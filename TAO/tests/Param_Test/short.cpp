@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "short.h"
 
 ACE_RCSID(Param_Test, short, "$Id$")
@@ -70,7 +68,11 @@ int
 Test_Short::run_sii_test (Param_Test_ptr objref,
                           CORBA::Environment &env)
 {
-  this->ret_ = objref->test_short (this->in_, this->inout_, this->out_, env);
+  this->ret_ = objref->test_short (this->in_,
+                                   this->inout_,
+                                   this->out_,
+                                   env);
+
   return (env.exception () ? -1:0);
 }
 
@@ -80,30 +82,49 @@ Test_Short::add_args (CORBA::NVList_ptr param_list,
                       CORBA::Environment &env)
 {
   // we provide top level memory to the ORB to retrieve the data
-  CORBA::Any in_arg (CORBA::_tc_short, &this->in_, 0);
-  CORBA::Any inout_arg (CORBA::_tc_short, &this->inout_, 0);
-  CORBA::Any out_arg (CORBA::_tc_short, &this->out_, 0);
+  CORBA::Any in_arg (CORBA::_tc_short,
+                     &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (CORBA::_tc_short,
+                        &this->inout_,
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (CORBA::_tc_short,
+                      &this->out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value. Let the ORB allocate storage. We simply tell the ORB
   // what type we are expecting.
-  (void)retval->item (0, env)->value ()->replace (CORBA::_tc_short,
-                                                  0, // no value
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (CORBA::_tc_short,
+                                            &this->ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
 CORBA::Boolean
 Test_Short::check_validity (void)
 {
-  if (this->inout_ == this->in_*2 &&
-      this->out_ == this->in_*3 &&
-      this->ret_ == this->in_*4)
+  if (this->inout_ == this->in_ * 2 &&
+      this->out_ == this->in_ * 3 &&
+      this->ret_ == this->in_ * 4)
     return 1; // success
   else
     return 0;
@@ -112,16 +133,7 @@ Test_Short::check_validity (void)
 CORBA::Boolean
 Test_Short::check_validity (CORBA::Request_ptr req)
 {
-  CORBA::Environment env;
-#if 0
-  // commented out since we really don't need to this as we have provided the
-  // ORB with the memory
-  *req->arguments ()->item (1, env)->value () >>= this->inout_;
-  *req->arguments ()->item (2, env)->value () >>= this->out_;
-#endif
-  // we must retrieve the return value since we aske dthe ORB to allocate the
-  // memory.
-  *req->result ()->value () >>= this->ret_;
+  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
