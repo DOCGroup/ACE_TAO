@@ -28,8 +28,7 @@ class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
 public:
   Barrier_Task (ACE_Thread_Manager *thr_mgr,
 		int n_threads, 
-		int n_iterations,
-		ACE_hthread_t thread_handles[]);
+		int n_iterations);
   
   virtual int svc (void);
   // Iterate <n_iterations> time printing off a message and "waiting"
@@ -46,20 +45,13 @@ private:
 
 Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr, 
 			    int n_threads, 
-			    int n_iterations,
-			    ACE_hthread_t thread_handles[])
+			    int n_iterations)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr), 
     barrier_ (n_threads), 
     n_iterations_ (n_iterations) 
 {
   // Create worker threads.
-  if (this->activate (THR_NEW_LWP,
-		      n_threads,
-		      0,
-		      ACE_DEFAULT_THREAD_PRIORITY,
-		      -1,
-		      0,
-		      thread_handles) == -1)
+  if (this->activate (THR_NEW_LWP, n_threads) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }
   
@@ -95,30 +87,12 @@ main (int, char *[])
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
   int n_iterations = ACE_MAX_ITERATIONS;
-  ACE_hthread_t *thread_handles;
-
-  ACE_NEW_RETURN (thread_handles, ACE_hthread_t[n_threads], -1);
 
   Barrier_Task barrier_task (ACE_Thread_Manager::instance (), 
 			     n_threads, 
-			     n_iterations,
-			     thread_handles);
+			     n_iterations);
 
-#if defined (VXWORKS)
-      // VxWorks doesn't support thr_join() semantics...  Someday
-      // we'll fix this.
-      ACE_Thread_Manager::instance ()->wait ();
-#else
-      // Wait for all the threads to reach their exit point and then join
-      // with all the exiting threads.
-      for (int i = 0;
-	   i < n_threads;
-	   i++)
-	if (ACE_Thread::join (thread_handles[i]) == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
-#endif /* VXWORKS */     
-
-  delete [] thread_handles;
+  ACE_Thread_Manager::instance ()->wait ();
 
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

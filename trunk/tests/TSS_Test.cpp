@@ -197,38 +197,15 @@ main (int, char *[])
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
-  ACE_hthread_t *thread_handles;
-
-  ACE_NEW_RETURN (thread_handles, ACE_hthread_t[threads], -1);
 
   if (ACE_Thread_Manager::instance ()->spawn_n
-      ((ACE_thread_t *) 0,
-       threads,
+      (threads,
        ACE_THR_FUNC (worker),
        (void *) ITERATIONS,
-       THR_BOUND,
-       ACE_DEFAULT_THREAD_PRIORITY,
-       -1,
-       0,
-       0,
-       thread_handles) == -1)
+       THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
-#if defined (VXWORKS)
-      // VxWorks doesn't support thr_join() semantics...  Someday
-      // we'll fix this.
-      ACE_Thread_Manager::instance ()->wait ();
-#else
-      // Wait for all the threads to reach their exit point and then join
-      // with all the exiting threads.
-      for (u_int i = 0;
-           i < threads;
-           i++)
-        if (ACE_Thread::join (thread_handles[i]) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
-#endif /* VXWORKS */
-
-  delete [] thread_handles;
+  ACE_Thread_Manager::instance ()->wait ();
 
   delete tss_error;
 
