@@ -1,3 +1,30 @@
+Wed May 17 16:20:30 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Future.cpp:
+        * ace/Future.h:
+        * ace/Future_Set.cpp:
+        * ace/Future_Set.h:
+        * ace/LOCK_SOCK_Acceptor.cpp:
+        * ace/config-pharlap.h:
+
+          While searching for the cause of a warning being undisabled,
+          I noticed there were several places where we were using
+          #include /**/ "ace/some-header.h".  The #include /**/ is only
+          for system headers, so it doesn't need to be used with ACE
+          headers.
+
+        * ace/streams.h:
+
+          If ACE_HAS_STANDARD_CPP_LIBRARY is defined, then we include
+          the .h-less versions of the header files.  This is all fine
+          and good, except that these headers in MSVC will disable some
+          warnings with #pragma warning, but then set them back to
+          default at the end.  So if we disabled a warning in the config
+          file, it would get reenabled because of these headers.
+
+          So I added a #pragma warning(push/pop) pair around the includes
+          in this file to localize the warning settings.  
+
 Wed May 17 14:32:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/CDR_Array_Test.cpp:
