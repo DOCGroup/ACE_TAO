@@ -1,6 +1,20 @@
+Wed Apr 07 17:25:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* apps/Gateway/Gateway/connection_config: Changed the connection 1
+	  and 2 to use localhost since it would probably be the most
+	  common test case.
+
+	* apps/Gateway/README: Replaced all references of proxy_config
+	  to connection_config.  Also change the example port number to
+	  10011 and 10012 which are the default port number used by the
+	  gatewayd.
+
+	  Thanks to Sam Rhine <rmsolution20@earchlink.net> for reporting
+	  this.
+
 Wed Apr  7 16:36:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ACE-INSTALL.html: Put a note in saying to rebuild all 
+        * ACE-INSTALL.html: Put a note in saying to rebuild all
           when upgrading releases.
 
 Wed Apr 07 14:25:47 1999  Joe Hoffert  <joeh@cs.wustl.edu>
@@ -19,10 +33,10 @@ Wed Apr  7 14:20:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* ace/Basic_Types.h:
 	  Added a signed companion to David's
 	  ACE_UINT64_LITERAL, to avoid MSVC warnings. If
-	  the platform has no 8-byte integer, this is 
+	  the platform has no 8-byte integer, this is
 	  useless, but we must keep all compilers happy.
 	  Also modified ACE_INT64_MAX tp use this, and
-	  added a signed companion to 
+	  added a signed companion to
 	  ACE_UINT64_FORMAT_SPECIFIER.
 
 Wed Apr 07 13:57:33 1999  David L. Levine  <levine@cs.wustl.edu>
