@@ -155,12 +155,12 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
       if (pdt == AST_PredefinedType::PT_longlong)
         {
-          *os << "CORBA::LongLong _tao_retval = "
+          *os << "CORBA::LongLong _tao_check_retval = "
               << "ACE_CDR_LONGLONG_INITIALIZER;" << be_nl << be_nl;
         }
       else if (pdt == AST_PredefinedType::PT_longdouble)
         {
-          *os << "CORBA::LongDouble _tao_retval = "
+          *os << "CORBA::LongDouble _tao_check_retval = "
               << "ACE_CDR_LONG_DOUBLE_INITIALIZER;" << be_nl << be_nl;
         }
     }
@@ -203,7 +203,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           if (pdt == AST_PredefinedType::PT_longlong
               || pdt == AST_PredefinedType::PT_longdouble)
             {
-              *os << "_tao_retval);";
+              *os << "_tao_check_retval);" << be_nl
+                  << "ACE_UNUSED_ARG (_tao_check_retval);";
             }
           else
             {
