@@ -86,8 +86,11 @@ be_union::compute_default_index (void)
                   if (bub->label (j)->label_kind ()
                       == AST_UnionLabel::UL_default)
                     this->default_index_ = i; // zero based indexing
-                  i++;
                 }
+              // TAO's Typecode class keeps only a member count (not
+              // a label count) so this increment has been moved
+              // out of the inner loop.
+              i++;
             }
           si->next ();
         } // end of while
