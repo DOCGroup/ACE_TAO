@@ -135,6 +135,7 @@ private:
   CORBA::Float dampening_;
   CORBA::Float per_balance_load_;
 
+  
 };
 
 

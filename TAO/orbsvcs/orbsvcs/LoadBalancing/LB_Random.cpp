@@ -61,7 +61,32 @@ TAO_LB_Random::next_member (
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  const CORBA::ULong len = locations->length ();
+  return TAO_LB_Random::_tao_next_member (object_group,
+                                          load_manager,
+                                          locations.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_LB_Random::analyze_loads (
+    PortableGroup::ObjectGroup_ptr /* object_group */,
+    CosLoadBalancing::LoadManager_ptr /* load_manager */
+    ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+CORBA::Object_ptr
+TAO_LB_Random::_tao_next_member (
+    PortableGroup::ObjectGroup_ptr object_group,
+    CosLoadBalancing::LoadManager_ptr load_manager,
+    const PortableGroup::Locations & locations
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberNotFound))
+{
+  const CORBA::ULong len = locations.length ();
   if (len == 0)
     ACE_THROW_RETURN (CORBA::TRANSIENT (),
                       CORBA::Object::_nil ());
@@ -101,13 +126,4 @@ TAO_LB_Random::next_member (
   return load_manager->get_member_ref (object_group,
                                        locations[i]
                                        ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_LB_Random::analyze_loads (
-    PortableGroup::ObjectGroup_ptr /* object_group */,
-    CosLoadBalancing::LoadManager_ptr /* load_manager */
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
 }
