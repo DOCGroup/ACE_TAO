@@ -594,6 +594,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__LB_OR="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\LB_ORT.idl
 InputName=LB_ORT
