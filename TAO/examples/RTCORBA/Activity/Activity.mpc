@@ -1,7 +1,8 @@
-project(*Lib) : orbsvcslib, naming, rtportableserver {
-  sharedname = activity
-  dynamicflags = ACTIVITY_BUILD_DLL
-  libout = .
+project : orbsvcslib, namingexe, rt_server {
+  exename = activity
+  // We use macros instead of dynamicflags so that 
+  // the symbols will be exported from an exe. 
+  macros = ACTIVITY_BUILD_DLL
   Source_Files {
     Activity.cpp
     Builder.cpp
@@ -12,14 +13,3 @@ project(*Lib) : orbsvcslib, naming, rtportableserver {
     Thread_Task.cpp
   }
 }
-project: namingexe, rt_server {
-  exename = test
-  after  += Activity_Lib
-  libs   += activity
-  Source_Files {
-    main.cpp
-  }  
-  IDL_Files {
-  }
-}
-

@@ -1,3 +1,13 @@
+Mon Jul 07 07:46:00 2003  Justin Michel  <michel_j@ociweb.com>
+	
+	* examples/RTCORBA/Activity/Activity.cpp
+	* examples/RTCORBA/Activity/Activity.mpc
+	* examples/RTCORBA/Activity/main.cpp
+
+          Reverted my changes to Activity from July 3. I thought
+        of a new way to write the mpc that's compatible with the 
+        existing Makefile.
+
 Mon Jul 07 07:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Makefile:
@@ -259,6 +269,7 @@ Thu Jul 03 17:03:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Set correct BUILD_DLL define when building shared libs. This fixes
           link errors in the Cygwin/MinGW and Kylix builds.
 
+>>>>>>> 1.2069
 Thu Jul 03 16:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp (init_endpoint):
