@@ -7866,7 +7866,13 @@ ACE_OS::gethrtime (void)
 
   ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
 
-  return ts.tv_sec * ACE_ONE_SECOND_IN_NSECS + ts.tv_nsec;
+  // Carefully create the return value to avoid arithmetic overflow
+  // if ACE_hrtime_t is ACE_U_LongLong.
+  ACE_hrtime_t now = ts.tv_sec;
+  now *= (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS;
+  now += ts.tv_nsec;
+
+  return now;
 #else
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
   return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
