@@ -12,17 +12,17 @@ TAO_ClientRequestInfo::TAO_ClientRequestInfo (const char * operation,
                                               IOP::ServiceContextList
                                               &service_context_list,
                                               CORBA::Object_ptr target)
-  : operation_ (operation), 
+  : operation_ (operation),
     service_context_list_ (service_context_list),
     target_ (CORBA_Object::_duplicate (target))
 {
 }
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 TAO_ClientRequestInfo::target (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->target_.in ();
+  return CORBA::Object::_duplicate (this->target_.in ());
 }
 
 CORBA::Object_ptr
@@ -32,7 +32,7 @@ TAO_ClientRequestInfo::effective_target (CORBA::Environment &)
   return CORBA::Object::_nil ();
 }
 
-IOP::TaggedProfile *  
+IOP::TaggedProfile *
 TAO_ClientRequestInfo::effective_profile (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -40,9 +40,9 @@ TAO_ClientRequestInfo::effective_profile (CORBA::Environment &)
 }
 
 // Use at own risk. There is no way currently of extracting an
-// exception from an Any. This method is in place just to be compliant 
+// exception from an Any. This method is in place just to be compliant
 // with the spec.
-CORBA::Any *  
+CORBA::Any *
 TAO_ClientRequestInfo::received_exception (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -53,35 +53,30 @@ TAO_ClientRequestInfo::received_exception (CORBA::Environment &)
 }
 
 // = TAO specific method done since there currently is no simple way
-//   to extract exceptions from an Any 
-CORBA::Exception *  
+//   to extract exceptions from an Any
+CORBA::Exception *
 TAO_ClientRequestInfo::_received_exception (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->caught_exception_;
 }
-  
-char *  
+
+char *
 TAO_ClientRequestInfo::received_exception_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Shouldn't we duplicate the string instead?
-
-  // constness had to be casted since <_id> which is a TAO-specific
-  // extension of CORBA::Exception returns a const char *.
-  return ACE_const_cast (char *, 
-                         this->caught_exception_->_id ());
+  return CORBA::string_dup (this->caught_exception_->_id ());
 }
 
-IOP::TaggedComponent *  
+IOP::TaggedComponent *
 TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId,
                                                 CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
- 
-CORBA::Policy_ptr  
+
+CORBA::Policy_ptr
 TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type,
                                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -90,12 +85,12 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type,
                                      ACE_TRY_ENV);
 }
 
-void  
+void
 TAO_ClientRequestInfo::add_request_service_context (
     const IOP::ServiceContext & service_context,
     CORBA::Boolean,
     CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException)) 
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Copy the service context into the list.
   CORBA::ULong length = this->service_context_list_.length ();
@@ -104,58 +99,57 @@ TAO_ClientRequestInfo::add_request_service_context (
   this->service_context_list_[length] = service_context;
 }
 
-CORBA::ULong 
+CORBA::ULong
 TAO_ClientRequestInfo::request_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->request_id_;
 }
 
-char * 
+char *
 TAO_ClientRequestInfo::operation (CORBA::Environment &)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return ACE_const_cast (char *, 
-                         this->operation_);
+  return CORBA::string_dup (this->operation_);
 
 }
 
-Dynamic::ParameterList * 
+Dynamic::ParameterList *
 TAO_ClientRequestInfo::arguments (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
  return &this->parameter_list_;
 }
 
-Dynamic::ExceptionList * 
+Dynamic::ExceptionList *
 TAO_ClientRequestInfo::exceptions (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return &this->exception_list_;
 }
 
-Dynamic::ContextList * 
+Dynamic::ContextList *
 TAO_ClientRequestInfo::contexts (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
  return &this->context_list_;
 }
 
-Dynamic::RequestContext * 
+Dynamic::RequestContext *
 TAO_ClientRequestInfo::operation_context (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
  return &this->request_context_;
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo::result (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_ClientRequestInfo::response_expected (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -171,21 +165,21 @@ TAO_ClientRequestInfo::sync_scope (CORBA::Environment &)
 }
 #endif  /* TAO_HAS_CORBA_MESSAGING */
 
-PortableInterceptor::ReplyStatus 
+PortableInterceptor::ReplyStatus
 TAO_ClientRequestInfo::reply_status (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 TAO_ClientRequestInfo::forward_reference (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId,
                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -194,7 +188,7 @@ TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId,
   return 0;
 }
 
-IOP::ServiceContext * 
+IOP::ServiceContext *
 TAO_ClientRequestInfo::get_request_service_context (IOP::ServiceId id,
                                                     CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -210,10 +204,10 @@ TAO_ClientRequestInfo::get_request_service_context (IOP::ServiceId id,
   return 0;
 }
 
-IOP::ServiceContext * 
+IOP::ServiceContext *
 TAO_ClientRequestInfo::get_reply_service_context (IOP::ServiceId id,
                                                   CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException)) 
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong size = 0;
        size < this->service_context_list_.length ();
