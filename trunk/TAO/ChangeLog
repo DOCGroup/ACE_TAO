@@ -1,3 +1,13 @@
+Sat May 29 12:21:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include):
+        
+          Added code to remove whitespace before checking for '#'.
+          The CORBA spec allows whitespace to appear before any
+          preprocessing directive. Thanks to 
+          Merlin Ran <merlinr@21cn.com> for sending in the 
+          example IDL files that uncovered this bug.
+
 Fri May 28 18:46:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:

@@ -395,6 +395,12 @@ DRV_check_for_include (const char* buf)
   const char* r = buf;
   const char* h;
 
+  // Skip the tabs and spaces.
+  while (*r == ' ' || *r == '\t')
+    {
+      ++r;
+    }
+
   // Skip initial '#'.
   if (*r != '#')
     {
