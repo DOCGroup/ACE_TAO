@@ -503,7 +503,19 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
   // Free up all the continuation messages.
   if (this->cont_)
     {
-      this->cont_->release_i (lock);
+      ACE_Message_Block *mb = this->cont_;
+      ACE_Message_Block *tmp;
+
+      do
+        {
+          tmp = mb;
+          mb = mb->cont_;
+          tmp->cont_ = 0;
+
+          tmp->release_i (lock);
+        }
+      while (mb);
+
       this->cont_ = 0;
     }
 

@@ -2415,7 +2415,7 @@ ACE_OS::fork_exec (char *argv[])
 
 // "Fake" writev for sites without it.  Note that this is thread-safe.
 
-extern "C" int
+extern "C" ACE_Export int
 writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
 // ACE_TRACE ("::writev");
@@ -2458,7 +2458,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 
 // "Fake" readv for sites without it.  Note that this is thread-safe.
 
-extern "C" int
+extern "C" ACE_Export int
 readv (ACE_HANDLE handle, 
        ACE_READV_TYPE *iov,
        int n)
