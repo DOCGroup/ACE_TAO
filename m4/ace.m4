@@ -426,10 +426,7 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
     no)
       ace_user_enable_exceptions=no
       if test "$GXX" = yes; then
-dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-changequote(, )dnl
-        if $CXX --version | $EGREP -v '^2\.[0-7]' > /dev/null; then
-changequote([, ])dnl
+        if $CXX --version | $EGREP -v '^2\.[[0-7]]' > /dev/null; then
           ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-exceptions"
         fi
       fi
@@ -446,10 +443,7 @@ dnl THE FOLLOWING WAS ONLY USED WHEN DISABLING EXCEPTION SUPPORT BY
 dnl DEFAULT.
 dnl
 dnl    if test "$GXX" = yes; then
-dnl dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-dnl changequote(, )dnl
-dnl      if $CXX --version | $EGREP -v '^2\.[0-7]' > /dev/null; then
-dnl changequote([, ])dnl
+dnl      if $CXX --version | $EGREP -v '^2\.[[0-7]]' > /dev/null; then
 dnl        ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-exceptions"
 dnl      fi
 dnl    fi
