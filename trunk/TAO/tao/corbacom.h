@@ -330,10 +330,9 @@ public:
     // = in, out, out, and _retn operations.
     // ORBOS/97-05-15, Appendix C.2
 
-    private:
-      char *ptr_;
-      // instance
-    };
+  private:
+    char *ptr_;
+    // instance.
 
     const char *in (void) const;
     // for in parameter
@@ -367,7 +366,7 @@ public:
     String_out (char *&p);
     // construction from a reference to a string
 
-    String_out (String_var &p);
+    String_out (CORBA::String_var &p);
     // construction from a var
 
     String_out (String_out &s);
@@ -385,7 +384,7 @@ public:
     operator char *&();
     // cast
 
-    char *& ptr (void);
+    char *&ptr (void);
     // return underlying instance
    
   private:
@@ -393,7 +392,7 @@ public:
     // instance
 
     // assignment from _var disallowed
-    void operator= (const String_var &);
+    void operator= (const CORBA::String_var &);
   };
 
   // 94-9-32 Appendix A defines 16-bit UNICODE characters as
@@ -666,7 +665,6 @@ public:
     IN_COPY_VALUE = 0x08,
     OUT_LIST_MEMORY = 0x10
   };
-
 };
 
 typedef CORBA::OctetSeq TAO_opaque;
