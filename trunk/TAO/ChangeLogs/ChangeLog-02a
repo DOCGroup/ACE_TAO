@@ -1,3 +1,15 @@
+Mon Apr  2 21:32:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/ORB.cpp:
+
+          Added throw of CORBA::INTERNAL exception to the check
+          for null instance of the service object in the
+          create_*_tc methods. Thanks to Carlos for the suggestion.
+
+        * examples/Makefile:
+
+          Updated dependencies.
+
 Mon Apr  2 18:55:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 
