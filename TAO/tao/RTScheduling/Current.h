@@ -18,7 +18,7 @@ public RTScheduling::Current,
   public TAO_Local_RefCounted_Object
 {
  public:
-  //TAO_Scheduler_Current (void);
+  TAO_Scheduler_Current (TAO_ORB_Core*);
   
   
   virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -88,7 +88,8 @@ public RTScheduling::Current,
   TAO_RTScheduler_Current_i* implementation (TAO_RTScheduler_Current_i*);
 
  private:
-	 RTCORBA::Current_var rt_current_;
+  RTCORBA::Current_var rt_current_;
+  TAO_ORB_Core* orb_;
   
 };
 
@@ -97,7 +98,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 {
  public:
 
-  TAO_RTScheduler_Current_i (void);
+  TAO_RTScheduler_Current_i (TAO_ORB_Core* orb);
 
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
@@ -151,7 +152,11 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   virtual ::RTScheduling::Current::NameList * 
     current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));  
-  
+
+ private:
+  RTScheduling::DistributableThread_var dt_;
+  RTScheduling::Scheduler_var scheduler_;
+  TAO_ORB_Core* orb_;
 };
 
 #endif /*TAO_RTSCHEDULER_CURRENT_H*/

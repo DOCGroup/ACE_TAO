@@ -1,11 +1,19 @@
 //$Id$
 #include "Current.h"
 #include "ORB_Core.h"
+#include "Distributable_Thread.h"
+
+TAO_Scheduler_Current::TAO_Scheduler_Current (TAO_ORB_Core* orb)
+{
+  this->orb_ = orb;
+}
 
 void
 TAO_RTScheduler_Current::rt_current (RTCORBA::Current_ptr rt_current)
 {
 	this->rt_current_ = RTCORBA::Current::_duplicate (rt_current);
+
+
 }
 
 void
@@ -193,7 +201,7 @@ TAO_RTScheduler_Current::implementation (void)
   if (impl == 0)
     {
       ACE_NEW_THROW_EX (impl,
-			TAO_RTScheduler_Current_i,
+			TAO_RTScheduler_Current_i (this->orb_),
 			CORBA::NO_MEMORY (
 					  CORBA::SystemException::_tao_minor_code (
 					  TAO_DEFAULT_MINOR_CODE,
@@ -208,20 +216,50 @@ TAO_RTScheduler_Current::implementation (void)
 
 }
 
-TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (void)
+TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb)
 {
   ACE_DEBUG ((LM_DEBUG,
-			  "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
+	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  this->orb_ = orb;
+  CORBA::Object_ptr scheduler_obj = this->orb_->object_ref_table ().resolve_initial_references ("RTScheduler"
+												ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
+						       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
 TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
-						  CORBA::Policy_ptr sched_param,
-						  CORBA::Policy_ptr implicit_sched_param
-						  ACE_ENV_SINGLE_ARG_DECL)
+						    CORBA::Policy_ptr sched_param,
+						    CORBA::Policy_ptr implicit_sched_param
+						    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
+  
+  RTScheduling::Current::IdType guid = 0;
+  
+  //DT pointer
+  RTScheduling::DistributableThread_ptr dt;
+  
+  if (CORBA::is_nil (this->dt_.in ()))
+    {
+      //Generate GUID
+      guid = ACE_OS::rand (); //Will be replaced by the ACE guid generator
+      
+      this->scheduler_->begin_new_scheduling_segment (guid,
+						      name,
+						      sched_param,
+						      implicit_sched_param);
+
+      //Create new DT.
+      this->dt_ = TAO_DistributableThread_Factory::create_DT ();
+      
+    }
   
 }
 

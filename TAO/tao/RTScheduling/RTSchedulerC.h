@@ -36,7 +36,7 @@
 
 #include "rtscheduler_export.h"
 
-#include "c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBAC.h"
+#include "c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBA.h"
 #include "c:/ACE_wrappers/TAO/tao/PortableServer/PortableServerC.h"
 #include "c:/ACE_wrappers/TAO/tao/PortableInterceptorC.h"
 
@@ -71,6 +71,7 @@ TAO_NAMESPACE  CORBA
 
 // TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+	typedef void* VoidData;
 
 }
 TAO_NAMESPACE_CLOSE // module CORBA

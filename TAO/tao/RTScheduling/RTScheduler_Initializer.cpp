@@ -33,10 +33,30 @@ void
   //
 
   // Create the RT_Current.
+    // @@ This is busted.  TAO_ORBInitInfo should do proper reference
+  //    counting.
+
+  // Narrow to a TAO_ORBInitInfo object to get access to the
+  // orb_core() TAO extension.
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
+                                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   
+  if (CORBA::is_nil (tao_info.in ()))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) Security_ORBInitializer::pre_init:\n"
+                    "(%P|%t)    Unable to narrow "
+                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
   
   ACE_NEW_THROW_EX (this->current_,
-                    TAO_RTScheduler_Current,
+                    TAO_RTScheduler_Current (tao_info->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
