@@ -1,3 +1,10 @@
+Fri Dec 17 13:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/IOStream_T.cpp:
+          Removed code to define a variable to prevent munch problems. Not
+          needed anymore with the latest VxWorks version and the static
+          metioned is also gone already.
+
 Fri Dec 17 12:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/IO_SAP.cpp:
