@@ -501,7 +501,7 @@ ACE_SOCK_Dgram::send (const void *buf,
     }
 }
 
-void
+int
 ACE_SOCK_Dgram::set_nic (const char *option_value)
 {
   /* The first step would be to get the interface address for the
@@ -513,7 +513,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
   ACE_INET_Addr interface_addr;
   if (interface_addr.set (mcast_addr.get_port_number (),
                           option_value) == -1)
-    return;
+    return -1;
   multicast_address.imr_interface.s_addr =
     htonl (interface_addr.get_ip_address ());
 #else
@@ -529,7 +529,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
   if (ACE_OS::ioctl (this->get_handle (),
                      SIOCGIFADDR,
                      &if_address) == -1)
-        return;
+    return -1;
 
   /* Cast this into the required format */
   sockaddr_in *socket_address;
@@ -542,8 +542,8 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
    * Use that to set the nic option.
    */
 
-  this->ACE_SOCK::set_option (IPPROTO_IP,
-                              IP_MULTICAST_IF,
-                              &multicast_address.imr_interface.s_addr,
-                              sizeof (struct in_addr));
+  return this->ACE_SOCK::set_option (IPPROTO_IP,
+                                     IP_MULTICAST_IF,
+                                     &multicast_address.imr_interface.s_addr,
+    c	                                 sizeof (struct in_addr));
 }
