@@ -85,7 +85,9 @@
 # define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 # define ACE_LACKS_T_ERRNO
 # define ACE_POLL_IS_BROKEN
-# define DIGITAL_UNIX
+# if !defined (DIGITAL_UNIX)
+#   define DIGITAL_UNIX
+# endif /* ! DIGITAL_UNIX */
   // DJT removed this due to some minor issues related to the
   // definitions of timestruc_t and tid_t in procfs.h not sure what
   // functionality is lost?  Platform supports <sys/procfs.h>
