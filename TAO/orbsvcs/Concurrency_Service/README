@@ -1,0 +1,88 @@
+$Id$
+
+This file describes how to run the concurrency service and the
+accompanying tests. It also describes the locations of the files that
+make up the service and the tests. For a general description of the
+directory structure for the services please consult
+        $TAO_ROOT/docs/orbsvcs.html
+
+** How to run the service
+
+The concurrency server runs in the thread-per-connection concurrency
+model, which is necessary in order to enable the server to block on a
+thread. This is set up in the svc.conf file. The concurrency service
+will not run in the reactive model.
+
+The server is located in the $TAO_ROOT/orbsvcs/Concurrency_Service
+directory.
+
+The server accepts the folowing options:
+        usage:  ./Concurrency_Service [-d] [-o] <ior_output_file>
+        [-d] is the debug option
+        [-o] <ior_output_file> outputs the IOR of the lock set factory
+             to the file
+        [-s] Prevents the concurency server from using the naming server
+
+The lock set factory is registered in the naming service in the
+CosConcurrency context with the name "LockSetFactory".
+
+** The implementation
+
+The implementation of the concurrency service objects is located in
+the $TAO_ROOT/orbsvcs/orbsvcs/Concurrency directory and consists of
+the following files:
+        CC_Lock.{h,cpp} Wrapper around the locking mechanism
+        CC_LockSet.{h,cpp} Implementation of the lock set
+        CC_LockSetFactory.{h,cpp} Iplementation of the lock set
+                factory
+        Concurrency_Utils.{h,cpp} Wrapper around the concurrency
+                server.
+
+The current implementation does not support transactions.
+
+** The tests
+
+The tests are located in the $TAO_ROOT/orbsvcs/tests/Concurrency
+directory. There are two types of tests - a simple test which tests
+that it is possible to create locks and lock them in all the different
+lock modes, and a more extended test which requires two (or more)
+processes.
+
+The server accepts the following options:
+        usage:  ./CC_client [-b] [-d] [-e] <test;arg1;arg2>
+                        [-f cc_factory-obj-ref-key-file]
+                        [-k cc-obj-ref-key] [-x] [-s]
+
+The [-b] option runs the basic tests.
+
+The [-d] option is the debug option.
+
+The [-e] option is for running one of the extended tests. The format
+of the argument to the -e option is <test;arg1;arg2> where test is the
+name of the test (at present test = {1,2,3}) and arg1 and arg2 are
+arguments to the test. See example below.
+
+The [-f] option reads the factory IOR from a file. This is currently
+not supported.
+
+The [-k] option takes the factory IOR as argument on the
+commandline. This is currently not supported.
+
+The [-x] option tells the server to shut down gracefully. Currently
+this has no effect.
+
+The [-s] option tells the test not to use the naming service. This is
+currently nit supported.
+
+** Example test run
+
+        Window-1> ./Concurrency_Service -d
+
+        Window-2> ./CC_client -b
+
+        Window-2> ./CC_client -e '1;Name'
+
+        Window-2> ./CC_client -e '2;Name'
+
+        Window-3> ./CC_client -e '3;Name'
+
