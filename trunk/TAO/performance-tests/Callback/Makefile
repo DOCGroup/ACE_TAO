@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_PortableServer -lTAO
-
 IDL_FILES = callback
 IDL_SRC = callbackC.cpp callbackS.cpp
 BIN_UNCHECKED = client server
@@ -51,6 +49,8 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
+
+TAO_SRVR_LIBS := -lTAO_Strategies $(TAO_SRVR_LIBS)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)

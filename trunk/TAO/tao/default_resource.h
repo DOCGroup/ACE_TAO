@@ -100,12 +100,17 @@ public:
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
+  virtual void disable_factory (void);
+
 protected:
   /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
 
   /// Add a Parser name to the list of Parser names.
   int add_to_ior_parser_names (const char *);
+
+  void report_option_value_error (const char* option_name,
+                                  const char* option_value);
 
 protected:
   /// Flag indicating whether resources should be global or
@@ -157,6 +162,16 @@ protected:
 
   virtual int load_default_protocols (void);
 
+  /// This flag is used to determine whether options have been
+  /// processed via the init() function.  It is necessary to
+  /// properly report errors when the default factory is replaced.
+  int options_processed_;
+
+  /// This flag specifies whether the factory has been disabled.
+  /// If it has been disabled we should print warnings if options
+  /// were processed before (or later).
+  int factory_disabled_;
+  
 private:
   enum Lock_Type
   {

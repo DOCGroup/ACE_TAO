@@ -1,3 +1,125 @@
+Wed Jul 11 16:03:58 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * tao/Object_Loader.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/Server_Strategy_Factory.h:
+        * tao/default_client.cpp:
+        * tao/default_client.h:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/default_server.cpp:
+        * tao/default_server.h:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.h:
+
+          Improved processing of service configurator options.  Many
+          failures were not being reported to the user.  These changes
+          cause many failure to print warning messages but should not
+          affect execution of the code.  The following situations now
+          result in warning messages:
+            - Passing unknown -ORB* options to a factory
+              (This includes passing advanced resource factory
+              options to the default resource factory)
+            - Passing an unknown value to a defined option
+            - Passing options to the default resource factory
+              (Resource_Factory) when the advanced resource factory
+              (Advanced_Resource_Factory) is being used
+
+          I also removed several deprecated options: -ORBEventLoopLock,
+          -ORBDemuxStrategy, and -ORBConnectorLock.
+
+        * examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/AMI/FL_Callback/AMI_Progress.dsp:
+        * examples/AMI/FL_Callback/Makefile:
+        * examples/AMI/FL_Callback/peer.conf:
+        * examples/AMI/FL_Callback/peer.cpp:
+        * examples/AMI/FL_Callback/svc.conf:
+        * orbsvcs/tests/AVStreams/Latency/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/control.dsp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.dsp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.dsp:
+        * orbsvcs/tests/AVStreams/Latency/svc.conf:
+        * orbsvcs/tests/Event/Performance/latency.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/svc.conf:
+        * performance-tests/Callback/Makefile:
+        * performance-tests/Callback/client.bor:
+        * performance-tests/Callback/client.cpp:
+        * performance-tests/Callback/client.dsp:
+        * performance-tests/Callback/server.bor:
+        * performance-tests/Callback/server.cpp:
+        * performance-tests/Callback/server.dsp:
+        * performance-tests/Callback/svc.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/iiop_lite.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.mt_server.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.st_client.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.st_server.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/uiop_lite.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.bor:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf:
+        * performance-tests/Throughput/Makefile:
+        * performance-tests/Throughput/client.bor:
+        * performance-tests/Throughput/client.cpp:
+        * performance-tests/Throughput/server.bor:
+        * performance-tests/Throughput/server.cpp:
+        * performance-tests/Throughput/svc.conf:
+        * tests/AMI_Timeouts/svc.conf:
+        * tests/Collocation/Collocation.bor:
+        * tests/Collocation/Collocation.cpp:
+        * tests/Collocation/Collocation.dsp:
+        * tests/Collocation/Makefile.test:
+        * tests/Collocation/svc.conf:
+        * tests/Exposed_Policies/Client.dsp:
+        * tests/Exposed_Policies/Makefile:
+        * tests/Exposed_Policies/Server.dsp:
+        * tests/Exposed_Policies/client.bor:
+        * tests/Exposed_Policies/client.cpp:
+        * tests/Exposed_Policies/server.bor:
+        * tests/Exposed_Policies/server.conf:
+        * tests/Exposed_Policies/server.cpp:
+        * tests/Exposed_Policies/svc.conf:
+        * tests/FL_Cube/Makefile:
+        * tests/FL_Cube/client.bor:
+        * tests/FL_Cube/client.cpp:
+        * tests/FL_Cube/server.bor:
+        * tests/FL_Cube/server.cpp:
+        * tests/FL_Cube/svc.conf:
+        * tests/LongUpcalls/svc.conf:
+        * tests/MT_Server/server.conf:
+        * tests/Strategies/Makefile:
+        * tests/Strategies/README:
+        * tests/Strategies/client.bor:
+        * tests/Strategies/server.bor:
+        * tests/Strategies/svc.conf
+
+          These are changes to TAO tests and examples with
+          broken service config files.  The above changes
+          caused these files to generate warnings.  The vast
+          majority of the problems were the passing of advanced
+          resource factory options to the default resource
+          factory.  Most were changed to simply use the advanced
+          resource factory.  Some were modified to use
+          the defaults of the default resource factory.
+
 Wed Jul 11 14:41:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp (compute_prefix):

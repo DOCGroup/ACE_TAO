@@ -119,9 +119,6 @@ public:
   virtual int server_connection_thread_flags (void);
   virtual int server_connection_thread_count (void);
 
-  /// Creates and returns a lock for the event loop.
-  virtual ACE_Lock *create_event_loop_lock (void);
-
   /// Return the active object map creation parameters.
   virtual const Active_Object_Map_Creation_Parameters &active_object_map_creation_parameters (void) const;
 

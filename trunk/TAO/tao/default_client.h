@@ -56,6 +56,10 @@ public:
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
 
+protected:
+  void report_option_value_error (const char* option_name,
+                                  const char* option_value);
+
 private:
   enum Lock_Type
   {

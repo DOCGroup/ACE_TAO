@@ -24,6 +24,7 @@ LIBFILES = \
         $(ACE_LIB) \
         $(TAO_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_STRATEGIES_LIB) \
         $(TAO_RTPORTABLESERVER_LIB) \
         $(TAO_RTCORBA_LIB)
 

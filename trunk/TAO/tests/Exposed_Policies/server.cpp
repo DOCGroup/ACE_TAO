@@ -13,6 +13,8 @@
 // -- App. Specific Include --
 #include "Policy_Tester.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(tao, server, "$Id$")
 
 

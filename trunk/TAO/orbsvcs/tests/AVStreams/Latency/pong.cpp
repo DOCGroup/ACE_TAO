@@ -3,6 +3,7 @@
 #include "pong.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Strategies/advanced_resource.h"
 #include "tao/corba.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
