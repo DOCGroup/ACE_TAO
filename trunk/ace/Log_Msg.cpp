@@ -341,16 +341,16 @@ ACE_Log_Msg::sync (const char *prog_name)
 #else
   if (prog_name)
     {
+      // Must free if already allocated!!!
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 
-	  // Stop heap checking, block will be freed in
-	  // atexit. Heap checking state will be restored
-	  // when the block is left.
-	  {
-		  ACE_NO_HEAP_CHECK;
+      // Stop heap checking, block will be freed in <atexit>.  Heap
+      // checking state will be restored when the block is left.
+      {
+	ACE_NO_HEAP_CHECK;
       
-		  ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
-	  }	  
+	ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+      }	  
     }
 #endif /* VXWORKS */
 

@@ -43,9 +43,8 @@ client (void *)
 
   ACE_OS::sleep (3);
   char t = 'a';
-  ACE_Shared_Memory *shm_client;
-  ACE_NEW_RETURN (shm_client, ACE_Shared_Memory_MM (shm_key), 0);
-  char *shm = (char *) shm_client->malloc ();
+  ACE_Shared_Memory_MM shm_client (shm_key);
+  char *shm = (char *) shm_client.malloc ();
 
   for (char *s = shm; *s != '\0'; s++)
     {
@@ -68,10 +67,9 @@ server (void *)
   ACE_NEW_THREAD;
 #endif /* ACE_WIN32 */
 
-  ACE_Shared_Memory *shm_server;
-  ACE_NEW_RETURN (shm_server, ACE_Shared_Memory_MM (shm_key, SHMSZ), 0);
+  ACE_Shared_Memory_MM shm_server (shm_key, SHMSZ);
 
-  char *shm = (char *) shm_server->malloc ();
+  char *shm = (char *) shm_server.malloc ();
   char *s = shm;
 
   for (char c = 'a'; c <= 'z'; c++)
@@ -83,8 +81,9 @@ server (void *)
   while (*shm != '*')
     ACE_OS::sleep (1);
 
-  if (shm_server->remove () < 0)
+  if (shm_server.remove () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "remove"));
+
   ACE_OS::unlink (shm_key);
   return 0;
 }

@@ -179,31 +179,17 @@ fi
 
 cd ${MY_ACEDIR}
 
-echo "Uncomressing ACE archive ..."
-
-gunzip ACE*tar.gz || \
-{
-  echo "gunzip failed. Aborting script !!"
-  echo ""
-  exit 22
-}
-
-echo ""
-echo "Extracting ACE files into `pwd`/ACE_wrappers directory ..."
+echo "Uncomressing ACE archive and extracting ACE files"
+echo "into `pwd`/ACE_wrappers directory ..."
 echo ""
 
-tar xvf ACE*tar || \
+gunzip -c ACE*tar.gz | tar xvf - || \
 {
   echo ""
-  echo "tar failed. Aborting script !!"
+  echo "gunzip or tar failed. Aborting script !!"
   echo ""
   exit 33
 }
-
-echo ""
-echo "Re-compressing ACE source using <gzip -9> ..."
-gzip  -9 ACE*tar
-echo ""
 
 if [ -d ${WRAPPER_ROOT} ]
 then

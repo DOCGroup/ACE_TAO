@@ -1,3 +1,28 @@
+Sat Apr  5 13:12:37 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/MM_Shared_Memory_Test.cpp: Removed the use of dynamic
+ 	  memory allocation to avoid memory leaks.
+
+	* ace/Service_Config: Changed _defaults to _static_svcs since this
+ 	  more accurately reflects what they do.
+
+	* examples/Shared_Malloc/test_malloc.cpp: Removed the
+ 	  print_stats() call since it doesn't work via this API.  Thanks
+ 	  to Sandro Doro <alex@aureus.sublink.org> for reporting this.
+
+	* ACE-install.sh: Tweeked the install script by changing the
+	  "gunzip; tar; gzip" sequence into "gunzip -c | tar xvf -" to
+	  speed it up a little.  Thanks to Per Andersson
+	  <Per.Andersson@hfera.ericsson.se> for this fix.
+
+	* examples/Threads/future1.cpp: Make sure to delete the char *name
+ 	  that is retrieved from the future in order to avoid a memory
+ 	  leak.  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
+ 	  figuring this out.
+	
+	* examples/Threads/future1.cpp: Make sure to delete this->name_ in
+ 	  the Scheduler destructor to avoid a memory leak.
+
 Sat Apr 05 13:11:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,cpp},Log_Msg.{h,cpp}: fixes from Matthias Kerkhoff
