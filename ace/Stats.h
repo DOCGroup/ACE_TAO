@@ -220,7 +220,9 @@ private:
   // The number of samples
 
   ACE_UINT64 latency_min_;
+  ACE_UINT32 latency_min_at_;
   ACE_UINT64 latency_max_;
+  ACE_UINT32 latency_max_at_;
   ACE_UINT64 latency_sum_;
   ACE_UINT64 latency_sum2_;
   // The stadigraphs for latency computation

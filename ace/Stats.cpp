@@ -424,7 +424,9 @@ ACE_Stats::square_root (const ACE_UINT64 n,
 ACE_Throughput_Stats::ACE_Throughput_Stats (void)
   :  samples_count_ (0),
      latency_min_ (0),
+     latency_min_at_ (0),
      latency_max_ (0),
+     latency_max_at_ (0),
      latency_sum_ (0),
      latency_sum2_ (0),
      throughput_last_ (0),
@@ -445,7 +447,9 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
   if (this->samples_count_ == 1u)
     {
       this->latency_min_ = latency;
+      this->latency_min_at_ = this->samples_count_;
       this->latency_max_ = latency;
+      this->latency_max_at_ = this->samples_count_;
       this->latency_sum_ = latency;
 #if defined ACE_LACKS_LONGLONG_T
       this->latency_sum2_ = latency * ACE_U64_TO_U32 (latency);
@@ -467,9 +471,15 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
   else
     {
       if (this->latency_min_ > latency)
-        this->latency_min_ = latency;
+        {
+          this->latency_min_ = latency;
+          this->latency_min_at_ = this->samples_count_;
+        }
       if (this->latency_max_ < latency)
-        this->latency_max_ = latency;
+        {
+          this->latency_max_ = latency;
+          this->latency_max_at_ = this->samples_count_;
+        }
 
       this->latency_sum_  += latency;
 #if defined ACE_LACKS_LONGLONG_T
@@ -573,8 +583,12 @@ ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
   double l_dev = ACE_CU64_TO_CU32 (latency_dev) / (sf * sf);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%s latency: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2)\n"),
-              msg, l_min, l_avg, l_max, l_dev));
+              ASYS_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
+              msg,
+              l_min, this->latency_min_at_,
+              l_avg,
+              l_max, this->latency_max_at_,
+              l_dev));
 
   double seconds =
 #if defined ACE_LACKS_LONGLONG_T

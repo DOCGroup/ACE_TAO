@@ -38,11 +38,22 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
 {
   ACE_TRACE ("ACE_Select_Reactor_T::any_ready");
 
+  if (this->handle_signals_)
+    {
 #if !defined (ACE_WIN32)
-  // Make this call signal safe.
-  ACE_Sig_Guard sb;
+      // Make this call signal safe.
+      ACE_Sig_Guard sb;
 #endif /* ACE_WIN32 */
 
+      return this->any_ready_i (wait_set);
+    }
+  return this->any_ready_i (wait_set);
+}
+
+  template <class ACE_SELECT_REACTOR_TOKEN> int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
+  (ACE_Select_Reactor_Handle_Set &wait_set)
+{
   int number_ready = this->ready_set_.rd_mask_.num_set ()
     + this->ready_set_.wr_mask_.num_set ()
     + this->ready_set_.ex_mask_.num_set ();
@@ -474,10 +485,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
   (ACE_Sig_Handler *sh,
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
-   ACE_Reactor_Notify *notify)
+   ACE_Reactor_Notify *notify,
+   int handle_signals)
     : token_ (*this),
       lock_adapter_ (token_),
-      deactivated_ (0)
+      deactivated_ (0),
+      handle_signals_ (handle_signals)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -502,10 +515,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Sig_Handler *sh,
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
-   ACE_Reactor_Notify *notify)
+   ACE_Reactor_Notify *notify,
+   int handle_signals)
     : token_ (*this),
       lock_adapter_ (token_),
-      deactivated_ (0)
+      deactivated_ (0),
+      handle_signals_ (handle_signals)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 

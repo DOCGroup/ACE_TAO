@@ -116,7 +116,8 @@ public:
   ACE_Select_Reactor_T (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
-                        ACE_Reactor_Notify *notify = 0);
+                        ACE_Reactor_Notify *notify = 0,
+                        int handle_signals = 1);
   // Initialize <ACE_Select_Reactor> with the default size.
 
   ACE_Select_Reactor_T (size_t size,
@@ -124,7 +125,8 @@ public:
                         ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
-                        ACE_Reactor_Notify *notify = 0);
+                        ACE_Reactor_Notify *notify = 0,
+                        int handle_signals = 1);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int open (size_t max_number_of_handles = DEFAULT_SIZE,
@@ -536,6 +538,10 @@ protected:
   // if so, update the <handle_set> and return the number ready.  If
   // there aren't any HANDLEs enabled return 0.
 
+  virtual int any_ready_i (ACE_Select_Reactor_Handle_Set &handle_set);
+  // Implement the <any_ready> method, assuming that the Sig_Guard is
+  // beign held
+
   virtual int handle_error (void);
   // Take corrective action when errors occur.
 
@@ -617,6 +623,10 @@ protected:
   sig_atomic_t deactivated_;
   // This flag is used to keep track of whether we are actively handling
   // events or not.
+
+  int handle_signals_;
+  // If 0 then the Reactor will make no attempts to protect itself
+  // against signals or to dispatch them.
 
 private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))

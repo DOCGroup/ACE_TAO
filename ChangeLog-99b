@@ -1,3 +1,16 @@
+Tue Aug 17 11:56:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.h:
+	* ace/Select_Reactor_T.cpp:
+	  Added option in the constructor to disable the signal handling
+	  features in the select reactor. This eliminates a couple of
+	  kernel level locks that are not needed in all applications.
+
+	* ace/Stats.h:
+	* ace/Stats.cpp:
+	  Now we keep track of the iteration where the minimum and maximum 
+	  latencies were achieved.
+
 Tue Aug 17 06:33:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* bin: Added a new shell script called update-ace+tao.sh
