@@ -381,6 +381,22 @@ namespace PortableInterceptor
 // Traits specializations.
 namespace TAO
 {
+  // Hand crafted. Not forward declared but used by PortableServer.
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_IORInterceptor_Export Objref_Traits<PortableInterceptor::IORInfo>
+  {
+    static PortableInterceptor::IORInfo_ptr tao_duplicate (
+        PortableInterceptor::IORInfo_ptr
+      );
+    static void tao_release (
+        PortableInterceptor::IORInfo_ptr
+      );
+    static PortableInterceptor::IORInfo_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        PortableInterceptor::IORInfo_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
 };
 
 // TAO_IDL - Generated from

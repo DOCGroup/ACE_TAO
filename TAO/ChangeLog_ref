@@ -1,3 +1,8 @@
+Wed Sep  3 18:23:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORInterceptor/IORInterceptorC.h: 
+	* tao/PortableInterceptroC.h: 
+          Got the lost changes in the merge from refactor-stage_5 merge.
 Wed Sep  3 18:19:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
