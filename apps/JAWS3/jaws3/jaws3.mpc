@@ -3,8 +3,8 @@
 
 project(JAWS3) : acelib {
     sharedname = JAWS3
-    includes += ../
-    dynamicflags=ACE_HAS_DLL=1 JAWS_HAS_DLL=1
+    dynamicflags = JAWS_BUILD_DLL
+    includes += ..
     Source_Files {
         Asynch_IO.cpp
         Concurrency.cpp
@@ -68,12 +68,11 @@ project(JAWS3) : acelib {
 }
 
 project(JAWS3_server) : aceexe {
-    dynamicflags=ACE_HAS_DLL=1 JAWS_HAS_DLL=1
-    includes += ../
+    includes += ..
     exename = main
     after += JAWS3
     libs  += JAWS3
     Source_Files {
-    main.cpp
+      main.cpp
   }
 }
