@@ -31,9 +31,9 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           const TAO::ObjectKey &obj_key,
                           const TAO_GIOP_Message_Version &version)
   : version_ (version)
-    , are_policies_parsed_ (0)
     , stub_ (0)
     , policy_list_ (0)
+    , are_policies_parsed_ (false)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
     , ref_object_key_ (0)

@@ -354,13 +354,6 @@ namespace CORBA
 
   private:
 
-    /// Flag to indicate collocation.  It is 0 except for collocated
-    /// objects.
-    CORBA::Boolean is_collocated_;
-
-    /// Specify whether this is a local object or not.
-    CORBA::Boolean is_local_;
-
     /// Pointer to the Proxy Broker
     /**
      * This cached pointer instance takes care of routing the call for
@@ -369,8 +362,15 @@ namespace CORBA
      */
     TAO::Object_Proxy_Broker *proxy_broker_;
 
+    /// Flag to indicate collocation.  It is 0 except for collocated
+    /// objects.
+    CORBA::Boolean is_collocated_;
+
+    /// Specify whether this is a local object or not.
+    CORBA::Boolean is_local_;
+
     /// Flag to indicate whether the IOP::IOR has been evaluated fully.
-    Boolean is_evaluated_;
+    CORBA::Boolean is_evaluated_;
 
     /// If the IOR hasnt been evaluated fully, then the contents of
     /// the IOR that we received  should be in here!

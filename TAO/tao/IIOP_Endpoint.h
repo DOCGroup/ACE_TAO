@@ -140,18 +140,18 @@ private:
   /// TCP port number.
   CORBA::UShort port_;
 
-  /// Cached instance of ACE_INET_Addr for use in making
-  /// invocations, etc.
-  mutable ACE_INET_Addr object_addr_;
+  /// Is this endpoint created encodable as part of the IOR?
+  bool is_encodable_;
 
   /// Flag to indicate if the address has been resolved and set.
   mutable bool object_addr_set_;
 
+  /// Cached instance of ACE_INET_Addr for use in making
+  /// invocations, etc.
+  mutable ACE_INET_Addr object_addr_;
+
   /// Preferred path for this endpoint.
   TAO::IIOP_Endpoint_Info preferred_path_;
-
-  /// Is this endpoint created encodable as part of the IOR?
-  bool is_encodable_;
 
   /// IIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.

@@ -264,6 +264,9 @@ private:
   /// Single read optimization.
   int single_read_optimization_;
 
+  /// Preferred network interfaces as a string
+  ACE_CString pref_network_;
+
   /// Default collocation resolver
   /**
    * The vanilla ORB has only one collocation resolver. But if the
@@ -276,9 +279,6 @@ private:
    * loaded if the RTORB is used.
    */
   bool disable_rt_collocation_resolver_;
-
-  /// Preferred network interfaces as a string
-  ACE_CString pref_network_;
 
   bool enforce_preferred_interfaces_;
 };
