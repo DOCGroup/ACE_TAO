@@ -1,3 +1,8 @@
+Fri May 14 16:17:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch.h (ACE_Null_Mutex>): Conditionally compiles ~ACE_Guard()
+          destructor.  Win32 needs this definition.
+
 Fri May 14 16:10:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Queue_T.cpp: replaced raw ACE_Read_Guards
