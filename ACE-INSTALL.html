@@ -747,24 +747,35 @@ supported by the DOC group, Riverace, or OCI. <P>
       suggestions for improving this port, please contact <a
       href="mailto:shuston@riverace.com">Steve Huston</a>. <P>
 
-<li><strong>Mac OS X (10.0.x, not public beta)</strong><p>
+<li><strong>Mac OS X (10.2.x)</strong><p>
 
-        The Mac OS X port of ACE is very much a work in progress.  Some
-        of the examples build and run, some of them don't yet.  Reactors
-        seem to work, while Proactors don't (Mac OS X doesn't use aio_*
-        calls for async i/o, it uses the OS X Event Queue instead, and
-        the ACE port doesn't take this into account yet).  Also, on OS X,
-        you must set the DYLD_LIBRARY_PATH environment variable to
-        $ACE_ROOT/ace i.e. setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace, or else
-        none of the examples will be able to find libACE.dylib.
+        <p>ACE builds and runs on Mac OS X 10.2.x, but the following are
+        needed to build it:</p>
 
-        John Zorko &lt;<A
-href="mailto:j.zorko@att.net">j.zorko@att.net</A>&gt; began this port for
-a work project, and basically only ported enough of ACE to be able to
-        do what we needed to with it on Mac OS X.  If you would like
-        to continue the port, please contact John since he as
-        interested in seeing ACE run, lean, mean and fully supported,
-        on Mac OS X.
+        <p>1. The latest version of the Apple Developer Tools
+        (December 2002)</p> 
+        <p>2. The dlcompat library (obtained either through Fink or
+        SourceForge)</p> 
+
+        <p>When creating $ACE_ROOT/ace/config.h for Mac OS X, you need
+        to add the following if you obtained dlcompat via Fink:</p>
+
+        <p>#define ACE_NEEDS_DL_UNDERSCORE</p>
+
+        <p>You'll also need to do:</p>
+
+        <p>setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace</p>
+        <p>setenv MACOSX_DEPLOYMENT_TARGET 10.2</p>
+
+        <p>Currently, all ACE tests pass except Process_Mutex_Test and
+        MEM_Stream_Test.  Also, Mac OS X doesn't yet support *nix
+        aio_* calls, and ACE does not know anything about Mach.</p>
+
+        <p>The work to port ACE to Mac OS X was done by several people,
+        John Zorko
+        &lt;<Ahref="mailto:j.zorko@att.net">j.zorko@att.net</A>&gt; is
+        only one of  them.</p>
+
 </UL>
 
 
