@@ -1,3 +1,10 @@
+Wed Mar 13 11:57:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration_Import_Export.cpp: Replace ACE_ASSERTs with
+          validity checks that set errno and return -1. ACE_ASSERT is
+          a little too drastic for a simple error, and the ACE_ASSERT
+          check is removed altogether when building with ACE_NDEBUG.
+
 Wed Mar 13 10:36:02 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/config-freebsd-pthread.h: Fix test for POSIX RT signals.
