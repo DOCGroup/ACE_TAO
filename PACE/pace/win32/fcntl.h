@@ -57,7 +57,7 @@ typedef struct flock pace_flock;
 #endif /* PACE_FLOCK */
 
 #if (PACE_HAS_POSIX_FS_UOF)
-  int creat (const char * path, pace_mode_t mode);
+  int pace_win32_creat (const char * path, pace_mode_t mode);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if defined (PACE_HAS_CPLUSPLUS)

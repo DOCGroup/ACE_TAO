@@ -100,7 +100,7 @@ FILE                    linux   lynxos  sunos   win32
 .............................................................
 <pthread.h>
   pthread_atfork()                              x
-  pthread_attr_destroy()                        x
+  pthread_attr_destroy()                        -E
   pthread_attr_getdetachstate()                 x
   pthread_attr_getinheritsched()                x
   pthread_attr_getschedparam()                  x
@@ -108,14 +108,14 @@ FILE                    linux   lynxos  sunos   win32
   pthread_attr_getscope()                       x
   pthread_attr_getstackaddr()                   x
   pthread_attr_getstacksize()                   x
-  pthread_attr_init()                           x
-  pthread_attr_setdetachstate()                 x
-  pthread_attr_setinheritsched()                x
-  pthread_attr_setschedparam()                  x
-  pthread_attr_setschedpolicy()                 x
-  pthread_attr_setscope()                       x
-  pthread_attr_setstackaddr()                   x
-  pthread_attr_setstacksize()                   x
+  pthread_attr_init()                           -E
+  pthread_attr_setdetachstate()                 -E
+  pthread_attr_setinheritsched()                -E
+  pthread_attr_setschedparam()                  -E
+  pthread_attr_setschedpolicy()                 -E
+  pthread_attr_setscope()                       -E
+  pthread_attr_setstackaddr()                   -E
+  pthread_attr_setstacksize()                   -E
   pthread_cancel()                              x
   pthread_cleanup_push()                        x
   pthread_cleanup_pop()                         x
@@ -129,11 +129,11 @@ FILE                    linux   lynxos  sunos   win32
   pthread_condattr_getpshared()                 x
   pthread_condattr_init()                       x
   pthread_condattr_setpshared()                 x
-  pthread_create()                              x
+  pthread_create()                              -E
   pthread_detach()                              x
   pthread_equal()                               x
   pthread_exit()                                x
-  pthread_getschedparam()                       x
+  pthread_getschedparam()                       -E
   pthread_getspecific()                         x
   pthread_join()                                x
   pthread_key_create()                          x
@@ -155,10 +155,10 @@ FILE                    linux   lynxos  sunos   win32
   pthread_mutexattr_init()                      x
   pthread_mutexattr_setpshared()                x
   pthread_once()                                x
-  pthread_self()                                x
+  pthread_self()                                -E
   pthread_setcancelstate()                      x
   pthread_setcanceltype()                       x
-  pthread_setschedparam()                       x
+  pthread_setschedparam()                       -E
   pthread_setspecific()                         x
   pthread_sigmask()                             x
   pthread_testcancel()                          x

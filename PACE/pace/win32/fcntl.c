@@ -22,7 +22,8 @@
 #if (PACE_HAS_POSIX_FS_UOF)
 #include <windows.h>
 #include <wtypes.h>
-int creat (const char * path, pace_mode_t mode)
+int
+pace_win32_creat (const char * path, pace_mode_t mode)
 {
   /* Emulation is still buggy! DO NOT YET USE! */
 
