@@ -69,3 +69,31 @@ ROA_Parameters::thread_flags(u_int f)
 {
   thread_flags_ = f;
 }
+
+ACE_INLINE
+ROA_Factory::ROA_Factory()
+  : concurrency_strategy_(0)
+{
+}
+
+ACE_INLINE
+ROA_Factory::CREATION_STRATEGY*
+ROA_Factory::creation_strategy()
+{
+  return 0;
+}
+
+ACE_INLINE
+ROA_Factory::ACCEPT_STRATEGY*
+ROA_Factory::accept_strategy()
+{
+  return 0;
+}
+
+ACE_INLINE
+ROA_Factory::SCHEDULING_STRATEGY*
+ROA_Factory::scheduling_strategy()
+{
+  return 0;
+}
+
