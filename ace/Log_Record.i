@@ -32,32 +32,32 @@ ACE_Log_Record::decode (void)
   this->length_ = ntohl (this->length_);
 }
 
-ASYS_INLINE long 
+ASYS_INLINE long
 ACE_Log_Record::type (void) const
 {
   ACE_TRACE ("ACE_Log_Record::type");
   return this->type_;
 }
 
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Log_Record::type (long t)
 {
   ACE_TRACE ("ACE_Log_Record::type");
   this->type_ = t;
 }
 
-ASYS_INLINE long 
+ASYS_INLINE long
 ACE_Log_Record::length (void) const
 {
   ACE_TRACE ("ACE_Log_Record::length");
   return this->length_;
 }
 
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Log_Record::length (long l)
 {
   ACE_TRACE ("ACE_Log_Record::length");
-  this->length_ = l;
+  this->length_ = ACE_static_cast (ACE_UINT32, l);
 }
 
 ASYS_INLINE const ACE_Time_Value &
@@ -67,21 +67,21 @@ ACE_Log_Record::time_stamp (void) const
   return this->time_stamp_;
 }
 
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
   this->time_stamp_ = ts;
 }
 
-ASYS_INLINE long 
+ASYS_INLINE long
 ACE_Log_Record::pid (void) const
 {
   ACE_TRACE ("ACE_Log_Record::pid");
   return this->pid_;
 }
 
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Log_Record::pid (long p)
 {
   ACE_TRACE ("ACE_Log_Record::pid");
@@ -94,4 +94,3 @@ ACE_Log_Record::msg_data (void)
   ACE_TRACE ("ACE_Log_Record::msg_data");
   return this->msg_data_;
 }
-
