@@ -816,15 +816,12 @@ ACE_DynScheduler::calculate_utilization_params (void)
         (ordered_dispatch_entries_ [i]->task_entry ().effective_period () > 0))
     {
       utilization_ +=
-		ACE_static_cast(
-		  double, 
-		  ACE_UINT64_DBLCAST_ADAPTER(ordered_dispatch_entries_ [i]->
-              task_entry ().rt_info ()->worst_case_execution_time)) /
-        ACE_static_cast(
-		  double,
-		  ACE_UINT64_DBLCAST_ADAPTER(ordered_dispatch_entries_ [i]->
-              task_entry ().effective_period ()));
-	}
+        ACE_static_cast (double,
+          ACE_UINT64_DBLCAST_ADAPTER (ordered_dispatch_entries_ [i]->
+            task_entry ().rt_info ()->worst_case_execution_time)) /
+        ACE_static_cast (double, ordered_dispatch_entries_ [i]->
+            task_entry ().effective_period ());
+    }
   }
 
   // update parameters for the lowest priority level
@@ -1757,12 +1754,12 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
             file, "%-11s  %9lf  %9lf  %8lu  %8lu  %11lu  %11lu\n",
             current_entry->dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
-			ACE_static_cast (
-			  double, 
-			  ACE_UINT64_DBLCAST_ADAPTER(current_accumulated_execution)) /
-			ACE_static_cast (
-			  double, 
-			  ACE_UINT64_DBLCAST_ADAPTER(current_completion)),
+                        ACE_static_cast (
+                          double,
+                          ACE_UINT64_DBLCAST_ADAPTER(current_accumulated_execution)) /
+                        ACE_static_cast (
+                          double,
+                          ACE_UINT64_DBLCAST_ADAPTER(current_completion)),
             0.0,
             current_entry->arrival (),
             current_entry->deadline (),
