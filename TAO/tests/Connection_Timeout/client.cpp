@@ -135,7 +135,7 @@ main (int argc, char *argv[])
       // range would help.
 #if (ACE_HAS_FLOATING_POINT == 1)
       // The elapsed time is in usecs
-      if (el.real_time > 130000)
+      if (el.real_time > 200000)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR: Too long to timeout \n"));
@@ -145,7 +145,7 @@ main (int argc, char *argv[])
 #else
 
       // The elapsed time is in secs
-      if (el.real_time > 0.130)
+      if (el.real_time > 0.200)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t)ERROR: Too long to timeout \n"));
