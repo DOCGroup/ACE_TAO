@@ -97,9 +97,18 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
   // the octet sequence, and place them into the Any.  We can't just
   // insert the octet sequence into the Any.
 
-  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                          data.get_buffer ()),
-                    data.length (),
+  ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
+  ACE_CDR::mb_align (&mb);
+
+  ACE_OS::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+
+  size_t rd_pos = mb.rd_ptr () - mb.base ();
+  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+
+  TAO_InputCDR cdr (mb.data_block (),
+                    ACE_Message_Block::DONT_DELETE,
+                    rd_pos,
+                    wr_pos,
                     ACE_CDR_BYTE_ORDER,
                     this->major_,
                     this->minor_,
@@ -114,10 +123,10 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
-                           TAO_DEFAULT_MINOR_CODE,
-                           ENOMEM),
-                          CORBA::COMPLETED_NO));
+                                          CORBA_SystemException::_tao_minor_code (
+                                            TAO_DEFAULT_MINOR_CODE,
+                                            ENOMEM),
+                                          CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
       CORBA::Any_var safe_any = any;
@@ -206,6 +215,17 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                    IOP::Codec::FormatMismatch,
                    IOP::Codec::TypeMismatch))
 {
+  // The ACE_CDR::mb_align() call can shift the rd_ptr by up
+  // to ACE_CDR::MAX_ALIGNMENT-1 bytes. Similarly, the offset
+  // adjustment can move the rd_ptr by up to the same amount.
+  // We accommodate this by including
+  // 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional space in
+  // the message block.
+  ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
+  ACE_CDR::mb_align (&mb);
+
+  ACE_OS::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?
   //       @@ I added a check below.  See the comment.  I'm not sure
@@ -220,9 +240,14 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
   //       encapsulation.
 
   CORBA::ULong sequence_length = data.length ();
-  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                          data.get_buffer ()),
-                    sequence_length,
+
+  size_t rd_pos = mb.rd_ptr () - mb.base ();
+  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+
+  TAO_InputCDR cdr (mb.data_block (),
+                    ACE_Message_Block::DONT_DELETE,
+                    rd_pos,
+                    wr_pos,
                     ACE_CDR_BYTE_ORDER,
                     this->major_,
                     this->minor_,
@@ -272,29 +297,19 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
           if (size != sequence_length - 1)
             ACE_THROW_RETURN (IOP::Codec::TypeMismatch (), 0);
 
-          // The ACE_CDR::mb_align() call can shift the rd_ptr by up
-          // to ACE_CDR::MAX_ALIGNMENT-1 bytes. Similarly, the offset
-          // adjustment can move the rd_ptr by up to the same amount.
-          // We accommodate this by including
-          // 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional space in
-          // the message block.
-          ACE_Message_Block mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
-          ACE_CDR::mb_align (&mb);
           ptr_arith_t offset =
             ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
           mb.rd_ptr (offset);
           mb.wr_ptr (offset + size);
 
-          ACE_OS::memcpy (mb.rd_ptr (), begin, size);
-
           CORBA::Any * any = 0;
           ACE_NEW_THROW_EX (any,
                             CORBA::Any,
                             CORBA::NO_MEMORY (
-                              CORBA_SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
+                                              CORBA_SystemException::_tao_minor_code (
+                                                TAO_DEFAULT_MINOR_CODE,
+                                                ENOMEM),
+                                              CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (0);
 
           CORBA::Any_var safe_any = any;
@@ -303,7 +318,6 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
           any->_tao_replace (tc,
                              cdr.byte_order (),
                              &mb);
-
           return safe_any._retn ();
         }
       else
