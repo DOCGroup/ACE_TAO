@@ -1,3 +1,26 @@
+Fri Jan 14 01:48:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process: Consider a process that spawns a number of
+ 	  processes using a same executable name but with different
+ 	  arguments <say svc.conf file..>. Depending on the arguments,
+ 	  each process does different things.  Currently
+ 	  <ACE_Process::spawn> calls <execvp> with argv[0] as the
+ 	  exeutable name. Therefore, if you do a <ps> command now, all
+ 	  these processes will look the same, since they are all launched
+ 	  with the same command.
+
+	  But for <execvp> call, you could actually give a different
+	  executable name and a different argv[0]. This helps us to have
+	  the name for a process to be different from the executable
+	  name. In this case, <ps> command will show the processes with
+	  different argv[0] names. 
+
+	  Therefore, we added a method called <process_name> to
+ 	  ACE_Process_Options to specify the executable name.  If you do
+ 	  not call <process_name> method, argv[0] is taken as the
+ 	  executable name.  Thanks to Alex Arulanthu <alex@sylantro.com>
+	  for these enhancements.
+
 Thu Jan 13 20:11:55 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp (work_pending): This version is similar to
