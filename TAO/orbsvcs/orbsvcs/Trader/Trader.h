@@ -74,15 +74,17 @@ public:
   // -TSdef_follow_policy {always,if_no_local,local_only}, default is if_no_local,
   // -TSmax_follow_policy {always,if_no_local,local_only}, default is always
 
+protected:
+
+  TAO_Trader_Factory (int& argc, char** argv);
+
 private:
 
   enum Conformance { TAO_TRADER_QUERY,
                      TAO_TRADER_SIMPLE,
                      TAO_TRADER_STANDALONE,
                      TAO_TRADER_LINKED };
-  
-  TAO_Trader_Factory (int& argc, char** argv);
-
+ 
   TAO_TRADER* manufacture_trader (void);
   
   void parse_args (int& argc, char** argv);

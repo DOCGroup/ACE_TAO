@@ -509,11 +509,11 @@ YY_MALLOC_DECL
 
 /* Copy whatever the last rule matched to the standard output. */
 
-#ifndef ECHO
+#ifndef TAO_TRADER_ECHO
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO (void) fwrite( yytext, yyleng, 1, yyout )
+#define TAO_TRADER_ECHO (void) fwrite( yytext, yyleng, 1, yyout )
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -848,7 +848,7 @@ YY_RULE_SETUP
 case 31:
 YY_RULE_SETUP
 #line 99 "Trader/constraint.l"
-ECHO;
+TAO_TRADER_ECHO;
 	YY_BREAK
 #line 865 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):

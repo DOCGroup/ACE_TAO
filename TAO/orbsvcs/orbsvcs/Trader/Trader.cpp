@@ -876,8 +876,8 @@ ACE_MT (template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>);
 template class TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#pragma instantiate TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>;
+#pragma instantiate TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>
 #endif /* ACE_MT_SAFE */ 
-#pragma instantiate TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
+#pragma instantiate TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

@@ -326,8 +326,8 @@ TAO_Lex_String_Input::reset(char* input_string)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info> Ordered_Offers; 
+template class ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info> Ordered_Offers; 
+#pragma instantiate ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

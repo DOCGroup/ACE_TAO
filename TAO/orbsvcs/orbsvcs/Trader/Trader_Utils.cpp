@@ -769,9 +769,6 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
   CosTrading::FollowOption trader_max_follow_policy = 
     this->trader_.import_attributes ().max_follow_policy ();
 
-  CosTrading::FollowOption link_limiting_follow_rule =
-    link_info.limiting_follow_rule;
-  
   if (this->policies_[LINK_FOLLOW_RULE] != 0)
     {
       CORBA::Environment env;
@@ -1225,7 +1222,7 @@ TAO_Offer_Filter::limits_applied (void)
       temp[i++] = CORBA::string_dup ((const char*) *policy_name_ptr);
     }
   
-  return new PolicyNameSeq (size, size, temp, CORBA::B_TRUE);
+  return new CosTrading::PolicyNameSeq (size, size, temp, CORBA::B_TRUE);
 }
 
   // *************************************************************
@@ -1326,8 +1323,8 @@ template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Property*, 
 template class ACE_Unbounded_Set<TAO_String_Hash_Key>;
 template class ACE_Unbounded_Queue<CosTrading::Property*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>;
-#pragma instantiate ACE_Unbounded_Set<TAO_String_Hash_Key>;
-#pragma instantiate ACE_Unbounded_Queue<CosTrading::Property*>;
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>
+#pragma instantiate ACE_Unbounded_Set<TAO_String_Hash_Key>
+#pragma instantiate ACE_Unbounded_Queue<CosTrading::Property*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
