@@ -138,20 +138,71 @@ sub append_current {
 }
 
 
+sub adjust_value {
+  my($self)  = shift;
+  my($name)  = shift;
+  my($value) = shift;
+
+  ## Perform any additions, subtractions
+  ## or overrides for the template values.
+  my($addtemp) = $self->{'prjc'}->get_addtemp();
+  foreach my $at (keys %$addtemp) {
+    if ($at eq $name) {
+      my($val) = $$addtemp{$at};
+      if ($$val[0] > 0) {
+        if (UNIVERSAL::isa($value, 'ARRAY')) {
+          $value = [ $$val[1], @$value ];
+        }
+        else {
+          $value = "$$val[1] $value";
+        }
+      }
+      elsif ($$val[0] < 0) {
+        my($parts) = undef;
+        if (UNIVERSAL::isa($value, 'ARRAY')) {
+          my(@copy) = @$value;
+          $parts = \@copy;
+        }
+        else {
+          $parts = $self->create_array($value);
+        }
+
+        $value = "";
+        foreach my $part (@$parts) {
+          if ($part ne $$val[1] && $part ne "") {
+            $value .= "$part ";
+          }                   
+        }
+        $value =~ s/^\s+//;
+        $value =~ s/\s+$//;
+      }
+      else {
+        $value = $$val[1];
+      }
+    }
+  }
+
+  return $value;
+}
+
+
 sub set_current_values {
   my($self) = shift;
   my($name) = shift;
 
   ## If any value within a foreach matches the name
   ## of a hash table within the template input we will
-  ## set the values of that hash tablein the current scope
+  ## set the values of that hash table in the current scope
   my($ti) = $self->{'prjc'}->get_template_input();
   if (defined $ti) {
     my($counter) = $self->{'foreach'}->{'count'};
     my($value) = $ti->get_value($name);
-    if (defined $value && $counter >= 0 &&
-        UNIVERSAL::isa($value, 'HASH')) {
-      $self->{'foreach'}->{'temp_scope'}->[$counter] = $value;
+    if (defined $value && $counter >= 0 && UNIVERSAL::isa($value, 'HASH')) {
+      my(%copy) = ();
+      foreach my $key (keys %$value) {
+        $copy{$key} = $self->adjust_value($key, $$value{$key});
+      }
+      $self->{'foreach'}->{'temp_scope'}->[$counter] = \%copy;
     }
   }
 }
@@ -251,6 +302,9 @@ sub get_value {
     my($ti) = $self->{'prjc'}->get_template_input();
     if (defined $ti) {
       $value = $ti->get_value($name);
+      if (defined $value) {
+        $value = $self->adjust_value($name, $value);
+      }
     }
 
     if (!defined $value) {
@@ -362,6 +416,8 @@ sub process_foreach {
         $$scope{'forlast'}    = 1;
         $$scope{'fornotlast'} = 0;
       }
+      ## We don't use adjust_value here because these names
+      ## are generated from a foreach and should not be adjusted.
       $$scope{$inner} = $value;
 
       ## A tiny hack for VC7

@@ -35,7 +35,7 @@ LIBFILES = \
 
 IDLFILES = \
 <%foreach(idl_files)%>
-	$(IDLDIR)\<%noextension(idl_file)%>.idl<%fornotlast(" \\")%>
+	$(IDLDIR)\<%basenoextension(idl_file)%>.idl<%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 <%if(resource_files)%>
@@ -113,7 +113,7 @@ BASE_BINDIR = <%install%>
 idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 
 <%foreach(idl_files)%>
-$(IDLDIR)\<%noextension(idl_file)%>S.cpp $(IDLDIR)\<%noextension(idl_file)%>C.cpp: $(IDLDIR)\<%noextension(idl_file)%>.idl
+$(IDLDIR)\<%basenoextension(idl_file)%>S.cpp $(IDLDIR)\<%basenoextension(idl_file)%>C.cpp: $(IDLDIR)\<%basenoextension(idl_file)%>.idl
 	$(TAO_IDL) $**
 <%endfor%>
 <%endif%>
