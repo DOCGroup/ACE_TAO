@@ -1,3 +1,9 @@
+Wed Oct 13 10:39:50 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: ensure that ACE_THR_PRI_FIFO_DEF and
+          ACE_THR_PRI_OTHER_DEF are defined on non-threaded platforms,
+          to support application source code compatibility.
+
 Wed Oct 13 10:11:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Malloc_Test.cpp: fixed preprocessor logic so that

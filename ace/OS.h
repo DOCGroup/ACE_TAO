@@ -53,7 +53,7 @@ enum ACE_Recyclable_State
 };
 
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_BASE)
-#define ACE_DEFAULT_PAGEFILE_POOL_BASE (void *) 0 
+#define ACE_DEFAULT_PAGEFILE_POOL_BASE (void *) 0
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_BASE */
 
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_SIZE)
@@ -2701,6 +2701,18 @@ typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef u_int ACE_thread_key_t;
 
+// Ensure that ACE_THR_PRI_FIFO_DEF and ACE_THR_PRI_OTHER_DEF are
+// defined on non-threaded platforms, to support application source
+// code compatibility.  ACE_THR_PRI_FIFO_DEF should be used by
+// applications for default real-time thread priority.
+// ACE_THR_PRI_OTHER_DEF should be used for non-real-time priority.
+#   if !defined(ACE_THR_PRI_FIFO_DEF)
+#     define ACE_THR_PRI_FIFO_DEF 0
+#   endif /* ! ACE_THR_PRI_FIFO_DEF */
+#   if !defined(ACE_THR_PRI_OTHER_DEF)
+#     define ACE_THR_PRI_OTHER_DEF 0
+#   endif /* ! ACE_THR_PRI_OTHER_DEF */
+
 # endif /* ACE_HAS_THREADS */
 
 # if defined (ACE_PSOS)
@@ -5138,7 +5150,7 @@ typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
 #define ACE_SIO_GET_QOS SIO_GET_QOS
 #define ACE_SIO_MULTIPOINT_LOOPBACK SIO_MULTIPOINT_LOOPBACK
 #define ACE_SIO_MULTICAST_SCOPE SIO_MULTICAST_SCOPE
-#define ACE_SIO_SET_QOS	SIO_SET_QOS
+#define ACE_SIO_SET_QOS SIO_SET_QOS
 
 #else
 typedef u_long ACE_SERVICE_TYPE;
@@ -5176,7 +5188,7 @@ struct ACE_Protocol_Info
 #define ACE_SIO_GET_QOS              (0x40000000 | 0x08000000 | 7)
 #define ACE_SIO_MULTIPOINT_LOOPBACK  (0x08000000 | 9)
 #define ACE_SIO_MULTICAST_SCOPE      (0x08000000 | 10)
-#define ACE_SIO_SET_QOS	       	     (0x08000000 | 11)
+#define ACE_SIO_SET_QOS              (0x08000000 | 11)
 
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 
