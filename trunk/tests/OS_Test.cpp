@@ -191,7 +191,7 @@ string_emulation_test (void)
     // Test strtok_r
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok_r\n")));
 
-    char *strtok_r1 = "A string of tokens";
+    char strtok_r1[] = "A string of tokens";
     char *strtok_r2;
 
 
