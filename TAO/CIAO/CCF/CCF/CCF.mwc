@@ -1,0 +1,10 @@
+workspace {
+  static {
+    cmdline += -static_only
+    IDL2/IDL2.mpc
+    IDL3/IDL3.mpc
+    CIDL/IDL3.mpc
+    CodeGenerationKit/CodeGenerationKit.mpc
+    CompilerElements/CompilerElements.mpc
+  }
+}
