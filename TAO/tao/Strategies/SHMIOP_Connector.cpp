@@ -17,6 +17,42 @@
 ACE_RCSID(Strategies, SHMIOP_Connector, "$Id$")
 
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;
+template class TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
+template class ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
+template class ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
+template class ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>;
+
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>;
+template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>
+
+#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>
+#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>
+
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Octet flag)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
@@ -426,39 +462,5 @@ TAO_SHMIOP_Connector::object_key_delimiter (void) const
   return TAO_SHMIOP_Profile::object_key_delimiter_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-template class ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>;
-
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>;
-template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
-#pragma instantiate ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>
-
-#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>
-
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

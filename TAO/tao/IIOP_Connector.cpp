@@ -16,6 +16,56 @@
 
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Node<ACE_INET_Addr>;
+template class ACE_Unbounded_Stack<ACE_INET_Addr>;
+template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
+template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
+template class ACE_Hash<ARHR<ACE_INET_Addr> >;
+template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >;
+
+template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
+template class TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>;
+template class ACE_Strategy_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>;
+
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>;
+template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Connection_Handler*>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<ACE_INET_Addr>
+#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
+#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+#pragma instantiate ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
+#pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
+
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>
+
+#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>
+#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Connection_Handler*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_IIOP_PROFILE),
     lite_flag_ (flag),
@@ -451,7 +501,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   int no_delay = 0;
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
-  
+
   if (tph != 0)
     {
       const char protocol [] = "iiop";
@@ -467,7 +517,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
       if(hook_result == -1)
         return -1;
     }
-  
+
   // Extract and locally store properties of interest.
   this->tcp_properties_.send_buffer_size =
     send_buffer_size;
@@ -491,52 +541,3 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack<ACE_INET_Addr>;
-template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
-template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
-template class ACE_Hash<ARHR<ACE_INET_Addr> >;
-template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >;
-
-template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>;
-
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>;
-template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Connection_Handler*>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
-#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
-#pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>
-
-#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Connection_Handler*>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
