@@ -1,3 +1,23 @@
+Mon Nov 29 17:45:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/IIOP_Endpoint.cpp:
+	* tao/IIOP_Endpoint.h:
+
+	  Added a bool which holds the  details of when the endpoint is 
+	  encodable. For example, endpoints created by RTCORBA for
+	  multiple priorities need to be encoded whereas endpoints created
+	  for preffered netwroks need not be encoded. 
+	
+	* tao/IIOP_Profile.cpp:
+
+	  Check the status of the bool before encoding th eendpoint. 
+	
+	* tao/Strategies/SCIOP_Endpoint.cpp:
+	* tao/Strategies/SCIOP_Endpoint.h:
+	* tao/Strategies/SCIOP_Profile.cpp:
+
+	  Repeat the above changes for SCIOP.
+
 Mon Nov 29 07:19:16 2004  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Discarding/run_test.pl:
