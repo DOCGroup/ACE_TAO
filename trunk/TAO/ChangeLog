@@ -1,3 +1,8 @@
+Sat Aug  3 09:15:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/PSS/PSDL_Node_Visitor.cpp (visit_export_dcl): Fixed
+	  unreachable statement warnings with TRU 64 builds.
+
 Sat Aug  3 09:08:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/AMH/Sink_Server/client.cpp: Fixed warnings from
