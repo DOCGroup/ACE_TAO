@@ -87,11 +87,13 @@ CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
                       CORBA::Environment &_env)
 {
+  CORBA::Boolean success = CORBA::B_TRUE;
+
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::try_lock\n"));
   TAO_TRY
     {
-      return lock_->try_lock (TAO_TRY_ENV);
+      success = lock_->try_lock (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -99,7 +101,7 @@ CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
       TAO_RETHROW_RETURN (CORBA::B_FALSE);
     }
   TAO_ENDTRY;
-  return CORBA::B_TRUE;
+  return success;
 }
 
 // Drops the specified lock. In this simple case we have only one lock
@@ -145,4 +147,3 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
     }
   TAO_ENDTRY;
 }
-
