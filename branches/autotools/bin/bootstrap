@@ -75,12 +75,9 @@ if test -d m4; then
   echo "Running aclocal"
   aclocal -I m4
 
-# Make sure libtool support files are available.
-  echo "Running libtool"
+  # Make sure libtool support files are available.
+  echo "Running libtoolize"
   libtoolize --automake
-
-  echo "Running automake"
-  automake --add-missing
 
   # Generate a `config.h.in' configuration header template from `acconfig.h'.
   echo "Running autoheader"
@@ -89,6 +86,12 @@ if test -d m4; then
   # Generate the `configure' script from the `configure.in'.
   echo "Running autoconf"
   autoconf
+
+  # Invoke `automake' after `autoheader' so that all configuration
+  # headers are generate a priori.
+  echo "Running automake"
+  automake --add-missing
+
 
 #   # Generate the man pages.
 #   # Only generate man pages if bootstrapping a release.
