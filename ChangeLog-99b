@@ -1,3 +1,8 @@
+Wed Jun 16 18:50:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.i:
+	  Fixed typos in single threaded code.
+
 Wed Jun 16 18:14:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added ATTRIBUTES to
