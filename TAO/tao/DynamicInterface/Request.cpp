@@ -57,13 +57,6 @@ CORBA::Request::_decr_refcnt (void)
   return 0;
 }
 
-// The pseudo-object _nil method.
-CORBA::Request_ptr
-CORBA::Request::_nil (void)
-{
-  return (CORBA::Request_ptr)0;
-}
-
 // DII Request class implementation
 
 CORBA::Request::Request (CORBA::Object_ptr obj,

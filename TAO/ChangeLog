@@ -1,3 +1,9 @@
+Thu Apr 24 11:48:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicInterface/Request.cpp:
+
+          Removed duplicate defintion of CORBA::Request::_duplicate.
+
 Thu Apr 24 10:33:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
