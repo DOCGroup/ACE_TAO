@@ -1,3 +1,7 @@
+Tue Mar 25 17:14:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Domain/DomainS.cpp: Fixed compile errors.
+
 Tue Mar 25 16:11:39 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	Merged with main trunk!
