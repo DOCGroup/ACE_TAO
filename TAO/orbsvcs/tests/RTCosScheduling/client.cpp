@@ -15,6 +15,7 @@
 #include <orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h>
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
+#include "tao/Version.h"
 #include "ace/OS_main.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -434,4 +435,3 @@ do_work(const CORBA::Long value)
     ACE::is_prime (prime_number, 2, prime_number / 2);
 
 }
-
