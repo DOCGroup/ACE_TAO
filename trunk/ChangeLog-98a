@@ -1,3 +1,9 @@
+Fri Jan  2 14:51:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Env_Value_Test.cpp (main): Fixed wrong test for negative
+ 	  values with unsigned longs.  Thanks to David Levine and
+ 	  Linux/Alpha for finding this.
+
 Fri Jan 02 13:47:46 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Token_Invariants.cpp:
