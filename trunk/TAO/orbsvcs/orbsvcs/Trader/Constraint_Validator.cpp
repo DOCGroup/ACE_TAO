@@ -233,7 +233,7 @@ visit_div(TAO_Binary_Constraint* boolean_div)
 	  break;
 	case TAO_DOUBLE:
 	  right_isnt_zero =
-	    ((CORBA::Double) (*((TAO_Literal_Constraint*) right)) != 0.0)
+	    ((CORBA::Double) (*((TAO_Literal_Constraint*) right)) != 0.0);
 	  break;
 	}
 
