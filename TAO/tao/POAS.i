@@ -7,6 +7,8 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::ThreadPolicy::~ThreadPolicy (void)
@@ -27,6 +29,9 @@ ACE_INLINE void POA_PortableServer::ThreadPolicy::_get_policy_type_skel (CORBA::
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::ThreadPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::LifespanPolicy::~LifespanPolicy (void)
@@ -87,6 +92,9 @@ ACE_INLINE void POA_PortableServer::IdAssignmentPolicy::_get_policy_type_skel (C
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::IdAssignmentPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
@@ -148,38 +156,16 @@ ACE_INLINE void POA_PortableServer::RequestProcessingPolicy::_get_policy_type_sk
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
 
-// **************************************************
-//
-// TAO spcific POA locking policy (non-standard)
-//
-// **************************************************
-
-// skeleton destructor
-ACE_INLINE
-POA_PortableServer::SynchronizationPolicy::~SynchronizationPolicy (void)
-{
-}
-ACE_INLINE void POA_PortableServer::SynchronizationPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
-{
-  POA_CORBA::Policy_ptr impl = (POA_PortableServer::SynchronizationPolicy_ptr) obj;
-  POA_CORBA::Policy::copy_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
-}
-ACE_INLINE void POA_PortableServer::SynchronizationPolicy::destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
-{
-  POA_CORBA::Policy_ptr impl = (POA_PortableServer::SynchronizationPolicy_ptr) obj;
-  POA_CORBA::Policy::destroy_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
-}
-ACE_INLINE void POA_PortableServer::SynchronizationPolicy::_get_policy_type_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
-{
-  POA_CORBA::Policy_ptr impl = (POA_PortableServer::SynchronizationPolicy_ptr) obj;
-  POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
-}
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::POAManager::~POAManager (void)
 {
 }
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::AdapterActivator::~AdapterActivator (void)
@@ -200,6 +186,9 @@ ACE_INLINE
 POA_PortableServer::ServantLocator::~ServantLocator (void)
 {
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::POA::~POA (void)

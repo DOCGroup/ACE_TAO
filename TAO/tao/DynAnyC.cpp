@@ -23,6 +23,9 @@
 // ======================================================================
 
 #include "tao/DynAnyC.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/Stub.h"
 #include "tao/Servant_Base.h"
 #include "tao/varout.h"
@@ -1527,3 +1530,4 @@ CORBA::TypeCode_ptr _tc_CORBA_DynArray =
 #  pragma instantiate TAO_Object_Field_T<CORBA_DynArray>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */

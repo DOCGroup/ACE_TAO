@@ -14,6 +14,9 @@
 // ===================================================================
 
 #include "tao/DynAny_i.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/DynSequence_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
@@ -969,3 +972,4 @@ TAO_DynSequence_i::get_element_type (CORBA::Environment& env)
   return element_type->content_type (env);
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA */

@@ -229,6 +229,12 @@ TAO_Object_Manager<T>::TAO_Object_Manager(T** buffer, CORBA::Boolean release)
 {
 }
 
+template <class T> ACE_INLINE T *
+TAO_Object_Manager<T>::operator-> (void) const
+{
+  return *this->ptr_;
+}
+
 template <class T> ACE_INLINE
 TAO_Object_Manager<T>::operator const T* () const // cast
 {
@@ -241,7 +247,7 @@ TAO_Object_Manager<T>::operator T* &() // cast
   return *this->ptr_;
 }
 
-template <class T> ACE_INLINE const T *
+template <class T> ACE_INLINE T *
 TAO_Object_Manager<T>::in (void) const
 {
   return *this->ptr_;

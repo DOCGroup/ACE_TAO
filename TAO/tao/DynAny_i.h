@@ -16,6 +16,10 @@
 #ifndef TAO_DYNANY_I_H
 #define TAO_DYNANY_I_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/corbafwd.h"
 #include "tao/POA_CORBA.h"
 
@@ -184,5 +188,7 @@ private:
   TAO_DynAny_i (const TAO_DynAny_i &src);
   TAO_DynAny_i &operator= (const TAO_DynAny_i &src);
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_DYNANY_I_H */
