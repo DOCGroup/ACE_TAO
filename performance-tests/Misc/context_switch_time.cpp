@@ -10,8 +10,8 @@
 //
 // = DESCRIPTION
 //   Program that calculates context switch time between threads.
-//   This test is based on the Task Context Switching measurement
-//   approach described in:
+//   The Suspend-Resume test is based on the Task Context Switching
+//   measurement approach described in:
 //   Darren Cathey<br>
 //   "RTOS Benchmarking -- All Things Considered . . ."<br>
 //   <a href="http://www.realtime-info.be"><em>Real-Time Magazine</em></a>,
@@ -590,6 +590,436 @@ Yield_Test::svc ()
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+// class Mutex_Acquire_Release_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+class Mutex_Acquire_Release_Test
+{
+public:
+  Mutex_Acquire_Release_Test (const ACE_UINT32 iterations);
+  virtual ~Mutex_Acquire_Release_Test ();
+
+  virtual int svc ();
+
+  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
+private:
+  ACE_Thread_Mutex mutex_;
+  // Mutex used for acquire/release time measurement.
+
+  ACE_Thread_Semaphore sem_;
+  // Semaphore used for acquire/release time measurement.
+
+  const ACE_UINT32 iterations_;
+
+  ACE_High_Res_Timer timer_;
+
+  ACE_hrtime_t elapsed_time_;
+
+  // Force proper construction of independent instances.
+  Mutex_Acquire_Release_Test ();
+  Mutex_Acquire_Release_Test (const Mutex_Acquire_Release_Test &);
+  Mutex_Acquire_Release_Test &operator= (const Mutex_Acquire_Release_Test &);
+};
+
+Mutex_Acquire_Release_Test::Mutex_Acquire_Release_Test (
+    const ACE_UINT32 iterations) :
+  mutex_ (),
+  sem_ (),
+  iterations_ (iterations),
+  timer_ ()
+{
+}
+
+Mutex_Acquire_Release_Test::~Mutex_Acquire_Release_Test()
+{
+}
+
+int
+Mutex_Acquire_Release_Test::svc ()
+{
+#if DEBUG > 0
+  ACE_hthread_t thread_id;
+  ACE_Thread_Manager::instance ()->thr_self (thread_id);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Mutex_Acquire_Release_Test::svc (), thread ID is %d\n",
+              thread_id));
+#endif /* DEBUG */
+
+  timer_.start ();
+
+  for (ACE_UINT32 i = 0; i < iterations_; ++i)
+    {
+      // Block on the mutex.
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1);
+
+      // Release the mutex so that the low priority thread can
+      // proceed.  The ACE_GUARD_RETURN macro implicity releases the
+      // mutex.
+    }
+
+  timer_.stop ();
+  timer_.elapsed_time (elapsed_time_); /* nanoseconds */
+
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "Mutex_Acquire_Release_Test::svc, finishing\n"));
+#endif /* DEBUG */
+
+  return 0;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class High_Priority_Synchronized_Task
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+class High_Priority_Synchronized_Task : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  High_Priority_Synchronized_Task (ACE_Thread_Semaphore &sem,
+                                   ACE_Thread_Mutex &mutex,
+                                   ACE_High_Res_Timer &timer);
+  virtual ~High_Priority_Synchronized_Task ();
+
+  virtual int svc ();
+
+  void ready () { initialized_.acquire (); }
+  // Called by other task:  it returns when this task is ready to
+  // continue
+
+  void done ();
+
+  ACE_UINT32 average_context_switch_time () const;
+
+  ACE_hthread_t thread_id () const { return thread_id_; }
+  ACE_UINT32 iterations () const { return iterations_; }
+private:
+  ACE_hthread_t thread_id_;
+  ACE_Semaphore initialized_;  // Block until thread_id_ is assigned.
+  int terminate_;
+  ACE_UINT32 iterations_;
+
+  ACE_Thread_Semaphore &sem_;
+  // Semaphore used to resume the task.
+
+  ACE_Thread_Mutex &mutex_;
+  // Mutex used to block the task.
+
+  ACE_High_Res_Timer &timer_;
+  // Clock shared between low and high priority tasks.
+
+  ACE_hrtime_t total_time_;
+  // Running total context switch time, nsec.
+
+  // Force proper construction of independent instances.
+  High_Priority_Synchronized_Task ();
+  High_Priority_Synchronized_Task (const High_Priority_Synchronized_Task &);
+  High_Priority_Synchronized_Task &
+    operator= (const High_Priority_Synchronized_Task &);
+};
+
+High_Priority_Synchronized_Task::High_Priority_Synchronized_Task (
+    ACE_Thread_Semaphore &sem,
+    ACE_Thread_Mutex &mutex,
+    ACE_High_Res_Timer &timer) :
+  ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
+  initialized_ (0),  // Initialize to locked, then unlock when ready.
+  terminate_ (0),
+  iterations_ (0),
+  sem_ (sem),
+  mutex_ (mutex),
+  timer_ (timer),
+  total_time_ (0)
+{
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor\n"));
+#endif /* DEBUG */
+
+  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, HIGH_PRIORITY);
+
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor, activated\n"));
+#endif /* DEBUG */
+}
+
+High_Priority_Synchronized_Task::~High_Priority_Synchronized_Task()
+{
+}
+
+int
+High_Priority_Synchronized_Task::svc ()
+{
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task::svc (), entering"));
+#endif /* DEBUG */
+
+  ACE_Thread_Manager::instance ()->thr_self (thread_id_);
+
+  ACE_UINT32 mutex_acquire_release_time = 0;
+  {
+    Mutex_Acquire_Release_Test mutex_acquire_release_test (num_iterations);
+    mutex_acquire_release_test.svc ();
+    mutex_acquire_release_time =
+      ACE_static_cast (ACE_UINT32,
+                       mutex_acquire_release_test.elapsed_time () /
+                       num_iterations);
+#if DEBUG > 0
+    ACE_DEBUG ((LM_DEBUG, "mutex_acquire_release: %u nsec\n",
+                mutex_acquire_release_time));
+#endif /* DEBUG */
+  }
+
+  initialized_.release ();
+
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
+#endif /* DEBUG */
+
+  for (ACE_UINT32 i = 0; ! terminate_; ++i)
+    {
+#if DEBUG > 0
+      ACE_DEBUG ((LM_DEBUG,
+                  "High_Priority_Synchronized_Task::svc, wait on sem ("
+                  "%u)\n", thread_id_));
+#endif /* DEBUG */
+
+
+      if (sem_.acquire () != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.acquire"), -1);
+        }
+
+      {
+        // Block on the mutex.
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, mutex_, -1);
+
+        timer_.stop ();
+
+        ++iterations_;
+
+        ACE_hrtime_t nsec;
+        timer_.elapsed_time (nsec);
+        // Convert the elapsed time from 64 to 32 bits.
+        const ACE_UINT32 delta_t =
+          ACE_static_cast (ACE_UINT32,
+                           nsec / ACE_static_cast (ACE_UINT32, 1u));
+
+        const ACE_UINT32 context_switch_time =
+          delta_t - mutex_acquire_release_time;
+
+        total_time_ += context_switch_time;
+
+        // Release the mutex so that the low priority thread can
+        // proceed.  The ACE_GUARD_RETURN macro implicity releases the
+        // mutex.
+      }
+
+#if DEBUG > 0
+      ACE_DEBUG ((LM_DEBUG,
+                  "High_Priority_Synchronized_Task::svc, resumed (%u)\n",
+                  thread_id_));
+#endif /* DEBUG */
+    }
+
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task::svc, finishing\n"));
+#endif /* DEBUG */
+
+  return 0;
+}
+
+inline
+void
+High_Priority_Synchronized_Task::done ()
+{
+  terminate_ = 1;
+}
+
+ACE_UINT32
+High_Priority_Synchronized_Task:: average_context_switch_time () const
+{
+  return iterations_ > 0  ?  ACE_static_cast (ACE_UINT32,
+                                              total_time_ / iterations_)
+                          : 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Synchronized_Suspend_Resume_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+class Synchronized_Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  Synchronized_Suspend_Resume_Test (const ACE_UINT32 iterations);
+  virtual ~Synchronized_Suspend_Resume_Test ();
+
+  virtual int svc ();
+
+  ACE_UINT32 average_context_switch_time ();
+
+  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
+private:
+  const ACE_UINT32 iterations_;
+
+  ACE_Thread_Semaphore sem_;
+  // Used by the low priority thread to resume the high priority thread.
+
+  ACE_Thread_Mutex mutex_;
+  // Used by the low priority thread to block the high priority thread.
+
+  ACE_High_Res_Timer timer_;
+  // Clock shared between low and high priority tasks.
+
+  High_Priority_Synchronized_Task high_;
+  // The high priority task.
+
+  ACE_hrtime_t elapsed_time_;
+
+  ACE_UINT32 mutex_acquire_release_time_;
+
+  // Force proper construction of independent instances.
+  Synchronized_Suspend_Resume_Test ();
+  Synchronized_Suspend_Resume_Test (const Synchronized_Suspend_Resume_Test &);
+  Synchronized_Suspend_Resume_Test &
+    operator= (const Synchronized_Suspend_Resume_Test &);
+};
+
+Synchronized_Suspend_Resume_Test::Synchronized_Suspend_Resume_Test (
+  const ACE_UINT32 iterations)
+:
+  ACE_Task<ACE_MT_SYNCH> (),
+  iterations_ (iterations),
+  sem_ (0),
+  mutex_ (),
+  timer_ (),
+  high_ (sem_, mutex_, timer_),
+  mutex_acquire_release_time_ (0)
+{
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test ctor\n"));
+#endif /* DEBUG */
+
+  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, LOW_PRIORITY);
+}
+
+Synchronized_Suspend_Resume_Test::~Synchronized_Suspend_Resume_Test()
+{
+}
+
+int
+Synchronized_Suspend_Resume_Test::svc ()
+{
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test::svc (), entering"));
+
+  ACE_hthread_t thread_id;
+  ACE_Thread_Manager::instance ()->thr_self (thread_id);
+
+  ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id));
+#endif /* DEBUG */
+
+  {
+    Mutex_Acquire_Release_Test mutex_acquire_release_test (num_iterations);
+    mutex_acquire_release_test.svc ();
+    mutex_acquire_release_time_ =
+      ACE_static_cast (ACE_UINT32,
+                       mutex_acquire_release_test.elapsed_time () /
+                       num_iterations);
+#if DEBUG > 0
+    ACE_DEBUG ((LM_DEBUG, "mutex_acquire_release: %u nsec\n",
+                mutex_acquire_release_time_));
+#endif /* DEBUG */
+  }
+
+  high_.ready ();
+
+#if DEBUG > 0
+  int priority, high_priority;
+  ACE_OS::thr_getprio (thread_id, priority);
+  ACE_OS::thr_getprio (high_.thread_id (), high_priority);
+  ACE_DEBUG ((LM_DEBUG,
+              "Synchronized_Suspend_Resume_Test::svc (), priority is %d, "
+              ", high thread priority is %d\n",
+              priority, high_priority));
+#endif /* DEBUG */
+
+  // For information:  the cost of the just the loop itself below,
+  // without the suspend and resume calls, on a 166 MHz Ultrasparc
+  // is about 12.3 nanoseconds per iteration.
+
+  ACE_UINT32 i;
+
+  for (i = 0; i < iterations_; ++i)
+    {
+#if DEBUG > 0
+      if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Synchronized_Suspend_Resume_Test::svc (), iteration "
+                      "%d, continue high-priority thread %u\n",
+                      i, high_.thread_id ()));
+        }
+#endif /* DEBUG */
+
+      {
+        // Acquire the mutex so that the high priority thread will
+        // block after we signal it via the condition variable.
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1);
+
+        // Release the semaphore so that the high priority thread can
+        // proceed.
+        if (sem_.release () != 0)
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.release"), -1);
+
+        timer_.start ();
+
+        // Release the mutex so that the high priority thread can
+        // proceed.  The ACE_GUARD_RETURN macro implicity releases
+        // the mutex.
+      }
+    }
+
+  high_.done ();
+
+  // The high priority thread will be block on the semaphore, so
+  // release it.
+  if (sem_.release () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.acquire"), -1);
+
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG,
+              "Synchronized_Suspend_Resume_Test::svc: told high priority "
+              "task to terminate\n"));
+#endif /* DEBUG */
+
+  // Resume the thread until thr_continue fails, indicating that it has
+  // finished.
+  for (i = 0; i < 10000  &&  ! ACE_OS::thr_continue (high_.thread_id ());
+       ++i) /* null */;
+
+#if DEBUG > 0
+  ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test::svc, finishing\n"));
+#endif /* DEBUG */
+
+  return 0;
+}
+
+ACE_UINT32
+Synchronized_Suspend_Resume_Test::average_context_switch_time ()
+{
+  return high_.average_context_switch_time ();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // function get_options
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -662,11 +1092,13 @@ main (int argc, char *argv [])
 {
   ACE_LOG_MSG->open (argv[0] > 0  ?  argv[0]  :  "context_switch_time");
 
-#if defined (ACE_HAS_PENTIUM)
-  // Just to verify that ACE_High_Res_Timer::calibrate () correctly
-  // determines the clock speed.
-  ACE_DEBUG ((LM_DEBUG, "calibrate: %u\n", ACE_High_Res_Timer::calibrate ()));
-#endif /* ACE_HAS_PENTIUM */
+#if defined (ACE_HAS_PENTIUM)  &&  \
+    !defined (ACE_HAS_HI_RES_TIMER)  &&  !defined (ACE_WIN32)
+  // Just to verify that ACE_High_Res_Timer::global_scale_factor ()
+  // correctly determines the clock speed.
+  ACE_DEBUG ((LM_DEBUG, "clock speed: %u MHz\n",
+              ACE_High_Res_Timer::global_scale_factor ()));
+#endif /* ACE_HAS_PENTIUM && ! ACE_HAS_HI_RES_TIMER && ! ACE_WIN32 */
 
   // Disable LM_DEBUG.
   ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
@@ -711,6 +1143,7 @@ main (int argc, char *argv [])
 
   ACE_Stats context_switch_test_stats;
   ACE_Stats yield_test_stats;
+  ACE_Stats synchronized_suspend_resume_test_stats;
 
   while (forever  ||  count-- > 0)
     {
@@ -776,6 +1209,21 @@ main (int argc, char *argv [])
                     (yield_test.elapsed_time () % (num_iterations * 2u)) *
                       1000u / num_iterations / 2u));
 #endif /* ! VXWORKS */
+
+      Synchronized_Suspend_Resume_Test
+        synchronized_suspend_resume_test (num_iterations);
+      // Wait for all tasks to exit.
+      ACE_Thread_Manager::instance ()->wait ();
+
+      synchronized_suspend_resume_test_stats.sample (
+        synchronized_suspend_resume_test.average_context_switch_time ());
+
+      ACE_DEBUG ((LM_INFO, "context switch time from synch susp/resume test "
+                           "is %u.%03u microseconds\n",
+                  synchronized_suspend_resume_test.
+                    average_context_switch_time () / 1000u,
+                  synchronized_suspend_resume_test.
+                    average_context_switch_time () / 1000u));
     }
 
   ACE_OS::printf ("context_switch_test: ");
@@ -785,6 +1233,10 @@ main (int argc, char *argv [])
   ACE_OS::printf ("\nyield_test: ");
   yield_test_stats.print_summary (3, num_iterations * 2u);
 #endif /* ! VXWORKS */
+
+  ACE_OS::printf ("\nsynchronized suspend-resume test: ");
+  synchronized_suspend_resume_test_stats.print_summary (3,
+                                                        1000u /* nsec/usec */);
 
   return 0;
 }
