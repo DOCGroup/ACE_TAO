@@ -61,9 +61,16 @@ private:
                                   RtecEventChannelAdmin::ConsumerQOS& qos,
                                   CORBA::ULong& pos,
                                   RtecScheduler::Scheduler_ptr scheduler,
-                                  const char* base_name,
+                                  RtecScheduler::handle_t parent_info,
                                   CORBA::Environment& env) const;
   // Recursively build the filter tree.
+
+  void recursive_name (RtecEventChannelAdmin::ConsumerQOS& qos,
+                       CORBA::ULong& pos,
+                       RtecScheduler::Scheduler_ptr scheduler,
+                       ACE_CString &name,
+                       CORBA::Environment& env) const;
+  // Build the name recursively...
 
   CORBA::ULong count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
                                CORBA::ULong pos) const;

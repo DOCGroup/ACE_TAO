@@ -5,6 +5,7 @@
 #include "EC_Filter_Builder.h"
 #include "EC_QOS_Info.h"
 #include "EC_Event_Channel.h"
+#include "EC_Scheduling_Strategy.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ProxySupplier.i"
@@ -33,9 +34,15 @@ TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
 }
 
 void
-TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer*,
-                                     CORBA::Environment &)
+TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer* consumer,
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  TAO_EC_Scheduling_Strategy *s = 
+    this->event_channel_->scheduling_strategy ();
+
+  s->add_proxy_supplier_dependencies (this,
+                                      consumer,
+                                      ACE_TRY_ENV);
 }
 
 void

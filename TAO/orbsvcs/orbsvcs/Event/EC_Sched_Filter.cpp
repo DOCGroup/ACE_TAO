@@ -11,16 +11,20 @@ ACE_RCSID(Event, EC_Sched_Filter, "$Id$")
 
 TAO_EC_Sched_Filter::
     TAO_EC_Sched_Filter (const char* name,
+                         RtecScheduler::handle_t rt_info,
                          RtecScheduler::Scheduler_ptr scheduler,
                          TAO_EC_Filter* body,
                          RtecScheduler::handle_t body_info,
+                         RtecScheduler::handle_t parent_info,
                          RtecScheduler::Info_Type_t info_type)
 
-  :  rt_info_ (-1),
+  :  rt_info_ (rt_info),
+     rt_info_computed_ (0),
      name_ (name),
      scheduler_ (RtecScheduler::Scheduler::_duplicate (scheduler)),
      body_ (body),
      body_info_ (body_info),
+     parent_info_ (parent_info),
      info_type_ (info_type)
 {
   this->adopt_child (this->body_);
@@ -157,10 +161,19 @@ TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
   ACE_CHECK_RETURN (0);
 
   if (matches != 0)
-    this->scheduler_->add_dependency (this->rt_info_, qos_info.rt_info, 1,
-                                      RtecScheduler::TWO_WAY_CALL,
-                                      ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+    {
+      this->scheduler_->add_dependency (this->rt_info_, qos_info.rt_info, 1,
+                                        RtecScheduler::TWO_WAY_CALL,
+                                        ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      RtecScheduler::RT_Info_var info =
+        this->scheduler_->get (qos_info.rt_info, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+                  this->name_.c_str (),
+                  info->entry_point.in ()));
+    }
 
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
@@ -184,18 +197,12 @@ TAO_EC_Sched_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info,
 void
 TAO_EC_Sched_Filter::init_rt_info (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->rt_info_ != -1)
+  if (this->rt_info_computed_)
     return;
-
-  // Create an entry in the Scheduling service...
-  RtecScheduler::handle_t rt_info =
-    this->scheduler_->create (this->name_.c_str (),
-                              ACE_TRY_ENV);
-  ACE_CHECK;
 
   // Provide dummy values the scheduler will compute them based on the
   // dependencies and the fact that this is a DISJUNCTION.
-  this->scheduler_->set (rt_info,
+  this->scheduler_->set (this->rt_info_,
                          RtecScheduler::VERY_LOW_CRITICALITY,
                          0, // worst_cast_execution_time
                          0, // typical_cast_execution_time
@@ -208,6 +215,7 @@ TAO_EC_Sched_Filter::init_rt_info (CORBA::Environment &ACE_TRY_ENV)
                          ACE_TRY_ENV);
   ACE_CHECK;
 
+#if 0
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
@@ -217,15 +225,56 @@ TAO_EC_Sched_Filter::init_rt_info (CORBA::Environment &ACE_TRY_ENV)
       filter->get_qos_info (child, ACE_TRY_ENV);
       ACE_CHECK;
 
-      this->scheduler_->add_dependency (rt_info, child.rt_info, 1,
+      this->scheduler_->add_dependency (this->rt_info_,
+                                        child.rt_info, 1,
                                         RtecScheduler::TWO_WAY_CALL,
                                         ACE_TRY_ENV);
       ACE_CHECK;
+
+      RtecScheduler::RT_Info_var info =
+        this->scheduler_->get (child.rt_info, ACE_TRY_ENV);
+      ACE_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+                  info->entry_point.in (),
+                  this->name_.c_str ()));
+
     }
-  this->scheduler_->add_dependency (this->body_info_, rt_info, 1,
+#endif /* 0 */
+
+#if 1
+  if (this->body_info_ != this->rt_info_)
+    {
+      this->scheduler_->add_dependency (this->rt_info_,
+                                        this->body_info_,
+                                        1,
+                                        RtecScheduler::TWO_WAY_CALL,
+                                        ACE_TRY_ENV);
+      ACE_CHECK;
+
+      RtecScheduler::RT_Info_var info =
+        this->scheduler_->get (this->body_info_, ACE_TRY_ENV);
+      ACE_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+                  info->entry_point.in (),
+                  this->name_.c_str ()));
+    }
+#endif /* 0 */
+
+#if 1
+  this->scheduler_->add_dependency (this->parent_info_,
+                                    this->rt_info_,
+                                    1,
                                     RtecScheduler::TWO_WAY_CALL,
                                     ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->rt_info_ = rt_info;
+  RtecScheduler::RT_Info_var info =
+    this->scheduler_->get (this->parent_info_, ACE_TRY_ENV);
+  ACE_CHECK;
+  ACE_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+              this->name_.c_str (),
+              info->entry_point.in ()));
+#endif /* 0 */
+
+  this->rt_info_computed_ = 1;
 }

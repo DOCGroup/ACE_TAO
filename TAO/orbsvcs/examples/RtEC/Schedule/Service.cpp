@@ -6,6 +6,8 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 #include "Consumer.h"
 #include "Supplier.h"
 
@@ -25,6 +27,8 @@ typedef TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>
 int
 main (int argc, char* argv[])
 {
+  TAO_EC_Default_Factory::init_svcs ();
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -54,6 +58,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
+#if 0
       // Obtain a reference to the naming service...
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
@@ -62,6 +67,7 @@ main (int argc, char* argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
+#endif /* 0 */
 
       // ****************************************************************
 
@@ -76,10 +82,12 @@ main (int argc, char* argv[])
       else
         {
           ACE_NEW_RETURN (sched_impl,
-                          ACE_Runtime_Scheduler (configs_size,
-                                                 configs,
-                                                 infos_size,
-                                                 infos),
+                          RECONFIG_SCHED_TYPE (configs_size,
+                                               configs,
+                                               infos_size,
+                                               infos,
+                                               0, 0,
+                                               0),
                           1);
         }
 
@@ -87,6 +95,7 @@ main (int argc, char* argv[])
         sched_impl->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+#if 0
       // Bind the scheduler with the naming service so clients
       // (consumers and suppliers) can resolve it, some (old)
       // implementations of the EC will try to do the same thing
@@ -98,9 +107,11 @@ main (int argc, char* argv[])
       naming_context->rebind (schedule_name, scheduler.in (),
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
+#endif /* 0 */
 
       // ****************************************************************
 
+#if 0
       // Create an event channel implementation...
       TAO_Default_Module_Factory module_factory;
       ACE_EventChannel event_channel_impl (scheduler.in (),
@@ -111,6 +122,22 @@ main (int argc, char* argv[])
       RtecEventChannelAdmin::EventChannel_var event_channel =
         event_channel_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+#else
+
+      TAO_EC_Event_Channel_Attributes attributes (poa.in (),
+                                                  poa.in ());
+      attributes.scheduler = scheduler.in (); // no need to dup
+
+      TAO_EC_Event_Channel ec_impl (attributes);
+      ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
+      ec_impl.activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
+
+      RtecEventChannelAdmin::EventChannel_var event_channel =
+        ec_impl._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+#endif /* 0 */
 
       // ****************************************************************
 
@@ -180,10 +207,12 @@ main (int argc, char* argv[])
         consumer_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      ACE_DEBUG ((LM_DEBUG, "connecting consumer\n"));
       supplier_proxy->connect_push_consumer (consumer.in (),
                                              consumer_qos.get_ConsumerQOS (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "consumer connected\n"));
 
       // ****************************************************************
 
@@ -256,10 +285,12 @@ main (int argc, char* argv[])
         supplier_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      ACE_DEBUG ((LM_DEBUG, "connecting supplier\n"));
       consumer_proxy->connect_push_supplier (supplier.in (),
                                              supplier_qos.get_SupplierQOS (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "supplier connected\n"));
 
       // ****************************************************************
 
@@ -273,6 +304,7 @@ main (int argc, char* argv[])
 
       if (config_run)
         {
+          ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
           RtecScheduler::RT_Info_Set_var infos;
           RtecScheduler::Config_Info_Set_var configs;
           RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
@@ -304,6 +336,8 @@ main (int argc, char* argv[])
         }
 
       // ****************************************************************
+
+      ACE_DEBUG ((LM_DEBUG, "Pushing events\n"));
 
       // Generate a few events....
 

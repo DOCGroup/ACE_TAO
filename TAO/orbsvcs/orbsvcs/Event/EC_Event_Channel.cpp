@@ -42,6 +42,9 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
         }
     }
 
+  this->scheduler_ =
+    RtecScheduler::Scheduler::_duplicate (attr.scheduler);
+
   this->dispatching_ =
     this->factory_->create_dispatching (this);
   this->filter_builder_ =
@@ -57,15 +60,17 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
   this->observer_strategy_ =
     this->factory_->create_observer_strategy (this);
 
-  this->scheduler_ =
-    RtecScheduler::Scheduler::_duplicate (attr.scheduler);
-
   this->scheduling_strategy_ =
     this->factory_->create_scheduling_strategy (this);
 }
 
 TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
 {
+  if (this->dispatching_ != 0)
+    this->dispatching_->shutdown ();
+  if (this->timeout_generator_ != 0)
+    this->timeout_generator_->shutdown ();
+
   this->factory_->destroy_dispatching (this->dispatching_);
   this->dispatching_ = 0;
   this->factory_->destroy_filter_builder (this->filter_builder_);
