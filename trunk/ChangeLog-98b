@@ -1,3 +1,12 @@
+Mon Jul 20 19:35:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix-4.1.x.h: Added ACE_LACKS_RLIMIT.  Thanks to Zheng
+	  Han <zhan@glenvan.glenayre.com> for finding this problem.
+
+	* ace/ACE_Library.{mdp mak}: Set up ".." as an include file directory
+	  so that $ACE_ROOT doesn't have to be added to MSVC's global options.
+	  Allows working on more than one ACE version.
+
 Mon Jul 20 11:12:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.{h,cpp}: added ACE_TSS_BASE_LOCK, to
