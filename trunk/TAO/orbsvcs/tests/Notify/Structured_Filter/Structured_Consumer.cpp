@@ -148,19 +148,6 @@ int main (int argc, char * argv[])
             consumer_admin->add_filter (filter.in ());
           }
 
-        CosNotification::EventTypeSeq added (1);
-        CosNotification::EventTypeSeq removed (0);
-
-        added.length (1);
-
-        removed.length (0);
-
-        added[0].domain_name = CORBA::string_dup ("*");
-        added[0].type_name = CORBA::string_dup ("*");
-
-        consumer_admin->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
         // End Filter Section
 
         // start server

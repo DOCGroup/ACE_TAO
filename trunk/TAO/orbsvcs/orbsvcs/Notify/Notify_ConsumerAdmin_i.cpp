@@ -210,13 +210,21 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
   // up subscriptions, we must remove the special event type otherwise we
   // will get the same event twice!
   // check with the resource manager if this option is enabled.
-  //if (this->resource_manager_->default_subscription_enabled () == 1)
-  /*    {
+  /*if (this->resource_manager_->default_subscription_enabled () == 1)
+  {
       TAO_Notify_EventType& special_type =
         TAO_Notify_EventType::special_event_type ();
 
-      this->subscription_list_.insert (special_type);
-    }
+      CosNotification::EventTypeSeq added (1), removed (0);
+
+      added.length (1);
+      removed.length (0);
+
+      added[0] = special_type.get_native ();
+      
+      this->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+  }
   */
 }
 
@@ -299,18 +307,55 @@ TAO_Notify_ConsumerAdmin_i::subscription_change (const CosNotification::EventTyp
                    CosNotifyComm::InvalidEventType
                    ))
 {
-  this->event_manager_->subscribe_for_events (this, //*this->event_listener_list_,
-                                              added, removed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+
+  TAO_Notify_EventType_List seq_added, seq_removed;
+  
+  seq_added.insert_seq (added);
+  seq_removed.insert_seq (removed);
+  
   {
     ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                         CORBA::INTERNAL ());
     ACE_CHECK;
 
-    // simply update our subscription list.
-    this->subscription_list_.insert_seq (added);
-    this->subscription_list_.remove_seq (removed);
+    TAO_Notify_EventType_List::preprocess (this->subscription_list_, seq_added, seq_removed);
+    
   }
+
+  CosNotification::EventTypeSeq p_added, p_removed;
+
+  seq_added.populate (p_added);
+  seq_removed.populate (p_removed);
+
+  this->event_manager_->subscribe_for_events (this, //*this->event_listener_list_,
+                                              p_added, p_removed ACE_ENV_ARG_PARAMETER);
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,"ConsumerAdmin %d: added following types: ",my_id_ ));
+
+      for (CORBA::ULong i = 0; i < p_added.length (); ++i)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_added[i].domain_name.in(), p_added[i].type_name.in()));
+	}
+
+      ACE_DEBUG ((LM_DEBUG,"\n ConsumerAdmin %d: removed following types: ",my_id_ ));
+
+      for (CORBA::ULong i = 0; i < p_removed.length (); ++i)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "(%s, %s)\t", p_removed[i].domain_name.in(), p_removed[i].type_name.in()));
+	}
+
+      CosNotification::EventTypeSeq  current;
+      this->subscription_list_.populate (current);
+
+      ACE_DEBUG ((LM_DEBUG,"\n ConsumerAdmin %d:current subscriptions: ",my_id_ ));
+      
+      for (CORBA::ULong i = 0; i < current.length (); ++i)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "(%s, %s)\n", current[i].domain_name.in(), current[i].type_name.in()));
+	}
+    }
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
