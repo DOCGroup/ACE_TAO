@@ -1,15 +1,23 @@
+Tue Mar  9 18:03:42 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h
+          Removed ACE_LACKS_INET_ATON.
+
+        * ace/os_include/arpa/os_inet.h
+          Added missing prototype inet_aton for LynxOS.
+
 Tue Mar  9 09:22:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/POSIX_Proactor.cpp:
+        * ace/POSIX_Proactor.cpp:
 
-	  Fixed a unused variable warning.
+          Fixed a unused variable warning.
 
 Tue Mar  9 14:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Reactor/WFMO_Reactor/run_test.pl:
-	  Improved this test script so that it outputs an error when the
-	  executable cannot be found, instead of just trying to spawn a non
-	  existent executable.
+        * examples/Reactor/WFMO_Reactor/run_test.pl:
+          Improved this test script so that it outputs an error when the
+          executable cannot be found, instead of just trying to spawn a non
+          existent executable.
 
 Tue Mar  9 08:01:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
