@@ -42,7 +42,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   logging_peer_.get_remote_addr (peer_addr);
   mblk = new ACE_Message_Block (MAXHOSTNAMELEN + 1);
   peer_addr.get_host_name (mblk->wr_ptr (), MAXHOSTNAMELEN);
-  mblk->wr_ptr (strlen (mblk->wr_ptr ()) + 1); // Advance pointer.
+  mblk->wr_ptr (strlen (mblk->wr_ptr ()) + 1); // Go past name
 
   // Create a CDR stream to parse the 8-byte header.
   ACE_InputCDR cdr (8);
