@@ -1,3 +1,9 @@
+Sun Nov 28 14:20:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/tutorials/Quoter: Changed the backgrounds for the tutorial
+	  pages so they are white.  Also, changed the use of <h1> to <h3>,
+ 	  which is easier to read.
+
 Sun Nov 28 11:34:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * docs/tutorials/Quoter/index.html:
