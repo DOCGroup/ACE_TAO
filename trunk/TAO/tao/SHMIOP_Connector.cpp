@@ -73,7 +73,6 @@ TAO_SHMIOP_Connector::close (void)
 {
   delete this->base_connector_.creation_strategy ();
   return this->base_connector_.close ();
-  return 0;
 }
 
 int
