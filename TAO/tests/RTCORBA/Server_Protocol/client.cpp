@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 
 #include "tao/Strategies/advanced_resource.h"
-
+#include "tao/RTCORBA/RTCORBA.h"
 
 const char *ior = "file://test.ior";
 
