@@ -37,23 +37,23 @@ run_test (SVC_HANDLER &svc_handler,
     {
       ACE_Message_Block *mb;
       ACE_NEW (mb,
-               ACE_Message_Block (sizeof ("hello ")));
+               ACE_Message_Block (sizeof (ACE_LIB_TEXT("hello "))));
 
       ACE_Message_Block *cb1;
       ACE_NEW (cb1,
-               ACE_Message_Block (sizeof ("there\n")));
+               ACE_Message_Block (sizeof (ACE_LIB_TEXT("there\n"))));
 
       ACE_Message_Block *cb2;
       ACE_NEW (cb2,
-               ACE_Message_Block (sizeof ("there\n")));
+               ACE_Message_Block (sizeof (ACE_LIB_TEXT("there\n"))));
 
       mb->copy ("hello ",
-                ACE_OS::strlen ("hello "));
+                ACE_OS::strlen (ACE_LIB_TEXT("hello ")));
       cb1->copy ("there ",
-                 ACE_OS::strlen ("there "));
+                 ACE_OS::strlen (ACE_LIB_TEXT("there ")));
       mb->cont (cb1);
       cb2->copy ("doug\n",
-                ACE_OS::strlen ("doug\n"));
+                ACE_OS::strlen (ACE_LIB_TEXT("doug\n")));
       cb1->cont (cb2);
 
       // Note that this is a buffered call!
@@ -129,22 +129,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_FILE_Info info;
     file_io.get_info (info);
-    ACE_DEBUG ((LM_DEBUG, "file size = %d\n", info.size_));
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("file size = %d\n"), info.size_));
 
     for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_Log_Record::MAXLOGMSGLEN)) > 0; )
       {
         buf[n_bytes] = '\0';
-        ACE_DEBUG ((LM_DEBUG, "%s", buf));
+        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("%s"), ACE_TEXT_CHAR_TO_TCHAR(buf)));
       }
 
-    ACE_DEBUG ((LM_DEBUG, "\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\n")));
+
+    file_io.close ();
 
     if (file_io.unlink () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("unlink failed for %p\n"),
                          file.get_path_name ()),
                         1);
-    // Destructor of svc_handler will close file_io.
   }
 
   ACE_END_TEST;

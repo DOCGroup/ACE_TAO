@@ -1,3 +1,30 @@
+Fri Mar 29 11:33:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ace/ace_dll.vcp:
+        * tests/Refcounted_Auto_Ptr_Test_WinCE.vcp:
+        * tests/Service_Config_DLL_WinCE.vcp:
+          Added few files into project.
+
+        * tests/CE_fostream.h:
+        * tests/CE_fostream.cpp:
+          A class that simulates fostream on WinCE for CDR File test.
+
+        * tests/Bound_Ptr_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/Log_Msg_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Refcounted_Auto_Ptr_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+          Minor updates for WinCE build.
+
 Fri Mar 29 11:08:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.h: Doxygen-ized the method comments.

@@ -208,7 +208,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   if (ACE_OS::mktemp (shm_key) == 0
       || (ACE_OS::unlink (shm_key) == -1
-          && errno == EPERM))
+#ifndef ACE_HAS_WINCE
+          && errno == EPERM
+#endif
+          ))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        shm_key),

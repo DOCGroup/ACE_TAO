@@ -228,8 +228,8 @@ test_log_msg_features (const ACE_TCHAR *program)
               ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter++,
               8,
-              "",
-              "hello",
+              ACE_TEXT (""),
+              ACE_TEXT ("hello"),
               10000));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
@@ -239,8 +239,8 @@ test_log_msg_features (const ACE_TCHAR *program)
               ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
-              "",
-              "world",
+              ACE_TEXT (""),
+              ACE_TEXT ("world"),
               10000 * counter++));
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -250,16 +250,16 @@ test_log_msg_features (const ACE_TCHAR *program)
               ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
-              "",
-              "world",
+              ACE_TEXT (""),
+              ACE_TEXT ("world"),
               10000 * counter++));
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
-              "",
-              "world",
+              ACE_TEXT (""),
+              ACE_TEXT ("world"),
               10000 * counter++));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
@@ -267,8 +267,8 @@ test_log_msg_features (const ACE_TCHAR *program)
               ACE_TEXT ("%10f, %*s%s = %d\n"),
               3.1416 * counter,
               8,
-              "",
-              "world",
+              ACE_TEXT (""),
+              ACE_TEXT ("world"),
               10000 * counter++));
 
   static int array[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
