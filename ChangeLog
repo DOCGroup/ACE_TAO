@@ -1,3 +1,20 @@
+Fri Nov 28 15:11:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/ace_flags.bor:
+        * include/makeinclude/build_core_exe.bor:
+        * include/makeinclude/build_core_library.bor:
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/build_library.bor:
+        * include/makeinclude/clean.bor:
+        * include/makeinclude/compiler.bor:
+        * include/makeinclude/decorator.bor:
+        * include/makeinclude/install.bor:
+        * include/makeinclude/make_flags.bor:
+        * include/makeinclude/outputdir.bor:
+        * include/makeinclude/recurse.bor
+          Added missing id tag
+
 Fri Nov 28 14:59:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
