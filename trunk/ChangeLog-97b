@@ -80,6 +80,17 @@ Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Thread_Manager.h: removed parens from (???) because
 	  g++ got upset about encountering a trigraph.
 
+	* tests/{Notify,Reactor}_Performance_Test.cpp: added
+	  ACE_UNUSED_ARG (handle).
+
+	* tests/run_tests.sh: added Reactor_Performance_Test and
+	  Notify_Performance_Test.
+
+	* tests/run_tests.vxworks: added test status of
+	  Reactor_Performance_Test (doesn't appear to do anything,
+	  but doesn't return) and Notify_Performance_Test (fcntl
+	  not supported).
+
 Wed Oct 15 01:48:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Containers.{h,i,cpp}: 
