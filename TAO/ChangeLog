@@ -1,4 +1,4 @@
-Sat Dec  1 13:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sat Jan  1 13:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
         * tao/RTCORBA/Priority_Mapping_Manager.h:
@@ -9,7 +9,7 @@ Sat Dec  1 13:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           Removed check for ACE_HAS_GNUG_PRE_2_8, this is not set anywhere
           anymore
 
-Sat Dec  1 13:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sat Jan  1 13:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Endpoint.cpp:
           Updated formatting of some debug messages to match the other
