@@ -143,13 +143,12 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
-          // Block indefinitely if timeout value is
-          // ACE_Time_Value::zero.
+          // Block indefinitely if timeout pointer is zero.
           status = ACE::select (int (handle) + 1,
                                 &rd_handle,
                                 &wr_handle,
                                 0,
-                                (t == ACE_Time_Value::zero ? 0 : &t));
+                                (timeout == 0 ? 0 : &t));
 
           (void) countdown.update ();
 
