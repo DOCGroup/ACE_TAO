@@ -74,7 +74,7 @@ sub print_log () {
       if (defined $changelog_hash{$2}) {
         print "@{$changelog_hash{$2}}";
       } else {
-        warn "\n\tChangeLogTag \"$2\" NOT FOUND!!!!\n\n";
+        print "\n\tChangeLogTag \"$2\" NOT FOUND!!!!\n\n";
       }
 
     } else {
