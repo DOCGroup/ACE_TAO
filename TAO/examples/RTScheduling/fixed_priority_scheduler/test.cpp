@@ -114,24 +114,6 @@ DT_Test::init (int argc, char *argv []
     		    "(%P|%t): sched_params failed\n"));
     }
   
-  //   ACE_hthread_t current;
-  //    ACE_Thread::self (current);
-  
-  //    int priority;
-  //    if (ACE_Thread::getprio (current, priority) == -1)
-  //      {
-  //        ACE_DEBUG ((LM_DEBUG,
-  //                    ACE_TEXT ("TAO (%P|%t) - ")
-  //                    ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
-  //                    ACE_TEXT (" ACE_Thread::get_prio\n")));
-  //        return -1;
-  //      }
-  
-  //    ACE_DEBUG ((LM_DEBUG,
-  //  	      "main thread priority %d\n",
-  //  		  priority));
-  
-  
   return 0;
 }
 
@@ -194,23 +176,6 @@ DT_Test::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // Set the main thread to max priority...
-//        if (ACE_OS::sched_params (ACE_Sched_Params (orb_->orb_core ()->orb_params ()->sched_policy (),
-//  						  98,
-//  						  ACE_SCOPE_PROCESS)) != 0)
-//  	{
-//  	  if (ACE_OS::last_error () == EPERM)
-//  	    {
-//  	      ACE_DEBUG ((LM_DEBUG,
-//  			  "(%P|%t): user is not superuser, "
-//  			  "test runs in time-shared class\n"));
-//  	    }
-//  	  else
-//  	    ACE_ERROR_RETURN ((LM_ERROR,
-//  			       "(%P|%t): sched_params failed\n"),
-//  			      -1);
-//  	}
-       
       dt_creator_->create_distributable_threads (orb_.in (),
 						 current_.in ()
 						 ACE_ENV_ARG_PARAMETER);

@@ -63,29 +63,6 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
 int
 Thread_Task::svc (void)
 {
-  //this->barrier_->wait ();
-  
-  //ACE_OS::sleep (start_time_);
-  
-  //    ACE_hthread_t current;
-  //    ACE_Thread::self (current);
-  
-  //    int priority;
-  //    if (ACE_Thread::getprio (current, priority) == -1)
-  //      {
-  //        ACE_DEBUG ((LM_DEBUG,
-  //                    ACE_TEXT ("TAO (%P|%t) - ")
-  //                    ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
-  //                    ACE_TEXT (" ACE_Thread::get_prio\n")));
-  
-  //        return -1;
-  //      }
-  
-  //    ACE_DEBUG ((LM_DEBUG,
-  //  	      "::svc %d priority = %d\n",
-  //  	      count_,
-  //  	      priority));
-
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "Thread_Task::svc %d\n", count_);
   dt_creator_->log_msg (msg);
@@ -125,4 +102,5 @@ Thread_Task::start_time (void)
 int
 Thread_Task::perform_task (void)
 {
+  return 0;
 }

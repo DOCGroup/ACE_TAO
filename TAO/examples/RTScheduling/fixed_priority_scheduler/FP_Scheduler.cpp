@@ -59,7 +59,7 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority
 void 
 Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
 							const char *,
-							CORBA::Policy_ptr sched_policy,
+							CORBA::Policy_ptr /*sched_policy*/,
 							CORBA::Policy_ptr
 							ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -149,11 +149,11 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 
 void 
 Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr,
-				RTScheduling::Current::IdType_out guid_out,
-				CORBA::String_out name,
-				CORBA::Policy_out sched_param,
-				CORBA::Policy_out implicit_sched_param
-				ACE_ENV_ARG_DECL)
+					   RTScheduling::Current::IdType_out guid_out,
+					   CORBA::String_out /*name*/,
+					   CORBA::Policy_out /*sched_param*/,
+					   CORBA::Policy_out /*implicit_sched_param*/
+					   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
@@ -176,11 +176,11 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 		  guid->get_buffer (),
 		  guid->length ());
   
- //  ACE_DEBUG ((LM_DEBUG,
-// 	      "The Guid is %d %d\n",
-// 	      id,
-// 	      server_guid_counter.value_i ()));
-
+  //  ACE_DEBUG ((LM_DEBUG,
+  // 	      "The Guid is %d %d\n",
+  // 	      id,
+  // 	      server_guid_counter.value_i ()));
+  
   guid_out.ptr () = guid;
   //***************************************
   
