@@ -621,7 +621,8 @@ TAO_POA::is_servant_in_map (PortableServer::Servant servant)
 
               ++this->waiting_servant_deactivation_;
 
-              this->servant_deactivation_condition_.wait ();
+              if (this->orb_core_.object_adapter ()->enable_locking_)
+                this->servant_deactivation_condition_.wait ();
 
               --this->waiting_servant_deactivation_;
             }
@@ -657,7 +658,8 @@ TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id)
 
               ++this->waiting_servant_deactivation_;
 
-              this->servant_deactivation_condition_.wait ();
+              if (this->orb_core_.object_adapter ()->enable_locking_)
+                this->servant_deactivation_condition_.wait ();
 
               --this->waiting_servant_deactivation_;
             }
@@ -807,7 +809,8 @@ void
 TAO_POA::wait_for_completions (CORBA::Boolean wait_for_completion,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  while (wait_for_completion &&
+  while (this->orb_core_.object_adapter ()->enable_locking_ &&
+         wait_for_completion &&
          this->outstanding_requests_ > 0)
     {
       this->wait_for_completion_pending_ = 1;
