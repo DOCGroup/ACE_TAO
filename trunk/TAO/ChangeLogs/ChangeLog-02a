@@ -1,3 +1,15 @@
+Tue Sep 12 18:01:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOPS_T.i:
+	* tao/GIOPS_T.h:
+	* tao/GIOPS_T.cpp:
+	* tao/GIOPS.h:
+	* tao/GIOPS.cpp:
+	* tao/GIOPS.h: Added these dummy files so that idl files that
+	  include GIOP.pidl would be happy.
+
+	* tao/GIOP.pidl: Moved the GIOP1_2.pidl as GIOP.pidl.
+
 Tue Sep 12 15:53:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/IFR_Service/Makefile.IFR_Service:
