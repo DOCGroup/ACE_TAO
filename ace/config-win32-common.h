@@ -160,8 +160,11 @@
 // Select Reactor can support at the same time (i.e., 64 - standard in,
 // out, error).  He we raise the limit to 1024.  Adjust the definition
 // below if you need to raise or lower it.
-//
+
+#if defined (FD_SETSIZE)
+#undef
 #define FD_SETSIZE 1024
+#endif /* FD_SETSIZE */
 
 // Windows doesn't like 65536 ;-) If 65536 is specified, it is
 // listenly ignored by the OS, i.e., setsockopt does not fail, and you
