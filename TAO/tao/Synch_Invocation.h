@@ -1,5 +1,5 @@
 // -*- C++ -*-
-
+//
 //=============================================================================
 /**
  *  @file    Synch_Invocation.h
@@ -10,7 +10,6 @@
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
-
 #ifndef TAO_SYNCH_INVOCATION_H
 #define TAO_SYNCH_INVOCATION_H
 #include /**/ "ace/pre.h"
@@ -109,6 +108,9 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// As the name suggests waits for a reply from the remote ORB.
+    /**
+     * This method returns an exception when there is an error.
+     */
     Invocation_Status wait_for_reply (ACE_Time_Value *max_wait_time,
                                       TAO_Synch_Reply_Dispatcher &rd,
                                       TAO_Bind_Dispatcher_Guard &bd
@@ -119,6 +121,9 @@ namespace TAO
 
     /// Helper method that checks the reply status of the
     /// replies and takes appropriate action.
+    /**
+     * This method returns an exception when there is an error.
+     */
     Invocation_Status check_reply_status (
         TAO_Synch_Reply_Dispatcher &rd
         ACE_ENV_ARG_DECL);

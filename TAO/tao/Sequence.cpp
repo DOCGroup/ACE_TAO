@@ -333,6 +333,9 @@ TAO_Unbounded_String_Sequence::_deallocate_buffer (void)
 
   TAO_Unbounded_String_Sequence::freebuf (tmp);
   this->buffer_ = 0;
+  this->length_ = 0;
+  this->release_ = 0;
+  this->maximum_ = 0;
 }
 
 void
@@ -639,6 +642,9 @@ TAO_Unbounded_WString_Sequence::_deallocate_buffer (void)
 
   TAO_Unbounded_WString_Sequence::freebuf (tmp);
   this->buffer_ = 0;
+  this->length_ = 0;
+  this->release_ = 0;
+  this->maximum_ = 0;
 }
 
 void
@@ -1046,6 +1052,9 @@ void TAO_Unbounded_Sequence<CORBA::Octet>::_deallocate_buffer (void)
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
   this->buffer_ = 0;
+  this->length_ = 0;
+  this->release_ = 0;
+  this->maximum_ = 0;
 }
 
 
