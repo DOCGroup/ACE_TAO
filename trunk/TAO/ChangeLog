@@ -1,3 +1,9 @@
+Thu Oct 30 22:02:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Turned on RTTI for a few files.
+
 Thu Oct 30 09:44:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/RtEC/Kokyu/Makefile:
