@@ -16,7 +16,7 @@
 #ifndef ACE_HASH_MAP_MANAGER_T_CPP
 #define ACE_HASH_MAP_MANAGER_T_CPP
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager_T.h" // KIRTHIKA
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -112,6 +112,43 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::creat
   return 0;
 }
 
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_Hash_Map_Entry<EXT_ID, INT_ID> *
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::create_entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
+                                                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev)
+{
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *new_entry;
+  void *ptr;
+
+  ACE_ALLOCATOR_RETURN (ptr,
+                        this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
+                        0);
+  
+  new_entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (next,
+                                                            prev);
+  
+  return new_entry;
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_Hash_Map_Entry<EXT_ID, INT_ID>*
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:: create_entry (const EXT_ID &ext_id,
+                                                                                          const INT_ID &int_id,
+                                                                                          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
+                                                                                          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev)
+{
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *new_entry;
+  void *ptr;
+
+  ACE_ALLOCATOR_RETURN (ptr,
+                        this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
+                        0);
+
+  new_entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
+                                                            int_id,
+                                                            next,
+                                                            prev);
+  return new_entry;
+}
+
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open (size_t size,
                                                                                  ACE_Allocator *alloc)
@@ -157,6 +194,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
               // Explicitly call the destructor.
               ACE_DES_FREE_TEMPLATE2 (hold_ptr, this->allocator_->free,
                                       ACE_Hash_Map_Entry, EXT_ID, INT_ID);
+              
             }
 
           // Destroy the dummy entry.
@@ -187,16 +225,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
 
   if (result == -1)
     {
-      void *ptr;
-      // Not found.
-      ACE_ALLOCATOR_RETURN (ptr,
-                            this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
-                            -1);
-
-      entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
-                                                            int_id,
-                                                            this->table_[loc].next_,
-                                                            &this->table_[loc]);
+      entry = this->create_entry (ext_id,
+                                  int_id,
+                                  this->table_[loc].next_,
+                                  &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
       this->cur_size_++;
@@ -216,16 +248,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
 
   if (result == -1)
     {
-      // Not found.
-      void *ptr;
-      ACE_ALLOCATOR_RETURN (ptr,
-                            this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
-                            -1);
-
-      entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
-                                                            int_id,
-                                                            this->table_[loc].next_,
-                                                            &this->table_[loc]);
+      entry = this->create_entry (ext_id,
+                                  int_id,
+                                  this->table_[loc].next_,
+                                  &this->table_[loc]);
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
       this->cur_size_++;
