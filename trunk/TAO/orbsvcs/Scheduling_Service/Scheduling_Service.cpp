@@ -45,7 +45,6 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
 {
   int result;
   CORBA::ORB_var orb;
-  PortableServer::POA_ptr root_poa;
   PortableServer::POAManager_ptr poa_manager;
 
   ACE_TRY_NEW_ENV
@@ -55,9 +54,6 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       orb = this->orb_manager_.orb ();
-      ACE_TRY_CHECK;
-
-      root_poa = this->orb_manager_.root_poa ();
       ACE_TRY_CHECK;
 
       poa_manager = this->orb_manager_.poa_manager ();
@@ -164,7 +160,6 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -279,18 +274,20 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s; initializing scheduling service\n", __FILE__));
+
       if (scheduling_service.init (argc, argv) < 0)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), 1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s; running scheduling service\n", __FILE__));
-      if (scheduling_service.run (ACE_TRY_ENV) < 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 
+      scheduling_service.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "schedule_service");
+	  return 1;
     }
   ACE_ENDTRY;
 

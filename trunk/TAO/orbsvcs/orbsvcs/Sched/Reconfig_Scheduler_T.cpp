@@ -78,18 +78,15 @@ TAO_Reconfig_Scheduler (int config_count,
     dependency_count_ (0),
     last_scheduled_priority_ (0)
 {
-  // Declare a CORBA::Environment variable in the current scope.
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   // The init method can throw an exception, which must be caught
   // *inside* the constructor to be portable between compilers that
   // differ in whether they support native C++ exceptions.
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       this->init (config_count, config_infos,
                   rt_info_count, rt_infos,
                   dependency_count, dependency_infos,
-                  stability_flags);
+                  stability_flags, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, corba_sysex)
@@ -99,7 +96,6 @@ TAO_Reconfig_Scheduler (int config_count,
                              "system exception: cannot init scheduler.\n"));
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 
@@ -139,7 +135,7 @@ init (int config_count,
       ACE_NEW_THROW_EX (new_config_info,
                         RtecScheduler::Config_Info,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (ST_VIRTUAL_MEMORY_EXHAUSTED);
+      ACE_CHECK_RETURN (-1);
 
       // Make sure the new config info is cleaned up if we exit abruptly.
       new_config_info_ptr.reset (new_config_info);
@@ -151,10 +147,12 @@ init (int config_count,
           case -1:
             // Something bad but unknown occurred while trying to bind in map.
             ACE_THROW_RETURN (RtecScheduler::INTERNAL (), -1);
+            break;
 
           case 1:
             // Tried to bind an operation that was already in the map.
             ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), -1);
+            break;
 
           default:
             break;
@@ -204,23 +202,23 @@ init (int config_count,
       new_rt_info->priority =
         rt_info [num_rt_infos].priority;
       new_rt_info->preemption_subpriority =
-        rt_info [num_rt_infos].preemption_subpriority;
+        rt_info [num_rt_infos].static_subpriority;
       new_rt_info->preemption_priority =
         rt_info [num_rt_infos].preemption_priority;
       new_rt_info->volatile_token = 0;
 
-    // Add dependencies between RT_Infos to scheduler.
-    for (this->dependency_count_ = 0;
-         this->dependency_count_ < dependency_count;
-         ++this->dependency_count_)
-      {
-        add_dependency_i (dependency_info [dependency_count_].info_that_depends,
-                          dependency_info [dependency_count_].info_depended_on,
-                          dependency_info [dependency_count_].dependency_type,
-                          dependency_info [dependency_count_].number_of_calls,
-                          ACE_TRY_ENV);
-        ACE_CHECK_RETURN (-1);
-      }
+      // Add dependencies between RT_Infos to scheduler.
+      for (this->dependency_count_ = 0;
+           this->dependency_count_ < dependency_count;
+           ++this->dependency_count_)
+        {
+          add_dependency_i (dependency_info [dependency_count_].info_that_depends,
+                            dependency_info [dependency_count_].info_depended_on,
+                            dependency_info [dependency_count_].number_of_calls,
+                            dependency_info [dependency_count_].dependency_type,
+                            ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+        }
 
     }
 
@@ -291,7 +289,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (CORBA::Environ
 
 
   // Finally, start over with the lowest handle number.
-  next_handle = 0;
+  next_handle_ = 0;
 }
 
 // Create an RT_Info.  If it does not exist, a new RT_Info is
@@ -419,7 +417,7 @@ set (RtecScheduler::handle_t handle,
 
   // Reference the associated scheduling entry.
   TAO_Reconfig_Scheduler_Entry *sched_entry_ptr =
-    ACE_static_cast (TAO_Reconfig_Scheduler_Entry *, rt_info_ptr->volatile_token);
+    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry *, rt_info_ptr->volatile_token);
   if (0 == sched_entry_ptr)
     {
       ACE_THROW (RtecScheduler::INTERNAL ());
@@ -687,7 +685,7 @@ last_scheduled_priority (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Check schedule stability flags.
   if (this->stability_flags_ & (SCHED_PRIORITY_NOT_STABLE | SCHED_CONFIG_NOT_STABLE))
@@ -830,7 +828,7 @@ create_i (const char *entry_point,
   // Store a pointer to the scheduling entry in the
   // scheduling entry pointer array and in the RT_Info.
   new_rt_info->volatile_token =
-    ACE_static_cast (CORBA::ULong, new_sched_entry);
+    ACE_reinterpret_cast (CORBA::ULong, new_sched_entry);
 
   // Release the auto pointers, so their destruction does not
   // remove the new rt_info that is now in the map and tree,
@@ -1261,6 +1259,7 @@ compute_dispatch_config_i (CORBA::Environment &ACE_TRY_ENV)
                       RtecScheduler::INTERNAL))
 {
   // @@ TBD - do this in the strategy
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 
