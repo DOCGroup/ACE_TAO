@@ -1,3 +1,13 @@
+Thu Feb  5 11:25:50 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* include/makeinclude/rules.bin.GNU:
+	* include/makeinclude/rules.lib.GNU:
+	* include/makeinclude/rules.local.GNU:
+
+	  Modified build rules to allow projects with sources in sub-
+	  directoris. Thanks to Don Hinton <dhinton@dre.vanderbilt.edu> 
+	  for his help.
+
 Thu Feb  5 08:48:27 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,cpp}: added a new methods called
@@ -44,7 +54,7 @@ Thu Feb  5 07:55:10 2004  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/templates/bmakelib.mpt:
         * bin/MakeProjectCreator/templates/bmakelibexe.mpt:
 
-          Added a new alternative Borland Make project type called bmake. 
+          Added a new alternative Borland Make project type called bmake.
           It does not rely on any of the .bor files in
           ACE_wrappers/include/makeinclude.
 

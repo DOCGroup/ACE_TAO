@@ -25,7 +25,7 @@ endif # CLEANUP_VSHLIB
 
 ifdef TEMPINCDIR
   CLEANUP_DIRS += $(TEMPINCDIR)
-endif 
+endif
 
 ifdef sun
   CLEANUP_DIRS += SunWS_cache
@@ -89,24 +89,24 @@ $(VDIR)%.obj: %.cpp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 else
-$(VDIR)%.o: %.c $(VDIR).creation_stamp
+$(VDIR)%.o: %.c $(VDIR)%.creation_stamp
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cpp $(VDIR).creation_stamp
+$(VDIR)%.o: %.cpp $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 endif
 
-$(VDIR)%.o: %.C $(VDIR).creation_stamp
+$(VDIR)%.o: %.C $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cc $(VDIR).creation_stamp
+$(VDIR)%.o: %.cc $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-$(VDIR)%.o: %.cxx $(VDIR).creation_stamp
+$(VDIR)%.o: %.cxx $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
@@ -120,41 +120,42 @@ ifndef SOLINK
 # that the service configurator needs to be able to function).
 # 970104 Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
   ifdef (ESOBUILD)
-$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR)%.creation_stamp
 	$(ESOBUILD)
   else # ! ESOBUILD
-$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR)%.creation_stamp
 	$(SOBUILD)
   endif # ESOBUILD
 
   ifeq ($(split), 1)
-$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR)%.creation_stamp
 	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
 	mv *.$(OBJEXT) $(VSHDIR)
   else # ! split
 
-$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR)%.creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+
   endif # split
 
-$(VSHDIR)%.$(OBJEXT): %.cc $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cc $(VSHDIR)%.creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-$(VSHDIR)%.$(OBJEXT): %.C $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.C $(VSHDIR)%.creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-$(VSHDIR)%.$(OBJEXT): %.cxx $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.cxx $(VSHDIR)%.creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-$(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR)%.creation_stamp
 	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
   ifneq (,$(COMPILE.rc))
-$(VSHDIR)%.rc.$(OBJEXT): %.rc $(VSHDIR).creation_stamp
+$(VSHDIR)%.rc.$(OBJEXT): %.rc $(VSHDIR).%creation_stamp
 	$(COMPILE.rc) $< $@
   endif # COMPILE.rc
 
-$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR).creation_stamp
+$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR)%.creation_stamp
 	$(SOLINK)
 endif # SOLINK
 
@@ -163,9 +164,9 @@ $(VDIR).creation_stamp:
 	@if not exist $(VDIR) mkdir $(VDIR)
 	@echo > $@
 else
-$(VDIR).creation_stamp:
-	@-test -d $(VDIR) || mkdir $(VDIR) $(ACE_NUL_STDERR)
-	@touch $@
+.PHONY: $(VDIR)%.creation_stamp
+$(VDIR)%.creation_stamp:
+	@-test -d $(dir $@) || mkdir -p $(dir $@) $(ACE_NUL_STDERR)
 endif
 
 ifneq ($(VDIR),$(VSHDIR))
@@ -174,9 +175,9 @@ $(VSHDIR).creation_stamp:
 	@if not exist $(VSHDIR) mkdir $(VSHDIR)
 	@echo > $@
   else
-$(VSHDIR).creation_stamp:
-	@-test -d $(VSHDIR) || mkdir $(VSHDIR) $(ACE_NUL_STDERR)
-	@touch $@
+.PHONY: $(VSHDIR)%.creation_stamp
+$(VSHDIR)%.creation_stamp:
+	@-test -d $(dir $@) || mkdir -p $(dir $@) $(ACE_NUL_STDERR)
   endif
 endif
 
@@ -308,13 +309,13 @@ endif # shared_libs
 CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
 
 ifdef SRC
-  CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
+  CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(SRC))))
 endif # SRC
 ifneq ($(CLEANUP_BIN),)
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(CLEANUP_BIN)))))
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(CLEANUP_BIN))))
 endif # CLEANUP_BIN
 ifdef LSRC
-  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
 endif # LSRC
 
 clean.local: makefile_name.local
@@ -438,4 +439,3 @@ SPLIT:
 	@echo "Splitting source files..."
 	@$(ACE_ROOT)/bin/split-cpp -s Svc_Conf_l.cpp -s Svc_Conf_y.cpp $(LSRC)
 	@echo "done."
-
