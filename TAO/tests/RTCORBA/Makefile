@@ -21,6 +21,7 @@ DIRS  = \
 	MT_Client_Protocol_Priority \
 	ORB_init \
 	Persistent_IOR \
+	Policies \
 	Policy_Combinations \
 	Private_Connection \
         Profile_And_Endpoint_Selection \

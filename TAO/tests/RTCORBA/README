@@ -60,6 +60,12 @@ includes the following:
           Test for -ORBEndpoint option. Also makes sure that user
           cannot use thread pools and persistence simultaneously.
 
+        . Policies
+
+          This program tests the construction of RTCORBA policies,
+          both through the generic ORB::create_policy interface and
+          the RTCORBA specific interfaces.
+
         . Policy_Combinations
 
           Test that combines and tests several RT policies in
