@@ -129,7 +129,7 @@ Receiver::open (ACE_HANDLE handle,
       return;
     }
 
-  // Print any initial data which came withthe AcceptEx call
+  // Print any initial data which came with the AcceptEx call
   message_block.rd_ptr ()[message_block.length ()] = '\0';
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "Initial data", message_block.rd_ptr ()));
 
@@ -536,14 +536,12 @@ main (int argc, char *argv[])
 			1) == -1)
        return -1;
    }
-  else
-    {
-      // If active side
-      if (sender.open (host, port) == -1)
-	return -1;
-    }
+  // If active side
+  else if (sender.open (host, port) == -1)
+    return -1;
   
   int error = 0;
+
   while (!error && !done)
     // dispatch events
     error = ACE_Service_Config::proactor ()->handle_events ();

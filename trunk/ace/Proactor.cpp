@@ -391,6 +391,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
   if (result == FALSE && overlapped == 0)
     {
       errno = ::GetLastError ();
+
       // @@  What's the WIN32 constant for timeout (258)?!?!?!
       if (errno == 258)
 	{

@@ -811,7 +811,7 @@ public:
   // This method will be called when an asynchronous read completes on a stream. 
 
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This method will be called when an asynchronous write completes on a stream. 
+  // This method will be called when an asynchronous write completes on a strea_m. 
 
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
   // This method will be called when an asynchronous read completes on a file. 
