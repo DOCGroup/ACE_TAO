@@ -1,3 +1,9 @@
+Tue Apr 22 18:29:18 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/ace.mpc: Moved ARGV.cpp and Argv_Type_Converter.cpp from the
+	  Utils section to the OS section. This is a follow-up to:
+	  Fri Mar 28 16:04:28 2003  Steve Huston  <shuston@riverace.com>
+
 Tue Apr 22 17:25:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/config-win32-msvc-6.h:
