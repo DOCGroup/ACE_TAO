@@ -341,7 +341,7 @@ TAO_ServerRequestInfo::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
                     0);
 }
 
-CORBA::OctetSeq *
+PortableInterceptor::ObjectId *
 TAO_ServerRequestInfo::object_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -350,10 +350,10 @@ TAO_ServerRequestInfo::object_id (ACE_ENV_SINGLE_ARG_DECL)
       const PortableServer::ObjectId &id =
         this->servant_upcall_->user_id ();
 
-      CORBA::OctetSeq *tmp = 0;
+      PortableInterceptor::ObjectId *tmp = 0;
 
       ACE_NEW_THROW_EX (tmp,
-                        CORBA::OctetSeq,
+                        PortableInterceptor::ObjectId,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -361,7 +361,7 @@ TAO_ServerRequestInfo::object_id (ACE_ENV_SINGLE_ARG_DECL)
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
-      CORBA::OctetSeq_var obj_id = tmp;
+      PortableInterceptor::ObjectId_var obj_id = tmp;
 
       // @@ It would be nice to avoid this copy.  However, we can't be
       //    sure if the octet sequence will out live the POA from

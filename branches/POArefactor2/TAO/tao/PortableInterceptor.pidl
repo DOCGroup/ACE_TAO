@@ -127,7 +127,7 @@ module PortableInterceptor {
     readonly attribute ServerId server_id;
     readonly attribute ORBId orb_id;
     readonly attribute AdapterName adapter_name;
-    readonly attribute CORBA::OctetSeq object_id;
+    readonly attribute ObjectId object_id;
     readonly attribute CORBA::OctetSeq adapter_id;
     readonly attribute CORBA::RepositoryId target_most_derived_interface;
     CORBA::Policy get_server_policy (in CORBA::PolicyType type);

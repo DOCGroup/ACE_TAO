@@ -169,7 +169,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the ObjectId for the target object.
-  virtual CORBA::OctetSeq * object_id (
+  virtual PortableInterceptor::ObjectId * object_id (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

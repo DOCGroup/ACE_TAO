@@ -1,3 +1,18 @@
+Fri Nov 12 08:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.pidl:
+          Changed type of object_id attribute of ServerRequestInfo from
+          CORBA::Octet to ObjectId to match the latest corba spec, this fixes
+          bug 1961.
+
+        * tao/PortableInterceptorC.{h,cpp,inl}:
+        * tao/PortableInterceptorA.cpp:
+        * tao/diffs/PortableInterceptor.diff:
+          Regenerated these files and updated diff
+
+        * tao/PortableServer/ServerRequestInfo.{h,cpp}:
+          Updated for change above
+
 Thu Nov 11 15:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Current_Impl.cpp (orb_core):
