@@ -1,3 +1,8 @@
+Tue Apr 30 14:20:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Messaging/TAO_Messaging_Static.dsp: Added the new files
+	  Connection_Timeout_Policy.*  to the project file.
+
 Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	
 	* tao/IIOP_Connector.cpp: Checked to see if the connection timeout
