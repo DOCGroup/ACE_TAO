@@ -123,13 +123,13 @@ ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
 
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
     {
-      d->dirent_ = (dirent *) ACE_OS_Memory::malloc (sizeof (dirent) +
-                                                     (ACE_OS_String::strlen (d->fdata_.cFileName)
-                                                      * sizeof (ACE_TCHAR)));
+      d->dirent_ = (dirent *) 
+        ACE_OS_Memory::malloc (sizeof (dirent) 
+                               + ((ACE_OS_String::strlen (d->fdata_.cFileName) + 1 
+                                   * sizeof (ACE_TCHAR))));
       ACE_OS_String::strcpy (d->dirent_->d_name, d->fdata_.cFileName); 
-      d->dirent_->d_reclen =
-        sizeof (dirent) + 
-        (ACE_OS_String::strlen (d->dirent_->d_name) * sizeof (ACE_TCHAR));
+      d->dirent_->d_reclen = sizeof (dirent) 
+        + (ACE_OS_String::strlen (d->dirent_->d_name) * sizeof (ACE_TCHAR));
       return d->dirent_; 
     }
   else
