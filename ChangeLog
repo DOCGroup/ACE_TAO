@@ -1,3 +1,8 @@
+Fri May 23 10:01:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Set the correct defines when building with threading enabled.
+
 Fri May 23 08:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.i (sigwait):

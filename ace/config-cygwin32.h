@@ -6,7 +6,12 @@
 
 #ifndef ACE_CONFIG_CYGWIN32_H
 #define ACE_CONFIG_CYGWIN32_H
+
 #include "ace/pre.h"
+
+#if !defined (ACE_MT_SAFE)
+#define ACE_MT_SAFE 1
+#endif
 
 #define CYGWIN32
 
@@ -48,6 +53,8 @@
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_MKTEMP
 
+#define ACE_LACKS_PRAGMA_ONCE
+
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -56,8 +63,6 @@
 // It's there on all libc 5 systems I checked.
 #include /**/ <features.h>
 
-// Then the compiler specific parts
-
 // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
 // this must appear before its #include.
 #define ACE_HAS_STRING_CLASS
@@ -65,14 +70,9 @@
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #else
-# error unsupported compiler in ace/config-cygwin32-common.h
+# error unsupported compiler in ace/config-cygwin32.h
 #endif /* __GNUG__ */
 
-
-// Completely common part :-)
-
-// Platform/compiler has the sigwait(2) prototype
-#define ACE_HAS_SIGWAIT
 #define ACE_HAS_POSIX_TIME
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_HAS_MSG
@@ -82,11 +82,12 @@
 #define ACE_LACKS_GETHOSTENT
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_LACKS_GETPGID_PROTOTYPE
+#define ACE_LACKS_UNIX_SIGNALS
 
 // Compiler/platform supports alloca().
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
-// if you ACE to use it.
+// if you want ACE to use it.
 //#define ACE_HAS_ALLOCA
 
 // Compiler/platform has the getrusage() system call.
@@ -144,7 +145,37 @@
 
 #define ACE_LACKS_MKFIFO
 
+// Cygwin has no siginfo.h
+#define ACE_LACKS_SIGINFO_H
+// Cygwin has no si_addr
+#define ACE_LACKS_SI_ADDR
+// Struct siginfo_t is not defined (only defined __rtems__ with _POSIX_REALTIME_SIGNALS).
+// Cygwin has no ucontext.h
+#define ACE_LACKS_UCONTEXT_H
+
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
+#if ACE_MT_SAFE
+// Yes, we do have threads.
+#  define ACE_HAS_THREADS
+// And they're even POSIX pthreads (LinuxThreads implementation)
+#  define ACE_HAS_PTHREADS
+
+// Compiler/platform has thread-specific storage
+#   define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+#  if !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+#    define ACE_LACKS_RWLOCK_T
+#  endif  /* !ACE_HAS_PTHREADS_UNIX98_EXT */
+
+// ... and the final standard even!
+#  define ACE_HAS_PTHREADS_STD
+// Cygwin (see pthread.h): Not supported or implemented.
+#  define ACE_LACKS_THREAD_STACK_SIZE
+#  define ACE_LACKS_THREAD_STACK_ADDR
+
+#endif  /* ACE_MT_SAFE */
+
 #include "ace/post.h"
+
 #endif /* ACE_CONFIG_CYGWIN32_H */
