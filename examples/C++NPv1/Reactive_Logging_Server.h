@@ -36,9 +36,9 @@ protected:
     int width = (int)active_handles_.max_set () + 1;
     if (select (width,
                 active_handles_.fdset (),
-                0,  // no write_fds
-                0,  // no except_fds
-                0)) // no timeout
+                0,        // no write_fds
+                0,        // no except_fds
+                0) == -1) // no timeout
       return -1;
     active_handles_.sync
       ((ACE_HANDLE) ((int)active_handles_.max_set () + 1));
@@ -50,6 +50,9 @@ protected:
       while (acceptor ().accept (logging_handler ().peer ()) == 0)
         master_handle_set_.set_bit
           (logging_handler ().peer ().get_handle ());
+
+      // Remove acceptor handle from further consideration.
+      active_handles_.clr_bit (acceptor ().get_handle ());
     }
     return 0;
   }

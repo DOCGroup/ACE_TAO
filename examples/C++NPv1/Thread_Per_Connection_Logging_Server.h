@@ -26,6 +26,24 @@ private:
 protected:
   virtual int handle_connections ();
   virtual int handle_data (ACE_SOCK_Stream * = 0);
+
+public:
+  // Template Method that runs logging server's event loop. Need to
+  // reimplement this here because the threads spawned from handle_connections
+  // call handle_data; therefore, this method must not.
+  virtual int run (int argc, char *argv[]) {
+    if (open (argc > 1 ? atoi (argv[1]) : 0) == -1)
+      return -1;
+
+    for (;;) {
+      if (wait_for_multiple_events () == -1)
+        return -1;
+      if (handle_connections () == -1)
+        return -1;
+    }
+
+    return 0;
+  }
 };
 
 #endif /* _THREAD_PER_CONNECTION_LOGGING_SERVER_H */
