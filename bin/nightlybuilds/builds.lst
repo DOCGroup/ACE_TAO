@@ -124,10 +124,11 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_FORTE_UPDATE_1/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_FORTE_UPDATE_1
 
-[SunOS_SunCC5]
+# the build changed from CC5 to 51
+[SunOS_SunCC51]
 TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC5/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC5
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC51/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC51
 
 [SunOS_KCC]
 TYPE = TIMEONLY
