@@ -4392,7 +4392,7 @@ inline long ace_timezone()
     && !defined (CHORUS)
 # if defined (ACE_WIN32)
   return _timezone;  // For Win32.
-# elif defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
+# elif ( defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY) ) && ( !defined (__linux__) )
   long result = 0;
   struct timeval time;
   struct timezone zone;
@@ -4400,6 +4400,15 @@ inline long ace_timezone()
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
 # else  /* __Lynx__ || __FreeBSD__ ... */
+# if defined (__linux__)
+  // Under Linux, gettimeofday() does not correctly set the timezone
+  // struct, so we should use the global variable <timezone>.
+  // However, it is initialized by tzset().  I assume other systems
+  // are the same (i.e., tzset() needs to be called to set
+  // <timezone>), but since no one is complaining, I will only make
+  // the change for Linux.
+  ::tzset();
+# endif
   return timezone;
 # endif /* __Lynx__ || __FreeBSD__ ... */
 #else
