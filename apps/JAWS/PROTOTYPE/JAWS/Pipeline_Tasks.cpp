@@ -14,7 +14,7 @@ JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler (void)
 int
 JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
-  JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
+  JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
 
   int status = this->handle_put (db, tv);
 
@@ -39,7 +39,6 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
   // JAWS_Data_Block should contain an INET_Addr and an IO
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = data->policy ();
-  JAWS_Pipeline_Handler *task = handler->task ();
 
   // data->policy ()->update (handler);
 
@@ -56,9 +55,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
       {
       result = 0;
       JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
-      // At this point need to move to the next task in the pipeline!
-      // The framework should automatically call the next stage.
-      data->task (task);
+      // Move on to next stage in pipeline
       break;
       }
     case JAWS_IO_Handler::ACCEPT_ERROR:

@@ -53,16 +53,14 @@ JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 JAWS_Concurrency_Base::svc (void)
 {
+  JAWS_TRACE ("JAWS_Concurrency_Base::svc");
+
   ACE_Message_Block *mb;         // The message queue element
 
   JAWS_Data_Block *db;           // Contains the task list
   JAWS_Dispatch_Policy *policy;  // Contains task policies
   JAWS_IO_Handler *handler;      // Keeps the state of the task
   JAWS_Pipeline_Handler *task;   // The task itself
-
-  // Thread specific message block and data block
-  JAWS_Data_Block ts_db;
-  ACE_Message_Block ts_mb (&ts_db);
 
   int result = 0;
 
@@ -74,17 +72,28 @@ JAWS_Concurrency_Base::svc (void)
       return -1;
     }
 
+  db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
+  if (db == 0)
+    {
+      JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty data block");
+      return -1;
+    }
+
+  // Thread specific message block and data block
+  JAWS_Data_Block *ts_db = new JAWS_Data_Block;
+  if (ts_db == 0)
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc"));
+      return -1;
+    }
+
+  ts_db->task (db->task ());
+  ts_db->policy  (db->policy ());
+
   for (;;)
     {
       // A NULL data block indicates that the thread should shut
       // itself down
-      db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
-      if (db == 0)
-        {
-          JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty data block");
-          break;
-        }
-
       policy = db->policy ();
 
       // Each time we iterate, we create a handler to maintain
@@ -98,13 +107,13 @@ JAWS_Concurrency_Base::svc (void)
 
       // Set the initial task in the handler
       handler->task (db->task ());
+      ts_db->io_handler (handler);
 
-      ts_db.task (db->task ());
-      ts_db.policy  (db->policy ());
-      ts_db.io_handler (handler);
 
       do
         {
+          JAWS_TRACE ("JAWS_Concurrency_Base::svc, looping");
+
           //  handler maintains the state of the protocol
           task = handler->task ();
 
@@ -113,7 +122,7 @@ JAWS_Concurrency_Base::svc (void)
             break;
 
           // the task should set the handler to the appropriate next step
-          result = task->put (&ts_mb);
+          result = task->put (ts_db);
 
           if (result == 1)
             {
@@ -138,11 +147,12 @@ JAWS_Concurrency_Base::svc (void)
 
         }
       while (result == 0);
+      result = 0;
 
       policy->ioh_factory ()->destroy_io_handler (handler);
     }
 
-  JAWS_TRACE ("JAWS_Concurrency_Base::svc, shutting down");
+  ts_db->release ();
 
   return 0;
 }

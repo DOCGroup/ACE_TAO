@@ -54,33 +54,33 @@ public:
   // accept a passive connection
 
   virtual void read (JAWS_IO_Handler *ioh,
-                     ACE_Message_Block& mb,
-                     int size) = 0;
+                     ACE_Message_Block *mb,
+                     unsigned int size) = 0;
   // read from the handle size bytes into the message block.
 
   virtual void transmit_file (JAWS_IO_Handler *ioh,
                               const char *filename,
                               const char *header,
-                              int header_size,
+                              unsigned int header_size,
                               const char *trailer,
-                              int trailer_size) = 0;
+                              unsigned int trailer_size) = 0;
   // send header, filename, trailer to the handle.
 
   virtual void receive_file (JAWS_IO_Handler *ioh,
                              const char *filename,
                              void *initial_data,
-                             int initial_data_length,
-                             int entire_length) = 0;
+                             unsigned int initial_data_length,
+                             unsigned int entire_length) = 0;
   // read data from the handle and store in filename.
 
   virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
                                           const char *buffer,
-                                          int length) = 0;
+                                          unsigned int length) = 0;
   // send a confirmation message to the handle.
 
   virtual void send_error_message (JAWS_IO_Handler *ioh,
                                    const char *buffer,
-                                   int length) = 0;
+                                   unsigned int length) = 0;
   // send an error message to the handle.
 
 protected:
@@ -104,33 +104,33 @@ public:
 
   virtual void accept (JAWS_IO_Handler *ioh);
 
-  void read (JAWS_IO_Handler *ioh, ACE_Message_Block& mb, int size);
+  void read (JAWS_IO_Handler *ioh, ACE_Message_Block *mb, unsigned int size);
 
   void transmit_file (JAWS_IO_Handler *ioh,
                       const char *filename,
                       const char *header,
-                      int header_size,
+                      unsigned int header_size,
                       const char *trailer,
-                      int trailer_size);
+                      unsigned int trailer_size);
 
   void receive_file (JAWS_IO_Handler *ioh,
                      const char *filename,
                      void *initial_data,
-                     int initial_data_length,
-                     int entire_length);
+                     unsigned int initial_data_length,
+                     unsigned int entire_length);
 
   void send_confirmation_message (JAWS_IO_Handler *ioh,
                                   const char *buffer,
-                                  int length);
+                                  unsigned int length);
 
   void send_error_message (JAWS_IO_Handler *ioh,
                            const char *buffer,
-                           int length);
+                           unsigned int length);
 
 protected:
   virtual void send_message (JAWS_IO_Handler *ioh,
                              const char *buffer,
-                             int length);
+                             unsigned int length);
 };
 
 typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
