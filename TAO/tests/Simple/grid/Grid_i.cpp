@@ -14,13 +14,11 @@ Grid_i::Grid_i (void)
 
 //  Constructor.
 Grid_i::Grid_i (CORBA::Short x,
-                CORBA::Short y)
+                CORBA::Short y,
+                CORBA::Environment &_env)
   : width_ (x),
     height_ (y)
 {
-  // @@ Can you please check and see if you can use ACE_NEW_THROW
-  // macros here to throw the proper NO_MEMORY exception if these
-  // ACE_NEW calls fail?
   ACE_NEW (array_,
 	   CORBA::Long *[y]);
 
@@ -175,7 +173,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
   ACE_NEW_THROW_RETURN (grid_ptr,
-			Grid_i (width, height, TAO_TRY_END),
+			Grid_i (width, height, _env),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			Grid::_nil ());
 

@@ -35,7 +35,8 @@ public:
   // Constructor
 
   Grid_i (CORBA::Short,
-          CORBA::Short);
+          CORBA::Short,
+          CORBA_Environment &);
   // Constructor.
 
   ~Grid_i (void);
