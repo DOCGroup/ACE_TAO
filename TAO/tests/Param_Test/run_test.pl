@@ -3,33 +3,127 @@
 # If your perl installation isn't in /pkg/gnu/bin/perl,
 # please make the change accordingly
 #
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
 
 use Process;
 
-#uid=`id | cut -c5-20 | cut -f1 -d"("`
+# Get the userid (or ip on NT)
+
+if ($^O eq "MSWin32")
+{
+  system ("ipconfig | find \"Address\">ipnum");
+
+  open (IPNUM, "ipnum");
+
+  read (IPNUM, $line, 80);
+
+  ($junk, $ip1, $ip2, $ip3, $ip4) = split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/, $line);
+
+  close IPNUM;
+
+  system ("del /q ipnum");
+
+  $uid = $ip4;
+}
+else
+{
+  $uid = getpwnam (getlogin ());
+}
+
 $port = 30001 + $uid;
 $iorfile = "theior";
 $invocation = "sii";
+$num = 1;
 
-$SV = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT, 
-                       "-ORBobjrefstyle url -ORBport ".$port." -o ".$iorfile." 2");
-sleep (2);     # Give the server a chance to start up
-
-# "any" should be added at some time.
-
-@types = ("short", "ubstring", "fixed_struct", "strseq", "bounded_strseq", "var_struct", "nested_struct", 
-          "struct_seq", "bounded_struct_seq", "objref", "objref_sequence", "any_sequence", 
-          "short_sequence", "long_sequence", "bounded_short_sequence", "bounded_long_sequence");
-
-
-foreach $type (@types)
+sub run_test
 {
-	print ("BEGIN Testing type ".$type."\n");
-	system (".".$DIR_SEPARATOR."client -f ".$iorfile."  -i ".$invocation." -t ".$type." 2");
-	print ("END   Testing type ".$type."\n");
+  print ("BEGIN Testing type ".$type."\n");
+  my $type = shift(@_);
+
+  $SV = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+                         "$debug -ORBobjrefstyle url -ORBport $port -o ".
+			 $iorfile);
+  
+  sleep (2);     # Give the server a chance to start up
+  
+  system (".".$DIR_SEPARATOR."client $debug -f $iorfile  -i $invocation -t ".
+          "$type -n $num");
+  
+  # @@
+  # Someday, a better way of doing this should be found.  Or at least 
+  # something that can tell if a server is still alive.  There is kill -0 on
+  # Unix, but on NT ???
+
+  $SV->Kill ();
+  print ("END   Testing type ".$type."\n");
 }
 
-$SV->Kill ();
+# Parse the arguments
+
+for ($i = 0; $i <= $#ARGV; $i++)
+{
+  SWITCH: 
+  {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
+    {
+      print "run_test [-n num] [-d] [-onewin] [-h] [-t type]\n";
+      print "\n";
+      print "-n num              -- runs the client num times\n";
+      print "-d                  -- runs each in debug mode\n";
+      print "-onewin             -- keeps all tests in one window on NT\n";
+      print "-h                  -- prints this information\n";
+      print "-t                  -- runs only one type of param test\n";
+      exit;
+    }
+    if ($ARGV[$i] eq "-n")
+    {
+      $num = $ARGV[$i + 1];
+      $i++;
+      last SWITCH;
+    }
+    if ($ARGV[$i] eq "-d")
+    {
+      $debug = $debug." -d";
+      last SWITCH;
+    }
+    if ($ARGV[$i] eq "-onewin")
+    {
+      if ($^O eq "MSWin32")
+      {
+        $Process::newwindow = "no";
+      }
+      last SWITCH;
+    }
+    if ($ARGV[$i] eq "-t")
+    {
+      $type = $ARGV[$i + 1];
+      $i++;
+      last SWITCH;
+    }
+  }
+}
+
+@types = ("short", "ubstring", "bdstring", "fixed_struct", "strseq", 
+          "bounded_strseq", "var_struct", "nested_struct", "struct_seq", 
+	  "bounded_struct_seq", "any", "objref", "objref_sequence", 
+	  "any_sequence", "short_sequence", "long_sequence", 
+	  "bounded_short_sequence", "bounded_long_sequence",
+	  "fixed_array", "var_array");
+
+if ($type ne "")
+{
+  run_test ($type);
+}
+else
+{
+  foreach $type (@types)
+  {
+    run_test ($type);	
+  }
+}
 
 if ($^O eq "MSWin32")
 {
