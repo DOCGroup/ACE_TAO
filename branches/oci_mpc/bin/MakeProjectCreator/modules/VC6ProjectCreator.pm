@@ -26,7 +26,7 @@ sub get_type_append {
   my($type) = "";
   if ($self->lib_target()) {
     ## Set the type_append preserving whitespace
-    if ($self->get_writing_type()) {
+    if ($self->get_writing_type() == 1) {
       $type = " LIB";
     }
     else {
@@ -46,16 +46,15 @@ sub translate_value {
     my($arr) = $self->create_array($val);
     my($app) = "";
     $val = "";
-    if ($self->get_writing_type()) {
-      $app = "LIB";
-    }
-    else {
+
+    ## Only write dependencies for non-static projects
+    if ($self->get_writing_type() == 0) {
       $app = "DLL";
+      foreach my $entry (@$arr) {
+        $val .= "\"$entry $app\" ";
+      }
+      $val =~ s/\s+$//;
     }
-    foreach my $entry (@$arr) {
-      $val .= "\"$entry $app\" ";
-    }
-    $val =~ s/\s+$//;
   }
   return $val;
 }
