@@ -1,3 +1,21 @@
+Wed Mar 13 20:50:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ace/OS.i:
+          Minor change to resolve signed/unsigned comparison warning.
+
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/OS_String.cpp:
+          Added wide-char version of strtok_r and strtok_r_emulation.
+
+        * ace/Functor.h:
+        * ace/Functor.i:
+          Added hash related templates for ACE_ANTI_TCHAR type
+          when ACE_USES_WCHAR is defined.
+
+        * ace/ace_dll.vcp:
+        * ace/ace_os_dll.vcp: Added missing files.
+
 Wed Mar 13 11:57:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Configuration_Import_Export.cpp: Replace ACE_ASSERTs with

@@ -186,3 +186,50 @@ ACE_Less_Than<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
+
+
+#if defined (ACE_USES_WCHAR)
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE u_long
+ACE_Hash<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *t) const
+{
+  return ACE::hash_pjw (t);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE u_long
+ACE_Hash<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *t) const
+{
+  return ACE::hash_pjw (t);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Equal_To<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+{
+  return !ACE_OS::strcmp (lhs, rhs);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Equal_To<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+{
+  return !ACE_OS::strcmp (lhs, rhs);
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Less_Than<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+{
+  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+}
+
+ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE int
+ACE_Less_Than<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+{
+  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+}
+
+#endif  // ACE_USES_WCHAR

@@ -424,6 +424,28 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
     *lasts += 1;
   return s ;
 }
+
+# if defined (ACE_HAS_WCHAR)
+wchar_t*
+ACE_OS_String::strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
+{
+  if (s == 0)
+    s = *lasts;
+  else
+    *lasts = s;
+  if (*s == 0)                  // We have reached the end
+    return 0;
+  int l_org = ACE_OS_String::strlen (s);
+  s = ::wcstok (s, tokens);
+  if (s == 0)
+    return 0;
+  int l_sub = ACE_OS_String::strlen (s);
+  *lasts = s + l_sub;
+  if (l_sub != l_org)
+    *lasts += 1;
+  return s ;
+}
+# endif  // ACE_HAS_WCHAR
 #endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
 #if !defined (ACE_HAS_MEMCHR)

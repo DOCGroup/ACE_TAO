@@ -352,6 +352,95 @@ public:
                    const ACE_TCHAR *rhs) const;
 };
 
+#if defined (ACE_USES_WCHAR)
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Less_Than<const
+ *
+ * @brief Function object for determining whether the first const string
+ * is less than the second const string.
+ */
+class ACE_Export ACE_Less_Than<const ACE_ANTI_TCHAR *>
+{
+public:
+  /// Simply calls ACE_OS::strcmp
+  int operator () (const ACE_ANTI_TCHAR *lhs,
+                   const ACE_ANTI_TCHAR *rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Less_Than<ACE_ANTI_TCHAR
+ *
+ * @brief Function object for determining whether the first string
+ * is less than the second string.
+ */
+class ACE_Export ACE_Less_Than<ACE_ANTI_TCHAR *>
+{
+public:
+  /// Simply calls ACE_OS::strcmp
+  int operator () (const ACE_ANTI_TCHAR *lhs,
+                   const ACE_ANTI_TCHAR *rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Hash<const
+ *
+ * @brief Function object for hashing a const string
+ */
+class ACE_Export ACE_Hash<const ACE_ANTI_TCHAR *>
+{
+public:
+  /// Calls ACE::hash_pjw
+  u_long operator () (const ACE_ANTI_TCHAR *t) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Hash<ACE_ANTI_TCHAR
+ *
+ * @brief Function object for hashing a string
+ */
+class ACE_Export ACE_Hash<ACE_ANTI_TCHAR *>
+{
+public:
+  /// Calls ACE::hash_pjw
+  u_long operator () (const ACE_ANTI_TCHAR *t) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Equal_To<const
+ *
+ * @brief Function object for determining whether two const strings are equal.
+ */
+class ACE_Export ACE_Equal_To<const ACE_ANTI_TCHAR *>
+{
+public:
+  /// Simply calls ACE_OS::strcmp
+  int operator () (const ACE_ANTI_TCHAR *lhs,
+                   const ACE_ANTI_TCHAR *rhs) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Equal_To<ACE_ANTI_TCHAR
+ *
+ * @brief Function object for determining whether two non-const
+ * strings are equal.
+ */
+class ACE_Export ACE_Equal_To<ACE_ANTI_TCHAR *>
+{
+public:
+  /// Simply calls ACE_OS::strcmp
+  int operator () (const ACE_ANTI_TCHAR *lhs,
+                   const ACE_ANTI_TCHAR *rhs) const;
+};
+
+#endif  // ACE_USES_WCHAR
+
 #if defined (__ACE_INLINE__)
 #include "ace/Functor.i"
 #endif /* __ACE_INLINE__ */
