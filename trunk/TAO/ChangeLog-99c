@@ -1,3 +1,18 @@
+Wed Jun 23 16:38:54 1999  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* examples/Quoter/run_test.pl:
+	* examples/POA/TIE/run_test.pl:
+	* examples/Forwarding/run_test.pl:
+	* orbsvcs/tests/Time/run_test.pl:
+	* orbsvcs/tests/Logger/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
+	  Rather that kill(), the servers now terminate();
+
+	* examples/POA/TIE/run_test.pl:
+	  Now conforms to the new style.
+
 Wed Jun 23 15:54:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/nestea_i.cpp :
@@ -52,6 +67,7 @@ Wed Jun 23 14:22:04 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 Wed Jun 23 13:56:52 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
+	* tests/NestedUpcall/Triangle_Test/run_test.pl: 
 	* tests/Multiple_Inheritance/run_test.pl:
 	  Was timing out too soon, increased the wait time to compensate.
 
