@@ -78,17 +78,38 @@ acquire_release (void)
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
 
+  // To see if we really are the only holder of the mutex below,
+  // we'll try to create a file with exclusive access. If the file
+  // already exists, we're not the only one holding the mutex.
+  char mutex_check[MAXNAMLEN];
+  ACE_OS::strcpy (mutex_check, mutex_name);
+  ACE_OS::strcat (mutex_check, ACE_TEXT ("_checker"));
+
   // Grab the lock
   ACE_ASSERT (mutex.acquire () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Mutex acquired %s\n"),
               mutex_name));
+
+  ACE_HANDLE checker_handle = ACE_OS::open (mutex_check, O_CREAT | O_EXCL);
+  if (checker_handle == ACE_INVALID_HANDLE)
+    {
+      ACE_ASSERT (errno != EEXIST);
+      ACE_DEBUG ((LM_WARNING, ACE_TEXT ("(%P): %p\n"),
+                  ACE_TEXT ("checker file open")));
+    }
+  else
+    ACE_OS::close (checker_handle);
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Working....\n")));
 
   // Do some "work", i.e., just sleep for a couple of seconds.
   ACE_OS::sleep (2);
+
+  // Free up the check file for the next acquirer.
+  ACE_OS::unlink (mutex_check);
 
   // Check if we need to release the mutex
   if (release_mutex == 1)
@@ -164,11 +185,17 @@ main (int argc, ACE_TCHAR *argv[])
 
       for (i = 0; i < n_processes; i++)
         {
+          ACE_exitcode child_status;
           // Wait for the child processes we created to exit.
-          ACE_ASSERT (children[i].wait () != -1);
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Parent %d finished\n"),
-                      children[i].getpid ()));
+          ACE_ASSERT (children[i].wait (&child_status) != -1);
+          if (child_status == 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("Child %d finished ok\n"),
+                        children[i].getpid ()));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Child %d finished with status %d\n"),
+                        children[i].getpid (), child_status));
         }
 
       ACE_END_TEST;

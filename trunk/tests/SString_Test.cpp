@@ -61,6 +61,7 @@ main (int, ACE_TCHAR *[])
     ACE_ASSERT (s1.substring (1) == s4);
     ACE_ASSERT (s1.substring (2, 2) == s3);
     ACE_ASSERT (s1.substring (0, 0) == empty_string);
+    ACE_ASSERT (s1.substring (4, 10).length () == 1);
 
     // Forward search.
     ACE_ASSERT (s1.find (s3) == 2);

@@ -177,16 +177,16 @@ connect_client (void *arg)
       ssize_t slen = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
 
       if (stream.send (buf, slen) < slen)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Write_Handler::handle_output - send\n")),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("In connect_client, send")),
                           0);
 
       if (stream.recv (buf, MAXPATHLEN) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Write_Handle::handle_output - recv\n")),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("In connect_client, recv")),
                           0);
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Got echo %s\n"), buf));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("connect_client, got echo %s\n"), buf));
     }
 
   stream.close ();

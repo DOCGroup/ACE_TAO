@@ -83,9 +83,33 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
                                   open_mode);
 
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%s\n"), this->error ()),
-                      -1);
+    {
+#if defined (AIX)
+      do
+        {
+          // AIX often puts the shared library file (most often named shr.o)
+          // inside an archive library. If this is an archive library
+          // name, then try appending [shr.o] and retry.
+          if (0 != ACE_OS_String::strstr (dll_pathname, ACE_LIB_TEXT (".a")))
+            {
+              ACE_OS_String::strcat (dll_pathname, ACE_LIB_TEXT ("(shr.o)"));
+              open_mode |= RTLD_MEMBER;
+              this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
+              if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+                break;  // end up returning 0
+            }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("%s\n"), this->error ()),
+                            -1);
+        }
+      while (0);
+#else
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("%s\n"), this->error ()),
+                        -1);
+#endif /* AIX */
+    }
+
   return 0;
 }
 

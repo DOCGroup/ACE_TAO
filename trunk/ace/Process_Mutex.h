@@ -10,7 +10,6 @@
  *   the same host machine, as well as within a process, of
  *   course.
  *
- *
  *  @author Doug Schmidt
  */
 //=============================================================================
@@ -26,11 +25,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS))
-#include "ace/SV_Semaphore_Complex.h"
-#else
+// The set of platforms encompassed by the set of 'defined' directives
+// below have cross-process mutex capability. Those that don't need to
+// use System V Semaphores. The following private macro sets this
+// capability difference and is used in Process_Mutex.* only.
+#if defined (_ACE_HAS_INTER_PROC_MUTEX)
+#  undef _ACE_HAS_INTER_PROC_MUTEX
+#endif /* _ACE_HAS_INTER_PROC_MUTEX */
+
+// This may need more qualification on pthreads version.
+#if (defined (ACE_WIN32) || defined (ACE_PSOS) || \
+     defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS))
+#  define _ACE_HAS_INTER_PROC_MUTEX
+#endif
+
+#if defined (_ACE_HAS_INTER_PROC_MUTEX)
 #include "ace/Synch.h"
-#endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS) */
+#else
+#include "ace/SV_Semaphore_Complex.h"
+#endif /* _ACE_HAS_INTER_PROC_MUTEX */
 
 /**
  * @class ACE_Process_Mutex
@@ -105,10 +118,10 @@ public:
    */
   int tryacquire_write_upgrade (void);
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (_ACE_HAS_INTER_PROC_MUTEX)
   /// Return the underlying mutex.
   const ACE_mutex_t &lock (void) const;
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* _ACE_HAS_INTER_PROC_MUTEX */
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -117,7 +130,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (_ACE_HAS_INTER_PROC_MUTEX)
   ACE_Mutex lock_;
 #else
   /// If the user does not provide a name we generate a unique name in
@@ -129,7 +142,7 @@ private:
 
   /// We need this to get the right semantics...
   ACE_SV_Semaphore_Complex lock_;
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* _ACE_HAS_INTER_PROC_MUTEX */
 };
 
 #if defined (__ACE_INLINE__)

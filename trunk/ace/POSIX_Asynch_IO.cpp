@@ -118,8 +118,10 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result (ACE_Handler &handler,
     aiocb (),
     handler_ (handler),
     act_ (act),
+    bytes_transferred_ (0),
     success_ (0),
-    completion_key_ (0)
+    completion_key_ (0),
+    error_ (0)
 {
   aio_offset = offset;
   aio_reqprio = priority;
