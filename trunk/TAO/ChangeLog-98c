@@ -1,3 +1,10 @@
+Fri Jan  2 16:29:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/GPlot_File.cpp:
+	* orbsvcs/Event_Service/Event_Channel.cpp:
+	* orbsvcs/Scheduling_Service/Scheduler.cpp:
+	* tao/connect.cpp:
+
 Fri Jan 02 10:24:21 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tests/Param_Test/driver.cpp (main): Added a trailing return in
@@ -6,8 +13,8 @@ Fri Jan 02 10:24:21 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 	* tests/Param_Test/helper.cpp (gen_fixed_struct): Changed to use
  	  ACE_OS::rand () * 1.0 instead of drand48 ().
 
-	* tao/connect.cpp: 
-	* orbsvcs/Scheduling_Service/Scheduler.cpp: 
+	* tao/connect.cpp:
+	* orbsvcs/Scheduling_Service/Scheduler.cpp:
 	* orbsvcs/Event_service/Gplot_File.cpp:
 	* orbsvcs/Event_Service/Event_Channel.cpp: Added explicit template
  	  instantiation for ACE_Map_Iterator_Base.

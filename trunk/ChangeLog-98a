@@ -1,3 +1,25 @@
+Fri Jan  2 16:35:34 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Proxy_Handler.cpp:
+	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp:
+	* apps/Gateway/Gateway/Event_Channel.cpp:
+	* apps/Gateway/Peer/Peer.cpp:
+	* ace/Local_Name_Space.cpp:
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
+	* examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
+	* examples/Connection/blocking/SPIPE-connector.cpp:
+	* examples/Connection/misc/test_upipe.cpp:
+	* examples/Connection/non_blocking/test_sock_connector.cpp:
+	* examples/Connection/non_blocking/test_spipe_connector.cpp:
+	* examples/Connection/non_blocking/test_tli_connector.cpp:
+	* examples/Connection/non_blocking/test_lsock_connector.cpp:
+	* netsvcs/clients/Tokens/manual/manual.cpp:
+	* netsvcs/lib/TS_Clerk_Handler.cpp:
+	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp: Added some
+	  more explicit template instantiations.
+
 Fri Jan  2 15:39:16 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Map_Manager.{h,cpp}:  Added back comparison operators for
