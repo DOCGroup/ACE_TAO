@@ -44,8 +44,8 @@ class ACE_Export ACE_POSIX_Proactor : public ACE_Proactor_Impl
   //     operations are queried on them. The other one is based on
   //     POSIX Real Time signals. This class abstracts out the common
   //     code needed for both the strategies. ACE_AIOCB_Proactor and
-  //     ACE_SIG_Proactor specialize this.
-
+  //     ACE_SIG_Proactor specialize this class for each strategy.
+  
 public:
   virtual ~ACE_POSIX_Proactor (void);
   // Virtual destructor.
@@ -55,8 +55,7 @@ public:
 
   virtual int register_handle (ACE_HANDLE handle,
 			       const void *completion_key);
-  // This method adds the <handle> to the I/O completion port. This
-  // function is a no-op function for Unix systems.
+  // This function is a no-op function for Unix systems. Returns 0.
 
   // = Timer management.
 
@@ -107,7 +106,7 @@ public:
   // Post a result to the completion port of the Proactor.  If errors
   // occur, the result will be deleted by this method.  If successful,
   // the result will be deleted by the Proactor when the result is
-  // removed from the completion port.  Therefore, the result should
+  // removed from the completion port. Therefore, the result should
   // have been dynamically allocated and should be orphaned by the
   // user once this method is called.
 
@@ -236,7 +235,7 @@ protected:
 };
 
 // Forward declarations.
-class ACE_AIO_Accept_Handler;
+class ACE_AIOCB_Notify_Pipe_Manager;
 
 class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
 {
@@ -249,7 +248,7 @@ class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
   // = DESCRIPTION
   //
 
-  friend class ACE_AIO_Accept_Handler;
+  friend class ACE_AIOCB_Notify_Pipe_Manager;
   // Handler needs to call application specific code.
 
   friend class ACE_POSIX_AIOCB_Asynch_Operation;
@@ -296,10 +295,6 @@ public:
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
 protected:
-  virtual int notify_asynch_accept (ACE_POSIX_Asynch_Accept_Result* result);
-  // Asynch_Accept calls this function to notify an accept to the
-  // Proactor.
-
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
   // before any events occur, return.
@@ -317,7 +312,7 @@ protected:
   // return 0 if yes, else return -1. If a valid ptr is passed, keep it
   // in a free slot.
 
-  ACE_AIO_Accept_Handler* aio_accept_handler_;
+  ACE_AIOCB_Notify_Pipe_Manager* aiocb_notify_pipe_manager_;
   // This class takes care of doing <accept> when we use
   // AIO_CONTROL_BLOCKS strategy.
 
