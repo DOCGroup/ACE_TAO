@@ -10,6 +10,7 @@ require Process;
 
 $NS_ior = "NameService.ior";
 $sleeptime = 3;
+$status = 0;
 
 $NS = Process::Create ("../../Naming_Service/Naming_Service".$EXE_EXT,
 		       " -o $NS_ior ");
@@ -17,10 +18,15 @@ $NS = Process::Create ("../../Naming_Service/Naming_Service".$EXE_EXT,
 sleep $sleeptime;
 
 # This is a very simple test, no multiple consumers and no gateways.
-$status = system ($EXEPREFIX."EC_Multiple".$EXE_EXT.
+$TEST = Process::Create ($EXEPREFIX."EC_Multiple".$EXE_EXT,
                   " -s local");
+if ($TEST->TimedWait (60) == -1) {
+  print STDERR "ERROR: test timedout\n";
+  $status = 1;
+  $TEST->Kill (); $TEST->TimedWait (1);
+}
 
-$NS->Kill ();
+$NS->Kill (); $NS->TimedWait (1);
 
 unlink $NS_ior;
 
