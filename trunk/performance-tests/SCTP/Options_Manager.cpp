@@ -68,7 +68,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
       ACE_OS::strcpy(__program_name, argv[0]);
     else{
       ACE_OS::strncpy(__program_name, argv[0], (Options_Manager::string_len-1));
-      __program_name[Options_Manager::string_len] = '\0';
+      __program_name[Options_Manager::string_len - 1] = '\0';
     }
 
     // Declare options with ACE_Get_Opt
@@ -373,7 +373,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
               ACE_OS::strcpy(server_host, str);
             else{
               ACE_OS::strncpy(server_host, str, (Options_Manager::string_len-1));
-              server_host[Options_Manager::string_len] = '\0';
+              server_host[Options_Manager::string_len - 1] = '\0';
             }
             break;
           }
