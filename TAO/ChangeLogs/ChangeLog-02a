@@ -1,3 +1,23 @@
+Tue May 30 20:58:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	  In the CDR extraction operator for interfaces,
+	  replaced _narrow with _unchecked_narrow, to
+	  eliminate remote calls to _is_a when foo's
+	  child is marshaled as a foo_ptr. Also eliminated
+	  the call to _narrow in the Any extraction operator.
+	  The temporary CORBA::Object_var was eliminated as
+	  well - the stream now extracts directly into the
+	  rhs argument. All this is safe because, in a
+	  marshaling situation, the type of the object must
+	  be either the type specified in IDL or a derived
+	  type, else there would have been a compile-time
+	  error. And the Any extractor checks for typecode
+	  equivalency before proceeding with the extration.
+	  Thanks to Francois Bernier <fbernier@gel.ulaval.ca> 
+	  for pointing out this use case.
+
 Tue May 30 11:14:51 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/EC_Mcast/run_test.pl
