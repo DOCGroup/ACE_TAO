@@ -78,6 +78,28 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
 // Counts the number of bits enabled in N.  Uses a table lookup to
 // speed up the count.
 
+#if 0
+// If there are platforms where fd_mask isn't typedef'd to "int" we'll
+// have to use the following code.  OS_FDMASK_TYPE is set in the
+// config*.h file to match whatever the OS has decided it should be.
+// For the Alpha, that is "int", for Linux it is "u_long."
+
+int
+ACE_Handle_Set::count_bits (OS_FDMASK_TYPE n) const
+{
+  ACE_TRACE ("ACE_Handle_Set::count_bits");
+  int rval = 0;
+
+  for (int i = 0; i < sizeof (u_long); ++i)
+    {
+      rval += ACE_Handle_Set::nbits_[n & 0xff];
+      n >>= 8;
+    }
+
+  return rval;
+}
+#endif /* 0 */
+
 int
 ACE_Handle_Set::count_bits (u_long n) const
 {
@@ -85,7 +107,7 @@ ACE_Handle_Set::count_bits (u_long n) const
   return (ACE_Handle_Set::nbits_[n & 0xff] 
 	  + ACE_Handle_Set::nbits_[(n >> 8) & 0xff] 
 	  + ACE_Handle_Set::nbits_[(n >> 16) & 0xff] 
-	  + ACE_Handle_Set::nbits_[n >> 24]);
+	  + ACE_Handle_Set::nbits_[(n >> 24) & 0xff]);
 }
 
 // Synchronize the underlying FD_SET with the MAX_FD and the SIZE.
