@@ -44,8 +44,7 @@ class TAO_IFRService_Export TAO_AttributeDef_i : public virtual TAO_Contained_i
   //    of an interface.
   //
 public:
-  TAO_AttributeDef_i (TAO_Repository_i *repo,
-                      ACE_Configuration_Section_Key section_key);
+  TAO_AttributeDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_AttributeDef_i (void);
@@ -57,13 +56,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -79,24 +78,24 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_IDLType_ptr type_def (
+  virtual CORBA::IDLType_ptr type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_IDLType_ptr type_def_i (
+  CORBA::IDLType_ptr type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void type_def (
-      CORBA_IDLType_ptr type_def
+      CORBA::IDLType_ptr type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void type_def_i (
-      CORBA_IDLType_ptr type_def
+      CORBA::IDLType_ptr type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -123,7 +122,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_AttributeDescription make_description (
+  CORBA::AttributeDescription make_description (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -131,12 +130,12 @@ public:
   // making its own description.
 
   // These two are called by Contained::move().
-  CORBA_ExceptionDefSeq *get_exceptions (
+  CORBA::ExceptionDefSeq *get_exceptions (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_ExceptionDefSeq *put_exceptions (
+  CORBA::ExceptionDefSeq *put_exceptions (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

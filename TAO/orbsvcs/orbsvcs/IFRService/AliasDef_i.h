@@ -44,8 +44,7 @@ public:
   //    Represents an OMG IDL typedef that aliases another definition.
   //
 public:
-  TAO_AliasDef_i (TAO_Repository_i *repo,
-                  ACE_Configuration_Section_Key section_key);
+  TAO_AliasDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_AliasDef_i (void);
@@ -69,24 +68,24 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA_IDLType_ptr original_type_def (
+  virtual CORBA::IDLType_ptr original_type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_IDLType_ptr original_type_def_i (
+  CORBA::IDLType_ptr original_type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void original_type_def (
-      CORBA_IDLType_ptr original_type_def
+      CORBA::IDLType_ptr original_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void original_type_def_i (
-      CORBA_IDLType_ptr original_type_def
+      CORBA::IDLType_ptr original_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -41,10 +41,12 @@ be_visitor_union_cdr_op_ci::~be_visitor_union_cdr_op_ci (void)
 int
 be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 {
-  // already generated and/or we are imported. Don't do anything.
+  // There is no check for is_local here because we have no way of
+  // knowing which member will be active at marshaling time. So we
+  // generate the CDR operators and let the local interface member
+  // (if any) be caught at runtime.
   if (node->cli_inline_cdr_op_gen () 
-      || node->imported () 
-      || node->is_local ())
+      || node->imported ())
     {
       return 0;
     }

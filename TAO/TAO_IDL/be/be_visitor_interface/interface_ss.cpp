@@ -251,7 +251,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl = ("
       << full_skel_name << " *) _tao_servant;" << be_nl
-      << "CORBA_InterfaceDef_ptr _tao_retval = 0;" << be_nl
+      << "CORBA::InterfaceDef_ptr _tao_retval = 0;" << be_nl
       << "CORBA::Boolean _tao_result = 0;" << be_nl << be_nl;
   *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
       << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("

@@ -300,6 +300,7 @@ TEMPLATE_FILES = \
   Connector_Impl \
   Connector_Impl \
   Sequence_T \
+  Any_T \
   TAO_Singleton
 
 ifndef TAO_ROOT
@@ -322,7 +323,6 @@ ifeq ($(minimum_corba),0)
 ORB_CORE_FILES += \
   Services \
   NVList \
-  IFR_TypeCodes \
   Dynamic_Adapter
 
 endif # minimum_corba

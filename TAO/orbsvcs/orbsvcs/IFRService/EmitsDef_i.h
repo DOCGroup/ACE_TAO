@@ -44,8 +44,7 @@ class TAO_IFRService_Export TAO_EmitsDef_i : public virtual TAO_EventDef_i
   //    by a component.
   //
 public:
-    TAO_EmitsDef_i (TAO_Repository_i *repo,
-                    ACE_Configuration_Section_Key section_key);
+    TAO_EmitsDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_EmitsDef_i (void);
@@ -68,13 +67,13 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

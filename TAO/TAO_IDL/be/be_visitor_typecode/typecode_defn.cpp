@@ -1104,8 +1104,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_enum *node)
   this->gen_name (node);
 
   // generate the member count
-  os->indent ();
-  *os << node->member_count () << ", // member count\n";
+  *os << node->member_count () << ", // member count" << be_nl;
   // size of the member length
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
@@ -1228,8 +1227,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_exception *node)
   this->gen_name (node);
 
   // generate the member count
-  os->indent ();
-  *os << node->nfields () << ", // member count\n";
+  *os << node->nfields () << ", // member count" << be_nl;
   // size of the member count
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
@@ -1779,8 +1777,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_structure *node)
   this->gen_name (node);
 
   // generate the member count
-  os->indent ();
-  *os << node->nfields () << ", // member count\n";
+  *os << node->nfields () << ", // member count" << be_nl;
   // size of the member count
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
@@ -1996,7 +1993,6 @@ be_visitor_typecode_defn::gen_encapsulation (be_union *node)
   this->gen_repoID (node);
 
   // generate name
-  os->indent ();
   this->gen_name (node);
 
   // generate typecode for discriminant
@@ -2009,13 +2005,12 @@ be_visitor_typecode_defn::gen_encapsulation (be_union *node)
     }
 
   // generate the default used flag
-  os->indent ();
   *os << node->default_index () << ", // default used index" << be_nl;
   // size of the default index used
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
   // generate the member count
-  *os << node->nfields () << ", // member count\n";
+  *os << node->nfields () << ", // member count" << be_nl;
   // size of the member count
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
@@ -2373,14 +2368,13 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
     }
 
-  //STEP 5: generate the member count
-  os->indent ();
+  // STEP 5: generate the member count
+  *os << node->data_members_count () << ", // member count" << be_nl;
 
-  *os << node->data_members_count () << ", // member count\n";
-  // size of the member count
-   this->tc_offset_ += sizeof (ACE_CDR::ULong);
+  // Size of the member count.
+  this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
-  //STEP 6: hand over to the scope to generate the typecode for elements
+  // STEP 6: hand over to the scope to generate the typecode for elements
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
 
   if (node->accept (this) == -1)
@@ -3427,7 +3421,7 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       // size of the repoID field
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
     }
-  *os << "\n";
+  *os << be_nl;
 
   return;
 }
@@ -3474,7 +3468,7 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
       // size of the name field.
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
     }
-  *os << "\n";
+  *os << be_nl;
   return;
 }
 

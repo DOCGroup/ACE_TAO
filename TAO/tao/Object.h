@@ -104,7 +104,7 @@ public:
 
 
   /// Get info about the object from the Interface Repository.
-  virtual CORBA_InterfaceDef_ptr _get_interface (
+  virtual CORBA::InterfaceDef_ptr _get_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Get info about the object from the Interface Repository.
@@ -241,6 +241,9 @@ public:
 
   /// Get the proxy broker.
   virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
+
+  /// Allows us to forbid marshaling of local interfaces.
+  virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
 protected:
 

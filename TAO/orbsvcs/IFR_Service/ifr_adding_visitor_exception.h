@@ -59,7 +59,7 @@ public:
   virtual int visit_union (AST_Union *node);
   // Visit union.
 
-  virtual CORBA_IDLType_ptr ir_current (void) const;
+  virtual CORBA::IDLType_ptr ir_current (void) const;
   // Lets the visitor one level above acess this value.
 
 private:
@@ -67,11 +67,11 @@ private:
   // Is this visitor visiting a struct that was defined inside
   // a union, an exception, or another struct?
 
-  CORBA_StructMemberSeq members_;
+  CORBA::StructMemberSeq members_;
   // Holder for the member list passed to create_struct() or
   // create_exception().
 
-  ACE_Unbounded_Queue<CORBA_Contained_ptr> move_queue_;
+  ACE_Unbounded_Queue<CORBA::Contained_ptr> move_queue_;
   // IR objects that must be moved into the scope (struct or
   // exception) where they were declared in the IDL file.
 };

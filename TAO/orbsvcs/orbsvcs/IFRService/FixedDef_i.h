@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_FixedDef_i : public virtual TAO_IDLType_i
   //    Represents an IDL fixed type.
   //
 public:
-  TAO_FixedDef_i (TAO_Repository_i *repo,
-                  ACE_Configuration_Section_Key section_key);
+  TAO_FixedDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_FixedDef_i (void);

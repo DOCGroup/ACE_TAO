@@ -92,16 +92,16 @@ BE_cleanup (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA_Contained_var result =
+      CORBA::Contained_var result =
         be_global->repository ()->lookup_id (be_global->holding_scope_name ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (result.in ()))
         {
-          CORBA_ModuleDef_var scope =
-            CORBA_ModuleDef::_narrow (result.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+          CORBA::ModuleDef_var scope =
+            CORBA::ModuleDef::_narrow (result.in ()
+                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           scope->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -163,8 +163,9 @@ BE_ifr_init (int &ac,
           );
         }
 
-      CORBA_Repository_var repo = CORBA_Repository::_narrow (object.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+      CORBA::Repository_var repo = 
+        CORBA::Repository::_narrow (object.in ()
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (repo.in ()))
@@ -194,10 +195,10 @@ BE_ifr_init (int &ac,
 void
 BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA_ModuleDef_ptr scope = CORBA_ModuleDef::_nil ();
+  CORBA::ModuleDef_ptr scope = CORBA::ModuleDef::_nil ();
 
   // If we are multi-threaded, it may already be created.
-  CORBA_Contained_var result =
+  CORBA::Contained_var result =
     be_global->repository ()->lookup_id (be_global->holding_scope_name ()
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -215,8 +216,8 @@ BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      scope = CORBA_ModuleDef::_narrow (result.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+      scope = CORBA::ModuleDef::_narrow (result.in ()
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 

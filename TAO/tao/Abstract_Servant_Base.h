@@ -43,7 +43,7 @@ public:
   virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Query the Interface Repository.
-  virtual CORBA_InterfaceDef_ptr _get_interface (
+  virtual CORBA::InterfaceDef_ptr _get_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) = 0;
 

@@ -101,6 +101,25 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       node->gen_stub_ctor (os);
     }
 
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean" << be_nl;
+
+  if (node->is_local ())
+    {
+      *os << node->name () << "::marshal (TAO_OutputCDR &)" << be_nl
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}";
+    }
+  else
+    {
+      *os << node->name () << "::marshal (TAO_OutputCDR &cdr)" << be_nl
+          << "{" << be_idt_nl
+          << "return (cdr << this);" << be_uidt_nl
+          << "}";
+    }
+
   os->gen_endif ();
   node->cli_inline_gen (I_TRUE);
   return 0;

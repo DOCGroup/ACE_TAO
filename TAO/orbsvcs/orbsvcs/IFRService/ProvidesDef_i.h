@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_ProvidesDef_i : public virtual TAO_Contained_i
   //    Represents an interface that is provided by a component.
   //
 public:
-    TAO_ProvidesDef_i (TAO_Repository_i *repo,
-                       ACE_Configuration_Section_Key section_key);
+    TAO_ProvidesDef_i (TAO_Repository_i *repoy);
   // Constructor
 
   virtual ~TAO_ProvidesDef_i (void);
@@ -67,24 +66,24 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_InterfaceDef_ptr interface_type (
+  virtual CORBA::InterfaceDef_ptr interface_type (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_InterfaceDef_ptr interface_type_i (
+  CORBA::InterfaceDef_ptr interface_type_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

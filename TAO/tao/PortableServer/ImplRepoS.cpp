@@ -842,7 +842,7 @@ void POA_ImplementationRepository::ServerObject::_interface_skel (
   )
 {
   POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *) _tao_object_reference;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
 
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -4186,7 +4186,7 @@ void POA_ImplementationRepository::Administration::_interface_skel (
   )
 {
   POA_ImplementationRepository::Administration *_tao_impl = (POA_ImplementationRepository::Administration *) _tao_object_reference;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
 
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -5138,7 +5138,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
   )
 {
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl = (POA_ImplementationRepository::ServerInformationIterator *) _tao_object_reference;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
 
   TAO_IFR_Client_Adapter *_tao_adapter =

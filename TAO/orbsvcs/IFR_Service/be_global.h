@@ -57,17 +57,17 @@ public:
 
   void orb (CORBA::ORB_ptr orb);
 
-  CORBA_Repository_ptr repository (void) const;
+  CORBA::Repository_ptr repository (void) const;
 
-  void repository (CORBA_Repository_ptr repo);
+  void repository (CORBA::Repository_ptr repo);
 
-  CORBA_ModuleDef_ptr holding_scope (void) const;
+  CORBA::ModuleDef_ptr holding_scope (void) const;
 
-  void holding_scope (CORBA_ModuleDef_ptr scope);
+  void holding_scope (CORBA::ModuleDef_ptr scope);
 
   const char *holding_scope_name (void) const;
 
-  ACE_Unbounded_Stack<CORBA_Container_ptr> &ifr_scopes (void);
+  ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
 
   const char *filename (void) const;
 
@@ -88,17 +88,17 @@ private:
   CORBA::ORB_var orb_;
   // Reference to our ORB.
 
-  CORBA_Repository_var repository_;
+  CORBA::Repository_var repository_;
   // Reference to the interface repository.
 
-  CORBA_ModuleDef_var holding_scope_;
+  CORBA::ModuleDef_var holding_scope_;
   // Used to hold struct/union/exception member defns until
   // they are moved into their permanent scope.
 
   CORBA::String_var holding_scope_name_;
   // Must be something unlikely to clash.
 
-  ACE_Unbounded_Stack<CORBA_Container_ptr> ifr_scopes_;
+  ACE_Unbounded_Stack<CORBA::Container_ptr> ifr_scopes_;
   // IR object scope stack.
 
   char *filename_;

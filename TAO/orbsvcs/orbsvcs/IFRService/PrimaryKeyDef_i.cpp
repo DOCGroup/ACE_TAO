@@ -7,11 +7,10 @@
 ACE_RCSID(IFR_Service, PrimaryKeyDef_i, "$Id$")
 
 TAO_PrimaryKeyDef_i::TAO_PrimaryKeyDef_i (
-    TAO_Repository_i *repo,
-    ACE_Configuration_Section_Key section_key
+    TAO_Repository_i *repo
   )
-  : TAO_IRObject_i (repo, section_key),
-    TAO_Contained_i (repo, section_key)
+  : TAO_IRObject_i (repo),
+    TAO_Contained_i (repo)
 {
 }
 
@@ -32,6 +31,9 @@ TAO_PrimaryKeyDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_WRITE_GUARD;
 
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -42,16 +44,19 @@ TAO_PrimaryKeyDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SING
   // TODO
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_PrimaryKeyDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_PrimaryKeyDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -66,6 +71,9 @@ TAO_PrimaryKeyDef_i::is_a (const char *primary_key_id
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   return this->is_a_i (primary_key_id
                        ACE_ENV_ARG_PARAMETER);
 }
@@ -79,16 +87,19 @@ TAO_PrimaryKeyDef_i::is_a_i (const char * /* primary_key_id */
   return 0;
 }
 
-CORBA_ValueDef_ptr
+CORBA::ValueDef_ptr
 TAO_PrimaryKeyDef_i::primary_key (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA_ValueDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA::ValueDef::_nil ());
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
 
   return this->primary_key_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_ValueDef_ptr
+CORBA::ValueDef_ptr
 TAO_PrimaryKeyDef_i::primary_key_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -154,6 +154,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
+  *os << be_nl << be_nl
+      << "CORBA::Boolean" << be_nl
+      << "tao_" << node->flat_name () << "_marshal (" << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR &strm" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (strm);" << be_uidt_nl
+      << "}";
+
   // Generate the _var class.
   if (node->gen_var_impl () == -1)
     {

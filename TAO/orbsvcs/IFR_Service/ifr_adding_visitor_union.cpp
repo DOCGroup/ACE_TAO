@@ -98,10 +98,10 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                     }
 
                   this->ir_current_ =
-                    CORBA_IDLType::_duplicate (visitor.ir_current ());
+                    CORBA::IDLType::_duplicate (visitor.ir_current ());
 
-                  CORBA_Contained_ptr tmp =
-                    CORBA_Contained::_narrow (visitor.ir_current ()
+                  CORBA::Contained_ptr tmp =
+                    CORBA::Contained::_narrow (visitor.ir_current ()
                                               ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
@@ -190,7 +190,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
               this->members_[index++].type_def =
-                CORBA_IDLType::_duplicate (this->ir_current_.in ());
+                CORBA::IDLType::_duplicate (this->ir_current_.in ());
             }
         }
     }
@@ -215,7 +215,7 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
   ACE_TRY
     {
       // Is this struct already in the respository?
-      CORBA_Contained_var prev_def =
+      CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -232,10 +232,10 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
             {
               // Get the result of the visit.
               this->ir_current_ =
-                CORBA_IDLType::_duplicate (visitor.ir_current ());
+                CORBA::IDLType::_duplicate (visitor.ir_current ());
 
-              CORBA_Contained_ptr tmp =
-                CORBA_Contained::_narrow (visitor.ir_current ()
+              CORBA::Contained_ptr tmp =
+                CORBA::Contained::_narrow (visitor.ir_current ()
                                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -264,7 +264,7 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
             }
 
           this->ir_current_ =
-            CORBA_IDLType::_narrow (prev_def.in ()
+            CORBA::IDLType::_narrow (prev_def.in ()
                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -290,7 +290,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
   ACE_TRY
     {
       // Is this enum already in the respository?
-      CORBA_Contained_var prev_def =
+      CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -301,7 +301,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
           CORBA::ULong member_count = ACE_static_cast (CORBA::ULong,
                                                        node->member_count ());
 
-          CORBA_EnumMemberSeq members (member_count);
+          CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);
 
           UTL_ScopedName *member_name = 0;
@@ -325,8 +325,8 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
                                         );
           ACE_TRY_CHECK;
 
-          CORBA_Contained_ptr tmp =
-            CORBA_Contained::_narrow (this->ir_current_.in ()
+          CORBA::Contained_ptr tmp =
+            CORBA::Contained::_narrow (this->ir_current_.in ()
                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -354,7 +354,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
             }
 
           this->ir_current_ =
-            CORBA_IDLType::_narrow (prev_def.in ()
+            CORBA::IDLType::_narrow (prev_def.in ()
                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -379,7 +379,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA_Contained_var prev_def =
+      CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -394,7 +394,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           // an Any.
           if (disc_type->node_type () == AST_Decl::NT_enum)
             {
-              CORBA_Contained_var disc_def =
+              CORBA::Contained_var disc_def =
                 be_global->repository ()->lookup_id (disc_type->repoID ()
                                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -411,8 +411,8 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                   );
                 }
 
-              CORBA_IDLType_var idl_def =
-                CORBA_IDLType::_narrow (disc_def.in ()
+              CORBA::IDLType_var idl_def =
+                CORBA::IDLType::_narrow (disc_def.in ()
                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -457,7 +457,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
             }
           else
             {
-              CORBA_Container_ptr current_scope = CORBA_Container::_nil ();
+              CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
 
               if (be_global->ifr_scopes ().top (current_scope) != 0)
                 {
@@ -488,10 +488,10 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 
           if (size > 0)
             {
-              CORBA_Contained_var traveller;
+              CORBA::Contained_var traveller;
 
-              CORBA_Container_var new_container =
-                CORBA_Container::_narrow (this->ir_current_.in ()
+              CORBA::Container_var new_container =
+                CORBA::Container::_narrow (this->ir_current_.in ()
                                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -532,7 +532,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
             }
 
           this->ir_current_ =
-            CORBA_IDLType::_narrow (prev_def.in ()
+            CORBA::IDLType::_narrow (prev_def.in ()
                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -551,7 +551,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
   return 0;
 }
 
-CORBA_IDLType_ptr
+CORBA::IDLType_ptr
 ifr_adding_visitor_union::ir_current (void) const
 {
   return this->ir_current_.in ();

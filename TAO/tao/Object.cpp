@@ -398,7 +398,7 @@ CORBA_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-CORBA_InterfaceDef_ptr
+CORBA::InterfaceDef_ptr
 CORBA_Object::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get the right Proxy.

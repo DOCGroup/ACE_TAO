@@ -288,20 +288,27 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << node->name () << "_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
-          << "if (result)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
-          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
-          << "}" << be_uidt;
+      if (node->is_local ())
+        {
+          *os << "result = 0;";
+        }
+      else
+        {
+          *os << node->name () << "_var _tao_union_tmp;" << be_nl
+              << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union."
+              << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+              << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+              << "}" << be_uidt;
+        }
 
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result = strm << _tao_union."
-          << f->local_name () << " ();";
+      *os << "result = _tao_union."
+          << f->local_name () << " ()->marshal (strm);";
       break;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -343,20 +350,27 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << node->name () << "_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
-          << "if (result)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
-          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
-          << "}" << be_uidt;
+      if (node->is_local ())
+        {
+          *os << "result = 0;";
+        }
+      else
+        {
+          *os << node->name () << "_var _tao_union_tmp;" << be_nl
+              << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union."
+              << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+              << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+              << "}" << be_uidt;
+        }
 
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result  = strm << _tao_union."
-          << f->local_name () << " ();";
+      *os << "result = _tao_union."
+          << f->local_name () << " ()->marshal (strm);";
       break;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:

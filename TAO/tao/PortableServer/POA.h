@@ -474,6 +474,10 @@ public:
 
   CORBA::Boolean cleanup_in_progress (void);
 
+  static int parse_ir_object_key (const TAO_ObjectKey &object_key,
+                                  PortableServer::ObjectId &user_id);
+  // Calls protected static method used when POACurrent is not appropriate.
+
   TAO_Object_Adapter &object_adapter (void);
 
   ACE_Lock &lock (void);

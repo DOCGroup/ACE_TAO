@@ -44,8 +44,44 @@ be_visitor_array_cdr_op_ci::~be_visitor_array_cdr_op_ci (void)
 int
 be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 {
+  if (node->cli_inline_cdr_op_gen () || node->imported ())
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Since we don't generate CDR stream operators for types that
+  // explicitly contain a local interface (at some level), we 
+  // must override these Any template class methods to avoid
+  // calling the non-existent operators. The zero return value
+  // will eventually cause CORBA::MARSHAL to be raised if this
+  // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
+      if (be_global->any_support ())
+        {
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+          *os << "ACE_INLINE CORBA::Boolean" << be_nl
+              << "TAO::Any_Array_Impl_T<" << node->name ()
+              << "_slice, " << node->name () 
+              << "_forany>::marshal_value (TAO_OutputCDR &)" << be_nl
+              << "{" << be_idt_nl
+              << "return 0;" << be_uidt_nl
+              << "}";
+
+          *os << be_nl << be_nl
+              << "ACE_INLINE CORBA::Boolean" << be_nl
+              << "TAO::Any_Array_Impl_T<" << node->name ()
+              << "_slice, " << node->name () 
+              << "_forany>::demarshal_value (TAO_InputCDR &)" << be_nl
+              << "{" << be_idt_nl
+              << "return 0;" << be_uidt_nl
+              << "}";
+        }
+
       return 0;
     }
 
@@ -56,13 +92,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       return this->visit_node (node);
     }
 
-  if (node->cli_inline_cdr_op_gen () || node->imported ())
-    {
-      return 0;
-    }
-
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  TAO_OutStream *os = this->ctx_->stream ();
 
   if (!bt)
     {
@@ -556,6 +586,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
   TAO_OutStream *os = this->ctx_->stream ();
   unsigned long i;
   be_array *node = this->ctx_->be_node_as_array ();
+  AST_Decl::NodeType nt = bt->node_type ();
 
   if (!node)
     {
@@ -617,7 +648,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
       // Handle the array of array case, where we need to pass the
       // forany type.
-      if (bt->node_type () == AST_Decl::NT_array)
+      if (nt == AST_Decl::NT_array)
         {
           *os << bt->name () << "_forany tmp ("
               << bt->name () << "_alloc ());" << be_nl;
@@ -637,7 +668,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm >> ";
           *os << "_tao_array ";
 
-          for (i = 0; i < node->n_dims (); i++)
+          for (i = 0; i < ndims; ++i)
             {
               *os << "[i" << i << "]";
             }
@@ -648,8 +679,6 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
-              case AST_Decl::NT_interface:
-              case AST_Decl::NT_interface_fwd:
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
                 *os << ".out ()";
@@ -691,7 +720,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
       // Handle the array of array case, where we need to pass the
       // forany type.
-      if (bt->node_type () == AST_Decl::NT_array)
+      if (nt == AST_Decl::NT_array)
         {
           *os << bt->name () << "_var tmp_var ("
               << bt->name () << "_dup (_tao_array";
@@ -704,6 +733,34 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << "));" << be_nl;
           *os << bt->name () << "_forany tmp (tmp_var.inout ());" << be_nl;
           *os << "_tao_marshal_flag = (strm << tmp);";
+        }
+      else if (nt == AST_Decl::NT_interface 
+               || nt == AST_Decl::NT_interface_fwd)
+        {
+          *os << "_tao_marshal_flag = " << be_idt_nl;
+
+          if (bt->is_defined ())
+            {    
+              *os << "_tao_array";
+
+              for (i = 0; i < ndims; ++i)
+                {
+                  *os << "[i" << i << "]";
+                }
+
+              *os << ".in ()->marshal (strm);" << be_uidt;
+            }
+          else
+            {
+              *os << "tao_" << bt->flat_name () << "_marshal (_tao_array";
+              
+              for (i = 0; i < ndims; ++i)
+                {
+                  *os << "[i" << i << "]";
+                }
+
+              *os << ".in (), strm);" << be_uidt;
+            }
         }
       else
         {
@@ -721,8 +778,6 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
-              case AST_Decl::NT_interface:
-              case AST_Decl::NT_interface_fwd:
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
                 *os << ".in ()";

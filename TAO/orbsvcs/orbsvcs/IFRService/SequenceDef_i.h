@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_SequenceDef_i : public virtual TAO_IDLType_i
   //    Represents an IDL sequence type.
   //
 public:
-  TAO_SequenceDef_i (TAO_Repository_i *repo,
-                     ACE_Configuration_Section_Key section_key);
+  TAO_SequenceDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_SequenceDef_i (void);
@@ -111,24 +110,24 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_IDLType_ptr element_type_def (
+  virtual CORBA::IDLType_ptr element_type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_IDLType_ptr element_type_def_i (
+  CORBA::IDLType_ptr element_type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void element_type_def (
-      CORBA_IDLType_ptr element_type_def
+      CORBA::IDLType_ptr element_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void element_type_def_i (
-      CORBA_IDLType_ptr element_type_def
+      CORBA::IDLType_ptr element_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

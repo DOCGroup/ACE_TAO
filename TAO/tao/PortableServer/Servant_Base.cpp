@@ -90,7 +90,7 @@ TAO_ServantBase::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return 0;
 }
 
-CORBA_InterfaceDef_ptr
+CORBA::InterfaceDef_ptr
 TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_Client_Adapter *adapter =

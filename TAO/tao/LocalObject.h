@@ -72,7 +72,7 @@ public:
       _get_implementation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Gets info about object from the Interface Repository.
-  virtual CORBA_InterfaceDef_ptr _get_interface (
+  virtual CORBA::InterfaceDef_ptr _get_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 

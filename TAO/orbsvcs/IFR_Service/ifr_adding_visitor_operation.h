@@ -50,7 +50,7 @@ public:
   // Visit argument.
 
 private:
-  CORBA_ParDescriptionSeq params_;
+  CORBA::ParDescriptionSeq params_;
   // Holder for the operation parameter info passed to the
   // interface repository method create_operation().
 

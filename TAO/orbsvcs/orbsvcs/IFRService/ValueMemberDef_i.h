@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_ValueMemberDef_i : public virtual TAO_Contained_
   //    Represents the definition of a valuemember structure.
   //
 public:
-  TAO_ValueMemberDef_i (TAO_Repository_i *repo,
-                        ACE_Configuration_Section_Key section_key);
+  TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
   // Constructor
 
   virtual ~TAO_ValueMemberDef_i (void);
@@ -67,13 +66,13 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -89,24 +88,24 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_IDLType_ptr type_def (
+  virtual CORBA::IDLType_ptr type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_IDLType_ptr type_def_i (
+  CORBA::IDLType_ptr type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void type_def (
-      CORBA_IDLType_ptr type_def
+      CORBA::IDLType_ptr type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void type_def_i (
-      CORBA_IDLType_ptr type_def
+      CORBA::IDLType_ptr type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

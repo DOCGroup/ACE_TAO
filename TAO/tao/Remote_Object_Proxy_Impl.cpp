@@ -231,7 +231,7 @@ TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
   return _tao_retval._retn ();
 }
 
-CORBA_InterfaceDef_ptr
+CORBA::InterfaceDef_ptr
 TAO_Remote_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
                                               ACE_ENV_ARG_DECL)
 {
@@ -247,7 +247,7 @@ TAO_Remote_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
     }
 
   return adapter->get_interface_remote (target
-                                         ACE_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

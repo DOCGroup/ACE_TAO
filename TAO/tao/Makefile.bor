@@ -91,7 +91,6 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_Version.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\IFR_Client_Adapter.obj \
-	$(OBJDIR)\IFR_TypeCodes.obj \
 	$(OBJDIR)\IIOPC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \

@@ -1829,19 +1829,16 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
         CORBA::ULong tc_kind_holder;
         CORBA::TCKind tc_kind;
 
-        // @@@ (JP) When the IDL compiler is updated to create typecodes
-        // using a CDR stream, ValueModifier will have to be changed to
-        // skip_short.
         if (!stream.skip_string ()          // ID
             || !stream.skip_string ()       // Name
-            || !stream.skip_long ()         // ValueModifier
+            || !stream.skip_short ()        // ValueModifier
             || !stream.read_ulong (tc_kind_holder)) // Base's TCKind
           {
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                               0);
           }
 
-        tc_kind = ACE_static_cast (CORBA::TCKind, tc_kind_holder);
+        tc_kind = ACE_static_cast(CORBA::TCKind, tc_kind_holder);
 
 
         // The tc_kind can be either tk_null or tk_value.
@@ -2112,12 +2109,9 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
         CORBA::ULong tc_kind_holder;
         CORBA::TCKind tc_kind;
 
-        // @@@ (JP) When the IDL compiler is updated to create typecodes
-        // using a CDR stream, ValueModifier will have to be changed to
-        // skip_short.
         if (!stream.skip_string ()          // ID
             || !stream.skip_string ()       // Name
-            || !stream.skip_long ()         // ValueModifier
+            || !stream.skip_short ()        // ValueModifier
             || !stream.read_ulong (tc_kind_holder)) // Base's TCKind
           {
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
@@ -2175,10 +2169,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
                                          ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-            // @@@ (JP) When the IDL compiler is updated to create typecodes
-            // using a CDR stream, this will have to be changed to
-            // skip_short.
-            if (!stream.skip_long ())  // skip member visibility
+            if (!stream.skip_short ())  // skip member visibility
               {
                 ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                                   CORBA::TypeCode::_nil ());
@@ -2752,12 +2743,9 @@ CORBA_TypeCode::private_member_visibility (CORBA::ULong slot
 
   // Skip rest of header (type ID, name, etc) and collect the
   // number of value members.
-  // @@@ (JP) When the IDL compiler is updated to create typecodes
-  // using a CDR stream, ValueModifier will have to be changed to
-  // skip_short.
   if (!stream.skip_string ()              // ID
       || !stream.skip_string ()           // Name
-      || !stream.skip_long ()             // ValueModifier
+      || !stream.skip_short ()            // ValueModifier
       || !this->skip_typecode (stream)    // Concrete base typecode
       || !stream.skip_ulong ())           // Member count
     {
@@ -2858,12 +2846,9 @@ CORBA_TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 
   // Skip rest of header (type ID, name, etc) and collect the
   // number of value members.
-  // @@@ (JP) When the IDL compiler is updated to create typecodes
-  // using a CDR stream, ValueModifier will have to be changed to
-  // skip_short.
   if (!stream.skip_string ()          // ID
       || !stream.skip_string ()       // Name
-      || !stream.skip_long ())        // ValueModifier
+      || !stream.skip_short ())       // ValueModifier
     {
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         0);
@@ -3126,6 +3111,13 @@ CORBA_TypeCode::_tao_decode (const CORBA_TypeCode *parent,
 
 // ****************************************************************
 
+
+void
+CORBA_TypeCode::_tao_any_destructor (void *x)
+{
+  CORBA::TypeCode_ptr tmp = ACE_static_cast (CORBA::TypeCode_ptr, x);
+  CORBA::release (tmp);
+}
 
 // ************ The following are deprecated ****************
 
