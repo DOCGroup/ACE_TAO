@@ -1,3 +1,15 @@
+Fri Mar 17 23:39:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Types.h (class
+	  TAO_Notify_EventType): Hacked the class by adding
+
+	     friend class TAO_Notify_ConsumerAdmin_i;
+
+	  so that orbsvcs would compile.
+
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp (federated_query):
+	  Changed _ptr's to *'s.
+
 Fri Mar 17 14:20:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/GIOP_Assorted_Headers.h:
@@ -22,11 +34,11 @@ Fri Mar 17 14:20:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 Fri Mar 17 14:17:00 2000  Shawn Hannan  <hannan@cs.wustl.edu>
 
 	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
-	* orbsvcs/tests/Property/client.cpp: changed _ptr's to *'s.
+	* orbsvcs/tests/Property/client.cpp: Changed _ptr's to *'s.
 
 Fri Mar 17 13:04:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp: Fixed a couple of errors in old g++. 
+	* tao/GIOP_Message_Lite.cpp: Fixed a couple of errors in old g++.
 
 Fri Mar 17 13:01:58 2000  David L. Levine  <levine@cs.wustl.edu>
 
