@@ -186,7 +186,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
       ACE_OS::sprintf (timestamp,
                        ACE_LIB_TEXT ("%s.%03ld %s"),
                        ctp + 4,
-                       this->usecs_ / 1000,
+                       ((long) this->usecs_) / 1000,
                        ctp + 20);
     }
 
