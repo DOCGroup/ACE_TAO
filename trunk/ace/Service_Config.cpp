@@ -573,10 +573,14 @@ ACE_Service_Config::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 
 
   ACE_Service_Type *service_type;
+  // This is just a temporary to force the compiler to use the right
+  // constructor in ACE_Service_Type
+  ACE_DLL tmp_dll;
+
   ACE_NEW_RETURN (service_type,
                   ACE_Service_Type (ssd.name_,
                                     stp,
-                                    0,
+                                    tmp_dll,
                                     ssd.active_),
                   -1);
 
