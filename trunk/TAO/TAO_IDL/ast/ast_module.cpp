@@ -108,6 +108,18 @@ AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
 
       this->fe_add_predefined_type (pdt);
 
+      pdt = idl_global->gen ()->create_predefined_type (
+                                  AST_PredefinedType::PT_pseudo,
+                                  new UTL_ScopedName (
+                                    new Identifier ("TCKind",
+                                                    1,
+                                                    0,
+                                                    I_FALSE),
+                                    NULL),
+                                  NULL);
+
+      this->fe_add_predefined_type (pdt);
+
 # ifdef IDL_HAS_VALUETYPE
       if (idl_global->obv_support ())
         {
