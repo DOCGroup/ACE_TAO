@@ -147,40 +147,34 @@ sub adjust_value {
 
   ## Perform any additions, subtractions
   ## or overrides for the template values.
-  my($addtemp) = $self->{'addtemp'};
-  foreach my $at (keys %$addtemp) {
-    if ($at eq $name) {
-      my($val) = $$addtemp{$at};
-      if ($$val[0] > 0) {
-        if (UNIVERSAL::isa($value, 'ARRAY')) {
-          $value = [ $$val[1], @$value ];
-        }
-        else {
-          $value = "$$val[1] $value";
-        }
-      }
-      elsif ($$val[0] < 0) {
-        my($parts) = undef;
-        if (UNIVERSAL::isa($value, 'ARRAY')) {
-          my(@copy) = @$value;
-          $parts = \@copy;
-        }
-        else {
-          $parts = $self->create_array($value);
-        }
-
-        $value = '';
-        foreach my $part (@$parts) {
-          if ($part ne $$val[1] && $part ne '') {
-            $value .= "$part ";
-          }
-        }
-        $value =~ s/^\s+//;
-        $value =~ s/\s+$//;
+  if (defined $self->{'addtemp'}->{$name}) {
+    my($val) = $self->{'addtemp'}->{$name};
+    if ($$val[0] > 0) {
+      if (UNIVERSAL::isa($value, 'ARRAY')) {
+        push(@$value, $$val[1]);
       }
       else {
-        $value = $$val[1];
+        $value .= " $$val[1]";
       }
+    }
+    elsif ($$val[0] < 0) {
+      my($parts) = undef;
+      if (UNIVERSAL::isa($value, 'ARRAY')) {
+        $parts = $value;
+      }
+      else {
+        $parts = $self->create_array($value);
+      }
+
+      $value = [];
+      foreach my $part (@$parts) {
+        if ($part ne $$val[1] && $part ne '') {
+          push(@$value, $part);
+        }
+      }
+    }
+    else {
+      $value = [ $$val[1] ];
     }
   }
 
@@ -293,21 +287,20 @@ sub get_value_with_default {
   my($name)  = shift;
   my($value) = $self->get_value($name);
 
-  if (defined $value) {
-    if (UNIVERSAL::isa($value, 'ARRAY')) {
-      $value = "@$value";
-    }
-  }
-  else {
+  if (!defined $value) {
     $value = $self->{'defaults'}->{$name};
-    if (!defined $value) {
+    if (defined $value) {
+      $value = $self->{'prjc'}->relative(
+                       $self->adjust_value($name, $value));
+    }
+    else {
       #$self->warning("$name defaulting to empty string.");
       $value = '';
     }
-    else {
-      $value = $self->adjust_value($name, $value);
-    }
-    $value = $self->{'prjc'}->relative($value);
+  }
+
+  if (UNIVERSAL::isa($value, 'ARRAY')) {
+    $value = "@$value";
   }
 
   return $value;
@@ -319,11 +312,13 @@ sub process_foreach {
   my($index)  = $self->{'foreach'}->{'count'};
   my($text)   = $self->{'foreach'}->{'text'}->[$index];
   my($status) = 1;
-  my($errorString) = undef;
+  my($error)  = undef;
   my(@values) = ();
   my($names)  = $self->create_array($self->{'foreach'}->{'names'}->[$index]);
   my($name)   = $self->{'foreach'}->{'name'}->[$index];
 
+  ## Get the values for all of the variable names
+  ## contained within the foreach
   foreach my $n (@$names) {
     my($vals) = $self->get_value($n);
     if (defined $vals && $vals ne '') {
@@ -398,7 +393,7 @@ sub process_foreach {
       ## Now parse the line of text, each time
       ## with different values
       ++$self->{'foreach'}->{'processing'};
-      ($status, $errorString) = $self->parse_line(undef, $text);
+      ($status, $error) = $self->parse_line(undef, $text);
       --$self->{'foreach'}->{'processing'};
       if (!$status) {
         last;
@@ -406,7 +401,7 @@ sub process_foreach {
     }
   }
 
-  return $status, $errorString;
+  return $status, $error;
 }
 
 
@@ -665,8 +660,7 @@ sub handle_uc {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = uc($self->get_value_with_default($name));
-    $self->append_current($val);
+    $self->append_current(uc($self->get_value_with_default($name)));
   }
 }
 
@@ -676,8 +670,7 @@ sub handle_lc {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = lc($self->get_value_with_default($name));
-    $self->append_current($val);
+    $self->append_current(lc($self->get_value_with_default($name)));
   }
 }
 
@@ -715,8 +708,8 @@ sub handle_dirname {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = $self->dirname($self->get_value_with_default($name));
-    $self->append_current($val);
+    $self->append_current(
+              $self->dirname($self->get_value_with_default($name)));
   }
 }
 
@@ -726,8 +719,8 @@ sub handle_basename {
   my($name) = shift;
 
   if (!$self->{'if_skip'}) {
-    my($val) = $self->basename($self->get_value_with_default($name));
-    $self->append_current($val);
+    $self->append_current(
+              $self->basename($self->get_value_with_default($name)));
   }
 }
 
@@ -792,6 +785,7 @@ sub process_name {
 
     $length += length($name);
     if (defined $val) {
+      ## Add the length of the value plus 2 for the surrounding ()
       $length += length($val) + 2;
     }
 
@@ -848,9 +842,7 @@ sub process_name {
         if (defined $val && !defined $self->{'defaults'}->{$name}) {
           $self->{'defaults'}->{$name} = $self->process_special($val);
         }
-
-        $val = $self->get_value_with_default($name);
-        $self->append_current($val);
+        $self->append_current($self->get_value_with_default($name));
       }
     }
   }

@@ -60,7 +60,7 @@ sub fill_value {
       }
       $dirnames{$dirname} = 1;
     }
-    $value = join(';', sort keys %dirnames);
+    $value = join(';', keys %dirnames);
   }
 
   return $value;
