@@ -42,6 +42,7 @@ done
 
 if [ ! "$ACE_ROOT" ]; then
   ACE_ROOT=..
+  export ACE_ROOT
 fi
 
 IFS="|"
