@@ -1,3 +1,13 @@
+Fri Dec 17 15:44:13 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_interface.cpp:
+	  Fixed a bug in checking for name clash of inherited
+	  members in IDL files. Thanks to
+	  Andrey Nechypurenko <andreynech@yahoo.com> for sending
+	  in the example file and to Jon Biggar <jon@floorboard.com>
+	  for providing his best guess on a scoping and name
+	  resolution case not explicitly covered by the spec.
+
 Fri Dec 17 15:39:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/pluggable_protocols/index.html:
