@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Abondoned"=.\Abondoned.dsp - Package Owner=<4>
+Project: "Abandoned"=.\Abandoned.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

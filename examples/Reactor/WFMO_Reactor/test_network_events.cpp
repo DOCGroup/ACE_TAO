@@ -24,7 +24,7 @@
 //
 //    To run this example, start an instance of this example and
 //    connect to it using telnet (to port
-//    ACE_DEFAULT_SERVER_PORT(10002)).
+//    ACE_DEFAULT_SERVER_PORT(20002)).
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -108,6 +108,9 @@ Network_Handler::handle_close (ACE_HANDLE handle,
 
   this->stream_.close ();
   delete this;
+
+  ACE_Reactor::end_event_loop ();
+
   return 0;
 }
 
@@ -140,9 +143,6 @@ Network_Listener::Network_Listener (void)
 
 Network_Listener::~Network_Listener (void)
 {
-  this->reactor ()->remove_handler (this, ACE_Event_Handler::ACCEPT_MASK ||
-                                          ACE_Event_Handler::DONT_CALL);
-  this->handle_close (this->get_handle (), ACE_Event_Handler::ALL_EVENTS_MASK);
 }
 
 ACE_HANDLE
@@ -189,6 +189,7 @@ Network_Listener::handle_close (ACE_HANDLE handle,
   ACE_DEBUG ((LM_DEBUG, "Network_Listener::handle_close handle = %d\n", handle));
 
   this->acceptor_.close ();
+
   return 0;
 }
 

@@ -1,3 +1,27 @@
+Mon Apr 22 18:33:20 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor/run_test.pl: This file will allow
+	  us to run these tests nightly.  Note that Console_Input,
+	  Network_Events, and Talker are not included since they are
+	  interactive tests.
+
+	* bin/auto_run_tests.lst: Added new test script.
+
+	* examples/Reactor/WFMO_Reactor/test_handle_close.cpp: 
+	* examples/Reactor/WFMO_Reactor/test_multithreading.cpp:
+	* examples/Reactor/WFMO_Reactor/test_network_events.cpp: 
+	  Fixed several memory management and shutdown issues.
+
+	* examples/Reactor/WFMO_Reactor/WFMO_Reactor.dsw: 
+	  Changed "Abondoned" to "Abandoned"
+
+	* examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
+	  Fixed debug message formatting.
+
+	* examples/Reactor/WFMO_Reactor/test_network_events.cpp: 
+	  Fixed documentation to says that ACE_DEFAULT_SERVER_PORT
+	  defaults to 10002; correct value is 20002.
+	
 Mon Apr 22 17:24:39 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Reactor_Logging_Server.mak:
