@@ -64,6 +64,15 @@ void Dispatch_Command::destroy (void)
   } 
 }
 
+ACE_INLINE 
+ConfigInfo::ConfigInfo ()
+  :preemption_priority_ (0),
+   thread_priority_ (0),
+   dispatching_type_ (FIFO_DISPATCHING),
+   allocator_ (0)
+{
+}
+
 }
 
 //to satisfy ACE_Array<ConfigInfo>
