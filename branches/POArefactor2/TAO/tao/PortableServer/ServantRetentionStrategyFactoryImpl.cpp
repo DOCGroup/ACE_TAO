@@ -57,7 +57,9 @@ namespace TAO
     }
 
     void
-    ServantRetentionStrategyFactoryImpl::destroy (ServantRetentionStrategy *strategy)
+    ServantRetentionStrategyFactoryImpl::destroy (
+      ServantRetentionStrategy *strategy
+      ACE_ENV_ARG_DECL)
     {
       switch (strategy->type ())
       {
@@ -68,7 +70,9 @@ namespace TAO
 
           if (servantretention_strategy_factory != 0)
             {
-              servantretention_strategy_factory->destroy (strategy);
+              servantretention_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+
             }
           break;
         }
@@ -79,7 +83,8 @@ namespace TAO
 
           if (servantretention_strategy_factory != 0)
             {
-              servantretention_strategy_factory->destroy (strategy);
+              servantretention_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
             }
           break;
         }

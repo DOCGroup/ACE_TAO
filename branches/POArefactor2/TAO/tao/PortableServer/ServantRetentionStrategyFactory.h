@@ -37,7 +37,9 @@ namespace TAO
       virtual ServantRetentionStrategy* create (
         ::PortableServer::ServantRetentionPolicyValue value) = 0;
 
-      virtual void destroy (ServantRetentionStrategy *strategy) = 0;
+      virtual void destroy (
+        ServantRetentionStrategy *strategy
+        ACE_ENV_ARG_DECL) = 0;
     };
   }
 }
