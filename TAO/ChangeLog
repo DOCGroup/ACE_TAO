@@ -1,5 +1,6 @@
 Fri Aug  2 09:11:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+        * tao/ValueFactory_Map.h:
 	* tao/ORB_Core.h: Removed a ; that was not required after
 	  TAO_SINGLETON_DECLARE.  TRU64 gives warnings with that extra ;. 
 
