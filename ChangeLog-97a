@@ -1,5 +1,15 @@
 Thu Mar 20 22:38:27 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/Timer_Heap.cpp: added template specializations.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp,
+	              Name_Handler.cpp
+	              Server_Logging_Handler.cpp
+	              TS_Clerk_Handler.cpp
+	              TS_Server_Handler.cpp
+	              Token_Handler.cpp: added template specializations.
+	  There are still many missing from libnetsvcs.
+
 	* include/makeinclude/platform_{chorus,hpux,hpux_gcc}.GNU:
 	  split out CFLAGS and CCFLAGS from CC and CXX.
 
