@@ -330,7 +330,7 @@ public:
   /// Set the codeset translators.
   void char_translator (ACE_Char_Codeset_Translator *);
   void wchar_translator (ACE_WChar_Codeset_Translator *);
-  void wchar_allowed (int );
+  static void wchar_maxbytes (int );
 
   /**
    * Return alignment of the wr_ptr(), with respect to the start of
@@ -399,6 +399,11 @@ private:
                                 size_t align,
                                 ACE_CDR::ULong length);
 
+
+  ACE_CDR::Boolean write_wchar_array_i (const ACE_CDR::WChar* x,
+					ACE_CDR::ULong length);
+
+
   /**
    * Grow the CDR stream. When it returns <buf> contains a pointer to
    * memory in the CDR stream, with at least <size> bytes ahead of it
@@ -461,11 +466,15 @@ protected:
   ACE_WChar_Codeset_Translator *wchar_translator_;
 
   /**
-   * There are some situations when it is an error to attempt wchar
-   * i/o of any kind. This may be when using GIOP 1.0, or no valid
-   * NCSW defined.
+   * Some wide char codesets may be defined with a maximum number
+   * of bytes that is smaller than the size of a wchar_t. This means
+   * that the CDR cannot simply memcpy a block of wchars to and from
+   * the stream, but must instead realign the bytes appropriately.
+   * In cases when wchar i/o is not allowed, such as with GIOP 1.0,
+   * or not having a native wchar codeset defined, the maxbytes is
+   * set to zero, indicating no wchar data is allowed.
    */
-  int wchar_allowed_;
+  static int wchar_maxbytes_;
 };
 
 // ****************************************************************
@@ -827,7 +836,6 @@ public:
   /// Set the codeset translators.
   void char_translator (ACE_Char_Codeset_Translator *);
   void wchar_translator (ACE_WChar_Codeset_Translator *);
-  void wchar_allowed (int );
 
   /**
    * Returns (in <buf>) the next position in the buffer aligned to
@@ -871,13 +879,6 @@ protected:
   ACE_Char_Codeset_Translator *char_translator_;
   ACE_WChar_Codeset_Translator *wchar_translator_;
 
-  /**
-   * There are some situations when it is an error to attempt wchar
-   * i/o of any kind. This may be when using GIOP 1.0, or no valid
-   * NCSW defined.
-   */
-  int wchar_allowed_;
-
 private:
   ACE_CDR::Boolean read_1 (ACE_CDR::Octet *x);
   ACE_CDR::Boolean read_2 (ACE_CDR::UShort *x);
@@ -908,6 +909,15 @@ private:
                                size_t size,
                                size_t align,
                                ACE_CDR::ULong length);
+
+  /**
+   * On those occasions when the native codeset for wchar is smaller than
+   * the size of a wchar_t, such as using UTF-16 with a 4-byte wchar_t, a
+   * special form of reading the array is needed. Actually, this should be
+   * a default translator.
+   */
+  ACE_CDR::Boolean read_wchar_array_i (ACE_CDR::WChar * x,
+				       ACE_CDR::ULong length);
 
   /// Move the rd_ptr ahead by <offset> bytes.
   void rd_ptr (size_t offset);
