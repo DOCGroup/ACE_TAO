@@ -32,7 +32,9 @@ $CL  = new PerlACE::Process ("ftp", "-ORBSvcConf components_svc$PerlACE::svcconf
 
 print STDERR "Starting Naming Service\n";
 
-$NS->Spawn ();
+if ($NS->Spawn () == -1) {
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($nsior, 15) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";

@@ -33,7 +33,9 @@ print STDERR "\nReceiver 1 --> Receiver 2 --> Distributer --> Sender\n\n";
 
 print STDERR "Starting Naming Service\n";
 
-$NS->Spawn ();
+if ($NS->Spawn () == -1) {
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($nsior, 10) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
