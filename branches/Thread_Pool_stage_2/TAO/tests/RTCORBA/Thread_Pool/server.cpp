@@ -2,7 +2,7 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
-#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
 ACE_RCSID(Thread_Pools, server, "$Id$")
