@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_module.cc	1.46% %92/06/11% Sun Microsystems"
-
 /*
  * ast_module.cc - Implementation of class AST_Module
  *

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ROOT_AST_ROOT_HH
 #define _AST_ROOT_AST_ROOT_HH
 
-#pragma ident "%@(#)AST_Root.h	1.1% %92/06/23% Sun Microsystems"
-
 // Representation of root of AST
 
 /*

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_IDL_HH
 #define _IDL_IDL_HH
 
-#pragma ident "%@(#)idl.hh	1.18% %92/06/10% Sun Microsystems"
-
 // idl.hh
 //
 // Main include file for IDL compiler. Includes the rest of the

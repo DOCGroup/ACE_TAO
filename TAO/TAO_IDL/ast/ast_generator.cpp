@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_generator.cc	1.46% %92/06/11% Sun Microsystems"
-
 /*
  * ast_generator.cc - Implements the base AST node generator
  *

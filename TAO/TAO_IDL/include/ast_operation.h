@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_OPERATION_AST_OPERATION_HH
 #define _AST_OPERATION_AST_OPERATION_HH
 
-#pragma ident "%@(#)AST_Operation.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of operation declaration:
 
 /*

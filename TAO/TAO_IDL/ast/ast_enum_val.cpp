@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_enum_val.cc	1.46% %92/06/11% Sun Microsystems"
-
 /*
  * ast_enum_val.cc - Implementation of class AST_EnumVal
  *

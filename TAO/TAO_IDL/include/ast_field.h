@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FIELD_AST_FIELD_HH
 #define _AST_FIELD_AST_FIELD_HH
 
-#pragma ident "%@(#)AST_Field.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of a generic field
 //
 // Used as member in structures, exceptions and unions, and as a base

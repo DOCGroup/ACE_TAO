@@ -53,8 +53,6 @@
 #ifndef _UTL_STRLIST_UTL_STRLIST_HH
 #define _UTL_STRLIST_UTL_STRLIST_HH
 
-#pragma ident "%@(#)UTL_StrList.h	1.33% %92/06/10% Sun Microsystems"
-
 // utl_strlist.hh
 //
 // List of String nodes

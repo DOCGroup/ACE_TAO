@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_SCOPED_NAME_AST_SCOPED_NAME_HH
 #define _AST_SCOPED_NAME_AST_SCOPED_NAME_HH
 
-#pragma ident "%@(#)utl_scoped_name.h	1.32% %92/06/10% Sun Microsystems"
-
 // Define UTL_ScopedName as a list of strings
 
 /*

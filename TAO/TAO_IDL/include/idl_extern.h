@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_EXTERN_IDL_EXTERN_HH
 #define _IDL_EXTERN_IDL_EXTERN_HH
 
-#pragma ident "%@(#)idl_extern.hh	1.18% %92/06/10% Sun Microsystems"
-
 // idl_extern.hh
 //
 // Global variables and functions for IDL compiler

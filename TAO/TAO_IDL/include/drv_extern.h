@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _DRV_EXTERN_DRV_EXTERN_HH
 #define _DRV_EXTERN_DRV_EXTERN_HH
 
-#pragma ident "%@(#)drv_extern.h	1.17% %92/06/10% Sun Microsystems"
-
 // drv_extern.h - External functions for the IDL compiler driver program
 
 // Functions

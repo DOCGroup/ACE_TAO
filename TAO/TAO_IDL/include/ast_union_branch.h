@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_BRANCH_AST_UNION_BRAN_HH
 #define _AST_UNION_BRANCH_AST_UNION_BRAN_HH
 
-#pragma ident "%@(#)AST_UnionBranch.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of union branch declaration:
 //
 // A branch of a union is a field with a label

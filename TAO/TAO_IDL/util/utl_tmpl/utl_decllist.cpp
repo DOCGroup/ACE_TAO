@@ -50,8 +50,6 @@
  *======================================================================
  */
 
-#pragma ident "%@(#)utl_decllist.cc	1.27% %92/06/10% Sun Microsystems"
-
 // utl_decllist.cc
 //
 // Implementation of a list of declarators

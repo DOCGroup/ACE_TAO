@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)utl_labellist.cc	1.27% %92/06/10% Sun Microsystems"
-
 // utl_labellist.cc
 //
 // Implementation of a list of scoped names

@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)BE_produce.cc	1.16% %92/06/10% Sun Microsystems"
-
 // BE_produce.cc - Produce the work of the BE - does nothing in the
 //		   dummy BE
 

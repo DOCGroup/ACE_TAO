@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_AST_HH
 #define _AST_AST_HH
 
-#pragma ident "%@(#)ast.h	1.41% %92/06/10% Sun Microsystems"
-
 // ast.h
 //
 // Defines the classes which constitute the agreement between the CFE

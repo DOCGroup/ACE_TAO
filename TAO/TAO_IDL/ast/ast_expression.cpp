@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_expression.cc	1.47% %92/06/11% Sun Microsystems"
-
 /*
  * ast_expression.cc - Implementation of class AST_Expression
  *
@@ -846,6 +844,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
   case AST_Expression::EV_wstring:
     return NULL;
   }
+  return NULL;
 }
 
 /*
@@ -1197,6 +1196,7 @@ AST_Expression::eval_internal(AST_Expression::EvalKind ek)
   case EC_none:
     return NULL;
   }
+  return NULL;
 }
 
 /*
@@ -1285,6 +1285,7 @@ AST_Expression::operator==(AST_Expression *vc)
   case EV_none:
     return I_FALSE;
   }
+  return NULL;
 }
 
 long
@@ -1337,6 +1338,7 @@ AST_Expression::compare(AST_Expression *vc)
   case EV_none:
     return I_FALSE;
   }
+  return NULL;
 }
 
 /*

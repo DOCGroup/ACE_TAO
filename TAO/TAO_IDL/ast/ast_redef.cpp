@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_redef.cc	1.46% %92/06/10% Sun Microsystems"
-
 /*
  * ast_redef.cc - Implement utility function to decide when redefinition
  * 		  is allowed

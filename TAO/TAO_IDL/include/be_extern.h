@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _BE_EXTERN_BE_EXTERN_HH
 #define _BE_EXTERN_BE_EXTERN_HH
 
-#pragma ident "%@(#)be_extern.h	1.17% %92/06/10% Sun Microsystems"
-
 // be_extern.h - Defines the BE part of the BE<->FE protocol
 
 // Functions:

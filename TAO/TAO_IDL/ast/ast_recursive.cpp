@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)fe_recursive.cc	1.30% %92/06/10% Sun Microsystems"
-
 /*
  * ast_recursive.cc - Check whether a type is used recursively in a situation
  *		      where this use would be illegal.

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_DECL_AST_DECL_HH
 #define _AST_DECL_AST_DECL_HH
 
-#pragma ident "%@(#)AST_Decl.h	1.38% %92/06/10% Sun Microsystems"
-
 // Rock bottom of AST class hierarchy
 //
 // This class is inherited by all classes which represent named entities

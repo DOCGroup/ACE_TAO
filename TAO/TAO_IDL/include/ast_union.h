@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_AST_UNION_HH
 #define _AST_UNION_AST_UNION_HH
 
-#pragma ident "%@(#)AST_Union.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of union declaration:
 //
 // NOTE: add(AST_ConcreteType *) is defined here because a union

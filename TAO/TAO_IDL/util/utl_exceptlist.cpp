@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)utl_exceptlist.cc	1.33% %92/06/10% Sun Microsystems"
-
 // utl_exceptlist.cc
 //
 // Implementation of a list of exceptions

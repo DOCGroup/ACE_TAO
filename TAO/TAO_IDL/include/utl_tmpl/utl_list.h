@@ -53,8 +53,6 @@
 #ifndef _UTL_LIST_UTL_LIST_HH
 #define _UTL_LIST_UTL_LIST_HH
 
-#pragma ident "%@(#)utl_list.hh	1.33% %92/06/10% Sun Microsystems"
-
 // utl_list.hh
 //
 // General single-linked lists

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_DECLLIST_UTL_DECLLIST_HH
 #define _UTL_DECLLIST_UTL_DECLLIST_HH
 
-#pragma ident "%@(#)utl_decllist.hh	1.27% %92/06/10% Sun Microsystems"
-
 // utl_decllist.hh
 //
 // List of FE_Declarator nodes

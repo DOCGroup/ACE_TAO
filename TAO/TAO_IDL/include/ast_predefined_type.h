@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
 #define _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH
 
-#pragma ident "%@(#)AST_PredefinedType.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of predefined types:
 //
 // Instances of this class are inserted into the global context by

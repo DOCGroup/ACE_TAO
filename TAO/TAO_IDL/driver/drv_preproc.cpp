@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)drv_preproc.cc	1.16% %92/06/10% Sun Microsystems"
-
 /*
  * DRV_pre_proc.cc - pass an IDL file through the C preprocessor
  */
@@ -73,6 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"drv_private.h"
 #include	"drv_link.h"
+
+#include "ace/Process_Manager.h"
 
 #include	<stdio.h>
 #include	<fcntl.h>
@@ -130,6 +130,7 @@ DRV_cpp_putarg(char *str)
 void
 DRV_cpp_init()
 {
+  // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
   DRV_cpp_putarg(idl_global->cpp_location());
   DRV_cpp_putarg("-E");
   DRV_cpp_putarg("-DIDL");
@@ -218,17 +219,28 @@ static char	tmp_ifile[128];
 void
 DRV_pre_proc(char *myfile)
 {
-#if defined(apollo) || defined(SUNOS4)
-  union wait wait_status;
-#else
-  int	wait_status;
-#endif	// defined(apollo) || defined(SUNOS4)
   long	readfromstdin = I_FALSE;
-  pid_t	child_pid;
   char	catbuf[512];
-  
-  strcpy(tmp_file, "/tmp/idlf_XXXXXX");
-  strcpy(tmp_ifile, "/tmp/idli_XXXXXX");
+
+  const char* tmpdir = getenv("TMP");
+  if (tmpdir != 0)
+    {
+      strcat(tmp_file, tmpdir);
+      strcat(tmp_ifile, tmpdir);
+    }
+  else
+    {
+      strcpy(tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
+      strcpy(tmp_file, "tmp");
+      strcpy(tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
+      strcpy(tmp_ifile, "tmp");
+    }
+
+  strcat(tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
+  strcat(tmp_file, "idlf_XXXXXX");
+
+  strcpy(tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
+  strcat(tmp_ifile, "idli_XXXXXX");
 
   (void) mktemp(tmp_file); strcat(tmp_file, ".cc");
   (void) mktemp(tmp_ifile); strcat(tmp_ifile, ".cc");
@@ -255,6 +267,66 @@ DRV_pre_proc(char *myfile)
         );
     idl_global->set_real_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
   }
+#if !defined (CORYAN_USE_FORK)
+  // We use ACE instead of the (low level) fork facilities, this also
+  // work on NT.
+  ACE_Process manager;
+  ACE_Process_Options cpp_options;
+  DRV_cpp_putarg (tmp_ifile);
+  DRV_cpp_putarg (0); // Null terminate the arglist.
+  cpp_options.command_line (arglist);
+  ACE_HANDLE fd = ACE_OS::open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+  if (fd < 0) {
+    cerr << idl_global->prog_name()
+	 << GTDEVEL(": cannot open temp file ")
+	 << tmp_file << " for writing\n";
+    return;
+  }
+  cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
+  cerr << "invoking preprocessor" << endl;
+  if (manager.spawn (cpp_options) == -1)
+    {
+      cerr << idl_global->prog_name() 
+	   << GTDEVEL(": spawn of ")
+	   << arglist[0]
+	   << GTDEVEL(" failed\n");
+      return;
+    }
+  cerr << "preprocessor running" << endl;
+
+  // Close the output file on the parent process.
+  if (ACE_OS::close (fd) == -1)
+    {
+      cerr << idl_global->prog_name ()
+	   << GTDEVEL(": cannot close temp file")
+	   << tmp_file << " on parent\n";
+      return;
+    }
+
+  // Remove the null termination and the input file from the arglist,
+  // the next file will the previous args.
+  argcount -= 2;
+
+  cerr << "waiting" << endl;
+  if (manager.wait () == -1)
+    {
+      cerr << idl_global->prog_name ()
+	   << GTDEVEL(": wait for child process failed\n");
+      return;
+    }
+  cerr << "joined preprocessor" << endl;
+  // TODO: Manage problems in the pre-processor, in the previous
+  // version the current process would exit if the pre-processor
+  // returned with error.
+
+#else
+#if defined(apollo) || defined(SUNOS4)
+  union wait wait_status;
+#else
+  int	wait_status;
+#endif	// defined(apollo) || defined(SUNOS4)
+  pid_t	child_pid;
+
   switch (child_pid = fork()) {
   case 0:	/* Child - call cpp */
     DRV_cpp_putarg(tmp_ifile);
@@ -333,6 +405,8 @@ DRV_pre_proc(char *myfile)
     }
 #endif  // defined(WIFEXITED) && defined(WEXITSTATUS)
   }
+#endif /* CORYAN_USE_FORK */
+
   FILE * yyin = fopen(tmp_file, "r");
   if (yyin == NULL) {
     cerr << idl_global->prog_name()
@@ -342,6 +416,7 @@ DRV_pre_proc(char *myfile)
     exit(99);
   }
   (*DRV_FE_set_yyin)((File *) yyin);
+  // TODO: This is not protable, cat(1) is a UNIX tool.
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC) {
     sprintf(catbuf, "cat < %s", tmp_file);
     system(catbuf);
@@ -353,6 +428,7 @@ DRV_pre_proc(char *myfile)
 	 << "\n";
     exit(99);
   }
+#if 0
   if (unlink(tmp_file) != 0) {
     cerr << idl_global->prog_name()
 	 << GTDEVEL(": Could not remove cpp output file ")
@@ -360,6 +436,7 @@ DRV_pre_proc(char *myfile)
 	 << "\n";
     exit(99);
   }
+#endif /* 0 */
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     exit(0);
 }

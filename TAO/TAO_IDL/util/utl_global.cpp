@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)utl_global.cc	1.19% %92/06/10% Sun Microsystems"
-
 // utl_global.cc - Implementation of class IDL_GlobalData
 //
 

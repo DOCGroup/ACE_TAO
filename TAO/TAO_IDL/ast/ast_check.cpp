@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_check.cc	1.46% %92/06/11% Sun Microsystems"
-
 /*
  * ast_check.cc - Check AST nodes representing fwd declared interfaces
  *		  after parse of AST is completed.
