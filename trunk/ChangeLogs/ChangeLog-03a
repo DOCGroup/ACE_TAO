@@ -1,3 +1,13 @@
+Sat Feb  1 08:43:53 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Stream_Modules.cpp (put): Return 0 rather than -1 to be consistent
+	  wrt the put() semantics elsewhere in ACE.  Thanks to Jody Hagins
+ 	  <jody@atdesk.com> for help with this.
+
+	* tests/FIFO_Test.cpp (server): Only compile this on platforms
+	  that aren't Win32 since FIFO's don't work there.  Thanks to Carl
+ 	  Halvorson <cyberdesk@yahoo.com> for reporting this.
+
 Wed Feb  5 09:45:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_mingw32.GNU:
@@ -63,6 +73,21 @@ Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
           not supported in GIOP 1.0.  Fixes a false positive in our
           scoreboard.
 
+Sat Feb  1 07:50 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+  	* Our deepest sympathies to the families and friends of the crew of
+	  the US Space Shuttle Columbia, which was lost over Texas this
+ 	  morning.  
+  
+          "We shall never forget them nor the last time we saw them, as
+	  they prepared for their mission and waved good-bye and slipped
+	  the surly bonds of Earth to touch the face of God."
+  
+             - President Reagan (addressing NASA employees following the
+	       tragic loss of the Challenger 7 crew on STS-51L.) 
+  
+          Ad astra per aspera.
+  
 Sat Feb  1 09:00:00 2003  Steve Huston  <shuston@riverace.com>
 
         * Space Shuttle Columbia breaks up at 200,000ft altitude at
