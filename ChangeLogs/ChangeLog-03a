@@ -9,7 +9,7 @@ Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
           But I am keeping the ACE_TCHAR or dual char/wchar_t 
           interfaces on classes higher up the stream.
 
-          methods changed are:
+          Methods changed are:
 
           - gethostbyaddr
           - gethostbyname
@@ -25,6 +25,13 @@ Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
           - inet_aton
           - inet_ntop
           - inet_pton
+
+          This should take care of a couple of things.  First we don't
+          have to worry about returning a wchar_t * static buffer 
+          instead of a char * static buffer from something like 
+          inet_ntoa and this should remove some slowdowns reported from
+          gethostbyname.  Thanks to Nick Pratt <npratt@microstrategy.com>
+          for reporting both of these.
 
         * ace/INET_Addr.cpp:
         * ace/INET_Addr.h:
