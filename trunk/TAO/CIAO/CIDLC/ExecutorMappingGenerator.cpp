@@ -723,8 +723,10 @@ namespace
 
   struct ContextEmitter : ComponentEmitter
   {
-    ContextEmitter (Context& c, ostream& os)
-        : ComponentEmitter (c, os), name_emitter (c, os, "CCM_", "_Context")
+    ContextEmitter (Context& c, ostream& os, CommandLine const& cl)
+      : ComponentEmitter (c, os), 
+        name_emitter (c, os, "CCM_", "_Context"),
+        cl_ (cl)
     {
       edge_traverser (inherits);
       inherits.node_traverser (name_emitter);
@@ -751,8 +753,18 @@ namespace
     virtual void
     inherits_none (Type&)
     {
-      //@@ should be os << " : ::Components::CCMContext";
-      os << " : " << STRS[COMP_SC];
+      string swap_option = cl_.get_value ("custom-container", "");
+      bool swapping = (swap_option == "upgradeable");
+      
+      if (swapping)
+      {
+        os << " : ::CIAO::UpgradeableContext";
+      }
+      else
+      {
+        //@@ should be os << " : ::Components::CCMContext";
+        os << " : " << STRS[COMP_SC];
+      }
     }
 
     virtual void
@@ -762,8 +774,8 @@ namespace
     }
 
     virtual void
-    names_post (Type&)
-    {
+    names_post (Type& t)
+    {      
       os << "}";
     }
 
@@ -776,6 +788,7 @@ namespace
   private:
     Traversal::Inherits inherits;
     NameMangler name_emitter;
+    CommandLine const& cl_;
   };
 
 
@@ -1581,7 +1594,7 @@ namespace
         : Emitter (c, os)
     {
     }
-
+    
     virtual void
     traverse (SemanticGraph::QuoteIncludes& qi)
     {
@@ -1861,6 +1874,13 @@ generate (CommandLine const& cl,
       os << "#include \"" << file_name << '\"' << endl;
     }
 
+    string swap_option = cl.get_value ("custom-container", "");
+    bool swapping = (swap_option == "upgradeable");
+    
+    if (swapping)
+    {
+      os << "#include <UpgradeableContext.idl>" << endl;
+    }
 
     Traversal::TranslationUnit unit;
 
@@ -1924,7 +1944,7 @@ generate (CommandLine const& cl,
     InterfaceFwdEmitter interface_fwd (ctx, os);
 
     MonolithEmitter component_monolith (ctx, os);
-    ContextEmitter component_context (ctx, os);
+    ContextEmitter component_context (ctx, os, cl);
 
     HomeImplicitEmitter home_implicit (ctx, os);
     HomeExplicitEmitter home_explicit (ctx, os);

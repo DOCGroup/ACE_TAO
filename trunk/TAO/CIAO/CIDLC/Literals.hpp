@@ -9,12 +9,11 @@ namespace StringLiterals
 {
   extern char const* const COPYRIGHT;
 
-  // Index into the string array below.
+  // Index into the string array in Literals.cpp.
   enum
   {
     ENV_HDR,
     ENV_SNGL_HDR,
-    ENV_SNGL_HDR_NOTUSED,
     ENV_SRC,
     ENV_SRC_NOTUSED,
     ENV_SNGL_SRC,
@@ -41,6 +40,7 @@ namespace StringLiterals
     COMP_ECB,
     COMP_EC,
     COMP_SC,
+    COMP_CD,
     GLUE_NS,
     INH_RCSB,
     TYPE_ID,
