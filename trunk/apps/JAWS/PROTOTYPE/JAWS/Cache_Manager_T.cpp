@@ -53,9 +53,9 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     this->factory_ = Object_Factory::instance ();
 
   ACE_NEW_MALLOC (this->hash_,
-                  (ACE_CACHE_HASH *)
-                  this->allocator_->malloc (sizeof (ACE_CACHE_HASH)),
-                  ACE_CACHE_HASH (alloc, hashsize));
+                  (Cache_Hash *)
+                  this->allocator_->malloc (sizeof (Cache_Hash)),
+                  Cache_Hash (alloc, hashsize));
 
   if (this->hash_ == 0)
     {

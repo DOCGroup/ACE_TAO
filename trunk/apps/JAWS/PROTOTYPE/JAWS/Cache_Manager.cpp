@@ -5,6 +5,7 @@
 #include "ace/Synch.h"
 
 #include "JAWS/Cache_Manager.h"
+#include "JAWS/Cache_List_T.h"
 
 ACE_String_Hash_Functor::ACE_String_Hash_Functor (const char *s)
   : i_ (0)
@@ -106,14 +107,6 @@ template class ACE_Hash_Bucket_Manager<ACE_Strdup_String,
 template class ACE_Cache_Hash<ACE_Strdup_String,
                               ACE_String_Hash_Functor,
                               ACE_String_Equal_Functor>;
-template class ACE_Cache_Heap_Item<ACE_Strdup_String,
-                                   ACE_Referenced_Cache_Object_Factory,
-                                   ACE_String_Hash_Functor,
-                                   ACE_String_Equal_Functor>;
-template class ACE_Cache_Heap<ACE_Strdup_String,
-                              ACE_Referenced_Cache_Object_Factory,
-                              ACE_String_Hash_Functor,
-                              ACE_String_Equal_Functor>;
 template class ACE_Cache_List_Item<ACE_Strdup_String,
                                    ACE_Referenced_Cache_Object_Factory,
                                    ACE_String_Hash_Functor,
@@ -126,14 +119,6 @@ template class ACE_Cache_Manager<ACE_Strdup_String,
                                  ACE_Referenced_Cache_Object_Factory,
                                  ACE_String_Hash_Functor,
                                  ACE_String_Equal_Functor>;
-template class ACE_Cache_Heap_Item<ACE_Strdup_String,
-                                   ACE_Counted_Cache_Object_Factory,
-                                   ACE_String_Hash_Functor,
-                                   ACE_String_Equal_Functor>;
-template class ACE_Cache_Heap<ACE_Strdup_String,
-                              ACE_Counted_Cache_Object_Factory,
-                              ACE_String_Hash_Functor,
-                              ACE_String_Equal_Functor>;
 template class ACE_Cache_List_Item<ACE_Strdup_String,
                                    ACE_Counted_Cache_Object_Factory,
                                    ACE_String_Hash_Functor,
