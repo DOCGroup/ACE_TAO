@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Time_Value.h
+ *  @file    Countdown_Time.h
  *
  *  $Id$
  *
@@ -21,22 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
-#   include "ace/os_include/sys/os_time.h"
-# endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
-
 #include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
-
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-// Something is a bit brain-damaged here and I'm not sure what... this code
-// compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
-// complains that the operators that return ACE_Time_Value are C-linkage
-// functions that can't return a C++ class. The only way I've found to
-// defeat this is to wrap the whole class in extern "C++".
-//    - Steve Huston, 23-Aug-2004
-extern "C++" {
-#endif
 
 /**
  * @class ACE_Countdown_Time
@@ -85,10 +70,6 @@ private:
   ACE_Countdown_Time (const ACE_Countdown_Time &);
   ACE_Countdown_Time &operator= (const ACE_Countdown_Time &);
 };
-
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 #include /**/ "ace/post.h"
 
