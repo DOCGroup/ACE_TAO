@@ -2,7 +2,7 @@ Thu Sep 17 18:53:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* server/IO.cpp: 
 	* PROTOTYPE/JAWS/IO.cpp: 
-	  Revert back to iovec.
+	  Revert back to iovec. Also added some missing casts.
 
 Wed Sep 16 22:53:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
