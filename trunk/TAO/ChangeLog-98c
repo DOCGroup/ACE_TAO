@@ -1,3 +1,10 @@
+Tue Jul  1 11:36:24 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* marshal.*: Changed the way make_marshal_object works. Instead of
+	having a switch statement, we index into a private table of
+	marshal objects using the TypeCode _kind field. MarshalFactory now
+	maintains this private table.
+
 Mon Jun 30 17:39:02 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* Added a new README file and a COPYING file that explains the
