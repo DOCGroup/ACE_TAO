@@ -1,3 +1,7 @@
+Tue Nov 10 22:37:55 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.40 released.
+
 Tue Nov 10 17:53:42 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Logger_i.h 
