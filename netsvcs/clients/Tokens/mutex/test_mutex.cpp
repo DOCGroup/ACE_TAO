@@ -33,7 +33,7 @@ static int iterations = 100;
 static int spawn_count = 2;
 
 static void *
-run_test (void *vp)
+run_test (void *)
 {
   int count = iterations;
   // test recursive acquisition of a global proxy
