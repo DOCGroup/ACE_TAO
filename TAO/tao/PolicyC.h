@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_POLICYC_H_
-#define _TAO_IDL_ORIG_POLICYC_H_
+#ifndef _TAO_IDL_POLICYC_H_
+#define _TAO_IDL_POLICYC_H_
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 #include "CurrentC.h"
 #include "Policy_ForwardC.h"
 #include "Exception.h"
@@ -336,6 +336,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
   
   
 #endif /* end #if !defined */
+  
+  // *************************************************************
+  // CORBA::Policy
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/interface_ch.cpp:106
+  // *************************************************************
   
   
 #if !defined (_CORBA_POLICY_CH_)
@@ -683,6 +689,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
   
 #endif /* end #if !defined */
   
+  // *************************************************************
+  // CORBA::PolicyManager
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/interface_ch.cpp:106
+  // *************************************************************
+  
   
 #if !defined (_CORBA_POLICYMANAGER_CH_)
 #define _CORBA_POLICYMANAGER_CH_
@@ -715,6 +727,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
       {
         return (PolicyManager_ptr)0;
       }
+    
+    static void _tao_any_destructor (void*);
     
     virtual ::CORBA::PolicyList * get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
@@ -750,6 +764,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
   
   
 #endif /* end #if !defined */
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyManager;
   
   
 #if !defined (_CORBA_POLICYCURRENT___PTR_CH_)
@@ -830,6 +846,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
   
 #endif /* end #if !defined */
   
+  // *************************************************************
+  // CORBA::PolicyCurrent
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/interface_ch.cpp:106
+  // *************************************************************
+  
   
 #if !defined (_CORBA_POLICYCURRENT_CH_)
 #define _CORBA_POLICYCURRENT_CH_
@@ -864,6 +886,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
         return (PolicyCurrent_ptr)0;
       }
     
+    static void _tao_any_destructor (void*);
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
     virtual const char* _interface_repository_id (void) const;
@@ -880,6 +904,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
   
   
 #endif /* end #if !defined */
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyCurrent;
   
   
 }
@@ -902,8 +928,17 @@ TAO_Export void operator<<= (CORBA::Any &, CORBA::InvalidPolicies*); // noncopyi
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InvalidPolicies *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InvalidPolicies *&);
 // Any operators for interface CORBA::Policy
-TAO_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Policy *&);
+TAO_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr); // copying
+TAO_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr *); // non-copying
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Policy_ptr &);
+// Any operators for interface CORBA::PolicyManager
+TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr); // copying
+TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr *); // non-copying
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyManager_ptr &);
+// Any operators for interface CORBA::PolicyCurrent
+TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr); // copying
+TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr *); // non-copying
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyCurrent_ptr &);
 
 #ifndef __ACE_INLINE__
 

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_POLICY_FORWARDC_H_
-#define _TAO_IDL_ORIG_POLICY_FORWARDC_H_
+#ifndef _TAO_IDL_POLICY_FORWARDC_H_
+#define _TAO_IDL_POLICY_FORWARDC_H_
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 #include "Sequence.h"
 #include "CDR.h"
 
@@ -61,41 +61,41 @@ TAO_NAMESPACE  CORBA
   typedef CORBA::ULong PolicyType;
   typedef CORBA::ULong_out PolicyType_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyType;
-
+  
   class Policy;
-
+  
 #if !defined (_CORBA_POLICY___PTR_CH_)
 #define _CORBA_POLICY___PTR_CH_
-
+  
   typedef Policy *Policy_ptr;
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_CORBA_POLICY___VAR_CH_)
 #define _CORBA_POLICY___VAR_CH_
-
+  
   class TAO_Export Policy_var : public TAO_Base_var
   {
   public:
     Policy_var (void); // default constructor
-    Policy_var (Policy_ptr p) : ptr_ (p) {}
+    Policy_var (Policy_ptr p) : ptr_ (p) {} 
     Policy_var (const Policy_var &); // copy constructor
     ~Policy_var (void); // destructor
-
+    
     Policy_var &operator= (Policy_ptr);
     Policy_var &operator= (const Policy_var &);
     Policy_ptr operator-> (void) const;
-
+    
     operator const Policy_ptr &() const;
     operator Policy_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     Policy_ptr in (void) const;
     Policy_ptr &inout (void);
     Policy_ptr &out (void);
     Policy_ptr _retn (void);
     Policy_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static Policy_ptr tao_duplicate (Policy_ptr);
@@ -106,7 +106,7 @@ TAO_NAMESPACE  CORBA
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     Policy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -116,11 +116,11 @@ TAO_NAMESPACE  CORBA
 
 
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_CORBA_POLICY___OUT_CH_)
 #define _CORBA_POLICY___OUT_CH_
-
+  
   class TAO_Export Policy_out
   {
   public:
@@ -133,20 +133,20 @@ TAO_NAMESPACE  CORBA
     operator Policy_ptr &();
     Policy_ptr &ptr (void);
     Policy_ptr operator-> (void);
-
+  
   private:
     Policy_ptr &ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CH_
-
+  
   class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_CORBA_PolicyList
     : public TAO_Unbounded_Base_Sequence
   {
@@ -167,14 +167,14 @@ TAO_NAMESPACE  CORBA
         const _TAO_Unbounded_Object_Sequence_CORBA_PolicyList &rhs
       );
     virtual ~_TAO_Unbounded_Object_Sequence_CORBA_PolicyList (void);
-
+    
     // = Accessors.
     TAO_Object_Manager<CORBA::Policy,CORBA::Policy_var> operator[] (CORBA::ULong index) const;
-
+    
     // = Static operations.
     static Policy **allocbuf (CORBA::ULong nelems);
     static void freebuf (Policy **buffer);
-
+    
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
@@ -184,7 +184,7 @@ TAO_NAMESPACE  CORBA
         CORBA::ULong nl,
         CORBA::ULong ol
       );
-
+    
     virtual void _downcast (
         void* target,
         CORBA_Object *src
@@ -192,59 +192,59 @@ TAO_NAMESPACE  CORBA
       );
     virtual CORBA_Object* _upcast (void *src) const;
   };
-
+  
 #endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+  
+  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_CORBA_POLICYLIST_CH_)
 #define _CORBA_POLICYLIST_CH_
-
+  
   class PolicyList;
   class PolicyList_var;
-
+  
   // *************************************************************
   // PolicyList
   // *************************************************************
-
-  class TAO_Export PolicyList : public
+  
+  class TAO_Export PolicyList : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<Policy,Policy_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     PolicyList (void); // default ctor
     PolicyList (CORBA::ULong max); // uses max size
     PolicyList (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        Policy_ptr *buffer,
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        Policy_ptr *buffer, 
         CORBA::Boolean release = 0
       );
     PolicyList (const PolicyList &); // copy ctor
     ~PolicyList (void);
     static void _tao_any_destructor (void*);
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef PolicyList_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-
+    
+    
   };
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_CORBA_POLICYLIST___VAR_CH_)
 #define _CORBA_POLICYLIST___VAR_CH_
-
+  
   // *************************************************************
   // class CORBA::PolicyList_var
   // *************************************************************
-
+  
   class TAO_Export PolicyList_var
   {
   public:
@@ -252,37 +252,37 @@ TAO_NAMESPACE  CORBA
     PolicyList_var (PolicyList *);
     PolicyList_var (const PolicyList_var &);
     ~PolicyList_var (void);
-
+    
     PolicyList_var &operator= (PolicyList *);
     PolicyList_var &operator= (const PolicyList_var &);
     PolicyList *operator-> (void);
     const PolicyList *operator-> (void) const;
-
+    
     operator const PolicyList &() const;
     operator PolicyList &();
     operator PolicyList &() const;
     operator PolicyList *&(); // variable-size base types only
-
+    
     TAO_Object_Manager<Policy, Policy_var> operator[] (CORBA::ULong index);
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const PolicyList &in (void) const;
     PolicyList &inout (void);
     PolicyList *&out (void);
     PolicyList *_retn (void);
     PolicyList *ptr (void) const;
-
+  
   private:
     PolicyList *ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_CORBA_POLICYLIST___OUT_CH_)
 #define _CORBA_POLICYLIST___OUT_CH_
-
+  
   class TAO_Export PolicyList_out
   {
   public:
@@ -295,31 +295,31 @@ TAO_NAMESPACE  CORBA
     PolicyList *&ptr (void);
     PolicyList *operator-> (void);
     TAO_Object_Manager<Policy, Policy_var> operator[] (CORBA::ULong index);
-
+  
   private:
     PolicyList *&ptr_;
     // Assignment from T_var not allowed.
     void operator= (const PolicyList_var &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyList;
-
-
+  
+  
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_POLICYTYPESEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_POLICYTYPESEQ_CH_
-
+  
   class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq
     : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
     _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (void);
-    _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (CORBA::ULong maximum);
+    _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (CORBA::ULong maximum); 
     _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (
         CORBA::ULong maximum,
         CORBA::ULong length,
@@ -333,15 +333,15 @@ TAO_NAMESPACE  CORBA
         const _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq &rhs
       );
     virtual ~_TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (void);
-
+    
     // = Accessors.
     CORBA::ULong &operator[] (CORBA::ULong i);
     const CORBA::ULong &operator[] (CORBA::ULong i) const;
-
+    
     // = Static operations.
     static CORBA::ULong *allocbuf (CORBA::ULong size);
     static void freebuf (CORBA::ULong *buffer);
-
+    
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
@@ -354,59 +354,59 @@ TAO_NAMESPACE  CORBA
         CORBA::Boolean release
       );
   };
-
+  
 #endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
+  
+  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
 #if !defined (_CORBA_POLICYTYPESEQ_CH_)
 #define _CORBA_POLICYTYPESEQ_CH_
-
+  
   class PolicyTypeSeq;
   class PolicyTypeSeq_var;
-
+  
   // *************************************************************
   // PolicyTypeSeq
   // *************************************************************
-
-  class TAO_Export PolicyTypeSeq : public
+  
+  class TAO_Export PolicyTypeSeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ULong>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
     PolicyTypeSeq (void); // default ctor
     PolicyTypeSeq (CORBA::ULong max); // uses max size
     PolicyTypeSeq (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::ULong *buffer,
+        CORBA::ULong max, 
+        CORBA::ULong length, 
+        CORBA::ULong *buffer, 
         CORBA::Boolean release = 0
       );
     PolicyTypeSeq (const PolicyTypeSeq &); // copy ctor
     ~PolicyTypeSeq (void);
     static void _tao_any_destructor (void*);
-
+    
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef PolicyTypeSeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-
+    
+    
   };
-
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_CORBA_POLICYTYPESEQ___VAR_CH_)
 #define _CORBA_POLICYTYPESEQ___VAR_CH_
-
+  
   // *************************************************************
   // class CORBA::PolicyTypeSeq_var
   // *************************************************************
-
+  
   class TAO_Export PolicyTypeSeq_var
   {
   public:
@@ -416,39 +416,39 @@ TAO_NAMESPACE  CORBA
     // Fixed-size base types only.
     PolicyTypeSeq_var (const PolicyTypeSeq &);
     ~PolicyTypeSeq_var (void);
-
+    
     PolicyTypeSeq_var &operator= (PolicyTypeSeq *);
     PolicyTypeSeq_var &operator= (const PolicyTypeSeq_var &);
     // Fixed-size base types only.
     PolicyTypeSeq_var &operator= (const PolicyTypeSeq &);
     PolicyTypeSeq *operator-> (void);
     const PolicyTypeSeq *operator-> (void) const;
-
+    
     operator const PolicyTypeSeq &() const;
     operator PolicyTypeSeq &();
     operator PolicyTypeSeq &() const;
-
+    
     PolicyType & operator[] (CORBA::ULong index);
     const PolicyType & operator[] (CORBA::ULong index) const;
-
-    // in, inout, out, _retn
+    
+    // in, inout, out, _retn 
     const PolicyTypeSeq &in (void) const;
     PolicyTypeSeq &inout (void);
     PolicyTypeSeq *&out (void);
     PolicyTypeSeq *_retn (void);
     PolicyTypeSeq *ptr (void) const;
-
+  
   private:
     PolicyTypeSeq *ptr_;
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
-
+  
+  
 #if !defined (_CORBA_POLICYTYPESEQ___OUT_CH_)
 #define _CORBA_POLICYTYPESEQ___OUT_CH_
-
+  
   class TAO_Export PolicyTypeSeq_out
   {
   public:
@@ -461,28 +461,28 @@ TAO_NAMESPACE  CORBA
     PolicyTypeSeq *&ptr (void);
     PolicyTypeSeq *operator-> (void);
     PolicyType & operator[] (CORBA::ULong index);
-
+  
   private:
     PolicyTypeSeq *&ptr_;
     // Assignment from T_var not allowed.
     void operator= (const PolicyTypeSeq_var &);
   };
-
-
+  
+  
 #endif /* end #if !defined */
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyTypeSeq;
-
+  
   enum SetOverrideType
   {
     SET_OVERRIDE,
     ADD_OVERRIDE
   };
-
+  
   typedef SetOverrideType &SetOverrideType_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SetOverrideType;
-
-
+  
+  
 }
 TAO_NAMESPACE_CLOSE // module CORBA
 
@@ -563,7 +563,7 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyTypeSeq_H_ */
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::SetOverrideType &); //
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::SetOverrideType &); // 
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::SetOverrideType &);
 
 #endif /* __ACE_INLINE__ */

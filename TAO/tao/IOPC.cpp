@@ -1586,6 +1586,10 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (IOP)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, TAG_GROUP_IIOP, 1413566212U)
 TAO_NAMESPACE_END
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/interface_cs.cpp:67
+
 int IOP::Codec::_tao_class_id = 0;
 
 IOP::Codec_ptr
@@ -1819,13 +1823,19 @@ IOP::Codec_out::operator-> (void)
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:209
+// be/be_visitor_interface/interface_cs.cpp:198
 
 IOP::Codec::Codec (void)
 {}
 
 IOP::Codec::~Codec (void)
 {}
+
+void IOP::Codec::_tao_any_destructor (void *_tao_void_pointer)
+{
+  Codec *tmp = ACE_static_cast (Codec*, _tao_void_pointer);
+  CORBA::release (tmp);
+}
 
 IOP::Codec_ptr IOP::Codec::_narrow (
     CORBA::Object_ptr obj
@@ -1912,6 +1922,12 @@ IOP::Codec::InvalidTypeForEncoding::operator= (const ::IOP::Codec::InvalidTypeFo
   return *this;
 }
 
+void IOP::Codec::InvalidTypeForEncoding::_tao_any_destructor (void *_tao_void_pointer)
+{
+  InvalidTypeForEncoding *tmp = ACE_static_cast (InvalidTypeForEncoding*, _tao_void_pointer);
+  delete tmp;
+}
+
 IOP::Codec::InvalidTypeForEncoding *
 IOP::Codec::InvalidTypeForEncoding::_downcast (CORBA::Exception *exc)
 {
@@ -1938,7 +1954,7 @@ IOP::Codec::InvalidTypeForEncoding::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      IOP::Codec::InvalidTypeForEncoding (*this),
+      ::IOP::Codec::InvalidTypeForEncoding (*this),
       0
     );
   return result;
@@ -1965,6 +1981,51 @@ void IOP::Codec::InvalidTypeForEncoding::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
+static const CORBA::Long _oc_IOP_Codec_InvalidTypeForEncoding[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  49,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x494f502f), 
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x632f496e), 
+  ACE_NTOHL (0x76616c69), 
+  ACE_NTOHL (0x64547970), 
+  ACE_NTOHL (0x65466f72), 
+  ACE_NTOHL (0x456e636f), 
+  ACE_NTOHL (0x64696e67), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0
+  23,
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c696454), 
+  ACE_NTOHL (0x79706546), 
+  ACE_NTOHL (0x6f72456e), 
+  ACE_NTOHL (0x636f6469), 
+  ACE_NTOHL (0x6e670000),  // name = InvalidTypeForEncoding
+  0, // member count
+};
+
+static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding (
+    CORBA::tk_except,
+    sizeof (_oc_IOP_Codec_InvalidTypeForEncoding),
+    (char *) &_oc_IOP_Codec_InvalidTypeForEncoding,
+    0,
+    sizeof (IOP::Codec::InvalidTypeForEncoding)
+  );
+
+::CORBA::TypeCode_ptr IOP::Codec::_tc_InvalidTypeForEncoding =
+  &_tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding;
+
+
+// TAO extension - the virtual _type method.
+CORBA::TypeCode_ptr IOP::Codec::InvalidTypeForEncoding::_type (void) const
+{
+  return ::IOP::Codec::_tc_InvalidTypeForEncoding;
+}
+
 // Default constructor.
 IOP::Codec::FormatMismatch::FormatMismatch (void)
   : CORBA_UserException ("IDL:omg.org/IOP/Codec/FormatMismatch:1.0")
@@ -1988,6 +2049,12 @@ IOP::Codec::FormatMismatch::operator= (const ::IOP::Codec::FormatMismatch &_tao_
 {
   this->CORBA_UserException::operator= (_tao_excp);
   return *this;
+}
+
+void IOP::Codec::FormatMismatch::_tao_any_destructor (void *_tao_void_pointer)
+{
+  FormatMismatch *tmp = ACE_static_cast (FormatMismatch*, _tao_void_pointer);
+  delete tmp;
 }
 
 IOP::Codec::FormatMismatch *
@@ -2016,7 +2083,7 @@ IOP::Codec::FormatMismatch::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      IOP::Codec::FormatMismatch (*this),
+      ::IOP::Codec::FormatMismatch (*this),
       0
     );
   return result;
@@ -2043,6 +2110,47 @@ void IOP::Codec::FormatMismatch::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
+static const CORBA::Long _oc_IOP_Codec_FormatMismatch[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  41,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x494f502f), 
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x632f466f), 
+  ACE_NTOHL (0x726d6174), 
+  ACE_NTOHL (0x4d69736d), 
+  ACE_NTOHL (0x61746368), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/Codec/FormatMismatch:1.0
+  15,
+  ACE_NTOHL (0x466f726d), 
+  ACE_NTOHL (0x61744d69), 
+  ACE_NTOHL (0x736d6174), 
+  ACE_NTOHL (0x63680000),  // name = FormatMismatch
+  0, // member count
+};
+
+static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_FormatMismatch (
+    CORBA::tk_except,
+    sizeof (_oc_IOP_Codec_FormatMismatch),
+    (char *) &_oc_IOP_Codec_FormatMismatch,
+    0,
+    sizeof (IOP::Codec::FormatMismatch)
+  );
+
+::CORBA::TypeCode_ptr IOP::Codec::_tc_FormatMismatch =
+  &_tc_TAO_tc_IOP_Codec_FormatMismatch;
+
+
+// TAO extension - the virtual _type method.
+CORBA::TypeCode_ptr IOP::Codec::FormatMismatch::_type (void) const
+{
+  return ::IOP::Codec::_tc_FormatMismatch;
+}
+
 // Default constructor.
 IOP::Codec::TypeMismatch::TypeMismatch (void)
   : CORBA_UserException ("IDL:omg.org/IOP/Codec/TypeMismatch:1.0")
@@ -2066,6 +2174,12 @@ IOP::Codec::TypeMismatch::operator= (const ::IOP::Codec::TypeMismatch &_tao_excp
 {
   this->CORBA_UserException::operator= (_tao_excp);
   return *this;
+}
+
+void IOP::Codec::TypeMismatch::_tao_any_destructor (void *_tao_void_pointer)
+{
+  TypeMismatch *tmp = ACE_static_cast (TypeMismatch*, _tao_void_pointer);
+  delete tmp;
 }
 
 IOP::Codec::TypeMismatch *
@@ -2094,7 +2208,7 @@ IOP::Codec::TypeMismatch::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      IOP::Codec::TypeMismatch (*this),
+      ::IOP::Codec::TypeMismatch (*this),
       0
     );
   return result;
@@ -2120,6 +2234,75 @@ void IOP::Codec::TypeMismatch::_tao_decode (
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
+
+static const CORBA::Long _oc_IOP_Codec_TypeMismatch[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  39,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x494f502f), 
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x632f5479), 
+  ACE_NTOHL (0x70654d69), 
+  ACE_NTOHL (0x736d6174), 
+  ACE_NTOHL (0x63683a31), 
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/Codec/TypeMismatch:1.0
+  13,
+  ACE_NTOHL (0x54797065), 
+  ACE_NTOHL (0x4d69736d), 
+  ACE_NTOHL (0x61746368), 
+  ACE_NTOHL (0x0),  // name = TypeMismatch
+  0, // member count
+};
+
+static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_TypeMismatch (
+    CORBA::tk_except,
+    sizeof (_oc_IOP_Codec_TypeMismatch),
+    (char *) &_oc_IOP_Codec_TypeMismatch,
+    0,
+    sizeof (IOP::Codec::TypeMismatch)
+  );
+
+::CORBA::TypeCode_ptr IOP::Codec::_tc_TypeMismatch =
+  &_tc_TAO_tc_IOP_Codec_TypeMismatch;
+
+
+// TAO extension - the virtual _type method.
+CORBA::TypeCode_ptr IOP::Codec::TypeMismatch::_type (void) const
+{
+  return ::IOP::Codec::_tc_TypeMismatch;
+}
+
+static const CORBA::Long _oc_IOP_Codec[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  26,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x494f502f), 
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x633a312e), 
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/Codec:1.0
+  6,
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x63000000),  // name = Codec
+};
+
+static CORBA::TypeCode _tc_TAO_tc_IOP_Codec (
+    CORBA::tk_objref,
+    sizeof (_oc_IOP_Codec),
+    (char *) &_oc_IOP_Codec,
+    0,
+    sizeof (IOP::Codec)
+  );
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (IOP)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_Codec, &_tc_TAO_tc_IOP_Codec)
+TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_IOP_EncodingFormat[] =
 {
@@ -2235,6 +2418,10 @@ void IOP::Encoding::_tao_any_destructor (void *_tao_void_pointer)
   Encoding *tmp = ACE_static_cast (Encoding*, _tao_void_pointer);
   delete tmp;
 }
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/interface_cs.cpp:67
 
 int IOP::CodecFactory::_tao_class_id = 0;
 
@@ -2469,13 +2656,19 @@ IOP::CodecFactory_out::operator-> (void)
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:209
+// be/be_visitor_interface/interface_cs.cpp:198
 
 IOP::CodecFactory::CodecFactory (void)
 {}
 
 IOP::CodecFactory::~CodecFactory (void)
 {}
+
+void IOP::CodecFactory::_tao_any_destructor (void *_tao_void_pointer)
+{
+  CodecFactory *tmp = ACE_static_cast (CodecFactory*, _tao_void_pointer);
+  CORBA::release (tmp);
+}
 
 IOP::CodecFactory_ptr IOP::CodecFactory::_narrow (
     CORBA::Object_ptr obj
@@ -2562,6 +2755,12 @@ IOP::CodecFactory::UnknownEncoding::operator= (const ::IOP::CodecFactory::Unknow
   return *this;
 }
 
+void IOP::CodecFactory::UnknownEncoding::_tao_any_destructor (void *_tao_void_pointer)
+{
+  UnknownEncoding *tmp = ACE_static_cast (UnknownEncoding*, _tao_void_pointer);
+  delete tmp;
+}
+
 IOP::CodecFactory::UnknownEncoding *
 IOP::CodecFactory::UnknownEncoding::_downcast (CORBA::Exception *exc)
 {
@@ -2588,7 +2787,7 @@ IOP::CodecFactory::UnknownEncoding::_tao_duplicate (void) const
   CORBA::Exception *result;
   ACE_NEW_RETURN (
       result,
-      IOP::CodecFactory::UnknownEncoding (*this),
+      ::IOP::CodecFactory::UnknownEncoding (*this),
       0
     );
   return result;
@@ -2615,286 +2814,514 @@ void IOP::CodecFactory::UnknownEncoding::_tao_decode (
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-void operator<<= (CORBA::Any &_tao_any, const IOP::TaggedProfile &_tao_elem) // copying
+static const CORBA::Long _oc_IOP_CodecFactory_UnknownEncoding[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  49,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x494f502f), 
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x63466163), 
+  ACE_NTOHL (0x746f7279), 
+  ACE_NTOHL (0x2f556e6b), 
+  ACE_NTOHL (0x6e6f776e), 
+  ACE_NTOHL (0x456e636f), 
+  ACE_NTOHL (0x64696e67), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0
+  16,
+  ACE_NTOHL (0x556e6b6e), 
+  ACE_NTOHL (0x6f776e45), 
+  ACE_NTOHL (0x6e636f64), 
+  ACE_NTOHL (0x696e6700),  // name = UnknownEncoding
+  0, // member count
+};
+
+static CORBA::TypeCode _tc_TAO_tc_IOP_CodecFactory_UnknownEncoding (
+    CORBA::tk_except,
+    sizeof (_oc_IOP_CodecFactory_UnknownEncoding),
+    (char *) &_oc_IOP_CodecFactory_UnknownEncoding,
+    0,
+    sizeof (IOP::CodecFactory::UnknownEncoding)
+  );
+
+::CORBA::TypeCode_ptr IOP::CodecFactory::_tc_UnknownEncoding =
+  &_tc_TAO_tc_IOP_CodecFactory_UnknownEncoding;
+
+
+// TAO extension - the virtual _type method.
+CORBA::TypeCode_ptr IOP::CodecFactory::UnknownEncoding::_type (void) const
+{
+  return ::IOP::CodecFactory::_tc_UnknownEncoding;
+}
+
+static const CORBA::Long _oc_IOP_CodecFactory[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  33,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x494f502f), 
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x63466163), 
+  ACE_NTOHL (0x746f7279), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/CodecFactory:1.0
+  13,
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x63466163), 
+  ACE_NTOHL (0x746f7279), 
+  ACE_NTOHL (0x0),  // name = CodecFactory
+};
+
+static CORBA::TypeCode _tc_TAO_tc_IOP_CodecFactory (
+    CORBA::tk_objref,
+    sizeof (_oc_IOP_CodecFactory),
+    (char *) &_oc_IOP_CodecFactory,
+    0,
+    sizeof (IOP::CodecFactory)
+  );
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (IOP)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_CodecFactory, &_tc_TAO_tc_IOP_CodecFactory)
+TAO_NAMESPACE_END
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::TaggedProfile &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_TaggedProfile,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedProfile,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::TaggedProfile *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedProfile,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::TaggedProfile::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::TaggedProfile *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const IOP::TaggedProfile *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::TaggedProfile *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_TaggedProfile,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::TaggedProfile::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedProfile *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const IOP::TaggedProfile*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedProfile *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::TaggedProfile *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedProfile ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_TaggedProfile
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::TaggedProfile*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::TaggedProfile *tmp;
-      ACE_NEW_RETURN (tmp, IOP::TaggedProfile, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedProfile,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::TaggedProfile::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const IOP::TaggedProfile*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::TaggedProfile *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::TaggedProfile,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_TaggedProfile,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::TaggedProfile::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const IOP::IOR &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::IOR &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_IOR,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_IOR,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::IOR *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_IOR,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::IOR::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::IOR *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const IOP::IOR *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::IOR *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_IOR,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::IOR::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::IOR *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const IOP::IOR*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::IOR *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::IOR *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_IOR ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_IOR
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::IOR*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::IOR *tmp;
-      ACE_NEW_RETURN (tmp, IOP::IOR, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_IOR,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::IOR::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const IOP::IOR*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::IOR *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::IOR,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_IOR,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::IOR::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const IOP::TaggedComponent &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::TaggedComponent &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_TaggedComponent,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedComponent,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::TaggedComponent *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedComponent,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::TaggedComponent::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::TaggedComponent *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const IOP::TaggedComponent *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::TaggedComponent *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_TaggedComponent,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::TaggedComponent::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponent *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const IOP::TaggedComponent*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedComponent *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::TaggedComponent *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponent ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_TaggedComponent
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::TaggedComponent*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::TaggedComponent *tmp;
-      ACE_NEW_RETURN (tmp, IOP::TaggedComponent, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedComponent,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::TaggedComponent::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const IOP::TaggedComponent*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::TaggedComponent *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::TaggedComponent,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_TaggedComponent,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::TaggedComponent::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:61
+
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const IOP::MultipleComponentProfile &_tao_elem
-  ) // copying
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        IOP::_tc_MultipleComponentProfile,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_MultipleComponentProfile,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::MultipleComponentProfile *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::MultipleComponentProfile *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_MultipleComponentProfile,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::MultipleComponentProfile::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_MultipleComponentProfile,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::MultipleComponentProfile::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::MultipleComponentProfile *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::MultipleComponentProfile *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const IOP::MultipleComponentProfile*&,
@@ -2902,90 +3329,127 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::MultipleComponentPr
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::MultipleComponentProfile *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::MultipleComponentProfile *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_MultipleComponentProfile ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_MultipleComponentProfile
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::MultipleComponentProfile*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::MultipleComponentProfile *tmp;
-      ACE_NEW_RETURN (tmp, IOP::MultipleComponentProfile, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_MultipleComponentProfile,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::MultipleComponentProfile::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const IOP::MultipleComponentProfile*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::MultipleComponentProfile *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::MultipleComponentProfile,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_MultipleComponentProfile,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::MultipleComponentProfile::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:61
+
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const IOP::TaggedComponentList &_tao_elem
-  ) // copying
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        IOP::_tc_TaggedComponentList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedComponentList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::TaggedComponentList *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::TaggedComponentList *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_TaggedComponentList,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::TaggedComponentList::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedComponentList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::TaggedComponentList::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponentList *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::TaggedComponentList *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const IOP::TaggedComponentList*&,
@@ -2993,90 +3457,127 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponentList
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedComponentList *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::TaggedComponentList *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponentList ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_TaggedComponentList
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::TaggedComponentList*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::TaggedComponentList *tmp;
-      ACE_NEW_RETURN (tmp, IOP::TaggedComponentList, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedComponentList,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::TaggedComponentList::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const IOP::TaggedComponentList*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::TaggedComponentList *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::TaggedComponentList,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_TaggedComponentList,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::TaggedComponentList::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:61
+
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const IOP::TaggedComponentSeq &_tao_elem
-  ) // copying
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        IOP::_tc_TaggedComponentSeq,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedComponentSeq,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::TaggedComponentSeq *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::TaggedComponentSeq *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_TaggedComponentSeq,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::TaggedComponentSeq::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_TaggedComponentSeq,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::TaggedComponentSeq::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponentSeq *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::TaggedComponentSeq *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const IOP::TaggedComponentSeq*&,
@@ -3084,173 +3585,255 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponentSeq 
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedComponentSeq *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::TaggedComponentSeq *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_TaggedComponentSeq ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_TaggedComponentSeq
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::TaggedComponentSeq*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::TaggedComponentSeq *tmp;
-      ACE_NEW_RETURN (tmp, IOP::TaggedComponentSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_TaggedComponentSeq,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::TaggedComponentSeq::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const IOP::TaggedComponentSeq*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::TaggedComponentSeq *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::TaggedComponentSeq,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_TaggedComponentSeq,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::TaggedComponentSeq::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const IOP::ServiceContext &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::ServiceContext &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_ServiceContext,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_ServiceContext,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::ServiceContext *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_ServiceContext,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::ServiceContext::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::ServiceContext *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const IOP::ServiceContext *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::ServiceContext *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_ServiceContext,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::ServiceContext::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContext *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const IOP::ServiceContext*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContext *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::ServiceContext *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_ServiceContext ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_ServiceContext
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::ServiceContext*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::ServiceContext *tmp;
-      ACE_NEW_RETURN (tmp, IOP::ServiceContext, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_ServiceContext,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::ServiceContext::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const IOP::ServiceContext*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::ServiceContext *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::ServiceContext,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_ServiceContext,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::ServiceContext::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:61
+
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const IOP::ServiceContextList &_tao_elem
-  ) // copying
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        IOP::_tc_ServiceContextList,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_ServiceContextList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::ServiceContextList *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::ServiceContextList *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_ServiceContextList,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      IOP::ServiceContextList::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_ServiceContextList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::ServiceContextList::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContextList *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::ServiceContextList *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const IOP::ServiceContextList*&,
@@ -3258,155 +3841,714 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContextList 
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContextList *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::ServiceContextList *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_ServiceContextList ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_ServiceContextList
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::ServiceContextList*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::ServiceContextList *tmp;
-      ACE_NEW_RETURN (tmp, IOP::ServiceContextList, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_ServiceContextList,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::ServiceContextList::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const IOP::ServiceContextList*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        IOP::ServiceContextList *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::ServiceContextList,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_ServiceContextList,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::ServiceContextList::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
+  return 0;
+}
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/any_op_cs.cpp:60
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::Codec_ptr _tao_elem
+  )
+{
+  _tao_any._tao_replace (
+      IOP::_tc_Codec, 
+      1,
+      IOP::Codec::_duplicate (_tao_elem),
+      IOP::Codec::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::Codec_ptr *_tao_elem
+  )
+{
+  _tao_any._tao_replace (
+      IOP::_tc_Codec, 
+      1,
+      *_tao_elem,
+      IOP::Codec::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::Codec_ptr &_tao_elem
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = IOP::Codec::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_Codec
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (!result)
+      {
+        return 0; // not equivalent
+      }
+    
+    _tao_elem =
+      ACE_reinterpret_cast (
+          IOP::Codec_ptr,
+          ACE_const_cast (void *, _tao_any.value ())
+        );
+    
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  _tao_elem = IOP::Codec::_nil ();
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<IOP::Codec,IOP::Codec_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<IOP::Codec,IOP::Codec_var>
+  template class TAO_Object_Manager<IOP::Codec,IOP::Codec_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<IOP::Codec,IOP::Codec_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const IOP::Encoding &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:60
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::Codec::InvalidTypeForEncoding &_tao_elem
+  )
 {
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      IOP::_tc_Encoding,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  IOP::Codec::InvalidTypeForEncoding *_tao_elem_copy = 0;
+  ACE_NEW (
+      _tao_elem_copy,
+      IOP::Codec::InvalidTypeForEncoding (_tao_elem)
     );
+  
+  _tao_any._tao_replace (
+      IOP::Codec::_tc_InvalidTypeForEncoding,
+      1,
+      _tao_elem_copy,
+      IOP::Codec::InvalidTypeForEncoding::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
 }
 
-void operator<<= (CORBA::Any &_tao_any, IOP::Encoding *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::Codec::InvalidTypeForEncoding *_tao_elem
+  )
 {
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
   _tao_any._tao_replace (
-      IOP::_tc_Encoding,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
+      IOP::Codec::_tc_InvalidTypeForEncoding,
       1,
       _tao_elem,
-      IOP::Encoding::_tao_any_destructor
+      IOP::Codec::InvalidTypeForEncoding::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,IOP::Codec::InvalidTypeForEncoding *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast(
+      const IOP::Codec::InvalidTypeForEncoding*&,
+      _tao_elem
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::Encoding *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const IOP::Encoding*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::Encoding *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::Codec::InvalidTypeForEncoding *&_tao_elem
+  )
 {
   _tao_elem = 0;
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (IOP::_tc_Encoding ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::Codec::_tc_InvalidTypeForEncoding
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const IOP::Encoding*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      IOP::Encoding *tmp;
-      ACE_NEW_RETURN (tmp, IOP::Encoding, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            IOP::_tc_Encoding,
-            1,
-            ACE_static_cast (void *, tmp),
-            IOP::Encoding::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
+    _tao_elem = (IOP::Codec::InvalidTypeForEncoding *)_tao_any.value ();
+    return 1;
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
+  return 0;
+}
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:60
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::Codec::FormatMismatch &_tao_elem
+  )
+{
+  IOP::Codec::FormatMismatch *_tao_elem_copy = 0;
+  ACE_NEW (
+      _tao_elem_copy,
+      IOP::Codec::FormatMismatch (_tao_elem)
+    );
+  
+  _tao_any._tao_replace (
+      IOP::Codec::_tc_FormatMismatch,
+      1,
+      _tao_elem_copy,
+      IOP::Codec::FormatMismatch::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::Codec::FormatMismatch *_tao_elem
+  )
+{
+  _tao_any._tao_replace (
+      IOP::Codec::_tc_FormatMismatch,
+      1,
+      _tao_elem,
+      IOP::Codec::FormatMismatch::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,IOP::Codec::FormatMismatch *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast(
+      const IOP::Codec::FormatMismatch*&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::Codec::FormatMismatch *&_tao_elem
+  )
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::Codec::_tc_FormatMismatch
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    _tao_elem = (IOP::Codec::FormatMismatch *)_tao_any.value ();
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
+}
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:60
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::Codec::TypeMismatch &_tao_elem
+  )
+{
+  IOP::Codec::TypeMismatch *_tao_elem_copy = 0;
+  ACE_NEW (
+      _tao_elem_copy,
+      IOP::Codec::TypeMismatch (_tao_elem)
+    );
+  
+  _tao_any._tao_replace (
+      IOP::Codec::_tc_TypeMismatch,
+      1,
+      _tao_elem_copy,
+      IOP::Codec::TypeMismatch::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::Codec::TypeMismatch *_tao_elem
+  )
+{
+  _tao_any._tao_replace (
+      IOP::Codec::_tc_TypeMismatch,
+      1,
+      _tao_elem,
+      IOP::Codec::TypeMismatch::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,IOP::Codec::TypeMismatch *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast(
+      const IOP::Codec::TypeMismatch*&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::Codec::TypeMismatch *&_tao_elem
+  )
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::Codec::_tc_TypeMismatch
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    _tao_elem = (IOP::Codec::TypeMismatch *)_tao_any.value ();
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
+}
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::Encoding &_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_Encoding,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::Encoding *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          IOP::_tc_Encoding,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          IOP::Encoding::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::Encoding *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const IOP::Encoding *&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::Encoding *&_tao_elem
+  )
+{
+  _tao_elem = 0;
+  
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_Encoding
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast (
+            const IOP::Encoding*,
+            _tao_any.value ()
+          );
+        
+        return 1;
+      }
+    else
+      {
+        IOP::Encoding *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            IOP::Encoding,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                IOP::_tc_Encoding,
+                1,
+                ACE_static_cast (void *, tmp),
+                IOP::Encoding::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
+}
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/any_op_cs.cpp:60
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::CodecFactory_ptr _tao_elem
+  )
+{
+  _tao_any._tao_replace (
+      IOP::_tc_CodecFactory, 
+      1,
+      IOP::CodecFactory::_duplicate (_tao_elem),
+      IOP::CodecFactory::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::CodecFactory_ptr *_tao_elem
+  )
+{
+  _tao_any._tao_replace (
+      IOP::_tc_CodecFactory, 
+      1,
+      *_tao_elem,
+      IOP::CodecFactory::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    IOP::CodecFactory_ptr &_tao_elem
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = IOP::CodecFactory::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::_tc_CodecFactory
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (!result)
+      {
+        return 0; // not equivalent
+      }
+    
+    _tao_elem =
+      ACE_reinterpret_cast (
+          IOP::CodecFactory_ptr,
+          ACE_const_cast (void *, _tao_any.value ())
+        );
+    
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  _tao_elem = IOP::CodecFactory::_nil ();
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<IOP::CodecFactory,IOP::CodecFactory_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<IOP::CodecFactory,IOP::CodecFactory_var>
+  template class TAO_Object_Manager<IOP::CodecFactory,IOP::CodecFactory_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<IOP::CodecFactory,IOP::CodecFactory_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:60
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const IOP::CodecFactory::UnknownEncoding &_tao_elem
+  )
+{
+  IOP::CodecFactory::UnknownEncoding *_tao_elem_copy = 0;
+  ACE_NEW (
+      _tao_elem_copy,
+      IOP::CodecFactory::UnknownEncoding (_tao_elem)
+    );
+  
+  _tao_any._tao_replace (
+      IOP::CodecFactory::_tc_UnknownEncoding,
+      1,
+      _tao_elem_copy,
+      IOP::CodecFactory::UnknownEncoding::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    IOP::CodecFactory::UnknownEncoding *_tao_elem
+  )
+{
+  _tao_any._tao_replace (
+      IOP::CodecFactory::_tc_UnknownEncoding,
+      1,
+      _tao_elem,
+      IOP::CodecFactory::UnknownEncoding::_tao_any_destructor
+    );
+  
+  _tao_any.contains_local (1);
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,IOP::CodecFactory::UnknownEncoding *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast(
+      const IOP::CodecFactory::UnknownEncoding*&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const IOP::CodecFactory::UnknownEncoding *&_tao_elem
+  )
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean result =
+      type->equivalent (
+          IOP::CodecFactory::_tc_UnknownEncoding
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    _tao_elem = (IOP::CodecFactory::UnknownEncoding *)_tao_any.value ();
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
+}
 
 
 #if !defined _TAO_CDR_OP_IOP_TaggedProfile__tao_seq_Octet_CPP_
@@ -3447,16 +4589,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -3517,16 +4659,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -3579,16 +4721,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -3645,16 +4787,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -3692,16 +4834,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -3739,16 +4881,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -3799,16 +4941,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -3865,16 +5007,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)

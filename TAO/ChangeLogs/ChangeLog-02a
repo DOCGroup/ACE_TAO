@@ -1,3 +1,64 @@
+Fri Apr  5 19:49:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Fix for part of
+	  bug #1159. Changed the way we perform a check for malformed GIOP
+	  message containing a sequence. The procedure we followed was to
+	  extract the length of the sequence, resize the length of
+	  sequence (this involved allocation) into which we need to
+	  extract and then perform a sanity check. This sanity check was
+	  too late. Malformed GIOP messages had very big size of sequences
+	  and allocations took time and sometimes crashed the
+	  application. 
+
+	  We extract the length of the sequence and then check to see if
+	  the length of the sequence is greater than the size of the
+	  incoming stream. If it is greater we return an error. Thanks to
+	  Duane Binder <duane.binder@veritas.com> for reporting the
+	  problem. 
+	
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/DynamicC.cpp:
+	* tao/DynamicC.h:
+	* tao/DynamicC.i:
+	* tao/IOPC.cpp:
+	* tao/IOPC.h:
+	* tao/IOPC.i:
+	* tao/Messaging_PolicyValueC.cpp:
+	* tao/Messaging_PolicyValueC.h:
+	* tao/Messaging_PolicyValueC.i:
+	* tao/ObjectReferenceTemplateC.cpp:
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/ObjectReferenceTemplateC.i:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+	* tao/PolicyS.h:
+	* tao/Policy_ForwardC.cpp:
+	* tao/Policy_ForwardC.h:
+	* tao/Policy_ForwardC.i:
+	* tao/Domain/DomainS.cpp:
+	* tao/Domain/DomainS.h:
+	* tao/Domain/DomainS.i:
+	* tao/Domain/DomainS_T.cpp:
+	* tao/Domain/DomainS_T.h:
+	* tao/Domain/DomainS_T.i:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ImplRepoS_T.cpp:
+	* tao/PortableServer/ImplRepoS_T.h:
+	* tao/PortableServer/ImplRepoS_T.i:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/diffs/IOP.diff:
+	* tao/diffs/Policy_Forward.diff: Regenerated all the code that
+	  needed to be changed with above change to the IDL compiler.
+
 Fri Apr  5 12:10:38 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:

@@ -30,7 +30,7 @@ PortableInterceptor::ObjectReferenceFactory::~ObjectReferenceFactory () // destr
 ACE_INLINE const char* 
 PortableInterceptor::ObjectReferenceFactory::_tao_obv_static_repository_id ()
 {
-  return "IDL:PortableInterceptor/ObjectReferenceFactory:1.0";
+  return "IDL:omg.org/PortableInterceptor/ObjectReferenceFactory:1.0";
 }
 
 ACE_INLINE
@@ -44,7 +44,7 @@ PortableInterceptor::ObjectReferenceTemplate::~ObjectReferenceTemplate () // des
 ACE_INLINE const char* 
 PortableInterceptor::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 {
-  return "IDL:PortableInterceptor/ObjectReferenceTemplate:1.0";
+  return "IDL:omg.org/PortableInterceptor/ObjectReferenceTemplate:1.0";
 }
 
 
