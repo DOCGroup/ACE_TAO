@@ -32,12 +32,13 @@ public:
   /// Constructor
   RTCORBA_Setup (CORBA::ORB_ptr orb,
                  const RT_Class &rtclass
-                 ACE_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS );
 
   const RTCORBA::ThreadpoolLanes & lanes (void) const;
 
 private:
-  void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane);
+  void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane
+		  ACE_ENV_ARG_DECL_WITH_DEFAULTS );
 
 private:
   RTCORBA::PriorityMappingManager_var priority_mapping_manager_;

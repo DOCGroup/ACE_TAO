@@ -1,3 +1,9 @@
+Sun Mar  3 16:09:14 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.h:
+	  Add ACE_ENV_ARG_DECL parameters to setup_lane().
+
 Sun Mar  3 10:20:23 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp:
