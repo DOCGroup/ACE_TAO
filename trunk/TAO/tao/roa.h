@@ -100,18 +100,13 @@ public:
        CORBA::Environment &env);
   virtual ~ROA (void);
 
+#if 0
   virtual ACE_INET_Addr get_addr (void) const;
+#endif /* 0 */
   
 private:
-  ACE_INET_Addr addr_;		
-  // The address of the endpoint on which we're listening for
-  // connections and requests.
-
   CORBA::Boolean do_exit_;	
   // Flag set by <clean_shutdown ()>.
-
-  ROA_Acceptor client_acceptor_;
-  // The acceptor listening for requests.
 
   CORBA::ORB_ptr orb_;		
   // Pointer to our ORB.

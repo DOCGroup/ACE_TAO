@@ -3,7 +3,8 @@
 ACE_INLINE
 IIOP_ORB::IIOP_ORB(void)
   : use_omg_ior_format_(CORBA::B_FALSE)
-{}
+{
+}
 
 ACE_INLINE
 IIOP_ORB::~IIOP_ORB(void)

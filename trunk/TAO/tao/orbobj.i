@@ -1,15 +1,6 @@
 // $Id$
 
 // Constructor and destructor are accessible to subclasses
-ACE_INLINE
-CORBA_ORB::CORBA_ORB (void)
-  : client_factory_ (0),
-    client_factory_from_service_config_ (CORBA::B_FALSE),
-    server_factory_ (0),
-    server_factory_from_service_config_ (CORBA::B_FALSE)
-{
-  refcount_ = 1;
-}
 
 ACE_INLINE
 CORBA_ORB::~CORBA_ORB (void)

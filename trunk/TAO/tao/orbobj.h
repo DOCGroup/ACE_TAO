@@ -30,6 +30,9 @@
 #  include "tao/params.h"
 #endif /* 0 */
 
+#include "tao/corba.h"
+#include "tao/connect.h"
+
 class ACE_Svc_Export CORBA_ORB : public IUnknown
 {
   // = TITLE
@@ -83,6 +86,13 @@ private:
   CORBA::Boolean server_factory_from_service_config_;
 
   TAO_ORB_Parameters params_;
+
+  ACE_INET_Addr addr_;		
+  // The address of the endpoint on which we're listening for
+  // connections and requests.
+
+  TAO_Acceptor client_acceptor_;
+  // The acceptor listening for requests.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);

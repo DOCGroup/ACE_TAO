@@ -194,8 +194,10 @@ public:
   virtual CORBA::ORB_ptr orb (void) const = 0;
   // Return the ORB with which this OA is associated.
 
+#if 0
   virtual ACE_INET_Addr get_addr (void) const = 0;
   // @@ Please add a comment.
+#endif /* 0 */
 
 protected:
   TAO_Object_Table *objtable_;
