@@ -1,6 +1,11 @@
+Mon Aug 23 08:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+          Fixed typo in vpath
+
 Sun Aug 22 22:23:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/Config_Handlers.mpc: 
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
 
 	  Fixed VC6 compilation errors.
 
@@ -9,7 +14,7 @@ Mon Aug 23 01:07:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
  	* DAnCE/ciao/StandardConfigurator_Impl.cpp:
 	* ciao/StandardConfigurator_Impl.cpp:
 
-	  Fixed unused variable warnings. 
+	  Fixed unused variable warnings.
 
 Sun Aug 22 21:28:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -23,7 +28,7 @@ Sun Aug 22 21:28:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  following change
 
 	  Tue Aug 17 14:29:00 2004  Jules White <jules@dre.vanderbilt.edu>
-	
+
 	* ciao/CCM_Core.mpc:
 	* ciao/Servant_Impl_Base.cpp:
 	* ciao/Servant_Impl_Base.h:
@@ -31,8 +36,8 @@ Sun Aug 22 21:28:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ciao/StandardConfigurator_Impl.h:
 
 	  Fixed compilation errors in builds where exceptions have been
-	  turned off. 
-	
+	  turned off.
+
 Sun Aug 22 22:11:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
@@ -43,14 +48,14 @@ Sun Aug 22 20:08:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:
 
-	  Fixed unused variable warnings in the generated code. 
+	  Fixed unused variable warnings in the generated code.
 
 Sun Aug 22 17:06:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/IDL3_to_IDL2/be_global.cpp:
 	* tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
 
-	  Fixed unused variable warnings in our daily builds. 
+	  Fixed unused variable warnings in our daily builds.
 
 Sun Aug 22 16:26:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -61,7 +66,7 @@ Sun Aug 22 16:26:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Aug 20 16:01:55 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
-        
+
           Fixed typo in source file name.
 
 Fri Aug 20 10:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
