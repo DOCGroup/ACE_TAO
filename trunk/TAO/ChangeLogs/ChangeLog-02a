@@ -1,3 +1,11 @@
+Fri May 25 08:47:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_identifier.cpp:
+
+          Fixed another case where a prefix with a leading underscore is
+          added internally by the IDL compiler, and must be distinguished
+          from legitimate escaped identifiers in the IDL file.
+
 Fri May 25 06:02:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/tutorials/Quoter/RT_Event_Service: Added some fixes to 
