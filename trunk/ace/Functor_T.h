@@ -36,6 +36,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Functor_String.h"
 ///////////////////////////////////
 // GOF Command Pattern Templates //
 ///////////////////////////////////
