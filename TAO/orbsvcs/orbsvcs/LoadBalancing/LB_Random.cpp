@@ -144,8 +144,9 @@ TAO_LB_Random::_tao_next_member (
   //       addition to the fact that the lower order bits should be as
   //       random as the higher order bits.
 
-  const CORBA::Float flen = len;  // Prevent integer arithmetic
-                                  // overflow.
+  // Prevent integer arithmetic overflow.
+  const CORBA::Float flen = ACE_static_cast (CORBA::Float, len);
+                                  
   const CORBA::ULong i =
     ACE_static_cast (CORBA::ULong,
                      flen * ACE_OS::rand () / (RAND_MAX + 1.0));
