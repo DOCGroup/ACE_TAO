@@ -6302,7 +6302,7 @@ Fri Aug 20 15:51:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/ORB.cpp (resolve_initial_references): Changed to search for
           the ORB's lookup table if the search in initial reference table
-          kept in ORB param fails.  This change allows up to find the
+          kept in ORB param fails.  This change allows us to find the
           collocated service available in the local ORB.  Thanks to Sharo
           Randall <RASB@eci-esyst.com> for suggesting the change.
 
