@@ -846,6 +846,10 @@ SOURCE=.\Stats.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\String_Base_Const.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SV_Message.cpp
 # End Source File
 # Begin Source File
@@ -1971,6 +1975,10 @@ SOURCE=.\streams.h
 # Begin Source File
 
 SOURCE=.\String_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\String_Base_Const.h
 # End Source File
 # Begin Source File
 

@@ -52,6 +52,7 @@ UTILS_FILES = \
   Method_Request \
   Object_Manager \
   Registry \
+  String_Base_Const \
   SString \
   Stats \
   Sample_History
@@ -104,7 +105,7 @@ CONNECTION_FILES = \
   Asynch_IO \
   Asynch_IO_Impl \
   POSIX_Asynch_IO \
-  WIN32_Asynch_IO 
+  WIN32_Asynch_IO
 SOCKETS_FILES = \
   Addr \
   INET_Addr \

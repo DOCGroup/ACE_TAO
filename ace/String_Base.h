@@ -16,6 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
+#include "ace/String_Base_Const.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,12 +44,9 @@ class ACE_Allocator;
  * ACE_String_Base is not guaranteed to be '\0' terminated.
  */
 template <class CHAR>
-class ACE_Export ACE_String_Base
+class ACE_Export ACE_String_Base : public ACE_String_Base_Const
 {
 public:
-  /// No position constant
-  static const int npos;
-
   /// Default constructor.
   ACE_String_Base (ACE_Allocator *alloc = 0);
 
