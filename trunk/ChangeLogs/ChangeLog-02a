@@ -1,3 +1,10 @@
+Fri May 18 01:31:47 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe.h: Reordered the include files: Timeprobe_T.h
+	  should come after Synch.h.  Thanks to Bruce McIntosh
+	  <Bruce.McIntosh@Australia.Boeing.com> for reporting this
+	  problem.
+
 Fri May 18 00:36:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Map_Manager.cpp (unbind_all): Added a new method that

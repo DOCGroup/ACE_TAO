@@ -103,9 +103,9 @@ public:
 #include "ace/Timeprobe.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Timeprobe_T.h"
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
+#include "ace/Timeprobe_T.h"
 
 // If ACE_MT_TIMEPROBES is defined, use a Thread_Mutex to lock the
 // internal state of ACE_Timerprobe.  This allows multiple threads to
