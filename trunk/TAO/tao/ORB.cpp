@@ -244,7 +244,8 @@ CORBA_ORB::open (void)
 
   this->open_called_ = 1;
 
-  TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
+  TAO_Server_Strategy_Factory *f =
+    this->orb_core_->server_factory ();
 
   // @@ For now we simple assume an IIOP handler, in the future
   // @@ this has to be more general
@@ -255,8 +256,8 @@ CORBA_ORB::open (void)
   //    activate the acceptor with the reactor and insert it in the
   //    Acceptor Registry.
   TAO_IIOP_BASE_ACCEPTOR *iiop_acceptor =
-    ACE_dynamic_cast(TAO_IIOP_BASE_ACCEPTOR *,
-                     this->orb_core_->acceptor ()->acceptor ());
+    ACE_dynamic_cast (TAO_IIOP_BASE_ACCEPTOR *,
+                      this->orb_core_->acceptor ()->acceptor ());
 
   // Initialize the endpoint ... or try!
 
@@ -316,13 +317,14 @@ CORBA_ORB::create_list (CORBA::Long count,
 {
   assert (CORBA::ULong (count) <= UINT_MAX);
 
-  // create an empty list
+  // Create an empty list
   new_list = new CORBA::NVList;
 
-  // if count is greater than 0, create a list of NamedValues
+  // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
     {
       new_list->max_ = (CORBA::ULong) count;
+
       for (CORBA::Long i=0; i < count; i++)
         {
           CORBA::NamedValue_ptr nv = new CORBA::NamedValue;
@@ -343,6 +345,7 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
   r->owner (ACE_Thread::self ());
 
   ACE_Time_Value tmp_tv (tv);
+
   return r->handle_events (tmp_tv);
 }
 
@@ -401,7 +404,7 @@ CORBA_ORB::run (ACE_Time_Value *tv,
   while (this->should_shutdown () == 0)
     {
 #if 0
-   ^   counter++;
+      counter++;
       if (counter == max_iterations)
         {
           ACE_TIMEPROBE_PRINT;
