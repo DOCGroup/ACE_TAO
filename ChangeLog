@@ -1,3 +1,8 @@
+Thu Jan  8 11:07:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/SSL_Context.cpp: Added #include "ace/ACE.h" for ACE::debug()
+	  and "ace/OS_NS_string.h" for ACE_OS::strlen().
+
 Thu Jan  8 15:45:50 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
 
         * ace/OS_NS_sys_shm.inl
