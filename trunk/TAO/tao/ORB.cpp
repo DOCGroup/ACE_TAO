@@ -5,6 +5,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
+#include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
