@@ -152,7 +152,7 @@ sdes_atoi (const char* s)
     return  (RTCP_SDES_EMAIL);
   if  (ACE_OS::strcasecmp (s, "phone") == 0)
     return  (RTCP_SDES_PHONE);
-  if  (ACE_OS::strcasecmp (s, "loc") == 0 || strcasecmp (s, "location") == 0)
+  if  (ACE_OS::strcasecmp (s, "loc") == 0 || ACE_OS::strcasecmp (s, "location") == 0)
     return  (RTCP_SDES_LOC);
   if  (ACE_OS::strcasecmp (s, "tool") == 0)
     return  (RTCP_SDES_TOOL);
