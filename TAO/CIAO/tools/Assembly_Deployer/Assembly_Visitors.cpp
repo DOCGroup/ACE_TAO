@@ -34,6 +34,46 @@ CIAO::Assembly_Builder_Visitor::visit_Container
         return -1;
       iter.advance ();
     }
+
+  // Iterate over the component list
+  CIAO::Assembly_Context::COMP_MAP_ITER end_iter =
+      this->context_.instantiated_components_.end ();
+
+  ACE_TRY
+    {
+      for (CIAO::Assembly_Context::COMP_MAP_ITER preiter =
+             this->context_.instantiated_components_.begin ();
+           preiter != end_iter;
+           ++preiter)
+        {
+          (*preiter).int_id_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      for (CIAO::Assembly_Context::COMP_MAP_ITER iter =
+             this->context_.instantiated_components_.begin ();
+           iter != end_iter;
+           ++iter)
+        {
+          (*iter).int_id_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      for (CIAO::Assembly_Context::COMP_MAP_ITER postiter =
+             this->context_.instantiated_components_.begin ();
+           postiter != end_iter;
+           ++postiter)
+        {
+          (*postiter).int_id_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
