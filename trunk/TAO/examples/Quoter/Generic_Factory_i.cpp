@@ -32,10 +32,10 @@ Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i (void)
 
 CORBA::Boolean 
 Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &factory_key,
-                                       CORBA::Environment &TAO_IN_ENV_there)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (factory_key);
-  ACE_UNUSED_ARG (TAO_IN_ENV_there);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 
   return 0;
 }
@@ -44,8 +44,8 @@ Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &factory_key,
 
 CosNaming::NamingContext_ptr
 Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_key,
-                                                 CORBA::Environment &env_here,
-                                                 CORBA::Environment &TAO_IN_ENV_there)
+                                              CORBA::Environment &env_here,
+                                              CORBA::Environment &TAO_IN_ENV_there)
 {
   // Get a reference to the ORB.
   CORBA::ORB_ptr orb_ptr =

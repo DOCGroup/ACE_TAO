@@ -27,35 +27,37 @@ Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server (void)
 
 Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Unbind the Quoter Factory Finder.
       CosNaming::Name factory_Finder_Name (2);
       factory_Finder_Name.length (2);
       factory_Finder_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_Finder_Name[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
-      this->quoterNamingContext_var_->unbind (factory_Finder_Name,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->quoterNamingContext_var_->unbind (factory_Finder_Name,ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_TRY_ENV.print_exception ("System Exception");
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_TRY_ENV.print_exception ("User Exception");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 int
-Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& env)
+Quoter_Factory_Finder_Server::init (int argc, 
+                                    char *argv[], 
+                                    CORBA::Environment &ACE_TRY_ENV )
 {
   if (this->orb_manager_.init (argc,
                                argv,
-                               env) == -1)
+                               ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init"),
@@ -75,10 +77,10 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
   // Activate the object.
   CORBA::String_var str  =
     this->orb_manager_.activate (this->quoter_Factory_Finder_i_ptr_,
-                                 env);
+                                 ACE_TRY_ENV);
 
   // Failure while activating the Quoter Factory Finder object
-  if (env.exception () != 0)
+  if (ACE_TRY_ENV.exception () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init: Failure while activating the Quoter Factory Finder Impl.\n"),
@@ -90,14 +92,14 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
               str.in ()));
 
   // Register the Quoter Factory Finder with the Naming Service
-  TAO_TRY
+  ACE_TRY
     {
       ACE_DEBUG ((LM_DEBUG,"Trying to get a reference to the Naming Service.\n"));
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
         orb_manager_.orb()->resolve_initial_references ("NameService");
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
@@ -106,9 +108,8 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       // Narrow the object reference to a Naming Context.
       CosNaming::NamingContext_var namingContext_var =
         CosNaming::NamingContext::_narrow (namingObj_var.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      ACE_DEBUG ((LM_DEBUG,"Have a proper reference to the Naming Service.\n"));
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Get the IDL_Quoter naming context.
       CosNaming::Name quoterContextName (1);  // max = 1
@@ -116,12 +117,12 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       quoterContextName[0].id = CORBA::string_dup ("IDL_Quoter");
 
       CORBA::Object_var quoterNamingObj_var =
-        namingContext_var->resolve (quoterContextName, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        namingContext_var->resolve (quoterContextName, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       quoterNamingContext_var_ =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
-                                           TAO_TRY_ENV);
+                                           ACE_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Have a proper reference to the Quoter Naming Context.\n"));
@@ -133,24 +134,24 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
       quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
-                                      this->quoter_Factory_Finder_i_ptr_->_this(TAO_TRY_ENV),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      this->quoter_Factory_Finder_i_ptr_->_this(ACE_TRY_ENV),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_TRY_ENV.print_exception ("SYS_EX");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
 
   return 0;
 }
 
 int
-Quoter_Factory_Finder_Server::run (CORBA::Environment& env)
+Quoter_Factory_Finder_Server::run (CORBA::Environment& ACE_TRY_ENV)
 {
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -201,28 +202,28 @@ main (int argc, char *argv [])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tIDL_Quoter:Quoter_Factory_Finder \n \n"));
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      if (quoter_Factory_Finder_Server.init (argc,argv,TAO_TRY_ENV) == -1)
+      if (quoter_Factory_Finder_Server.init (argc,argv,ACE_TRY_ENV) == -1)
         return 1;
       else
         {
-          quoter_Factory_Finder_Server.run (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          quoter_Factory_Finder_Server.run (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
