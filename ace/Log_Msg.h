@@ -418,15 +418,20 @@ public:
   // td->acquire_release to block execution until this call
   // return.
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && !defined(ACE_HAS_LASTEST_AND_GREATEST)
+  // These functions are disabled with ACE_HAS_LATEST_AND_GREATEST
+  // because the *semantics* have changed (they objects are no longer
+  // TSS).
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
   // Get/Set TSS exception action.
+  // NOTE: The action is no longer TSS, they are global!
 
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
   // Get/Set TSS exception handler.
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+  // NOTE: The handler is no longer TSS, they are global!
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ! ACE_HAS_GREATES_AND_LATEST*/
 
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
@@ -582,13 +587,6 @@ private:
   // thread descriptor of the thread.  This can be used to repidly
   // access all thread data kept in <ACE_Thread_Descriptor>.
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
-  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-  // These handlers determine how a thread handles win32 structured
-  // exception.
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-
   u_long priority_mask_;
   // Keeps track of all the per-thread <ACE_Log_Priority> values that
   // are currently enabled.  Default is for all logging priorities to
@@ -634,6 +632,9 @@ private:
 
   static void close (void);
   // For cleanup, at program termination.
+
+  static void sync_hook (const ACE_TCHAR *prg_name);
+  // Decouple the OS layer from the Log_Msg layer.
 
   friend void ACE_OS::cleanup_tss (const u_int);
 

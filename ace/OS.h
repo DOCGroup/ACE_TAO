@@ -1023,6 +1023,13 @@ extern "C" pthread_t pthread_self (void);
 #   define ACE_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 # endif /* ACE_NTRACE */
 
+// By default we perform no tracing on the OS layer, otherwise the
+// coupling between the OS layer and Log_Msg is too tight.  But the
+// application can override the default if they wish to.
+# if !defined(ACE_OS_TRACE)
+#  define ACE_OS_TRACE(X)
+# endif /* ACE_OS_TRACE */
+
 # if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
 #     include /**/ <time.h>
 #   if defined (__Lynx__)
@@ -4519,6 +4526,12 @@ public:
   // Accessor for the C entry point function to the OS thread creation
   // routine.
 
+  static void close_log_msg (void);
+  // Invoke the close_log_msg_hook, if it is present
+
+  static void sync_log_msg (const ACE_TCHAR *prog_name);
+  // Invoke the sync_log_msg_hook, if it is present
+
 private:
   ~ACE_Thread_Adapter (void);
   // Ensure that this object must be allocated on the heap.
@@ -4529,10 +4542,14 @@ private:
 
   static ACE_INIT_LOG_MSG_HOOK init_log_msg_hook_;
   static ACE_INHERIT_LOG_MSG_HOOK inherit_log_msg_hook_;
+  static ACE_CLOSE_LOG_MSG_HOOK close_log_msg_hook_;
+  static ACE_SYNC_LOG_MSG_HOOK sync_log_msg_hook_;
   // The hooks to inherit and cleanup the Log_Msg attributes
 
   static void set_log_msg_hooks (ACE_INIT_LOG_MSG_HOOK init_hook,
-                                 ACE_INHERIT_LOG_MSG_HOOK inherit_hook);
+                                 ACE_INHERIT_LOG_MSG_HOOK inherit_hook,
+                                 ACE_CLOSE_LOG_MSG_HOOK close_hook,
+                                 ACE_SYNC_LOG_MSG_HOOK sync_hook);
   // Set the Log_Msg hooks
 
   friend class ACE_Log_Msg;
@@ -6374,6 +6391,15 @@ public:
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
   // Returns the existing thread hook and assign a <new_thread_hook>.
 
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  static ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
+  static ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
+  // Get/Set TSS exception action.
+
+  static ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
+  static ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+
 public:
   // = Applications shouldn't use these so they're hidden here.
 
@@ -6404,6 +6430,13 @@ private:
 
   ACE_OS_Exit_Info exit_info_;
   // For at_exit support.
+
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
+  // These handlers determine how a thread handles win32 structured
+  // exception.
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   int at_exit (ACE_EXIT_HOOK func);
   // For <ACE_OS::atexit> support.
