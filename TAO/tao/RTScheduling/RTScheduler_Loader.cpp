@@ -11,6 +11,15 @@
 ACE_RCSID (TAO, RTScheduler_Loader, "$Id$")
 
 
+TAO_RTScheduler_Loader::TAO_RTScheduler_Loader (void)
+{
+}
+
+TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
+{
+
+}
+
 int
 TAO_RTScheduler_Loader::init (int argc,
                          ACE_TCHAR* argv[])
