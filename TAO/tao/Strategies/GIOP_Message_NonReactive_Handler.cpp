@@ -19,7 +19,9 @@ TAO_GIOP_Message_NonReactive_Handler::TAO_GIOP_Message_NonReactive_Handler (TAO_
                                        mesg_base,
                                        cdr_size),
     mesg_base_ (mesg_base),
-    input_cdr_ (orb_core->data_block_for_message_block (cdr_size))
+    input_cdr_ (orb_core->data_block_for_message_block (cdr_size),
+                0,
+                TAO_ENCAP_BYTE_ORDER)
 {
 }
 

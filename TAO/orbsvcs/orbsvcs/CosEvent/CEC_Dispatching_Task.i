@@ -19,7 +19,7 @@ TAO_CEC_Dispatch_Command::TAO_CEC_Dispatch_Command (ACE_Allocator *mb_allocator)
 ACE_INLINE
 TAO_CEC_Dispatch_Command::TAO_CEC_Dispatch_Command (ACE_Data_Block *data_block,
                                                   ACE_Allocator *mb_allocator)
-  :  ACE_Message_Block (data_block, mb_allocator)
+  :  ACE_Message_Block (data_block, 0, mb_allocator)
 {
 }
 
