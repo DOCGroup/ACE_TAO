@@ -30,6 +30,12 @@ namespace CORBA
   typedef Object *Object_ptr;
 }
 
+namespace PortableInterceptor
+{
+  class ObjectReferenceTemplate;
+  class ObjectReferenceFactory;
+}
+
 /**
  * @class TAO_ObjectReferenceTemplate_Adapter
  *
@@ -48,7 +54,13 @@ public:
   /// Activate the ORT library
   virtual int activate (const char *server_id,
                         const char *orb_id,
+                        PortableInterceptor::AdapterName *,
                         TAO_POA *poa) = 0;
+
+  virtual int activate (PortableInterceptor::ObjectReferenceFactory *current_factory,
+                        TAO_POA *poa) = 0;
+
+  virtual int destroy (void) = 0;
 
   /// Set the underlying POA pointer.
   /**
@@ -59,6 +71,12 @@ public:
    * it has been destroyed.
    */
   virtual void poa (TAO_POA * poa) = 0;
+
+  /// Accessor methods to ObjectReferenceTemplate template
+  virtual PortableInterceptor::ObjectReferenceTemplate * get_adapter_template (void) = 0;
+
+  /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
+  virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void) = 0;
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -75,8 +93,6 @@ public:
       CORBA::SystemException
     )) = 0;
   //@}
-
-
 };
 
 #include /**/ "ace/post.h"

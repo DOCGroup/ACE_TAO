@@ -15,9 +15,9 @@ ACE_RCSID (PortableServer,
 #include "tao/StringSeqC.h"
 
 #include "tao/PortableServer/IORInfo.h"
-#include "tao/PortableServer/ObjectReferenceTemplate.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
-
+#include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
+#include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -41,6 +41,7 @@ ACE_RCSID (PortableServer,
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "POA.i"
@@ -171,10 +172,29 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 void
 TAO_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_ENV_ARG_DECL)
 {
-  CORBA::add_ref (current_factory);
-  this->obj_ref_factory_ = current_factory;
+  if (ort_adapter_ != 0)
+  {
+    ort_adapter_->destroy();
+    ort_adapter_ = 0;
+  }
+
+  TAO_ObjectReferenceTemplate_Adapter_Factory * ort_ap_factory =
+    this->object_reference_template_adapter_factory();
+
+  if (ort_ap_factory)
+    {
+      this->ort_adapter_ =
+        ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (ort_adapter_)
+        {
+          ort_adapter_->activate (current_factory,
+                                  this);
+        }
+    }
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &name,
@@ -194,6 +214,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     policies_ (policies),
     parent_ (parent),
     active_object_map_ (0),
+    ort_adapter_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -345,22 +366,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-  // Create an ObjectReferenceTemplate for this POA.
-  ACE_NEW_THROW_EX (this->def_ort_template_,
-                    TAO_ObjectReferenceTemplate (
-                      this->orb_core_.server_id (),
-                      this->orb_core_.orbid (),
-                      this),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  this->ort_template_ = this->def_ort_template_;
-
-  // Must increase ref count since this->obj_ref_factory_ will
-  // descrease it upon destruction.
-  CORBA::add_ref (this->ort_template_.in ());
-  this->obj_ref_factory_ = this->ort_template_;
 }
 
 TAO_POA::~TAO_POA (void)
@@ -376,6 +381,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Delete the active object map.
   delete this->active_object_map_;
+  active_object_map_ = 0;
 
   // Remove POA from the POAManager.
   int result = this->poa_manager_.remove_poa (this);
@@ -424,6 +430,12 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+  }
+
+  if (ort_adapter_ != 0)
+  {
+    ort_adapter_->destroy ();
+    ort_adapter_ = 0;
   }
 
   CORBA::release (this);
@@ -845,7 +857,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       // Break all ties between the ObjectReferenceTemplate and this
       // POA.
-      this->def_ort_template_->poa (0);
+      if (this->ort_adapter_ == 0)
+        this->ort_adapter_->poa (0);
     }
   else
     {
@@ -1921,14 +1934,32 @@ TAO_POA::create_reference_i (const char *intf,
                                    1,
                                    priority);
 
+  return this->invoke_key_to_object_helper (intf,
+                                            user_id
+                                            ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object_ptr
+TAO_POA::invoke_key_to_object_helper (const char * repository_id,
+                                      const PortableServer::ObjectId & id
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
   const PortableInterceptor::ObjectId &user_oid =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                          user_id);
+    reinterpret_cast <const PortableInterceptor::ObjectId &>(id);
 
   // Ask the ORT to create the object.
-  return this->obj_ref_factory_->make_object (intf,
+  if (this->object_reference_template_adapter ())
+    {
+      // Ask the ORT to create the object.
+      return this->ort_adapter_->make_object (repository_id,
                                               user_oid
                                               ACE_ENV_ARG_PARAMETER);
+    }
+  else
+    {
+      return this->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
 }
 
 CORBA::Object_ptr
@@ -2005,14 +2036,9 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                    1,
                                    priority);
 
-  const PortableInterceptor::ObjectId &user_oid =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                          user_id);
-
-  // Ask the ORT to create the object.
-  return this->obj_ref_factory_->make_object (intf,
-                                              user_oid
-                                              ACE_ENV_ARG_PARAMETER);
+  return this->invoke_key_to_object_helper (intf,
+                                            user_id
+                                            ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -2253,19 +2279,14 @@ TAO_POA::servant_to_reference_i (PortableServer::Servant servant
                                    1,
                                    priority);
 
-  const PortableInterceptor::ObjectId &user_oid =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                          user_id);
-
   // Ask the ORT to create the object.
   // @@NOTE:There is a possible deadlock lurking here. We held the
   // lock, and we are possibly trying to make a call into the
   // application code. Think what would happen if the app calls us
   // back. We need to get to this at some point.
-  return this->obj_ref_factory_->make_object (
-    servant->_interface_repository_id (),
-    user_oid
-    ACE_ENV_ARG_PARAMETER);
+  return this->invoke_key_to_object_helper (servant->_interface_repository_id (),
+                                            user_id
+                                            ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
@@ -2605,14 +2626,9 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                                        1,
                                        priority);
 
-      const PortableInterceptor::ObjectId &user_oid =
-        ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                              id);
-
-      // Ask the ORT to create the object.
-      return this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
-                                                  user_oid
-                                                  ACE_ENV_ARG_PARAMETER);
+      return this->invoke_key_to_object_helper (servant->_interface_repository_id (),
+                                                id
+                                                ACE_ENV_ARG_PARAMETER);
     }
   else
     // If the Object Id value is not active in the POA, an
@@ -4170,6 +4186,63 @@ TAO_POA::imr_notify_shutdown (void)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+TAO_ObjectReferenceTemplate_Adapter_Factory *
+TAO_POA::object_reference_template_adapter_factory (void)
+{
+  return ACE_Dynamic_Service<TAO_ObjectReferenceTemplate_Adapter_Factory>::instance (
+           TAO_POA::objectreferencetemplate_adapter_factory_name());
+}
+
+TAO_ObjectReferenceTemplate_Adapter *
+TAO_POA::object_reference_template_adapter (void)
+{
+  if (this->ort_adapter_ == 0)
+    {
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD_RETURN (0);
+
+      if (this->ort_adapter_ == 0)
+        {
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              TAO_ObjectReferenceTemplate_Adapter_Factory * ort_ap_factory =
+                this->object_reference_template_adapter_factory();
+
+              if (ort_ap_factory)
+                {
+                  this->ort_adapter_ =
+                    ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (ort_adapter_)
+                    {
+                      // Get the full adapter name of this POA
+                      PortableInterceptor::AdapterName *adapter_name =
+                        this->adapter_name_i(ACE_ENV_SINGLE_ARG_PARAMETER)
+                      ACE_TRY_CHECK;
+
+                      ort_adapter_->activate (this->orb_core_.server_id (),
+                                              this->orb_core_.orbid (),
+                                              adapter_name,
+                                              this);
+                    }
+                }
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "(%P|%t) Cannot initialize the "
+                                   "object_reference_template_adapter\n");
+            }
+          ACE_ENDTRY;
+        }
+    }
+
+  return this->ort_adapter_;
+}
+
+
 TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
                               ACE_ENV_ARG_DECL,
                               int check_for_destruction)
@@ -4304,6 +4377,52 @@ TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
   this->priority_ = priority;
 }
 
+void
+TAO_POA::objectreferencetemplate_adapter_factory_name (const char *name)
+{
+  TAO_POA_Static_Resources::instance ()->objectreferencetemplate_adapter_factory_name_ = name;
+}
+
+const char *
+TAO_POA::objectreferencetemplate_adapter_factory_name (void)
+{
+  return TAO_POA_Static_Resources::instance ()->objectreferencetemplate_adapter_factory_name_.c_str();
+}
+
+// Initialize instance_ to 0, since this is what we test for in the call
+// to instance ().  Note that this does not require a constructor call, so
+// it is always initialized by the time that instance () can be called.
+TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = 0;
+
+// Force an instance to be created at module initialization time,
+// since we do not want to worry about double checked locking and
+// the race condition to initialize the lock.
+TAO_POA_Static_Resources* TAO_POA_Static_Resources::initialization_reference_ =
+  TAO_POA_Static_Resources::instance ();
+
+TAO_POA_Static_Resources*
+TAO_POA_Static_Resources::instance (void)
+{
+  if (TAO_POA_Static_Resources::instance_ == 0)
+    {
+      // This new is never freed on purpose.  The data specified by
+      // it needs to be around for the last shared library that references
+      // this class.  This could occur in a destructor in a shared library
+      // that is unloaded after this one.  One solution to avoid this
+      // harmless memory leak would be to use reference counting.
+      ACE_NEW_RETURN (TAO_POA_Static_Resources::instance_,
+                      TAO_POA_Static_Resources (),
+                      0);
+    }
+
+  return TAO_POA_Static_Resources::instance_;
+}
+
+TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
+  : objectreferencetemplate_adapter_factory_name_ ("ObjectReferenceTemplate_Adapter_Factory")
+{
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>;
@@ -4321,13 +4440,11 @@ template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Array_Base <IOP::ProfileId>;
 
-//template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_Active_Object_Map>;
 
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-//template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
 #  endif  /* ACE_LACKS_AUTO_PTR */
 
@@ -4349,13 +4466,11 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
 
-//#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_Active_Object_Map>
 
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-//#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
 #  endif  /* ACE_LACKS_AUTO_PTR */
 
