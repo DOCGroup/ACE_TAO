@@ -1,3 +1,8 @@
+Wed Mar 17 18:34:14 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl:
+          Changed -c to -g, -c is used by other scripts for the config
+
 Wed Mar 17 18:20:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.pl:
