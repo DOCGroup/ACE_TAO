@@ -67,13 +67,16 @@ main (int argc, char *argv[])
   int hi = 4096;
   int s = 4;
 
-  ACE_Get_Opt get_opt (argc, argv, "n:l:h:s:");
+  ACE_Get_Opt get_opt (argc, argv, "dn:l:h:s:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
+	case 'd':
+	  TAO_debug_level++;
+	  break;
         case 'n':
           n = ACE_OS::atoi (get_opt.optarg);
           break;
@@ -90,6 +93,7 @@ main (int argc, char *argv[])
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
+		      "-d debug"
                       "-l low "
                       "-h high "
                       "-s step "
@@ -109,6 +113,8 @@ main (int argc, char *argv[])
     {
       ACE_High_Res_Timer writing;
       ACE_High_Res_Timer reading;
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG, "\nx= %d\n", x));
 
       for (int i = 0; i < n; ++i)
         {
