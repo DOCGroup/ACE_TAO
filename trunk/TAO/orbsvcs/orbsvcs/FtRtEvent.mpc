@@ -75,6 +75,6 @@ project (FTRT_EventChannel) :  orbsvcslib, ftrtevent, utils {
   }
 
   Header_Files {
-    ftrtec_export.h
+    FtRtEvent/EventChannel/ftrtec_export.h
   }
 }

@@ -14,7 +14,7 @@ project(DsNotifyLogAdmin) : orbsvcslib, core, dseventlogadmin, notification {
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
-    Log {
+    DsNotifyLogAdmin {
       DsNotifyLogAdminC.cpp
       DsNotifyLogAdminS.cpp
       Log/NotifyLogFactory_i.cpp

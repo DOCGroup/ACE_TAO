@@ -15,7 +15,7 @@ project(DsLogAdmin) : orbsvcslib, core, etcl, naming, dynamicany {
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
-    Log {
+    DsLogAdmin {
       DsLogAdminC.cpp
       DsLogAdminS.cpp
       DsLogNotificationC.cpp

@@ -1,3 +1,24 @@
+Sun Aug  1 08:16:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+	  Changed ftrtec_export.h to FtRtEvent/EventChannel/ftrtec_export.h
+	  in Header_Files.
+
+	* tao/tao.mpc:
+	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+	  Removed Auto_Functor.cpp from Template_Files.
+
+	* TAO_IDL/tao_idl.1: Update to reflect current file extensions.
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	  Changed group name from EventLog to DsEventLogAdmin.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	  Changed group name from Log to DsLogAdmin.
+
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+	  Changed group name from Log to DsNotifyLogAdmin.
+
 Sun Aug  1 09:10:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-04a:

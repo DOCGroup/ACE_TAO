@@ -14,11 +14,12 @@ tao_idl \- Compile IDL sources for use with the ACE ORB (TAO)
 .B tao_idl
 is a program that is used to compile
 .I IDL
-source code.  The IDL compiler generates 6 files from each .idl file, the file
-names are obtained by taking the IDL basename and appending C.h, C.i, C.cpp,
-S.h, S.i and S.cpp; the client stubs are declared in the C.h file, the
-skeletons in the S.h file. Please see the Options list on how to get different
-suffixes for these files. 
+source code.  The IDL compiler generates 9 files from each .idl file,
+the file names are obtained by taking the IDL basename and appending
+C.h, C.inl, C.cpp, S.h, S.inl, S.cpp, S_T.h, S_T.inl, and S_T.cpp; the
+client stubs are declared in the C.h file, the skeletons in the S.h
+file. Please see the Options list on how to get different suffixes for
+these files.
 
 Both clients and servers should link against the object files for the stubs
 and skeletons, this is needed to transparently support collocated objects.
@@ -156,7 +157,7 @@ Server's template header file name ending. Default is "S_T.h".
 Client stub's file name ending. Default is "C.cpp".
 .TP
 .B \-ci
-Client inline file name ending. Default is "C.i".
+Client inline file name ending. Default is "C.inl".
 .TP
 .B \-ss
 Server skeleton file name ending. Default is "S.cpp".
@@ -165,10 +166,10 @@ Server skeleton file name ending. Default is "S.cpp".
 Server template skeleton file name ending. Default is "S_T.cpp".
 .TP
 .B \-si
-Server inline skeleton file name ending. Default is "S_i.cpp".
+Server inline skeleton file name ending. Default is "S.inl".
 .TP
 .B \-st
-Server's template inline file name ending. Default is "S_T.i".
+Server's template inline file name ending. Default is "S_T.inl".
 .TP
 .B \-t
 Temporary directory to be used by the IDL compiler. Default : Resolve
