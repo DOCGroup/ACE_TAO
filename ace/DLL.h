@@ -62,7 +62,8 @@ public:
   // Other supported modes include: <RTLD_NOW>, which performs all
   // necessary relocations when <dll_name> is first loaded and
   // <RTLD_GLOBAL>, which makes symbols available for relocation
-  // processing of any other DLLs.
+  // processing of any other DLLs.  Returns -1 on failure and 0 on
+  // success.
   
   int close (void);
   // Call to close the DLL object.
@@ -93,6 +94,10 @@ private:
   int close_on_destruction_;
   // This flag keeps track of whether we should close the handle
   // automatically when the destructor runs.
+
+  // = Disable copying and assignment since we don't handle these.
+  ACE_DLL (const ACE_DLL &);
+  void operator= (const ACE_DLL &);
 };
 
 #endif /* ACE_DLL_H */
