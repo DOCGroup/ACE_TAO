@@ -1687,8 +1687,15 @@ typedef u_int ACE_thread_key_t;
 # include /**/ <errno.h>
 # include /**/ <stdlib.h>
 
+// If the user wants minimum IOStream inclusion, we will just include
+// the forward declarations
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 // Forward declaration for streams
 #include "ace/iosfwd.h"
+#else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+// Else they will get all the stream header files
+#include "ace/streams.h"
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 #include /**/ <fcntl.h>
 

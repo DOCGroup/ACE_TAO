@@ -162,7 +162,7 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-# PROP Target_Last_Scanned "Message_Queue_Notifications_Test - Win32 Debug"
+# PROP Target_Last_Scanned "SOCK_Connector_Test - Win32 Debug"
 RSC=rc.exe
 CPP=cl.exe
 
@@ -3236,7 +3236,7 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -3293,7 +3293,7 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -3389,7 +3389,7 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -3475,7 +3475,7 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -3577,13 +3577,13 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -3652,7 +3652,7 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -3695,7 +3695,7 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -3762,7 +3762,7 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -3888,7 +3888,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\SPIPE_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
@@ -3898,6 +3897,7 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4015,10 +4015,10 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4084,7 +4084,7 @@ DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\ace\Process.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -4160,7 +4160,7 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\ace\SPIPE_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4260,7 +4260,6 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
@@ -4270,6 +4269,7 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4359,7 +4359,7 @@ DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4437,7 +4437,7 @@ DEP_CPP_READE=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4515,7 +4515,7 @@ DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4615,13 +4615,13 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4711,7 +4711,7 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4788,7 +4788,7 @@ DEP_CPP_TSS_T=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -4888,13 +4888,13 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5011,13 +5011,13 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5142,7 +5142,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5252,10 +5252,10 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5359,7 +5359,7 @@ DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5425,7 +5425,7 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\Process.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -5475,7 +5475,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Process.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5549,7 +5549,7 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5626,7 +5626,7 @@ DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5713,7 +5713,7 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5810,7 +5810,7 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -5915,13 +5915,13 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6037,13 +6037,13 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6184,7 +6184,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
@@ -6335,13 +6334,13 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6493,13 +6492,13 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6594,7 +6593,7 @@ DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6684,7 +6683,7 @@ DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\ace\SOCK_Dgram.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6791,13 +6790,13 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -6866,7 +6865,7 @@ DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -6953,13 +6952,13 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7033,7 +7032,7 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -7110,7 +7109,7 @@ DEP_CPP_HASH_=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7191,7 +7190,7 @@ DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7250,7 +7249,7 @@ DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7342,7 +7341,7 @@ DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7484,13 +7483,13 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7653,13 +7652,13 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7791,10 +7790,10 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7882,7 +7881,7 @@ DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -7952,7 +7951,7 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
