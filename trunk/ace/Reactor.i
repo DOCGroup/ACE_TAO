@@ -524,9 +524,10 @@ ACE_Reactor::max_notify_iterations (void)
 }
 
 ACE_INLINE int
-ACE_Reactor::purge_pending_notifications (ACE_Event_Handler *eh)
+ACE_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
+                                          ACE_Reactor_Mask   mask)
 {
-  return this->implementation ()->purge_pending_notifications (eh);
+  return this->implementation ()->purge_pending_notifications (eh, mask);
 }
 
 ACE_INLINE int

@@ -380,8 +380,9 @@ run_notify_purge_test (void)
     ACE_NEW_RETURN (n2, Purged_Notify, -1);
     auto_ptr<Purged_Notify> ap (n2);
 
-    r->notify (&n1);
-    r->notify (n2);
+    // First test:
+    // Notify EXCEPT, and purge ALL
+    r->notify (&n1); // the mask is EXCEPT_MASK
 
     status = r->purge_pending_notifications (&n1);
     if (status == -1 && errno == ENOTSUP)
@@ -390,6 +391,39 @@ run_notify_purge_test (void)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Purged %d notifies; expected 1\n"),
                   status));
+    // Second test:
+    // Notify READ twice, and WRITE once, and purge READ and WRITE - should purge 3 times.
+    r->notify (&n1, ACE_Event_Handler::READ_MASK);
+    r->notify (&n1, ACE_Event_Handler::READ_MASK);
+    r->notify (&n1, ACE_Event_Handler::WRITE_MASK);
+    status = r->purge_pending_notifications 
+      (&n1, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
+    if (status != 3)
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Purged %d notifies; expected 3\n"),
+                  status));
+    // Third test:
+    // Notify READ on 2 handlers, and purge READ|WRITE on all handlers. Should purge 2
+    r->notify (&n1, ACE_Event_Handler::READ_MASK);
+    r->notify (n2, ACE_Event_Handler::READ_MASK);
+    status = r->purge_pending_notifications 
+      (0, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
+    if (status != 2)
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Purged %d notifies; expected 2\n"),
+                  status));
+    // Forth test:
+    // Notify EXCEPT and WRITE, purge READ. Should not purge
+    r->notify (&n1); // the mask is EXCEPT_MASK
+    r->notify (&n1, ACE_Event_Handler::WRITE_MASK);
+    status = r->purge_pending_notifications 
+      (&n1, ACE_Event_Handler::READ_MASK);
+    if (status != 0)
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Purged %d notifies; expected 0\n"),
+                  status));
+    // Fifth test:
+    r->notify (n2);
     // <ap> destructor should cause n2's notify to be cancelled.
   }
 

@@ -532,7 +532,8 @@ public:
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler *);
+  virtual int purge_pending_notifications (ACE_Event_Handler *,
+                                           ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // = Assorted helper methods.
 

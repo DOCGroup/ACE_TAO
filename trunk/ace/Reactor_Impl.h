@@ -93,7 +93,8 @@ public:
    * <ACE_Event_Handler> object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0) = 0;
+  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
+                                           ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
   /// Dump the state of an object.
   virtual void dump (void) const = 0;
@@ -449,7 +450,8 @@ public:
    * <ACE_Event_Handler> object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0) = 0;
+  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
+                                           ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
