@@ -1089,20 +1089,21 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 // it works that way in most systems.
 
 #define TAO_TC_BUF_LEN 256
-//  static CORBA::Long tc_buf_CORBA_ ## name[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 
+static CORBA::Long tc_buf_CORBA[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
+
+// static CORBA::Long tc_buf_CORBA_ ## name[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 #define TAO_SYSTEM_EXCEPTION(name) \
   CORBA::TypeCode_ptr CORBA::_tc_ ## name = 0;
-
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-  CORBA::TypeCode_ptr type_code_array [] = {
+  static CORBA::TypeCode_ptr *type_code_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-                                            CORBA::_tc_ ## name,
+                                            &CORBA::_tc_ ## name,
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-      CORBA::_tc_null};
+      &CORBA::_tc_null};
 
 // Since we add an extra element subtract 1
 static CORBA::ULong array_sz =
@@ -1151,12 +1152,10 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
        i < array_sz;
        ++i)
     {
-      CORBA::Long tc_buf_CORBA_tc [TAO_TC_BUF_LEN/sizeof(CORBA::Long)];
-
-      TAO_Exceptions::make_standard_typecode (type_code_array[i],
+      TAO_Exceptions::make_standard_typecode (*type_code_array[i],
                                               name_array[i],
-                                              (char*) tc_buf_CORBA_tc,
-                                              sizeof tc_buf_CORBA_tc
+                                              (char*) tc_buf_CORBA,
+                                              sizeof tc_buf_CORBA
                                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -1192,8 +1191,8 @@ TAO_Exceptions::fini (void)
        i < array_sz;
        ++i)
     {
-      CORBA::release (type_code_array[i]);
-      type_code_array[i] = 0;
+      CORBA::release (*type_code_array[i]);
+      *type_code_array[i] = 0;
     }
 
   CORBA::release (CORBA::_tc_UnknownUserException);
