@@ -4,8 +4,8 @@ Thu Mar 11 11:49:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  If the value of the length argument is greater than the size of
 	  the string, we made a mistake by setting the wrong length in the
-	  newly create SString object. Thanks to Michael Kircher for
-	  reporting this.
+	  newly create SString object. Thanks to Michael Kircher
+	  <Michael.Kircher@mchp.siemens.de> for reporting this.
 	  
 	* tests/SString_Test.cpp (run_main): 
 
