@@ -1,3 +1,8 @@
+Tue Nov 23 15:33:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Auto_Ptr.h:
+	  Added missing auto_ptr(auto_ptr<X> &) constructor.
+
 Tue Nov 23 15:20:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks5.x.h:
