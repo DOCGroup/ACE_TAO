@@ -1,3 +1,20 @@
+Sun May 25 09:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          Only schedule the timer when the rate is bigger than zero, and
+          schedule the timer after the policies are created, because when the
+          timer fires the handle_timeout() uses these policies. Thanks to
+          Bruce McIntosh <bruce.mcintosh@boeing.com> for reporting this. This
+          fixes bugzilla [1507]
+
+Sun May 25 09:06:12 UTC 2003  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
+          Added missing libraries to link with to fix MinGW link errors.
+
 Fri May 23 22:23:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor/IORInterceptor_List.h:
@@ -16,7 +33,7 @@ Fri May 23 19:23:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri May 23 17:53:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor_Adapter.h (TAO_IORInterceptor_Adapter): Fixed
-	  compilation errors in builds where exceptions are turned off. 
+	  compilation errors in builds where exceptions are turned off.
 
 Fri May 23 17:49:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -54,14 +71,14 @@ Fri May 23 13:21:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Any.cpp: Moved explicit template instantiations for
 	  ValueBase and AbstractBase to its own library.
-	
-	* tao/ObjectKey_Table.cpp: Fixed template instantiations for
-	  RB_Tree. 
-	
-	* tao/Messaging/MessagingC.cpp: Removed unnecessary template
-	  instantiations. 
 
-	* tao/Valuetype/AbstractBase.cpp: 
+	* tao/ObjectKey_Table.cpp: Fixed template instantiations for
+	  RB_Tree.
+
+	* tao/Messaging/MessagingC.cpp: Removed unnecessary template
+	  instantiations.
+
+	* tao/Valuetype/AbstractBase.cpp:
 	* tao/Valuetype/Seq_Tmplinst.cpp: Template instantiations for the
 	  ValueType library.
 
@@ -76,18 +93,18 @@ Fri May 23 11:16:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Fri May 23 10:59:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Valuetype_Adapter.h: Cleaned the interface to the ORB to
-	  provide a consistent way of performing operations on ValueType. 
-	
+	  provide a consistent way of performing operations on ValueType.
+
 	* tao/ORB.h: Removed references to TAO_ValueFactory_Map. Cache a
-	  pointer to the ValueFactory_Adapter instead. 
-	
+	  pointer to the ValueFactory_Adapter instead.
+
 	* tao/ORB.cpp: Integrated patches from Vincent Korkos
 	  <vincent.korkos@fr.thalesgroup.com>  which contained the
-	  implentation of the ORB::unregister_value_factory (). 
+	  implentation of the ORB::unregister_value_factory ().
 
 	  Did some cosmetic fixes to the implementations of
-	  lookup_value_factory () and register_value_factory (). 
-	
+	  lookup_value_factory () and register_value_factory ().
+
 	* tao/Valuetype/Valuetype_Adapter_Impl.cpp (vf_map_find):
 	  Implemented the new adapter interfaces.
 
@@ -98,7 +115,7 @@ Fri May 23 08:14:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Fri May 23 07:28:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor/IORInterceptor_List.h: 
+	* tao/IORInterceptor/IORInterceptor_List.h:
 	* tao/IORInterceptor/IORInterceptor_List.cpp: Fixed compilation
 	  problems on Win32.
 
@@ -110,27 +127,27 @@ Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  This checkin cleans up things that were not properly done during
 	  IORInterceptor strategizing. There were multiple problems but
 	  they just showed up as a failure in the DLL_ORB test in our
-	  daily builds. 
+	  daily builds.
 
 	  The focal point of the problem TAO_IORInterceptor_List class
 	  which was left in the main tao library. This class used all
 	  sorts of mechanisms to access the IORInterceptor library which
-	  lead to shutdown problems if the ORB was dynamically loaded.  
+	  lead to shutdown problems if the ORB was dynamically loaded.
 
 	  The following changes basically moved the class to its own
-	  library and resolves the problems seen. 
+	  library and resolves the problems seen.
 
 	* tao/IORInterceptor_Adapter.h: Completely changed the interface
 	  of the adapter class. It now houses the following pure virtual
 	  methods
-	  - add_interceptor (), 
+	  - add_interceptor (),
 	  - destroy_interceptors (), and
 	  - interceptor_list () which provide a nice interface for the ORB
 	  to interact with the IORInterceptor in the library.
-	
-	* tao/Interceptor_List.cpp: 
+
+	* tao/Interceptor_List.cpp:
 	* tao/Interceptor_List.h:
-	* tao/Interceptor_List.inl: Removed the TAO_IORInterceptor_List 
+	* tao/Interceptor_List.inl: Removed the TAO_IORInterceptor_List
 	  class from the file.
 
 	* tao/ORB_Core.h: The ORB_Core will not store the list of IOR
@@ -138,7 +155,7 @@ Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  instead. The accessor for the IORInterceptor_List::TYPE has been
 	  removed but replaced with an accessor that returns a pointer
 	  IORInterceptor_List and a pointer to the adapter class.
-	  
+
 	* tao/ORB_Core.cpp: Added implementation for the new accessor
 	  methods included. Methods add_interceptor () and
 	  destroy_interceptors () just turns around and invokes the
@@ -146,19 +163,19 @@ Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.i: Moved the add_interceptor () call to the .cpp
 	  file since it has a conditional statement.
-	
+
 	* tao/IORInterceptor/IORInterceptor_List.cpp:
 	* tao/IORInterceptor/IORInterceptor_List.h:
 	* tao/IORInterceptor/IORInterceptor_List.inl: The class
-	  TAO_IORInterceptor_List has been placed in this file. 
-	
+	  TAO_IORInterceptor_List has been placed in this file.
+
 	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
 	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h: The actual
-	  implementation for the adapter classes. 
+	  implementation for the adapter classes.
 
 	* tao/IORInterceptor/Makefile.bor:
 	* tao/IORInterceptor/Makefile: Added the new file for
-	  compilation. 
+	  compilation.
 
 	* tao/PortableServer/POA.cpp:
 	* tao/PortableServer/POAManager.cpp: They now use the new method
@@ -167,8 +184,8 @@ Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Refcounted_ObjectKey.cpp:
 	* tao/Refcounted_ObjectKey.inl: Moved the decr_refcount () to the
-	  cpp file. 
-	
+	  cpp file.
+
 Fri May 23 06:17:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.h:
@@ -189,13 +206,13 @@ Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  exacerbated when the thread created for handling a new
 	  connection starts to clean itself up once its exits the
 	  *IOP_Connection_Handler::svc (). Since the handler is completely
-	  deleted resource cleanup by ACE_Task crashes. 
+	  deleted resource cleanup by ACE_Task crashes.
 
 	  This checkin basically decouples the thread-per-connection
 	  handler and the handler that has protocol specific code. When
 	  the client crashes only the protocol specific handler would get
 	  cleaned up, leaving the thread-per-connection handler to be
-	  cleaned when the thread created exits. 
+	  cleaned when the thread created exits.
 
 	* tao/Thread_Per_Connection_Handler.h:
 	* tao/Thread_Per_Connection_Handler.cpp: The new

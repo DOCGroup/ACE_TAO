@@ -922,7 +922,7 @@ Jim Scheller <csoftware@iname.com>
 Bob Bouterse <BBouterse@escient.com>
 Sandeep Adwankar <adwankar@rsch.comm.mot.com>
 W. Craig Trader <ct7@vitelinc.com>
-Bruce McIntosh <Bruce.McIntosh@australia.boeing.com>
+Bruce McIntosh <Bruce.McIntosh@boeing.com>
 Natarajan Kalpathy <Natarajan_Kalpathy@mw.3com.com>
 David O'Farrell <eeidofl@eei.ericsson.se>
 Bob Bouterse <BBouterse@escient.com>
@@ -1689,7 +1689,7 @@ Weston Markham <wmarkham@tissueinformatics.com>
 Bryan Thrall <thrall@cs.wustl.edu>
 Subhabrata Biswas <Subhabrata.Biswas@roamware.com>
 Dave Ryan <djryan7@pacbell.net>
-Zsolt Zsoldos <zsolt.zsoldos@rogers.com> 
+Zsolt Zsoldos <zsolt.zsoldos@rogers.com>
 Tongzhe Cui <tonycui@yahoo.com>
 Braden McDaniel <bmcdaniel@objectsciences.com>
 Richard Woodring <rwoodring@nova-eng.com>
@@ -1707,6 +1707,7 @@ Ken Kane <kkane@livevault.com>
 Bill Church <wchurch@ara.com>
 Udo Berninger <udo.berninger@siemens.com>
 Vincent Korkos <vincent.korkos@fr.thalesgroup.com>
+Martin Corino <mcorino@remedy.nl>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
