@@ -100,7 +100,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 	    continue;
 	  if (this->subscribe(mcast_addr,
 			      reuse_addr,
-			      if_addrs[if_cnt].get_host_addr(),
+			      ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
 			      protocol_family,
 			      protocol) == 0)
 	    ++nr_subscribed;
