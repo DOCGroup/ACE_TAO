@@ -19,7 +19,7 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
 
-LDLIBS	= $(addprefix .shobj/,$(SHOBJ))
+LDLIBS	= $(addprefix $(VSHDIR),$(SHOBJ))
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
