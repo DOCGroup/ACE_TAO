@@ -1,86 +1,91 @@
+Sun Jun 06 08:19:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
+          remove old IOR file, if any, before starting the server.
+
 Sun Jun  6 02:14:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/sfp.cpp: Fixed a few missing template
-	instantiations spotted by Sun CC 5.0. Thanks to carlos for
-	reporting them.
+        * orbsvcs/orbsvcs/AV/sfp.cpp: Fixed a few missing template
+        instantiations spotted by Sun CC 5.0. Thanks to carlos for
+        reporting them.
 
 Sat Jun  5 23:48:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* tao: Replaced all uses of "index" with "slot" since "index" is
- 	  defined as a macro by some broken C++ compilers...
+        * tao: Replaced all uses of "index" with "slot" since "index" is
+          defined as a macro by some broken C++ compilers...
 
 Sun Jun  6 00:23:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	  Added missing template instantiations
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+          Added missing template instantiations
 
 Sun Jun  6 00:06:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Scheduler.h:
-	* orbsvcs/orbsvcs/Sched/Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/DynSched.h:
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	  Replaced "export" with "export_to_file", the first one is a
-	  keyword in ANSI/C++
+        * orbsvcs/orbsvcs/Sched/Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+          Replaced "export" with "export_to_file", the first one is a
+          keyword in ANSI/C++
 
 Sat Jun  5 23:06:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Sun/CC 5.0 works with TAO now! Partly because we don't use the
- 	  same templates than before and partly because we found work
- 	  arounds the other SunC++ compiler bugs, e.g., incorrect code
- 	  generation for certain types of default constructors.
+        * Sun/CC 5.0 works with TAO now! Partly because we don't use the
+          same templates than before and partly because we found work
+          arounds the other SunC++ compiler bugs, e.g., incorrect code
+          generation for certain types of default constructors.
 
-	* tao/Object_Adapter.h:
-	* tao/Object_Adapter.i:
-	* tao/Policy_Manager.h:
-	* tao/Policy_Manager.i:
-	  Sun/CC was generating buggy code for the compiler-generated
-	  default constructor of TAO_Policy_Current, TAO_POA_Current,
-	  added explicit default constructors and now it is happy.
+        * tao/Object_Adapter.h:
+        * tao/Object_Adapter.i:
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.i:
+          Sun/CC was generating buggy code for the compiler-generated
+          default constructor of TAO_Policy_Current, TAO_POA_Current,
+          added explicit default constructors and now it is happy.
 
-	* tao/Messaging_Policy_i.h:
-	* tao/Messaging_Policy_i.i:
-	  The compiler-generated copy constructor was not working, added
-	  an explicit one and now things are happy.
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.i:
+          The compiler-generated copy constructor was not working, added
+          an explicit one and now things are happy.
 
-	* tao/DynUnion_i.cpp:
-	* tao/Sequence.h:
-	  Added the ACE_TEMPLATE_SPECIALIZATION macro
+        * tao/DynUnion_i.cpp:
+        * tao/Sequence.h:
+          Added the ACE_TEMPLATE_SPECIALIZATION macro
 
-	* tao/Operation_Table.h:
-	  Made the opname_ field a "const char*" instead of just "char*"
-	  to avoid warnings because we assign string literals to that
-	  field.
+        * tao/Operation_Table.h:
+          Made the opname_ field a "const char*" instead of just "char*"
+          to avoid warnings because we assign string literals to that
+          field.
 
-	* tao/debug.cpp:
-	* tao/debug.h:
-	  Removed unused variable
+        * tao/debug.cpp:
+        * tao/debug.h:
+          Removed unused variable
 
-	* tao/CDR_Interpreter.cpp:
-	* tao/DynAnyC.h:
-	* tao/GIOP.h:
-	* tao/ObjectIDList.h:
-	* tao/PolicyC.h:
-	* tao/Request.h:
-	* tao/Services.h:
-	* tao/Stub.cpp:
-	* tao/corba.h:
-	  Include "Sequence_T.h" directly from Sequence.h, is the ACE way
-	  and it is easier to use.
+        * tao/CDR_Interpreter.cpp:
+        * tao/DynAnyC.h:
+        * tao/GIOP.h:
+        * tao/ObjectIDList.h:
+        * tao/PolicyC.h:
+        * tao/Request.h:
+        * tao/Services.h:
+        * tao/Stub.cpp:
+        * tao/corba.h:
+          Include "Sequence_T.h" directly from Sequence.h, is the ACE way
+          and it is easier to use.
 
 Sat Jun  5 20:09:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  Removed unused variable
+        * tao/ORB_Core.cpp:
+          Removed unused variable
 
-	* tao/GIOP.cpp:
-	  Changed ACE_THROW for ACE_TRY_THROW, we want the exception
-	  catched in the enclosing TRY/CATCH clause.
+        * tao/GIOP.cpp:
+          Changed ACE_THROW for ACE_TRY_THROW, we want the exception
+          catched in the enclosing TRY/CATCH clause.
 
-	* examples/OBV/Simple_util.h:
-	* orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
-	  Fixed order of declaration between ORB_var and other objects,
-	  the ORB must be the last object destroyed.
+        * examples/OBV/Simple_util.h:
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+          Fixed order of declaration between ORB_var and other objects,
+          the ORB must be the last object destroyed.
 
 Sat Jun 05 19:00:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -13864,10 +13869,10 @@ Thu Jan 21 15:00:10 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
         (gen_assign_op):
 
         * TAO_IDL/driver/drv_args.cpp: Addded options to generate
- 	implementation header and skeleton files. Also provided options to
- 	change the name of the implemenation files created, adding copy
- 	constructors, providing prefixes and suffixes to the
- 	implementation class names
+        implementation header and skeleton files. Also provided options to
+        change the name of the implemenation files created, adding copy
+        constructors, providing prefixes and suffixes to the
+        implementation class names
 
         * TAO_IDL/be/be_visitor_root/root.cpp:
         Add the following case statements to set constext
