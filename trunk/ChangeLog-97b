@@ -1,5 +1,29 @@
 Mon Oct 20 12:05:39 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
+	* Thread_Manager.*:  Replace the thr_table_ with a double-linked
+	  list thr_list_.  With this change, we can cache the thread
+	  descriptor entries in TSS area.  Then, when accessing thread
+	  descriptor from a spawned thread's context, we don't have to
+	  search thru the whole list in order to find the corresponding
+	  thread descriptor.  Double-linked list and caching also make
+	  adding/removing thread descriptor entries very fast.  At this
+	  moment, we need to do a linear search when we try to access the
+	  cached pointer the first time.  This overhead is expected to
+	  removed shortly.  The will be some memory leaks at this moment
+	  because I haven't implemented the code to clean up the list when
+	  a thread manager gets deleted.  Will fix it soon.
+
+	* Log_Msg.{h,cpp}: Removed thr_state methods, variable, and thr_id
+	  methods and variable and replace them with thr_desc which cache
+	  the pointer to the thread descriptor structure.
+	
+	* Containers.*: Added two new template classes
+	  ACE_Double_Linked_List and ACE_Double_Linked_List_Iterator.
+	  These two classes implement the very fundamental data structure
+	  of double-linked list.  Although this is not actually a
+	  container class, I couldn't find a better place to put these
+	  classes.  
+	
 	* ace/Filecache.*
 	* ace/FIFO.*
 	* ace/FIFO_Send.*
