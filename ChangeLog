@@ -1,3 +1,7 @@
+Tue Feb 18 13:09:05  2003  Object Computing  <oci@deuce.doc.wustl.edu>
+
+	* ACE version 5.3.1 released
+
 Mon Feb 17 15:21:18 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: The Server_Protocol and the ORB_init
