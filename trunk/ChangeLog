@@ -10,7 +10,7 @@ Wed Nov  3 07:24:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/HTBP/htbptest.mpb:
 
-          Added a $Id$ string.
+          Added missing Id tag.
 
 Wed Nov  3 07:13:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
