@@ -4,8 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Asynch_Acceptor.h"
 
-#if defined (ACE_WIN32)
-// This only works on Win32 platforms
+#if defined (ACE_WIN32) 
+// This only works on Win32 platforms 
 
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
@@ -110,6 +110,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read)
 template <class HANDLER> void 
 ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
 {  
+#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
   // If the asynchronous accept succeeds
   if (result.success ())
     {
@@ -156,6 +157,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
 
   // Start off another asynchronous accept to keep the backlog going
   this->accept (this->bytes_to_read_);
+#endif // defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
 }
 
 template <class HANDLER> int
@@ -172,6 +174,7 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (ACE_Message_Block &message_block,
 					     ACE_INET_Addr &remote_address,
 					     ACE_INET_Addr &local_address)
 {
+#if defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
   sockaddr *local_addr = 0;
   sockaddr *remote_addr = 0;
   int local_size = 0;
@@ -188,6 +191,10 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (ACE_Message_Block &message_block,
 
   local_address.set_addr  ((sockaddr_in *)  local_addr,  local_size);
   remote_address.set_addr ((sockaddr_in *) remote_addr, remote_size);
+#else
+  // just in case
+  errno = ENOTSUP;
+#endif // defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400)
 }
 
 template <class HANDLER> ACE_HANDLE 

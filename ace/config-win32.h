@@ -14,6 +14,7 @@
 // Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT > 4.0
+//  Additonal notes: Defining _WIN32_WINNT as 0x0400 implies ACE_HAS_WINSOCK2.
 // #define _WIN32_WINNT 0x0400
 
 // Uncomment this, if you want ACE to use CWinThread. This should
