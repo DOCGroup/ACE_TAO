@@ -10,7 +10,7 @@ main (int, char *[])
 				 O_WRONLY | O_CREAT, 
 				 ACE_DEFAULT_FILE_PERMS);
 
-  if (fifo_sender.send (&msg) == -1)
+  if (fifo_sender.send (msg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send error for fifo"), -1);
   else
     return 0;
