@@ -92,47 +92,6 @@ SOURCE=.\DOVEMIB.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\NavWeap.idl
-
-!IF  "$(CFG)" == "DOVEMIB - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "DOVEMIB - Win32 Debug"
-
-# Begin Custom Build
-InputPath=.\NavWeap.idl
-InputName=NavWeap
-
-BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\NavWeapC.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Node.cpp
 # End Source File
 # Begin Source File
