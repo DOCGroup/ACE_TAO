@@ -1,3 +1,10 @@
+Thu Mar 24 14:52:03 2005  Will Otte <wotte@dre.vanderilt.edu>
+
+	* DAnCE/Config_Handlers/Any_Handler.cpp
+
+	Fixed a compile error for 64bit arch that resulted from
+	the earlier VC6 fix.
+
 Thu Mar 24 09:21:59 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/examples/Swapping/Sender/Sender.mpc:
