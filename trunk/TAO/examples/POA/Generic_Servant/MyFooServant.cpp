@@ -43,18 +43,21 @@ MyFooServant::_default_POA (CORBA::Environment &/*env*/)
 
 CORBA::Long
 MyFooServant::doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
 
 void
 MyFooServant::simply_doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 MyFooServant::timed_operation (CORBA::ULong timeout,
                                CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Thread %t starting  MyFooServant::timed_operation with timeout %d\n",
@@ -68,6 +71,7 @@ MyFooServant::timed_operation (CORBA::ULong timeout,
 
 void
 MyFooServant::shutdown (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);
   ACE_CHECK;

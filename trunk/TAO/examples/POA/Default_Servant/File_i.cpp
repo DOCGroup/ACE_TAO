@@ -44,6 +44,8 @@ File::Descriptor_ptr
 FileImpl::System::open (const char *file_name,
                         CORBA::Long flags,
                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   // Do an ACE_OS::open
   ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
@@ -131,6 +133,8 @@ FileImpl::Descriptor::fd (CORBA::Environment &ACE_TRY_ENV)
 CORBA::Long
 FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
                              CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -149,6 +153,8 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
 File::Descriptor::DataBuffer *
 FileImpl::Descriptor::read (CORBA::Long num_bytes,
                             CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -170,6 +176,8 @@ CORBA::ULong
 FileImpl::Descriptor::lseek (CORBA::ULong offset,
                              CORBA::Long whence,
                              CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -185,6 +193,7 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
 
 void
 FileImpl::Descriptor::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ACE_HANDLE for this object reference
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);

@@ -22,8 +22,8 @@ class FileImpl
 {
 public:
   class Descriptor : public POA_File::Descriptor
-    // Descriptor implements the Descriptor interface in the File Module
-    // A single Descriptor servant can serve multiple object references
+  // Descriptor implements the Descriptor interface in the File Module
+  // A single Descriptor servant can serve multiple object references
   {
   public:
     //Constructor
@@ -37,18 +37,25 @@ public:
 
     // write buffer to File corresponding to this Descriptor
     virtual CORBA::Long write (const File::Descriptor::DataBuffer &buffer,
-                               CORBA::Environment &env);
+                               CORBA::Environment &env)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       File::IOError));
 
     // Reads num_bytes from the file and returns it
     virtual File::Descriptor::DataBuffer *read (CORBA::Long num_bytes,
-                                                CORBA::Environment &env);
+                                                CORBA::Environment &env)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       File::IOError));
     // seek to the offset in file from whence
     virtual CORBA::ULong lseek (CORBA::ULong offset,
                                 CORBA::Long whence,
-                                CORBA::Environment &env);
+                                CORBA::Environment &env)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       File::IOError));
 
     // closes the file corresponding to the requested ObjectID
-    virtual void destroy (CORBA::Environment &env);
+    virtual void destroy (CORBA::Environment &env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
 
@@ -59,7 +66,7 @@ public:
   };
 
   class System : public POA_File::System
-    // File System implementation class
+  // File System implementation class
   {
   public:
     // Constructor, Creates a single File Descriptor Servant and
@@ -76,7 +83,9 @@ public:
     // and returns that reference
     File::Descriptor_ptr open (const char *file_name,
                                CORBA::Long flags,
-                               CORBA::Environment &env);
+                               CORBA::Environment &env)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       File::IOError));
 
   private:
     PortableServer::POA_var poa_;
@@ -86,4 +95,3 @@ public:
     Descriptor fd_servant_;
   };
 };
-

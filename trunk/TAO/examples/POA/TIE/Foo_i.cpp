@@ -27,6 +27,7 @@ ACE_RCSID(TIE, Foo_i, "$Id$")
 // Return this->value
 CORBA::Long
 Tie_i::doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -42,6 +43,7 @@ A_i::A_i (CORBA::Long value,
 // Return this->value
 CORBA::Long
 A_i::doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -64,6 +66,7 @@ Outer_i::B_i::B_i (CORBA::Long value,
 // Return this->value
 CORBA::Long
 Outer_i::B_i::doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -86,6 +89,7 @@ Outer_i::Inner_i::C_i::C_i (CORBA::Long value,
 // Return this->value
 CORBA::Long
 Outer_i::Inner_i::C_i::doit (CORBA::Environment &/*env*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -96,4 +100,3 @@ Outer_i::Inner_i::C_i::_default_POA (CORBA::Environment &/*env*/)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
-

@@ -1,4 +1,6 @@
-Tue Jun 15 16:43:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Tue Jun 15 17:44:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA: Fixed the throw spec.
 
 	* examples/POA/Forwarding/MyFooServant.h
  	  (MyFirstFooServant::forward): Added a *hack* (but it's the only
