@@ -19,7 +19,7 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Strategies_T.h"
-#include "tao/corbafwd.h"
+#include "tao/Connect.h"
 
 class ACE_Lock;
 class TAO_Client_Connection_Handler;

@@ -1,3 +1,33 @@
+Tue Feb  9 17:55:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbafwd.h: 
+	* tao/Active_Object_Map.h: 
+	* tao/Any.cpp: 
+	* tao/CDR.h: 
+	* tao/Client_Strategy_Factory.h: 
+	* tao/IIOP_ORB.h: 
+	* tao/Marshal.h: 
+	* tao/ORB.cpp: 
+	* tao/Object.cpp: 
+	* tao/Object.i: 
+	* tao/POA.h: 
+	  Fixed several g++ errors and warnings, the main problem was that 
+	  g++ could not cope with this code:
+
+	  class CORBA {
+	  public:
+	    int foo ();
+	    void bar (int x = CORBA::foo ());
+	  };
+
+	  I had to create two versions of the bar() method (actually
+	  ORB_init()).  It also had some problems with the order of
+	  definition of some inline methods (which I was able to solve)
+	  and it required the definition (not only forward declarations)
+	  of some templates before some templates could be instantiated.
+	  Overall a small set of re-arrangment of includes and
+	  declarations. We have to test in other platforms now.
+
 Tue Feb  9 17:53:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/docs/configurations.html:

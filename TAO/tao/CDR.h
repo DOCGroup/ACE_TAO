@@ -45,7 +45,7 @@
 #define TAO_CDR_H
 
 #include "tao/corbafwd.h"
-#include "tao/Marshal.h"
+#include "tao/Typecode.h"
 
 class TAO_Export TAO_OutputCDR : public ACE_OutputCDR
 {

@@ -503,11 +503,16 @@ TAO_SYSTEM_EXCEPTION_LIST
   static CORBA_Environment& default_environment (void);
   // Obtain the thread-specific default environment.
 
-  // @@ handle the reference to CORBA_Environment here...
+  // There could be a single version of these methods, but g++ 2.7.2
+  // gets horribly confused if we used CORBA::default_environment() at 
+  // this point.
   static ORB_ptr ORB_init (int &argc,
                            char *const *argv,
-                           const char *orb_name = 0,
-                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                           const char *orb_name = 0);
+  static ORB_ptr ORB_init (int &argc,
+                           char *const *argv,
+                           const char *orb_name,
+                           CORBA_Environment &TAO_IN_ENV);
   // ORB initialisation
 
   // = The following two methods are TAO-specific extensions.

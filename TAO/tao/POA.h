@@ -48,15 +48,11 @@
 // Object_Key
 #include "tao/Object_KeyC.h"
 
-class TAO_POA;
-class TAO_POA_Manager;
-class TAO_Active_Object_Map;
-
-extern TAO_Export int operator== (const PortableServer::ObjectId &l,
-                                  const PortableServer::ObjectId &r);
-
 // Active Object Table
 #include "tao/Active_Object_Map.h"
+
+class TAO_POA;
+class TAO_POA_Manager;
 
 class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
