@@ -1,52 +1,65 @@
-Mon Apr 29 17:56:38 2003  Stephen Torri <venkita@cs.wustl.edu>
+Wed Apr 30 13:53:41 2003  Stephen Torri <storri@cs.wustl.edu>
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.h:
+        * tao/RTCORBA/Multi_Priority_Mapping.i:
+        
+          Cleared up lines that were missing comments
 
-        * TAO/orbsvcs/tests/Metrics/Makefile:
-        * TAO/orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.cpp:
-        * TAO/orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.h:
-        * TAO/orbsvcs/tests/Metrics/Remote_Metrics_Logger.cpp:
-        * TAO/orbsvcs/tests/Metrics/Remote_Metrics_Logger.h:
-        * TAO/orbsvcs/tests/Metrics/Rate_Group_Info.cpp:
-        * TAO/orbsvcs/tests/Metrics/Rate_Group_Info.h:
-        * TAO/orbsvcs/tests/Metrics/Rate_Group_Info.i:
-        * TAO/orbsvcs/tests/Metrics/Makefile:
-        * TAO/tao/orbconf.h:
+        * ace/Metrics_Cache_T.h:
+        * ace/Timeprobe_T.h:
+        
+          Cleared up segfault when the default constructor
+          is used and no allocator was defined.
+          
+Tue Apr 29 17:56:38 2003  Stephen Torri <storri@cs.wustl.edu>
+
+        * orbsvcs/tests/Metrics/Makefile:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.cpp:
+        * orbsvcs/tests/Metrics/Metrics_Local_Cache_Test.h:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.cpp:
+        * orbsvcs/tests/Metrics/Remote_Metrics_Logger.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.cpp:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.h:
+        * orbsvcs/tests/Metrics/Rate_Group_Info.i:
+        * orbsvcs/tests/Metrics/Makefile:
+        * tao/orbconf.h:
 
           Added tests for libTAO_Metrics.
 
-        * TAO/orbsvcs/orbsvcs/Metrics/metrics_export.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.i:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.i:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.i:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.i:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Utils.cpp:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Utils.h:
-        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Utils.i:
-        * TAO/orbsvcs/orbsvcs/Metrics:
-        * TAO/orbsvcs/orbsvcs/Metrics.idl:
-        * TAO/orbsvcs/orbsvcs/Makefile.Metrics:
-        * TAO/orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Metrics/metrics_export.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_FrameManager_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.h:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Utils.i:
+        * orbsvcs/orbsvcs/Metrics:
+        * orbsvcs/orbsvcs/Metrics.idl:
+        * orbsvcs/orbsvcs/Makefile.Metrics:
+        * orbsvcs/orbsvcs/Makefile:
 
           Adding new TAO Metrics ORB service.
 
-        * TAO/tao/RTCORBA/Multi_Priority_Mapping.cpp:
-        * TAO/tao/RTCORBA/Multi_Priority_Mapping.h:
-        * TAO/tao/RTCORBA/Multi_Priority_Mapping.i:
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.h:
+        * tao/RTCORBA/Multi_Priority_Mapping.i:
 
         * ace/Timeprobe.h:
         * ace/Timeprobe.cpp:

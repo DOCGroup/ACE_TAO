@@ -1,4 +1,4 @@
-$Id$
+// $Id$
 // Multi_Priority_Mapping.cpp,v 1.0
 
 #include "tao/orbconf.h"
