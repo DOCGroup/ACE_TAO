@@ -39,11 +39,6 @@ module CORBA
     PARAM_INOUT
   };
 
-  interface Request;
-  interface NVList;
-
-  typedef sequence<Request> RequestSeq;
-
   typedef string ObjectId;
   typedef sequence <ObjectId> ObjectIdList;
 
