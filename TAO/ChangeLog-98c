@@ -1,3 +1,13 @@
+Sun Oct 18 21:40:23 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/client.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp: Fixed some
+ 	unreferenced variables that caused warnings.  Deleted some
+ 	variables that were not being used.  Cleaned up the code a bit.
+
 Sun Oct 18 15:59:36 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/Param_Test/param_test_i.cpp: Changed use of "TRUE" to 1
