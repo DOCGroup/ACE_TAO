@@ -36,16 +36,7 @@
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
 #     define ACE_HAS_USING_KEYWORD
-#     define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #       define ACE_HAS_TEMPLATE_TYPEDEFS
-    // Note that SunC++ 5.0 doesn't yet appear to support
-    // ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
-    // @@todo: is anyone using CC 5.0 at all?
-    // However, Forte 6 Update 1 does... if this needs to be backed up,
-    // change this to an earlier version.
-#     if (__SUNPRO_CC >= 0x520)
-#       define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-#     endif /* __SUNPRO_CC >= 0x530 */
 #     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST

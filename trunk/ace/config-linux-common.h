@@ -184,7 +184,6 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_TYPEDEFS
 # define ACE_HAS_TYPENAME_KEYWORD
-# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_LACKS_SWAB
@@ -358,7 +357,7 @@
 // Enables use of POSIX termios struct
 #define ACE_USES_NEW_TERMIOS
 
-#if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) 
+#if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in
 // the sockaddr_in::sin_zero field by evaluation of the kernel
 // version. Since version 2.5.47 this problem is fixed.

@@ -45,7 +45,6 @@
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // Compiler doesn't support static data member templates.

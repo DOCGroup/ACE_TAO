@@ -93,8 +93,6 @@
 # define ACE_HAS_USING_KEYWORD
 
 # define ACE_TEMPLATES_REQUIRE_SOURCE
-# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-# define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
 # error unsupported compiler on VxWorks
