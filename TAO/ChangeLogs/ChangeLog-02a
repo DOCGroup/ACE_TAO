@@ -132,11 +132,6 @@ Mon Jul 09 01:51:27 2001  Ossama Othman  <ossama@uci.edu>
 	  Added new QOPPolicy and Security_PolicyFactory filenames to
 	  these Makefiles and project files.
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
-
-	  Removed unused "readfromstdin" variable and accompanying
-	  "ACE_UNUSED_ARG" macro.
-
 Mon Jul  9 08:41:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/orbsvcs/tests/AVStreams/Makefile.bor
