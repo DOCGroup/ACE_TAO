@@ -1,3 +1,21 @@
+Mon Mar 20 16:54:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/Event/Performance/Inversion.h:
+	* orbsvcs/tests/Event/Performance/Inversion.cpp:
+	* orbsvcs/tests/Event/Performance/Inversion.dsp:
+
+	* orbsvcs/tests/Event/Event.dsw:
+	* orbsvcs/tests/Event/Performance/Throughput.dsp:
+	* orbsvcs/tests/Event/Performance/Connect.dsp:
+	* orbsvcs/tests/Event/Performance/ECPerformance.dsw:
+	  Add the new test to the project files.
+	  Some older project files were updated simultaneously, to make
+	  them all consistent.
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+	  Fixed the export macro to fit the new standard set by Darrell.
+
 Mon Mar 20 17:03:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
