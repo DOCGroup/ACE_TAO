@@ -119,7 +119,7 @@ public:
 
 class Temperature_factory : public Temperature_init
 {
-  friend Temperature;
+  friend class Temperature;
  public:
   // create (...) would go here
 private:
@@ -151,7 +151,7 @@ public:
 
 class Position_factory : public Position_init
 {
-  friend Position;
+  friend class Position;
  public:
 
   // create (...) would go here
@@ -176,7 +176,7 @@ public:
 
 class Log_Msg_factory : public Log_Msg_init
 {
-  friend Log_Msg;
+  friend class Log_Msg;
  public:
 
   // create (...) would go here
@@ -215,7 +215,7 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
 
 class Event_List_Link_factory : public Event_List_Link_init
 {
-  friend Event_List_Link;
+  friend class Event_List_Link;
  private:
   virtual ~Event_List_Link_factory ();
   TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal ();
@@ -227,7 +227,7 @@ class Event_List_Link_factory : public Event_List_Link_init
 class Event_List_impl : public virtual OBV_Event_List,
                         public virtual CORBA::DefaultValueRefCountBase
 {
-  friend Event_List_Iterator;
+  friend class Event_List_Iterator;
  public:
   Event_List_impl ();
   virtual ~Event_List_impl ();
@@ -253,7 +253,7 @@ class Event_List_impl : public virtual OBV_Event_List,
 
 class Event_List_factory : public Event_List_init
 {
-  friend Event_List;
+  friend class Event_List;
  private:
   virtual ~Event_List_factory ();
   TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal ();
@@ -316,7 +316,7 @@ public:
 
 class Temperature_Criterion_factory : public Temperature_Criterion_init
 {
-  friend Temperature;
+  friend class Temperature;
 private:
   virtual ~Temperature_Criterion_factory ();
   TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal ();
@@ -342,7 +342,7 @@ public:
 
 class Position_Criterion_factory : public Position_Criterion_init
 {
-  friend Position;
+  friend class Position;
 private:
   virtual ~Position_Criterion_factory ();
   TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal ();
@@ -364,7 +364,7 @@ public:
 
 class Log_Msg_Criterion_factory : public Log_Msg_Criterion_init
 {
-  friend Log_Msg;
+  friend class Log_Msg;
 private:
   virtual ~Log_Msg_Criterion_factory ();
   TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal ();
