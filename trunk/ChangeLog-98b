@@ -1,14 +1,21 @@
+Thu Oct 29 17:36:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tests/Semaphore_Test: Removed the timed acquire stuff from
+          th worker thread and the display at the end of the test.
+          Now it shouldn't output the confusing "100% of threads
+          timed out" message on platforms without timed acquire.
+
 Thu Oct 29 15:25:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Svc_Handler.cpp (open): Added a trailing newline to the
-	  error message.
+        * ace/Svc_Handler.cpp (open): Added a trailing newline to the
+          error message.
 
 Thu Oct 29 15:13:07 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/index.html
         * docs/tutorials/016/*
-	  Added Tutorial 016.  This discusses ACE_Condition<> and ways
-	  to make it more manageable in an application.
+          Added Tutorial 016.  This discusses ACE_Condition<> and ways
+          to make it more manageable in an application.
 
 Thu Oct 29 11:44:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
