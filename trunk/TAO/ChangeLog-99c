@@ -1,3 +1,9 @@
+Wed Nov 17 10:29:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	  Removed unused arguments, thanks to David for pointing this
+	  out.
+
 Wed Nov 17 01:45:00 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify:
