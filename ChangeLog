@@ -1,3 +1,23 @@
+Thu Nov 18 07:10:26 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Logger/Acceptor-server/Logger_Acceptor_Server.mpc:
+        * examples/Logger/client/Logger_client.mpc:
+        * examples/Logger/simple-server/Logger_Simple_Server.mpc:
+
+          Added exename settings to these.  They use ACE_MAIN, but that's no
+          longer recognized by MPC as an exe entry point.
+
+        * performance-tests/Synch-Benchmarks/Base_Test/Synch_Benchmarks_Base_Test.mpc:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
+
+          Changed these library projects to inherit from acelib instead of
+          aceexe.
+
+        * protocols/protocols.mwc:
+
+          Added a default workspace so that msvc_mpc_auto_compile.pl can
+          find the HTBP (and future libraries).
+
 Thu Nov 18 06:48:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/envinfo.cpp:
