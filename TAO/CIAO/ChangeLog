@@ -1,3 +1,12 @@
+Thu Aug  5 11:56:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/CodeGenerationKit/IndentationImplanter.hpp:
+        
+          Changed template template parameter of class Implanter from
+          "Buffer" to "BufferType" because the former was causing a
+          problem with VC 7.1 clashing with a class Buffer in another
+          file.
+
 Thu Aug  5 08:48:50 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * CIAO-INSTALL.html: Updated to reflect dependency on Xerces and
