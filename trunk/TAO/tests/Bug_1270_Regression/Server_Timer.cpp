@@ -31,25 +31,31 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 {
   refcnt_++;
 
+  Test::Payload pload (1024);
+  pload.length (1024);
+
+  ACE_OS::memset (pload.get_buffer(), pload.length(), 0);
+
   ACE_DECLARE_NEW_CORBA_ENV;
-
-  Test::Payload pload(1024); pload.length(1024);
-  ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
   ACE_TRY
-  {
-    Test::Echo_var echo = Test::Echo::_duplicate(this->echo_.in());
-    if(CORBA::is_nil(echo.in()))
-      return 0;
+    {
+      Test::Echo_var echo =
+        Test::Echo::_duplicate (this->echo_.in ());
 
-    echo->echo_payload(pload);
-  }
+      if(CORBA::is_nil (echo.in ()))
+        return 0;
+
+      echo->echo_payload (pload
+                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
   ACE_CATCHANY
-  {
-    this->echo_ = Test::Echo::_nil ();
+    {
+      this->echo_ = Test::Echo::_nil ();
 
-    if(this->reactor()->cancel_timer(this) != 0)
-      refcnt_--;
-  }
+      if (this->reactor ()->cancel_timer (this) != 0)
+        refcnt_--;
+    }
   ACE_ENDTRY;
 
   refcnt_--;
