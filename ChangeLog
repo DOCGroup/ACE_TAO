@@ -1,9 +1,8 @@
 Thu Apr 11 18:29:27 2002  Steve Huston  <shuston@riverace.com>
 
-        * examples/C++NPv2/Makefile: New file to build display_logfile
+        * examples/C++NPv2/Makefile: New Makefile to build display_logfile.
 
-        * examples/C++NPv2/display_logfile.cpp: Finished and debugged on
-          Linux.
+        * examples/C++NPv2/display_logfile.cpp: Finished and debugged on Linux.
 
 Thu Apr 11 22:07:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
