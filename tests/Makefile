@@ -20,7 +20,6 @@ BIN =   Aio_Platform_Test \
         Cached_Accept_Conn_Test \
         Cached_Conn_Test \
         Capabilities_Test \
-        CDR_Array_Test \
         CDR_File_Test \
         CDR_Test \
         Collection_Test \
@@ -123,6 +122,21 @@ PSRC=$(addsuffix .cpp,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  ifeq ($(LYNXTARGET),)
+    BIN += CDR_Array_Test
+    BUILD += CDR_Array_Test
+  else
+    #### LynxOS:  but only with 3.1.0 or later.  (Pre-3.0.0 has
+    #### ACE_GNUG_PRE_2_8 == 1.)
+    ifneq ($(VERSION),3.0.0)
+      BIN += CDR_Array_Test
+      BUILD += CDR_Array_Test
+    endif # > 3.0.0
+  endif
+endif
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
