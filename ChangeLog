@@ -1,3 +1,8 @@
+Thu Sep 21 16:54:19 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp: Fixed a typo in <day_of_week_name>.  Thanks to Craig
+	  Perras <cperras@watchguard.com>.
+
 Thu Sep 21 14:40:07 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Connector.h:
@@ -35,12 +40,12 @@ Thu Sep 21 14:40:07 2000  Ossama Othman  <ossama@uci.edu>
 
 Thu Sep 21 11:54:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Service_Config.h : 
-	* ace/Service_Config.cpp : 
+	* ace/Service_Config.h :
+	* ace/Service_Config.cpp :
 
-	* ace/Proactor.cpp: 
-	* ace/Proactor.h (ACE_Proactor): 
-	  
+	* ace/Proactor.cpp:
+	* ace/Proactor.h (ACE_Proactor):
+
 	  Removed dependency of Service_Config on Proactor by registering
 	  the Proactor singleton with the Object_Manager when it is
 	  instantiated. This way we need not call

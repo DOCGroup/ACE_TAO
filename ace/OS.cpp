@@ -16,7 +16,7 @@ ACE_RCSID(ace, OS, "$Id$")
 # if defined (ACE_HAS_WINCE)
 const wchar_t *ACE_OS::day_of_week_name[] = {ACE_TEXT ("Sun"), ACE_TEXT ("Mon"),
                                              ACE_TEXT ("Tue"), ACE_TEXT ("Wed"),
-                                             ACE_TEXT ("Thr"), ACE_TEXT ("Fri"),
+                                             ACE_TEXT ("Thu"), ACE_TEXT ("Fri"),
                                              ACE_TEXT ("Sat")};
 const wchar_t *ACE_OS::month_name[] = {ACE_TEXT ("Jan"), ACE_TEXT ("Feb"),
                                        ACE_TEXT ("Mar"), ACE_TEXT ("Apr"),
