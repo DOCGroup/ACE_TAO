@@ -39,8 +39,8 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       new_addr = this->activate_server (0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      STUB_Object *stub_obj = ACE_dynamic_cast (STUB_Object *,
-                                                obj->_stubobj ());
+      TAO_Stub *stub_obj = ACE_dynamic_cast (TAO_Stub *,
+                                             obj->_stubobj ());
       TAO_IIOP_Profile *iiop_pfile =
                 ACE_dynamic_cast (TAO_IIOP_Profile *,
                                   stub_obj->profile_in_use ());
@@ -755,8 +755,8 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
                                    0,
                                    ACE_TRY_ENV);
 
-  STUB_Object *stub_obj = ACE_dynamic_cast (STUB_Object *,
-                                            forward_object->_stubobj ());
+  TAO_Stub *stub_obj = ACE_dynamic_cast (TAO_Stub *,
+                                         forward_object->_stubobj ());
 
   TAO_IIOP_Profile *iiop_pfile =
             ACE_dynamic_cast (TAO_IIOP_Profile *,
