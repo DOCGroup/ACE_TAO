@@ -1,3 +1,29 @@
+Wed Apr 10 17:15:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	Run-time memory requirement reductions:
+
+	* tao/orbconf.h (TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE):
+	  (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE):
+
+	  New constants that specify the default size of TAO's
+	  PolicyFactory registry and initial object reference table
+	  (i.e. the one used by the
+	  CORBA::ORB::register_initial_reference()) method, respectively.
+	  Both of these are less than ACE_DEFAULT_MAP_SIZE (1024) by
+	  default.
+
+	* tao/PolicyFactory_Registry.cpp (TAO_PolicyFactory_Registry):
+
+	  Initialize the underlying ACE_Map_Manager to have a size of
+	  TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE (<< 1024) instead of
+	  ACE_DEFAULT_MAP_SIZE (1024).
+
+	* tao/Object_Ref_Table.cpp (TAO_Object_Ref_Table):
+
+	  Initialize the underlying ACE_Hash_Map_Manager_Ex table to have
+	  a size of TAO_DEFAULT_OBJECT_REF_TABLE_SIZE (< 1024) instead of
+	  ACE_DEFAULT_MAP_SIZE (1024).
+
 Wed Apr 10 14:26:05 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ValueBase.h:

@@ -9,8 +9,8 @@
  *  Build configuration file.
  *
  *  @author  Copyright 1995 by Sun Microsystems, Inc.
- *  @author  TAO-specific changes by Chris Cleeland
- *  @author  and Douglas C. Schmidt
+ *  @author  Chris Cleeland
+ *  @author  Douglas C. Schmidt
  */
 //=============================================================================
 
@@ -54,7 +54,7 @@
 
 // Define this if you don't want POA timestamps in the IOR.  Remember,
 // without timestamps, transient and persistent POA cannot be
-// distinguished
+// distinguished.
 #if !defined (POA_NO_TIMESTAMP)
 # define POA_NO_TIMESTAMP 0
 #endif /* POA_NO_TIMESTAMP */
@@ -71,6 +71,22 @@
 // underlying implementation for the CORBA::ORB_init() function.
 #if !defined (TAO_DEFAULT_ORB_TABLE_SIZE)
 const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
+#endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
+
+// The default size of TAO's policy factory registry, i.e. the map
+// used as the underlying implementation for the
+// PortableInterceptor::ORBInitInfo::register_policy_factory() method.
+#if !defined (TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE)
+const size_t TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
+#endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
+
+// The default size of TAO's initial object reference table, i.e. the
+// one used as the underlying implementation for the
+// CORBA::ORB::register_initial_reference() and
+// PortableInterceptor::ORBInitInfo::register_initial_reference()
+// methods.
+#if !defined (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE)
+const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's server active object map.
