@@ -855,8 +855,23 @@ sub process_name {
 
 
 sub collect_data {
-  my($self) = shift;
-  my($prjc) = $self->{'prjc'};
+  my($self)  = shift;
+  my($prjc)  = $self->{'prjc'};
+  my($cwd)   = $self->getcwd();
+  my($relwd) = $prjc->reverse_relative($cwd);
+
+  ## Set the current working directory
+  if ($self->{'cslashes'}) {
+    $cwd = $prjc->slash_to_backslash($cwd);
+  }
+  $self->{'values'}->{'cwd'} = $cwd;
+
+  ## Set the relative working directory
+  $relwd =~ s/\$\([^\)]+\)[\/\\]//;
+  if ($self->{'cslashes'}) {
+    $relwd = $prjc->slash_to_backslash($relwd);
+  }
+  $self->{'values'}->{'relwd'} = $relwd;
 
   ## Collect the components into {'values'} somehow
   foreach my $key (keys %{$prjc->{'valid_components'}}) {

@@ -15,13 +15,13 @@
 # UNICODE - if defined when building a unicode dll
 #
 
-# Check if the BASE_BINDIR variable was explicitly specified.
-!ifdef BASE_BINDIR
-EXPLICIT_BASE_BINDIR = 1
+# Check if the output location was explicitly specified.
+!if $d(BASE_BINDIR) || $d(BINDIR)
+EXPLICIT_BINDIR = 1
 !endif
 
 !ifdef INSTALL_THIS_TARGET
-!ifndef EXPLICIT_BASE_BINDIR
+!ifndef EXPLICIT_BINDIR
 BINDIR = $(CORE_BINDIR)
 !endif
 !endif
@@ -35,10 +35,7 @@ BINDIR = $(CORE_BINDIR)
 TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).dll
 !endif
 !ifndef INSTALL_THIS_TARGET
-!ifndef EXPLICIT_BASE_BINDIR
-# Unless the BASE_BINDIR was explicitly specified, all DLLs are copied
-# into the common bin directory so that they are always available on
-# the path for the tests.
+!ifndef EXPLICIT_BINDIR
 CORE_TARGET = $(CORE_BINDIR)\$(NAME)$(LIB_DECORATOR).dll
 !endif
 !endif

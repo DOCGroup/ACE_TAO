@@ -2,13 +2,13 @@
 // $Id$
 
 project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
-  libout       = $(ACE_ROOT)/lib 
+  libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL ACE_OS_BUILD_DLL
   include_dir  = ace
 
   // This mpc file could be greatly simplified by putting the separate components
-  // in subdirectories. 
+  // in subdirectories.
 
   // Old OS files.  put these back and remove the OS_NS*, Cleanup.cpp, and
   // Object_Manager_Base.cpp to improve compile times at the cost of
@@ -439,6 +439,11 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
   }
 
   Header_Files {
+    os_include
+    os_include/arpa
+    os_include/net
+    os_include/netinet
+    os_include/sys
     ACE_export.h
     Array.h
     Bound_Ptr.h

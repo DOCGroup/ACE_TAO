@@ -18,16 +18,24 @@
 # MAKE_OBJDIR - command to be used for creating OBJDIR
 #
 
+!ifndef STATIC_DIR
 !ifdef STATIC
 STATIC_DIR=Static
 !else
 STATIC_DIR=Dynamic
 !endif
+!endif
 
 !ifdef DEBUG
+!ifndef DEBUG_DIR
 DEBUG_DIR=Debug
+!endif
+OBJDEBUG_DIR=Debug
 !else
+!ifndef DEBUG_DIR
 DEBUG_DIR=Release
+!endif
+OBJDEBUG_DIR=Release
 !endif
 
 !ifdef PASCAL
@@ -70,7 +78,7 @@ MAKE_BINDIR=if not exist "$(BINDIR)" mkdir "$(BINDIR)"
 !endif
 
 !ifndef OBJDIR
-OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
+OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(OBJDEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
 !endif
 
 !ifdef MKDIR

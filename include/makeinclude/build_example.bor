@@ -4,7 +4,9 @@
 # Makefile for building the example executables
 #
 
+!ifndef TAO_IDL
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+!endif
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
