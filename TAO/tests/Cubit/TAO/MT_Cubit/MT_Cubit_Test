@@ -46,4 +46,5 @@ sleep 4
 ########
 ######## Start client.
 ########
-./client -s -f $ior_file -t $threads -n $iterations > client.log 2>&1
+./client -s -f $ior_file -t $threads -n $iterations > \
+  client-${threads}.log 2>&1
