@@ -1,3 +1,21 @@
+Tue Jan 22 10:46:41 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_idlist.cpp (copy):
+
+          Fixed method to propagate the value of the 'escaped_'
+          member of each contained instance of class Identifier.
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          When checking for case difference errors, modified logic
+          to pass the check if one or the other (but not both) of
+          the identifiers is escaped.
+
+        * orbsvcs/orbsvcs/LifeCycleService.idl:
+
+          Added an escape to an operation parameter named 'object',
+          since it clashes with the IDL keyword 'Object'.
+
 Tue Jan 22 06:52:32 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
