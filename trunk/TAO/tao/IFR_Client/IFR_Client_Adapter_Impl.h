@@ -70,7 +70,7 @@ public:
       CORBA::ORB_ptr orb,
       CORBA::OperationDef_ptr,
       CORBA::NVList_ptr&
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL
     );
 
   // Used to force the initialization of the ORB code.
