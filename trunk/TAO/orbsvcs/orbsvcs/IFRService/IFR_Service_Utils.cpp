@@ -116,7 +116,7 @@ TAO_IFR_Server::init_with_orb (int argc,
           return retval;
         }
 
-      if (use_multicast_server)
+      if (use_multicast_server || OPTIONS::instance()->support_multicast_discovery ())
         {
           retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;

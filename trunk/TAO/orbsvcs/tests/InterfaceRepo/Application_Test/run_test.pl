@@ -13,12 +13,21 @@ $status = 0;
 $ifr_iorfile= "if_repo.ior";
 $svr_iorfile = "iorfile";
 $test_idl = PerlACE::LocalFile ("test.idl");
- 
+
+# find the tao_ifr executable.
+# Its placement is dependent upon the OS and if MPC generated makefiles are used.
+my $exec_extn="";
 if ($^O eq "MSWin32") {
-    $tao_ifr = "../../../../../bin/tao_ifr";
+  $exec_extn=".exe";
 }
-else {
+
+$tao_ifr = "../../../../../bin/tao_ifr";
+if (! -e $tao_ifr . $exec_extn ) {
     $tao_ifr = "../../../IFR_Service/tao_ifr";
+	if (! -e $tao_ifr . $exec_extn ) {
+        print STDERR "ERROR: tao_ifr compiler not found.\n";
+	    exit 1;
+    }
 }
 
 $lookup_by_name = "";
@@ -34,7 +43,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 }
 
 $TAO_IFR = new PerlACE::Process ($tao_ifr);
-$IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service");
+$IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " -o $ifr_iorfile");
 $SV      = new PerlACE::Process ("server", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile");
 $CL      = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile"
                                  . " $lookup_by_name");

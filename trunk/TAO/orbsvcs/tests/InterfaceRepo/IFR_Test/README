@@ -37,7 +37,7 @@ start the Interface Repository by typing
 
 in one window, then (in another window)
 
- IFR_Test
+ IFR_Test -ORBInitRef InterfaceRepository=file://if_repo.ior
 
 (Unix)
 in this directory, type 
@@ -46,22 +46,18 @@ in this directory, type
 
 then
 
+ ./IFR_Test -ORBInitRef InterfaceRepository=file://if_repo.ior
+
+
+
+You may use IP multicast discovery by starting the server with "-m 1"
+and use the default multicast address for the InterfaceRepository.
+
+ ../../../IFR_Service/IFR_Service -m 1
+
+and 
+
  ./IFR_Test
-
-
-
-If for some reason IP multicast is not available or enabled on your platform, 
-then add
-
- -ORBInitRef InterfaceRepository=file://if_repo.ior
-
-to the client's command line. If the IFR_Service has been started with the
-command line option -o <filename> (see the README file in the IFR_Service
-directory), then instead add
-
- -ORBInitRef InterfaceRepository=file://<filename>
-
-to the client's command line.
 
 You may add any of the options below to the IFR_Test command line. Both the
 Perl script and the test executable have the same command line options. 
