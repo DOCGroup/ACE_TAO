@@ -258,6 +258,10 @@ SOURCE=.\CDR_Stream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Codecs.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Configuration.cpp
 # End Source File
 # Begin Source File
@@ -1235,6 +1239,10 @@ SOURCE=.\CDR_Stream.h
 # Begin Source File
 
 SOURCE=.\Cleanup_Strategies_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Codecs.h
 # End Source File
 # Begin Source File
 

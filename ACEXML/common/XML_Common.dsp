@@ -156,6 +156,10 @@ SOURCE=.\Validator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\XML_Codecs.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\XMLFilterImpl.cpp
 # End Source File
 # End Group
@@ -253,6 +257,10 @@ SOURCE=.\Transcode.h
 # Begin Source File
 
 SOURCE=.\Validator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\XML_Codecs.h
 # End Source File
 # Begin Source File
 

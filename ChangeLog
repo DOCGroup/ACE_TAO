@@ -1,3 +1,16 @@
+Mon May 27 15:59:17 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/XML_Codecs.h:
+	* ACEXML/common/XML_Codecs.cpp: Fixed VC warnings.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added Codecs.*.
+
+	* tests/tests.dsw:
+	* tests/Codecs_Test.dsp: Added a new test.
+
+	* ACEXML/common/XML_Common.dsp:  Added XML_Codecs.*.
+
 Mon May 27 15:47:44 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Add new service-related macro, ACE_Local_Service_Export.
