@@ -165,6 +165,14 @@ SOURCE=.\CosLoadBalancingS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_Client_Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Client_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_ClientRequestInterceptor.cpp
 # End Source File
 # Begin Source File
@@ -266,6 +274,14 @@ SOURCE=.\CosLoadBalancingS.h
 # Begin Source File
 
 SOURCE=.\CosLoadBalancingS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Client_Component.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Client_ORBInitializer.h
 # End Source File
 # Begin Source File
 

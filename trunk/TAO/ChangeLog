@@ -1,3 +1,11 @@
+Fri Nov 15 11:06:07 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+
+	  Added LB_Client_{Component,ORBInitalizer}.{h,cpp} files to these
+	  project files.
+
 Fri Nov 15 10:51:04 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_cs.cpp:
