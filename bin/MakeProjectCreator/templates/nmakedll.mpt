@@ -75,3 +75,63 @@ Static Debug {
   need_libflags         = 1
 }
 
+MFC Release {
+  type_code             = 0x0102
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /Zi /Ob2 /GR
+  defines               = NDEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  lib_modifier          = mfc
+  debug_switch          =
+  type_is_dynamic       = 1
+  type_is_binary        = 1
+  pdb                   = 1
+  ssl_libs              = libeay32 ssleay32
+}
+
+MFC Debug {
+  type_code             = 0x0102
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  compile_flags_removed = /Fr /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcd
+  type_is_dynamic       = 1
+  type_is_binary        = 1
+  pdb                   = 1
+  ssl_libs              = libeay32 ssleay32
+}
+
+Static MFC Release {
+  type_description      = "Static Library"
+  type_code             = 0x0104
+  use_debug_libraries   = 0
+  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
+  defines               = NDEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  compile_flags_removed = /YX
+  output_dir            = Static_MFC_Release
+  intermediate_dir      = Static_MFC_Release
+  lib_modifier          = mfcs
+  debug_switch          =
+  type_is_static        = 1
+  need_libflags         = 1
+}
+
+Static MFC Debug {
+  type_description      = "Static Library"
+  type_code             = 0x0104
+  use_debug_libraries   = 1
+  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
+  defines               = _DEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  compile_flags_removed = /Fr /YX
+  output_dir            = Static_MFC_Debug
+  intermediate_dir      = Static_MFC_Debug
+  lib_modifier          = mfcsd
+  type_is_static        = 1
+  need_libflags         = 1
+}
+

@@ -52,3 +52,25 @@ Debug {
   intermediate_dir      = Debug
   lib_modifier          = d
 }
+
+MFC Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /O2 /Zi /Ob2
+  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  lib_modifier          = mfc
+  use_mfc               = 2
+}
+
+MFC Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Zi /Od
+  defines               = _DEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcd
+  use_mfc               = 2
+}

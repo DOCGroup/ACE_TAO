@@ -27,3 +27,31 @@ Debug {
   output_dir            = .
   lib_modifier          = d
 }
+
+MFC Release {
+  subsystem             = windows
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  common_defines        = WIN32 _WINDOWS
+  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  debug_switch          =
+  lib_modifier          = mfc
+  use_mfc               = 2
+}
+
+MFC Debug {
+  subsystem             = windows
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  common_defines        = WIN32 _WINDOWS
+  defines               = _DEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  intermediate_dir      = MFC_Debug
+  output_dir            = MFC_Debug
+  lib_modifier          = mfcd
+  use_mfc               = 2
+}
+

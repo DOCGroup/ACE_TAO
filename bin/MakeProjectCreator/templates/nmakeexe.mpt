@@ -65,3 +65,54 @@ Static Debug {
   output_dir            = Static_Debug
   intermediate_dir      = Static_Debug
 }
+
+MFC Release {
+  subsystem             = windows
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  lib_modifier          = mfc
+  debug_switch          =
+  ssl_libs              = libeay32 ssleay32
+}
+
+MFC Debug {
+  subsystem             = windows
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcd
+  ssl_libs              = libeay32 ssleay32
+}
+
+Static MFC Release {
+  subsystem             = windows
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  lib_modifier          = mfcs
+  need_libflags         = 1
+  output_dir            = Static_MFC_Release
+  intermediate_dir      = Static_MFC_Release
+  debug_switch          =
+}
+
+Static MFC Debug {
+  subsystem             = windows
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  lib_modifier          = mfcsd
+  need_libflags         = 1
+  output_dir            = Static_MFC_Debug
+  intermediate_dir      = Static_MFC_Debug
+}
+
