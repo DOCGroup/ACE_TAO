@@ -271,9 +271,18 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       return -1;
     }
 
-  *os << "," << be_nl
-      << node->local_name ()
-      << be_nl << "ACE_ENV_ARG_PARAMETER";
+  *os << ",";
+  
+  {
+    be_visitor_args_upcall_ss visitor (this->ctx_);
+
+    if (visitor.visit_argument (&the_argument) == -1)
+      {
+        return -1;
+      }
+  }
+  
+  *os << be_nl << "ACE_ENV_ARG_PARAMETER";
 
   if (this->generate_shared_epilogue (os) == -1)
     {
