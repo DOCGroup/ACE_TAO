@@ -21,6 +21,28 @@
 #include "ace/SString.h"
 #include "ace/Array.h"
 
+class ACE_Export ACE_WString_Helper
+  // = TITLE
+  //     Some helper functions for manipulate ACE_WString.
+  //
+  // = DESCRIPTION
+  //     These functions simplify encoding/decoding of
+  //     ACE_WString objects for network communication.
+{
+public:
+  static size_t bsize (ACE_WString *wstr);
+  // Returns the actual size required to contain the ACE_WString.
+
+  static size_t encode (void *buf, ACE_WString *wstr);
+  // Encode <wstr> into <buf> for network communication.
+  // Return total octets consumed.
+
+  static size_t decode (void *buf);
+  // This function doesn't relate to ACE_WString directly.
+  // It converts an ACE_USHORT16 string from network
+  // byte order to host byte order.  Returns bsize of the string.
+};
+
 class ACE_Export ACE_URL_Property
   // = TITLE
   //     Defines a property of a URL.
@@ -70,12 +92,12 @@ public:
   size_t bsize (void) const;
   // Returns memory size required to encode this object.
 
-  void encode (void *buf) const;
+  size_t encode (void *buf) const;
   // Encodes this object into buf for network transmission.
 
-  ACE_URL_Property *decode (void *buf);
+  size_t decode (void *buf);
   // Decodes buf and modifies this object, you should
-  // probably create this with default ctor.
+  // probably create this with default ctor.  
 
   void dump (void) const;
   // Dump out this object for debug.
@@ -136,10 +158,10 @@ public:
   size_t bsize (void) const;
   // Returns memory size required to encode this object.
 
-  void encode (void *buf) const;
+  size_t encode (void *buf) const;
   // Encodes this object into buf for network transmission.
 
-  ACE_URL_Offer *decode (void *buf);
+  size_t decode (void *buf);
   // Decodes buf into current object, you better use
   // the default ctor.
 
@@ -152,13 +174,6 @@ protected:
 
   ACE_URL_Property_Seq prop_;
   // Properties associate with this offer.
-
-private:
-  static char NULL_STRING;
-  // A constant null string.
-
-  //  ACE_UNIMPLEMENTED_FUNC (ACE_URL_Offer (void))
-  // Do not allow access to default constructor
 };
 
 typedef ACE_Array<ACE_URL_Offer> ACE_URL_Offer_Seq;
