@@ -237,6 +237,9 @@ ACE_Test_Output::ACE_Test_Output (void)
 
 ACE_Test_Output::~ACE_Test_Output (void)
 {
+  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 #if !defined (ACE_HAS_WINCE)
   delete this->output_file_;
 #endif /* ACE_HAS_WINCE */
@@ -328,9 +331,6 @@ ACE_Test_Output::close (void)
   ACE_OS::fflush (this->output_file_);
   ACE_OS::fclose (this->output_file_);
 #endif /* !ACE_HAS_WINCE */
-  ACE_LOG_MSG->msg_ostream (&cerr);
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
-  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 }
 
 #if 0 /* old WinCE stuff */
