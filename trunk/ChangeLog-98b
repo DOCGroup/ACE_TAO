@@ -48,8 +48,8 @@ Thu Jul 02 09:14:20 1998  David L. Levine  <levine@cs.wustl.edu>
           that the iterator_test () is disabled in the test.
 
         * tests/SOCK_Connector_Test.cpp (succeed_nonblocking):
-          if the connection completion fails, save the errno
-          before doing the printout.  The printout causes the
+          if the connection completion fails, reset the status
+          _before_ doing the printout.  The printout causes the
           errno to be overwritten on LynxOS 2.5.0, for example.
 
 Wed Jul 01 21:31:40 1998  Arturo Montes  <mitosys@colomsat.net.co>
