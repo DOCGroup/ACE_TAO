@@ -5,5 +5,4 @@ project : acelib, core {
   requires     += exceptions
   sharedname    = TMCast
   dynamicflags += TMCAST_BUILD_DLL
-  include_dir   = ace/TMCast
 }

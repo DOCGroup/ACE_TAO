@@ -1,3 +1,20 @@
+Thu Jan  8 07:47:58 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/QoS/qos.mpc:
+        * ace/RMCast/rmcast.mpc:
+        * ace/SSL/ssl.mpc:
+        * ace/TMCast/TMCast.mpc:
+        * ace/ace.mpc:
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+
+          Removed the include_dir setting.  This is determined automatically
+          in the Borland template.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Removed support for the include_dir keyword.  It's usage is
+          superseded by the use of <%relwd%> in the Borland template.
+
 Wed Jan  7 23:06:57 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * include/makeinclude/all_in_one.GNU:
@@ -14,7 +31,7 @@ Wed Jan  7 23:06:57 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
         * include/makeinclude/all_in_one.GNU:
           Always add the *_UNCHECKED to the regular targets if no
           components are missing, since Makefiles can have both checked
-          and unchecked targets. 
+          and unchecked targets.
 
         * include/makeinclude/platform_g++_common.GNU:
         * include/makeinclude/rules.bin.GNU:
@@ -31,85 +48,85 @@ Wed Jan  7 23:06:57 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Wed Jan  7 17:34:26 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Proactor/HA_Proactive_Status.cpp: Added #include
-	  "ace/Log_Msg.h" to find LM_DEBUG, et al.
+        * examples/APG/Proactor/HA_Proactive_Status.cpp: Added #include
+          "ace/Log_Msg.h" to find LM_DEBUG, et al.
 
-	* examples/APG/Processes/Process_Manager_Spawn.cpp:
-	* examples/APG/Processes/Process_Mutex.cpp:
-	* examples/APG/Processes/Spawn.cpp:
-	* examples/APG/Reactor/HAStatus.cpp:
-	* examples/APG/Reactor/HAStatus-AC.cpp:
-	* examples/APG/Shared_Memory/Hash_Map.cpp:
-	* examples/APG/Shared_Memory/Malloc.cpp:
-	* examples/APG/Shared_Memory/PI_Malloc.cpp:
-	* examples/APG/Shared_Memory/Pool_Growth.cpp:
-	* examples/APG/Timers/Alarm.cpp:
-	* examples/APG/Timers/Task.cpp:
-	* examples/APG/Timers/Upcall.cpp: Added missing includes
-	  for "ace/OS_NS_*.h".
+        * examples/APG/Processes/Process_Manager_Spawn.cpp:
+        * examples/APG/Processes/Process_Mutex.cpp:
+        * examples/APG/Processes/Spawn.cpp:
+        * examples/APG/Reactor/HAStatus.cpp:
+        * examples/APG/Reactor/HAStatus-AC.cpp:
+        * examples/APG/Shared_Memory/Hash_Map.cpp:
+        * examples/APG/Shared_Memory/Malloc.cpp:
+        * examples/APG/Shared_Memory/PI_Malloc.cpp:
+        * examples/APG/Shared_Memory/Pool_Growth.cpp:
+        * examples/APG/Timers/Alarm.cpp:
+        * examples/APG/Timers/Task.cpp:
+        * examples/APG/Timers/Upcall.cpp: Added missing includes
+          for "ace/OS_NS_*.h".
 
-	* examples/APG/Reactor/Client.h:
-	* examples/APG/Reactor/ClientService.h" Add #include
-	  "ace/Synch_Traits.h", "ace/Null_Condition.h", and "ace/Null_Mutex.h"
-	  for Visual Age C++ to see when compiling templates.
+        * examples/APG/Reactor/Client.h:
+        * examples/APG/Reactor/ClientService.h" Add #include
+          "ace/Synch_Traits.h", "ace/Null_Condition.h", and "ace/Null_Mutex.h"
+          for Visual Age C++ to see when compiling templates.
 
-	* ACEXML/Makefile:
-	* examples/APG/Svc_Config/Makefile:
-	* examples/APG/Timers/Makefile: Move the rm tempinc up to before
-	  the sub-make runs to avoid whacking it while a subsequent sub-make
-	  is running.
+        * ACEXML/Makefile:
+        * examples/APG/Svc_Config/Makefile:
+        * examples/APG/Timers/Makefile: Move the rm tempinc up to before
+          the sub-make runs to avoid whacking it while a subsequent sub-make
+          is running.
 
-	* examples/APG/Svc_Config/Makefile.dynamic: Add LIBS += $(ACELIB)
+        * examples/APG/Svc_Config/Makefile.dynamic: Add LIBS += $(ACELIB)
 
-	* tests/Makefile: Add .NOTPARALLEL for Visual Age C++ to avoid
-	  squashing tempinc randomly, resulting in missing templates.
+        * tests/Makefile: Add .NOTPARALLEL for Visual Age C++ to avoid
+          squashing tempinc randomly, resulting in missing templates.
 
-	* tests/Makefile.tests: Moved the DIRS_PARALLEL setting down to after
-	  wrapper_macros.GNU is included and only set it for non-Visual Age C++
-	  builds. The tempinc directory getting mashed in parallel builds
-	  makes mysterious build errors happen on AIX, Visual Age C++.
+        * tests/Makefile.tests: Moved the DIRS_PARALLEL setting down to after
+          wrapper_macros.GNU is included and only set it for non-Visual Age C++
+          builds. The tempinc directory getting mashed in parallel builds
+          makes mysterious build errors happen on AIX, Visual Age C++.
 
 Wed Jan  7 16:33:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ace/config-tandem-nsk-mips-v2.h:
 
-	  Added the config files provided by Gary Maxey <gay.maxey@hp.com>
-	  for Tandem NSK.
+          Added the config files provided by Gary Maxey <gay.maxey@hp.com>
+          for Tandem NSK.
 
 Wed Jan  7 15:55:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_netdb.inl (getipnodebyaddr, getipnodebyname, ): Make
-	  ACE_WIN32 go through the IPv4-only case. Even if ACE_HAS_IPV6
-	  is enabled, the Windows IPv6 implementation (at this time)
-	  doesn't offer getipnodebyname().
+        * ace/OS_NS_netdb.inl (getipnodebyaddr, getipnodebyname, ): Make
+          ACE_WIN32 go through the IPv4-only case. Even if ACE_HAS_IPV6
+          is enabled, the Windows IPv6 implementation (at this time)
+          doesn't offer getipnodebyname().
 
-	* ace/OS_NS_arpa_inet.inl (inet_ntop, inet_pton): Make these run
-	  through the IPv4-only section on Win32 as well. These may be doable
-	  on Windows using the getnameinfo() function, but it's not clear.
-	  Needs some research and checking (and improvement of the docs for)
-	  what the args for ACE_OS::inet_ntop() and inet_pton() are.
+        * ace/OS_NS_arpa_inet.inl (inet_ntop, inet_pton): Make these run
+          through the IPv4-only section on Win32 as well. These may be doable
+          on Windows using the getnameinfo() function, but it's not clear.
+          Needs some research and checking (and improvement of the docs for)
+          what the args for ACE_OS::inet_ntop() and inet_pton() are.
 
 Wed Jan  7 13:09:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.inl:
-	* ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.h:
 
-	  The following	 checkin "Mon Jan  5 11:02:55 2004  Douglas
-	  C. Schmidt  <schmidt@ace.cs.wustl.edu>" actually broke
-	  ACE_Auto_Event. The idea behind the said checkin was to do a
-	  check whether a proper event occured during event_wait (),
-	  insted of a spurious wakeup call. This was achieved by checking
-	  the value of <is_signaled_>. This works great for manual
-	  events. For auto events, we don't set the variable value if we 
-	  have waiting threads. This makes the threads calling
-	  Auto_Event.wait () to wait for ever. 
+          The following  checkin "Mon Jan  5 11:02:55 2004  Douglas
+          C. Schmidt  <schmidt@ace.cs.wustl.edu>" actually broke
+          ACE_Auto_Event. The idea behind the said checkin was to do a
+          check whether a proper event occured during event_wait (),
+          insted of a spurious wakeup call. This was achieved by checking
+          the value of <is_signaled_>. This works great for manual
+          events. For auto events, we don't set the variable value if we
+          have waiting threads. This makes the threads calling
+          Auto_Event.wait () to wait for ever.
 
-	  We now have another special boolean variable added to
-	  ACE_event_t class which keeps track whether an auto event was
-	  signalled during the signal () call. Thanks to Dr. Schmidt for
-	  giving this idea. We need to revisit this later after x.4 and
-	  use inheritance and polymorphism to encapsulate these behvioral
-	  differences. Doing now could break backward compatibility.  
+          We now have another special boolean variable added to
+          ACE_event_t class which keeps track whether an auto event was
+          signalled during the signal () call. Thanks to Dr. Schmidt for
+          giving this idea. We need to revisit this later after x.4 and
+          use inheritance and polymorphism to encapsulate these behvioral
+          differences. Doing now could break backward compatibility.
 
 Wed Jan  7 13:03:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
