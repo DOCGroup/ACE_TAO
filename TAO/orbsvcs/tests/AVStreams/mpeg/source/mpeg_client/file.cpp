@@ -125,7 +125,7 @@ static void playCB(Widget w, XtPointer closure, XtPointer call_data)
     return;
   }
   StartFile("", filename);
-  XmStringFree((XmString)filename);
+  //XmStringFree((XmString)filename);
 }
 
 Widget CreateFileWindow(Widget parent, int cmdSock, int * playflag, Widget frametext)
