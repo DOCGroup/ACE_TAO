@@ -157,9 +157,9 @@ ACE_ReactorEx_Handler_Repository::bind (ACE_HANDLE handle,
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_, -1);
   
-  int current_size = this->max_handlep1_ + 
-                     this->handles_to_be_added_ - 
-                     this->handles_to_be_deleted_;
+  size_t current_size = this->max_handlep1_ + 
+                        this->handles_to_be_added_ - 
+                        this->handles_to_be_deleted_;
 
   // Make sure that there's room in the table.
   if (current_size < this->max_size_)
