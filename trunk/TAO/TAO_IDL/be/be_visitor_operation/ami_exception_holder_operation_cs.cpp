@@ -202,7 +202,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   
   if (node->exceptions())
     {
-      *os << be_idt
+      *os << be_idt_nl
           << "else  // it must be user exception" << be_idt_nl
           << "{" << be_idt_nl
           << "// Match the exception interface repository id with the" << be_nl
