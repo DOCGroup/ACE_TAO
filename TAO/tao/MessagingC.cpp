@@ -372,6 +372,8 @@ Messaging::PriorityRange Messaging::RequestPriorityPolicy::priority_range (
   )
 {
     Messaging::PriorityRange _tao_retval;
+    _tao_retval.min = 0;
+    _tao_retval.max = 0;
     ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
@@ -444,6 +446,8 @@ Messaging::PriorityRange Messaging::ReplyPriorityPolicy::priority_range (
   )
 {
     Messaging::PriorityRange _tao_retval;
+    _tao_retval.min = 0;
+    _tao_retval.max = 0;
     ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
@@ -516,6 +520,10 @@ TimeBase::UtcT Messaging::RequestStartTimePolicy::start_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    _tao_retval.time = 0;
+    _tao_retval.inacclo = 0;
+    _tao_retval.inacchi = 0;
+    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
@@ -588,6 +596,10 @@ TimeBase::UtcT Messaging::RequestEndTimePolicy::end_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    _tao_retval.time = 0;
+    _tao_retval.inacclo = 0;
+    _tao_retval.inacchi = 0;
+    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
@@ -660,6 +672,10 @@ TimeBase::UtcT Messaging::ReplyStartTimePolicy::start_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    _tao_retval.time = 0;
+    _tao_retval.inacclo = 0;
+    _tao_retval.inacchi = 0;
+    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
@@ -732,6 +748,10 @@ TimeBase::UtcT Messaging::ReplyEndTimePolicy::end_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    _tao_retval.time = 0;
+    _tao_retval.inacclo = 0;
+    _tao_retval.inacchi = 0;
+    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
@@ -976,6 +996,8 @@ Messaging::RoutingTypeRange Messaging::RoutingPolicy::routing_range (
   )
 {
     Messaging::RoutingTypeRange _tao_retval;
+    _tao_retval.min = Messaging::ROUTE_NONE;
+    _tao_retval.max = Messaging::ROUTE_NONE;
     ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
