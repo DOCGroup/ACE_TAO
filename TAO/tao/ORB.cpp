@@ -145,7 +145,8 @@ CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 }
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
-  : refcount_ (1),
+  : lock_ (),
+    refcount_ (1),
     orb_core_ (orb_core),
 # if defined (TAO_HAS_VALUETYPE)
     valuetype_factory_map_ (0),
@@ -154,13 +155,17 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
     client_interceptor_ (),
     server_interceptor_ (),
 # endif /* TAO_HAS_INTERCEPTORS */
+    lookup_table_ (),
+    ior_manipulation_ (),
     use_omg_ior_format_ (1)
 {
 }
 
 CORBA_ORB::~CORBA_ORB (void)
 {
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ()));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
+                     tao_mon,
+                     *ACE_Static_Object_Lock::instance ()));
 
   CORBA_ORB::orb_init_count_--;
 

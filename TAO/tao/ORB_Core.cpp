@@ -54,7 +54,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
-    orb_ (CORBA::ORB::_nil()),
+    orb_ (),
     root_poa_ (0),
     root_poa_reference_ (),
     orb_params_ (),
@@ -886,7 +886,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     }
 
   // Initialize the "ORB" pseudo-object now.
-  ACE_NEW_RETURN (this->orb_, CORBA_ORB (this), -1);
+  CORBA::ORB_ptr temp_orb = CORBA::ORB::_nil ();
+
+  ACE_NEW_RETURN (temp_orb, CORBA_ORB (this), -1);
+
+  this->orb_ = temp_orb;
 
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
@@ -947,7 +951,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   this->protocol_factories_ = trf->get_protocol_factories ();
 
   // Now that we have a complete list of available protocols and their
-  // related factory objects, initial;ize the registries!
+  // related factory objects, initialize the registries!
 
   // Initialize the connector registry and create a connector for each
   // configured protocol.
@@ -1074,9 +1078,6 @@ TAO_ORB_Core::fini (void)
                               *ACE_Static_Object_Lock::instance (), 0));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
-
-  // Release what should be the last reference of the ORB.
-  CORBA::release (this->orb ());
 
   delete this->reactor_registry_;
 #if defined(TAO_HAS_RT_CORBA)
