@@ -1,4 +1,3 @@
-// Dump.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -46,6 +45,8 @@ ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
 }
 
 ACE_ODB::ACE_ODB (void)
+  // Let the Tuple default constructor initialize object_table_
+  : current_size_ (0)
 {
   ACE_TRACE ("ACE_ODB::ACE_ODB");
 }
