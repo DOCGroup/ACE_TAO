@@ -9,17 +9,17 @@
 #if defined (ACE_HAS_THREADS)
 
 Options::Options (void)
-		 : debugging_ (0),
-		   verbosity_ (0),
-		   low_water_mark_ (1024),
+		 : thr_count_ (4),
+		   t_flags_ (THR_DETACHED),
 		   high_water_mark_ (8 * 1024),
+		   low_water_mark_ (1024),
 		   message_size_ (128),
-		   thr_count_ (4),
 		   initial_queue_length_ (0),
 		   iterations_ (100000),
+		   debugging_ (0),
+		   verbosity_ (0),
 		   consumer_port_ ("-p " ACE_ITOA (10000)),
-		   supplier_port_ ("-p " ACE_ITOA (10001)),
-		   t_flags_ (THR_DETACHED)
+		   supplier_port_ ("-p " ACE_ITOA (10001))
 {
 }
 
