@@ -1,21 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = DESCRIPTION
-//   Implementation class for the RTORB (from RTCORBA.pidl).
-//
-// = FILENAME
-//   RT_ORB.h
-//
-// = AUTHOR
-//   Marina Spivak (marina@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RT_ORB.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak (marina@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_RT_ORB_H
 #define TAO_RT_ORB_H
@@ -53,11 +46,11 @@ class TAO_Export TAO_RT_ORB :
   //
 
 public:
+  /// Constructor.
   TAO_RT_ORB (void);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_RT_ORB (void);
-  // Destructor.
 
   virtual RTCORBA::Mutex_ptr create_mutex (CORBA::Environment
                                            &ACE_TRY_ENV =

@@ -2,42 +2,38 @@
 // $Id$
 
 // ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    try_macros.h
-//
-// = DESCRIPTION
-//     This file has been depricated.
-//
-// = AUTHOR
-//     Copyright by Douglas C. Schmidt.
-//
-//   *****************************************************************
-//   *                                                               *
-//   *        NOTICE !!!    NOTICE !!!   NOTICE !!!   NOTICE !!!     *
-//   *                                                               *
-//   *        The macros in this file is deprecated.                 *
-//   *                                                               *
-//   *        Please check out $ACE_ROOT/ace/CORBA_macros.h          *
-//   *        and $ACE_ROOT/docs/exceptions.html for a new           *
-//   *        set of helper macros that replace this file.           *
-//   *                                                               *
-//   *        We strongely encourage you to stop using the           *
-//   *        macros in this file.  You should try to convert        *
-//   *        your program to use the new ACE try macros             *
-//   *        which are simpler to use and easier to remember.       *
-//   *        However, if you still insist on using these old        *
-//   *        macros, you can do this by uncomment the "#define      *
-//   *        TAO_USES_DEPRECATED_TAO_TRY_MACROS" below.             *
-//   *                                                               *
-//   *        Again, we no longer maintain this file and it will     *
-//   *        eventually go away.                                    *
-//   *                                                               *
-//   *****************************************************************
-//
+/**
+ * @file try_macros.h
+ *
+ * @brief This file has been deprecated.
+ *
+ *<PRE>
+ *   *****************************************************************
+ *   *                                                               *
+ *   *        NOTICE !!!    NOTICE !!!   NOTICE !!!   NOTICE !!!     *
+ *   *                                                               *
+ *   *        The macros in this file is deprecated.                 *
+ *   *                                                               *
+ *   *        Please check out $ACE_ROOT/ace/CORBA_macros.h          *
+ *   *        and $ACE_ROOT/docs/exceptions.html for a new           *
+ *   *        set of helper macros that replace this file.           *
+ *   *                                                               *
+ *   *        We strongely encourage you to stop using the           *
+ *   *        macros in this file.  You should try to convert        *
+ *   *        your program to use the new ACE try macros             *
+ *   *        which are simpler to use and easier to remember.       *
+ *   *        However, if you still insist on using these old        *
+ *   *        macros, you can do this by uncomment the "#define      *
+ *   *        TAO_USES_DEPRECATED_TAO_TRY_MACROS" below.             *
+ *   *                                                               *
+ *   *        Again, we no longer maintain this file and it will     *
+ *   *        eventually go away.                                    *
+ *   *                                                               *
+ *   *****************************************************************
+ *</PRE>
+ *
+ * @author Douglas C. Schmidt.
+ */
 // ============================================================================
 
 #ifndef TAO_TRY_MACROS_H

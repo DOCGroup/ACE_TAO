@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   RT_Current.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RT_Current.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_RT_CURRENT_H
 #define TAO_RT_CURRENT_H
@@ -46,11 +43,11 @@ class TAO_Export TAO_RT_Current :
   //   Allows setting/getting the priority of the current thread.
   //
 public:
+  /// Default constructor.
   TAO_RT_Current (TAO_ORB_Core *orb_core);
-  // Default constructor.
 
+  /// The destructor.
   virtual ~TAO_RT_Current (void);
-  // The destructor.
 
   virtual RTCORBA::Priority the_priority (CORBA::Environment
                                           &ACE_TRY_ENV =
@@ -64,8 +61,8 @@ public:
 
 private:
 
+  /// ORB Core that owns us.
   TAO_ORB_Core *orb_core_;
-  // ORB Core that owns us.
 };
 
 

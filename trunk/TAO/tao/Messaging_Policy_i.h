@@ -1,21 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = DESCRIPTION
-//   Implementation classes for the Messaging related policies
-//
-// = FILENAME
-//   Messaging_Policy_i.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Messaging_Policy_i.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_MESSAGING_POLICY_I_H
 #define TAO_MESSAGING_POLICY_I_H
@@ -46,11 +39,11 @@ class TAO_Export TAO_RelativeRoundtripTimeoutPolicy
   //   request.
   //
 public:
+  /// Constructor.
   TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs);
-  // Copy constructor.
 
   /// Implement the timeout hook, this is set in the ORB_Core at
   /// initialization time.
@@ -59,13 +52,13 @@ public:
                     int &has_timeout,
                     ACE_Time_Value &time_value);
 
+  /// Helper method for the implementation of
+  /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Helper method for the implementation of
-  // CORBA::ORB::create_policy.
 
+  /// Returns a copy of <this>.
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone (void) const;
-  // Returns a copy of <this>.
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
   virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV)
@@ -80,12 +73,12 @@ public:
   virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
-  // Change the CORBA representation to the ACE representation.
 
 private:
+  /// The attribute
   TimeBase::TimeT relative_expiry_;
-  // The attribute
 };
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
@@ -106,11 +99,11 @@ class TAO_Export TAO_Sync_Scope_Policy
   //   transport requests.
   //
 public:
+  /// Constructor.
   TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs);
-  // Copy constructor.
 
   /// Implement the Sync_Scope hook, this is set in the ORB_Core at
   /// initialization time.
@@ -119,13 +112,13 @@ public:
                     int &has_synchronization,
                     int &scope);
 
+  /// Helper method for the implementation of
+  /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Helper method for the implementation of
-  // CORBA::ORB::create_policy.
 
+  /// Returns a copy of <this>.
   virtual TAO_Sync_Scope_Policy *clone (void) const;
-  // Returns a copy of <this>.
 
   // = The Messaging::SyncScopePolicy methods.
 
@@ -145,8 +138,8 @@ public:
 
 private:
 
+  /// The attribute
   Messaging::SyncScope synchronization_;
-  // The attribute
 };
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */

@@ -164,7 +164,7 @@ ostream& operator<< (ostream &os,
   return os;
 }
 
-#endif // (ACE_LACKS_IOSTREAM_TOTALLY)
+#endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
 // Avoid zillions of not-quite-inlined copies of utilities.
 
@@ -1149,7 +1149,7 @@ tao_insert_in_extractor_system_exception (
               tmp,
               destructor
             );
-          return 1; 
+          return 1;
         }
     }
   ACE_CATCHANY

@@ -1,18 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   xt_resource.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   xt_resource.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_XT_RESOURCE_H
 #define TAO_XT_RESOURCE_H
@@ -30,28 +27,29 @@
 
 // ****************************************************************
 
+/**
+ * @class TAO_XT_Resource_Factory
+ *
+ * @brief TAO's default resource factory
+ *
+ * Using a <{resource source specifier}> as a discriminator, the
+ * factory can return resource instances which are, e.g., global,
+ * stored in thread-specific storage, stored in shared memory,
+ * etc.
+ */
 class TAO_XT_Resource_Factory : public TAO_Default_Resource_Factory
 {
-  // = TITLE
-  //   TAO's default resource factory
-  //
-  // = DESCRIPTION
-  //   Using a <{resource source specifier}> as a discriminator, the
-  //   factory can return resource instances which are, e.g., global,
-  //   stored in thread-specific storage, stored in shared memory,
-  //   etc.
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_XT_Resource_Factory (void);
-  // Constructor.
 
+  /// Set the context used to create the XtReactor
   static void set_context (XtAppContext context);
-  // Set the context used to create the XtReactor
 
 protected:
+  /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
-  // Obtain the reactor implementation
 
 private:
   static XtAppContext context_;

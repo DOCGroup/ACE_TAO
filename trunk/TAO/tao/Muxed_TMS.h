@@ -1,15 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Muxed_TMS.h
+ *
+ *  $Id$
+ *
+ *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_MUXED_TMS_H
 #define TAO_MUXED_TMS_H
@@ -26,28 +26,30 @@
 
 class TAO_Pluggable_Reply_Params;
 
+/**
+ * @class TAO_Muxed_TMS
+ *
+ * Using this strategy a single connection can have multiple
+ * outstanding requests.
+ * @@ Can the performance of the demuxer be made more predictable,
+ * for example, using the request id as an active demux key?
+ * NOTE: check the OMG resolutions about bidirectional
+ * connections, it is possible that the request ids can only
+ * assume even or odd values.
+ */
 class TAO_Export TAO_Muxed_TMS : public TAO_Transport_Mux_Strategy
 {
-  // = DESCRIPTION
-  //   Using this strategy a single connection can have multiple
-  //   outstanding requests.
-  //   @@ Can the performance of the demuxer be made more predictable,
-  //   for example, using the request id as an active demux key?
-  //   NOTE: check the OMG resolutions about bidirectional
-  //   connections, it is possible that the request ids can only
-  //   assume even or odd values.
-  //
 
 public:
+  /// Constructor.
   TAO_Muxed_TMS (TAO_Transport *transport);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Muxed_TMS (void);
-  // Destructor.
 
+  /// Generate and return an unique request id for the current
+  /// invocation.
   virtual CORBA::ULong request_id (void);
-  // Generate and return an unique request id for the current
-  // invocation.
 
   // = Please read the documentation in the TAO_Transport_Mux_Strategy
   //   class.
@@ -66,12 +68,12 @@ public:
   virtual void connection_closed (void);
 
 protected:
+  /// Lock to protect the state of this class
   ACE_SYNCH_MUTEX lock_;
-  // Lock to protect the state of this class
 
+  /// Used to generate a different request_id on each call to
+  /// request_id().
   CORBA::ULong request_id_generator_;
-  // Used to generate a different request_id on each call to
-  // request_id().
 
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
                                    TAO_Reply_Dispatcher *,
@@ -79,12 +81,12 @@ protected:
                                    ACE_Equal_To <CORBA::ULong>,
                                    ACE_Null_Mutex> REQUEST_DISPATCHER_TABLE;
 
+  /// Table of <Request ID, Reply Dispatcher> pairs.
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
-  // Table of <Request ID, Reply Dispatcher> pairs.
 
+  /// Keep track of the orb core pointer. We need to this to create the
+  /// Reply Dispatchers.
   TAO_ORB_Core *orb_core_;
-  // Keep track of the orb core pointer. We need to this to create the
-  // Reply Dispatchers.
 
   // @@ Commented for the time being, let the commented line stay for
   //    sometime - Bala

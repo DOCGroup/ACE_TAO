@@ -35,11 +35,11 @@
 # include "ORBInitializer_Registry.h"
 
 #if TAO_HAS_RT_CORBA == 1
-# include "RT_ORBInitializer.h"         // @@ This should go away!
+# include "RT_ORBInitializer.h"         /* @@ This should go away! */
 #endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-# include "Messaging_ORBInitializer.h"  // @@ This should go away!
+# include "Messaging_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #if defined (TAO_HAS_VALUETYPE)

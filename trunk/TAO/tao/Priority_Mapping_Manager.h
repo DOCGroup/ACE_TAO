@@ -1,21 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = DESCRIPTION
-//   .
-//
-// = FILENAME
-//   Priority_Mapping_Manager.h
-//
-// = AUTHOR
-//   Marina Spivak (marina@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Priority_Mapping_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak (marina@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H
 #define TAO_PRIORITY_MAPPING_MANAGER_H
@@ -56,19 +49,19 @@ class TAO_Export TAO_Priority_Mapping_Manager :
   //
 
 public:
+  /// Constructor.
   TAO_Priority_Mapping_Manager (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_Priority_Mapping_Manager (void);
-  // Destructor.
 
   // = Interface methods.
 
+  ///
   void mapping (RTCORBA::PriorityMapping * mapping);
-  //
 
+  ///
   RTCORBA::PriorityMapping *mapping (void);
-  //
 
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -118,9 +111,9 @@ public:
   TAO_Priority_Mapping_Manager_var &operator= (const TAO_Priority_Mapping_Manager_var &);
   TAO_Priority_Mapping_Manager_ptr operator-> (void) const;
 
+  /// in, inout, out, _retn
   operator const TAO_Priority_Mapping_Manager_ptr &() const;
   operator TAO_Priority_Mapping_Manager_ptr &();
-  // in, inout, out, _retn
   TAO_Priority_Mapping_Manager_ptr in (void) const;
   TAO_Priority_Mapping_Manager_ptr &inout (void);
   TAO_Priority_Mapping_Manager_ptr &out (void);
@@ -128,8 +121,8 @@ public:
   TAO_Priority_Mapping_Manager_ptr ptr (void) const;
 
 private:
+  /// Unimplemented - prevents widening assignment.
   TAO_Priority_Mapping_Manager_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
   TAO_Priority_Mapping_Manager_var (const TAO_Base_var &rhs);
   TAO_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs);
 };

@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ValueBase.h
-//
-// = AUTHOR
-//     Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     ValueBase.h
+ *
+ *  $Id$
+ *
+ *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ */
+//=============================================================================
+
 
 #ifndef TAO_VALUEBASE_H
 #define TAO_VALUEBASE_H
@@ -29,58 +26,61 @@
 #ifdef TAO_HAS_VALUETYPE
 
 
+/**
+ * @class CORBA_ValueBase
+ *
+ * @brief Abstract baseclass for Valuetypes
+ * (see CORBA 2.3 20.17.5)
+ */
 class TAO_Export CORBA_ValueBase
 {
-  // = TITLE
-  //   Abstract baseclass for Valuetypes
-  //   (see CORBA 2.3 20.17.5)
 
 public:
   // reference counting
+  /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
   virtual void _add_ref (void) = 0;
   virtual void _remove_ref (void) = 0;
-  // %! virtual CORBA::ValueBase* _copy_value (void) = 0;
   virtual CORBA::ULong _refcount_value (void) = 0;
 
   // dynamic casting
   static CORBA::ValueBase* _downcast (CORBA::ValueBase*);
 
+  /// TAO extension
   virtual const char* _tao_obv_repository_id () const = 0;
-  // TAO extension
 
   // TAO internal --------------------------
 
+  /// Marshal a valuetype (see operator<< in tao_idl generated file
+  /// how it is called)
   static CORBA::Boolean _tao_marshal (TAO_OutputCDR &strm,
                                       CORBA_ValueBase *_this,
                                ptr_arith_t formal_type_id = 0);
-  // Marshal a valuetype (see operator<< in tao_idl generated file
-  // how it is called)
 
+  /// Unmarshal a valuetype, if formal type is a pointer to ValueBase
   static CORBA::Boolean _tao_unmarshal (TAO_InputCDR &strm,
                                         CORBA_ValueBase *&_this);
-  // Unmarshal a valuetype, if formal type is a pointer to ValueBase
 
   // static CORBA::Boolean
   // T::_tao_unmarshal (TAO_InputCDR &, CORBA_ValueBase *&_this)
   // is typespecific for valuetype T and generated from tao_idl
   // Use this for unmarshaling.
 
+  /// Both used internally and are called from T::_tao_unmarshal ()
   static CORBA::Boolean _tao_unmarshal_pre (TAO_InputCDR &strm,
                                             CORBA_ValueFactory_ptr &,
                                             CORBA_ValueBase *&,
                                             const char * const repo_id);
   CORBA::Boolean _tao_unmarshal_post (TAO_InputCDR &strm);
-  // Both used internally and are called from T::_tao_unmarshal ()
 
 
 public:  // otherwise these cannot be called from a static function
   virtual void *_tao_obv_narrow (ptr_arith_t) = 0;
 
+  /// during marshal jump to the most derived part
   virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) = 0;
-  // during marshal jump to the most derived part
 
+  /// called after obtaining the fresh object from create_for_unmarshal ()
   virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) = 0;
-  // called after obtaining the fresh object from create_for_unmarshal ()
 
 protected:
   CORBA_ValueBase (void);
@@ -94,21 +94,24 @@ private:
 
 
 
+/**
+ * @class CORBA_DefaultValueRefCountBase
+ *
+ * @brief Default mix-in for reference count of a valuetype.
+ */
 class TAO_Export CORBA_DefaultValueRefCountBase : public virtual CORBA_ValueBase
 {
-  // = TITLE
-  //   Default mix-in for reference count of a valuetype.
 
 public:
   virtual void _add_ref (void);
   virtual void _remove_ref (void);
   virtual CORBA::ULong _refcount_value (void);
 
+  /// The _tao variants are inline for fast access from T_var
+  /// (if valuetype T is compiled with optimization for that.) %! (todo)
   void _tao_add_ref (void);
   void _tao_remove_ref (void);
   CORBA::ULong _tao_refcount_value (void);
-  // The _tao variants are inline for fast access from T_var
-  // (if valuetype T is compiled with optimization for that.) %! (todo)
 
 protected:
   CORBA_DefaultValueRefCountBase (void);
@@ -128,9 +131,12 @@ private: // data
 // $! todo: debug aids for refcounts
 
 
+/**
+ * @class TAO_OBV_GIOP_Flags
+ CORBA 2.3: 15.3.4
+ */
 class TAO_OBV_GIOP_Flags
 {
-  // CORBA 2.3: 15.3.4
 public:
   static const CORBA::ULong Value_tag_base;
   static const CORBA::ULong Value_tag_sigbits;

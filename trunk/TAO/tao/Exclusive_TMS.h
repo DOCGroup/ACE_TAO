@@ -1,15 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Exclusive_TMS.h
+ *
+ *  $Id$
+ *
+ *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_EXCLUSIVE_TMS_H
 #define TAO_EXCLUSIVE_TMS_H
@@ -24,23 +24,25 @@
 
 class TAO_Pluggable_Reply_Params;
 
+/**
+ * @class TAO_Exclusive_TMS
+ *
+ * Using this strategy only one request can be pending at a time
+ * in a connection.  This improves performance because the client
+ * does not have to demux the reply, and there is less need for
+ * synchronization.
+ * On the other hand, it does not scale well when you have
+ * multiple client threads or asynchronous messaging.
+ */
 class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
 {
-  // = DESCRIPTION
-  //   Using this strategy only one request can be pending at a time
-  //   in a connection.  This improves performance because the client
-  //   does not have to demux the reply, and there is less need for
-  //   synchronization.
-  //   On the other hand, it does not scale well when you have
-  //   multiple client threads or asynchronous messaging.
-  //
 
 public:
+  /// Constructor.
   TAO_Exclusive_TMS (TAO_Transport *transport);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Exclusive_TMS (void);
-  // Destructor.
 
   // = Please read the documentation in the TAO_Transport_Mux_Strategy
   //   class.
@@ -60,19 +62,19 @@ public:
   virtual void connection_closed (void);
 
 protected:
+  /// Used to generate a different request_id on each call to
+  /// request_id().
   CORBA::ULong request_id_generator_;
-  // Used to generate a different request_id on each call to
-  // request_id().
 
+  /// If 0 then the request id and reply dispatcher below are
+  /// meaningless
   int has_request_;
-  // If 0 then the request id and reply dispatcher below are
-  // meaningless
 
+  /// Request id for the current request.
   CORBA::ULong request_id_;
-  // Request id for the current request.
 
+  /// Reply Dispatcher corresponding to the request.
   TAO_Reply_Dispatcher *rd_;
-  // Reply Dispatcher corresponding to the request.
 
   // @@ Commented for the time being, let the commented line stay for
   //    sometime - Bala

@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Profile.h
-//
-// = AUTHOR
-//   Fred Kuhns <fredk@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Profile.h
+ *
+ *  $Id$
+ *
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_PROFILE_H
 #define TAO_PROFILE_H
@@ -33,129 +30,138 @@ class TAO_Stub;
 class TAO_Endpoint;
 class TAO_ORB_Core;
 
+/**
+ * @class TAO_Profile
+ *
+ * @brief Defines the Profile interface
+ *
+ * An abstract base class for representing object location
+ * information.  This is based on the CORBA IOR definitions.
+ */
 class TAO_Export TAO_Profile
 {
-  // = TITLE
-  //   Defines the Profile interface
-  //
-  // = DESCRIPTION
-  //   An abstract base class for representing object location
-  //   information.  This is based on the CORBA IOR definitions.
-  //
 public:
 
+  /// Constructor
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
                const TAO_GIOP_Version &version);
-  // Constructor
 
+  /// If you have a virtual method you need a virtual dtor.
   virtual ~TAO_Profile (void);
-  // If you have a virtual method you need a virtual dtor.
 
+  /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag (void) const;
-  // The tag, each concrete class will have a specific tag value.
 
+  /// Return a pointer to this profile's version.  This object
+  /// maintains ownership.
   const TAO_GIOP_Version &version (void) const;
-  // Return a pointer to this profile's version.  This object
-  // maintains ownership.
 
+  /// Get a poiter to the TAO_ORB_Core
   TAO_ORB_Core *orb_core (void) const;
-  // Get a poiter to the TAO_ORB_Core
 
+  /// Increase the reference count by one on this object.
   CORBA::ULong _incr_refcnt (void);
-  // Increase the reference count by one on this object.
 
+  /// Decrement the object's reference count.  When this count goes to
+  /// 0 this object will be deleted.
   CORBA::ULong _decr_refcnt (void);
-  // Decrement the object's reference count.  When this count goes to
-  // 0 this object will be deleted.
 
+  /// Keep a pointer to the forwarded profile
   void forward_to (TAO_MProfile *mprofiles);
-  // Keep a pointer to the forwarded profile
 
+  /// MProfile accessor
   TAO_MProfile* forward_to (void);
-  // MProfile accessor
 
+  /// Access the tagged components, notice that they they could be
+  /// empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
   const TAO_Tagged_Components& tagged_components (void) const;
   TAO_Tagged_Components& tagged_components (void);
-  // Access the tagged components, notice that they they could be
-  // empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
 
   /// Add the given tagged component to the profile.
   void add_tagged_component (const IOP::TaggedComponent &component,
                              CORBA::Environment &ACE_TRY_ENV);
 
+  /// The object key delimiter.
   virtual char object_key_delimiter (void) const = 0;
-  // The object key delimiter.
 
+  /// Initialize this object using the given input string.
+  /// Supports URL style of object references
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Initialize this object using the given input string.
-  // Supports URL style of object references
 
+  /// Return a string representation for this profile.  client must
+  /// deallocate memory.
   virtual char* to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Return a string representation for this profile.  client must
-  // deallocate memory.
 
+  /// Initialize this object using the given CDR octet string.
   virtual int decode (TAO_InputCDR& cdr) = 0;
-  // Initialize this object using the given CDR octet string.
 
+  /// Encode this profile in a stream, i.e. marshal it.
   virtual int encode (TAO_OutputCDR &stream) const = 0;
-  // Encode this profile in a stream, i.e. marshal it.
 
+  /**
+   * Encodes this profile's endpoints into a tagged component.
+   * This is done only if RTCORBA is enabled, since currently this is
+   * the only case when we have more than one endpoint per profile.
+   */
   virtual int encode_endpoints (void) = 0;
-  // Encodes this profile's endpoints into a tagged component.
-  // This is done only if RTCORBA is enabled, since currently this is
-  // the only case when we have more than one endpoint per profile.
 
+  /// @@ deprecated. return a reference to the Object Key.
   virtual const TAO_ObjectKey &object_key (void) const = 0;
-  // @@ deprecated. return a reference to the Object Key.
 
+  /// Obtain the object key, return 0 if the profile cannot be parsed.
+  /// The memory is owned by the caller!
   virtual TAO_ObjectKey *_key (void) const = 0;
-  // Obtain the object key, return 0 if the profile cannot be parsed.
-  // The memory is owned by the caller!
 
+  /**
+   * Return pointer to this profile's endpoint.  If the profile
+   * contains more than one endpoint, i.e., a list, the method returns
+   * the head of the list.
+   */
   virtual TAO_Endpoint *endpoint (void) = 0;
-  // Return pointer to this profile's endpoint.  If the profile
-  // contains more than one endpoint, i.e., a list, the method returns
-  // the head of the list.
 
+  /// Return how many endpoints this profile contains.
   virtual size_t endpoint_count (void) = 0;
-  // Return how many endpoints this profile contains.
 
+  /**
+   * Return true if this profile is equivalent to other_profile.  Two
+   * profiles are equivalent iff their tag, object_key, version and
+   * all endpoints are the same.
+   */
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
-  // Return true if this profile is equivalent to other_profile.  Two
-  // profiles are equivalent iff their tag, object_key, version and
-  // all endpoints are the same.
 
+  /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Return a hash value for this object.
 
+  /**
+   * This method is used to get the IOP::taggedProfile. The profile
+   * information that is received from the server side would have
+   * already been decoded. So this method will just make a
+   * IOP::TaggedProfile struct from the existing information and
+   * return the reference to that. This method is necessary for GIOP
+   * 1.2.
+   */
   virtual IOP::TaggedProfile &create_tagged_profile (void) = 0;
-  // This method is used to get the IOP::taggedProfile. The profile
-  // information that is received from the server side would have
-  // already been decoded. So this method will just make a
-  // IOP::TaggedProfile struct from the existing information and
-  // return the reference to that. This method is necessary for GIOP
-  // 1.2.
 
+  /// This method sets the client exposed policies, i.e., the ones
+  /// propagated in the IOR, for this profile.
   virtual void policies (CORBA::PolicyList *policy_list);
-  // This method sets the client exposed policies, i.e., the ones
-  // propagated in the IOR, for this profile.
 
+  /// Accessor for the client exposed policies of this profile.
   virtual CORBA::PolicyList&  policies (void);
-  // Accessor for the client exposed policies of this profile.
 
+  /// Sets the TAO_Stub to which this profile is associated.
   virtual void the_stub (TAO_Stub *stub);
-  // Sets the TAO_Stub to which this profile is associated.
 
+  /// Gets the TAO_MProfile that holds the TAO_Profile instance.
   virtual TAO_Stub* the_stub (void);
-  // Gets the TAO_MProfile that holds the TAO_Profile instance.
 
 private:
 
+  /// this object keeps ownership of this object
   TAO_MProfile *forward_to_i (void);
-  // this object keeps ownership of this object
 
   /// Verify that the current ORB's configuration supports tagged
   /// components in IORs.
@@ -171,21 +177,21 @@ private:
 
 protected:
 
+  /// IIOP version number.
   TAO_GIOP_Version version_;
-  // IIOP version number.
 
+  /// The tagged components
   TAO_Tagged_Components tagged_components_;
-  // The tagged components
 
+  /// Flag indicating whether the lazy decoding of the client exposed
+  /// policies has taken place.
   CORBA::Boolean are_policies_parsed_;
-  // Flag indicating whether the lazy decoding of the client exposed
-  // policies has taken place.
 
+  /// Pointer to the TAO_Stub to which this profile is related.
   TAO_Stub *stub_;
-  // Pointer to the TAO_Stub to which this profile is related.
 
+  /// Client exposed policies of this profile.
   CORBA::PolicyList *policy_list_;
-  // Client exposed policies of this profile.
 
   // NOTE: In this implementation it is assumed that the <policy_list>
   // is exactly the same for each profile.
@@ -196,42 +202,43 @@ protected:
 
 private:
 
+  /// IOP protocol tag.
   CORBA::ULong tag_;
-  // IOP protocol tag.
 
+  /// Pointer to the ORB core
   TAO_ORB_Core *orb_core_;
-  // Pointer to the ORB core
 
+  /// the TAO_MProfile which contains the profiles for the forwarded
+  /// object.
   TAO_MProfile* forward_to_;
-  // the TAO_MProfile which contains the profiles for the forwarded
-  // object.
 
+  /// Mutex to protect reference count.
   ACE_SYNCH_MUTEX refcount_lock_;
-  // Mutex to protect reference count.
 
+  /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
-  // Number of outstanding references to this object.
 
 };
 
+/**
+ * @class TAO_Unknown_Profile
+ *
+ * @brief A TAO_Profile class to handle foreign profiles.
+ *
+ * The CORBA spec implies that ORBs must be prepared to save and
+ * pass around profiles for protocols it does not recognize. It is
+ * not mandatory to *use* those profiles but they shouldn't be
+ * dropped.
+ * This class stores the information required to marshal and
+ * demarshal an unknown profile, but simply returns an error if
+ * any of the TAO internal methods are invoked.
+ */
 class TAO_Export TAO_Unknown_Profile : public TAO_Profile
 {
-  // = TITLE
-  //   A TAO_Profile class to handle foreign profiles.
-  //
-  // = DESCRIPTION
-  //   The CORBA spec implies that ORBs must be prepared to save and
-  //   pass around profiles for protocols it does not recognize. It is
-  //   not mandatory to *use* those profiles but they shouldn't be
-  //   dropped.
-  //   This class stores the information required to marshal and
-  //   demarshal an unknown profile, but simply returns an error if
-  //   any of the TAO internal methods are invoked.
-  //
 public:
+  /// Create the profile
   TAO_Unknown_Profile (CORBA::ULong tag,
                        TAO_ORB_Core *orb_core);
-  // Create the profile
 
   // = The TAO_Profile methods look above
   virtual int parse_string (const char *string,

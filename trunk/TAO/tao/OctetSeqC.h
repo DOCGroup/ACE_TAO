@@ -62,20 +62,20 @@ class CORBA_OctetSeq_var;
 // CORBA_OctetSeq
 // *************************************************************
 
-class TAO_Export CORBA_OctetSeq : public 
+class TAO_Export CORBA_OctetSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   CORBA_OctetSeq (void); // default ctor
   CORBA_OctetSeq (CORBA::ULong max); // uses max size
   CORBA_OctetSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA::Octet *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::Octet *buffer,
     CORBA::Boolean release = 0
   );
   CORBA_OctetSeq (const CORBA_OctetSeq &); // copy ctor
@@ -115,21 +115,21 @@ public:
   CORBA_OctetSeq_var (const CORBA_OctetSeq_var &); // copy constructor
   CORBA_OctetSeq_var (const CORBA_OctetSeq &); // fixed-size base types only
   ~CORBA_OctetSeq_var (void); // destructor
-  
+
   CORBA_OctetSeq_var &operator= (CORBA_OctetSeq *);
   CORBA_OctetSeq_var &operator= (const CORBA_OctetSeq_var &);
   CORBA_OctetSeq_var &operator= (const CORBA_OctetSeq &); // fixed-size base types only
   CORBA_OctetSeq *operator-> (void);
   const CORBA_OctetSeq *operator-> (void) const;
-  
+
   operator const CORBA_OctetSeq &() const;
   operator CORBA_OctetSeq &();
   operator CORBA_OctetSeq &() const;
-  
+
   CORBA::Octet & operator[] (CORBA::ULong index);
   const CORBA::Octet & operator[] (CORBA::ULong index) const;
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const CORBA_OctetSeq &in (void) const;
   CORBA_OctetSeq &inout (void);
   CORBA_OctetSeq *&out (void);
@@ -159,7 +159,7 @@ public:
   CORBA_OctetSeq *&ptr (void);
   CORBA_OctetSeq *operator-> (void);
   CORBA::Octet & operator[] (CORBA::ULong index);
-  
+
 private:
   CORBA_OctetSeq *&ptr_;
   // assignment from T_var not allowed

@@ -1,18 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   IIOP_Factory.h
-//
-// = AUTHOR
-//   Fred Kuhns <fredk@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   IIOP_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IIOP_FACTORY_H
 #define TAO_IIOP_FACTORY_H
@@ -36,18 +33,18 @@ public:
   virtual ~TAO_IIOP_Protocol_Factory (void);
 
   // = Service Configurator hooks.
+  /// Dynamic linking hook
   virtual int init (int argc, char* argv[]);
-  // Dynamic linking hook
 
+  /// Verify prefix is a match
   virtual int match_prefix (const ACE_CString &prefix);
-  // Verify prefix is a match
 
+  /// Returns the prefix used by the protocol.
   virtual const char *prefix (void) const;
-  // Returns the prefix used by the protocol.
 
+  /// Return the character used to mark where an endpoint ends and
+  /// where its options begin.
   virtual char options_delimiter (void) const;
-  // Return the character used to mark where an endpoint ends and
-  // where its options begin.
 
   // = Check Protocol_Factory.h for a description of these methods.
   virtual TAO_Acceptor  *make_acceptor (void);
@@ -55,10 +52,10 @@ public:
   virtual int requires_explicit_endpoint (void) const;
 
 private:
+  /// Changing the version number can be used to provide backwards
+  /// compatibility with old clients.
   int major_;
   int minor_;
-  // Changing the version number can be used to provide backwards
-  // compatibility with old clients.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_IIOP_Protocol_Factory)

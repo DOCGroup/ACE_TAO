@@ -59,17 +59,17 @@ class TAO_Export CORBA_Current_var : public TAO_Base_var
 {
 public:
   CORBA_Current_var (void); // default constructor
-  CORBA_Current_var (CORBA_Current_ptr p) : ptr_ (p) {} 
+  CORBA_Current_var (CORBA_Current_ptr p) : ptr_ (p) {}
   CORBA_Current_var (const CORBA_Current_var &); // copy constructor
   ~CORBA_Current_var (void); // destructor
-  
+
   CORBA_Current_var &operator= (CORBA_Current_ptr);
   CORBA_Current_var &operator= (const CORBA_Current_var &);
   CORBA_Current_ptr operator-> (void) const;
-  
+
   operator const CORBA_Current_ptr &() const;
   operator CORBA_Current_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_Current_ptr in (void) const;
   CORBA_Current_ptr &inout (void);
   CORBA_Current_ptr &out (void);
@@ -102,7 +102,7 @@ public:
   operator CORBA_Current_ptr &();
   CORBA_Current_ptr &ptr (void);
   CORBA_Current_ptr operator-> (void);
-  
+
 private:
   CORBA_Current_ptr &ptr_;
 };
@@ -126,12 +126,12 @@ public:
   static CORBA_Current_ptr _duplicate (CORBA_Current_ptr obj);
   static CORBA_Current_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_Current_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static CORBA_Current_ptr _nil (void)
@@ -140,7 +140,7 @@ public:
     }
 
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:

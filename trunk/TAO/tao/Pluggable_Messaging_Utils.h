@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Pluggable_Messaging_Utils.h
-//
-// = DESCRIPTION
-//     Utility classes for the TAO pluggable messaging framework.
-//
-// = AUTHOR
-//     Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Pluggable_Messaging_Utils.h
+ *
+ *  $Id$
+ *
+ *   Utility classes for the TAO pluggable messaging framework.
+ *
+ *
+ *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
@@ -29,57 +26,63 @@
 
 #include "tao/CDR.h"
 
+/**
+ * @class TAO_Pluggable_Reply_Params
+ *
+ * @brief TAO_Pluggable_Connector_Params
+ *
+ * This represents a set of data that would be received by the
+ * connector from the acceptor.
+ */
 class TAO_Export TAO_Pluggable_Reply_Params
 {
-  // = TITLE
-  //   TAO_Pluggable_Connector_Params
-  //
-  // = DESCRIPTION
-  //   This represents a set of data that would be received by the
-  //   connector from the acceptor.
 public:
+  /// Constructor.
   TAO_Pluggable_Reply_Params (TAO_ORB_Core *orb_core);
-  // Constructor.
 
+  /// The IOP service context list.
   IOP::ServiceContextList svc_ctx_;
-  // The IOP service context list.
 
+  /// The request id for which the reply we (connector) has received.
   CORBA::ULong request_id_;
-  // The request id for which the reply we (connector) has received.
 
   // @@ Bala: this is (again) an GIOPism (to coin a word).  Other
   // protocol may choose to send different *messages* instead.
   // @@ Carlos: I agree. Please see above.
+  /// The reply status.
   CORBA::ULong reply_status_;
-  // The reply status.
 
+  /**
+   * Since this class no longer contains an NVList, this is the
+   * way to determine if the request was DSI, so we can use Carlos'
+   * service context list no-deep-copy optimization.
+   */
   CORBA::Boolean is_dsi_;
-  // Since this class no longer contains an NVList, this is the
-  // way to determine if the request was DSI, so we can use Carlos'
-  // service context list no-deep-copy optimization.
 
+  /// Info required for DSI optimization that pads the outgoing
+  /// CDR stream according to the alignment of the NVList.
   ptr_arith_t dsi_nvlist_align_;
-  // Info required for DSI optimization that pads the outgoing
-  // CDR stream according to the alignment of the NVList.
 
+  /**
+   * Get and Set methods for the service context list that we dont
+   * own. This is useful for cases  where the application objects own
+   * a service context list and would like to pass on their contents
+   * without a copy.
+   */
   IOP::ServiceContextList &service_context_notowned (void);
   void service_context_notowned (IOP::ServiceContextList *svc);
-  // Get and Set methods for the service context list that we dont
-  // own. This is useful for cases  where the application objects own
-  // a service context list and would like to pass on their contents
-  // without a copy.
 
+  /// A flag that indicates if there is any data is going to get
+  /// marshalled in the reply
   CORBA::Boolean argument_flag_;
-  // A flag that indicates if there is any data is going to get
-  // marshalled in the reply
 
+  /// The stream with the non-demarshalled reply. This stream will be
+  /// passed up to the stubs to demarshall the parameter values.
   TAO_InputCDR input_cdr_;
-  // The stream with the non-demarshalled reply. This stream will be
-  // passed up to the stubs to demarshall the parameter values.
 
 private:
+  /// The service context list that we don't own.
   IOP::ServiceContextList *service_context_;
-  // The service context list that we don't own.
 };
 
 // @@ Bala: this is a GIOPism too, there is no such thing as locate

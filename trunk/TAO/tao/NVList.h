@@ -1,20 +1,16 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    NVList.h
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
-//     and
-//     Aniruddha Gokhale (additions, missing operations)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    NVList.h
+ *
+ *  $Id$
+ *
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ *  @author  Aniruddha Gokhale <gokhale@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
@@ -31,30 +27,31 @@
 
 class TAO_InputCDR;
 
+/**
+ * @class CORBA_NamedValue
+ *
+ * @brief NamedValue ... these occur only in "NVList" (named value list) data
+ * structures.  The binary form of the data structure is frozen and
+ * visible to programs using it (e.g. from C).  The C++ class supports
+ * some programming discipline, e.g. to avoid memory leaks.
+ * They just represent parameters to calls.  The name is optional, and
+ * the value is packaged as an Any.  The flags indicate parameter
+ * mode, and some ownership rules for "top level" memory.
+ */
 class TAO_Export CORBA_NamedValue
 {
-  // = TITLE
-  // NamedValue ... these occur only in "NVList" (named value list) data
-  // structures.  The binary form of the data structure is frozen and
-  // visible to programs using it (e.g. from C).  The C++ class supports
-  // some programming discipline, e.g. to avoid memory leaks.
-  //
-  // They just represent parameters to calls.  The name is optional, and
-  // the value is packaged as an Any.  The flags indicate parameter
-  // mode, and some ownership rules for "top level" memory.
-  //
 public:
+  /// optional name
   const char *name (void) const;
-  // optional name
 
+  /// return the value
   CORBA::Any_ptr value (void) const;
-  // return the value
 
+  /// return the parameter mode flag
   CORBA::Flags flags (void) const;
-  // return the parameter mode flag
 
+  /// destructor - manages the name and value
   ~CORBA_NamedValue (void);
-  // destructor - manages the name and value
 
   // The pseudo object static methods..
   static CORBA_NamedValue* _duplicate (CORBA_NamedValue*);
@@ -71,44 +68,44 @@ public:
 #endif /* __GNUC__ */
 
 private:
+  /// maintains how many references exist to this object
   CORBA::ULong refcount_;
-  // maintains how many references exist to this object
 
+  /// Protects the reference count.
   ACE_SYNCH_MUTEX refcount_lock_;
-  // Protects the reference count.
 
+  /// holds the value
   CORBA::Any any_;
-  // holds the value
 
+  /// parameter mode flags
   CORBA::Flags flags_;
-  // parameter mode flags
 
+  /// optional IDL name of the parameter
   char *name_;
-  // optional IDL name of the parameter
 
+  /// private constructor. Cannot be directly instantiated other than
+  /// by its friends.
   CORBA_NamedValue (void);
-  // private constructor. Cannot be directly instantiated other than
-  // by its friends.
 
   friend class CORBA_ORB;
   friend class CORBA_NVList;
   friend class CORBA_Request;
 };
 
+/**
+ * @class CORBA_NamedValue_var
+ *
+ * @brief The T_var class for NamedValue
+ *
+ * As any other pseudo object NamedValue must have a T_var class,
+ * the interface an semantics are specified in the CORBA spec.
+ * = NOTE
+ * We use CORBA_NamedValue_ptr as the _ptr type instead of
+ * CORBA::NamedValue_ptr, this is an attempt to reduced the cyclic
+ * dependencies in TAO.
+ */
 class TAO_Export CORBA_NamedValue_var
 {
-  // = TITLE
-  //   The T_var class for NamedValue
-  //
-  // = DESCRIPTION
-  //   As any other pseudo object NamedValue must have a T_var class,
-  //   the interface an semantics are specified in the CORBA spec.
-  //
-  // = NOTE
-  //   We use CORBA_NamedValue_ptr as the _ptr type instead of
-  //   CORBA::NamedValue_ptr, this is an attempt to reduced the cyclic
-  //   dependencies in TAO.
-  //
 public:
   CORBA_NamedValue_var (void); // default constructor
   CORBA_NamedValue_var (CORBA_NamedValue_ptr);
@@ -119,9 +116,9 @@ public:
   CORBA_NamedValue_var &operator= (const CORBA_NamedValue_var &);
   CORBA_NamedValue_ptr operator-> (void) const;
 
+  /// in, inout, out, _retn
   operator const CORBA_NamedValue_ptr &() const;
   operator CORBA_NamedValue_ptr &();
-  // in, inout, out, _retn
   CORBA_NamedValue_ptr in (void) const;
   CORBA_NamedValue_ptr &inout (void);
   CORBA_NamedValue_ptr &out (void);
@@ -132,20 +129,20 @@ private:
   CORBA_NamedValue_ptr ptr_;
 };
 
+/**
+ * @class CORBA_NamedValue_out
+ *
+ * @brief The T_out class for NamedValue
+ *
+ * As any other pseudo object NamedValue must have a T_out class,
+ * the interface an semantics are specified in the CORBA spec.
+ * = NOTE
+ * We use CORBA_NamedValue_ptr as the _ptr type instead of
+ * CORBA::NamedValue_ptr, this is an attempt to reduced the cyclic
+ * dependencies in TAO.
+ */
 class TAO_Export CORBA_NamedValue_out
 {
-  // = TITLE
-  //   The T_out class for NamedValue
-  //
-  // = DESCRIPTION
-  //   As any other pseudo object NamedValue must have a T_out class,
-  //   the interface an semantics are specified in the CORBA spec.
-  //
-  // = NOTE
-  //   We use CORBA_NamedValue_ptr as the _ptr type instead of
-  //   CORBA::NamedValue_ptr, this is an attempt to reduced the cyclic
-  //   dependencies in TAO.
-  //
 public:
   CORBA_NamedValue_out (CORBA_NamedValue_ptr &);
   CORBA_NamedValue_out (CORBA_NamedValue_var &);
@@ -163,71 +160,73 @@ private:
 
 // ****************************************************************
 
+/**
+ * @class CORBA_NVList
+ *
+ * @brief NVList ... this is used in the (client side) DII (Dynamic
+ * Invocation Interface) to hold parameters, except for the return
+ * parameter. It's used in the same role in the (server side) DSI
+ * (Dynamic Skeleton Interface).
+ *
+ * Each user (client, server) provides the typecode and memory for
+ * each parameter using an NVList, then talks to the ORB using a
+ * Request or ServerRequest pseudo-object.  The ORB copies data
+ * to/from the IPC messages (e.g. IIOP::Request, IIOP::Response)
+ * as appropriate.
+ */
 class TAO_Export CORBA_NVList
 {
-  // = TITLE
-  //   NVList ... this is used in the (client side) DII (Dynamic
-  //   Invocation Interface) to hold parameters, except for the return
-  //   parameter. It's used in the same role in the (server side) DSI
-  //   (Dynamic Skeleton Interface).
-  //
-  // = DESCRIPTION
-  //   Each user (client, server) provides the typecode and memory for
-  //   each parameter using an NVList, then talks to the ORB using a
-  //   Request or ServerRequest pseudo-object.  The ORB copies data
-  //   to/from the IPC messages (e.g. IIOP::Request, IIOP::Response)
-  //   as appropriate.
 public:
+  /// destructor
   ~CORBA_NVList (void);
-  // destructor
 
+  /// return the current number of elements in the list
   CORBA::ULong count (CORBA_Environment &ACE_TRY_ENV =
                           TAO_default_environment ()) const;
-  // return the current number of elements in the list
 
+  /// add an element and just initialize the flags
   CORBA_NamedValue_ptr add (CORBA::Flags,
                             CORBA_Environment &ACE_TRY_ENV =
                                 TAO_default_environment ());
-  // add an element and just initialize the flags
 
+  /// add an element and initialize its name and flags
   CORBA_NamedValue_ptr add_item (const char *,
                                  CORBA::Flags,
                                  CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
-  // add an element and initialize its name and flags
 
+  /// initializes a value, name, and flags
   CORBA_NamedValue_ptr add_value (const char *,
                                   const CORBA::Any &,
                                   CORBA::Flags,
                                   CORBA_Environment &ACE_TRY_ENV =
                                       TAO_default_environment ());
-  // initializes a value, name, and flags
 
+  /// just like add_item. In addition, memory management of char * name
+  /// is taken over by the NVList
   CORBA_NamedValue_ptr add_item_consume (char *,
                                          CORBA::Flags,
                                          CORBA_Environment &ACE_TRY_ENV =
                                              TAO_default_environment ());
-  // just like add_item. In addition, memory management of char * name
-  // is taken over by the NVList
 
+  /// just like add_value. In addition, the NVList controls the memory
+  /// management of the char *name and Any *value parameter
   CORBA_NamedValue_ptr add_value_consume (char *,
                                           CORBA::Any_ptr,
                                           CORBA::Flags,
                                           CORBA_Environment &ACE_TRY_ENV =
                                               TAO_default_environment ());
-  // just like add_value. In addition, the NVList controls the memory
-  // management of the char *name and Any *value parameter
 
+  /// retrieve the item at the nth location. Raises Bounds
   CORBA_NamedValue_ptr item (CORBA::ULong n,
                              CORBA_Environment &ACE_TRY_ENV =
                                  TAO_default_environment ());
-  // retrieve the item at the nth location. Raises Bounds
 
   //  CORBA::Status
+  /// remove element at index n. Raises Bounds
   void remove (CORBA::ULong n,
                CORBA_Environment &ACE_TRY_ENV =
                    TAO_default_environment ());
-  // remove element at index n. Raises Bounds
 
   // The pseudo object static methods..
   static CORBA_NVList* _duplicate (CORBA_NVList*);
@@ -239,37 +238,43 @@ public:
 
   // = TAO Extensions:
 
+  /**
+   * Set the incoming CDR stream, this is used by TAO to perform lazy
+   * evaluation of the NVList in an incoming ServerRequest.
+   * The <flag> is used to check which parameters (IN, OUT and/or
+   * INOUT) are to be extracted
+   */
   void _tao_incoming_cdr (TAO_InputCDR &cdr,
                           int flag,
                           int &lazy_evaluation,
                           CORBA::Environment &ACE_TRY_ENV);
-  // Set the incoming CDR stream, this is used by TAO to perform lazy
-  // evaluation of the NVList in an incoming ServerRequest.
-  // The <flag> is used to check which parameters (IN, OUT and/or
-  // INOUT) are to be extracted
 
+  /// Encode the NVList into the CDR stream. <flag> masks the type of
+  /// arguments (IN, OUT or INOUT) that are to be marshaled.
   void _tao_encode (TAO_OutputCDR &cdr,
                     TAO_ORB_Core *orb_core,
                     int flag,
                     CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
-  // Encode the NVList into the CDR stream. <flag> masks the type of
-  // arguments (IN, OUT or INOUT) that are to be marshaled.
 
+  /// Decode the NVList arguments from the <cdr> stream.
   void _tao_decode (TAO_InputCDR &cdr,
                     int flag,
                     CORBA::Environment &ACE_TRY_ENV);
-  // Decode the NVList arguments from the <cdr> stream.
 
+  /**
+   * Return the required alignment to marshal the NVList without any
+   * re-alignment.
+   * It returns ACE_CDR::MAX_ALIGNMENT to indicate errors.
+   */
   ptr_arith_t _tao_target_alignment (void);
-  // Return the required alignment to marshal the NVList without any
-  // re-alignment.
-  // It returns ACE_CDR::MAX_ALIGNMENT to indicate errors.
 
+  /**
+   * If this list is used by a DII request, this will tell us if
+   * our CDR stream contains any marshaled arguments (needed for
+   * GIOP 1.2).
+   */
   CORBA::Boolean _lazy_has_arguments (void) const;
-  // If this list is used by a DII request, this will tell us if 
-  // our CDR stream contains any marshaled arguments (needed for
-  // GIOP 1.2).
 
   // Useful for template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -278,60 +283,62 @@ public:
 #endif /* __GNUC__ */
 
 private:
+  /// constructor - cannot be instantiated directly other than through the
+  /// ORB::create_list method
   CORBA_NVList (void);
-  // constructor - cannot be instantiated directly other than through the
-  // ORB::create_list method
 
+  /// helper to increase the list size. This is used by all the add_
+  /// methods of the NVList class
   CORBA_NamedValue_ptr add_element (CORBA::Flags,
                                     CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
-  // helper to increase the list size. This is used by all the add_
-  // methods of the NVList class
 
+  /// Lazy evaluation routine to fill up the Anys in the NVList from
+  /// the CDR stream.
   void evaluate (CORBA::Environment &ACE_TRY_ENV);
-  // Lazy evaluation routine to fill up the Anys in the NVList from
-  // the CDR stream.
 
 private:
+  /// internal list of parameters stored as NamedValues
   ACE_Unbounded_Queue<CORBA_NamedValue_ptr> values_;
-  // internal list of parameters stored as NamedValues
 
+  /// maximum length of list
   CORBA::ULong max_;
-  // maximum length of list
 
+  /// maintains how many references exist to this object
   CORBA::ULong refcount_;
-  // maintains how many references exist to this object
 
+  /// Protects the reference count.
   ACE_SYNCH_MUTEX refcount_lock_;
-  // Protects the reference count.
 
+  /**
+   * When the NVList is used as part of a Server Request we can simply
+   * store the CDR buffer and perform lazy evaluation to compute the
+   * Anys.
+   */
   TAO_InputCDR *incoming_;
-  // When the NVList is used as part of a Server Request we can simply
-  // store the CDR buffer and perform lazy evaluation to compute the
-  // Anys.
 
+  /// The flags used to check which parameters are actually extracted
+  /// from the <incoming_> buffer
   int incoming_flag_;
-  // The flags used to check which parameters are actually extracted
-  // from the <incoming_> buffer
 
   friend class CORBA_ORB;
   friend class CORBA_Request;
 };
 
+/**
+ * @class CORBA_NVList_var
+ *
+ * @brief The T_var class for NVList
+ *
+ * As any other pseudo object NVList must have a T_var class,
+ * the interface an semantics are specified in the CORBA spec.
+ * = NOTE
+ * We use CORBA_NVList_ptr as the _ptr type instead of
+ * CORBA::NVList_ptr, this is an attempt to reduced the cyclic
+ * dependencies in TAO.
+ */
 class TAO_Export CORBA_NVList_var
 {
-  // = TITLE
-  //   The T_var class for NVList
-  //
-  // = DESCRIPTION
-  //   As any other pseudo object NVList must have a T_var class,
-  //   the interface an semantics are specified in the CORBA spec.
-  //
-  // = NOTE
-  //   We use CORBA_NVList_ptr as the _ptr type instead of
-  //   CORBA::NVList_ptr, this is an attempt to reduced the cyclic
-  //   dependencies in TAO.
-  //
 public:
   CORBA_NVList_var (void);
   CORBA_NVList_var (CORBA_NVList_ptr);
@@ -342,9 +349,9 @@ public:
   CORBA_NVList_var &operator= (const CORBA_NVList_var &);
   CORBA_NVList_ptr operator-> (void) const;
 
+  /// in, inout, out, _retn
   operator const CORBA_NVList_ptr &() const;
   operator CORBA_NVList_ptr &();
-  // in, inout, out, _retn
   CORBA_NVList_ptr in (void) const;
   CORBA_NVList_ptr &inout (void);
   CORBA_NVList_ptr &out (void);
@@ -355,20 +362,20 @@ private:
   CORBA_NVList_ptr ptr_;
 };
 
+/**
+ * @class CORBA_NVList_out
+ *
+ * @brief The T_out class for NVList
+ *
+ * As any other pseudo object NVList must have a T_out class,
+ * the interface an semantics are specified in the CORBA spec.
+ * = NOTE
+ * We use CORBA_NVList_ptr as the _ptr type instead of
+ * CORBA::NVList_ptr, this is an attempt to reduced the cyclic
+ * dependencies in TAO.
+ */
 class TAO_Export CORBA_NVList_out
 {
-  // = TITLE
-  //   The T_out class for NVList
-  //
-  // = DESCRIPTION
-  //   As any other pseudo object NVList must have a T_out class,
-  //   the interface an semantics are specified in the CORBA spec.
-  //
-  // = NOTE
-  //   We use CORBA_NVList_ptr as the _ptr type instead of
-  //   CORBA::NVList_ptr, this is an attempt to reduced the cyclic
-  //   dependencies in TAO.
-  //
 public:
   CORBA_NVList_out (CORBA_NVList_ptr &);
   CORBA_NVList_out (CORBA_NVList_var &);

@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Remote_Object_Proxy_Broker.h
-//
-// = DESCRIPTION
-//    This files contains the Remote Proxy Broker implementation
-//    for the CORBA Object.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Remote_Object_Proxy_Broker.h
+ *
+ *  $Id$
+ *
+ *  This files contains the Remote Proxy Broker implementation
+ *  for the CORBA Object.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
 
-#ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H_ 
+
+#ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H_
 #define TAO_REMOTE_OBJECT_PROXY_BROKER_H_
 
 // -- ACE Include --
@@ -30,7 +27,7 @@
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
-#endif // ACE_LACKS_PRAGMA_ONCE
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Export TAO_Remote_Object_Proxy_Broker : public TAO_Object_Proxy_Broker
 {
@@ -51,7 +48,3 @@ TAO_Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
 #include "ace/post.h"
 
 #endif /* TAO_REMOTE_Object_PROXY_BROKER_H_ */
-
-
-
-

@@ -1,19 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     RT_ORBInitializer.h
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     RT_ORBInitializer.h
+ *
+ *  $Id$
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_RT_ORB_INITIALIZER_H
 #define TAO_RT_ORB_INITIALIZER_H
@@ -57,11 +53,11 @@ public:
 
 private:
 
+  ////< Register RTCORBA policy factories.
   void register_policy_factories (
            PortableInterceptor::ORBInitInfo_ptr info
            TAO_ENV_ARG_DECL
          );
-  ///< Register RTCORBA policy factories.
 
 };
 

@@ -1,26 +1,24 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    corba.h
-//
-// = DESCRIPTION
-//     Master Header file for the TAO CORBA ORB.  Include only this
-//     file, to see all public ORB interfaces declared by TAO.
-//
-//     This follows the OMG C++ mapping for compilers that don't
-//     support C++ exceptions or namespaces.
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc., Chris Cleeland,
-//     and Douglas C. Schmidt.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    corba.h
+ *
+ *  $Id$
+ *
+ *   Master Header file for the TAO CORBA ORB.  Include only this
+ *   file, to see all public ORB interfaces declared by TAO.
+ *
+ *   This follows the OMG C++ mapping for compilers that don't
+ *   support C++ exceptions or namespaces.
+ *
+ *
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ *  @author Chris Cleeland
+ *  @author  and Douglas C. Schmidt.
+ */
+//=============================================================================
+
 
 #ifndef TAO_MASTER_CORBA_H
 #define TAO_MASTER_CORBA_H
@@ -85,7 +83,7 @@
 #include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
 
-#include "tao/PortableInterceptor.h" // This needs to remain visible.
+#include "tao/PortableInterceptor.h" /* This needs to remain visible. */
 
 #include "tao/ClientRequestInfo.h"
 

@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Sync_Strategies.h
-//
-// = DESCRIPTION
-//     Sync Strategies for the ORB Messaging layer.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sync_Strategies.h
+ *
+ *  $Id$
+ *
+ *   Sync Strategies for the ORB Messaging layer.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #ifndef TAO_SYNC_STRATEGIES_H
 #define TAO_SYNC_STRATEGIES_H

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Remote_Object_Proxy_Impl.h
-//
-// = DESCRIPTION
-//    This files contains the definition of the remote proxy
-//    for the CORBA::Object class.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Remote_Object_Proxy_Impl.h
+ *
+ *  $Id$
+ *
+ *  This files contains the definition of the remote proxy
+ *  for the CORBA::Object class.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_REMOTE_OBJECT_PROXY_IMPL_H_
 #define TAO_REMOTE_OBJECT_PROXY_IMPL_H_
@@ -25,14 +22,15 @@
 
 #include "tao/Object_Proxy_Impl.h"
 
+/**
+ * @class TAO_Remote_Object_Proxy_Impl
+ *
+ * @brief TAO_Remote_Object_Proxy_Impl
+ *
+ * This class implements the remote proxy for the CORBA::Object class.
+ */
 class TAO_Export TAO_Remote_Object_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
 {
-  // = TITLE
-  //    TAO_Remote_Object_Proxy_Impl
-  //
-  // = DESCRIPTION
-  //    This class implements the remote proxy for the CORBA::Object class.
-  //
 public:
 
   TAO_Remote_Object_Proxy_Impl (void);

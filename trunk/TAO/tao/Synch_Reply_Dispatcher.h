@@ -1,19 +1,19 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = DESCRIPTION
-//     Dispatch the reply appropriately.
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Synch_Reply_Dispatcher.h
+ *
+ *  $Id$
+ *
+ *   Dispatch the reply appropriately.
+ *
+ *
+ *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SYNCH_REPLY_DISPATCHER_H
 #define TAO_SYNCH_REPLY_DISPATCHER_H
@@ -29,27 +29,28 @@
 class TAO_Wait_Strategy;
 class TAO_Pluggable_Reply_Params;
 
+/**
+ * @class TAO_Synch_Reply_Dispatcher
+ *
+ * @brief Reply dispatcher for Synchoronous Method Invocation (SMI)s.
+ *
+ */
 class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
-  // = TITLE
-  //     Reply dispatcher for Synchoronous Method Invocation (SMI)s.
-  //
-  // = DESCRIPTION
-  //
 
 public:
+  /// Constructor.
   TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
                               IOP::ServiceContextList &sc);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Synch_Reply_Dispatcher (void);
-  // Destructor.
 
+  /// Return the reply CDR.
   TAO_InputCDR &reply_cdr (void);
-  // Return the reply CDR.
 
+  /// A flag to check if the reply
   int &reply_received (void);
-  // A flag to check if the reply
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
@@ -61,8 +62,8 @@ public:
   virtual void connection_closed (void);
 
 protected:
+  /// The service context list
   IOP::ServiceContextList &reply_service_info_;
-  // The service context list
 
 private:
   //  TAO_GIOP_Message_State message_state_;
@@ -72,25 +73,27 @@ private:
   // protocol. But for the present let us close our eyes till we are
   // able to iterate on a use case - Bala.
 
+  /// Flag that indicates the reply  has been received.
   int reply_received_;
-  // Flag that indicates the reply  has been received.
 
+  /// Cache the ORB Core pointer.
   TAO_ORB_Core *orb_core_;
-  // Cache the ORB Core pointer.
 
+  /// Save the wait strategy to signal the waiting threads (if
+  /// appropriate).
   TAO_Wait_Strategy *wait_strategy_;
-  // Save the wait strategy to signal the waiting threads (if
-  // appropriate).
 
+  /// CDR stream which has the reply information that needs to be
+  /// demarshalled by the stubs
   TAO_InputCDR reply_cdr_;
-  // CDR stream which has the reply information that needs to be
-  // demarshalled by the stubs
 
+  /**
+   * The condition variable used to signal the waiting thread in the
+   * Leader/Followers model.  The variable is acquired in the thread
+   * that binds the Reply_Dispatcher to its transport, and then passed
+   * to the Waiting_Strategy to do the signalling, if needed.
+   */
   ACE_SYNCH_CONDITION *leader_follower_condition_variable_;
-  // The condition variable used to signal the waiting thread in the
-  // Leader/Followers model.  The variable is acquired in the thread
-  // that binds the Reply_Dispatcher to its transport, and then passed
-  // to the Waiting_Strategy to do the signalling, if needed.
 };
 
 #include "ace/post.h"

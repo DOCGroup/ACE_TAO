@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     default_server.h
-//
-// = AUTHOR
-//     Chris Cleeland
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     default_server.h
+ *
+ *  $Id$
+ *
+ *  @author  Chris Cleeland
+ */
+//=============================================================================
+
 
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
 #define TAO_DEFAULT_SERVER_FACTORY_H
@@ -26,14 +23,16 @@
 
 #include "ace/Service_Config.h"
 
+/**
+ * @class TAO_Default_Server_Strategy_Factory
+ *
+ * @brief This is the default strategy factory for CORBA servers.  It
+ * allows developers to choose strategies via argument flags.
+ * This design gives substantial freedom for experimentation.
+ *
+ */
 class TAO_Export TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
 {
-  // = TITLE
-  //   This is the default strategy factory for CORBA servers.  It
-  //   allows developers to choose strategies via argument flags.
-  //   This design gives substantial freedom for experimentation.
-  //
-  // = DESCRIPTION
 
 
 public:
@@ -53,25 +52,27 @@ public:
   virtual int server_connection_thread_flags (void);
   virtual int server_connection_thread_count (void);
 
+  /**
+   * If the ORB is single threaded or some form of ORB-per-thread then
+   * it is more efficient to use a Null_Mutex for the variables
+   * controlling the event loop (termination). Otherwise a
+   * Recursive_Thread_Mutex or Thread_Mutex may be required.
+   */
   virtual ACE_Lock *create_event_loop_lock (void);
-  // If the ORB is single threaded or some form of ORB-per-thread then
-  // it is more efficient to use a Null_Mutex for the variables
-  // controlling the event loop (termination). Otherwise a
-  // Recursive_Thread_Mutex or Thread_Mutex may be required.
 
+  /// Parse the arguments, check the documentation in
+  /// $TAO_ROOT/docs/Options.html for details
   int parse_args (int argc, char *argv[]);
-  // Parse the arguments, check the documentation in
-  // $TAO_ROOT/docs/Options.html for details
 
 protected:
   void tokenize (char *flag_string);
 
 protected:
+  /// Should the server connection handlers run in their own thread?
   int activate_server_connections_;
-  // Should the server connection handlers run in their own thread?
 
+  /// Default thread flags passed to thr_create().
   u_long thread_flags_;
-  // Default thread flags passed to thr_create().
 
   enum Lock_Type
   {
@@ -79,15 +80,15 @@ protected:
     TAO_THREAD_LOCK
   };
 
+  /// The type of lock to be returned by <create_poa_lock()>.
   Lock_Type poa_lock_type_;
-  // The type of lock to be returned by <create_poa_lock()>.
 
+  /// The type of lock to be returned by <create_event_loop_lock()>.
   Lock_Type event_loop_lock_type_;
-  // The type of lock to be returned by <create_event_loop_lock()>.
 
+  /// The timeout flag and value for the thread-per-connection model
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
-  // The timeout flag and value for the thread-per-connection model
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    params.h
-//
-// = AUTHOR
-//    Chris Cleeland
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    params.h
+ *
+ *  $Id$
+ *
+ *  @author Chris Cleeland
+ */
+//=============================================================================
+
 
 #ifndef TAO_PARAMS_H
 #define TAO_PARAMS_H
@@ -53,63 +50,67 @@ typedef ACE_Unbounded_Queue_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 // -------------------------------------------------------------------
 
+/**
+ * @class TAO_ORB_Parameters
+ *
+ * @brief Parameters that are specific to the ORB.  These parameters can
+ * be for the client, the server, or for both.
+ * = NOTE
+ * Some of the functions have inline definitions in the class header
+ * below.  Please do not move them back to the .i file.
+ * cygnus-2.7.2-960126, distributed with Tornado 1.0.1, can't deal
+ * with returing a const reference here.  It raises an internal
+ * compiler error at ace/Svc_Handler.cpp:46, of all places.
+ */
 class TAO_Export TAO_ORB_Parameters
-  // = TITLE
-  //    Parameters that are specific to the ORB.  These parameters can
-  //    be for the client, the server, or for both.
-  //
-  // = NOTE
-  // Some of the functions have inline definitions in the class header
-  // below.  Please do not move them back to the .i file.
-  // cygnus-2.7.2-960126, distributed with Tornado 1.0.1, can't deal
-  // with returing a const reference here.  It raises an internal
-  // compiler error at ace/Svc_Handler.cpp:46, of all places.
 {
 public:
+  /// Constructor.
   TAO_ORB_Parameters (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_ORB_Parameters (void);
-  // Destructor.
 
+  /// Specifies the endpoints to pre-establish connections on.
   int preconnects (ACE_CString &preconnects);
   TAO_EndpointSet &preconnects (void);
   void add_preconnect (ACE_CString &preconnect);
-  // Specifies the endpoints to pre-establish connections on.
 
+  /// Specifies the endpoints on which this server is willing to
+  /// listen for requests.
   int endpoints (ACE_CString &endpoints);
   TAO_EndpointSet &endpoints (void);
   void add_endpoint (ACE_CString &endpoint);
-  // Specifies the endpoints on which this server is willing to
-  // listen for requests.
 
+  /// Set/Get the port of services locatable through multicast.
   CORBA::UShort service_port (MCAST_SERVICEID service_id) const;
   void service_port (MCAST_SERVICEID service_id, CORBA::UShort port);
-  // Set/Get the port of services locatable through multicast.
 
+  /// Get/Set address:port for Multicast Discovery Protocol for
+  /// the Naming Service.
   const char *mcast_discovery_endpoint (void) const;
   void mcast_discovery_endpoint (const char *mde);
-  // Get/Set address:port for Multicast Discovery Protocol for
-  // the Naming Service.
 
+  /// Set/Get the size to be used for a socket's receive buffer.
   int sock_rcvbuf_size (void) const;
   void sock_rcvbuf_size (int);
-  // Set/Get the size to be used for a socket's receive buffer.
 
+  /// Set/Get the size to be used for a socket's send buffer.
   int sock_sndbuf_size (void) const;
   void sock_sndbuf_size (int);
-  // Set/Get the size to be used for a socket's send buffer.
 
+  /// Set/Get the status of whether to use TCP_NODELAY or not.
   int nodelay (void) const;
   void nodelay (int);
-  // Set/Get the status of whether to use TCP_NODELAY or not.
 
+  /**
+   * Octet sequences are marshalled without doing any copies, we
+   * simply append a block to the CDR message block chain. When the
+   * octet sequence is small enough and there is room in the current
+   * message block it is more efficient just to copy the buffer.
+   */
   int cdr_memcpy_tradeoff (void) const;
   void cdr_memcpy_tradeoff (int);
-  // Octet sequences are marshalled without doing any copies, we
-  // simply append a block to the CDR message block chain. When the
-  // octet sequence is small enough and there is room in the current
-  // message block it is more efficient just to copy the buffer.
 
   // @@Deprecated. Will not be used. - Bala
   // int use_lite_protocol (void) const;
@@ -117,19 +118,19 @@ public:
   // The ORB will use a modified version of GIOP that minimizes the
   // header size. By default we use the standard GIOP protocol.
 
+  /// The ORB will use the dotted decimal notation for addresses. By
+  /// default we use the full ascii names.
   int use_dotted_decimal_addresses (void) const;
   void use_dotted_decimal_addresses (int);
-  // The ORB will use the dotted decimal notation for addresses. By
-  // default we use the full ascii names.
 
+  /// Set/Get the Init Reference of an arbitrary ObjectID.
   char *default_init_ref (void) const;
   void default_init_ref (const char *default_init_ref);
-  // Set/Get the Init Reference of an arbitrary ObjectID.
 
+  /// Disable the OMG standard profile components, useful for
+  /// homogenous environments.
   int std_profile_components (void) const;
   void std_profile_components (int x);
-  // Disable the OMG standard profile components, useful for
-  // homogenous environments.
 
 private:
   // Each "endpoint" is of the form:
@@ -152,44 +153,44 @@ private:
   int parse_endpoints (ACE_CString &endpoints,
                        TAO_EndpointSet &endpoints_list);
 
+  /// List of endpoints used to pre-establish connections.
   TAO_EndpointSet preconnects_list_;
-  // List of endpoints used to pre-establish connections.
 
+  /// List of endpoints this server is willing to accept requests
+  /// on.
   TAO_EndpointSet endpoints_list_;
-  // List of endpoints this server is willing to accept requests
-  // on.
 
+  /// Port numbers of the configured services.
   CORBA::UShort service_port_[NO_OF_MCAST_SERVICES];
-  // Port numbers of the configured services.
 
+  /// address:port for Multicast Discovery Protocol for the Naming
+  /// Service.
   CORBA::String_var mcast_discovery_endpoint_;
-  // address:port for Multicast Discovery Protocol for the Naming
-  // Service.
 
+  /// List of comma separated prefixes from ORBDefaultInitRef.
   ACE_CString default_init_ref_;
-  // List of comma separated prefixes from ORBDefaultInitRef.
 
+  /// Size to be used for a socket's receive buffer.
   int sock_rcvbuf_size_;
-  // Size to be used for a socket's receive buffer.
 
+  /// Size to be used for a socket's send buffer.
   int sock_sndbuf_size_;
-  // Size to be used for a socket's send buffer.
 
+  /// 1 if we're using TCP_NODELAY and 0 otherwise.
   int nodelay_;
-  // 1 if we're using TCP_NODELAY and 0 otherwise.
 
+  /// Control the strategy for copying vs. appeding octet sequences in
+  /// CDR streams.
   int cdr_memcpy_tradeoff_;
-  // Control the strategy for copying vs. appeding octet sequences in
-  // CDR streams.
 
+  /// For selecting a liteweight version of the GIOP protocol.
   int use_lite_protocol_;
-  // For selecting a liteweight version of the GIOP protocol.
 
+  /// For selecting a address notation
   int use_dotted_decimal_addresses_;
-  // For selecting a address notation
 
+  /// If true then the standard OMG components are not generated.
   int std_profile_components_;
-  // If true then the standard OMG components are not generated.
 };
 
 #if defined (__ACE_INLINE__)

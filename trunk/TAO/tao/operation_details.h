@@ -1,108 +1,110 @@
-// This	may look like C, but it's really -*- C++ -*-
-//     $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    operation_details.h
-//
-// = AUTHOR
-//    Bala Natarajan <bala@cs.wustl.edu>
-// ============================================================================
+// This may look like C, but it's really -*- C++ -*-
+//=============================================================================
+/**
+ *  @file    operation_details.h
+ *
+ *  $Id$
+ *
+ *  @author Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
 
-#ifndef	TAO_OPERATION_DETAILS_H
-#define	TAO_OPERATION_DETAILS_H
+
+#ifndef TAO_OPERATION_DETAILS_H
+#define TAO_OPERATION_DETAILS_H
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/IOPC.h"
 #include "tao/target_specification.h"
 
-// @@ Bala: Why	is this	not part of the	RequestHeader?!
+// @@ Bala: Why is this not part of the RequestHeader?!
+/**
+ * @class TAO_Operation_Details
+ *
+ * @brief Class with operation details
+ *
+ * This class stores some of the "operation" details that would be
+ * required     by the invocation classes. this class is in its
+ * infancy now but I expect     this one to grow as we come with
+ * different varieties of use cases.
+ */
 class TAO_Export TAO_Operation_Details
 {
-  // = TITLE
-  //   Class with operation details
-  //
-  // = DESCRIPTION
-  //   This class stores some of the "operation" details that would be
-  //   required	by the invocation classes. this	class is in its
-  //   infancy now but I expect	this one to grow as we come with
-  //   different varieties of use cases.
 public:
-  TAO_Operation_Details	(const char *name,
-			 CORBA::ULong len,
-			 CORBA::Boolean	argument_flag);
-  //Ctor
+  ///Ctor
+  TAO_Operation_Details (const char *name,
+                         CORBA::ULong len,
+                         CORBA::Boolean argument_flag);
 
-  const	char* opname (void) const;
-  // Operation name
+  /// Operation name
+  const char* opname (void) const;
 
+  /// Length of the operation name
   CORBA::ULong opname_len (void) const;
-  // Length of the operation name
 
+  /// Return the        flag that indicates whether the operation has any
+  /// arguments
   CORBA::Boolean argument_flag (void) const;
-  // Return the	flag that indicates whether the	operation has any
-  // arguments
 
+  /// Set the response flags
   void response_flags (CORBA::Octet flags);
-  // Set the response flags
 
+  /// Get the response flags
   CORBA::Octet response_flags (void);
   CORBA::Octet response_flags (void) const;
-  // Get the response flags
 
-  IOP::ServiceContextList &service_info	(void);
-  const	IOP::ServiceContextList	&service_info (void) const;
-  // Get the service context list
+  /// Get the service context list
+  IOP::ServiceContextList &service_info (void);
+  const IOP::ServiceContextList &service_info (void) const;
 
-  void request_id (CORBA::ULong	id);
+  void request_id (CORBA::ULong id);
 
+  /// Get for request id
   CORBA::ULong request_id (void);
   CORBA::ULong request_id (void) const;
-  // Get for request id
 
+  /// Get method        for the addressing mode
   TAO_Target_Specification::TAO_Target_Address addressing_mode (void);
   TAO_Target_Specification::TAO_Target_Address
   addressing_mode (void)  const;
-  // Get method	for the	addressing mode
 
+  /// Set method        for the addressing mode
   void
-  addressing_mode (CORBA::Short	addr);
-  // Set method	for the	addressing mode
+  addressing_mode (CORBA::Short addr);
 
 private:
-  const	char *opname_;
-  // Name of the operation being invoked.
+  /// Name of the operation being invoked.
+  const char *opname_;
 
+  /// Precalculated length of opname_.
   CORBA::ULong opname_len_;
-  // Precalculated length of opname_.
 
+  /// Request ID        of this operation.
   CORBA::ULong request_id_;
-  // Request ID	of this	operation.
 
+  /**
+   * Flag that indicates whether the operation has any arguments. If
+   * there are any arguments the falg will have a value of 1, 0
+   * otherwise.
+   */
   CORBA::Boolean argument_flag_;
-  // Flag that indicates whether the operation has any arguments. If
-  // there are any arguments the falg will have	a value	of 1, 0
-  // otherwise.
 
+  /// Response flags
   CORBA::Octet response_flags_;
-  // Response flags
 
+  /// The ServiceContextList sent to the        server side.  Only valid
+  /// when sending a request.
   IOP::ServiceContextList service_info_;
-  // The ServiceContextList sent to the	server side.  Only valid
-  // when sending a request.
 
   // The first element of header is service context list;
-  // transactional context would be acquired here using	the
-  // transaction service APIs.	Other kinds of context are as yet
+  // transactional context would be acquired here using the
+  // transaction service APIs.  Other kinds of context are as yet
   // undefined.
   //
 
+  /// Addressing        mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_;
-  // Addressing	mode for this request.
 };
 
 #if defined (__ACE_INLINE__)

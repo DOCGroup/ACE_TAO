@@ -1,27 +1,25 @@
-// $Id$
 //-*- C++ -*-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    IOP_Defn.h
-//
-// = DESCRIPTION
-//    Definitions for IOP related classes. IOP definitions are part of
-//    the Interoperability model specified by the CORBA spec.
-//    
-// = AUTHOR
-//    Taken from the old GIOP.h file. Not sure of the author
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IOP_Defns.h
+ *
+ *  $Id$
+ *
+ *  Definitions for IOP related classes. IOP definitions are part of
+ *  the Interoperability model specified by the CORBA spec.
+ *
+ *
+ *  @author Taken from the old GIOP.h file. Not sure of the author
+ */
+//=============================================================================
+
 #ifndef _TAO_IOP_DEFN_H_
 #define _TAO_IOP_DEFN_H_
 #include "ace/pre.h"
 
 // These were all in the GIOP.h file. They shouldn't be combined with
 // GIOP as they are not specific to GIOP. They are part of the CORBA
-// Interoperable reference model. 
+// Interoperable reference model.
 
 // namespace TAO_IOP
 
@@ -32,10 +30,13 @@
 // Email to tag-request@omg.org to allocate tags.
 typedef CORBA::ULong TAO_IOP_Profile_ID;
 
+/**
+ * @class TAO_IOP_Tagged_Profile
+ *
+ * @brief One per protocol.
+ */
 class TAO_IOP_Tagged_Profile
 {
-  // = TITLE
-  //   One per protocol.
 public:
   TAO_IOP_Profile_ID tag;
   TAO_opaque profile_data;
@@ -44,16 +45,18 @@ public:
 typedef TAO_Unbounded_Sequence<TAO_IOP_Tagged_Profile>
         TAO_IOP_Tagged_Profile_Sequence;
 
+/**
+ * @class TAO_IOP_IOR
+ *
+ * @brief InteroperableObjectReference
+ *
+ * ... a set of protocol-specific protocol profiles, plus a type
+ * ID.  Only one object is denoted by all of this information.
+ * It's OK to delete all profiles except the one for the single
+ * protocol actually being used.
+ */
 class TAO_IOP_IOR
 {
-  // = TITLE
-  //   InteroperableObjectReference
-  //
-  // = DESCRIPTION
-  //   ... a set of protocol-specific protocol profiles, plus a type
-  //   ID.  Only one object is denoted by all of this information.
-  //   It's OK to delete all profiles except the one for the single
-  //   protocol actually being used.
 
 public:
   char *type_id;
@@ -82,16 +85,19 @@ enum
   TAO_IOP_TAG_LOCATION_POLICY = 12 // octet/enum
 };
 
+/**
+ * @class TAO_IOP_TaggedComponent
+ *
+ * One way to represent multicomponent profiles, e.g. as done by
+ * the DCE-CIOP protocol.  One of these gets encapsulated in
+ * Tagged_Profile::profile_data.  TAG_MULTIPLE_COMPONENTS may be
+ * used to represent protocol profiles structured in that way, but
+ * protocol-specific tags facilitate simpler scanning of IORs
+ * since you can be assured that each profile only has data used
+ * within a single ORB protocol.
+ */
 class TAO_IOP_TaggedComponent
 {
-  // = DESCRIPTION
-  //   One way to represent multicomponent profiles, e.g. as done by
-  //   the DCE-CIOP protocol.  One of these gets encapsulated in
-  //   Tagged_Profile::profile_data.  TAG_MULTIPLE_COMPONENTS may be
-  //   used to represent protocol profiles structured in that way, but
-  //   protocol-specific tags facilitate simpler scanning of IORs
-  //   since you can be assured that each profile only has data used
-  //   within a single ORB protocol.
 public:
 
   TAO_IOP_ComponentId tag;
