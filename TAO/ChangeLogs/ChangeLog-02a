@@ -1,3 +1,9 @@
+Thu Jul 19 18:48:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.h (run/work_pending/perform_work): Updated documentation
+	  wrt timeouts.  Thanks to Jean-Christophe Dubois <jcd@one.com>
+	  for suggesting this.
+
 Thu Jul 19 10:37:55 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
 	* docs/Options.html:
