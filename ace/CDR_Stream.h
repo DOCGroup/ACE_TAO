@@ -307,6 +307,10 @@ public:
               size_t align,
               char *&buf);
 
+  /// If non-zero then this stream is writing in non-native byte order,
+  /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+  int do_byte_swap (void) const;
+
 private:
   /// disallow copying...
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
@@ -344,10 +348,6 @@ private:
   int grow_and_adjust (size_t size,
                        size_t align,
                        char *&buf);
-
-  /// If non-zero then this stream is writing in non-native byte order,
-  /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
-  int do_byte_swap (void) const;
 
 private:
   /// The start of the chain of message blocks.
