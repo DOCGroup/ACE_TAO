@@ -26,8 +26,8 @@ class ACE_Connection_Recycling_Strategy;
 #include "ace/Service_Config.h"
 #include "ace/Synch_T.h"
 
-template <ACE_PEER_STREAM_1, ACE_SYNCH_1>
-class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_2>
+template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
+class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
   // = TITLE
   //     Defines the interface for a service that exchanges data with
   //     its connected peer.
@@ -46,7 +46,7 @@ class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_2>
 public:
   // = Initialization and termination methods.
   ACE_Svc_Handler (ACE_Thread_Manager * = 0, 
-                   ACE_Message_Queue<ACE_SYNCH_2> * = 0,
+                   ACE_Message_Queue<ACE_SYNCH_USE> * = 0,
                    ACE_Reactor * = ACE_Reactor::instance ());
 
   virtual ~ACE_Svc_Handler (void); 

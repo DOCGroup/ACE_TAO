@@ -5,7 +5,7 @@
 #include "ace/Addr.h"
 
 // This is a static class variable. 
-const ACE_Addr ACE_Addr::sap_any (-1, -1);
+const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Addr.i"

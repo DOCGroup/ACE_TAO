@@ -31,16 +31,29 @@ ACE_DEV_Addr::ACE_DEV_Addr (void)
 			 0, sizeof this->devname_);
 }
 
+int
+ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
+{
+  this->base_set (sa.get_type (), sa.get_size ());
+
+  if (sa.get_type () == AF_ANY)
+    (void) ACE_OS::memset ((void *) &this->devname_,
+                           0,
+                           sizeof this->devname_);
+  else
+    (void) ACE_OS::memcpy ((void *) &this->devname_, 
+                           (void *) &sa.devname_, 
+                           sa.get_size ());
+  return 0;
+}
+
 // Copy constructor. 
 
 ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
-  : ACE_Addr (AF_DEV, ACE_OS::strlen (this->devname_))
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
 
-  (void) ACE_OS::memcpy ((void *) &this->devname_, 
-			 (void *) &sa.devname_, 
-			 sa.get_size ());
+  this->set (sa);
 }
 
 ACE_DEV_Addr::ACE_DEV_Addr (LPCTSTR devname)

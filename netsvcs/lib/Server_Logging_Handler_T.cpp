@@ -11,12 +11,12 @@
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Track number of requests.
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR>
-COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::request_count_ = (COUNTER) 0;
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
+COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::request_count_ = (COUNTER) 0;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR>
-ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::ACE_Server_Logging_Handler_T 
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ACE_Server_Logging_Handler_T 
   (ACE_Thread_Manager *,
    LMR const &receiver) 
    // Initialize the CString to something that is not the empty string
@@ -33,15 +33,15 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::ACE_
 // Callback routine for handling the reception of remote logging
 // transmissions.
 
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR> int
-ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::handle_input (ACE_HANDLE)
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::handle_input (ACE_HANDLE)
 {
   int result = this->handle_logging_record ();
   return result > 0 ? result : -1;
 }
 
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR> const char *
-ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::host_name (void)
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> const char *
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::host_name (void)
 { 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
   return this->receiver_.m_.fast_rep ();
@@ -51,8 +51,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::host
 }
 
 
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR> int
-ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::handle_logging_record (void)
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::handle_logging_record (void)
 {
   ssize_t len;
 
@@ -115,8 +115,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::hand
 // Hook called by Server_Logging_Acceptor when connection is
 // established.
 
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR> int
-ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::open_common (void)
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::open_common (void)
 {
   // Shut off non-blocking IO if it was enabled...
   if (this->peer ().disable (ACE_NONBLOCK) == -1)

@@ -33,6 +33,9 @@ public:
   ACE_DEV_Addr (const ACE_DEV_Addr &sa);
   // Copy constructor.
 
+  int set (const ACE_DEV_Addr &sa);
+  // Acts like a copy constructor.
+
   ACE_DEV_Addr (LPCTSTR devname);
   // Create a ACE_DEV_Addr from a device name.
 
