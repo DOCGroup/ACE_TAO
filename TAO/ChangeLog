@@ -1,3 +1,10 @@
+Fri Jul 26 09:23:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/examples/PSS/client.cpp (main): 
+	* orbsvcs/examples/PSS/Simple_Naming_i.cpp (find): 
+	* orbsvcs/PSS/PSDL_Code_Gen.cpp: 
+	  Fixed inline build's compilation errors.
+
 Fri Jul 26 09:02:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/ORT/Server_IORInterceptor.cpp: 
