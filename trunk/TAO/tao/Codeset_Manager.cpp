@@ -94,7 +94,7 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
     {
       if(TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("(%P|%t) Codeset_Manager::set_tcs ")
+                    ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
                     ACE_LIB_TEXT ("transport already set\n")));
 
       return;
@@ -110,7 +110,7 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("(%P|%t) Codeset_Manager::set_tcs ")
+                      ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
                       ACE_LIB_TEXT ("No codeset componnet in profile\n")));
         }
 
@@ -125,7 +125,7 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) Codeset_Manager::set_tcs ")
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
                   ACE_LIB_TEXT ("setting char translator(%08x)\n"),
                   tcs));
     }
@@ -138,7 +138,7 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) Codeset_Manager::set_tcs ")
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
                   ACE_LIB_TEXT ("setting wchar translator (%08x)\n"),
                   tcs));
     }
@@ -182,8 +182,8 @@ TAO_Codeset_Manager::process_service_context (TAO_ServerRequest &request)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) Codeset_Manager::")
-                  ACE_LIB_TEXT ("process_service_context ")
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                  ACE_LIB_TEXT ("process_service_context, ")
                   ACE_LIB_TEXT ("using tcsc = %08x, tcsw = %08x\n"),
                   tcs_c,tcs_w));
     }
@@ -214,8 +214,8 @@ TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) Codeset_Manager::")
-                  ACE_LIB_TEXT ("generate_service_context ")
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                  ACE_LIB_TEXT ("generate_service_context, ")
                   ACE_LIB_TEXT ("using tcs_c = %08x, tcs_w = %08x\n"),
                   codeset_cntx.char_data,
                   codeset_cntx.wchar_data));
@@ -330,7 +330,9 @@ TAO_Codeset_Manager::add_char_translator (const char *name)
   if (this->char_factories_.insert (item) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
+                         ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                         ACE_LIB_TEXT ("add_char_translator, ")
+                         ACE_LIB_TEXT ("Unable to add Codeset ")
                          ACE_LIB_TEXT ("factories for %s: %m\n"),
                          ACE_TEXT_CHAR_TO_TCHAR (name)),
                         -1);
@@ -348,7 +350,9 @@ TAO_Codeset_Manager::add_wchar_translator (const char *name)
   if (this->wchar_factories_.insert (item) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
+                         ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                         ACE_LIB_TEXT ("add_wchar_translator, ")
+                         ACE_LIB_TEXT ("Unable to add Codeset ")
                          ACE_LIB_TEXT ("factories for %s: %m\n"),
                          ACE_TEXT_CHAR_TO_TCHAR (name)),
                         -1);
@@ -364,16 +368,18 @@ TAO_Codeset_Manager::configure_codeset_factories()
                                 this->codeset_info_.ForCharData) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("TAO (%P|%t) failed to init char ")
-                  ACE_LIB_TEXT ("codeset factories\n")));
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                  ACE_LIB_TEXT ("configure_codeset_factories, failed to init ")
+                  ACE_LIB_TEXT ("char codeset factories\n")));
     }
 
   if (init_codeset_factories_i (this->wchar_factories_,
                                 this->codeset_info_.ForWcharData) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("TAO (%P|%t) failed to init wchar ")
-                  ACE_LIB_TEXT ("codeset factories\n")));
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                  ACE_LIB_TEXT ("configure_codeset_factories, failed to init ")
+                  ACE_LIB_TEXT ("wchar codeset factories\n")));
     }
 
   if (this->codeset_info_.ForWcharData.native_code_set == 0)
@@ -406,7 +412,8 @@ TAO_Codeset_Manager::init_codeset_factories_i (
       if (trans == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
+                      ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                      ACE_LIB_TEXT ("init_codeset_factories_i, Unable to load ")
                       ACE_LIB_TEXT ("CodeSet <%s>, %m\n"),
                       ACE_TEXT_CHAR_TO_TCHAR(name)));
           continue;
@@ -420,8 +427,9 @@ TAO_Codeset_Manager::init_codeset_factories_i (
           if (TAO_debug_level > 2)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_LIB_TEXT ("TAO (%P|%t) Loaded CodeSet <%s>, ")
-                          ACE_LIB_TEXT ("ncs = %08x tcs = %08x\n"),
+                          ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                          ACE_LIB_TEXT ("init_codeset_factories_i, Loaded CodeSet ")
+                          ACE_LIB_TEXT ("<%s>, ncs = %08x tcs = %08x\n"),
                           ACE_TEXT_CHAR_TO_TCHAR(name),
                           trans->ncs(),trans->tcs()));
             }
