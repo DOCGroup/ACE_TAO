@@ -639,7 +639,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
         // set a timeout on the orb
         //
-        CORBA::Object_var orbPolicyManagerObj = orb->resolve_initial_references ("ORBPolicyManager");
+        CORBA::Object_var orbPolicyManagerObj = 
+	  orb->resolve_initial_references ("ORBPolicyManager"
+			                   ACE_ARG_ENV_PARAMETER);
+	ACE_TRY_CHECK;
+
         CORBA::PolicyManager_var orbPolicyManager =
           CORBA::PolicyManager::_narrow (orbPolicyManagerObj.in ());
         ACE_TRY_CHECK;
