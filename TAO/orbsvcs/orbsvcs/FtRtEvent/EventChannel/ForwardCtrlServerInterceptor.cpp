@@ -6,6 +6,7 @@
 #include "IOGR_Maker.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
+#include "../Utils/Log.h"
 
 #include "tao/Object_KeyC.h"
 #include "tao/ORB_Constants.h"
@@ -191,8 +192,8 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
   // pass a new IOGR if the client use an outdated version
 
   IOGR_Maker* maker = IOGR_Maker::instance();
-  ACE_DEBUG((LM_DEBUG, "Current GROUP Version = %d, received version = %d\n",
-    maker->get_ref_version(), version));
+  TAO_FTRTEC::Log(3, "Current GROUP Version = %d, received version = %d\n",
+    maker->get_ref_version(), version);
 
   if (version < maker->get_ref_version()) {
     ACE_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));

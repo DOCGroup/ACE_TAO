@@ -34,8 +34,6 @@ namespace TAO_FTRTEC {
   };
 }
 
-#define FTRTEC_TRACE(x) TAO_FTRTEC::Trace __ftrtec_trace_obj(x)
-#define FTRTEC_LOGTIME(x) TAO_FTRTEC::TimeAutoLogger __ftrtec_time_logger(x)
 #if defined(__ACE_INLINE__)
 #include "Log.inl"
 #endif /* __ACE_INLINE__ */
