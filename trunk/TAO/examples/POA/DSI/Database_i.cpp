@@ -61,10 +61,9 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
                             CORBA::Environment &env)
 {
   CORBA::NVList_ptr list;
-  this->orb_->create_list (1, list);
+  this->orb_->create_list (0, list);
 
-  char *value = 0;
-  CORBA::Any any_1 (CORBA::_tc_string, &value);
+  CORBA::Any any_1 (CORBA::_tc_string);
 
   CORBA::NamedValue_ptr named_value_1 = list->add_value ("value", 
                                                          any_1, 
@@ -77,6 +76,10 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
                       env);
   if (env.exception () != 0)
     return;
+
+  char *value;
+  CORBA::Any_ptr ap = list->item (0, env)->value ();
+  *ap >>= value;
 
   CORBA::Boolean result;
   if (!ACE_OS::strcmp (value, "IDL:Database/Employee:1.0") ||
