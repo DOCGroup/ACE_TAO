@@ -123,7 +123,7 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::preconnect (char* preconnections)
+TAO_IIOP_Connector::preconnect (char *preconnections)
 {
 #if 0
   if (preconnections)
@@ -148,15 +148,14 @@ TAO_IIOP_Connector::preconnect (char* preconnections)
               *sep = '\0';
               tport = sep + 1;
 
-              dest.set (ACE_OS::atoi (tport), thost);
+              dest.set (ACE_OS::atoi (tport),
+                        thost);
 
               // Try to establish the connection
               handler = 0;
               if (this->base_connector_.connect (handler, dest) == 0)
-                {
-                  // Save it for later so we can mark it as idle
-                  handlers.push (handler);
-                }
+                // Save it for later so we can mark it as idle
+                handlers.push (handler);
               else
                 ACE_ERROR ((LM_ERROR,
                             "(%P|%t) Unable to preconnect to host '%s', port %d.\n",
@@ -197,12 +196,13 @@ TAO_IIOP_Connector::preconnect (char* preconnections)
               *sep = '\0';
               tport = sep + 1;
 
-              dest.set (atoi(tport), thost);
+              dest.set (ACE_OS::atoi (tport), thost);
               dests.push (dest);
             }
           else
             ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n", where));
+                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n",
+                        where));
         }
 
       // Create an array of addresses from the stack, as well as an
@@ -216,14 +216,15 @@ TAO_IIOP_Connector::preconnect (char* preconnections)
                       ACE_INET_Addr[num_connections],
                       -1);
       ACE_NEW_RETURN (handlers,
-                      TAO_Client_Connection_Handler*[num_connections],
+                      TAO_Client_Connection_Handler *[num_connections],
                       -1);
       ACE_NEW_RETURN (failures,
                       char[num_connections],
                       -1);
 
-      // Fill in the remote address array
       size_t index = 0;
+
+      // Fill in the remote address array
       while (dests.pop (remote_addrs[index]) == 0)
         handlers[index++] = 0;
 
@@ -234,9 +235,11 @@ TAO_IIOP_Connector::preconnect (char* preconnections)
                                        failures);
       // Loop over all the failures and set the handlers that
       // succeeded to idle state.
-      for (index = 0; index < num_connections; index++)
+      for (index = 0;
+           index < num_connections;
+           index++)
         {
-          if (! failures[index])
+          if (!failures[index])
             {
               handlers[index]->idle ();
               successes++;
