@@ -95,6 +95,9 @@ private:
   // Calls to <open> will create a new instance of <Account_i> and
   // bind into the hash map manager if <name> is unique, else it will
   // return a previously bound entry.
+
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const AccountManager_i&));
+  // Keeping g++2.7.2
 };
 
 #endif /* ACCOUNTMANAGER_I_H */
