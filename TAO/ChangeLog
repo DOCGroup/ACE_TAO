@@ -1,3 +1,9 @@
+Thu Apr 03 08:13:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Collocation_Test/Collocation.dsw:
+	* tests/Collocation_Test/Collocation_Test.dsp: Win32 project files
+	  for this test.
+	
 Wed Apr  2 23:05:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
