@@ -2063,7 +2063,11 @@ dnl Check for C++ "std" namespace
 ACE_CACHE_CHECK([for C++ "std" namespace],
   [ace_cv_feature_posix_uses_std_namespace],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <iostream.h>
+#if defined (ACE_USES_OLD_IOSTREAMS)
+#  include <iostream.h>
+#else
+#  include <iostream>
+#endif
                    ]],[[
                     std::cout << "FOO" << std::endl;
                    ]])],[
@@ -2079,7 +2083,7 @@ ACE_CACHE_CHECK([for C++ "using" keyword support],
   [
    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-# include <iostream.h>
+# include <iostream>
 #elif !defined (ACE_HAS_BROKEN_NAMESPACES)
   namespace ACE
   {
