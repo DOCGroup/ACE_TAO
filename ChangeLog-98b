@@ -1,30 +1,30 @@
 Thu Sep 24 17:54:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp: 
-	  Removed duplicate instantiation of a template, IRIX does not
-	  like this. Thanks to Ossama Othman
-	  <othman@astrosun.tn.cornell.edu> because his configure script
-	  detected the Asynch I/O calls on IRIX and enabled this ACE
-	  code.
+        * ace/Asynch_IO.cpp:
+          Removed duplicate instantiation of a template, IRIX does not
+          like this. Thanks to Ossama Othman
+          <othman@astrosun.tn.cornell.edu> because his configure script
+          detected the Asynch I/O calls on IRIX and enabled this ACE
+          code.
 
 Thu Sep 24 16:28:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/config-win32-common.h: ACE_HAS_TEMPLATE_TYPEDEFS was defined
- 	  for VC4.1 and VC4.2.  Template typedefs in Strategies_T.cpp
- 	  broke the VC4.2 compiler.  Therefore, ACE_HAS_TEMPLATE_TYPEDEFS
- 	  was deprecated for VC4.1 and VC4.2. I also checked VC5.0 and it
- 	  didn't work.  Therefore, for the time being, none of the VC
- 	  compilers support ACE_HAS_TEMPLATE_TYPEDEFS.  I didn't try
- 	  VC6.0.
+        * ace/config-win32-common.h: ACE_HAS_TEMPLATE_TYPEDEFS was defined
+          for VC4.1 and VC4.2.  Template typedefs in Strategies_T.cpp
+          broke the VC4.2 compiler.  Therefore, ACE_HAS_TEMPLATE_TYPEDEFS
+          was deprecated for VC4.1 and VC4.2. I also checked VC5.0 and it
+          didn't work.  Therefore, for the time being, none of the VC
+          compilers support ACE_HAS_TEMPLATE_TYPEDEFS.  I didn't try
+          VC6.0.
 
-	* ace/Strategies_T.cpp (check_hint_i ): Changed the signature so
- 	  that it is identical to find_or_create_svc_handler_i().  For
- 	  some strange freakin reason, the VC4.2 could not gork
- 	  check_hint_i() but was able to gork
- 	  find_or_create_svc_handler_i.
+        * ace/Strategies_T.cpp (check_hint_i ): Changed the signature so
+          that it is identical to find_or_create_svc_handler_i().  For
+          some strange freakin reason, the VC4.2 could not gork
+          check_hint_i() but was able to gork
+          find_or_create_svc_handler_i.
 
-	* ace/ACE_Library.mdp: Added Select_Reactor_Base.cpp and
- 	  Container.cpp to make ACE build with VC4.2.
+        * ace/ACE_Library.mdp: Added Select_Reactor_Base.cpp and
+          Container.cpp to make ACE build with VC4.2.
 
 Thu Sep 24 13:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
@@ -41,12 +41,15 @@ Thu Sep 24 12:48:58 1998  David L. Levine  <levine@cs.wustl.edu>
           reporting a compilation failure on Sun C++ 4.2/Solaris 2.6
           without it.
 
-        * ace/ High_Res_Timer.cpp (global_scale_factor): on Linux,
+        * ace/High_Res_Timer.cpp (global_scale_factor): on Linux,
           only use BogoMips if the CPU is an alpha.  It would also
           work directly on Pentium Pro, but not other Pentiums.  With
           a little effort, it could be made to work there, see the
           BogoMips mini-HOWTO.  Thanks to Ossama for enlightening me
           on this corner of Linux.
+
+        * tests/Upgradable_RW_Test.cpp (main): delete dynamically
+          allocated reader_tasks and writer_tasks, and arrays, at end of test.
 
 Thu Sep 24 09:17:32 1998  Steve Huston  <shuston@riverace.com>
 
