@@ -228,12 +228,12 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 ACE_Service_Type *
 ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                                           ACE_Service_Type_Impl *o,
-                                          const ACE_SHLIB_HANDLE handle,
+                                          ACE_DLL &dll,
                                           int active)
 {
   ACE_Service_Type *sp = 0;
   ACE_NEW_RETURN (sp,
-                  ACE_Service_Type (n, o, handle, active),
+                  ACE_Service_Type (n, o, dll, active),
                   0);
   return sp;
 }
@@ -389,7 +389,7 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
                       0);
 
   void *foo;
-  foo = xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object");
+  foo = xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
