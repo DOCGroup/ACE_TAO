@@ -273,9 +273,6 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
-  // ugly but effective
-  TAO_debug_level++;
-
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
@@ -375,14 +372,17 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         }
         else
         {
-          ACE_ERROR ((LM_ERROR,"ReplicaFactory: Can't resolve ReplicationManager, and no -f option was given.\n" ));
+          ACE_ERROR ((LM_ERROR,"ReplicaFactory: Can't resolve ReplicationManager.\n" ));
         }
       }
     }
     ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.  Factory will not be registered.\n" );
+      if (this->test_output_file_ == 0) // ignore if this is a test run
+      {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+          "ReplicaFactory: Exception resolving ReplicationManager. Factory will not be registered.\n" );
+      }
     }
     ACE_ENDTRY;
 

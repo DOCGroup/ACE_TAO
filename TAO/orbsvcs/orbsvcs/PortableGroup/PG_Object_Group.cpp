@@ -126,7 +126,7 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
     objectGroup,
     TAO::PG_Object_Group (
       orb,
-      iorm,
+      iorm.in(),
       empty_group,
       tagged_component,
       type_id,
@@ -152,7 +152,7 @@ TAO::PG_Object_Group::~PG_Object_Group ()
 void dump_ior (const char * base, const char * ext, unsigned long version, const char * iogr)
 {
   char filename[1000];
-  sprintf(filename, "%this->s_%lu.%s", base, version, ext );
+  sprintf(filename, "%s_%lu.%s", base, version, ext );
 
   FILE * iorfile = fopen(filename, "w");
   fwrite (iogr, 1, strlen(iogr), iorfile);
@@ -235,6 +235,14 @@ void TAO::PG_Object_Group::add_member (
 
 {
   InternalGuard guard(this->internals_);
+
+  if (TAO_debug_level > 6)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT("PG (%P|%t) enter Object_Group add_member \n")
+      ));
+  }
+
   /////////////////////////////////////////
   // Convert the new member to a string IOR
   // This keeps a clean IOR (not and IOGR!)
@@ -253,7 +261,7 @@ void TAO::PG_Object_Group::add_member (
   // This can be avoided when we get support for TAG_MULTIPLE_COMPONENTS
   // For now, we already have a copy of the tagGroupTagged component and we're going to use
   // it below wen we increment the group version so we can clean out the dummy entry.
-  PortableGroup::ObjectGroup_var cleaned = this->reference_;
+  PortableGroup::ObjectGroup_var cleaned = PortableGroup::ObjectGroup::_duplicate (this->reference_);
   if (this->empty_)
   {
     // remove the original profile.  It's a dummy entry supplied by create_object.
@@ -266,8 +274,8 @@ void TAO::PG_Object_Group::add_member (
   // create a list of references to be merged
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
   iors.length (2);
-  iors [0] = cleaned.in();
-  iors [1] = member;
+  iors [0] = CORBA::Object::_duplicate (cleaned.in());
+  iors [1] = CORBA::Object::_duplicate (member);
 
   // Now merge the list into one new IOGR
   PortableGroup::ObjectGroup_var new_reference =
@@ -278,7 +286,7 @@ void TAO::PG_Object_Group::add_member (
   ACE_CHECK;
 
   MemberInfo * info = 0;
-  ACE_NEW_THROW_EX (info, MemberInfo(member_ior, the_location),
+  ACE_NEW_THROW_EX (info, MemberInfo(member_ior.in(), the_location),
     CORBA::NO_MEMORY());
 
   if (this->members_.bind (the_location, info) != 0)
@@ -287,7 +295,6 @@ void TAO::PG_Object_Group::add_member (
   }
 
   this->reference_ = new_reference; // note var-to-var assignment does a duplicate
-
   if (increment_version ())
   {
     distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -296,6 +303,13 @@ void TAO::PG_Object_Group::add_member (
   else
   {
     ACE_THROW (PortableGroup::ObjectNotAdded());
+  }
+
+  if (TAO_debug_level > 6)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT("PG (%P|%t) exit Object_Group add_member \n")
+      ));
   }
 }
 
@@ -325,15 +339,15 @@ int TAO::PG_Object_Group::set_primary_member (
     info->is_primary_ = 1;
 
     //remove primary
-    int sts = this->iorm_->is_primary_set (prop, this->reference_ ACE_ENV_ARG_PARAMETER);
+    int sts = this->iorm_->is_primary_set (prop, this->reference_.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     if (sts)
     {
-      (void)this->iorm_->remove_primary_tag (prop, this->reference_ ACE_ENV_ARG_PARAMETER);
+      (void)this->iorm_->remove_primary_tag (prop, this->reference_.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
-    sts = this->iorm_->set_primary (prop, info->member_.in (), this->reference_ ACE_ENV_ARG_PARAMETER);
+    sts = this->iorm_->set_primary (prop, info->member_.in (), this->reference_.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     if (! sts)
     {
@@ -499,22 +513,26 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_ARG_DECL)
     // TAO-FT (2996|976) - Wrong version information within the interceptor [1 | 0]
     // TAO_Perfect_Hash_OpTable:find for operation 'tao_update_object_group' (length=23) failed
     // back to using _narrow
-    PortableGroup::TAO_UpdateObjectGroup_var uog = PortableGroup::TAO_UpdateObjectGroup::_narrow ( info->member_);
+    PortableGroup::TAO_UpdateObjectGroup_var uog = PortableGroup::TAO_UpdateObjectGroup::_narrow ( info->member_.in ());
     if (! CORBA::is_nil (uog.in ()) )
     {
       ACE_TRY_NEW_ENV
       {
-        ACE_DEBUG ((LM_DEBUG,
-          "PG (%P|%t) -  Object_Group pushing IOGR to  %s member: %s@%s.\n",
-          (info->is_primary_ ? "Primary" : "Backup"),
-          this->role_.c_str(),
-          ACE_static_cast(const char *, info->location_[0].id)
-          ));
-        dump_ior ("group", "iogr", this->tagged_component_.object_group_ref_version, iogr);
-        CORBA::String_var replica_ior = this->orb_->object_to_string(uog.in() ACE_ENV_ARG_PARAMETER);
-        dump_ior (info->location_[0].id, "ior", (this->tagged_component_.object_group_ref_version * 100) + n_rep++, replica_ior);
+        if (TAO_debug_level > 3)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            "PG (%P|%t) -  Object_Group pushing IOGR to %s member: %s@%s.\n",
+            (info->is_primary_ ? "Primary" : "Backup"),
+            this->role_.c_str(),
+            ACE_static_cast(const char *, info->location_[0].id)
+            ));
+        }
+//        dump_ior ("group", "iogr", this->tagged_component_.object_group_ref_version, iogr);
+//        CORBA::String_var replica_ior = this->orb_->object_to_string(uog.in() ACE_ENV_ARG_PARAMETER);
+//        dump_ior (info->location_[0].id, "ior", (this->tagged_component_.object_group_ref_version * 100) + n_rep++, replica_ior);
+        uog->tao_update_object_group (iogr, this->tagged_component_.object_group_ref_version, info->is_primary_ ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-        uog->tao_update_object_group (iogr, this->tagged_component_.object_group_ref_version, info->is_primary_);
       }
       ACE_CATCHANY
       {
@@ -526,7 +544,7 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_ARG_DECL)
     else
     {
       ACE_ERROR ((LM_ERROR,
-        "TAO::PG_Object_Group::set_reference can't narrow member reference to PortableGroup::TAO_UpdateObjectGroup.\n"
+        "TAO::PG_Object_Group::distribute iogr can't narrow member reference to PortableGroup::TAO_UpdateObjectGroup.\n"
         ));
     }
   }

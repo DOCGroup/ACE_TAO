@@ -124,7 +124,7 @@ int TAO::FT_FaultDetectorFactory_i::write_ior()
 
 int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:l:o:q");
+  ACE_Get_Opt get_opts (argc, argv, "d:l:o:qr");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -132,15 +132,21 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
     switch (c)
     {
       case 'd':
+      {
         this->domain_ = CORBA::string_dup (get_opts.opt_arg ());
         break;
+      }
       case 'l':
+      {
         this->location_.length(1);
         this->location_[0].id = CORBA::string_dup(get_opts.opt_arg ());
         break;
+      }
       case 'o':
+      {
         this->ior_output_file_ = get_opts.opt_arg ();
         break;
+      }
       case 'r':
       {
         this->rm_register_ = ! this->rm_register_;
