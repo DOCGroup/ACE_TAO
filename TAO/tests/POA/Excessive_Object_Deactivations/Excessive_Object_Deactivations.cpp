@@ -72,6 +72,8 @@ test_i::deactivate_self (CORBA::Environment &ACE_TRY_ENV)
 
   // Make sure an exception was raised and it was of the correct type.
   ACE_ASSERT (expected_exception_raised);
+
+  ACE_UNUSED_ARG (expected_exception_raised);
 }
 
 void
@@ -107,6 +109,8 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   // Make sure an exception was raised and it was of the correct
   // type.
   ACE_ASSERT (expected_exception_raised);
+
+
 
   poa->activate_object_with_id (id,
                                 &servant,
@@ -159,6 +163,10 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
   test->deactivate_self (ACE_TRY_ENV);
   ACE_CHECK;
+
+  // ACE_ASSERT dissappears in non-debug builds
+  ACE_UNUSED_ARG (expected_exception_raised);
+
 }
 
 int
