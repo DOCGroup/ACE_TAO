@@ -1,3 +1,13 @@
+Wed Jul 29 08:58:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_field/{field_ci, field_cs}.cpp: Added code
+	to handle arrays. I had forgotten to invoke the code generator for
+	arrays that are struct members. I had only handled the header file
+	but not the inline file and the implementation file. The visitor
+	that does this was already done, but it was not getting
+	invoked. Thanks to Andreas Geisler
+	(andreas.geisler@erls.siemens.de) for reporting this problem.
+
 Wed Jul 29 06:45:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/NestedUpcall/MT_Client_Test/ local_server.cpp (MT_Server):
