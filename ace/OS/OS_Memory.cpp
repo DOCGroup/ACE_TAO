@@ -1,11 +1,11 @@
 // $Id$
 
-#include "OS_Memory.h"
+#include "ace/OS/OS_Memory.h"
 
 ACE_RCSID(ace, OS_Memory, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "OS_Memory.inl"
+# include "ace/OS/OS_Memory.inl"
 #else /* !ACE_HAS_INLINED_OSCALLS */
 #if defined (__hpux) && !defined (__GNUG__)
 static int shut_up_aCC = 0;

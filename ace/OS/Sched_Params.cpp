@@ -16,10 +16,10 @@
 //
 // ============================================================================
 
-#include "Sched_Params.h"
+#include "ace/OS/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Sched_Params.i"
+#include "ace/OS/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Sched_Params, "$Id$")

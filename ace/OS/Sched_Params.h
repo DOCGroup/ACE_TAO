@@ -15,7 +15,7 @@
 #define ACE_SCHED_PARAMS_H
 #include "ace/pre.h"
 
-#include "OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -218,7 +218,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "Sched_Params.i"
+#include "ace/OS/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

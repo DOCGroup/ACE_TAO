@@ -33,7 +33,7 @@
 #endif /* ! ACE_OSTREAM_TYPE */
 
 
-#include "OS_Export.h"
+#include "ace/OS/OS_Export.h"
 
 /// The attributes required by ACE_Log_Msg.
 /**
@@ -82,7 +82,7 @@ protected:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "OS_Log_Msg_Attributes.inl"
+#   include "ace/OS/OS_Log_Msg_Attributes.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

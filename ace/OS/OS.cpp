@@ -1,14 +1,14 @@
 // $Id$
 
-#include "OS.h"
-#include "Sched_Params.h"
-#include "OS_Thread_Adapter.h"
-#include "OS_QoS.h"
+#include "ace/OS/OS.h"
+#include "ace/OS/Sched_Params.h"
+#include "ace/OS/OS_Thread_Adapter.h"
+#include "ace/OS/OS_QoS.h"
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "OS.i"
+# include "ace/OS/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 ACE_RCSID(ace, OS, "$Id$")

@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Basic_Types.h"
+#include "ace/OS/Basic_Types.h"
 #include /**/ <stddef.h>
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
@@ -589,7 +589,7 @@ private:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "OS_String.inl"
+#   include "ace/OS/OS_String.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

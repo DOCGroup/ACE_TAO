@@ -12,13 +12,13 @@
 #define ACE_BASE_THREAD_ADAPTER_H
 #include "ace/pre.h"
 
-#include "OS_Log_Msg_Attributes.h"
+#include "ace/OS/OS_Log_Msg_Attributes.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "OS_Export.h"
+#include "ace/OS/OS_Export.h"
 
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
@@ -160,7 +160,7 @@ protected:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "Base_Thread_Adapter.inl"
+#   include "ace/OS/Base_Thread_Adapter.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

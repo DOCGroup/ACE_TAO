@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "OS_Export.h"
+#include "ace/OS/OS_Export.h"
 
 /**
  * @class ACE_Thread_Hook

@@ -98,7 +98,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "Date_Time.i"
+#include "ace/OS/Date_Time.i"
 #endif
 
 #include "ace/post.h"

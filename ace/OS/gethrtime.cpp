@@ -5,7 +5,7 @@
 // knew a way to correctly move values from registers to a 64-bit
 // variable in GHS asm code.  That's easy with g++ asm.
 
-#include "OS.h"
+#include "ace/OS/OS.h"
 
 ACE_RCSID(ace, gethrtime, "$Id$")
 

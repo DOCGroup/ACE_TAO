@@ -17,7 +17,6 @@ OS_FILES = \
 	gethrtime\
 	Handle_Ops\
 	Handle_Set\
-	Init_ACE\
 	OS\
 	OS_Dirent\
 	OS_Errno\
@@ -52,7 +51,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 INSTALL =
 
 clean:
-	$(RM) -f libACE_OS.a libACE_OS.so
+	$(RM) -f $(LIBOS).a $(LIBOS).so
 
 #----------------------------------------------------------------------------
 #       Local targets

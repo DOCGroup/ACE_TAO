@@ -1,12 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
-#include "OS_Errno.h"
+#include "ace/OS/OS_Errno.h"
 
 ACE_RCSID(ace, OS_Errno, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "OS_Errno.inl"
+# include "ace/OS/OS_Errno.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
