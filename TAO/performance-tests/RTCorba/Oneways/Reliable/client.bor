@@ -8,6 +8,9 @@ OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\client.obj
 
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
 CPPDIR = .
 
 IDLDIR = .
@@ -20,3 +23,4 @@ IDLDIR = .
 
 $(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
 	$(TAO_IDL) $**
+
