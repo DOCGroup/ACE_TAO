@@ -15,11 +15,11 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
   ACEXML_FileCharStream* fstream = 0;
   ACEXML_HttpCharStream* hstream = 0;
 
-  if (ACE_OS::strstr (uri, "ftp://") != 0)
+  if (ACE_OS::strstr (uri, ACE_TEXT("ftp://")) != 0)
     {
       return 0;
     }
-  else if (ACE_OS::strstr (uri, "http://") != 0)
+  else if (ACE_OS::strstr (uri, ACE_TEXT ("http://")) != 0)
     {
       ACE_NEW_RETURN (hstream, ACEXML_HttpCharStream, 0);
       if (hstream->open (uri) != -1)
@@ -35,4 +35,9 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
       else
         return 0;
     }
+}
+
+ACEXML_StreamFactory::~ACEXML_StreamFactory ()
+{
+  // No op
 }

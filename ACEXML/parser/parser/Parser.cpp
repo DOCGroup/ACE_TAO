@@ -1984,7 +1984,7 @@ ACEXML_Parser::report_prefix_mapping (const ACEXML_Char* prefix,
 {
   if (this->namespaces_)
     {
-      const char* temp = (name == 0) ? empty_string : prefix;
+      const ACEXML_Char* temp = (name == 0) ? empty_string : prefix;
       if (start)
         this->content_handler_->startPrefixMapping (temp, uri, xmlenv);
       else
