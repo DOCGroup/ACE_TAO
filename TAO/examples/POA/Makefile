@@ -18,8 +18,7 @@ DIRS  = Default_Servant \
 	NewPOA \
 	On_Demand_Activation \
 	RootPOA \
-	TIE \
-	locking \
+	TIE
 
 # The following test hasn't been updated yet
 # Demux_Test
@@ -35,4 +34,3 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-
