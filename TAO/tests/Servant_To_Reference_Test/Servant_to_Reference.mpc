@@ -6,7 +6,7 @@ project(*Server): taoexe, portableserver, minimum_corba {
     server.cpp
     Test_i.cpp
     Test_i.h
-    TestC.pp
+    TestC.cpp
     TestS.cpp
   }
   
