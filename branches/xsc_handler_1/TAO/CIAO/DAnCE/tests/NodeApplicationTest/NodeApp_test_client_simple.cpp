@@ -4,6 +4,7 @@
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"
+#include "assert.h"
 
 const char *ior = "file://test.ior";
 
@@ -51,23 +52,23 @@ main (int argc, char *argv[])
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Deployment::NodeApplication_var comserv =
+      Deployment::NodeApplication_var node_app =
         Deployment::NodeApplication::_narrow(tmp.in ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (comserv.in ()))
+      if (CORBA::is_nil (node_app.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil ServerActivator reference <%s>\n",
+                             "Nil nodeapplication reference <%s>\n",
                              ior),
                             1);
         }
 
 
-      ACE_DEBUG ((LM_DEBUG, "Try installing Home\n"));
+      ACE_DEBUG ((LM_DEBUG, "Try installing Home and Component\n"));
 
-      Deployment::ImplementationInfo info;
+      Deployment::ComponentImplementationInfo info;
 
       // Add the names and entry points of each of the DLLs
       info.component_instance_name = "NodeAppTest_RoundTrip";
@@ -76,8 +77,18 @@ main (int argc, char *argv[])
       info.servant_dll = "NodeAppTest_RoundTrip_svnt";
       info.servant_entrypt = "createNodeAppTest_RoundTripHome_Servant";
 
+      // Create a ContainerImplementationInfo sequence
+      Deployment::ContainerImplementationInfo container_info;
+      container_info.length (1);
+      container_info[0] = info;
+
+      // Create a NodeImplementationInfo sequence
+      Deployment::NodeImplementationInfo node_info;
+      node_info.length (1);
+      node_info[0] = container_info;
+/*
       // Install the NodeApplication Test component
-      ::Components::CCMHome_var home = comserv->install_home (info);
+      ::Components::CCMHome_var home = node_app->install_home (info);
       ACE_TRY_CHECK;
 
       // Narrow the Home to the appropriate component
@@ -93,9 +104,22 @@ main (int argc, char *argv[])
        }
 
       // Get Component from Home
-      ACE_DEBUG ((LM_DEBUG, "Try obtaining RoundTrip ref from Home\n"));
+      ACE_DEBUG ((LM_DEBUG, "Try obtaining RoundTrip component ref from Home\n"));
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
         home_var->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+*/
+      Deployment::ComponentInfos_var comp_info =
+        node_app->install (node_info ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      assert (comp_info->length () == 1); //return 1 component objeref
+
+      const CORBA::ULong i = 0;
+      Components::CCMObject_ptr objref =
+        (comp_info[i]).component_ref;
+
+      NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
+        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref);
 
       if (CORBA::is_nil (roundtrip_var.in ()))
        {
@@ -120,9 +144,11 @@ main (int argc, char *argv[])
        exit (1);
      }
 
+     /*
      ACE_DEBUG ((LM_DEBUG, "Try removing home\n"));
-     comserv->remove_home (info.component_instance_name);
+     node_app->remove_home (info.component_instance_name);
      ACE_DEBUG ((LM_DEBUG, "Home removed successfully\n"));
+*/
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

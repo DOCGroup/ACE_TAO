@@ -11,6 +11,7 @@
 
 const char *ior_file_name = 0;
 const char *callback_ior = 0;
+int use_callback = 1;
 
 int
 parse_args (int argc, char *argv[])
@@ -21,6 +22,11 @@ parse_args (int argc, char *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'n':
+        use_callback = 0;
+        break;
+
+
       case 'o':  // get the file name to write to
         ior_file_name = get_opts.opt_arg ();
         break;
@@ -41,7 +47,7 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  if (callback_ior == 0)
+  if (use_callback && callback_ior == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Callback IOR to NodeApplicationManager is required.\n"),
                       -1);
@@ -121,22 +127,25 @@ main (int argc, char *argv[])
       Deployment::NodeApplicationManager_var nodeapp_man;
       Deployment::Properties_var prop = new Deployment::Properties;
 
-      obj = orb->string_to_object (callback_ior
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CIAO::NodeApplication_Callback_var nam_callback
-        = CIAO::NodeApplication_Callback::_narrow (obj.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      Deployment::Properties_out properties_out (prop.out ());
-
-      nodeapp_man
-        = nam_callback->register_node_application (nodeapp_obj.in (),
-                                                   properties_out
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (use_callback)
+        {
+          obj = orb->string_to_object (callback_ior
+                                       ACE_ENV_ARG_PARAMETER);
+	      ACE_TRY_CHECK;
+	
+	      CIAO::NodeApplication_Callback_var nam_callback
+	        = CIAO::NodeApplication_Callback::_narrow (obj.in ()
+	                                                   ACE_ENV_ARG_PARAMETER);
+	      ACE_TRY_CHECK;
+	
+	      Deployment::Properties_out properties_out (prop.out ());
+	
+	      nodeapp_man
+	        = nam_callback->register_node_application (nodeapp_obj.in (),
+	                                                   properties_out
+	                                                   ACE_ENV_ARG_PARAMETER);
+	      ACE_TRY_CHECK;
+        }
 
       /** @@ We need to call NodeApplication servant's init method.
        * But it's not sure to me where exactly we can get the

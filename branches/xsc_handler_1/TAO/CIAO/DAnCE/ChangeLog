@@ -1,3 +1,27 @@
+Wed Jan 26 12:02:41 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Deployment_Core.idl
+
+          Modified to have totally 3 abstraction layers of ImplementationInfo,
+          NodeImplementationInfo, ContainerImplementationInfo and
+          ComponentImplementationInfo. 
+
+	* DAnCE/NodeApplication/NodeApplication.cpp
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/Container_Impl.h
+        * DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.h
+	* DAnCE/ciao/NodeApplication_Impl.inl
+
+          Added the abstraction layer of container interface. Reorganize
+          the functionality between NodeApplication and Container.
+
+	* tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+
+          Modified this to test against the above change. This test
+          could run successfully when we have 1 component hosted in
+          1 container, which in turn hosted in 1 NodeApplication.
+
 Wed Jan 19 21:41:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/ADD_Handler.cpp
