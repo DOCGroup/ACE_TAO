@@ -2306,8 +2306,16 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   TAO_POA *poa = 0;
   const char *operation = req.operation ();
 
+  // @@ Lots on non-exception safe code here!!
+
   // Setup for POA Current
   TAO_POA_Current current_context;
+
+  // @@ This call changes the state, but if an exception is raised the
+  // context will not be reset, you need a helper class that can do
+  // that in the destructor, what about using the TAO_POA_Current
+  // class itself?
+
   // Set the current context and remember the old one
   TAO_POA_Current *previous_context = orb_core->poa_current (&current_context);
 
@@ -2317,8 +2325,14 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                                                                     poa,
                                                                     orb_core,
                                                                     env);
+
+  // @@ We should use the TRY macros here, notice that you detect the
+  // exception but you do not attempt to fix the problems above
   if (env.exception () != 0 || servant == 0)
     return;
+
+  // @@ Yet another place where you change the state without a class
+  // whose destructor will return things to normal....
 
   // Setup for upcall
   poa->pre_invoke (key,
@@ -2336,11 +2350,15 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                         env);
   }
 
+  // @@ This shoul be done by a destructor....
+
   // Cleanup from upcall
   poa->post_invoke (servant,
                     operation,
                     &current_context,
                     env);
+
+  // @@ this should also be done by a destructor....
 
   // Reset old context
   orb_core->poa_current (previous_context);
