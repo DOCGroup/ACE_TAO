@@ -12,6 +12,9 @@ Sun Mar 14 14:58:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	API to send their own environment variables that should be 
 	theoretically in a TRY block.
 
+	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp
+	Made the changes that is a fallout of the above changes..
+	
 Sun Mar 14 14:13:22 19	99  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): 
