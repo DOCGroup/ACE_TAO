@@ -1,3 +1,9 @@
+Thu Feb 20 12:48:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Connector.cpp: Added a const to regulate the size of the map
+	  that is being used inside this class. A size of 1024 seems too
+	  excessive for runtime memory.
+
 Thu Feb 20 12:29:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Profile.h:
