@@ -1,3 +1,11 @@
+Mon Mar 23 09:18:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Dump_Schedule/Makefile,orbsvcs/Event_Service/Makefile,
+          orbsvcs/Scheduling_Service/Makefile,
+          orbsvcs/tests/Event_Latency/Makefile:
+          replaced orbsvcs/orbsvcs/orbsvcs with orbsvcs/orbsvcs in some
+          dependencies.
+
 Mon Mar 23 03:20:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.1.10, released Mon Mar 23 03:20:47 1998.
