@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// $Id$
+// $Id config-win32-borland.h,v 4.14 1999/09/18 23:48:56 parsons Exp $
 
 // The following configuration file contains the defines
 // common to all Borland compilers.  Do not include this file directly
@@ -164,6 +164,11 @@
 #     if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
 #       undef ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 #     endif /* defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST) */
+
+      /* previously defined for MSVC */
+#     if defined (ACE_AUTO_PTR_LACKS_RESET)
+#       undef ACE_AUTO_PTR_LACKS_RESET
+#     endif /* defined (ACE_AUTO_PTR_LACKS_RESET) */
 
       /* include only forward declaration of iostreams */
 #     if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)

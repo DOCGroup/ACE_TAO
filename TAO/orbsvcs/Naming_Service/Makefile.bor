@@ -1,18 +1,12 @@
 #
-# Makefile for building the Naming Service executable
-# 
+# Makefile for building the Naming Service executables
+#
 
-NAME = Naming_Service
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
 
-OBJFILES = \
-	$(OBJDIR)\Naming_Service.obj \
-	$(OBJDIR)\Naming_Server.obj
-        
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_CFLAGS)
-        
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(ORBSVCS_LIB)
+console_only:
+	$(MAKE) -f Naming_Service.bor $(MAKE_FLAGS)
 
-CPPDIR = .
-
-!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
-
+all:
+	$(MAKE) -f Naming_Service.bor $(MAKE_FLAGS)
+	$(MAKE) -f NT_Naming_Service.bor $(MAKE_FLAGS)
