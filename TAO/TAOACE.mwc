@@ -9,7 +9,7 @@ workspace {
   ../ACEXML/apps/svcconf
   ../Kokyu/Kokyu.mpc
   tao
-  TAO_IDL/TAO_IDL.mwc
+  TAO_IDL
   utils
   orbsvcs
   exclude {
