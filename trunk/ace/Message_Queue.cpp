@@ -121,10 +121,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::dump (void) const
               this->cur_count_,
               this->head_,
               this->tail_));
-  ACE_DEBUG ((LM_DEBUG,"notfull_cond: \n"));
-  notfull_cond_.dump ();
-  ACE_DEBUG ((LM_DEBUG,"notempty_cond: \n"));
-  notempty_cond_.dump ();
+  ACE_DEBUG ((LM_DEBUG,"not_full_cond: \n"));
+  not_full_cond_.dump ();
+  ACE_DEBUG ((LM_DEBUG,"not_empty_cond: \n"));
+  not_empty_cond_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -138,8 +138,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue (size_t hwm,
     enqueue_waiters_ (0),
     dequeue_waiters_ (0)
 #else
-  : notempty_cond_ (this->lock_),
-    notfull_cond_ (this->lock_)
+  : not_empty_cond_ (this->lock_),
+    not_full_cond_ (this->lock_)
 #endif /* ACE_LACKS_COND_T */
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue");
@@ -189,8 +189,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::deactivate_i (void)
 
   // Wakeup all waiters.
 #if !defined (ACE_LACKS_COND_T)
-  this->notempty_cond_.broadcast ();
-  this->notfull_cond_.broadcast ();
+  this->not_empty_cond_.broadcast ();
+  this->not_full_cond_.broadcast ();
 #endif /* ACE_LACKS_COND_T */
 
   this->deactivated_ = 1;
@@ -280,7 +280,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail_i (ACE_Message_Block *new_item)
   this->cur_count_++;
 #if !defined (ACE_LACKS_COND_T)
   // Tell any blocked threads that the queue has a new item!
-  if (this->notempty_cond_.signal () != 0)
+  if (this->not_empty_cond_.signal () != 0)
     return -1;
 #else
   if (this->dequeue_waiters_ > 0)
@@ -322,7 +322,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head_i (ACE_Message_Block *new_item)
   this->cur_count_++;
 #if !defined (ACE_LACKS_COND_T)
   // Tell any blocked threads that the queue has a new item! 
-  if (this->notempty_cond_.signal () != 0)
+  if (this->not_empty_cond_.signal () != 0)
     return -1;
 #else
   if (this->dequeue_waiters_ > 0)
@@ -400,7 +400,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_i (ACE_Message_Block *new_item)
   this->cur_count_++;
 #if !defined (ACE_LACKS_COND_T)
   // Tell any blocked threads that the queue has a new item! 
-  if (this->notempty_cond_.signal () != 0)
+  if (this->not_empty_cond_.signal () != 0)
     return -1;
 #else
   if (this->dequeue_waiters_ > 0)
@@ -440,7 +440,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head_i (ACE_Message_Block *&first_item)
   this->cur_count_--;
 
 #if !defined (ACE_LACKS_COND_T)
-  if (this->notfull_cond_.signal () != 0)
+  if (this->not_full_cond_.signal () != 0)
     return -1;
 #else
   if (this->enqueue_waiters_ > 0)
@@ -471,7 +471,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::peek_dequeue_head (ACE_Message_Block *&first_ite
 
   while (this->is_empty_i ())
     {
-      if (this->notempty_cond_.wait (tv) == -1)
+      if (this->not_empty_cond_.wait (tv) == -1)
         {
           if (errno == ETIME)
             errno = EWOULDBLOCK;
@@ -518,7 +518,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
 
   while (this->is_full_i ())
     {
-      if (this->notfull_cond_.wait (tv) == -1)
+      if (this->not_full_cond_.wait (tv) == -1)
         {
           if (errno == ETIME)
             errno = EWOULDBLOCK;
@@ -574,7 +574,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item,
 
   while (this->is_full_i ())
     {
-      if (this->notfull_cond_.wait (tv) == -1)
+      if (this->not_full_cond_.wait (tv) == -1)
         {
           if (errno == ETIME)
             errno = EWOULDBLOCK;
@@ -637,7 +637,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item,
 
   while (this->is_full_i ())
     {
-      if (this->notfull_cond_.wait (tv) == -1)
+      if (this->not_full_cond_.wait (tv) == -1)
         {
           if (errno == ETIME)
             errno = EWOULDBLOCK;
@@ -693,7 +693,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item,
 
   while (this->is_empty_i ())
     {
-      if (this->notempty_cond_.wait (tv) == -1)
+      if (this->not_empty_cond_.wait (tv) == -1)
         {
           if (errno == ETIME)
             errno = EWOULDBLOCK;
