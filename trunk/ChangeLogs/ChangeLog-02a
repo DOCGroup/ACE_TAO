@@ -1,3 +1,7 @@
+Wed Aug 09 18:06:40 2000  Pradeep  <pradeep@cs.wustl.edu>
+
+        * ACE version 5.1.8 released.
+
 Wed Aug 09 10:10:45 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/CDR_Array_Test.cpp: disabled LongLong test if
