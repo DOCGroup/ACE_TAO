@@ -11,7 +11,8 @@ NAME = LoadManager
 !endif
 
 OBJFILES = \
-	$(OBJDIR)\LoadManager.obj
+	$(OBJDIR)\LoadManager.obj \
+	$(OBJDIR)\Signal_Handler.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

@@ -1,3 +1,27 @@
+Fri Sep 27 13:40:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Signal_Handler.h:
+	* orbsvcs/LoadBalancer/Signal_Handler.cpp:
+
+	  New signal handler designed to ensure proper cleanup of remote
+	  objects and resources created by the LoadManager upon
+	  interruption by signals.  Signals are handled synchronously in
+	  the multi-threaded build case through an Active Object, and
+	  asynchronously through the ORB's Reactor in the single-threaded
+	  build case.
+
+	* orbsvcs/LoadBalancer/LoadManager.cpp (ACE_TMAIN):
+
+	  Instantiate and activate the new signal handler.
+
+	* orbsvcs/LoadBalancer/Makefile.LoadManager (SRC):
+	* orbsvcs/LoadBalancer/LoadManager.bor (OBJFILES):
+	* orbsvcs/LoadBalancer/LoadManager.dsp:
+	* orbsvcs/LoadBalancer/LoadManager_Static.dsp:
+
+	  Added new Signal_Handler source to these Makefiles and MSVC++
+	  project.
+
 Fri Sep 27 11:55:18 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
