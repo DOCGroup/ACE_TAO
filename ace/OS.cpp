@@ -178,6 +178,28 @@ ACE_OS::gethrtime (void)
 }
 #endif /* ACE_HAS_PENTIUM && __GNUC__ */
 
+#if defined (ACE_HAS_POWERPC) && defined (ghs)
+void
+ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
+{
+  // ACE_TRACE ("ACE_OS::readPPCTimeBase");
+
+  // This function can't be inline because it depends on the arguments
+  // being in particular registers (r3 and r4), in conformance with the
+  // EABI standard.  It would be nice if we knew how to put the variable
+  // names directly into the assembler instructions . . .
+  asm("aclock:");
+  asm("mftb  r5,TBU");
+  asm("mftb  r6,TBL");
+  asm("mftb  r7,TBU");
+  asm("cmpw  r5,r7");
+  asm("bne   aclock");
+
+  asm("stw r5, 0(r3)");
+  asm("stw r6, 0(r4)");
+}
+#endif /* ACE_HAS_POWERPC && ghs */
+
 #if defined (ACE_WIN32) || defined (VXWORKS)
 // Don't inline on those platforms because this function contains
 // string literals, and some compilers, e.g., g++, don't handle those
