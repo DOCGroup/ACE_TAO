@@ -808,7 +808,6 @@ Thomas Mehrkam <Thomas_Mehrkam@i-o.com>
 Erik Ivanenko <erik.ivanenko@utoronto.ca>
 Sarmeesha Reddy <sreddy@tr.comm.mot.com>
 
-
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
 Makefile scheme that underlies this distribution and also spent
