@@ -1,10 +1,80 @@
-Thu Nov 21 08:12:51 1996  David L. Levine  <levine@cs.wustl.edu>
-	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU:
- 	  put back the LD definition
-	* include/makeinclude/platform_osf1_4.0_g++.GNU:
- 	  added LD definition to work with latest wrapper_macros.GNU
+Thu Nov 21 10:37:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-Thu Nov 21 00:12:42 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ace/Service_Config: Changed the implementation of the
+ 	  Service_Config class so that it no longer inherits from
+ 	  ACE_Event_Handler.  This was causing problems because the new
+ 	  reactor() method in the ACE_Event_Handler was conflicting with
+ 	  the static reactor() method on ACE_Service_Config.
+
+	* ace/OS.cpp (detach): Since we no longer use an
+	  ACE_Recursive_Thread_Mutex, we can remove the line 
+	  
+	  else if (ACE_TSS_Cleanup::lock_.get_nesting_level () > 1)
+	    // ...
+
+	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for 
+	  reporting this.
+
+	* ace/Thread_Manager.cpp (spawn_n): Replaced int i with size_t i
+ 	  to avoid warnings between signed and unsigned values.
+
+	* ace: There is an easy way to speed up the "Update dependencies" 
+	  in MSVC. Just keep the the compiler from complaining about
+	  missing header by inserting a comment like below in the
+	  #include-directives which are not used in Win32.
+ 
+ 	  Therefore, instead of 
+
+	  #include <somefile.h>
+
+	  we use
+
+	  #include /**/ <somefile.h>
+
+	  Please let me know if this causes problems for any
+	  pre-processors.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for this suggestion!
+
+	* ace/OS.cpp: Added support for AfxBeginThread in
+ 	  ACE_OS::thr_create().  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for this!
+
+	* ace/Malloc_T.cpp (avail_chunks): Changed the return value to
+ 	  ssize_t so we can return -1 if we can't get the lock.  Thanks to
+ 	  Tilo for reporting this.
+
+	* ace/config-sunos4-sun3.x.h: Added new #ifdefs for Sun C++ 3.0.1
+ 	  on SunOS 4.1.3.  Thanks to Eric Parker <eparker@credence.com>
+ 	  for these fixes.
+
+	* ace/Stack.h: Added a new method called peek() to the
+ 	  ACE_Unbounded_Queue classes so that the first element can be
+ 	  retrieved without removing it.  Thanks to Luca for this
+ 	  suggestion.
+
+	* ace/SString.cpp (ACE_CString): Changed ACE_CString so that it
+ 	  uses memcpy() rather than str(n)cpy() so that we can store any
+ 	  structure into it.  Thanks to Luca for this suggestion.
+  
+	* ace/Acceptor: Since we moved the reactor() accessors to
+ 	  ACE_Event_Handler we can omit these from the Acceptor and
+ 	  Svc_Handler.
+
+	* ace: Updated the ACE_Reactor and ACE_ReactorEx so that they
+ 	  automatically sets the pointers in ACE_Event_Handlers.  Thanks
+ 	  to Luca for this suggestion.
+
+	* ace/Event_Handler: Added pointers to all the ACE demultiplexors
+	  (e.g., ACE_Reactor, ACE_ReactorEx, and ACE_Proactor) to
+ 	  ACE_Event_Handler, along with set/get accessor methods.  This
+ 	  supports a very common use-case where an event handler keeps
+ 	  track of its demultiplexor.  Thanks to Luca for this suggestion.
+
+	* ace/OS.cpp: Since we do not use the recursion count from the
+ 	  Recursive Mutex any more in ACE_TSS_Cleanup::exit() we can
+ 	  replace the Recursive Mutex by a regular ACE_Thread_Mutex that
+ 	  is recursive on NT natively and more efficient.  Thanks to
+	  Detlef for suggesting this.
 
 	* ace/OS.cpp: Since we do not use the recursion count from the
  	  Recursive Mutex any more in ACE_TSS_Cleanup::exit() we can
@@ -17,6 +87,13 @@ Thu Nov 21 00:12:42 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  he reimplemented ACE_TSS_Cleanup so that it no longer needs to
  	  hold the lock when callbacks are made.  Once again, Detlef
  	  proves that he's a macho man, not a boy ;-)
+
+Thu Nov 21 08:12:51 1996  David L. Levine  <levine@cs.wustl.edu>
+	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU:
+ 	  put back the LD definition
+
+	* include/makeinclude/platform_osf1_4.0_g++.GNU:
+ 	  added LD definition to work with latest wrapper_macros.GNU
 
 Wed Nov 20 21:35:28 1996  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Svc_Conf_l.cpp:  added #include of ace/config.h so that

@@ -33,81 +33,69 @@ ACE_Service_Config::dump (void) const
 ACE_SVC_FACTORY_DEFINE (ACE_Service_Manager)
 
 // ----------------------------------------
+
+// Set the signal handler to point to the handle_signal() function.
+ACE_Sig_Adapter ACE_Service_Config::signal_handler_ (&ACE_Service_Config::handle_signal);
+
 // Process-wide Service Repository.
-/* static */
 ACE_Service_Repository *ACE_Service_Config::svc_rep_ = 0;
 
 // Controls whether the Service_Repository is deleted when we shut
 // down (we can only delete it safely if we created it!)
-/* static */
 int ACE_Service_Config::delete_svc_rep_ = 0;
 
 // Process-wide Thread Manager.
-/* static */
 ACE_Thread_Manager *ACE_Service_Config::thr_mgr_ = 0;
 
 // Controls whether the Thread_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
-/* static */
 int ACE_Service_Config::delete_thr_mgr_ = 0;
 
 // Process-wide ACE_Allocator.
-/* static */
 ACE_Allocator *ACE_Service_Config::allocator_ = 0;
 
 // Controls whether the Allocator is deleted when we shut down (we can
 // only delete it safely if we created it!)
-/* static */
 int ACE_Service_Config::delete_allocator_ = 0;
 
 // Process-wide ACE_Proactor.
-/* static */
 ACE_Proactor *ACE_Service_Config::proactor_ = 0;
 
 // Controls whether the Proactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
-/* static */
 int ACE_Service_Config::delete_proactor_ = 0;
 
 // Process-wide ACE_Reactor.
-/* static */
 ACE_Reactor *ACE_Service_Config::reactor_ = 0;
 
 // Controls whether the Reactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
-/* static */
 int ACE_Service_Config::delete_reactor_ = 0;
 
 // Process-wide ACE_ReactorEx.
-/* static */
 ACE_ReactorEx *ACE_Service_Config::reactorEx_ = 0;
 
 // Controls whether the ReactorEx is deleted when we shut down (we can
 // only delete it safely if we created it!)
-/* static */
 int ACE_Service_Config::delete_reactorEx_ = 0;
 
 // Make this the default.
 typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> ACE_DEFAULT_MALLOC;
 
 // Terminate the eventloop.
-/* static */
 sig_atomic_t ACE_Service_Config::end_reactor_event_loop_ = 0;
 sig_atomic_t ACE_Service_Config::end_proactor_event_loop_ = 0;
 sig_atomic_t ACE_Service_Config::end_reactorEx_event_loop_ = 0;
 
 // Trigger a reconfiguration.
-/* static */
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 
   // = Set by command-line options. 
-/* static */
 char ACE_Service_Config::debug_ = 0;
 char ACE_Service_Config::be_a_daemon_ = 0;
 char ACE_Service_Config::no_defaults_ = 0;
 
 // Number of the signal used to trigger reconfiguration.
-/* static */
 int ACE_Service_Config::signum_ = SIGHUP;
 
 // Name of the service configuration file. 
@@ -371,7 +359,8 @@ ACE_Service_Config::ACE_Service_Config (int ignore_defaults,
   // This really ought to be a Singleton I suspect...
 
   if (ACE_Service_Config::reactor_->register_handler 
-      (ACE_Service_Config::signum_, this) == -1)
+      (ACE_Service_Config::signum_, 
+       &ACE_Service_Config::signal_handler_) == -1)
     ACE_ERROR ((LM_ERROR, "can't register signal handler\n"));
 #endif /* !ACE_WIN32 */
 }
@@ -405,16 +394,11 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
 // There's no point in dealing with this on NT since it doesn't really
 // support signals very well...
 #if !defined (ACE_WIN32)
-	  ACE_Event_Handler *eh = 0;
-
-	  if (ACE_Service_Config::reactor ()->handler 
-	      (ACE_Service_Config::signum_, &eh) == -1)
-	    ACE_ERROR ((LM_ERROR, "cannot obtain signal handler\n"));
-
 	  ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
 
 	  if (ACE_Service_Config::reactor ()->register_handler 
-	      (ACE_Service_Config::signum_, eh) == -1)
+	      (ACE_Service_Config::signum_, 
+	       &ACE_Service_Config::signal_handler_) == -1)
 	    ACE_ERROR ((LM_ERROR, "cannot obtain signal handler\n"));
 #endif /* !ACE_WIN32 */
 	  break;
@@ -609,7 +593,7 @@ ACE_Service_Config::ACE_Service_Config (const char program_name[])
 
 // Signal handling API to trigger dynamic reconfiguration.
 
-int
+void
 ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Service_Config::handle_signal");
@@ -623,7 +607,6 @@ ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
     ACE_DEBUG ((LM_DEBUG, "signal %S occurred\n", sig));
 
   ACE_Service_Config::reconfig_occurred_ = 1;
-  return 0;
 }
 
 // Trigger the reconfiguration process.

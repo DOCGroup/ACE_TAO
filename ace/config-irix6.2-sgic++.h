@@ -16,8 +16,8 @@
 #define ACE_HAS_IRIX62_THREADS
 
 // Needed for the threading stuff?
-#include <sched.h>
-#include <task.h>
+#include /**/ <sched.h>
+#include /**/ <task.h>
 #define PTHREAD_MIN_PRIORITY PX_PRIO_MIN
 #define PTHREAD_MAX_PRIORITY PX_PRIO_MAX
 

@@ -79,15 +79,16 @@ ACE_CString::ACE_CString (const char *s, ACE_Allocator *alloc)
     {
       this->len_ = ACE_OS::strlen (s);
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::strcpy (this->rep_, s);
+      ACE_OS::memcpy (this->rep_, s, this->len_);
+      this->rep_[this->len_] = '\0';
     }
 }
 
 // Constructor that actually copies memory.
 
 ACE_CString::ACE_CString (const char *s, 
-			    size_t len, 
-			    ACE_Allocator *alloc)
+			  size_t len, 
+			  ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
@@ -104,7 +105,7 @@ ACE_CString::ACE_CString (const char *s,
     {
       this->len_ = len;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::strncpy (this->rep_, s, len);
+      ACE_OS::memcpy (this->rep_, s, len);
       this->rep_[len] = '\0'; // Make sure to NUL terminate this!
     }
 }
@@ -207,7 +208,7 @@ ACE_SString::ACE_SString (const ACE_SString &s)
 
   this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
   ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_, this->len_);
-  this->rep_[this->len_] = 0;
+  this->rep_[this->len_] = '\0';
 }
 
 // Default constructor.
@@ -319,7 +320,7 @@ ACE_SString::ACE_SString (const char *s,
     {
       this->len_ = len;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::strncpy (this->rep_, s, len);
+      ACE_OS::memcpy (this->rep_, s, len);
       this->rep_[len] = '\0'; // Make sure to NUL terminate this!
     }
 }

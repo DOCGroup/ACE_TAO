@@ -100,6 +100,7 @@ ACE_HAS_SYSCALL_H			Compiler/platform contains the <sys/syscall.h> file.
 ACE_HAS_SYSENT_H			Platform provides <sysent.h> header
 ACE_HAS_SYSINFO				Platform supports system configuration information
 ACE_HAS_SYSV_IPC			Platform supports System V IPC (most versions of UNIX, but not Win32)
+ACE_HAS_SYSV_SPRINTF			Platform/compiler support the System V sprintf().
 ACE_HAS_SYS_ERRLIST			Platform/compiler supports _sys_errlist symbol
 ACE_HAS_SYS_FILIO_H			Platform provides <sys/filio.h> header
 ACE_HAS_SYS_SIGLIST			Compiler/platform supports sys_siglist array
@@ -157,7 +158,7 @@ ACE_MT_SAFE				Compile using multi-thread libraries
 ACE_NDEBUG				Turns off debugging features
 ACE_NEEDS_HUGE_THREAD_STACKSIZE		Required by platforms with small default stacks.
 ACE_NEEDS_READV				Platform doesn't define readv, so use our own
-ACE_NEEDS_SYSTIME_H			<time.h> doesn't automatically #include <sys/time.h>
+ACE_NEEDS_SYSTIME_H			<time.h> doesn't automatically #include /**/ <sys/time.h>
 ACE_NEEDS_WRITEV			Platform doesn't define writev, so use our own
 ACE_NLOGGING				Turns off the LM_DEBUG and LM_ERROR logging macros...
 ACE_NTRACE				Turns off the tracing feature.
@@ -572,7 +573,7 @@ ACE_HAS_POLL:
 
   Notes:
      #if defined (ACE_HAS_POLL)
-     #include <poll.h>
+     #include /**/ <poll.h>
      #endif /* ACE_HAS_POLL */
 
 ACE_USE_POLL_IMPLEMENTATION:

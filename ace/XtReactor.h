@@ -23,7 +23,7 @@
 #if defined (ACE_HAS_XT)
 
 #define String XtString
-#include <X11/Intrinsic.h>
+#include /**/ <X11/Intrinsic.h>
 #undef String
 
 // Forward decl.

@@ -14,8 +14,8 @@
 #endif /* HPUX */
 
 #define _HPUX_SOURCE
-#include <sys/stdsyms.h>
-#include <sched.h>                              //  pthread.h doesn't include this
+#include /**/ <sys/stdsyms.h>
+#include /**/ <sched.h>                              //  pthread.h doesn't include this
 
 #define ACE_HAS_BROKEN_CONVERSIONS
 

@@ -31,20 +31,20 @@
 // trl 26-July-1996
 
 #ifdef _AFXDLL        // May be defined by MSVC++ IDE
-#include <afxwin.h>   // He is doing MFC
+#include /**/ <afxwin.h>   // He is doing MFC
 #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 #ifdef _WINDLL        // May be defined by MSVC++ IDE
-#include <afxwin.h>   // He is doing MFC
+#include /**/ <afxwin.h>   // He is doing MFC
 #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 
 #ifndef __AFX_H__     // set in afxwin.h
-#include <windows.h>  // if he's not doing MFC, snag this
+#include /**/ <windows.h>  // if he's not doing MFC, snag this
 #endif
 
 // Needed for timeval.
-#include <winsock.h> 
+#include /**/ <winsock.h> 
 
 #define ACE_HAS_UNICODE
 #define ACE_HAS_STL

@@ -52,20 +52,20 @@ typedef char *ACE_MMAP_TYPE;
 #endif /* ACE_HAS_VOIDPTR_MMAP */
 
 #if defined (ACE_HAS_XLI)
-#include <xliuser.h>
+#include /**/ <xliuser.h>
 #endif /* ACE_HAS_XLI */
 
 #if !defined (ACE_HAS_CPLUSPLUS_HEADERS)
-#include <libc.h>
-#include <osfcn.h>
+#include /**/ <libc.h>
+#include /**/ <osfcn.h>
 #endif /* ACE_HAS_CPLUSPLUS_HEADERS */
 
 #if defined (ACE_HAS_SYSENT_H)
-#include <sysent.h>
+#include /**/ <sysent.h>
 #endif /* ACE_HAS_SYSENT_H_*/
 
 #if defined (ACE_HAS_SYS_FILIO_H)
-#include <sys/filio.h>
+#include /**/ <sys/filio.h>
 #endif /* ACE_HAS_SYS_FILIO_H */
 
 #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
@@ -93,25 +93,25 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 #endif /* HPUX */
 
 #if !defined (ACE_LACKS_MALLOC_H)
-#include <malloc.h>
+#include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
 
 #if !defined (ACE_WIN32)
 
 #if !defined (ACE_LACKS_RPC_H)
-#include <rpc/rpc.h>
+#include /**/ <rpc/rpc.h>
 #endif /* ACE_LACKS_RPC_H */
 
 
 // Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
 #if defined (ACE_HAS_GNU_CSTRING_H)
 // Define this file to keep /usr/include/memory.h from being included.
-#include <cstring>
+#include /**/ <cstring>
 #else
 #if defined (VXWORKS)
-#include <string.h>
+#include /**/ <string.h>
 #else
-#include <memory.h>
+#include /**/ <memory.h>
 #endif /* VXWORKS */
 #endif /* ACE_HAS_GNU_CSTRING_H */
 
@@ -135,19 +135,19 @@ extern "C" char *mktemp (char *);
 // inlining...
 
 #if defined (ACE_HAS_REGEX)
-#include <regexpr.h>
+#include /**/ <regexpr.h>
 #endif /* ACE_HAS_REGEX */
 
 #if defined (ACE_HAS_SYSINFO)
-#include <sys/systeminfo.h>
+#include /**/ <sys/systeminfo.h>
 #endif /* ACE_HAS_SYS_INFO */
 
 #if defined (ACE_HAS_SYSCALL_H)
-#include <sys/syscall.h>
+#include /**/ <sys/syscall.h>
 #endif /* ACE_HAS_SYSCALL_H */
 
 #if defined (UNIXWARE)	// See strcasecmp, below
-#include <ctype.h>
+#include /**/ <ctype.h>
 #endif /* UNIXWARE */
 
 // Adapt the weird threading and synchronization routines (which don't

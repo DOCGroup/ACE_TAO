@@ -758,8 +758,8 @@ ACE_Reactor::register_handler (ACE_Event_Handler *handler,
 
 int
 ACE_Reactor::register_handler (ACE_HANDLE handle, 
-                           ACE_Event_Handler *handler, 
-                           ACE_Reactor_Mask mask)
+			       ACE_Event_Handler *handler, 
+			       ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Reactor::register_handler");
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
@@ -1278,6 +1278,9 @@ ACE_Reactor::attach (ACE_HANDLE handle,
                  this->wr_handle_mask_, 
                  this->ex_handle_mask_, 
                  ACE_Reactor::ADD_MASK);
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  handler->reactor (this);
   return 0;
 }
 
@@ -1306,6 +1309,8 @@ ACE_Reactor::detach (ACE_HANDLE handle,
                              this->rd_handle_mask_,
                              this->wr_handle_mask_, 
                              this->ex_handle_mask_);
+  // Reinitialize the Reactor pointer to 0.
+  eh->reactor (0);
   return 0;
 }
 

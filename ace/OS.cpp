@@ -296,7 +296,7 @@ private:
   // Pointer to the singleton instance.
 
 public:
-  static ACE_Recursive_Thread_Mutex lock_;
+  static ACE_Thread_Mutex lock_;
   // Serialize initialization of <key_>.
 };
 
@@ -306,7 +306,7 @@ public:
 ACE_TSS_Cleanup *ACE_TSS_Cleanup::instance_ = 0;
 
 // Serialize initialization of <key_>.
-ACE_Recursive_Thread_Mutex ACE_TSS_Cleanup::lock_;
+ACE_Thread_Mutex ACE_TSS_Cleanup::lock_;
 
 int 
 ACE_TSS_Cleanup::mark_cleanup_i (void)
@@ -342,7 +342,7 @@ ACE_TSS_Cleanup::exit (void *status)
   // in an array without invoking the according destructors.
 
   {
-    ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+    ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
 
     // Prevent recursive deletions
 
@@ -394,7 +394,7 @@ ACE_TSS_Cleanup::exit (void *status)
    // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
    // entries from ACE_TSS_Info table.
    {
-    ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+    ACE_GUARD (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
 
     for (int i = 0; i < index; i++)
       {
@@ -405,10 +405,17 @@ ACE_TSS_Cleanup::exit (void *status)
     this->exit_cleanup_i (); // remove thread id from reference list.
    }
 
+#if defined (ACE_HAS_MFC)	
+  // allow CWinThread-destructor to be invoked from AfxEndThread
+  // _endthreadex() will be called from AfxEndThread so don't exit the
+  // thread now if we are running an MFC thread.
+  // if (ACE_BIT_DISABLED (flags, THR_USE_AFX))
+#endif /* ACE_HAS_MFC */
+  ::_endthreadex ((DWORD) status);
+
 #if 0 
   ::ExitThread ((DWORD) status);
 #endif 
-  ::_endthreadex ((DWORD) status);
 
   /* NOTREACHED */
 }
@@ -427,7 +434,7 @@ ACE_TSS_Cleanup::instance (void)
   if (ACE_TSS_Cleanup::instance_ == 0)
     {
       // Insure that we are serialized!
-      ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, 0);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, 0);
 
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the key once.
@@ -444,7 +451,7 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
 			 void *inst)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::insert");
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
 
   return this->table_.insert (ACE_TSS_Info (key, destructor, inst));
 }
@@ -453,7 +460,7 @@ int
 ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::remove");
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
 
   return this->table_.remove (ACE_TSS_Info (key));
 }
@@ -461,7 +468,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 int 
 ACE_TSS_Cleanup::detach (void *inst)
 { 
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
   
   ACE_TSS_Info *key_info = 0;
   int success = 0;
@@ -482,8 +489,6 @@ ACE_TSS_Cleanup::detach (void *inst)
   
   if (success == 0)
     return -1;
-  else if (ACE_TSS_Cleanup::lock_.get_nesting_level () > 1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "Detach() invoked from ACE_TSS_Cleanup::exit()\n"), 0);
   else if (ref_cnt == 0)
     {
       ::TlsFree (key_info->key_);
@@ -502,7 +507,7 @@ ACE_TSS_Cleanup::detach (ACE_thread_key_t key, ACE_thread_t tid)
 int 
 ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_, -1);
 
   ACE_TSS_Info *key_info = 0;
 
@@ -866,14 +871,27 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #if defined (ACE_HAS_MFC)
       if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
-	{
-	  CWinThread *cwin_thread = 
-	    // These aren't the right arguments (yet).
-	    ::AfxBeginThread ((ThreadFunc) (ACE_Win32_Thread_Adapter::svc_run),
-			      thread_args, 0, 0, flags);
-	  *thr_handle = cwin_thread->m_hThread;
-	  *thr_id = cwin_thread->m_nThreadID;
-	  // Can we delete the memory of cwin_thread here?
+  	{
+  	  CWinThread *cwin_thread = 
+  	    ::AfxBeginThread ((ThreadFunc) (ACE_Win32_Thread_Adapter::svc_run),
+ 			      thread_args, 0, 0, flags | THR_SUSPENDED);
+ 	  // Have to duplicate the handle because
+ 	  // CWinThread::~CWinThread() closes the original handle.
+ 	  *thr_handle = ::DuplicateHandle (::GetCurrentProcess (), 
+ 					   cwin_thread->m_hThread,
+ 					   ::GetCurrentProcess (),
+ 					   thr_handle,
+ 					   0, 
+ 					   TRUE,
+ 					   DUPLICATE_SAME_ACCESS);
+ 
+  	  *thr_id = cwin_thread->m_nThreadID;
+ 	  if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
+	    cwin_thread->ResumeThread ();
+	      // cwin_thread will be deleted in AfxThreadExit()
+	      // Warning: If AfxThreadExit() is called from within the
+	      // thread, ACE_TSS_Cleanup->exit() never gets called !
+
 	}
       else
 #endif /* ACE_HAS_MFC */

@@ -8,7 +8,7 @@
 #define ACE_CONFIG_H
 
 // Needed for timeval.
-#include <winsock.h>
+#include /**/ <winsock.h>
 
 #define ACE_HAS_UNICODE
 

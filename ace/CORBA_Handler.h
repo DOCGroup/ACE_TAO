@@ -25,8 +25,8 @@
 #if defined (ACE_HAS_ORBIX) || defined (ACE_HAS_MT_ORBIX)
 #define EXCEPTIONS
 #define WANT_ORBIX_FDS
-#include <CORBA.h>
-// #include <daemon.hh>
+#include /**/ <CORBA.h>
+// #include /**/ <daemon.hh>
 #undef EXCEPTIONS
 #undef WANT_ORBIX_FDS
 

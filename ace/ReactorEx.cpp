@@ -45,11 +45,14 @@ ACE_ReactorEx::register_handler (ACE_Event_Handler *eh,
   this->handles_[this->active_handles_] = handle;
   this->handlers_[this->active_handles_] = eh;
   this->active_handles_++;
+
+  // Assign *this* <ReactorEx> to the <Event_Handler>.
+  eh->reactorex (this);
   return 0;
 }
 
-// Removes -eh- from the ReactorEx.  Note that the ReactorEx will call
-// eh->get_handle() to extract the underlying I/O handle.
+// Removes <eh> from the <ReactorEx>.  Note that the <ReactorEx> will
+// call eh->get_handle() to extract the underlying I/O handle.
 
 int 
 ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
@@ -59,8 +62,8 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
 
   ACE_HANDLE handle = eh->get_handle ();
 
-  // Go through all the handles looking for -handle-.  Even if we find
-  // it, we continue through the rest of the list.  -handle- could
+  // Go through all the handles looking for <handle>.  Even if we find
+  // it, we continue through the rest of the list.  <handle> could
   // appear multiple times.
   for (size_t index = 0; index < this->active_handles_; index++)
     {
@@ -70,6 +73,9 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
 	    handlers_[index]->handle_close (handle,
 					    ACE_Event_Handler::NULL_MASK);
 
+	  // Reinitial the ReactorEx pointer since we no longer point
+	  // to this one.
+	  handlers_[index]->reactorex (0);
 	  // If there was only one handle, reset the pointer to 0.
 	  if (this->active_handles_ == 1)
 	    {
