@@ -379,10 +379,30 @@ MT_Test::execute (TAO_Naming_Client &root_context)
   // Spawn threads, each of which will be executing svc ().
   int status = this->activate (THR_NEW_LWP | THR_JOINABLE,
                                size_);
+
+  // @@The code below isn't right for cases with error conditions.
+  // The proper thing to do is to make impl objects deregister from
+  // poa in their destructors.
+
   if (status == -1)
     return -1;
   else
-    return this->wait ();
+    this->wait ();
+
+  // Now, unregister our servant from POA before exiting
+  PortableServer::POA_var poa =
+    test_obj_impl._default_POA ();
+
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (&test_obj_impl,
+                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
