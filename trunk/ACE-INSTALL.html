@@ -151,7 +151,7 @@ the distribution with these:
   <li>linuxthreads 0.7? for the glibc-2.0.6 above
 </ul>
 
-And, apply Torbjorn Lindgren's &lt;tl@funcom.com&gt; patch to
+And, apply Torbjörn Lindgren's &lt;tl@funcom.com&gt; patch to
 glibc-2.0.6's LinuxThread:<p>
 
 <pre>
@@ -186,11 +186,11 @@ glibc-2.0.6's LinuxThread:<p>
        sigdelset(&sigwaited, s);
 </pre>
 
-Thanks to James CE Johnson &lt;jjohnson@lads.com&gt;, Torbjorn
+Thanks to James CE Johnson &lt;jjohnson@lads.com&gt;, Torbjörn
 Lindgren &lt;tl@funcom.com&gt;, and Oleg Krivosheev
-&lt;kriol@fnal.gov&gt; for this information; Torbjorn supplied the
-above patch.  With the above configuration, Jame and Torbjorn report
-that only ACE Thread_Manager_Test seg faults!<p>
+&lt;kriol@fnal.gov&gt; for this information; Torbjörn supplied the
+above patch.  With the above configuration, Jame and Torbjörn report
+that only ACE Thread_Manager_Test seg faults on Intel platforms!
 
 Without the following patch from Scott Snyder &lt;sss@d0linux01.fnal.gov&gt;,
 egcs 1.0.1 on Linux won't be able to compile
@@ -238,18 +238,13 @@ diff -c -r1.1.1.5 method.c
     else
 </pre>
 
-With RedHat 5.0 on Alpha CPUs, two system patches are necessary.
-Even with them, threads are not stable.  It's best to use ACE
-without threads (<code>include/makeinclude/platform_linux.GNU</code>
-and <code>ace/config-linux.h</code>) until thread support in
-glibc 2.0 for Alpha stabilizes.<p>
-
-The first patch is for the GNU assembler, gas.  It is only
-necessary on Alphas, and only when <code>-g</code> is used.
-If you don't want to patch the assembler, you can enable the
-SUPPRESS_DASH_G option in the <code>platform_linux.GNu</code>.
-Otherwise, this patch can be applied to the binutils gas
-source.  Then, rebuild and install as.<p>
+With RedHat 5.0 on Alpha CPUs, two system patches and one
+glibc-2.0.6/linuxthreads patch are necessary in addition to the above.
+The first patch is for the GNU assembler, gas.  It is only necessary
+on Alphas, and only when <code>-g</code> is used.  If you don't want
+to patch the assembler, you can enable the SUPPRESS_DASH_G option in
+the <code>platform_linux.GNu</code>.  Otherwise, this patch can be
+applied to the binutils gas source.  Then, rebuild and install as.<p>
 
 <pre>
 //--- ecoff.c.ORIGINAL	Mon May 26 12:32:47 1997
@@ -293,6 +288,20 @@ to avoid compilation errors:<p>
 // typedef void (*__kernel_sighandler_t)(int);
 </pre><p>
 
+Finally, on Alpha only, I removed wrapsyscall from the LinuxThreads
+library by patching linuxthreads/Makefile:
+
+<pre>
+36c36
+&lt;                      semaphore wrapsyscall
+---
+&gt;                      semaphore # wrapsyscall
+</pre>
+
+With that and the above configuration/pathes, all ACE tests run
+perfectly cleanly on Alpha!<p>
+
+
 <DT> <B> SCO UNIX </B> <BR><BR>
 
 <DD> ACE has been ported to SCO UNIX using the GNU g++ 2.7.2 compiler.
@@ -329,32 +338,28 @@ pthreads</A>.<P>
 </UL>
 <P>
 
-<DT> <B> OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0a) </B> <BR><BR>
+<DT> <B>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</B> <BR><BR>
 
-<DD> The current OSF/1 C++ 5.4 compiler still seems to have problems
-with ACE's templates. It compiles the lib and test programs, although
-giving warnings about template usage.  Most tests run, some dump core.
-Hopefully newer compiler releases will alleviate these problems.<P>
+<DD> The OSF/1 C++ 5.4 through 5.7 compilers have problems with ACE's
+templates.  They compile the lib and most of the test programs,
+although giving warnings about template usage.  Most tests run, some
+dump core.<P>
 
 CXX 6.0 is _much_ improved in this regard.  Please note that
-include/makeinclude/platform_osf1_4.0.GNU has a WARNING_FLAGS
-macro that is disabled by default, because most users probably
-don't have 6.0 yet.  If you do, enable that macro definition
-by either adding CXX_VER=POST_5X to your gmake invocation, or
-editing your include/makeinclude/platform_macros.GNU file.<P>
-
-All of the tests in ACE_wrappers/tests run successfully with
-CXX 6.0 on the version of Digital UNIX 4.0 that we tested with
-at Washington U.  There appear to be variations in Digital UNIX 4.0,
-however, because users elsewhere report test failures with the
-same version of CXX 6.0.<P>
+<code>include/makeinclude/platform_osf1_4.0.GNU</code> has a
+<strong><code>WARNING_FLAGS</code></strong> macro that is disabled by
+default, to support users who don't have 6.0 yet.  If you do, enable
+that macro definition by either adding CXX_VER=POST_5X to your gmake
+invocation, or editing your include/makeinclude/platform_macros.GNU
+file.  All of the tests in ACE_wrappers/tests run successfully with
+CXX 6.0 and CXX 6.1.<P>
 
 GNU gcc 2.7.2.1 compiles without problems. All tests run (besides
 minor problems).  Thanks to Thilo Kielmann &lt<A
 HREF="mailto:kielmann@informatik.uni-siegen.de">
 kielmann@informatik.uni-siegen.de</A>&gt and David Trumble &lt<A
 HREF="mailto:trumble@cvg.enet.dec.com">trumble@cvg.enet.dec.com</A>&gt
-for help with this port. <P>
+for help with this port.<P>
 
 <DT><B> UnixWare </B> <BR><BR>
 <DD>
