@@ -55,6 +55,7 @@ ACE_SOCK_Dgram::recv (void *buf,
 				     (sockaddr *) saddr,
                                      &addr_len);
   addr.set_size (addr_len);
+  addr.set_type (((sockaddr_in *) saddr)->sin_family);
   return status;
 }
 
@@ -104,6 +105,7 @@ ACE_SOCK_Dgram::recv (iovec buffers[],
                                      overlapped,
                                      func);
   addr.set_size (addr_len);
+  addr.set_type (((sockaddr_in *) saddr)->sin_family);
   return status;
 }
 

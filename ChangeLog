@@ -1,3 +1,22 @@
+Wed Nov  5 11:58:04 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp,
+  	* ace/Asynch_Connector.cpp,
+	* ace/INET_Addr.cpp,
+  	* ace/OS.h,
+    	* ace/OS.i,
+      	* ace/Sock_Connect.n,  
+      	* ace/Sock_Connect.i,
+	* ace/SOCK_Dgram.i,  
+	* ace/SOCK_Dgram.cpp,
+  	* ace/SOCK_Dgram_Mcast.h,  
+  	* ace/SOCK_Dgram_Mcast.cpp,
+	* ace/SOCK_SEQPACK_Acceptor.cpp,
+	* ace/OS_NS_sys_socket.{h,inl}:
+	  Finished adding IPv6 support to ACE.  The main addition is
+ 	  support for UDP multicast over IPv6 for Linux.  Thanks to Brian
+ 	  Buesker <bbuesker@qualcomm.com> for contributing this.
+
 Wed Nov  5 15:28:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Multihomed_INET_Addr_Test.cpp:
