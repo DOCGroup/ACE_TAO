@@ -1,3 +1,27 @@
+Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+          Added check for getifaddrs() which sets ACE_HAS_GETIFADDRS if it
+	  does not exist.
+
+        * configure.ac:
+        * m4/config_h.m4:
+        * ace/OS_NS_Thread.inl:
+        * ace/README:
+          Added new config knob ACE_LACKS_RWLOCKATTR_PSHARED for those
+          systems which support thread but not processes scope rwlocks. 
+          This fixes bugzilla bug 1841.
+        
+        * configure.ac:
+        * m4/config_h.m4:
+        * ace/README:
+          Removed check for pthread_suspend() and pthread_continue() in
+          ACE_HAS_PTHREADS_UNIX98_EXT test as these interfaces were not
+          part of the Version 2 of the Single Unix Specification
+          (aka UNIX98).
+          This fixes bugzilla bug 1840.
+
 Wed Jun 16 16:51:52 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_Context.h: Changed include of os_include/os_pthread.h to
@@ -62,25 +86,6 @@ Wed Jun 16 12:48:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/OS_Test.cpp: Added access_test() to test ACE_OS::access()
 	  features.
-
-Wed Jun 16 07:18:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
-
-	* configure.ac:
-	* m4/config_h.m4:
-	* ace/OS_NS_Thread.inl:
-	* ace/README:
-	  Added new config knob ACE_LACKS_RWLOCKATTR_PSHARED for those
-	  systems which support thread but not processes scope rwlocks. 
-	  This fixes bugzilla bug 1841.
-	
-	* configure.ac:
-	* m4/config_h.m4:
-	* ace/README:
-	  Removed check for pthread_suspend() and pthread_continue() in
-	  ACE_HAS_PTHREADS_UNIX98_EXT test as these interfaces were not
-	  part of the Version 2 of the Single Unix Specification
-	  (aka UNIX98).
-	  This fixes bugzilla bug 1840.
 
 Wed Jun 16 06:58:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -8823,3 +8828,7 @@ Thu Jan 15 08:14:08 2004  Chad Elliott  <elliott_c@ociweb.com>
           handled properly.
           Removed the use of the idlpreprocessor keyword in favor of the
           verbatim used to get the same effect.
+
+Local Variables:
+add-log-time-format: current-time-string
+End:

@@ -3299,6 +3299,9 @@ AC_CHECK_FUNC([gethostent],
   ,
   [AC_DEFINE([ACE_LACKS_GETHOSTENT])])
 
+AC_CHECK_FUNC([getifaddrs],
+  [AC_DEFINE([ACE_HAS_GETIFADDRS])],)
+
 AC_CHECK_FUNC([difftime],
   ,
   [AC_DEFINE([ACE_LACKS_DIFFTIME])])
@@ -4115,7 +4118,9 @@ dnl Check for Unix98 pthreads extensions
   AC_CHECK_FUNC([pthread_rwlock_trywrlock],,)
   AC_CHECK_FUNC([pthread_rwlockattr_init],,)
   AC_CHECK_FUNC([pthread_rwlockattr_destroy],,)
-  AC_CHECK_FUNC([pthread_rwlockattr_setpshared],,)
+  AC_CHECK_FUNC([pthread_rwlockattr_setpshared],
+    ,
+    [AC_DEFINE([ACE_LACKS_RWLOCKATTR_PSHARED])])
 
   if test "$ace_cv_struct_pthread_rwlock_t" = yes &&
      test "$ace_cv_struct_pthread_rwlockattr_t" = yes &&
@@ -4130,8 +4135,7 @@ dnl Check for Unix98 pthreads extensions
      test "$ac_cv_func_pthread_rwlock_tryrdlock" = yes &&
      test "$ac_cv_func_pthread_rwlock_trywrlock" = yes &&
      test "$ac_cv_func_pthread_rwlockattr_init" = yes &&
-     test "$ac_cv_func_pthread_rwlockattr_destroy" = yes &&
-     test "$ac_cv_func_pthread_rwlockattr_setpshared" = yes; then
+     test "$ac_cv_func_pthread_rwlockattr_destroy" = yes; then
     AC_DEFINE([ACE_HAS_PTHREADS_UNIX98_EXT])
   fi  dnl Unix98 pthreads extensions
 

@@ -445,6 +445,9 @@ AH_TEMPLATE([ACE_HAS_EXCEPTIONS],[Compiler supports C++ exception handling.])
 
 AH_TEMPLATE([ACE_HAS_FL],[Platform has Fast-Light (FL) toolkit installed.])
 
+AH_TEMPLATE([ACE_HAS_GETIFADDRS],
+[Platform supports getifaddrs() / freeifaddrs().])
+
 AH_TEMPLATE([ACE_HAS_GETPAGESIZE],
 [Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must
 be defined, except on Win32).])
@@ -605,8 +608,7 @@ AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT7],a
 AH_TEMPLATE([ACE_HAS_PTHREADS_STD],[Platform supports POSIX.1c-1995 threads])
 
 AH_TEMPLATE([ACE_HAS_PTHREADS_UNIX98_EXT],
-[Platform has the UNIX98 extensions to Pthreads (suspend, continue,
-   rwlocks)])
+[Platform has the UNIX98 extensions to Pthreads (rwlocks)])
 
 AH_TEMPLATE([ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP],
 [Platform has pthread_condattr_setkind_np().])
@@ -1088,6 +1090,9 @@ AH_TEMPLATE([ACE_LACKS_RLIMIT],
 
 AH_TEMPLATE([ACE_LACKS_RLIMIT_PROTOTYPE],
 [Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)])
+
+AH_TEMPLATE([ACE_LACKS_RWLOCKATTR_PSHARED],
+[Platform lacks pthread_rwlockattr_setpshared().])
 
 AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_NEW],
 [Compiler doesn't support placement operator new(size_t, void *).])
