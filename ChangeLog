@@ -6,7 +6,7 @@ Fri Jul 23 10:19:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  completion has been posted and prior to exiting this method
 	  successfully.  Once the completion is posted, the proactor
 	  becomes response for managing the asynch_timer memory.
-	  Addresses memory access violations revealved by a
+	  Addresses memory access violations revealed by a
 	  Proactor_Timer_Test failure.  Thanks to Johnny for pointing out
 	  the failure.
 
