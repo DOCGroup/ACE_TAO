@@ -19,7 +19,6 @@ int
 initialize (void)
 {
 #if defined (VXWORKS)
-    hostAdd ("mv2604d", "130.38.183.132");
 #if defined (VME_DRIVER)
     STATUS status = vmeDrv ();
     if (status != OK)
@@ -60,43 +59,27 @@ do_priority_inversion_test (Task_State &ts)
                         0,
                         priority);
 #endif
-  // Now activate the high priority client.
 
-  // @@ The ifdef here is temporarily placed here until
-  // I figure out how to map NT's thread priorities
-  // into pthread's priorities.
-#if defined (ACE_THR_PRI_FIFO_DEF)
+  // Now activate the high priority client.
   priority = ACE_THR_PRI_FIFO_DEF;
-#else
-  priority = ACE_DEFAULT_THREAD_PRIORITY;
-#endif
 
   if (high_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
                                      1,
                                      0,
                                      priority) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p; priority is %d\n",
+                  "activate failed", priority));
+    }
 
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "activate failed"));
-
-  // @@ Sumedh, can you please document why we need this VxWorks
-  // #ifdef?  Is there a way to make this more general so we don't
-  // need the #ifdef?  In other words, please check with David or
-  // Brian about this.
-
-#if !defined (VXWORKS)
-  priority =
-    ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                         priority,
-                                         ACE_SCOPE_THREAD);
-#else
-  priority = 65;
-#endif /* !defined (VXWORKS) */
+  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                  priority,
+                                                  ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d clients with low priority\n",
-              ts.thread_count_ - 1));
+              "Creating %d clients with low priority of %d\n",
+              ts.thread_count_ - 1, priority));
 
   for (u_int i = 0; i < ts.thread_count_ - 1; i++)
     {
@@ -112,10 +95,13 @@ do_priority_inversion_test (Task_State &ts)
                                         1,
                                         1,
                                         priority) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "activate failed"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p; priority is %d\n",
+                      "activate failed", priority));
+        }
     }
+
     // Wait for all the threads to exit.
     ACE_Thread_Manager::instance ()->wait ();
 #if defined (VXWORKS)
@@ -123,13 +109,13 @@ do_priority_inversion_test (Task_State &ts)
                     "High priority client latency : %d usec\n"
                     "Low priority client latency : %d usec\n",
                     high_priority_client.get_high_priority_latency (),
-		    low_priority_client.get_low_priority_latency ());
+                    low_priority_client.get_low_priority_latency ());
 #elif defined (CHORUS)
     ACE_OS::printf ("Test done.\n"
                     "High priority client latency : %u usec\n"
                     "Low priority client latency : %u usec\n",
                     high_priority_client.get_high_priority_latency (),
-		    low_priority_client.get_low_priority_latency ());
+                    low_priority_client.get_low_priority_latency ());
 #else /* !defined (CHORUS) */
     ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                 "High priority client latency : %f msec, jitter: %f msec\n"
@@ -146,6 +132,7 @@ do_priority_inversion_test (Task_State &ts)
  ACE_DEBUG ((LM_DEBUG, "(%t) utilization task performed %g computations\n",
                         util_thread.get_number_of_computations ()));
 #endif
+
  return 0;
 }
 
@@ -159,30 +146,38 @@ do_thread_per_rate_test (Task_State &ts)
     Client CB_5Hz_client (&ts);
     Client CB_1Hz_client (&ts);
 
-    ACE_Sched_Priority priority =
-      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                      ACE_SCOPE_THREAD);
+    ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
 
-    // VxWorks priority of 0 causes problems.
-    priority = 10;
     ACE_DEBUG ((LM_DEBUG, "Creating 40 Hz client with priority %d\n", priority));
-    if (CB_40Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
+    if (CB_40Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
     ACE_DEBUG ((LM_DEBUG, "Creating 20 Hz client with priority %d\n", priority));
-    if (CB_20Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
+    if (CB_20Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
     ACE_DEBUG ((LM_DEBUG, "Creating 10 Hz client with priority %d\n", priority));
-    if (CB_10Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
+    if (CB_10Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
     ACE_DEBUG ((LM_DEBUG, "Creating 5 Hz client with priority %d\n", priority));
-    if (CB_5Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
+    if (CB_5Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
     ACE_DEBUG ((LM_DEBUG, "Creating 1 Hz client with priority %d\n", priority));
-    if (CB_1Hz_client.activate (THR_BOUND, 1, 0, priority++) == -1)
+    if (CB_1Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 
     // Wait for all the threads to exit.
