@@ -32,13 +32,9 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
 
   size_t length;
   if (s != 0)
-  {
     length = ACE_OS::strlen (s);
-  }
   else
-  {
     length = 0;
-  }
 
   this->set (s, length, release);
 }
@@ -125,9 +121,7 @@ ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
 
   // Check for identify.
   if (this != &s)
-  {
     this->set (s.rep_, s.len_, 1);
-  }
 
   return *this;
 }
@@ -137,13 +131,9 @@ ACE_String_Base<CHAR>::set (const CHAR *s, int release)
 {
   size_t length;
   if (s != 0)
-  {
     length = ACE_OS::strlen (s);
-  }
   else
-  {
     length = 0;
-  }
 
   this->set (s, length, release);
 }
@@ -232,29 +222,16 @@ ACE_String_Base<CHAR>::operator < (const ACE_String_Base<CHAR> &s) const
 
   size_t smaller_length = 0;
   if (this->len_ < s.len_)
-  {
-	smaller_length = this->len_;
-  }
+    smaller_length = this->len_;
   else
-  {
-	smaller_length = s.len_;
-  }
+    smaller_length = s.len_;
 
   if (this->rep_ && s.rep_)
-  {
     return ACE_OS::strncmp (this->rep_, s.rep_, smaller_length) < 0;
-  }
+  else if (s.rep_) 
+    return 1;
   else 
-  {
-    if (s.rep_) 
-    {
-    	return 1;
-    }
-    else 
-    {
-	return 0;
-    }
-  }
+    return 0;
 }
 
 // Greater than comparison operator.
@@ -266,29 +243,16 @@ ACE_String_Base<CHAR>::operator > (const ACE_String_Base &s) const
   size_t smaller_length = 0;
 
   if (this->len_ < s.len_)
-  {
-	 smaller_length = this->len_;
-  }
+    smaller_length = this->len_;
   else 
-  {
-	 smaller_length = s.len_;
-  }
-
+    smaller_length = s.len_;
 
   if (this->rep_ && s.rep_)
-  {
     return ACE_OS::strncmp (this->rep_, s.rep_, smaller_length) > 0;
-  }
-  else
-  {
-    if (this->rep_)
-    {
-	return 1;
-    }
-    else {
-	return 0;
-    }
-  }
+  else if (this->rep_)
+    return 1;
+  else 
+    return 0;
 }
 
 
@@ -313,34 +277,21 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
   size_t smaller_length = 0;
 
   if (this->len_ < s.len_)
-  {
-	smaller_length = this->len_;
-  }
+    smaller_length = this->len_;
   else 
-  {
-	smaller_length = s.len_;
-  }
+    smaller_length = s.len_;
 
   int result = ACE_OS::strncmp (this->rep_,
                                 s.rep_,
                                 smaller_length);
 
   if (result != 0 || s.len_ == this->len_)
-  {
     return result;
-  }
-  else
-  {
+  else if (this->len_ > s.len_)
     // we need to differentiate based on length
-    if (this->len_ > s.len_)
-    {
-      return (this->rep_[smaller_length] - '\0');
-    }
-    else
-    {
-      return ('\0' - s.rep_[smaller_length]);
-    }
-  }
+    return (this->rep_[smaller_length] - '\0');
+  else
+    return ('\0' - s.rep_[smaller_length]);
 }
 
 template <class CHAR> ACE_INLINE ssize_t
@@ -350,13 +301,9 @@ ACE_String_Base<CHAR>::find (const CHAR *s, size_t pos) const
   size_t len = ACE_OS::strlen (s);
   CHAR *pointer = ACE_OS::strnstr (substr, s, len);
   if (pointer == 0)
-  {
     return ACE_String_Base<CHAR>::npos;
-  }
   else
-  {
     return pointer - this->rep_;
-  }
 }
 
 template <class CHAR> ACE_INLINE ssize_t
@@ -365,13 +312,9 @@ ACE_String_Base<CHAR>::find (CHAR c, size_t pos) const
   CHAR *substr = this->rep_ + pos;
   CHAR *pointer = ACE_OS::strnchr (substr, c, this->len_ - pos);
   if (pointer == 0)
-  {
     return ACE_String_Base<CHAR>::npos;
-  }
   else
-  {
     return pointer - this->rep_;
-  }
 }
 
 template <class CHAR> ACE_INLINE ssize_t
@@ -392,17 +335,11 @@ template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
 {
   if (pos == npos || pos > ACE_static_cast (ssize_t, this->len_))
-  {
     pos = ACE_static_cast (ssize_t, this->len_);
-  }
 
   for (ssize_t i = pos - 1; i >= 0; i--)
-  {
     if (this->rep_[i] == c)
-    {
       return i;
-    }
-  }
 
   return ACE_String_Base<CHAR>::npos;
 }
@@ -410,10 +347,10 @@ ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
 template <class CHAR> ACE_INLINE u_long
 ACE_String_Base<CHAR>::hash (void) const
 {
-  return ACE::hash_pjw (
-    (ACE_reinterpret_cast (char *, ACE_const_cast (CHAR *,
-                                                   this->rep_))),
-     this->len_ * sizeof (CHAR));
+  return ACE::hash_pjw ((ACE_reinterpret_cast (char *,
+                                               ACE_const_cast (CHAR *,
+                                                               this->rep_))),
+                        this->len_ * sizeof (CHAR));
 }
 
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
