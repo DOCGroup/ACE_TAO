@@ -65,14 +65,15 @@ TAO_TypeCodeFactory_i::create_union_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
+  
+  if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
                         CORBA::TypeCode::_nil ());
     }
 
-  if (id != 0 && !this->valid_id (id))
+  if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
@@ -301,14 +302,14 @@ TAO_TypeCodeFactory_i::create_enum_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
+  if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
                         CORBA::TypeCode::_nil ());
     }
 
-  if (id != 0 && !this->valid_id (id))
+  if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
@@ -521,7 +522,7 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
 {
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
                         CORBA::TypeCode::_nil ());
     }
@@ -834,7 +835,7 @@ TAO_TypeCodeFactory_i::create_tc_common (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
+  if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
@@ -844,7 +845,7 @@ TAO_TypeCodeFactory_i::create_tc_common (
   // Repo id may not be null for object or native type.
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
                         CORBA::TypeCode::_nil ());
     }
@@ -944,16 +945,14 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
+  if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
                         CORBA::TypeCode::_nil ());
     }
 
-  // Repo id may not be null for an exception.
-  if ((id == 0 && kind == CORBA::tk_except)
-      || (id != 0 && !this->valid_id (id)))
+  if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
@@ -1051,14 +1050,13 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
+  if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
                         CORBA::TypeCode::_nil ());
     }
 
-  // Repo id may not be null for valueboxtype.
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
@@ -1122,14 +1120,13 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (name != 0 && !this->valid_name (name))
+  if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
                         CORBA::TypeCode::_nil ());
     }
 
-  // Repo id may not be null for valueboxtype.
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
@@ -1226,6 +1223,12 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 CORBA::Boolean
 TAO_TypeCodeFactory_i::valid_name (const char *name)
 {
+  // Empty string is valid for name.
+  if (*name == '\0')
+    {
+      return 1;
+    }
+    
   if (!isalpha (*name))
     {
       return 0;
