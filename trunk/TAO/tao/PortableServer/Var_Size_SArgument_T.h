@@ -40,7 +40,7 @@ namespace TAO
     S const & arg (void) const;
 
   private:
-    S * x_;
+    S x_;
   };
 
   /**
@@ -63,7 +63,7 @@ namespace TAO
     S & arg (void);
 
   private:
-    S * x_;
+    S x_;
   };
 
   /**

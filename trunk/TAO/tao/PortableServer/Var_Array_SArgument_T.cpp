@@ -17,7 +17,8 @@ TAO::In_Var_Array_SArgument_T<S,
                               S_slice,
                               S_forany>::demarshal (TAO_InputCDR & cdr)
 {
-  return cdr >> this->x_;
+  S_forany tmp (this->x_);
+  return cdr >> tmp;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -29,7 +30,8 @@ TAO::In_Var_Array_SArgument_T<S,
                               S_forany>::interceptor_param (
     Dynamic::Parameter & p)
 {
-  p.argument <<= this->x_;
+
+  p.argument <<= S_forany (this->x_);
   p.mode = CORBA::PARAM_IN;
 }
 
@@ -52,7 +54,8 @@ TAO::Inout_Var_Array_SArgument_T<S,
                                  S_slice,
                                  S_forany>::demarshal (TAO_InputCDR & cdr)
 {
-  return cdr >> this->x_;
+  S_forany tmp (this->x_);
+  return cdr >> tmp;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -62,7 +65,7 @@ void
 TAO::Inout_Var_Array_SArgument_T<S, S_slice, S_forany>::interceptor_param (
   Dynamic::Parameter & p)
 {
-  p.argument <<= this->x_;
+  p.argument <<= S_forany (this->x_);
   p.mode = CORBA::PARAM_INOUT;
 }
 

@@ -14,7 +14,8 @@ ACE_INLINE
 S_slice const *
 TAO::In_Fixed_Array_SArgument_T<S, S_slice, S_forany>::arg (void) const
 {
-  return this->x_.in ();
+  S_forany tmp (this->x_);
+  return tmp.in ();
 }
 
 // ===========================================================================
@@ -34,7 +35,8 @@ TAO::Inout_Fixed_Array_SArgument_T<S,
                                    S_slice,
                                    S_forany>::arg (void)
 {
-  return this->x_.inout ();
+  S_forany tmp (this->x_);
+  return tmp.inout ();
 }
 
 // ===========================================================================
@@ -53,7 +55,8 @@ TAO::Out_Fixed_Array_SArgument_T<S,
                                  S_slice,
                                  S_forany>::arg (void)
 {
-  return this->x_.out ();
+  S_forany tmp (this->x_);
+  return tmp.out ();
 }
 
 // ===========================================================================

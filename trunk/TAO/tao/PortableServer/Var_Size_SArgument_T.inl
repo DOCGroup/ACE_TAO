@@ -1,11 +1,13 @@
+// -*- C++ -*-
+//
 // $Id$
 
 
 template<typename S>
-const S &
+S const &
 TAO::In_Var_Size_SArgument_T<S>::arg (void) const
 {
-  return *this->x_;
+  return this->x_;
 }
 
 // ==========================================================================
@@ -19,7 +21,7 @@ template<typename S>
 S &
 TAO::Inout_Var_Size_SArgument_T<S>::arg (void)
 {
-  return *this->x_;
+  return this->x_;
 }
 
 // ==========================================================================
