@@ -168,9 +168,11 @@ TAO_OutStream *os = this->ctx_->stream ();
     bt = this->ctx_->alias ();
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ())
-        << ","
-        << bt->nested_type_name (this->ctx_->scope (), "_var");
+    {
+      *os << bt->nested_type_name (this->ctx_->scope ())
+        << ",";
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+    }
   else
     *os << bt->name ()
         << "," << bt->name () << "_var";
