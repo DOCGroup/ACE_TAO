@@ -8,10 +8,9 @@
 //    orbsvcs
 //
 // = FILENAME
-//    Reconfig_Sched_Utils.i
+//    Reconfig_Sched_Utils_T.i
 //
 // = AUTHOR
 //     Chris Gill <cdgill@cs.wustl.edu>
 //
 // ============================================================================
-
