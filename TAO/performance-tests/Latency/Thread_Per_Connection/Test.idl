@@ -21,6 +21,6 @@ module Test
     Timestamp test_method (in Timestamp send_time);
 
     /// Shutdown the ORB
-    void shutdown ();
+    oneway void shutdown ();
   };
 };

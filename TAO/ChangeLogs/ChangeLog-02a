@@ -1,3 +1,8 @@
+Sat Mar  9 16:22:25 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* performance-tests/Latency/Thread_Per_Connection/Test.idl:
+	  Make shutdown() method oneway.
+
 Fri Mar  8 19:01:33 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/Makefile:
