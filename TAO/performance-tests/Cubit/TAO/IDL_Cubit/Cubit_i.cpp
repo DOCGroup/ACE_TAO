@@ -52,7 +52,10 @@ static const char *Cubit_i_Timeprobe_Description[] =
   "Cubit_i::cube_long_sequence - end",
 
   "Cubit_i::cube_octet_sequence - start",
-  "Cubit_i::cube_octet_sequence - end"
+  "Cubit_i::cube_octet_sequence - end",
+
+  "Cubit_i::cube_many_sequence - start",
+  "Cubit_i::cube_many_sequence - end"
 };
 
 enum
@@ -83,7 +86,10 @@ enum
   CUBIT_I_CUBE_LONG_SEQUENCE_END,
 
   CUBIT_I_CUBE_OCTET_SEQUENCE_START,
-  CUBIT_I_CUBE_OCTET_SEQUENCE_END
+  CUBIT_I_CUBE_OCTET_SEQUENCE_END,
+
+  CUBIT_I_CUBE_MANY_SEQUENCE_START,
+  CUBIT_I_CUBE_MANY_SEQUENCE_END
 };
 
 // Setup Timeprobes
@@ -285,6 +291,39 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
   CORBA::ULong i = 0;
   CORBA::Octet x = input[0];
   output[i] = x * x * x;
+#endif
+}
+
+void 
+Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
+                             Cubit::many_seq_out output,
+                             CORBA::Environment &)
+{
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_MANY_SEQUENCE_START);
+
+  if (output.ptr () == 0)
+    output = new Cubit::many_seq (input.length ());
+
+  output->length (input.length ());
+
+#if 0
+  for (CORBA::ULong i = 0; i < input.length (); ++i)
+    {
+      const Cubit::Many &in = input[i];
+      Cubit::Many &out = output[i];
+
+      out.o = in.o * in.o * in.o;
+      out.s = in.s * in.s * in.s;
+      out.l = in.l * in.l * in.l;
+    }
+#else
+  CORBA::ULong i = 0;
+  const Cubit::Many &in = input[i];
+  Cubit::Many &out = output[i];
+
+  out.o = in.o * in.o * in.o;
+  out.s = in.s * in.s * in.s;
+  out.l = in.l * in.l * in.l;
 #endif
 }
 
