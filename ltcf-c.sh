@@ -1,7 +1,5 @@
 #### This script is meant to be sourced by ltconfig.
 
-# $Id$
-
 # ltcf-c.sh - Create a C compiler specific configuration
 #
 # Copyright (C) 1996-2000 Free Software Foundation, Inc.
@@ -92,7 +90,7 @@ EOF
       allow_undefined_flag=unsupported
       # Joseph Beckenbach <jrb3@best.com> says some releases of gcc
       # support --undefined.  This deserves some investigation.  FIXME
-      archive_cmds='$CC -nostart $libobjs $deplibs $linker_flags ${wl}-soname $wl$soname -o $lib'
+      archive_cmds='$CC -nostart $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname -o $lib'
     else
       ld_shlibs=no
     fi
@@ -172,6 +170,7 @@ EOF
   netbsd*)
     if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
       archive_cmds='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
+      wlarc=
     else
       archive_cmds='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname -o $lib'
       archive_expsym_cmds='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname ${wl}-retain-symbols-file $wl$export_symbols -o $lib'
@@ -192,8 +191,8 @@ EOF
 
 EOF
     elif $LD --help 2>&1 | egrep ': supported targets:.* elf' > /dev/null; then
-      archive_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-soname $wl$soname -o $lib'
-      archive_expsym_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-soname $wl$soname ${wl}-retain-symbols-file $wl$export_symbols -o $lib'
+      archive_cmds='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname -o $lib'
+      archive_expsym_cmds='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname ${wl}-retain-symbols-file $wl$export_symbols -o $lib'
     else
       ld_shlibs=no
     fi
@@ -519,7 +518,7 @@ fi
 
 ## Compiler Characteristics: PIC flags, static flags, etc
 if test "X${ac_cv_prog_cc_pic+set}" = Xset; then
-  echo $ac_n "(cached) $ac_c" 1>&6
+  :
 else
   ac_cv_prog_cc_pic=
   ac_cv_prog_cc_shlib=
@@ -642,4 +641,49 @@ else
   ac_cv_prog_cc_pic="$ac_cv_prog_cc_pic -DPIC"
 fi
 
-
+need_lc=yes
+if test "$enable_shared" = yes && test "$with_gcc" = yes; then
+  case "$archive_cmds" in
+  *'~'*)
+    # FIXME: we may have to deal with multi-command sequences.
+    ;;
+  '$CC '*)
+    # Test whether the compiler implicitly links with -lc since on some
+    # systems, -lgcc has to come before -lc. If gcc already passes -lc
+    # to ld, don't add -lc before -lgcc.
+    echo $ac_n "checking whether -lc should be explicitly linked in... $ac_c" 1>&6
+    if eval "test \"`echo '$''{'ac_cv_archive_cmds_needs_lc'+set}'`\" = set"; then
+      echo $ac_n "(cached) $ac_c" 1>&6
+      need_lc=$ac_cv_archive_cmds_needs_lc
+    else
+      $rm conftest*
+      echo "static int dummy;" > conftest.$ac_ext
+      if { (eval echo ltcf-c.sh:need_lc: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>conftest.err; }; then
+	# Append any warnings to the config.log.
+	cat conftest.err 1>&5
+	soname=conftest
+	lib=conftest
+	libobjs=conftest.o
+	deplibs=
+	wl=$ac_cv_prog_cc_wl
+	compiler_flags=-v
+	linker_flags=-v
+	verstring=
+	output_objdir=.
+	libname=conftest
+	save_allow_undefined_flag=$allow_undefined_flag
+	allow_undefined_flag=
+	if { (eval echo ltcf-c.sh:need_lc: \"$archive_cmds\") 1>&5; (eval $archive_cmds) 2>&1 | grep " -lc " 1>&5 ; }; then
+	  need_lc=no
+	fi
+	allow_undefined_flag=$save_allow_undefined_flag
+      else
+	cat conftest.err 1>&5
+      fi
+    fi
+    $rm conftest*
+    echo "$ac_t$need_lc" 1>&6
+    ;;
+  esac
+fi
+ac_cv_archive_cmds_needs_lc=$need_lc
