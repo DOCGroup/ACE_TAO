@@ -1,3 +1,11 @@
+Wed Aug 19 17:15:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp: Moved the registration of the SIGHUP
+ 	  signal from the constructor to the open() method since otherwise
+ 	  it'll never get called in the typical usecase...  Thanks to
+ 	  Susan Liebeskind <susan.liebeskind@gtri.gatech.edu> for
+ 	  reporting this.
+
 Wed Aug 19 14:11:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.30 released.
