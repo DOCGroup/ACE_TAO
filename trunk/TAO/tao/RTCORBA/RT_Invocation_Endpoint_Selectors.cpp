@@ -16,6 +16,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "RT_Endpoint_Utils.h"
 #include "RT_Protocols_Hooks.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, RT_Invocation_Endpoint_Selectors, "$Id$")
 
@@ -327,6 +328,15 @@ TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation,
               if (endp->priority () <= max_priority
                   && endp->priority () >= min_priority)
                 {
+                  if (TAO_debug_level > 1)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "(%P|%t) TAO Endpoint Selection: priority = %d, band = [%d %d], endpoint = %d\n",
+                                  p,
+                                  min_priority,
+                                  max_priority,
+                                  endp->priority ()));
+                    }
                   endpoint = endp;
                   break;
                 }
