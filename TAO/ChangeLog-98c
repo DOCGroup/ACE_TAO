@@ -1,30 +1,35 @@
+Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/Event_Supplier/Makefile:
+          cleaned up to work on both Solaris and VxWorks.
+
 Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp: 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
-	  The default constructor for unions is now generated on the .cpp
-	  file, this removes a warning in some versions of g++.
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          The default constructor for unions is now generated on the .cpp
+          file, this removes a warning in some versions of g++.
 
-	* TAO_IDL/be/be_visitor_argument/arglist.cpp: 
-	  Fixed an indentation problem in the C.cpp file.
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+          Fixed an indentation problem in the C.cpp file.
 
 Mon Aug 24 21:24:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (TAO_ORB_Core): Added code to clean up memory
- 	  pools.
+        * tao/ORB_Core.cpp (TAO_ORB_Core): Added code to clean up memory
+          pools.
 
 Mon Aug 24 20:58:36 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tao/ORB.h: Changed CORBA_Boolean for CHORUS platforms to
-	  unsigned long as it was same as CORBA::ULong before.
-	  Thanks to David for this.
-	
+        * tao/ORB.h: Changed CORBA_Boolean for CHORUS platforms to
+          unsigned long as it was same as CORBA::ULong before.
+          Thanks to David for this.
+
 Mon Aug 24 18:14:58 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_naming_service.{h,cpp} 
-	* orbsvcs/tests/Concurrency/NS_client.{h,cpp}
- 	  Added TAO_Naming_Client code. This test doesn't appear to do
-	  anything, however. 
+        * orbsvcs/tests/Concurrency/CC_naming_service.{h,cpp}
+        * orbsvcs/tests/Concurrency/NS_client.{h,cpp}
+          Added TAO_Naming_Client code. This test doesn't appear to do
+          anything, however.
 
 Mon Aug 24 15:33:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
