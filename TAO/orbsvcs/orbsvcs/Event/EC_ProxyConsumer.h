@@ -62,7 +62,7 @@ public:
   virtual ~TAO_EC_ProxyPushConsumer (void);
 
   /// Activate in the POA
-  virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBS::SystemException));
+  virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
   void deactivate (CORBA::Environment &ACE_TRY_ENV);

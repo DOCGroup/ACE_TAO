@@ -1,3 +1,7 @@
+Fri May 11 18:52:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/EC_ProxyConsumer.h: Fixed a stupid typo.
+
 Fri May 11 17:19:03 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
