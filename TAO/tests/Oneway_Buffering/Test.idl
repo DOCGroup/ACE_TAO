@@ -41,7 +41,7 @@ module Test
 
     /// The Oneway_Buffering interface uses this method to report any
     /// request received.
-    void request_received (in unsigned long payload_length);
+    oneway void request_received (in unsigned long payload_length);
 
     /// An empty operation to force a flush in the ORB queues
     void flush ();
