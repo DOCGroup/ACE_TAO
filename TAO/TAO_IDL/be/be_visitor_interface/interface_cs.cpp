@@ -146,7 +146,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
             {
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
-              *os << "this->" << inherited->local_name ()<< "::setup_collocation" << " (collocated);" << be_nl;
+              *os << "ACE_NESTED_CLASS (" << inherited->full_name () << ", "
+                  << inherited->local_name ()<< ")::setup_collocation" << " (collocated);" << be_nl;
             }
         }
 
