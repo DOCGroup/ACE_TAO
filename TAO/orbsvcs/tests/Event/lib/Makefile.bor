@@ -1,5 +1,5 @@
 #
-# Makefile for building the TAO RTEvent library
+# $Id$
 #
 
 NAME = ECTests
@@ -31,5 +31,5 @@ LIBFILES = \
 
 CPPDIR = .
 
-!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
 
