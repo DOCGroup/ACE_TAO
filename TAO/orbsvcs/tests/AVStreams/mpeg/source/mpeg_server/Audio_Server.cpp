@@ -763,3 +763,60 @@ Audio_Server::run (CORBA::Environment &env)
 {
   return this->orb_manager_.run (env);
 }
+
+// Audio_Server_StreamEndPoint methods.
+
+int
+Audio_Server_StreamEndPoint::handle_open (void) 
+{
+  return 0;
+}
+
+int
+Audio_Server_StreamEndPoint::handle_close (void) 
+{
+  // called when streamendpoint is being destructed
+  return 0;
+}
+
+int
+Audio_Server_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
+                                          CORBA::Environment &env) 
+{
+  return 0;
+}
+  
+int
+Audio_Server_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,  
+                                           CORBA::Environment &env) 
+{
+ return 0;
+}
+  
+int
+Audio_Server_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,  
+                                             CORBA::Environment &env) 
+{
+  return 0;
+}
+
+CORBA::Boolean 
+Audio_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
+                                                          CORBA::Environment &env) 
+{
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Server_StreamEndPoint::handle_connection_requested:() %s \n",
+              the_spec[0]));
+
+  char *server_string;
+
+  server_string = (const char *) the_spec [0];
+  CORBA::Boolean result;
+  result = AUDIO_CONTROL_I::instance ()->set_peer (server_string,env);
+  // Get media control from my vdev and call set_peer on that.
+  
+  the_spec.length (1);
+  the_spec [0]=server_string;
+
+  return result;
+}
+
