@@ -48,7 +48,7 @@ OUTDIR=<%libout%>
 <%endif%>
 INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 
-ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> ".\<%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%endif%><%custom_type->input_file->output_file%>"<%endfor%><%endfor%><%endfor%>
+ALL : <%if(idl_files)%>IDL_STUBS <%endif%><%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> ".\<%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%endif%><%custom_type->input_file->output_file%>"<%endfor%><%endfor%><%endfor%>
 
 DEPEND :
 	depgen.pl<%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines)%> -D<%define%>=1<%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%> -D<%libflag%>=1<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%>=1<%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
@@ -201,7 +201,7 @@ SOURCE=.\<%pch_source%>
 
 CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c
 
-"$(INTDIR)\<%basenoextension(pch_source)%>.obj"	"$(INTDIR)\<%noextension(pch_header)%>.pch" : $(SOURCE) "$(INTDIR)"<%if(idl_files)%> IDL_STUBS<%endif%>
+"$(INTDIR)\<%basenoextension(pch_source)%>.obj"	"$(INTDIR)\<%noextension(pch_header)%>.pch" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
   $(CPP_SWITCHES) $(SOURCE)
 <<
