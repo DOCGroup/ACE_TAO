@@ -843,15 +843,12 @@ ACE_INET_Addr::get_ip_address (void) const
           ACE_OS_String::memcpy (&addr, thisaddrptr, sizeof (addr));
           return ACE_NTOHL (addr);
         }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
-          errno = EAFNOSUPPORT;
-          return 0;
-        }
+
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
+      errno = EAFNOSUPPORT;
+      return 0;
     }
-#else
-  return ntohl (ACE_UINT32 (this->inet_addr4_.sin_addr.s_addr));
 #endif /* ACE_HAS_IPV6 */
+  return ntohl (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
 }
