@@ -44,6 +44,11 @@ public:
   virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target,
                                         CORBA_Environment &ACE_TRY_ENV) = 0;
 
+  virtual CORBA_InterfaceDef_ptr _get_interface (
+      const CORBA::Object_ptr target,
+      CORBA_Environment &ACE_TRY_ENV
+    ) = 0;
+
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 protected:

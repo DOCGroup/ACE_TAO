@@ -114,8 +114,10 @@ ORB_CORE_FILES = \
   CDR.cpp \
   Client_Strategy_Factory.cpp \
   debug.cpp \
+  DynamicInterface_Adapter.cpp \
   Object_KeyC.cpp \
-  IFR_TypeCodes \
+  IFR_Client_Adapter.cpp \
+  IFR_TypeCodes.cpp \
   Invocation.cpp \
   Interceptor.cpp \
   InterceptorC.cpp \
@@ -139,6 +141,7 @@ ORB_CORE_FILES = \
   Sync_Strategies.cpp \
   TAO_Internal.cpp \
   Typecode_Constants.cpp \
+  TypeCodeFactory_Adapter.cpp \
   IOR_LookupTable.cpp \
   TAO.cpp \
   Wait_Strategy.cpp \
@@ -273,20 +276,14 @@ HEADER_FILES = \
   Direct_Priority_Mapping.h \
   DomainC.h \
   DomainS_T.h \
-  DynAnyC.h \
-  DynAny_i.h \
-  DynArray_i.h \
-  DynEnum_i.h \
-  DynSequence_i.h \
-  DynStruct_i.h \
-  DynUnion_i.h \
-  DynUnion_i_T.h \
+  DynamicInterface_Adapter.h \
   Environment.h \
   Exception.h \
   Forwarding_Servant.h \
   GIOP.h \
   GIOPC.h \
   GIOP_Server_Request.h \
+  IFR_Client_Adapter.h \
   IIOP_Acceptor.h \
   IIOP_Connect.h \
   IIOP_Connector.h \
@@ -371,6 +368,7 @@ HEADER_FILES = \
   TimeBaseS_T.h \
   Timeprobe.h \
   Typecode.h \
+  TypeCodeFactory_Adapter.h \
   UIOP_Acceptor.h \
   UIOP_Connect.h \
   UIOP_Connector.h \
@@ -428,7 +426,6 @@ INLINE_FILES = \
   Direct_Priority_Mapping.i \
   DomainC.i \
   DomainS_T.i \
-  DynAnyC.i \
   Environment.i \
   Exception.i \
   GIOP.i \

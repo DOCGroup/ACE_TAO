@@ -37,10 +37,17 @@ public:
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id,
-                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
+                                CORBA_Environment &ACE_TRY_ENV = 
+                                  TAO_default_environment ()) = 0;
 
   /// Default <_non_existent>: always returns false.
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
+  virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV = 
+                                          TAO_default_environment ()) = 0;
+
+  /// Query the Interface Repository.
+  virtual CORBA_InterfaceDef_ptr _get_interface (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    ) = 0;
 
   //@{
   /// @name Reference counting hooks: no-ops by default.

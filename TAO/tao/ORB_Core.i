@@ -476,13 +476,6 @@ TAO_ORB_Core::resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV)
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
 
-/*ACE_INLINE void
-TAO_ORB_Core::typecode_factory (const CORBA::Object_ptr tf)
-{
-  this->typecode_factory_ = tf;
-}
-*/
-
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
 {

@@ -402,7 +402,7 @@ CORBA_ConstructionPolicy::_duplicate (CORBA_ConstructionPolicy_ptr obj)
 }
 
 void CORBA_ConstructionPolicy::make_domain_manager (
-    IR_InterfaceDef *object_type,
+    CORBA_InterfaceDef_ptr object_type,
     CORBA::Boolean constr_policy,
     CORBA::Environment &ACE_TRY_ENV
   )

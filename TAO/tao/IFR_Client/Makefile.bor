@@ -5,7 +5,10 @@
 NAME = TAO_IFR_Client
 
 OBJFILES = \
-	$(OBJDIR)\InterfaceC.obj \
+	$(OBJDIR)\IFR_BaseC.obj \
+	$(OBJDIR)\IFR_BasicC.obj \
+	$(OBJDIR)\IFR_ExtendedC.obj \
+	$(OBJDIR)\IFR_ComponentsC.obj \
         $(OBJDIR)\IFR_Client_Adapter_Impl.obj
 
 !ifdef STATIC

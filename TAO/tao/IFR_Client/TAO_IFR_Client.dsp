@@ -92,16 +92,36 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\IFR_BaseC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFR_Client_Adapter_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceC.cpp
+SOURCE=.\IFR_ComponentsC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\IFR_BaseC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicC.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\IFR_Client_Adapter_Impl.h
@@ -112,11 +132,11 @@ SOURCE=.\ifr_client_export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ifrfwd.h
+SOURCE=.\IFR_ComponentsC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceC.h
+SOURCE=.\IFR_ExtendedC.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -124,7 +144,19 @@ SOURCE=.\InterfaceC.h
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\InterfaceC.i
+SOURCE=.\IFR_BaseC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_BasicC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ComponentsC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_ExtendedC.i
 # End Source File
 # End Group
 # End Target

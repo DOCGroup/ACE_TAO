@@ -23,8 +23,6 @@
 
 #include "ace/Service_Object.h"
 
-class IR_InterfaceDef;
-
 /**
  * @class TAO_IFR_Client_Adapter
  *
@@ -32,7 +30,7 @@ class IR_InterfaceDef;
  *
  * Class that adapts various functions in the CORBA namespace
  * which use the Interface Repository. This is a base class for 
- * the actual implementation in the IFR_Basic library.
+ * the actual implementation in the TAO_IFR_Client library.
  */
 class TAO_Export TAO_IFR_Client_Adapter : public ACE_Service_Object
 {
@@ -41,26 +39,28 @@ public:
 
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
-      IR_InterfaceDef *object_type
+      CORBA_InterfaceDef_ptr object_type
     );
 
   virtual void interfacedef_any_insert (
       CORBA_Any &any,
-      IR_InterfaceDef *object_type
+      CORBA_InterfaceDef_ptr object_type
     );
 
-  virtual IR_InterfaceDef *get_interface (
+  virtual void dispose (
+      CORBA_InterfaceDef_ptr orphan
+    );
+
+  virtual CORBA_InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
 
-  virtual CORBA_IRObject_ptr get_interface_def (
-      CORBA::ORB_ptr orb,
-      const char *repo_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  virtual CORBA_InterfaceDef_ptr get_interface_remote (
+      const CORBA::Object_ptr target,
+      CORBA_Environment &ACE_TRY_ENV
     );
 };
 
