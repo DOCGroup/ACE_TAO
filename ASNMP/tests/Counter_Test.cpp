@@ -37,7 +37,7 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-
+#include "ace/OS_main.h"
 #include "asnmp/counter.h"
 #include "test_config.h"
 
@@ -125,9 +125,9 @@ static void  TestCounter()
 
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST ("Counter_Test");
+  ACE_START_TEST (ACE_TEXT ("Counter_Test"));
 
   TestCounter();
 

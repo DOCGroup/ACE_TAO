@@ -68,14 +68,14 @@ typedef size_t KEY;
 #endif /* ACE_WIN32 */
 
 #define ACE_START_TEST(NAME) \
-  const char *program = NAME; \
+  const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %T\n", program));
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting %s test at %T\n"), program));
 
 #define ACE_END_TEST \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n", program)); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %T\n"), program)); \
   ace_file_stream.close ();
 
 #define ACE_NEW_THREAD \
@@ -86,23 +86,23 @@ do {\
 } while (0)
 
 #define ACE_APPEND_LOG(NAME) \
-  const char *program = NAME; \
+  const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program, 1) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting %s test at %T\n", program));
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %T\n"), program));
 
 #define ACE_END_LOG \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n\n", program)); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %T\n\n"), program)); \
   ace_file_stream.close ();
 
 #define ACE_INIT_LOG(NAME) \
   char temp[BUFSIZ]; \
   ACE_OS::sprintf (temp, "%s%s%s", \
-                   ACE_LOG_DIRECTORY, \
-                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR), \
+                   ACE_TEXT_ALWAYS_CHAR (ACE_LOG_DIRECTORY), \
+                   ACE_TEXT_ALWAYS_CHAR (ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR)), \
                    ".log"); \
-  ACE_DEBUG ((LM_DEBUG, "Deleting old log file %s (if any)\n\n", temp)); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting old log file %C (if any)\n\n"), temp)); \
   ACE_OS::unlink (temp);
 
 
@@ -121,7 +121,7 @@ class ACE_Test_Output
 public:
   ACE_Test_Output (void);
   ~ACE_Test_Output (void);
-  int set_output (const char *filename, int append = 0);
+  int set_output (const ACE_TCHAR *filename, int append = 0);
   ofstream *output_file (void);
   void close (void);
 
@@ -140,14 +140,14 @@ ACE_Test_Output::~ACE_Test_Output (void)
 }
 
 int
-ACE_Test_Output::set_output (const char *filename, int append)
+ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
   char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
   ACE_OS::mkdir (ACE_LOG_DIRECTORY);
   ACE_OS::sprintf (temp, "%s%s%s",
-                   ACE_LOG_DIRECTORY,
-                   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR),
+                   ACE_TEXT_ALWAYS_CHAR (ACE_LOG_DIRECTORY),
+                   ACE_TEXT_ALWAYS_CHAR (ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR)),
                    ".log");
 
   this->output_file_.open (temp, ios::out | (append ? ios::app : ios::trunc));
