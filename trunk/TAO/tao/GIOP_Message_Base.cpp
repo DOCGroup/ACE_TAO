@@ -219,14 +219,17 @@ TAO_GIOP_Message_Base::
                                           state->cdr,
                                           TAO_GIOP_MESSAGE_HEADER_LEN ,
                                           max_wait_time);
-      if (retval == -1 && TAO_debug_level > 0)
+      if (retval == -1)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - \n")
-                      ACE_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - \n")
+                          ACE_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
+            }
+
           return -1;
         }
-
 
       if (this->parse_magic_bytes (state) == -1)
         {
