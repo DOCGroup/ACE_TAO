@@ -1,3 +1,21 @@
+Thu Apr 15 10:16:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+          Reimplemented the ACE_OS::setsid(). Introduced ACE_LACKS_SETSID so
+          that from the config file we can say if the platform supports setsid()
+          or not. VxWorks and PSOS don't have the concept of processes so
+          there we return just 0, just like to other methods related to this one.
+          This way when we get another port to a platform which doesn't have
+          setsid() we just have to add this define to the config file.
+
+        * ace/config-chorus.h:
+        * ace/config-integritySCA:
+        * ace/config-win32-common.h:
+          Added define of ACE_LACKS_SETSID because these platforms lack this
+
+        * ace/README:
+          Documented ACE_LACKS_SETSID
+
 Thu Apr 15 09:51:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
