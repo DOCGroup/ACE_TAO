@@ -37,7 +37,7 @@ Cubit_Factory_i::Cubit_Factory_i (const char *key, int numobjs)
 
       if (my_cubit_[i] == 0)
         ACE_ERROR ((LM_ERROR,
-                    " (%P|%t) Unable to create implementation object&d\n",
+                    " (%P|%t) Unable to create implementation object%d\n",
                     i));
 
     }
