@@ -651,6 +651,13 @@ ACE_Service_Config::close_svcs (void)
 }
 
 int
+ACE_Service_Config::fini_svcs (void)
+{
+  ACE_TRACE ("ACE_Service_Config::fini_svcs");
+  return ACE_Service_Repository::instance ()->fini ();
+}
+
+int
 ACE_Service_Config::close_singletons (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_singletons");

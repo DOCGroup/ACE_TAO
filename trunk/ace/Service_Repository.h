@@ -56,6 +56,9 @@ public:
   ~ACE_Service_Repository (void);
   // Terminate the repository.
 
+  int fini (void);
+  // Finalize (call fini() and possibly delete) all the services.
+
   int close (void);
   // Terminate the repository.
 
