@@ -69,7 +69,6 @@
 #endif /* _MSC_VER */
 
 // Forward Declaration
-class ServerObject_i;
 class TAO_Acceptor_Filter;
 class TAO_Acceptor_Registry;
 class TAO_IORInfo;
@@ -580,18 +579,6 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  /// @name Implementation repository related methods
-  //@{
-
-  /// ImplRepo helper method, notify the ImplRepo on startup
-  void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// ImplRepo helper method, notify the ImplRepo on shutdown
-  void imr_notify_shutdown (void);
-  //@}
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
   /// Wrapper for the ORB's key_to_object that will alter the object pointer
   /// if the ImplRepo is used.
   CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
@@ -678,13 +665,14 @@ protected:
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
-
+public:
+// @todo Johnny made temporarily public for lifespan strategy
   PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant
                                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ServantNotActive,
                      PortableServer::POA::WrongPolicy));
-
+protected:
   PortableServer::ObjectId *servant_to_system_id (
       PortableServer::Servant p_servant,
       CORBA::Short &priority
@@ -896,16 +884,6 @@ protected:
   PortableServer::ServantBase_var default_servant_;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-  /// Implementation Repository Server Object
-  ServerObject_i *server_object_;
-
-  /// Flag for whether the ImR should be used or not.
-  int use_imr_;
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef
     ACE_Hash_Map_Manager_Ex<

@@ -1,3 +1,12 @@
+Tue Oct 26 09:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/Lifespan_Strategy.{h,cpp}:
+          Moved all ImR code to the Lifespan Strategy and just call from the
+          POA notify_startup and notify_shutdown. The code itself to notify
+          the ImR must be converted, but first move it out. Had to include the
+          different PolicyC files in the POA, have to look why in detail.
+
 Tue Oct 26 09:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POAManager.{h,cpp}:

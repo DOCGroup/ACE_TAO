@@ -50,10 +50,17 @@ namespace TAO
 
       virtual ~Lifespan_Strategy (void);
 
+      virtual
       void strategy_init (TAO_POA *poa);
 
       void create (const char *name,
                    const TAO::ObjectKey &key);
+
+      virtual
+      void notify_startup (ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+      virtual
+      void notify_shutdown () = 0;
 
       /**
        * Validate the passed object key if it belongs to this POA.
@@ -87,6 +94,12 @@ namespace TAO
     public:
       virtual ~Transient_Lifespan_Strategy (void);
 
+      virtual
+      void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
+
+      virtual
+      void notify_shutdown ();
+
       virtual char lifespan_key_type (void)
       {
         return 'T';
@@ -108,6 +121,12 @@ namespace TAO
       Persistent_Lifespan_Strategy ();
 
       virtual ~Persistent_Lifespan_Strategy (void);
+
+      virtual
+      void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
+
+      virtual
+      void notify_shutdown ();
 
       virtual char lifespan_key_type (void)
       {

@@ -5,21 +5,22 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 //
-// ImplRepo related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-# include "tao/PortableServer/ImplRepo_i.h"
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 #include "tao/StringSeqC.h"
 
 #include "ThreadPolicyFactory.h"
+#include "ThreadPolicyC.h"
 #include "LifespanPolicyFactory.h"
+#include "LifespanPolicyC.h"
 #include "IdAssignmentPolicyFactory.h"
+#include "IdAssignmentPolicyC.h"
 #include "IdUniquenessPolicyFactory.h"
+#include "IdUniquenessPolicyC.h"
 #include "ImplicitActivationPolicyFactory.h"
+#include "ImplicitActivationPolicyC.h"
 #include "RequestProcessingPolicyFactory.h"
+#include "RequestProcessingPolicyC.h"
 #include "ServantRetentionPolicyFactory.h"
+#include "ServantRetentionPolicyC.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"
@@ -27,8 +28,11 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/Policy_Creator_T.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/AdapterActivatorC.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 #include "Non_Servant_Upcall.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/PolicyC.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -219,16 +223,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-    //
-    // ImplRepo related.
-    //
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-    server_object_ (0),
-    use_imr_ (1),
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
     children_ (),
     lock_ (lock),
     creation_time_ (ACE_OS::gettimeofday ()),
@@ -320,34 +314,22 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // from the auto pointer.
   this->active_object_map_ = new_active_object_map.release ();
 
-  //
-  // ImplRepo related.
-  //
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  if (this->active_policy_strategies_.lifespan_strategy()->persistent ())
+  // Notify the Lifespan strategy of our startup
+  ACE_TRY
     {
-      int temp = this->use_imr_;
-      this->use_imr_ = 0;
-      ACE_TRY
-        {
-          this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          this->poa_manager_.remove_poa (this);
-          this->object_adapter ().unbind_poa (this,
-                                              this->folded_name_,
-                                              this->system_name_.in ());
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-
-      this->use_imr_ = temp;
+      this->active_policy_strategies_.lifespan_strategy()->notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
+  ACE_CATCHANY
+    {
+      this->poa_manager_.remove_poa (this);
+      this->object_adapter ().unbind_poa (this,
+                                          this->folded_name_,
+                                          this->system_name_.in ());
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 TAO_POA::~TAO_POA (void)
@@ -784,39 +766,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       ACE_CHECK;
     }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  //
-  // ImplRepo related.
-  //
-  if (this->active_policy_strategies_.lifespan_strategy()->persistent ())
-    {
-      this->imr_notify_shutdown ();
-      // Delete the servant, if there is one.
-
-      if (this->server_object_)
-        {
-          PortableServer::POA_var poa =
-            this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
-
-          TAO_POA *tao_poa = dynamic_cast<TAO_POA*>(poa.in());
-
-          if (!tao_poa)
-            {
-              ACE_THROW (CORBA::OBJ_ADAPTER ());
-            }
-
-          PortableServer::ObjectId_var id =
-            tao_poa->servant_to_id_i (this->server_object_
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          tao_poa->active_policy_strategies().servant_retention_strategy()->deactivate_object (id.in() ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
-    }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
+  // Notify the lifespan strategy of our shutdown
+  this->active_policy_strategies_.lifespan_strategy()->notify_shutdown ();
 
   // When a POA is destroyed, any requests that have started execution
   // continue to completion. Any requests that have not started
@@ -994,7 +945,6 @@ TAO_POA::add_ior_component (TAO_MProfile & mprofile,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add the given tagged component to all profiles.
-
   const CORBA::ULong profile_count = mprofile.profile_count ();
 
   for (CORBA::ULong i = 0; i < profile_count; ++i)
@@ -1017,7 +967,6 @@ TAO_POA::add_ior_component_to_profile (
 {
   // Add the given tagged component to all profiles matching the given
   // ProfileId.
-
   int found_profile = 0;
 
   const CORBA::ULong profile_count = mprofile.profile_count ();
@@ -2479,8 +2428,10 @@ TAO_POA::key_to_object (const TAO::ObjectKey &key,
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  if (this->use_imr_
-      && this->active_policy_strategies_.lifespan_strategy()->persistent ())
+  if (this->active_policy_strategies_.lifespan_strategy()->persistent ())
+// @todo Johnny, check the use of use_imr_ here
+//  if (this->use_imr_
+//      && this->active_policy_strategies_.lifespan_strategy()->persistent ())
     {
       // Check to see if we alter the IOR.
       CORBA::Object_var imr =
@@ -2807,147 +2758,6 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
 {
   return this->active_policy_strategies_.servant_retention_strategy()->locate_servant (system_id, servant ACE_ENV_ARG_PARAMETER);
 }
-
-//
-// ImplRepo related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-void
-TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
-{
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
-
-  CORBA::Object_var imr = this->orb_core ().implrepo_service ();
-
-  if (CORBA::is_nil (imr.in ()))
-      return;
-
-  ImplementationRepository::Administration_var imr_locator =
-    ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (CORBA::is_nil(imr_locator.in ()))
-      return;
-
-  TAO_POA *root_poa = this->object_adapter ().root_poa ();
-  ACE_NEW_THROW_EX (this->server_object_,
-                    ServerObject_i (this->orb_core_.orb (),
-                                    root_poa),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  PortableServer::ServantBase_var safe_servant (this->server_object_);
-  ACE_UNUSED_ARG (safe_servant);
-
-  // Since this method is called from the POA constructor, there
-  // shouldn't be any waiting required.  Therefore,
-  // <wait_occurred_restart_call_ignored> can be ignored.
-  int wait_occurred_restart_call_ignored = 0;
-
-  // Activate the servant in the root poa.
-  PortableServer::ObjectId_var id =
-    root_poa->activate_object_i (this->server_object_,
-                                 this->cached_policies_.server_priority (),
-                                 wait_occurred_restart_call_ignored
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  ()
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ImplementationRepository::ServerObject_var svr
-    = ImplementationRepository::ServerObject::_narrow (obj.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
-    {
-      ACE_ERROR ((LM_ERROR, "Invalid ImR ServerObject, bailing out.\n"));
-      return;
-    }
-
-  CORBA::String_var ior =
-    svr->_stubobj ()->profile_in_use ()->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Search for "corbaloc:" alone, without the protocol.  This code
-  // should be protocol neutral.
-  const char corbaloc[] = "corbaloc:";
-  char *pos = ACE_OS::strstr (ior.inout (), corbaloc);
-  pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-
-  pos = ACE_OS::strchr (pos + 1,
-                        svr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
-
-  ACE_CString partial_ior(ior.in (), (pos - ior.in()) + 1);
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Informing IMR that we are running at: %s\n",
-                ACE_TEXT_CHAR_TO_TCHAR (partial_ior.c_str())));
-
-  ACE_TRY
-    {
-      imr_locator->server_is_running (this->name().c_str (),
-                                      partial_ior.c_str(),
-                                      svr.in()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::SystemException, sysex)
-    {
-      // Avoid warnings on platforms with native C++ exceptions
-      ACE_UNUSED_ARG (sysex);
-      ACE_RE_THROW;
-    }
-  ACE_CATCHANY
-    {
-      ACE_TRY_THROW (CORBA::TRANSIENT (
-          CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-          CORBA::COMPLETED_NO));
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Successfully notified ImR of Startup\n"));
-}
-
-void
-TAO_POA::imr_notify_shutdown (void)
-{
-  // Notify the Implementation Repository about shutting down.
-  CORBA::Object_var imr = this->orb_core ().implrepo_service ();
-
-  // Check to see if there was an imr returned.  If none, return ourselves.
-  if (CORBA::is_nil (imr.in ()))
-    return;
-
-  ACE_TRY_NEW_ENV
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown server:%s\n", this->the_name()));
-
-      // Get the IMR's administrative object and call shutting_down on it
-      ImplementationRepository::Administration_var imr_locator =
-        ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      imr_locator->server_is_shutting_down (this->the_name () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "POA::imr_notify_shutdown()");
-      // Ignore exceptions
-    }
-  ACE_ENDTRY;
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 TAO::ORT_Adapter_Factory *
 TAO_POA::ORT_adapter_factory (void)

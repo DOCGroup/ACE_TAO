@@ -18,6 +18,9 @@ ACE_RCSID (PortableServer,
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 #include "tao/debug.h"
+#include "tao/PortableServer/ImplRepo_i.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Servant_Retention_Strategy.h"
 
 namespace TAO
 {
@@ -40,6 +43,47 @@ namespace TAO
 
     Transient_Lifespan_Strategy::~Transient_Lifespan_Strategy ()
     {
+    }
+
+    void
+    Transient_Lifespan_Strategy::notify_startup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
+    }
+
+    void
+    Transient_Lifespan_Strategy::notify_shutdown ()
+    {
+    }
+
+    void
+    Persistent_Lifespan_Strategy::notify_startup (ACE_ENV_SINGLE_ARG_DECL)
+    {
+      (void) this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+    void
+    Persistent_Lifespan_Strategy::notify_shutdown ()
+    {
+      (void) this->imr_notify_shutdown ();
+
+      PortableServer::POA_var poa =
+        this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      TAO_POA *tao_poa = dynamic_cast<TAO_POA*>(poa.in());
+
+      if (!tao_poa)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+
+      PortableServer::ObjectId_var id =
+        tao_poa->servant_to_id_i (this->server_object_
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      tao_poa->active_policy_strategies().servant_retention_strategy()->deactivate_object (id.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 
     void
