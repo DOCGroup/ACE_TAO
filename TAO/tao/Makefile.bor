@@ -144,6 +144,7 @@ OBJFILES = \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\Object.obj \
 	$(OBJDIR)\ObjectIdListC.obj \
+	$(OBJDIR)\ObjectKey_Table.obj \
 	$(OBJDIR)\Object_KeyC.obj \
 	$(OBJDIR)\Object_Loader.obj \
 	$(OBJDIR)\Object_Proxy_Broker.obj \
@@ -172,6 +173,7 @@ OBJFILES = \
 	$(OBJDIR)\Queued_Message.obj \
 	$(OBJDIR)\Reactive_Connect_Strategy.obj \
 	$(OBJDIR)\Reactive_Flushing_Strategy.obj \
+	$(OBJDIR)\Refcounted_ObjectKey.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
