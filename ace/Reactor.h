@@ -137,7 +137,9 @@ public:
 private:
   ACE_Reactor &reactor_;
 };
-
+#else
+// If we're non-MT safe then this is just a no-op...
+typedef ACE_Null_Mutex ACE_Reactor_Token;
 #endif /* ACE_MT_SAFE */    
 
 class ACE_Export ACE_Reactor_Handler_Repository
@@ -584,6 +586,13 @@ public:
   int initialized (void);
   // Returns true if we've been successfully initialized, else false.
 
+  ACE_Reactor_Token &lock (void);
+  // Returns a reference to the <ACE_Reactor_Token> that is used to
+  // serialize the internal Reactor's processing logic.  This can be
+  // useful for situations where you need to avoid deadlock
+  // efficiently when <ACE_Event_Handlers> are used in multiple
+  // threads.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -738,12 +747,12 @@ protected:
   // whether we need to make another trip through the <Reactor>'s
   // <wait_for_multiple_events> loop.
 
+  ACE_Reactor_Token token_;
+  // Synchronization token for the MT_SAFE ACE_Reactor.
+
 #if defined (ACE_MT_SAFE)
   ACE_Reactor_Notify notify_handler_;
   // Callback object that unblocks the ACE_Reactor if it's sleeping.
-
-  ACE_Reactor_Token token_;
-  // Synchronization token for the MT_SAFE ACE_Reactor.
 
   void renew (void);
   // Enqueue ourselves into the list of waiting threads at the

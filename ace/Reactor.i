@@ -123,3 +123,10 @@ ACE_Reactor::cancel_wakeup (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Reactor::cancel_wakeup");
   return this->mask_ops (handle, mask, ACE_Reactor::CLR_MASK);
 }
+
+ACE_INLINE ACE_Reactor_Token &
+ACE_Reactor::lock (void)
+{
+  ACE_TRACE ("ACE_Reactor::lock");
+  return this->token_;
+}
