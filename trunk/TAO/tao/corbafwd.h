@@ -743,6 +743,7 @@ TAO_NAMESPACE CORBA
 
     TC_KIND_COUNT
   };
+  typedef TCKind &TCKind_out;
 
   // All the typecode constants
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_null;
