@@ -111,7 +111,7 @@ CORBA::Exception *CORBA::Bounds::_alloc (void)
 CORBA::Exception *
 CORBA::Bounds::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::CORBA::Bounds (*this),
@@ -213,7 +213,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -184,11 +184,11 @@ RTScheduling::ThreadAction::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -200,7 +200,7 @@ const char* RTScheduling::ThreadAction::_interface_repository_id (void) const
 CORBA::Boolean
 RTScheduling::ThreadAction::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -315,11 +315,11 @@ RTScheduling::DistributableThread::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -331,7 +331,7 @@ const char* RTScheduling::DistributableThread::_interface_repository_id (void) c
 CORBA::Boolean
 RTScheduling::DistributableThread::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -426,7 +426,7 @@ CORBA::Exception *RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_all
 CORBA::Exception *
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE (*this),
@@ -671,11 +671,11 @@ RTScheduling::Current::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -687,7 +687,7 @@ const char* RTScheduling::Current::_interface_repository_id (void) const
 CORBA::Boolean
 RTScheduling::Current::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -806,11 +806,11 @@ RTScheduling::ResourceManager::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -822,7 +822,7 @@ const char* RTScheduling::ResourceManager::_interface_repository_id (void) const
 CORBA::Boolean
 RTScheduling::ResourceManager::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -917,7 +917,7 @@ CORBA::Exception *RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::
 CORBA::Exception *
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES (*this),
@@ -1073,11 +1073,11 @@ RTScheduling::Scheduler::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1089,11 +1089,11 @@ const char* RTScheduling::Scheduler::_interface_repository_id (void) const
 CORBA::Boolean
 RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

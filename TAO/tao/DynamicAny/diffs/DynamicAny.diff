@@ -1,5 +1,5 @@
---- orig/DynamicAnyC.h	2005-02-11 13:49:41.303510400 +0100
-+++ DynamicAnyC.h	2005-02-11 13:49:41.774187200 +0100
+--- orig/DynamicAnyC.h	2005-02-18 12:28:35.777297600 +0100
++++ DynamicAnyC.h	2005-02-18 12:28:36.067715200 +0100
 @@ -34,6 +34,10 @@
  #include /**/ "ace/pre.h"
  
@@ -19,8 +19,8 @@
  #include "tao/ORB.h"
  #include "tao/SystemException.h"
  #include "tao/Environment.h"
---- orig/DynamicAnyC.cpp	2005-02-11 13:49:41.303510400 +0100
-+++ DynamicAnyC.cpp	2005-02-11 13:49:41.964460800 +0100
+--- orig/DynamicAnyC.cpp	2005-02-18 12:28:35.787312000 +0100
++++ DynamicAnyC.cpp	2005-02-18 12:28:36.077729600 +0100
 @@ -29,7 +29,7 @@
  // be\be_codegen.cpp:302
  

@@ -73,13 +73,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -89,22 +89,22 @@ namespace TAO
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_CORBA_DOMAINMANAGER__VAR_OUT_CH_)
 #define _CORBA_DOMAINMANAGER__VAR_OUT_CH_
-
+  
   class DomainManager;
   typedef DomainManager *DomainManager_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         DomainManager
       >
     DomainManager_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         DomainManager
@@ -112,13 +112,13 @@ namespace CORBA
     DomainManager_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_DOMAINMANAGER_CH_)
 #define _CORBA_DOMAINMANAGER_CH_
-
+  
   class TAO_Export DomainManager
     : public virtual CORBA::Object
   {
@@ -126,30 +126,30 @@ namespace CORBA
     friend class TAO::Narrow_Utils<DomainManager>;
     typedef DomainManager_ptr _ptr_type;
     typedef DomainManager_var _var_type;
-
+    
     // The static operations.
     static DomainManager_ptr _duplicate (DomainManager_ptr obj);
-
+    
     static DomainManager_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static DomainManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static DomainManager_ptr _nil (void)
     {
       return static_cast<DomainManager_ptr> (0);
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr get_domain_policy (
         ::CORBA::PolicyType policy_type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -157,34 +157,34 @@ namespace CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   private:
     TAO::Collocation_Proxy_Broker *the_TAO_DomainManager_Proxy_Broker_;
-
+  
   protected:
     // Concrete interface only.
     DomainManager (void);
-
+    
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
     virtual void CORBA_DomainManager_setup_collocation (void);
-
+    
     // Concrete non-local interface only.
     DomainManager (
         IOP::IOR *ior,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     // Non-local interface only.
     DomainManager (
         TAO_Stub *objref,
@@ -192,9 +192,9 @@ namespace CORBA
         TAO_Abstract_ServantBase *servant = 0,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     virtual ~DomainManager (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     DomainManager (const DomainManager &);

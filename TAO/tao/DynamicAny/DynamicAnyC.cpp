@@ -142,7 +142,7 @@ CORBA::Exception *DynamicAny::DynAny::InvalidValue::_alloc (void)
 CORBA::Exception *
 DynamicAny::DynAny::InvalidValue::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::DynamicAny::DynAny::InvalidValue (*this),
@@ -226,7 +226,7 @@ CORBA::Exception *DynamicAny::DynAny::TypeMismatch::_alloc (void)
 CORBA::Exception *
 DynamicAny::DynAny::TypeMismatch::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::DynamicAny::DynAny::TypeMismatch (*this),
@@ -330,11 +330,11 @@ DynamicAny::DynAny::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -346,7 +346,7 @@ const char* DynamicAny::DynAny::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynAny::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -465,11 +465,11 @@ DynamicAny::DynFixed::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -481,7 +481,7 @@ const char* DynamicAny::DynFixed::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynFixed::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -600,11 +600,11 @@ DynamicAny::DynEnum::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -616,7 +616,7 @@ const char* DynamicAny::DynEnum::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynEnum::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -833,11 +833,11 @@ DynamicAny::DynStruct::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -849,7 +849,7 @@ const char* DynamicAny::DynStruct::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynStruct::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -968,11 +968,11 @@ DynamicAny::DynUnion::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -984,7 +984,7 @@ const char* DynamicAny::DynUnion::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynUnion::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -1194,11 +1194,11 @@ DynamicAny::DynSequence::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1210,7 +1210,7 @@ const char* DynamicAny::DynSequence::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynSequence::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1329,11 +1329,11 @@ DynamicAny::DynArray::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1345,7 +1345,7 @@ const char* DynamicAny::DynArray::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynArray::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1464,11 +1464,11 @@ DynamicAny::DynValue::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1480,7 +1480,7 @@ const char* DynamicAny::DynValue::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynValue::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1575,7 +1575,7 @@ CORBA::Exception *DynamicAny::DynAnyFactory::InconsistentTypeCode::_alloc (void)
 CORBA::Exception *
 DynamicAny::DynAnyFactory::InconsistentTypeCode::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::DynamicAny::DynAnyFactory::InconsistentTypeCode (*this),
@@ -1679,11 +1679,11 @@ DynamicAny::DynAnyFactory::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1695,7 +1695,7 @@ const char* DynamicAny::DynAnyFactory::_interface_repository_id (void) const
 CORBA::Boolean
 DynamicAny::DynAnyFactory::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1866,7 +1866,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

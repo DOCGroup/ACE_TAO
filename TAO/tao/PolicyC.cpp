@@ -134,7 +134,7 @@ CORBA::Exception *CORBA::PolicyError::_alloc (void)
 CORBA::Exception *
 CORBA::PolicyError::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::CORBA::PolicyError (*this),
@@ -319,7 +319,7 @@ CORBA::Exception *CORBA::InvalidPolicies::_alloc (void)
 CORBA::Exception *
 CORBA::InvalidPolicies::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::CORBA::InvalidPolicies (*this),
@@ -702,7 +702,7 @@ CORBA::Policy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -844,11 +844,11 @@ CORBA::PolicyManager::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -860,7 +860,7 @@ const char* CORBA::PolicyManager::_interface_repository_id (void) const
 CORBA::Boolean
 CORBA::PolicyManager::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -991,11 +991,11 @@ CORBA::PolicyCurrent::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1007,7 +1007,7 @@ const char* CORBA::PolicyCurrent::_interface_repository_id (void) const
 CORBA::Boolean
 CORBA::PolicyCurrent::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1141,7 +1141,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

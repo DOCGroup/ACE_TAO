@@ -1,5 +1,5 @@
---- orig/Typecode_typesC.h	2005-02-11 12:21:03.236505600 +0100
-+++ Typecode_typesC.h	2005-02-11 12:22:23.181460800 +0100
+--- orig/Typecode_typesC.h	2005-02-18 11:42:38.332286400 +0100
++++ Typecode_typesC.h	2005-02-18 11:42:54.004822400 +0100
 @@ -75,26 +75,6 @@
    // TAO_IDL - Generated from
    // be\be_interface.cpp:598

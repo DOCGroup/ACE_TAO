@@ -174,11 +174,11 @@ Messaging::RebindPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -190,7 +190,7 @@ const char* Messaging::RebindPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -330,11 +330,11 @@ Messaging::RequestPriorityPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -346,7 +346,7 @@ const char* Messaging::RequestPriorityPolicy::_interface_repository_id (void) co
 CORBA::Boolean
 Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -473,11 +473,11 @@ Messaging::ReplyPriorityPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -489,7 +489,7 @@ const char* Messaging::ReplyPriorityPolicy::_interface_repository_id (void) cons
 CORBA::Boolean
 Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -616,11 +616,11 @@ Messaging::RequestStartTimePolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -632,7 +632,7 @@ const char* Messaging::RequestStartTimePolicy::_interface_repository_id (void) c
 CORBA::Boolean
 Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -759,11 +759,11 @@ Messaging::RequestEndTimePolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -775,7 +775,7 @@ const char* Messaging::RequestEndTimePolicy::_interface_repository_id (void) con
 CORBA::Boolean
 Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -902,11 +902,11 @@ Messaging::ReplyStartTimePolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -918,7 +918,7 @@ const char* Messaging::ReplyStartTimePolicy::_interface_repository_id (void) con
 CORBA::Boolean
 Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1045,11 +1045,11 @@ Messaging::ReplyEndTimePolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1061,7 +1061,7 @@ const char* Messaging::ReplyEndTimePolicy::_interface_repository_id (void) const
 CORBA::Boolean
 Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1188,11 +1188,11 @@ Messaging::RelativeRequestTimeoutPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1204,7 +1204,7 @@ const char* Messaging::RelativeRequestTimeoutPolicy::_interface_repository_id (v
 CORBA::Boolean
 Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -1344,11 +1344,11 @@ Messaging::RoutingPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1360,7 +1360,7 @@ const char* Messaging::RoutingPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1487,11 +1487,11 @@ Messaging::MaxHopsPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1503,7 +1503,7 @@ const char* Messaging::MaxHopsPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1630,11 +1630,11 @@ Messaging::QueueOrderPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1646,7 +1646,7 @@ const char* Messaging::QueueOrderPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1696,7 +1696,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

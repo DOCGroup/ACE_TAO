@@ -151,7 +151,7 @@ CORBA::Exception *IOP::Codec::InvalidTypeForEncoding::_alloc (void)
 CORBA::Exception *
 IOP::Codec::InvalidTypeForEncoding::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::IOP::Codec::InvalidTypeForEncoding (*this),
@@ -287,7 +287,7 @@ CORBA::Exception *IOP::Codec::FormatMismatch::_alloc (void)
 CORBA::Exception *
 IOP::Codec::FormatMismatch::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::IOP::Codec::FormatMismatch (*this),
@@ -419,7 +419,7 @@ CORBA::Exception *IOP::Codec::TypeMismatch::_alloc (void)
 CORBA::Exception *
 IOP::Codec::TypeMismatch::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::IOP::Codec::TypeMismatch (*this),
@@ -571,11 +571,11 @@ IOP::Codec::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -587,7 +587,7 @@ const char* IOP::Codec::_interface_repository_id (void) const
 CORBA::Boolean
 IOP::Codec::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -702,7 +702,7 @@ CORBA::Exception *IOP::CodecFactory::UnknownEncoding::_alloc (void)
 CORBA::Exception *
 IOP::CodecFactory::UnknownEncoding::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::IOP::CodecFactory::UnknownEncoding (*this),
@@ -857,11 +857,11 @@ IOP::CodecFactory::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -873,7 +873,7 @@ const char* IOP::CodecFactory::_interface_repository_id (void) const
 CORBA::Boolean
 IOP::CodecFactory::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
