@@ -584,6 +584,24 @@ sub handle_if {
       $val = $self->get_value($val)
     }
 
+    if (defined $val) {
+      if (UNIVERSAL::isa($val, 'ARRAY')) {
+        my($empty) = 1;
+        foreach my $v (@$val) {
+          if ($v ne '') {
+            $empty = 0;
+            last;
+          }
+        }
+        if ($empty) {
+          $val = undef;
+        }
+      }
+      elsif ($val eq '') {
+        $val = undef;
+      }
+    }
+
     if (!defined $val) {
       $self->{'if_skip'} = $true;
     }
