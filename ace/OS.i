@@ -2262,7 +2262,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   // lock.
   int result = ::WaitForSingleObject (s->count_nonzero_, 0);
 
-  if (result == WAIT_OBJECT_0)	// Proceed when it is available.
+  if (result == WAIT_OBJECT_0)  // Proceed when it is available.
     {
       ACE_OS::thread_mutex_lock (&s->lock_);
 
@@ -2272,8 +2272,8 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
       result = ::WaitForSingleObject (s->count_nonzero_, 0);
       if (result == WAIT_OBJECT_0)
         {
-	  // Adjust the semaphore count.  Only update the event
-	  // object status when the state changed.
+          // Adjust the semaphore count.  Only update the event
+          // object status when the state changed.
           s->count_--;
           if (s->count_ <= 0)
             ACE_OS::event_reset (&s->count_nonzero_);
@@ -2382,11 +2382,11 @@ ACE_OS::sema_wait (ACE_sema_t *s)
         ACE_OS::thread_mutex_lock (&s->lock_);
 
         // Need to double check if the semaphore is still available.
-	// This time, we shouldn't wait at all.
+        // This time, we shouldn't wait at all.
         if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
           {
-	    // Decrease the internal counter.  Only update the event
-	    // object's status when the state changed.
+            // Decrease the internal counter.  Only update the event
+            // object's status when the state changed.
             s->count_--;
             if (s->count_ <= 0)
               ACE_OS::event_reset (&s->count_nonzero_);
@@ -2394,15 +2394,15 @@ ACE_OS::sema_wait (ACE_sema_t *s)
           }
 
         ACE_OS::thread_mutex_unlock (&s->lock_);
-	// if we didn't get a hold on the semaphore, the result won't
-	// be 0 and thus, we'll start from the beginning again.
+        // if we didn't get a hold on the semaphore, the result won't
+        // be 0 and thus, we'll start from the beginning again.
         if (result == 0)
           return 0;
         break;
 
       default:
-	// Since we wait indefinitely, anything other than
-	// WAIT_OBJECT_O indicates an error.
+        // Since we wait indefinitely, anything other than
+        // WAIT_OBJECT_O indicates an error.
         errno = ::GetLastError ();
         // This is taken from the hack above. ;)
         return -1;
@@ -2502,19 +2502,19 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   // While we are not timeout yet.
   while (relative_time > ACE_Time_Value::zero)
     {
-      // Wait for our turn to get the object.  
+      // Wait for our turn to get the object.
       switch (::WaitForSingleObject (s->count_nonzero_, relative_time.msec ()))
         {
         case WAIT_OBJECT_0:
           ACE_OS::thread_mutex_lock (&s->lock_);
 
           // Need to double check if the semaphore is still available.
-	  // We can only do a "try lock" styled wait here to avoid
-	  // blocking threads that want to signal the semaphore.
+          // We can only do a "try lock" styled wait here to avoid
+          // blocking threads that want to signal the semaphore.
           if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
             {
-	      // As before, only reset the object when the semaphore
-	      // is no longer available.
+              // As before, only reset the object when the semaphore
+              // is no longer available.
               s->count_--;
               if (s->count_ <= 0)
                 ACE_OS::event_reset (&s->count_nonzero_);
@@ -2523,17 +2523,17 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
           ACE_OS::thread_mutex_unlock (&s->lock_);
 
-	  // Only return when we successfully get the semaphore.
+          // Only return when we successfully get the semaphore.
           if (result == 0)
             return 0;
           break;
 
-	  // We have timed out.
+          // We have timed out.
         case WAIT_TIMEOUT:
           errno = ETIME;
           return -1;
 
-	  // What?
+          // What?
         default:
           errno = ::GetLastError ();
           // This is taken from the hack above. ;)
@@ -4530,7 +4530,7 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
-#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+#elif defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
 # if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   int result;
@@ -7026,11 +7026,11 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
       ACE_OS::close (lock->handle_);
       lock->handle_ = ACE_INVALID_HANDLE;
       if (lock->lockname_ != 0)
-	{
-	  ACE_OS::unlink (lock->lockname_);
-	  ACE_OS::free ((void*) lock->lockname_);
-	  lock->lockname_ = 0;
-	}
+        {
+          ACE_OS::unlink (lock->lockname_);
+          ACE_OS::free ((void*) lock->lockname_);
+          lock->lockname_ = 0;
+        }
     }
   return 0;
 }
