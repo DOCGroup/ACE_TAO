@@ -253,7 +253,6 @@ private:
   // character read is '.' or '/' or '\', an escape character '\' is
   // prepended before the character.
 
-
   void to_string_helper_length (CORBA::ULong &len, const char * &src);
   // This method helps count the number of characters in 'src' so
   // that memory can be allocated for the return parameter. For
@@ -261,6 +260,16 @@ private:
   // account for the escape character that needs to be
   // added. Seperators between 'id' and 'kind' as well as seperators
   // between the name components are also counted.
+
+  static int to_url_is_alnum_or_punctuation (char c);
+  // Return 1 if the character is alphanumeric or a non-scaped
+  // punctuation.
+
+  static size_t to_url_validate_and_compute_size (const char *add,
+                                                  const char *sn,
+                                                  CORBA::Environment &ACE_TRY_ENV);
+  // Validate the to_url() method input, and compute the size of the
+  // returned URL address.
 
 protected:
 

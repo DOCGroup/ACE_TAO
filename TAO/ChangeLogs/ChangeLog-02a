@@ -1,3 +1,11 @@
+Sun Feb 18 14:28:44 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+          Workaround problems in the RedHat-7.0 version of the g++
+          compiler.  I refactored code to make it simpler, it helps humans
+          and it seems to help this compiler too.
+
 Sun Feb 18 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
