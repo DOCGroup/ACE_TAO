@@ -284,6 +284,10 @@ ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
 ACE_HAS_EXCEPTIONS                      Compiler supports C++
                                         exception handling
+ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS    Compiler does not call
+                                        unexpected exception handler
+                                        if exception not listed in
+                                        exception specification is thrown.
 ACE_HAS_EXPLICIT_KEYWORD                Compiler support explicit constructors.
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
                                         instantiation mechanism

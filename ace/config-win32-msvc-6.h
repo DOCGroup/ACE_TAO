@@ -1,13 +1,14 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   config-win32-msvc-6.h
  *
  *  $Id$
  *
- *  @brief  Microsoft Visual C++ 6.0 configuration file. 
+ *  @brief  Microsoft Visual C++ 6.0 configuration file.
  *
- *  This file is the ACE configuration file for Microsoft Visual C++ version 6. 
+ *  This file is the ACE configuration file for Microsoft Visual C++ version 6.
  *
  *  @note   Do not include this file directly, include config-win32.h instead.
  *
@@ -62,6 +63,7 @@
 
 # if !defined (ACE_HAS_WINCE)
 #  define ACE_HAS_EXCEPTIONS
+#  define ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS
 # endif /* ACE_HAS_WINCE */
 
 # define ACE_HAS_BROKEN_NAMESPACES
@@ -171,7 +173,7 @@
 
 # if !defined (ACE_ENDTHREADEX)
 #   define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
-# endif 
+# endif
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_6_H */
