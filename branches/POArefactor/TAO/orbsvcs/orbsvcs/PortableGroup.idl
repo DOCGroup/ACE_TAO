@@ -11,6 +11,7 @@
 #ifndef _PORTABLEGROUP_IDL_
 #define _PORTABLEGROUP_IDL_
 
+#include "tao/PortableServer/PortableServer.pidl"
 #include "CosNaming.idl"
 #include "tao/IOP.pidl"
 #include "tao/GIOP.pidl"
@@ -300,7 +301,7 @@ module PortableGroup
   };
 
   exception NotAGroupObject {};
-  typedef sequence <ObjectId> IDs;
+  typedef sequence <PortableServer::ObjectId> IDs;
 
   local interface GOA : PortableServer::POA {
     PortableServer::ObjectId create_id_for_reference(in Object the_ref)
