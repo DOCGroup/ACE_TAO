@@ -1,3 +1,37 @@
+Sat Jun 17 15:18:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp ast/ast_string.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_array/array.cpp:
+	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+
+	  Minor changes to get rid of warnings in BCB, mostly 
+	  signed/unsigned comparisons.
+
 Sat Jun 17 09:44:57 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Asynch_Reply_Dispatcher.h:
