@@ -4,6 +4,9 @@ Sun Feb 02 10:30:29 1997  David L. Levine  <levine@cs.wustl.edu>
 	  and ACE_Map_Entry: they don't appear to be used and, without
 	  including their headers, this file won't compile.
 
+	* ace/Hash_Map_Manager.cpp (Hash_Map_Manager (ACE_Allocator *)):
+	  reordered initializers to match declaration order.
+
 Sat Feb  1 03:25:21 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/SString.cpp: Added two methods to the wide string
