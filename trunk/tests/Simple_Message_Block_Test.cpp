@@ -64,7 +64,7 @@ main (void)
 
   // Same set of tests but with locking_strategy set.
   {
-    ACE_Lock_Adapter <ACE_Mutex> mutex;
+    ACE_Lock_Adapter <ACE_SYNCH_MUTEX> mutex;
     ACE_Lock *lock = &mutex;
     
     {
@@ -154,8 +154,8 @@ main (void)
     // Checks continuation of message blocks on the heap with two
     // different lock strategies
 
-    ACE_Lock_Adapter <ACE_Mutex> lock1;
-    ACE_Lock_Adapter <ACE_Mutex> lock2;
+    ACE_Lock_Adapter <ACE_SYNCH_MUTEX> lock1;
+    ACE_Lock_Adapter <ACE_SYNCH_MUTEX> lock2;
 
     ACE_Message_Block *mb1;
     ACE_Message_Block *mb2;
@@ -173,3 +173,7 @@ main (void)
   ACE_END_TEST;
   return 0;
 }  
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
