@@ -60,7 +60,8 @@ JAWS_Synch_IO::JAWS_Synch_IO (void)
 
 JAWS_Synch_IO::~JAWS_Synch_IO (void)
 {
-  ACE_OS::closesocket (this->handle_);
+  if (this->handle_ != ACE_INVALID_HANDLE)
+    ACE_OS::closesocket (this->handle_);
 }
 
 void
@@ -237,49 +238,21 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
                         ACE_Message_Block *,
                         unsigned int)
 {
-  // Create our own handler and message block
-  JAWS_Data_Block *ndb = new JAWS_Data_Block;
-  if (ndb == 0)
-    {
-      ioh->accept_error ();
-      return;
-    }
+  JAWS_TRACE ("JAWS_Asynch_IO::accept");
 
   JAWS_Data_Block *db = ioh->message_block ();
-  JAWS_IO_Handler *nioh =
-    ioh->factory ()->create_io_handler ();
-  if (nioh == 0)
-    {
-      delete ndb;
-      ioh->accept_error ();
-      return;
-    }
-
-  ndb->task (db->task ());
-  ndb->policy (db->policy ());
-  ndb->io_handler (nioh);
-  nioh->task (db->task ());
-  nioh->message_block (ndb);
-
-  JAWS_Asynch_IO_Handler *aioh =
-    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, nioh);
-
   ACE_HANDLE listen_handle = db->policy ()->acceptor ()->get_handle ();
 
-  aioh->accept_called_already (1);
+  JAWS_Asynch_IO_Handler *aioh =
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
+
   ACE_Asynch_Accept aa;
 
-  size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
-  size_t bytes_to_read =
-    JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE - (2 * address_size);
+  size_t bytes_to_read = JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE;
 
   if (aa.open (*(aioh->handler ()), listen_handle) == -1
-      || aa.accept (*ndb, bytes_to_read) == -1)
-    {
-      ioh->factory ()->destroy_io_handler (nioh);
-      delete ndb;
-      ioh->accept_error ();
-    }
+      || aa.accept (*db, bytes_to_read) == -1)
+    ioh->accept_error ();
 }
 
 void

@@ -20,6 +20,7 @@ class JAWS_Export JAWS_Data_Block : public ACE_Message_Block
 {
 public:
   JAWS_Data_Block (void);
+  JAWS_Data_Block (JAWS_Data_Block &db);
   ~JAWS_Data_Block (void);
 
   JAWS_Pipeline_Handler *task (void);

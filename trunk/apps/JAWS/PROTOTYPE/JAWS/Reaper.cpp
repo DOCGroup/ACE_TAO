@@ -6,7 +6,8 @@
 ACE_RCSID(JAWS, Reaper, "$Id$")
 
 JAWS_Reaper::JAWS_Reaper (JAWS_Concurrency_Base *concurrency)
-  : concurrency_ (concurrency)
+  : concurrency_ (concurrency),
+    waiting_ (0)
 {
 }
 
