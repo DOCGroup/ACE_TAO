@@ -13,8 +13,6 @@ public:
   static void dump_properties (const CosTrading::PropertySeq& prop_seq,
 			       CORBA::Boolean print_dynamic = CORBA::B_TRUE);
   // Dump the contents of this property sequence.
-
-  static void serialize_offer (const CosTrading::Offer& offer);
   
   enum INTERFACES
   {
@@ -24,35 +22,69 @@ public:
     FILESYSTEM,
     PS_PRINTER
   };
+
+  // = Test servants.
   
-  class Remote_Output : public POA_TAO_Trader_Test::Remote_Output
+  class Remote_Output :
+    public POA_TAO_Trader_Test::Remote_Output
   {
   public:
+    
     Remote_Output (void) {}
+    
+    virtual void confirm (CORBA::Environment& _env)
+      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+    // Method to test that the importer received a valid reference to
+    // the exported object.
   };
   
-  class Printer : public POA_TAO_Trader_Test::Printer
+  class Printer :
+    public POA_TAO_Trader_Test::Printer
   {
   public:
+
     Printer (void) {}
+
+    virtual void confirm (CORBA::Environment& _env)
+      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+    // Method to test that the importer received a valid reference to
+    // the exported object. 
   };
   
-  class Plotter : public POA_TAO_Trader_Test::Plotter
+  class Plotter :
+    public POA_TAO_Trader_Test::Plotter
   {
   public:
     Plotter (void) {}
+    
+    virtual void confirm (CORBA::Environment& _env)
+      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+    // Method to test that the importer received a valid reference to
+    // the exported object. 
   };
   
-  class File_System : public POA_TAO_Trader_Test::File_System
+  class File_System :
+    public POA_TAO_Trader_Test::File_System
   {
   public:  
     File_System (void) {}
+
+    virtual void confirm (CORBA::Environment& _env)
+      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+    // Method to test that the importer received a valid reference to
+    // the exported object. 
   };
   
-  class PostScript_Printer : public POA_TAO_Trader_Test::PostScript_Printer
+  class PostScript_Printer :
+    public POA_TAO_Trader_Test::PostScript_Printer
   {
   public:
     PostScript_Printer (void) {}
+
+    virtual void confirm (CORBA::Environment& _env)
+      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+    // Method to test that the importer received a valid reference to
+    // the exported object. 
   };
 
 #define NUM_TYPES 5
