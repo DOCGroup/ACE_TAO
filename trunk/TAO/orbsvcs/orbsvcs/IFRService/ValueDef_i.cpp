@@ -1426,8 +1426,12 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
                                                             "arg_path",
                                                             holder);
                   obj = 
-                    TAO_IFR_Service_Utils::path_to_ir_object (holder,
-                                                              this->repo_);
+                    TAO_IFR_Service_Utils::path_to_ir_object (
+                                               holder,
+                                               this->repo_
+                                               ACE_ENV_ARG_PARAMETER);
+                  ACE_CHECK_RETURN (0);
+
                   fv_desc->initializers[i].members[j].type_def =
                     CORBA::IDLType::_narrow (obj.in ()
                                              ACE_ENV_ARG_PARAMETER);
@@ -1933,18 +1937,18 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
                                         ACE_ENV_ARG_DECL)
 {
   desc.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
   
   desc.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
   
   CORBA::ULong tmp = this->is_abstract_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
   desc.is_abstract = ACE_static_cast (CORBA::Boolean,
                                       tmp);
                                      
   tmp = this->is_custom_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
   desc.is_custom = ACE_static_cast (CORBA::Boolean,
                                     tmp);
     
@@ -1955,7 +1959,7 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
   desc.defined_in = holder.fast_rep ();
   
   desc.version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
   
   TAO_IFR_Strseq_Utils<CORBA::RepositoryIdSeq>::fill_string_seq (
       "supported",
@@ -1972,7 +1976,7 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
     );
   
   tmp = this->is_truncatable_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
   desc.is_truncatable = ACE_static_cast (CORBA::Boolean,
                                          tmp);
                                         

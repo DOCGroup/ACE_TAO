@@ -258,7 +258,7 @@ TAO_HomeDef_i::base_home (
 void
 TAO_HomeDef_i::base_home_i (
     CORBA::ComponentIR::HomeDef_ptr base_home
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -284,7 +284,7 @@ TAO_HomeDef_i::supported_interfaces (
     
 CORBA::InterfaceDefSeq *
 TAO_HomeDef_i::supported_interfaces_i (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -353,7 +353,7 @@ TAO_HomeDef_i::supported_interfaces (
 void 
 TAO_HomeDef_i::supported_interfaces_i (
     const CORBA::InterfaceDefSeq &supported_interfaces
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -437,7 +437,7 @@ TAO_HomeDef_i::managed_component (
 void
 TAO_HomeDef_i::managed_component_i (
     CORBA::ComponentIR::ComponentDef_ptr managed_component
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -503,7 +503,7 @@ TAO_HomeDef_i::primary_key (
 void 
 TAO_HomeDef_i::primary_key_i (
     CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -744,7 +744,7 @@ void
 TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
                                  CORBA::OpDescriptionSeq &ods,
                                  const char *sub_section
-                                 ACE_ENV_ARG_PARAMETER)
+                                 ACE_ENV_ARG_DECL)
 {
   ods.length (0);
   ACE_Configuration_Section_Key sub_key;
@@ -1007,7 +1007,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
       this->fill_attr_desc (attrs_key,
                             eads[i],
                             stringified
-                            ACE_ENV_ARG_DECL);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -1028,7 +1028,7 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
                                               ead,
                                               this->repo_,
                                               attr_key
-                                              ACE_ENV_ARG_DECL
+                                              ACE_ENV_ARG_PARAMETER
                                             );
   ACE_CHECK;
 
