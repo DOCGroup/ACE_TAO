@@ -1,5 +1,8 @@
 Wed Apr 28 09:02:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/config-sunos5.5.h: It appears that SunC++ 5.0 wants
+ 	  ACE_HAS_THR_C_DEST to be defined.
+
         * ace/SString: Clarified the comments a bit to avoid confusion.
           Also, moved the definition of ACE_SString to AFTER ACE_CString
           and ACE_WString since they are more general.  Thanks to Kevin
