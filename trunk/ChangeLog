@@ -1,3 +1,12 @@
+Mon Oct 28 20:46:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (ACE_SDM_helpers::addr_to_string): Use
+          the "<?>" string in place rather than try to declare it a static.
+          gcc reports the original usage won't do what you think (keep one
+          copy for the method) but will duplicate it in each generated
+          method. Use it as a literal and let the compiler try to place a
+          single copy in a read-only section.
+
 Mon Oct 28 20:38:27 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_IO.cpp (ACE_Service_Handler::addresses()): Don't
