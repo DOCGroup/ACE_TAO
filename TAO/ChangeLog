@@ -1,3 +1,25 @@
+Fri Aug 27 23:08:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO_IDL/fe/idl.ll:
+
+	  Fix for BUG 1683. Jeff prepared this lex file. I just generated
+	  the code, and applied the patches. 
+	
+	* TAO_IDL/fe/lex.yy.cpp:
+
+	  Regenerated code for the new lex file. 
+
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+
+	  Another useless diff that we maintain which we cannot use! The
+	  above change took only 4-5 hours! Anyway, we have tested on
+	  Linux and things seem to be working. Let us see how other
+	  platforms behave.
+
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  Fixed unused variable warnings.
+
 Fri Aug 27 13:34:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* utils/NamingViewer/NamingViewerDlg.cpp:
@@ -46,7 +68,8 @@ Fri Aug 27 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri Aug 27 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security.mpc:
-          SecurityLevel3.idl uses valuetype, so add valuetype as base project
+          SecurityLevel3.idl uses valuetype, so add valuetype as base
+	  project.
 
 Fri Aug 27 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -65,12 +88,13 @@ Fri Aug 27 01:12:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Fri Aug 27 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        Integrated ORTrefactor_2 branch into main. Previously the PortableServer
-        library was dependent on IORInterceptor, ObjRefTemplate and Valuetype,
-        this dependency has been removed. PortableServer doesn't use these libs
-        anymore, but IORInterceptor, ObjRefTemplate and Valuetype are now
-        dependent on PortableServer. This will reduce the size of corba servers
-        which don't use IORInterceptor, ObjRefTemplate and Valuetype.
+        Integrated ORTrefactor_2 branch into main. Previously the
+        PortableServer library was dependent on IORInterceptor,
+        ObjRefTemplate and Valuetype, this dependency has been
+        removed. PortableServer doesn't use these libs anymore, but
+	IORInterceptor, ObjRefTemplate and Valuetype are now dependent on
+        PortableServer. This will reduce the size of corba servers which
+        don't use IORInterceptor, ObjRefTemplate and Valuetype. 
 
         * tao/Makefile.am:
           Updated for changes below.

@@ -1578,16 +1578,16 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 
 // Look through inherited list. Overridden in AST_Interface.
 AST_Decl *
-UTL_Scope::look_in_inherited (UTL_ScopedName *e,
-                              idl_bool treat_as_ref)
+UTL_Scope::look_in_inherited (UTL_ScopedName *,
+                              idl_bool )
 {
   return 0;
 }
 
 // Look through supported interface list. Overridden where necessary.
 AST_Decl *
-UTL_Scope::look_in_supported (UTL_ScopedName *e,
-                              idl_bool treat_as_ref)
+UTL_Scope::look_in_supported (UTL_ScopedName *,
+                              idl_bool)
 {
   return 0;
 }
