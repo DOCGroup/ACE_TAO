@@ -795,11 +795,8 @@ public:
   // Delegates to ACE_Double_Linked_List_Iterator.
 
 private:
-
   ACE_DLList<T> &list_;
-
 };
-
 
 template <class T>
 class ACE_Unbounded_Set_Iterator
