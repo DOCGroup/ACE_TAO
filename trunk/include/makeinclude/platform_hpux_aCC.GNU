@@ -37,7 +37,7 @@ endif
 endif
 # Suppress warning 829 (string literal to char * is deprecated)
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) +W829,302
+CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) +W829,302 -DACE_LACKS_PRAGMA_ONCE
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)
 LD		= $(CXX)
