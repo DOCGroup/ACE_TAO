@@ -61,13 +61,6 @@ public:
   virtual int run (int argc, char* argv[]);
   // Execute the test.
 
-  virtual void run_init (int& argc, char* argv[],
-                         CORBA::Environment& ACE_TRY_ENV);
-  // The initialization section
-
-  virtual void run_cleanup (CORBA::Environment& ACE_TRY_ENV);
-  // The cleanup section
-
   virtual void initialize_orb_and_poa (int& argc, char* argv[],
                                        CORBA::Environment& env);
   // Initialize the ORB and obtain the RootPOA object
@@ -87,14 +80,6 @@ public:
   virtual void initialize_ec_impl (CORBA::Environment& env);
   // Construct the EC and its helper objects, also activates the EC in
   // the RootPOA.
-
-  virtual void connect_clients (CORBA::Environment& env);
-  // By default connect the consumers and then the suppliers, other
-  // orders should work too.
-
-  virtual void disconnect_clients (CORBA::Environment &env);
-  // By default disconnect the suppliers and then the consumers, other
-  // orders should work too.
 
   virtual void connect_consumers (CORBA::Environment& env);
   // Connect all the consumers, by default it lets each consumer
@@ -158,12 +143,6 @@ public:
 
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
   // Allow modifications of the default EC attributes
-
-  virtual int decode_consumer_cookie (void* cookie) const;
-  // Returns the index of the consumer for <cookie>
-
-  virtual int decode_supplier_cookie (void* cookie) const;
-  // Returns the index of the supplier for <cookie>
 
   virtual void consumer_push (void* consumer_cookie,
                               const RtecEventComm::EventSet& event,
@@ -384,10 +363,6 @@ protected:
 
   RtecEventChannelAdmin::EventChannel_var event_channel_;
   // The event channel object reference
-
-  int busy_hwm_;
-  int max_write_delay_;
-  // Control the concurrency inside the EC.
 };
 
 #if defined (__ACE_INLINE__)

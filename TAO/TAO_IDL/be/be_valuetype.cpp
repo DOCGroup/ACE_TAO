@@ -588,7 +588,6 @@ be_valuetype::gen_out_impl (void)
   return 0;
 }
 
-#if 0
 // generate typecode.
 // Typecode for interface comprises the enumerated value followed by the
 // encapsulation of the parameters
@@ -685,7 +684,6 @@ be_valuetype::tc_encap_len (void)
     }
   return this->encap_len_;
 }
-#endif
 
 // for building the pre and postfix of private data fields
 const char*

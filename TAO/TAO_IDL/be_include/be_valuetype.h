@@ -81,7 +81,6 @@ public:
   // retrieve the fully scoped skel class name
 
 
-#if 0
   virtual int gen_typecode (void);
   // generate the typecode
 
@@ -93,7 +92,6 @@ public:
 
   virtual long tc_encap_len (void);
   // return length of encapsulation
-#endif
 
   // virtual int traverse_inheritance_graph (tao_code_emitter gen,
   //                                         TAO_OutStream *os);

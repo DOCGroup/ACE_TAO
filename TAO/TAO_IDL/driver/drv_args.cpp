@@ -572,7 +572,7 @@ DRV_parse_args (long ac, char **av)
                   // exception support
                   idl_global->exception_support (1);
                 }
-              else if (av[i][2] == 't')
+              else if (av[i][2] == 'o')
                 {
                   // optimized typecode support
                   idl_global->opt_tc (1);

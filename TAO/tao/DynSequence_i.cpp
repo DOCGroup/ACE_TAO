@@ -113,7 +113,7 @@ TAO_DynSequence_i::length (CORBA::ULong length,
   this->da_members_.size (length);
 }
 
-CORBA_AnySeq_ptr
+AnySeq_ptr
 TAO_DynSequence_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
@@ -121,9 +121,9 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
   if (length == 0)
     return 0;
 
-  CORBA_AnySeq_ptr elements;
+  AnySeq_ptr elements;
   ACE_NEW_THROW_EX (elements,
-                    CORBA_AnySeq (length),
+                    AnySeq (length),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -141,7 +141,7 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 }
 
 void
-TAO_DynSequence_i::set_elements (const CORBA_AnySeq& value,
+TAO_DynSequence_i::set_elements (const AnySeq& value,
                                  CORBA::Environment& env)
 {
   CORBA::ULong length = value.length ();

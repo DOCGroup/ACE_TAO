@@ -17,13 +17,10 @@ ACE_RCSID(Event, EC_Per_Supplier_Filter, "$Id$")
 
 TAO_EC_Per_Supplier_Filter::
     TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel* ec)
-  :  event_channel_ (ec),
-     refcnt_ (1)
+  :  event_channel_ (ec)
 {
   this->supplier_set_ =
     this->event_channel_->create_proxy_push_supplier_set ();
-  this->supplier_set_->busy_hwm (this->event_channel_->busy_hwm ());
-  this->supplier_set_->max_write_delay (this->event_channel_->max_write_delay ());
 }
 
 TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter (void)
@@ -55,7 +52,7 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
     return;
 
   const RtecEventChannelAdmin::SupplierQOS& pub =
-    this->consumer_->publications_i ();
+    this->consumer_->publications ();
 
   for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
     {
@@ -126,25 +123,6 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
           ACE_CHECK;
         }
     }
-}
-
-CORBA::ULong
-TAO_EC_Per_Supplier_Filter::_incr_refcnt (void)
-{
-  this->refcnt_++;
-  return this->refcnt_;
-}
-
-CORBA::ULong
-TAO_EC_Per_Supplier_Filter::_decr_refcnt (void)
-{
-  this->refcnt_--;
-  if (this->refcnt_ == 0)
-    {
-      this->event_channel_->supplier_filter_builder ()->destroy (this);
-      return 0;
-    }
-  return this->refcnt_;
 }
 
 // ****************************************************************

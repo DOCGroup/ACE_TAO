@@ -111,6 +111,11 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::connected (
       ACE_NEW (command,
                TAO_EC_ProxyPushSupplier_Set::Connected_Command (this,
                                                         supplier));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC (%P|%t) Delayed connection command = %x\n",
+                  command));
+
       this->command_queue_.enqueue_tail (command);
       this->write_delay_++;
     }
@@ -136,6 +141,9 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::disconnected (
       ACE_NEW (command,
                TAO_EC_ProxyPushSupplier_Set::Disconnected_Command (this,
                                                            supplier));
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC (%P|%t) Delayed disconnection command = %x\n",
+                  command));
 
       this->command_queue_.enqueue_tail (command);
       this->write_delay_++;
@@ -179,6 +187,10 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::execute_delayed_operations 
       this->command_queue_.dequeue_head (command);
 
       command->execute ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC (%P|%t) Executed delayed command = %x\n",
+                  command));
 
       delete command;
     }
