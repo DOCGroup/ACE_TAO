@@ -4,9 +4,6 @@
 
 #include "Stock_Factory_i.h"
 #include <orbsvcs/CosNamingC.h>
-#include <iostream>
-
-using namespace std;
 
 int main (int argc, char* argv[])
 {

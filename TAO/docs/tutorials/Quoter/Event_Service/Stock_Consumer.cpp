@@ -5,8 +5,6 @@
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
 
-using namespace std;
-
 Stock_Consumer::Stock_Consumer ()
 {
 }
