@@ -1,3 +1,14 @@
+Tue Dec 18 12:45:45 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/nightlybuilds/builds.lst:
+	  Updated to use the new build standard.
+
+	* bin/nightlybuilds/scoreboard_update.pl:
+	  Incorporate changes to support multiple "groups" (for external
+	  builds), to print out the last reported status of each build
+	  (such as "COMPILING"), and to adjust the build timeouts on a
+	  per-build basis.
+
 Tue Dec 18 11:11:29 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SPIPE.h: Improved comments for Doxygen processing.

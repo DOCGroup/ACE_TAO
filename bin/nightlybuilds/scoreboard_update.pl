@@ -12,14 +12,30 @@ use File::Path;
 use LWP::UserAgent;
 use Time::Local;
 
-my @builds = ();
+###############################################################################
+# Big bad variables
 
-# Hashes based on builds
-my %build_latest_file;
-my %build_latest_time;
-my %build_type;
-my %build_list;
-my %build_web;
+# %builds->{$name}->{GROUP}       <- Group this build is in
+#                 ->{LATEST_FILE} <- The filename of the latest build
+#                 ->{LATEST_TIME} <- The timestamp of the latest build
+#                 ->{LIST_LINK}   <- Link to use to download builds from
+#                 ->{WEB_LINK}    <- Link to use for directing to all logs
+#                 ->{STATUS_LINK} <- Link to grab the build status from
+#                 ->{MANUAL_LINK} <- Link to use to manually start a build
+#                 ->{ORANGE_TIME} <- Number of hours before build turns orange
+#                 ->{RED_TIME}    <- Number of hours before build turns red
+#                 ->{STATUS}      <- Results of query of status link
+
+my %builds;
+
+# %groups->{$name} <- list of builds for $name
+
+my %groups;
+
+my @nogroup;
+
+my $orange_default = 24;
+my $red_default = 48;
 
 ###############################################################################
 #
@@ -28,13 +44,15 @@ my %build_web;
 # Reads the list of builds from a file
 #
 # Arguments:  $ - file to read
+#             $ - report flag
 #
 # Returns:    Nothing
 #
 ###############################################################################
-sub load_build_list ($)
+sub load_build_list ($$)
 {
     my $file = shift;
+    my $report = shift;
     my @latest = ();
 
     print "Loading Build List\n";
@@ -51,49 +69,92 @@ sub load_build_list ($)
     $filehandle->close ();
 
     my $buildname = undef ;
-    my %build;
 
     foreach (@data) {
-	chomp;
-	
+        chomp;
+    
         # Skip blank lines and comments
-	if (m/^\s*$/) { next; };
+        if (m/^\s*$/) { next; };
         if (m/^\#/) { next; }
 
         # Remove trailing and leading spaces
         s/^\s*//;
         s/\s*$//;
   
-	if (m/\[(.*)\]/) {
+        if (m/\[(.*)\]/) {
             $buildname = $1;
-            push (@builds, $buildname);
+            
+            # $todo: Could probably check for other bad character (\:) here
+            
+            if (defined %builds->{$buildname}) {
+                print "ERROR: Build [$buildname] redefined, skipping\n";
+                $buildname = undef;
+            }
+            elsif ($buildname =~ m/\s/) {
+                print "ERROR: Name [$buildname] contains spaces, skipping\n";
+                $buildname = undef;
+            }
+            
             next;
         }
 
         if (defined $buildname) {
             if (m/^\s*TYPE\s*=\s*(.*)/) {
-                if (defined $build_type{$buildname}) {
-                    print "Warning: Redefining TYPE for $buildname\n";
-                }
-                $build_type{$buildname} = $1;
+                print "WARNING: TYPE is deprecated\n";
+            }
+            if (m/^\s*GROUP\s*=\s*(.*)/) {
+                %builds->{$buildname}->{GROUP} = $1;
             }
             if (m/^\s*LIST\s*=\s*(.*)/) {
-                if (defined $build_list{$buildname}) {
-                    print "Warning: Redefining LIST for $buildname\n";
-                }
-                $build_list{$buildname} = $1;
+                %builds->{$buildname}->{LIST_LINK} = $1;
             }
-            if (m/^\s*WEB\s*=\s*(.*)/) {
-                if (defined $build_web{$buildname}) {
-                    print "Warning: Redefining WEB for $buildname\n";
+            if (m/^\s*ORANGE\s*=\s*(.*)/) {
+                %builds->{$buildname}->{ORANGE_TIME} = $1;
+            }
+            if (m/^\s*RED\s*=\s*(.*)/) {
+                %builds->{$buildname}->{RED_TIME} = $1;
+            }
+
+            if (!$report) {
+                if (m/^\s*WEB\s*=\s*(.*)/) {
+                    %builds->{$buildname}->{WEB_LINK} = $1;
                 }
-                $build_web{$buildname} = $1;
+                if (m/^\s*STATUS\s*=\s*(.*)/) {
+                    %builds->{$buildname}->{STATUS_LINK} = $1;
+                }
+                if (m/^\s*MANUAL\s*=\s*(.*)/) {
+                    %builds->{$buildname}->{MANUAL_LINK} = $1;
+                }
             }
         }
     }
-
-    @builds = sort (@builds);
 }
+
+###############################################################################
+#
+# build_group_hash
+#
+# Looks at all the groups specified and collects the builds together
+#
+# Arguments:  Nothing
+#
+# Returns:    Nothing
+#
+###############################################################################
+sub build_group_hash ()
+{
+    print "Grouping builds\n";
+
+    foreach my $buildname (keys %builds) {
+        if (defined %builds->{$buildname}->{GROUP}) {
+            push @{%groups->{%builds->{$buildname}->{GROUP}}}, $buildname;
+        }
+        else {
+            push @nogroup, $buildname;
+        }
+    }
+}
+
 
 
 ###############################################################################
@@ -101,11 +162,7 @@ sub load_build_list ($)
 # query_latest
 #
 # Queries the web servers to figure out the latest build available and saves
-# the list in build_latest_file and
-# build_latest_time.
-#
-# @todo Actually since query_latest doesn't depend on the type anymore, we
-#       could feasibly remove it.
+# the list in LATEST_FILE and LATEST_TIME
 #
 # Arguments:  Nothing
 #
@@ -116,8 +173,8 @@ sub query_latest ()
 {
     print "Getting file lists\n";
 
-    foreach my $build (@builds) {
-        my @files = load_web_dir ($build_list{$build});
+    foreach my $buildname (keys %builds) {
+        my @files = load_web_dir (%builds->{$buildname}->{LIST_LINK});
 
         my $latest_time= 0;
         my $latest_file = "";
@@ -131,7 +188,7 @@ sub query_latest ()
                     $latest_file = $file;
                 }
             }
-            elsif ($file =~ m/\Q$build\E\_(...)(..)_(....)\.txt/) {
+            elsif ($file =~ m/\Q$buildname\E\_(...)(..)_(....)\.txt/) {
                 my %mon = ('Jan' =>  1, 'Feb' =>  2, 'Mar' =>  3,
                            'Apr' =>  4, 'May' =>  5, 'Jun' =>  6,
                            'Jul' =>  7, 'Aug' =>  8, 'Sep' =>  9,
@@ -144,7 +201,7 @@ sub query_latest ()
                    $latest_file = $file;
                 }
             }
-            elsif ($file =~ m/\Q$build\E\_(....)_(....)\.txt/) {
+            elsif ($file =~ m/\Q$buildname\E\_(....)_(....)\.txt/) {
 
                 my $time = scalar ("2001".$1.$2);
 
@@ -153,7 +210,7 @@ sub query_latest ()
                     $latest_file = $file;
                 }
             }
-            elsif ($file =~ m/\Q$build\E\_(....)\.txt/) {
+            elsif ($file =~ m/\Q$buildname\E\_(....)\.txt/) {
                 my $time = scalar ("2001".$1."0000");
 
                 if ($time > $latest_time) {
@@ -163,13 +220,63 @@ sub query_latest ()
             }
         }
 
-        # Save the latest
+        # Save the latest results
         if ($latest_time > 0) {
-            $build_latest_file{$build} = $latest_file;
-            $build_latest_time{$build} = $latest_time;
+            %builds->{$buildname}->{LATEST_FILE} = $latest_file;
+            %builds->{$buildname}->{LATEST_TIME} = $latest_time;
         }
     }
 }
+
+
+###############################################################################
+#
+# query_status
+#
+# Queries the status links to figure out the latest status and stores in 
+# STATUS
+#
+# Arguments:  Nothing
+#
+# Returns:    Nothing
+#
+###############################################################################
+sub query_status ()
+{
+    print "Getting status messages\n";
+
+    foreach my $buildname (keys %builds) {
+        my $link = %builds->{$buildname}->{STATUS_LINK};
+        if (defined $link) {
+            print "    Status [$buildname] from $link\n";
+        
+            my $ua = LWP::UserAgent->new;
+
+            ### We are impatient, so don't wait more than 20 seconds for a
+            ### response (the default was 180 seconds)
+            $ua->timeout(20);
+
+            my $request = HTTP::Request->new('GET', $link);
+            my $response = $ua->request($request);
+
+            if (!$response->is_success ()) {
+                print "        ERROR: Could not load status\n";
+                next;
+            }
+            
+            my @contents = split /\n/, $response->content ();
+
+            ### Now look for files
+
+            foreach my $line (@contents) {
+                if ($line =~ m/SCOREBOARD_STATUS\:(.*)$/) {
+                    %builds->{$buildname}->{STATUS} = $1;
+                }
+            }
+        }
+    }
+}
+
 
 
 ###############################################################################
@@ -311,37 +418,37 @@ sub update_cache ($)
         return;
     }
 
-    foreach my $build (@builds) {
+    foreach my $buildname (keys %builds) {
         ### Check to see if we had problems.  If there is no latest time,
         ### we had problems downloading.
-        if (!defined $build_latest_time{$build}) {
+        if (!defined %builds->{$buildname}->{LATEST_TIME}) {
             next;
         }
 
-        my $time = $build_latest_time{$build};
+        my $time = %builds->{$buildname}->{LATEST_TIME};
         my $oldtime = '';
-        my $address = $build_list{$build} . "/" 
-                      . $build_latest_file{$build};
+        my $address = %builds->{$buildname}->{LIST_LINK} . "/" . %builds->{$buildname}->{LATEST_FILE};
 
-        my $filename = $build.'_'.$time.'.txt';
+        my $filename = $buildname.'_'.$time.'.txt';
 
-        print "    Looking at $build\n";
+        print "    Looking at $buildname\n";
 
-	mkpath "$directory/$build";
+        mkpath "$directory/$buildname";
 
-        if (! -r "$directory/$build/$filename") {
+        if (! -r "$directory/$buildname/$filename") {
             print "        Downloading\n";
             my $ua = LWP::UserAgent->new;
             my $request = HTTP::Request->new('GET', $address);
-            my $response = $ua->request($request, "$directory/$build/$filename");
+            my $response = $ua->request($request, "$directory/$buildname/$filename");
 
             if (!$response->is_success ()) {
-                warn 'Unable to download '.$address;
+                print "WARNING: Unable to download $address\n";
                 return;
             }
         }
 
-        my @existing = glob ($directory . '/' . $build . '/' . $build . '_*');
+        my @existing = glob ($directory . '/' . $buildname 
+                             . '/' . $buildname . '_*');
 
         @existing = reverse sort @existing;
 
@@ -364,24 +471,28 @@ sub update_cache ($)
 # Decodes a YYYYMMDDHHMM timestamp and figures out the color
 #
 # Arguments:  $ - encoded timestamp
+#             $ - orange hours
+#             $ - red hours
 #
 # Returns:    $ - color
 #
 ###############################################################################
-sub timestamp_color ($)
+sub timestamp_color ($$$)
 {
     my $timestamp = shift; 
+    my $orange = shift;
+    my $red = shift;
 
     if ($timestamp =~ m/(....)(..)(..)(..)(..)/) {
-        my $buildtime = timelocal (0, $5, $4, $3, $2 - 1, $1);
+        my $buildtime = timegm (0, $5, $4, $3, $2 - 1, $1);
 
-	my $nowtime = timelocal (localtime);
+        my $nowtime = timegm (gmtime ());
 
-        if ($nowtime - $buildtime > (60 * 60 * 24 * 2)) {
+        if ($nowtime - $buildtime > (60 * 60 * $red)) {
             return 'red';
         }
 
-        if ($nowtime - $buildtime > (60 * 60 * 24 * 1)) {
+        if ($nowtime - $buildtime > (60 * 60 * $orange)) {
             return 'orange';
         }
 
@@ -413,7 +524,7 @@ sub determine_type ($)
     my $log = new FileHandle;
 
     unless ($log->open ("<$file")) {
-        warn 'Could not open '.$file.' '.$_;
+        warn 'Error: Could not open '.$file.' '.$_;
         return 'makefile';
     }
 
@@ -458,7 +569,7 @@ sub get_color ($$)
     my $results = new FileHandle;
 
     unless ($results->open ("<$file")) {
-        warn 'Could not open '.$file.' '.$_;
+        print STDERR 'Error: Could not open '.$file.": $!\n";
         return 'gray';
     }
 
@@ -496,9 +607,50 @@ sub get_color ($$)
         return 'lime';
     }
     else {        
-        return 'gray';
+        return 'white';
     }
 }
+
+
+###############################################################################
+#
+# found_section
+#
+# Returns 1 if the file contains a section
+#
+# Arguments:  $ - input file
+#             $ - type (config)
+#
+# Returns:    Nothing
+#
+###############################################################################
+sub found_section ($$)
+{
+    my $file = shift;
+    my $type = shift;
+
+    my $found = 0;
+
+    my $results = new FileHandle;
+
+    unless ($results->open ("<$file")) {
+        print STDERR 'Error: Could not open '.$file.": $!\n";
+        return 0;
+    }
+
+    while (<$results>) {
+        if ($type eq 'config') {
+            if (m/#config/) {
+                $found = 1;
+                last;
+            }
+        }
+    }
+    $results->close ();
+    
+    return $found;
+}
+
 
 
 ###############################################################################
@@ -518,11 +670,10 @@ sub update_html ($$)
     my $dir = shift;
     my $script = shift;
     my $filename = "$dir/index.html";
-    my $localshift = '';
 
     my $indexhtml = new FileHandle;
 
-    print "Updating HTML\n";
+    print "Generating Scoreboard\n";
 
     unless ($indexhtml->open (">$filename")) {
         warn 'Could not create file: '.$filename." ".$_;
@@ -537,88 +688,217 @@ sub update_html ($$)
 
     print $indexhtml "<BODY bgcolor=white>\n<H1>Build Scoreboard</H1>\n<HR>\n";
 
+    ### Print tables (first the empty one)
+    
+    update_html_table ($dir, $script, $indexhtml, undef);
+    foreach my $group (sort keys %groups) {
+        update_html_table ($dir, $script, $indexhtml, $group);
+    }
+
+    ### Print timestamp
+
+    print $indexhtml '<BR>Last updated at '.scalar (gmtime ())." UTC<BR>\n";
+
+    ### Print the Footer
+
+    print $indexhtml "</BODY>\n</HTML>\n";
+
+    $indexhtml->close ();
+}
+
+
+###############################################################################
+#
+# update_html_table
+#
+# helper for update_html that prints a single table
+#
+# Arguments:  $ - directory
+#             $ - make_pretty script
+#             $ - output file handle
+#             $ - group name
+#
+# Returns:    Nothing
+#
+###############################################################################
+sub update_html_table ($$$@)
+{
+    my $dir = shift;
+    my $script = shift;
+    my $indexhtml = shift;
+    my $name = shift;
+    my $havestatus = 0;
+    my $havemanual = 0;
+    
+    my @builds;
+    
     ### Table
+    
+    # check to see if we are doing the "NONE" group
+    if (!defined $name) {
+        print "    Building table for ungrouped\n";
+        @builds = sort @nogroup;
+    }
+    else {
+        print "    Building table for group $name\n";
+        @builds = sort @{%groups->{$name}};
+        print $indexhtml "<A NAME=\"$name\"><H2></A>$name</H2>\n";
+    }
+    
+    foreach my $buildname (@builds) {
+        if (defined %builds->{$buildname}->{STATUS}) {
+            $havestatus = 1;
+        }
+        if (defined %builds->{$buildname}->{MANUAL_LINK}) {
+            $havemanual = 1;
+        }
+    }
 
-    print $indexhtml '<TABLE border=1><TH>Config<TH>Last Run<TH>CVS<TH>Compilation'.
-                     "<TH>Tests\n";
+    print $indexhtml "<TABLE border=1><TH>Build Name<TH>Last Finished";
+    print $indexhtml "<TH>Config<TH>CVS<TH>Compile<TH>Tests";
+    print $indexhtml "<TH>Manual" if ($havemanual);
+    print $indexhtml "<TH>Status" if ($havestatus);
+    print $indexhtml "\n";
 
-    foreach my $build (@builds) {
-        mkpath "$dir/$build/pretty";
+    foreach my $buildname (@builds) {
+        mkpath "$dir/$buildname/pretty";
 
-        print "    Looking at $build\n";
+        print "        Looking at $buildname\n";
 
-        if (defined $build_latest_time{$build}) {
-            my $time = $build_latest_time{$build};
+        print $indexhtml '<TR><TD>';
+        
+        if (defined %builds->{$buildname}->{WEB_LINK}) {
+            print $indexhtml "<A HREF=\"".%builds->{$buildname}->{WEB_LINK} ."\">" ;
+            print $indexhtml $buildname;
+            print $indexhtml "</A> ";
+        }
+        else {
+            print $indexhtml $buildname;
+        }
 
-            my $log = $dir . '/' . $build . '/' . $build . '_' . $time . ".txt";
+        my $webfile;
+        my $newfile;
 
-            my $webfile = "$build/pretty/$build" . "_$time";
-            my $newfile = "$dir/$webfile";
+        if (defined %builds->{$buildname}->{LATEST_TIME}) {
+            my $time = %builds->{$buildname}->{LATEST_TIME};
+
+            my $log = $dir . '/' . $buildname . '/' . $buildname . '_' . $time . ".txt";
+
+            $webfile = "$buildname/pretty/$buildname" . "_$time";
+            $newfile = "$dir/$webfile";
 
             $newfile =~ s/\//\\/g if ($OSNAME eq "MSWin32");
             $log =~ s/\//\\/g if ($OSNAME eq "MSWin32");
 
             if (!-e $newfile.'.html') {
-                print "        Creating HTML for $time\n";
+                print "            Creating HTML for $time\n";
 
-                my $command = 'perl '.$script.' -c makefile < '.$log.' > '.
-                              $newfile.'.html';
+                my $command = 'perl ' . $script . ' -c ' . determine_type ($log) . 
+                              ' -i ' . $log . ' -o ' . $newfile . '.html';
 
                 system ($command);
             }
 
             if (!-e $newfile.'_Brief.html') {
-                print "        Creating HTML Brief for $time\n";
+                print "            Creating HTML Brief for $time\n";
     
-                my $command = 'perl '.$script.' -b -c '
-                              .determine_type ($log).
-                              ' < '.$log.' > '.
-                              $newfile.'_Brief.html';
+                my $command = 'perl '.$script.' -b -c ' . determine_type ($log) . 
+                              ' -i ' . $log . ' -o ' . $newfile . '_Brief.html';
 
                 system ($command);
             }
+           
+            my $orange = $orange_default;
+            my $red = $red_default;
 
-            print $indexhtml '<TR><TD>';
+            if (defined %builds->{$buildname}->{ORANGE_TIME}) {
+                $orange = %builds->{$buildname}->{ORANGE_TIME};
+            }
 
-            print $indexhtml "<A HREF=\"".$build_web{$build} ."\">" if defined $build_web{$build};
-            print $indexhtml $build;
-            print $indexhtml "</A> " if defined $build_web{$build};
-            
+            if (defined %builds->{$buildname}->{RED_TIME}) {
+                $red = %builds->{$buildname}->{RED_TIME};
+            }
+
             print $indexhtml '<TD bgcolor=';
-            print $indexhtml timestamp_color ($time);
+            print $indexhtml timestamp_color ($time, $orange, $red);
             print $indexhtml '>',decode_timestamp ($time);
-            print $indexhtml '<TD bgcolor=';
-            print $indexhtml get_color ($newfile.'_Brief.html', 'cvs');
-            print $indexhtml '>';
-            print $indexhtml "[<A HREF=\"".$webfile.".html#cvs\">Full</A>] ";
-            print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#cvs\">Brief</A>]";
-            print $indexhtml '<TD bgcolor=';
-            print $indexhtml get_color ($newfile.'_Brief.html', 'compiler');
-            print $indexhtml '>';
-            print $indexhtml "[<A HREF=\"".$webfile.".html#compiler\">Full</A>] ";
-            print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#compiler\">Brief</A>]";
-            print $indexhtml '<TD bgcolor=';
-            print $indexhtml get_color ($newfile.'_Brief.html', 'tests');
-            print $indexhtml '>';
-            print $indexhtml "[<A HREF=\"".$webfile.".html#tests\">Full</A>] ";
-            print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#tests\">Brief</A>]";
-            print $indexhtml "\n";
 
+            my $color;
+        
+            print $indexhtml '<TD>';
+            if (found_section ($newfile.'.html', 'config')) {
+                print $indexhtml "[<A HREF=\"".$webfile.".html#config\">Config</A>] ";
+            }
+            else {
+                print $indexhtml "&nbsp;";
+            }
+        
+            $color = get_color ($newfile.'_Brief.html', 'cvs');
+            print $indexhtml "<TD bgcolor=$color>";
+            if ($color ne 'gray' && $color ne 'white') {
+                print $indexhtml "[<A HREF=\"".$webfile.".html#cvs\">Full</A>] ";
+                print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#cvs\">Brief</A>]";
+            }
+            else {
+                print $indexhtml "&nbsp;";
+            }
+
+            $color = get_color ($newfile.'_Brief.html', 'compiler');
+            print $indexhtml "<TD bgcolor=$color>";
+            if ($color ne 'gray' && $color ne 'white') {
+                print $indexhtml "[<A HREF=\"".$webfile.".html#compiler\">Full</A>] ";
+                print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#compiler\">Brief</A>]";
+            }
+            else {
+                print $indexhtml "&nbsp;";
+            }
+
+            $color = get_color ($newfile.'_Brief.html', 'tests');
+            print $indexhtml "<TD bgcolor=$color>";
+            if ($color ne 'gray' && $color ne 'white') {
+                print $indexhtml "[<A HREF=\"".$webfile.".html#tests\">Full</A>] ";
+                print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#tests\">Brief</A>]";
+            }
+            else {
+                print $indexhtml "&nbsp;";
+            }
         }
         else {
-            print $indexhtml '<TR><TD>';
-            print $indexhtml "<A HREF=\"".$build_web{$build} ."\">$build</A> ";
-            print $indexhtml '<TD bgcolor=gray>';
-            print $indexhtml '<TD bgcolor=gray>';
-            print $indexhtml "[Full] [Brief]";
-            print $indexhtml '<TD bgcolor=gray>';
-            print $indexhtml "[Full] [Brief]";
-            print $indexhtml '<TD bgcolor=gray>';
-            print $indexhtml "[Full] [Brief]";
-            print $indexhtml "\n";
+            print $indexhtml '<TD bgcolor=gray>&nbsp;'; # Time
+            print $indexhtml '<TD bgcolor=gray>&nbsp;'; # Config
+            print $indexhtml '<TD bgcolor=gray>&nbsp;'; # CVS
+            print $indexhtml '<TD bgcolor=gray>&nbsp;'; # Compiler
+            print $indexhtml '<TD bgcolor=gray>&nbsp;'; # Tests
+        }       
+                
+
+        if ($havemanual) {
+            print $indexhtml "<TD align=center>";
+            if (defined %builds->{$buildname}->{MANUAL_LINK}) {
+                print $indexhtml "<INPUT TYPE=\"BUTTON\" VALUE=\"Start\" ";
+                print $indexhtml "ONCLICK=\"window.location.href='";
+                print $indexhtml %builds->{$buildname}->{MANUAL_LINK};
+                print $indexhtml "'\">";
+            }
+            else {
+                print $indexhtml "&nbsp;";
+            }
+        }
+        if ($havestatus) {
+            print $indexhtml "<TD>";
+            if (defined %builds->{$buildname}->{STATUS}) {
+                print $indexhtml "<A HREF=\"", %builds->{$buildname}->{STATUS_LINK}, "\"\>";
+                print $indexhtml %builds->{$buildname}->{STATUS};
+                print $indexhtml "</A>";                
+            }
+            else {
+                print $indexhtml "&nbsp;";
+            }
         }
 
-        my @existing = glob ($dir . '/' . $build . '/pretty/' . $build . '_*.html');
+        print $indexhtml "\n";
+
+        my @existing = glob ($dir . '/' . $buildname . '/pretty/' . $buildname . '_*.html');
 
         @existing = reverse sort @existing;
 
@@ -628,49 +908,39 @@ sub update_html ($$)
         shift @existing;  
 
         foreach my $file (@existing) {
-            print "        Removing $file\n";
+            print "            Removing $file\n";
             unlink $file;
       
         }
     }
 
     print $indexhtml "</TABLE>\n";
-
-    ### Print timestamp
-
-    print $indexhtml '<BR>Last updated at '.scalar (localtime ())."<BR>\n";
-
-    ### Print the Footer
-
-    print $indexhtml "</BODY>\n</HTML>\n";
-
-    $indexhtml->close ();
 }
+
+
 
 ###############################################################################
 ###############################################################################
 
 # Getopts
 
-use vars qw/$opt_c $opt_h $opt_m $opt_o/;
+use vars qw/$opt_c $opt_h $opt_m $opt_o $opt_r/;
 
-if (!getopts ('c:hm:o:') || defined $opt_h) {
-    print "scoreboard_update.pl [-c file] [-h] [-o dir] [-m script]\n";
-    print "\n";
-    print "  input        input directory\n";
-    print "  output       output directory\n";
+if (!getopts ('c:hm:o:r') || defined $opt_h) {
+    print "scoreboard_update.pl [-c file] [-h] [-o dir] [-m script] [-r]\n";
     print "\n";
     print "    -c file    use <file> as the configuration file [def: bin/nightlybuilds/builds.lst]\n";
     print "    -h         display this help\n";
     print "    -m script  make pretty with this script [def:bin/make_pretty.pl\n";
     print "    -o dir     directory to place files [def: html]\n";
-    print "    -r         remove files\n";
+    print "    -r         generate report\n";
     exit (1);
 }
 
 my $pretty = "bin/make_pretty.pl";
 my $file = "bin/nightlybuilds/builds.lst";
 my $dir = "html";
+my $report = 0;
 
 if (defined $opt_c) {
     $file = $opt_c;
@@ -684,16 +954,22 @@ if (defined $opt_m) {
     $pretty = $opt_m;
 }
 
+if (defined $opt_r) {
+    $report = 1;
+}
+
 # Do the stuff
 
-print 'Running Scoreboard Update at '.scalar (localtime ())."\n";
+print 'Running Scoreboard Update at '.scalar (gmtime ())."\n";
 
-load_build_list ($file);
+load_build_list ($file, $report);
+build_group_hash ();
 query_latest ();
 update_cache ($dir);
+query_status ();
 update_html ($dir, $pretty);
 
-print 'Finished Scoreboard Update at '.scalar (localtime ())."\n";
+print 'Finished Scoreboard Update at '.scalar (gmtime ())."\n";
 
 ###############################################################################
 ###############################################################################
