@@ -38,7 +38,8 @@
 # define ACE_CAST_CONST
 #elif defined (__SUNPRO_CC)
   // Sun CC 4.2, for example, requires const where it really shouldn't.
-  // An example is a local pointer variable in a const member function.
+  // An example is a reinterpret cast to a local pointer variable in a
+  // const member function.
 # define ACE_CAST_CONST const
 #endif
 
