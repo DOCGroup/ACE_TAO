@@ -252,6 +252,9 @@ public:
   // Totally remove <svc_name> from the daemon by removing it
   // from the ACE_Reactor, and unlinking it if necessary.
 
+  static char debug (void);
+  // Returns the debug level.
+
 #if defined (ACE_HAS_WINCE)
   // We must provide these function to bridge the <Svc_Conf> parser
   // with ACE.
@@ -300,6 +303,7 @@ protected:
 
   static int load_static_svcs (void);
   // Add the default statically-linked services to the <ACE_Service_Repository>.
+
 
 public:
   static void handle_signal (int sig, siginfo_t *, ucontext_t *);

@@ -268,7 +268,8 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
   ACE_ARGV args (parameters);
   ACE_Service_Type *srp = 0;
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening static service %s\n"), svc_name));
+  if (ACE_Service_Config::debug_)
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening static service %s\n"), svc_name));
 
   if (ACE_Service_Repository::instance ()->find (svc_name,
                                                  (const ACE_Service_Type **) &srp) == -1)
@@ -294,7 +295,8 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening dynamic service %s\n"), sr->name ()));
+  if (ACE_Service_Config::debug_)
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening dynamic service %s\n"), sr->name ()));
 
   if (ACE_Service_Repository::instance ()->insert (sr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("insertion failed, %p\n"), sr->name ()), -1);
@@ -482,7 +484,8 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
     return -1;
   else
     {
-      ACE_DEBUG ((LM_STARTUP, ASYS_TEXT ("starting up daemon %n\n")));
+      if (ACE_Service_Config::debug_)
+        ACE_DEBUG ((LM_STARTUP, ASYS_TEXT ("starting up daemon %n\n")));
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
@@ -546,7 +549,8 @@ ACE_Service_Config::reconfigure (void)
   if (ACE_Service_Config::debug_)
     {
       time_t t = ACE_OS::time (0);
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("beginning reconfiguration at %s"), ACE_OS::ctime (&t)));
+      if (ACE_Service_Config::debug_)
+        ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("beginning reconfiguration at %s"), ACE_OS::ctime (&t)));
     }
 
   if (ACE_Service_Config::process_directives () == -1)

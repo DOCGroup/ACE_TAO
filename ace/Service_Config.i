@@ -30,6 +30,12 @@ ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
   signal_handler_ = signal_handler;
 }
 
+ACE_INLINE char
+ACE_Service_Config::debug (void)
+{
+  return ACE_Service_Config::debug_;
+}
+
 #if defined (ACE_HAS_WINCE)
   // We must provide these function to bridge Svc_Conf parser with ACE.
 
