@@ -1,3 +1,8 @@
+Sun Aug  5 16:58:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/DLL_ORB/Makefile: Thanks to Ossama for helping to fix the
+	  the warnings in the daily builds.
+
 Sun Aug  5 16:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneway_Buffering/Test.idl: Changed the oneway in the
