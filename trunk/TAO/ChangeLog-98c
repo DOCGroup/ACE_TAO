@@ -1,3 +1,8 @@
+Thu Nov  6 02:34:54 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_exception.cpp (gen_client_header): 
+	removed warning for unused variable.
+
 Thu Nov 06 02:17:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.23, released Thu Nov 06 02:17:02 1997.

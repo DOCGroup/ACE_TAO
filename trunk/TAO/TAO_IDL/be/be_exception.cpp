@@ -68,6 +68,8 @@ be_exception::gen_client_header (void)
       TAO_OutStream *ch = cg->client_header (); // output stream
       TAO_NL  nl;        // end line
 
+      ACE_UNUSED_ARG (nl);
+
       cg->outstream (ch);
       ch->indent (); // start from whatever indentation level we were at
 
