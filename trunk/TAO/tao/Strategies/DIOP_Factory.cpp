@@ -55,7 +55,7 @@ TAO_DIOP_Protocol_Factory::make_acceptor (void)
 
 int
 TAO_DIOP_Protocol_Factory::init (int /* argc */,
-                                 char* /* argv */ [])
+                                 ACE_TCHAR* /* argv */ [])
 {
   return 0;
 }

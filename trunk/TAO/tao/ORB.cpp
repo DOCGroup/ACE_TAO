@@ -1530,7 +1530,6 @@ CORBA::ORB_init (int &argc,
   PortableInterceptor::ORBInitInfo_var orb_init_info =
     orb_init_info_temp;
 
-
   // Call the ORBInitializer::pre_init() on each registered ORB
   // initializer.
   TAO_ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in ()
@@ -1539,7 +1538,7 @@ CORBA::ORB_init (int &argc,
 
   // Initialize the ORB Core instance.
   result = safe_oc->init (command_line.get_argc(),
-                          command_line.get_TCHAR_argv()
+                          command_line.get_ASCII_argv()
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 

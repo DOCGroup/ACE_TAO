@@ -74,14 +74,14 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
 
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  ACE_TCHAR* argv0 = ACE_LIB_TEXT("");
+  ACE_CString argv0 = "";
 
   if (argc > 0 && argv != 0)
-    argv0 = argv[0];
+    argv0 = ACE_TEXT_ALWAYS_CHAR(argv[0]);
 
   CORBA::ULong len = 0;
   svc_config_argv.length (1);
-  svc_config_argv[0] = ACE_TEXT_ALWAYS_CHAR(argv0);
+  svc_config_argv[0] = argv0.c_str ();
 
   // Should we skip the <ACE_Service_Config::open> method, e.g., if we
   // already being configured by the ACE Service Configurator.

@@ -40,7 +40,7 @@ public:
   virtual ~TAO_UIOP_Protocol_Factory (void);
 
   // = Service Configurator hooks.
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   // Dynamic linking hook
 
   virtual int match_prefix (const ACE_CString &prefix);

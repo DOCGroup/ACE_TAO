@@ -897,7 +897,7 @@ protected:
 
   /// Initialize the guts of the ORB Core.  It is intended that this be
   /// called by <CORBA::ORB_init>.
-  int init (int &argc, ACE_TCHAR **argv ACE_ENV_ARG_DECL);
+  int init (int &argc, char **argv ACE_ENV_ARG_DECL);
 
   /// Final termination hook, typically called by CORBA::ORB's
   /// destructor.

@@ -22,7 +22,7 @@ TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
 int
 TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
                                 int,
-                                char *[]
+                                ACE_TCHAR *[]
                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

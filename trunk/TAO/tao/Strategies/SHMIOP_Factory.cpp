@@ -7,6 +7,7 @@
 #include "SHMIOP_Acceptor.h"
 #include "SHMIOP_Connector.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Strategies, SHMIOP_Factory, "$Id$")
 
@@ -62,20 +63,23 @@ TAO_SHMIOP_Protocol_Factory::make_acceptor (void)
 
 int
 TAO_SHMIOP_Protocol_Factory::init (int argc,
-                                   char* argv[])
+                                   ACE_TCHAR* argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  // Copy command line parameter not to use original as well as type conversion.
+  ACE_Argv_Type_Converter command_line(argc, argv);
+
+  ACE_Arg_Shifter arg_shifter (command_line.get_argc(), command_line.get_TCHAR_argv());
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *current_arg = 0;
+      const ACE_TCHAR *current_arg = 0;
 
-      if ((current_arg = arg_shifter.get_the_parameter ("-MMAPFileSize")))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-MMAPFileSize"))))
         {
           this->min_bytes_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-MMAPFilePrefix")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-MMAPFilePrefix"))))
         {
           this->mmap_prefix_ = ACE::strnew (current_arg);
           arg_shifter.consume_arg ();
