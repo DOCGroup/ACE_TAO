@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-// $Id$
-
-
-#include "Round_Robin_Strategy.h"
+#include "LB_Round_Robin_Strategy.h"
 #include "ReplicaProxy.h"
 
 ACE_RCSID (LoadBalancing,
-           Round_Robin_Strategy,
+           LB_Round_Robin_Strategy,
            "$Id$")
 
 
