@@ -5,6 +5,7 @@
  *  $Id$
  *
  *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ *          Jaiganesh Balasubramanian  <jai@dre.vanderbilt.edu>
  */
 //=====================================================================
 
@@ -65,7 +66,8 @@ typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
 typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
 
 template <typename DATA>
-class Process_Function {
+class Process_Function 
+{
 public:
   virtual void call(DOMDocument*, DOMNodeIterator*, DATA&)=0;
 
@@ -80,7 +82,8 @@ public:
  */
 
 template <typename OBJ, typename DATA>
-class Process_Member_Function: public Process_Function<DATA> {
+class Process_Member_Function: public Process_Function<DATA> 
+{
 public:
   typedef void (OBJ::*func_type) (DOMNodeIterator*, DATA&);
   typedef DATA data_type;
@@ -108,11 +111,13 @@ private:
 };
 
 /*
- *  Wrapper class for the process member functions which does not have DOMNodeIterator parameter
+ *  Wrapper class for the process member functions which does not have 
+    DOMNodeIterator parameter
  */
 
 template <typename OBJ, typename DATA>
-class Process_Member_Function_Remote: public Process_Function<DATA> {
+class Process_Member_Function_Remote: public Process_Function<DATA> 
+{
 public:
   typedef void (OBJ::*func_type) (DATA&);
   typedef DATA data_type;
@@ -144,7 +149,8 @@ private:
  */
 
 template <typename DATA>
-class Process_Static_Function: public Process_Function<DATA> {
+class Process_Static_Function: public Process_Function<DATA> 
+{
 public:
   typedef void (*func_type) (DOMNodeIterator*, DATA&);
   typedef DATA data_type;
@@ -163,29 +169,6 @@ private:
   func_type f_;
 };
 
-// processes sequence - not for common elements, process function is a member of "this" -
-template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
-bool
-process_sequence_local(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
-                      XStr& node_name, const char* name,
-                      SEQUENCE& seq, OBJECT* obj, FUNCTION func);
-
-// processes sequence - not for common elements, process function is not a member of "this" -
-template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
-bool
-process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
-                        XStr& node_name, const char* name,
-                        SEQUENCE& seq, FUNCTION func,
-                        REF_MAP& id_map);
-
-// Processes sequence - common elements -
-template<typename DATA, typename SEQUENCE, typename FUNCTION>
-bool
-process_sequence_common(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
-                        XStr& node_name, const char* name,
-                        SEQUENCE& seq, FUNCTION func,
-                        REF_MAP& id_map);
-
 // Processes reference sequences
 bool
 process_reference_seq (DOMNode* node,
@@ -202,43 +185,8 @@ process_reference (DOMNode* node,
                    int& index,
                    IDREF_MAP& idref_map);
 
-//  Process function for non-sequential elements
-template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
-bool
-process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
-                XStr& node_name, const char* name,
-                ELEMENT& elem, OBJECT* obj, FUNCTION func,
-                REF_MAP& id_map);
-
-// Process function for non-sequential non-local elements
-template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
-bool
-process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
-                       XStr& node_name, const char* name,
-                       ELEMENT& elem, OBJECT* obj, FUNCTION func,
-                       REF_MAP& id_map);
-
-template <typename SEQUENCE, typename DATA>
-void
-process_sequential_element (DOMNode* node,
-                            DOMDocument* doc,
-                            DOMNodeIterator* iter,
-                            SEQUENCE& seq,
-                            Process_Function <DATA>* func,
-                            REF_MAP& id_map);
-
 END_DEPLOYMENT_NAMESPACE
 
-#if defined (__ACE_INLINE__)
-#include "Process_Element.i"
-#endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Process_Element.tpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Process_Element.tpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "Process_Element_T.h"
 
 #endif // PROCESS_ELEMENT_H

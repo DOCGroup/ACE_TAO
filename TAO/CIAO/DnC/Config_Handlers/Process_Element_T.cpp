@@ -1,25 +1,146 @@
 //=====================================================================
 /**
- *  @file Process_Element.tpp
+ *  @file Process_Element_T.cpp
  *
  *  $Id$
  *
  *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ *          Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  */
 //=====================================================================
 
-#include "Process_Element.h"
+#include "Process_Element_T.h"
 #include "Config_Handlers/Config_Error_Handler.h"
 #include "ace/Auto_Ptr.h"
 #include "Utils.h"
 #include <iostream>
 #include <memory>
-#if !defined (__ACE_INLINE__)
-#include "Process_Element.i"
-#endif /* __ACE_INLINE__ */
+
 BEGIN_DEPLOYMENT_NAMESPACE
 
 class parser_error { };
+
+template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
+ACE_INLINE bool
+process_sequence_local(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                       XStr& node_name, const char* name,
+                       SEQUENCE& seq, OBJECT* obj, FUNCTION func)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      Process_Member_Function<OBJECT, DATA>
+        pf(obj, func);
+      process_sequential_element (node, doc, iter, seq, &pf, obj->id_map());
+    }
+
+  return result;
+}
+
+template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
+ACE_INLINE bool
+process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode*
+node,
+                        XStr& node_name, const char* name,
+                        SEQUENCE& seq, FUNCTION func,
+                        REF_MAP& id_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      OBJECT obj (doc, iter, false);
+
+      Process_Member_Function_Remote<OBJECT, DATA>
+        pf(obj, func);
+      process_sequential_element (node, doc, iter, seq, &pf, id_map);
+    }
+
+  return result;
+}
+
+template<typename DATA, typename SEQUENCE, typename FUNCTION>
+ACE_INLINE bool
+process_sequence_common(DOMDocument* doc, DOMNodeIterator* iter, DOMNode*
+node,
+                        XStr& node_name, const char* name,
+                        SEQUENCE& seq, FUNCTION func,
+                        REF_MAP& id_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      Process_Static_Function<DATA>
+        pf(func);
+      process_sequential_element (node, doc, iter, seq, &pf, id_map);
+    }
+
+  return result;
+}
+
+template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
+ACE_INLINE bool
+process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                XStr& node_name, const char* name,
+                ELEMENT& elem, OBJECT* obj, FUNCTION func,
+                REF_MAP& id_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+
+          Process_Member_Function<OBJECT, DATA>
+            pf(obj, func);
+
+          if (length == 1)
+              pf(doc, iter, elem);
+          else
+              process_element_attributes(named_node_map, doc, iter, 0, elem,
+&pf, id_map);
+        }
+    }
+
+  return result;
+}
+
+template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
+ACE_INLINE bool
+process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                       XStr& node_name, const char *name,
+                       ELEMENT& elem, FUNCTION func,
+                       REF_MAP& id_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      OBJECT obj (iter, false);
+
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+
+          Process_Member_Function_Remote<OBJECT, DATA>
+            pf(&obj, func);
+
+          if (length == 1)
+              pf(doc, iter, elem);
+          else
+              process_element_attributes(named_node_map, doc, iter, 0, elem,
+&pf, id_map);
+        }
+    }
+
+  return result;
+}
 
 template <typename VALUE, typename DATA>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
