@@ -103,7 +103,15 @@ public:
 
   /// A helper method that grabs the token for us, after which the
   /// thread that owns that can do some actual work.
-  int grab_token (ACE_Time_Value *max_wait_time);
+  /// @@todo: Should probably be called acquire_read_token ()
+  int grab_token (ACE_Time_Value *max_wait_time = 0);
+
+  /* A helper method that grabs the token for us, after which the
+   * thread that owns that can do some actual work. This differs from
+   * grab_token () as it uses acquire () to get the token instead of
+   * acquire_read ()
+   */
+  int acquire_token (ACE_Time_Value *max_wait_time = 0);
 
 private:
 
@@ -200,6 +208,36 @@ public:
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
 
   virtual int handle_events (ACE_Time_Value &max_wait_time);
+
+
+  /// The following two overloaded methods are necessary as we dont
+  /// want the TP_Reactor to call handle_close () with the token
+  /// held.
+  /**
+   * Removes the <mask> binding of <eh> from the Select_Reactor.  If
+   * there are no more bindings for this <eh> then it is removed from
+   * the Select_Reactor.  Note that the Select_Reactor will call
+   * <ACE_Event_Handler::get_handle> to extract the underlying I/O
+   * handle.
+   */
+  virtual int remove_handler (ACE_Event_Handler *eh,
+                              ACE_Reactor_Mask mask);
+
+  /**
+   * Removes the <mask> bind of <Event_Handler> whose handle is
+   * <handle> from the Select_Reactor.  If there are no more bindings
+   * for this <eh> then it is removed from the Select_Reactor.
+   */
+  virtual int remove_handler (ACE_HANDLE handle,
+                              ACE_Reactor_Mask);
+
+  /**
+   * Removes all the <mask> bindings for handles in the <handle_set>
+   * bind of <Event_Handler>.  If there are no more bindings for any
+   * of these handlers then they are removed from the Select_Reactor.
+   */
+  virtual int remove_handler (const ACE_Handle_Set &handle_set,
+                              ACE_Reactor_Mask);
 
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
