@@ -101,3 +101,161 @@ CORBA_TypeCode::operator new (size_t, void *p)
 {
   return p;
 }
+
+// ****************************************************************
+
+ACE_INLINE
+CORBA_TypeCode_var::CORBA_TypeCode_var (void)
+  : ptr_ (CORBA_TypeCode::_nil ())
+{}
+
+ACE_INLINE
+CORBA_TypeCode_var::CORBA_TypeCode_var (CORBA_TypeCode_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE CORBA_TypeCode_ptr
+CORBA_TypeCode_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_TypeCode_var::CORBA_TypeCode_var (const CORBA_TypeCode_var &p)
+  : ptr_ (CORBA_TypeCode::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+CORBA_TypeCode_var::~CORBA_TypeCode_var (void)
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE CORBA_TypeCode_var &
+CORBA_TypeCode_var::operator= (CORBA_TypeCode_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE CORBA_TypeCode_var &
+CORBA_TypeCode_var::operator= (const CORBA_TypeCode_var &p)
+{
+  if (this != &p)
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = CORBA_TypeCode::_duplicate (p.ptr ());
+    }
+  return *this;
+}
+
+ACE_INLINE
+CORBA_TypeCode_var::operator const CORBA_TypeCode_ptr &() const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_TypeCode_var::operator CORBA_TypeCode_ptr &()
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_TypeCode_ptr
+CORBA_TypeCode_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_TypeCode_ptr
+CORBA_TypeCode_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_TypeCode_ptr &
+CORBA_TypeCode_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_TypeCode_ptr &
+CORBA_TypeCode_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = CORBA_TypeCode::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_TypeCode_ptr
+CORBA_TypeCode_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  CORBA_TypeCode_ptr val = this->ptr_;
+  this->ptr_ = CORBA_TypeCode::_nil ();
+  return val;
+}
+
+// *************************************************************
+// Inline operations for class CORBA_TypeCode_out
+// *************************************************************
+
+ACE_INLINE
+CORBA_TypeCode_out::CORBA_TypeCode_out (CORBA_TypeCode_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = CORBA_TypeCode::_nil ();
+}
+
+ACE_INLINE
+CORBA_TypeCode_out::CORBA_TypeCode_out (CORBA_TypeCode_var &p)
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = CORBA_TypeCode::_nil ();
+}
+
+ACE_INLINE
+CORBA_TypeCode_out::CORBA_TypeCode_out (CORBA_TypeCode_out &p)
+  : ptr_ (p.ptr_)
+{}
+
+ACE_INLINE CORBA_TypeCode_out &
+CORBA_TypeCode_out::operator= (CORBA_TypeCode_out &p)
+{
+  this->ptr_ = p.ptr_;
+  return *this;
+}
+
+ACE_INLINE CORBA_TypeCode_out &
+CORBA_TypeCode_out::operator= (const CORBA_TypeCode_var &p)
+{
+  this->ptr_ = CORBA_TypeCode::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE CORBA_TypeCode_out &
+CORBA_TypeCode_out::operator= (CORBA_TypeCode_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+CORBA_TypeCode_out::operator CORBA_TypeCode_ptr &()
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_TypeCode_ptr &
+CORBA_TypeCode_out::ptr (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_TypeCode_ptr
+CORBA_TypeCode_out::operator-> (void)
+{
+  return this->ptr_;
+}

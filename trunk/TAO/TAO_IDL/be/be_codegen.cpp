@@ -209,10 +209,14 @@ TAO_CodeGen::client_header (const char *fname)
           ACE_OS::sprintf (macro_name, "_TAO_IDL_");
           // convert letters in fname to upcase
           for (int i=0; i < (suffix - fname); i++)
-            if (isalpha (fname [i]))
-              macro_name[i+9] = toupper (fname [i]);
-            else
-              macro_name[i+9] = fname[i];
+	    {
+	      if (isalpha (fname [i]))
+		macro_name[i+9] = toupper (fname [i]);
+	      else if (isdigit (fname [i]))
+		macro_name[i+9] = fname[i];
+	      else
+		macro_name[i+9] = '_';
+	    }
 
           ACE_OS::strcat (macro_name, "_H_");
 
@@ -239,8 +243,17 @@ TAO_CodeGen::client_header (const char *fname)
 	      const char* client_hdr =
 		IDL_GlobalData::be_get_client_hdr (idl_name);
 
-	      this->client_header_->print ("#include \"%s\"\n",
-					   client_hdr);
+	      if (client_hdr != 0)
+		{
+		  this->client_header_->print ("#include \"%s\"\n",
+					       client_hdr);
+		}
+	      else
+		{
+		  ACE_ERROR ((LM_WARNING,
+			      "WARNING, invalid file '%s' included\n",
+			      idl_name->get_string ()));
+		}
 	    }
 	  *this->client_header_ << "\n";
           return 0;

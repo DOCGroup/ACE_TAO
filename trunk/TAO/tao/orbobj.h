@@ -234,7 +234,7 @@ private:
   CORBA::ORB_ptr ptr_;
 };
 
-class CORBA_ORB_out
+class TAO_Export CORBA_ORB_out
 {
 public:
   CORBA_ORB_out (CORBA::ORB_ptr &);
