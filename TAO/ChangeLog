@@ -1,3 +1,8 @@
+Wed Apr 23 07:40:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp: Use
+	  .out () instead of a .in (), which seems more meaningful. 
+
 Wed Apr 23 07:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTCORBA/Activity/Makefile:
@@ -20,6 +25,7 @@ Tue Apr 22 21:43:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Tue Apr 22 21:39:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp: Fixed warnings in g++ builds.
+
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
 	  Added a .in () operator to the _var variable. Assigning a _var
 	  to a _out is a no-no.
