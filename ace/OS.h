@@ -5854,13 +5854,13 @@ private:
 // file of template instantiations.
 # if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 class ACE_TSS_Ref
+{
   // = TITLE
   //     "Reference count" for thread-specific storage keys.
   //
   // = DESCRIPTION
   //     Since the <ACE_Unbounded_Stack> doesn't allow duplicates, the
   //     "reference count" is the identify of the thread_id.
-{
 public:
   ACE_TSS_Ref (ACE_thread_t id);
   // Constructor
@@ -5881,12 +5881,12 @@ public:
 };
 
 class ACE_TSS_Info
+{
   // = TITLE
   //     Thread Specific Key management.
   //
   // = DESCRIPTION
   //     This class maps a key to a "destructor."
-{
 public:
   ACE_TSS_Info (ACE_thread_key_t key,
                 void (*dest)(void *) = 0,
@@ -5930,6 +5930,7 @@ private:
 };
 
 class ACE_TSS_Keys
+{
   // = TITLE
   //     Collection of in-use flags for a thread's TSS keys.
   //     For internal use only by ACE_TSS_Cleanup; it is public because
@@ -5939,8 +5940,7 @@ class ACE_TSS_Keys
   // = DESCRIPTION
   //     Wrapper around array of whether each key is in use.  A simple
   //     typedef doesn't work with Sun C++ 4.2.
-{
- public:
+public:
   ACE_TSS_Keys (void);
   // Default constructor, to initialize all bits to zero (unused).
 
@@ -5975,6 +5975,63 @@ private:
 
 # endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
 
+class ACE_Export ACE_OS_WString
+{
+  // = TITLE
+  //     A lightweight wchar* to char* string conversion class.
+  //
+  // = DESCRIPTION
+  //     The purpose of this class is to perform conversion between
+  //     wchar and char strings.  It is not intended for general
+  //     purpose use.
+public:
+  ACE_OS_WString (const ACE_USHORT16 *s);
+  // Ctor must take a wchar stirng.
+
+  ~ACE_OS_WString (void);
+  // Dtor will free up the memory.
+
+  char *char_rep (void);
+  // Return the internal char* representation.
+
+private:
+  char *rep_;
+  // Internal pointer to the converted string.
+
+  ACE_OS_WString (void);
+  ACE_OS_WString (ACE_OS_WString &);
+  operator= (ACE_OS_WString &);
+  // Disallow these operation.
+};
+
+class ACE_Export ACE_OS_CString
+{
+  // = TITLE
+  //     A lightweight char* to wchar* string conversion class.
+  //
+  // = DESCRIPTION
+  //     The purpose of this class is to perform conversion from
+  //     char* to wchar* strings.  It is not intended for general
+  //     purpose use.
+public:
+  ACE_OS_CString (const char *s);
+  // Ctor must take a wchar stirng.
+
+  ~ACE_OS_CString (void);
+  // Dtor will free up the memory.
+
+  ACE_USHORT16 *wchar_rep (void);
+  // Return the internal char* representation.
+
+private:
+  ACE_USHORT16 *rep_;
+  // Internal pointer to the converted string.
+
+  ACE_OS_CString (void);
+  ACE_OS_CString (ACE_OS_CString &);
+  operator= (ACE_OS_CString &);
+  // Disallow these operation.
+};
 
 // Support non-scalar thread keys, such as with some POSIX
 // implementations, e.g., MVS.
@@ -6485,20 +6542,18 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 // that some data may be lost in this conversion.
 
 # if defined (UNICODE)
-#   include "ace/Auto_Ptr.h"
-#   include "ace/SString.h"
 #   define ACE_WIDE_STRING(ASCII_STRING) \
-ACE_WString (ASCII_STRING).fast_rep ()
+ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #   define ACE_MULTIBYTE_STRING(WIDE_STRING) \
-ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
+ACE_OS_WString (WIDE_STRING).char_rep ()
 #   define ACE_TEXT_STRING ACE_WString
 #   if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 #     define ASYS_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
 #     define ASYS_ONLY_MULTIBYTE_STRING(WIDE_STRING) \
-ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
+ACE_OS_WString (WIDE_STRING).char_rep ()
 #   else
 #     define ASYS_MULTIBYTE_STRING(WIDE_STRING) \
-ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
+ACE_OS_WString (WIDE_STRING).char_rep ()
 #     define ASYS_ONLY_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
 #   endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 # else
@@ -6510,7 +6565,7 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 # endif /* UNICODE */
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   define ASYS_WIDE_STRING(ASCII_STRING) ACE_WString (ASCII_STRING).fast_rep ()
+#   define ASYS_WIDE_STRING(ASCII_STRING) ACE_OS_CString (ASCII_STRING).char_rep ()
 # else
 #   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
