@@ -101,7 +101,8 @@ CORBA::Boolean
 Video_Control_i::step (const Video_Control::STEPpara &para,
                        CORBA::Environment& env)
 {
-  return 0;
+  return this->get_video_control_handler ()->step (para,
+                                                   env);
 }
 
 
