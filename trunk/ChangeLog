@@ -1,6 +1,11 @@
+Mon Nov 18 20:49:33 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/IPC_SAP/FILE_SAP/client.cpp (ACE_TMAIN): Changed to use
+	  predefined ACE_DEFAULT_FILE_PERMS instead of the non-portable 0666.
+
 Mon Nov 18 12:27:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.cpp (handler): 
+	* ace/Dev_Poll_Reactor.cpp (handler):
 	* ace/WFMO_Reactor.i (handler):
 	* ace/Select_Reactor_Base_T.cpp (handler_i): The methods that
 	  returns a signal handler associated with a certain type of
@@ -15,7 +20,7 @@ Sat Nov 16 09:38:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* ace/*/Makefile:
 	* tests/Makefile:
 	* examples/*/Makefile:
-	* performance-tests/*/Makefile: 
+	* performance-tests/*/Makefile:
 	* ACEXML/*/Makefile: Updated dependencies.
 
 Fri Nov 15 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
@@ -25,23 +30,23 @@ Fri Nov 15 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  implement the new IGMPv3, perfect multicast filtering, and
 	  replaced the #ifdef linux in the ACE_SOCK_Dgram_Mcast::ctor
 	  with the new macro, since this isn't just a linux thing.
-	
+
 	* ace/config-aix-4.x.h:
 	* ace/config-freebsd.h:
 	* ace/config-linux-common.h:
 	* ace/config-netbsd.h:
-	* ace/config-openbsd.h: 
+	* ace/config-openbsd.h:
 	  Defined ACE_LACKS_PERFECT_MULTICAST_FILTERING for these platforms.
 
-	* ace/SOCK_Dgram_Mcast.cpp (open_i): Removed redundant call to 
-	  ACE_SOCK::set_option() to set SO_REUSEADDR, since it's set in 
+	* ace/SOCK_Dgram_Mcast.cpp (open_i): Removed redundant call to
+	  ACE_SOCK::set_option() to set SO_REUSEADDR, since it's set in
 	  the call to ACE_SOCK::open().  This fixes [bug 1111].
 
-	* tests/Multicast_Test.cpp: Enhanced test by adding new options 
-	  control the wait time when running test as a CONSUMER only, 
-	  and contol the TTL so the test could be used over routers.  
+	* tests/Multicast_Test.cpp: Enhanced test by adding new options
+	  control the wait time when running test as a CONSUMER only,
+	  and contol the TTL so the test could be used over routers.
 	  Also cleaned up the code a bit to make it more readable.  Thanks
-	  to Bill Fulton for motivating these enhancements.	
+	  to Bill Fulton for motivating these enhancements.
 
 Fri Nov 15 14:16:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
