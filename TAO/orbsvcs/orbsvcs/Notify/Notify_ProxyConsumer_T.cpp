@@ -18,7 +18,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::TAO_Notify_ProxyConsumer (TAO_Notify_Sup
   : supplier_admin_ (supplier_admin),
     filter_eval_task_ (0)
 {
-  event_manager_ = supplier_admin->get_event_manager ();
+  this->event_manager_ = supplier_admin->get_event_manager ();
   supplier_admin_->_add_ref ();
 }
 
@@ -36,7 +36,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
   // Create the task to forward filtering commands to:
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
-    event_manager_->resource_factory ();
+    this->event_manager_->resource_factory ();
 
   this->filter_eval_task_ =
     event_manager_objects_factory->create_source_eval_task (ACE_TRY_ENV);
@@ -86,7 +86,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event
 
   CORBA::Boolean ret_val;
 
-  ret_val = supplier_admin_->MyOperator (ACE_TRY_ENV);
+  ret_val = this->supplier_admin_->MyOperator (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   if (ret_val == CosNotifyChannelAdmin::AND_OP)
