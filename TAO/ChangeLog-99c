@@ -4,6 +4,20 @@ Tue Aug 10 11:52:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  The timeout values were not normalized, leading to strange
 	  errors in the calls to select()
 
+Tue Aug 10 11:48:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/pragma.idl:
+	* TAO/tests/IDL_Test/run_test.pl:
+	* TAO/tests/IDL_Test/main.cpp:
+	* TAO/tests/IDL_Test/Makefile:
+	* TAO/tests/IDL_Test/README:
+	  Added new .idl file to generate pragma prefixes,
+	  including various declarations that have caused
+	  the prefixes to be dropped in the past. Added code
+	  to main.cpp to check the correctness of the prefixes,
+	  and a perl script to run the test. Finally, changes
+	  to Makefile and README reflecting the above additions.
+
 Tue Aug 10 08:51:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp
