@@ -16,8 +16,6 @@ void
 ACE_DEV_Connector::dump (void) const
 {
   ACE_TRACE ("ACE_DEV_Connector::dump");
-
-  ACE_DEV::dump ();
 }
 
 ACE_DEV_Connector::ACE_DEV_Connector (void)

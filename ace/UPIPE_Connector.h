@@ -28,7 +28,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_Export ACE_UPIPE_Connector : public ACE_SPIPE
+class ACE_Export ACE_UPIPE_Connector
 {
   // = TITLE
   //     Defines an active connection factory for the

@@ -25,7 +25,7 @@
 
 #if defined (ACE_HAS_TLI)
 
-class ACE_Export ACE_TLI_Connector : public ACE_TLI
+class ACE_Export ACE_TLI_Connector 
 {
   // = TITLE
   //     Defines an active connection factory for the ACE_TLI C++

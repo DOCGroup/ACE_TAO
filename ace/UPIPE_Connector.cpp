@@ -79,9 +79,6 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
       if (result == -1)
 	  ACE_ERROR ((LM_ERROR, "ACE_UPIPE_Connector %p\n",
 		      "no confirmation from server"));
-
-      if (result == -1)
-	this->close ();
       else
 	// Close down the new_stream at this point in order to
 	// conserve handles.  Note that we don't need the SPIPE
