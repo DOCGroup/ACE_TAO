@@ -70,7 +70,6 @@ Wed Aug 27 14:48:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Fixed warning about potential use of an uninitialized variable.
 
->>>>>>> 1.2448
 Wed Aug 27 14:11:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTSched.dsp:
