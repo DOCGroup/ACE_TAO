@@ -1,3 +1,8 @@
+Tue Aug 10 20:40:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	  It was ACE_CU64_TO_CU32 instead of ACE_U64_TO_U32
+
 Tue Aug 10 19:59:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
