@@ -1,3 +1,151 @@
+Sun Nov 28 17:06:00 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+
+	  Added ACE_HAS_POSITION_INDEPENDENT_MALLOC macro.
+
+	* configure.in:
+
+	  Dropped AC_ISC_POSIX macro in favor of an AC_CHECK_LIB strerror
+	  test.
+
+	  Disabled exception handling support by default.
+
+	  Added "--enable-pi-malloc" configure script option to
+	  enable/disable ACE's position independent malloc feature.  By
+	  default, this feature will be enabled.
+
+	  Added a run-time test for sem_open().  glibc() apparently
+	  defines a stub for this function in the pthread library but
+	  there is no entry in <gnu/stubs.h> for it.  As such, the
+	  configure script assumed that it is a working function.  It
+	  turns out it is not (on Linux with glibc <= 2.1.2).
+
+	  Generalized/improved setrlimit and getrusage tests that check if
+	  the first argument is an enum.  The tests now determine exactly
+	  what the enum type is.  Previously, the test was specific to
+	  Linux/glibc platforms.
+
+	  Fixed some tests that didn't initialize a const variable before
+	  it was used.
+
+	  Added a test that checks the integrity of the generated
+	  configuration.  The test attempts to compile ace/OS.cpp.  If it
+	  fails then the rest of ACE won't compile, indicating that the
+	  automatic configuration wasn't successful.  Upon failure, some
+	  diagnostic information is output, and a request to submit a bug
+	  report is made.
+
+	  Flush the cached configuration test results to the cache file.
+	  This is mainly useful for configure script debugging purposes.
+	
+	* ace/Log_Msg.h (ACE_Log_Msg):
+
+	  Added additional spaces before comments describing each format
+	  specifier since the single quote "'" at the beginning of each
+	  description was interpreted as a troff comment. Thanks to Kevin
+	  Dalley for pointing this out and suggesting a fix.
+
+	* ace/OS.h:
+
+	  Consolidated some ACE_INLINE macro preprocessor conditionals.
+
+	  Moved inclusion of Log_Msg.h and OS.i to the end of the file in
+	  case some declarations or definitions found earlier in OS.h are
+	  ever needed in the future by these two files.
+
+	* ace/Trace.h:
+	* ace/Trace.cpp:
+
+	  Removed inclusion of Log_Msg.h from Trace.cpp and included OS.h
+	  in Trace.h.  OS.h is needed for the definition of ACE_Export.
+	
+	* ace/config-win32-borland.h:
+	* ace/config-win32-common.h:
+
+	  Removed ACE_HAS_BROKEN_IMPLICIT_CONST_CAST macro.  This macro
+	  isn't used anywhere in ACE or TAO.
+
+	* ace/Makefile:
+
+	  Updated dependencies.
+
+	* bin/am_edit:
+
+	  This script is generates IDL source file targets and
+	  dependencies in Makefile.in files.  It is essentially the same
+	  script that the KDE developers use for their IDL sources except
+	  that it is has been customised for TAO_IDL generated sources.
+	  Thanks to Stephan Kulow <coolo@kde.org> for pointing out the
+	  availability of this script.
+
+	* bin/make_release:
+
+	  Archive list should be concatenated instead replaced.  This list
+	  is currently only used by the MD5 checksum generation support.
+
+	* bin/generate_html_windex:
+
+	  Created this script to generate the acewindex.html file.  It
+	  generates the acewindex.html directly from the man pages instead
+	  of an intermediate windex file.  Some platforms don't have a
+	  "catman -w" equivalent command since the man database is
+	  generated automatically by the OS (e.g. Debian GNU/Linux).  This
+	  script allows the acewindex.html file to be generated on such
+	  platforms.  The windex file (not acewindex.html) isn't generated
+	  but this typically isn't a problem since it is not the ACE
+	  install system's responsibility to (re)generate a windex file at
+	  install time.  It is up to the sysadmin to do so. Thanks to
+	  Kevin Dalley <kevind@rahul.net> for motivating the creation of
+	  this script.
+
+	* bin/bootstrap:
+
+	  The list of ROFF and HTML man pages is now automatically
+	  generated and inserted into the appropriate Makefile.am file in
+	  this script.  This allows the removal of the non-portable
+	  "$(shell ...)" expression from the Makefile.am files.  It also
+	  improves build performance in the man directories since the list
+	  is only evaluate at bootstrap time instead of each time the
+	  directory is built.
+
+	* man/Makefile.am (acewindex.html):
+
+	  Use the newly created `generate_html_windex' script to create
+	  the acewindex.html file since not all platforms support "catman
+	  -w" windex file generation.
+
+	* man/html/Makefile.am (html_DATA):
+	* man/man3/Makefile.am (man_MANS):
+
+	  Removed the commands that generate the man pages lists.  The
+	  `bootstrap' script now takes care of substituting what each of
+	  the Makefile.am variables should contain.
+
+	* m4/acinclude.m4:
+
+	  Improved ACE_USE_TEMP_FILE macro.  It now checks for the
+	  existence of a file with the same name as the temporary file in
+	  the current directory, in addition to the top-level source
+	  directory.
+
+	  Moved the setrlimit and getrusage enum tests into Autoconf
+	  macros in this file.  The macros are ACE_CHECK_SETRLIMIT_ENUM
+	  and ACE_CHECK_GETRUSAGE_ENUM.
+
+	  Fixed AC_SYS_RESTARTABLE_SYSCALLS and added it to this file.
+	  The patched version compiles and runs, whereas the existing/old
+	  version doesn't even compile on some platforms.  The
+	  AC_SYS_RESTARTABLE_SYSCALLS test is broken in GNU Autoconf
+	  2.13.  I use this test to determine if the
+	  ACE_HAS_SIGNAL_SAFE_OS_CALLS macro should be defined for ACE.  I
+	  patched it so that it works, at least platforms that expect a
+	  signal handler that expects an int argument.
+
+	* m4/subsets.m4:
+
+	  Disable building of all subset libraries by default.
+
 Sun Nov 28 09:45:36 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * netsvcs/lib/Logging_Strategy.cpp: ACE_Logging_Strategy::fini () 
@@ -171,15 +319,39 @@ Mon Nov 22 17:06:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           <Derek.Dominish@Australia.Boeing.com> for pointing this out.
 
 Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+<<<<<<< ChangeLog
+=======
 
         * examples/Configuration/config_test.cpp: ACE-ified this example.
+>>>>>>> 4.2455
 
+<<<<<<< ChangeLog
+	* examples/Configuration/config_test.cpp: ACE-ified this example.
+=======
         * ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
           within the overloaded global relational operator to use inline
           methods.  This change should work around bugs with MSVC++.
           Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
           this.
+>>>>>>> 4.2455
 
+<<<<<<< ChangeLog
+	* ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
+	  within the overloaded global relational operator to use inline
+ 	  methods.  This change should work around bugs with MSVC++.
+  	  Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
+ 	  this.
+
+	* ace/Service_Config.cpp (parse_args): Reverted the behavior
+	  of parse_args() so that it doesn't return an error when it runs
+ 	  across an option that it doesn't recognize.  This is necessary
+ 	  to support certain use-cases where the Service Configurator is
+ 	  part of an application-specific configuration process.  We do,
+ 	  however, print a warning message if ACE::debug() > 0.  Thanks to
+ 	  Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
+ 	  suggesting a fix.
+
+=======
         * ace/Service_Config.cpp (parse_args): Reverted the behavior
           of parse_args() so that it doesn't return an error when it runs
           across an option that it doesn't recognize.  This is necessary
@@ -189,6 +361,7 @@ Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
           Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
           suggesting a fix.
 
+>>>>>>> 4.2455
 Sat Nov 20 10:16:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Configuration.cpp: Moved DEFBUFSIZE into the Win32-specific
