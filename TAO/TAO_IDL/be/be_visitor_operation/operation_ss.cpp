@@ -271,7 +271,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   *os << " ri (" << be_idt << be_idt_nl
       << "_tao_server_request," << be_nl
-      << "_tao_impl" << be_nl;
+      << "_tao_impl";
 
   // Generate the formal argument fields which are passed to the
   // RequestInfo object.
