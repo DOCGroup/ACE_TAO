@@ -69,7 +69,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
-  CORBA::String id = CORBA::string_dup (iors[0]->_stubobj ()->type_id.in ());
+  CORBA::String_var id =
+    CORBA::string_dup (iors[0]->_stubobj ()->type_id.in ());
 
   for (i = 1; i < iors.length () ; i++)
     {
@@ -86,8 +87,8 @@ TAO_IOR_Manipulation_impl::merge_iors (
                           CORBA::Object::_nil ());
 
       // If the object type_id's differ then raise an exception.
-      if (id && iors[i]->_stubobj ()->type_id.in () &&
-          ACE_OS::strcmp (id, iors[i]->_stubobj ()->type_id.in ()))
+      if (id.in () && iors[i]->_stubobj ()->type_id.in () &&
+          ACE_OS::strcmp (id.in (), iors[i]->_stubobj ()->type_id.in ()))
         ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                           CORBA::Object::_nil ());
 
@@ -105,7 +106,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   TAO_Stub *stub = 0;
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id,  // give the id string to stub
+                    TAO_Stub (id._retn (),  // give the id string to stub
                               Merged_Profiles,
                               orb_core),
                     CORBA::NO_MEMORY ());
@@ -172,9 +173,10 @@ TAO_IOR_Manipulation_impl::remove_profiles (
       ))
 {
   // First verify they are the same type!
-  CORBA::String id = CORBA::string_dup (ior1->_stubobj ()->type_id.in ());
-  if (id && ior2->_stubobj ()->type_id.in () &&
-      ACE_OS::strcmp (id, ior2->_stubobj ()->type_id.in ()))
+  CORBA::String_var id =
+    CORBA::string_dup (ior1->_stubobj ()->type_id.in ());
+  if (id.in () && ior2->_stubobj ()->type_id.in () &&
+      ACE_OS::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
@@ -210,7 +212,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   TAO_Stub *stub = 0;
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id, // give id string to stub
+                    TAO_Stub (id._retn (), // give id string to stub
                               Diff_Profiles,
                               orb_core),
                     CORBA::NO_MEMORY ());
