@@ -2017,8 +2017,6 @@ private:
 
 #endif /* end #if !defined */
 
-extern TAO_IFR_Client_Export CORBA::TypeCode_ptr  _tc_CORBA_InterfaceDefSeq;
-
 class CORBA_ExceptionDef;
 
 #if !defined (_CORBA_EXCEPTIONDEF___PTR_CH_)
@@ -2397,8 +2395,6 @@ private:
 
 #endif /* end #if !defined */
 
-extern TAO_IFR_Client_Export CORBA::TypeCode_ptr  _tc_CORBA_ValueDefSeq;
-
 class CORBA_ValueBoxDef;
 
 #if !defined (_CORBA_VALUEBOXDEF___PTR_CH_)
@@ -2701,8 +2697,6 @@ private:
 
 #endif /* end #if !defined */
 
-extern TAO_IFR_Client_Export CORBA::TypeCode_ptr  _tc_CORBA_AbstractInterfaceDefSeq;
-
 class CORBA_LocalInterfaceDef;
 
 #if !defined (_CORBA_LOCALINTERFACEDEF___PTR_CH_)
@@ -2928,8 +2922,6 @@ private:
 
 
 #endif /* end #if !defined */
-
-extern TAO_IFR_Client_Export CORBA::TypeCode_ptr  _tc_CORBA_LocalInterfaceDefSeq;
 
 struct CORBA_StructMember;
 class CORBA_StructMember_var;
