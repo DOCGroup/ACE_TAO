@@ -64,7 +64,7 @@ parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
                         "c:e:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
-                        "b:l:n:o:s:" // server options
+                        "b:f:hl:n:o:s:" // server options
                         );
   int c;
 
@@ -157,6 +157,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'b':
+      case 'f':
       case 'l':
       case 'n':
       case 'o':
