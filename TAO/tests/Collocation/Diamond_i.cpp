@@ -47,7 +47,7 @@ Left_i::color (CORBA::Environment &)
   ))
 {
   return CORBA::string_dup ("black");
-};
+}
 
 Right_i::Right_i ()
 {
