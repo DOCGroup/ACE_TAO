@@ -73,6 +73,7 @@ CORBA::string_dup (const CORBA::Char *str)
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
     open_called_(CORBA::B_FALSE),
+    shutdown_lock_ (0),
     should_shutdown_(CORBA::B_FALSE),
     name_service_ (CORBA_Object::_nil ()),
     schedule_service_ (CORBA_Object::_nil ()),
