@@ -1,3 +1,10 @@
+Sun May  9 12:59:11 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Updated name of project file we must build first when doing a static
+          msvc build. This has to be done because of the changes of
+          Marek Brudka  <mbrudka@elka.pw.edu.pl> to get smaller filenames
+
 Sat May  8 16:25:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* ace/Time_Value.h:
