@@ -97,8 +97,11 @@ Cubit_Server::init (int argc,
 int
 Cubit_Server::init_naming_service (CORBA::Environment& env)
 {
-  this->my_name_server_.init (this->orb_, 
+  int result;
+  result = this->my_name_server_.init (this->orb_, 
                               this->child_poa_);
+  if (result < 0)
+    return result;
   factory = this->factory_impl_._this (env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
