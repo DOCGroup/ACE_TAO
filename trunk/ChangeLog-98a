@@ -5,6 +5,10 @@ Mon May 04 17:09:39 1998  David L. Levine  <levine@cs.wustl.edu>
           for the default therad priority, and removal of some
           unnecessary thr_yield () calls.
 
+        * tests/Aio_Platform_Test.cpp: added arguments to main (),
+          removed #includes that are already in ace/OS.h, and added
+          ACE_START_TEST/ACE_END_TEST calls.
+
 Mon May  4 13:08:18 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace/config-sunos5.6.h: Removed a mysterious "30" at the end of
