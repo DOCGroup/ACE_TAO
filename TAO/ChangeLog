@@ -1,3 +1,17 @@
+Thu Aug 12 17:51:52 2004  Simon McQueen  <sm@prismtechnologies.com>
+
+        * TAO_IDL/fe/fe_lookup.cpp (lookup):
+          Added test for matching string lengths to prevent incorrect
+          identification of non-keyword strings as c++ keywords.
+
+          This fixes bugzilla #1904.
+
+        * tests/Bug_1904_Regression/test.cpp:
+        * tests/Bug_1904_Regression/test.idl:
+        * tests/Bug_1904_Regression/test.mpc:
+
+          Regression test for the above.
+
 Thu Aug 12 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Transport.cpp:
