@@ -1,3 +1,10 @@
+Mon Aug 23 01:04:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_T.cpp:
+
+	  Made some slight changes to the BUG 1890 patch after receiving
+	  some clarifications from Kobi. 
+
 Sun Aug 22 11:11:00 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/amh.mpb:
@@ -86,6 +93,8 @@ Fri Aug 20 15:20:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Added a default argument to the ACE_Signal class, which is used
           by the ACE_Select_Reactor.
+
+	  Thanks to Kobi for the patches.
 
 Fri Aug 20 14:26:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
