@@ -1,40 +1,42 @@
 Tue May 25 17:00:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Supplier_i.cpp (via_naming_service): 
-	* examples/Callback_Quoter/Consumer_Handler.cpp
-	* examples/Callback_Quoter/Consumer_Input_Handler.cpp
-	* examples/Callback_Quoter/Consumer_Signal_Handler.cpp
-	* examples/Callback_Quoter/Notifier_Input_Handler.cpp
-	* examples/Callback_Quoter/Notifier_i.cpp
-	* examples/Callback_Quoter/Supplier_i.cpp
-	* examples/Callback_Quoter/notifier.cpp : Removed some
-	ACE_TRY_NEW_ENV's and cleaned up the way exception handling is
-	being done.
-	
+        * examples/Callback_Quoter/Supplier_i.cpp (via_naming_service):
+        * examples/Callback_Quoter/Consumer_Handler.cpp
+        * examples/Callback_Quoter/Consumer_Input_Handler.cpp
+        * examples/Callback_Quoter/Consumer_Signal_Handler.cpp
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp
+        * examples/Callback_Quoter/Notifier_i.cpp
+        * examples/Callback_Quoter/Supplier_i.cpp
+        * examples/Callback_Quoter/notifier.cpp : Removed some
+        ACE_TRY_NEW_ENV's and cleaned up the way exception handling is
+        being done.
 
 Tue May 25 16:24:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (set_endpoint): Seveal "reason" strings for
-	  "%p" directive were missing.  Thanks to Christopher Kohlhoff
-	  <chris@kohlhoff.com> for pointing this out.
+        * tao/ORB_Core.cpp (set_endpoint): Seveal "reason" strings for
+          "%p" directive were missing.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for pointing this out.
 
 Tue May 25 12:54:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Messaging_Policy_i.h:
-	  Fixed syntax error only IRIX catched this one.
+        * tao/Messaging_Policy_i.h:
+          Fixed syntax error only IRIX catched this one.
 
-	* tao/ORB.h:
-	  The throw specs need complete types in IRIX/MIPSPro, added
-	  include for PolicyC.h
+        * tao/ORB.h:
+          The throw specs need complete types in IRIX/MIPSPro, added
+          include for PolicyC.h
 
-	* tao/ORB.cpp:
-	  Fixed problems in resolve_initial_references.
+        * tao/ORB.cpp:
+          Fixed problems in resolve_initial_references.
 
 Tue May 25 12:39:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Environment.cpp,Exception.{h,cpp},Invocation.cpp,corbafwd.h:
           added support for passing location and errno through minor status
-          of SystemExceptions.
+          of CORBA_SystemExceptions.
+
+        * docs/releasenotes/orbcore.html: added mention of support
+          for CORBA_SystemException minor status.
 
 Tue May 25 12:17:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
