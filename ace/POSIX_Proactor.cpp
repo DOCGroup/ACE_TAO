@@ -138,6 +138,16 @@ ACE_POSIX_Proactor::get_handle (void) const
   return ACE_INVALID_HANDLE;
 }
 
+ACE_Asynch_Read_Stream_Impl *
+ACE_POSIX_Proactor::create_asynch_read_stream (void)
+{
+  ACE_Asynch_Read_Stream_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Read_Stream (this),
+                  0);
+  return implementation;
+}
+
 ACE_Asynch_Read_Stream_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                       ACE_HANDLE handle,
@@ -158,6 +168,17 @@ ACE_POSIX_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                        event,
                                                        priority,
                                                        signal_number),
+                  0);
+  return implementation;
+}
+
+
+ACE_Asynch_Write_Stream_Impl *
+ACE_POSIX_Proactor::create_asynch_write_stream (void)
+{
+  ACE_Asynch_Write_Stream_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Write_Stream (this),
                   0);
   return implementation;
 }
@@ -184,6 +205,17 @@ ACE_POSIX_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                         signal_number),
                   0);
   return implementation;
+}
+
+
+ACE_Asynch_Read_File_Impl *
+ACE_POSIX_Proactor::create_asynch_read_file (void)
+{
+  ACE_Asynch_Read_File_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Read_File (this),
+                  0);
+  return  implementation;
 }
 
 ACE_Asynch_Read_File_Result_Impl *
@@ -214,6 +246,17 @@ ACE_POSIX_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
   return implementation;
 }
 
+
+ACE_Asynch_Write_File_Impl *
+ACE_POSIX_Proactor::create_asynch_write_file (void)
+{
+  ACE_Asynch_Write_File_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Write_File (this),
+                  0);
+  return  implementation;
+}
+
 ACE_Asynch_Write_File_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                      ACE_HANDLE handle,
@@ -240,6 +283,17 @@ ACE_POSIX_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                       signal_number),
                   0);
   return implementation;
+}
+
+
+ACE_Asynch_Read_Dgram_Impl *
+ACE_POSIX_Proactor::create_asynch_read_dgram (void)
+{
+    ACE_Asynch_Read_Dgram_Impl *implementation = 0;
+    ACE_NEW_RETURN (implementation,
+                    ACE_POSIX_Asynch_Read_Dgram (this),
+                    0);
+    return implementation;
 }
 
 ACE_Asynch_Read_Dgram_Result_Impl *
@@ -271,6 +325,18 @@ ACE_POSIX_Proactor::create_asynch_read_dgram_result (ACE_Handler &handler,
   return implementation;
 }
 
+
+ACE_Asynch_Write_Dgram_Impl *
+ACE_POSIX_Proactor::create_asynch_write_dgram (void)
+{
+        ACE_Asynch_Write_Dgram_Impl *implementation = 0;
+        ACE_NEW_RETURN (implementation,
+                        ACE_POSIX_Asynch_Write_Dgram (this),
+                        0);
+
+    return implementation;
+}
+
 ACE_Asynch_Write_Dgram_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
                                                       ACE_HANDLE handle,
@@ -293,6 +359,18 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
                                                       event,
                                                       priority,
                                                       signal_number),
+                  0);
+
+  return implementation;
+}
+
+
+ACE_Asynch_Accept_Impl *
+ACE_POSIX_Proactor::create_asynch_accept (void)
+{
+  ACE_Asynch_Accept_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Accept (this),
                   0);
 
   return implementation;
@@ -324,6 +402,18 @@ ACE_POSIX_Proactor::create_asynch_accept_result (ACE_Handler &handler,
   return implementation;
 }
 
+
+ACE_Asynch_Connect_Impl *
+ACE_POSIX_Proactor::create_asynch_connect (void)
+{
+  ACE_Asynch_Connect_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Connect (this),
+                  0);
+
+  return implementation;
+}
+
 ACE_Asynch_Connect_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_connect_result (ACE_Handler &handler,
                                                   ACE_HANDLE  connect_handle,
@@ -340,6 +430,17 @@ ACE_POSIX_Proactor::create_asynch_connect_result (ACE_Handler &handler,
                                                    event,
                                                    priority,
                                                    signal_number),
+                  0);
+  return implementation;
+}
+
+
+ACE_Asynch_Transmit_File_Impl *
+ACE_POSIX_Proactor::create_asynch_transmit_file (void)
+{
+  ACE_Asynch_Transmit_File_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Transmit_File (this),
                   0);
   return implementation;
 }
@@ -1027,99 +1128,6 @@ int ACE_POSIX_AIOCB_Proactor::process_result_queue (void)
   return ret_val;
 }
 
-ACE_Asynch_Read_Stream_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_read_stream (void)
-{
-  ACE_Asynch_Read_Stream_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_Asynch_Read_Stream (this),
-                  0);
-  return implementation;
-}
-
-ACE_Asynch_Write_Stream_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_write_stream (void)
-{
-  ACE_Asynch_Write_Stream_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_Asynch_Write_Stream (this),
-                  0);
-  return implementation;
-}
-
-ACE_Asynch_Read_Dgram_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_read_dgram (void)
-{
-    ACE_Asynch_Read_Dgram_Impl *implementation = 0;
-    ACE_NEW_RETURN (implementation,
-                ACE_POSIX_Asynch_Read_Dgram (this),
-                0);
-    return implementation;
-}
-
-ACE_Asynch_Write_Dgram_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_write_dgram (void)
-{
-        ACE_Asynch_Write_Dgram_Impl *implementation = 0;
-        ACE_NEW_RETURN (implementation,
-                ACE_POSIX_Asynch_Write_Dgram (this),
-                0);
-
-    return implementation;
-}
-
-ACE_Asynch_Read_File_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_read_file (void)
-{
-  ACE_Asynch_Read_File_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_Asynch_Read_File (this),
-                  0);
-  return  implementation;
-}
-
-ACE_Asynch_Write_File_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_write_file (void)
-{
-  ACE_Asynch_Write_File_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_Asynch_Write_File (this),
-                  0);
-  return  implementation;
-}
-
-ACE_Asynch_Accept_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_accept (void)
-{
-  ACE_Asynch_Accept_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_Asynch_Accept (this),
-                  0);
-
-  return implementation;
-}
-
-ACE_Asynch_Connect_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_connect (void)
-{
-  ACE_Asynch_Connect_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_Asynch_Connect (this),
-                  0);
-
-  return implementation;
-}
-
-ACE_Asynch_Transmit_File_Impl *
-ACE_POSIX_AIOCB_Proactor::create_asynch_transmit_file (void)
-{
-  ACE_Asynch_Transmit_File_Impl *implementation = 0;
-  ACE_NEW_RETURN (implementation,
-                  ACE_POSIX_Asynch_Transmit_File (this),
-                  0);
-  return  implementation;
-}
-
 int
 ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
 {
@@ -1258,10 +1266,10 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
 
 int
-ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *result,
-                                                  int op)
+ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
+                                     ACE_POSIX_Proactor::Opcode op)
 {
-  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::register_and_start_aio");
+  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
 
@@ -1273,18 +1281,18 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *resul
   // Save operation code in the aiocb
   switch (op)
     {
-    case 0 :
+    case ACE_POSIX_Proactor::READ :
       result->aio_lio_opcode = LIO_READ;
       break;
 
-    case 1 :
+    case ACE_POSIX_Proactor::WRITE :
       result->aio_lio_opcode = LIO_WRITE;
       break;
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%N:%l:(%P | %t)::\n"
-                         "register_and_start_aio: Invalid operation code\n"),
+                         "start_aio: Invalid operation code\n"),
                         -1);
     }
 
@@ -1306,7 +1314,7 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *resul
   result_list_[index] = result;   //Store result ptr anyway
   aiocb_list_cur_size_++;
 
-  ret_val = start_aio (result);
+  ret_val = start_aio_i (result);
   switch (ret_val)
     {
     case 0 :     // started OK
@@ -1326,7 +1334,7 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *resul
 
   ACE_ERROR ((LM_ERROR,
               "%N:%l:(%P | %t)::%p\n",
-              "register_and_start_aio: Invalid request to start <aio>\n"));
+              "start_aio: Invalid request to start <aio>\n"));
   return -1;
 }
 
@@ -1370,15 +1378,15 @@ ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   return ACE_static_cast (ssize_t, i);
 }
 
-// start_aio  has new return codes
+// start_aio_i  has new return codes
 //     0    AIO was started successfully
 //     1    AIO was not started, OS AIO queue overflow
 //     -1   AIO was not started, other errors
 
 int
-ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
+ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
 {
-  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio");
+  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio_i");
 
   int ret_val;
   const ACE_TCHAR *ptype;
@@ -1450,7 +1458,7 @@ ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
 
   ACE_POSIX_Asynch_Result *result = result_list_[i];
 
-  int ret_val = start_aio (result);
+  int ret_val = start_aio_i (result);
 
   switch (ret_val)
     {
