@@ -29,11 +29,10 @@ namespace CCF
       //
       //
       //
-      class Factory
+      struct Factory
       {
-      public:
         virtual
-        ~Factory () throw () {}
+        ~Factory () {}
 
         virtual Attribute&
         attribute () = 0;
@@ -58,7 +57,7 @@ namespace CCF
 
         virtual Native&
         native () = 0;
-        
+
         virtual Operation&
         operation () = 0;
 
@@ -74,8 +73,6 @@ namespace CCF
         virtual TypePrefix&
         type_prefix () = 0;
 
-        //@@ In some places I use 'value_type' and in others 'valuetype'.
-        //
         virtual ValueType&
         value_type () = 0;
       };

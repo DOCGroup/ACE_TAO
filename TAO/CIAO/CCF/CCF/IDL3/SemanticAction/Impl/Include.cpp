@@ -27,20 +27,12 @@ namespace CCF
       {
         using namespace SemanticGraph;
 
-        // IncludeImpl
-        //
-        //
-        Include::
-        ~Include () throw ()
-        {
-        }
-
         Include::
         Include (Context& c,
                  CompilerElements::Context& context,
                  Diagnostic::Stream& dout,
                  SemanticAction::Factory& action_factory)
-            : ctx (c),
+            : Base (c),
               context_ (context),
               dout_ (dout),
               action_factory_ (action_factory)

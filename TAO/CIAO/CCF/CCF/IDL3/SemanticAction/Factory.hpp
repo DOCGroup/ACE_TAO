@@ -24,12 +24,9 @@ namespace CCF
       class HomeFactory;
       class HomeFinder;
 
-      //
-      //
-      //
-      class Factory : public virtual IDL2::SemanticAction::Factory
+
+      struct Factory : virtual IDL2::SemanticAction::Factory
       {
-      public:
         virtual Component&
         component () = 0;
 

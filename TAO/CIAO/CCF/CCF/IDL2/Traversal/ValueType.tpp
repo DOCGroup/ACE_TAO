@@ -1,15 +1,15 @@
-// file      : CCF/IDL3/Traversal/EventType.tpp
+// file      : CCF/IDL2/Traversal/ValueType.tpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
 namespace CCF
 {
-  namespace IDL3
+  namespace IDL2
   {
     namespace Traversal
     {
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       traverse (T& i)
       {
         pre (i);
@@ -21,26 +21,26 @@ namespace CCF
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       pre (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       name (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       inherits (T& i, EdgeDispatcherBase&)
       {
         //@@ TODO
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       inherits (T& i)
       {
         /*
@@ -50,39 +50,39 @@ namespace CCF
         if (b != e)
         {
           inherits_pre (i);
-          iterate_and_dispatch (b, e, *this, &EventTypeTemplate::comma, i);
+          iterate_and_dispatch (b, e, *this, &ValueTypeTemplate::comma, i);
           inherits_post (i);
         }
         */
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       inherits_pre (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       inherits_post (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       inherits_none (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       supports (T& i, EdgeDispatcherBase&)
       {
         //@@ TODO
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       supports (T& i)
       {
         /*
@@ -92,38 +92,38 @@ namespace CCF
         if (b != e)
         {
           supports_pre (i);
-          iterate_and_dispatch (b, e, *this, &EventTypeTemplate::comma, i);
+          iterate_and_dispatch (b, e, *this, &ValueTypeTemplate::comma, i);
           supports_post (i);
         }
         */
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       supports_pre (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       supports_post (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       supports_none (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       post (T&)
       {
       }
 
       template <typename T>
-      void EventTypeTemplate<T>::
+      void ValueTypeTemplate<T>::
       comma (T&)
       {
       }

@@ -14,7 +14,7 @@ namespace CCF
     namespace SemanticGraph
     {
       class Raises;
-      
+
       class Exception : public virtual Type, public virtual Scope
       {
       public:

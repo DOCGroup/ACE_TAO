@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         EventType::
-        ~EventType () throw ()
-        {
-        }
-
-        EventType::
         EventType (Context& c)
             : ScopeBase<SemanticGraph::EventType> (c)
         {

@@ -4,15 +4,15 @@
 
 #include "CCF/IDL2/SemanticGraph/Translation.hpp"
 
-using Introspection::TypeInfo;
-using Introspection::Access;
-
 namespace CCF
 {
   namespace IDL2
   {
     namespace SemanticGraph
     {
+      using Introspection::TypeInfo;
+      using Introspection::Access;
+
       // ContainsPrincipal
       //
       //
@@ -159,7 +159,7 @@ namespace CCF
       //
 
       Nameables TranslationRegion::
-      lookup (ScopedName const& name)
+      lookup (ScopedName const& name) const
       {
         Nameables r;
         lookup (name, r);
@@ -167,7 +167,7 @@ namespace CCF
       }
 
       void TranslationRegion::
-      lookup (ScopedName const& name, Nameables& result)
+      lookup (ScopedName const& name, Nameables& result) const
       {
         bool root (name.simple ());
 
@@ -219,7 +219,7 @@ namespace CCF
       //
 
       Nameables TranslationUnit::
-      lookup (ScopedName const& name)
+      lookup (ScopedName const& name) const
       {
         Nameables r;
 

@@ -120,7 +120,7 @@ namespace CCF
 
       public:
         Inherits*
-        inherits ()
+        inherits () const
         {
           return inherits_;
         }

@@ -13,7 +13,6 @@ namespace CCF
       using Introspection::TypeInfo;
       using Introspection::Access;
 
-
       // EventType
       //
       //

@@ -5,7 +5,7 @@
 #ifndef CCF_IDL2_SEMANTIC_ACTION_IMPL_MEMBER_HPP
 #define CCF_IDL2_SEMANTIC_ACTION_IMPL_MEMBER_HPP
 
-#include "CCF/IDL2/SemanticGraph/Member.hpp"
+#include "CCF/IDL2/SemanticGraph/Elements.hpp"
 #include "CCF/IDL2/SemanticAction/Member.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
 
@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Member : public virtual SemanticAction::Member,
-                       public Base
+        struct Member : SemanticAction::Member, Base
         {
-        public:
-          virtual
-          ~Member () throw ();
-
           Member (Context& c);
 
           virtual void

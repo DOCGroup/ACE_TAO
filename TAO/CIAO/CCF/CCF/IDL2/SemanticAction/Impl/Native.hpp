@@ -16,13 +16,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Native : public virtual SemanticAction::Native,
-                       public Base
+        struct Native : SemanticAction::Native, Base
         {
-        public:
-          virtual
-          ~Native () throw ();
-
           Native (Context& c);
 
           virtual void

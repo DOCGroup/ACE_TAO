@@ -17,12 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Include : public virtual SemanticAction::Include
+        struct Include : SemanticAction::Include
         {
-        public:
-          virtual
-          ~Include () throw ();
-
           Include (Context& c);
 
           virtual void

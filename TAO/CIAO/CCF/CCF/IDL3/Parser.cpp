@@ -295,9 +295,6 @@ namespace CCF
         >> SEMI
         ;
 
-      //@@ action name inconsistency: act_event_type_bagin_abstract_ftw
-      //   and act_abstract_value_type...
-
 
       // eventtype
       //

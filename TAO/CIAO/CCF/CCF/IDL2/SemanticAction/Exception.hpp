@@ -13,12 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class Exception : public virtual Scope
+      struct Exception : Scope
       {
-      public:
-        virtual
-        ~Exception () throw () {}
-
         virtual void
         begin (SimpleIdentifierPtr const& id) = 0;
 

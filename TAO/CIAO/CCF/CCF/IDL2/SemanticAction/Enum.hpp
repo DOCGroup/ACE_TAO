@@ -13,12 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class Enum
+      struct Enum
       {
-      public:
-        virtual
-        ~Enum () throw () {}
-
         virtual void
         begin (SimpleIdentifierPtr const& id) = 0;
 

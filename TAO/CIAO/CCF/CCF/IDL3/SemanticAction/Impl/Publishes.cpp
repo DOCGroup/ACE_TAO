@@ -21,11 +21,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Publishes::
-        ~Publishes () throw ()
-        {
-        }
-
-        Publishes::
         Publishes (Context& c)
             : Base (c)
         {
@@ -76,7 +71,7 @@ namespace CCF
           if (type_)
           {
             Publisher& p (ctx.tu ().new_node<Publisher> ());
-            
+
             ctx.tu ().new_edge<Belongs> (p, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), p, id->lexeme ());
           }

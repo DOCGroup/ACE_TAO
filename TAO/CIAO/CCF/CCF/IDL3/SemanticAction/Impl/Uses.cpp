@@ -21,11 +21,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Uses::
-        ~Uses () throw ()
-        {
-        }
-
-        Uses::
         Uses (Context& c)
             : Base (c)
         {
@@ -76,7 +71,7 @@ namespace CCF
           if (type_)
           {
             User& u (ctx.tu ().new_node<User> ());
-            
+
             ctx.tu ().new_edge<Belongs> (u, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), u, id->lexeme ());
           }

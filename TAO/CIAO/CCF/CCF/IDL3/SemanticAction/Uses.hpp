@@ -13,18 +13,11 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Uses
+      struct Uses
       {
-      public:
-        virtual
-        ~Uses () throw () {}
-        
         virtual void
         type (IdentifierPtr const& id) = 0;
-        
+
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
       };

@@ -21,11 +21,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Operation::
-        ~Operation () throw ()
-        {
-        }
-
-        Operation::
         Operation (Context& c)
             : Base (c)
         {
@@ -63,7 +58,7 @@ namespace CCF
           {
             try
             {
-              Type& t (resolve<Type> (from, name, complete));
+              Type& t (resolve<Type> (from, name, Flags::complete));
 
               if (dynamic_cast<OneWayOperation*>(op_))
               {
@@ -140,7 +135,7 @@ namespace CCF
                 throw NotIn ();
               }
 
-              Type& t (resolve<Type> (from, name, complete));
+              Type& t (resolve<Type> (from, name, Flags::complete));
 
               Parameter* p (0);
 

@@ -17,13 +17,9 @@ namespace CCF
     {
       namespace Impl
       {
-        class ValueType : public virtual SemanticAction::ValueType,
-                          public virtual ScopeBase<SemanticGraph::ValueType>
+        struct ValueType : SemanticAction::ValueType,
+                           ScopeBase<SemanticGraph::ValueType>
         {
-        public:
-          virtual
-          ~ValueType () throw ();
-
           ValueType (Context& c);
 
           virtual void

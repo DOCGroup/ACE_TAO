@@ -26,13 +26,13 @@ namespace CCF
 
       public:
         Manages&
-        manages ()
+        manages () const
         {
           return *manages_;
         }
 
         Inherits*
-        inherits ()
+        inherits () const
         {
           return inherits_;
         }

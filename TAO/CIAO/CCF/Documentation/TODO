@@ -78,10 +78,7 @@ Legend:
 
 ---
 
-@@ Preprocessor fix
-
-@@ Interconnect parsing rules so that typedef is possible in interface, 
-   etc. Also will need to fix generators. Home can have operations etc.
+@@ Revisit LEM for interconnected rules.
 
 @@ Maybe do something with diagnostic
 

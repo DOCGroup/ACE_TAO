@@ -13,12 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class Native
+      struct Native
       {
-      public:
-        virtual
-        ~Native () throw () {}
-
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
 

@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class HomeExecutor : public virtual SemanticAction::HomeExecutor,
-                             public virtual Base
+        struct HomeExecutor : SemanticAction::HomeExecutor, Base
         {
-        public:
-          virtual
-          ~HomeExecutor () throw ();
-
           HomeExecutor (Context& c);
 
           virtual void

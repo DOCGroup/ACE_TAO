@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Provides : public virtual SemanticAction::Provides,
-                         public Base
+        struct Provides : SemanticAction::Provides, Base
         {
-        public:
-          virtual
-          ~Provides () throw ();
-
           Provides (Context& c);
 
           virtual void

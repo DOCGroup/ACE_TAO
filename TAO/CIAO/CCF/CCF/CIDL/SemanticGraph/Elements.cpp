@@ -12,10 +12,7 @@ namespace CCF
     {
       using Introspection::TypeInfo;
       using Introspection::Access;
-
-      // Implements
-      //
-      //
+      
       namespace
       {
         TypeInfo

@@ -13,12 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class ValueType : public virtual Scope
+      struct ValueType : Scope
       {
-      public:
-        virtual
-        ~ValueType () throw () {}
-
         virtual void
         begin_abstract_def (SimpleIdentifierPtr const& id) = 0;
 

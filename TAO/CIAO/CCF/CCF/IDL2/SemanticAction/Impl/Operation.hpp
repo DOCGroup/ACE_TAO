@@ -20,13 +20,8 @@ namespace CCF
         //
         //
         //
-        class Operation : public virtual SemanticAction::Operation,
-                          public Base
+        struct Operation : SemanticAction::Operation, Base
         {
-        public:
-          virtual
-          ~Operation () throw ();
-
           Operation (Context& c);
 
           virtual void
