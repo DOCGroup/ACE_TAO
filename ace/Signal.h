@@ -126,7 +126,20 @@ public:
   // the <handler> to process signal <signum> via the <sigaction>
   // function.
 
-  ACE_Sig_Action (const ACE_Sig_Set &signals,
+  
+  // @@ The next two methods have a parameter as "signalss". Please do
+  // not change the argument name as "signals". This causes the
+  // following problem as reported by
+  // <James.Briggs@dsto.defence.gov.au>. 
+
+  
+  // In the file Signal.h two of the functions have and argument name
+  // of signals. signals is a Qt macro (to do with their meta object
+  // stuff. 
+  // We could as well have it as "signal", but I am nost sure whether
+  // that would cause a problem with something else - Bala <bala@cs>
+  
+  ACE_Sig_Action (const ACE_Sig_Set &signalss,
                   ACE_SignalHandler handler,
                   const ACE_Sig_Set &sigmask,
                   int flags = 0);
@@ -134,7 +147,7 @@ public:
   // the <handler> to process all <signals> via the <sigaction>
   // function.
 
-  ACE_Sig_Action (const ACE_Sig_Set &signals,
+  ACE_Sig_Action (const ACE_Sig_Set &signalss,
                   ACE_SignalHandler handler,
                   sigset_t *sigmask = 0,
                   int flags = 0);

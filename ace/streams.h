@@ -43,7 +43,8 @@
 #   if defined (ACE_USES_OLD_IOSTREAMS)
 #     include /**/ <iostream.h>
 #     include /**/ <fstream.h>
-#     include /**/ <iomanip.h>
+  // This has been commented as it is not needed and causes problems with Qt. 
+  //#     include /**/ <iomanip.h>
 #     if defined (_MSC_VER)
 #       include /**/ <strstrea.h>
 #     else
