@@ -1,3 +1,13 @@
+Wed Nov 15 18:45:45 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo.cpp (target, operation):
+	* tao/PortableServer/ServerRequestInfo.cpp (operation):
+
+	  According to the C++ mapping, the caller is responsible for
+	  releasing returned values for both these cases (an object
+	  reference and a string, respectively).  These methods now
+	  return duplicated value.  This is the correct behavior.
+
 Wed Nov 15 18:38:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * */Makefile*:
