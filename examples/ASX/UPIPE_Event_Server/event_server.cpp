@@ -238,6 +238,8 @@ main (int argc, char *argv[])
   daemon.run_reactor_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG, "main exiting\n"));
+
+  return 0;
 }
 #else
 int 
