@@ -55,6 +55,19 @@ Sun Jul 26 16:02:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 	* tao/ORB_Core.cpp: Removed a line in unset_leader_wake_up_follower
 	  which did not belong there any more.
 
+Sun Jul 26 13:50:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/tests/Concurrency/Makefile: 
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Simple_Naming/Makefile: 
+	* orbsvcs/tests/Trading/Makefile: 
+	* tests/NestedUpcall/Reactor/Makefile: 
+	* tests/NestedUpcall/Triangle_Test/Makefile: 
+	* tests/POA/Default_Servant/Makefile: 
+	* tests/POA/Generic_Servant/Makefile: 
+	  The realclean target was not removing all the files.	
+
 Sun Jul 26 10:11:07 1998  Carlos O'Ryan  <coryan@JIG>
 
 	* orbsvcs/Trading_Service/Trading_Service.cpp: 
