@@ -41,11 +41,11 @@ if ($client2 != 0) {
   print STDERR "ERROR running client (file://)\n";
 }
 
-print STDERR "==== Running second test, using iioploc IORs ($port)\n";
+print STDERR "==== Running second test, using corbaloc IORs ($port)\n";
 
 $CL2 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			"-x -i 100 "
-			. "-k iioploc://localhost:"
+			. "-k corbaloc::localhost:"
 			.$port
 			."/Simple_Server");
 
