@@ -3,6 +3,10 @@ functionality of ACE on Win32 and UNIX.  These tests can be executed
 in a single pass via a shell script run_tests.sh (on UNIX) or a batch
 file run_tests.bat (on Win32).
 
+On UNIX, all the output from the tests will be stored in separate
+files in the ./log/ directory.  On Win32 all the output is stored in
+separate files in C:\temp\log\.
+
 We had problems running the batch file on Windows 95 and Windows NT
 using the native DOS prompt. However we were able to get around this
 problem by using a program called "4DOS for Windows NT" which also
