@@ -1,3 +1,8 @@
+Thu Feb 26 18:08:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Reactor/Client.cpp: Add missing #include
+	  "ace/OS_NS_string.h" to get ACE_OS::strlen().
+
 Thu Feb 26 18:02:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* m4/tls.m4: Add handling for ACE_TLS_LDFLAGS so user can specify
