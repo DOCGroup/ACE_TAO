@@ -22,8 +22,8 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 
-ACE_RCSID (be, 
-           be_interface_strategy, 
+ACE_RCSID (be,
+           be_interface_strategy,
            "$Id$")
 
 
@@ -667,7 +667,7 @@ be_interface_default_strategy::local_name (void)
 {
   if (!this->local_name_)
     {
-      size_t len = 
+      size_t len =
         ACE_OS::strlen (node_->AST_Interface::local_name ()->get_string ());
 
       ACE_NEW_RETURN (this->local_name_,
@@ -767,8 +767,8 @@ be_interface_default_strategy::create_with_prefix_suffix (
     ACE_OS::strlen (separator) +
     1; // The '/0'
 
-  ACE_NEW_RETURN (cat_string, 
-                  char[length], 
+  ACE_NEW_RETURN (cat_string,
+                  char[length],
                   0);
 
   ACE_OS::strcpy (cat_string, prefix);

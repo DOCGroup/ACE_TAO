@@ -21,7 +21,7 @@
 #ifndef BE_STRATEGIZED_PROXY_BROKER_SS_H_
 #define BE_STRATEGIZED_PROXY_BROKER_SS_H_
 
-class be_visitor_interface_strategized_proxy_broker_ss 
+class be_visitor_interface_strategized_proxy_broker_ss
   : public be_visitor_interface
 {
   // = TITLE

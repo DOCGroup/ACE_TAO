@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_sh, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_sh,
            "$Id$")
 
 
@@ -103,7 +103,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   *os << "public virtual " << "POA_"
       << concrete->name () << ",";
 
-	*os << be_nl << "public virtual " << "::" << node->full_name ();
+        *os << be_nl << "public virtual " << "::" << node->full_name ();
 
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -112,7 +112,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
-  *os << class_name.c_str () << " (const " << class_name.c_str () 
+  *os << class_name.c_str () << " (const " << class_name.c_str ()
       << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_uidt_nl;
 
@@ -126,4 +126,3 @@ be_visitor_valuetype_sh::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
-

@@ -38,8 +38,8 @@ be_visitor_component_sh::~be_visitor_component_sh (void)
 int
 be_visitor_component_sh::visit_component (be_component *node)
 {
-  if (node->srv_hdr_gen () 
-      || node->imported () 
+  if (node->srv_hdr_gen ()
+      || node->imported ()
       || node->is_abstract ())
     {
       return 0;
@@ -155,7 +155,7 @@ be_visitor_component_sh::visit_component (be_component *node)
       << be_nl << be_nl;
 
   // Copy constructor and destructor.
-  *os << class_name.c_str () << " (const " 
+  *os << class_name.c_str () << " (const "
       << class_name.c_str () << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
 
@@ -231,9 +231,9 @@ be_visitor_component_sh::visit_component (be_component *node)
   // Generate skeletons for operations of our base classes. These
   // skeletons just cast the pointer to the appropriate type
   // before invoking the call.
-  int status = 
+  int status =
     node->traverse_inheritance_graph (
-              be_interface::gen_skel_helper, 
+              be_interface::gen_skel_helper,
               os
             );
 
