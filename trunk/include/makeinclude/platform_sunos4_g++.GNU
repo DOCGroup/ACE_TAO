@@ -9,11 +9,6 @@ CC	= gcc
 CXX	= g++
 CFLAGS  += -fno-strict-prototypes
 
-# Test for template instantiation.
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS	+= -g
 DLD	= /bin/ld
 LD	= $(CXX)
@@ -29,3 +24,10 @@ SOFLAGS	+= -assert pure-text
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
 PRELIB	= @true
+
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)

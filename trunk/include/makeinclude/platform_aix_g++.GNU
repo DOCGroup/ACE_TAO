@@ -41,9 +41,6 @@ SOEXT       = a
 # rules.lib.GNU
 aix_build = 1
 
-ifeq (0,$(threads))
-  CFLAGS  += -DACE_MT_SAFE=0
-endif
 ifeq (1,$(threads))
   CFLAGS  += -pthread
 endif
@@ -57,10 +54,6 @@ AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 CC             = gcc
 CXX            = g++
 
-# Test for template instantiation.
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
 CFLAGS          += -W -Wall -mcpu=common -DACE_AIX_VERS=$(AIX_VERS)
 ifeq ($(buildbits),32)
   CFLAGS    += -m32
@@ -68,7 +61,6 @@ endif
 ifeq ($(buildbits),64)
   CFLAGS    += -m64
 endif
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
@@ -89,3 +81,11 @@ ARFLAGS         = cruv
 RANLIB          = ranlib
 SONAME		=
 SOVERSION	=
+
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+

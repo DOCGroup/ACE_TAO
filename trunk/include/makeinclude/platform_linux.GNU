@@ -20,10 +20,6 @@ ifeq (,$(threads))
   threads = 1
 endif
 
-ifeq ($(threads),0)
-  CPPFLAGS += -DACE_MT_SAFE=0
-endif # threads
-
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
 PLATFORM_XT_LDFLAGS=
@@ -73,10 +69,6 @@ CC  = gcc
 CXX = g++
 endif
 
-# Test for template instantiation.
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
@@ -88,7 +80,6 @@ endif # threads
 # for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, etc...
 CPPFLAGS += -D_GNU_SOURCE
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
@@ -112,6 +103,13 @@ SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
+
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).

@@ -201,6 +201,12 @@ endif
 # platform_macros.GNU to set default values for them.
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
+ifeq ($(threads),0)
+  ifneq ($(findstring -DACE_MT_SAFE=0,$(CPPFLAGS)),-DACE_MT_SAFE=0)
+    CPPFLAGS += -DACE_MT_SAFE=0
+  endif # -DACE_MT_SAFE=0
+endif # threads
+
 ####
 #### Defaults are exceptions off (0), fast off (0), and rtti off (0)
 ####

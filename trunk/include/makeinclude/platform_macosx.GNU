@@ -18,12 +18,6 @@ CC              = gcc
 CXX             = g++
 CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe -I/sw/include
 
-# Test for template instantiation.
-#
-SONAME=
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 DLD             = libtool
 LD              = $(CXX)
@@ -42,3 +36,11 @@ RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS += -dynamic
 SOBUILD = -o $(VSHDIR)$*.dylib $<
+SONAME=
+
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
