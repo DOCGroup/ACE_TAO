@@ -1434,9 +1434,9 @@ spa (FUNCPTR entry, ...)
      {
        // fill unused argv slots with 0 to get rid of leftovers
        // from previous invocations
-              for ( ; argc <= MAX_ARGS; ++argc)
+              for ( int i = argc; i <= MAX_ARGS; ++i)
                 {
-                  argv[argc] = 0;
+                  argv[i] = 0;
                 }
      }
 
