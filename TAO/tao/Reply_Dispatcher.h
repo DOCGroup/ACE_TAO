@@ -206,6 +206,10 @@ private:
   // Reply Handler passed in the Asynchronous Invocation.
 };
 
+#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING  */
+
 // *********************************************************************
 
 class TAO_Export TAO_DII_Deferred_Reply_Dispatcher : public TAO_Reply_Dispatcher
@@ -265,10 +269,6 @@ private:
   const CORBA::Request_ptr req_;
   // Where the reply needs to go.
 };
-
-#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING  */
 
 // *********************************************************************
 

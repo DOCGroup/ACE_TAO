@@ -26,6 +26,8 @@ TAO_Asynch_Reply_Dispatcher::version (void) const
   return this->version_;
 }
 
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
+
 //*********************************************************************
 
 ACE_INLINE CORBA::ULong
@@ -40,4 +42,3 @@ TAO_DII_Deferred_Reply_Dispatcher::version (void) const
   return this->version_;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */

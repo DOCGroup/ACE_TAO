@@ -687,10 +687,6 @@ TAO_Stub::do_dynamic_call (const char *opname,
     }
 }
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
-#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
-
 void
 TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
                             CORBA::Environment &ACE_TRY_ENV)
@@ -757,10 +753,6 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
       break;
     }
 }
-
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */
 
 void
 TAO_Stub::put_params (TAO_GIOP_Invocation &call,
