@@ -16,6 +16,9 @@ Tue Sep 22 07:12:31 1998  David L. Levine  <levine@cs.wustl.edu>
           put the sleep in a loop that checks for the server ior file.
           The old 4 second sleep wasn't always long enough.
 
+        * tests/Makefile: removed DynAny_Test from DIRS because it
+          doesn't yet have a Makefile.
+
 Tue Sep 22 03:22:56 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.13 released.
