@@ -16,7 +16,7 @@ Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
           so that it's easier to support Tornado II.  Thanks to
           Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
-          reporting this.  [Bug 80]
+          reporting this. [Bug 80]
 
 Mon Jul 19 11:26:33 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
         HP/UX compile warning fixes -
