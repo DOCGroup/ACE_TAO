@@ -1,3 +1,14 @@
+Thu Apr 30 10:06:19 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: moved the
+          start barrier from the stack frame of start_servants ()
+          to the stack frame of main ().  This turned out the be
+          the cause of the barrier failure on Linux.  And on Solaris86,
+          but it only appeared there when the ior file was in /tmp.
+          That's because start_servants () was able to write the file
+          more quickly there, and then destroy the old barrier.  Threads
+          are evil.
+
 Wed Apr 29 14:06:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/{Object, POAC, POAS, PolicyC, PolicyS}.cpp: Moved all the
