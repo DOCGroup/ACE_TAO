@@ -5,7 +5,7 @@
 #include "Message_Receiver.h"
 
 // Listing 5 code/ch12
-int 
+int
 HA_CommandHandler::svc (void)
 {
   while(1)
@@ -24,7 +24,7 @@ HA_CommandHandler::svc (void)
           DeviceCommandHeader *dch
             = (DeviceCommandHeader*)mb->rd_ptr ();
           mb->rd_ptr (sizeof (DeviceCommandHeader));
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Message for device #%d with ")
                       ACE_TEXT ("command payload of:\n%s"),
                       dch->deviceId_, mb->rd_ptr ()));
@@ -41,7 +41,7 @@ HA_CommandHandler::svc (void)
 // Listing 5
 
 // Listing 4 code/ch12
-ACE_Message_Block * 
+ACE_Message_Block *
 Message_Receiver::shut_down_message (void)
 {
   ACE_Message_Block *mb;
@@ -50,11 +50,11 @@ Message_Receiver::shut_down_message (void)
   return mb;
 }
 // Listing 4
-    
-int 
+
+int
 Message_Receiver::read_header (DeviceCommandHeader *dch)
 {
-    ssize_t result = 
+    ssize_t result =
         this->peer ().recv_n (dch, sizeof (DeviceCommandHeader));
     if (result <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -63,13 +63,13 @@ Message_Receiver::read_header (DeviceCommandHeader *dch)
     return 0;
 }
 // Listing 3 code/ch12
-int 
+int
 Message_Receiver::copy_payload (ACE_Message_Block *mb,
                                 int payload_length)
 {
-  int result = 
+  int result =
     this->peer ().recv_n (mb->wr_ptr (), payload_length);
-    
+
     if (result <= 0)
       {
         mb->release ();
@@ -81,20 +81,20 @@ Message_Receiver::copy_payload (ACE_Message_Block *mb,
 }
 // Listing 3
 // Listing 2 code/ch12
-int 
+int
 Message_Receiver::handle_input (ACE_HANDLE)
 {
   DeviceCommandHeader dch;
   if (this->read_header (&dch) < 0)
     return -1;
-    
+
   if (dch.deviceId_ < 0)
     {
       // Handle shutdown.
       this->handler_->putq (shut_down_message ());
       return -1;
     }
-    
+
   ACE_Message_Block *mb;
   ACE_NEW_RETURN
     (mb, ACE_Message_Block (dch.length_ + sizeof dch), -1);
@@ -120,7 +120,7 @@ static void report_usage (int argc, ACE_TCHAR *argv[])
 }
 
 
-class Acceptor : public ACE_Acceptor<Message_Receiver, ACE_SOCK_ACCEPTOR> 
+class Acceptor : public ACE_Acceptor<Message_Receiver, ACE_SOCK_ACCEPTOR>
 {
 public:
   Acceptor(HA_CommandHandler *handler) : handler_(handler)
@@ -142,21 +142,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   report_usage (argc, argv);
 
   u_short port = ACE_OS::atoi (argv[1]);
-    
+
   HA_Device_Repository rep;
   HA_CommandHandler handler (rep);
   ACE_ASSERT(handler.activate()==0);
   //start up the handler.
-    
+
   Acceptor acceptor (&handler);
   ACE_INET_Addr addr (port);
   if (acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Failed to open connection")), -1);
-    
-  ACE_Reactor::run_event_loop ();
+
+  ACE_Reactor::instance()->run_reactor_event_loop ();
   //run the reactive event loop
-    
+
   handler.wait ();
   //reap the handler before exiting.
 
