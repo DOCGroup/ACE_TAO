@@ -1,3 +1,8 @@
+Thu Mar  4 06:39:11 2004  Olli Savia  <ops@iki.fi>
+
+        * tests/Max_Default_Port_Test_IPV6.cpp
+          Fixed compile error on LynxOS.
+
 Thu Mar  4 04:28:53 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * include/makeinclude/rules.local.GNU:
