@@ -33,6 +33,17 @@ char *force_argv[]=
   "ior.txt" 
 };
 
+Server::Server (void)
+  :argc_ (0),
+   argv_ (0),
+   cubits_ (0),
+   high_priority_task_ (0),
+   low_priority_tasks_ (0),
+   high_argv_ (0),
+   low_argv_ (0)
+{
+}
+
 int
 Server::initialize (int argc, char **argv)
 {
@@ -62,39 +73,24 @@ Server::initialize (int argc, char **argv)
                            "%n: ACE_OS::sched_params failed\n%a"),
                           -1);
     }
+#else
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Test will not run.  This platform doesn't seem to have threads.\n"),
+                    -1);
+#endif /* ACE_HAS_THREADS */
+
   this->argc_ = argc;
   this->argv_ = argv;
 
-#if defined (VXWORKS)
-  // @@ Naga, can you please factor this code into a separate file?!
-#if defined (VME_DRIVER)
-   STATUS status = vmeDrv ();
+  VX_VME_INIT;
 
-   if (status != OK)
-     ACE_DEBUG ((LM_DEBUG,
-                 "ERROR on call to vmeDrv()\n"));
+#if defined (VXWORKS) && defined (FORCE_ARGS)
+  this->argc_ = 4;
+  this->argv_ = force_argv;
+#endif /* VXWORKS && FORCE_ARGS */
 
-   status = vmeDevCreate ("/vme");
-
-   if (status != OK)
-     ACE_DEBUG ((LM_DEBUG,
-                 "ERROR on call to vmeDevCreate()\n"));
-#endif /* defined (VME_DRIVER) */
-
-#if defined (FORCE_ARGS)
-   int argc = 4;
-   char *argv[] = 
-   {
-     "server",
-     "-s",
-     "-f",
-     "ior.txt" 
-   };
-#endif /* defined (FORCE_ARGS) */
-#endif /* defined (VXWORKS) */
-
-   // Make sure we've got plenty of socket handles.  This call will
-   // use the default maximum.
+  // Make sure we've got plenty of socket handles.  This call will
+  // use the default maximum.
    ACE::set_handle_limit ();
    return 0;
 }
@@ -127,77 +123,24 @@ Server::prelim_args_process (void)
 }
 
 void
-Server::init_high_priority (void)
-{
-  // @@ Naga, here's another place where we write the same code again.
-  // Please make sure that this gets factored out into a macro or an
-  // inline function!
-#if defined (VXWORKS)
-  this->high_priority_ = ACE_THR_PRI_FIFO_DEF;
-#elif defined (ACE_WIN32)
-  this->high_priority_ =
-    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                    ACE_SCOPE_THREAD);
-#else
-  // @@ Naga/Sergio, why is there a "25" here?  This seems like to
-  // much of a "magic" number.  Can you make this more "abstract?"
-  this->high_priority_ = ACE_THR_PRI_FIFO_DEF + 25;
-#endif /* VXWORKS */
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Creating servant 0 with high priority %d\n",
-              this->high_priority_));
-
-}
-
-void
 Server::init_low_priority (void)
 {
-  u_int j;
-  this->num_low_priority_ =
-    GLOBALS::instance ()->num_of_objs - 1;
-
   ACE_Sched_Priority prev_priority = this->high_priority_;
   // Drop the priority
   if (GLOBALS::instance ()->thread_per_rate == 1 
       || GLOBALS::instance ()->use_multiple_priority == 1)
-    {
-      this->num_priorities_ = 0;
-
-      for (ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-                                                          ACE_SCOPE_THREAD);
-           priority_iterator.more ();
-          priority_iterator.next ())
-        this->num_priorities_ ++;
-      // 1 priority is exclusive for the high priority client.
-      this->num_priorities_ --;
-      // Drop the priority, so that the priority of clients will
-      // increase with increasing client number.
-      for (j = 0;
-           j < this->num_low_priority_;
-           j++)
-        {
-          this->low_priority_ =
-            ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                 prev_priority,
-                                                 ACE_SCOPE_THREAD);
-          prev_priority = this->low_priority_;
-        }
-      // Granularity of the assignment of the priorities.  Some OSs
-      // have fewer levels of priorities than we have threads in our
-      // test, so with this mechanism we assign priorities to groups
-      // of threads when there are more threads than priorities.
-      this->grain_ = this->num_low_priority_ / this->num_priorities_;
-      this->counter_ = 0;
-
-      if (this->grain_ <= 0)
-        this->grain_ = 1;
-    }
+    this->low_priority_ =
+      this->priority_.get_low_priority (this->num_low_priority_,
+                                        prev_priority,
+                                        1);
   else
     this->low_priority_ =
-      ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                           prev_priority,
-                                           ACE_SCOPE_THREAD);
+      this->priority_.get_low_priority (this->num_low_priority_,
+                                        prev_priority,
+                                        0);
+  this->num_priorities_ = this->priority_.number_of_priorities ();
+  this->grain_ = this->priority_.grain ();
+  this->counter_ = 0;
 }
 
 // Write the ior's to a file so the client can read them.
@@ -384,13 +327,20 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
   this->prelim_args_process ();
 
   // Find the priority for the high priority servant.
-  this->init_high_priority ();
+  this->high_priority_ = this->priority_.get_high_priority ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating servant 0 with high priority %d\n",
+              this->high_priority_));
 
   // activate the high priority servant task
   if (this->activate_high_servant (serv_thr_mgr) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failure in activating high priority servant\n"),
                       -1);
+
+  this->num_low_priority_ =
+    GLOBALS::instance ()->num_of_objs - 1;
 
   // initialize the priority of the low priority servants.
   this->init_low_priority ();
@@ -437,32 +387,20 @@ main (int argc, char *argv[])
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager servant_thread_manager;
 
-#if defined (NO_ACE_QUANTIFY)
-  quantify_stop_recording_data();
-  quantify_clear_data ();
-  quantify_start_recording_data();
-#endif /* NO_ACE_QUANTIFY */
+  STOP_QUANTIFY;
+  CLEAR_QUANTIFY;
+  START_QUANTIFY;
 
   if (server.start_servants (&servant_thread_manager) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);
-
   ACE_DEBUG ((LM_DEBUG,
               "Wait for all the threads to exit\n"));
-
   // Wait for all the threads to exit.
   servant_thread_manager.wait ();
   //  ACE_Thread_Manager::instance ()->wait ();
-
-#if defined (NO_ACE_QUANTIFY)
-  quantify_stop_recording_data();
-#endif /* NO_ACE_QUANTIFY */
-
-#else
-  ACE_DEBUG ((LM_DEBUG,
-              "Test not run.  This platform doesn't seem to have threads.\n"));
-#endif /* ACE_HAS_THREADS */
+  STOP_QUANTIFY;
   return 0;
 }
 

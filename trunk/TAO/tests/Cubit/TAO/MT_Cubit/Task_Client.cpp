@@ -196,10 +196,10 @@ Task_State::parse_args (int argc,char **argv)
                   ACE_Thread_Semaphore (0),
                   -1);
   ACE_NEW_RETURN (latency_,
-                  double [thread_count_],
+                  ACE_timer_t [thread_count_],
                   -1);
   ACE_NEW_RETURN (global_jitter_array_,
-                  double *[thread_count_],
+                  ACE_timer_t *[thread_count_],
                   -1);
   ACE_NEW_RETURN (count_,
                   u_int [thread_count_],
@@ -212,8 +212,6 @@ Task_State::~Task_State (void)
   int i;
 
   if (this->ior_file_ != 0)
-    // @@ Naga, should this be delete [] this->ior_file?! 
-    // ;-(
     ACE_OS::free (this->ior_file_);
 
   // Delete the strduped memory.
@@ -240,8 +238,8 @@ Client::Client (ACE_Thread_Manager *thread_manager,
 }
 
 void
-Client::put_latency (double *jitter,
-                     double latency,
+Client::put_latency (ACE_timer_t *jitter,
+                     ACE_timer_t latency,
                      u_int thread_id,
                      u_int count)
 {
@@ -251,52 +249,43 @@ Client::put_latency (double *jitter,
   this->ts_->global_jitter_array_[thread_id] = jitter;
   this->ts_->count_[thread_id] = count;
 
-  // @@ Naga, can you please try to factor out all of the
-  // ACE_LACKS_FLOATING_POINT into a helper class to clean up all of
-  // this code?!
-#if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) My latency was %u msec\n",
+              "(%t) My latency was %A msec\n",
               latency));
-#else
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) My latency was %f msec\n",
-              latency));
-#endif /* ! ACE_LACKS_FLOATING_POINT */
 }
 
-double
+ACE_timer_t
 Client::get_high_priority_latency (void)
 {
-  return (double) this->ts_->latency_ [0];
+  return (ACE_timer_t) this->ts_->latency_ [0];
 }
 
-double
+ACE_timer_t
 Client::get_low_priority_latency (void)
 {
   if (this->ts_->thread_count_ == 1)
     return 0;
 
-  double l = 0;
+  ACE_timer_t l = 0;
 
   for (u_int i = 1; i < this->ts_->thread_count_; i++)
-    l += (double) this->ts_->latency_[i];
+    l += (ACE_timer_t) this->ts_->latency_[i];
 
-  return l / (double) (this->ts_->thread_count_ - 1);
+  return l / (ACE_timer_t) (this->ts_->thread_count_ - 1);
 }
 
-double
+ACE_timer_t
 Client::get_latency (u_int thread_id)
 {
-  return ACE_static_cast (double, this->ts_->latency_ [thread_id]);
+  return ACE_static_cast (ACE_timer_t, this->ts_->latency_ [thread_id]);
 }
 
-double
+ACE_timer_t
 Client::get_high_priority_jitter (void)
 {
-  double jitter = 0.0;
-  double average = get_high_priority_latency ();
-  double number_of_samples = this->ts_->high_priority_loop_count_ / this->ts_->granularity_;
+  ACE_timer_t jitter = 0.0;
+  ACE_timer_t average = get_high_priority_latency ();
+  ACE_timer_t number_of_samples = this->ts_->high_priority_loop_count_ / this->ts_->granularity_;
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
@@ -307,7 +296,7 @@ Client::get_high_priority_jitter (void)
   // each latency has from the average
   for (u_int i = 0; i < number_of_samples; i ++)
     {
-      double difference =
+      ACE_timer_t difference =
         this->ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
       stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [0][i] * 1000 + 0.5));
@@ -316,8 +305,6 @@ Client::get_high_priority_jitter (void)
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
 
-  // @@ Naga, can you please replace the fprintf (stderr, ...) calls
-  // with ACE_DEBUG(()) calls throughout this file?
   ACE_DEBUG ((LM_DEBUG,
               "high priority jitter:\n"));
   stats.print_summary (3, 1000, stderr);
@@ -325,15 +312,15 @@ Client::get_high_priority_jitter (void)
   return sqrt (jitter / (number_of_samples - 1));
 }
 
-double
+ACE_timer_t
 Client::get_low_priority_jitter (void)
 {
   if (this->ts_->thread_count_ == 1)
     return 0;
 
-  double jitter = 0.0;
-  double average = get_low_priority_latency ();
-  double number_of_samples = 0;
+  ACE_timer_t jitter = 0.0;
+  ACE_timer_t average = get_low_priority_latency ();
+  ACE_timer_t number_of_samples = 0;
   //(this->ts_->thread_count_ - 1) * (this->ts_->loop_count_ / this->ts_->granularity_);
 
   // Compute the standard deviation (i.e. jitter) from the values
@@ -348,7 +335,7 @@ Client::get_low_priority_jitter (void)
       number_of_samples += this->ts_->count_[j];
       for (u_int i = 0; i < this->ts_->count_[j] / this->ts_->granularity_; i ++)
         {
-          double difference =
+          ACE_timer_t difference =
             this->ts_->global_jitter_array_[j][i] - average;
           jitter += difference * difference;
           stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
@@ -365,12 +352,12 @@ Client::get_low_priority_jitter (void)
   return sqrt (jitter / (number_of_samples - 1));
 }
 
-double
+ACE_timer_t
 Client::get_jitter (u_int id)
 {
-  double jitter = 0.0;
-  double average = get_latency (id);
-  double number_of_samples = this->ts_->count_[id]  / this->ts_->granularity_;
+  ACE_timer_t jitter = 0.0;
+  ACE_timer_t average = get_latency (id);
+  ACE_timer_t number_of_samples = this->ts_->count_[id]  / this->ts_->granularity_;
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
@@ -381,7 +368,7 @@ Client::get_jitter (u_int id)
   // latency has from the average.
   for (u_int i = 0; i < this->ts_->count_[id] / this->ts_->granularity_; i ++)
     {
-      double difference =
+      ACE_timer_t difference =
         this->ts_->global_jitter_array_[id][i] - average;
       jitter += difference * difference;
       stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [id][i] * 1000 + 0.5));
@@ -405,7 +392,7 @@ Client::svc (void)
   CORBA::Object_var naming_obj (0);
   CORBA::Environment env;
 
-  double frequency = 0.0;
+  ACE_timer_t frequency = 0.0;
 
   ACE_DEBUG ((LM_DEBUG, "I'm thread %t\n"));
 
@@ -787,12 +774,6 @@ Client::cube_short (void)
       CORBA::Short arg_short = func (this->num_);
       CORBA::Short ret_short;
 
-      // @@ Naga, can you please do two things:
-      // 1. Move this quantify stuff into a macro so that it
-      //    doesn't clutter the code everywhere?
-      // 2. Reconsider why this macro is named NO_ACE_QUANTIFY?
-      //    It doesn't seem to make much sense!
-
       START_QUANTIFY;
 
       ret_short = this->cubit_->cube_short (arg_short, TAO_TRY_ENV);
@@ -964,30 +945,25 @@ Client::run_tests (Cubit_ptr cb,
                    u_int loop_count,
                    u_int thread_id,
                    Cubit_Datatypes datatype,
-                   double frequency)
+                   ACE_timer_t frequency)
 {
   int result;
-  // @@ Naga, this function is WAY too long!  Can you please try to
-  // split it up?!
   CORBA::Environment env;
   u_int i = 0;
   u_int low_priority_client_count = this->ts_->thread_count_ - 1;
-  double *my_jitter_array;
+  ACE_timer_t *my_jitter_array;
 
   this->cubit_ = cb;
 
   if (id_ == 0 && this->ts_->thread_count_ > 1)
     // @@ Naga, can you please generalize this magic number?
     ACE_NEW_RETURN (my_jitter_array,
-                    double [(loop_count/this->ts_->granularity_) * 30],
+                    ACE_timer_t [(loop_count/this->ts_->granularity_) * 30],
                     -1);
   else
     ACE_NEW_RETURN (my_jitter_array,
-                    double [loop_count/this->ts_->granularity_ * 15],
+                    ACE_timer_t [loop_count/this->ts_->granularity_ * 15],
                     -1);
-
-  // @@ Naga, can you please replace this CHORUS stuff with the
-  // ACE_timer_t stuff throughout the file?!
 
   ACE_timer_t latency = 0;
   ACE_timer_t sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_; // usec
@@ -997,7 +973,7 @@ Client::run_tests (Cubit_ptr cb,
   ACE_Time_Value max_wait_time (this->ts_->util_time_, 0);
   ACE_Countdown_Time countdown (&max_wait_time);
 
-  MT_Cubit_Timer timer (this->ts_);
+  MT_Cubit_Timer timer (this->ts_->granularity_);
 
   // Elapsed time will be in microseconds.
   ACE_Time_Value delta_t;
@@ -1032,7 +1008,9 @@ Client::run_tests (Cubit_ptr cb,
           timer.start ();
         }
       this->num_ = i;
+      // make calls to the server object depending on the datatype.
       result = this->make_calls ();
+
       if (result < 0)
         return 2;
 
@@ -1044,17 +1022,12 @@ Client::run_tests (Cubit_ptr cb,
           // Calculate time elapsed.
           ACE_timer_t real_time;
           real_time = timer.get_elapsed ();
-#if defined (ACE_LACKS_FLOATING_POINT)          
-  delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
-  latency += real_time * this->ts_->granularity_;
-  my_jitter_array [i/this->ts_->granularity_] = real_time; // in units of microseconds.
-  // update the latency array, correcting the index using the granularity
-#else  /* !ACE_LACKS_FLOATING_POINT */
-  delta = ((0.4 * fabs (real_time * ACE_ONE_SECOND_IN_USECS)) + (0.6 * delta)); // pow(10,6)
-  latency += (real_time * ts_->granularity_);
-  my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS;
-#endif /* !ACE_LACKS_FLOATING_POINT */
-        } // END OF IF   :
+          delta = (ACE_timer_t) 40 *fabs (TIME_IN_MICROSEC(real_time))
+            / (ACE_timer_t) 100 + (ACE_timer_t) 60 *delta/ 100;
+          latency += real_time * this->ts_->granularity_;
+          my_jitter_array [i/this->ts_->granularity_] =
+            TIME_IN_MICROSEC (real_time);
+        } 
       if ( this->ts_->thread_per_rate_ == 1 && id_ < (this->ts_->thread_count_ - 1) )
         {
           if (this->ts_->semaphore_->tryacquire () != -1)
@@ -1094,38 +1067,21 @@ Client::run_tests (Cubit_ptr cb,
     {
       if (this->error_count_ == 0)
         {
-#if defined (ACE_LACKS_FLOATING_POINT)
-          long calls_per_second = (this->call_count_ * ACE_ONE_SECOND_IN_USECS) / latency;
+          ACE_timer_t calls_per_second = (TIME_IN_MICROSEC (this->call_count_)) / latency;
           latency = latency/this->call_count_;//calc average latency
-#else
-          latency /= this->call_count_; // calc average latency
-#endif /* ACE_LACKS_FLOATING_POINT */
 
           if (latency > 0)
             {
-#if defined (ACE_LACKS_FLOATING_POINT)
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) cube average call ACE_OS::time\t= %u usec, \t"
-                          "%u calls/second\n",
+                          "(%P|%t) cube average call ACE_OS::time\t= %A usec, \t"
+                          "%A calls/second\n",
                           latency,
                           calls_per_second));
 
               this->put_latency (my_jitter_array,
-                                 latency,
+                                 TIME_IN_MICROSEC (latency),
                                  thread_id,
                                  this->call_count_);
-#else
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
-                          "%f calls/second\n",
-                          latency * 1000,
-                          1 / latency));
-
-              this->put_latency (my_jitter_array,
-                                 latency * ACE_ONE_SECOND_IN_MSECS,
-                                 thread_id,
-                                 this->call_count_);
-#endif /* ! ACE_LACKS_FLOATING_POINT */
             }
           else
             {

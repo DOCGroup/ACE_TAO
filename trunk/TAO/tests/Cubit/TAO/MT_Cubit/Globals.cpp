@@ -67,8 +67,6 @@ Globals::parse_args (int argc, char *argv[])
         break;
       case 'p':
         base_port = ACE_OS::atoi (opts.optarg);
-        // @@ Naga, do we need to keep this printout here or can we
-        // remove it?
         break;
       case 't':
         num_of_objs = ACE_OS::atoi (opts.optarg);
@@ -94,3 +92,87 @@ Globals::parse_args (int argc, char *argv[])
   // Indicates successful parsing of command line.
   return 0;
 }
+
+MT_Priority::MT_Priority (void)
+  :num_priorities_ (0),
+   grain_ (0)
+{
+}
+
+ACE_Sched_Priority
+MT_Priority::get_high_priority (void)
+{
+  ACE_Sched_Priority high_priority;
+#if defined (VXWORKS)
+  high_priority = ACE_THR_PRI_FIFO_DEF;
+#elif defined (ACE_WIN32)
+  high_priority =
+    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                    ACE_SCOPE_THREAD);
+#else
+  // @@ Naga/Sergio, why is there a "25" here?  This seems like to
+  // much of a "magic" number.  Can you make this more "abstract?"
+  high_priority = ACE_THR_PRI_FIFO_DEF + 25;
+#endif /* VXWORKS */
+  return high_priority;
+}
+
+ACE_Sched_Priority
+MT_Priority::get_low_priority (u_int num_low_priority,
+                               ACE_Sched_Priority prev_priority,
+                               u_int use_multiple_priority)
+{
+  ACE_Sched_Priority low_priority;
+  // Drop the priority
+  if (use_multiple_priority)
+    {
+      this->num_priorities_ = 0;
+
+      for (ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
+                                                          ACE_SCOPE_THREAD);
+           priority_iterator.more ();
+          priority_iterator.next ())
+        this->num_priorities_ ++;
+      // 1 priority is exclusive for the high priority client.
+      this->num_priorities_ --;
+      // Drop the priority, so that the priority of clients will
+      // increase with increasing client number.
+      for (u_int j = 0;
+           j < num_low_priority;
+           j++)
+        {
+          low_priority =
+            ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                 prev_priority,
+                                                 ACE_SCOPE_THREAD);
+          prev_priority = low_priority;
+        }
+      // Granularity of the assignment of the priorities.  Some OSs
+      // have fewer levels of priorities than we have threads in our
+      // test, so with this mechanism we assign priorities to groups
+      // of threads when there are more threads than priorities.
+      this->grain_ = num_low_priority / this->num_priorities_;
+      if (this->grain_ <= 0)
+
+        this->grain_ = 1;
+    }
+  else
+    low_priority =
+      ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                           prev_priority,
+                                           ACE_SCOPE_THREAD);
+  return low_priority;
+}
+
+u_int
+MT_Priority::number_of_priorities (void)
+{
+  return this->num_priorities_;
+}
+
+u_int
+MT_Priority::grain (void)
+{
+  return this->grain_;
+}
+

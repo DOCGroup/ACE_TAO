@@ -3,13 +3,11 @@
 #include "Timer.h"
 #include "Task_Client.h"
 
-MT_Cubit_Timer::MT_Cubit_Timer (Task_State *ts)
+MT_Cubit_Timer::MT_Cubit_Timer (u_int granularity)
+  :granularity_ (granularity)
 #if defined (CHORUS)
-  :pstartTime_ (0),
-   pstopTime_ (0),
-   ts_ (ts)
-#else
-     :ts_ (ts)
+  ,pstartTime_ (0)
+   pstopTime_ (0)
 #endif
 {
 }
@@ -42,11 +40,11 @@ MT_Cubit_Timer::get_elapsed (void)
   ACE_timer_t real_time;
 #if defined (ACE_LACKS_FLOATING_POINT)
 #   if defined (CHORUS)
-  real_time = (this->pstopTime_ - this->pstartTime_) / this->ts_->granularity_;
+  real_time = (this->pstopTime_ - this->pstartTime_) / this->granularity_;
 #   else /* CHORUS */
   // Store the time in usecs.
   real_time = (this->delta_.sec () * ACE_ONE_SECOND_IN_USECS  +
-               this->delta_.usec ()) / this->ts_->granularity_;
+               this->delta_.usec ()) / this->granularity_;
 #endif /* !CHORUS */
 #else /* !ACE_LACKS_FLOATING_POINT */
   
@@ -64,8 +62,8 @@ MT_Cubit_Timer::get_elapsed (void)
 
           // This is only occuring in VxWorks.
           // I'll leave these here to debug it later.
-          double tmp = (double)this->delta_.sec ();
-          double tmp2 = (double)this->delta_.usec ();
+          ACE_timer_t tmp = (ACE_timer_t)delta_t.sec ();
+          ACE_timer_t tmp2 = (ACE_timer_t)delta_t.usec ();
           if (tmp > 100000)
             {
               tmp = 0.0;
@@ -74,15 +72,14 @@ MT_Cubit_Timer::get_elapsed (void)
                          this->delta_.usec ()));
             }
 
-          real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
+          real_time = tmp + tmp2 / (ACE_timer_t)ACE_ONE_SECOND_IN_USECS;
 #else
-          real_time = ((double) this->delta_.sec () +
-                       (double) this->delta_.usec () / (double) ACE_ONE_SECOND_IN_USECS);
+          real_time = ((ACE_timer_t) this->delta_.sec () +
+                       (ACE_timer_t) this->delta_.usec () / (ACE_timer_t) ACE_ONE_SECOND_IN_USECS);
 #endif /* VXWORKS */
 
-          real_time /= this->ts_->granularity_;
+          real_time /= this->granularity_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
-
           return real_time;
 }
    
