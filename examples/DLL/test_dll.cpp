@@ -33,14 +33,9 @@ main (void)
                       dll.error ()),
                       -1);
   {
-    //*done* cool. i realise what you did. You have added a scope that
-    // the auto_ptr deletes the magazine object.
-    // Kirthika, can you please use an auto_ptr here.
-
     auto_ptr <Magazine> magazine = mc ();
   
     magazine->title ();
-
   }
 
   dll.close ();
@@ -56,6 +51,7 @@ main (void)
                       -1);
   
   mc = (Magazine_Creator) dll.symbol ("create_magazine");
+
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                       "%s",
