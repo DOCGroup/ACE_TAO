@@ -279,6 +279,21 @@ TAO_StreamCtrl::unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
 }
 
 // ----------------------------------------------------------------------
+// TAO_Base_StreamEndPoint
+// ----------------------------------------------------------------------
+
+TAO_Base_StreamEndPoint::~TAO_Base_StreamEndPoint (void)
+{
+}
+
+int TAO_Base_StreamEndPoint::handle_close (void)
+{
+  // This method should not be defined, but EGCS complains endlessly
+  // about it.
+  return -1;
+}
+
+// ----------------------------------------------------------------------
 // TAO_StreamEndPoint
 // ----------------------------------------------------------------------
 
