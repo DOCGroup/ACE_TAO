@@ -1,90 +1,111 @@
+Fri Jul 30 18:47:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tests/Faults/Makefile:
+        * tests/Faults/ping.cpp:
+        * tests/Faults/ping.idl:
+        * tests/Faults/ping_i.h:
+        * tests/Faults/ping_i.i:
+        * tests/Faults/ping_i.cpp:
+        * tests/Faults/pong.cpp:
+        * tests/Faults/run_test.pl:
+          Added new test to check that the client can continue sending
+          requests (in this case oneways) after the server dies.  The test
+          can also be used to check that the client can reconnect to a
+          persistet service, but this is not checked in the run_test.pl
+          script because.
+
+        * tao/IIOP_Connector.cpp:
+        * tao/UIOP_Connector.cpp:
+          If the connection fails then we have to reset the hint. We need
+          to re-examine the current solution, but after 1.0
+
 Fri Jul 30 14:52:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/IDL_Test/IDL_Test.dsw:
-	* tests/IDL_Test/idl_test.dsp: Updated project configurations.
+        * tests/IDL_Test/IDL_Test.dsw:
+        * tests/IDL_Test/idl_test.dsp: Updated project configurations.
 
-	* version_tests.dsw: Added IDL_Test.
+        * version_tests.dsw: Added IDL_Test.
 
 Fri Jul 30 12:40:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/typedef.idl:
-	  Commented out some code for now where an array contains
-	  a typedef'd array. HP/UX-aCC had a problem with the
-	  generated code, and the IDL compiler (as Carlos informs
-	  me) does not include any of the config-* files, so we
-	  have to comment this out for everybody.
+        * TAO/tests/IDL_Test/typedef.idl:
+          Commented out some code for now where an array contains
+          a typedef'd array. HP/UX-aCC had a problem with the
+          generated code, and the IDL compiler (as Carlos informs
+          me) does not include any of the config-* files, so we
+          have to comment this out for everybody.
 
 Fri Jul 30 11:08:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/Tags.html:
-	  Fixed the ASCII representation for some of the protocol
-	  tags. Thanks to Andres <akruse@cyberlife.co.uk> for pointing
-	  this out.
+        * docs/Tags.html:
+          Fixed the ASCII representation for some of the protocol
+          tags. Thanks to Andres <akruse@cyberlife.co.uk> for pointing
+          this out.
 
 Fri Jul 30 02:40:24 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* docs/releasenotes/orbcore.html: Added the Connection Caching in
-	  the Ongoing Work portion.
+        * docs/releasenotes/orbcore.html: Added the Connection Caching in
+          the Ongoing Work portion.
 
 Fri Jul 30 02:50:06 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (servant_cleanup and poa_cleanup):
-	* tao/POA.cpp (is_servant_in_map, is_user_id_in_map, and
-	  wait_for_completions):
+        * tao/Object_Adapter.cpp (servant_cleanup and poa_cleanup):
+        * tao/POA.cpp (is_servant_in_map, is_user_id_in_map, and
+          wait_for_completions):
 
-	  Condition variables should only be used when <enable_locking_>
-	  is true.
+          Condition variables should only be used when <enable_locking_>
+          is true.
 
 Fri Jul 30 02:40:24 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/orbconf.h (TAO_CONNECTION_CACHING_STRATEGY):
-	  Made the ConnectionCachingStrategy to be NOOP by default.
+        * tao/orbconf.h (TAO_CONNECTION_CACHING_STRATEGY):
+          Made the ConnectionCachingStrategy to be NOOP by default.
 
 Fri Jul 30 01:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/Options.html:
-	* tao/orbconf.h:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	* tao/default_server.h:
-	* tao/default_server.cpp:
-	* tao/Server_Strategy_Factory.h:
-	* tao/Server_Strategy_Factory.cpp:
-	* tao/UIOP_Connect.h:
-	* tao/UIOP_Connect.cpp:
-	* tao/IIOP_Connect.h:
-	* tao/IIOP_Connect.cpp:
-	  Fixed the concurrency problems of shutting down the ORB when the
-	  thread-per-connection concurrency model was used.  The server
-	  threads poll the ORB to find out if they should shutdown, but at
-	  a very low rate (the default is 5 seconds).
-	  The user can control the rate or even disabled the polling
-	  completely using the -ORBThreadPerConnection server strategy
-	  factory option; the complete documentation is in Options.html
-	  This solves [BUGID:174]
+        * docs/Options.html:
+        * tao/orbconf.h:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/default_server.h:
+        * tao/default_server.cpp:
+        * tao/Server_Strategy_Factory.h:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/UIOP_Connect.h:
+        * tao/UIOP_Connect.cpp:
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Connect.cpp:
+          Fixed the concurrency problems of shutting down the ORB when the
+          thread-per-connection concurrency model was used.  The server
+          threads poll the ORB to find out if they should shutdown, but at
+          a very low rate (the default is 5 seconds).
+          The user can control the rate or even disabled the polling
+          completely using the -ORBThreadPerConnection server strategy
+          factory option; the complete documentation is in Options.html
+          This solves [BUGID:174]
 
 Thu Jul 29 23:03:32 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}:
-	  Fixed the direct usage of ACE_Condition to ACE_SYNCH_CONDITION.
+        * orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}:
+          Fixed the direct usage of ACE_Condition to ACE_SYNCH_CONDITION.
 
-	* orbsvcs/tests/AVStreams/mpeg/source:
-	  Fixed LIBS to LDLIBS in Makefile. Also removed a few warnings
-	  for egcs.
+        * orbsvcs/tests/AVStreams/mpeg/source:
+          Fixed LIBS to LDLIBS in Makefile. Also removed a few warnings
+          for egcs.
 
-	* orbsvcs/tests/AVStreams/mpeg/server_discovery:
-	  Fixed LIBS to LDLIBS in Makefile.
+        * orbsvcs/tests/AVStreams/mpeg/server_discovery:
+          Fixed LIBS to LDLIBS in Makefile.
 
 Thu Jul 29 22:11:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Faults/run_test.pl:
-	  Adjusted time out values, the new test takes longer to run than
-	  expected.
+        * tests/Faults/run_test.pl:
+          Adjusted time out values, the new test takes longer to run than
+          expected.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	  If the server or the client return with an error we print out
-	  which one.
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+          If the server or the client return with an error we print out
+          which one.
 
 Thu Jul 29 22:00:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
