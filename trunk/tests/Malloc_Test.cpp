@@ -76,6 +76,10 @@ init_test (const void *base_addr = 0)
   // file from the previous crash.
   ACE_MMAP_Memory_Pool_Options options (base_addr);
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
+
+  size_t rbyte = 0;
+  int ft = 0;
+  mmap.init_acquire (1024, rbyte, ft);
   mmap.release ();
 }
 
@@ -251,11 +255,14 @@ main (int argc, ASYS_TCHAR *[])
 
 #if 0
       cout << "Sizeof header padding: " << ACE_MALLOC_PADDING << endl
+           << "Sizeof ptr: " << sizeof (char *) << endl
            << "Sizeof size_t: " << sizeof (size_t) << endl
            << "Sizeof long: " << sizeof (long) << endl
            << "Sizeof double: " << sizeof (double) << endl
+           << "Sizeof MALLOC_ALIGN: " << ACE_MALLOC_ALIGN << endl
            << "Sizeof ACE_MALLOC_HEADER_SIZE: " << ACE_MALLOC_HEADER_SIZE << endl
            << "Sizeof (Malloc Header): " << sizeof (ACE_Malloc_Header) << endl
+           << "Sizeof ACE_CONTROL_BLOCK_SIZE: " << ACE_CONTROL_BLOCK_SIZE << endl
            << "Sizeof (control align long: " << ACE_CONTROL_BLOCK_ALIGN_LONGS << endl
            << "Sizeof (Control Block): " << sizeof (ACE_Control_Block) << endl
            << "Sizeof padding size: " << ACE_MALLOC_PADDING_SIZE << endl

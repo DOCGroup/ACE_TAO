@@ -1,3 +1,11 @@
+Sat Dec 04 21:14:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Malloc_Test.cpp (init_test): Need to call init_acquire to
+	  make sure the old mapfile does get removed.
+
+	  Added more printout items in the normally disabled debug
+	  section.
+
 Sat Dec 04 19:45:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp: Conditionally bind/unbind the
