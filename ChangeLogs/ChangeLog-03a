@@ -1,3 +1,11 @@
+Mon Sep  9 00:12:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/Makefile.dirs:
+	* examples/Makefile:
+	* tests/Makefile:
+	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make 
+	  variable.
+
 Sat Sep  7 23:22:20 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* bin/make_release: The tar ball that is put out during the
