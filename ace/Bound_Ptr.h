@@ -110,7 +110,7 @@ class ACE_Strong_Bound_Ptr
 {
 public:
   /// Constructor that initializes an ACE_Strong_Bound_Ptr to point to the
-  /// object <p> immediately.
+  /// object \<p\> immediately.
   ACE_EXPLICIT ACE_Strong_Bound_Ptr (X *p = 0);
 
   /// Constructor that initializes an ACE_Strong_Bound_Ptr by stealing
@@ -136,7 +136,7 @@ public:
   /// instances point to the same underlying object.
   /**
    * @note It also returns 1 if both objects have just been
-   *       instantiated and not used yet. 
+   *       instantiated and not used yet.
    */
   int operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
 
@@ -221,7 +221,7 @@ class ACE_Weak_Bound_Ptr
 {
 public:
   /// Constructor that initializes an ACE_Weak_Bound_Ptr to point to
-  /// the object <p> immediately.
+  /// the object \<p\> immediately.
   ACE_EXPLICIT ACE_Weak_Bound_Ptr (X *p = 0);
 
   /// Copy constructor binds <this> and <r> to the same object.

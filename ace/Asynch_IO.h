@@ -553,7 +553,7 @@ public:
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * NOTE: In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   int readv (ACE_Message_Block &message_block,
@@ -689,7 +689,7 @@ public:
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * NOTE: In win32 Each data block payload must be at least the size of a system
   * memory page and must be aligned on a system memory page size boundary
   */
   int writev (ACE_Message_Block &message_block,
@@ -1474,7 +1474,7 @@ public:
   /// A do nothing constructor.
   ACE_Handler (void);
 
-  /// A do nothing constructor which allows proactor to be set to <p>.
+  /// A do nothing constructor which allows proactor to be set to \<p\>.
   ACE_Handler (ACE_Proactor *p);
 
   /// Virtual destruction.
