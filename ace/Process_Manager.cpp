@@ -247,23 +247,54 @@ ACE_Process_Manager::~ACE_Process_Manager (void)
   this->close ();
 }
 
+#if !defined (ACE_WIN32)
+
 // This is called when the Reactor notices that a Process has exited.
-// On Windoze, it knows which Process it was, and passes the Process'
-// handle.  On Unix, what has actually happened is a SIGCHLD invoked
-// the handle_signal routine, which fooled the Reactor into thinking
-// that this routine needed to be called.  (On Unix, we reap as many
-// children as are dead.)
+// What has actually happened is a SIGCHLD invoked the <handle_signal>
+// routine, which fooled the Reactor into thinking that this routine
+// needed to be called.  Since we don't know which Process exited, we
+// must reap as many exit statuses as are immediately available.
 
 int
-ACE_Process_Manager::handle_input (ACE_HANDLE proc)
+ACE_Process_Manager::handle_input (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_Process_Manager::handle_input");
 
-#if defined(ACE_WIN32)
+   pid_t pid;
+
+   do 
+     pid = this->wait (0,
+                       ACE_Time_Value::zero);
+   while (pid != 0 && pid != ACE_INVALID_PID);
+
+  return 0;
+}
+
+ACE_HANDLE
+ACE_Process_Manager::get_handle (void) const
+{
+  return this->dummy_handle_;
+}
+#endif /* !ACE_WIN32 */
+
+// On Unix, this routine is called asynchronously when a SIGCHLD is
+// received.  We just tweak the reactor so that it'll call back our
+// <handle_input> function, which allows us to handle Process exits
+// synchronously.
+//
+// On Win32, this routine is called synchronously, and is passed the
+// HANDLE of the Process that exited, so we can do all our work here.
+
+int
+ACE_Process_Manager::handle_signal (int,
+                                    siginfo_t *si,
+                                    ucontext_t *)
+{
+#if defined (ACE_WIN32)
+  ACE_HANDLE proc = si->si_handle_;
   ACE_exitcode status = 0;
   BOOL result = ::GetExitCodeProcess (proc, 
                                       &status);
-
   if (result) 
     {
       if (status != STILL_ACTIVE) 
@@ -278,55 +309,29 @@ ACE_Process_Manager::handle_input (ACE_HANDLE proc)
             this->notify_proc_handler (proc, pid, status);
             this->remove_proc (pid);
           }
-          ACE_Reactor *r = this->reactor ();
-
-          if (r)
-            r->remove_handler (proc, 0);
+          return -1; // remove this HANDLE/Event_Handler combination
         } 
       else 
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("Process still active -- shouldn't have been called yet!\n")),
-                          -1);
+                           ASYS_TEXT ("Process still active")
+                           ASYS_TEXT (" -- shouldn't have been called yet!\n")),
+                          0); // return 0 : stay registered
     } 
   else 
     {
       // <GetExitCodeProcess> failed.
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n%a",
-                  "handle_input: GetExitCodeProcess failed",
-                  0));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("GetExitCodeProcess failed")),
+                        -1); // return -1: unregister
     }
-#else /* !defined(ACE_WIN32) */
-  ACE_UNUSED_ARG (proc);        // proc is dummy_handle_ on unix.
-
-   pid_t pid;
-
-   do 
-     pid = this->wait (0, ACE_Time_Value::zero);
-   while (pid != 0 && pid != ACE_INVALID_PID);
-
-#endif /* defined (ACE_WIN32) */
-  return 0;
-}
-
-#if !defined (ACE_WIN32)
-ACE_HANDLE
-ACE_Process_Manager::get_handle (void) const
-{
-  return this->dummy_handle_;
-}
-
-int
-ACE_Process_Manager::handle_signal (int,
-                                    siginfo_t *,
-                                    ucontext_t *)
-{
+#else /* !ACE_WIN32 */
+  ACE_UNUSED_ARG (si);
   return reactor ()->ready_ops
     (this->dummy_handle_,
      ACE_Event_Handler::READ_MASK,
      ACE_Reactor::ADD_MASK);
-}
 #endif /* !ACE_WIN32 */
+}
 
 int
 ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
@@ -337,8 +342,9 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   if (pid == ACE_INVALID_PID) 
     {
       if (this->default_exit_handler_ != 0)
-        this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,
-                                                   0);
+        this->default_exit_handler_->handle_close 
+          (ACE_INVALID_HANDLE, 
+           0);
       this->default_exit_handler_ = eh;
       return 0;
     }
@@ -353,8 +359,9 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
       ACE_Process_Descriptor &proc_desc = this->process_table_[i];
 
       if (proc_desc.exit_notify_ != 0)
-        proc_desc.exit_notify_->handle_close (ACE_INVALID_HANDLE,
-                                              0);
+        proc_desc.exit_notify_->handle_close 
+          (ACE_INVALID_HANDLE,
+           0);
       proc_desc.exit_notify_ = eh;
       return 0;
     }
@@ -388,8 +395,8 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options)
 
   if (pid != ACE_INVALID_PID) 
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, ACE_INVALID_PID));
-          
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+                                this->lock_, ACE_INVALID_PID));
       ssize_t i = this->find_proc (pid);
 
       ACE_ASSERT (i != -1);
@@ -416,7 +423,8 @@ ACE_Process_Manager::spawn (ACE_Process *process,
     return pid;
   else
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
+                                ace_mon, this->lock_, -1));
 
       if (this->append_proc (process) == -1) 
         // bad news: spawned, but not registered in table.
@@ -477,6 +485,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
       // pending better info from caller
       proc_desc.delete_process_ = 0;    
       proc_desc.process_ = proc;
+      proc_desc.exit_notify_ = 0;
 
 #if defined (ACE_WIN32)
       // If we have a Reactor, then we're supposed to reap Processes
@@ -485,9 +494,8 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
 
       ACE_Reactor *r = this->reactor ();
       if (r != 0)
-        r->register_handler (proc->gethandle (),
-                             this,
-                             ACE_Event_Handler::READ_MASK);
+        r->register_handler (this,
+                             proc->gethandle ());
 #endif /* ACE_WIN32 */
 
       this->current_count_++;
@@ -723,7 +731,6 @@ ACE_Process_Manager::wait (pid_t pid,
     {
       // Wait for any Process spawned by this Process_Manager.
 #if defined (ACE_WIN32)
-
       HANDLE *handles;
 
       ACE_NEW_RETURN (handles,
@@ -823,13 +830,15 @@ ACE_Process_Manager::wait (pid_t pid,
       if (proc == 0) 
         {
           ssize_t i = this->find_proc (pid);
-          if (i == -1) {
-            // oops, reaped an unmanaged process!
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) oops, reaped unmanaged %d\n",
-                        pid));
-            return pid;
-          } else
+          if (i == -1) 
+            {
+              // oops, reaped an unmanaged process!
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) oops, reaped unmanaged %d\n",
+                          pid));
+              return pid;
+            }
+          else
             proc = process_table_[i].process_;
         }
       notify_proc_handler (proc->gethandle (),
@@ -878,16 +887,18 @@ ACE_Process_Manager::notify_proc_handler (ACE_HANDLE,
       if (proc_desc.exit_notify_ != 0) 
         proc_desc.exit_notify_->handle_exit (proc_desc.process_);
       else if (this->default_exit_handler_ != 0
-               && this->default_exit_handler_->handle_exit
-               (proc_desc.process_) < 0) {
-          this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,
-                                                     0);
+               && this->default_exit_handler_->handle_exit (proc_desc.process_) < 0) 
+        {
+          this->default_exit_handler_->handle_close 
+            (ACE_INVALID_HANDLE,
+             0);
           this->default_exit_handler_ = 0;
-      }
+        }
     } 
   else
     ACE_DEBUG ((LM_DEBUG,
-                "(%P:%t|%T) ACE_Process_Manager::notify_proc_handler: unknown process %d reaped\n",
+                ASYS_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:"),
+                ASYS_TEXT (" unknown process %d reaped\n"),
                 pid));
 
   return i != -1;
