@@ -383,8 +383,6 @@ ACE_HAS_PTHREAD_SIGMASK                 Platform has pthread_sigmask()
                                         defined.
 ACE_HAS_PTHREAD_T                       Platform has pthread_t
                                         defined.
-ACE_HAS_PTHREAD_YIELD_VOIDPTR           pthread_yield() takes a void
-                                        pointer arg.
 ACE_HAS_PURIFY                          Purify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_QUANTIFY                        Quantify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
