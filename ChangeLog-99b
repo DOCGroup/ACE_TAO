@@ -1,12 +1,18 @@
+Tue Aug 03 21:17:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/SOCK_Connector_Test.cpp (host_is_up): Added a time out
+	  value of 5 second to spped up the test.  Thanks to Jody Hagins
+	  <jody@atdesk.com> for submitting the patch.
+
 Tue Aug 03 18:30:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-	
+
 	* ace/Strategies.h (ACE_Connection_Recycling_Strategy):
 	  Added a new pure virtual method <marked_as_closed_i> which
 	  will provide a non-locking implementation of the
 	  <mark_as_closed> method.
 
-	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy): 
-	* ace/Cached_Connect_Strategy_T.h (ACE_Cached_Connect_Strategy_Ex): 
+	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy):
+	* ace/Cached_Connect_Strategy_T.h (ACE_Cached_Connect_Strategy_Ex):
 	  Made <mark_as_closed_i> public.
 
 	* ace/Caching_Utility_T.{h,cpp}
@@ -128,17 +134,16 @@ Mon Aug  2 09:58:20 1999  Ossama Othman  <othman@cs.wustl.edu>
 Sun Aug  1 15:58:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/colorize:
-	Added <PRE></PRE> wrapper around generated output.
+	  Added <PRE></PRE> wrapper around generated output.
 
 	* docs/tutorials/Chap_03/Makefile:
 	* docs/tutorials/Chap_03/README:
 	* docs/tutorials/Chap_03/mm.cpp:
-	* docs/tutorials/Chap_03/ex03.html:
-	mm.cpp (and ex03.html) are a slightly modified version of
- 	ex02.html that uses a memory mapped file instead of SYSV SHMEM.
-  	To work around the lack of fork() in Win32, the app must be
- 	executed once in server mode (argv[1] == 's') and again in client
- 	mode.
+	* docs/tutorials/Chap_03/ex03.html: mm.cpp (and ex03.html) are a
+	  slightly modified version of ex02.html that uses a memory mapped
+	  file instead of SYSV SHMEM.  To work around the lack of fork()
+	  in Win32, the app must be executed once in server mode
+	  (argv[1] == 's') and again in client mode.
 
 Sun Aug  1 15:58:39 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
