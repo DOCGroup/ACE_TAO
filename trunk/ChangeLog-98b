@@ -1,4 +1,18 @@
-Tue Oct 06 22:50:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Oct  7 00:11:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added more information on using MFC with ACE,
+	  some explanations about using run-time libraries and information
+	  about VC6.
+
+	* tests/version_tests/version_tests.dsw: Removed
+	  MsgQueue_Notifications_Test.dsp and added
+	  Message_Queue_Notifications_Test.
+
+	* tests/*.dsp: Changed to use DLL version of run-time libraries
+	  for static builds.  Notice that user libraries are still linked
+	  in statically.  Only the run-time libraries are effected.
+
+	* ace/README: Added information for ACE_USES_STATIC_MFC.
 
 	* ace/config-win32-common.h: Re-structured MFC related macros
 	  (_AFXDLL and _WINDLL) so that it allows us to use MFC in static
@@ -62,7 +76,7 @@ Tue Oct  6 02:16:01 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
  	In POSIX implementation of  Asynch_Accept, We dont have to read
 	initial data to read on to the Message Block given to the
 	Asynch_Accept. So we dont use it at all. We get local and peer
-	address from using socket and pass back to the application. 
+	address from using socket and pass back to the application.
 
 Mon Oct 05 23:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
