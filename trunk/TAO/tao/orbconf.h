@@ -42,6 +42,12 @@
 #define TAO_SOCK_CONNECTOR ACE_SOCK_CONNECTOR
 #endif /* TAO_SOCK_CONNECTOR */
 
+//#define POA_NO_TIMESTAMP
+//
+// Define this if you don't want POA timestamps in the IOR.  Remember,
+// without timestamps, transient and persistent POA cannot be
+// distinguished
+
 // The default arguments of the resource factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)

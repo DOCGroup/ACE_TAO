@@ -736,7 +736,7 @@ TAO_ORB_Core::create_and_set_root_poa (void)
   root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
 
   // Construct a new POA
-  poa = new TAO_Strategy_POA ("RootPOA",
+  poa = new TAO_Strategy_POA ("",
                               *manager,
                               root_poa_policies,
                               0,

@@ -1,5 +1,8 @@
 // $Id$
 
+#if !defined (POA_MACROS_H)
+#define POA_MACROS_H
+
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
 #define TAO_POA_WRITE_GUARD(MUTEX,OBJ,LOCK,ENV) \
@@ -47,3 +50,4 @@
   } \
   while (0);
 
+#endif /* POA_MACROS_H */

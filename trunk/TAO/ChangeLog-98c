@@ -1,3 +1,21 @@
+Wed May 20 12:54:40 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: Added the following optimizations to the POA:
+
+	  - Use the new ACE_CString to make sure that no malloc/strcpy are
+ 	    done while the IOR is being parsed.  This optimization is
+ 	    valid irrespective of how deep/long the POA name is.
+
+	  - The class that holds the ObjectId in the IOR is now allocated
+ 	    off the stack instead of coming from the heap.  
+
+	  - Timestamping and checking for persistent/transient Ids in the
+ 	    POA can be disabled by using POA_NO_TIMESTAMP flag in the TAO
+ 	    config file.
+
+	* tao/ORB_Core.cpp (create_and_set_root_poa): Renamed the RootPOA
+ 	  from "RootPOA" to "" (the empty string).
+
 Wed May 20 12:10:12 1998  Carlos O'Ryan  <coryan@JIG>
 
 	* tao/CDR.h: 
