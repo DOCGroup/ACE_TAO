@@ -102,12 +102,6 @@
 #  define TAO_DEFAULT_SERVER_POA_MAP_SIZE 24
 #endif /* ! TAO_DEFAULT_SERVER_POA_MAP_SIZE */
 
-// The default number of times the ORB will attempt to get a reply
-// from a service using multicast.
-#if !defined (TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS)
-#define TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS 3
-#endif /* TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS */
-
 // The default UDP multicast port number for locating the TAO Naming
 // Service.
 #if !defined (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT)
@@ -133,9 +127,9 @@
 #endif /* TAO_DEFAULT_NAME_SERVER_REPLY_PORT */
 
 // The default timeout receiving the location request to the TAO
-// Naming Service and Trading Service.
+// Naming, Trading and other servicesService.
 #if !defined (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 1
+#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 4
 #endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
 
 // The default starting port number for TAO servers.
