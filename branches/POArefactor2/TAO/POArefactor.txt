@@ -1,3 +1,13 @@
+Fri Oct 29 13:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*.pidl:
+        * tao/PortableServer/diffs/*:
+        * tao/PortableServer/*C.{h,cpp,inl}:
+        * tao/PortableServer/*A.cpp:
+          Moved all Policy enums out of the PortableServer.pidl and to the
+          belonging *Policy.pidl file, that way we only get the Any operations
+          we use
+
 Fri Oct 29 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Made the ServantRetentionStrategy loadable by service configurator

@@ -18,13 +18,18 @@
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_IDL_
 
 #include <tao/Policy.pidl>
-#include <tao/PortableServer/PortableServer.pidl>
 
 #pragma prefix "omg.org"
 
 module PortableServer
 {
 # pragma version PortableServer 2.3
+
+  enum ImplicitActivationPolicyValue
+  {
+    IMPLICIT_ACTIVATION,
+    NO_IMPLICIT_ACTIVATION
+  };
 
   local interface ImplicitActivationPolicy : CORBA::Policy
   {

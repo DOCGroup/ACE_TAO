@@ -169,7 +169,7 @@ PortableServer::IdAssignmentPolicy::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0"
+          "IDL:omg.org/PortableServer/IdAssignmentPolicy:2.3"
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
@@ -191,13 +191,35 @@ PortableServer::IdAssignmentPolicy::_is_a (
 
 const char* PortableServer::IdAssignmentPolicy::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0";
+  return "IDL:omg.org/PortableServer/IdAssignmentPolicy:2.3";
 }
 
 CORBA::Boolean
 PortableServer::IdAssignmentPolicy::marshal (TAO_OutputCDR &)
 {
   return 0;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_enum/cdr_op_cs.cpp:51
+
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::IdAssignmentPolicyValue &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
+}
+
+CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdAssignmentPolicyValue &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = static_cast<PortableServer::IdAssignmentPolicyValue> (_tao_temp);
+    }
+  
+  return _tao_result;
 }
 
 // TAO_IDL - Generated from

@@ -18,13 +18,20 @@
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY_IDL_
 
 #include <tao/Policy.pidl>
-#include <tao/PortableServer/PortableServer.pidl>
 
 #pragma prefix "omg.org"
 
 module PortableServer
 {
 # pragma version PortableServer 2.3
+
+  enum RequestProcessingPolicyValue
+  {
+    USE_ACTIVE_OBJECT_MAP_ONLY,
+    USE_DEFAULT_SERVANT,
+    USE_SERVANT_MANAGER
+  };
+
   local interface RequestProcessingPolicy : CORBA::Policy
   {
     readonly attribute RequestProcessingPolicyValue value;

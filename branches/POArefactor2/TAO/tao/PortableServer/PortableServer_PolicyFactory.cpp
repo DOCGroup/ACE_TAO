@@ -1,13 +1,5 @@
 
 #include "PortableServer_PolicyFactory.h"
-#include "IdAssignmentPolicyC.h"
-#include "IdUniquenessPolicyC.h"
-#include "ImplicitActivationPolicyC.h"
-#include "LifespanPolicyC.h"
-#include "RequestProcessingPolicyC.h"
-#include "ServantRetentionPolicyC.h"
-#include "ThreadPolicyC.h"
-#include "Policy_Creator_T.h"
 
 #include "ThreadPolicyFactory.h"
 #include "LifespanPolicyFactory.h"
@@ -16,6 +8,9 @@
 #include "ImplicitActivationPolicyFactory.h"
 #include "RequestProcessingPolicyFactory.h"
 #include "ServantRetentionPolicyFactory.h"
+#include "PortableServerC.h"
+
+#include "Policy_Creator_T.h"
 
 ACE_RCSID (PortableServer,
            PortableServer_PolicyFactory,

@@ -1,5 +1,5 @@
---- orig/ServantLocatorC.h	2004-10-11 14:53:59.402102400 +0200
-+++ ServantLocatorC.h	2004-10-11 14:54:01.855630400 +0200
+--- orig/ServantLocatorC.h	2004-10-29 14:44:24.275984000 +0200
++++ ServantLocatorC.h	2004-10-29 14:44:27.911211200 +0200
 @@ -74,6 +74,8 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_root/root_ch.cpp:63
@@ -27,8 +27,8 @@
  // TAO_IDL - Generated from
  // be\be_codegen.cpp:958
  
---- orig/ServantLocatorC.cpp	2004-10-11 14:53:59.402102400 +0200
-+++ ServantLocatorC.cpp	2004-10-11 14:54:01.855630400 +0200
+--- orig/ServantLocatorC.cpp	2004-10-29 14:44:24.275984000 +0200
++++ ServantLocatorC.cpp	2004-10-29 14:44:27.981312000 +0200
 @@ -46,6 +46,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:64
@@ -44,8 +44,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ServantLocatorA.cpp	2004-10-11 14:53:59.402102400 +0200
-+++ ServantLocatorA.cpp	2004-10-11 14:54:01.865644800 +0200
+--- orig/ServantLocatorA.cpp	2004-10-29 14:44:24.296012800 +0200
++++ ServantLocatorA.cpp	2004-10-29 14:44:28.031384000 +0200
 @@ -32,6 +32,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:290

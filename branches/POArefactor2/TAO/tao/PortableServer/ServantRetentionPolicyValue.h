@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "ThreadPolicyC.h"
+#include "ServantRetentionPolicyC.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 

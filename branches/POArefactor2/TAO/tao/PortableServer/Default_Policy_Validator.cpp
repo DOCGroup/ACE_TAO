@@ -3,13 +3,7 @@
 #include "Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
-#include "IdAssignmentPolicyC.h"
-#include "IdUniquenessPolicyC.h"
-#include "ImplicitActivationPolicyC.h"
-#include "LifespanPolicyC.h"
-#include "RequestProcessingPolicyC.h"
-#include "ServantRetentionPolicyC.h"
-#include "ThreadPolicyC.h"
+#include "PortableServerC.h"
 
 ACE_RCSID (PortableServer,
            Default_Policy_Validator,

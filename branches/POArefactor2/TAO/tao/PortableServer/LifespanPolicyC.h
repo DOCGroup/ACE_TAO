@@ -48,7 +48,6 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PolicyC.h"
-#include "tao/PortableServer/PortableServerC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -87,6 +86,22 @@ namespace TAO
 
 namespace PortableServer
 {
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_enum/enum_ch.cpp:57
+  
+  enum LifespanPolicyValue
+  {
+    TRANSIENT,
+    PERSISTENT
+  };
+  
+  typedef LifespanPolicyValue &LifespanPolicyValue_out;
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_LifespanPolicyValue;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:603
@@ -240,11 +255,23 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
+// be\be_visitor_enum/any_op_ch.cpp:51
+
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::LifespanPolicyValue);
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::LifespanPolicyValue &);
+
+// TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::LifespanPolicy_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::LifespanPolicy_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::LifespanPolicy_ptr &);
+
+// TAO_IDL - Generated from
+// be\be_visitor_enum/cdr_op_ch.cpp:50
+
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicyValue &);
+TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::LifespanPolicyValue &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:958

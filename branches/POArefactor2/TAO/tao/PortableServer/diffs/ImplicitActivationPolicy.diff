@@ -1,6 +1,6 @@
---- orig/ImplicitActivationPolicyC.h	2004-10-11 14:53:57.519395200 +0200
-+++ ImplicitActivationPolicyC.h	2004-10-11 14:54:01.054478400 +0200
-@@ -74,6 +74,8 @@
+--- orig/ImplicitActivationPolicyC.h	2004-10-29 14:44:22.032758400 +0200
++++ ImplicitActivationPolicyC.h	2004-10-29 14:44:26.248820800 +0200
+@@ -73,6 +73,8 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_root/root_ch.cpp:63
  
@@ -9,17 +9,17 @@
  namespace TAO
  {
    class Collocation_Proxy_Broker;
-@@ -246,6 +248,8 @@
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ImplicitActivationPolicy_ptr *); // non-copying
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ImplicitActivationPolicy_ptr &);
+@@ -254,6 +256,8 @@
+ #endif /* end #if !defined */
+ }
  
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:958
+ // be\be_visitor_enum/any_op_ch.cpp:51
  
---- orig/ImplicitActivationPolicyC.cpp	2004-10-11 14:53:57.519395200 +0200
-+++ ImplicitActivationPolicyC.cpp	2004-10-11 14:54:01.054478400 +0200
+--- orig/ImplicitActivationPolicyC.cpp	2004-10-29 14:44:22.032758400 +0200
++++ ImplicitActivationPolicyC.cpp	2004-10-29 14:44:26.348964800 +0200
 @@ -45,6 +45,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:64
@@ -29,15 +29,15 @@
  // Arg traits specializations.
  namespace TAO
  {
-@@ -238,3 +240,5 @@
+@@ -260,3 +262,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ImplicitActivationPolicyA.cpp	2004-10-11 14:53:57.519395200 +0200
-+++ ImplicitActivationPolicyA.cpp	2004-10-11 14:54:01.064492800 +0200
-@@ -32,6 +32,8 @@
+--- orig/ImplicitActivationPolicyA.cpp	2004-10-29 14:44:22.052787200 +0200
++++ ImplicitActivationPolicyA.cpp	2004-10-29 14:44:26.419065600 +0200
+@@ -95,6 +95,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:290
  
@@ -46,7 +46,7 @@
  static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
  {
      TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -158,3 +160,5 @@
+@@ -259,3 +261,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

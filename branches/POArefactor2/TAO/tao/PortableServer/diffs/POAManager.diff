@@ -1,5 +1,5 @@
---- orig/POAManagerC.h	2004-10-11 14:53:58.000086400 +0200
-+++ POAManagerC.h	2004-10-11 14:54:01.094536000 +0200
+--- orig/POAManagerC.h	2004-10-29 14:44:22.603579200 +0200
++++ POAManagerC.h	2004-10-29 14:44:26.559267200 +0200
 @@ -221,6 +221,8 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46

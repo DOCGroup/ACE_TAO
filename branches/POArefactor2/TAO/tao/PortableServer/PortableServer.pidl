@@ -48,6 +48,13 @@
 #include <Policy_Forward.pidl>
 #include <OctetSeq.pidl>
 #include <tao/PortableServer/PS_Forward.pidl>
+#include <tao/PortableServer/IdAssignmentPolicy.pidl>
+#include <tao/PortableServer/IdUniquenessPolicy.pidl>
+#include <tao/PortableServer/ImplicitActivationPolicy.pidl>
+#include <tao/PortableServer/LifespanPolicy.pidl>
+#include <tao/PortableServer/RequestProcessingPolicy.pidl>
+#include <tao/PortableServer/ServantRetentionPolicy.pidl>
+#include <tao/PortableServer/ThreadPolicy.pidl>
 
 #pragma prefix "omg.org"
 
@@ -65,63 +72,6 @@ module PortableServer
   const CORBA::PolicyType IMPLICIT_ACTIVATION_POLICY_ID   = 20;
   const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID     = 21;
   const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID    = 22;
-
-  enum ThreadPolicyValue
-  {
-    ORB_CTRL_MODEL,
-    SINGLE_THREAD_MODEL
-  };
-
-  local interface ThreadPolicy;
-
-  enum LifespanPolicyValue
-  {
-    TRANSIENT,
-    PERSISTENT
-  };
-
-  local interface LifespanPolicy;
-
-  enum IdUniquenessPolicyValue
-  {
-    UNIQUE_ID,
-    MULTIPLE_ID
-  };
-
-  local interface IdUniquenessPolicy;
-
-  enum IdAssignmentPolicyValue
-  {
-    USER_ID,
-    SYSTEM_ID
-  };
-
-  local interface IdAssignmentPolicy;
-
-  enum ImplicitActivationPolicyValue
-  {
-    IMPLICIT_ACTIVATION,
-    NO_IMPLICIT_ACTIVATION
-  };
-
-  local interface ImplicitActivationPolicy;
-
-  enum ServantRetentionPolicyValue
-  {
-    RETAIN,
-    NON_RETAIN
-  };
-
-  local interface ServantRetentionPolicy;
-
-  enum RequestProcessingPolicyValue
-  {
-    USE_ACTIVE_OBJECT_MAP_ONLY,
-    USE_DEFAULT_SERVANT,
-    USE_SERVANT_MANAGER
-  };
-
-  local interface RequestProcessingPolicy;
 
   // Forward declaration
   local interface POAManager;

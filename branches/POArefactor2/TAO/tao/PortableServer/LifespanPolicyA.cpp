@@ -28,6 +28,58 @@
 #include "LifespanPolicyC.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
+#include "tao/Any_Basic_Impl_T.h"
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  51,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f4c), 
+  ACE_NTOHL (0x69666573), 
+  ACE_NTOHL (0x70616e50), 
+  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x7956616c), 
+  ACE_NTOHL (0x75653a32), 
+  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/LifespanPolicyValue:2.3
+  20,
+  ACE_NTOHL (0x4c696665), 
+  ACE_NTOHL (0x7370616e), 
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63795661), 
+  ACE_NTOHL (0x6c756500),  // name = LifespanPolicyValue
+  2, // member count
+  10,
+  ACE_NTOHL (0x5452414e), 
+  ACE_NTOHL (0x5349454e), 
+  ACE_NTOHL (0x54000000),  // name = TRANSIENT
+  11,
+  ACE_NTOHL (0x50455253), 
+  ACE_NTOHL (0x49535445), 
+  ACE_NTOHL (0x4e540000),  // name = PERSISTENT
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicyValue (
+    CORBA::tk_enum,
+    sizeof (_oc_PortableServer_LifespanPolicyValue),
+    (char *) &_oc_PortableServer_LifespanPolicyValue,
+    0,
+    sizeof (PortableServer::LifespanPolicyValue)
+  );
+
+namespace PortableServer
+{
+  ::CORBA::TypeCode_ptr _tc_LifespanPolicyValue =
+    &_tc_TAO_tc_PortableServer_LifespanPolicyValue;
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:290
@@ -46,8 +98,8 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicy[] =
   ACE_NTOHL (0x69666573), 
   ACE_NTOHL (0x70616e50), 
   ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableServer/LifespanPolicy:1.0
+  ACE_NTOHL (0x793a322e), 
+  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/LifespanPolicy:2.3
     15,
   ACE_NTOHL (0x4c696665), 
   ACE_NTOHL (0x7370616e), 
@@ -67,6 +119,34 @@ namespace PortableServer
 {
   ::CORBA::TypeCode_ptr _tc_LifespanPolicy =
     &_tc_TAO_tc_PortableServer_LifespanPolicy;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_enum/any_op_cs.cpp:52
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    PortableServer::LifespanPolicyValue _tao_elem
+  )
+{
+  TAO::Any_Basic_Impl_T<PortableServer::LifespanPolicyValue>::insert (
+      _tao_any,
+      PortableServer::_tc_LifespanPolicyValue,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    PortableServer::LifespanPolicyValue &_tao_elem
+  )
+{
+  return
+    TAO::Any_Basic_Impl_T<PortableServer::LifespanPolicyValue>::extract (
+        _tao_any,
+        PortableServer::_tc_LifespanPolicyValue,
+        _tao_elem 
+      );
 }
 
 // TAO_IDL - Generated from
@@ -141,11 +221,21 @@ operator>>= (
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
+    TAO::Any_Basic_Impl_T<
+        PortableServer::LifespanPolicyValue
+      >;
+
+  template class
     TAO::Any_Impl_T<
         PortableServer::LifespanPolicy
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        PortableServer::LifespanPolicyValue \
+      >
 
 # pragma instantiate \
     TAO::Any_Impl_T< \

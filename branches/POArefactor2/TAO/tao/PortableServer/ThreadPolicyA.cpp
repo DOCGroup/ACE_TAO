@@ -28,6 +28,61 @@
 #include "ThreadPolicyC.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
+#include "tao/Any_Basic_Impl_T.h"
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  49,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f54), 
+  ACE_NTOHL (0x68726561), 
+  ACE_NTOHL (0x64506f6c), 
+  ACE_NTOHL (0x69637956), 
+  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x3a322e33), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/ThreadPolicyValue:2.3
+  18,
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x56616c75), 
+  ACE_NTOHL (0x65000000),  // name = ThreadPolicyValue
+  2, // member count
+  15,
+  ACE_NTOHL (0x4f52425f), 
+  ACE_NTOHL (0x4354524c), 
+  ACE_NTOHL (0x5f4d4f44), 
+  ACE_NTOHL (0x454c0000),  // name = ORB_CTRL_MODEL
+  20,
+  ACE_NTOHL (0x53494e47), 
+  ACE_NTOHL (0x4c455f54), 
+  ACE_NTOHL (0x48524541), 
+  ACE_NTOHL (0x445f4d4f), 
+  ACE_NTOHL (0x44454c00),  // name = SINGLE_THREAD_MODEL
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicyValue (
+    CORBA::tk_enum,
+    sizeof (_oc_PortableServer_ThreadPolicyValue),
+    (char *) &_oc_PortableServer_ThreadPolicyValue,
+    0,
+    sizeof (PortableServer::ThreadPolicyValue)
+  );
+
+namespace PortableServer
+{
+  ::CORBA::TypeCode_ptr _tc_ThreadPolicyValue =
+    &_tc_TAO_tc_PortableServer_ThreadPolicyValue;
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:290
@@ -48,7 +103,7 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
   ACE_NTOHL (0x68726561), 
   ACE_NTOHL (0x64506f6c), 
   ACE_NTOHL (0x6963793a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableServer/ThreadPolicy:1.0
+  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/ThreadPolicy:2.3
     13,
   ACE_NTOHL (0x54687265), 
   ACE_NTOHL (0x6164506f), 
@@ -68,6 +123,34 @@ namespace PortableServer
 {
   ::CORBA::TypeCode_ptr _tc_ThreadPolicy =
     &_tc_TAO_tc_PortableServer_ThreadPolicy;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_enum/any_op_cs.cpp:52
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    PortableServer::ThreadPolicyValue _tao_elem
+  )
+{
+  TAO::Any_Basic_Impl_T<PortableServer::ThreadPolicyValue>::insert (
+      _tao_any,
+      PortableServer::_tc_ThreadPolicyValue,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    PortableServer::ThreadPolicyValue &_tao_elem
+  )
+{
+  return
+    TAO::Any_Basic_Impl_T<PortableServer::ThreadPolicyValue>::extract (
+        _tao_any,
+        PortableServer::_tc_ThreadPolicyValue,
+        _tao_elem 
+      );
 }
 
 // TAO_IDL - Generated from
@@ -142,11 +225,21 @@ operator>>= (
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
+    TAO::Any_Basic_Impl_T<
+        PortableServer::ThreadPolicyValue
+      >;
+
+  template class
     TAO::Any_Impl_T<
         PortableServer::ThreadPolicy
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Any_Basic_Impl_T< \
+        PortableServer::ThreadPolicyValue \
+      >
 
 # pragma instantiate \
     TAO::Any_Impl_T< \

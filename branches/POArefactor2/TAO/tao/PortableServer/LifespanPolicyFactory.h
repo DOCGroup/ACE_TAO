@@ -20,9 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PolicyC.h"
 #include "tao/PortableServer/PolicyFactory.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
 
 namespace TAO
 {

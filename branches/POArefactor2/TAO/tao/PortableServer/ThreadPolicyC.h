@@ -48,7 +48,6 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PolicyC.h"
-#include "tao/PortableServer/PortableServerC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -89,6 +88,22 @@ namespace TAO
 
 namespace PortableServer
 {
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_enum/enum_ch.cpp:57
+  
+  enum ThreadPolicyValue
+  {
+    ORB_CTRL_MODEL,
+    SINGLE_THREAD_MODEL
+  };
+  
+  typedef ThreadPolicyValue &ThreadPolicyValue_out;
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:603
@@ -241,6 +256,14 @@ namespace TAO
 #endif /* end #if !defined */
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+// TAO_IDL - Generated from
+// be\be_visitor_enum/any_op_ch.cpp:51
+
+TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ThreadPolicyValue);
+TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ThreadPolicyValue &);
+
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_ch.cpp:52
 
@@ -248,7 +271,11 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Thread
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ThreadPolicy_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ThreadPolicy_ptr &);
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+// TAO_IDL - Generated from
+// be\be_visitor_enum/cdr_op_ch.cpp:50
+
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &);
+TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:958

@@ -1,78 +1,6 @@
---- orig/PortableServerC.h	2004-10-11 14:53:58.310532800 +0200
-+++ PortableServerC.h	2004-10-11 14:54:01.184665600 +0200
-@@ -195,6 +195,8 @@
-     SINGLE_THREAD_MODEL
-   };
-   
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-   typedef ThreadPolicyValue &ThreadPolicyValue_out;
-   
-   // TAO_IDL - Generated from
-@@ -225,6 +227,8 @@
- 
- #endif /* end #if !defined */
-   
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-   // TAO_IDL - Generated from
-   // be\be_visitor_enum/enum_ch.cpp:57
-   
-@@ -351,6 +355,8 @@
-     NO_IMPLICIT_ACTIVATION
-   };
-   
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-   typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
-   
-   // TAO_IDL - Generated from
-@@ -381,6 +387,8 @@
- 
- #endif /* end #if !defined */
-   
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-   // TAO_IDL - Generated from
-   // be\be_visitor_enum/enum_ch.cpp:57
-   
-@@ -390,6 +398,8 @@
-     NON_RETAIN
-   };
-   
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-   typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
-   
-   // TAO_IDL - Generated from
-@@ -420,6 +430,8 @@
- 
- #endif /* end #if !defined */
-   
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-   // TAO_IDL - Generated from
-   // be\be_visitor_enum/enum_ch.cpp:57
-   
-@@ -430,6 +442,8 @@
-     USE_SERVANT_MANAGER
-   };
-   
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-   typedef RequestProcessingPolicyValue &RequestProcessingPolicyValue_out;
-   
-   // TAO_IDL - Generated from
-@@ -460,6 +474,8 @@
- 
- #endif /* end #if !defined */
-   
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-   // TAO_IDL - Generated from
-   // be\be_interface.cpp:603
- 
-@@ -740,6 +756,8 @@
+--- orig/PortableServerC.h	2004-10-29 14:44:23.034198400 +0200
++++ PortableServerC.h	2004-10-29 14:58:48.939308800 +0200
+@@ -473,6 +473,8 @@
      // TAO_IDL - Generated from
      // be\be_visitor_exception/exception_ch.cpp:51
  
@@ -81,7 +9,7 @@
  #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
  #define _PORTABLESERVER_POA_NOSERVANT_CH_
      
-@@ -785,6 +803,8 @@
+@@ -518,6 +520,8 @@
  
  #endif /* end #if !defined */
      
@@ -90,100 +18,7 @@
      // TAO_IDL - Generated from
      // be\be_visitor_exception/exception_ch.cpp:51
  
-@@ -1116,6 +1136,8 @@
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-     virtual ::PortableServer::ThreadPolicy_ptr create_thread_policy (
-         ::PortableServer::ThreadPolicyValue value
-         ACE_ENV_ARG_DECL_WITH_DEFAULTS
-@@ -1124,6 +1146,8 @@
-         CORBA::SystemException
-       )) = 0;
-     
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-@@ -1160,6 +1184,8 @@
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-     virtual ::PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
-         ::PortableServer::ImplicitActivationPolicyValue value
-         ACE_ENV_ARG_DECL_WITH_DEFAULTS
-@@ -1168,9 +1194,13 @@
-         CORBA::SystemException
-       )) = 0;
-     
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-     virtual ::PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (
-         ::PortableServer::ServantRetentionPolicyValue value
-         ACE_ENV_ARG_DECL_WITH_DEFAULTS
-@@ -1179,9 +1209,13 @@
-         CORBA::SystemException
-       )) = 0;
-     
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-     virtual ::PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (
-         ::PortableServer::RequestProcessingPolicyValue value
-         ACE_ENV_ARG_DECL_WITH_DEFAULTS
-@@ -1190,6 +1224,8 @@
-         CORBA::SystemException
-       )) = 0;
-     
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-@@ -1233,6 +1269,8 @@
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-     virtual ::PortableServer::AdapterActivator_ptr the_activator (
-         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-       )
-@@ -1251,9 +1289,14 @@
-         CORBA::SystemException
-       )) = 0;
-     
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+
-     // TAO_IDL - Generated from
-     // be\be_visitor_operation/operation_ch.cpp:46
-     
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
-     virtual ::PortableServer::ServantManager_ptr get_servant_manager (
-         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-       )
-@@ -1274,9 +1317,13 @@
-         ::PortableServer::POA::WrongPolicy
-       )) = 0;
-     
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
+@@ -1010,6 +1014,8 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
      
@@ -192,7 +27,7 @@
      virtual ::PortableServer::Servant get_servant (
          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
        )
-@@ -1298,6 +1345,8 @@
+@@ -1031,6 +1037,8 @@
          ::PortableServer::POA::WrongPolicy
        )) = 0;
      
@@ -201,7 +36,7 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
      
-@@ -1484,6 +1533,13 @@
+@@ -1217,6 +1225,13 @@
    
    TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POA;
  
@@ -215,129 +50,7 @@
  // TAO_IDL - Generated from
  // be\be_visitor_module/module_ch.cpp:66
  
-@@ -1517,6 +1573,8 @@
- 
- #endif /* end #if !defined */
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- #if !defined (_PORTABLESERVER_THREADPOLICY__TRAITS_CH_)
- #define _PORTABLESERVER_THREADPOLICY__TRAITS_CH_
-   
-@@ -1538,6 +1596,8 @@
- 
- #endif /* end #if !defined */
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- #if !defined (_PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_)
- #define _PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_
-   
-@@ -1601,6 +1661,8 @@
- 
- #endif /* end #if !defined */
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_)
- #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_
-   
-@@ -1622,6 +1684,10 @@
- 
- #endif /* end #if !defined */
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__TRAITS_CH_)
- #define _PORTABLESERVER_SERVANTRETENTIONPOLICY__TRAITS_CH_
-   
-@@ -1643,6 +1709,10 @@
- 
- #endif /* end #if !defined */
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__TRAITS_CH_)
- #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__TRAITS_CH_
-   
-@@ -1664,6 +1734,8 @@
- 
- #endif /* end #if !defined */
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- #if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
- #define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
-   
-@@ -1739,6 +1811,8 @@
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_ch.cpp:51
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ThreadPolicyValue);
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ThreadPolicyValue &);
- 
-@@ -1749,6 +1823,8 @@
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ThreadPolicy_ptr *); // non-copying
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ThreadPolicy *&);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_ch.cpp:51
- 
-@@ -1791,6 +1867,8 @@
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_ch.cpp:51
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ImplicitActivationPolicyValue);
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ImplicitActivationPolicyValue &);
- 
-@@ -1801,9 +1879,13 @@
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ImplicitActivationPolicy_ptr *); // non-copying
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ImplicitActivationPolicy *&);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_ch.cpp:51
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantRetentionPolicyValue);
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantRetentionPolicyValue &);
- 
-@@ -1814,9 +1896,13 @@
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantRetentionPolicy_ptr *); // non-copying
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantRetentionPolicy *&);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_ch.cpp:51
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::RequestProcessingPolicyValue);
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::RequestProcessingPolicyValue &);
- 
-@@ -1827,6 +1913,8 @@
- TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::RequestProcessingPolicy_ptr *); // non-copying
- TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::RequestProcessingPolicy *&);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_interface_fwd/any_op_ch.cpp:65
- 
-@@ -1882,11 +1970,15 @@
+@@ -1377,11 +1392,15 @@
  // TAO_IDL - Generated from
  // be\be_visitor_exception/any_op_ch.cpp:52
  
@@ -353,71 +66,13 @@
  // TAO_IDL - Generated from
  // be\be_visitor_exception/any_op_ch.cpp:52
  
-@@ -1938,6 +2030,8 @@
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_ch.cpp:50
+@@ -1470,4 +1489,3 @@
  
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &);
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
+ #endif /* ifndef */
  
-@@ -1947,6 +2041,7 @@
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicy_ptr );
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ThreadPolicy_ptr &);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
- 
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_ch.cpp:50
-@@ -1990,6 +2085,8 @@
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_ch.cpp:50
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicyValue &);
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicyValue &);
- 
-@@ -1999,10 +2096,13 @@
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicy_ptr );
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicy_ptr &);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
- 
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_ch.cpp:50
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ServantRetentionPolicyValue &);
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ServantRetentionPolicyValue &);
- 
-@@ -2012,10 +2112,13 @@
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ServantRetentionPolicy_ptr );
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ServantRetentionPolicy_ptr &);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
- 
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_ch.cpp:50
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicyValue &);
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicyValue &);
- 
-@@ -2025,6 +2128,8 @@
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicy_ptr );
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicy_ptr &);
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- 
- // TAO_IDL - Generated from
- // be\be_visitor_interface_fwd/cdr_op_ch.cpp:66
---- orig/PortableServerC.cpp	2004-10-11 14:53:58.310532800 +0200
-+++ PortableServerC.cpp	2004-10-11 14:54:01.224723200 +0200
+-
+--- orig/PortableServerC.cpp	2004-10-29 14:44:23.034198400 +0200
++++ PortableServerC.cpp	2004-10-29 14:50:11.415145600 +0200
 @@ -36,6 +36,8 @@
  #include "tao/Object_Argument_T.h"
  #include "ace/OS_NS_string.h"
@@ -485,67 +140,9 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_exception/exception_cs.cpp:63
  
-@@ -1249,6 +1279,8 @@
-   return 0;
- }
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_cs.cpp:51
- 
-@@ -1271,6 +1303,8 @@
-   return _tao_result;
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_cs.cpp:51
- 
-@@ -1337,6 +1371,8 @@
-   return _tao_result;
- }
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_cs.cpp:51
- 
-@@ -1359,6 +1395,10 @@
-   return _tao_result;
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_cs.cpp:51
- 
-@@ -1381,6 +1421,10 @@
-   return _tao_result;
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/cdr_op_cs.cpp:51
- 
-@@ -1403,6 +1447,8 @@
-   return _tao_result;
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_root/root.cpp:1629
- 
---- orig/PortableServerA.cpp	2004-10-11 14:53:58.320547200 +0200
-+++ PortableServerA.cpp	2004-10-11 14:54:01.264780800 +0200
-@@ -72,6 +72,8 @@
+--- orig/PortableServerA.cpp	2004-10-29 14:44:23.054227200 +0200
++++ PortableServerA.cpp	2004-10-29 14:49:10.217147200 +0200
+@@ -71,6 +71,8 @@
      &_tc_TAO_tc_PortableServer_POAList;
  }
  
@@ -554,132 +151,56 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:290
  
-@@ -126,6 +128,8 @@
-     &_tc_TAO_tc_PortableServer_ThreadPolicyValue;
- }
+@@ -113,6 +115,8 @@
+ ::CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists =
+   &_tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists;
  
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:290
  
-@@ -282,6 +286,8 @@
-     &_tc_TAO_tc_PortableServer_IdAssignmentPolicyValue;
- }
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_typecode/typecode_defn.cpp:290
- 
-@@ -344,6 +350,10 @@
-     &_tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue;
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_typecode/typecode_defn.cpp:290
- 
-@@ -398,6 +408,10 @@
-     &_tc_TAO_tc_PortableServer_ServantRetentionPolicyValue;
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_typecode/typecode_defn.cpp:290
- 
-@@ -466,6 +480,8 @@
-     &_tc_TAO_tc_PortableServer_RequestProcessingPolicyValue;
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_typecode/typecode_defn.cpp:290
- 
-@@ -596,6 +612,8 @@
- // TAO_IDL - Generated from
- // be\be_visitor_typecode/typecode_defn.cpp:290
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- static const CORBA::Long _oc_PortableServer_POA_NoServant[] =
- {
-     TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -630,6 +648,8 @@
+@@ -235,6 +239,8 @@
  ::CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant =
    &_tc_TAO_tc_PortableServer_POA_NoServant;
  
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ // TAO_IDL - Generated from
+ // be\be_visitor_typecode/typecode_defn.cpp:290
+ 
+@@ -315,6 +321,10 @@
+ ::CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive =
+   &_tc_TAO_tc_PortableServer_POA_ObjectNotActive;
+ 
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
++
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ // TAO_IDL - Generated from
+ // be\be_visitor_typecode/typecode_defn.cpp:290
+ 
+@@ -357,6 +367,10 @@
+ ::CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive =
+   &_tc_TAO_tc_PortableServer_POA_ServantAlreadyActive;
+ 
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
++
++#if (TAO_HAS_MINIMUM_POA == 0)
++
+ // TAO_IDL - Generated from
+ // be\be_visitor_typecode/typecode_defn.cpp:290
+ 
+@@ -435,6 +449,8 @@
+ ::CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter =
+   &_tc_TAO_tc_PortableServer_POA_WrongAdapter;
+ 
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:290
  
-@@ -976,6 +996,8 @@
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_cs.cpp:52
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- void operator<<= (
-     CORBA::Any &_tao_any,
-     PortableServer::ThreadPolicyValue _tao_elem
-@@ -1001,6 +1023,8 @@
-       );
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_cs.cpp:52
- 
-@@ -1085,6 +1109,8 @@
-       );
- }
- 
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_cs.cpp:52
- 
-@@ -1113,6 +1139,10 @@
-       );
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_cs.cpp:52
- 
-@@ -1141,6 +1171,10 @@
-       );
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
-+#if (TAO_HAS_MINIMUM_POA == 0)
-+
- // TAO_IDL - Generated from
- // be\be_visitor_enum/any_op_cs.cpp:52
- 
-@@ -1169,6 +1203,8 @@
-       );
- }
- 
-+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-+
- // TAO_IDL - Generated from
- // be\be_visitor_interface/any_op_cs.cpp:50
- 
-@@ -1457,6 +1493,8 @@
+@@ -866,6 +882,8 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_exception/any_op_cs.cpp:50
  
@@ -688,7 +209,7 @@
  ACE_TEMPLATE_SPECIALIZATION
  CORBA::Boolean
  TAO::Any_Dual_Impl_T<PortableServer::POA::NoServant>::marshal_value (TAO_OutputCDR &)
-@@ -1526,6 +1564,8 @@
+@@ -935,6 +953,8 @@
        );
  }
  
@@ -697,7 +218,7 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_exception/any_op_cs.cpp:50
  
-@@ -1975,11 +2015,15 @@
+@@ -1384,11 +1404,15 @@
          PortableServer::POA::InvalidPolicy
        >;
  
@@ -713,7 +234,7 @@
    template class
      TAO::Any_Dual_Impl_T<
          PortableServer::POA::ObjectAlreadyActive
-@@ -2072,11 +2116,15 @@
+@@ -1446,11 +1470,15 @@
          PortableServer::POA::InvalidPolicy \
        >
  
