@@ -84,7 +84,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
         }
       *os << be_nl;
     }
-  *os << "TAO_ENV_ARG_PARAMETER"
+  *os << "TAO_ENV_ARG_DECL"
       << be_uidt_nl << ")" << be_uidt;
 
   if (be_global->use_raw_throw ())
