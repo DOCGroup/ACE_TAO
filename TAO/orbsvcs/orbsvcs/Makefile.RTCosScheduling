@@ -14,17 +14,6 @@ MAKEFILE        = Makefile.RTCosScheduling
 LIB_UNCHECKED   = libTAO_RTCosScheduling.a
 SHLIB_UNCHECKED = libTAO_RTCosScheduling.$(SOEXT)
 
-# go ahead and set these here, it's less typing than fixing the mess below.
-LIB = $(LIB_UNCHECKED)
-SHLIB = $(SHLIB_UNCHECKED)
-
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-ifndef CIAO_ROOT
-  CIAO_ROOT = $(TAO_ROOT)/CIAO
-endif
-
 TAO_IDL = ../../../bin/tao_idl
 IDL_FILES = RTCosScheduling
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
@@ -36,14 +25,8 @@ RTCosScheduling = \
   RTCosScheduling/RTCosScheduling_PCP_Manager \
   RTCosScheduling/RTCosScheduling_ServerScheduler_i
 
-ifndef ORBSVCS_COMPONENTS
-  ORBSVCS_COMPONENTS = \
-    RTCosScheduling
-endif # ORBSVCS_COMPONENTS
-
-ifneq (,$(findstring RTCosScheduling, $(ORBSVCS_COMPONENTS)))
-  FILES += $(RTCosScheduling)
-endif # RTCosScheduling
+FILES = $(RTCosScheduling)
+LSRC   = $(addsuffix .cpp, $(FILES))
 
 VPATH = .:RTCosScheduling
 
@@ -51,10 +34,7 @@ VPATH = .:RTCosScheduling
 #       Include macros and targets
 #----------------------------------------------------------------------------
 ACE_SHLIBS = -lTAO_RTPortableServer -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
-ACELIB =
-include $(TAO_ROOT)/rules.tao.GNU
 
 # To build multiple executables in the same directory on AIX, it works
 # best to have a template directory per project.
@@ -66,89 +46,14 @@ all: $(TEMPINCDIR)
 
 $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
-
 endif
 
-CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq ($(interceptors),1)
-ifeq ($(rt_corba),1)
-else
-  LIB   =
-  SHLIB =
-  all: require_warning
-endif
-else
-  LIB   =
-  SHLIB =
-  all: require_warning
-endif
+ADDITIONAL_INCLUDE = $(TAO_ROOT)/rules.tao.GNU
+REQUIRED_COMPONENTS = interceptors rt_corba RTCosScheduling
+include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
 
-ifeq (,$(TAO_ORBSVCS))
-ifeq ($(interceptors),1)
-ifeq ($(rt_corba),1)
-else
-  LIB   =
-  SHLIB =
-  all: require_warning
-endif
-else
-  LIB   =
-  SHLIB =
-  all: require_warning
-endif
-else
-ifeq ($(interceptors),1)
-ifeq ($(rt_corba),1)
-  ifeq (RTCosScheduling, $(findstring RTCosScheduling, $(TAO_ORBSVCS)))
-  else
-    LIB   =
-    SHLIB =
-  endif
-else
-  LIB   =
-  SHLIB =
-  all: require_warning
-endif
-else
-  LIB   =
-  SHLIB =
-  all: require_warning
-endif
-endif
+CPPFLAGS     += -I$(TAO_ROOT)/orbsvcs/ -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-LSRC   = $(addsuffix .cpp, $(FILES))
-ifeq (,$(TAO_ORBSVCS))
-BUILD += ORBSVCS_COMPONENTS
-else
-  ifeq (RTCosScheduling, $(findstring RTCosScheduling, $(TAO_ORBSVCS)))
-    BUILD += ORBSVCS_COMPONENTS
-  endif
-endif
-
-ifneq ($(SHLIB),)
-all: idl_stubs
-
-# This rule forces make to run the idl_stubs
-# target before building any of the source files.
-RTCosSchedulingC.cpp RTCosSchedulingS.cpp RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp RTCosScheduling/RTCosScheduling_PCP_Manager.cpp RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp: idl_stubs
-endif
-
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-
-INSTALL_CHECK = ../../../lib
-ifeq ($(INSTALL_CHECK),.)
-  INSLIB = $(PWD)
-else
-  INSLIB  = $(INSTALL_CHECK)
-endif
-
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(TAO_ROOT)/taoconfig.mk
-
-CPPFLAGS     += -I../../orbsvcs/orbsvcs -I../../orbsvcs -I../.. -I../../tao -I../../..
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
     CPPFLAGS += -DTAO_RTCOSSCHEDULING_BUILD_DLL
@@ -178,13 +83,6 @@ require_warning:
 .PHONY: ORBSVCS_COMPONENTS
 ORBSVCS_COMPONENTS:
 	@sh ../../../bin/ace_components --orbsvcs --append '$(ORBSVCS_COMPONENTS)'
-
-ADDITIONAL_IDL_TARGETS =
-# IDL File Directory: .
-
-ifneq ($(ADDITIONAL_IDL_TARGETS),)
-idl_stubs: $(ADDITIONAL_IDL_TARGETS)
-endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 

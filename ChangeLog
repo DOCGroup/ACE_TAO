@@ -1,14 +1,20 @@
+Tue Nov 18 05:12:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/all_in_one.GNU:
+          Added ability to include an arbitrary Makefile passed as
+          ADDITIONAL_INCLUDE, and added BUILD rule dependency of idl_stubs
+          if IDL_SRC is defined.  Added TAO_ROOT is not already defined.
+
 Mon Nov 17 20:34:27 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * etc/ciao.doxygen:
         * bin/generate_doxygen.pl:
-        Added doxygen configuration file for ciao.
-
+          Added doxygen configuration file for ciao.
 
 Mon Nov 17 20:12:53 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * etc/tao_ifr.doxygen:
-        Added doxygen configuration file for IFR_Service.
+          Added doxygen configuration file for IFR_Service.
 
 Mon Nov 17 20:00:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
