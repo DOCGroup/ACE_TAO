@@ -1,3 +1,17 @@
+Fri Mar 18 21:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/upcall_command_ss.h:
+          Generate the Upcall_Command class outside of the method where it is
+          used and give it then a uniqe name. This should fix the link errors
+          in the gcc 2.96 build. This compiler seems to have problems with
+          nested classes. No requirement to force regeneration of the
+          generated files in the repo, we can do that later because the
+          link errors are not in the core libraries.
+
 Fri Mar 18 20:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.{h,cpp}:
