@@ -102,11 +102,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
-  // = Disable public <open> method to ensure class used properly.
-
-  /// Not publically visible.
-  int open (const ACE_Addr &mcast_addr,
+  int open (const ACE_Addr &addr,
             const ACE_QoS_Params &qos_params,
             int protocol_family = PF_INET,
             int protocol = 0,
@@ -114,6 +110,10 @@ private:
             ACE_SOCK_GROUP g = 0,
             u_long flags = 0,
             int reuse_addr = 0);
+
+private:
+  // = Disable public <open> method to ensure class used properly.
+
 
   /// Subscribe to the multicast interface using QoS-enabled semantics.
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,

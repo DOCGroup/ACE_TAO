@@ -25,7 +25,7 @@ ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS (void)
 }
 
 int
-ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &addr,
                                 const ACE_QoS_Params &qos_params,
                                 int protocol_family,
                                 int protocol,
@@ -42,12 +42,15 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &mcast_addr,
   // Note: Sun C++ 4.2 needs the useless const_cast.
   this->mcast_addr_.set (ACE_reinterpret_cast (const ACE_INET_Addr &,
                                                ACE_const_cast (ACE_Addr &,
-                                                               mcast_addr)));
+                                                               addr)));
 
   // Only perform the <open> initialization if we haven't been opened
   // earlier.
   if (this->get_handle () == ACE_INVALID_HANDLE)
     {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Get Handle Returns Invalid Handle\n"));
+
       if (ACE_SOCK::open (SOCK_DGRAM,
                           protocol_family,
                           protocol,
@@ -233,28 +236,27 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       // Check if the mcast_addr passed into this method is the
       // same as the QoS session address.
       if (mcast_addr == qos_session->dest_addr ())
-      {
-        // Subscribe to the QoS session.
-        if (this->qos_manager_.join_qos_session (qos_session) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("Unable to join QoS Session\n")),
-                            -1);
-      }
+      	{
+	  // Subscribe to the QoS session.
+	  if (this->qos_manager_.join_qos_session (qos_session) == -1)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       ACE_LIB_TEXT ("Unable to join QoS Session\n")),
+			      -1);
+	}
       else
-        {
-          if (this->close () != 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("Unable to close socket\n")));
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("Dest Addr in the QoS Session does")
-                             ACE_LIB_TEXT (" not match the address passed into")
-                             ACE_LIB_TEXT (" subscribe\n")),
-                            -1);
-        }
+	{
+	  if (this->close () != 0)
+	    ACE_ERROR ((LM_ERROR,
+			ACE_LIB_TEXT ("Unable to close socket\n")));
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_LIB_TEXT ("Dest Addr in the QoS Session does")
+                               ACE_LIB_TEXT (" not match the address passed into")
+                               ACE_LIB_TEXT (" subscribe\n")),
+                              -1);
+	}
 
       sockaddr_in mult_addr;
-
+      
       if (protocol_family == ACE_FROM_PROTOCOL_INFO)
         mult_addr.sin_family = protocolinfo->iAddressFamily;
       else
@@ -279,3 +281,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       return 0;
     }
 }
+
+
+
+
