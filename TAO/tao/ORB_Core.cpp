@@ -1609,7 +1609,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
       // Set the "iterator" to the beginning of MProfile.
       mp.rewind ();
       TAO_Profile * profile;
-      
+
       for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
         {
           // Get the ith profile
@@ -1617,16 +1617,16 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
           profile->the_stub (stub);
           profile->policies (policy_list);
         }
-    }  
+    }
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id._retn (), mp, this),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
-  
+
   stub->base_profiles ().policy_list (policy_list);
-  
+
   return stub;
 }
 
@@ -2184,6 +2184,25 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 #if (TAO_HAS_RT_CORBA == 1)
 
+TAO_ThreadpoolPolicy *
+TAO_ORB_Core::threadpool (void)
+{
+  TAO_ThreadpoolPolicy *result = 0;
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  TAO_Policy_Manager *policy_manager =
+    this->policy_manager ();
+  if (policy_manager != 0)
+    result = policy_manager->threadpool ();
+
+  if (result == 0)
+    result = this->default_threadpool ();
+
+  return result;
+}
+
 TAO_PriorityModelPolicy *
 TAO_ORB_Core::priority_model (void)
 {
@@ -2192,13 +2211,10 @@ TAO_ORB_Core::priority_model (void)
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
   //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->priority_model ();
-    }
+  TAO_Policy_Manager *policy_manager =
+    this->policy_manager ();
+  if (policy_manager != 0)
+    result = policy_manager->priority_model ();
 
   if (result == 0)
     result = this->default_priority_model ();
@@ -2214,13 +2230,10 @@ TAO_ORB_Core::server_protocol (void)
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
   //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->server_protocol ();
-    }
+  TAO_Policy_Manager *policy_manager =
+    this->policy_manager ();
+  if (policy_manager != 0)
+    result = policy_manager->server_protocol ();
 
   if (result == 0)
     result = this->default_server_protocol ();

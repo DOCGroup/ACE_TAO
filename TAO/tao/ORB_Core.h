@@ -378,17 +378,34 @@ public:
   // Access the priority mapping class, this is a TAO extension but
   // there is no standard way to get to it either.
 
-  TAO_PriorityModelPolicy *default_priority_model (void) const;
+  // = Methods for obtaining ORB implementation default values for RT
+  //   policies.
 
-  TAO_PriorityModelPolicy *priority_model (void);
-  // This policy is only available at the POA and ORB level; not
-  // available at the object or thread level.
+  TAO_PrivateConnectionPolicy *default_private_connection (void) const;
+
+  TAO_PriorityBandedConnectionPolicy *
+  default_priority_banded_connection (void) const;
+
+  TAO_ClientProtocolPolicy *default_client_protocol (void) const;
 
   TAO_ServerProtocolPolicy *default_server_protocol (void) const;
 
+  TAO_ThreadpoolPolicy *default_threadpool (void) const;
+
+  TAO_PriorityModelPolicy *default_priority_model (void) const;
+
+  // = Methods for obtaining effective ORB-level overrides for
+  //   policies available only at the POA/ORB levels, and unavailable
+  //   at Object/Current levels.
+  //
+  //   First check for an override at the ORB scope; if nothing there,
+  //   check the ORB implementation default values.
+
+  TAO_ThreadpoolPolicy *threadpool (void);
+
+  TAO_PriorityModelPolicy *priority_model (void);
+
   TAO_ServerProtocolPolicy *server_protocol (void);
-  // This policy is only available at the POA and ORB level; not
-  // available at the object or thread level.
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

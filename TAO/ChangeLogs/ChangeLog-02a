@@ -1,3 +1,65 @@
+Thu Jun 15 22:49:21 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h
+	* tao/ORB_Core.i:
+
+	  Added the following methods for quick access to ORB default RT
+	  policies:
+	    default_client_protocol ()
+	    default_priority_banded_connection ()
+	    default_private_policy ()
+	    default_threadpool ()
+
+	  Added <threadpool> method to obtain effective threadpool policy.
+	  Removed unnecessary code from  <server_protocol> and
+	  <priority_model>.
+
+	* tao/Policy_Manager.h
+	* tao/Policy_Manager.i:
+
+ 	  Removed the following methods from TAO_Policy_Current_Impl and
+	  TAO_Policy_Current classes because the corresponding policies
+	  are not available at the Current scope:
+	  - threadpool
+	  - priority_model
+	  - server_protocol
+
+	  Added checks to <get_policy_overrides> and
+	  <set_policy_overrides> methods on TAO_Policy_Current_Impl to
+	  disallow setting/getting of certain RT policies at this scope.
+	  Moved the methods from .i to .cpp file.
+
+	* tao/RT_Policy_i.h
+	* tao/RT_Policy_i.i:
+
+	  Added <TAO_PriorityBandedConnectionPolicy::priority_bands_rep>
+	  and <TAO_ClientProtocolPolicy::protocols_rep> accessors.  These
+	  methods return underlying bands/protocols sequences, avoiding making
+	  costly copies.
+
+	* tao/Stub.cpp
+	* tao/Stub.h:
+
+	  Added the following methods for obtaining effective overrides
+	  for corresponding policies:
+	  - private_connection ()
+	  - priority_banded_connection ()
+	  - client_protocol ()
+
+	  Added the following methods for obtaining effective policies, i.e.,
+	  reconciliation between effective overrides and values exported
+	  in the Object's IOR:
+	  - effective_priority_banded_connection ()
+	  - effective_client_protocol ()
+
+	  Modified <get_policy> to return effective policy for all RT client
+	  exposed policies and effective override for all other policies.
+
+	  Added check to disallow setting/getting of certain RT policies
+	  in <set_policy_overrides>, <get_policy_overrides> and
+	  <get_client_policy>.
+
 Thu Jun 15 21:18:06 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadBalancer.h:
@@ -97,7 +159,7 @@ Thu Jun 15 17:08:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  a new option -Ge 2 has been added to the IDL compiler, which
 	  generates the raw 'throw' keyword instead of ACE_THROW_SPEC,
 	  ACE_THROW, and ACE_RETHROW. Since the expansion of
-	  ACE_THROW_RETURN is platform-dependent, and 
+	  ACE_THROW_RETURN is platform-dependent, and
 	  TAO_INTERCEPTOR_THROW may expand to ACE_THROW_RETURN,
 	  these two macros were left unchanged. Documentation was added to the
 	  appropriate files.
@@ -120,7 +182,7 @@ Thu Jun 15 16:23:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  this use case.
 
 Thu Jun 15 12:44:55 2000  Ossama Othman  <ossama@uci.edu>
-	  
+
 	* tao/Any.h (type_):
 
 	  Changed the variable that contains the type for the Any from a
@@ -153,13 +215,13 @@ Thu Jun 15 14:23:53 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/diffs/PolicyC.cpp.diff:
 	* tao/diffs/RTCORBAC.h.diff:
 	* tao/diffs/RTCORBAC.cpp.diff:
-	  
+
 	  Created diffs file for modified pidl generated files.
 
 Thu Jun 15 13:39:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
-	  
+
 	  Changed the generation of a native type as a
 	  return type in an operation to be a non-pointer.
 	  Thanks to Irfan for pointing this out.
