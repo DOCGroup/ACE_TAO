@@ -1,5 +1,7 @@
 Sat Feb 28 18:37:54 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_properties_with_modes): 
+
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h (PropertySetFactory): 
 
 	* orbsvcs/orbsvcs/CosPropertyService.idl: 
