@@ -44,7 +44,7 @@ class Cubit_Client
   //    server is hidden in the class.  Just the run() interface is needed.
 public:
   // = Constructor and destructor.
-  Cubit_Client (int testing_collocation = 1, int shutdown = 0);
+  Cubit_Client (int testing_collocation = 0, int shutdown = 0);
   // Use <testing_collocation> to control some client's behaviors.
 
   ~Cubit_Client (void);
