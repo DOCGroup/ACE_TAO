@@ -529,85 +529,94 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
                                 ACE_DEFAULT_MULTICAST_ADDR);
 
   // Subscribe to multicast address.
-  if (multicast.subscribe (multicast_addr) == -1)
-    return return_value;
+  if (multicast.subscribe (multicast_addr) != -1)
+    {
+      // Prepare connection for the reply.
+      ACE_INET_Addr response_addr;
+      ACE_SOCK_Dgram response;
 
-  // Prepare connection for the reply.
-  ACE_INET_Addr response_addr;
-  ACE_SOCK_Dgram response;
+      // Choose any local port, we don't really care.
+      if (response.open (ACE_Addr::sap_any) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "open failed.\n"));
+      else
+        {
+          if (response.get_local_addr (response_addr) == -1)
+            ACE_ERROR ((LM_ERROR,
+                        "get_local_addr failed.\n"));
+          else
+            {
+              struct
+              {
+                u_short reply_port;
+                CORBA::Short service_id;
+              } mcast_info;
 
-  // Choose any local port, we don't really care.
-  if (response.open (ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "open failed.\n"),
-                      0);
+              // Figure out what port to listen on for server replies,
+              // and convert to network byte order.
+              mcast_info.reply_port =
+                ACE_HTONS (response_addr.get_port_number ());
+              mcast_info.service_id =
+                ACE_HTONS (service_id);
 
-  if (response.get_local_addr (response_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "get_local_addr failed.\n"),
-                      0);
-  struct
-  {
-    u_short reply_port;
-    CORBA::Short service_id;
-  } mcast_info;
+              // Send multicast of one byte, enough to wake up server.
+              ssize_t n_bytes = multicast.send (&mcast_info,
+                                                sizeof (mcast_info));
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            "sent multicast request."));
 
-  // Figure out what port to listen on for server replies, and convert
-  // to network byte order.
-  mcast_info.reply_port = ACE_HTONS (response_addr.get_port_number ());
-  mcast_info.service_id = ACE_HTONS (service_id);
+              // Check for errors.
+              if (n_bytes != -1)
+                {
+                  if (TAO_debug_level > 0)
+                    ACE_DEBUG ((LM_DEBUG,
+                                "%s; Sent multicast.  Reply port is %u."
+                                "# of bytes sent is %d.\n", 
+                                __FILE__,
+                                response_addr.get_port_number (),
+                                n_bytes));
 
-  // Send multicast of one byte, enough to wake up server.
-  ssize_t n_bytes = multicast.send (&mcast_info,
-                                    sizeof (mcast_info));
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "sent multicast request."));
+                  // Wait for response until
+                  // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
+                  ACE_Time_Value tv (timeout == 0 
+                                     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
+                                     : *timeout);
 
-  // Check for errors.
-  if (n_bytes == -1)
-    return return_value;
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"%s; Sent multicast.  Reply port is %u."
-		"# of bytes sent is %d.\n", 
-		__FILE__,
-		response_addr.get_port_number (),
-		n_bytes));
+                  // receive response message
+                  char buf[ACE_MAX_DGRAM_SIZE];
+                  n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &tv);
 
-  // Wait for response until TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
-  ACE_Time_Value tv (timeout == 0 
-                     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-                     : *timeout);
+                  // Close endpoint for response.
+                  int retval = response.close ();
 
-  // receive response message
-  char buf[ACE_MAX_DGRAM_SIZE];
-  n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &tv);
+                  // Check for errors.
+                  if (n_bytes != -1 && retval != -1)
+                    {
+                      // Null terminate message.
+                      buf[n_bytes] = 0;
 
-  // Close endpoint for response.
-  int retval = response.close ();
+                      if (TAO_debug_level > 0)
+                        ACE_DEBUG ((LM_DEBUG,
+                                    "%s; Service resolved to ior: '%s'\n",
+                                    __FILE__,
+                                    buf));
 
-  // Check for errors.
-  if (n_bytes == -1 || retval == -1)
-    return return_value;
+                      // Convert ior to an object reference.
+                      CORBA_Object_ptr objectified_ior =
+                        this->string_to_object ((CORBA::String) buf, env);
 
-  // Null terminate message.
-  buf[n_bytes] = 0;
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"%s; Service resolved to ior: '%s'\n",
-		__FILE__,
-		buf));
-
-  // Convert ior to an object reference.
-  CORBA_Object_ptr objectified_ior =
-    this->string_to_object ((CORBA::String) buf, env);
-
-  // Check for errors.
-  if (env.exception () == 0)
-    return_value = objectified_ior;
-
+                      // Check for errors.
+                      if (env.exception () == 0)
+                        return_value = objectified_ior;
+                    }
+                }
+            }
+          response.close ();    // It's okay to close this twice.
+        }
+      multicast.close ();
+    }
+  
   // Return ior.
   return return_value;
 }
