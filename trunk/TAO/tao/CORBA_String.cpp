@@ -5,6 +5,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/OS.h"
+#include "ace/streams.h"
 
 
 ACE_RCSID (tao,
