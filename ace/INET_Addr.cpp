@@ -458,7 +458,7 @@ ACE_INET_Addr::set_addr (void *addr, int len)
   ACE_TRACE ("ACE_INET_Addr::set_addr");
   ACE_UNUSED_ARG (len);
 
-  struct sockaddr_in *getfamily = ACE_static_cast (struct sockaddr_in*, addr);
+  struct sockaddr_in *getfamily = ACE_static_cast (struct sockaddr_in *, addr);
 
   if (getfamily->sin_family == AF_INET)
     {
