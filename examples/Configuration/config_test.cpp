@@ -67,7 +67,10 @@ test (ACE_Configuration* config)
 
   unsigned char* data_out = 0;
   unsigned int length = 0;
-  if (config->get_binary_value (testsection, "binvalue", (void*&)data_out, length))
+  if (config->get_binary_value (testsection,
+                                "binvalue",
+                                (void*&) data_out,
+                                length))
     {
       return -10;
     }
@@ -169,7 +172,8 @@ test (ACE_Configuration* config)
     {
       return -21;
     }
-  // try to remove the testsection root, it should fail since it still has subkeys
+  // try to remove the testsection root, it should fail since it still
+  // has subkeys
   if (!config->remove_section (root, "test", 0))
     {
       return -22;
