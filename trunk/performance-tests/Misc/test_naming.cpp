@@ -134,7 +134,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
     }
 }
 
-void do_testing (int argc, char *argv[], int light)
+void do_testing (int argc, ACE_TCHAR *argv[], int light)
 {
   ACE_Profile_Timer timer;
 
@@ -150,10 +150,10 @@ void do_testing (int argc, char *argv[], int light)
     }
   else  // Use NO-SYNC
     {
-      const char *p = ACE::basename (name_options->process_name (),
-                                     ACE_DIRECTORY_SEPARATOR_CHAR);
-      char s[5 /* strlen ("light") */ + MAXNAMELEN + 1];
-      ACE_OS::sprintf (s, "light%s", p);
+      const ACE_TCHAR *p = ACE::basename (name_options->process_name (),
+                                          ACE_DIRECTORY_SEPARATOR_CHAR);
+      ACE_TCHAR s[5 /* strlen ("light") */ + MAXNAMELEN + 1];
+      ACE_OS::sprintf (s, ACE_TEXT("light%s"), p);
       name_options->database (s);
       ns_context.open (ACE_Naming_Context::PROC_LOCAL, 1);
     }
@@ -177,7 +177,7 @@ void do_testing (int argc, char *argv[], int light)
 
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   // Do testing with SYNC on
   ACE_DEBUG ((LM_DEBUG, "SYNC is ON\n"));

@@ -383,14 +383,14 @@ main (int argc, ACE_TCHAR *argv[])
       latency.accumulate (workers[i]->latency_stats_);
       throughput.accumulate (workers[i]->throughput_stats_);
       ACE_DEBUG ((LM_DEBUG, "Thread[%d]: ", i));
-      workers[i]->throughput_stats_.dump_results ("", "");
+      workers[i]->throughput_stats_.dump_results (ACE_TEXT(""), ACE_TEXT(""));
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals for latency:\n"));
-  latency.dump_results (argv[0], "latency");
+  latency.dump_results (argv[0], ACE_TEXT("latency"));
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals for throughput:\n"));
-  throughput.dump_results (argv[0], "throughput");
+  throughput.dump_results (argv[0], ACE_TEXT("throughput"));
 
 #if defined(ACE_HAS_PRUSAGE_T)
   ACE_DEBUG ((LM_DEBUG, "\n(%t) Context switches %d/%d\n",
