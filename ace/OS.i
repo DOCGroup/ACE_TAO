@@ -347,14 +347,6 @@ extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
 #endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
-#if defined (ACE_LACKS_COND_T)
-ACE_INLINE long
-ACE_cond_t::waiters (void) const
-{
-  return this->waiters_;
-}
-#endif /* ACE_LACKS_COND_T */
-
 ACE_INLINE int 
 ACE_OS::chdir (const char *path)
 {
@@ -1531,6 +1523,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	  error = ::GetLastError ();
 	  break;
 	}
+      result = -1;  
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
     // Release the signaler/broadcaster if we're the last waiter.
@@ -1640,6 +1633,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	  error = ::GetLastError ();
 	  break;
 	}
+      result = -1;
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
     // Release the signaler/broadcaster if we're the last waiter.
@@ -3329,7 +3323,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   return result;
 
 #elif defined (ACE_HAS_WTHREADS)
-  switch (::WaitForSingleObject (*s_, INFINITE))
+  switch (::WaitForSingleObject (*s, INFINITE))
     {
     case WAIT_OBJECT_0:
       return 0;
@@ -6209,6 +6203,14 @@ ACE_OS::mkdir (const wchar_t *path, mode_t mode)
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
+
+#if defined (ACE_LACKS_COND_T)
+ACE_INLINE long
+ACE_cond_t::waiters (void) const
+{
+  return this->waiters_;
+}
+#endif /* ACE_LACKS_COND_T */
 
 #if 0
 ACE_INLINE int 

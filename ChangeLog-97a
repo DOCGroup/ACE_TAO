@@ -1,3 +1,16 @@
+Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
+
+	* ace/ReactorEx: Complete rewrite. Details to follow.
+
+	* ace/Synch.cpp (dump): Fixed access error.
+
+	* ace/OS.h: Fixed ACE_rwlock_t friend declaration.
+
+	* ace/OS.i: Moved ACE_cond_t::waiters() such that it is now
+ 	  visiable to NT. Also fixed ACE_OS::cond_timed_wait by returning
+ 	  the correct return value on a TIMEOUT. Also fixed typo in
+ 	  ACE_OS::sema_wait.	
+
 Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (select): Simplified Chris' fixes for the weird
