@@ -209,7 +209,11 @@ public:
   /// Report if the <ACE_Proactor::instance> event loop is finished.
   static int event_loop_done (void);
 
-  /// Close the IO completion port.
+  /// Close the associated @c ACE_Proactor_Impl implementation object.
+  /**
+   * If @arg delete_implementation was specified to the @c open() method,
+   * the implementation object is also deleted.
+   */
   virtual int close (void);
 
    /**
