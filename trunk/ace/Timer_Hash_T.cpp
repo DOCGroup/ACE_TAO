@@ -281,6 +281,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dump (void) const
   for (size_t i = 0; i < this->table_size_; i++)
       if (!this->table_[i]->is_empty ())
         ACE_DEBUG ((LM_DEBUG, "\nBucket %d contains nodes", i));
+  ACE_DEBUG ((LM_DEBUG, "\n"));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -358,6 +359,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
 
   int ret = this->table_[h->pos_]->cancel (h->orig_id_, act, dont_call);
 
+  if (h->pos_ == this->earliest_position_)
+    this->find_new_earliest ();
+  
   if (act != 0)
     *act = h->act_;
 
@@ -379,7 +383,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
-  size_t i; // loop  variable
+  size_t i; // loop variable
 
   Hash_Token **timer_ids = new Hash_Token *[this->size_];
   size_t pos = 0;
@@ -408,6 +412,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
   if (dont_call == 0)
      this->upcall_functor ().cancellation (*this, type);
 
+  this->find_new_earliest ();
+
   return pos;
 }
 
@@ -422,15 +428,24 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::remove_first (void)
 
   ACE_Timer_Node_T<TYPE> *temp = this->table_[this->earliest_position_]->remove_first ();
 
-  for (size_t i = 0; i < this->table_size_; i++)
-    if (!this->table_[i]->is_empty ())
-      if (this->earliest_time () == ACE_Time_Value::zero
-          || this->table_[i]->earliest_time () < this->earliest_time ())
-          this->earliest_position_ = i;
+  this->find_new_earliest ();
 
   --this->size_;
 
   return temp;
+}
+
+// Finds a new earliest position
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> void
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::find_new_earliest (void)
+{
+  for (size_t i = 0; i < this->table_size_; i++)
+    if (!this->table_[i]->is_empty ())
+      if (this->table_[this->earliest_position_]->is_empty()
+	  || this->earliest_time () == ACE_Time_Value::zero
+	  || this->table_[i]->earliest_time () <= this->earliest_time ())
+	  this->earliest_position_ = i;
 }
 
 

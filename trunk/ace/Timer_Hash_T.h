@@ -212,6 +212,9 @@ private:
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
   // Reschedule an "interval" <ACE_Timer_Node>.
 
+  void find_new_earliest (void);
+  // Finds the earliest node
+
   size_t size_;
   // Keeps track of the size of the queue
   
