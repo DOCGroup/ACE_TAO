@@ -168,10 +168,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // the Reactor is used, this isn't a busy wait.
   while (SSL_in_accept_init (ssl))
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TID = %t \t SSL = 0x%x\n",
-                  ssl));
-
       // Before blocking in the Reactor, do an SSL_accept() in case
       // OpenSSL buffered additional data sent within an SSL record
       // during session negotiation.  The buffered data must be
