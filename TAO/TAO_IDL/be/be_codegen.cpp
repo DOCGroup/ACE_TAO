@@ -1565,11 +1565,11 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // OR a TypeCode or TCKind reference is not seen
   //    AND we are not generating typecodes in a separate file.
   if (be_global->tc_support ()
-      && ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+      && (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                           idl_global->decls_seen_masks.exception_seen_)
-      || (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+          || (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                            idl_global->decls_seen_masks.typecode_seen_)
-          && !be_global->gen_anyop_files ()))
+              && !be_global->gen_anyop_files ())))
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Typecode.h");

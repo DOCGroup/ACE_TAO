@@ -1,3 +1,14 @@
+Tue Dec  7 08:12:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Fixed logic in the decision to generate an include of
+          tao/Typecode.h. An extra set of parenthese was needed to
+          take into account the relative precedence of '&&' and '||'.
+          Thanks to Johnny Willemsen <jwillemsen@remedy,nl> for
+          reporting the unnecessary include in 
+          tao/IORInterceptor/IORInfoC.cpp.
+
 Tue Dec  7 12:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/Default_ORTC.cpp:
