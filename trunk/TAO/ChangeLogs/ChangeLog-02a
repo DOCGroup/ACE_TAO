@@ -13,15 +13,15 @@ Wed Mar 28 11:49:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed Mar 28 13:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * tao/tests/DynAny_Test/test_dynsequence.cpp:
-        * tao/tests/DynAny_Test/test_dynstruct.cpp:
-        * tao/tests/DynAny_Test/test_dynunion.cpp:
-        * tao/tests/Param_Test/bd_long_seq.cpp:
-        * tao/tests/Param_Test/param_test_i.cpp:
-        * tao/tests/Param_Test/typecode.cpp:
-        * tao/DynamicAny/DynAny_i.cpp:
-        * tao/DynamicAny/DynamicAnyC.cpp:
-        * tao/DynamicInterface/Request.cpp:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+	* tests/DynAny_Test/test_dynstruct.cpp:
+	* tests/DynAny_Test/test_dynunion.cpp:
+	* tests/Param_Test/bd_long_seq.cpp:
+	* tests/Param_Test/param_test_i.cpp:
+	* tests/Param_Test/typecode.cpp:
+	* tao/DynamicAny/DynAny_i.cpp:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicInterface/Request.cpp:
         * orbsvcs/IFR_Service/IFR_Server.cpp:
 
           Added missing ACE_CHECK/ACE_TRY_CHECK
