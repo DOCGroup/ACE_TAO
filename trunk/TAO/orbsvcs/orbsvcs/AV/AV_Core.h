@@ -184,10 +184,9 @@ protected:
   CORBA::Boolean stop_run_;
 };
 
-#define TAO_AV_CORE_SINGLETON_DEFINE ACE_Singleton <TAO_AV_Core, ACE_Null_Mutex>
-TAO_AV_SINGLETON_DECLARATION (TAO_AV_CORE_SINGLETON_DEFINE);
+typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
 
-typedef TAO_AV_CORE_SINGLETON_DEFINE TAO_AV_CORE;
+TAO_AV_SINGLETON_DECLARE ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex>;
 
 #include "ace/post.h"
 #endif /* TAO_AV_CORE_H */
