@@ -9,7 +9,7 @@ Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Shawn Atkins <sma1@cs.wustl.edu>
 Matt Braun <mjb2@cs.wustl.edu>
 Darrell Brunsch <brunsch@uci.edu>
-Chris Cleeland <chris@cs.wustl.edu>
+Chris Cleeland <cleeland@cs.wustl.edu>
 Mayur Deshpande <mayur@ics.uci.edu>
 Eric Ding <qnd1@cs.wustl.edu>
 Sergio Flores-Gaitan <sergio@cs.wustl.edu>
@@ -1362,6 +1362,8 @@ Guillaume Renaud <guillaume.renaud@valtech.fr>
 Tommy Svensson <tommysvensson@yahoo.com>
 Jstwo <jstwo@writeme.com>
 Hartmut Quast <HartmutQuast@t-online.de> 
+Ulrich Voigt <Ulrich.Voigt@ddg.de>
+Syed Wasim Ali <syed.ali@neustar.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

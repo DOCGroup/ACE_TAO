@@ -772,7 +772,7 @@ public:
   // = Default priority value.
   enum
   {
-    DEFUALT_PRIORITY = 0
+    DEFAULT_PRIORITY = 0
   };
 
 #if 0 

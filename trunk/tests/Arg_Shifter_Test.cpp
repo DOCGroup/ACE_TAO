@@ -25,7 +25,7 @@ main (int, ACE_TCHAR *argv[])
 
   const int test_argc_size = 5;
   int argl (test_argc_size);
-  ACE_TCHAR *args[test_argc_size] = {
+  const ACE_TCHAR *args[test_argc_size] = {
     ACE_TEXT ("-known"),
     ACE_TEXT ("-huh"),
     ACE_TEXT ("-arg"),

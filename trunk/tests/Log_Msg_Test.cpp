@@ -472,7 +472,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
 }
 
 int
-Log_Spec_Verify::result ()
+Log_Spec_Verify::result (void)
 {
   if (this->fail_ == 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
@@ -483,7 +483,7 @@ Log_Spec_Verify::result ()
 }
 
 static int
-test_format_specs ()
+test_format_specs (void)
 {
 #if 0
   Log_Spec_Verify  verifier;
@@ -510,7 +510,6 @@ test_format_specs ()
 
 }
 
-
 // Main function.
 
 int
@@ -528,7 +527,7 @@ main (int argc, ACE_TCHAR *argv[])
   test_ostream ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("**** running callback test\n")));
+              ACE_TEXT ("%M **** running callback test\n")));
 
   // Test the <ACE_Log_Msg> callback mechanism.
   test_callbacks ();

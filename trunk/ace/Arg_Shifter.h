@@ -6,17 +6,15 @@
  *
  *  $Id$
  *
- *  @author  Seth Widoff
+ *  @author Seth Widoff 
  */
 //=============================================================================
-
 
 #ifndef ACE_ARG_SHIFTER_H
 #define ACE_ARG_SHIFTER_H
 #include "ace/pre.h"
 
 #include "ace/OS.h"
-
 
 /**
  * @class ACE_Arg_Shifter
@@ -60,14 +58,14 @@ public:
    *    vector transparently.
    */
   ACE_Arg_Shifter (int& argc,
-                   ACE_TCHAR **argv,
-                   ACE_TCHAR **temp = 0);
+                   const ACE_TCHAR **argv,
+                   const ACE_TCHAR **temp = 0);
 
   /// Destructor.
   ~ACE_Arg_Shifter (void);
 
   /// Get the current head of the vector.
-  ACE_TCHAR *get_current (void) const;
+  const ACE_TCHAR *get_current (void) const;
 
   /**
    * If the <flag> matches the current_arg of arg shifter
@@ -101,7 +99,7 @@ public:
    * together '-foobarflagVALUE', the flag is NOT consumed
    * and the cur arg is left pointing to the entire flag/value pair
    */
-  ACE_TCHAR *get_the_parameter (const ACE_TCHAR* flag);
+  const ACE_TCHAR *get_the_parameter (const ACE_TCHAR* flag);
 
   /**
    * Check if the current argument matches (case insensitive) <flag>
@@ -164,10 +162,10 @@ private:
   int total_size_;
 
   /// The temporary array over which we traverse.
-  ACE_TCHAR **temp_;
+  const ACE_TCHAR **temp_;
 
   /// The array in which the arguments are reordered.
-  ACE_TCHAR **argv_;
+  const ACE_TCHAR **argv_;
 
   /// The element in <temp_> we're currently examining.
   int current_index_;

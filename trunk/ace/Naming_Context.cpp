@@ -33,7 +33,7 @@ ACE_STATIC_SVC_REQUIRE (ACE_Naming_Context)
 // by the ACE_Object_Manager, in Object_Manager.cpp.
 
 int
-ACE_Naming_Context::info (char **strp,
+ACE_Naming_Context::info (ACE_TCHAR **strp,
                           size_t length) const
 {
   ACE_TRACE ("ACE_Naming_Context::info");

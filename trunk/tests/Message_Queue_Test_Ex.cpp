@@ -295,7 +295,7 @@ main (int argc, ACE_TCHAR *argv[])
       max_messages = ACE_OS::atoi (argv[1]);
 
   // Be sure that the a timed out get sets the error code properly.
-  ACE_Message_Queue_Ex<ACE_Message_Block,ACE_SYNCH> q1;
+  ACE_Message_Queue_Ex<ACE_Message_Block, ACE_SYNCH> q1;
   if (!q1.is_empty ()) {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("New queue is not empty!\n")));
     status = 1;

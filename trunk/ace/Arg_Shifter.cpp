@@ -6,8 +6,8 @@
 ACE_RCSID(ace, Arg_Shifter, "$Id$")
 
 ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
-                                  ACE_TCHAR** argv,
-                                  ACE_TCHAR** temp)
+                                  const ACE_TCHAR** argv,
+                                  const ACE_TCHAR** temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -19,7 +19,7 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
     ACE_NEW (this->temp_,
-             ACE_TCHAR*[this->total_size_]);
+             const ACE_TCHAR *[this->total_size_]);
 
   if (this->temp_ != 0)
     {
@@ -45,10 +45,10 @@ ACE_Arg_Shifter::~ACE_Arg_Shifter (void)
   delete [] temp_;
 }
 
-ACE_TCHAR*
+const ACE_TCHAR *
 ACE_Arg_Shifter::get_current (void) const
 {
-  ACE_TCHAR* retval = 0;
+  const ACE_TCHAR * retval = 0;
 
   if (this->is_anything_left ())
     retval =  this->temp_[current_index_];
@@ -56,7 +56,7 @@ ACE_Arg_Shifter::get_current (void) const
   return retval;
 }
 
-ACE_TCHAR*
+const ACE_TCHAR *
 ACE_Arg_Shifter::get_the_parameter (const ACE_TCHAR *flag)
 {
   // the return 0's abound because this method

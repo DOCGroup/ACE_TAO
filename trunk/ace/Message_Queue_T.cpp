@@ -114,7 +114,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head (ACE_MESSAGE
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
                                      sizeof (*new_item),
-                                     DEFUALT_PRIORITY),
+                                     DEFAULT_PRIORITY),
                   -1);
 
   int result = this->queue_.enqueue_head (mb, timeout);
@@ -148,7 +148,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
                                      sizeof (*new_item),
-                                     DEFUALT_PRIORITY ),
+                                     DEFAULT_PRIORITY),
                   -1);
 
   int result = this->queue_.enqueue_prio (mb, timeout);
@@ -173,7 +173,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail (ACE_MESSAGE
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
                                      sizeof (*new_item),
-                                     DEFUALT_PRIORITY),
+                                     DEFAULT_PRIORITY),
                   -1);
 
   int result = this->queue_.enqueue_tail (mb, timeout);
