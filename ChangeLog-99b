@@ -1,3 +1,19 @@
+Mon Aug 16 20:09:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
+	  Added new method to transfer the contents of one CDR stream into 
+	  another. This is used in the implementation of the ORB to
+	  minimize the number of data copies, memory allocations and
+	  locks.
+
+	* ace/Message_Block.h:
+	* ace/Message_Block.i:
+	  Added new method to replace the Data_Block, this method returns
+	  the old one, letting the user decide how to deallocated the Data 
+	  block, possibly transfering it to another Message_Block.
+
 Mon Aug 16 15:58:12 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.5.h:
