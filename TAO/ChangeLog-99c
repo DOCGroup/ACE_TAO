@@ -1,20 +1,25 @@
+Sat Jun 05 19:00:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbafwd.h: changed value of TAO_UNKNOWN_MINOR_CODE
+          from 0xFF to 0xF because its only 4 bits wide.
+
 Sat Jun  5 18:04:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/PollableS_T.i:
-	  Removed more calls to TAO_ORB_Core_instance()
+        * tao/PollableS_T.i:
+          Removed more calls to TAO_ORB_Core_instance()
 
 Sat Jun  5 17:49:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
-	  Fixed problem on shutdown: some objects where still around even
-	  though the ORB was destroyed.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+          Fixed problem on shutdown: some objects where still around even
+          though the ORB was destroyed.
 
 Sat Jun  5 16:46:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (~Servant_Upcall): Added missing
-	  case INITIAL_STAGE to keep compiler happy although it is not
-	  used anywhere.
+        * tao/Object_Adapter.cpp (~Servant_Upcall): Added missing
+          case INITIAL_STAGE to keep compiler happy although it is not
+          used anywhere.
 
 Sat Jun 05 16:23:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
