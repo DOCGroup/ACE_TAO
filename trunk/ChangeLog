@@ -1,3 +1,10 @@
+Wed May 14 14:52:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-all.h:
+        * ace/README:
+          Added new macro, ACE_USES_ALLOCA.  If it is not defined in the
+          user's config.h, then turn off ACE_HAS_ALLOCA by default.
+        
 Tue May 13 09:39:13 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS.i (last_error): Fixed this method so that it assigns errno

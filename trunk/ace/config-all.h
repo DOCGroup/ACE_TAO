@@ -22,6 +22,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Since use of alloca can be dangerous, turn it off unless the user has
+// specifically turned it on by defining the ACE_USES_ALLOCA macro.
+#if !defined (ACE_USES_ALLOCA)
+#  if defined (ACE_HAS_ALLOCA)
+#    undef ACE_HAS_ALLOCA
+#  endif /* ACE_HAS_ALLOCA */
+#endif /* !ACE_USES_ALLOCA */
+
 // =========================================================================
 // Perfect Multicast filting refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
