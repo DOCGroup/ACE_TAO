@@ -41,17 +41,17 @@ CM_Server::open (short port_number)
 int
 CM_Server::receive (int)
 {
-  size_t sin_len = sizeof this->sin_;
+  int sin_len = sizeof this->sin_;
 
   if (Options::get_opt (Options::DEBUG) != 0)
     ACE_DEBUG ((LM_DEBUG, "waiting for client to send...\n"));
 
-  ssize_t n = recvfrom (this->sokfd_,
-                        this->recv_packet_,
-                        UDP_PACKET_SIZE,
-                        0,
-                        (sockaddr *) &this->sin_,
-                        &sin_len);
+  int n = recvfrom (this->sokfd_,
+                    this->recv_packet_,
+                    UDP_PACKET_SIZE,
+                    0,
+                    (sockaddr *) &this->sin_,
+                    &sin_len);
   if (n == -1)
     return -1;
 
