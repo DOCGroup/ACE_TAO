@@ -1,3 +1,18 @@
+Wed Nov 26 14:05:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/Naming_Service/Naming_Service.bor:
+	* orbsvcs/Naming_Service/NT_Naming_Service.bor:
+	* orbsvcs/Time_Service/Time_Service_Clerk.bor:
+	* orbsvcs/Time_Service/Time_Service_Server.bor:
+	* include/makeinclude/build_example.bor:
+	* examples/Quoter/Factory_finder.bor:
+	* examples/Quoter/Generic_factory.bor:
+	* examples/Quoter/Server.bor:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Starter.bor:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Test.bor:
+	* tests/InterOp-Naming/server.bor:
+	  Add Messaging library to fix link errors in BCB6 Static Build.
+
 Wed Nov 26 10:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/PSS/PSDL_Scope.cpp:
