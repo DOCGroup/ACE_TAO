@@ -24,7 +24,7 @@ namespace TAO
 {
   /**
    *
-   * @brief Base class for all arg traits specializations
+   * @brief Base class for all arg traits specializations.
    *
    */
   template<typename T>

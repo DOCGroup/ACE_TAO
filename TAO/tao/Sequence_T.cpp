@@ -385,6 +385,30 @@ TAO_Bounded_Sequence<T,MAX>::replace (CORBA::ULong max,
 }
 
 // *************************************************************
+// @@@ (JP) These can be removed after we regenerate the hand-crafted files.
+
+template<typename T>
+T *
+TAO::Object_Cast<T>::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return T::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+template<typename T>
+CORBA::Object *
+TAO::Object_Cast<T>::tao_upcast (
+    void *src
+  )
+{
+  T **tmp =
+    ACE_static_cast (T **, src);
+  return *tmp;
+}
+
+// *************************************************************
 // class TAO_Object_Manager
 // *************************************************************
 
