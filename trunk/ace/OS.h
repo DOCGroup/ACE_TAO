@@ -452,8 +452,8 @@ typedef int key_t;
 #if defined (ACE_PSOS)
 
     #include <ace/sys_conf.h> /* system configuration file */
-    #include <psos.h>         /* pSOS+ system calls                */
-    #include <pna.h>          /* pNA+ TCP/IP Network Manager calls */
+    #include /**/ <psos.h>         /* pSOS+ system calls                */
+    #include /**/ <pna.h>          /* pNA+ TCP/IP Network Manager calls */
 
 
   #if defined (ACE_PSOSIM)
@@ -461,12 +461,12 @@ typedef int key_t;
     /* In the *simulator* environment, use unsigned int for size_t */
     #define size_t  unsigned int
 
-//    #include <prepc.h>    /* pREPC+ ANSI C Standard Library calls */
+//    #include /**/ <prepc.h>    /* pREPC+ ANSI C Standard Library calls */
 
-    /*  #include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
+    /*  #include /**/ <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
     /*                         are not supported by pSOSim                 */
     /*                                                                     */
-    /*  #include <phile.h>     pHILE+ file system calls are not supported  */
+    /*  #include /**/ <phile.h>     pHILE+ file system calls are not supported  */
     /*                         by pSOSim *so*, for the time being, we make */
     /*                         use of UNIX file system headers and then    */
     /*                         when we have time, we wrap UNIX file system */
@@ -474,10 +474,10 @@ typedef int key_t;
     /*                         use the wrappers under pSOSim               */
 
     /* put includes for necessary UNIX file system calls here */
-    #include <sys/stat.h>
-    #include <sys/ioctl.h>
-    #include <sys/sockio.h>
-    #include <netinet/tcp.h>
+    #include /**/ <sys/stat.h>
+    #include /**/ <sys/ioctl.h>
+    #include /**/ <sys/sockio.h>
+    #include /**/ <netinet/tcp.h>
 
     // remap missing error numbers for system functions
     #define EPERM        1        /* Not super-user                        */
@@ -511,8 +511,8 @@ typedef int key_t;
 
   #else
 
-    #include <rpc.h>       /* pRPC+ Remote Procedure Call Library calls */
-    #include <phile.h>     /* pHILE+ file system calls                  */
+    #include /**/ <rpc.h>       /* pRPC+ Remote Procedure Call Library calls */
+    #include /**/ <phile.h>     /* pHILE+ file system calls                  */
 
 
   #endif /* defined (ACE_PSOSIM) */
@@ -2596,7 +2596,7 @@ PAGE_NOCACHE  */
 #endif /* ACE_HAS_WINCE */
 
 #if defined (__BORLANDC__)
-#include <fcntl.h>
+#include /**/ <fcntl.h>
 #define _chdir chdir
 #define _ftime ftime
 #define _access access
