@@ -1,4 +1,4 @@
-# Filename: VC50_DIR.MAK
+# filename: VC50_DIR.MAK
 #    $Id$
 #
 # Description:  This file defines rules to recursively step into
@@ -49,9 +49,15 @@ $(MAK_LIST) :
 	@mkdir $(ACE_CHECK_DIR)
 !ENDIF	
 !ENDIF
+!IFDEF VC50_ROOT
+#       When using MSVC 5.0
 #	@Echo NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /f $@.MAK
 	@NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /NOLOGO /f $@.MAK $(ACE_ACTION)
-	
+!ELSE
+#       When using MSVC 4.2
+#	@Echo NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /f $(MAK_NAME).MAK
+	@NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /NOLOGO /f $(MAK_NAME).MAK $(ACE_ACTION)
+!ENDIF	
 !ENDIF
 
 !ELSE
