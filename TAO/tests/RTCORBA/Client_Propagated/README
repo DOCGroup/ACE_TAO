@@ -1,0 +1,33 @@
+$Id$
+
+This is a unit test for RTCORBA::CLIENT_PROPAGATED priority model.
+
+Scenario:
+--------
+
+Server creates a POA with RTCORBA::CLIENT_PROPAGATED priority model
+policy and registers a servant with it.  Client obtains the object
+reference and verifies that it does have the RTCORBA::CLIENT_PROPAGATED
+priority model set.  Client then performs several invocations on the
+object, changing the priority of its thread before each.  The client
+also passes its thread priority as an argument to each operation.
+For each invocation, the servant checks that it's thread priority is
+equivalent to the priority of the invoking client thread, which we know
+from the operation argument.  In addition, the server verifies that
+it's starting thread priority (before entering ORB event loop) is the
+same as it's ending thread priority (ater ORB shutdown), to insure
+that the thread servicing the requests at client propagated priority
+is always returned to its original priority.
+
+To run (on Unix):
+-------
+$./server
+$./client
+
+Options:
+--------
+server [-o ior_output_file]
+client [-k server_ior]
+
+Expected output:
+----------------
