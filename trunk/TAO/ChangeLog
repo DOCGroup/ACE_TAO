@@ -1,11 +1,21 @@
+Mon Nov 11 10:43:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp:
+	  Added TAO_CosEvent.lib to the list of libraries for Release
+	  build only to fix a link problem on MSVC.
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp
+	  (write_records): Initialize the local variable <l> to 0 to fix a
+	  build warning.
+
 Mon Nov 11 09:28:43 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
 	  Get the whole hostname name including the domain instead
 	  of just the hostname.
 	  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for pointing
 	  out a exception thats raised.
-	
+
 	* orbsvcs/tests/ImplRepo/run_test.pl:
 	  cosmetic changes.
 
@@ -30,7 +40,7 @@ Sun Nov 10 20:24:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
 
-	  Cosmetic changes.	  
+	  Cosmetic changes.
 
 Sun Nov 10 18:02:51 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
