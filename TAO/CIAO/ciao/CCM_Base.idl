@@ -17,7 +17,7 @@
 #if defined (CIAO_HAS_IMPORT_KEYWORD)
 import ::CORBA;
 #else
-#include "CORBA.pidl"
+#include <orb.idl>
 #endif /* CIAO_HAS_IMPORT_KEYWORD */
 
 #if !defined (CCM_BASE_IDL)
