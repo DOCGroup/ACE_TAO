@@ -117,17 +117,15 @@ TAO_IOR_Manipulation_impl::merge_iors (
   TAO_Stub_Auto_Ptr safe_stub (stub);
 
   // Create the CORBA level proxy
-  CORBA_Object *new_obj = CORBA::Object::_nil ();
-  ACE_NEW_THROW_EX (new_obj,
-                    CORBA_Object (safe_stub.get ()),
+  CORBA::Object_var new_obj;
+  ACE_NEW_THROW_EX (new_obj.inout (),
+                    CORBA::Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
-
-  auto_ptr<CORBA_Object> safe_new_obj (new_obj);
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
-  if (CORBA::is_nil (safe_new_obj.get ()))
+  if (CORBA::is_nil (new_obj.in ()))
     {
       ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                         CORBA::Object::_nil ());
@@ -135,10 +133,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   // Release ownership of the pointers protected by the auto_ptrs since they
   // no longer need to be protected by this point.
-  new_obj = safe_new_obj.release ();
   stub = safe_stub.release ();
 
-  return new_obj;
+  return new_obj._retn ();
 }
 
 CORBA::Object_ptr
@@ -225,15 +222,15 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_Stub_Auto_Ptr safe_stub (stub);
 
   // Create the CORBA level proxy
-  CORBA_Object *new_obj = CORBA::Object::_nil ();
-  ACE_NEW_THROW_EX (new_obj,
-                    CORBA_Object (safe_stub.get ()),
+  CORBA::Object_var new_obj = CORBA::Object::_nil ();
+  ACE_NEW_THROW_EX (new_obj.inout (),
+                    CORBA::Object (safe_stub.get ()),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
-  if (CORBA::is_nil (new_obj))
+  if (CORBA::is_nil (new_obj.in ()))
     {
       ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                         CORBA::Object::_nil ());
@@ -243,7 +240,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // the TAO_Stub from the TAO_Stub_Auto_Ptr.
   stub = safe_stub.release ();
 
-  return new_obj;
+  return new_obj._retn ();
 }
 
 CORBA::ULong
@@ -300,16 +297,10 @@ TAO_IOR_Manipulation_impl::get_profile_count (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr<CORBA_Object>;
-template class ACE_Auto_Basic_Ptr<CORBA_Object>;
-
 template class TAO_Object_Manager<CORBA_Object,CORBA_Object_var>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Object,CORBA_Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<CORBA_Object>
-#pragma instantiate ACE_Auto_Basic_Ptr<CORBA_Object>
 
 #pragma instantiate TAO_Object_Manager<CORBA_Object,CORBA_Object_var>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Object,CORBA_Object_var>
