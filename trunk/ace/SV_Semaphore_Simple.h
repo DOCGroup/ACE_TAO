@@ -38,25 +38,25 @@ public:
   ACE_SV_Semaphore_Simple (key_t key, 
 			   int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
 			   int initial_value = 1,
-			   int nsems = 1, 
+			   u_short nsems = 1, 
 			   int perms = ACE_DEFAULT_FILE_PERMS);
   ACE_SV_Semaphore_Simple (const char *name, 
 			   int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 			   int initial_value = 1, 
-			   int nsems = 1, 
+			   u_short nsems = 1, 
 			   int perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Simple (void);
 
   int open (const char *name, 
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
-	    int nsems = 1, 
+	    u_short nsems = 1, 
 	    int perms = ACE_DEFAULT_FILE_PERMS);
 
   int open (key_t key, 
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
-	    int nsems = 1, 
+	    u_short nsems = 1, 
 	    int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create one or more SV_Semaphores.  We return 0 if all is
   // OK, else -1.
@@ -73,27 +73,27 @@ public:
   // Most other processes should use close() below.
 
   // = Semaphore acquire and release methods.
-  int acquire (int n = 0, int flags = 0) const;
+  int acquire (u_short n = 0, int flags = 0) const;
   // Wait until a ACE_SV_Semaphore's value is greater than 0, the
   // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
   // DOWN operation.
 
-  int acquire_read (int n = 0, int flags = 0) const;
+  int acquire_read (u_short n = 0, int flags = 0) const;
   // Acquire a semaphore for reading.
 
-  int acquire_write (int n = 0, int flags = 0) const;
+  int acquire_write (u_short n = 0, int flags = 0) const;
   // Acquire a semaphore for writing
 
-  int tryacquire (int n = 0, int flags = 0) const;
+  int tryacquire (u_short n = 0, int flags = 0) const;
   // Non-blocking version of <acquire>.
 
-  int tryacquire_read (int n = 0, int flags = 0) const;
+  int tryacquire_read (u_short n = 0, int flags = 0) const;
   // Try to acquire the semaphore for reading.
 
-  int tryacquire_write (int n = 0, int flags = 0) const;
+  int tryacquire_write (u_short n = 0, int flags = 0) const;
   // Try to acquire the semaphore for writing.
 
-  int release (int n = 0, int flags = 0) const;
+  int release (u_short n = 0, int flags = 0) const;
   // Increment ACE_SV_Semaphore by one. Dijkstra's V operation,
   // Tannenbaums UP operation.
 
@@ -102,12 +102,12 @@ public:
   // General ACE_SV_Semaphore operation. Increment or decrement by a
   // specific amount (positive or negative; amount can`t be zero). 
 
-  int op (sembuf op_vec[], int nsems) const;
+  int op (sembuf op_vec[], u_short nsems) const;
   // General ACE_SV_Semaphore operation on an array of SV_Semaphores.
 
   // = Semaphore control methods.
-  int control (int cmd, semun arg, int semnum = 0) const;
-  int control (int cmd, int value = 0, int semnum = 0) const;
+  int control (int cmd, semun arg, u_short n = 0) const;
+  int control (int cmd, int value = 0, u_short n = 0) const;
 
   int get_id (void) const;
   // Get underlying internal id.
@@ -124,7 +124,7 @@ protected:
   int sem_number_;
 
   int init (key_t k = ACE_INVALID_SEM_KEY, int i = -1);
-  key_t	 name_2_key (const char *name);
+  key_t name_2_key (const char *name);
   // Convert name to key This function is used internally to create
   // keys for the semaphores. A valid name contains letters and
   // digits only and MUST start with a letter.

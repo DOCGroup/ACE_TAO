@@ -12,11 +12,11 @@
 inline int
 ACE_SV_Semaphore_Simple::control (int cmd, 
 				  semun arg, 
-				  int semnum) const
+				  u_short n) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::control");
   return this->internal_id_ == -1 ? 
-    -1 : ACE_OS::semctl (this->internal_id_, semnum, cmd, arg);
+    -1 : ACE_OS::semctl (this->internal_id_, n, cmd, arg);
 }
 
 // Close a ACE_SV_Semaphore, marking it as invalid for subsequent
@@ -32,7 +32,7 @@ ACE_SV_Semaphore_Simple::close (void)
 // General ACE_SV_Semaphore operation on an array of SV_Semaphores. 
      
 inline int 
-ACE_SV_Semaphore_Simple::op (sembuf op_vec[], int n) const
+ACE_SV_Semaphore_Simple::op (sembuf op_vec[], u_short n) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::op");
   return this->internal_id_ == -1 
@@ -44,21 +44,21 @@ ACE_SV_Semaphore_Simple::op (sembuf op_vec[], int n) const
 // DOWN operation.
 
 inline int 
-ACE_SV_Semaphore_Simple::acquire (int n, int flags) const
+ACE_SV_Semaphore_Simple::acquire (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::acquire");
   return this->op (-1, n, flags);
 }
 
 inline int 
-ACE_SV_Semaphore_Simple::acquire_read (int n, int flags) const
+ACE_SV_Semaphore_Simple::acquire_read (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::acquire_read");
   return this->acquire (n, flags);
 }
 
 inline int 
-ACE_SV_Semaphore_Simple::acquire_write (int n, int flags) const
+ACE_SV_Semaphore_Simple::acquire_write (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::acquire_write");
   return this->acquire (n, flags);
@@ -67,7 +67,7 @@ ACE_SV_Semaphore_Simple::acquire_write (int n, int flags) const
 // Non-blocking version of acquire(). 
 
 inline int 
-ACE_SV_Semaphore_Simple::tryacquire (int n, int flags) const
+ACE_SV_Semaphore_Simple::tryacquire (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::tryacquire");
   return this->op (-1, n, flags | IPC_NOWAIT);
@@ -76,7 +76,7 @@ ACE_SV_Semaphore_Simple::tryacquire (int n, int flags) const
 // Non-blocking version of acquire(). 
 
 inline int 
-ACE_SV_Semaphore_Simple::tryacquire_read (int n, int flags) const
+ACE_SV_Semaphore_Simple::tryacquire_read (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::tryacquire_read");
   return this->tryacquire (n, flags);
@@ -85,7 +85,7 @@ ACE_SV_Semaphore_Simple::tryacquire_read (int n, int flags) const
 // Non-blocking version of acquire(). 
 
 inline int 
-ACE_SV_Semaphore_Simple::tryacquire_write (int n, int flags) const
+ACE_SV_Semaphore_Simple::tryacquire_write (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::tryacquire_write");
   return this->tryacquire (n, flags);
@@ -95,7 +95,7 @@ ACE_SV_Semaphore_Simple::tryacquire_write (int n, int flags) const
 // Tannenbaums UP operation.
 
 inline int 
-ACE_SV_Semaphore_Simple::release (int n, int flags) const
+ACE_SV_Semaphore_Simple::release (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::release");
   return this->op (1, n, flags);
