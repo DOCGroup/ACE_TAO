@@ -11,17 +11,12 @@ u_int ACE_Thread_Exit::is_constructed_ = 0;
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
-ACE_Thread_Exit_cleanup (void *instance, void *)
+ACE_Thread_Exit_cleanup (void *instance, void *arg)
 {
-  ACE_OS_TRACE ("ACE_Thread_Exit_cleanup");
-
-  delete (ACE_TSS_TYPE (ACE_Thread_Exit) *) instance;
-
-  ACE_Thread_Exit::is_constructed_ = 0;
-  // All TSS objects have been destroyed.  Reset this flag so
-  // ACE_Thread_Exit singleton can be created again.
+  ACE_Thread_Exit::cleanup (instance, arg);
 }
-#else
+#endif
+
 void
 ACE_Thread_Exit::cleanup (void *instance, void *)
 {
@@ -33,7 +28,6 @@ ACE_Thread_Exit::cleanup (void *instance, void *)
   // All TSS objects have been destroyed.  Reset this flag so
   // ACE_Thread_Exit singleton can be created again.
 }
-#endif /* ACE_HAS_SIG_C_FUNC */
 
 // NOTE: this preprocessor directive should match the one in
 // ACE_Task_Base::svc_run () below.  This prevents the two statics
