@@ -1,3 +1,10 @@
+Tue Feb 06 17:16:43 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MEM_Stream_Test.h: New file; moved definition of Echo_Handler
+          from MEM_Stream_Test.cpp to this file to make it visible to AIX
+          C++ 3.6.6 at template instantiation time.
+
 Mon Feb  5 16:19:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Basic_Types.h: Changed the ACE_BIG_ENDIAN and ACE_LITTLE_ENDIAN
