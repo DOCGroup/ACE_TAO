@@ -56,6 +56,7 @@ FTP_Client_Callback::handle_timeout (void *)
           
           ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
           TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     
       if (n == 0)
@@ -70,11 +71,12 @@ FTP_Client_Callback::handle_timeout (void *)
                   AVStreams::flowSpec stop_spec (1);
                   //ACE_DECLARE_NEW_CORBA_ENV;
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
-                  ACE_CHECK_RETURN (-1);
+                  ACE_TRY_CHECK;
                   CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
-                  ACE_CHECK_RETURN (-1);
+                  ACE_TRY_CHECK;
                   TAO_AV_CORE::instance ()->stop_run ();
                   TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
                   return 0;
                 }
               else
@@ -97,6 +99,7 @@ FTP_Client_Callback::handle_timeout (void *)
       return -1;
     }
   ACE_ENDTRY;
+  return 0;
 }
 
 FTP_Client_Producer::FTP_Client_Producer (void)
