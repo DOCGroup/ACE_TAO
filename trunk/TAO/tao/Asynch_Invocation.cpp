@@ -45,12 +45,12 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Asynch_Invocation_Timeprobe_Description,
-				  TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
+                                  TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
-#endif /* ACE_ENABLE_TIMEPROBES	*/
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (void)
-  : rd_	(0)
+  : rd_ (0)
 {
 }
 
@@ -60,7 +60,21 @@ TAO_GIOP_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
-  return this->invoke_i	(ACE_TRY_ENV);
+  return this->invoke_i (ACE_TRY_ENV);
+}
+
+void
+TAO_GIOP_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->target_spec_.target_specifier (this->profile_->object_key ());
+  this->transport_->start_request (this->orb_core_,
+                                   this->target_spec_,
+                                   this->out_stream_,
+                                   ACE_TRY_ENV);
 }
 
 // **************************************************************************
@@ -68,39 +82,39 @@ TAO_GIOP_Asynch_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment	&ACE_TRY_ENV)
+TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Register a	reply dispatcher for this Asynch_Invocation. Use the
+  // Register a reply dispatcher for this Asynch_Invocation. Use the
   // heap allocated reply dispatcher.
 
   int retval =
     this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
-					                                     this->rd_);
-  if (retval ==	-1)
+                                                                             this->rd_);
+  if (retval == -1)
     {
-      // @@ What is the	right way to handle this error?
+      // @@ What is the right way to handle this error?
       this->close_connection ();
 
-      ACE_THROW_RETURN (CORBA::INTERNAL	(TAO_DEFAULT_MINOR_CODE,
-					                               CORBA::COMPLETED_NO),
-			                  TAO_INVOKE_EXCEPTION);
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                                                       CORBA::COMPLETED_NO),
+                                          TAO_INVOKE_EXCEPTION);
     }
 
   // Just send the request, without trying to wait for the reply.
   retval = TAO_GIOP_Invocation::invoke (0,
-					                              ACE_TRY_ENV);
+                                                                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
-  if (retval !=	TAO_INVOKE_OK)
+  if (retval != TAO_INVOKE_OK)
     {
       return retval;
     }
 
-  // Everything	executed ok; lets remember the transport for later.
+  // Everything executed ok; lets remember the transport for later.
   this->rd_->transport (this->transport_);
 
-  // We	do not wait for	the reply. Let us return.
+  // We do not wait for the reply. Let us return.
   return TAO_INVOKE_OK;
 }
 

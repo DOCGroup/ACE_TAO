@@ -279,6 +279,7 @@ CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
   }
 
   CORBA::Boolean argument_flag = this->args_->count () ? 1: 0;
+
   TAO_GIOP_DII_Deferred_Invocation call (this->target_->_stubobj (),
                                          this->orb_->orb_core (),
                                          argument_flag,

@@ -29,6 +29,7 @@
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+#include "tao/Asynch_Invocation.h"
 #include "DII_Reply_Dispatcher.h"
 #include "Request.h"
 
@@ -60,7 +61,7 @@ public:
 };
 
 class TAO_DynamicInterface_Export TAO_GIOP_DII_Deferred_Invocation
-  : public TAO_GIOP_Invocation
+  : public TAO_GIOP_Asynch_Invocation
 {
   // = TITLE
   //    Sends a two-way request using DII and does not wait for a reply.
