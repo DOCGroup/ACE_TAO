@@ -1,0 +1,32 @@
+#
+# Makefile for building the ACE WFMO_Reactor examples
+#
+
+NAMES = \
+        test_abandoned \
+        test_apc \
+        test_console_input \
+        test_directory_changes \
+        test_exceptions \
+        test_handle_close \
+        test_multithreading \
+        test_network_events \
+        test_prerun_state_changes \
+        test_registration \
+        test_registry_changes \
+        test_removals \
+        test_suspended_removals \
+        test_talker \
+        test_timeouts \
+        test_window_messages
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

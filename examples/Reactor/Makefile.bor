@@ -5,6 +5,7 @@
 DIRS = \
         Dgram \
         Multicast \
-        Ntalker
+        Ntalker \
+        WFMO_Reactor
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -79,7 +79,7 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
   int close_down = argc > 1 ? 1 : 0;
 

@@ -53,7 +53,7 @@ public:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler handler;
   ACE_WFMO_Reactor reactor;

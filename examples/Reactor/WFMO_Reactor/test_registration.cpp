@@ -65,7 +65,7 @@ Simple_Handler::Simple_Handler (void)
 }
 
 int
-Simple_Handler::handle_signal (int signum, siginfo_t *s, ucontext_t *)
+Simple_Handler::handle_signal (int, siginfo_t *s, ucontext_t *)
 {
   ACE_HANDLE handle = s->si_handle_;
 
@@ -90,7 +90,7 @@ Simple_Handler::handle_signal (int signum, siginfo_t *s, ucontext_t *)
 
 int
 Simple_Handler::handle_close (ACE_HANDLE handle,
-                              ACE_Reactor_Mask close_mask)
+                              ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_close handle = %d\n", handle));
   this->handle_close_count_++;
@@ -133,7 +133,7 @@ worker (void)
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int result = reactor.register_handler (&simple_handler,
                                        simple_handler.event1_.handle ());

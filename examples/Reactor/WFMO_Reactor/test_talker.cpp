@@ -154,7 +154,7 @@ class Peer_Handler : public MT_TASK, public ACE_Handler
 {
 public:
   // = Initialization methods.
-  Peer_Handler (int argc, char *argv[]);
+  Peer_Handler (int argc, ACE_TCHAR *argv[]);
   ~Peer_Handler (void);
 
   int open (void * =0);
@@ -195,7 +195,7 @@ private:
   // something is added to the queue.
 
   // = Remote peer info.
-  char *host_;
+  ACE_TCHAR *host_;
   // Name of remote host.
 
   u_short port_;
@@ -248,7 +248,7 @@ private:
   // Handle of our thread.
 };
 
-Peer_Handler::Peer_Handler (int argc, char *argv[])
+Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
   : host_ (0),
     port_ (ACE_DEFAULT_SERVER_PORT),
     strategy_ (ACE_Reactor::instance (),
@@ -261,7 +261,7 @@ Peer_Handler::Peer_Handler (int argc, char *argv[])
   // then notifies us.
   this->msg_queue ()->notification_strategy (&this->strategy_);
 
-  ACE_Get_Opt get_opt (argc, argv, "h:p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("h:p:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -390,7 +390,7 @@ Peer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
 // New stuff added to the message queue.  Try to dequeue a message.
 int
-Peer_Handler::handle_output (ACE_HANDLE fd)
+Peer_Handler::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *mb;
 
@@ -511,7 +511,7 @@ STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Let the proactor know that it will be used with Reactor
   // Create specific proactor
