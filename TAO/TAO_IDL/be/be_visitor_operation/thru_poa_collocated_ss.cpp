@@ -254,35 +254,24 @@ int
 be_visitor_operation_thru_poa_collocated_ss::gen_check_exception (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
 
   os->indent ();
   // check if there is an exception
   if (!this->void_return_type (bt))
     {
-      *os << "ACE_CHECK_RETURN (";
-      // << "_tao_environment, ";
-
-      // return the appropriate return value
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (bt->accept (visitor) == -1))
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_thru_poa_collocated_cs::"
-                             "gen_check_exception - "
-                             "codegen failed\n"),
-                            -1);
+          *os << "ACE_CHECK_RETURN (0);\n";
         }
-      *os << ");\n";
+      else
+        {
+          *os << "ACE_CHECK_RETURN  (_tao_retval);\n";
+        }
     }
   else
     {
       *os << "ACE_CHECK;\n";
-      //<< "_tao_environment);\n";
     }
 
   return 0;
