@@ -66,7 +66,7 @@ writer (void *arg)
 
   if (EVENT::instance ()->signal () == -1)
     {
-      ACE_ERROR ((LM_ERROR, "thread wait failed"));
+      ACE_ERROR ((LM_ERROR, "thread signal failed"));
       ACE_OS::exit (0);
     }
 
