@@ -337,6 +337,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
 
   ACE_NEW_THROW_EX (request,
                     CORBA::Request (this,
+                                    this->protocol_proxy_->orb_core ()-> orb (),
                                     operation,
                                     arg_list,
                                     result,
@@ -365,6 +366,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
 
   ACE_NEW_THROW_EX (request,
                     CORBA::Request (this,
+                                    this->protocol_proxy_->orb_core ()->orb (),
                                     operation,
                                     arg_list,
                                     result,
@@ -383,6 +385,7 @@ CORBA_Object::_request (const CORBA::Char *operation,
       CORBA::Request_ptr req = CORBA::Request::_nil ();
       ACE_NEW_THROW_EX (req,
                         CORBA::Request (this,
+                                        this->protocol_proxy_->orb_core ()->orb (),
                                         operation,
                                         ACE_TRY_ENV),
                         CORBA::NO_MEMORY ());

@@ -268,6 +268,18 @@ public:
   //    - exceptions ... list of legal user-defined exceptions
   //    - ACE_TRY_ENV ... used for exception reporting.
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+#  if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
+
+  void do_deferred_call (const CORBA::Request_ptr req,
+                         CORBA_Environment &ACE_TRY_ENV =
+                              TAO_default_environment ());
+
+#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING  */
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
@@ -456,10 +468,10 @@ private:
   // NON-THREAD-SAFE.  utility method for next_profile.
 
 private:
-  TAO_MProfile     base_profiles_;
+  TAO_MProfile base_profiles_;
   // ordered list of profiles for this object.
 
-  TAO_MProfile     *forward_profiles_;
+  TAO_MProfile *forward_profiles_;
   // The list of forwarding profiles.  This is actually iimplemented as a
   // linked list of TAO_MProfile objects.
 
