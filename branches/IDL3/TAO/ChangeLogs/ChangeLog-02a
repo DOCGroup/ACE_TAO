@@ -1,3 +1,93 @@
+Tue Mar 26 19:42:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Added the token IDL_OBJECT to the lexer and the production rule
+          'object_type' to the parser, as specified in the OMG IDL grammar.
+          Now a CORBA::Object, when used as a field or parameter, is parsed
+          by this rule instead of by 'scoped_name' as it was formerly. Also
+          added values to enum in AST_Expression and AST_PredefinedType to
+          correspond specifically to CORBA::Object, and modified many files
+          to use the new enum values.
+
 Mon Mar 25 18:27:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_constant.cpp:
