@@ -71,12 +71,11 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         ACE_Process_Options video_process_options;
         video_process_options.command_line ("./vs -ORBport 8522");
 
-        // Create the semaphore
-        //        ACE_Process_Semaphore semaphore (0,
-        //                                         "Video_Server_Semaphore");
         
         ACE_Process video_process;
-        if (video_process.spawn (video_process_options) == -1)
+        pid_t child_pid;
+
+        if ((child_pid = video_process.spawn (video_process_options)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) ACE_Process:: spawn failed: %p\n",
                              "spawn"),
@@ -84,13 +83,21 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         // %% need to close down the orb fd's
         // in the child process!!
 
+        char sem_str [BUFSIZ];
+
+        // create a unique semaphore name
+        sprintf (sem_str,"%s%d","Video_Server_Semaphore",child_pid);
+        ACE_DEBUG ((LM_DEBUG,"(%P|%t) semaphore is %s\n",sem_str));
+        // Create the semaphore
+        ACE_Process_Semaphore semaphore (0,sem_str);
+
         // %% wait until the child finishes booting
-        //         if (semaphore.acquire () == -1)
-        //           ACE_ERROR_RETURN ((LM_ERROR,
-        //                              "(%P|%t) semaphore acquire failed: %p\n",
-        //                              "acquire"),
-        //                             -1);
-        ::sleep (5);
+        if (semaphore.acquire () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) semaphore acquire failed: %p\n",
+                             "acquire"),
+                            -1);
+        //        ::sleep (5);
         // Wait until a ACE_SV_Semaphore's value is greater than 0, the
         // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
         // DOWN operation.
@@ -427,8 +434,7 @@ AV_Server::init (int argc,
 
 // Runs the mpeg server
 int
-AV_Server::run (CORBA::Environment& env)
-{
+AV_Server::run (CORBA::Environment& env){
   int result;
   this->server_control_addr_.set (VCR_TCP_PORT);
 
