@@ -651,10 +651,16 @@ DTTask::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
+
+      TAO_TSS_Resources *tss =
+	TAO_TSS_RESOURCES::instance ();
+      
+      tss->rtscheduler_current_impl_ = this->current_;
+      
       this->current_->begin_scheduling_segment (this->name_.in (),
-					       this->sched_param_.in (),
-					       this->implicit_sched_param_.in ()
-					       ACE_ENV_ARG_PARAMETER);
+						this->sched_param_.in (),
+						this->implicit_sched_param_.in ()
+						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
       // Invoke entry point into new DT.
