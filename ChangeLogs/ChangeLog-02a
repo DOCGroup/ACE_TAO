@@ -1,3 +1,19 @@
+Mon Jul  9 16:40:02 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dirent_Selector.cpp (ACE_Dirent_Selector):
+
+	  Correct order of initialization of members to match order of
+	  declaration.  Fixes a warning issued from GCC.
+
+	* ace/Dirent_Selector.inl:
+
+	  Added missing RCS ID keyword.  Fuzz was whining about the lack
+	  of it.
+
+	* ace/Dirent_Selector.h:
+
+	  Corrected some Doxygen comments.
+
 Mon Jul 09 19:12:42 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.icc: Added Log_Msg_UNIX_Syslog and Log_Msg_NT_Event_Log
