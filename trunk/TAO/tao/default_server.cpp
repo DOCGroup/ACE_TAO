@@ -142,17 +142,13 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                 this->concurrency_strategy_ = &reactive_strategy_;
               else if (ACE_OS::strcasecmp (name, "thread-per-connection") == 0)
                 this->concurrency_strategy_ = &threaded_strategy_;
-              curarg++;
             }
         }
       else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0)
         {
           curarg++;
           if (curarg < argc)
-            {
-              this->object_table_size_ = ACE_OS::strtoul (argv[curarg], NULL, 10);
-              curarg++;
-            }
+            this->object_table_size_ = ACE_OS::strtoul (argv[curarg], NULL, 10);
         }
       else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
         {
@@ -169,8 +165,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                 this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
               else if (ACE_OS::strcasecmp (name, "user") == 0)
                 this->object_lookup_strategy_ = TAO_USER_DEFINED;
-
-              curarg++;
             }
         }
       else if (ACE_OS::strcmp (argv[curarg], "-ORBthreadflags") == 0)
@@ -178,10 +172,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           curarg++;
 
           if (curarg < argc)
-            {
-              this->tokenize (argv[curarg]);
-              curarg++;
-            }
+            this->tokenize (argv[curarg]);
         }
     }
 

@@ -5067,6 +5067,7 @@ NODEP_CPP_OPTAB=\
 SOURCE=.\orb_core.cpp
 DEP_CPP_ORB_C=\
 	"..\..\ace\config-win32.h"\
+	".\tao_internals.i"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
@@ -5119,6 +5120,7 @@ DEP_CPP_ORB_C=\
 	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\tao_internals.h"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
 	{$(INCLUDE)}"\.\varout.h"\
@@ -5143,6 +5145,8 @@ DEP_CPP_ORB_C=\
 	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Dynamic.h"\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.cpp"\
+	{$(INCLUDE)}"\ace\Dynamic_Service.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
@@ -5197,6 +5201,8 @@ DEP_CPP_ORB_C=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
