@@ -229,8 +229,6 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
 {
   int result;
   
-  //  fprintf (stderr, "VS: waiting for a new command...\n");
-    
   VIDEO_SINGLETON::instance ()->precmd = VIDEO_SINGLETON::instance ()->cmd;
   result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
   if (result != 0)
@@ -371,10 +369,25 @@ Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
 
 
 CORBA::Boolean 
-Video_Control_Waiting_State::position (const Video_Control::POSITIONpara &para)
+Video_Control_Waiting_State::position (const Video_Control::POSITIONpara &pos_para)
                            
 {
-  return 0;
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Control_Waiting_State::position () called \n"));
+
+  if (VIDEO_SINGLETON::instance ()->live_source) 
+    return CORBA::B_TRUE;
+
+  CheckGroupRange (pos_para.nextGroup);
+  VIDEO_SINGLETON::instance ()-> cmd = CmdPOSITION;
+  VIDEO_SINGLETON::instance ()-> cmdsn = pos_para.sn;
+
+  int result = VIDEO_SINGLETON::instance ()->SendPacket 
+    (VIDEO_SINGLETON::instance () ->numS > 1 
+     || pos_para.nextGroup == 0, 
+     pos_para.nextGroup, 0, 0);
+  
+  return CORBA::B_TRUE;
 }
 
 
