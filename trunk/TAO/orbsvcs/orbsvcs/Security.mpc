@@ -9,20 +9,28 @@ project(Security) : orbsvcslib, corba_messaging, core, portableserver {
   tagchecks   += Security
 
   IDL_Files {
+    CSI.idl
+    CSIIOP.idl
+    GSSUP.idl
     Security.idl
     SecurityLevel1.idl
     SecurityLevel2.idl
+    SecurityLevel3.idl
     SecurityReplaceable.idl
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
     Security {
+      CSIC.cpp
+      CSIIOPC.cpp
+      GSSUPC.cpp
       SecurityC.cpp
       SecurityS.cpp
       SecurityLevel1C.cpp
       SecurityLevel1S.cpp
       SecurityLevel2C.cpp
       SecurityLevel2S.cpp
+      SecurityLevel3C.cpp
       SecurityReplaceableC.cpp
       SecurityReplaceableS.cpp
       Security
