@@ -4950,8 +4950,7 @@ nobase_include_HEADERS += \
   SSLIOPS_T.inl \
   Channel_Clients_T.cpp \
   SSLIOPS_T.cpp \
-  SSLIOP.idl \
-  SSLIOP/ssl_endpoints.pidl
+  SSLIOP.idl
 
 EXTRA_DIST += \
   SSLIOP.rc
