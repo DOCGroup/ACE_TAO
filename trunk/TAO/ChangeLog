@@ -1,9 +1,14 @@
+Fri Jan  2 08:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+	  Fixed warnings in gnu builds.
+
 Thu Jan  1 21:28:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO-INSTALL.html:
 
 	  Added notes and observations about VC++ 7.1 in the install
-	  file. Thanks to Valery Salamakha <ccapstan@bigpond.net.au>. 
+	  file. Thanks to Valery Salamakha <ccapstan@bigpond.net.au>.
 
 Thu Jan 01 20:10:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -16,8 +21,8 @@ Thu Jan  1 17:07:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Secure_Inovcation/Foo_i.h:
 	* orbsvcs/tests/Security/Secure_Inovcation/server.cpp:
-	 
-	  Fixed a memory managemnt problem with servants. 
+
+	  Fixed a memory managemnt problem with servants.
 
 Thu Jan  1 16:42:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
