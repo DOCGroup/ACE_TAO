@@ -1,3 +1,15 @@
+Wed Jul 14 11:22:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU,
+          ACE_INSTALL.html: with egcs (Tornado II) and without
+          exception handling, add -Wno-uninitialized to CCFLAGS.
+          The version of egcs that is provided with Tornado II
+          produces some spurious warnings about uninitialized
+          variables (including "this" :-).  This was a problem
+          in older versions of egcs, but has since been fixed.
+          To avoid the warning, we always disable the warning
+          with VxWorks' egcs.
+
 Wed Jul 14 11:15:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Shared_Malloc/Malloc.cpp: only explicitly
