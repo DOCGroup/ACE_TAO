@@ -1,3 +1,8 @@
+Sun Dec 24 06:49:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed link errors
+	  in MSVC buid. 
+
 Sat Dec 23 11:54:07 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
