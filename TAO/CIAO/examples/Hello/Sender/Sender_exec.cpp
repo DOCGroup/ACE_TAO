@@ -7,25 +7,24 @@
 
 #include "Sender_exec.h"
 
-void
-MyImpl::message_impl::set_message (const char * message)
-{
-  message_ = CORBA::string_dup(message);
-}
-
-char *
+// message_impl
+//
+//
+char*
 MyImpl::message_impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Sender sending out message. \n"));
-  //return CORBA::string_dup(this->message_.in ());
-  return CORBA::string_dup (this->message_.in ());
+  ACE_DEBUG ((LM_DEBUG, "Sender sending out message. \n"));
+
+  return CORBA::string_dup (component_.message_.in ());
 }
 
+
+// Sender_exec_i
+//
+//
 MyImpl::Sender_exec_i::~Sender_exec_i ()
 {
-  delete message_impl_i;
 }
 
 void
@@ -48,8 +47,7 @@ Hello::CCM_message_ptr
 MyImpl::Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //return Hello::CCM_message::_duplicate (this);
-  return Hello::CCM_message::_duplicate(this->message_impl_i);
+  return new message_impl (*this);
 }
 
 
@@ -59,12 +57,9 @@ MyImpl::Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
 {
   Hello::timeout_var event = new OBV_Hello::timeout;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Sender initiates the process.\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
 
-  this->context_->push_click_out (event
-                                       ACE_ENV_ARG_PARAMETER);
-  return;
+  this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -112,6 +107,9 @@ MyImpl::Sender_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 
+// SenderHome_exec_i
+//
+//
 MyImpl::SenderHome_exec_i::SenderHome_exec_i ()
 {
 }
@@ -128,7 +126,9 @@ MyImpl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   return new MyImpl::Sender_exec_i;
 }
 
-
+//
+//
+//
 extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
 createSenderHome_Impl (void)
 {

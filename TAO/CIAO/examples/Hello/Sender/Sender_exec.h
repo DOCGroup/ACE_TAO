@@ -17,28 +17,6 @@
 
 namespace MyImpl
 {
-
-
-  class message_impl :
-    public virtual Hello::CCM_message,
-    public virtual TAO_Local_RefCounted_Object
-  {
-  public:
-    message_impl () : message_ ("Default Message") {}
-
-    message_impl (const char* message_ptr)
-      : message_ (message_ptr) {}
-
-    virtual char *
-    get_message (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    void set_message (const char * message);
-
-  private:
-    CORBA::String_var message_;
-  };
-
   /**
    * @class Sender_exec_i
    *
@@ -46,19 +24,23 @@ namespace MyImpl
    */
 
   class SENDER_EXEC_Export Sender_exec_i :
-      public virtual Hello::Sender_Exec,
-      public virtual TAO_Local_RefCounted_Object  {
+      public virtual Hello::CCM_Sender,
+      public virtual Component::SessionComponent,
+      public virtual TAO_Local_RefCounted_Object
+  {
 
   public:
     /// Default constructor.
     Sender_exec_i ()
-      : message_("Default Message"),
-      message_impl_i(new message_impl (message_.in() )) {}
+        : message_("Default Message")
+    {
+    }
 
     /// Secondary construction.
     Sender_exec_i (const char* local_message)
-      : message_ (local_message),
-      message_impl_i (new message_impl (message_.in() )) {}
+        : message_ (local_message)
+    {
+    }
 
     /// Default destructor.
     virtual ~Sender_exec_i ();
@@ -82,15 +64,9 @@ namespace MyImpl
     get_push_message (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Operation which will be called upon the interface call(by the receptacle)
-    //    virtual char *
-    //get_message (ACE_ENV_SINGLE_ARG_DECL)
-    //  ACE_THROW_SPEC ((CORBA::SystemException));
-
 
     // Operation inside of the trigger interface.
-    virtual void
-      start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
@@ -117,7 +93,29 @@ namespace MyImpl
 
   private:
     CORBA::String_var message_;
-    message_impl * message_impl_i;
+
+    friend class message_impl;
+  };
+
+
+  //
+  //
+  //
+  class message_impl : public virtual Hello::CCM_message,
+                       public virtual TAO_Local_RefCounted_Object
+  {
+  public:
+    message_impl (Sender_exec_i& component)
+        : component_ (component)
+    {
+    }
+
+    virtual char *
+    get_message (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    Sender_exec_i& component_;
   };
 
   /**
@@ -134,7 +132,7 @@ namespace MyImpl
     SenderHome_exec_i ();
 
     /// Default dtor.
-    ~SenderHome_exec_i ();
+    virtual ~SenderHome_exec_i ();
 
     // Implicit home operations.
 
