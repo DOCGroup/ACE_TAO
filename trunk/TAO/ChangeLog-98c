@@ -1,3 +1,7 @@
+Wed Nov 04 22:46:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Operation_Table.cpp: Added a timeprobe table.
+
 Wed Nov  4 15:31:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/IIOP_Object.h: Added TAO_Export to Profile so I can use
