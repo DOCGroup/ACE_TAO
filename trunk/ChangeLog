@@ -1,3 +1,17 @@
+Tue Apr  1 12:48:33 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ace/Node.{h,cpp}:
+
+	  Added back the deleted_ member.
+	  This sets the stage for the new Ace_Unbounded_Set_Ex class.
+
+	* ace/Unbounded_Set_Ex.{h,inl,cpp}: New.
+
+	  This class is a variation on ACE_Unbounded_Set that fixes
+	  Bugzilla bug 1460.
+
+	* ace/Makefile.ace: Add Unbounded_Set_Ex.
+
 Mon Mar 31 14:04:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/CDR_Stream.cpp:
