@@ -660,6 +660,8 @@ Worker::svc (void)
       ACE_CHECK_RETURN (-1);
       ACE_DEBUG ((LM_DEBUG, "BRGIN to make next one way call\n"));
       sched_param.task_id= second_task_id;
+      sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
+      implicit_sched_param = sched_param_policy;
       scheduler_current_->update_scheduling_segment(name,
                                                         sched_param_policy.in (),
                                                         implicit_sched_param.in ()

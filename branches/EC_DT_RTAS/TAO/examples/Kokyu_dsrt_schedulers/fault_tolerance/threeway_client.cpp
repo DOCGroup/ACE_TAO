@@ -530,7 +530,7 @@ Worker::svc (void)
 {
   /* MEASURE: Worker start time */
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
-  oid.task_id = m_id;
+  oid.task_id = ID_BEGIN++; 
   DSTRM_EVENT (WORKER_GROUP_FAM, WORKER_STARTED, 0, sizeof(Object_ID), (char*)&oid);
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -575,7 +575,7 @@ Worker::svc (void)
                                          ACE_OS::gettimeofday () +
                                          ACE_Time_Value (period_,0)); 
       sched_param.period = period_*10000000;
-      sched_param.task_id = ID_BEGIN++;
+      sched_param.task_id = oid.task_id;
       first_task_id = sched_param.task_id;
       second_task_id = ID_BEGIN++;
       sched_param.id = oid.id;
@@ -612,6 +612,7 @@ Worker::svc (void)
           sched_param.deadline = sched_param.deadline+period_*10000000;
           sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
           oid = ACE_OBJECT_COUNTER->increment();
+          oid.task_id = sched_param.task_id;
           sched_param.id = oid.id;
           sched_param.tid = oid.tid;
           sched_param.pid = oid.pid;
