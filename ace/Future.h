@@ -9,7 +9,7 @@
  *  @author Andres Kruse <Andres.Kruse@cern.ch>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Per Andersson <Per.Andersson@hfera.ericsson.se> and
- *  @author John Tucker <jtucker@infoglide.com>
+ *  @author John Tucker <johnny_tucker@yahoo.com>
  */
 //=============================================================================
 
