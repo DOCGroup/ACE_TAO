@@ -1,3 +1,22 @@
+Fri Sep  5 09:36:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Remote_Object_Proxy_Broker(_get_component).h:
+
+          Removed 'const' qualifier from the object parameter.
+
+        * tao/TAO.dsp:
+
+          Removed file fromt he project that have now been completely
+          subsumed by others.
+
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+
+          Fixed typo.
+
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
+
+          Added link to Valuetype library.
+
 Thu Sep  4 17:13:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/MessagingS.cpp:

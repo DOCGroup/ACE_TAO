@@ -36,7 +36,7 @@ TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create a object.
-  CORBA::Object_ptr retval = ;
+  CORBA::Object_ptr retval = CORBA::Object::_nil ();
   ACE_NEW_RETURN (retval,
                   CORBA::Object (stub,
                                  1,
