@@ -1,3 +1,39 @@
+Sat Sep 18 14:15:24 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IORManipulation.cpp (merge_iors, remove_profiles):
+
+	  Made TAO_Stub allocation exception safe using TAO_Stub_Auto_Ptr
+	  since it is now functioning properly.
+
+	  Updated to use ACE_AUTO_PTR_RESET macro to get around compilers
+	  that lack a reset() method.  The previous code was functionally
+	  equivalent but using ACE_AUTO_PTR_RESET is the "ACE Way" of
+	  doing an auto_ptr<>::reset().
+
+	* tao/ORB.cpp (object_to_string):
+
+	  Added some debugging messages.
+
+	* tao/Object.cpp:
+
+	  Updated some Interface Repository related code, and enable it if 
+	  TAO_HAS_INTERFACE_REPOSITORY is defined.
+
+	  Replaced instances of raw C++ new() with appropriate ACE macro,
+	  such as ACE_NEW_THROW_EX() and ACE_NEW_RETURN().
+
+	  Removed extraneous zero pointer check.  Made TAO_Stub allocation
+	  exception safe by using TAO_Stub_Auto_Ptr.
+
+	* tests/IORManipulation/IORTest.cpp (main):
+
+	  CORBA::ORB::object_to_string() cannot be called on locality
+	  constrained objects such as IORManipulation.  Disabled
+	  object_to_string() call on IORManipulation object.  [Bug 329]
+
+	  Test now uses CORBA::Object_var variables instead of
+	  CORBA::Object_ptr.  This fixes several memory leaks.
+
 Fri Sep 17 22:49:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/IORManipulation/IORTest.cpp (main):
