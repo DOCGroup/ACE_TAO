@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_field.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -37,7 +37,7 @@ be_field::be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
   // computes the fully scoped name
   compute_fullname ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -45,8 +45,8 @@ be_field::be_field (AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
 //            CODE GENERATION METHODS
 // ----------------------------------------
 
-// Generates the client-side header information for the field 
-int 
+// Generates the client-side header information for the field
+int
 be_field::gen_client_header (void)
 {
   be_type *bt;  // the field type
@@ -68,14 +68,14 @@ be_field::gen_client_header (void)
 }
 
 // Generates the client-side stubs for the field
-int 
+int
 be_field::gen_client_stubs (void)
 {
   return 0;
 }
 
-// Generates the server-side header information for the field 
-int 
+// Generates the server-side header information for the field
+int
 be_field::gen_server_header (void)
 {
   // nothing to be done
@@ -83,7 +83,7 @@ be_field::gen_server_header (void)
 }
 
 // Generates the server-side skeletons for the field
-int 
+int
 be_field::gen_server_skeletons (void)
 {
   // nothing to be done
@@ -91,7 +91,7 @@ be_field::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_field::gen_client_inline (void)
 {
   // base type may need inline definitions
@@ -102,7 +102,7 @@ be_field::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_field::gen_server_inline (void)
 {
   // nothing to be done
@@ -148,10 +148,11 @@ be_field::tc_encap_len (void)
       // struct member is represented as the "name" followed by the typecode
 
       this->encap_len_ = this->name_encap_len (); // for name
-      
+
       // add to this, the size of our typecode
       bt = be_type::narrow_from_decl (this->field_type ());
-      this->encap_len_ += bt->tc_encap_len ();
+      this->encap_len_ += bt->tc_size (); // note that we must add typecode
+                                          // size of the type
     }
   return this->encap_len_;
 }
@@ -159,4 +160,3 @@ be_field::tc_encap_len (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_field, AST_Field, be_decl)
 IMPL_NARROW_FROM_DECL (be_field)
-

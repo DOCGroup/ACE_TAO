@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_structure.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -42,7 +42,7 @@ be_structure::be_structure (UTL_ScopedName *n, UTL_StrList *p)
   // computes the fully scoped typecode name
   compute_tc_name ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -61,11 +61,11 @@ be_structure::compute_member_count (void)
       // instantiate a scope iterator.
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               this->member_count_++;
             }
@@ -90,8 +90,8 @@ be_structure::member_count (void)
 //            CODE GENERATION METHODS
 // ----------------------------------------
 
-// Generates the client-side header information for the structure 
-int 
+// Generates the client-side header information for the structure
+int
 be_structure::gen_client_header (void)
 {
   TAO_OutStream *ch; // output stream
@@ -117,7 +117,7 @@ be_structure::gen_client_header (void)
       // generate code for field members
       if (be_scope::gen_client_header () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "be_structure::gen_client_header\n")); 
+          ACE_ERROR ((LM_ERROR, "be_structure::gen_client_header\n"));
           ACE_ERROR ((LM_ERROR, "code generation for fields failed\n"));
           return -1;
         }
@@ -162,7 +162,7 @@ be_structure::gen_client_header (void)
 }
 
 // Generates the client-side stubs for the structure
-int 
+int
 be_structure::gen_client_stubs (void)
 {
   TAO_OutStream *cs; // output stream
@@ -183,7 +183,7 @@ be_structure::gen_client_stubs (void)
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
-        nl; 
+        nl;
       *cs << "{\n";
       cs->incr_indent (0);
       // note that we just need the parameters here and hence we generate the
@@ -196,9 +196,9 @@ be_structure::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "};" << nl;
 
-      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
-        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () << 
-        "), (unsigned char *) &_oc_" << this->flatname () << 
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
+        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () <<
+        "), (unsigned char *) &_oc_" << this->flatname () <<
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
@@ -209,8 +209,8 @@ be_structure::gen_client_stubs (void)
   return 0;
 }
 
-// Generates the server-side header information for the structure 
-int 
+// Generates the server-side header information for the structure
+int
 be_structure::gen_server_header (void)
 {
   // nothing to be done
@@ -218,7 +218,7 @@ be_structure::gen_server_header (void)
 }
 
 // Generates the server-side skeletons for the structure
-int 
+int
 be_structure::gen_server_skeletons (void)
 {
   // nothing to be done
@@ -226,7 +226,7 @@ be_structure::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_structure::gen_client_inline (void)
 {
   if (!this->cli_inline_gen_)
@@ -252,7 +252,7 @@ be_structure::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_structure::gen_server_inline (void)
 {
   // nothing to be done
@@ -274,7 +274,7 @@ be_structure::gen_typecode (void)
   cs->indent (); // start from whatever indentation level we were at
 
   *cs << "CORBA::tk_struct, // typecode kind" << nl;
-  *cs << this->tc_size () << ", // encapsulation length\n";
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
   // now emit the encapsulation
   cs->incr_indent (0);
   if (this->gen_encapsulation () == -1)
@@ -303,8 +303,8 @@ be_structure::gen_encapsulation (void)
   cs->indent (); // start from whatever indentation level we were at
 
   // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO 
-  *cs << "0, // byte order" << nl; 
+  // TODO
+  *cs << "0, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
@@ -368,4 +368,3 @@ be_structure::tc_encap_len (void)
 IMPL_NARROW_METHODS3 (be_structure, AST_Structure, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_structure)
 IMPL_NARROW_FROM_SCOPE (be_structure)
-
