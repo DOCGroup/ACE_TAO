@@ -58,6 +58,7 @@ ACE_CORBA_Handler::~ACE_CORBA_Handler (void)
 }
 
 ACE_CORBA_Handler::ACE_CORBA_Handler (void)
+  : reference_count_ (0)
 {
   ACE_TRACE ("ACE_CORBA_Handler::ACE_CORBA_Handler");
   reactor (ACE_Reactor::instance ());
