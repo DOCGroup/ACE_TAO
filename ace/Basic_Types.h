@@ -201,6 +201,24 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   error Have to add to the ACE_UINT32 type setting
 # endif
 
+// The number of bytes in a void *.
+# ifndef ACE_SIZEOF_VOID_P
+#   define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
+# endif /* ACE_SIZEOF_VOID_P */
+
+// Type for doing arithmetic on pointers ... as elsewhere, we assume
+// that unsigned versions of a type are the same size as the signed
+// version of the same type.
+#if ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT
+  typedef u_int ptr_arith_t;
+#elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
+  typedef u_long ptr_arith_t;
+#elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
+  typedef u_long long ptr_arith_t;
+#else
+# error "Can't find a suitable type for doing pointer arithmetic."
+#endif /* ACE_SIZEOF_VOID_P */
+
 // If the platform lacks a long long, define one.
 # if defined (ACE_LACKS_LONGLONG_T)
   class ACE_Export ACE_U_LongLong
@@ -276,6 +294,18 @@ typedef ACE_UINT16 ACE_USHORT16;
     ACE_UINT32 operator/ (const u_int) const;
     ACE_UINT32 operator/ (const int) const;
 #   endif /* ACE_SIZEOF_INT != 4 */
+
+    // Conversion operator.  Try to avoid adding more of these,
+    // because they can lead to subtle problems.  But a conversion to
+    // ptr_arith_t is useful.
+#   if ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT  || \
+       ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
+      operator ptr_arith_t () { return data_.lo_; }
+#   elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
+      operator ptr_arith_t () { return data_.hi_ << 32U  &  data_.lo_; }
+#   else
+#     error "Can't find a suitable type for doing pointer arithmetic."
+#   endif /* ACE_SIZEOF_VOID_P */
 
     // = Helper methods.
     void output (FILE * = stdout) const;
@@ -392,11 +422,6 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
 # endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 
-
-// The number of bytes in a void *.
-# ifndef ACE_SIZEOF_VOID_P
-#   define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
-# endif /* ACE_SIZEOF_VOID_P */
 
 // The number of bytes in a float.
 # ifndef ACE_SIZEOF_FLOAT
