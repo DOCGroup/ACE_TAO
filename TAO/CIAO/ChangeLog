@@ -1,7 +1,13 @@
+Thu Nov 11 14:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ciao/Servant_Activator.cpp:
+        * docs/tutorial/Hello/hello_exec.cpp:
+          Fixed unused parameter warnings in emulated exception build
+
 Tue Nov  9 14:20:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Fixed incorrect code generation for home factory operations.
           Thanks to Chad Elliott <elliott_c@ociweb.com> for pointing
           out the mistake.
