@@ -107,6 +107,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -297,6 +298,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -457,6 +459,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
@@ -629,6 +632,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
@@ -869,8 +873,10 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -958,6 +964,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1112,8 +1119,10 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1324,6 +1333,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1409,8 +1419,10 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1597,6 +1609,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
@@ -1963,6 +1976,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -2048,8 +2062,10 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -2192,6 +2208,65 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Service_Context.h \
  $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(ACE_ROOT)/ace/Recyclable.h \
+ $(ACE_ROOT)/ace/Recyclable.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
+ $(ACE_ROOT)/ace/Connection_Recycling_Strategy.h \
+ $(ACE_ROOT)/ace/Dynamic.h \
+ $(ACE_ROOT)/ace/Dynamic.i \
+ $(TAO_ROOT)/tao/IIOPC.h \
+ $(TAO_ROOT)/tao/IIOPC.i \
+ $(TAO_ROOT)/tao/IIOP_Transport.i \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Hashable.h \
+ $(ACE_ROOT)/ace/Hashable.inl \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/Connection_Handler.inl \
+ $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
