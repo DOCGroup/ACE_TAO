@@ -70,9 +70,7 @@ RANLIB		= echo
 LDFLAGS		= -L. -L$(ACE_ROOT)/ace -Wl,+s
 SOFLAGS		+= $(CPPFLAGS) -shared -nostdlib $(PIC)
 SOEXT		= sl
-SOVERSION	=
 SOBUILD 	= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.$(SOEXT) $<
-#SHLIBBUILD 	= $(SOLINK.cc) -o $@ $(VSHOBJS1)
 PRELIB = @true
 #
 # Grab the appropriate libraries based on the version of HP-UX we're building

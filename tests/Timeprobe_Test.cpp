@@ -122,7 +122,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     template class ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>;
 # elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #   pragma instantiate ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>
-# elif defined (__GNUC__) && defined (_AIX)
+# elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
     template ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX> *
       ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>::singleton_;
 # endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
