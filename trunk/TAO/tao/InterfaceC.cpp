@@ -13981,7 +13981,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::Contained::Description &_ta
 
 void CORBA::Contained::Description::_tao_any_destructor (void *x)
 {
-  CORBA::Contained::Description *tmp = ACE_const_cast(CORBA::Contained::Description*,x);
+  CORBA::Contained::Description *tmp = ACE_static_cast(CORBA::Contained::Description*,x);
   delete tmp;
 }
 
@@ -14072,7 +14072,7 @@ void operator<<= (
 
 void CORBA::InterfaceDefSeq::_tao_any_destructor (void *x)
 {
-  CORBA::InterfaceDefSeq *tmp = ACE_const_cast(CORBA::InterfaceDefSeq*,x);
+  CORBA::InterfaceDefSeq *tmp = ACE_static_cast(CORBA::InterfaceDefSeq*,x);
   delete tmp;
 }
 
@@ -14164,7 +14164,7 @@ void operator<<= (
 void CORBA::ValueDefSeq::_tao_any_destructor (void *x)
 {
   CORBA::ValueDefSeq *tmp = ACE_static_cast(CORBA::ValueDefSeq*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ValueDefSeq *_tao_elem) // non copying
@@ -14255,7 +14255,7 @@ void operator<<= (
 void CORBA::ContainedSeq::_tao_any_destructor (void *x)
 {
   CORBA::ContainedSeq *tmp = ACE_static_cast(CORBA::ContainedSeq*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::ContainedSeq *_tao_elem) // non copying
@@ -14341,7 +14341,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::StructMember &_tao_elem) //
 void CORBA::StructMember::_tao_any_destructor (void *x)
 {
   CORBA::StructMember *tmp = ACE_static_cast(CORBA::StructMember*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::StructMember *_tao_elem) // non copying
@@ -14432,7 +14432,7 @@ void operator<<= (
 void CORBA::StructMemberSeq::_tao_any_destructor (void *x)
 {
   CORBA::StructMemberSeq *tmp = ACE_static_cast(CORBA::StructMemberSeq*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::StructMemberSeq *_tao_elem) // non copying
@@ -14518,7 +14518,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::Initializer &_tao_elem) // 
 void CORBA::Initializer::_tao_any_destructor (void *x)
 {
   CORBA::Initializer *tmp = ACE_static_cast(CORBA::Initializer*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Initializer *_tao_elem) // non copying
@@ -14610,7 +14610,7 @@ void CORBA::InitializerSeq::_tao_any_destructor (void *x)
 {
   CORBA::InitializerSeq *tmp =
     ACE_static_cast(CORBA::InitializerSeq*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::InitializerSeq *_tao_elem) // non copying
@@ -14696,7 +14696,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::UnionMember &_tao_elem) // 
 void CORBA::UnionMember::_tao_any_destructor (void *x)
 {
   CORBA::UnionMember *tmp = ACE_static_cast(CORBA::UnionMember*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMember *_tao_elem) // non copying
@@ -14787,7 +14787,7 @@ void operator<<= (
 void CORBA::UnionMemberSeq::_tao_any_destructor (void *x)
 {
   CORBA::UnionMemberSeq *tmp = ACE_static_cast(CORBA::UnionMemberSeq*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::UnionMemberSeq *_tao_elem) // non copying
@@ -14862,7 +14862,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::UnionMember
 void CORBA::EnumMemberSeq::_tao_any_destructor (void *x)
 {
   CORBA::EnumMemberSeq *tmp = ACE_static_cast(CORBA::EnumMemberSeq*,x);
-  delete x;
+  delete tmp;
 }
 
 void operator<<= (
