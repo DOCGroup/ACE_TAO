@@ -1042,7 +1042,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (BAD_QOS) \
     TAO_SYSTEM_EXCEPTION (INVALID_ACTIVITY) \
     TAO_SYSTEM_EXCEPTION (ACTIVITY_COMPLETED) \
-    TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED)
+    TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
+    TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
