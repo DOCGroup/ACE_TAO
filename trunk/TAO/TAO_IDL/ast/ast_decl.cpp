@@ -263,7 +263,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
 }
 
 void
-AST_Decl::set_prefix_with_typeprefix_r (char *value,
+AST_Decl::set_prefix_with_typeprefix_r (const char *value,
                                         UTL_Scope *appeared_in)
 {
   if (this->typeid_set_)
@@ -880,7 +880,7 @@ AST_Decl::prefix (void)
 }
 
 void
-AST_Decl::prefix (char *value)
+AST_Decl::prefix (const char *value)
 {
   delete [] this->prefix_;
   this->prefix_ = ACE::strnew (value);
@@ -1034,7 +1034,7 @@ AST_Decl::set_id_with_typeid (char *value)
 }
 
 void
-AST_Decl::set_prefix_with_typeprefix (char *value)
+AST_Decl::set_prefix_with_typeprefix (const char *value)
 {
   // Are we a legal type for 'typeprefix'? This is checked only at
   // the top level.
