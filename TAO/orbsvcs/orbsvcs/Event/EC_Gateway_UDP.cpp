@@ -587,7 +587,7 @@ TAO_ECG_UDP_Request_Entry::decode (RtecEventComm::EventSet& event,
                                    CORBA::Environment& _env)
 {
   TAO_InputCDR cdr (&this->payload_,
-                    this->byte_order_);
+                    ACE_static_cast(int,this->byte_order_));
   cdr.decode (RtecEventComm::_tc_EventSet, &event, 0, _env);
 }
 
