@@ -15,20 +15,29 @@ ifdef SHLIBA
 VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 endif
 
-VLOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file))))
+VLOBJS   = $(subst .c,.$(OBJEXT), \
+                $(subst .cpp,.$(OBJEXT), \
+                    $(foreach file,$(LSRC),$(VDIR)$(notdir $(file)))))
 
 LSRC    += $(LSRC2)
 ifdef PRELIB
 ifdef PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+  VSHOBJS = $(subst .c,.$(OBJEXT), \
+                $(subst .cpp,.$(OBJEXT), \
+                    $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
 else  # ! PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+  VSHOBJS = $(subst .c,.$(OBJEXT), \
+                $(subst .cpp,.$(OBJEXT), \
+                     $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
 endif # ! PRELIB_USES_OBJ_ONLY
   VSHOBJS1 = $(VSHOBJS)
 else  # ! PRELIB
-  VSHOBJS = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
-  VSHOBJS1 = \
-    $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+  VSHOBJS = $(subst .c,.$(OBJEXT), \
+                $(subst .cpp,.$(OBJEXT), \
+                     $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
+  VSHOBJS1 = $(subst .c,.$(OBJEXT), \
+                 $(subst .cpp,.$(OBJEXT), \
+                     $(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file)))))
 endif # ! PRELIB
 
 # Comment out for now...
