@@ -1,3 +1,51 @@
+Fri Apr 17 11:40:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_Service_Object_Exterminator): Typedef of ACE
+	  factory cleanup funciton. 
+	  (ACE_FACTORY_{DECLARE,DEFINE}): Added an extra argument to pass
+	  back destructor for the object created by the factory.  Changed
+	  the ACE_FACTORY_DEFINE to generate this destructor function to
+	  pair with factory function so that we can deallocate the object
+	  in the same heap it was created.
+	  (ACE_SVC_INVOKE): This will now pass in 0, which means we don't
+	  want to use the destructor function.
+
+	* ace/Parse_Node.{h,cpp} (symbol): Added an extra argument to get
+	  back the destructor function from ACE_FACTORY.  Only
+	  Function_Node actually uses it.
+	  (ACE_Function_Node::symbol): Initialize the Service_Object with
+	  added destructor function ptr so it will get destructed in the
+	  "right place".
+
+	* ace/Service_Config.{h,cpp} (load_static_svcs): Invoke the
+	  factory method with added argument to get back the destructor
+	  function and then, pass it in to ace_create_service_type
+	  function. 
+	  (ACE_Service_Manager): Changed to use the more generic
+	  ACE_FACTORY_DEFINE than using ACE_SVC_FACTORY_DEFINE.
+	  (ACE_SERVICE_ALLOCATOR): Must match with signature of the
+	  new factory method.
+
+	* ace/Service_Type.{h,cpp}
+	  (ACE_Service_Object_Type,ACE_Service_Type_Impl): Keep the
+	  destruction function in these object, if use provides one, then
+	  use it to destruct the object, otherwise, just use delete.
+
+	* ace/Naming_Context.{h,cpp}: Changed to use
+	  ACE_FACTORY_{DEFINE,DECLARE}.
+
+	* ace/Object_Manager.cpp: Changed the signature of
+	  Service_Manager.
+
+	* ace/Svc_Conf.h: Changed the signature of
+	  ace_create_service_type.
+
+	* ace/Svc_Conf_y.cpp:
+	* ace/Svc_Conf.y: Try to get the destruction function from
+	  factories in svc_location.  
+	  (ace_create_service_type): Pass in the destruction function if
+	  provided one.
+	
 Fri Apr 17 08:31:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Signal.cpp (dispatch): Fixed a typo.  Thanks for David
