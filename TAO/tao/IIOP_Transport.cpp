@@ -111,7 +111,7 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - %p\n"),
                     ACE_TEXT ("IIOP_Transport::read_message, failure ")
-                    ACE_TEXT ("in read_message ()"))); 
+                    ACE_TEXT ("in read_message ()")));
 
       this->tms_->connection_closed ();
       return -1;
@@ -142,8 +142,11 @@ TAO_IIOP_Transport::register_handler_i (void)
   if (r == this->connection_handler_->reactor ())
     return 0;
 
-  // Set the flag in the Connection Handler
+  // Set the flag in the Connection Handler and in the Wait Strategy
+  // @@Maybe we should set these flags after registering with the
+  // reactor. What if the  registration fails???
   this->connection_handler_->is_registered (1);
+  this->ws_->is_registered (1);
 
 
   // Register the handler with the reactor
@@ -459,7 +462,7 @@ TAO_IIOP_Transport::get_listen_point (
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local ")
                          ACE_TEXT ("host address in ")
-                         ACE_TEXT ("get_listen_point()\n")), 
+                         ACE_TEXT ("get_listen_point()\n")),
                         -1);
     }
 
