@@ -47,10 +47,10 @@ main (int argc, char *[], char* envp[])
   else
     {
       // In this case we're the child
-      ACE_START_TEST ("Env_Value");
+      ACE_START_TEST ("Env_Value_Test");
 
 #define TEST_THIS(type,varname,defval,expval) do { ACE_Env_Value<type> val(varname, (defval)); ACE_ASSERT (val == (expval)); } while (0)
-      
+
       TEST_THIS (int, "TEST_VALUE_POSITIVE", 4, 10);
       TEST_THIS (double, "TEST_VALUE_POSITIVE", -1.0, 10.2);
       TEST_THIS (unsigned long, "TEST_VALUE_POSITIVE", 0, 10);
@@ -67,7 +67,7 @@ main (int argc, char *[], char* envp[])
 
       ACE_END_TEST;
     }
-  
+
   return 0;
 }
 
