@@ -25,8 +25,8 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (void)
 
 int
 ACE_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
-					int restart,
-					int &in_blocking_mode) const
+                                        int restart,
+                                        int &in_blocking_mode) const
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_accept_start");
 
@@ -36,20 +36,20 @@ ACE_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
   if (timeout != 0)
     {
       if (ACE::handle_timed_accept (handle,
-				    timeout,
-				    restart) == -1)
-	return -1;
+                                    timeout,
+                                    restart) == -1)
+        return -1;
       else
-	{
-	  in_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
-					       ACE_NONBLOCK);
-	  // Set the handle into non-blocking mode if it's not already
-	  // in it.
-	  if (in_blocking_mode
-	      && ACE::set_flags (handle,
-				 ACE_NONBLOCK) == -1)
-	    return -1;
-	}
+        {
+          in_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
+                                               ACE_NONBLOCK);
+          // Set the handle into non-blocking mode if it's not already
+          // in it.
+          if (in_blocking_mode
+              && ACE::set_flags (handle,
+                                 ACE_NONBLOCK) == -1)
+            return -1;
+        }
     }
 
   return 0;
@@ -57,8 +57,8 @@ ACE_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
 
 int
 ACE_SOCK_Acceptor::shared_accept_finish (ACE_SOCK_Stream new_stream,
-					 int in_blocking_mode,
-					 int reset_new_handle) const
+                                         int in_blocking_mode,
+                                         int reset_new_handle) const
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_accept_finish ()");
 
@@ -75,9 +75,9 @@ ACE_SOCK_Acceptor::shared_accept_finish (ACE_SOCK_Stream new_stream,
       // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
       // originally.
       ACE::clr_flags (this->get_handle (),
-		      ACE_NONBLOCK);
+                      ACE_NONBLOCK);
       ACE::clr_flags (new_handle,
-		      ACE_NONBLOCK);
+                      ACE_NONBLOCK);
     }
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -96,7 +96,7 @@ ACE_SOCK_Acceptor::shared_accept_finish (ACE_SOCK_Stream new_stream,
 int
 ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                            ACE_Addr *remote_addr,
-			   ACE_Time_Value *timeout,
+                           ACE_Time_Value *timeout,
                            int restart,
                            int reset_new_handle) const
 {
@@ -104,8 +104,8 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 
   int in_blocking_mode = 0;
   if (this->shared_accept_start (timeout,
-				 restart,
-				 in_blocking_mode) == -1)
+                                 restart,
+                                 in_blocking_mode) == -1)
     return -1;
   else
     {
@@ -116,38 +116,38 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
       int len = 0;
 
       if (remote_addr != 0)
-	{
-	  len = remote_addr->get_size ();
+        {
+          len = remote_addr->get_size ();
           len_ptr = &len;
-	  addr = (sockaddr *) remote_addr->get_addr ();
-	}
+          addr = (sockaddr *) remote_addr->get_addr ();
+        }
 
       do
-	new_stream.set_handle (ACE_OS::accept (this->get_handle (),
-					       addr,
-					       len_ptr));
+        new_stream.set_handle (ACE_OS::accept (this->get_handle (),
+                                               addr,
+                                               len_ptr));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
-	     && restart != 0
-	     && errno == EINTR
-	     && timeout == 0);
+             && restart != 0
+             && errno == EINTR
+             && timeout == 0);
 
       // Reset the size of the addr, which is only necessary for UNIX
       // domain sockets.
       if (new_stream.get_handle () != ACE_INVALID_HANDLE
-	  && remote_addr != 0)
-	remote_addr->set_size (len);
+          && remote_addr != 0)
+        remote_addr->set_size (len);
     }
 
   return this->shared_accept_finish (new_stream,
-				     in_blocking_mode,
-				     reset_new_handle);
+                                     in_blocking_mode,
+                                     reset_new_handle);
 }
 
 int
 ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
-			   ACE_Accept_QoS_Params qos_params,
+                           ACE_Accept_QoS_Params qos_params,
                            ACE_Addr *remote_addr,
-			   ACE_Time_Value *timeout,
+                           ACE_Time_Value *timeout,
                            int restart,
                            int reset_new_handle) const
 {
@@ -155,8 +155,8 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 
   int in_blocking_mode = 0;
   if (this->shared_accept_start (timeout,
-				 restart,
-				 in_blocking_mode) == -1)
+                                 restart,
+                                 in_blocking_mode) == -1)
     return -1;
   else
     {
@@ -167,32 +167,32 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
       sockaddr *addr = 0;
 
       if (remote_addr != 0)
-	{
-	  len = remote_addr->get_size ();
+        {
+          len = remote_addr->get_size ();
           len_ptr = &len;
-	  addr = (sockaddr *) remote_addr->get_addr ();
-	}
+          addr = (sockaddr *) remote_addr->get_addr ();
+        }
 
       do
-	new_stream.set_handle (ACE_OS::accept (this->get_handle (),
-					       addr,
-					       len_ptr,
-					       qos_params));
+        new_stream.set_handle (ACE_OS::accept (this->get_handle (),
+                                               addr,
+                                               len_ptr,
+                                               qos_params));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
-	     && restart != 0
-	     && errno == EINTR
-	     && timeout == 0);
+             && restart != 0
+             && errno == EINTR
+             && timeout == 0);
 
       // Reset the size of the addr, which is only necessary for UNIX
       // domain sockets.
       if (new_stream.get_handle () != ACE_INVALID_HANDLE
-	  && remote_addr != 0)
-	remote_addr->set_size (len);
+          && remote_addr != 0)
+        remote_addr->set_size (len);
     }
 
   return this->shared_accept_finish (new_stream,
-				     in_blocking_mode,
-				     reset_new_handle);
+                                     in_blocking_mode,
+                                     reset_new_handle);
 }
 
 void
@@ -210,14 +210,8 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   int error = 0;
 
 #if defined (ACE_HAS_IPV6)
-  // For AF_INET6 addresses, we need PF_INET6 sockets in order to
-  // properly bind to IPv6 addresses
-  if(local_sap.get_type() == AF_INET6)
-    protocol_family = PF_INET6;
-
   if (protocol_family == PF_INET6)
     {
-      printf("Doing PF_INET6 open\n");
       sockaddr_in6 local_inet6_addr;
       ACE_OS::memset (ACE_reinterpret_cast (void *,
                                             &local_inet6_addr),
@@ -280,7 +274,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
         error = 1;
     }
   else if (ACE_OS::bind (this->get_handle (),
-			 (sockaddr *) local_sap.get_addr (),
+                         (sockaddr *) local_sap.get_addr (),
                          local_sap.get_size ()) == -1)
     error = 1;
 
@@ -307,13 +301,21 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::open");
 
+#if defined (ACE_HAS_IPV6)
+  // For AF_INET6 addresses, we need PF_INET6 sockets in order to
+  // properly bind to IPv6 addresses
+  if(local_sap.get_type() == AF_INET6) {
+    protocol_family = PF_INET6;
+  }
+#endif
+
   if (ACE_SOCK::open (SOCK_STREAM,
-		      protocol_family,
-		      protocol,
+                      protocol_family,
+                      protocol,
                       protocolinfo,
                       g,
                       flags,
-		      reuse_addr) == -1)
+                      reuse_addr) == -1)
     return -1;
   else
     return this->shared_open (local_sap,
@@ -335,30 +337,34 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                   protocolinfo,
                   g,
                   flags,
-		  reuse_addr,
-		  protocol_family,
-		  backlog,
-		  protocol) == -1)
+                  reuse_addr,
+                  protocol_family,
+                  backlog,
+                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-		ACE_LIB_TEXT ("%p\n"),
-		ACE_LIB_TEXT ("ACE_SOCK_Acceptor")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_SOCK_Acceptor")));
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
 
 int
 ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
-			 int reuse_addr,
-			 int protocol_family,
-			 int backlog,
-			 int protocol)
+                         int reuse_addr,
+                         int protocol_family,
+                         int backlog,
+                         int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::open");
+#if defined (ACE_HAS_IPV6)
+  if(local_sap.get_type() == AF_INET6)
+    protocol_family = PF_INET6;
+#endif
 
   if (ACE_SOCK::open (SOCK_STREAM,
-		      protocol_family,
-		      protocol,
-		      reuse_addr) == -1)
+                      protocol_family,
+                      protocol,
+                      reuse_addr) == -1)
     return -1;
   else
     return this->shared_open (local_sap,
@@ -369,18 +375,18 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
 // General purpose routine for performing server ACE_SOCK creation.
 
 ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
-				      int reuse_addr,
-				      int protocol_family,
-				      int backlog,
-				      int protocol)
+                                      int reuse_addr,
+                                      int protocol_family,
+                                      int backlog,
+                                      int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
   if (this->open (local_sap,
-		  reuse_addr,
-		  protocol_family,
-		  backlog,
-		  protocol) == -1)
+                  reuse_addr,
+                  protocol_family,
+                  backlog,
+                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-		ACE_LIB_TEXT ("%p\n"),
-		ACE_LIB_TEXT ("ACE_SOCK_Acceptor")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_SOCK_Acceptor")));
 }

@@ -205,7 +205,7 @@ ACE_INET_Addr::set (u_short port_number,
   ACE_UNUSED_ARG (port_number);
   ACE_UNUSED_ARG (ip_addr);
   ACE_UNUSED_ARG (encode);
-  
+
   // XXXXX
   printf("Error: set not defined for 32 bit addresses with IPv6 defined\n");
   return -1;
@@ -280,7 +280,7 @@ ACE_INET_Addr::set (u_short port_number,
   this->ACE_Addr::base_set (ACE_AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
                          this->inet_addr_);
-
+  printf("in set(port,hostname)\n");
   // Yow, someone gave us a NULL host_name!
   if (host_name == 0)
     {
@@ -290,7 +290,7 @@ ACE_INET_Addr::set (u_short port_number,
 #if defined (ACE_HAS_IPV6)
   else if (ACE_OS::inet_pton (AF_INET6,
                               host_name,
-                              (void*)&addr) == 0)
+                              (void*)&addr) == 1)
 #else
   else if (ACE_OS::inet_aton (host_name,
                               (struct in_addr *) &addr) == 1)
