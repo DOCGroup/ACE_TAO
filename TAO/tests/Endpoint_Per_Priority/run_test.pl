@@ -12,7 +12,7 @@ $client_conf="client.conf";
 $server_conf="server.conf";
 $threads='2';
 
-$iorfile = "/tmp/test.ior";
+$iorfile = "test.ior";
 
 print STDERR "================ Multi-threaded test\n";
 
@@ -23,6 +23,8 @@ $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
 		       . " -ORBEndPoint iiop://localhost:0/priority=0 "
 		       . " -ORBEndPoint iiop://localhost:0/priority=1 "
 		       . " -ORBEndPoint iiop://localhost:0/priority=2 "
+                       . " -ORBEndPoint iiop://localhost:0/priority=3 "
+                       . " -ORBEndPoint iiop://localhost:0/priority=4 "
                        . " -o $iorfile -n $threads");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
