@@ -1,3 +1,8 @@
+Fri Jan  9 11:01:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Fixed compile problem in BCB build
+
 Thu Jan  8 22:30:13 2004  Frank Hunleth  <frank@hunleth.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
