@@ -1,3 +1,22 @@
+Mon Mar 23 10:42:12 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.{cpp,h,i}
+          orbsvcs/orbsvcs/Sched/SchedEntry.{cpp,h,i}
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp,h,i}
+
+          Merged in the final round of timeline fixes from the
+          files in the old scheduler directory into the ones
+          in the new directory.
+          
+        * orbsvcs/tests/Sched/DynSched_Test.cpp
+
+          Added directory orbsvcs/tests/Sched and checked in a
+          copy of DynSched_Test.cpp, the file used to test the
+          offline behavior of the dynamic scheduler locally.
+          This file will serve as the basis of a real TAO test
+          for the on and off line behaviors of the dynamic
+          scheduler when it is fully integrated into TAO.
+
 Mon Mar 23 09:18:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Dump_Schedule/Makefile,orbsvcs/Event_Service/Makefile,
