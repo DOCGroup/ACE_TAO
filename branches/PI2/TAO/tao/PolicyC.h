@@ -23,6 +23,8 @@
 #include "tao/Exception.h"
 #include "tao/Sequence.h"
 
+#include "tao/Encodable.h"
+
 class TAO_Export CORBA_PolicyError : public CORBA::UserException
 {
 public:
@@ -108,7 +110,7 @@ class TAO_Export  CORBA_Policy_var : public TAO_Base_var
 {
 public:
   CORBA_Policy_var (void); // default constructor
-  CORBA_Policy_var (CORBA_Policy_ptr);
+  CORBA_Policy_var (CORBA_Policy_ptr p) : ptr_ (p) {}
   CORBA_Policy_var (const CORBA_Policy_var &); // copy constructor
   ~CORBA_Policy_var (void); // destructor
 
@@ -149,7 +151,8 @@ private:
   CORBA_Policy_ptr &ptr_;
 };
 
-class TAO_Export  CORBA_Policy : public virtual CORBA_Object
+class TAO_Export  CORBA_Policy : public virtual CORBA_Object,
+                                 public TAO_Encodable
 {
 public:
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -201,6 +204,19 @@ public:
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
+
+  // The following methods are used for embedding client-exposed
+  // policies into an IOR.  These methods are not part of the idl
+  // compiler generated code: they were added by hand.
+
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+  // Encode the Policy into a CDR representation.  Returns true 
+  // on success and false on failure.
+
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+  // Decode the Policy from a CDR representation.  Returns true 
+  // on success and false on failure.
+
 protected:
   CORBA_Policy (void); // default constructor
   CORBA_Policy (TAO_Stub *objref,

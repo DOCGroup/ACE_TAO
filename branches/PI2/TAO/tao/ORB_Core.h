@@ -378,6 +378,35 @@ public:
   // Access the priority mapping class, this is a TAO extension but
   // there is no standard way to get to it either.
 
+  // = Methods for obtaining ORB implementation default values for RT
+  //   policies.
+
+  TAO_PrivateConnectionPolicy *default_private_connection (void) const;
+
+  TAO_PriorityBandedConnectionPolicy *
+  default_priority_banded_connection (void) const;
+
+  TAO_ClientProtocolPolicy *default_client_protocol (void) const;
+
+  TAO_ServerProtocolPolicy *default_server_protocol (void) const;
+
+  TAO_ThreadpoolPolicy *default_threadpool (void) const;
+
+  TAO_PriorityModelPolicy *default_priority_model (void) const;
+
+  // = Methods for obtaining effective ORB-level overrides for
+  //   policies available only at the POA/ORB levels, and unavailable
+  //   at Object/Current levels.
+  //
+  //   First check for an override at the ORB scope; if nothing there,
+  //   check the ORB implementation default values.
+
+  TAO_ThreadpoolPolicy *threadpool (void);
+
+  TAO_PriorityModelPolicy *priority_model (void);
+
+  TAO_ServerProtocolPolicy *server_protocol (void);
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   int get_thread_priority (CORBA::Short &priority);
@@ -424,8 +453,8 @@ public:
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ());
+                                CORBA::PolicyList *policy_list,
+                                CORBA::Environment &ACE_TRY_ENV);
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
 
@@ -439,6 +468,10 @@ public:
   CORBA::Object_ptr typecode_factory (void);
   void typecode_factory (const CORBA::Object_ptr tf);
   // Get/Set the IOR of the TypeCodeFactory DLL.
+
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
+  // Reference counting...
 
 protected:
 
@@ -644,6 +677,9 @@ protected:
 
   char **svc_config_argv_;
   // The argument vector for the service configurator.
+
+  CORBA::ULong refcount_;
+  // Number of outstanding references to this object.
 };
 
 // ****************************************************************

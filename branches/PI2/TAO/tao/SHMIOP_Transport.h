@@ -70,7 +70,8 @@ public:
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0);
   virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
+                        const ACE_Time_Value *s = 0,
+			size_t *bytes_transferred = 0);
   virtual ssize_t send (const u_char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);
@@ -82,7 +83,7 @@ public:
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
@@ -136,18 +137,18 @@ public:
                                    ACE_Time_Value *max_time_value = 0);
   virtual int register_handler (void);
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
-  
+
   int messaging_init (CORBA::Octet major,
                       CORBA::Octet minor);
   // Initialising the messaging object
-  
+
   void use_lite (CORBA::Boolean flag);
   // Sets the lite flag
-  
+
 private:
   TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
@@ -158,7 +159,7 @@ private:
 
   CORBA::Boolean lite_flag_;
   // Are we using lite?
-  
+
   TAO_Pluggable_Reply_Params params_;
   // The reply data that is sent back by the server
 };
@@ -183,7 +184,7 @@ public:
 
   ~TAO_SHMIOP_Server_Transport (void);
   // Default destructor
-  
+
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.

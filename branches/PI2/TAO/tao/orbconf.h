@@ -353,6 +353,12 @@ enum MCAST_SERVICEID
 
 // TAO Naming Service.
 
+// Memory mapping address used by TAO's Naming Service when run in
+// persistent mode.
+#if !defined (TAO_NAMING_BASE_ADDR)
+#  define TAO_NAMING_BASE_ADDR ACE_DEFAULT_BASE_ADDR
+#endif /* ! TAO_NAMING_BASE_ADDR */
+
 // Poa id of the root Naming Context in a Naming server.
 #if !defined (TAO_ROOT_NAMING_CONTEXT)
 #  define TAO_ROOT_NAMING_CONTEXT "NameService"
@@ -676,8 +682,9 @@ enum MCAST_SERVICEID
              TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_BUFFERING_CONSTRAINT_POLICY */
 
-// AMI support is disabled by default.  If enabled, it requires
-// CORBA_MESSAGING support.
+// AMI support is enabled by default, unless TAO is compiled with
+// Minimum CORBA.  In that case AMI is disabled by default.
+// If disabled you can also disable the CORBA MESSAGING support.
 // To explicitly enable AMI support uncomment the following
 // #define TAO_HAS_AMI 1
 // To explicitly disable AMI support uncomment the following
@@ -685,7 +692,11 @@ enum MCAST_SERVICEID
 
 // Default AMI settings
 #if !defined (TAO_HAS_AMI)
-#  define TAO_HAS_AMI 0
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
+#    define TAO_HAS_AMI 0
+#  else
+#    define TAO_HAS_AMI 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
 #else
 #  if (TAO_HAS_AMI == 1) && \
       (TAO_HAS_CORBA_MESSAGING == 0)
@@ -829,6 +840,13 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 
 #define TAO_CLIENT_PRIORITY_POLICY_TYPE 0x54410000
 #define TAO_BUFFERING_CONSTRAINT_POLICY_TYPE 0x54410001
+
+#define TAO_RT_PRIORITY_MODEL_POLICY_TYPE 0x54410002
+#define TAO_RT_THREADPOOL_POLICY_TYPE 0x54410003
+#define TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE 0x54410006
+#define TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE 0x54410007
+#define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 0x54410004
+#define TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE 0x54410005
 
 #define TAO_MESSAGING_REBIND_POLICY_TYPE 23
 #define TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE 24

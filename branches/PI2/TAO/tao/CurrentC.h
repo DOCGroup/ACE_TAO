@@ -32,6 +32,8 @@
 #endif
 
 #include "tao/Object.h"
+#include "tao/Exception.h"
+#include "tao/Environment.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -128,6 +130,9 @@ class  CORBA_Current : public virtual CORBA_Object
   static CORBA_Current_ptr _narrow (CORBA::Object_ptr obj,
                                     CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
+  static CORBA_Current_ptr _unchecked_narrow (CORBA::Object_ptr obj,
+                                              CORBA_Environment &ACE_TRY_ENV =
+                                                TAO_default_environment ());
   static CORBA_Current_ptr _nil (void);
   static void _tao_any_destructor (void*);
 
@@ -151,11 +156,21 @@ class  CORBA_Current : public virtual CORBA_Object
 
 #endif /* end #if !defined */
 
+extern  CORBA_Current_ptr (*_TAO_collocation_CORBA_Current_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  );
 // Any operators for interface CORBA_Current
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_Current_ptr);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA_Current *&);
+
+#ifndef __ACE_INLINE__
+
+   CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_Current_ptr );
+   CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_Current_ptr &);
+
+#endif /* __ACE_INLINE__ */
 
 #if defined (__ACE_INLINE__)
 #include "tao/CurrentC.i"

@@ -72,7 +72,8 @@ public:
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0);
   virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0);
+                        const ACE_Time_Value *s = 0,
+			size_t *bytes_transferred = 0);
   virtual ssize_t send (const u_char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);

@@ -297,6 +297,10 @@ public:
   operator T *&();
   // Cast.
 
+  operator const T_var() const;
+  // Cast (read-only) so that assignment from a structured
+  // type to a T_var will make a copy.
+
   T *in (void) const;
   // for in parameter.
 

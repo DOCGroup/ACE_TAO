@@ -30,6 +30,7 @@
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 #include "tao/TAOC.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -38,7 +39,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Buffering_Constraint_Policy : public TAO::BufferingConstraintPolicy
+class TAO_Export TAO_Buffering_Constraint_Policy
+  : public TAO::BufferingConstraintPolicy,
+    public CORBA::LocalObject
 {
   // = TITLE
   //     Implementation class for TAO-specific Buffering Constraint
@@ -54,6 +57,12 @@ public:
 
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
   // Copy constructor.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());

@@ -97,7 +97,8 @@ public:
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0) = 0;
+                        const ACE_Time_Value *s = 0,
+			size_t *bytes_transferred = 0) = 0;
   // Write the complete Message_Block chain to the connection.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
@@ -145,13 +146,13 @@ public:
   // Using this method, instead of send(), allows the transport (and
   // wait strategy) to take appropiate action.
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &op_details,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg) = 0;
   // This is a request for the transport object to write a request
   // header before it sends out a request
-                                
+
   TAO_ORB_Core *orb_core (void) const;
   // Access the ORB that owns this connection.
 
@@ -284,9 +285,16 @@ public:
                     const char *options = 0) = 0;
   // Method to initialize acceptor for address.
 
-  virtual int open_default (TAO_ORB_Core *orb_core,
+  virtual int open_default (TAO_ORB_Core *,
+                            int version_major,
+                            int version_minor,
                             const char *options = 0) = 0;
-  // Open an acceptor on the default endpoint for this protocol
+  // Open an acceptor with the given protocol version on a default
+  // endpoint
+  // @@ This method should be pure virtual, but in order to maintain
+  //    some form of backward compatibilty, a default implementation
+  //    is provided.  Ideally, that default implementation should be
+  //    removed in the near future.
 
   virtual int close (void) = 0;
   // Closes the acceptor

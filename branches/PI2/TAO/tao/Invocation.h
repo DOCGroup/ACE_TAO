@@ -38,7 +38,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/Any.h"
-#include "tao/Reply_Dispatcher.h"
+#include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/TAOC.h"
 #include "tao/operation_details.h"
 #include "tao/target_specification.h"
@@ -146,7 +146,7 @@ protected:
   // In any case we must demarshal the object reference and setup the
   // profiles.
   // It returns TAO_INVOKE_RESTART unless an exception is raised.
-  
+
   CORBA::ULong create_ior_info (void);
   // Create the IOP::IOR info. We will create the info atmost
   // once. This method will not work for RTCorba - Bala
@@ -180,14 +180,14 @@ protected:
   ACE_Time_Value *max_wait_time_;
   // The timeout remaining for this request, it is initialized in
   // start() and updated as required.
-  
+
   IOP::IOR ior_info_;
   // The ior info. This would be needed for GIOP 1.2, as the clients
   // could receive an exception from the server asking for this
   // info. The exception that the client receives is
   // LOC_NEEDS_ADDRESSING_MODE. If we receive an exception we will
   // fill up this data atmost *once* and send it to the server.
-  
+
 };
 
 // ****************************************************************
@@ -218,7 +218,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Invocation::start.
 
-  int invoke (CORBA::ExceptionList &exceptions,
+  int invoke (CORBA::ExceptionList_ptr exceptions,
               CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException));

@@ -32,6 +32,7 @@
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 #include "tao/TAOC.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -40,7 +41,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Client_Priority_Policy : public TAO::ClientPriorityPolicy
+class TAO_Export TAO_Client_Priority_Policy
+  : public TAO::ClientPriorityPolicy,
+    public CORBA::LocalObject
 {
   // = TITLE
   //
@@ -54,6 +57,12 @@ public:
 
   TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs);
   // Copy constructor.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
   static CORBA::Policy_ptr create (
       const CORBA::Any& val,

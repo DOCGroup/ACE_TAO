@@ -1074,9 +1074,9 @@ class TAO_Export ProtocolProperties : public virtual CORBA_Object,
     // CDR Encoder/Decoder methods.
 
     virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-
+    
     virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-
+   
   protected:
     ProtocolProperties (void);
     virtual ~ProtocolProperties (void);

@@ -152,6 +152,7 @@ private:
                  CORBA::NVList_ptr args,
                  CORBA::NamedValue_ptr result,
                  CORBA::Flags flags,
+                 CORBA::ExceptionList_ptr exceptions,
                  CORBA::Environment &ACE_TRY_ENV =
                    TAO_default_environment ());
 
@@ -184,7 +185,7 @@ private:
   CORBA::Environment env_;
   // holds exceptions
 
-  CORBA::ExceptionList exceptions_;
+  CORBA::ExceptionList_var exceptions_;
   // list of exceptions raised by the operation
 
   CORBA::ContextList_ptr contexts_;

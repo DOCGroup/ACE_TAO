@@ -34,10 +34,14 @@
 #include "tao/IORManipulation.h"
 
 // Interceptor definitions.
-#include "tao/Interceptor.h"
+#include "tao/PortableInterceptor.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
+
+// -- Containers --
+#include "ace/Containers_T.h"
+
 
 // For the (W)String_var and (W)String_out iostream operators.
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
@@ -628,16 +632,18 @@ public:
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ());
+                                CORBA::PolicyList *policy_list,
+                                CORBA_Environment &ACE_TRY_ENV);
   // Delegates on the ORB_Core to create a TAO_Stub.
+
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
-                                  TAO_ServantBase *servant = 0,
-                                  CORBA::Boolean collocated = 1,
-                                  CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
+                                  CORBA::PolicyList *policy_list,
+                                  TAO_ServantBase *servant,
+                                  CORBA::Boolean collocated,
+                                  CORBA_Environment &ACE_TRY_ENV);
+
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
   //

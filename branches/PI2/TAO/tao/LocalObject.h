@@ -59,14 +59,6 @@ public:
                                                      TAO_default_environment ());
   // no-op it is just here to simplify some templates.
 
-  virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
-  // Determine if we are of the type specified by the
-  // "logical_type_id".  The CCM spec says this operation _may_ throw
-  // NO_IMPLEMENT exception.  Since we need it in _narrow, I'll keep
-  // this function around.
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
   virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
