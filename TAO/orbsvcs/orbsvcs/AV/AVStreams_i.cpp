@@ -411,260 +411,6 @@ int TAO_Base_StreamEndPoint::handle_close (void)
   return -1;
 }
 
-// ----------------------------------------------------------------------
-// TAO_StreamEndPoint
-// ----------------------------------------------------------------------
-
-// constructor.
-TAO_StreamEndPoint::TAO_StreamEndPoint (void)
-  :flow_count_ (1)
-{
-  //  this->handle_open ();
-}
-
-// Stop the physical flow of data on the stream
-// Empty the_spec --> apply to all flows
-void
-TAO_StreamEndPoint::stop (const AVStreams::flowSpec &the_spec,
-                          CORBA::Environment &env)
-{
-  // Make the upcall into the app
-  this->handle_stop (the_spec, env);
-}
-
-// Start the physical flow of data on the stream
-// Empty the_spec --> apply to all flows
-void
-TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
-                           CORBA::Environment &env)
-{
-  // Make the upcall into the app
-  this->handle_start (flow_spec, env);
-}
-
-// Close the connection
-void
-TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &the_spec,
-                             CORBA::Environment &env)
-{
-  // Make the upcall into the app
-  this->handle_destroy (the_spec, env);
-}
-
-// Called by streamctrl, requesting us to call request_connection
-// on the responder (to initiate a connection)
-CORBA::Boolean
-TAO_Server_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
-                                    AVStreams::streamQoS &qos_spec,
-                                    const AVStreams::flowSpec &the_spec,
-                                    CORBA::Environment &)
-{
-  ACE_UNUSED_ARG (responder);
-  ACE_UNUSED_ARG (qos_spec);
-  ACE_UNUSED_ARG (the_spec);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "(%P|%t) Calling TAO_Server_StreamEndPoint::connect"
-                     " is not compatible with the spec!"
-                     "\n"),
-                    0);
-}
-
-// Called by our peer endpoint, requesting us to establish
-// a connection
-CORBA::Boolean
-TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
-                                        CORBA::Boolean is_mcast,
-                                        AVStreams::streamQoS &qos,
-                                        AVStreams::flowSpec &the_spec,
-                                        CORBA::Environment &)
-{
-  ACE_UNUSED_ARG (initiator);
-  ACE_UNUSED_ARG (is_mcast);
-  ACE_UNUSED_ARG (qos);
-
-  ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) TAO_StreamEndPoint::request_connection called"));
-  ACE_DEBUG ((LM_DEBUG,
-              "\n(%P|%t) TAO_StreamEndPoint::request_connection: "
-              "flowspec has length = %d"
-              "and the strings are:",
-              the_spec.length ()));
-  for (u_int i = 0; i < the_spec.length (); i++)
-    ACE_DEBUG ((LM_DEBUG,
-                the_spec [i]));
-
-  return 0;
-}
-
-// @@ Need to throw not-supported exception here
-CORBA::Boolean
-TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
-                                const AVStreams::flowSpec &the_flows,
-                                CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (new_qos);
-  ACE_UNUSED_ARG (the_flows);
-  ACE_UNUSED_ARG (env);
-  return 0;
-}
-
-// @@ Need to throw not-supported exception here
-CORBA::Boolean
-TAO_StreamEndPoint::set_protocol_restriction (const AVStreams::protocolSpec &the_pspec,
-                                              CORBA::Environment &env)
-{
-  CORBA::Any protocol_restriction_any;
-
-  protocol_restriction_any <<= the_pspec;
-  this->define_property ("ProtocolRestriction",
-                         protocol_restriction_any,
-                         env);
-  TAO_CHECK_ENV_RETURN (env,0);
-  return 1;
-}
-
-void
-TAO_StreamEndPoint::disconnect (const AVStreams::flowSpec &the_spec,
-                                CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (env);
-}
-
-// @@ Need to throw not-supported exception here
-void
-TAO_StreamEndPoint::set_FPStatus (const AVStreams::flowSpec &the_spec,
-                                  const char *fp_name,
-                                  const CORBA::Any &fp_settings,
-                                  CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (fp_name);
-  ACE_UNUSED_ARG (fp_settings);
-  ACE_UNUSED_ARG (env);
-}
-
-CORBA::Object_ptr
-TAO_StreamEndPoint::get_fep (const char *flow_name,
-                             CORBA::Environment &)
-{
-  TAO_String_Hash_Key fep_name_key (flow_name);
-  FlowEndPoint_Map::ENTRY *fep_entry = 0;
-  if (this->fep_map_.find (fep_name_key,fep_entry) == 0)
-    return fep_entry->int_id_;
-  return 0;
-}
-
-char *
-TAO_StreamEndPoint::add_fep (CORBA::Object_ptr the_fep,
-                             CORBA::Environment &env)
-{
-  char *flow_name = 0;
-  ACE_NEW_RETURN (flow_name,char [BUFSIZ],0);
-  CORBA::Any_ptr flow_name_any;
-  AVStreams::FlowEndPoint_ptr fep =
-    AVStreams::FlowEndPoint::_narrow (the_fep,env);
-  TAO_CHECK_ENV_RETURN (env,0);
-  TAO_TRY
-    {
-      flow_name_any = fep->get_property_value ("FlowName",TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      *flow_name_any >>= flow_name;
-    }
-  TAO_CATCHANY
-    {
-      // exception implies the flow name is not defined and is system generated.
-      ACE_OS::sprintf (flow_name,"flow%d",flow_num_++);
-    }
-  // Add it to the sequence of flowNames supported.
-  // put the flowname and the flowendpoint in a hashtable.
-  TAO_String_Hash_Key fep_name_key (flow_name);
-  if (this->fep_map_.bind (fep_name_key,the_fep) != 0)
-    TAO_THROW_ENV_RETURN (AVStreams::streamOpFailed (),env,0);
-
-  // increment the flow count.
-  this->flow_count_++;
-  this->flows_.length (this->flow_count_);
-  this->flows_ [this->flow_count_-1] = flow_name;
-  // define/modify the "Flows" property.
-  CORBA::Any flows_any;
-  flows_any <<= this->flows_;
-  this->define_property ("Flows",
-                         flows_any,
-                         env);
-  TAO_CHECK_ENV_PRINT_RETURN (env,"TAO_StreamEndPoint::add_fep",0);
-  TAO_ENDTRY;
-  return flow_name;
-}
-
-void
-TAO_StreamEndPoint::remove_fep (const char *flow_name,
-                                CORBA::Environment &env)
-{
-  TAO_String_Hash_Key fep_name_key (flow_name);
-  CORBA::Object_ptr fep_entry = 0;
-  // Remove the fep from the hash table.
-  if (this->fep_map_.unbind (fep_name_key,fep_entry)!= 0)
-    TAO_THROW_ENV (AVStreams::streamOpFailed (),env);
-  // redefine the "Flows" property
-  AVStreams::flowSpec new_flows (this->flows_.length ());
-  for (u_int i=0,j=0 ; i <this->flows_.length (); i++)
-    if (ACE_OS::strcmp (flow_name,this->flows_[i]) != 0)
-      new_flows[j++] = this->flows_[i];
-
-  CORBA::Any flows;
-  flows <<= new_flows;
-  this->flows_ = new_flows;
-  this->define_property ("Flows",
-                         flows,
-                         env);
-  TAO_CHECK_ENV_PRINT_RETURN_VOID (env,"TAO_StreamEndPoint::remove_fep");
-  return;
-}
-
-// @@ Need to throw not-supported exception here
-void
-TAO_StreamEndPoint::set_negotiator (AVStreams::Negotiator_ptr new_negotiator,
-                                    CORBA::Environment &env)
-{
-  CORBA::Any negotiator;
-  negotiator <<= new_negotiator;
-  this->define_property ("Negotiator",
-                         negotiator,
-                         env);
-  TAO_CHECK_ENV_PRINT_RETURN_VOID (env,"TAO_StreamEndPoint::set_negotiator");
-  return;
-}
-
-// Sets the public key used for this streamendpoint.
-void
-TAO_StreamEndPoint::set_key (const char *flow_name,
-                             const AVStreams::key & the_key,
-                             CORBA::Environment &env)
-{
-  CORBA::Any PublicKey;
-  PublicKey <<= the_key;
-  char PublicKey_property [BUFSIZ];
-  ACE_OS::sprintf (PublicKey_property,"%s_PublicKey",flow_name);
-  this->define_property (PublicKey_property,
-                         PublicKey,
-                         env);
-  TAO_CHECK_ENV_PRINT_RETURN_VOID (env,"TAO_StreamEndPoint::set_key");
-  return;
-}
-
-// Set the source id.
-void
-TAO_StreamEndPoint::set_source_id (CORBA::Long source_id,
-                                   CORBA::Environment &)
-{
-  this->source_id_ = source_id;
-}
-
-TAO_StreamEndPoint::~TAO_StreamEndPoint (void)
-{
-  //this->handle_close ();
-}
 
 // ----------------------------------------------------------------------
 // TAO_Client_StreamEndPoint
@@ -752,6 +498,25 @@ TAO_Server_StreamEndPoint::TAO_Server_StreamEndPoint (void)
               "\n(%P|%t) TAO_Server_StreamEndPoint::TAO_Server_StreamEndPoint: created"));
 }
 
+
+// Called by streamctrl, requesting us to call request_connection
+// on the responder (to initiate a connection)
+CORBA::Boolean
+TAO_Server_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
+                                    AVStreams::streamQoS &qos_spec,
+                                    const AVStreams::flowSpec &the_spec,
+                                    CORBA::Environment &)
+{
+  ACE_UNUSED_ARG (responder);
+  ACE_UNUSED_ARG (qos_spec);
+  ACE_UNUSED_ARG (the_spec);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "(%P|%t) Calling TAO_Server_StreamEndPoint::connect"
+                     " is not compatible with the spec!"
+                     "\n"),
+                    0);
+}
+
 CORBA::Boolean
 TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
                                                CORBA::Boolean is_mcast,
@@ -761,18 +526,18 @@ TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr ini
 
 {
   // Use the base class implementation of request_connection
-  TAO_StreamEndPoint::request_connection (initiator,
-                                          is_mcast,
-                                          qos,
-                                          the_spec,
-                                          env);
+  TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_B>::request_connection (initiator,
+									   is_mcast,
+									   qos,
+									   the_spec,
+									   env);
 
   TAO_CHECK_ENV_RETURN (env,0);
   // Make the upcall to the app
   return this->handle_connection_requested (the_spec,
                                             env);
-
 }
+
 CORBA::Boolean
 TAO_Server_StreamEndPoint::multiconnect (AVStreams::streamQoS &the_qos,
                                          AVStreams::flowSpec &the_spec,
@@ -1781,6 +1546,15 @@ template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, 
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint>;
+template class TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_A>;
+template class TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_B>;
+template class TAO_PropertySet<POA_AVStreams::Basic_StreamCtrl>;
+template class TAO_PropertySet<POA_AVStreams::VDev>;
+template class TAO_PropertySet<POA_AVStreams::MMDevice>;
+template class TAO_PropertySet<POA_AVStreams::FlowConnection>;
+template class TAO_PropertySet<POA_AVStreams::FlowEndPoint>;
+template class TAO_PropertySet<POA_AVStreams::FDev>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA::Object_ptr>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
@@ -1790,4 +1564,20 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::Obje
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate TAO_PropertySet<POA_AVStreams::Basic_StreamCtrl>
+#pragma instantiate TAO_PropertySet<POA_AVStreams::VDev>
+#pragma instantiate TAO_PropertySet<POA_AVStreams::MMDevice>
+#pragma instantiate TAO_PropertySet<POA_AVStreams::FlowConnection>
+#pragma instantiate TAO_PropertySet<POA_AVStreams::FlowEndPoint>
+#pragma instantiate TAO_PropertySet<POA_AVStreams::FDev>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
+
+
+
+
+
+
+
+
