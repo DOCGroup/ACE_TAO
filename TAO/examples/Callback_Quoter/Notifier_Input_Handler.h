@@ -29,8 +29,12 @@ class Notifier_Input_Handler : public ACE_Event_Handler
 {
   // = TITLE
   //   The class defines the callback quoter Notifier initialization
-  //   and and run methods. It sets up the Orb manager and registers
-  //   the Notifier servant object.
+  //   and run methods. 
+  //
+  // = DESCRIPTION
+  //   This class handles initialization tasks, as well, such as
+  //   setting up the Orb manager and registers the Notifier servant
+  //   object. 
 public:
   // = Initialization and termination methods.
   Notifier_Input_Handler (void);

@@ -1,4 +1,5 @@
 // $Id$
+
 // ===========================================================
 //
 //
@@ -25,7 +26,7 @@
 #include <ace/Reactor.h>
 #include <ace/Event_Handler.h>
 
-Consumer_Handler::Consumer_Handler ()
+Consumer_Handler::Consumer_Handler (void)
   : stock_name_ ("Unknown"),
     threshold_value_ (0),
     server_ (),
@@ -37,7 +38,7 @@ Consumer_Handler::Consumer_Handler ()
 
 }
 
-Consumer_Handler::~Consumer_Handler ()
+Consumer_Handler::~Consumer_Handler (void)
 {
   // Make sure to cleanup the STDIN handler.
 
@@ -47,13 +48,6 @@ Consumer_Handler::~Consumer_Handler ()
      ACE_ERROR ((LM_ERROR,
        	       "%p\n",
        	       "remove_stdin_handler"));
-
-  /*if (reactor_used()->remove_handler (consumer_signal_handler_,
-				  ACE_Event_Handler::READ_MASK) == -1)
-     ACE_ERROR ((LM_ERROR,
-		 "%p\n",
-		 "removal of signal handler\n"));*/
-
 }
 
 // Reads the Server factory IOR from a file.
@@ -264,12 +258,10 @@ Consumer_Handler::init (int argc, char **argv)
                            "invalid ior <%s>\n",
                            this->ior_),
                           -1);
-
-      // The downcasting from CORBA::Object_var to Notifier_var is done
-      // using the <_narrow> method.
+      // The downcasting from CORBA::Object_var to Notifier_var is
+      // done using the <_narrow> method.
       this->server_ = Notifier::_narrow (server_object.in (),
                                          TAO_TRY_ENV);
-
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -281,7 +273,6 @@ Consumer_Handler::init (int argc, char **argv)
 
   return 0;
 }
-
 
 int
 Consumer_Handler::run (void)
@@ -323,5 +314,8 @@ Consumer_Handler::run (void)
 ACE_Reactor *
 Consumer_Handler::reactor_used (void) const
 {
-  return (TAO_ORB_Core_instance ()->reactor ());
+  // @@ Please check with Pradeep and see how to remove the reliance
+  // on <TAO_ORB_Core_instance()>.  This is non-portable and we want
+  // to try to use only CORBA-compliant code in our examples.
+  return TAO_ORB_Core_instance ()->reactor ();
 }
