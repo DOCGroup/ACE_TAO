@@ -1,3 +1,9 @@
+Fri Feb 25 10:46:52 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated release notes for TAO's pluggable protocol framework.
+
 Fri Feb 25 10:43:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
@@ -29,7 +35,7 @@ Fri Feb 25 10:43:48 2000  Carlos O'Ryan  <coryan@uci.edu>
           This fixes [BUGID:437], and it reduces the probability of
           hitting [BUGID:438], even though that last one is very unlikely
           to happen in the first place.
-          Notice how many files where affected, this is a strong argument
+          Notice how many files were affected, this is a strong argument
           for the Event Service Framework, that i'm cooking on the back
           burner.
 
