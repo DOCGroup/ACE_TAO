@@ -42,7 +42,7 @@ public:
   TAO_SSLIOP_PrincipalAuthenticator (void);
 
   /// Destructor
-  ~TAO_SSLIOP_PrincipalAuthenticator (void);
+  virtual ~TAO_SSLIOP_PrincipalAuthenticator (void);
 
   /**
    * @name TAO_PrincipalAuthenticator_Impl Methods
@@ -52,7 +52,6 @@ public:
    * SecurityLevel2::PrincipalAuthenticator interface.
    */
   //@{
-
 
   /// Return the authenication method identifier.
   virtual Security::AuthenticationMethod authentication_method (void) const;

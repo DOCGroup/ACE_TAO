@@ -1,3 +1,9 @@
+Sat Dec 15 11:54:31 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_PrincipalAuthenticator.h:
+
+	  Made destructor virtual to correct warning exhibited by G++.
+
 Sat Dec 15 11:48:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
