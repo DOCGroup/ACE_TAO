@@ -1,355 +1,372 @@
+Thu May  6 12:16:16 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/common/common.mpc:
+
+          Since Source_Files is now specified, we need to also specify the
+          Header_Files that do not correspond to any cpp files.
+
+        * bin/MakeProjectCreator/config/notification.mpb:
+
+          The TAO_CosNotification library needs the TAO_Svc_Utils library.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Only use the .NOTPARALLEL: rule if all of the generated files have
+          not been generated.  This can speed up parallel builds on a
+          rebuild and on projects that share generated source files.
+
 Thu May  6 12:43:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
-	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
-	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
-	* examples/C++NPv2/TPC_Logging_Server.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
-	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
-	  Added missing #includes so Visual Age C++ can see ACE_OS methods.
+        * examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/TPC_Logging_Server.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+          Added missing #includes so Visual Age C++ can see ACE_OS methods.
 
-	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Moved the declarations
-	  of AC_Input_Handler and AC_Output_Handler to a new file,
-	  AC_Client_Logging_Daemon.h, so Visual Age C++ can see them when
-	  instantiating templates.
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Moved the declarations
+          of AC_Input_Handler and AC_Output_Handler to a new file,
+          AC_Client_Logging_Daemon.h, so Visual Age C++ can see them when
+          instantiating templates.
 
-	* examples/C++NPv2/AIO_Client_Logging_Daaemon.cpp: Moved the
-	  declarations of AIO_Input_handler, AIO_Output_Handler, and
-	  AIO_CLD_Connector to a new file, AIO_Client_Logging_Daemon.h,
-	  so Visual Age C++ can see them when instantiating templates.
+        * examples/C++NPv2/AIO_Client_Logging_Daaemon.cpp: Moved the
+          declarations of AIO_Input_handler, AIO_Output_Handler, and
+          AIO_CLD_Connector to a new file, AIO_Client_Logging_Daemon.h,
+          so Visual Age C++ can see them when instantiating templates.
 
-	* examples/Reactor/Proactor/test_cancel.cpp:
-	* examples/Reactor/Proactor/test_proactor.cpp: Moved the declaration
-	  of the Receiver class to a new file, test_cancel.h and
-	  test_proactor.h respectively, so Visual Age C++ can see it when
-	  instantiating templates.
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp: Moved the declaration
+          of the Receiver class to a new file, test_cancel.h and
+          test_proactor.h respectively, so Visual Age C++ can see it when
+          instantiating templates.
 
 Thu May  6 11:04:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/DLL/Today.{h cpp}:
-	* examples/DLL/Newsweek.{h cpp}: Added a nothrow-variant operator
-	  new if ACE_HAS_NEW_NOTHROW is defined. The ACE_NEW_* macros use
-	  nothrow when available.
+        * examples/DLL/Today.{h cpp}:
+        * examples/DLL/Newsweek.{h cpp}: Added a nothrow-variant operator
+          new if ACE_HAS_NEW_NOTHROW is defined. The ACE_NEW_* macros use
+          nothrow when available.
 
 Wed May  5 23:35:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Get_Opt.cpp (~ACE_Get_Opt_Long_Option):
+        * ace/Get_Opt.cpp (~ACE_Get_Opt_Long_Option):
 
-	  MSVC++ 6 can't deal with delete[]ing a const ACE_TCHAR *.
-	  Reintroduced a const_cast<> that addresses this issue by
-	  reverting a portion of the change in the "Wed May  5 14:14:53
-	  2004  Ossama Othman  <ossama@dre.vanderbilt.edu>" set of
-	  changes.
+          MSVC++ 6 can't deal with delete[]ing a const ACE_TCHAR *.
+          Reintroduced a const_cast<> that addresses this issue by
+          reverting a portion of the change in the "Wed May  5 14:14:53
+          2004  Ossama Othman  <ossama@dre.vanderbilt.edu>" set of
+          changes.
 
 Wed May  5 23:27:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_stat.inl (fstat):
+        * ace/OS_NS_sys_stat.inl (fstat):
 
-	  Corrected static_cast<> typo in Win32 case.  Fixes Win32
-	  compile-time errors.
+          Corrected static_cast<> typo in Win32 case.  Fixes Win32
+          compile-time errors.
 
 Wed May  5 22:30:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Kokyu/tests/DSRT_MIF/MIF.cpp:
-	* apps/JAWS3/jaws3/Concurrency.h:
-	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
-	* examples/Smart_Pointers/widget_test.cpp:
-	* performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
-	* performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+        * apps/JAWS3/jaws3/Concurrency.h:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+        * examples/Smart_Pointers/widget_test.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
 
-	  Include appropriate headers to fix undefined type compile-time
-	  errors.
+          Include appropriate headers to fix undefined type compile-time
+          errors.
 
-	* examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
 
-	  Changed ACE_Atomic_Op<> lock template parameter from
-	  ACE_Thread_Mutex to ACE_SYNCH_MUTEX.  Allows this file to build
-	  in single threaded builds.
+          Changed ACE_Atomic_Op<> lock template parameter from
+          ACE_Thread_Mutex to ACE_SYNCH_MUTEX.  Allows this file to build
+          in single threaded builds.
 
 Wed May  5 16:34:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/CDR_Base.h (ACE_CDR):
+        * ace/CDR_Base.h (ACE_CDR):
 
-	  Improved doxygen documentation of basic CDR/IDL types.
+          Improved doxygen documentation of basic CDR/IDL types.
 
-	  (ACE_CDR::Boolean):
+          (ACE_CDR::Boolean):
 
-	  Versions of GNU G++ less than version 3.0 defined a pre-C99 bool
-	  type that was an enumeration.  In some cases the enumeration
-	  could be promoted to an int, causing a potential problem where a
-	  4 byte integer (for example) could be selected when attempting
-	  to send a boolean over a CDR stream.
+          Versions of GNU G++ less than version 3.0 defined a pre-C99 bool
+          type that was an enumeration.  In some cases the enumeration
+          could be promoted to an int, causing a potential problem where a
+          4 byte integer (for example) could be selected when attempting
+          to send a boolean over a CDR stream.
 
 Wed May  5 18:10:32 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp: Change #include
-	  <stdio.h> to "ace/OS_NS_stdio.h" since ACE_OS::fprintf() is used.
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp: Change #include
+          <stdio.h> to "ace/OS_NS_stdio.h" since ACE_OS::fprintf() is used.
 
 Wed May  5 14:14:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Future.h (ACE_Future_Rep):
-	* ace/Map_Manager.h (ACE_Map_Manager):
-	* ace/Refcounted_Auto_Ptr.h:
+        * ace/Future.h (ACE_Future_Rep):
+        * ace/Map_Manager.h (ACE_Map_Manager):
+        * ace/Refcounted_Auto_Ptr.h:
 
-	  Declare lock members as "mutable" to avoid using a
-	  const_cast<> hack in const methods that modify the lock
-	  member through an ACE_GUARD.
+          Declare lock members as "mutable" to avoid using a
+          const_cast<> hack in const methods that modify the lock
+          member through an ACE_GUARD.
 
-	* ace/Future.cpp (get):
-	* ace/Map_Manager.i (current_size, total_size):
-	* ace/Refcounted_Auto_Ptr.i:
+        * ace/Future.cpp (get):
+        * ace/Map_Manager.i (current_size, total_size):
+        * ace/Refcounted_Auto_Ptr.i:
 
-	  Removed const_cast<> around lock member.  It is no longer
-	  needed since the lock member is now declared "mutable".
+          Removed const_cast<> around lock member.  It is no longer
+          needed since the lock member is now declared "mutable".
 
-	* ace/CDR_Stream.h:
+        * ace/CDR_Stream.h:
 
-	  Minor Doxygen documentation update.
+          Minor Doxygen documentation update.
 
-	* ace/ACE.cpp:
-	* ace/ARGV.cpp:
-	* ace/ARGV.i:
-	* ace/ATM_Acceptor.cpp:
-	* ace/ATM_Connector.cpp:
-	* ace/ATM_Stream.cpp:
-	* ace/Acceptor.cpp:
-	* ace/Activation_Queue.cpp:
-	* ace/Arg_Shifter.cpp:
-	* ace/Asynch_Acceptor.cpp:
-	* ace/Asynch_Connector.cpp:
-	* ace/Asynch_IO.cpp:
-	* ace/Atomic_Op.cpp:
-	* ace/Atomic_Op.i:
-	* ace/Base_Thread_Adapter.cpp:
-	* ace/Based_Pointer_T.i:
-	* ace/Basic_Stats.cpp:
-	* ace/Basic_Types.h:
-	* ace/Basic_Types.i:
-	* ace/CDR_Base.cpp:
-	* ace/CDR_Base.inl:
-	* ace/CDR_Stream.cpp:
-	* ace/CDR_Stream.i:
-	* ace/Caching_Utility_T.cpp:
-	* ace/Cleanup.cpp:
-	* ace/Codecs.cpp:
-	* ace/Codeset_IBM1047.cpp:
-	* ace/Condition_T.inl:
-	* ace/Configuration.cpp:
-	* ace/Connector.cpp:
-	* ace/Containers_T.cpp:
-	* ace/DEV_Addr.i:
-	* ace/DEV_IO.cpp:
-	* ace/DEV_IO.i:
-	* ace/DLL.cpp:
-	* ace/DLL_Manager.cpp:
-	* ace/Dev_Poll_Reactor.cpp:
-	* ace/Dynamic_Service.cpp:
-	* ace/Env_Value_T.h:
-	* ace/FIFO_Recv_Msg.i:
-	* ace/FIFO_Send_Msg.cpp:
-	* ace/FIFO_Send_Msg.i:
-	* ace/FILE_Addr.cpp:
-	* ace/FILE_Connector.cpp:
-	* ace/FILE_IO.cpp:
-	* ace/FlReactor.cpp:
-	* ace/Framework_Component.cpp:
-	* ace/Functor_T.i:
-	* ace/Future_Set.cpp:
-	* ace/Get_Opt.cpp:
-	* ace/Global_Macros.h:
-	* ace/Hash_Map_Manager_T.cpp:
-	* ace/Hash_Map_Manager_T.i:
-	* ace/High_Res_Timer.cpp:
-	* ace/INET_Addr.cpp:
-	* ace/INET_Addr.i:
-	* ace/Lib_Find.cpp:
-	* ace/Local_Name_Space.cpp:
-	* ace/Log_Record.i:
-	* ace/MEM_Addr.cpp:
-	* ace/MEM_Connector.cpp:
-	* ace/MEM_IO.i:
-	* ace/MEM_SAP.i:
-	* ace/Malloc_T.cpp:
-	* ace/Malloc_T.i:
-	* ace/Mem_Map.cpp:
-	* ace/Mem_Map.i:
-	* ace/Memory_Pool.i:
-	* ace/Message_Queue.i:
-	* ace/Multihomed_INET_Addr.cpp:
-	* ace/Mutex.inl:
-	* ace/Name_Proxy.cpp:
-	* ace/Name_Request_Reply.cpp:
-	* ace/OS_NS_Thread.inl:
-	* ace/OS_NS_arpa_inet.inl:
-	* ace/OS_NS_dirent.inl:
-	* ace/OS_NS_dlfcn.inl:
-	* ace/OS_NS_math.inl:
-	* ace/OS_NS_netdb.inl:
-	* ace/OS_NS_signal.inl:
-	* ace/OS_NS_stdio.inl:
-	* ace/OS_NS_stdlib.inl:
-	* ace/OS_NS_string.inl:
-	* ace/OS_NS_stropts.inl:
-	* ace/OS_NS_sys_msg.inl:
-	* ace/OS_NS_sys_shm.inl:
-	* ace/OS_NS_sys_socket.inl:
-	* ace/OS_NS_sys_stat.inl:
-	* ace/OS_NS_time.inl:
-	* ace/OS_NS_unistd.inl:
-	* ace/OS_TLI.inl:
-	* ace/Object_Manager.i:
-	* ace/Obstack_T.i:
-	* ace/Process.cpp:
-	* ace/Process_Manager.cpp:
-	* ace/Profile_Timer.cpp:
-	* ace/RB_Tree.i:
-	* ace/Recursive_Thread_Mutex.inl:
-	* ace/Registry.cpp:
-	* ace/SOCK.cpp:
-	* ace/SOCK_Dgram.cpp:
-	* ace/SOCK_Dgram.i:
-	* ace/SOCK_IO.cpp:
-	* ace/SOCK_IO.i:
-	* ace/SPIPE_Addr.cpp:
-	* ace/SPIPE_Stream.cpp:
-	* ace/SString.i:
-	* ace/SUN_Proactor.cpp:
-	* ace/SV_Semaphore_Simple.cpp:
-	* ace/SV_Semaphore_Simple.h:
-	* ace/Select_Reactor_Base.cpp:
-	* ace/Service_Config.cpp:
-	* ace/Service_Manager.cpp:
-	* ace/Service_Object.cpp:
-	* ace/Service_Types.cpp:
-	* ace/Service_Types.i:
-	* ace/Shared_Memory_MM.i:
-	* ace/Shared_Memory_SV.i:
-	* ace/Signal.i:
-	* ace/Stats.cpp:
-	* ace/Strategies_T.cpp:
-	* ace/String_Base.cpp:
-	* ace/String_Base.i:
-	* ace/Svc_Conf.h:
-	* ace/Task.cpp:
-	* ace/Thread_Adapter.cpp:
-	* ace/Thread_Manager.i:
-	* ace/Time_Value.inl:
-	* ace/Typed_SV_Message_Queue.i:
-	* ace/ace_wchar.inl:
+        * ace/ACE.cpp:
+        * ace/ARGV.cpp:
+        * ace/ARGV.i:
+        * ace/ATM_Acceptor.cpp:
+        * ace/ATM_Connector.cpp:
+        * ace/ATM_Stream.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Activation_Queue.cpp:
+        * ace/Arg_Shifter.cpp:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_Connector.cpp:
+        * ace/Asynch_IO.cpp:
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op.i:
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/Based_Pointer_T.i:
+        * ace/Basic_Stats.cpp:
+        * ace/Basic_Types.h:
+        * ace/Basic_Types.i:
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.inl:
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.i:
+        * ace/Caching_Utility_T.cpp:
+        * ace/Cleanup.cpp:
+        * ace/Codecs.cpp:
+        * ace/Codeset_IBM1047.cpp:
+        * ace/Condition_T.inl:
+        * ace/Configuration.cpp:
+        * ace/Connector.cpp:
+        * ace/Containers_T.cpp:
+        * ace/DEV_Addr.i:
+        * ace/DEV_IO.cpp:
+        * ace/DEV_IO.i:
+        * ace/DLL.cpp:
+        * ace/DLL_Manager.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dynamic_Service.cpp:
+        * ace/Env_Value_T.h:
+        * ace/FIFO_Recv_Msg.i:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FIFO_Send_Msg.i:
+        * ace/FILE_Addr.cpp:
+        * ace/FILE_Connector.cpp:
+        * ace/FILE_IO.cpp:
+        * ace/FlReactor.cpp:
+        * ace/Framework_Component.cpp:
+        * ace/Functor_T.i:
+        * ace/Future_Set.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/Global_Macros.h:
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Hash_Map_Manager_T.i:
+        * ace/High_Res_Timer.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/INET_Addr.i:
+        * ace/Lib_Find.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Log_Record.i:
+        * ace/MEM_Addr.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_IO.i:
+        * ace/MEM_SAP.i:
+        * ace/Malloc_T.cpp:
+        * ace/Malloc_T.i:
+        * ace/Mem_Map.cpp:
+        * ace/Mem_Map.i:
+        * ace/Memory_Pool.i:
+        * ace/Message_Queue.i:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Mutex.inl:
+        * ace/Name_Proxy.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_arpa_inet.inl:
+        * ace/OS_NS_dirent.inl:
+        * ace/OS_NS_dlfcn.inl:
+        * ace/OS_NS_math.inl:
+        * ace/OS_NS_netdb.inl:
+        * ace/OS_NS_signal.inl:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_string.inl:
+        * ace/OS_NS_stropts.inl:
+        * ace/OS_NS_sys_msg.inl:
+        * ace/OS_NS_sys_shm.inl:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_sys_stat.inl:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_TLI.inl:
+        * ace/Object_Manager.i:
+        * ace/Obstack_T.i:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/Profile_Timer.cpp:
+        * ace/RB_Tree.i:
+        * ace/Recursive_Thread_Mutex.inl:
+        * ace/Registry.cpp:
+        * ace/SOCK.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram.i:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_IO.i:
+        * ace/SPIPE_Addr.cpp:
+        * ace/SPIPE_Stream.cpp:
+        * ace/SString.i:
+        * ace/SUN_Proactor.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/SV_Semaphore_Simple.h:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Object.cpp:
+        * ace/Service_Types.cpp:
+        * ace/Service_Types.i:
+        * ace/Shared_Memory_MM.i:
+        * ace/Shared_Memory_SV.i:
+        * ace/Signal.i:
+        * ace/Stats.cpp:
+        * ace/Strategies_T.cpp:
+        * ace/String_Base.cpp:
+        * ace/String_Base.i:
+        * ace/Svc_Conf.h:
+        * ace/Task.cpp:
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Manager.i:
+        * ace/Time_Value.inl:
+        * ace/Typed_SV_Message_Queue.i:
+        * ace/ace_wchar.inl:
 
-	  Converted all uses of ACE cast macros to their corresponding
-	  ANSI C++ equivalent.  The ACE cast macros are deprecated.
+          Converted all uses of ACE cast macros to their corresponding
+          ANSI C++ equivalent.  The ACE cast macros are deprecated.
 
-	* ace/OS_NS_fcntl.h:
+        * ace/OS_NS_fcntl.h:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
 Wed May  5 16:16:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/WIN32_Proactor.cpp (post_completion): reinterpret_cast the void*
-	  to ULONG_PTR on Win64.
+        * ace/WIN32_Proactor.cpp (post_completion): reinterpret_cast the void*
+          to ULONG_PTR on Win64.
 
 Wed May  5 14:52:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* apps/soreduce/Library.cpp:
-	* apps/soreduce/Obj_Module.cpp:
-	* apps/soreduce/Sig_List.cpp:
-	* apps/soreduce/SO_Group.cpp:
-	* examples/Connection/blocking/SPIPE-acceptor.cpp:
-	* examples/Connection/blocking/SPIPE-connector.cpp:
-	* examples/OS/Process/process.cpp:
-	* examples/Reactor/Proactor/test_end_event_loop.cpp:
-	* examples/Reactor/Proactor/post_completions.cpp:
-	* examples/Reactor/Proactor/test_proactor.cpp:
-	* examples/Reactor/Proactor/test_timeout.cpp:
-	* examples/Reactor/Proactor/test_udp_proactor.cpp:
-	* examples/Service_Configurator/Misc/Timer_Service.cpp:
-	* examples/Threads/cancel.cpp:
-	* examples/Web_Crawler/Command_Processor.cpp:
-	* examples/Web_Crawler/HTTP_URL.cpp:
-	* examples/Web_Crawler/Options.{h cpp}:
-	* examples/Web_Crawler/URL_Visitor.cpp: Added #includes for various
-	  "ace/OS_NS_*.h" files to let Visual Age C++ see missing methods.
+        * apps/soreduce/Library.cpp:
+        * apps/soreduce/Obj_Module.cpp:
+        * apps/soreduce/Sig_List.cpp:
+        * apps/soreduce/SO_Group.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+        * examples/Threads/cancel.cpp:
+        * examples/Web_Crawler/Command_Processor.cpp:
+        * examples/Web_Crawler/HTTP_URL.cpp:
+        * examples/Web_Crawler/Options.{h cpp}:
+        * examples/Web_Crawler/URL_Visitor.cpp: Added #includes for various
+          "ace/OS_NS_*.h" files to let Visual Age C++ see missing methods.
 
-	* apps/soreduce/Obj_Module.h: Added forward declaration for
-	  ACE_Message_Block.
+        * apps/soreduce/Obj_Module.h: Added forward declaration for
+          ACE_Message_Block.
 
-	* examples/Misc/test_XtReactor1.cpp:
-	* examples/Misc/test_XtReactor2.cpp:
-	* examples/OS/Process/imore.cpp:
-	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp:
-	  Added #include "ace/Log_Msg.h".
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/test_XtReactor2.cpp:
+        * examples/OS/Process/imore.cpp:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp:
+          Added #include "ace/Log_Msg.h".
 
 Wed May  5 09:18:00 2004  Justin Michel  <michel_j@ociweb.com>
 
-	* ace/OS_NS_unistd.inl:
+        * ace/OS_NS_unistd.inl:
 
-	  Attempt to use ::gethostname() on Win32, before falling back to
-	  GetComputerName(), to implement ACE_OS::hostname().  The latter
-	  returns the NetBios name, which may not be the same as the DNS
-	  name.
+          Attempt to use ::gethostname() on Win32, before falling back to
+          GetComputerName(), to implement ACE_OS::hostname().  The latter
+          returns the NetBios name, which may not be the same as the DNS
+          name.
 
 Wed May  5 09:13:46 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/ace.mpc:
-	* ace/Auto_Functor.h:
-	* ace/Auto_Functor.inl:
-	* ace/Auto_Functor.cpp:
-	  Moved from TAO/tao, this class provides auto_ptr<>-like
-	  functionality, what to do on destruction is controlled by a
-	  functor.  So, you could write auto_ptr<> and
-	  ACE_Auto_Array_Ptr<> in terms of it, and many other similar
-	  classes.
+        * ace/ace.mpc:
+        * ace/Auto_Functor.h:
+        * ace/Auto_Functor.inl:
+        * ace/Auto_Functor.cpp:
+          Moved from TAO/tao, this class provides auto_ptr<>-like
+          functionality, what to do on destruction is controlled by a
+          functor.  So, you could write auto_ptr<> and
+          ACE_Auto_Array_Ptr<> in terms of it, and many other similar
+          classes.
 
 Tue May  4 18:32:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* apps/mkcsregdb/mkcsregdb.cpp: Added #includes to pick up missing
-	  ACE_OS methods on AIX.
+        * apps/mkcsregdb/mkcsregdb.cpp: Added #includes to pick up missing
+          ACE_OS methods on AIX.
 
 Tue May  4 18:16:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_stdio.cpp (checkUnicodeFormat): ACE_OS::fread() returns
-	  size_t, not int.
+        * ace/OS_NS_stdio.cpp (checkUnicodeFormat): ACE_OS::fread() returns
+          size_t, not int.
 
-	* ace/WIN32_Proactor.cpp (register_handle): reinterpret_cast the void*
-	  to ULONG_PTR on Win64.
+        * ace/WIN32_Proactor.cpp (register_handle): reinterpret_cast the void*
+          to ULONG_PTR on Win64.
 
-	* apps/soreduce/Obj_Module.{h cpp} (add_source):
-	* apps/soreduce/Library.{h cpp} (ctor, load_modules, set_path):
-	  Changed path arugment and usage from ACE_TCHAR* to char*. It's
-	  used only with narrow chars throughout the rest of the sources.
+        * apps/soreduce/Obj_Module.{h cpp} (add_source):
+        * apps/soreduce/Library.{h cpp} (ctor, load_modules, set_path):
+          Changed path arugment and usage from ACE_TCHAR* to char*. It's
+          used only with narrow chars throughout the rest of the sources.
 
 Tue May  4 09:51:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Fix for [BUG 1798]. Thanks to Johnny for reporting this bug.
+          Fix for [BUG 1798]. Thanks to Johnny for reporting this bug.
 
 Mon May  3 18:12:30 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/TMCast/MTQueue.hpp: Remove 'mutable' from the mutex_ member.
-	  Visual Age C++ says you can only 'mutable' a non-reference member.
+        * ace/TMCast/MTQueue.hpp: Remove 'mutable' from the mutex_ member.
+          Visual Age C++ says you can only 'mutable' a non-reference member.
 
-	* ace/TMCast/TransactionController.hpp: Added #include
-	  "ace/OS_NS_string.h" so Visual Age C++ can find ACE_OS::memcpy().
-	  Added #include <typeinfo> to enable typeid operator.
+        * ace/TMCast/TransactionController.hpp: Added #include
+          "ace/OS_NS_string.h" so Visual Age C++ can find ACE_OS::memcpy().
+          Added #include <typeinfo> to enable typeid operator.
 
-	* Kokyu/tests/DSRT_MIF/MIF.cpp: Added #include "ace/ACE.h" so Visual
-	  Age C++ can see ACE::is_prime().
+        * Kokyu/tests/DSRT_MIF/MIF.cpp: Added #include "ace/ACE.h" so Visual
+          Age C++ can see ACE::is_prime().
 
-	* Kokyu/tests/EDF/test.cpp: Added #include "ace/OS_NS_sys_time.h" so
-	  Visual Age C++ can see ACE_OS::gettimeofday().
+        * Kokyu/tests/EDF/test.cpp: Added #include "ace/OS_NS_sys_time.h" so
+          Visual Age C++ can see ACE_OS::gettimeofday().
 
-	* ASNMP/asnmp/octet.cpp (to_string_hex): Instead of using separate
-	  #if/#endif blocks for fmt, one for WIN32, and one for __unix, use
-	  #if WIN32, #else. __unix wasn't defined for Visual Age C++ 6.
+        * ASNMP/asnmp/octet.cpp (to_string_hex): Instead of using separate
+          #if/#endif blocks for fmt, one for WIN32, and one for __unix, use
+          #if WIN32, #else. __unix wasn't defined for Visual Age C++ 6.
 
-	* apps/JAWS/clients/Blobby/Blob.cpp:
-	* apps/JAWS/clients/Blobby/Blob_Handler.cpp: Added #include
-	  "ace/OS_NS_string.h" so Visual Age C++ can see ACE_OS:: string
-	  methods.
+        * apps/JAWS/clients/Blobby/Blob.cpp:
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp: Added #include
+          "ace/OS_NS_string.h" so Visual Age C++ can see ACE_OS:: string
+          methods.
 
 Mon May  3 13:13:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
