@@ -9,7 +9,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
 
-#include "Timeprobe.h"
+#include "tao/Timeprobe.h"
 #include "Event_Utilities.h"
 #include "Event_Service_Constants.h"
 #include "Scheduler_Factory.h"
@@ -669,8 +669,9 @@ get_options (int argc, char *argv [])
         }
       else
         {
-          cerr << argv [0] << ": number of consumers must be > 0" << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+			     "%s: number of consumers must be > 0",
+			     argv[0]), 1);
         }
       break;
     case 'd':
@@ -686,8 +687,9 @@ get_options (int argc, char *argv [])
         }
       else
         {
-          cerr << argv [0] << ": count must be > 0" << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+			     "%s: count must be > 0",
+			     argv[0]), 1);
         }
       break;
     case 's':
@@ -697,8 +699,9 @@ get_options (int argc, char *argv [])
         }
       else
         {
-          cerr << argv [0] << ": number of suppliers must be > 0" << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+			     "%s: number of suppliers must be > 0",
+			     argv[0]), 1);
         }
       break;
     case 't':
@@ -708,33 +711,33 @@ get_options (int argc, char *argv [])
         }
       else
         {
-          cerr << argv [0] << ": count must be >= 0" << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+			     "%s: timeout must be >= 0",
+			     argv[0]), 1);
         }
       break;
-    case 'O':
-      // Ignore -O options those are used by the ORB....
-      break;
     case '?':
-      cout << "usage: " << argv [0] << " " << usage << endl;
+      ACE_DEBUG ((LM_DEBUG,
+		  "Usage: %s %s\n",
+		  argv[0], usage));
       ACE_OS::exit (0);
       break;
     default:
-      cerr << argv [0] << ": unknown arg, " << (char) opt << endl;
-      cerr << "usage: " << argv [0] << " " << usage << endl;
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "%s: unknown arg, -%c\n"
+			 "Usage: %s %s\n",
+			 argv[0], char(opt),
+			 argv[0], usage), 1);
     }
   }
 
-  switch (argc - get_opt.optind) {
-  case 0:
-    // OK
-    break;
-  default:
-    cerr << argv [0] << ": too many arguments" << endl;
-    cerr << "usage: " << argv [0] << " " << usage << endl;
-    return 1;
-  }
+  if (argc != get_opt.optind)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "%s: too many arguments\n"
+			 "Usage: %s %s\n",
+			 argv[0], argv[0], usage), 1);
+    }
 
   return 0;
 }

@@ -226,8 +226,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/lib/Scheduler_Factory.i \
  Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
  Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerS.h \
@@ -466,8 +464,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
  Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/CosNamingC.h \
@@ -552,8 +548,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  Dispatching_Modules.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
  ReactorTask.h Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Token.h \
@@ -665,8 +659,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
  Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/CosNamingC.h \
@@ -863,8 +855,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerC.i \
  RT_Task.i Debug_Macros.h Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
  Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/CosNamingC.h \

@@ -4,6 +4,7 @@
 //
 // ============================================================================
 
+#include "Scheduler_Factory.h"
 #include "Scheduler_Internal.h"
 #include "Config_Scheduler.h"
 
@@ -252,4 +253,8 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 	}
     }
   ACE_DEBUG ((LM_DEBUG, "schedule prepared\n"));
+
+  ACE_DEBUG ((LM_DEBUG, "dumping to stdout\n"));
+  ACE_Scheduler_Factory::dump_schedule (*infos, 0);
+  ACE_DEBUG ((LM_DEBUG, "dump done\n"));
 }
