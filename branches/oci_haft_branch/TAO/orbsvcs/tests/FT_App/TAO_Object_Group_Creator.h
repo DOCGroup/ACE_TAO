@@ -20,11 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <orbsvcs/FT_ReplicationManagerC.h>
 #include <orbsvcs/PortableGroupC.h>
 #include <ace/SString.h>
 #include <ace/Vector_T.h>
-#include <tao/IORManipulation/IORC.h>
-#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
 
 namespace TAO
 {
@@ -56,10 +55,10 @@ namespace TAO
     // implementation
   private:
     void usage (ostream & out)const;
-    int read_ior_file(const char * fileName, CORBA::String_var & ior);
     int write_ior_file(const char * outputFile, const char * ior);
 
-    int create_group(const char * type_id);
+    int create_group(const char * type_id ACE_ENV_ARG_DECL);
+    int kill_type(const char * type_id ACE_ENV_ARG_DECL);
 
     ////////////////////
     // forbidden methods
@@ -73,7 +72,21 @@ namespace TAO
     CORBA::ORB_var orb_;
     const char * registry_filename_;
     PortableGroup::FactoryRegistry_var registry_;
-    StringVec types_;
+    StringVec create_types_;
+    StringVec kill_types_;
+
+
+  ::FT::ReplicationManager_var replication_manager_;
+    /**
+     * bool: true if we have a real replication manager
+     */
+    int have_replication_manager_;
+
+    /**
+     * sequence number applied to created IOGRs
+     */
+    unsigned long iogr_seq_;
+
   };
 
 } // namespace TAO

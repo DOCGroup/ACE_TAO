@@ -1,14 +1,15 @@
 // $Id$
 
 #include "FT_TestReplicaC.h"
-// the following include is relative to $TAO_ROOT
-#include <examples/Simple/Simple_util.h>
+#include <ace/Vector_T.h>
+#include <ace/SString.h>
+#include <ace/Get_Opt.h>
 #include <iostream>
 #include <fstream>
 
 class FTClientMain
 {
-  typedef Client<FT_TEST::TestReplica, FT_TEST::TestReplica_var> ServerVar;
+  typedef ACE_Vector<ACE_CString> StringVec;
  public:
   ///////////////////////////
   // construction/destruction
@@ -30,12 +31,14 @@ private:
   void usage (ostream & out)const;
   void commandUsage (ostream & out);
   int pass (
-    ServerVar & ft_server,  // in
     long & counter,         // inout
     int & more,             // out
     ACE_CString & command,  // inout
     int retry               // in
     );
+
+
+  int next_replica (ACE_ENV_SINGLE_ARG_DECL);
 
   ////////////////////
   // forbidden methods
@@ -46,6 +49,9 @@ private:
   ////////////////
   // Data members
  private:
+
+  CORBA::ORB_var orb_;
+
   int argc_;
   char ** argv_;
   const char * inFileName_;
@@ -60,19 +66,19 @@ private:
     LOUD}
     verbose_;
 
-  char * fargValue_;
-  char * fargPos_;
-  char * fargEnd_;
 
+  StringVec replica_iors_;
+  size_t replica_pos_;
+  const char * replica_name_;
+  FT_TEST::TestReplica_var replica_;
 };
 
 
 FTClientMain::FTClientMain ()
   : commandIn_(&std::cin)
   , verbose_(NORMAL)
-  , fargValue_(0)
-  , fargPos_(0)
-  , fargEnd_(0)
+  , replica_pos_(0)
+  , replica_name_("none")
 {
 }
 
@@ -82,8 +88,6 @@ FTClientMain::~FTClientMain ()
   {
     this->inFile_.close();
   }
-  ACE_OS::free (this->fargValue_);
-  this->fargValue_ = 0;
 }
 
 void FTClientMain::commandUsage(ostream & out)
@@ -147,51 +151,17 @@ FTClientMain::parse_args (int argc, char *argv[])
   this->argv_ = argv;
   int result = 0;
 
-  // find the -f filename argument
-  // and treat it specially
-  this->fargValue_ = 0;
-  int nArg;
-  for(nArg = 1; this->fargValue_ == 0 && nArg < argc - 1; ++nArg)
-  {
-    if (argv[nArg][0] == '-'
-      &&  argv[nArg][1] == 'f'
-      &&  argv[nArg][2] == '\0')
-    {
-      // remember the starting, current, and ending position of farg
-      this->fargValue_ = ACE_OS::strdup(argv[nArg+1]);
-      this->fargPos_ = this->fargValue_;
-      this->fargEnd_ = this->fargValue_ + ACE_OS::strlen(this->fargPos_);
-
-      // find a comma delimiter, and
-      // chop the string there.
-      char * delim = ACE_OS::strchr (this->fargValue_, ',');
-      while(delim != 0)
-      {
-        *delim = '\0';
-        delim = ACE_OS::strchr (delim + 1, ',');
-      }
-      argv[nArg+1] = this->fargValue_;
-
-      std::cout << "FT Client: Initial primary replica: " << this->fargPos_ << std::endl;
-
-      // point fargPos at the next filename
-      this->fargPos_ = this->fargPos_ + ACE_OS::strlen(this->fargPos_);
-      if (this->fargPos_ != this->fargEnd_)
-      {
-        this->fargPos_ += 1;
-      }
-    }
-  }
-
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
   ACE_Get_Opt get_opts (argc, argv, "c:df:g:nk:x");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
+  {
     switch (c)
-      {
+    {
       case 'c':
+      {
         this->inFileName_ = get_opts.opt_arg ();
         this->inFile_.open(this->inFileName_);
         if(this->inFile_.is_open() && this->inFile_.good())
@@ -205,9 +175,14 @@ FTClientMain::parse_args (int argc, char *argv[])
           result = -1;
         }
         break;
+      }
+      case 'f':
+      {
+        replica_iors_.push_back(get_opts.opt_arg ());
+        break;
+      }
 
       case 'd':
-      case 'f':
       case 'k':
       case 'n':
       case 'x':
@@ -224,8 +199,8 @@ FTClientMain::parse_args (int argc, char *argv[])
       case '?':
         usage(std::cerr);
         result = 1;
-      }
-  // Indicates sucessful parsing of the command line
+    }
+  }
   return result;
 }
 
@@ -240,7 +215,6 @@ void FTClientMain::usage(ostream & out)const
 }
 
 int FTClientMain::pass (
-  ServerVar & ft_server,
   long & counter,
   int & more,
   ACE_CString & command,
@@ -292,7 +266,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->set(" << operand << ");" << std::endl;
           }
-          ft_server->set(operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->set(operand ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           counter = operand;
           break;
@@ -303,7 +277,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->get();" << std::endl;
           }
-          long value = ft_server->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
+          long value = this->replica_->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if (value == operand)
           {
@@ -324,7 +298,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->counter(" << operand << ");" << std::endl;
           }
-          ft_server->counter(operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->counter(operand ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           counter = operand;
           break;
@@ -335,7 +309,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->increment(" << operand << ");" << std::endl;
           }
-          ft_server->increment(operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->increment(operand ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           counter += operand;
           break;
@@ -346,7 +320,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->increment(" << -operand << ");" << std::endl;
           }
-          ft_server->increment(-operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->increment(-operand ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           counter -= operand;
           break;
@@ -357,7 +331,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->counter();" << std::endl;
           }
-          long attribute = ft_server->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
+          long attribute = this->replica_->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           std::cout << "FT Client: Attribute: " << attribute << std::endl;
           echo = 0;
@@ -369,7 +343,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->is_alive();" << std::endl;
           }
-          int alive = ft_server->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
+          int alive = this->replica_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           std::cout << "FT Client: Is alive?  " << alive << std::endl;
           break;
@@ -380,7 +354,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->die(" << operand << ");" << std::endl;
           }
-          ft_server->die(ACE_static_cast (FT_TEST::TestReplica::Bane, operand) ACE_ENV_ARG_PARAMETER);
+          this->replica_->die(ACE_static_cast (FT_TEST::TestReplica::Bane, operand) ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           echo = 0;
           break;
@@ -391,7 +365,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->get_state();" << std::endl;
           }
-          state = ft_server->get_state(ACE_ENV_SINGLE_ARG_PARAMETER);
+          state = this->replica_->get_state(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           stateValue = counter;
           break;
@@ -404,7 +378,7 @@ int FTClientMain::pass (
             {
               std::cout << "FT Client: ->set_state(saved_state);" << std::endl;
             }
-            ft_server->set_state(state ACE_ENV_ARG_PARAMETER);
+            this->replica_->set_state(state ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
             counter = stateValue;
           }
@@ -420,7 +394,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: ->get_update();" << std::endl;
           }
-          update = ft_server->get_update(ACE_ENV_SINGLE_ARG_PARAMETER);
+          update = this->replica_->get_update(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           updateValue = counter;
           break;
@@ -433,7 +407,7 @@ int FTClientMain::pass (
             {
               std::cout << "FT Client: ->set_update(saved_update);" << std::endl;
             }
-            ft_server->set_update(update ACE_ENV_ARG_PARAMETER);
+            this->replica_->set_update(update ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
             counter = updateValue;
           }
@@ -468,11 +442,11 @@ int FTClientMain::pass (
               {
                 std::cout << "FT Client: ->shutdown();" << std::endl;
               }
-              ft_server->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
+              this->replica_->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
               // @@ Note: this is here because the corba event loop seems to go to sleep
               // if there's nothing for it to do.
               // not quite sure why, yet.  Dale
-              ft_server->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
+              this->replica_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
             }
             ACE_CATCHANY
             {
@@ -502,7 +476,7 @@ int FTClientMain::pass (
           std::cout << "FT Client: ->get();" << std::endl;
         }
 
-        long value = ft_server->get(ACE_ENV_SINGLE_ARG_PARAMETER);
+        long value = this->replica_->get(ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
         if (value == counter)
         {
@@ -522,17 +496,43 @@ int FTClientMain::pass (
   return result;
 }
 
+int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
+{
+  int result = 0;
+  if (this->replica_pos_ < this->replica_iors_.size())
+  {
+    this->replica_name_ = this->replica_iors_[this->replica_pos_].c_str();
+    this->replica_pos_ += 1;
+    CORBA::Object_var rep_obj = this->orb_->string_to_object (this->replica_name_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    replica_ = FT_TEST::TestReplica::_narrow (rep_obj);
+    if (! CORBA::is_nil (replica_))
+    {
+      result = 1;
+    }
+    else
+    {
+      std::cerr << "FT Client: Can't resolve IOR: " << this->replica_name_ << std::endl;
+    }
+  }
+  else
+  {
+    std::cerr << "***OUT_OF_REPLICAS*** " << this->replica_pos_ << std::endl;
+  }
+  return result;
+}
+
+
 int FTClientMain::run ()
 {
   int result = 0;
 
-  ServerVar ft_server;
-  // Initialize the ft_server.
-  result = ft_server.init ("FT_TEST",this->argc_, this->argv_);
+  this->orb_ = CORBA::ORB_init(this->argc_, this->argv_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  if ( result == 0)
+  if (next_replica ())
   {
-    long counter = ft_server->get(ACE_ENV_SINGLE_ARG_PARAMETER);
+    long counter = this->replica_->get(ACE_ENV_SINGLE_ARG_PARAMETER);
 
     // retry information
     ACE_CString command;
@@ -553,7 +553,7 @@ int FTClientMain::run ()
     {
       ACE_TRY_NEW_ENV
       {
-        result = pass(ft_server, counter, more, command, retry);
+        result = pass (counter, more, command, retry);
         ACE_TRY_CHECK;
       }
       ACE_CATCH (CORBA::SystemException, sysex)
@@ -563,41 +563,32 @@ int FTClientMain::run ()
 
         retry = 0;
         int handled = 0;
-        if(this->fargPos_ != 0 && this->fargPos_ != this->fargEnd_)
-        {
-          handled = ! ft_server.reconnect_file(this->fargPos_);
-          if (handled)
-          {
-            std::cout << "FT Client: Recovering from fault." << std::endl;
-            std::cout << "FT Client:   Activate " << this->fargPos_ << std::endl;
-            if (command.length () == 0)
-            {
-              std::cout << "FT Client:   No command to retry." << std::endl;
-            }
-            else if (command[0] == 'd')
-            {
-              std::cout << "FT Client:   Not retrying \"die\" command." << std::endl;
-            }
-            else if (sysex.completed () == CORBA::COMPLETED_YES)
-            {
-              std::cout << "FT Client:   Last command completed.  No retry needed." << std::endl;
-            }
-            else
-            {
-              if (sysex.completed () == CORBA::COMPLETED_MAYBE)
-              {
-                std::cout << "FT Client:   Last command may have completed.  Retrying anyway." << std::endl;
-              }
-              retry = 1;
-              std::cout << "FT Client:   Retrying command: " << command << std::endl;
-            }
 
-            // advance fargPos to next filename
-            this->fargPos_ += ACE_OS::strlen(this->fargPos_);
-            if (this->fargPos_ != this->fargEnd_)
+        handled = next_replica();
+        if (handled)
+        {
+          std::cout << "FT Client: Recovering from fault." << std::endl;
+          std::cout << "FT Client:   Activate " << this->replica_name_ << std::endl;
+          if (command.length () == 0)
+          {
+            std::cout << "FT Client:   No command to retry." << std::endl;
+          }
+          else if (command[0] == 'd')
+          {
+            std::cout << "FT Client:   Not retrying \"die\" command." << std::endl;
+          }
+          else if (sysex.completed () == CORBA::COMPLETED_YES)
+          {
+            std::cout << "FT Client:   Last command completed.  No retry needed." << std::endl;
+          }
+          else
+          {
+            if (sysex.completed () == CORBA::COMPLETED_MAYBE)
             {
-              this->fargPos_ += 1;
+              std::cout << "FT Client:   Last command may have completed.  Retrying anyway." << std::endl;
             }
+            retry = 1;
+            std::cout << "FT Client:   Retrying command: " << command << std::endl;
           }
         }
         if (! handled)
@@ -641,6 +632,8 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template Client<FT_TEST::TestReplica, FT_TEST::TestReplica_var>;
+  template ACE_Vector<ACE_CString>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate Client<FT_TEST::TestReplica, FT_TEST::TestReplica_var>
+# pragma ACE_Vector<ACE_CString>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

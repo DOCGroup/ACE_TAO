@@ -159,11 +159,6 @@ private:
   int write_ior (const char * outputFile, const char * ior);
 
   /**
-   * Read IOR from a file
-   */
-  int read_ior_file(const char * fileName, CORBA::String_var & ior);
-
-  /**
    * Clean house for factory shut down.
    */
   void shutdown_i ();
@@ -214,9 +209,9 @@ private:
   const char * ior_output_file_;
 
   /**
-   * A file from which to read the factory registry IOR
+   * The factory registry IOR
    */
-  const char * factory_registry_ior_file_;
+  const char * factory_registry_ior_;
 
   /**
    * The factory registry with which to register.

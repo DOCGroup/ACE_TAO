@@ -92,10 +92,12 @@ FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * 
   , death_pending_(FT_TEST::TestReplica::NOT_YET)
   , verbose_(1)
 {
+//  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Construct" << std::endl;
 }
 
 FT_TestReplica_i::~FT_TestReplica_i ()
 {
+//  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Destruct" << std::endl;
 }
 
 

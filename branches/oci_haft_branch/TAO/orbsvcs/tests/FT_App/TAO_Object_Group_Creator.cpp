@@ -16,13 +16,15 @@
 #include <iostream>
 #include <fstream>
 #include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
-#include <orbsvcs/FT_ReplicationManagerC.h>
 
 #include <ace/Get_Opt.h>
 
 TAO::Object_Group_Creator::Object_Group_Creator ()
   : registry_filename_(0)
   , registry_(0)
+  , replication_manager_(0)
+  , have_replication_manager_(0)
+  , iogr_seq_(0)
 {
 }
 
@@ -35,7 +37,7 @@ TAO::Object_Group_Creator::parse_args (int argc, char *argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "t:f:");
+  ACE_Get_Opt get_opts (argc, argv, "t:f:k:");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -44,7 +46,12 @@ TAO::Object_Group_Creator::parse_args (int argc, char *argv[])
     {
       case 't':
       {
-        this->types_.push_back (get_opts.opt_arg ());
+        this->create_types_.push_back (get_opts.opt_arg ());
+        break;
+      }
+      case 'k':
+      {
+        this->kill_types_.push_back (get_opts.opt_arg ());
         break;
       }
       case 'f':
@@ -69,16 +76,9 @@ TAO::Object_Group_Creator::parse_args (int argc, char *argv[])
     }
   }
 
-  if ( this->types_.size() == 0)
+  if ( this->create_types_.size() == 0 && this->kill_types_.size())
   {
-    std::cerr << "Creator: Missing required parameter: -t <type> " << std::endl;
-    usage (std::cerr);
-    result = -1;
-  }
-
-  if ( this->registry_filename_ == 0)
-  {
-    std::cerr << "Creator: Missing required parameter: -f <FactoryRegistry.ior> " << std::endl;
+    std::cerr << "Creator: neither create (-t) nor kill (-k) specified.  Nothing to do." << std::endl;
     usage (std::cerr);
     result = -1;
   }
@@ -98,32 +98,83 @@ void TAO::Object_Group_Creator::usage(ostream & out)const
 
 int TAO::Object_Group_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 {
-  int result = 0;
+  int result = 1;
   this->orb_ = orb;
 
-////////////////STASH0
-
-  // Find the ReplicationManager.  If found, assume it's our factory
-  CORBA::Object_var obj = orb->resolve_initial_references("ReplicationManager");
-  PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());  
-
-  /////////////////////////////
-  // resolve reference to factory
-  CORBA::String_var registry_ior;
-  if (read_ior_file(this->registry_filename_, registry_ior))
+  // if a factory IOR was specified on command line
+  if ( this->registry_filename_ != 0)
   {
-    CORBA::Object_var registry_obj = this->orb_->string_to_object(registry_ior);
-    this->registry_ = PortableGroup::FactoryRegistry::_narrow(registry_obj);
-    if (CORBA::is_nil(this->registry_))
+    //////////////////////////////////////
+    // Try using the -f argument as an IOR
+    ACE_TRY_NEW_ENV
     {
-      std::cerr << "Creator: Can't resolve FactoryRegistry IOR " << this->registry_filename_ << std::endl;
-      result = -1;
+      CORBA::Object_var registry_obj = this->orb_->string_to_object (this->registry_filename_  ACE_ENV_ARG_PARAMETER); 
+      ACE_TRY_CHECK;
+      this->registry_ = PortableGroup::FactoryRegistry::_narrow(registry_obj  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (! CORBA::is_nil (registry_))
+      {
+        result = 0; // success
+      }
     }
+    ACE_CATCHANY
+    {
+      result = 1;
+    }
+    ACE_ENDTRY;
   }
-  else
+  else  // no -f option.  Try RIR(RM)
   {
-    std::cerr << "Creator: Can't read FactoryRegistry IOR " << this->registry_filename_ << std::endl;
-    result = -1;
+    ///////////////////////////////
+    // Find the ReplicationManager
+    ACE_TRY_NEW_ENV
+    {
+std::cout << "RIR(ReplicationManager)" << std::endl;
+      CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (replication_manager_))
+      {
+std::cout << "Found a _real_ ReplicationManager.  Ask it for a factory registry." << std::cout;
+        have_replication_manager_ = 1;
+        // empty criteria
+        ::PortableGroup::Criteria criteria;
+        this->registry_ = this->replication_manager_->get_factory_registry(criteria  ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (!CORBA::is_nil (this->registry_))
+        {
+          result = 0; // success
+        }
+        else
+        {
+          std::cerr << "Creator: ReplicationManager failed to return FactoryRegistry." << std::endl;
+        }
+      }
+      else
+      {
+
+std::cout << "did we get a FactoryRegistry instead?" << std::endl;
+        registry_ =  ::PortableGroup::FactoryRegistry::_narrow(rm_obj.in()  ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (!CORBA::is_nil(registry_))
+        {
+std::cout << "Found a FactoryRegistry DBA ReplicationManager" << std::endl;
+          result = 0; // success
+        }
+        else
+        {
+          std::cerr << "Creator: Can't resolve ReplicationManager, and no -f option was given." << std::endl;
+        }
+      }
+    }
+    ACE_CATCHANY
+    {
+      std::cerr << "Creator: Exception resolving ReplicationManager, and no -f option was given." << std::endl;
+      result = 1;
+    }
+    ACE_ENDTRY;
   }
 
   return result;
@@ -132,16 +183,33 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 int TAO::Object_Group_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result = 0;
-  size_t typeCount = this->types_.size();
+  size_t typeCount = this->create_types_.size();
   for ( size_t nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * type = this->types_[nType].c_str();
+    const char * type = this->create_types_[nType].c_str();
     result = create_group (type);
   }
+
+  typeCount = this->kill_types_.size();
+  for ( nType = 0; result == 0 && nType < typeCount; ++nType)
+  {
+    const char * type = this->kill_types_[nType].c_str();
+    result = kill_type (type);
+  }
+
   return result;
 }
 
-int TAO::Object_Group_Creator::create_group(const char * type)
+int TAO::Object_Group_Creator::kill_type(const char * type ACE_ENV_ARG_DECL)
+{
+  int result = 0;
+  std::cout << std::endl << "Creator: Unregistering all factories for " << type << std::endl;
+  this->registry_->unregister_factory_by_type (type ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  return result;
+}
+
+int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
@@ -156,7 +224,23 @@ int TAO::Object_Group_Creator::create_group(const char * type)
 
   if (count > 0)
   {
-////////////////STASH1
+    ///////////////////////////
+    // Begin with an empty IOGR
+    ::PortableGroup::GenericFactory::FactoryCreationId_var creation_id;
+    CORBA::Object_var iogr;
+    if (this->have_replication_manager_)
+    {
+      PortableGroup::Criteria criteria;
+      iogr = this->replication_manager_->create_object(
+        type,
+        criteria,
+        creation_id
+        ACE_ENV_ARG_PARAMETER
+        );
+      ACE_CHECK;
+
+    }
+
     for (CORBA::ULong nFact = 0; nFact < count; ++nFact)
     {
       ::PortableGroup::FactoryInfo info = infos[nFact];
@@ -170,22 +254,20 @@ int TAO::Object_Group_Creator::create_group(const char * type)
       std::cout << "Creator: Creating " << type << " at " << loc_name << std::endl;
 
       PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
-      CORBA::Object_var obj = info.the_factory->create_object (
+      CORBA::Object_var created_obj = info.the_factory->create_object (
         type,
         info.the_criteria,
         factory_creation_id
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      if ( !CORBA::is_nil(obj) )
+      if ( !CORBA::is_nil(created_obj) )
       {
-        const char * replica_ior = orb_->object_to_string (obj ACE_ENV_ARG_PARAMETER );
+        const char * replica_ior = orb_->object_to_string (created_obj ACE_ENV_ARG_PARAMETER );
         ACE_CHECK;
-
-////////////////STASH2
 
         ////////////////////////////////////
         // Somewhat of a hack
-        // guess at factory creation id type
+        // guess at type of factory creation id
         CORBA::ULong ulong_id = 0;
         CORBA::Long long_id = 0;
         if (factory_creation_id >>= ulong_id)
@@ -216,6 +298,20 @@ int TAO::Object_Group_Creator::create_group(const char * type)
         {
           std::cerr << "Creator: Error writing ior [" << replica_ior << "] to " << replica_ior_filename << std::endl;
         }
+
+        if (this->have_replication_manager_)
+        {
+          iogr = this->replication_manager_->add_member (iogr,
+                            info.the_location,
+                            created_obj
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+          if (nFact == 0)
+          {
+            iogr = this->replication_manager_->set_primary_member(iogr, info.the_location
+                            ACE_ENV_ARG_PARAMETER);
+          }
+        }
       }
       else
       {
@@ -224,7 +320,27 @@ int TAO::Object_Group_Creator::create_group(const char * type)
     }
 
     std::cout << "Creator:  Successfully created group of " << type << std::endl;
-////////////////STASH3
+
+    if( have_replication_manager_)
+    {
+      const char * replica_iogr = orb_->object_to_string (iogr ACE_ENV_ARG_PARAMETER );
+      ACE_CHECK;
+      char replica_iogr_filename[200];
+
+      ACE_OS::snprintf(replica_iogr_filename, sizeof(replica_iogr_filename)-1, "%s_%lu.iogr",
+        type,
+        this->iogr_seq_);
+      replica_iogr_filename[sizeof(replica_iogr_filename)-1] = '\0';
+
+      std::cout << "Creator: Writing ior for created object to " << replica_iogr_filename << std::endl;
+
+      if (write_ior_file(replica_iogr_filename, replica_iogr) != 0)
+      {
+        std::cerr << "Creator: Error writing ior [" << replica_iogr << "] to " << replica_iogr_filename << std::endl;
+      }
+      this->iogr_seq_ += 1;
+    }
+
   }
 
   return result;
@@ -237,37 +353,6 @@ int TAO::Object_Group_Creator::fini ()
 }
 
 
-
-int TAO::Object_Group_Creator::read_ior_file(const char * fileName, CORBA::String_var & ior)
-{
-  int result = 0;
-  FILE *in = ACE_OS::fopen (fileName, "r");
-  if (in != 0)
-  {
-    ACE_OS::fseek(in, 0, SEEK_END);
-    size_t fileSize = ACE_OS::ftell(in);
-    ACE_OS::fseek(in, 0, SEEK_SET);
-    char * buffer;
-    ACE_NEW_NORETURN (buffer,
-      char[fileSize+1]);
-    if (buffer != 0)
-    {
-      if( fileSize == ACE_OS::fread(buffer, 1, fileSize, in))
-      {
-        buffer[fileSize] = '\0';
-        ior = CORBA::string_dup(buffer);
-        ACE_TRY_CHECK;
-        result = 1; // success
-      }
-      delete[] buffer;
-    }
-  }
-  else
-  {
-    result = 1;
-  }
-  return result;
-}
 
 int TAO::Object_Group_Creator::write_ior_file(const char * outputFile, const char * ior)
 {
@@ -312,7 +397,6 @@ main (int argc, char *argv[])
         result = app.fini();
       }
     }
-    std::cout << "***END TRY SCOPE***" << std::endl;
   }
   ACE_CATCHANY
   {
@@ -321,84 +405,8 @@ main (int argc, char *argv[])
     result = -1;
   }
   ACE_ENDTRY;
-  std::cout << "***EXIT***" << std::endl;
-
   return result;
 }
-
-
-#ifdef UNUSED_CODE_STASH
-////////////////STASH0
-  // Get an object reference for the ORBs IORManipulation object!
-  CORBA::Object_var IORM =
-    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                      0
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-////////////////STASH1
-    // Create IOR list for use with merge_iors.
-    TAO_IOP::TAO_IOR_Manipulation::IORList iors (count + 1);
-
-    // create a property set
-    TAO_PG::Properties_Encoder encoder;
-    PortableGroup::Value value;
-
-    value <<= 99;
-    encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
-
-    // allocate and populate the criteria
-    FT::Properties_var props_in;
-    ACE_NEW_NORETURN (props_in, FT::Properties);
-    if (props_in.ptr() == 0)
-    {
-      ACE_ERROR((LM_ERROR, "Error cannot allocate properties.\n" ));
-    }
-    else
-    {
-      encoder.encode(props_in);
-    }
-
-    iors.length (count + 1);
-    iors [0] = this->object_group_manager_.create_object_group(
-                       this->iogr_group_id_,
-                       "domain",
-                       type,
-                       props_in);
-
-////////////////STASH2
-        iors [nFact + 1] = obj;
-
-////////////////STASH3
-    CORBA::Object_var object_group = this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    const char * iogr = orb_->object_to_string (object_group ACE_ENV_ARG_PARAMETER );
-    ACE_CHECK;
-
-
-    char iogr_filename[200]; // "${type}_${iogr_id}.ior"
-
-    ACE_OS::snprintf(iogr_filename, sizeof(iogr_filename)-1, "%s_%lu.ior",
-      type,
-      ACE_static_cast(unsigned long, iogr_group_id_));
-    iogr_filename[sizeof(iogr_filename)-1] = '\0';
-
-    std::cout << "Creator: Writing iogr for created object to " << iogr_filename << std::endl;
-
-    if (write_ior_file(iogr_filename, iogr) != 0)
-    {
-      std::cerr << "Creator: Error writing iogr [" << iogr << "] to " << iogr_filename << std::endl;
-    }
-
-
-    this->iogr_group_id_ += 1;
-
-#endif // UNUSED_CODE_STASH
 
 
 

@@ -51,10 +51,10 @@ static const char * type_initial_value = "INITIAL_VALUE";
 
 FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   : ior_output_file_(0)
-  , factory_registry_ior_file_(0)
+  , factory_registry_ior_(0)
   , registered_(0)
   , ns_name_(0)
-  , location_(0)
+  , location_("unknown")
   , quit_on_idle_(0)
   , unregister_by_location_(0)
   , test_output_file_(0)
@@ -157,7 +157,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
       }
       case 'f':
       {
-        this->factory_registry_ior_file_ = get_opts.opt_arg ();
+        this->factory_registry_ior_ = get_opts.opt_arg ();
         break;
       }
       case 'i':
@@ -378,71 +378,59 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   ACE_TRY_CHECK;
 
 
-  if (factory_registry_ior_file_ != 0)
+  if (factory_registry_ior_ != 0)
   {
-    CORBA::String_var registry_ior;
-    if (read_ior_file(this->factory_registry_ior_file_, registry_ior))
+    CORBA::Object_var reg_obj = this->orb_->string_to_object(factory_registry_ior_
+                                  ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj);
+    if (! CORBA::is_nil(factory_registry_))
     {
-      CORBA::Object_var reg_obj = this->orb_->string_to_object(registry_ior
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj);
-      if (! CORBA::is_nil(factory_registry_))
+      ::PortableGroup::GenericFactory_var this_var = ::PortableGroup::GenericFactory::_narrow(this_obj);
+      if (! CORBA::is_nil(this_var))
       {
-        ::PortableGroup::GenericFactory_var this_var = ::PortableGroup::GenericFactory::_narrow(this_obj);
-        if (! CORBA::is_nil(this_var))
+
+        size_t typeCount = types_.size();
+        for (size_t nType = 0; nType < typeCount; ++nType)
         {
+          const char * typeId = this->types_[nType].c_str();
 
-          size_t typeCount = types_.size();
-          for (size_t nType = 0; nType < typeCount; ++nType)
-          {
-            const char * typeId = this->types_[nType].c_str();
+          PortableGroup::FactoryInfo info;
+          info.the_factory = this_var;
+          info.the_location.length(1);
+          info.the_location[0].id = CORBA::string_dup(location_);
+          info.the_criteria.length(1);
+          info.the_criteria[0].nam.length(1);
+          info.the_criteria[0].nam[0].id = CORBA::string_dup(type_property);
+          info.the_criteria[0].val <<= CORBA::string_dup(typeId);
 
-            PortableGroup::FactoryInfo info;
-            info.the_factory = this_var;
-            info.the_location.length(1);
-            info.the_location[0].id = CORBA::string_dup(location_);
-            info.the_criteria.length(1);
-            info.the_criteria[0].nam.length(1);
-            info.the_criteria[0].nam[0].id = CORBA::string_dup(type_property);
-            info.the_criteria[0].val <<= CORBA::string_dup(typeId);
-
-            ACE_ERROR (( LM_INFO,
-               "Factory: %s@%s registering with factory registry\n",
-               typeId,
-               location_
-               ));
-
-            factory_registry_->register_factory(
-              typeId,
-              info
-              ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
-          this->registered_ = 1;
-        }
-        else
-        {
-          ACE_ERROR (( LM_ERROR,
-             "Unexpected error: object reference should be a ReplicaFactory?\n"
+          ACE_ERROR (( LM_INFO,
+             "Factory: %s@%s registering with factory registry\n",
+             typeId,
+             location_
              ));
+
+          factory_registry_->register_factory(
+            typeId,
+            info
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
+        this->registered_ = 1;
       }
       else
       {
         ACE_ERROR (( LM_ERROR,
-           "Can't resolve Factory Registry IOR %s\n",
-           this->factory_registry_ior_file_
+           "Unexpected error: object reference should be a ReplicaFactory?\n"
            ));
-        result = -1;
       }
     }
     else
     {
       ACE_ERROR (( LM_ERROR,
-        "Can't read %s\n",
-        this->factory_registry_ior_file_
-        ));
+         "Can't resolve Factory Registry IOR %s\n",
+         this->factory_registry_ior_
+         ));
       result = -1;
     }
   }
@@ -524,32 +512,6 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   return result;
 }
-
-int FT_ReplicaFactory_i::read_ior_file(const char * fileName, CORBA::String_var & ior)
-{
-  int result = 0;
-  FILE *in = ACE_OS::fopen (fileName, "r");
-  ACE_OS::fseek(in, 0, SEEK_END);
-  size_t fileSize = ACE_OS::ftell(in);
-  ACE_OS::fseek(in, 0, SEEK_SET);
-  char * buffer;
-  ACE_NEW_NORETURN (buffer,
-    char[fileSize+1]);
-  if (buffer != 0)
-  {
-    if( fileSize == ACE_OS::fread(buffer, 1, fileSize, in))
-    {
-      buffer[fileSize] = '\0';
-      ior = CORBA::string_dup(buffer);
-      ACE_TRY_CHECK;
-      result = 1; // success
-    }
-    delete[] buffer;
-  }
-  return result;
-}
-
-
 
 void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * replica)
 {
