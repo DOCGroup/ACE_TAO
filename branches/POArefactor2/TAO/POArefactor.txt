@@ -1,3 +1,10 @@
+Wed Dec 15 15:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Include PortableServer.h instead of PortableServerC.h
+
 Wed Dec 15 12:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/Attic/imr_client.mpb:
