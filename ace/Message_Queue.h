@@ -106,8 +106,9 @@ public:
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.
-  /// True if queue is empty, else false.
   virtual int is_full (void) = 0;
+
+  /// True if queue is empty, else false.
   virtual int is_empty (void) = 0;
 
   // = Queue statistic methods.
@@ -154,8 +155,10 @@ public:
   /// Returns true if <deactivated_> is enabled.
   virtual int deactivated (void) = 0;
 
-  // = Get/set the notification strategy for the <Message_Queue>
+  /// Get the notification strategy for the <Message_Queue>
   virtual ACE_Notification_Strategy *notification_strategy (void) = 0;
+
+  /// Set the notification strategy for the <Message_Queue>
   virtual void notification_strategy (ACE_Notification_Strategy *s) = 0;
 
   // = Notification hook.
@@ -233,12 +236,18 @@ public:
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
-   * Number of total length on the queue, i.e., sum of the message
-   * block lengths.
-   * Number of total messages on the queue.
    */
   virtual size_t message_bytes (void);
+
+  /**
+   * Number of total length on the queue, i.e., sum of the message
+   * block lengths.
+   */
   virtual size_t message_length (void);
+
+  /**
+   * Number of total messages on the queue.
+   */
   virtual size_t message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
@@ -246,22 +255,26 @@ public:
   /**
    * New value of the number of total bytes on the queue, i.e., sum of
    * the message block sizes.
+   */
+  virtual void message_bytes (size_t new_size);
+  /**
    * New value of the number of total length on the queue, i.e., sum
    * of the message block lengths.
    */
-  virtual void message_bytes (size_t new_size);
   virtual void message_length (size_t new_length);
 
   // = Flow control routines
-  /**
-   * Get high watermark.
-   * Set high watermark.
-   * Get low watermark.
-   * Set low watermark.
-   */
+
+  /// Get high watermark.
   virtual size_t high_water_mark (void);
+
+  /// Set high watermark.
   virtual void high_water_mark (size_t hwm);
+
+  /// Get low watermark.
   virtual size_t low_water_mark (void);
+
+  /// Set low watermark.
   virtual void low_water_mark (size_t lwm);
 
   // = Activation control methods.
@@ -303,8 +316,9 @@ protected:
 
   // = Check the boundary conditions (assumes locks are held).
   /// True if queue is full, else false.
-  /// True if queue is empty, else false.
   virtual int is_full_i (void);
+
+  /// True if queue is empty, else false.
   virtual int is_empty_i (void);
 
   // = Implementation of public <activate>/<deactivate> methods above.
@@ -312,8 +326,9 @@ protected:
   // These methods assume locks are held.
 
   /// Deactivate the queue.
-  /// Activate the queue.
   virtual int deactivate_i (void);
+
+  /// Activate the queue.
   virtual int activate_i (void);
 
   // = Helper methods to factor out common #ifdef code.
@@ -418,22 +433,31 @@ public:
   // = Check if queue is full/empty.
   /**
    * Always return false.
+   */
+
+  virtual int is_full (void);
+  /**
    * True if queue is empty, else false.  Notice the return value is
    * only transient.
    */
-  virtual int is_full (void);
   virtual int is_empty (void);
 
   // = Queue statistic methods (transient.)
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
-   * Number of total length on the queue, i.e., sum of the message
-   * block lengths.
-   * Number of total messages on the queue.
    */
   virtual size_t message_bytes (void);
+
+  /**
+   * Number of total length on the queue, i.e., sum of the message
+   * block lengths.
+   */
   virtual size_t message_length (void);
+
+  /**
+   * Number of total messages on the queue.
+   */
   virtual size_t message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
@@ -441,10 +465,13 @@ public:
   /**
    * New value of the number of total bytes on the queue, i.e., sum of
    * the message block sizes.
+   */
+  virtual void message_bytes (size_t new_size);
+
+  /**
    * New value of the number of total length on the queue, i.e., sum
    * of the message block lengths.
    */
-  virtual void message_bytes (size_t new_size);
   virtual void message_length (size_t new_length);
 
   /// Get the max concurrent thread number.

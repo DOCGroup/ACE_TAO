@@ -59,7 +59,7 @@ public:
   /// Default constructor.
   ACE_Command_Base (void);
 
-  /// Virtaul destructor.
+  /// Virtual destructor.
   virtual ~ACE_Command_Base (void);
 
   /**
