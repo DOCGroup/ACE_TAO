@@ -1,3 +1,9 @@
+Mon Nov  4 09:28:34 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/SOCK_Dgram.cpp (recv): Corrected method signature in .cpp to 
+	  match the one in the .h.  The .h version specified iovec*, but
+	  the .cpp had iovec[] which confused doxygen.  This fixes bug [1353].
+
 Sun Nov  3 19:41:30 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Multicast_Test.cpp:
