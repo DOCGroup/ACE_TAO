@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   config-win32-visualage.h
@@ -44,7 +46,6 @@
 #define ACE_LACKS_MKTEMP
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define NSIG 23 /* Maximum no. of signals + 1 */
-#define ACE_HAS_ANSI_CASTS 1
 #define ACE_HAS_BROKEN_NESTED_TEMPLATES 1
 #define ACE_HAS_CPLUSPLUS_HEADERS 1
 #define ACE_HAS_EXCEPTIONS 1

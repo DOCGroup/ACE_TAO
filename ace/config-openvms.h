@@ -292,11 +292,6 @@
                                         ACE_LACKS_PWD_FUNCTIONS to be
                                         undefined and that the
                                         geteuid() system call exists.*/
-//#define ACE_HAS_ANSI_CASTS 1 // works sometimes!!!
-					/*Platform supports new C++
-                                        style casts (dynamic_cast,
-                                        static_cast, reinterpret_cast
-                                        and const_cast)*/
 //#define ACE_DEFAULT_THREAD_KEYS
 					/*Number of TSS keys, with
                                         ACE_HAS_TSS_EMULATION _only_.
@@ -1319,8 +1314,7 @@ ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
                                         (e.g., Tandem)*/
 //#define ACE_LACKS_RTTI
 					/*Compiler does not support
-                                        dynamic_cast.  Usually used
-                                        with ACE_HAS_ANSI_CASTS.*/
+                                          dynamic_cast.*/
 //#define ACE_LACKS_READDIR_R
 					/*Platform uses ACE_HAS_DIRENT
                                         but does not have readdir_r
@@ -1563,4 +1557,3 @@ Macro                                   Description
                                         ** This macro takes precedence over previous
                                         ** two macros. */
 #endif
-

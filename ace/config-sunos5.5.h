@@ -27,7 +27,6 @@
     // with Sun C++ 4.0.1 never completes.
 #   define ACE_NEEDS_DEV_IO_CONVERSION
 # elif (__SUNPRO_CC >= 0x420)
-# define ACE_HAS_ANSI_CASTS
 # if (__SUNPRO_CC >= 0x500)
     // string.h and memory.h conflict for memchr definitions
 #   define ACE_LACKS_MEMORY_H
@@ -135,7 +134,6 @@
 
 #elif defined (__KCC) /* KAI compiler */
 
-# define ACE_HAS_ANSI_CASTS
 # include "ace/config-kcc-common.h"
 
 #else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */

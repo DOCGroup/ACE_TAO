@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef ACE_CXX_COMMON_H
@@ -29,7 +31,6 @@
 #   if defined (ACE_HAS_EXCEPTIONS)
 #     define ACE_NEW_THROWS_EXCEPTIONS
 #   endif /* ACE_HAS_EXCEPTIONS */
-#   define ACE_HAS_ANSI_CASTS
 #   if !defined (__RTTI)
 #     define ACE_LACKS_RTTI
 #   endif

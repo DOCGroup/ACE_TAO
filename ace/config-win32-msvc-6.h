@@ -38,13 +38,6 @@
 #  define ACE_HAS_BROKEN_NESTED_TEMPLATES
 # endif /* ACE_HAS_BROKEN_NESTED_TEMPLATES */
 
-// By default, we disable the C++ casting because
-// it requires the RTTI support to be turned on which
-// is not something we usually do.
-# if !defined (ACE_HAS_ANSI_CASTS)
-#  define ACE_HAS_ANSI_CASTS 0
-# endif
-
 // Keywords
 
 # define ACE_HAS_EXPLICIT_KEYWORD
@@ -71,10 +64,6 @@
 # define ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 # define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 # define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-
-# if defined (ACE_HAS_ANSI_CASTS) && (ACE_HAS_ANSI_CASTS == 0)
-#  undef  ACE_HAS_ANSI_CASTS
-# endif /* ACE_HAS_ANSI_CASTS && ACE_HAS_ANSI_CASTS == 0 */
 
 # if !defined (ACE_HAS_WINCE)
 #   define ACE_HAS_SIG_ATOMIC_T

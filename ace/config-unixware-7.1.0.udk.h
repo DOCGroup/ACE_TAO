@@ -95,10 +95,6 @@
 /* Enable ACE inlining */
 #define __ACE_INLINE__ 1
 
-/* Platform supports new C++ style casts (dynamic_cast, static_cast,
-   reinterpret_cast and const_cast) */
-#define ACE_HAS_ANSI_CASTS
-
 /* Platform supports Asynchronous IO calls */
 /* #define ACE_HAS_AIO_CALLS */
 

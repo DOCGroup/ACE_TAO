@@ -1,4 +1,7 @@
+// -*- C++ -*-
+//
 // $Id$
+
 #ifndef ACE_CONFIG_NSK_H
 #define ACE_CONFIG_NSK_H
 #include /**/ "ace/pre.h"
@@ -41,16 +44,16 @@
 // The following #defines are hacks to get around things
 // that seem to be missing or different in Tandem land
 #define NSIG 32                 // missing from Signal.h
-                                // note: on nsk TNS/R there is room in 
+                                // note: on nsk TNS/R there is room in
                                 // sigset_t for 128 signals but those
                                 // above 31 are not valid.
 typedef long    fd_mask;        // should be in select.h but no such file
 #define NBBY 8                  // must be consistent with value in sys/types.h
-#define NFDBITS         (sizeof (fd_mask) * NBBY)       /* bits per mask */ 
+#define NFDBITS         (sizeof (fd_mask) * NBBY)       /* bits per mask */
 #define MAXNAMLEN  248          // missing from dirent.h
 #define ERRMAX 4218             // from errno.h
 
-// Following seems to be missing from G06.20 version of standard 
+// Following seems to be missing from G06.20 version of standard
 // pthreads includes (it appeared in older version of standard pthreads)
 // (SCHED_FIFO (aka cma_c_sched_fifo) used in Dynamic_Priority_Test)
 #ifdef ACE_TANDEM_T1248_PTHREADS
@@ -81,24 +84,24 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 // Use native implementation of memchr.
-#define ACE_HAS_MEMCHR                          
+#define ACE_HAS_MEMCHR
 
 // Platform supports recvmsg and sendmsg
-#define ACE_HAS_MSG    
+#define ACE_HAS_MSG
 
 // Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its cmsghdr
 // structure does not contain an 'unsigned char cmsg_data[0]' member.
 #define ACE_LACKS_CMSG_DATA_MEMBER
 
-//  Platform defines ACE_HAS_MSG, but lacks msg_accrights{,len}. 
+//  Platform defines ACE_HAS_MSG, but lacks msg_accrights{,len}.
 #define ACE_LACKS_MSG_ACCRIGHTS
 
 // Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
 // Platform/compiler has the sigwait(2) prototype
-#define ACE_HAS_SIGWAIT                         
-                                        
+#define ACE_HAS_SIGWAIT
+
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 
@@ -111,7 +114,7 @@ typedef enum CMA_T_SCHED_POLICY {
 // The platform doesn't have mprotect(2)
 #define ACE_LACKS_MPROTECT
 
-// Platform lacks struct msgbuf 
+// Platform lacks struct msgbuf
 #define ACE_LACKS_MSGBUF_T
 
 // Platform lacks msync()
@@ -124,7 +127,7 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform lacks madvise()
 #define ACE_LACKS_MADVISE
 
-// Platform lacks pri_t 
+// Platform lacks pri_t
 #define ACE_LACKS_PRI_T
 
 // Platform lacks a working sbrk()
@@ -137,7 +140,7 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_LACKS_INET_ATON
 
 // Compiler/platform has Dirent iterator functions
-#define ACE_HAS_DIRENT 
+#define ACE_HAS_DIRENT
 
 // Platform uses ACE_HAS_DIRENT but does not have readdir_r()
 #define ACE_LACKS_READDIR_R
@@ -147,7 +150,7 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_HAS_GETPAGESIZE
 
 // Platform supports IP multicast
-#define ACE_HAS_IP_MULTICAST 
+#define ACE_HAS_IP_MULTICAST
 
 // Platform's select() uses non-const timeval*
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
@@ -156,21 +159,21 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_HAS_POSIX_NONBLOCK
 
 // Platform lacks named POSIX semaphores
-#define ACE_LACKS_NAMED_POSIX_SEM 
+#define ACE_LACKS_NAMED_POSIX_SEM
 
 // Platform has support for multi-byte character support compliant
 // with the XPG4 Worldwide Portability Interface wide-character
 // classification.
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR     
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 // Platform supports the POSIX regular expression library.
 // [Note Tandem NSK platform does have regular expresson support but it
 // does not follow the assumptions made by ACE.  To use it would need
 // to make some ACE modifications.]
 //#define ACE_HAS_REGEX
- 
-// Compiler/platform supports strerror ()                                  
-#define ACE_HAS_STRERROR                        
+
+// Compiler/platform supports strerror ()
+#define ACE_HAS_STRERROR
 
 // Platform doesn't have truncate()
 #define ACE_LACKS_TRUNCATE
@@ -222,12 +225,12 @@ typedef enum CMA_T_SCHED_POLICY {
 // macro says the platform has a pthreads variety - should also define
 // one of the below to say which one.  Also may need some
 // ACE_HAS_... thing for extensions.
-#define ACE_HAS_PTHREADS                        
+#define ACE_HAS_PTHREADS
 
 // Platform's 'Pthreads' is .4a draft 4
 #ifndef ACE_TANDEM_T1248_PTHREADS
 #  define ACE_HAS_PTHREADS_DRAFT4
-#  define ACE_LACKS_CONST_TIMESPEC_PTR 
+#  define ACE_LACKS_CONST_TIMESPEC_PTR
 extern int cma_sigwait  (sigset_t *);
 #endif
 
@@ -238,11 +241,11 @@ extern int cma_sigwait  (sigset_t *);
 #endif
 
 // Compiler/platform has thread-specific storage
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE 
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // Platform has no implementation of pthread_condattr_setpshared(),
 // even though it supports pthreads!
-#define ACE_LACKS_CONDATTR_PSHARED              
+#define ACE_LACKS_CONDATTR_PSHARED
 
 // pthread_cond_timedwait does *not* reset the time argument when the
 // lock is acquired.
@@ -282,11 +285,11 @@ extern int cma_sigwait  (sigset_t *);
 // <time.h> doesn't automatically #include /**/ <sys/time.h>
 #define ACE_LACKS_SYSTIME_H
 
-// Platform lacks the siginfo.h include file 
+// Platform lacks the siginfo.h include file
 #define ACE_LACKS_SIGINFO_H
 
 // Platform doesn't define struct strrecvfd.
-#define ACE_LACKS_STRRECVFD 
+#define ACE_LACKS_STRRECVFD
 
 // Platform lacks the ucontext.h file
 #define ACE_LACKS_UCONTEXT_H
@@ -306,7 +309,7 @@ extern int cma_sigwait  (sigset_t *);
 
 // Platform has <strings.h> (which contains bzero() prototype)
 #define ACE_HAS_STRINGS 1
-                                        
+
 
 // OS/compiler omits the const from the iovec parameter in the
 // writev() prototype.
@@ -334,12 +337,8 @@ extern int cma_sigwait  (sigset_t *);
 // Compiler specific parts
 //=========================================================================
 
-// Platform supports new C++ style casts (dynamic_cast, static_cast,
-// reinterpret_cast and const_cast)
-#define ACE_HAS_ANSI_CASTS 
-
 // Compiler supports C++ exception handling
-#define ACE_HAS_EXCEPTIONS 
+#define ACE_HAS_EXCEPTIONS
 
 // Compiler/platform has correctly prototyped header files
 #define ACE_HAS_CPLUSPLUS_HEADERS
@@ -348,16 +347,16 @@ extern int cma_sigwait  (sigset_t *);
 #define ACE_HAS_MUTABLE_KEYWORD
 
 // Compiler/platform does not support the unsigned long long datatype.
-#define ACE_LACKS_LONGLONG_T                    
+#define ACE_LACKS_LONGLONG_T
 
 // Compiler supports the ssize_t typedef
-#define ACE_HAS_SSIZE_T 
+#define ACE_HAS_SSIZE_T
 
 // Platform/compiler supports Standard C++ Library
 #define ACE_HAS_STANDARD_CPP_LIBRARY 0
 
 // Compiler support explicit constructors (for type conversions).
-#define ACE_HAS_EXPLICIT_KEYWORD 
+#define ACE_HAS_EXPLICIT_KEYWORD
 
 // Compiler uses the template<> syntax
 #define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
@@ -375,15 +374,15 @@ extern int cma_sigwait  (sigset_t *);
 // of classes used as formal arguments to a template class.
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 
-// Platform/Compiler supports a String class 
-//#define ACE_HAS_STRING_CLASS 
+// Platform/Compiler supports a String class
+//#define ACE_HAS_STRING_CLASS
 //# define ACE_HAS_STDCPP_STL_INCLUDES
 
 // Platform has its standard c++ library in the namespace std.
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 // Compiler doesn't support static data member templates
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES  
+#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Platform lacks "signed char" type (broken!)
 // Following will not be needed if use standard c library (G06.20 and later)
