@@ -14,7 +14,7 @@
 // if used with the CURRENT_USER predefined registry.
 
 #include "ace/Registry.h"
-
+#include "ace/streams.h"
 
 // Name for application's naming context
 static ACE_Registry::Name application_context_name;
@@ -137,11 +137,11 @@ setup_names ()
 
   ACE_Registry::Name_Component component;
 
-  component.id_ = __TEXT ("Software"),         ::application_context_name.push_back (component);
-  component.id_ = __TEXT ("AcmeSoft"),         ::application_context_name.push_back (component);
-  component.id_ = __TEXT ("AcmeApplication"),  ::application_context_name.push_back (component);
-  component.id_ = __TEXT ("1.0"),              ::application_context_name.push_back (component);
+  component.id_ = __TEXT ("Software"),         ::application_context_name.insert (component);
+  component.id_ = __TEXT ("AcmeSoft"),         ::application_context_name.insert (component);
+  component.id_ = __TEXT ("AcmeApplication"),  ::application_context_name.insert (component);
+  component.id_ = __TEXT ("1.0"),              ::application_context_name.insert (component);
   
-  component.id_ = __TEXT ("Instance Counter"), ::counter_name.push_back (component);
+  component.id_ = __TEXT ("Instance Counter"), ::counter_name.insert (component);
 }
 

@@ -212,6 +212,14 @@ operator<< (ostream &os, const ACE_CString &cs)
 }
 
 ostream &
+operator<< (ostream &os, const ACE_WString &ws)
+{
+  if (ws.length () > 0)
+    os << ACE_MULTIBYTE_STRING (ws);
+  return os;
+}
+
+ostream &
 operator<< (ostream &os, const ACE_SString &ss)
 {
   os << ss.fast_rep ();
