@@ -1,4 +1,4 @@
-$Id$
+/*$Id$*/
 
 // Automatically generated header file "ec_dsui_families.h"  by dsui-parse.py
 #ifndef _ec_DSUI_FAMILIES_H
