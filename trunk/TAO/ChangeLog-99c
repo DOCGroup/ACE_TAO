@@ -1,3 +1,9 @@
+Tue Jul 06 15:05:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Scheduling_Service/Makefile:  added
+          -I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched, so that DU cxx 6.2
+          can find Reconfig_Scheduler_T.cpp for template instantiation.
+
 Tue Jul 06 14:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
@@ -9,27 +15,27 @@ Tue Jul 06 14:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Jul 06 13:00:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (servant_locator_cleanup): Using the
-	  zero'ness of the cookie to determine if we need to call the
-	  servant locator <postinvoke> method is not a good idea since the
-	  cookie itself might be set to zero by the user. Therefore, a new
-	  and separate variable <using_servant_locator_> is used for this
-	  purpose.
+        * tao/Object_Adapter.cpp (servant_locator_cleanup): Using the
+          zero'ness of the cookie to determine if we need to call the
+          servant locator <postinvoke> method is not a good idea since the
+          cookie itself might be set to zero by the user. Therefore, a new
+          and separate variable <using_servant_locator_> is used for this
+          purpose.
 
-	* tao/POA.cpp: Made sure to setup and teardown the single threaded
-	  poa lock for servants returned from servant managers.  Thanks to
-	  Mike Moran <mm4@cs.wustl.edu> for pointing this out.
+        * tao/POA.cpp: Made sure to setup and teardown the single threaded
+          poa lock for servants returned from servant managers.  Thanks to
+          Mike Moran <mm4@cs.wustl.edu> for pointing this out.
 
-	  In addition, _add_ref() was not being invoked on a servant
-	  returned from a servant activator.  This is fixed now.
+          In addition, _add_ref() was not being invoked on a servant
+          returned from a servant activator.  This is fixed now.
 
 Tue Jul  6 12:05:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Simple/bank/run_test.pl:
-	  Remove the IOR file before running the server
+        * examples/Simple/bank/run_test.pl:
+          Remove the IOR file before running the server
 
-	* examples/Simple/bank/Bank_Client_i.cpp:
-	  Fixed debugging messages.
+        * examples/Simple/bank/Bank_Client_i.cpp:
+          Fixed debugging messages.
 
 Tue Jul 06 11:36:37 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -33,7 +33,8 @@ ifndef TAO_ROOT
 endif
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched -I$(TAO_ROOT)/orbsvcs \
+            -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
