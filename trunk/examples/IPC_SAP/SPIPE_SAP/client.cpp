@@ -2,6 +2,7 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(SPIPE_SAP, client, "$Id$")
 
@@ -9,7 +10,7 @@ ACE_RCSID(SPIPE_SAP, client, "$Id$")
 
 #include "shared.h"
 
-int 
+int
 main (int argc, char *argv[])
 {
   if (argc < 2)
