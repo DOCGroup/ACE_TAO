@@ -1,3 +1,8 @@
+Wed Jan  5 17:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp:
+          Added include of ace/OS_NS_stropts.h to get ACE_OS::ioctl
+
 Wed Jan  5 09:25:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/ace.mpc:
@@ -7,7 +12,7 @@ Wed Jan  5 09:25:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ace/svcconf.mpb:
         * ace/token.mpb:
         * ace/uuid.mpb:
-        
+
           Removed the extra nested braces related to ACE_COMPONENTS
           that create "subdirectories" in VC project files. In makefiles,
           these "components" can be separately compiled but not linked,
