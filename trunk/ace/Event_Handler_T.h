@@ -100,9 +100,9 @@ public:
   // These methods all delegate down to the <T> operations handler.
   virtual ACE_HANDLE get_handle (void) const;
   virtual void set_handle (ACE_HANDLE);
-  virtual int handle_input (ACE_HANDLE fd = -1);
-  virtual int handle_output (ACE_HANDLE fd = -1);
-  virtual int handle_exception (ACE_HANDLE fd = -1);
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);

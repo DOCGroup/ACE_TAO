@@ -285,7 +285,11 @@ ACE_OS::stat (const char *file, ACE_stat *stp)
    // wrapper for _xstat().
   ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
 #elif defined (ACE_WIN32)
+# if defined(__IBMCPP__)
+  ACE_OSCALL_RETURN (::_stat (file,  stp), int, -1);
+#else
   ACE_OSCALL_RETURN (::_stat (file, (struct _stat *) stp), int, -1);
+#endif /* __IBMCPP__ */
 #else /* VXWORKS */
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #endif /* VXWORKS */
