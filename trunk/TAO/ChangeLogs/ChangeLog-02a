@@ -1,3 +1,10 @@
+Fri Jun  9 13:16:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/POA.cpp:
+	  Just overallocate one more WChar instead of using ceil().
+	  It is simpler, it works in platforms without floating point,
+	  it avoids the loss of precision and it avoid code bloat.
+
 Fri Jun 09 15:18:50 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp
