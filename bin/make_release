@@ -284,7 +284,8 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   }
 
   if ("$tao_tag") {
-    &ex ("$cvs -q export -r$tao_tag -kv ACE_wrappers/TAO > /dev/null")  &&
+    chdir "ACE_wrappers"  ||  die "$0: unable to chdir ACE_wrappers\n";
+    &ex ("$cvs -q export -r$tao_tag -kv TAO > /dev/null")  &&
       die "$0: failed cvs export of $tao_tag in $stage_dir\n";
     &ex ("cd ACE_wrappers/TAO  &&  $make INSTALL")  &&
       die "$0: failed make INSTALL in " .
@@ -292,7 +293,8 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
   }
 
   if ("$ciao_tag") {
-    &ex ("$cvs -q export -r$ciao_tag -kv ACE_wrappers/TAO/CIAO > /dev/null")  &&
+    chdir "TAO"  ||  die "$0: unable to chdir ACE_wrappers/TAO\n";
+    &ex ("$cvs -q export -r$ciao_tag -kv CIAO > /dev/null")  &&
       die "$0: failed cvs export of $ciao_tag in $stage_dir\n";
   }
 
