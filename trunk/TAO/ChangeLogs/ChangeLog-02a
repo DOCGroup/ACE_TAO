@@ -1,3 +1,8 @@
+Sun Sep 17 10:41:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/README:  Added the file for
+	  the test.
+
 Sun Sep 17 10:19:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGRManipulation:
