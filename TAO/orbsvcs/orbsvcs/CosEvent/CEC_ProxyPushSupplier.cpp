@@ -268,9 +268,6 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
     this->cleanup_i ();
   }
 
-  this->deactivate (ACE_TRY_ENV);
-  ACE_CHECK;
-
   // Notify the event channel....
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
   ACE_CHECK;
