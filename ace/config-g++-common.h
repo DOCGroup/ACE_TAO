@@ -18,17 +18,20 @@
 #   define ACE_HAS_STDCPP_STL_INCLUDES
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
-    // It has gets (), but warns about using it (on Linux) at link time.
 # else
     // Let's find out
-
 #   define ACE_HAS_ANSI_CASTS
 #   define ACE_HAS_CPLUSPLUS_HEADERS
 #   define ACE_HAS_STDCPP_STL_INCLUDES
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
-
 # endif /* __GNUC__ >= 2.90 */
+
+# if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
+    // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
+    // used with older versions.
+#   define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+# endif /* __GNUC__ >= 2.91 */
 
 # if __GNUC__ == 2  &&  __GNUC_MINOR__ != 9  &&  __GNUC_MINOR__ != 91
 #   // g++ 2.9 and egcs 2.91 apparently have a bug with this . . .
@@ -48,12 +51,12 @@
 #   define ACE_HAS_EXCEPTIONS
 # endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
 
-#else  /* ! EGCS */
+#else  /* ! egcs */
   // Plain old g++.
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 # define ACE_HAS_GNUG_PRE_2_8
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
-#endif /* ! EGCS */
+#endif /* ! egcs */
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12
