@@ -119,7 +119,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       // This means that the ownership of <foo_impl> now belongs to
       // the POA.
       foo_impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (0);
 
       // Finally everything is fine
       return 1;
@@ -156,7 +156,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       // This means that the ownership of <foo_impl> now belongs to
       // the POA.
       foo_impl->_remove_ref (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (0);
 
       // Finally everything is fine
       return 1;

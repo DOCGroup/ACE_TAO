@@ -38,12 +38,12 @@ Database_i::get (Test::Index i,
   if (i >= this->max_range_)
     ACE_THROW_RETURN (Test::OutOfRange (0, this->max_range_), 0);
 
-  Test::OctetSeq_var copy;
+  Test::OctetSeq* copy;
   ACE_NEW_THROW_EX (copy,
                     Test::OctetSeq (this->elements_[i]),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
-  return copy._retn ();
+  return copy;
 }
 
 CORBA::ULong
