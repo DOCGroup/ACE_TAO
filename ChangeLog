@@ -1,3 +1,11 @@
+Mon Jan 19 08:07:02 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where files added to the Template_Files section were
+          not removed from the Source_Files section due to differences in
+          slashes to backslashes.
+
 Mon Jan 19 07:24:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Misc/test_XtReactor1.cpp:
