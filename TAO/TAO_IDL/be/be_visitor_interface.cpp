@@ -33,6 +33,10 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
   *os << "_tao_collocated (" << node->full_skel_name () << "_ptr "
       << " servant);\n";
 
+  os->indent ();
+  *os << node->full_skel_name ()
+      << "_ptr _get_servant (void) const;\n";
+
   if (node->nmembers () > 0)
     {
       UTL_ScopeActiveIterator *si;
@@ -125,7 +129,7 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
 
   this->current_interface_ = node;
 
-  *ss << current_interface_->full_coll_name () << "::"
+  *ss << this->current_interface_->full_coll_name () << "::"
       << "_tao_collocated (" << node->full_skel_name () << "_ptr "
       << " servant)\n";
   ss->incr_indent ();
@@ -134,6 +138,16 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   *ss << "{\n";
   ss->incr_indent ();
   *ss << "this->set_parent (servant->get_parent ());\n";
+  ss->decr_indent ();
+  *ss << "}\n\n";
+
+  ss->indent ();
+  *ss << this->current_interface_->full_skel_name () << "_ptr "
+      << this->current_interface_->full_coll_name () << "::"
+      << "_get_servant (void) const\n"
+      << "{\n";
+  ss->incr_indent ();
+  *ss << "return this->servant_;\n";
   ss->decr_indent ();
   *ss << "}\n\n";
 

@@ -691,7 +691,7 @@ int be_interface::gen_server_header (void)
 
   sh->indent ();
   *sh << "virtual const char* _interface_repository_id"
-      << " (CORBA::Environment& _tao_environment) const;\n";
+      << " (void) const;\n";
 
   be_visitor_collocated_sh visitor;
   this->accept (&visitor);
@@ -843,7 +843,7 @@ int be_interface::gen_server_skeletons (void)
 
   ss->indent ();
   *ss << "const char* " << this->full_skel_name ()
-      << "::_interface_repository_id (CORBA::Environment &) const"
+      << "::_interface_repository_id (void) const"
       << nl;
   *ss << "{\n";
   ss->incr_indent ();
