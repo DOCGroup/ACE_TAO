@@ -12,10 +12,10 @@ TAO_NotifySubscribe_i::~TAO_NotifySubscribe_i (void)
 }
 
 void TAO_NotifySubscribe_i::subscription_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                 const CosNotification::EventTypeSeq & /*added*/,
+                                                 const CosNotification::EventTypeSeq & /*removed*/,
+                                                 CORBA::Environment & //ACE_TRY_ENV
+                                                 )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosNotifyComm::InvalidEventType

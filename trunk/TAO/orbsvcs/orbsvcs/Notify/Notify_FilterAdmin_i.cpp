@@ -154,6 +154,7 @@ template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::FilterID,CosNotify
 template class ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::FilterID,CosNotifyFilter::Filter_var,ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::FilterID,CosNotifyFilter::Filter_var,ACE_Hash<CosNotifyFilter::FilterID>, ACE_Equal_To<CosNotifyFilter::FilterID>,ACE_SYNCH_MUTEX>;
 
+template class ID_Pool<CosNotifyFilter::FilterID>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<CosNotifyFilter::FilterID,CosNotifyFilter::Filter_var>;
@@ -165,4 +166,5 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::FilterID,CosNot
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::FilterID,CosNotifyFilter::Filter_var,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::FilterID,CosNotifyFilter::Filter_var,ACE_Hash<CosNotifyFilter::FilterID>, ACE_Equal_To<CosNotifyFilter::FilterID>,ACE_SYNCH_MUTEX>
 
+#pragma instantiate ID_Pool<CosNotifyFilter::FilterID>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

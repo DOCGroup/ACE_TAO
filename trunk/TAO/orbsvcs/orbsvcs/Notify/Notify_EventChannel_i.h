@@ -180,11 +180,13 @@ virtual void set_admin (
  protected:
   TAO_Notify_EventChannelFactory_i& my_factory_;
   // The factory that created us.
-
-  ID_Pool<CosNotifyChannelAdmin::AdminID> consumer_admin_ids;
+  
+  typedef ID_Pool<CosNotifyChannelAdmin::AdminID> IDGEN;
+  
+  IDGEN consumer_admin_ids;
   // Id generator for consumer admins.
 
-  ID_Pool<CosNotifyChannelAdmin::AdminID> supplier_admin_ids;
+  IDGEN supplier_admin_ids;
   // Id generator for supplier admins.
 
   ACE_Hash_Map_Manager <CosNotifyChannelAdmin::AdminID,

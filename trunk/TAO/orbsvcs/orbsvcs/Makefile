@@ -45,7 +45,7 @@ ifndef minimum_corba
 # Trader uses DynAny which is disabled when compiling with minimum
 # CORBA support.  LifeCycle depend on Trader so don't build
 # them either.
-  TAO_ORBSVCS += Trader LifeCycle Log
+  TAO_ORBSVCS += Trader LifeCycle Log 
 
 endif # minimum_corba
 
@@ -303,7 +303,8 @@ ifneq (,$(findstring Notify,$(TAO_ORBSVCS)))
         Notify/Notify_StructuredProxyPushSupplier_i \
         Notify/Notify_StructuredProxyPushConsumer_i \
         Notify/Notify_StructuredPushConsumer \
-        Notify/Notify_StructuredPushSupplier
+        Notify/Notify_StructuredPushSupplier \
+        Notify/ID_Pool_T
 
 #If the Trader is not being build, include the files that we need.
 ifeq (,$(findstring Trader,$(TAO_ORBSVCS)))
