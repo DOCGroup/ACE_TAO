@@ -813,6 +813,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                        "ORB Core unable to find a Resource Factory instance"),
                       -1);
 
+  if (use_tss_resources == -1)
+    this->use_tss_resources_ = trf->use_tss_resources ();
+  else
+    this->use_tss_resources_ = use_tss_resources;
+
   (void) this->reactor ();
   // Make sure the reactor is initialized...
 
@@ -906,11 +911,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Have registry parse the preconnects
   if (this->orb_params ()->preconnects ().is_empty () == 0)
     this->connector_registry ()->preconnect (this->orb_params ()->preconnects ());
-
-  if (use_tss_resources == -1)
-    this->use_tss_resources_ = 0; // @@ What is the default?
-  else
-    this->use_tss_resources_ = use_tss_resources;
 
   return 0;
 }
@@ -1513,12 +1513,17 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
       this->owns_reactor_ = 0;
     }
 
+  if (this->output_cdr_dblock_allocator_ != 0)
+    this->output_cdr_dblock_allocator_->remove ();
   delete this->output_cdr_dblock_allocator_;
-  this->output_cdr_dblock_allocator_ = 0;
+
+  if (this->output_cdr_buffer_allocator_ != 0)
+    this->output_cdr_buffer_allocator_->remove ();
   delete this->output_cdr_buffer_allocator_;
-  this->output_cdr_buffer_allocator_ = 0;
+
+  if (this->output_cdr_msgblock_allocator_ != 0)
+    this->output_cdr_msgblock_allocator_->remove ();
   delete this->output_cdr_msgblock_allocator_;
-  this->output_cdr_msgblock_allocator_ = 0;
 
   if (this->owns_connection_cache_)
     {

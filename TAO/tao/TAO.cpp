@@ -344,7 +344,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager (void)
 {
   ACE_TRY_NEW_ENV
     {
-      if (CORBA::is_nil (this->poa_.in ()) == 0)
+      if (!CORBA::is_nil (this->poa_.in ()))
         {
           this->poa_->destroy (1,
                                1,
@@ -357,5 +357,4 @@ TAO_ORB_Manager::~TAO_ORB_Manager (void)
       // ignore any exceptions..
     }
   ACE_ENDTRY;
-  this->poa_ = PortableServer::POA::_nil ();
 }
