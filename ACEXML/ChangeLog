@@ -1,3 +1,9 @@
+Tue Jun 24 23:31:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* apps/svcconf/Svcconf.cpp: Turned off validation temporarily when
+	  handling svc.conf files.  All of the converted svc.conf.xml
+	  files do not have associate doctype at the moment.
+
 Tue Jun 24 15:38:49 UTC 2003  Don Hinton  <dhinton@dresystems.h>
 
         * common/NamespaceSupport.i:
@@ -7,7 +13,7 @@ Sun Jun  1 09:09:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* parser/parser/Parser.cpp:
 	* parser/parser/Entity_Manager.cpp: Added explicit template
-	  instantiations. 
+	  instantiations.
 
 Fri May 30 14:16:33 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
