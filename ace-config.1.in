@@ -50,8 +50,7 @@ the ACE ORB (TAO) library
 Additional ACE related library configuration information.
 .RE
 .SH BUGS
-No option to display which C++ compiler was used to compile ACE currently
-exists.
+None.
 .SH AUTHOR
 Ossama Othman <othman@cs.wustl.edu>
 .SH "SEE ALSO"
