@@ -1,3 +1,17 @@
+Wed Aug 26 07:47:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Select_Reactor_{Base,T}.{h,i,cpp}: Moved a bunch of methods
+	  that don't use the internal select_reactor_token to the base
+	  class.  This is to reduce the template generated code size.
+
+	* ace/Select_Reactor.h: Added template specialization for
+	  ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>> to speed
+	  thing up when using lock-freed Select_Reactor.
+
+	* ace/Select_Reactor.cpp: Removed template instantiation for
+	  ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>> because
+	  it's been specialized in .h file.
+
 Wed Aug 26 08:51:23 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.cpp (thr_keycreate): On pthreads draft 6, the call is
