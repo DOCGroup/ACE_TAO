@@ -1,3 +1,32 @@
+Wed Oct 10 06:16:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        * ace/Activation_Queue.{h,cpp}: Added support for two ACE_Allocator that
+	  will control how the message blocks and data blocks are
+ 	  allocated.  Thanks to Gil Rapaport <grapaport@comgates.co.il>
+ 	  for contributing this.	
+  
+	* examples/Reactor/WFMO_Reactor/test_apc.cpp (main): 
+	* examples/Reactor/WFMO_Reactor/test_abandoned.cpp (main): Don't
+	  use a global Event_Handler since this violates the design rules
+ 	  for the ACE_Reactor.  Thanks to Heping He
+ 	  <heping.he@riskmetrics.com> for reporting this and to Irfan for
+ 	  suggesting where the problem arose.
+
+Tue Oct  9 07:46:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/C++NPv1/Logging_Handler.h: Added a new constructor to
+	  class Logging_Handler that just takes an ACE_SOCK_Stream.  We
+ 	  need to use this in C++NPv2.
+
+	* ace/Message_Queue_T.cpp (wait_not_full_cond): Thanks to Leo Kov
+ 	  <leo_kov@hotmail.com> for reporting this.
+
+	* ace/TTY_IO.cpp (control): Inserted some useful
+	  ACE_OS::set_errno_to_last_error() calls.  Also, for Win32 made
+ 	  readtimeoutmsec == 0 cause no timeout, whereas readtimeoutmsec
+ 	  == MAXDWORD causes infinite timeout.  Thanks to Lars Steubesand
+ 	  <Lars_Steubesand@hsgmed.com> for reporting this.
+
 Mon Oct  8 20:19:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/DLL/test_dll.cpp: There's no need to specify

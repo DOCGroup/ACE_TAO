@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Andres Kruse <Andres.Kruse@cern.ch> and
+ *  @author Andres Kruse <Andres.Kruse@cern.ch>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
@@ -42,7 +42,9 @@ class ACE_Export ACE_Activation_Queue
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0);
+  ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0,
+						ACE_Allocator *alloc = 0,
+						ACE_Allocator *db_alloc = 0);
 
   /// Destructor.
   virtual ~ACE_Activation_Queue (void);
@@ -87,6 +89,12 @@ protected:
   int delete_queue_;
 
 private:
+  /// Allocation strategy of the queue.
+  ACE_Allocator *allocator_;
+
+  /// Allocation strategy of the message blocks.
+  ACE_Allocator *data_block_allocator_;
+
   // = Prevent assignment and initialization.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Activation_Queue &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
@@ -98,3 +106,4 @@ private:
 
 #include "ace/post.h"
 #endif /* ACE_ACTIVATION_QUEUE_H */
+
