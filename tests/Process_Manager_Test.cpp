@@ -398,7 +398,6 @@ multiple_children_worker_parent (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) test multiple children done\n")));
-
   return 0;
 }
 
@@ -431,6 +430,8 @@ one_child_worker_parent (void *)
     ((ACE_Time_Value *) 0);
   ACE_ASSERT (result != -1);
 
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) test single child done\n")));
   return 0;
 }
 
