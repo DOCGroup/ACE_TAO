@@ -1,3 +1,10 @@
+Tue Jun  1 10:49:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CAD_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+
+          Made changes to fix testing errors.
+
 Tue Jun  1 10:41:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
