@@ -19,12 +19,8 @@
 #include "Strategy_Scheduler.h"
 #include "ace/Sched_Params.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Strategy_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Sched, 
-           Strategy_Scheduler, 
+ACE_RCSID (Sched,
+           Strategy_Scheduler,
            "$Id$")
 
 //////////////////////////////////////////////

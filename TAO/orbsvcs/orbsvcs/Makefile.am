@@ -4528,16 +4528,8 @@ nobase_include_HEADERS += \
   RtecSchedulerS.inl \
   RtecSchedulerS_T.inl \
   Runtime_Scheduler.i \
-  Sched/Config_Scheduler.i \
   Sched/DynSched.i \
-  Sched/Reconfig_Sched_Utils.i \
-  Sched/Reconfig_Sched_Utils_T.i \
-  Sched/Reconfig_Scheduler.i \
-  Sched/Reconfig_Scheduler_T.i \
   Sched/SchedEntry.i \
-  Sched/Scheduler.i \
-  Sched/Scheduler_Generic.i \
-  Sched/Strategy_Scheduler.i \
   Scheduler_Factory.i \
   Scheduler_Utilities.i \
   RtecSchedulerS_T.cpp \
