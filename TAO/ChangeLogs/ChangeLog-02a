@@ -1,4 +1,4 @@
-Mon Aug 21 15:40:00 2000  Kirthika PArameswaran  <kirthika@cs.wustl.edu>
+Mon Aug 21 15:40:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/PortableInterceptorC.{h,cpp} (sync_scope):
 	  Added check for Messaging since for cases like Minimum CORBA
