@@ -55,12 +55,10 @@ ACE_ODB::instance (void)
 
   if (ACE_ODB::instance_ == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_Thread_Mutex *lock =
+      ACE_MT (ACE_Thread_Mutex *lock =
         ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_DUMP_LOCK);
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
-#endif /* ACE_MT_SAFE */
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
       if (ACE_ODB::instance_ == 0)
         ACE_NEW_RETURN (ACE_ODB::instance_, ACE_ODB, 0);
