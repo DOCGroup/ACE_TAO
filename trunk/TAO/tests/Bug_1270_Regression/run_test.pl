@@ -25,7 +25,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 local $start_time = time();
-local $max_running_time = 4200; # 70 minutes
+local $max_running_time = 420; # 7 minutes
 local $elapsed = time() - $start_time;
 
 while($elapsed < $max_running_time) {
