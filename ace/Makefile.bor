@@ -1,7 +1,4 @@
-
-#
 # Makefile for building the ACE library with Borland C++Builder 4.x
-#
 
 NAME = ace
 
@@ -42,6 +39,7 @@ OBJFILES = \
 	$(OBJDIR)\CDR_Base.obj \
 	$(OBJDIR)\CDR_Stream.obj \
 	$(OBJDIR)\Configuration.obj \
+	$(OBJDIR)\Configuration_Import_Export.obj \
 	$(OBJDIR)\Containers.obj \
 	$(OBJDIR)\CORBA_Handler.obj \
 	$(OBJDIR)\CORBA_Ref.obj \

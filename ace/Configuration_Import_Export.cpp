@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ConfigImpExpFiles.h"
+#include "ace/Configuration_Import_Export.h"
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)
