@@ -1,3 +1,12 @@
+Tue Aug 14 14:50:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/SmartProxies/SmartProxies.dsp (RSC): Added MFC
+	  configurations.  
+
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply): 
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.cpp: Made some cosmetic changes. 
+
 Tue Aug 14 12:29:08 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i):
