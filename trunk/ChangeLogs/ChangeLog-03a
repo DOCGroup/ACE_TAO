@@ -1,3 +1,8 @@
+Wed Jun 13 21:50:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Obstack_T.cpp (ACE_Obstack_T): Fixed a mismatched ACE_TRACE
+	  fuzz warning.
+
 Wed Jun 13 14:10:17 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Context.cpp:
