@@ -593,12 +593,6 @@ TAO_NAMESPACE  IR
   typedef IR_UsesDef_out UsesDef_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_UsesDef;
 
-  typedef IR_UsesDescription UsesDescription;
-  typedef IR_UsesDescription_var UsesDescription_var;
-  typedef IR_UsesDescription_out UsesDescription_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IR_UsesDescription;
-
-
   typedef IR_UsesDefSeq UsesDefSeq;
   typedef IR_UsesDefSeq_var UsesDefSeq_var;
   typedef IR_UsesDefSeq_out UsesDefSeq_out;
