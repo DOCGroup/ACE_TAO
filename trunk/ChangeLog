@@ -37,9 +37,9 @@ Thu Apr 17 08:23:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
           ACE_USHORT16.  Not all platforms represent wide characters with
           16 bit unsigned integers.  Adjusted all members, return types
           and parameters accordingly.  This change was prompted by the
-          consistency fixes made to ace/Basic_Types.h the "Wed Apr 16
-          13:35:34 2003  Ossama Othman  <ossama@uci.edu>" ChangeLog
-          entry.
+          consistency fixes made to ace/Basic_Types.h as detailed in the
+	  "Wed Apr 16 13:35:34 2003  Ossama Othman  <ossama@uci.edu>"
+	  ChangeLog entry.
 
           Use rep() instead of ushort_rep() when copying an
           ACE_NS_WString.  The latter only works for platforms with 16 bit
