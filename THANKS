@@ -1467,7 +1467,7 @@ Ken O'Brien <kmobrien@fedex.com>
 Daniel Troesser <troesser_d@ociweb.com>
 Ivan Pazymenko <pia@octet.spb.ru>
 Dan Green <dan.c.green@lmco.com>
-Cyrille Chepelov <cyrille@softek.fr> 
+Cyrille Chepelov <cyrille@softek.fr>
 Peter Heitman <pheitman@cisco.com>
 Paxton Mason <PMason@wolve.com>
 Yan Dai <dai_y@ociweb.com>
@@ -1778,6 +1778,7 @@ Dale Wilson  <wilson_d@ociweb.com>
 Thomas Girard <thomas.g.girard@free.fr>
 Malcolm McRoberts <mmcroberts@ideorlando.org>
 Dror Tirosh <ace@dror.mailshell.com>
+Chris Sontag <sontag@stsci.edu>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

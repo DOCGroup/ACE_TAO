@@ -1,8 +1,14 @@
+Thu Nov 27 15:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_tmplinst.cpp:
+          Added fix for compilation on AIX. Thanks to Chris Sontag
+          <sontag@stsci.edu> for reporting this and testing this fix.
+
 Thu Nov 27 08:55:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/AMI/client.cpp:
 	* tests/AMI/simple_client.cpp:
-	  
+
 	  Fixed compile errors with g++.
 
 Thu Nov 27 10:51:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
