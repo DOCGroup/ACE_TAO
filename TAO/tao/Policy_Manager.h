@@ -61,7 +61,11 @@ class TAO_Export TAO_Policy_Manager_Impl
   //   This class is used to implement both the CORBA::PolicyManager
   //   and the CORBA::PolicyCurrent interfaces.
   //
+
+  friend class TAO_Policy_Manager;
+
 public:
+
   TAO_Policy_Manager_Impl (void);
   // Constructor
 
