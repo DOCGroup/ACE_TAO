@@ -1,3 +1,10 @@
+Tue Dec 02 14:13:15 1997  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Moved some compile options
+	  from the DCFLAGS to the CCFLAGS to compile correctly with or without
+	  debugging.  Thanks to Istvan Buki <ibuki@fedex.com> for reporting
+	  the problem.
+
 Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.cpp (~ACE_Object_Manager_Destroyer): don't
