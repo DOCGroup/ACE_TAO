@@ -166,7 +166,7 @@ TAO_SHMIOP_Connection_Handler::svc (void)
 
 int
 TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                           ACE_Reactor_Mask rm)
+                                             ACE_Reactor_Mask rm)
 {
   // @@ Alex: we need to figure out if the transport decides to close
   //    us or something else.  If it is something else (for example
@@ -193,6 +193,8 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // the reactor, so that it isn't included in the set that is
       // passed to the reactor on ORB destruction.
       this->is_registered (0);
+
+      this->peer ().remove ();
 
       // Decrement the reference count
       this->decr_ref_count ();

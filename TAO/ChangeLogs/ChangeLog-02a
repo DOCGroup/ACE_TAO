@@ -1,7 +1,32 @@
+Sun Dec 17 19:43:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Acceptor.h:
+	* tao/Strategies/SHMIOP_Acceptor.cpp: Added methods from
+	  SHMIOP_Factory class to pass in the MMAP file options.
+
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close):
+	  Must call remove method on the MEM_Stream to make sure the mmap
+	  file get removed when not in use.
+
+	* tao/Strategies/SHMIOP_Factory.h: Added methods to set mmap file
+	  prefix and its initial file size.
+
+	* tao/Strategies/SHMIOP_Factory.cpp: Added methods to set mmap
+	  file prefix and its initial file size.  These options are
+	  changed thru the argument string passed to SHMIOP_Factory in
+	  svc.conf files using flags: "-MMAPFilePrefix" and
+	  "-MMAPFileSize".
+
+	* tao/Strategies/advanced_resource.cpp: Changed to change the
+	  resource factory in the ORB_Core from
+	  Advanced_Resource_Facotry's contructor to its init method so
+	  users won't forced to use Advanced_Resource_Factory with either
+	  SHMIOP or UIOP.
+
 Sun Dec 17 10:49:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/Event_Latency/Event_Latency.h:
-	* orbsvcs/TAO_Service/TAO_Service.cpp: 
+	* orbsvcs/TAO_Service/TAO_Service.cpp:
 	* orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
 	  Fixed minor warnings detected by DU/CXX builds.
 
@@ -27,7 +52,7 @@ Sun Dec 17 01:29:20 2000  Ossama Othman  <ossama@uci.edu>
 
 Sat Dec 16 09:40:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional: New test for BiDirectional connections.  
+	* tests/BiDirectional: New test for BiDirectional connections.
 
 	* tests/BiDirectional/README:
 	* tests/BiDirectional/client.cpp:

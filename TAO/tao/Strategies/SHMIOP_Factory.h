@@ -58,11 +58,21 @@ public:
   virtual TAO_Connector *make_connector  (void);
   virtual int requires_explicit_endpoint (void) const;
 
+  // = Set/get mmap file prefix
+  void mmap_file_prefix (const ACE_TCHAR *prefix);
+  const ACE_TCHAR *mmap_file_prefix (void);
+
 private:
   int major_;
   int minor_;
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
+
+  ACE_TCHAR *mmap_prefix_;
+  // Specify the prefix (full path) for mmap files
+
+  off_t min_bytes_;
+  // Minimum bytes of the mmap files.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_SHMIOP_Protocol_Factory)
