@@ -70,8 +70,11 @@ main (int argc, char **argv)
       if (result != 0)
         return result;
 
-      // Get the Root POA object reference
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      // Obtain the RootPOA.
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("RootPOA",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Narrow the object reference to a POA reference
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
@@ -83,7 +86,7 @@ main (int argc, char **argv)
       CORBA::PolicyList policies (5);
       policies.length (5);
 
-  // ID Assignment Policy
+      // ID Assignment Policy
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID, ACE_TRY_ENV);
       ACE_TRY_CHECK;

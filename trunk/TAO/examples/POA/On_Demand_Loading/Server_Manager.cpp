@@ -5,8 +5,8 @@
 ACE_RCSID(On_Demand_Loading, Server_Manager, "$Id$")
 
 Server_i::Server_i(void)
-    : ior_output_file_ (0),
-      policies_ (4)
+  : ior_output_file_ (0),
+    policies_ (4)
 {
 }
 
@@ -122,9 +122,11 @@ Server_i::init (int argc, char **argv)
       if (result != 0)
         return result;
 
-      // Get an Object reference to RootPOA.
+      // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb_->resolve_initial_references ("RootPOA");
+        orb_->resolve_initial_references ("RootPOA",
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Narrow the Object reference to a POA reference
       root_poa_ = PortableServer::POA::_narrow (obj.in (),
@@ -184,17 +186,17 @@ Server_i::create_poa (const char *name,
 
       // Servant Retention Policy.
       if (servant_retention_policy == 1)
-      policies_[3] =
-        root_poa_->create_servant_retention_policy
-        (PortableServer::RETAIN,
-         ACE_TRY_ENV);
+        policies_[3] =
+          root_poa_->create_servant_retention_policy
+          (PortableServer::RETAIN,
+           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (servant_retention_policy == 0)
-      policies_[3] =
-        root_poa_->create_servant_retention_policy
-        (PortableServer::NON_RETAIN,
-         ACE_TRY_ENV);
+        policies_[3] =
+          root_poa_->create_servant_retention_policy
+          (PortableServer::NON_RETAIN,
+           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Create myPOA as the child of RootPOA with the above
@@ -330,12 +332,12 @@ Server_i::run (void)
 
       CORBA::String_var first_foo_ior =
         orb_->object_to_string (first_foo_.in (),
-                               ACE_TRY_ENV);
+                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var second_foo_ior =
         orb_->object_to_string (second_foo_.in (),
-                               ACE_TRY_ENV);
+                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Print the ior's of first_foo and second_foo.
