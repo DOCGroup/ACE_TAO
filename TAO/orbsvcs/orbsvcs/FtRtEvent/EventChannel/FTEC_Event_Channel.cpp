@@ -217,6 +217,11 @@ TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr obs
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
+  /// we have yet to implement the replication of observers
+  /// throw an exception for the moment
+  ACE_THROW(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER());
+  ACE_CHECK;
+
   return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
 }
 
@@ -228,6 +233,11 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle 
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
+  /// we have yet to implement the replication of observers
+  /// throw an exception for the moment
+  ACE_THROW(RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER());
+  ACE_CHECK;
+
   ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
 }
 

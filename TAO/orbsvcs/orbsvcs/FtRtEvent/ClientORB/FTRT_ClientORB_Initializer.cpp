@@ -31,7 +31,6 @@ FTRT_ClientORB_Initializer::post_init (
 {
   info->add_client_request_interceptor (client_interceptor_.in()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_DEBUG((LM_DEBUG, "TransactionDepth_Intercetpor installed\n"));
 }
 
 

@@ -159,38 +159,54 @@ void TAO_FTEC_Group_Manager::add_member (
                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (impl_->my_position == impl_->info_list.length()-2)
+  if (impl_->my_position < impl_->info_list.length()-2) 
   {
-    // this was the last replica in the list
-    // synchornize the state with the newly joined replica.
-    FtRtecEventChannelAdmin::EventChannelState state;
-    get_state(state ACE_ENV_ARG_PARAMETER);
-
-    TAO_OutputCDR cdr;
-    cdr << state;
-
-    FTRT::State s;
-    if (cdr.begin()->cont()) {
-      ACE_Message_Block* blk;
-      ACE_NEW_THROW_EX(blk, ACE_Message_Block, CORBA::NO_MEMORY());
-      ACE_CDR::consolidate(blk, cdr.begin());
-      s.replace(blk->length(), blk);
-      blk->release();
+    // I am not the last of replica, tell my successor that
+    // a new member has joined in.
+    ACE_TRY {
+      publisher->successor()->add_member(info, object_group_ref_version
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      return;
+    } 
+    ACE_CATCHANY {
+      // Unable to send request to all the successors. 
+      // Now this node become the last replica of the object group.
     }
-    else
-      s.replace(cdr.begin()->length(), cdr.begin());
+    ACE_ENDTRY;
 
-    ACE_DEBUG((LM_DEBUG, "Setting state\n"));
-    info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
-    info.ior->create_group(impl_->info_list, object_group_ref_version);
-    ACE_DEBUG((LM_DEBUG, "After create_group\n"));
-  }
-  else {
-    publisher->successor()->add_member(info, object_group_ref_version
-          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-  }
+    // update the info list again
+    impl_->info_list.length(impl_->my_position+2);
+    impl_->info_list[impl_->my_position+1] = info;
 
+    publisher->update(impl_->info_list, impl_->my_position
+      ACE_ENV_ARG_PARAMETER);
+ }
+
+
+  // this is the last replica in the list
+  // synchornize the state with the newly joined replica.
+  FtRtecEventChannelAdmin::EventChannelState state;
+  get_state(state ACE_ENV_ARG_PARAMETER);
+
+  TAO_OutputCDR cdr;
+  cdr << state;
+
+  FTRT::State s;
+  if (cdr.begin()->cont()) {
+    ACE_Message_Block* blk;
+    ACE_NEW_THROW_EX(blk, ACE_Message_Block, CORBA::NO_MEMORY());
+    ACE_CDR::consolidate(blk, cdr.begin());
+    s.replace(blk->length(), blk);
+    blk->release();
+  }
+  else
+    s.replace(cdr.begin()->length(), cdr.begin());
+
+  ACE_DEBUG((LM_DEBUG, "Setting state\n"));
+  info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
+  info.ior->create_group(impl_->info_list, object_group_ref_version);
+  ACE_DEBUG((LM_DEBUG, "After create_group\n"));
 }
 
 template <class SEQ>
@@ -207,6 +223,7 @@ void TAO_FTEC_Group_Manager::replica_crashed (
     const FTRT::Location & location
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
+  ACE_DEBUG((LM_DEBUG, "TAO_FTEC_Group_Manager::replica_crashed\n"));
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
     remove_member(location, IOGR_Maker::instance()->increment_ref_version());

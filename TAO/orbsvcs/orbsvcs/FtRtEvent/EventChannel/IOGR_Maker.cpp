@@ -235,6 +235,7 @@ IOGR_Maker::set_ref_version(CORBA::ULong version)
 CORBA::ULong
 IOGR_Maker::increment_ref_version()
 {
+  ACE_DEBUG((LM_DEBUG, "new object_group_ref_version = %d\n", ft_tag_component_.object_group_ref_version+1));
   return ++ft_tag_component_.object_group_ref_version;
 }
 

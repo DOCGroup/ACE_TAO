@@ -20,7 +20,6 @@ void obtain_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
                           FtRtecEventChannelAdmin::Operation& op
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "obtain_push_supplier"));
   ec->consumer_admin()->obtain_proxy(op ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -29,7 +28,6 @@ void obtain_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
                           FtRtecEventChannelAdmin::Operation& op
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "obtain_push_consumer"));
   ec->supplier_admin()->obtain_proxy(op ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -40,7 +38,7 @@ void obtain_push_consumer_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
                            const RtecEventChannelAdmin::SupplierQOS & qos
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_UNUSED_ARG(oid);
+  Request_Context_Repository().set_object_id(oid);
 
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
     ec->supplier_admin()->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -62,7 +60,6 @@ void connect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
                            FtRtecEventChannelAdmin::Operation& op
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "connect_push_supplier"));
   PortableServer::POA_var poa= ec->supplier_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   FtRtecEventChannelAdmin::Connect_push_supplier_param& param
@@ -92,7 +89,7 @@ void obtain_push_supplier_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
                            const RtecEventChannelAdmin::ConsumerQOS & qos
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_UNUSED_ARG(oid);
+  Request_Context_Repository().set_object_id(oid);
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
     ec->consumer_admin()->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -114,7 +111,6 @@ void connect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
                            FtRtecEventChannelAdmin::Operation& op
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "connect_push_consumer"));
   PortableServer::POA_var poa= ec->consumer_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   FtRtecEventChannelAdmin::Connect_push_consumer_param& param
@@ -141,7 +137,6 @@ void disconnect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
                               FtRtecEventChannelAdmin::Operation& op
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "disconnect_push_supplier"));
   PortableServer::POA_var poa= ec->consumer_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -160,7 +155,6 @@ void disconnect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
                               FtRtecEventChannelAdmin::Operation& op
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "disconnect_push_consumer"));
   PortableServer::POA_var poa= ec->supplier_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -179,7 +173,6 @@ void suspend_connection (TAO_FTEC_Event_Channel_Impl* ec,
                          FtRtecEventChannelAdmin::Operation& op
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "suspend_connection"));
   PortableServer::POA_var poa= ec->consumer_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -198,7 +191,6 @@ void resume_connection(TAO_FTEC_Event_Channel_Impl* ec,
                        FtRtecEventChannelAdmin::Operation& op
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  ACE_DEBUG((LM_DEBUG, "resume_connection"));
   PortableServer::POA_var poa= ec->consumer_poa(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -502,13 +494,10 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate))
 {
-  ACE_DEBUG((LM_DEBUG, "set_update() received: "));
   FTRTEC::Replication_Service::instance()->check_validity(ACE_ENV_ARG_PARAMETER);
 
   if (!Request_Context_Repository().is_executed_request()) {
-    ACE_DEBUG((LM_DEBUG, "NEW update: "));
     TAO_InputCDR cdr((const char*)s.get_buffer(), s.length());
-
 
     FtRtecEventChannelAdmin::Operation_var op(new FtRtecEventChannelAdmin::Operation);
     if (!(cdr >> *op)) {
@@ -519,7 +508,6 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
     ACE_CHECK;
 
   }
-  ACE_DEBUG((LM_DEBUG, "\n"));
 }
 
 

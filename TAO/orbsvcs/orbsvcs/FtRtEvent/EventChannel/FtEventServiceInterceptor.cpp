@@ -100,9 +100,6 @@ retrieve_ft_request_context(
   if ((cdr >> ft_request_service_context) == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  ACE_DEBUG((LM_DEBUG, "client_id = %s, retention_id = %d \n",
-    ft_request_service_context.client_id.in(),
-    ft_request_service_context.retention_id));
 }
 
 FTRT::TransactionDepth
@@ -140,7 +137,6 @@ get_transaction_depth_context(
   if ((cdr >> result) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
-  ACE_DEBUG((LM_DEBUG, "transaction depth %d\n", result));
   return result;
 }
 
@@ -171,7 +167,6 @@ get_sequence_number_context(
   if ((cdr >> result) == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  ACE_DEBUG((LM_DEBUG, "sequence number %d\n", result));
   return result;
 }
 
@@ -228,8 +223,6 @@ FtEventServiceInterceptor::receive_request_service_contexts (
       ft_request_service_context.client_id.in(),
       ft_request_service_context.retention_id);
 
-    ACE_DEBUG((LM_DEBUG,"is_new_request %d\n", is_new_request));
-
     CORBA::Any cached_result;
     if (!is_new_request)  {
       cached_result =
@@ -284,7 +277,6 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG((LM_DEBUG, "receive request %s\n", operation.in()));
 }
 
 void

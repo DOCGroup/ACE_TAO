@@ -131,24 +131,26 @@ void ForwardCtrlServerInterceptor::receive_request_service_contexts (
 FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context
                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  const char * buf =
-    ACE_reinterpret_cast (const char *,
-    service_context->context_data.get_buffer ());
-  TAO_InputCDR cdr (buf,
-    service_context->context_data.length ());
+  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
+                                            service_context->context_data.get_buffer ()
+                                            ),
+                      service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+    CORBA::COMPLETED_NO));
 
   cdr.reset_byte_order (ACE_static_cast (int,byte_order));
 
-  FT::ObjectGroupRefVersion version;
+  FT::FTGroupVersionServiceContext fgvsc;
 
-  if ((cdr >> version) == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
-  return version;
+  if ((cdr >> fgvsc) == 0)
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+    CORBA::COMPLETED_NO));
+
+  return fgvsc.object_group_ref_version;
 }
 
 
@@ -165,6 +167,8 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
     if (!ri->response_expected(ACE_ENV_SINGLE_ARG_PARAMETER))
       return;
     ACE_TRY_CHECK;
+
+
 
     service_context =
       ri->get_request_service_context(IOP::FT_GROUP_VERSION
@@ -185,7 +189,8 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
   // pass a new IOGR if the client use an outdated version
 
   IOGR_Maker* maker = IOGR_Maker::instance();
-  //ACE_DEBUG((LM_DEBUG, "Current GROUP Version = %d\n", maker->get_ref_version()));
+  ACE_DEBUG((LM_DEBUG, "Current GROUP Version = %d, received version = %d\n", 
+    maker->get_ref_version(), version));
 
   if (version < maker->get_ref_version()) {
     ACE_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));
@@ -210,6 +215,8 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
 
       ri->add_reply_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG((LM_DEBUG, "reply_service_context added\n"));
     }
     ACE_CATCHALL {
     }
