@@ -34,12 +34,12 @@ ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
 static const char * executable = "MORE.COM";
-static char *rendezvous_dir = "c:/temp";
-static char *rendezvous_pfx = "imore";
+static const char *rendezvous_dir = "c:/temp";
+static const char *rendezvous_pfx = "imore";
 #else
 static const char * executable = "more"; // I like less better.
-static char *rendezvous_dir = "/tmp";
-static char *rendezvous_pfx = "imore";
+static const char *rendezvous_dir = "/tmp";
+static const char *rendezvous_pfx = "imore";
 #endif /* ACE_WIN32 */
 
 static char *fname = 0;		// File you want to view.

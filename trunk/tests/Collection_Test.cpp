@@ -187,7 +187,7 @@ template class ACE_Node<DATA>;
 #if (ACE_SIZEOF_INT != 4)
 // These might be already instantiated in ace/stats.cpp
 // (if ACE_INT32 == int)
-ptemplate class ACE_Node<DATA>;
+template class ACE_Node<DATA>;
 #endif /* ACE_SIZEOF_INT != 4 */
 
 template class ACE_Array<ARRAY_DATA>;

@@ -45,7 +45,7 @@ Peer_Handler::open (void *)
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
-      char *buffer =
+      const char *buffer =
         "Oh give me a home\n"
         "Where the buffalo roam,\n"
         "And the deer and the antelope play.\n"
