@@ -1,3 +1,15 @@
+Thu Sep  9 19:26:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
+
+	  Changed project to inherit from event_skel.
+
+Thu Sep  9 19:21:21 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Notify/lib/Notify_lib.mpc:
+
+	  Changed project to inherit from svc_utils.
+
 Thu Sep  9 19:18:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/RT_Notification.mpc:
