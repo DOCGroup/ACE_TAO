@@ -228,7 +228,7 @@ public class Module
     this.next_ = m;
   }
 
-  private Task qPair [] = new Task[2];
+  private Task qPair_[] = new Task[2];
   // Pair of Tasks that form the "read-side" and "write-side" of the
   // ACE_Module partitioning.
 
