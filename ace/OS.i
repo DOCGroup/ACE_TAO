@@ -3348,6 +3348,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS) || !defined (ACE_LACKS_RWLOCK_T)
   // Solaris rwlocks don't support the upgrade feature...
+  ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
@@ -7618,7 +7619,7 @@ ACE_OS::sigaction (int signum,
 
   if (osa == 0)
     osa = &sa;
-  
+
   osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
 #elif defined (CHORUS)
