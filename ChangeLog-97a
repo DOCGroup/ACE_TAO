@@ -1,3 +1,19 @@
+Mon Feb 03 21:00:56 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: define ACE_SCOPE_PROCESS and ACE_SCOPE_THREAD
+	  even if ACE_HAS_THREADS is not defined.  Thanks to
+	  Michael Maxie <maxie@acm.org> for pointing this out.
+
+	* examples/Threads/{process_mutex.cpp,process_semaphore.cpp,
+	  task_three.cpp,thread_manager.cpp,thread_specific.cpp} (main):
+	  added ACE_UNUSED_ARG (sa);.
+
+	* examples/Threads/reader_writer.cpp: fixed declaration of
+	  "shared_data" to be "static volatile" instead of "volatile
+	  static", and removed unused variable "n".
+
+	* examples/Threads/thread_pool.cpp: removed unused variable "result".
+
 Sun Feb 02 21:24:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: changed hrtime_t to ACE_hrtime_t.
