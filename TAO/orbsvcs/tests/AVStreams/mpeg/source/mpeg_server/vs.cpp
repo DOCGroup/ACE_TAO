@@ -2149,7 +2149,7 @@ int VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
     result = CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
     if (result != 0)
       {
-        cerr << result;
+        //        cerr << result;
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) VideoServer "),
                           result);

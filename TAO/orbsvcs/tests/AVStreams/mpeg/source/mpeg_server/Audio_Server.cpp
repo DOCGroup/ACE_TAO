@@ -121,7 +121,7 @@ Audio_Data_Handler::get_handle (void) const
 int
 Audio_Data_Handler::handle_input (ACE_HANDLE fd)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Data_Handler::handle_input ()\n"));
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Data_Handler::handle_input ()\n"));
   int bytes, len;
   for (;;) {
     if (this->audio_global_->conn_tag >= 0) {
@@ -144,6 +144,14 @@ Audio_Data_Handler::handle_input (ACE_HANDLE fd)
     }
     break;
   }
+  //~~ check for end of file.
+  if (len == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)End of file while reading feedback packedt\n"));
+      TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
+      return 0;
+    }
+
   if (len < sizeof(*this->audio_global_->fbpara)) {
     if (len > 0) fprintf(stderr,
 			 "AS warn read() len %dB < sizeof(*this->audio_global_->fbpara) %dB\n",
@@ -408,9 +416,9 @@ Audio_Server::init (int argc,
 
   // do the handshaking.
   // Client is sending us JUNK
-  ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+  //  ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
   control.recv_n (&junk, sizeof junk);
-  ACE_DEBUG ((LM_DEBUG,"%s,%d,received %d\n",__FILE__,__LINE__,junk));  
+  //  ACE_DEBUG ((LM_DEBUG,"%s,%d,received %d\n",__FILE__,__LINE__,junk));  
   // Client is sending us it's port number
   control.recv_n (&port, sizeof port);
   ACE_DEBUG ((LM_DEBUG,"%s,%d,received %u\n",__FILE__,__LINE__,port));
@@ -568,7 +576,7 @@ Audio_Server::init (int argc,
     perror("AS failed to allocate mem for pktbuf");
     return(-1);
   }
-  ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+  //  ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
 
 }
 

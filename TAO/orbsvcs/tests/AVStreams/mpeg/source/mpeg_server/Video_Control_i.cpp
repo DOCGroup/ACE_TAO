@@ -146,6 +146,24 @@ Video_Control_i::set_peer (const char *peer,
                        "(%P|%t) UDP open failed: %p\n"),
                       -1);
 
+  // set the socket buffer sizes to 64k.
+  int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  
+  if (VIDEO_SINGLETON::instance ()->dgram.set_option (SOL_SOCKET,
+                                                       SO_SNDBUF,
+                                                       (void *) &sndbufsize,
+                                                       sizeof (sndbufsize)) == -1
+      && errno != ENOTSUP)
+    return -1;
+  else if (VIDEO_SINGLETON::instance ()->dgram.set_option (SOL_SOCKET,
+                                                           SO_RCVBUF,
+                                                           (void *) &rcvbufsize,
+                                                           sizeof (rcvbufsize)) == -1
+           && errno != ENOTSUP)
+    return -1;
+
+
   ACE_INET_Addr server_data_addr;
   // Data (UDP) Address of this server.
   

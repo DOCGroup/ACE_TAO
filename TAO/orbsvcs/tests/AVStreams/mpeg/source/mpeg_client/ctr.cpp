@@ -239,8 +239,7 @@ static void SocketRead(int s, char *buf, int size)
   {
     val = read(s, ptr, remain);
     
-    fprintf(stderr, "CTR got from %sSocket %d of %d.\n",
-	    s == videoSocket ? "video" : "audio", val, remain);
+    //    fprintf(stderr, "CTR got from %sSocket %d of %d.\n",s == videoSocket ? "video" : "audio", val, remain);
     
     if (val == -1 && errno == EINTR)
     {
@@ -670,7 +669,7 @@ static int InitVideoChannel(char * phostname, char * vf)
 
 static int InitAudioChannel(char * phostname, char * af)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) InitAudioChannel called\n"));
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) InitAudioChannel called\n"));
   int dataSocket = -1;
 
   if (!hasAudioDevice)
@@ -2273,7 +2272,7 @@ static void PlayAudioOnly(void)
   if (timer_on >4)
   {
     // ~~we may need to uncomment this ??
-    //    stop_timer();
+    stop_timer();
     
     /* tries to rewind and play again */
     if (shared->loopBack)
@@ -2510,12 +2509,15 @@ void TimerProcessing(void)
  
 #define MAX_WAIT_USEC 10000000
  
-static void start_timer(void)
+static void start_timer (void)
 {
   struct itimerval val;
   
   if (audioSocket >= 0 && shared->cmd == CmdPLAY && rtplay)
-    PlayAudioInit();
+    {
+      //      ACE_DEBUG ((LM_DEBUG,"calling playaudioinit ()\n"));
+      PlayAudioInit();
+    }
  
   /* sleep for a while to wait for decoding the first picture
      and/or audio stream ready */
@@ -2523,35 +2525,41 @@ static void start_timer(void)
     unsigned val1 = startTime;
     if (audioSocket >= 0 && shared->cmd == CmdPLAY && rtplay)
     {
-      int samples = videoSocket >= 0 ? 1200 : 1200;
-      while (ABcheckSamples() <= samples)
-      {
-        if (get_duration(val1, get_usec()) >= MAX_WAIT_USEC) {
-          fprintf(stderr, "CTR warning: audio is not ready yet.\n");
-          break;
+      if (shared->nextSample < shared->totalSamples)
+        {
+          int samples = videoSocket >= 0 ? 1200 : 1200;
+          while (ABcheckSamples() <= samples)
+            {
+              if (get_duration(val1, get_usec()) >= MAX_WAIT_USEC)
+                {
+                  fprintf(stderr, "CTR warning: audio is not ready yet.\n");
+                  break;
+                }
+              else
+                {
+                  usleep(10000);
+                  continue;
+                }
+            }
         }
-        else {
-          usleep(10000);
-          continue;
-        }
-      }
     }
+
     if (videoSocket >= 0)
-    {
-      while (VDcheckMsg() <= 0) {  /* keep sleeping for 1 millisec until a decoded
-                                      frame show up in VD buffer */
-        if (get_duration(val1, get_usec()) >= MAX_WAIT_USEC) {
-          fprintf(stderr, "CTR warning: video is not ready yet.\n");
-          break;
+      {
+        while (VDcheckMsg() <= 0) {  /* keep sleeping for 1 millisec until a decoded
+                                        frame show up in VD buffer */
+          if (get_duration(val1, get_usec()) >= MAX_WAIT_USEC) {
+            fprintf(stderr, "CTR warning: video is not ready yet.\n");
+            break;
+          }
+          usleep(10000);
         }
-        usleep(10000);
       }
-    }
     val1 = get_duration(val1, get_usec()) / 1000;
     shared->playRoundTripDelay = val1;
     
     Fprintf(stderr, "CTR: estimated play round trip delay: %d millisec.\n", val1);
- 
+    
     /*
     if (shared->collectStat)
     {
@@ -2804,10 +2812,10 @@ static void compute_sendPattern(void)
  
 static void on_exit_routine(void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) %s:%d\n",
-              __FILE__,
-              __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG,
+  //          "(%P|%t) %s:%d\n",
+  //          __FILE__,
+  //          __LINE__));
   unsigned char tmp = CmdCLOSE;
  
   if (getpid() != CTRpid) return;
