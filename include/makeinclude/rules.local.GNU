@@ -177,9 +177,10 @@ $(INSMAN)/mann/% :
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
-			echo "Installing $(@F) -> $(@D)" ; \
+			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
 			$(LN_S) $(shell pwd)/$(@F) $@; \
 		fi ; \
