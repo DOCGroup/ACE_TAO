@@ -71,6 +71,24 @@ namespace CCF
           type_info (static_type_info ());
         }
       };
+
+      //
+      //
+      //
+      class EventTypeFactory : public virtual ValueTypeFactory
+      {
+      public:
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        EventTypeFactory ()
+        {
+          type_info (static_type_info ());
+        }
+      };
     }
   }
 }

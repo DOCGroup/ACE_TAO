@@ -1,3 +1,23 @@
+Tue Sep 21 11:08:20 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SemanticGraph/ValueType.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/ValueType.hpp:
+	* CCF/CCF/IDL2/Traversal/ValueType.hpp:
+	* CCF/CCF/IDL3/Parser.cpp:
+	* CCF/CCF/IDL3/Parser.hpp:
+	* CCF/CCF/IDL3/SemanticAction.hpp:
+	* CCF/CCF/IDL3/SemanticAction/EventTypeFactory.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/EventTypeFactory.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/EventTypeFactory.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
+	* CCF/CCF/IDL3/SemanticGraph/EventType.hpp:
+	* CCF/CCF/IDL3/Traversal/EventType.hpp:
+
+	  Added support for eventtype factories.
+
 Tue Sep 21 07:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/Context_Impl_Base.cpp:

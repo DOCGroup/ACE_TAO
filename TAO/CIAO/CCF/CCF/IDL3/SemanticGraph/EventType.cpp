@@ -75,6 +75,27 @@ namespace CCF
 
       TypeInfo const& ConcreteEventType::
       static_type_info () { return concrete_event_type_; }
+
+
+      // EventTypeFactory
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        event_type_factory_init_ ()
+        {
+          TypeInfo ti (typeid (EventTypeFactory));
+          ti.add_base (
+            Access::PUBLIC, true, EventTypeFactory::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo event_type_factory_ (event_type_factory_init_ ());
+      }
+
+      TypeInfo const& EventTypeFactory::
+      static_type_info () { return event_type_factory_; }
     }
   }
 }
