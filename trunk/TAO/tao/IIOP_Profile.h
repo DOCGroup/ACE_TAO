@@ -109,7 +109,7 @@ public:
   // version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Return a hash value for this object.
 
   int addr_to_string (char *buffer, size_t length);
