@@ -22,6 +22,8 @@ ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY
 {
   if (this->delete_implementation_)
     delete this->implementation_;
+  this->delete_implementation_ = 0;
+  this->implementation_ = 0;
 }
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
