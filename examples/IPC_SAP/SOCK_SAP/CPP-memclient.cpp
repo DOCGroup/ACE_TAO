@@ -41,6 +41,7 @@ run_client (void)
 int
 main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG(argc);
   // Initialize the logger.
   ACE_LOG_MSG->open (argv[0]);
 
