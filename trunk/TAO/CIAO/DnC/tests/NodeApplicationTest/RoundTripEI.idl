@@ -1,0 +1,34 @@
+// $Id$ 
+
+//=============================================================================
+/**
+ * @file RoundTripEI.idl
+ * Executor IDL definition for the RoundTrip Component
+ *
+ * @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu> 
+ */
+//=============================================================================
+
+#ifndef NODEAPP_ROUNDTRIPEI_IDL
+#define NODEAPP_ROUNDTRIPEI_IDL
+
+#include "NodeAppTest_RoundTripE.idl"
+
+module NodeAppTest
+{
+  /**
+   * @interface RoundTrip_Exec
+   *
+   * The actually Test executor need to support
+   * Components::SessionComponent interface.  Therefore, we need to
+   * define the component executor interface explicitly here.
+   */
+  local interface RoundTrip_Exec : CCM_NodeAppTest_RoundTrip, 
+                                   CCM_LatencyTest,
+				   Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* NODEAPP_ROUNDTRIPEI_IDL */
