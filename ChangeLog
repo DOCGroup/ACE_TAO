@@ -1,3 +1,11 @@
+Sun Dec 28 10:44:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp:
+          On Tru64 getchar() is a macro which expands to fgetc. fgetc exists
+          in the global and in the ACE_OS namespace, so on Tru64 use ::getchar()
+          which then expands to ::fgetc(). This looks to work on the Tru64 box
+          I am testing on.
+
 Sat Dec 27 12:55:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/SOCK_Dgram_Mcast.h:
