@@ -1,3 +1,8 @@
+Fri Oct 24 10:00:02 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (wait_grp):  Fixed a bug.  Should wait on
+	  threads with same grp_id, not task.
+
 Fri Oct 24 09:24:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp (open): cast return value of
