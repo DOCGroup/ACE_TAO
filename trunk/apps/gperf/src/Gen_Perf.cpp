@@ -162,7 +162,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
         if (ptr == curr)
           {
             fewest_collisions = collisions;
-            if (option[DEBUG])
+            if (option[DEBUGGING])
               ACE_DEBUG ((LM_DEBUG,
                           "- resolved after %d iterations",
                           total_iterations - i));
@@ -181,7 +181,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 int
 Gen_Perf::change (List_Node *prior, List_Node *curr)
 {
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "collision on keyword #%d, prior = \"%s\", curr = \"%s\" hash = %d\n",
                 num_done,
@@ -200,7 +200,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   for (char *temp = union_set; *temp != '\0'; temp++)
     if (affects_prev (*temp, curr) == 0)
       {
-        if (option[DEBUG])
+        if (option[DEBUGGING])
           ACE_DEBUG ((LM_DEBUG,
                       " by changing asso_value['%c'] (char #%d) to %d\n",
                       *temp,
@@ -217,7 +217,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
 
   this->hash (curr);
 
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n",
                !option[FAST] ? option.asso_max () : option.iterations () ? option.iterations () : this->key_list.keyword_list_length (),
@@ -282,7 +282,7 @@ Gen_Perf::open (void)
           version_string);
   Options::print_options ();
 
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "total non-linked keys = %d\n"
                 "total duplicates = %d\n"
@@ -432,7 +432,7 @@ Gen_Perf::run (void)
 
 Gen_Perf::~Gen_Perf (void)
 {
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));

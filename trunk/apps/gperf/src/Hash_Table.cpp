@@ -50,7 +50,7 @@ Hash_Table::Hash_Table (size_t s)
 
 Hash_Table::~Hash_Table (void)
 {
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     {
       u_int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
         ? option.max_keysig_size () 
