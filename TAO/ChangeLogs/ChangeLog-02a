@@ -1,3 +1,70 @@
+Tue Mar  5 23:47:17 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object.h:
+
+	  No need to include "Object_Proxy_Broker.h".  Forward declaring
+	  the TAO_Object_Proxy_Broker class is enough.  This should
+	  improve overall compile times slightly.
+
+	  (_incr_refcnt, _decr_refcnt, refcount_lock_, refcount_):
+
+	  Removed these CORBA::Object class members.  They are no longer
+	  used.  See below.
+
+	* tao/Object.i (_incr_refcnt, _decr_refcnt):
+
+	  Removed these internally used methods.  All reference counting
+	  is now deferred to the underlying TAO_Stub object.
+
+	* tao/Object.cpp (CORBA_Object):
+
+	  Fixed bug where the CORBA::Object instance be considered to be
+	  one that points to an unconstrained object instead of the
+	  locality-constrained one.  If the TAO_Stub pointer parameter is
+	  zero then the CORBA::Object instance represents a
+	  locality-constrained object.  Set the "is_local_" member
+	  appropriately.
+
+	  If the object is locality-constrained then do not attempt to
+	  initialize a remote proxy broker.
+
+	  (add_ref, remove_ref):
+
+	  Defer reference counting to the underlying TAO_Stub object.
+	  There is no need for the CORBA::Object class to maintain a
+	  separate reference count.  This reduces memory requirements
+	  slightly, in addition to improving object reference creation
+	  times for both unconstrained objects and locality-constrained
+	  objects (e.g. one lock initialization -- not acquisition --
+	  instead of two). 
+
+	  These changes are part of an optimization for creation of
+	  locality-constrained objects.  This is particularly useful for
+	  locality-constrained objects that are instantiated in the
+	  critical a path, such as the Portable Interceptor "RequestInfo"
+	  objects.  [Bug 874]
+
+	  (_hash):
+
+	  Added an implementation for locality-constrained objects.  It
+	  isn't strictly needed, but better to be consistent.
+
+	* tao/LocalObject.h (TAO_Local_RefCounted_Object):
+
+	  Added reference counting (lock and count variable) to this
+	  class.  It no longer relies on the CORBA::Object base class
+	  reference counting.
+
+	* tao/LocalObject.i (TAO_Local_RefCounted_Object):
+
+	  Initialize the reference counting lock and count variable
+	  appropriately.
+
+	* tao/LocalObject.cpp (_add_ref, _remove_ref):
+
+	  Implemented these methods in the TAO_Local_RefCounted_Object
+	  class using the newly added lock and reference count variable.
+
 Tue Mar 05 19:16:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* docs\tutorials\Quoter\AMI\server.dsp: 
@@ -34,7 +101,7 @@ Tue Mar 05 19:16:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	* orbsvcs/performance-tests/EC_Latency/client.dsp:
 	* orbsvcs/performance-tests/EC_Latency/server.dsp:
 	* orbsvcs/performance-tests/EC_Federated_Latency/client.dsp:
-        * orbsvcs/performance-tests/EC_Federated_Latency/server.dsp:
+	* orbsvcs/performance-tests/EC_Federated_Latency/server.dsp:
 	* orbsvcs/performance-tests/EC_Federated_Scalability/client.dsp:
 	* orbsvcs/performance-tests/EC_Federated_Scalability/server.dsp:
 	* orbsvcs/performance-tests/EC_Latency/client.dsp:
@@ -66,9 +133,8 @@ Tue Mar 05 19:16:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	* orbsvcs/tests/Event/Performance/Latency.dsp:
 	* orbsvcs/tests/Event/Performance/Latency_Server.dsp:
 	* orbsvcs/tests/Event/Performance/Throughput.dsp:
-	*
-	orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
-        * performance-tests/Callback/client.dsp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+	* performance-tests/Callback/client.dsp:
 	* performance-tests/Callback/server.dsp:
 	* performance-tests/Latency/AMI/client.dsp:
 	* performance-tests/Latency/AMI/server.dsp:
@@ -163,7 +229,6 @@ Tue Mar  5 15:21:51 2002  Carlos O'Ryan  <coryan@uci.edu>
 	* orbsvcs/performance-tests/RTEvent/Roundtrip/run_dispatching.sh:
 	  Add a simple test driver
 
-	
 Tue Mar  5 11:37:52 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
