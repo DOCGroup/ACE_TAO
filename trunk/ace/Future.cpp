@@ -205,7 +205,7 @@ ACE_Future_Rep<T>::get (T &value,
   // If the value is already produced, return it.
   if (this->value_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, 
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
                                 ACE_const_cast (ACE_Thread_Mutex &, this->value_ready_mutex_),
                                 -1));
       // If the value is not yet defined we must block until the
@@ -213,7 +213,7 @@ ACE_Future_Rep<T>::get (T &value,
 
       while (this->value_ == 0)
         // Perform a timed wait.
-        if (this->value_ready_.wait (tv) == -1)
+        if ( (ACE_const_cast (ACE_Condition_Thread_Mutex &, this->value_ready_)).wait (tv) == -1)
           return -1;
 
       // Destructor releases the lock.
