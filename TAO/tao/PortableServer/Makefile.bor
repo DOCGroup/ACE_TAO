@@ -25,8 +25,8 @@ OBJFILES = \
 	$(OBJDIR)\PortableServerC.obj \
 	$(OBJDIR)\Servant_Base.obj \
 	$(OBJDIR)\Strategized_Object_Proxy_Broker.obj \
-	$(OBJDIR)\ThruPOA_Object_Proxy_Impl
-
+	$(OBJDIR)\ThruPOA_Object_Proxy_Impl.obj
+x
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS)
 !else
