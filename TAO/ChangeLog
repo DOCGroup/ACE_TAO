@@ -1,3 +1,13 @@
+Fri Mar 11 05:10:19 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/Bug_1476_Regression/client.cpp:
+
+	  Fixed a compilation error. 
+	
+	* tests/Faults/test_i.cpp:
+
+	  Fixed some debug statements. 
+	
 Fri Mar 11 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client_Adapter_Impl.cpp:
