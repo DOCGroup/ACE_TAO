@@ -1,3 +1,7 @@
+Thu Apr  3 08:20:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/Default_Dispatcher_Impl.h: Fixed doxygen fuzz error
+
 Wed Apr  2 12:44:58 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU:

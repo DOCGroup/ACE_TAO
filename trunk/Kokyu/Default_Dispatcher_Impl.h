@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file   Dispatcher_Impl.h
+ *  @file   Default_Dispatcher_Impl.h
  *
  *  $Id$
  *
