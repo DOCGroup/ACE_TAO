@@ -4,4 +4,5 @@
            -i node3_ec.ior \
            -i node4_ec.ior \
            -o node1_ec.ior \
-           -s edf
+           -s edf \
+           -m

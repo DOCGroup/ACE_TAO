@@ -14,6 +14,7 @@
 #include <orbsvcs/Event/EC_Kokyu_Factory.h>
 
 #include "Kokyu_EC.h"
+#include "RtSchedEventChannelC.h"
 
 namespace {
 
@@ -109,7 +110,7 @@ Kokyu_EC::~Kokyu_EC(void)
 }
 
 int
-Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor)
+Kokyu_EC::init(bool time_master, const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor)
 {
   ACE_TRY_NEW_ENV {
 
@@ -131,8 +132,12 @@ Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa, ACE
     ACE_TRY_CHECK;
 
     this->reactor_ = reactor;
-    this->started_ = false;
+    this->time_master_ = time_master;
     this->remote_gateways_connected_ = 0;
+
+    this->started_ = false;
+    this->start_time_ = ACE_Time_Value::zero;
+    this->remote_ecs_.clear();
   }
   ACE_CATCHALL {
     return -1;
@@ -323,6 +328,14 @@ Kokyu_EC::notify_gateway_connection (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->remote_gateways_connected_++;
+}
+
+void
+Kokyu_EC::set_start_time (RtEventChannelAdmin::Time start_time ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ORBSVCS_Time::TimeT_to_Time_Value(this->start_time_,start_time);
+  ACE_DEBUG((LM_DEBUG,"Kokyu_EC (%P|%t) set_start_time() to %isec %iusec\n",this->start_time_.sec(),this->start_time_.usec()));
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
@@ -584,35 +597,6 @@ Kokyu_EC::set_up_first_subtask (subtask_t subtask,
   ACE_CHECK;
 
   set_up_middle_subtask(subtask,supp_id1,supp_id2,in_type,out_type ACE_ENV_ARG_PARAMETER);
-  /*
-  Supplier *next_supplier_impl;
-  ACE_NEW(next_supplier_impl,
-          Supplier(supp_id2));
-  Consumer * consumer_impl;
-  ACE_NEW(consumer_impl,
-          Consumer(next_supplier_impl));
-
-  consumer_impl->setWorkTime(subtask.exec);
-
-  std::stringstream cons_entry;
-  cons_entry << "consumer" << subtask.task_index << "_" << subtask.subtask_index;
-
-  std::stringstream next_entry;
-  next_entry << "supplier" << subtask.task_index << "_" << (subtask.subtask_index+1);
-
-  add_consumer_with_supplier(consumer_impl, //stores impl inside Kokyu_EC
-                             cons_entry.str().c_str(),
-                             subtask.period,
-                             in_type,
-                             RtecScheduler::VERY_LOW_CRITICALITY,
-                             RtecScheduler::VERY_LOW_IMPORTANCE,
-                             next_supplier_impl, //stores impl inside Kokyu_EC
-                             next_entry.str().c_str(),
-                             out_type
-                             ACE_ENV_ARG_PARAMETER
-                             );
-  ACE_CHECK;
-  */
 } //set_up_first_subtask
 
 void
@@ -675,7 +659,7 @@ Kokyu_EC::init_gateway(CORBA::ORB_ptr orb,
   RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec, consumer_ec;
   ACE_CHECK;
 
-  ACE_Time_Value sleeptime(1,00000);
+  ACE_Time_Value sleeptime(0,500000);
   while(ACE_OS::filesize(consumer_ec_ior) <= 0)
     {
       //while file doesn't exist
@@ -688,6 +672,12 @@ Kokyu_EC::init_gateway(CORBA::ORB_ptr orb,
 
   obj = orb->string_to_object(ior_file.str().c_str() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  if (CORBA::is_nil(obj.in()))
+    {
+      ACE_DEBUG((LM_DEBUG,"Unable to read IOR file for remote EC; Object_var is nil.\n"));
+      return;
+    }
 
   //WARNING: if consumer_ec_ior is not a readable file, obj is null!
   consumer_ec = RtEventChannelAdmin::RtSchedEventChannel::_narrow(obj.in()
@@ -748,9 +738,32 @@ Kokyu_EC::init_gateway(CORBA::ORB_ptr orb,
   consumer_ec->notify_gateway_connection(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  if(!CORBA::is_nil(consumer_ec.in()))
+    {
+      this->remote_ecs_.push_back(consumer_ec);
+    }
+
   //consumer_ec->start(ACE_ENV_SINGLE_ARG_PARAMETER);
   //ACE_CHECK;
 } //init_gateway()
+
+bool
+Kokyu_EC::time_master(void)
+{
+  return this->time_master_;
+}
+
+ACE_Time_Value
+Kokyu_EC::start_time(void)
+{
+  return this->start_time_;
+}
+
+ACE_Vector<RtEventChannelAdmin::RtSchedEventChannel_var>*
+Kokyu_EC::remote_ecs(void)
+{
+  return &(this->remote_ecs_);
+}
 
 //***********************************************************
 /// Constructor
@@ -933,14 +946,46 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
       //DONE connecting dummy supplier
 
       //TODO: How ensure all gateways TO us are connected?
-      ACE_Time_Value sleeptime(1,00000);
-      int remote_gateways_connected;
-      while ((remote_gateways_connected = this->ec_->remote_gateways_connected()) < 3)
+      ACE_Time_Value sleeptime(0,500000);
+      for (size_t remote_gateways_connected = 0;
+           remote_gateways_connected < this->ec_->remote_ecs()->size();
+           remote_gateways_connected = this->ec_->remote_gateways_connected())
         {
           //while file doesn't exist
-          ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): waiting for remote gateway connections (%d left)\n",(3-remote_gateways_connected)));
+          ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): waiting for remote gateway connections (%d left)\n",(this->ec_->remote_ecs()->size()-remote_gateways_connected)));
           ACE_OS::sleep(sleeptime);
         }
+
+      if (this->ec_->time_master())
+        {
+          //set start time for all other ECs
+          RtEventChannelAdmin::Time st;
+          ACE_Time_Value start_time(30,0);
+          start_time += ACE_OS::gettimeofday(); //now + 30 sec
+          ORBSVCS_Time::Time_Value_to_TimeT(st,start_time);
+          this->ec_->set_start_time(st); //set start time for this EC
+          ACE_Vector<RtEventChannelAdmin::RtSchedEventChannel_var>* remote_ecs(this->ec_->remote_ecs());
+          for(size_t i=0; i< remote_ecs->size(); ++i) //set start time for remote ECs
+            {
+              (*remote_ecs)[i]->set_start_time(st);
+              ACE_TRY_CHECK;
+            }
+        }
+
+      //now wait for start time
+      sleeptime.set(0,5); //we'll be within 5usec of start time when we call ec_->start()
+      ACE_Time_Value now(ACE_OS::gettimeofday());
+      ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): waiting for start time to be set or to pass; now is %isec %iusec, start time is %isec %iusec\n",now.sec(),now.usec(),this->ec_->start_time().sec(),this->ec_->start_time().usec()));
+      while (this->ec_->start_time() == ACE_Time_Value::zero
+             || now < this->ec_->start_time())
+        {
+          //while not time to start
+          //ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): waiting for start time to be set or to pass; now is %isec %iusec, start time is %isec %iusec\n",now.sec(),now.usec(),this->ec_->start_time().sec(),this->ec_->start_time().usec()));
+          ACE_OS::sleep(sleeptime);
+          now = ACE_OS::gettimeofday();
+        }
+
+      ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): Reached start time at %isec %iusec\n",now.sec(),now.usec()));
 
       //start self once we know that all the gateways are connected
       this->ec_->start(ACE_ENV_SINGLE_ARG_PARAMETER);

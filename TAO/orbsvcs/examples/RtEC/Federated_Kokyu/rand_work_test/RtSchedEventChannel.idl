@@ -67,6 +67,8 @@ module RtEventChannelAdmin
 
     void notify_gateway_connection();
 
+    void set_start_time(in Time start_time);
+
     RtecEventChannelAdmin::EventChannel event_channel();
     RtecScheduler::Scheduler scheduler();
   };

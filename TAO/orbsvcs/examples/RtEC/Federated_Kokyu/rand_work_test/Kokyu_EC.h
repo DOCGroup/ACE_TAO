@@ -10,6 +10,7 @@
 #include "ace/OS_NS_unistd.h" //for ACE_OS::sleep()
 #include "ace/OS_NS_sys_stat.h" //for ACE_OS::filesize()
 #include "ace/Event_Handler.h"
+#include "ace/Time_Value.h"
 #include "ace/Vector_T.h"
 #include "ace/Reactor.h"
 
@@ -52,7 +53,7 @@ public:
     return (tv.sec () * 1000000 + tv.usec ())*10;
   }
 
-  int init(const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor = 0);
+  int init(bool time_master, const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor = 0);
 
   virtual RtEventChannelAdmin::handle_t register_consumer (
                                                            const char * entry_point,
@@ -109,6 +110,9 @@ public:
   virtual void notify_gateway_connection (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void set_start_time (RtEventChannelAdmin::Time start_time ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual RtecEventChannelAdmin::EventChannel_ptr event_channel (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -137,43 +141,6 @@ public:
                      , RtecScheduler::SYNCHRONIZATION_FAILURE
                      ));
 
-  /*
-  ///Takes ownership of Supplier and Timeout_Consumer
-  void add_supplier_with_timeout(
-                                 Supplier * supplier_impl,
-                                 const char * supp_entry_point,
-                                 RtecEventComm::EventType supp_type,
-                                 Timeout_Consumer * timeout_consumer_impl,
-                                 const char * timeout_entry_point,
-                                 ACE_Time_Value period,
-                                 RtecScheduler::Criticality_t crit,
-                                 RtecScheduler::Importance_t imp
-                                 ACE_ENV_ARG_DECL
-                                 )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , RtecScheduler::UNKNOWN_TASK
-                     , RtecScheduler::INTERNAL
-                     , RtecScheduler::SYNCHRONIZATION_FAILURE
-                     ));
-
-  ///Takes ownership of Timeout_Consumer
-  void add_timeout_consumer(
-                            Supplier * supplier_impl,
-                            Timeout_Consumer * timeout_consumer_impl,
-                            const char * timeout_entry_point,
-                            ACE_Time_Value period,
-                            RtecScheduler::Criticality_t crit,
-                            RtecScheduler::Importance_t imp
-                            ACE_ENV_ARG_DECL
-                            )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , RtecScheduler::UNKNOWN_TASK
-                     , RtecScheduler::INTERNAL
-                     , RtecScheduler::SYNCHRONIZATION_FAILURE
-                     ));
-  */
   ///Takes ownership of Supplier
   void add_supplier(
                     Supplier * supplier_impl,
@@ -260,6 +227,12 @@ public:
                     const char* ior_output_filename
                     ACE_ENV_ARG_DECL);
 
+  bool time_master(void);
+
+  ACE_Time_Value start_time(void);
+
+  ACE_Vector<RtEventChannelAdmin::RtSchedEventChannel_var>* remote_ecs(void);
+
 private:
   TAO::Utils::Servant_Var<POA_RtecScheduler::Scheduler> scheduler_impl_;
   TAO::Utils::Servant_Var<TAO_EC_Event_Channel> ec_impl_;
@@ -281,6 +254,10 @@ private:
 
   bool started_;
   int remote_gateways_connected_;
+
+  bool time_master_;
+  ACE_Time_Value start_time_;
+  ACE_Vector<RtEventChannelAdmin::RtSchedEventChannel_var> remote_ecs_;
 
   //need to handle multiple gateways!
   typedef ACE_Map_Manager<const char*,TAO_EC_Gateway_Sched*,ACE_Thread_Mutex> Gateway_Map;
