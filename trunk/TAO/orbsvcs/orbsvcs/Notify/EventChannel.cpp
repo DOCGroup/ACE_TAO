@@ -63,7 +63,8 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            , const CosNotification::AdminProperties & initial_admin
                            ACE_ENV_ARG_DECL)
 {
-  this->TAO_Notify::Topology_Object::init (ecf);
+  // this-> on the following line confuses VC6
+  TAO_Notify::Topology_Object::init (ecf);
 
   this->ecf_ = ecf;
 
@@ -129,7 +130,8 @@ void
 TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            ACE_ENV_ARG_DECL)
 {
-  this->TAO_Notify::Topology_Object::init (ecf);
+  // this-> on the following line confuses VC6
+  TAO_Notify::Topology_Parent::init (ecf);
 
   this->ecf_ = ecf;
 

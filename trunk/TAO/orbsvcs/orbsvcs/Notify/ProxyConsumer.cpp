@@ -46,7 +46,7 @@ TAO_Notify_ProxyConsumer::peer (void)
 void
 TAO_Notify_ProxyConsumer::init (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL)
 {
-  TAO_Notify::Topology_Object::init (supplier_admin);
+  TAO_Notify_Proxy::init (supplier_admin);
 
   this->supplier_admin_ = supplier_admin;
 
