@@ -1,3 +1,18 @@
+Fri Oct 15 17:26:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Added a new flag that
+	  would help conditional compilation compilation of the
+	  QtReactor. 
+	
+	* ace/QtReactor.cpp:
+	* ace/QtReactor.h: Files for the QtReactor. Thanks to Hamish
+	  Friedlander <ullexco@wave.co.nz> for donating this to ACE. For
+	  the sake of record, Qt is a multiplatform C++ GUI toolkit.
+	
+	* ace/Makefile: Added the above files to Makefile. Changes were
+	  also made to generate files from moc (Meta Object Compiler,
+	  that comes with Qt libraries) and include them with the build.
+
 Fri Oct 15 01:03:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Activation_Queue: ACE_Activation_Queue has no methods for
