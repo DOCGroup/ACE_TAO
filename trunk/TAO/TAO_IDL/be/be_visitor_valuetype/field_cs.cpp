@@ -834,18 +834,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   *os << "this->"
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
-      << " = ";
-
-  if (node->width () == (long) sizeof (char))
-    {
-      *os << "CORBA::string_dup";
-    }
-  else
-    {
-      *os << "CORBA::wstring_dup";
-    }
-
-  *os << " (val);" << be_uidt_nl
+      << " = (val);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // (2) Set method from const char * or const wchar*.
