@@ -1,11 +1,17 @@
+Mon Oct 25 11:33:18 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/Notify/Blocking/notify.conf:
+          Extra character at end of line causes "parse error"
+          No newline @ end of file.
+
 Mon Oct 25 10:04:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
-        
+
           Removed some unnecessary dependencies.
-          
+
         * orbsvcs/IFR_Service/be_produce.cpp:
-        
+
           Uncommented a line that creates a holding scope for
           struct/union/exception members that must be created
           before the container scope, then moved in. Thanks to
