@@ -1,3 +1,14 @@
+Mon Nov 09 14:12:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h (TAO_ENDTRY_RETURN): Added a new macro
+	  'TAO_ENDTRY_RETURN(X)' to avoid compilation errors when a return
+	  statement goes right after the TAO_ENDTRY macro.  Thanks to
+	  David for pointing this out.
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	  (create_constrained_propertyset): Changed to use
+	  TAO_ENDTRY_RETURN.
+
 Mon Nov  9 13:04:56 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_Input_Handler.cpp (handle_input): 
