@@ -141,19 +141,19 @@ Client::svc (void)
       ACE_TRY_CHECK;
 
       CORBA::Long number = 0;
-      
+
       for (int i = 0; i < this->niterations_; ++i)
         {
           number = server_->get_number (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
-          ACE_DEBUG ((LM_DEBUG,
-                      "get_number = %d\n",
-                      number));
-          
+
+          //          ACE_DEBUG ((LM_DEBUG,
+          //                      "get_number = %d\n",
+          //                      number));
+
           server_->test_method (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
