@@ -32,30 +32,7 @@ ASYS_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf, size_t n, int flags)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
-
-  size_t count = 0;
-
-//    while (n > 0)
-//      {
-      size_t buf_len = this->buf_size_ - this->cur_offset_;
-      if (buf_len == 0)
-        {
-          if (this->fetch_recv_buf (flags) == -1)
-            return -1;
-          buf_len = this->buf_size_;
-        }
-
-      size_t length = (n > buf_len ? buf_len : n);
-
-      ACE_OS::memcpy ((char *) buf + count,
-                      (char *) this->recv_buffer_ + this->cur_offset_,
-                      length);
-      this->cur_offset_ += length;
-//        n -= length;
-//        count += length;
-//      }
-
-  return count;
+  return this->recv (buf, n, flags, 0);
 }
 
 // Send an n byte message to the connected socket.
@@ -78,7 +55,7 @@ ACE_MEM_IO::recv (void *buf, size_t n)
 }
 
 ASYS_INLINE ssize_t
-ACE_MEM_IO::fetch_recv_buf (int flag, ACE_Time_Value *timeout)
+ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
 
@@ -190,7 +167,7 @@ ACE_MEM_IO::recv (void *buf,
                    const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
-  return ACE::recv (this->get_handle (), buf, len, timeout);
+  return this->recv (buf, len, 0, timeout);
 }
 
 ASYS_INLINE ssize_t
@@ -209,5 +186,28 @@ ACE_MEM_IO::recv (void *buf,
                    const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
-  return ACE::recv (this->get_handle (), buf, len, flags, timeout);
+
+  size_t count = 0;
+
+//    while (len > 0)
+//      {
+      size_t buf_len = this->buf_size_ - this->cur_offset_;
+      if (buf_len == 0)
+        {
+          if (this->fetch_recv_buf (flags, timeout) == -1)
+            return -1;
+          buf_len = this->buf_size_;
+        }
+
+      size_t length = (len > buf_len ? buf_len : len);
+
+      ACE_OS::memcpy ((char *) buf + count,
+                      (char *) this->recv_buffer_ + this->cur_offset_,
+                      length);
+      this->cur_offset_ += length;
+//        len -= length;
+      count += length;
+//      }
+
+  return count;
 }

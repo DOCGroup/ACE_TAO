@@ -338,7 +338,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("TAO (%P|%t) Zero length IIOP option.\n")),
+                           ASYS_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
         {
@@ -349,7 +349,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
           if (slot == ACE_static_cast (int, len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
+                               ASYS_TEXT ("TAO (%P|%t) SHMIOP option <%s> is ")
                                ASYS_TEXT ("missing a value.\n"),
                                opt.c_str ()),
                               -1);
@@ -359,7 +359,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) Zero length IIOP ")
+                               ASYS_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
                                ASYS_TEXT ("option name.\n")),
                               -1);
 
@@ -377,14 +377,14 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
                 this->priority_ = corba_priority;
               else
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ASYS_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
+                                   ASYS_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint ")
                                    ASYS_TEXT ("priority: <%s>\n"),
                                    value.c_str ()),
                                   -1);
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) Invalid IIOP option: <%s>\n"),
+                               ASYS_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%s>\n"),
                                name.c_str ()),
                               -1);
         }

@@ -59,7 +59,7 @@ public:
                 size_t n) ;
   // Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
 
-  ssize_t fetch_recv_buf (int flags, ACE_Time_Value *timeout = 0);
+  ssize_t fetch_recv_buf (int flags, const ACE_Time_Value *timeout = 0);
   // @@ Please fill in here.
 
   /*
