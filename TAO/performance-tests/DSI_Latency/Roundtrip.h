@@ -28,9 +28,7 @@ public:
 
   // = The DSI methods
   virtual void invoke (CORBA::ServerRequest_ptr request,
-                       CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+                       CORBA_Environment &ACE_TRY_ENV);
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa,

@@ -14,7 +14,6 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 void
 Roundtrip::invoke (CORBA::ServerRequest_ptr request,
                    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
