@@ -553,7 +553,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
   ControlC.h ControlC.i ControlS_T.h ControlS_T.i ControlS_T.cpp \
-  ControlS.i $(ACE_ROOT)/ace/High_Res_Timer.h \
+  ControlS.i \
+  $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
   $(ACE_ROOT)/ace/Sample_History.h \
   $(ACE_ROOT)/ace/Sample_History.inl \
@@ -758,7 +759,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
-  ControlC.i $(TAO_ROOT)/tao/Stub.h \
+  ControlC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -3164,7 +3166,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
-  ControlC.i $(TAO_ROOT)/tao/Stub.h \
+  ControlC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \

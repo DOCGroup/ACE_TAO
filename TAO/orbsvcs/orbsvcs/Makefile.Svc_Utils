@@ -77,9 +77,9 @@ realclean: clean
 
 
 .obj/Time_Utilities.o .obj/Time_Utilities.so .shobj/Time_Utilities.o .shobj/Time_Utilities.so: Time_Utilities.cpp \
-  Time_Utilities.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(ACE_ROOT)/ace/pre.h \
-  TimeBaseC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -264,13 +264,13 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  svc_utils_export.h \
-  TimeBaseC.i \
-  Time_Utilities.i
+  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
 
 .obj/IOR_Multicast.o .obj/IOR_Multicast.so .shobj/IOR_Multicast.o .shobj/IOR_Multicast.so: IOR_Multicast.cpp IOR_Multicast.h \
   $(ACE_ROOT)/ace/pre.h \
-  svc_utils_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
