@@ -83,7 +83,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS +=  -lACE $(PLATFORM_X11_LDFLAGS) -lXm -lXt -lXext -lSM -lICE -lX11 
-CPPFLAGS += -i -DSH_MEM -DNDEBUG $(PLATFORM_X11_CPPFLAGS)
+CPPFLAGS +=  -DSH_MEM -DNDEBUG $(PLATFORM_X11_CPPFLAGS)
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
