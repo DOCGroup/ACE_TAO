@@ -1,32 +1,39 @@
+Tue Apr  1 10:06:57 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Fixed a bug with multiple types and an mpc file specified with
+          a directory.  The original file name was not being preserved.
+
 Tue Apr  1 16:02:30 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* ace/Makefile.{am,bor}: Added Unbounded_Set_Ex.
+        * ace/Makefile.{am,bor}: Added Unbounded_Set_Ex.
 
 Tue Apr  1 13:42:37 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* tests/Unbounded_Set_Test_Ex.cpp: New.
+        * tests/Unbounded_Set_Test_Ex.cpp: New.
 
-	  This is a replica of Unbounded_Set_Test.cpp but uses the new
-	  ACE_Unbounded_Set_Ex class instead of ACE_Unbounded_Set.
-	  This is for side-by-side comparisons between the two tests.
+          This is a replica of Unbounded_Set_Test.cpp but uses the new
+          ACE_Unbounded_Set_Ex class instead of ACE_Unbounded_Set.
+          This is for side-by-side comparisons between the two tests.
 
-	* tests/Makefile: Added Unbounded_Set_Test_Ex, updated dependencies.
+        * tests/Makefile: Added Unbounded_Set_Test_Ex, updated dependencies.
 
-	* tests/Makefile.{am,bor}: Added Unbounded_Set_Test_Ex.
+        * tests/Makefile.{am,bor}: Added Unbounded_Set_Test_Ex.
 
 Tue Apr  1 12:48:33 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* ace/Node.{h,cpp}:
+        * ace/Node.{h,cpp}:
 
-	  Added back the deleted_ member.
-	  This sets the stage for the new Ace_Unbounded_Set_Ex class.
+          Added back the deleted_ member.
+          This sets the stage for the new Ace_Unbounded_Set_Ex class.
 
-	* ace/Unbounded_Set_Ex.{h,inl,cpp}: New.
+        * ace/Unbounded_Set_Ex.{h,inl,cpp}: New.
 
-	  This class is a variation on ACE_Unbounded_Set that fixes
-	  Bugzilla bug 1460.
+          This class is a variation on ACE_Unbounded_Set that fixes
+          Bugzilla bug 1460.
 
-	* ace/Makefile.ace: Add Unbounded_Set_Ex.
+        * ace/Makefile.ace: Add Unbounded_Set_Ex.
 
 Mon Mar 31 14:04:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
