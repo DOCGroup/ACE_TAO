@@ -1,3 +1,16 @@
+Sat Aug 31 01:29:05 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/Makefile.dirs: (Added) Specifies the DIRS= list of directories
+	  to invoke recursive makes on.
+	* tao/Makefile.tao: (Added) Build the libTAO library like the old 
+	  Makefile did.
+	* tao/Makefile: Invoke Makefile.tao first, and then Makefile.dirs.
+	  It was necessary to split apart the DIRS= rule from the part of the
+          Makefile which builds libACE in order to have parallel makes (-j 2)
+          work on recursive makes, using the new rules.nested.GNU, see ACE
+	  ChangeLog entry:
+	  Sat Aug 31 01:20:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>	
+  
 Fri Aug 30 17:24:15 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
