@@ -19,8 +19,9 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "notify_test_export.h"
 
-class Notify_Test_Client
+class TAO_NOTIFY_TEST_Export Notify_Test_Client
 {
   // = TITLE
   //   Notify_Test_Client
