@@ -1,3 +1,19 @@
+Wed Apr 17 07:28:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DLL/Newsweek.cpp:
+        * examples/DLL/Today.cpp:
+	  Added include of svc_export.h.
+
+        * tests/Proactor_Test.cpp:
+          Fixed fuzz and unicode error
+
+        * ace/Asynch_Acceptor.h:
+        * ace/Functor.h:
+        * ace/Message_Queue.h:
+        * ace/Module.h:
+        * ace/Thread_Manager.h:
+          Doxygen-ized some of the comments
+
 Tue Apr 16 23:32:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_dll.dsp:
