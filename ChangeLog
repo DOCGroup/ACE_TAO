@@ -1,3 +1,7 @@
+Tue Aug 17 14:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+        * tests/Proactor_Test.cpp
+          Revertion of change to this file (for the sake of being complete).
+
 Tue Aug 17 13:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
         * ace/Asynch_Connector.h
           Revertion of change to this file as it breaks the windows build and
