@@ -1,3 +1,9 @@
+1999-04-16    <naga@CALYPSO>
+
+	* orbsvcs/orbsvcs/Trader/Trader.h :
+	  Added TAO_ORBSVCS_Export to TAO_String_Hash_Key as it is used in
+	  AVStreams implemtation. 
+
 Fri Apr 16 14:49:04 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tests/InterOp-Naming/Makefile (LDLIBS): 
