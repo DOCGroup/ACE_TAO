@@ -21,6 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// For size_t under Chorus
+#include "ace/OS_Memory.h"
+
 class ACE_Allocator;
 
 template <class T>
