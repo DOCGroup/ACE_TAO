@@ -23,6 +23,7 @@ Demux_Test_CodeGenerator::Demux_Test_CodeGenerator (void)
   : num_POAs_ (1), // 1 child POA
     num_objs_ (1),
     num_ops_ (1),
+    state_ (Demux_Test_CodeGenerator::CG_NONE),
     oneway_ (0),
     debug_ (0)
 {
@@ -132,6 +133,8 @@ Demux_Test_CodeGenerator::run (void)
                          "Failed to generate operation names\n"),
                         -1);
     }
+
+  this->state_ = Demux_Test_CodeGenerator::CG_NONE;
 
   // debugging
   if (this->debug_)

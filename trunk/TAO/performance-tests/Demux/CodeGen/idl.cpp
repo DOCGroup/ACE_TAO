@@ -52,9 +52,13 @@ Demux_Test_CodeGenerator::gen_idl_interface (void)
       // grab the next element waiting to be grabbed
       (void) iter.next (str);
 
-      ACE_OS::fprintf (fp, "   %svoid %s ();\n", 
-                       (this->oneway_ ? "oneway ": ""),
-                       str->rep ());
+      // only the shutdown method is always oneway
+      if (!ACE_OS::strcmp (str->c_str (), "shutdown"))
+        ACE_OS::fprintf (fp, "   oneway void shutdown ();\n");
+      else
+        ACE_OS::fprintf (fp, "   %svoid %s ();\n", 
+                         (this->oneway_ ? "oneway ": ""),
+                         str->c_str ());
 
       (void) iter.advance ();
     }

@@ -25,6 +25,7 @@ ACE_RCSID(CodeGen, gen_names, "$Id$")
 int 
 Demux_Test_CodeGenerator::gen_poa_names (void)
 {
+  this->state_ = Demux_Test_CodeGenerator::CG_POA;
   if (this->gen_names (this->poa_array_, this->num_POAs_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -35,12 +36,15 @@ Demux_Test_CodeGenerator::gen_poa_names (void)
 
   // We store the generated names in a file
   FILE *fp;
+  char poa_file [128];
 
-  if ((fp = ACE_OS::fopen ("poa_names.dat", "w")) == 0)
+  ACE_OS::sprintf (poa_file, "poa_names_%d.dat", this->num_POAs_);
+
+  if ((fp = ACE_OS::fopen (poa_file, "w")) == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%n:%l) Demux_Test_CodeGenerator::gen_poa_names - "
-                         "Failed to open file\n"),
+                         "Failed to open file %s\n", poa_file),
                         -1);
     }
 
@@ -69,6 +73,7 @@ Demux_Test_CodeGenerator::gen_poa_names (void)
 int 
 Demux_Test_CodeGenerator::gen_object_names (void)
 {
+  this->state_ = Demux_Test_CodeGenerator::CG_OBJ;
   if (this->gen_names (this->obj_array_, this->num_objs_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -83,6 +88,7 @@ Demux_Test_CodeGenerator::gen_object_names (void)
 int 
 Demux_Test_CodeGenerator::gen_operation_names (void)
 {
+  this->state_ = Demux_Test_CodeGenerator::CG_OP;
   if (this->gen_names (this->op_array_, this->num_ops_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -90,6 +96,15 @@ Demux_Test_CodeGenerator::gen_operation_names (void)
                          "Failed to generate object names\n"),
                         -1);
     }
+
+  // save it at this location
+  if (this->op_array_.enqueue_tail (ACE_CString ("shutdown")) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%n:%l) Demux_Test_CodeGenerator::gen_operation_names - "
+                         "Failed to enqueue the shutdown operation\n"),
+                        -1);
+    }  
 
   return 0;
 }
@@ -123,8 +138,8 @@ int
 Demux_Test_CodeGenerator::insert_unique_string (ACE_Unbounded_Queue<ACE_CString> &arr)
 {
   long rnd;
-  ACE_CString s;
-  long status;
+  ACE_CString str;
+  int exists = 1;
 
   // get a random number between 3 and 32
   rnd = this->gen_rand (3,32); 
@@ -132,29 +147,41 @@ Demux_Test_CodeGenerator::insert_unique_string (ACE_Unbounded_Queue<ACE_CString>
   // This random number is used as a string length of the distinct string to be
   // generated. 
 
-  do 
+  do
     {
-      if (this->create_string (rnd, s) == -1)
+      if (this->create_string (rnd, str) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%n:%l) Demux_Test_CodeGenerator::insert_unique_string - "
                              "Failed to create string\n"),
                             -1);
         }
+      
+      // if we are generating operations, we do not want to generate the
+      // operation "shutdown" that has special semantics
+      if ((this->state_ == Demux_Test_CodeGenerator::CG_OP) &&
+          (!ACE_OS::strcmp (str.c_str (), "shutdown")))
+        {
+          // repeat the loop since we cannot accept this string
+          continue;
+        }
 
-      status = this->is_present (arr, s);
-      if (status == -1)
+      exists = this->is_present (arr, str);
+      if (exists == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%n:%l) Demux_Test_CodeGenerator::insert_unique_string - "
                              "is_present check failed\n"),
                             -1);
         }
-    } 
-  while (status > 0);
+    }
+  while (exists > 0);
   
+  // we are here implies that the generated string did not exist in the queue
+  // that has been created so far
+
   // save it at this location
-  if (arr.enqueue_tail (s) == -1)
+  if (arr.enqueue_tail (str) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%n:%l) Demux_Test_CodeGenerator::insert_unique_string - "

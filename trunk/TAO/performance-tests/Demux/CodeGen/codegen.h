@@ -43,6 +43,14 @@ public:
   int run (void);
   // run the various algorithms
 
+  enum CG_STATE
+  {
+    CG_NONE,
+    CG_POA,
+    CG_OBJ,
+    CG_OP
+  };
+
 private:
   int parse_args (int argc, char *argv []);
   // parse arguments
@@ -117,11 +125,15 @@ private:
   ACE_Unbounded_Queue <ACE_CString> op_array_;
   // array of operation names
 
+  CG_STATE state_;
+  // code generation state
+
   int oneway_;
   // whether operations must be oneway or not
 
   int debug_;
   // whether to print debugging info
+
 };
 
 

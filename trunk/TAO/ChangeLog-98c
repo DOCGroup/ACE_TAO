@@ -1,3 +1,33 @@
+Fri Oct 30 15:10:16 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* performance_tests/Demux/CodeGen
+
+	  Made modifications such that a new method called shutdown is
+	  always generated for every interface. This method will be called
+	  to shutdown the ORB on the server side. 
+
+	  In addition, we now generate the poa-names.dat file with a POA
+	  depth appaneded to it. Thus we shall have names like
+	  poa_names_1.dat. This will enable us to create many executables
+	  at the same time. Otherwise, everytime we ran the demux
+	  executable, we were overwriting this file. In the servant
+	  implementation, for the shutdown mehtod, we call the shutdown on
+	  the ORB.
+
+	  Affected files are:
+
+	  codegen.cpp
+	  codegen.h
+	  gen_names.cpp
+	  idl.cpp
+	  servant_impl.cpp
+	
+	* performance_tests/Demux/demux_test_client.cpp
+
+	  The client now invokes the shutdown method on the very first obj
+	  reference it holds. This will enable the ORB shutting down on
+	  the other side.
+
 Fri Oct 30 13:50:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_array/any_op_cs.cpp,
