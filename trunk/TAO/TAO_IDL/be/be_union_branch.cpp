@@ -152,7 +152,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
         os->print ("%d", dv.u.char_val);
         break;
       case AST_Expression::EV_bool:
-        *os << dv.u.bool_val;
+        *os << (dv.u.bool_val == 0 ? "false" : "true");
         break;
       case AST_Expression::EV_enum:
         // The discriminant is an enum. Some compilers will
