@@ -586,12 +586,8 @@ size_t
 ACE_WString::strlen (const ACE_USHORT16 *s)
 {
   ACE_TRACE ("ACE_WString::strlen");
-  int i;
 
-  for (i = 0; s[i] != 0; i++)
-    continue;
-
-  return i;
+  return ACE_OS::strlen (s);
 }
 
 // Get the underlying pointer as an ASCII char.

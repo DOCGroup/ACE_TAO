@@ -1,3 +1,119 @@
+Thu Dec 24 03:14:25 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager: There are two problems with the current
+ 	  implementation of Hash_Map_Manager:
+
+	  (a) It requires a hash() method on the key type.  If it is not
+ 	      possible for the key type to have a hash() function (e.g.,
+ 	      the key is a primitive type such as an int, or is a pointer
+ 	      type, or a three party class), the usual solution is to do
+ 	      partial template specialization.
+
+	      This is usually not a very good option since some compilers
+	      do not support partial template specialization. 
+
+	  (b) The second problem is with comparing two keys.
+  	      Hash_Map_Manager assumes that keys can be compared using
+ 	      operator==. This assumption causes problems in some cases,
+ 	      e.g., when using char * as the key.  Usually with char *,
+ 	      you want to use strcmp and not compare pointers.
+
+	  Solution to these two problems is the new Hash_Map_Manager_Ex
+ 	  class. Problem (a) is addressed by using a function object - the
+ 	  type of which is specified by the user as an additional template
+ 	  parameter. Problem (b) is addressed by using another function
+ 	  object - the type of which is specified by the user as an
+ 	  additional template parameter. So the new Hash_Map_Manager_Ex
+	  takes five template parameters: 
+
+	  <key, value, hash_key, compare_keys, mutex>
+
+	  Backward compatibility: Hash_Map_Manager now inherits from
+ 	  Hash_Map_Manager_Ex, fixing the hash_key function object (which
+ 	  simply calls key.hash()) and fixing compare_keys (which simply
+ 	  uses operator== on the keys).
+
+	  There will be one problem: Users of compilers that do not
+ 	  implicitly instantiate templates will have to update their list
+	  of template instantiations. To help with this, please see
+          $ACE_ROOT/bin/Hash_Map_Manager_Helper.csh
+ 	
+	  Other miscellaneous changes: Added two new classes: ACE_Hash<T>
+	  and ACE_Equal_To<T>.  ACE_Hash assumes a hash() method on T.
+	  ACE_Equal_To compares by using operator==.  However, the
+	  ACE_Hash class has been specialized to work with:
+
+	  char, signed char, unsigned char, 
+	  short, unsigned short, 
+	  int, unsigned int, 
+	  long, unsigned long, 
+	  const char *, char *, 
+	  const wchar_t *, wchar_t *,
+	  const ACE_USHORT16 *, ACE_USHORT16 *,
+
+	  Also, ACE_Equal_To has been specialized to work with:
+
+	  const char *, char *, 
+	  const wchar_t *, wchar_t *,
+	  const ACE_USHORT16 *, ACE_USHORT16 *,
+
+	  Remember, you don't have to use these specialization.  You can
+	  always create your own.
+	
+	  If we had default template parameters, we could default hash_key
+ 	  to ACE_Hash<key> and compare_keys could default to
+ 	  ACE_Equal_To<key>.
+
+	  BTW, note that the specialization with ACE_Hash and ACE_Equal_To
+ 	  is not partial template specialization.  It is complete template
+ 	  specialization, and we don't know of compilers that cannot
+ 	  handle complete template specialization.
+	
+	  Since we now have template specialization, Hash_Map_Manager_T.*
+ 	  files were created.  I also took this opportunity to inline most
+ 	  of the Hash_Map_Manager functions.
+
+	  Also, update the makefiles and project files.
+
+	  BTW, these changes grossly simplified
+ 	  tests/Hash_Map_Manager_Test.cpp and tests/Map_Manager_Test.cpp.
+  	  These tests will now work with compilers that do not support
+ 	  partial template specialization.  Maybe James can change
+	  Filecache to take advantage of these changes.
+	  
+	  Updated the following files with the new template instantiations:
+
+	  ace/Filecache.cpp
+	  ace/Local_Name_Space.cpp
+	  ace/Template_Instantiations.cpp
+	  tests/Conn_Test.cpp
+	  tests/Hash_Map_Manager_Test.cpp
+	  tests/Map_Manager_Test.cpp
+	
+	  Thanks to Carlos for suggesting these changes.  Most of these
+ 	  were inspired by SGI's STL.	
+
+	  If these changes are successful (i.e., nobody is hunting me down
+ 	  for breaking their code ;-)), we should add a similar comparison
+ 	  function object to Map_Manager.
+
+	* ace/ACE (hash_pjw): hash_pjw is now available for char *,
+ 	  wchar_t *, and ACE_UINT16 *.
+
+	* ace/OS (strlen, strcpy, strcmp): These functions are now
+ 	  available for char *, wchar_t *, and ACE_UINT16 *.
+	
+	* ace/SString.cpp (ACE_WString::strlen): Simply calls
+ 	  ACE_OS::strlen.
+
+	* ace/config-win32-common.h (ACE_HAS_WCHAR_TYPEDEFS_USHORT): Since
+ 	  Win32 typedefs wchar_t as a 16 bit unsigned short, this can
+ 	  potentially cause problems with function overloading.
+  	  Therefore, I added ACE_HAS_WCHAR_TYPEDEFS_USHORT to the Win32
+ 	  config file.  This is very similar to
+ 	  ACE_HAS_WCHAR_TYPEDEFS_CHAR.  Thanks to David Levine for helping
+ 	  with this.
+
 Thu Dec 24 09:37:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.8 released.
