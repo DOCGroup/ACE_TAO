@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file NS_Periodic_Consumer.h
+ *  @file Periodic_Consumer.h
  *
  *  $Id$
  *

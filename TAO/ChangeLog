@@ -1,3 +1,11 @@
+Fri May 23 22:23:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
+	* orbsvcs/tests/Notify/lib/StructuredEvent.h:
+	* orbsvcs/tests/Notify/lib/Task_Callback.h: Fixed fuzz errors.
+
 Fri May 23 19:23:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB.cpp:

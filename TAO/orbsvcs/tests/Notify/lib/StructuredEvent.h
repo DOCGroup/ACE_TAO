@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file NS_StructuredEvent.h
+ *  @file StructuredEvent.h
  *
  *  $Id$
  *
