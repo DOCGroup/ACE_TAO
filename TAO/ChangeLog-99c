@@ -1,3 +1,15 @@
+Sun Oct 17 20:20:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/Param_Test/recursive_union.cpp:
+	  In methods that initialize the recursive unions, 
+	  replaced use of the CORBA 2.3 anonymous sequence
+	  typedef to define temporaries with the TAO-specific
+	  type. LynxOS uses the older GNU compiler that doesn't
+	  handle the scoping of these typedefs correctly so
+	  that compiler does not see them in the generated code.
+	  Thanks to Dan Butler <daniel.g.butler@boeing.com>
+	  and David Levine for pointing this out.
+
 Sun Oct 17 19:00:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp : Made changes to
