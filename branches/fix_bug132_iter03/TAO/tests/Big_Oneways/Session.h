@@ -42,6 +42,8 @@ public:
                      Test::Already_Running,
                      Test::No_Peers));
 
+  virtual void ping (CORBA::Environment &) ACE_THROW_SPEC (());
+
   virtual void receive_payload (const Test::Payload &the_payload,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -58,6 +60,10 @@ private:
 
   /// Return 1 if all the work in this session has been completed
   int more_work (void) const;
+
+  /// Make sure that all threads have connections avaiable to the
+  /// other sessions.
+  void validate_connections (CORBA::Environment &ACE_TRY_ENV);
 
 private:
   /// Synchronize the internal state

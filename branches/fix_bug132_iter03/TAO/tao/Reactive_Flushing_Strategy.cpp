@@ -32,7 +32,8 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      while (!msg->done () && result > 0)
+      while (!msg->all_data_sent ()
+             && result > 0)
         {
           result = orb_core->run (0, 1, ACE_TRY_ENV);
           ACE_TRY_CHECK;

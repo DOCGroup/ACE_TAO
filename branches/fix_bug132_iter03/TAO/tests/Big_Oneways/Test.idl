@@ -60,6 +60,9 @@ module Test
     void start (in Session_List other_sessions)
       raises (Already_Running, No_Peers);
 
+    /// Ping the session, used to validate all connections
+    void ping ();
+
     /// Receive the payload
     oneway void receive_payload (in Payload the_payload);
 
