@@ -1,3 +1,14 @@
+Wed Jun 13 09:08:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
+
+          Added missing .in()s in places where a _var was used as an
+          argument, and fixed fuzz errors.
+
 Wed Jun 13 08:42:31 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:
