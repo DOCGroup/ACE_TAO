@@ -1,3 +1,14 @@
+Mon Sep  1 13:26:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Sync_Strategies.h: Removed Transport.h inclusion
+
+	* tao/Asynch_Reply_Dispatcher_Base.h:
+	* tao/Asynch_Reply_Dispatcher_Base.cpp:
+	* tao/Asynch_Reply_Dispatcher_Base.i: Removed inclusion of
+	  Transport.h from the header file. Moved the method transport ()
+	  from the inlined file to the cpp file which helped us to get rid
+	  of the Transport.h onclusion.
+
 Mon Sep  1 11:08:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CurrentC.h: Removed inclusion of Object_T.h.

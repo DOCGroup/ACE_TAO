@@ -41,6 +41,18 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
     this->transport_->remove_reference ();
 }
 
+void
+TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
+{
+  if (this->transport_ != 0)
+    {
+      this->transport_->remove_reference ();
+    }
+
+  this->transport_ = t;
+  this->transport_->add_reference ();
+}
+
 // Must override pure virtual method in TAO_Reply_Dispatcher.
 int
 TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
@@ -49,7 +61,6 @@ TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
 {
   return 0;
 }
-
 
 void
 TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
