@@ -25,7 +25,7 @@ public:
     //   Factory Status
     //
     // = DESCRIPTION
-    //   This type enumerates the possible states of the factory: 
+    //   This type enumerates the possible states of the factory:
     //   uninitialized, or in a config or runtime mode of operation.
 
   struct POD_RT_Info
@@ -58,7 +58,7 @@ public:
   // NamingContext to locate a Scheduler.
 
   static int use_config (CosNaming::NamingContext_ptr naming,
-			 const char* name);
+                         const char* name);
   // Setup the variables needed for a config run, using the
   // NamingContext to locate a Scheduler.
 
@@ -86,8 +86,19 @@ public:
   // TODO: How to do cleanup()? Use the ACE_Object_Manager stuff?
 
   static Factory_Status status (void);
-  // This helper function allows the application to determine whether the 
+  // This helper function allows the application to determine whether the
   // factory is uninitialized, or in a config or runtime mode of operation.
+
+  // = Access the (OS independent) preemption priority of the calling thread.
+  static RtecScheduler::Preemption_Priority preemption_priority ();
+  // Returns (u_int) -1 if the preemption priority hadn't been set.
+
+  // = Set the (OS independent) preemption priority of the calling thread.
+  static void set_preemption_priority
+    (const RtecScheduler::Preemption_Priority);
+  // The application or Event Channel is responsible for making sure
+  // that the preemption priority is set before any access of the
+  // preemption priority.
 
 protected:
   static int no_config_run (void);
