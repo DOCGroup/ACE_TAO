@@ -109,6 +109,11 @@ public class PushConsumerFactory {
 	  
        	  RtecEventChannelAdmin.EventChannel event_channel_ = 
 	    RtecEventChannelAdmin.EventChannelHelper.narrow (event_channel_object_);
+
+	  if (event_channel_ == null)
+	    {
+	      throw new Object_is_null_exception("EventChannel narrowed ref is null");
+	    }
 	  
 	  System.out.println ("Reference to the Event Service is ok.");
 	  
