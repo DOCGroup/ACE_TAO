@@ -4,6 +4,7 @@
 #include "tao/RT_CORBA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
+#include "Client_ORBInitializer.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
@@ -48,13 +49,27 @@ main (int argc, char *argv[])
       int min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
 
-	  if ((max_priority + min_priority) / 2 + 2 > max_priority)
+      if ((max_priority + min_priority) / 2 + 2 > max_priority)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Not enough priority levels on this platform"
                       "to run the test, aborting\n"));
           return 0;
         }
+
+      // Register the interceptors to check for the RTCORBA
+      // service contexts in the reply messages.
+      PortableInterceptor::ORBInitializer_ptr temp_initializer;
+
+      ACE_NEW_RETURN (temp_initializer,
+                      Client_ORBInitializer,
+                      -1);  // No exceptions yet!
+      PortableInterceptor::ORBInitializer_var initializer =
+        temp_initializer;
+
+      PortableInterceptor::register_orb_initializer (initializer.in (),
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Initialize and obtain reference to the Test object.
       CORBA::ORB_var orb =
@@ -126,10 +141,10 @@ main (int argc, char *argv[])
       RTCORBA::PriorityMapping *pm =
         mapping_manager->mapping ();
 
-	  CORBA::Short native_priority =
+      CORBA::Short native_priority =
         (max_priority + min_priority) / 2;
 
-	  CORBA::Short desired_priority = 0;
+      CORBA::Short desired_priority = 0;
 
       if (pm->to_CORBA (native_priority, desired_priority) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -169,7 +184,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
@@ -190,3 +205,6 @@ main (int argc, char *argv[])
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
+
+

@@ -37,6 +37,7 @@
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 #include "StringSeqC.h"
+#include "Service_Context.h"
 
 class TAO_GIOP_Invocation;
 
@@ -160,6 +161,12 @@ public:
      ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+  /// Helper method to get the request and response service contexts.
+  IOP::ServiceContext *get_service_context_i (
+      TAO_Service_Context &service_context_list,
+      IOP::ServiceId id,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Change the exception status.
   void exception (CORBA::Exception *exception);

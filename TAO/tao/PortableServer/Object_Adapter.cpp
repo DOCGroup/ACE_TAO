@@ -268,7 +268,9 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
   Priority_Model_Processing priority_processing (servant_upcall.poa ());
 
   // Set thread's priority.
-  priority_processing.pre_invoke (req.service_info (), ACE_TRY_ENV);
+  priority_processing.pre_invoke (req.request_service_context (),
+                                  req.reply_service_context (),
+                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (result);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -1444,7 +1446,8 @@ TAO_Object_Adapter::Priority_Model_Processing::~Priority_Model_Processing
 
 void
 TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
-   IOP::ServiceContextList &service_context_list,
+   TAO_Service_Context &request_service_context,
+   TAO_Service_Context &reply_service_context,
    CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_POA_Policies &poa_policies = this->poa_.policies ();
@@ -1467,37 +1470,35 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
       // Attempt to extract client-propagated priority from the
       //  ServiceContextList of the request.
       RTCORBA::Priority target_priority;
-      int priority_found = 0;
-      for (CORBA::ULong i = 0;
-           i < service_context_list.length () && !priority_found;
-           ++i)
+      const IOP::ServiceContext *context;
+
+      if (request_service_context.get_context (IOP::RTCorbaPriority,
+                                               &context) == 1)
         {
-          IOP::ServiceContext &context = service_context_list[i];
+          // Extract the target priority
+          TAO_InputCDR cdr (ACE_reinterpret_cast
+                            (const char*,
+                             context->context_data.get_buffer ()),
+                            context->context_data.length ());
+          CORBA::Boolean byte_order;
+          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+            ACE_THROW (CORBA::MARSHAL ());
+          cdr.reset_byte_order (ACE_static_cast(int,byte_order));
 
-          if (context.context_id == IOP::RTCorbaPriority)
-            {
-              TAO_InputCDR cdr (ACE_reinterpret_cast
-                                (const char*,
-                                 context.context_data.get_buffer ()),
-                                context.context_data.length ());
+          if ((cdr >> target_priority) == 0)
+            ACE_THROW (CORBA::MARSHAL ());
 
-              CORBA::Boolean byte_order;
-              if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-                ACE_THROW (CORBA::MARSHAL ());
-              cdr.reset_byte_order (ACE_static_cast(int,byte_order));
-
-              if ((cdr >> target_priority) == 0)
-                ACE_THROW (CORBA::MARSHAL ());
-
-              priority_found = 1;
-              break;
-            }
+          // Save the target priority in the response service
+          // context to propagate back to the client as specified
+          // by the RTCORBA specification.
+          reply_service_context.set_context (*context);
         }
-
-      // Use default priority if none came in the request.  (Request
-      // must have come from a non-RT ORB.)
-      if (!priority_found)
-        target_priority = poa_policies.server_priority ();
+      else
+        {
+          // Use default priority if none came in the request.  (Request
+          // must have come from a non-RT ORB.)
+          target_priority = poa_policies.server_priority ();
+        }
 
       // Change the priority of the current thread to the
       // client-propagated value for the duration of

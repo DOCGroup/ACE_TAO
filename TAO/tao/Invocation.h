@@ -116,7 +116,11 @@ public:
 
   /// Accessor to the request ServiceContextList.  Only valid when
   /// sending a request message.
-  IOP::ServiceContextList& service_info (void);
+  TAO_Service_Context& request_service_context (void);
+
+  /// Accessor to the reply ServiceContextList.  Only valid when
+  /// after receiving a reply message.
+  TAO_Service_Context& reply_service_context (void);
 
   /// Return the request id of this invocation.
   CORBA::ULong request_id (void);

@@ -87,7 +87,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
                     opdetails.opname ());
 
   // Write the service context list
-  msg << opdetails.service_info ();
+  msg << opdetails.request_service_info ();
 
   // We align the pointer only if the operation has arguments.
   if (opdetails.argument_flag ())
@@ -346,10 +346,10 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   // verify a digital signature, if that is required in this security
   // environment.  It may be required even when using IPSEC security
   // infrastructure.
-  IOP::ServiceContextList &service_info =
-    request.service_info ();
+  IOP::ServiceContextList &req_service_info =
+    request.request_service_info ();
 
-  input >> service_info;
+  input >> req_service_info;
 
   // Check an process if BiDir contexts are available
   if (request.orb_core ()->bidir_giop_policy ())
@@ -585,12 +585,14 @@ int
 TAO_GIOP_Message_Generator_Parser_12::check_bidirectional_context (
     TAO_ServerRequest &request)
 {
+  TAO_Service_Context &service_context = request.request_service_context ();
+
   // Check whether we have the BiDir service context info available in
   // the ServiceContextList
-  if (request.service_context ().is_service_id (IOP::BI_DIR_IIOP)
+  if (service_context.is_service_id (IOP::BI_DIR_IIOP)
       == 1)
     {
-      return this->process_bidir_context (request.service_context (),
+      return this->process_bidir_context (service_context,
                                           request.transport ());
     }
 

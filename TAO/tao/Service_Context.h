@@ -64,6 +64,15 @@ public:
   /// sequence.
   void set_context (const IOP::ServiceContext &context);
 
+  /// Insert the component into the list, making a copy of the octet
+  /// sequence.  Search the list before insertion so that the
+  /// insertion does not cause a duplicate context to be in the list.
+  /// If the replace flag is true, update the specified context.
+  /// Return 0 if the component was present and the replace flag
+  /// was not set to true.
+  int set_context (const IOP::ServiceContext &context,
+                   CORBA::Boolean replace);
+
   /// Insert the component into the list, but efficiently stealing the
   /// contents of the octet sequence.
   void set_context (IOP::ServiceContext &context);
@@ -71,6 +80,10 @@ public:
   /// Get a copy of the context identified by <context.context_id>, return
   /// 0 if the component is not present.
   int get_context (IOP::ServiceContext &context) const;
+
+  /// Get a reference to a context identified by id, return
+  /// 0 if the component is not present.
+  int get_context (IOP::ServiceId id, const IOP::ServiceContext **context) const;
 
   /// Set the context from the CDR stream and add that to the service
   /// Context list
@@ -107,7 +120,7 @@ private:
   void set_context_i (IOP::ServiceId id, TAO_OutputCDR &cdr);
   void set_context_i (IOP::ServiceContext &context, TAO_OutputCDR &cdr);
 
-  /// Helper methods to implement set_context()
+  /// Helper methods to implement get_context()
   int get_context_i (IOP::ServiceContext &context) const;
 
 private:

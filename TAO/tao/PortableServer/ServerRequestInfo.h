@@ -31,6 +31,7 @@
 #include "tao/LocalObject.h"
 #include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
+#include "tao/Service_Context.h"
 #include "portableserver_export.h"
 
 #if defined(_MSC_VER)
@@ -177,6 +178,14 @@ public:
   /// PortableServer::ForwardRequest exception is thrown by a servant
   /// manager.
   void forward_reference (CORBA::Object_ptr obj);
+
+protected:
+  /// Helper method to get the request and response service contexts.
+  IOP::ServiceContext *get_service_context_i (
+    TAO_Service_Context &service_context_list,
+    IOP::ServiceId id,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
 

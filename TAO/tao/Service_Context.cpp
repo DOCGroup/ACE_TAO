@@ -57,6 +57,28 @@ TAO_Service_Context::set_context (const IOP::ServiceContext &context)
   this->add_context_i (context);
 }
 
+int
+TAO_Service_Context::set_context (const IOP::ServiceContext &context,
+                                  CORBA::Boolean replace)
+{
+  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+    {
+      if (context.context_id == this->service_context_[i].context_id)
+        {
+          if (replace)
+            {
+              this->service_context_[i] = context;
+              return 1;
+            }
+          else
+            return 0;
+        }
+    }
+
+  this->add_context_i (context);
+  return 1;
+}
+
 void
 TAO_Service_Context::set_context (IOP::ServiceContext &context)
 {
@@ -134,6 +156,19 @@ TAO_Service_Context::get_context (IOP::ServiceContext& context) const
   return 0;
 }
 
+int
+TAO_Service_Context::get_context (IOP::ServiceId id, const IOP::ServiceContext **context) const
+{
+  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+    {
+      if (id == this->service_context_[i].context_id)
+        {
+          *context = &this->service_context_[i];
+          return 1;
+        }
+    }
+  return 0;
+}
 
 int
 TAO_Service_Context::encode (TAO_OutputCDR& cdr) const
