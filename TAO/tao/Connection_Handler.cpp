@@ -20,7 +20,15 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
    is_registered_ (0)
 {
 }
-
+int
+TAO_Connection_Handler::purge_entry (void)
+{
+  // Decerment our reference count before we remove ourselves from the
+  // map as our references are not held by the map
+  this->decr_ref_count ();
+  return
+    this->orb_core_->connection_cache ().purge_entry (this->cache_map_entry_);
+}
 
 int
 TAO_Connection_Handler::make_idle (void)
