@@ -100,6 +100,7 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
     case AST_Argument::dir_IN:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -118,6 +119,7 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
     case AST_Argument::dir_INOUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -136,6 +138,7 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
     case AST_Argument::dir_OUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -183,6 +186,7 @@ int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
     case AST_Argument::dir_IN:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -201,6 +205,7 @@ int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
     case AST_Argument::dir_INOUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -219,6 +224,7 @@ int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
     case AST_Argument::dir_OUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -331,6 +337,7 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
         case AST_Argument::dir_IN:
           {
             if (bt->is_nested () 
+                && !bt->imported ()
                 && (scope->node_type () == AST_Decl::NT_interface
                     || scope->node_type () == AST_Decl::NT_union ))
               {
@@ -347,11 +354,43 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
             break;
           }
         case AST_Argument::dir_INOUT:
-          *os << this->type_name (node) << " &";
-          break;
+          {
+            if (bt->is_nested () 
+                && !bt->imported ()
+                && (scope->node_type () == AST_Decl::NT_interface
+                    || scope->node_type () == AST_Decl::NT_union ))
+              {
+                *os << "ACE_NESTED_CLASS (";
+                *os << scope->name () << ",";
+                *os << bt->local_name ();
+	              *os  << ") &";
+              }
+            else
+              {
+                *os << this->type_name (node) << " &";
+              }
+
+            break;
+          }
         case AST_Argument::dir_OUT:
-          *os << this->type_name (node, "_out");
-          break;
+          {
+            if (bt->is_nested () 
+                && !bt->imported ()
+                && (scope->node_type () == AST_Decl::NT_interface
+                    || scope->node_type () == AST_Decl::NT_union ))
+              {
+                *os << "ACE_NESTED_CLASS (";
+	              *os << scope->name () << ",";
+	              *os << bt->local_name ();
+	              *os  << "_out)";
+              }
+            else
+              {
+                *os << this->type_name (node, "_out");
+              }
+
+            break;
+          }
         } // end switch direction
     } // end of if
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
@@ -376,6 +415,7 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
         case AST_Argument::dir_IN:
           {
             if (bt->is_nested () 
+                && !bt->imported ()
                 && (scope->node_type () == AST_Decl::NT_interface
                     || scope->node_type () == AST_Decl::NT_union ))
               {
@@ -392,11 +432,43 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
             break;
           }
         case AST_Argument::dir_INOUT:
-          *os << this->type_name (node) << " &";
-          break;
+          {
+            if (bt->is_nested () 
+                && !bt->imported ()
+                && (scope->node_type () == AST_Decl::NT_interface
+                    || scope->node_type () == AST_Decl::NT_union ))
+              {
+                *os << "ACE_NESTED_CLASS (";
+                *os << scope->name () << ",";
+                *os << bt->local_name ();
+	              *os  << ") &";
+              }
+            else
+              {
+                *os << this->type_name (node) << " &";
+              }
+
+            break;
+          }
         case AST_Argument::dir_OUT:
-          *os << this->type_name (node, "_out");
-          break;
+          {
+            if (bt->is_nested () 
+                && !bt->imported ()
+                && (scope->node_type () == AST_Decl::NT_interface
+                    || scope->node_type () == AST_Decl::NT_union ))
+              {
+                *os << "ACE_NESTED_CLASS (";
+	              *os << scope->name () << ",";
+	              *os << bt->local_name ();
+	              *os  << "_out)";
+              }
+            else
+              {
+                *os << this->type_name (node, "_out");
+              }
+
+            break;
+          }
         } // end switch direction
     } // end of else
 
@@ -430,6 +502,7 @@ int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
     case AST_Argument::dir_IN:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -448,6 +521,7 @@ int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
     case AST_Argument::dir_INOUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -463,6 +537,7 @@ int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
     case AST_Argument::dir_OUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -480,6 +555,7 @@ int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
       }
 
     }
+
   return 0;
 }
 
@@ -547,7 +623,8 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
     {
     case AST_Argument::dir_IN:
       {
-        if (bt->is_nested () 
+        if (bt->is_nested ()
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -566,6 +643,7 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
     case AST_Argument::dir_INOUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -584,6 +662,7 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
     case AST_Argument::dir_OUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -631,6 +710,7 @@ int be_visitor_args_request_info_ch::visit_union (be_union *node)
     case AST_Argument::dir_IN:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -649,6 +729,7 @@ int be_visitor_args_request_info_ch::visit_union (be_union *node)
     case AST_Argument::dir_INOUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
@@ -667,6 +748,7 @@ int be_visitor_args_request_info_ch::visit_union (be_union *node)
     case AST_Argument::dir_OUT:
       {
         if (bt->is_nested () 
+            && !bt->imported ()
             && (scope->node_type () == AST_Decl::NT_interface
                 || scope->node_type () == AST_Decl::NT_union ))
           {
