@@ -1,3 +1,10 @@
+Sat Dec 23 18:11:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SString.cpp: Enhanced the implementation so that it works correctly
+	  when binary data (i.e., data that may contain NUL characters) is
+ 	  stored in a string.  Thanks to Michael Lindner <mikel@att.net>
+ 	  for reporting this.
+
 Fri Dec 22 15:18:49 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/ace-dll.icc: Added Basic_Stats.{h cpp} to build clean.
