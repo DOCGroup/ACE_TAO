@@ -1,3 +1,17 @@
+Wed Mar  7 12:01:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_operation/operation_cs.cpp:
+
+          Added to previous fix to handle the case where the
+          return type is an enum. In such a case, the added
+          ACE_CHECK_RETURN macro cannot just return 0, but
+          must return an enum value, which is a separate type.
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Cosmetic changes to generation of the *_setup_collocation
+          method.
+
 Wed Mar  7 10:50:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_operation/operation_cs.cpp:
