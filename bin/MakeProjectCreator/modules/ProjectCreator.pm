@@ -103,6 +103,7 @@ sub new {
   $self->{'want_dynamic_projects'} = $dynamic;
   $self->{'want_static_projects'}  = $static;
   $self->{'flag_overrides'}        = {};
+  $self->{'special_supplied'}      = {};
 
   ## Set up the verbatim constructs
   $self->{'verbatim'} = {};
@@ -216,6 +217,7 @@ sub parse_line {
         $self->{'idl_defaulted'}    = 0;
         $self->{'flag_overrides'}   = {};
         $self->{'source_defaulted'} = 0;
+        $self->{'special_supplied'} = {};
       }
       else {
         ## Project Beginning
@@ -370,6 +372,13 @@ sub parse_components {
   }
   if (!defined $$comps{$current}) {
     $$comps{$current} = [];
+  }
+
+  foreach my $special (@specialComponents) {
+    if ($special eq $tag) {
+      $self->{'special_supplied'}->{$tag} = 1;
+      last;
+    }
   }
 
   while(<$fh>) {
@@ -1180,14 +1189,16 @@ sub generate_defaults {
   ## Now, if the @specialComponents are still empty
   ## then take any file that matches the components extension
   foreach my $tag (@specialComponents) {
-    my($names) = $self->{$tag};
-    if (defined $names) {
-      foreach my $name (keys %$names) {
-        my($comps) = $$names{$name};
-        foreach my $comp (keys %$comps) {
-          my($array) = $$comps{$comp};
-          if (!defined $$array[0] || $self->{'source_defaulted'}) {
-            $self->generate_default_components(\@files, $tag);
+    if (!$self->{'special_supplied'}->{$tag}) {
+      my($names) = $self->{$tag};
+      if (defined $names) {
+        foreach my $name (keys %$names) {
+          my($comps) = $$names{$name};
+          foreach my $comp (keys %$comps) {
+            my($array) = $$comps{$comp};
+            if (!defined $$array[0] || $self->{'source_defaulted'}) {
+              $self->generate_default_components(\@files, $tag);
+            }
           }
         }
       }
