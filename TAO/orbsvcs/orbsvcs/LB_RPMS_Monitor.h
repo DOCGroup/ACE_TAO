@@ -84,6 +84,11 @@ private:
   /// requests arriving per second.
   TAO_LB_RPMS_Monitor_Interceptor *interceptor_;
 
+  /// Manage the above interceptor's memory with the following "_var."
+  /// The above "narrowed" pointer is cached so that downcasting need
+  /// not be performed more than once.
+  PortableInterceptor::ServerRequestInterceptor_var safe_interceptor_;
+
 };
 
 #include "ace/post.h"
