@@ -773,8 +773,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
     return; // no fault reported
 }
 
-extern CORBA::ExceptionList __system_exceptions;
-
 const char *
 TAO_GIOP::message_name (TAO_GIOP::Message_Type which)
 {
@@ -1013,11 +1011,12 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         if (reply_status == TAO_GIOP_USER_EXCEPTION)
           xlist = &exceptions;
         else
-          xlist = &__system_exceptions;
+          xlist = &TAO_Exception::system_exceptions;
 
-        // Find it in the operation description and then use that to get
-        // the typecode.  Use it to unmarshal the exception's value; if
-        // that exception is not allowed by this operation, fail (next).
+        // Find it in the operation description and then use that to
+        // get the typecode.  Use it to unmarshal the exception's
+        // value; if that exception is not allowed by this operation,
+        // fail (next).
 
         u_int i;
         CORBA::TypeCode_ptr *tcp;
