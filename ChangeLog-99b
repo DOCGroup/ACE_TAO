@@ -1,5 +1,39 @@
-Wed Jul  7 15:46:20 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+Wed Jul  7 13:27:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Malloc[_T]: Cleaned up the code so that we can use the 
+	  ACE_Based_Pointer<> consistently when
+ 	  ACE_HAS_POSITION_INDEPENDENT_MALLOC is enabled and disable.
+	
+	* ace/Malloc.h: By default, ACE_MALLOC_PADDING is set to 1 so that
+	  we don't get "divide by zero" errors.  However, it's only used
+ 	  in the computation of the ACE_Malloc_Header if it's > 1.
+
+	* config-aix-4.x.h,
+	  config-lynxos.h,
+	  config-psos-diab-mips.h,
+	  config-psos-diab-ppc.h,
+	  config-psos-diab.h,
+	  config-psos-tm.h,
+	  config-psosim-g++.h,
+	  config-sunos5.5.h:
+	  Removed the ACE_MALLOC_ALIGN macro since it should no longer
+	  be necessary.
+
+	* ace/Malloc.h: Renamed the macro ACE_MALLOC_ALIGN to
+	  ACE_MALLOC_PADDING, which is more descriptive.  However, I've
+ 	  retained ACE_MALLOC_ALIGN for backwards compatibility to keep
+ 	  Steve Huston happy ;-).
+  
+        * Fixed a typo in the TAO-mail.html program where ace-*
+          should have been tao-*.  Thanks to Pedro Alves Ferreira
+          <pedro.ferreira@inescn.pt> for reporting this.
+
+        * Fixed all vestiages of "BUG-REPORT-FORM" to say
+          "PROBLEM-REPORT-FORM."  Thanks to Neil B. Cohen <nbc@cisco.com>
+          for reporting this.
+
+Wed Jul  7 15:46:20 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+  
 	* tests/Cached_Conn_Test.cpp (parse_args): 
 	* tests/Cache_Map_Manager_Test (parse_args):
   	  Runtime selection of different caching strategies
@@ -9,17 +43,25 @@ Wed Jul  7 15:46:20 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           Removed typos and also definied the virtual destructor for
 	  ACE_Caching_Strategy.
 	
-Wed Jul  7 09:05:32 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/Caching_Strategies_T.i (ACE_Caching_Strategy_Adapter<>::purge_
-          percent): Don't return a value from a void function.
-
-Wed Jul  7 08:55:53 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
 	* tests/Map_Manager_Test.cpp (test_cache_map_manager): 
 	  Added <null_caching_strategy> to the construction of
 	  <cache_map_manager> and <hash_cache_map_manager> objects to make
 	  it in sync with the changes made below.
+
+Wed Jul 07 12:27:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: added ACE_LACKS_FORK for PowerPC
+          only.  This cleans up most of the remaining test problems
+          on LynxOS/PPC.
+
+Wed Jul 07 11:26:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Malloc_T.cpp: Added ASYS_TEXT macros.
+
+Wed Jul  7 09:05:32 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Caching_Strategies_T.i (ACE_Caching_Strategy_Adapter<>::purge_
+          percent): Don't return a value from a void function.
 
 Tue Jul  6 17:54:52 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
