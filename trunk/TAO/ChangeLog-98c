@@ -17,6 +17,9 @@ Mon Jul 13 17:50:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	
 	* tao/deep_free.cpp (DEEP_FREE): Commented out 'delete source' in
 	  case of CORBA::tk_struct.
+
+	* tao/Any.cpp (operator=, ~CORBA_Any, replace): Added delete
+	  this->value after DEEP_FREEing.
 	  
 Mon Jul 13 17:37:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
