@@ -65,7 +65,7 @@ public:
 			      CORBA::Environment &env);
   // Cube a sequence.
 
-  virtual void please_exit (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env);
   // Shutdown routine.
 };
 

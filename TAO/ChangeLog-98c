@@ -1,5 +1,8 @@
 Tue Feb 17 21:47:41 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (shutdown): Renamed please_exit 
+	method to shutdown.
+
 	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: Renamed please_exit operation to 
 	shutdown.
 
