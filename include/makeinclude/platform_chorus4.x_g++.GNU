@@ -163,7 +163,7 @@ POSTLINK= -r $(OS_DIR)/lib/CC/libC.a $(OS_DIR)/lib/libbsd/libbsd.a          \
              -nostdlib -lgcc-chorus;                                        \
         mv $@ $@.xp.o;                                                      \
         $(CHTOOLS_DIR)/host/bin/mkctors $@.xp.o > $@.ct.s;                  \
-        $(CXX) -c $@.ct.s;                                                  \
+        $(CXX) -c $@.ct.s -o $@.ct.o;                                       \
         $(RM) $@.ct.s;                                                      \
         $(LD) $(LDOPTIONS) -e _start -r -dn -o $@                           \
               $(NUCLEUS_DIR)/lib/crt/crth.u.o $(NUCLEUS_DIR)/lib/crt/crt0.o \
