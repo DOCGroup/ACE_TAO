@@ -17,7 +17,7 @@
 #include "Reactor_Logging_Server.h"
 #include "TPLS_export.h"
 
-class TP_Logging_Task : public ACE_Task<ACE_MT_SYNCH> {
+class TP_Logging_Task : public ACE_Task<ACE_SYNCH> {
          // Instantiated with an MT synchronization trait.
 public:
   enum { MAX_THREADS = 4 };
@@ -32,7 +32,7 @@ public:
   virtual int svc (void);
 };
 
-typedef ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex> 
+typedef ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex>
         TP_LOGGING_TASK;
 
 /*******************************************************/
@@ -53,7 +53,7 @@ protected:
   int deferred_close_;
 
   // Serialize access to <queued_count_> and <deferred_close_>.
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
 
 public:
   TP_Logging_Handler (ACE_Reactor *reactor)
