@@ -105,95 +105,95 @@ public:
   // =type safe insertion
 
   void operator<<= (CORBA::Short);
-  // insert a short
+  // Insert a short.
 
   void operator<<= (CORBA::UShort);
-  // insert an unsigned short
+  // Insert an unsigned short.
 
   void operator<<= (CORBA::Long);
-  // insert a long
+  // Insert a long.
 
   void operator<<= (CORBA::ULong);
-  // insert an unsigned long
+  // Insert an unsigned long.
 
   void operator<<= (CORBA::LongLong);
-  // insert a long long
+  // Insert a long long.
 
   void operator<<= (CORBA::ULongLong);
-  // insert an unsigned long long
+  // Insert an unsigned long long.
 
   void operator<<= (CORBA::Float);
-  // insert a float
+  // Insert a float.
 
   void operator<<= (CORBA::Double);
-  // insert a double
+  // Insert a double.
 
   void operator<<= (CORBA::LongDouble);
-  // insert a long double
+  // Insert a long double.
 
   void operator<<= (const CORBA_Any&);
-  // insert an Any, copying
+  // Insert an Any, copying.
 
   void operator<<= (CORBA_Any_ptr);
-  // insert an Any, non-copying
+  // Insert an Any, non-copying.
 
   void operator<<= (const char*);
-  // insert unbounded string
+  // Insert unbounded string
 
   void operator<<= (const CORBA::WChar*);
-  // insert unbounded wide string
+  // Insert unbounded wide string.
 
   void operator<<= (CORBA::TypeCode_ptr);
-  // insert a TypeCode
+  // Insert a TypeCode.
 
   void operator<<= (const CORBA::Object_ptr);
-  // insert an object reference, copying.
+  // Insert an object reference, copying.
 
   void operator<<= (CORBA::Object_ptr *);
-  // insert an object reference, non-copying. Any assumes the ownership
+  // Insert an object reference, non-copying. Any assumes the ownership
   // of the object.
 
-  // =type safe extraction
+  // =Type safe extraction.
 
   CORBA::Boolean operator>>= (CORBA::Short&) const;
-  // extract a short
+  // Extract a short.
 
   CORBA::Boolean operator>>= (CORBA::UShort&) const;
-  // extract an unsigned short
+  // Extract an unsigned short.
 
   CORBA::Boolean operator>>= (CORBA::Long&) const;
-  // extract a long
+  // Extract a long.
 
   CORBA::Boolean operator>>= (CORBA::ULong&) const;
-  // extract an unsigned long
+  // Extract an unsigned long.
 
   CORBA::Boolean operator>>= (CORBA::LongLong&) const;
-  // extract a long long
+  // Extract a long long.
 
   CORBA::Boolean operator>>= (CORBA::ULongLong&) const;
-  // extract an unsigned long long
+  // Extract an unsigned long long.
 
   CORBA::Boolean operator>>= (CORBA::Float&) const;
-  // extract a float
+  // Extract a float.
 
   CORBA::Boolean operator>>= (CORBA::Double&) const;
-  // extract a double
+  // Extract a double.
 
   CORBA::Boolean operator>>= (CORBA::LongDouble&) const;
-  // extract a long double
+  // Extract a long double.
 
   CORBA::Boolean operator>>= (CORBA_Any&) const; // non-spec
   CORBA::Boolean operator>>= (const CORBA_Any*&) const;
-  // extract an Any
+  // Extract an Any.
 
   CORBA::Boolean operator>>= (CORBA::TypeCode_ptr&) const;
-  // extract a TypeCode
+  // Extract a TypeCode.
 
   CORBA::Boolean operator>>= (const char*&) const;
-  // extract an unbounded string
+  // Extract an unbounded string
 
   CORBA::Boolean operator>>= (const CORBA::WChar*&) const;
-  // extract an unbounded wide string
+  // Extract an unbounded wide string.
 
   // = Special types.
 
@@ -210,28 +210,28 @@ public:
   typedef ACE_OutputCDR::from_wstring from_wstring;
 
   void operator<<= (from_boolean);
-  // insert a boolean
+  // Insert a boolean.
 
   void operator<<= (from_char);
-  // insert a char
+  // Insert a char.
 
   void operator<<= (from_wchar);
-  // insert a wchar
+  // Insert a wchar.
 
   void operator<<= (from_octet);
-  // insert an octet
+  // Insert an octet.
 
   void operator<<= (from_string);
-  // insert a bounded string
+  // Insert a bounded string.
 
   void operator<<= (from_wstring);
-  // insert a bounded wide string
+  // Insert a bounded wide string.
 
   void operator<<= (const CORBA_Exception &exception);
-  // insert an exception into the Any (copying)
+  // Insert an exception into the Any (copying)
 
   void operator<<= (CORBA_Exception *exception);
-  // insert an exception into the Any (non-copying)
+  // Insert an exception into the Any (non-copying).
 
   // = Special types.
 
@@ -280,32 +280,6 @@ public:
   // the following are unsafe operations
   // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA_Environment
   // parameter, two forms of the replace method are provided.
-
-#if 0
-  CORBA_Any (CORBA::TypeCode_ptr type,
-             void *value,
-             CORBA::Boolean any_owns_data,
-             CORBA::Environment &ACE_TRY_ENV
-                 = TAO_default_environment ());
-  CORBA_Any (CORBA::TypeCode_ptr type,
-             void *value,
-             CORBA::Environment &ACE_TRY_ENV
-                = TAO_default_environment ());
-  // Obsolete. Raises CORBA::NO_IMPLEMENT.
-
-  void replace (CORBA::TypeCode_ptr type,
-                const void *value,
-                CORBA::Boolean any_owns_data,
-                CORBA_Environment &ACE_TRY_ENV =
-                  TAO_default_environment ());
-  // Obsolete. Raises CORBA::NO_IMPLEMENT.
-
-  void replace (CORBA::TypeCode_ptr type,
-                const void *value,
-                CORBA_Environment &ACE_TRY_ENV =
-                  TAO_default_environment ());
-  // Obsolete. Raises CORBA::NO_IMPLEMENT.
-#endif
 
   CORBA::TypeCode_ptr type (void) const;
   // Return TypeCode of the element stored in the Any.
@@ -553,6 +527,8 @@ TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Any::from_octet);
 TAO_Export void operator<<= (CORBA_Any_var &,
                              CORBA::Any::from_string);
+TAO_Export void operator<<= (CORBA_Any_var &,
+                             CORBA::Any::from_wstring);
 
 // These are not required by the spec, but will make users
 // of other ORBs that are used to them more comfortable.
@@ -590,6 +566,8 @@ TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_wchar);
 TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_string);
+TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
+                                       CORBA::Any::to_wstring);
 TAO_Export CORBA::Boolean operator>>= (CORBA_Any_var &,
                                        CORBA::Any::to_object);
 
