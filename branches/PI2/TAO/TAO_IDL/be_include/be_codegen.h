@@ -104,6 +104,7 @@ public:
     TAO_ATTRIBUTE_INTERCEPTORS_CS,           // in client source 
     TAO_ATTRIBUTE_INTERCEPTORS_SH,           // in server header
     TAO_ATTRIBUTE_INTERCEPTORS_SS,           // in server source 
+   
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
 
@@ -269,14 +270,14 @@ public:
     TAO_OPERATION_INTERCEPTORS_ARGLIST_CH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS,   // arglist for request info obj instantiation
-    TAO_OPERATION_INTERCEPTORS_ARGLIST_CS,   // private member list list for request info                                          // ... for client source
+    TAO_OPERATION_INTERCEPTORS_ARGLIST_CS,   // private member list list for request info                                                                         // ... for client source
     TAO_OPERATION_INTERCEPTORS_PARAMLIST,   // create the paramlist on demand
     TAO_OPERATION_INTERCEPTORS_RESULT,   // create the result on demand
     TAO_OPERATION_INTERCEPTORS_EXCEPTLIST,   // create the exceptionlist on demand
     TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS,   // arglist for request info obj instantiation
-    TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,   // private member list list for request info                                          // ... for server source
+    TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,   // private member list list for request info                                                                       // ... for server source 
     
     TAO_OPERATION_ARGLIST_IH,                // ... for implementation header
     TAO_OPERATION_ARGLIST_IS,                // ... for implementation header
@@ -302,6 +303,7 @@ public:
     TAO_OPERATION_ARG_MARSHAL_SS,
     TAO_OPERATION_RETVAL_ASSIGN_SS,          // assigning to return type
                                              // variable
+    TAO_OPERATION_RETVAL_SS,                 // return type variable
     TAO_OPERATION_ARG_UPCALL_SS,             // variables to upcall
     TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS,  // variables to upcall for
                                              // collocated op
