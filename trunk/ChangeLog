@@ -1,3 +1,10 @@
+Sun Jan  4 09:56:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/APG/Makefile:
+	  
+	  Removed the Logging example from the builds. The macro
+	  definitions seem to pain a few compilers.
+
 Sun Jan  4 11:59:46 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/bor.mpd:

@@ -10,7 +10,7 @@
 
 DIRS  =	Config \
 	Containers \
-	Logging \
+#	Logging \
 	Misc_IPC \
 	Proactor \
 	Processes \
