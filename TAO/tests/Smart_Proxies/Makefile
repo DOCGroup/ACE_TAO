@@ -49,7 +49,7 @@ CPPFLAGS += -I$(TAO_ROOT)/tao
 .PRECIOUS: testS.h testS.i testS.cpp
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_SmartProxies $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_SmartProxies $(TAO_SRVR_LIBS) $(POSTLINK)
