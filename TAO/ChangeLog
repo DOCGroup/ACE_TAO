@@ -1,3 +1,10 @@
+Thu Aug 29 16:07:42 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\POA\Default_Servant\Default_Servant.cpp (main): Make sure
+	  to destroy the ORB before the end of main(). Otherwise during
+	  POA cleanup, it will try to access the deleted servant which was
+	  on the stack.
+
 Thu Aug 29 12:30:33 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTCORBA/RT_Protocols_Hooks.h: 
