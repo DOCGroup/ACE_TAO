@@ -64,25 +64,34 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
   h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
   h0.source = 1;                      // first free event source
 
-  RtecEventComm::PushSupplier_var supplier = supplier_servant_._this();
+  ACE_TRY {
+    RtecEventComm::PushSupplier_var supplier = supplier_servant_._this();
 
-  ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+    ACE_Time_Value time_val = ACE_OS::gettimeofday ();
 
-  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    channel->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+      channel->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-  consumer_ =
-    supplier_admin->obtain_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    consumer_ =
+      supplier_admin->obtain_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-  consumer_->connect_push_supplier(supplier.in(), qos   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    consumer_->connect_push_supplier(supplier.in(), qos   ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
 
-  time_val = ACE_OS::gettimeofday () - time_val;
+    time_val = ACE_OS::gettimeofday () - time_val;
 
-  ACE_DEBUG((LM_DEBUG, "connected to proxy_push_consumer, subscription latency = %d\n", time_val.sec () * 10000000 + time_val.usec ()* 10));
+    ACE_DEBUG((LM_DEBUG, "connected to proxy_push_consumer, subscription latency = %d\n", time_val.sec () * 10000000 + time_val.usec ()* 10));
+  }
+  ACE_CATCHANY 
+  {
+    ACE_PRINT_EXCEPTION(ex, "PushSupplier_impl::init ");
+    exit(1);
+  }
+  ACE_ENDTRY;
+  ACE_CHECK;
 
   /*
   if (!reactor_task_.thr_count() &&
@@ -91,8 +100,10 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
   */
 
   ACE_Reactor* reactor = orb->orb_core()->reactor();
-  if (reactor->schedule_timer(this, 0, ACE_Time_Value::zero, options.timer_interval)== -1)
-    ACE_ERROR_RETURN((LM_ERROR,"Cannot schedule timer\n"),-1);
+  if (reactor->schedule_timer(this, 0, ACE_Time_Value::zero, options.timer_interval)== -1) {
+    ACE_DEBUG((LM_ERROR,"Cannot schedule timer\n"));
+    exit(1);
+  }
 
   return 0;
 }

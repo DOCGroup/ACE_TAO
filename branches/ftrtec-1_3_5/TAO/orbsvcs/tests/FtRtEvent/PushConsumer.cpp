@@ -79,7 +79,14 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
       TAO_FTRTEC::Log(3, "received event %d\n", x);
     }
     else {
-      supplier_->disconnect_push_supplier();
+      ACE_TRY {
+        supplier_->disconnect_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+      ACE_CATCHANY {
+      }
+      ACE_ENDTRY;
+
       orb_->shutdown();
       output_result();
     }
