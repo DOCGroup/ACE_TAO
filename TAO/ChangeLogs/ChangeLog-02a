@@ -1,3 +1,8 @@
+Fri Nov 10 11:54:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/NestedUpcall/Simple/client.cpp:
+          Removed extra return to avoid unreachable statement warnings.
+
 Fri Nov 10 12:49:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
