@@ -77,7 +77,7 @@ public:
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
-   * USER_ID policies.  Call this if you want a <child_poa> with the
+   * USER_ID policies.  Call this if you want a @c child_poa with the
    * above policies, otherwise call init.
    *
    * @return -1 on failure, 0 on success
@@ -89,7 +89,7 @@ public:
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
-   * USER_ID policies.  Call this if you want a <child_poa> with the
+   * USER_ID policies.  Call this if you want a @a child_poa with the
    * above policies, otherwise call init.  Returns -1 on failure.
    */
   int init_child_poa (int &argc,
@@ -100,7 +100,8 @@ public:
 
   /** Shut down.  Invoke the destroy() methods on the orb and poa.
    *
-   * @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int fini (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -116,7 +117,8 @@ public:
    *  service incoming requests while waiting for a result of CORBA
    *  call on a server.
    *
-   *  @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int activate_poa_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
@@ -165,13 +167,19 @@ public:
   void deactivate_under_child_poa (const char *id
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Run the ORB event loop with the specified <tv> time value.
+  /**
+   * Run the ORB event loop with the specified @a tv time value.
    *
    * @param tv  the time interval for how long to run the ORB event loop.
-   * @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int run (ACE_Time_Value &tv
            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+  /**
+   * Run the ORB event loop.
+   */
   int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
@@ -180,8 +188,8 @@ public:
    * this function duplicates the orb return value before returning
    * it.
    *
-   * @return orb  ORB pointer which has been duplicated, so caller
-   *              must release pointer when done.
+   * @return ORB pointer which has been duplicated, so caller
+   *         must release pointer when done.
    */
   CORBA::ORB_ptr orb (void);
 
@@ -190,8 +198,8 @@ public:
    * memory management rules of return values from functions, this
    * function duplicates the poa return value before returning it.
    *
-   * @return poa  Root POA pointer which has been duplicated.  Caller
-   *              must release pointer when done.
+   * @return Root POA pointer which has been duplicated.  Caller
+   *         must release pointer when done.
    */
   PortableServer::POA_ptr root_poa (void);
 

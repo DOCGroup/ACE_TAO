@@ -16,7 +16,6 @@
 
 #include "portableserver_export.h"
 #include "ThreadPolicyC.h"
-#include "tao/LocalObject.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 
@@ -65,10 +64,10 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ORB_CTRL_Thread_Policy)
+  ACE_STATIC_SVC_DECLARE (ORB_CTRL_Thread_Policy)
   ACE_FACTORY_DECLARE (TAO_PortableServer, ORB_CTRL_Thread_Policy)
 
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, SINGLE_THREAD_Thread_Policy)
+  ACE_STATIC_SVC_DECLARE (SINGLE_THREAD_Thread_Policy)
   ACE_FACTORY_DECLARE (TAO_PortableServer, SINGLE_THREAD_Thread_Policy)
 }
 

@@ -36,7 +36,6 @@
 
 namespace TAO
 {
-
   class TAO_PortableServer_Export POA_Policy :
      public virtual ACE_Service_Object
   {

@@ -6,9 +6,6 @@
  *
  *  $Id$
  *
- *
- *
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -43,8 +40,6 @@ namespace PortableServer
 
 namespace TAO
 {
-  class POA_ThreadPolicy;
-
   class TAO_PortableServer_Export Loadable_Thread_Policy :
      public virtual POA_Policy
   {
@@ -57,10 +52,11 @@ namespace TAO
       /// Returns the scope at which this policy can be applied. See orbconf.h.
       TAO_Policy_Scope _tao_scope (void) const;
 
+      /// Create a new thread polciy
       PortableServer::ThreadPolicy_ptr create (PortableServer::ThreadPolicyValue value);
   };
 
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Loadable_Thread_Policy)
+  ACE_STATIC_SVC_DECLARE (Loadable_Thread_Policy)
   ACE_FACTORY_DECLARE (TAO_PortableServer, Loadable_Thread_Policy)
 }
 

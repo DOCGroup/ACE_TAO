@@ -54,7 +54,6 @@ public:
    */
   struct Map_Entry
   {
-
     /// Default constructor.
     Map_Entry (void);
 

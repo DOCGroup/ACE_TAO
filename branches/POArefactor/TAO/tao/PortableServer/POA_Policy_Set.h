@@ -48,6 +48,8 @@ public:
   /// Returns the policy at the specified index.
   /// CORBA::Policy::_nil () is returned if the policy doesn't exist
   CORBA::Policy *get_policy_by_index (CORBA::ULong index);
+
+  /// Get the number of policies
   CORBA::ULong num_policies (void) const;
 
   /// Obtain a single cached policy.

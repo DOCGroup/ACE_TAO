@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Jeff Parsons and Carlos O'Ryan
+ *  @author Jeff Parsons
+ *  @author Carlos O'Ryan
  */
 //=============================================================================
 

@@ -1,3 +1,28 @@
+Fri Sep 17 09:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.h:
+        * tao/PortableServer/ORB_Manager.h:
+        * tao/PortableServer/ORT_Adapter.h:
+        * tao/PortableServer/PICurrent_Guard.h:
+        * tao/PortableServer/POA_Policy.h:
+        * tao/PortableServer/POA_Policy_Set.h:
+        * tao/PortableServer/POA_Manager.h:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Upcall_Wrapper.h:
+          Documentation improvements
+
+        * tao/PortableServer/Key_Adapters.cpp:
+          Replaced all ACE cast macros with C++ versions
+
+        * tao/PortableServer/Key_Adapters.h:
+          Instead of including PortableServerC.h, just include PS_ForwardC.h,
+          this is enough
+
+        * tao/PortableServer/Loadable_Thread_Policy.h:
+        * tao/PortableServer/Thread_Policy_Value.h:
+          Don't export svc config stuff
+
 Wed Sep 15 12:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Policy_Set.cpp:

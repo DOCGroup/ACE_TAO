@@ -96,7 +96,6 @@ namespace TAO
      * the thread scope, meaning that a logical copy is not enough.
      */
     const bool tsc_to_rsc_;
-
   };
 }
 

@@ -21,7 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PortableServerC.h"
+#include "portableserver_export.h"
+#include "PS_ForwardC.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
