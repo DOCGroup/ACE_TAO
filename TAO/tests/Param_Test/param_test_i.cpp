@@ -20,7 +20,7 @@ ACE_RCSID(Param_Test, param_test_i, "$Id$")
 
 // ********* class Coffee_i ****************
 // Constructor
-  
+
 Coffee_i::Coffee_i (const char *name)
   : name_ (name)
 {
@@ -327,11 +327,11 @@ Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
 
   Param_Test::PathSpec_var rPathSpec = new Param_Test::PathSpec;
   rPathSpec->length(2);
-  
+
   rPathSpec[(unsigned long)0].name.id = CORBA::string_dup("staff");
   rPathSpec[(unsigned long)0].name.kind = CORBA::string_dup("staff");
   rPathSpec[(unsigned long)0].process = 1;
-  
+
   rPathSpec[(unsigned long)1].name.id = CORBA::string_dup("john");
   rPathSpec[(unsigned long)1].name.kind = CORBA::string_dup("john");
   rPathSpec[(unsigned long)1].process = 1;
@@ -340,9 +340,9 @@ Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
   *out = s1;
   *ret = s1;
   s3 = out;
-  
+
   return ret;
-}  
+}
 
 
 Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
@@ -595,6 +595,9 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   CORBA::Short short_in;
   char *str_in;
   Coffee_ptr coffee;
+  Param_Test::Fixed_Array_forany array;
+  Param_Test::Bounded_Short_Seq_ptr bd_short_sequence;
+  Param_Test::Fixed_Struct *fixed_structure;
 
   a2 = a1;
   a3 = new CORBA::Any (a1);
@@ -624,6 +627,39 @@ Param_Test_i::test_any (const CORBA::Any &a1,
     {
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG, "Received Coffee object\n"));
+    }
+  else if (a1 >>= array)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Received Fixed_Array:"));
+          for (size_t i = 0; i < Param_Test::DIM1; i++)
+            ACE_DEBUG ((LM_DEBUG, " %d", array[i]));
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
+      for (size_t i = 0; i < Param_Test::DIM1; i++)
+        array[i] = i * i;
+      a2 <<= Param_Test::Fixed_Array_forany (array);
+      *ret <<= Param_Test::Fixed_Array_forany (array);
+    }
+  else if (a1 >>= bd_short_sequence)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Received Bounded_Short_Seq:"));
+          for (size_t i = 0; i < bd_short_sequence->length (); i++)
+            ACE_DEBUG ((LM_DEBUG, " %d", (*bd_short_sequence)[i]));
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
+      for (size_t i = 0; i < bd_short_sequence->length (); i++)
+        (*bd_short_sequence)[i] = i * i;
+      a2 <<= *bd_short_sequence;
+      *ret <<= *bd_short_sequence;
+    }
+  else if (a1 >>= fixed_structure)
+    {
+      if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_DEBUG, "Received Fixed_Struct\n"));
     }
   else
     {
