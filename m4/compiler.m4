@@ -34,6 +34,18 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
  AC_REQUIRE([AC_PROG_CXXCPP])
  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 
+ if test -n "$GXX"; then
+dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
+changequote(, )dnl
+   if $GXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
+changequote([, ])dnl
+     :  # Do nothing
+   else
+     AC_DEFINE(ACE_HAS_GNUG_PRE_2_8)dnl
+     AC_DEFINE(ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)dnl
+   fi
+ fi
+
  dnl Compiler Flag Key
  dnl    CXXFLAGS  - C++ flags to use during the configure script run and
  dnl                during ACE compilation.  The user may set this prior to
