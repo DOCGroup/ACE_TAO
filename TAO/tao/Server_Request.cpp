@@ -137,6 +137,36 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
     env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
 }
 
+// This constructor is used, by the locate request code
+
+IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
+                                        CORBA::Boolean &response_expected,
+                                        TAO_opaque &object_key,
+                                        char* operation,
+                                        TAO_OutputCDR &output,
+                                        CORBA::ORB_ptr the_orb,
+                                        TAO_POA *the_poa,
+                                        CORBA::Environment &env)
+  : operation_ (operation),
+    incoming_ (0),
+    outgoing_ (&output),
+    response_expected_ (response_expected),
+    params_ (0),
+    retval_ (0),
+    exception_ (0),
+    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    refcount_ (1),
+    orb_ (the_orb),
+    poa_ (the_poa),
+    service_info_ (0),
+    request_id_ (0),
+    object_key_ (object_key),
+    requesting_principal_ (0)
+{
+}
+
+
+
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {
   if (this->params_)
