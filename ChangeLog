@@ -56,11 +56,11 @@ Thu Nov 11 15:56:00 2004  Gary Maxey    <gary.maxey@hp.com>
 Thu Nov 11 17:27:24 2004  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
       * ace/Logging_Strategy.cpp:
-        Fixed handle_timeout conditional test to check the max_size against the size of the
-        file and not the value of a pointer.
-        Fix init to handle re-init correctly. When wipeout_logfile_ is true, than
-        close the file and reopen it truncated, when wipeout_logfile_ is false, don't reopen the
-        file unless its not open already.
+        Fixed handle_timeout conditional test to check the max_size
+        against the size of the file and not the value of a pointer. Fix
+        init to handle re-init correctly. When wipeout_logfile_ is true,
+	than close the file and reopen it truncated, when wipeout_logfile_
+        is false, don't reopen the file unless its not open already.
 
 Thu Nov 11 08:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
