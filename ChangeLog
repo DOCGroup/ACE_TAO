@@ -1,3 +1,10 @@
+Sun Sep 26 10:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ICMP_Socket.h:
+        * ace/Ping_Socket.h:
+          Added missing /**/ before include of pre/post.h to fix fuzz
+          errors
+
 Sun Sep 26 10:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE_crc32.cpp:
