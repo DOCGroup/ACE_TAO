@@ -3,6 +3,11 @@ Fri Dec 18 09:30:57 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/High_Res_Timer.h (elapsed_time_incr): added missing
           const to member function declaration.
 
+        * ace/config-sunos5.5.h: removed redundant
+          ACE_HAS_XPG4_MULTIBYTE_CHAR #define.
+
+        * ace/config-sunos5.7.h: added this config, for Solaris 7.
+
 Fri Dec 18 06:08:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/High_Res_Timer: Made several methods const.  Thanks to Ulf
