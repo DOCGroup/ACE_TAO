@@ -1,0 +1,12 @@
+project(Thread Pool Reactor SSL Test) : aceexe {
+  ssl       = 1
+  requires += ssl
+  depends  += SSL
+  exename   = Thread_Pool_Reactor_SSL_Test
+  libs     += ACE_SSL
+
+  Source_Files {
+    Thread_Pool_Reactor_SSL_Test.cpp
+  }
+}
+

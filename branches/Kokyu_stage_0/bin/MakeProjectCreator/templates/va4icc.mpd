@@ -1,0 +1,142 @@
+// Configuration file to build <%if(type_is_dynamic)%><%sharedname%> shared library (aka DLL)<%endif%><%if(type_is_static)%><%staticname%> static library<%endif%><%if(type_is_binary)%><%exename%> executable<%endif%> on both Win32
+// and AIX using Visual Age C++ 4 (or later)
+
+if $__TOS_WIN__ {
+        option PlatformOptions =
+<%foreach(defines common_defines)%>
+                define ("<%define%>", "1"),
+<%endfor%>
+<%if(type_is_dynamic)%>
+<%foreach(dllflags)%>
+                define ("<%dllflag%>", "1"),
+<%endfor%>
+<%endif%>
+<%if(need_libflags)%>
+<%foreach(libflags)%>
+                define ("<%libflag%>", "1"),
+<%endfor%>
+<%endif%>
+                define ("ACE_HAS_WINSOCK2","1"),
+                define ("ACE_HAS_WCHAR_TYPEDEFS_CHAR","1"),
+                define ("_stricmp", "stricmp"),
+                define ("_strnicmp", "strnicmp"),
+                define ("_O_TEMPORARY", 0x08),
+                define ("_O_CREAT", "O_CREAT"),
+                define ("_O_TRUNC", "O_TRUNC"),
+                define ("_O_EXCL", "O_EXCL"),
+                define ("_INTEGRAL_MAX_BITS", 64),
+                define ('ACE_LACKS_RTTI', '1'),
+                define ('ACE_USE_RCSID', '0'),
+                gen('check', 'bounds', 'no'),
+                gen('libansi', 'yes'),
+                link('typecheck', 'yes'),
+                opt('level', '0'),
+                report('level', 'W'),
+                lang('staticinlinelinkage', 'yes'),
+                file('once', 'yes')
+}
+
+if $__TOS_AIX__ {
+        option PlatformOptions =
+                defaults('xlC_r'),
+                define ('ACE_AIX_VERS', '<%aix_vers("501")%>'),
+                define ('ACE_LACKS_RTTI', '1'),
+                define ('ACE_USE_RCSID', '0'),
+                gen('check', 'bounds', 'no'),
+                gen('libansi', 'yes'),
+                link('typecheck', 'yes'),
+                opt('level', 0),
+                report('level', 'W'),
+                lang('staticinlinelinkage', 'yes'),
+                file('once', 'yes')
+}
+
+option
+         PlatformOptions,
+<%foreach(includes)%>
+         incl(searchPath, '<%include%>'),
+<%endfor%>
+<%if(sharedname)%>
+         link(exportAll),
+<%endif%>
+         link(linkwithsharedlib),
+<%foreach(libpaths)%>
+         link(libSearchPath, '<%libpath%>'),
+<%endfor%>
+         link(linkWithMultiThreadLib,yes),
+         link(debug)
+         {
+            if $__TOS_WIN__ {
+               target type ( <%if(type_is_dynamic)%>shr<%endif%><%if(type_is_static)%>lib<%endif%><%if(type_is_binary)%>exe<%endif%> ) '<%if(type_is_dynamic)%>shr.o<%endif%><%if(type_is_static)%>lib<%sharedname%>.a<%endif%><%if(type_is_binary)%><%exename%><%endif%>'
+               {
+                       option macros(global)
+                       {
+<%if(sharedname)%>
+                             source type(hpp) 'wchar.h'
+                             source type(hpp) 'wcstr.h'
+<%endif%>
+<%if(header_files)%>
+                             source type(hpp)
+<%foreach(header_files)%>
+                                              '<%header_file%>'<%fornotlast(",")%>
+<%endfor%>
+<%endif%>
+                       }
+<%if(source_files)%>
+                 source type(cpp)
+<%foreach(source_files)%>
+                                  "<%source_file%>"<%fornotlast(",")%>
+<%endfor%>
+<%endif%>
+<%if(type_is_static)%>
+                 // Template implementation files (#pragma implementation)
+<%foreach(template_files)%>
+                 source type(cpp) "<%template_file%>"
+<%endfor%>
+<%endif%>
+
+                       // Libraries needed during linking
+                       source type (lib) "advapi32.lib"
+                       source type (lib) "user32.lib"
+                       source type (lib) "ws2_32.lib"
+                       source type (lib) "wsock32.lib"
+                       source type (lib) "mswsock.lib"
+<%foreach(libs default_libs)%>
+                       source type (lib) "<%lib%><%lib_modifier%>.lib"
+<%endfor%>
+               }
+            }
+            if $__TOS_AIX__ {
+               target type ( <%if(type_is_dynamic)%>shr<%endif%><%if(type_is_static)%>lib<%endif%><%if(type_is_binary)%>exe<%endif%> ) '<%if(type_is_dynamic)%>shr.o<%endif%><%if(type_is_static)%>lib<%sharedname%>.a<%endif%><%if(type_is_binary)%><%exename%><%endif%>'
+               {
+                       run after sources("shr.o") targets ("lib<%sharedname%>.a") "ar -r -u lib<%sharedname%>.a shr.o", "rm -rf shr.o"
+                       run cleanup "rm -rf lib<%sharedname%>.a shr.o"
+
+<%if(source_files)%>
+                 source type(cpp)
+<%foreach(source_files)%>
+                                  "<%source_file%>"<%fornotlast(",")%>
+<%endfor%>
+<%endif%>
+<%if(type_is_static)%>
+                 // Template implementation files (#pragma implementation)
+<%foreach(template_files)%>
+                 source type(cpp) "<%template_file%>"
+<%endfor%>
+<%endif%>
+
+                       // Libraries needed during linking
+<%foreach(libs defaultlibs)%>
+                       source type (lib) "lib<%lib%>.a"
+<%endfor%>
+<%if(type_is_dynamic)%>
+                       source type (lib) "libtli_r.a"
+                       source type (lib) "libpthreads.a"
+                       source type (lib) "libc_r.a"
+                       source type (lib) "libdl.a"
+                       // Imports
+                       source type (imp) "pse.exp"
+<%endif%>
+               }
+            }
+         }
