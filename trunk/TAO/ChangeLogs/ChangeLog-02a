@@ -51,7 +51,6 @@ Fri Aug 25 11:20:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* orbsvcs/tests/Interoperable_Naming/Makefile:
 	  Modified the order in which the files are compiled.
 
->>>>>>> 1.1308
 Thu Aug 24 21:03:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/Makefile:
