@@ -1,3 +1,6 @@
+//
+// $Id$
+//
 #include "Task_Client.h"
 
 #if defined (VXWORKS)
@@ -185,10 +188,8 @@ Client::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread created\n"));
   u_int thread_id;
-  Cubit_ptr cb;
   char ior [1024];
   double frequency;
-  CORBA::ORB_ptr orb_ptr;
 
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1);
@@ -203,10 +204,10 @@ Client::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "(%t) Im the high priority client, my id is %d.\n",
                         thread_id));
-            ::sprintf (ior,
-                       "iiop:1.0//%s:%d/Cubit00",
-                       ts_->server_host_,
-                       ts_->base_port_);
+            ACE_OS::sprintf (ior,
+			     "iiop:1.0//%s:%d/Cubit00",
+			     ts_->server_host_,
+			     ts_->base_port_);
             frequency = CB_HIGH_PRIORITY_RATE;
           }
         else
@@ -214,110 +215,109 @@ Client::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "(%t) Im a low priority client, my id is %d\n",
                         thread_id));
-            ::sprintf (ior,
-                       "iiop:1.0//%s:%d/Cubit00",
-                       ts_->server_host_,
-                       ts_->base_port_ + thread_id);
+            ACE_OS::sprintf (ior,
+			     "iiop:1.0//%s:%d/Cubit00",
+			     ts_->server_host_,
+			     ts_->base_port_ + thread_id);
             frequency = CB_LOW_PRIORITY_RATE;
           }
       }
-else
-  {
-    switch (thread_id)
+    else
       {
-      case CB_40HZ_CONSUMER:
-        ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
-        ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_);
-        frequency = CB_40HZ_CONSUMER_RATE;
-        break;
-      case CB_20HZ_CONSUMER:
-        ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
-        ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+1);
-        frequency = CB_20HZ_CONSUMER_RATE;
-        break;
-      case CB_10HZ_CONSUMER:
-        ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
-        ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+2);
-        frequency = CB_10HZ_CONSUMER_RATE;
-        break;
-      case CB_5HZ_CONSUMER:
-        ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
-        ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+3);
-        frequency = CB_5HZ_CONSUMER_RATE;
-        break;
-      case CB_1HZ_CONSUMER:
-        ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
-        ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+4);
-        frequency = CB_1HZ_CONSUMER_RATE;
-        break;
-      default:
-        ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
+	switch (thread_id)
+	  {
+	  case CB_40HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG,
+			"(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
+			     ts_->server_host_, ts_->base_port_);
+	    frequency = CB_40HZ_CONSUMER_RATE;
+	    break;
+	  case CB_20HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
+		       ts_->server_host_, ts_->base_port_+1);
+	    frequency = CB_20HZ_CONSUMER_RATE;
+	    break;
+	  case CB_10HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
+			     ts_->server_host_, ts_->base_port_+2);
+	    frequency = CB_10HZ_CONSUMER_RATE;
+	    break;
+	  case CB_5HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
+			     ts_->server_host_, ts_->base_port_+3);
+	    frequency = CB_5HZ_CONSUMER_RATE;
+	    break;
+	  case CB_1HZ_CONSUMER:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+			"my id is %d.\n", thread_id));
+	    ACE_OS::sprintf (ior, "iiop:1.0//%s:%d/Cubit00",
+			     ts_->server_host_, ts_->base_port_+4);
+	    frequency = CB_1HZ_CONSUMER_RATE;
+	    break;
+	  default:
+	    ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
+	  }
       }
-  }
+
+    
     ACE_DEBUG ((LM_DEBUG, "Using ior = %s\n", ior));
     
-    CORBA::Object_ptr objref = CORBA::Object::_nil ();
-    CORBA::Environment env;
+    TAO_TRY
+      {
+	CORBA::ORB_var orb =
+	  CORBA::ORB_init (ts_->argc_, ts_->argv_,
+			   "internet", TAO_TRY_ENV);
+	TAO_CHECK_ENV;
 
-    orb_ptr = CORBA::ORB_init (ts_->argc_, ts_->argv_, "internet", env);
+	CORBA::Object_var objref =
+	  orb->string_to_object (ior, TAO_TRY_ENV);
+	TAO_CHECK_ENV;
 
-    if (env.exception () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"%s:ORB initialization", env.exception ()), 2);
+	if (CORBA::is_nil (objref.in ()))
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "%s:  must identify non-null target objref\n",
+			     ts_->argv_ [0]),
+			    1);
 
-    CORBA::POA_ptr oa_ptr = orb_ptr->POA_init (ts_->argc_, ts_->argv_, "ROA");
+	// Narrow the CORBA::Object reference to the stub object, checking
+	// the type along the way using _is_a.
+	Cubit_var cb = Cubit::_narrow (objref, TAO_TRY_ENV);
+	TAO_CHECK_ENV;
 
-    if (oa_ptr == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to initialize the POA.\n"),
-                        1);
+	if (CORBA::is_nil (cb.in ()))
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "Create cubit failed\n"), 1);
 
-    objref = orb_ptr->string_to_object ((CORBA::String) ior, env);
+	ACE_DEBUG ((LM_DEBUG, "(%t) Binding succeeded\n"));
 
-    if (env.exception () != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s:string2object failed. Supply valid IOR with the -O option\n",
-                         env.exception ()), 2);
+	CORBA::String_var str =
+	  orb->object_to_string (cb.in (), TAO_TRY_ENV);
 
-    if (CORBA::is_nil (objref) == CORBA::B_TRUE)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s:  must identify non-null target objref\n",
-                         ts_->argv_ [0]),
-                        1);
+	ACE_DEBUG ((LM_DEBUG,
+		    "Object connected <%s>\n", str.in ()));
 
-    // Narrow the CORBA::Object reference to the stub object, checking
-    // the type along the way using _is_a.
-    cb = Cubit::_narrow (objref, env);
+	ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for other threads to "
+		    "finish binding..\n"));
+	ts_->barrier_->wait ();
+	ACE_DEBUG ((LM_DEBUG, "(%t) Everyone's done, here I go!!\n"));
 
-   if ( (cb == NULL) || (env.exception () != 0))
-     {
-       ACE_ERROR_RETURN ((LM_ERROR, "%s:Create cubit failed\n", env.exception ()), 1);
-     }
-    ACE_DEBUG ((LM_DEBUG, "(%t) Binding succeeded\n"));
-    ACE_DEBUG ((LM_DEBUG, "(%t) Cb == %x\n", cb));
-
-    CORBA::String str;
-
-    str = orb_ptr->object_to_string (cb, env);
-
-    if (env.exception () != 0)
-      ACE_ERROR_RETURN ((LM_ERROR, "object_to_string %s\n", env.exception ()), -1);
-
-    ACE_OS::puts ((char *) str);
-    ACE_OS::fflush (stdout);
-    ACE_DEBUG ((LM_DEBUG, "Object Created at: '%ul'", cb));
-    ACE_DEBUG ((LM_DEBUG, "connected to object '%s'", str));
-    //    if (cb->cube_short (2, env) == 8) // dummy call.
-    //      ACE_DEBUG ((LM_DEBUG, "(%t) Made successful dummy call"));
+	this->run_tests (cb, ts_->loop_count_, thread_id,
+			 ts_->datatype_, frequency);
+      }
+    TAO_CATCHANY
+      {
+	TAO_TRY_ENV.print_exception ("get_object");
+      }
+    TAO_ENDTRY;
   }
-
-  ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for other threads to finish binding..\n"));
-  ts_->barrier_->wait ();
-  ACE_DEBUG ((LM_DEBUG, "(%t) Everyone's done, here I go!!\n"));
-
-  this->run_tests (cb, ts_->loop_count_, thread_id, ts_->datatype_, frequency);
-
-  // Free resources
-  //  CORBA::release (orb_ptr);
 
   return 0;
 }

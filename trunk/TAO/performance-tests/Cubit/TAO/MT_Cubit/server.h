@@ -73,13 +73,18 @@ private:
   u_int num_of_objs_;
   // Number of objects we're managing.
 
-  CORBA::ORB_ptr orb_ptr_;
+  CORBA::ORB_var orb_;
   // Pointer to the ORB
 
-  CORBA::POA_ptr oa_ptr_;
-  // Pointer to the POA
+  PortableServer::POA_var root_poa_;
+  // Pointer to the Root POA
+
+  PortableServer::POA_var poa_;
+  // Pointer to the child POA used on the application.
+
+  PortableServer::POAManager_var poa_manager_;
+  // The POA Manager for both the root POA and the child POA.
 
   Cubit_i **servants_;
   // Array to hold the servants
-
 };
