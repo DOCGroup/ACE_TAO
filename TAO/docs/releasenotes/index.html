@@ -40,6 +40,9 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A HREF="#cservices">CORBA Concurrency Control Service</A></LI>
 
 <LI>
+<A HREF="#implrepo">Implementation Repository</A></LI>
+
+<LI>
 <A HREF="#av">CORBA Audio/Video Control Service</A></LI>
 
 <LI>
@@ -395,6 +398,49 @@ developed for TAO. More testing is being done.
 Property Service Specification.</A>
 
 <P>
+<HR>
+<H3><A NAME="implrepo">Implementation Repository</A></H3>
+
+<P>Current status (as of July 20, 1998)</P>
+
+<P>Here is a brief list of my goals (and the dates completed).  For more 
+information, please see the <A HREF="../implrepo.html">Implementation Repository 
+documentation</A>.</P>
+
+<UL>
+  <LI>Create the base test client and server programs [7/17]
+  <LI>Add an IR that forwards server requests
+  <LI>Have the server register its IOR with the IR
+  <LI>Have the server exit after every call, so it is restarted each time
+  <LI>Add the ping object to the server
+  <LI>Add in shutdown calls to test ping objects
+  <LI>Change IOR format
+  <LI>Add in support for server names
+  <LI>Make the IR forward any request
+  <LI>Add another server
+</UL>
+
+<P>Other goals:</P>
+
+<UL>
+  <LI>Implement the IDL Interface for the IR
+  <LI>Move this stuff into the POA
+  <LI>Multiple Profiles
+  <LI>POA extension
+  <LI>Persistence
+</UL>
+
+<P>Future Goals:</P>
+
+<UL>
+  <LI>TAO client-side optimization with restarted servers
+  <LI>Server security (checksums)
+  <LI>Helper Application
+  <LI>Federation of IRs
+  <LI>DLLs
+</UL>
+
+
 <HR>
 <H3>
 <A NAME="cservices"></A>CORBA Concurrency Control Service</H3>
