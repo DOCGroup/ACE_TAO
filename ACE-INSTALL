@@ -159,10 +159,10 @@
           version that is shipped with Tornado 1.0.1/ VxWorks 5.3.1. The
           problems are:
           
-         1. The program entry point cannot be called ``main''. ACE
-            renames it to ``ace_main'' on VxWorks. While this may seem
-            trivial, it is important with legacy code. ACE itself ran
-            into this problem.
+         1. The program entry point cannot be called ``main'' with g++.
+            ACE renames it to ``ace_main'' (configurable via ACE_MAIN) on
+            VxWorks. While this may seem trivial, it is important with
+            legacy code. ACE itself ran into this problem.
          2. argc/argv isn't used with VxWorks entry points. ACE provides
             a wrapper function that transparently converts shell command
             line arguments to argc/argv form. See [18]below for details.
@@ -447,7 +447,7 @@
 #define INCLUDE_CPLUS_IOSTREAMS /* include iostreams classes */
 #define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
 
-   For completeness, here are the non-default #defines that we use for
+   For completeness, here are the non-default #defines that we used for
    VxWorks 5.3.1/g++ 2.7.2:
 
 #define INCLUDE_CPLUS           /* include C++ support */
@@ -476,20 +476,33 @@
    It probably wouldn't take much effort to modify the ACE library to not
    require INCLUDE_CPLUS_IOSTREAMS, if necessary. If you're first getting
    started with ACE and/or VxWorks, I recommend just building the ACE
-   library and tests first. Some of the ACE examples, in System_V_IPC and
-   Threads, don't build on VxWorks yet. Then try running the tests.
-   Please see $ACE_ROOT/tests/README for the latest status of the ACE
-   tests on VxWorks.
+   library and tests first. (Some of the ACE examples, in System_V_IPC,
+   don't build on VxWorks yet.) Then try running the tests. Please see
+   $ACE_ROOT/tests/README for the latest status of the ACE tests on
+   VxWorks.
    
-   Please note that the main entry point is renamed to ace_main on
-   VxWorks, to comply with the VxWorks restriction against using main.
-   Also, if you run ace_main directly from a shell, you'll probably have
-   to restart the shell (using Ctrl-C, if enabled in your configuration)
-   in order to be able to unld the module. Alternatively, you can spawn a
-   new task to run ace_main, using either VxWorks sp, or ACE'S spa. spa
-   can be used from the VxWorks shell to pass arguments to ace_main. Its
-   usage is
-    spa main, "arg1" [, ...]
+   Please note that the main entry point is renamed to ace_main
+   (configurable via ACE_MAIN) on VxWorks with g++, to comply with its
+   restriction against using main. In addition,
+   ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled by default to cleanly
+   support construction and destruction of static objects. This requires
+   that main be declared with its arguments even if they're not used, and
+   with int return type:
+
+  int
+  main (int, char *[])
+
+   Alternatively, this feature can be disabled by commenting out the
+   #define ACE_HAS_NONSTATIC_OBJECT_MANAGER in your ace/config.h. But,
+   that will make repeated testing more difficult on VxWorks. You'd
+   either have to call static constructors and destructors manually or
+   unload/load the program between runs.
+   
+   You can spawn a new task to run ace_main, using either VxWorks sp, or
+   ACE'S spa. spa can be used from the VxWorks shell to pass arguments to
+   ace_main. Its usage is:
+
+  spa ace_main, "arg1" [, ...]
 
    All arguments must be quoted, even numbers.
      _________________________________________________________________
@@ -646,12 +659,12 @@
 
 References
 
-   1. file://localhost/project/adaptive/ACE_wrappers/ChangeLog
-   2. file://localhost/project/adaptive/ACE_wrappers/ACE.FAQ.html
-   3. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#platforms
-   4. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
-   5. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#svcsinstall
-   6. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#advanced
+   1. file://localhost/project/merengue/levine/ACE_wrappers/ChangeLog
+   2. file://localhost/project/merengue/levine/ACE_wrappers/ACE.FAQ.html
+   3. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#platforms
+   4. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#aceinstall
+   5. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#svcsinstall
+   6. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#advanced
    7. http://www.wrs.com/
    8. http://www.s390.ibm.com/products/oe/index.html
    9. mailto:ace-users@cs.wustl.edu
@@ -663,31 +676,31 @@ References
   15. mailto:shuston@riverace.com
   16. http://www.cs.wustl.edu/~levine/
   17. mailto:levine@cs.wustl.edu
-  18. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#spa
-  19. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#g++
+  18. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#spa
+  19. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#g++
   20. mailto:gehr@sweng.stortek.com
-  21. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
+  21. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#mvs
   22. mailto:kielmann@informatik.uni-siegen.de
-  23. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
-  24. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
-  25. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
+  23. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unixsvcs
+  24. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  25. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32
   26. http://www.cs.wustl.edu/~schmidt/byacc.tar.gz
-  27. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
-  28. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
-  29. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
-  30. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
-  31. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
-  32. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
-  33. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
+  27. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unix
+  28. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32
+  29. file://localhost/project/merengue/levine/ACE_wrappers/ACE-netsvcs.html
+  30. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unixsvcs
+  31. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  32. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  33. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unix
   34. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/main.cpp
   35. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/svc.conf
-  36. file://localhost/project/adaptive/ACE_wrappers/ACE-papers.html#config
-  37. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
-  38. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#cloning
-  39. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#corba
-  40. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
+  36. file://localhost/project/merengue/levine/ACE_wrappers/ACE-papers.html#config
+  37. file://localhost/project/merengue/levine/ACE_wrappers/ACE-netsvcs.html
+  38. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#cloning
+  39. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#corba
+  40. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#mvs
   41. http://www.cs.wustl.edu/~levine/CVS.html
   42. http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html
-  43. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
+  43. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#aceinstall
   44. http://www.s390.ibm.com/products/oe/index.html
   45. http://www.cs.wustl.edu/~schmidt/ACE.html

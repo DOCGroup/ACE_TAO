@@ -190,15 +190,15 @@ That is the version that is shipped with Tornado 1.0.1/
 VxWorks 5.3.1.  The problems are:<P>
 
 <OL>
-  <LI> The program entry point cannot be called ``main''.  ACE
-       renames it to ``ace_main'' on VxWorks.  While this may seem
-       trivial, it is important with legacy code.  ACE itself ran
-       into this problem.<P>
+  <LI> The program entry point cannot be called ``main'' with g++.  ACE
+       renames it to ``ace_main'' (configurable via ACE_MAIN) on VxWorks.
+       While this may seem trivial, it is important with legacy code.
+       ACE itself ran into this problem.<P>
 
   <LI> argc/argv isn't used with VxWorks entry points.  ACE provides
        a wrapper function that transparently converts shell command
        line arguments to argc/argv form.  See <A HREF="#spa">below</a>
-       for details.
+       for details.<P>
 
   <LI> Unsigned long long support is not available with the g++ that
        is distributed with Tornado 1.0.1/VxWorks 5.3.1, or with
@@ -543,7 +543,7 @@ are required with ACE:<P>
 </pre>
 
 For completeness, here are the non-default <code>#defines</code> that
-we use for VxWorks 5.3.1/g++ 2.7.2:
+we used for VxWorks 5.3.1/g++ 2.7.2:
 
 <pre>
 #define INCLUDE_CPLUS		/* include C++ support */
@@ -575,26 +575,40 @@ ACE library to not require <code>INCLUDE_CPLUS_IOSTREAMS</code>,
 if necessary.
 
 If you're first getting started with ACE and/or VxWorks, I recommend
-just building the ACE library and tests first.  Some of the ACE
-examples, in System_V_IPC and Threads, don't build on VxWorks yet.
-Then try running the tests.  Please see $ACE_ROOT/tests/README for the
-latest status of the ACE tests on VxWorks.<P>
+just building the ACE library and tests first.  (Some of the ACE
+examples, in System_V_IPC, don't build on VxWorks yet.)  Then try
+running the tests.  Please see $ACE_ROOT/tests/README for the latest
+status of the ACE tests on VxWorks.<P>
 
-<A NAME="spa">Please</A> note that the <code>main</code> entry point
-is renamed to <code>ace_main</code> on VxWorks, to comply with the
-VxWorks restriction against using <code>main</code>.  Also, if you run
-<code>ace_main</code> directly from a shell, you'll probably have to
-restart the shell (using Ctrl-C, if enabled in your configuration) in
-order to be able to unld the module.  Alternatively, you can spawn a
-new task to run <code>ace_main</code>, using either VxWorks
-<code>sp</code>, or ACE'S <code>spa</code>.  <code>spa</code> can be
-used from the VxWorks shell to pass arguments to
-<code>ace_main</code>.  Its usage is
+Please note that the <code>main</code> entry point is renamed to
+<code>ace_main</code> (configurable via ACE_MAIN) on VxWorks with g++,
+to comply with its restriction against using <code>main</code>.
+In addition, ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled by default
+to cleanly support construction and destruction of static objects.
+This requires that <code>main</code> be declared with its arguments
+even if they're not used, and with <code>int</code> return type:
 
-<pre><code>    spa main, "arg1" [, ...]
+<pre><code>
+  int
+  main (int, char *[])
 </code></pre>
 
-All arguments must be quoted, even numbers.
+Alternatively, this feature can be disabled by commenting out the
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER in your ace/config.h.
+But, that will make repeated testing more difficult on VxWorks.
+You'd either have to call static constructors and destructors
+manually or unload/load the program between runs.<p>
+
+You can spawn a new task to run <code>ace_main</code>, using either
+VxWorks <code>sp</code>, or ACE'S <A NAME="spa"><code>spa</code></A>.
+<code>spa</code> can be used from the VxWorks shell to pass arguments
+to <code>ace_main</code>.  Its usage is:
+
+<pre><code>
+  spa ace_main, "arg1" [, ...]
+</code></pre>
+
+All arguments must be quoted, even numbers.<p>
 
 
 <HR>
