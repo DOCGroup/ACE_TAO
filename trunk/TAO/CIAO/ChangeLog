@@ -1,3 +1,32 @@
+2003-08-11  Diego Sevilla  <dsevilla@ditec.um.es>
+
+	* CIDLC/ServantGenerator.cpp: Removed commented code.
+
+2003-08-07  Diego Sevilla  <dsevilla@ditec.um.es>
+
+	* CCF/Example/CodeGenerationKit/Indentation/IDL/IDL.mpc:
+	* CCF/Example/CodeGenerationKit/Indentation/Indentation.mwc:
+	* CCF/Example/CodeGenerationKit/CodeGenerationKit.mwc:
+	* CCF/Example/CIDL/LocalExecutorMapping/LocalExecutorMapping.mpc:
+	* CCF/Example/CIDL/CIDL.mwc:
+	* CCF/Example/Example.mwc:
+	* CCF/CCF/CompilerElements/CompilerElements.mpc:
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+	* CCF/CCF/IDL3/IDL3.mpc:
+	* CCF/CCF/IDL2/IDL2.mpc:
+	* CCF/CCF/CIDL/CIDL.mpc:
+	* CCF/CCF/CCF.mwc:
+	* CCF/CCF.mwc:
+	CCF Makefiles to MPC.
+
+	* CIDLC/cidlc.mpc: Adapted to the new structure of the CIDL
+	compiler.
+
+	* CIDLC/README: Updated the information regarding the new
+	libraries and how to build the CIDL compiler now.
+
+	* CIDLC/parser_examples/*.*: Removed old parser examples code.
+
 Tue Aug 12 20:18:23 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.idl:
@@ -29,7 +58,7 @@ Tue Aug 12 20:18:23 2003  George Edwards <g.edwards@vanderbilt.edu>
 	  The client was not using the proper svc conf file to run in
 	  "single-threaded" mode. Added proper svc.conf file and support
 	  code in the client. The .mpc file was modified to add client's
-	  dependency with TAO_Strategies library. 
+	  dependency with TAO_Strategies library.
 
 Thu Aug 07 16:46:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -59,7 +88,7 @@ Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
 
           Added library include paths and additional library to MPC
-	  files. 
+	  files.
 
           Removed file:
         * examples/handcrafted/BasicSP_EC2/EC/config:
@@ -83,7 +112,7 @@ Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC2/RTEventService/*.*:
 
           Added new event channel example. The event service is
-	  integrated as a separate component. 
+	  integrated as a separate component.
 
 2003-08-04  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
@@ -93,7 +122,7 @@ Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 	  Fixed errors in the perl file for running the example. Corrected
 	  the way in which throughput is measured within the client
 	  component. Also added code to enable tests to be run in the
-	  super user mode. 
+	  super user mode.
 
 2003-08-04  Diego Sevilla  <dsevilla@ditec.um.es>
 
@@ -105,7 +134,7 @@ Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 	* performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
 	  Made the test to run.  Fixed some problems with UUID.  Made the
 	  client to correctly expect a component instance instead of a
-	  home. 
+	  home.
 
 Mon Jul  7 23:35:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -169,15 +198,15 @@ Fri Aug 01 23:34:38 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
         * performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
         * performance-tests/Benchmark/descriptors/test.dat:
 	  Added files for the performance tests Arvind and I are
-	  developing. 
+	  developing.
 
         * CIDLC/ServantHeaderGenerator.cpp: Removed usage of Traversal
-	  namespace to avoid name clashing. 
+	  namespace to avoid name clashing.
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 	  Generate SessionContext by now instead of CCMContext for local
-	  interfaces. 
+	  interfaces.
 
 Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
 
@@ -189,19 +218,19 @@ Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
 
           Made modifications requested. Added @@ Bala comments  to
-	  indicate changes. 
+	  indicate changes.
 
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
         * examples/OEP/BasicSP/EC/EC_exec.{cpp,h}: Changed the exception
 	  specification for the new_EC method (explicit home operations
-	  don't throw CCMException.) 
+	  don't throw CCMException.)
 
 	* examples/OEP/Display/RateGen/RateGen_exec.{cpp,h}: Ditto.
 
         * CIDLC/*: Adapted the CIDL compiler to work with the new CCF
           library.  Basically the same code is generated with small bugs
-	  fixed. 
+	  fixed.
 
 Wed Jul 30 07:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
