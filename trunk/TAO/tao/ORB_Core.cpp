@@ -36,6 +36,7 @@
 
 #include "IORInfo.h"
 
+
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -1417,6 +1418,21 @@ TAO_ORB_Core::bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV)
                                              0,
                                              ACE_TRY_ENV);
   else
+    return 0;
+}
+
+int
+TAO_ORB_Core::parse_bidir_policy (CORBA::Policy_ptr policy,
+                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->bidir_adapter_)
+    return this->bidir_adapter_->parse_policy (this,
+                                               policy,
+                                               ACE_TRY_ENV);
+  else
+    // @@ The BiDirectional library hasn't been loaded. What do we do?
+    // We are just returning an error which will be processd by the
+    // POA who requested us to parse the policy.
     return 0;
 }
 

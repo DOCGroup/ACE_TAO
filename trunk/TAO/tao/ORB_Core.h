@@ -43,7 +43,6 @@
 
 #include "RT_Policy_i.h"
 #include "Protocols_Hooks.h"
-#include "BiDir_Adapter.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Thread_Manager.h"
@@ -82,7 +81,7 @@ class TAO_Client_Priority_Policy_Selector;
 class TAO_Message_State_Factory;
 class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
-
+class TAO_BiDir_Adapter;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
