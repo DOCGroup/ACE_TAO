@@ -1,3 +1,10 @@
+Sun Apr 28 09:19:17 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/DIOP_Connector.cpp: Do not derement the refcount
+	  on the handler since we dont use the new non-blocking connect
+	  scheme here. Rather there is no connection per-se. This should
+	  fix runtime errors in the examples using this protocol.
+
 Sun Apr 28 08:54:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (shutdown): Added a #if (TAO_HAS_INTERCEPTORS
