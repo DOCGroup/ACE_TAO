@@ -1,3 +1,10 @@
+Thu Jun 25 19:35:50 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tests/NestedUpcall/{Triangle_Test, Reactor}: Added the 
+	  Triangle test to examine ORB behavior doing nested upcalls.
+	  Also moved the Reactor test one level down in the hierarchy
+	  which means it is now in ../NestedUpcall/Reactor
+
 Thu Jun 25 17:57:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/DII_Cubit/Makefile: Integrated the new DII_Cubit
