@@ -139,6 +139,14 @@ MT_Priority::get_low_priority (u_int num_low_priority,
   return -1;
 #else
   ACE_Sched_Priority low_priority = ACE_THR_PRI_FIFO_DEF;
+  int policy = ACE_SCHED_FIFO;
+
+  if (!ACE_BIT_ENABLED (GLOBALS::instance ()->thr_create_flags,
+			THR_SCHED_FIFO))
+    {
+      low_priority = ACE_THR_PRI_OTHER_DEF;
+      policy = ACE_SCHED_OTHER;
+    }
 
   // Drop the priority.
   if (use_multiple_priority)
@@ -146,7 +154,7 @@ MT_Priority::get_low_priority (u_int num_low_priority,
       this->num_priorities_ = 0;
 
       for (ACE_Sched_Priority_Iterator priority_iterator
-             (ACE_SCHED_FIFO, ACE_SCOPE_THREAD);
+             (policy, ACE_SCOPE_THREAD);
            priority_iterator.more ();
            priority_iterator.next ())
         this->num_priorities_++;
@@ -161,7 +169,7 @@ MT_Priority::get_low_priority (u_int num_low_priority,
            j++)
         {
           low_priority =
-            ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+            ACE_Sched_Params::previous_priority (policy,
                                                  prev_priority,
                                                  ACE_SCOPE_THREAD);
           prev_priority = low_priority;
@@ -177,7 +185,7 @@ MT_Priority::get_low_priority (u_int num_low_priority,
     }
   else
     low_priority =
-      ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+      ACE_Sched_Params::previous_priority (policy,
                                            prev_priority,
                                            ACE_SCOPE_THREAD);
   return low_priority;
