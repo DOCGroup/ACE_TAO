@@ -44,48 +44,61 @@
 #include "ace/ACE.h"
 
 #if !defined (ACE_WIN32)
+
+static
+u_long
+check_ace_u_longlong (char *const name,
+                      ACE_U_LongLong ull,
+                      u_long hi,
+                      u_long lo)
+{
+  if (ull.hi () == hi  &&  ull.lo () == lo)
+    {
+      return 0;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, "%s; hi: %x, should be %x; "
+                            "lo: %x, should be %x.\n",
+                  name, ull.hi (), hi, ull.lo (), lo));
+      return 1;
+    }
+}
+
+static
 u_long
 test_ace_u_longlong ()
 {
   u_long errors = 0;
 
   ACE_U_LongLong ull1 (0x21,1);
-  if (! (ull1.hi () == 1  &&  ull1.lo () == 0x21)) ++errors;
-  ACE_ASSERT (ull1.hi () == 1  &&  ull1.lo () == 0x21);
+  errors += check_ace_u_longlong ("ull1", ull1, 1, 0x21);
 
   ACE_U_LongLong ull2 (0x20,2);
-  if (! (ull2.hi () == 2  &&  ull2.lo () == 0x20)) ++errors;
-  ACE_ASSERT (ull2.hi () == 2  &&  ull2.lo () == 0x20);
+  errors += check_ace_u_longlong ("ull2", ull2, 2, 0x20);
 
   ull2 -= ull1;
-  if (! (ull2.hi () == 0  &&  ull2.lo () == 0xfffffffful)) ++errors;
-  ACE_ASSERT (ull2.hi () == 0  &&  ull2.lo () == 0xfffffffful);
+  errors += check_ace_u_longlong ("ull2", ull2, 0, 0xfffffffful);
 
   ull2 += ull1;
-  if (! (ull2.hi () == 2  &&  ull2.lo () == 0x20)) ++errors;
-  ACE_ASSERT (ull2.hi () == 2  &&  ull2.lo () == 0x20);
+  errors += check_ace_u_longlong ("ull2", ull2, 2, 0x20);
 
   ACE_U_LongLong ull3 = ull1 + ull1;
-  if (! (ull3.hi () == 2  &&  ull3.lo () == 0x42)) ++errors;
-  ACE_ASSERT (ull3.hi () == 2  &&  ull3.lo () == 0x42);
+  errors += check_ace_u_longlong ("ull3", ull3, 2, 0x42);
 
   ACE_U_LongLong ull4 = ACE_U_LongLong (0x1111, 0) -
                         ACE_U_LongLong (0x1112, 0);
-  if (! (ull4.hi () == 0xfffffffful  &&  ull4.lo () == 0xfffffffful)) ++errors;
-  ACE_ASSERT (ull4.hi () == 0xfffffffful  &&  ull4.lo () == 0xfffffffful);
+  errors += check_ace_u_longlong ("ull4", ull4, 0xfffffffful, 0xfffffffful);
 
   ACE_U_LongLong ull5 = ACE_U_LongLong (0x1111, 1) -
                         ACE_U_LongLong (0x1112, 0);
-  if (! (ull5.hi () == 0  &&  ull5.lo () == 0xfffffffful)) ++errors;
-  ACE_ASSERT (ull5.hi () == 0  &&  ull5.lo () == 0xfffffffful);
+  errors += check_ace_u_longlong ("ull5", ull5, 0, 0xfffffffful);
 
   ACE_U_LongLong ull6 = ull2 + ACE_U_LongLong (0, 1);
-  if (! (ull6.hi () == 3  &&  ull6.lo () == 0x20)) ++errors;
-  ACE_ASSERT (ull6.hi () == 3  &&  ull6.lo () == 0x20);
+  errors += check_ace_u_longlong ("ull6", ull6, 3, 0x20);
 
   ull6 += ACE_U_LongLong (0xffffffff, 0xfff0);
-  if (! (ull6.hi () == 0xfff4  &&  ull6.lo () == 0x1f)) ++errors;
-  ACE_ASSERT (ull6.hi () == 0xfff4  &&  ull6.lo () == 0x1f);
+  errors += check_ace_u_longlong ("ull6", ull6, 0xfff4, 0x1f);
 
   return errors;
 }
