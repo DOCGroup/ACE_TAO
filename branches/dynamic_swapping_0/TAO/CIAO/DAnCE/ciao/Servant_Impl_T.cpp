@@ -209,6 +209,7 @@ namespace CIAO
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    // @@ Jai, could you please see why this is required?
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
@@ -217,9 +218,7 @@ namespace CIAO
     ACE_CHECK;
 
     if (! ::CORBA::is_nil (temp.in ()))
-      {
-        temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      }
+      temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 }
 

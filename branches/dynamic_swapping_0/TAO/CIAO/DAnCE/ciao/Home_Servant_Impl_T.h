@@ -40,8 +40,8 @@ namespace CIAO
    * This class implements operations
    * common to all generated home servants.
    */
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -56,9 +56,9 @@ namespace CIAO
   public:
     Home_Servant_Impl (EXEC * exe,
                        Session_Container * c);
-                       
+
     virtual ~Home_Servant_Impl (void);
-    
+
     // Operations for CCMHome interface.
 
     virtual void
@@ -66,7 +66,7 @@ namespace CIAO
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
-                       
+
     // Operations for keyless home interface.
 
     virtual ::Components::CCMObject_ptr
@@ -88,7 +88,7 @@ namespace CIAO
     _ciao_activate_component (COMP_EXEC *exe
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
     void
     _ciao_passivate_component (COMP *comp
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -97,6 +97,10 @@ namespace CIAO
   protected:
     EXEC_VAR executor_;
 
+
+    // @@ Jai, why do you need two maps? Can't you derive one from the
+    // other? Its a waste of memory to do TWO things if it can be done
+    // by one.
     ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             COMP_SVNT *,
                             TAO_ObjectId_Hash,
@@ -124,4 +128,3 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_HOME_SERVANT_IMPL_T_H */
-   
