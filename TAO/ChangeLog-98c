@@ -1,3 +1,16 @@
+Wed Sep 30 02:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
+	  IDL_Cubit does *not* use the Naming Service anymore. It was
+	  simply too slow to compile orbsvcs and the Naming Service has
+	  many other examples that show how to use it and this test is
+	  compiled often after changin the ORB.
+
 Wed Sep 30 00:26:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h: 
