@@ -1,6 +1,24 @@
+// ============================================================================
+// $Id$
+
+//
+// = LIBRARY
+//    tests
+// 
+// = FILENAME
+//    Map_Manager_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test of the ACE_Map_Manager that
+//      illustrates how to use the forward and reverse iterators. 
+//
+// = AUTHOR
+//    Irfan Pyarali
+// 
+// ============================================================================
+
 #include "ace/Map_Manager.h"
 #include "ace/Synch.h"
-#include <iostream.h>
 
 typedef ACE_Null_Mutex MUTEX;
 typedef int KEY;
@@ -12,8 +30,10 @@ typedef ACE_Map_Reverse_Iterator <KEY, VALUE, MUTEX> REVERSE_ITERATOR;
 typedef ACE_Map_Entry <KEY, VALUE> ENTRY;
 
 int 
-main ()
+main (int argc, char *argv[])
 {
+  ACE_START_TEST ("Map_Manager_Test.cpp");
+
   const int ITERATIONS = 5;
   MAP_MANAGER map;
 
@@ -67,5 +87,6 @@ main ()
       }  
   }
 
+  ACE_END_TEST;
   return 0;
 }

@@ -219,8 +219,8 @@ server (void *)
   return 0;
 }
 
-void
-spawn ()
+static void
+spawn (void)
 {
 #if !defined (ACE_WIN32)
   switch (ACE_OS::fork ())
@@ -252,7 +252,7 @@ spawn ()
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("CPP_Test.cpp");
   ACE_DEBUG ((LM_DEBUG, "starting %s test at %u\n", argv[0], ACE_OS::time (0)));
 
   spawn ();

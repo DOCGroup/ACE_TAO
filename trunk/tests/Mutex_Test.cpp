@@ -25,7 +25,7 @@
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Mutex_Test.cpp");
 
   char *name = argc == 1 ? "hello" : argv[1];
 

@@ -174,7 +174,7 @@ worker (void *args)
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Reactors_Test.cpp");
 
   ACE_Reactor *react1 = ACE_Service_Config::reactor ();
   ACE_Reactor *react2 = new ACE_Reactor ();

@@ -52,7 +52,7 @@ public:
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Reactor_Timer_Test.cpp");
 
   ACE_Reactor reactor;
 
@@ -64,7 +64,6 @@ main (int, char *argv[])
     t_id[i] = reactor.schedule_timer (&rt[i], 
 				      (const void *) i, 
 				      ACE_Time_Value (2 * i + 1));
-
   while (!done)
     reactor.handle_events ();
   

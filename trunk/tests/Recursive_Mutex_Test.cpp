@@ -64,7 +64,7 @@ worker (void *arg)
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Recursive_Mutex_Test.cpp");
 
   ACE_Service_Config daemon (argv[0]);
   ACE_Recursive_Thread_Mutex rm;

@@ -21,7 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 #include "ace/Thread.h"
-#include "ace/Thread_Manager.h"
+#include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "test_config.h"
 
@@ -47,9 +47,6 @@ static ACE_RW_Mutex rw_mutex;
 
 // Count of the number of readers and writers.
 ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers, current_writers;
-
-// Thread manager
-static ACE_Thread_Manager thr_mgr;
 
 // Explain usage and exit.
 static void 
@@ -95,7 +92,7 @@ parse_args (int argc, char *argv[])
 static void *
 reader (void *)
 {
-  ACE_Thread_Control tc (&thr_mgr);
+  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) reader starting\n"));
@@ -134,7 +131,7 @@ reader (void *)
 static void *
 writer (void *)
 {
-  ACE_Thread_Control tc (&thr_mgr);
+  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) writer starting\n"));
@@ -174,7 +171,7 @@ writer (void *)
 
 int main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Reader_Writer_Test.cpp");
 
   ACE_LOG_MSG->open (argv[0]);
 
@@ -183,18 +180,18 @@ int main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread starting\n"));
 
-  if (thr_mgr.spawn_n (n_readers, 
-		       ACE_THR_FUNC (reader), 
-		       0, 
-		       THR_NEW_LWP) == -1)
+  if (ACE_Service_Config::thr_mgr ()->spawn_n (n_readers, 
+					       ACE_THR_FUNC (reader), 
+					       0, 
+					       THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
-  else if (thr_mgr.spawn_n (n_writers, 
-			    ACE_THR_FUNC (writer), 
-			    0, 
-			    THR_NEW_LWP) == -1)
+  else if (ACE_Service_Config::thr_mgr ()->spawn_n (n_writers, 
+						    ACE_THR_FUNC (writer), 
+						    0, 
+						    THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
-  thr_mgr.wait ();
+  ACE_Service_Config::thr_mgr ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting main thread\n"));
   ACE_END_TEST;

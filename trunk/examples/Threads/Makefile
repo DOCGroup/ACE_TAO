@@ -25,7 +25,8 @@ BIN     = test_auto_event \
 	  test_thread_manager \
 	  test_thread_pool \
 	  test_thread_specific \
-	  test_tss \
+	  test_tss1 \
+	  test_tss2 \
 	  test_token
 
 LSRC    = $(addsuffix .cpp,$(BIN))

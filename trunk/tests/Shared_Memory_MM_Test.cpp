@@ -89,7 +89,7 @@ server (void *)
   return 0;
 }
 
-void
+static void
 spawn ()
 {
 #if !defined (ACE_WIN32)
@@ -122,7 +122,7 @@ spawn ()
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Shared_Memory_MM_Test.cpp");
 
   if (ACE_OS::mktemp (shm_key) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", shm_key), 1);
