@@ -7,7 +7,7 @@ To run the Notify Logging Service:
    if not, start one at $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
 
 2. execute the Notify_Logging_Service
-   at $TAO_ROOT/orbsvcs/Logging_Service/NotifyLogging_Service/Notify_Logging_Service
+   at $TAO_ROOT/orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service
 
 
 The idl spec is $TAO_ROOT/orbsvcs/orbsvcs/DsNotifyLogAdmin.idl

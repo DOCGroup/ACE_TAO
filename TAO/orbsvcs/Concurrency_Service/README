@@ -23,13 +23,13 @@ $TAO_ROOT/orbsvcs/Concurrency_Service
 
 directory.
 
-The server accepts the folowing options:
+The server accepts the following options:
 
         usage:  ./Concurrency_Service [-d] [-o] <ior_output_file>
         [-d] is the debug option
         [-o] <ior_output_file> outputs the IOR of the lock set factory
              to the file
-        [-s] Prevents the concurency server from using the naming server
+        [-s] Prevents the concurrency server from using the naming server
 
 The lock set factory is registered in the naming service in the
 CosConcurrency context with the name "LockSetFactory".
@@ -44,12 +44,12 @@ the following files:
 
         CC_LockSet.{h,cpp} Implementation of the lock set. At present
 		there is only one implementation of the lock set which
-		implements multiple possesion semantics for both
+		implements multiple possession semantics for both
 		transactional (which is not otherwise supported) and
 		non-transactional clients. Please see the comments in
 		the CC_LockSet.h file for further details.
 
-        CC_LockSetFactory.{h,cpp} Iplementation of the lock set
+        CC_LockSetFactory.{h,cpp} Implementation of the lock set
                 factory
 
         Concurrency_Utils.{h,cpp} Wrapper around the concurrency
