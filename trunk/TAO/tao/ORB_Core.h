@@ -1072,11 +1072,11 @@ protected:
   // default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
   // will be changed to TAO_RT_POA so that a POA equipped with
   // realtime extensions will be returned.
-  static const char * TAO_ORB_Core::poa_factory_name_;
+  static const char *poa_factory_name_;
 
   // The service configurator directive used to load
   // poa_factory_name_ dynamically.
-  static const char * TAO_ORB_Core::poa_factory_directive_;
+  static const char *poa_factory_directive_;
 
   // @@ This is not needed since the default resource factory
   //    is staticaly added to the service configurator.
