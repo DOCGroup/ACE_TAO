@@ -28,7 +28,7 @@
 class ACE_Allocator;
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
-class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE, 
+class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE,
                                    ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
                                    ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
                                    ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
@@ -64,16 +64,11 @@ class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE,
   // class.
 
   // = Initialization and termination methods.
-  ACE_Hash_Cache_Map_Manager (size_t size = ACE_DEFAULT_MAP_SIZE,
-                              ACE_Allocator *alloc = 0,
-                              CACHING_STRATEGY *caching_s = 0,
-                              int delete_caching_strategy = 1);
+  ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
+                              size_t size = ACE_DEFAULT_MAP_SIZE,
+                              ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Cache_Map_Manager> with <size> entries.
-  // By default the caching strategy is allocated and deallocated by
-  // the class but if needed it can be changed as per the users need.
-  // The <delete_on_destruction> flag simply tells the class whether
-  // the ownership is given to the class or not.
-  
+
   ~ACE_Hash_Cache_Map_Manager (void);
   // Close down a <Cache_Map_Manager> and release dynamically allocated
   // resources.
@@ -165,7 +160,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE,
 
 protected:
 
-  typedef ACE_Cache_Map_Manager<KEY, VALUE, 
+  typedef ACE_Cache_Map_Manager<KEY, VALUE,
                                 ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
                                 ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
                                 ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
