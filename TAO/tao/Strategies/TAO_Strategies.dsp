@@ -95,275 +95,86 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\advanced_resource.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Reactor_Per_Priority.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SHMIOP_Acceptor.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SHMIOP_Connect.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SHMIOP_Connector.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SHMIOP_Endpoint.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SHMIOP_Factory.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SHMIOP_Profile.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SHMIOP_Transport.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TAO_Strategies_Internal.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Acceptor.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Connect.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Connector.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Endpoint.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\uiop_endpoints.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Factory.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Lite_Factory.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Profile.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UIOP_Transport.cpp
-
-!IF  "$(CFG)" == "TAO_Strategies - Win32 Release"
-
-# ADD CPP /D TAO_STRATEGIES_HAS_DLL=0
-
-!ELSEIF  "$(CFG)" == "TAO_Strategies - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Header Files"
