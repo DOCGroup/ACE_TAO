@@ -1,6 +1,13 @@
+Mon Dec 15 18:51:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/gnu.mpd:
+	  Added setting of CLEANUP_INSTALL, this has the result that an exe
+	  that is installed into a different directory is also removed when
+	  doing a clean. Thanks to Don and Chad for validing this.
+
 Mon Dec 15 11:09:45 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/POSIX_CB_Proactor.cpp (ACE_POSIX_CB_Proactor): Added a 
+	* ace/POSIX_CB_Proactor.cpp (ACE_POSIX_CB_Proactor): Added a
 	  cast to (unsigned int) so things will work properly for the
  	  ACE_Thread_Semaphore.
 
