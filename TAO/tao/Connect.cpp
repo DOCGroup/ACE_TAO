@@ -90,6 +90,11 @@ TAO_Server_Connection_Handler::open (void*)
     return -1;
 #endif /* TCP_NODELAY */
 
+  (void) ACE_OS::fcntl (this->peer ().get_handle (), F_SETFD, 1);
+  // Set the close-on-exec flag for that file descriptor. If the
+  // operation fails we are out of luck (some platforms do not support
+  // it and return -1).
+
   char client[MAXHOSTNAMELEN + 1];
 
   if (addr.get_host_name (client, MAXHOSTNAMELEN) == -1)
@@ -536,6 +541,11 @@ TAO_Client_Connection_Handler::open (void *)
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "NODELAY failed\n"), -1);
+
+  (void) ACE_OS::fcntl (this->peer ().get_handle (), F_SETFD, 1);
+  // Set the close-on-exec flag for that file descriptor. If the
+  // operation fails we are out of luck (some platforms do not support
+  // it and return -1).
 
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
