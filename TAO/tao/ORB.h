@@ -313,6 +313,152 @@ public:
                                    CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ());
 
+  /// The ORB TypeCode creation functions.
+
+  CORBA::TypeCode_ptr create_struct_tc (
+      const char *id,
+      const char *name,
+      const CORBA::StructMemberSeq &members,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_union_tc (
+      const char *id,
+      const char *name,
+      CORBA::TypeCode_ptr discriminator_type,
+      const CORBA::UnionMemberSeq &members,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_enum_tc (
+      const char *id,
+      const char *name,
+      const CORBA::EnumMemberSeq &members,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_alias_tc (
+      const char *id,
+      const char *name,
+      CORBA::TypeCode_ptr original_type,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_exception_tc (
+      const char *id,
+      const char *name,
+      const CORBA::StructMemberSeq &members,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_interface_tc (
+      const char *id,
+      const char *name,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_string_tc (
+      CORBA::ULong bound,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_wstring_tc (
+      CORBA::ULong bound,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_fixed_tc (
+      CORBA::UShort digits,
+      CORBA::UShort scale,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_sequence_tc (
+      CORBA::ULong bound,
+      CORBA::TypeCode_ptr element_type,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_array_tc (
+      CORBA::ULong length,
+      CORBA::TypeCode_ptr element_type,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_value_tc (
+      const char *id,
+      const char *name,
+      CORBA::ValueModifier type_modifier,
+      CORBA::TypeCode_ptr concrete_base,
+      const CORBA::ValueMemberSeq &members,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_value_box_tc (
+      const char *id,
+      const char *name,
+      CORBA::TypeCode_ptr boxed_type,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_native_tc (
+      const char *id,
+      const char *name,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_recursive_tc (
+      const char *id,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr create_abstract_interface_tc (
+      const char *id,
+      const char *name,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    
+  CORBA::TypeCode_ptr create_local_interface_tc (
+      const char *id,
+      const char *ame,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------

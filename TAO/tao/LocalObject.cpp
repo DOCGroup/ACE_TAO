@@ -131,22 +131,7 @@ CORBA_LocalObject::_request (const CORBA::Char *,
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-CORBA_IRObject_ptr
-CORBA_LocalObject::_get_interface_def (CORBA_Environment &ACE_TRY_ENV)
-{
-  TAO_IFR_Client_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
-
-  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
-
-  return adapter->get_interface_def (orb.in (),
-                                     this->_interface_repository_id (),
-                                     ACE_TRY_ENV);
-}
-
-IR_InterfaceDef *
+CORBA_InterfaceDef_ptr
 CORBA_LocalObject::_get_interface (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_IFR_Client_Adapter *adapter =

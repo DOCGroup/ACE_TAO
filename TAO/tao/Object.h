@@ -30,7 +30,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class IR_InterfaceDef;
 class TAO_Stub;
 
 class TAO_Abstract_ServantBase;
@@ -94,17 +93,11 @@ public:
         TAO_default_environment ()
     );
 
-  virtual CORBA_IRObject_ptr _get_interface_def (
+  /// Get info about the object from the Interface Repository.
+  virtual CORBA_InterfaceDef_ptr _get_interface (
       CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-
-  virtual IR_InterfaceDef *_get_interface (
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  // Interface repository related operations.
 
   // DII operations to create a request.
   //

@@ -91,17 +91,25 @@ module IR
     dk_Value, 
     dk_ValueBox, 
     dk_ValueMember,
-    dk_Native,
-    dk_Component, 
-    dk_Home,
-    dk_Factory, 
-    dk_Finder, 
-    dk_PrimaryKey,
-    dk_Emits, 
-    dk_Publishes, 
-    dk_Consumes,
-    dk_Provides, 
-    dk_Uses
+    dk_Native
+
+    // CORBA 2.x specific.
+
+    ,dk_AbstractInterface
+    ,dk_LocalInterface
+
+    // CCM specific.
+
+    ,dk_Component
+    ,dk_Home
+    ,dk_Factory
+    ,dk_Finder
+    ,dk_PrimaryKey
+    ,dk_Emits 
+    ,dk_Publishes
+    ,dk_Consumes
+    ,dk_Provides
+    ,dk_Uses
   };
 };
 
@@ -184,6 +192,15 @@ module IR
   interface ValueDef;
   typedef sequence <ValueDef> ValueDefSeq;
   interface ValueBoxDef;
+  typedef sequence <Contained> ContainedSeq;
+
+  // CORBA 2.x specific.
+  interface AbstractInterfaceDef;
+  typedef sequence <AbstractInterfaceDef> AbstractInterfaceDefSeq;
+  interface LocalInterfaceDef;
+  typedef sequence <LocalInterfaceDef> LocalInterfaceDefSeq;
+  
+  // CCM specific.
   interface ComponentDef;
   typedef sequence <ComponentDef> ComponentDefSeq;
   interface ProvidesDef;
@@ -204,7 +221,6 @@ module IR
   interface FinderDef;
   typedef sequence <FinderDef> FinderDefSeq;
   interface PrimaryKeyDef;
-  typedef sequence <Contained> ContainedSeq;
 
   struct StructMember 
   {
@@ -306,9 +322,12 @@ module IR
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
-        in InterfaceDefSeq base_interfaces,
-        in boolean is_abstract,
-        in boolean is_local
+        in InterfaceDefSeq base_interfaces
+
+        /* CCM specific.
+        ,in boolean is_abstract
+        ,in boolean is_local 
+        */
       );
     ValueDef create_value (
         in RepositoryId id,
@@ -338,6 +357,21 @@ module IR
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version
+      );
+
+    // CORBA 2.x specific.
+
+    AbstractInterfaceDef create_abstract_interface (
+        in RepositoryId id,
+        in Identifier name,
+        in VersionSpec version,
+        in AbstractInterfaceDefSeq base_interfaces
+      );
+    LocalInterfaceDef create_local_interface (
+        in RepositoryId id,
+        in Identifier name,
+        in VersionSpec version,
+        in InterfaceDefSeq base_interfaces
       );
   };
 
@@ -411,6 +445,8 @@ module IR
         in short scale
       );
   };
+
+  // CCM specific.
 
   interface ComponentRepository : Repository
   {
@@ -573,8 +609,11 @@ module IR
     VersionSpec version;
     CORBA::TypeCode type;
     AttributeMode mode;
+
+    /* CCM specific.
     ExcDescriptionSeq get_exceptions;
     ExcDescriptionSeq put_exceptions;
+    */
   };
 
   enum OperationMode 
@@ -634,20 +673,44 @@ module IR
     // read/write interface
     attribute InterfaceDefSeq base_interfaces;
     // read interface
+
+    /* CCM specific.
     attribute boolean is_abstract;
     attribute boolean is_local;
+    */
+
     boolean is_a (
         in RepositoryId interface_id
       );
+
+    // CORBA 2.x specific.
+
+    struct FullInterfaceDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      OpDescriptionSeq operations;
+      AttrDescriptionSeq attributes;
+      RepositoryIdSeq base_interfaces;
+      CORBA::TypeCode type;
+    };
+
+    FullInterfaceDescription describe_interface ();
+
     // write interface
     AttributeDef create_attribute (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in IDLType type,
-        in AttributeMode mode,
-        in ExceptionDefSeq get_exceptions,
-        in ExceptionDefSeq put_exceptions
+        in AttributeMode mode
+
+        /* CCM specific.
+        ,in ExceptionDefSeq get_exceptions
+        ,in ExceptionDefSeq put_exceptions
+        */
       );
     OperationDef create_operation (
         in RepositoryId id,
@@ -667,12 +730,19 @@ module IR
     RepositoryId id;
     RepositoryId defined_in;
     VersionSpec version;
+
+    /* CCM specific
     OpDescriptionSeq operations;
     AttrDescriptionSeq attributes;
+    */
+
     RepositoryIdSeq base_interfaces;
+
+    /* CCM specific.
     CORBA::TypeCode type;
     boolean is_abstract;
     boolean is_local;
+    */
   };
 
   struct ValueMember 
@@ -709,6 +779,30 @@ module IR
     boolean is_a (
         in RepositoryId id
       );
+
+    // CORBA 2.x specific.
+
+    struct FullValueDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      boolean is_abstract;
+      boolean is_custom;
+      RepositoryId defined_in;
+      VersionSpec version;
+      OpDescriptionSeq operations;
+      AttrDescriptionSeq attributes;
+      ValueMemberSeq members;
+      InitializerSeq initializers;
+      RepositoryIdSeq supported_interfaces;
+      RepositoryIdSeq abstract_base_values;
+      boolean is_truncatable;
+      RepositoryId base_value;
+      CORBA::TypeCode type;
+    };
+
+    FullValueDescription describe_value ();
+      
     ValueMemberDef create_value_member (
         in RepositoryId id,
         in Identifier name,
@@ -721,9 +815,12 @@ module IR
         in Identifier name,
         in VersionSpec version,
         in IDLType type,
-        in AttributeMode mode,
-        in ExceptionDefSeq get_exceptions,
-        in ExceptionDefSeq put_exceptions
+        in AttributeMode mode
+
+        /* CCM specific
+        ,in ExceptionDefSeq get_exceptions
+        ,in ExceptionDefSeq put_exceptions
+        */
       );
     OperationDef create_operation (
         in RepositoryId id,
@@ -745,21 +842,40 @@ module IR
     boolean is_custom;
     RepositoryId defined_in;
     VersionSpec version;
+
+    /* CCM specific.
     OpDescriptionSeq operations;
     AttrDescriptionSeq attributes;
     ValueMemberSeq members;
     InitializerSeq initializers;
+    */
+
     RepositoryIdSeq supported_interfaces;
     RepositoryIdSeq abstract_base_values;
     boolean is_truncatable;
     RepositoryId base_value;
+    
+    /* CCM specific
     CORBA::TypeCode type;
+    */
   };
 
   interface ValueBoxDef : TypedefDef 
   {
     attribute IDLType original_type_def;
   };
+
+  // CORBA 2.x specific.
+
+  interface AbstractInterfaceDef : InterfaceDef 
+  {
+  };
+
+  interface LocalInterfaceDef : InterfaceDef 
+  {
+  };
+
+  // The rest of this file is CCM specific.
 
   interface ProvidesDef : Contained 
   {

@@ -16,7 +16,8 @@ DIRS = \
   IORManipulation \
   IORTable \
   Strategies \
-  SmartProxies
+  SmartProxies \
+  TypeCodeFactory
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
@@ -186,6 +187,7 @@ ORB_CORE_FILES = \
   TAO_Internal \
   TAO_Server_Request \
   Typecode_Constants \
+  TypeCodeFactory_Adapter \
   Single_Reactor \
   Wait_Strategy \
   Wait_On_Read \
@@ -276,10 +278,9 @@ ORB_CORE_FILES += \
   Services \
   NVList \
   IFR_Client_Adapter \
-  Dynamic_Adapter
-
-INTERFACE_REPO_FILES += \
-  IFR_TypeCodes
+  IFR_TypeCodes \
+  Dynamic_Adapter \
+  DynamicInterface_Adapter
 
 endif # minimum_corba
 
@@ -386,7 +387,7 @@ all.nested: all.local
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 
 ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  DIRS += IFR_Client Domain
+  DIRS += IFR_Client Domain TypeCodeFactory
 endif # ACE_HAS_GNUG_PRE_2_8
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU

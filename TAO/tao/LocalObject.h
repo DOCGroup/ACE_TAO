@@ -72,13 +72,8 @@ public:
       _get_implementation (CORBA_Environment &ACE_TRY_ENV =
                              TAO_default_environment ());
 
-  /// From CORBA 2.x version of Interface Repository spec.
-  virtual CORBA_IRObject_ptr _get_interface_def (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    );
-
-  /// From CORBA 3.x (CORBA Components) version of IFR spec.
-  virtual IR_InterfaceDef *_get_interface (
+  /// Gets info about object from the Interface Repository.
+  virtual CORBA_InterfaceDef_ptr _get_interface (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
 
@@ -108,7 +103,7 @@ public:
   /// throws NO_IMPLEMENT.
   virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
                                        CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
+                                         TAO_default_environment ());
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

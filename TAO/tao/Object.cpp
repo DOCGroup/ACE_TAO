@@ -367,34 +367,17 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
   return _tao_retval;
 }
 
-CORBA_IRObject_ptr
-CORBA_Object::_get_interface_def (CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_IFR_Client_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
 
-  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
-
-  return adapter->get_interface_def (orb.in (),
-                                     this->_interface_repository_id (),
-                                     ACE_TRY_ENV);
-}
-
-IR_InterfaceDef *
+CORBA_InterfaceDef_ptr
 CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_IFR_Client_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
-  CORBA::ORB_var orb = this->_stubobj ()->servant_orb_var ();
-
-  return adapter->get_interface (orb.in (),
-                                 this->_interface_repository_id (),
-                                 ACE_TRY_ENV);
+  // Perform the Call.
+  return the_proxy._get_interface (this, ACE_TRY_ENV);
 }
 
 CORBA::ImplementationDef_ptr

@@ -13,6 +13,7 @@ DIRS = \
 	Strategies \
         IFR_Client \
         Domain \
+        TypeCodeFactory \
         SmartProxies
 
 OBJFILES = \

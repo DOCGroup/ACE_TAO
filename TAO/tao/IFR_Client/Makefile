@@ -15,7 +15,11 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 ACE_SHLIBS = -lTAO -lACE
 
 
-CPP_SRCS += InterfaceC IFR_Client_Adapter_Impl
+CPP_SRCS += IFR_BaseC \
+            IFR_BasicC \
+            IFR_ExtendedC \
+            IFR_ComponentsC \
+            IFR_Client_Adapter_Impl
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))

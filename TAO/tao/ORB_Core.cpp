@@ -60,11 +60,17 @@ TAO_default_environment ()
 
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
-const char * TAO_ORB_Core::resource_factory_name_ = "Resource_Factory";
-const char * TAO_ORB_Core::protocols_hooks_name_ = "Protocols_Hooks";
-const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
-const char * TAO_ORB_Core::ifr_client_adapter_name_ = "IFR_Client_Adapter";
 
+const char * TAO_ORB_Core::resource_factory_name_ = 
+  "Resource_Factory";
+const char * TAO_ORB_Core::protocols_hooks_name_ = 
+  "Protocols_Hooks";
+const char * TAO_ORB_Core::dynamic_adapter_name_ = 
+  "Dynamic_Adapter";
+const char * TAO_ORB_Core::ifr_client_adapter_name_ = 
+  "IFR_Client_Adapter";
+const char * TAO_ORB_Core::typecodefactory_adapter_name_ = 
+  "TypeCodeFactory_Adapter";
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
@@ -1275,6 +1281,18 @@ TAO_ORB_Core::ifr_client_adapter_name (void)
   return TAO_ORB_Core::ifr_client_adapter_name_;
 }
 
+void
+TAO_ORB_Core::typecodefactory_adapter_name (const char *name)
+{
+  TAO_ORB_Core::typecodefactory_adapter_name_ = name;
+}
+
+const char *
+TAO_ORB_Core::typecodefactory_adapter_name (void)
+{
+  return TAO_ORB_Core::typecodefactory_adapter_name_;
+}
+
 TAO_Resource_Factory *
 TAO_ORB_Core::resource_factory (void)
 {
@@ -2151,9 +2169,9 @@ TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
-                                             "dynamic TypeCodeFactory Service_Object *"
-                                             "TypeCodeFactory_DLL:_make_TCF_Loader()"
-                                             );
+          "dynamic TypeCodeFactory Service_Object *"
+          "TAO_TypeCodeFactory:_make_TAO_TypeCodeFactory_Loader()"
+        );
       loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory");
       if (loader == 0)
