@@ -1,3 +1,12 @@
+Fri Nov 17 10:59:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicInterface/DynamicImplementation.cpp:
+	* tao/DynamicInterface/Server_Request.cpp:
+
+	  Fixed DSI exception handling. Thanks to 
+	  Mateu Batle <mbatle@iname.com> for reporting this
+	  bug.
+
 Fri Nov 17 08:23:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
