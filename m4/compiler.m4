@@ -182,6 +182,10 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
    *solaris2*)
      case "$CXX" in
        CC)
+         if test "$ace_user_enable_exceptions" != yes; then
+           CXXFLAGS="$CXXFLAGS -noex"
+         fi
+
          dnl Some flags only work with Sun C++ 4.2
          if (CC -V 2>&1 | egrep 'Compilers 4\.2' > /dev/null); then
            CXXFLAGS="$CXXFLAGS -features=castop"
@@ -190,10 +194,11 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
            fi 
          fi
 
-         if test "$ace_user_enable_exceptions" != yes; then
-           CXXFLAGS="$CXXFLAGS -noex"
+         dnl Sun C++ 5.0 weirdness
+         if (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
+           CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd -instances=explicit"
 
-           if (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
+           if test "$ace_user_enable_exceptions" != yes; then
              dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
              AC_DEFINE(_RWSTD_NO_EXCEPTIONS)
            fi
