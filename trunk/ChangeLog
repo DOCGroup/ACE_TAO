@@ -1,3 +1,8 @@
+Wed Oct  6 16:34:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_wchar.cpp: For ACE_HAS_WCHAR, #include "ace/OS_NS_string.h"
+	  since it's needed in some of the emulation methods.
+
 Wed Oct  6 14:50:53 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tests/Message_Queue_Test.cpp (iterator_test): Changed initial
