@@ -210,7 +210,7 @@ main (int argc, char **argv)
   while ((c = opts ()) != -1)
     switch (c)
       {
-      case 't':
+      case 'T':
       thread_count = (u_int) ACE_OS::atoi (opts.optarg);
       continue;
       default:
