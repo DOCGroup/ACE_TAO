@@ -1,3 +1,11 @@
+Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Arg_Shifter.{h,cpp}: Added macros ACE_Export and
+ 	  ACE_BUILD_DLL respectively.
+
+	* ace/ACE_Library.mak:
+	* ace/ace_{dll,lib}.dsp: Added Arg_Shifter.cpp into project.
+
 Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Addr: Made the destructor for ACE_Addr virtual so that
