@@ -1,3 +1,8 @@
+Mon Sep  9 16:44:00 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* THANKS: Suprirse of surprise, Gautam Thakers name was not there
+	  in the THANKS file. So added it.
+
 Mon Sep  9 16:57:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Asynch_IO.cpp (cancel): Don't sanity-check the
