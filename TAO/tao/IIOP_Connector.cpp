@@ -109,7 +109,6 @@ int
 TAO_IIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
                                   TAO_Transport_Descriptor_Interface *desc)
 {
-  TAO_Transport *&transport = invocation->transport ();
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
@@ -144,7 +143,7 @@ TAO_IIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
 
    int result = 0;
    TAO_IIOP_Connection_Handler *svc_handler = 0;
-   TAO_Transport *base_transport;
+
 
    if (TAO_debug_level > 2)
      ACE_DEBUG ((LM_DEBUG,
@@ -200,7 +199,8 @@ TAO_IIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
                  ACE_LIB_TEXT ("new connection on HANDLE %d\n"),
                  svc_handler->peer ().get_handle ()));
 
-   base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
+   TAO_Transport *base_transport =
+     TAO_Transport::_duplicate (svc_handler->transport ());
 
    // Add the handler to Cache
    int retval =
@@ -214,6 +214,19 @@ TAO_IIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
                    ACE_LIB_TEXT ("could not add the new connection to Cache \n")));
      }
 
+   // If the wait strategy wants us to be registered with the reactor
+   // then we do so.
+   retval =  base_transport->wait_strategy ()->register_handler ();
+
+   if (retval != 0 && TAO_debug_level > 0)
+     {
+       ACE_DEBUG ((LM_DEBUG,
+                   ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                   ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
+     }
+
+   // Handover the transport pointer to the Invocation class.
+   TAO_Transport *&transport = invocation->transport ();
    transport = base_transport;
 
    return 0;
