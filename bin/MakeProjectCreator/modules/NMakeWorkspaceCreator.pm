@@ -32,13 +32,7 @@ sub crlf {
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_modified_workspace_name('Makefile', '');
-}
-
-
-sub workspace_per_project {
-  #my($self) = shift;
-  return 1;
+  return $self->get_workspace_name() . '.mak';
 }
 
 
