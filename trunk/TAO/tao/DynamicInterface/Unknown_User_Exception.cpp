@@ -2,6 +2,8 @@
 
 #include "Unknown_User_Exception.h"
 #include "tao/Any.h"
+#include "tao/Environment.h"
+
 
 ACE_RCSID (DynamicInterface,
            Unknown_User_Exception,
@@ -10,7 +12,7 @@ ACE_RCSID (DynamicInterface,
 
 CORBA::UnknownUserException::UnknownUserException (void)
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
-                         "UnknownUserException"),
+                          "UnknownUserException"),
     exception_ (0)
 {
 }
