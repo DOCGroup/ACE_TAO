@@ -58,13 +58,7 @@ Repository_Configuration::open (void)
   // This method would have been called only if some kind of
   // persistence is to be used: either the ACE_Configuration_Heap
   // or the XML format of the file.
-  if (this->config_ == 0)
-    {
-      // The persistence file type is to be in XML format. Dont do
-      // anything here. Just return.
-      return 0;
-    }
-  else
+  if (this->config_ != 0)
     {
       // Open the configuration heap.
       ACE_Configuration_Heap *heap =
@@ -73,6 +67,9 @@ Repository_Configuration::open (void)
       ACE_ASSERT(heap != 0);
       return heap->open ();
     }
+
+  // The persistence file type is to be in XML format. Dont do
+  // anything here. Just return.
   return 0;
 }
 
@@ -154,20 +151,15 @@ Repository_Configuration::enumerate_sections (const ACE_Configuration_Section_Ke
                                               int Index,
                                               ACE_CString& name)
 {
-  if (this->config_ == 0)
-    {
-      return 0;
-      /// @@ May be I need to write the initial DTD etc stuff here.
-    }
-  else
+  if (this->config_ != 0)
     {
       return this->config_->enumerate_sections (key,
-                                              Index,
-                                              name);
+                                                Index,
+                                                name);
     }
 
+  /// @@ May be I need to write the initial DTD etc stuff here.
   return 0;
-
 }
 
 int
