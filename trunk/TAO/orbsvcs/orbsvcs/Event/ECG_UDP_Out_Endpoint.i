@@ -10,6 +10,16 @@ TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (void)
 {
 }
 
+ACE_INLINE
+TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (
+                                  const TAO_ECG_UDP_Out_Endpoint& rhs)
+  : port_number_ (0),
+    if_count_ (0),
+    ifs_ (0)
+{
+  *this = rhs;
+}
+
 ACE_INLINE ACE_SOCK_Dgram&
 TAO_ECG_UDP_Out_Endpoint::dgram (void)
 {

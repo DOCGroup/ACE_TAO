@@ -1,20 +1,39 @@
+Wed Mar 16 10:28:11 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+
+         Use reset() on the refcounted autopointer instead of assigning an
+          empty object.
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp:
+
+          Provide a copy constructor and assignment operator since we have a
+          pointer data member.
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+
+          Before passing the ECG_UDP_Out_Endpoint, make a copy to give to
+          the refcounted autopointer.
+
 Wed Mar 16 07:20:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
 
-	  Add empty Header_Files and Inline_Files sections to
-	  CosNotification_Persist project so MPC doesn't add unrelated
-	  files to project.
+          Add empty Header_Files and Inline_Files sections to
+          CosNotification_Persist project so MPC doesn't add unrelated
+          files to project.
 
-	* orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
 
-	  Add empty Header_Files and Inline_Files sections to
-	  RTCORBAEvent project so MPC doesn't add unreleated files to
-	  project.
+          Add empty Header_Files and Inline_Files sections to
+          RTCORBAEvent project so MPC doesn't add unreleated files to
+          project.
 
 Wed Mar 16 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -45,10 +64,10 @@ Wed Mar 16 10:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Mar 16 15:21:56 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Hang_Shutdown/test_i.h:
-	* tests/Hang_Shutdown/client.cpp:
+        * tests/Hang_Shutdown/test_i.h:
+        * tests/Hang_Shutdown/client.cpp:
 
-	  Fixed compile errors in emulated exception builds.
+          Fixed compile errors in emulated exception builds.
 
 Wed Mar 16 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -58,38 +77,38 @@ Wed Mar 16 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar 15 22:15:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* orbsvcs/orbsvcs/AVStreams.idl:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/tests/Property/main.cpp:
+        * orbsvcs/orbsvcs/AVStreams.idl:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/tests/Property/main.cpp:
 
-	  Update to use CosProperty.idl, etc.
+          Update to use CosProperty.idl, etc.
 
-	* orbsvcs/orbsvcs/CosProperty.mpc:
-	* orbsvcs/orbsvcs/CosProperty.idl:
-	* orbsvcs/orbsvcs/CosPropertyService.idl:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosProperty.idl:
+        * orbsvcs/orbsvcs/CosPropertyService.idl:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
 
-	  Current OMG specs refer to Property Service via CosProperty.idl
-	  instead of CosPropertyService.idl.  Rename *.idl file, but keep
-	  a wrapper version for backwards compatibility.
+          Current OMG specs refer to Property Service via CosProperty.idl
+          instead of CosPropertyService.idl.  Rename *.idl file, but keep
+          a wrapper version for backwards compatibility.
 
 Tue Mar 15 16:20:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
 Tue Mar 15 11:25:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Time_Server/Clerk_i.cpp:
-	* orbsvcs/Time_Server/Server_i.cpp:
+        * orbsvcs/Time_Server/Clerk_i.cpp:
+        * orbsvcs/Time_Server/Server_i.cpp:
 
-	  Change ACE_TRY/ACE_TRY_CHECK to ACE_TRY_EX/ACE_TRY_CHECK_EX
-	  to handle nested emulated exceptions.
+          Change ACE_TRY/ACE_TRY_CHECK to ACE_TRY_EX/ACE_TRY_CHECK_EX
+          to handle nested emulated exceptions.
 
 Tue Mar 15 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -109,9 +128,9 @@ Tue Mar 15 10:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar 15 15:24:37 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Hang_Shutdown/test_i.h :
+        * tests/Hang_Shutdown/test_i.h :
 
-	  Fixed compilation errors in VC6.
+          Fixed compilation errors in VC6.
 
 Tue Mar 15 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -124,59 +143,59 @@ Tue Mar 15 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Mar 14 12:22:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Callback_Quoter/Callback_Quoter.mpc:
-	* examples/Event_Comm/Event_Comm.mpc:
-	* examples/Logging/Logging.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Logging/Logging.mpc:
 
-	  Changed to inherit from naming instead of naming_serv.
+          Changed to inherit from naming instead of naming_serv.
 
-	* examples/Callback_Quoter/Notifier_Input_Handler.cpp:
-	* examples/Callback_Quoter/Notifier_Input_Handler.h:
-	* examples/Event_Comm/Notifier_Server.cpp:
-	* examples/Event_Comm/Notifier_Server.h:
-	* examples/Logging/Logging_Service_i.cpp:
-	* examples/Logging/Logging_Service_i.h:
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.h:
+        * examples/Event_Comm/Notifier_Server.cpp:
+        * examples/Event_Comm/Notifier_Server.h:
+        * examples/Logging/Logging_Service_i.cpp:
+        * examples/Logging/Logging_Service_i.h:
 
-	  Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
+          Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
 
 Mon Mar 14 12:05:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Simple/bank/bank.mpc:
-	* examples/Simple/echo/echo.mpc:
-	* examples/Simple/grid/grid.mpc:
-	* examples/Simple/time/time.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/echo/echo.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/Simple/time/time.mpc:
 
-	  Added inheritance from iortable (its inheritance was previously
-	  implicit via naming_serv).
+          Added inheritance from iortable (its inheritance was previously
+          implicit via naming_serv).
 
-	  Removed inheritance from naming_serv (they already inherit from
-	  namingexe).
+          Removed inheritance from naming_serv (they already inherit from
+          namingexe).
 
-	* examples/Simple/Simple_util.cpp:
-	* examples/Simple/Simple_util.h:
+        * examples/Simple/Simple_util.cpp:
+        * examples/Simple/Simple_util.h:
 
-	  Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
+          Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
 
 Mon Mar 14 07:49:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Concurrency_Service/Makefile.am:
-	* orbsvcs/Time_Service/Makefile.am:
+        * orbsvcs/Concurrency_Service/Makefile.am:
+        * orbsvcs/Time_Service/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
-	* orbsvcs/Time_Service/Time_Service.mpc:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.mpc:
+        * orbsvcs/Time_Service/Time_Service.mpc:
 
-	  Changed to inherit from naming instead of naming_serv.
+          Changed to inherit from naming instead of naming_serv.
 
-	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
-	* orbsvcs/Concurrency_Service/Concurrency_Service.h:
-	* orbsvcs/Time_Service/Clerk_i.cpp:
-	* orbsvcs/Time_Service/Clerk_i.h:
-	* orbsvcs/Time_Service/Server_i.cpp:
-	* orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.h:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Server_i.h:
 
-	  Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
+          Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
 
 Mon Mar 14 14:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -204,25 +223,25 @@ Mon Mar 14 10:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Mar 14 13:55:41 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Hang_Shutdown/*:
+        * tests/Hang_Shutdown/*:
 
-	  A new test for testing ORB hangs during shutdowns.
+          A new test for testing ORB hangs during shutdowns.
 
 Sun Mar 13 20:19:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
 
-	  Fixed compilation errors introduced by this change
+          Fixed compilation errors introduced by this change
 
-	  Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+          Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sun Mar 13 20:16:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Thread_Lane_Resources.cpp:
-	* tao/Transport.cpp (provide_handler):
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Transport.cpp (provide_handler):
 
-	  Fixed unused variable warnings in g++ builds.
+          Fixed unused variable warnings in g++ builds.
 
 Sat Mar 12 13:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -286,13 +305,13 @@ Fri Mar 11 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Mar 11 05:10:19 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tests/Bug_1476_Regression/client.cpp:
+        * tests/Bug_1476_Regression/client.cpp:
 
-	  Fixed a compilation error.
+          Fixed a compilation error.
 
-	* tests/Faults/test_i.cpp:
+        * tests/Faults/test_i.cpp:
 
-	  Fixed some debug statements.
+          Fixed some debug statements.
 
 Fri Mar 11 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -304,78 +323,78 @@ Fri Mar 11 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Mar 11 02:53:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Strategies/SCIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
 
-	  Fixed compilation errors in protocols other than IIOP.
+          Fixed compilation errors in protocols other than IIOP.
 
 Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>g
 
-	This checkin is mainly to address a problem with ORB
+        This checkin is mainly to address a problem with ORB
         shutdown. The problem shows up when a client ORB with RW strategy
         is communicating with a misbehaved server. It is possible that the
-	client sent a request to the server and is waiting for
-	replies. The server may not send back a reply at all. Meanwhile
-	the thread waiting for reply continues to wait even if the ORB is
-	shutdown making the process hang. This is simply ill behaviour.
+        client sent a request to the server and is waiting for
+        replies. The server may not send back a reply at all. Meanwhile
+        the thread waiting for reply continues to wait even if the ORB is
+        shutdown making the process hang. This is simply ill behaviour.
 
         * tao/Thread_Lane_Resources_Manager.h:
 
-	  Added a new pure virtual method cleanup_rw_transports () that
-	  can be overridden in concrete classes.
+          Added a new pure virtual method cleanup_rw_transports () that
+          can be overridden in concrete classes.
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Call cleanup_rw_transports () during shutdown ().
+          Call cleanup_rw_transports () during shutdown ().
 
-	* tao/Default_Thread_Lane_Resources_Manager.cpp:
+        * tao/Default_Thread_Lane_Resources_Manager.cpp:
         * tao/Default_Thread_Lane_Resources_Manager.h:
-	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
         * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
 
-	  Concrete implementations for cleanup_rw_transports (). The
-	  implementation just delegates it concrete lane resources that
-	  are maintained.
+          Concrete implementations for cleanup_rw_transports (). The
+          implementation just delegates it concrete lane resources that
+          are maintained.
 
-	* tao/Cache_Entries.cpp:
-	* tao/Cache_Entries.h:
-	* tao/Cache_Entries.inl:
+        * tao/Cache_Entries.cpp:
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
 
-	  Added the code in TAO namespace. Redefined a new state enum
-	  called Cache_Entries_State.
+          Added the code in TAO namespace. Redefined a new state enum
+          called Cache_Entries_State.
 
         * tao/Transport_Cache_Manager.cpp:
-	* tao/Transport_Cache_Manager.h:
-	* tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
 
-	  Moved the code into a namespace. Used the new new state enums
-	  defined in Cache_Entries.h to do lifecycle management of cache
-	  entries. Added a new method, blockable_client_transports ()
-	  which returns a list of transports that are opened as clients
-	  and are blocked on read/write (which basically boils down to RW
-	  strategy).
+          Moved the code into a namespace. Used the new new state enums
+          defined in Cache_Entries.h to do lifecycle management of cache
+          entries. Added a new method, blockable_client_transports ()
+          which returns a list of transports that are opened as clients
+          and are blocked on read/write (which basically boils down to RW
+          strategy).
 
         * tao/Connection_Handler.h:
 
-	  Moved release_os_resources () to be public so that they could be
-	  called from Thread_Lane_Manager during shutdown.
+          Moved release_os_resources () to be public so that they could be
+          called from Thread_Lane_Manager during shutdown.
 
-	* tao/Thread_Lane_Resources.cpp:
-	* tao/Thread_Lane_Resources.h:
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Thread_Lane_Resources.h:
 
-	  Actual work for cleanup_rw_transports (), which collects all
-	  transports opened as clients and close the socket handles
-	  underneath to wake waiting threads.
+          Actual work for cleanup_rw_transports (), which collects all
+          transports opened as clients and close the socket handles
+          underneath to wake waiting threads.
 
-	* tao/Transport.cpp:
-	* tao/Transport.h:
-	* tao/Transport.inl:
-	* tao/Transport_Connector.cpp:
-	* tao/IIOP_Connection_Handler.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport_Connector.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
 
-	  Changes propogated due to changes in the Transport_Cache_Manager
-	  interface.
+          Changes propogated due to changes in the Transport_Cache_Manager
+          interface.
 
 Fri Mar 11 08:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -817,26 +836,26 @@ Thu Mar 10 09:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Mar 10 03:37:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Leader_Follower.cpp:
+        * tao/Leader_Follower.cpp:
 
-	  Fixed some typos.
+          Fixed some typos.
 
 Wed Mar  9 23:04:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Leader_Follower.cpp (wait_for_event):
+        * tao/Leader_Follower.cpp (wait_for_event):
 
-	  Propogate the result of failure of handle_event () to the
-	  application.
+          Propogate the result of failure of handle_event () to the
+          application.
 
-	* tao/Leader_Follower.h:
+        * tao/Leader_Follower.h:
 
-	  Added some documention for wait_for_event ()'s return value.
+          Added some documention for wait_for_event ()'s return value.
 
 Wed Mar  9 14:20:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerate, fix paths to HTPB and Kokyu libraries.
+          Regenerate, fix paths to HTPB and Kokyu libraries.
 
 Wed Mar 09 21:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -887,62 +906,62 @@ Wed Mar 09 08:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar  8 22:08:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
-	* TAO_IDL/be_include/be_visitor_interface/thru_poa_proxy_impl_sh.h:
-	* TAO_IDL/be_include/be_visitor_interface/thru_poa_proxy_impl_ss.h:
-	* TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
+        * TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/thru_poa_proxy_impl_sh.h:
+        * TAO_IDL/be_include/be_visitor_interface/thru_poa_proxy_impl_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
 
-	  Removed these vesitigial files.
+          Removed these vesitigial files.
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_interface_strategy.cpp:
-	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
-	* TAO_IDL/be/be_visitor_component/component_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be_include/be_interface_strategy.h:
-	* TAO_IDL/be_include/be_visitor_interface.h:
-	* TAO_IDL/be_include/be_visitor_interface/smart_proxy_ch.h:
-	* TAO_IDL/be_include/be_visitor_interface/smart_proxy_cs.h:
-	* TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
-	* TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface_strategy.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/smart_proxy_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/smart_proxy_cs.h:
+        * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
 
-	  Cleaned up remaining thru-POA related code that is no longer
-	  necessary or is unused.
+          Cleaned up remaining thru-POA related code that is no longer
+          necessary or is unused.
 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 
-	  Only generate a strategized proxy broker for the direct
-	  collocation case.  A strategized proxy broker isn't needed for
-	  the thru-POA collocated case.  Reduces skeleton footprint by
-	  approximately 2.5Kb per interface.
+          Only generate a strategized proxy broker for the direct
+          collocation case.  A strategized proxy broker isn't needed for
+          the thru-POA collocated case.  Reduces skeleton footprint by
+          approximately 2.5Kb per interface.
 
-	  Generate a dummy collocation proxy broker factory function in
-	  the thru-POA collocation case that returns a dummy
-	  TAO::Collocation_Proxy_Broker pointer (i.e. "0xdead").  The
-	  collocation code in TAO's ORB_Core still detects collocation
-	  availability by checking for a non-zero pointer.  That value
-	  will not be used for the thru-POA case.  A valid collocation
-	  proxy broker factory function is still generated for the direct
-	  collocation case.
+          Generate a dummy collocation proxy broker factory function in
+          the thru-POA collocation case that returns a dummy
+          TAO::Collocation_Proxy_Broker pointer (i.e. "0xdead").  The
+          collocation code in TAO's ORB_Core still detects collocation
+          availability by checking for a non-zero pointer.  That value
+          will not be used for the thru-POA case.  A valid collocation
+          proxy broker factory function is still generated for the direct
+          collocation case.
 
 Tue Mar  8 17:22:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
 Tue Mar 08 21:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -951,29 +970,29 @@ Tue Mar 08 21:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar 08 12:26:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/get_arg.h:
+        * tao/PortableServer/get_arg.h:
 
-	  Moved thru-POA/skeleton argument selection function templates
-	  out of generated skeletons and into this new file.
+          Moved thru-POA/skeleton argument selection function templates
+          out of generated skeletons and into this new file.
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Generate include directive for new get_arg.h header file when
-	  thru-POA collocation support is enabled and an unconstrained
-	  interface is seen.
+          Generate include directive for new get_arg.h header file when
+          thru-POA collocation support is enabled and an unconstrained
+          interface is seen.
 
-	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
 
-	  Since MSVC++ 6 cannot handle typedefs that depend on template
-	  parameters, explicitly specify the return argument type in a
-	  second template parameter for the get_*_arg<>() function
-	  templates.
+          Since MSVC++ 6 cannot handle typedefs that depend on template
+          parameters, explicitly specify the return argument type in a
+          second template parameter for the get_*_arg<>() function
+          templates.
 
-	* TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
 
-	  Remove thru-POA/skeleton argument selection function template
-	  generation.  Those templates are now in the PortableServer
-	  library.
+          Remove thru-POA/skeleton argument selection function template
+          generation.  Those templates are now in the PortableServer
+          library.
 
 Tue Mar 08 10:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
