@@ -859,7 +859,7 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
 // supported only for standard data types.
 
 void
-CORBA_Any::dump (const CORBA::Any any_value)
+CORBA_Any::dump (const CORBA::Any &any_value)
 {
   CORBA::Environment env;
 
