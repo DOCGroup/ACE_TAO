@@ -1,3 +1,8 @@
+Sun Mar 21 21:26:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: fixed error status when building ACE+TAO.
+          Thanks to Doug for reporting this.
+
 Sun Mar 21 21:16:02 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.31 released.
@@ -8,63 +13,63 @@ Sun Mar 21 20:45:57 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Mar 21 18:39:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ACE.ifnames:
+        * ACE.ifnames:
 
-	Updated with new macro list.
-	
-	* Makefile.am:
+        Updated with new macro list.
 
-	Added the m4 directory to the distribution list and made some
-	minor updates.
-	
-	* ace/Makefile.am: 
-	* m4/subsets.m4:
+        * Makefile.am:
 
-	Subsetting updates/corrections.
+        Added the m4 directory to the distribution list and made some
+        minor updates.
 
-	* configure.in:
+        * ace/Makefile.am:
+        * m4/subsets.m4:
 
-	Added work around for buggy glibc2.1 when including both
-	<ucontext.h> and <sys/procfs.h>.  Added check for auto_ptr class
-	declaration since some platforms have <memory> but may not
-	declare the auto_ptr class.  Shortened some of the "checking"
-	messages.
+        Subsetting updates/corrections.
 
-	* ace-config.1.in:  ace-config script man page template
-	* aceConf.sh.in:    ace-config "unknown" library script
-	
-	Added these files to the CVS repository.
+        * configure.in:
 
-	* config.guess:
-	* config.sub:
-	* ltconfig:
-	* ltmain.sh:
+        Added work around for buggy glibc2.1 when including both
+        <ucontext.h> and <sys/procfs.h>.  Added check for auto_ptr class
+        declaration since some platforms have <memory> but may not
+        declare the auto_ptr class.  Shortened some of the "checking"
+        messages.
 
-	Updated these files to the ones in the latest libtool.
+        * ace-config.1.in:  ace-config script man page template
+        * aceConf.sh.in:    ace-config "unknown" library script
 
-	* libtool:
+        Added these files to the CVS repository.
 
-	Removed this since it is automatically generated for each platform.
-  	It shouldn't be under CVS control.
-	
+        * config.guess:
+        * config.sub:
+        * ltconfig:
+        * ltmain.sh:
+
+        Updated these files to the ones in the latest libtool.
+
+        * libtool:
+
+        Removed this since it is automatically generated for each platform.
+        It shouldn't be under CVS control.
+
 Sun Mar 21 17:59:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp: 
+        * ace/CDR_Stream.cpp:
           Fixed a problem with ACE_OutputCDR::write_octet_array_mb, thanks
           to Dave Meyer <dmeyer@std.saic.com> for isolating and reporting
-	  this bug again [it was fixed in TAO and somehow it crept to the
-	  ACE version of the CDR classes].
+          this bug again [it was fixed in TAO and somehow it crept to the
+          ACE version of the CDR classes].
 
 Sun Mar 21 17:42:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record): 
-	  Use ACE_NTOHL macro instead of system ntohl() to get around bug
- 	  in egcs-2.91.6x.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
+          Use ACE_NTOHL macro instead of system ntohl() to get around bug
+          in egcs-2.91.6x.
 
 Sun Mar 21 16:07:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/config-g++-common.h (ACE_HAS_USING_KEYWORD):
-	  Define ACE_HAS_USING_KEYWORD for egcs 1.1.x.
+        * ace/config-g++-common.h (ACE_HAS_USING_KEYWORD):
+          Define ACE_HAS_USING_KEYWORD for egcs 1.1.x.
 
 Sun Mar 21 09:44:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
