@@ -1,3 +1,11 @@
+Mon Jan 19 11:24:43 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/sequence_T.i: 
+	  g++ does not like nested types in templates.
+
+	* docs/releasenotes/index.html: 
+	  Updated docs on services.
+
 Sun Jan 18 21:33:21 1998    <coryan@MILONGA>
 
 	* tao/sequence.h: 
