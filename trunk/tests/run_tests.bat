@@ -81,7 +81,7 @@ call %0 %dopure% Thread_Mutex_Test
 call %0 %dopure% Thread_Pool_Test
 call %0 %dopure% Timer_Queue_Test
 call %0 %dopure% Timeprobe_Test
-call %0 %dopure% Time_Service_Test
+if exist ..\netsvcs\servers\main.exe call %0 %dopure% Time_Service_Test
 call %0 %dopure% Time_Value_Test
 call %0 %dopure% Tokens_Test
 call %0 %dopure% TSS_Test
