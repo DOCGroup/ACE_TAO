@@ -34,26 +34,21 @@ The tests have been run on a wide range of platforms (e.g., UNIX,
 pSOS, VxWorks, LynxOS, Windows NT/2000/95/98/etc.) and they all work
 with the following exceptions:
 
-1. Naming_Test, MEM_Stream_Test, Malloc_Test, and
-   MM_Shared_Memory_Test on Windows 98/95/ME: these do not work on
-   Windows 9x since Windows 9x has a different model for shared memory
-   and does not support explicitly selecting shared memory addresses.
-
-2. UPIPE_Test and SPIPE_Test on Windows 95: these do not work on
+1. UPIPE_Test and SPIPE_Test on Windows 95: these tests don't run on
    Windows 95 since Windows 95 does not support the server side
    functionality of accepting connections from clients using named pipes.
 
-3. Proactor_Test (to be added) on Windows 95: this does not work on
+2. Proactor_Test (to be added) on Windows 95: this test does not run on
    Windows 95 since Windows 95 does not support I/O completion ports.
 
-4. Of the tests (believed) relevant to the single threaded port to pSOSim,
+3. Of the tests (believed) relevant to the single threaded port to pSOSim,
    Sigset_Ops_Test, Sock_Connector_Test, Priority_Reactor_Test,
    Process_Strategy_Test, and Service_Config_Test are still failing.
    These are being debugged and will either be corrected or, if there
    are unsupported features in these tests, removed from the test suite for
    pSOSim.
 
-5. The set of tests for pSOSim will be expanded to include those that require
+4. The set of tests for pSOSim will be expanded to include those that require
    multiple threads, with the release of the multi-threaded port to pSOSim.
 
 Notes:
