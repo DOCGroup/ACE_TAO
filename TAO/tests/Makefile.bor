@@ -9,6 +9,7 @@ DIRS = \
         Bidirectional \
         Bidirectional_NestedUpcall \
         Big_Oneways \
+        Big_Request_Muxing \
         Big_Twoways \
         Blocking_Sync_None \
 	CDR \
@@ -54,6 +55,7 @@ DIRS = \
 	Policies \
         Portable_Interceptors \
         QtTests \
+        Queued_Message_Test \
 	Reliable_Oneways \
 	RTCORBA \
 	Server_Leaks \
