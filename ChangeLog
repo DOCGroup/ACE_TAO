@@ -1,3 +1,8 @@
+Thu Jan 22 18:08:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/ThreadPools/ThreadPool.cpp: Don't ACE_ASSERT action
+	  that needs to be performed regardless of the ACE_NDEBUG setting.
+
 Thu Jan 22 13:25:49 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-sunos5.5.h:
@@ -8,6 +13,7 @@ Thu Jan 22 13:25:49 2004  Chad Elliott  <elliott_c@ociweb.com>
           config-sunos5.7.h, since it has it.
 
 Wed Jan 22 10:33:47 2004  Scott Harris <harris_s@ociweb.com>
+
         * bin/MakeProjectCreator/config/wxwindows.mpb
         * include/makeinclude/platform_linux.GNU
         * include/makeinclude/platform_linux_borland.GNU

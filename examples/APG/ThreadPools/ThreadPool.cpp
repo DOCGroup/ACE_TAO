@@ -22,16 +22,17 @@ public:
 class Worker : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Worker (IManager *manager) : manager_(manager)
-  { }
+  Worker (IManager *manager) : manager_(manager) { }
 
   virtual int svc (void)
   {
     thread_id_ = ACE_Thread::self ();
     while (1)
       {
-        ACE_Message_Block *mb = NULL;
-        ACE_ASSERT (this->getq (mb) != -1);
+        ACE_Message_Block *mb = 0;
+        if (this->getq (mb) == -1)
+          ACE_ERROR_BREAK
+            ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
         if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
             ACE_DEBUG ((LM_INFO,
@@ -39,18 +40,16 @@ public:
             mb->release ();
             break;
           }
-
         // Process the message.
         process_message (mb);
-
         // Return to work.
         this->manager_->return_to_work (this);
       }
 
     return 0;
   }
-
   // Listing 2
+
   ACE_thread_t thread_id (void)
   {
     return thread_id_;
