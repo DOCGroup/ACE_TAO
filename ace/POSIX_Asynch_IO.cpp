@@ -3562,26 +3562,21 @@ ACE_POSIX_AIOCB_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                          int priority,
                                          int signal_number)
 {
- 
-
-
-
   // Create the Asynch_Result.
   ACE_POSIX_Asynch_Read_Dgram_Result *result = 0;
   ACE_NEW_RETURN (result,
     ACE_POSIX_Asynch_Read_Dgram_Result (*this->handler_,
-                                          this->handle_,
-                                          message_block,
-                                          num_bytes_to_read,
-                                          flags,
-                                          protocol_family,
-                                          act,
-                                          this->posix_aiocb_proactor_->get_handle (),
-                                          priority,
-                                          signal_number),
-                                          -1);
+                                        this->handle_,
+                                        message_block,
+                                        num_bytes_to_read,
+                                        flags,
+                                        protocol_family,
+                                        act,
+                                        this->posix_aiocb_proactor_->get_handle (),
+                                        priority,
+                                        signal_number),
+                  -1);
   
-
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
   
   // try start read
@@ -3627,52 +3622,45 @@ ACE_POSIX_SIG_Asynch_Read_Dgram::~ACE_POSIX_SIG_Asynch_Read_Dgram (void)
 ssize_t
 ACE_POSIX_SIG_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                        u_long num_bytes_to_read,
-                                       size_t &number_of_bytes_recvd,
                                        int flags,
                                        int protocol_family,
                                        const void *act,
                                        int priority,
                                        int signal_number)
 {
- 
- 
-
-
   // Create the Asynch_Result.
   ACE_POSIX_Asynch_Read_Dgram_Result *result = 0;
   ACE_NEW_RETURN (result,
     ACE_POSIX_Asynch_Read_Dgram_Result (*this->handler_,
-                                          this->handle_,
-                                          message_block,
-                                          num_bytes_to_read,
-                                          flags,
-                                          protocol_family,
-                                          act,
-                                          this->posix_sig_proactor_->get_handle (),
-                                          priority,
-                                          signal_number),
-                                          -1);
+                                        this->handle_,
+                                        message_block,
+                                        num_bytes_to_read,
+                                        flags,
+                                        protocol_family,
+                                        act,
+                                        this->posix_sig_proactor_->get_handle (),
+                                        priority,
+                                        signal_number),
+                  -1);
 
-  // do the scatter/gather recv
+  // Do the scatter/gather recv.
   size_t bytes_recvd = 0;
   int initiate_result = aio_read (result);
-  if(initiate_result==-1)
-  {
-  
-  ACE_ERROR_RETURN ((LM_ERROR,
-	  "Error:%N%l:%p\n",
-	  "Asynch_Read_Stream: aio_read queueing failed"),
-	  -1);
-  }
+
+  if (initiate_result == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:%N%l:%p\n",
+                       "Asynch_Read_Stream: aio_read queueing failed"),
+                      -1);
 
   return initiate_result;
 }
 
 int
 ACE_POSIX_SIG_Asynch_Read_Dgram::open (ACE_Handler &handler,
-                                   ACE_HANDLE handle,
-                                   const void *completion_key,
-                                   ACE_Proactor *proactor)
+                                       ACE_HANDLE handle,
+                                       const void *completion_key,
+                                       ACE_Proactor *proactor)
 {
   return ACE_POSIX_SIG_Asynch_Operation::open (handler,
                                            handle,

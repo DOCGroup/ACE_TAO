@@ -1707,7 +1707,7 @@ public:
  *
  */
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
-                                               public ACE_POSIX_AIOCB_Asynch_Operation
+                                                     public ACE_POSIX_AIOCB_Asynch_Operation
 {
 public:
   /// Constructor.
@@ -1717,7 +1717,7 @@ public:
   /// Recv <buffer_count> worth of <buffers> from <addr> using
   /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
   virtual ssize_t recv (ACE_Message_Block *message_block,
-                        size_t &number_of_bytes_recvd,
+                        u_long num_bytes_to_read,
                         int flags,
                         int protocol_family,
                         const void *act,
@@ -1904,7 +1904,6 @@ public:
                         int priority,
                         int signal_number);
   
-
   // = Methods belonging to <ACE_POSIX_AIOCB_Asynch_Operation> base class.
 
   // These methods are defined here to avoid VC++ warnings. They route
@@ -2074,7 +2073,7 @@ protected:
  *
  */
 class ACE_Export ACE_POSIX_SIG_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
-                                               public ACE_POSIX_SIG_Asynch_Operation
+                                                   public ACE_POSIX_SIG_Asynch_Operation
 {
 public:
   /// Constructor.
@@ -2084,7 +2083,7 @@ public:
   /// Recv <buffer_count> worth of <buffers> from <addr> using
   /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
   virtual ssize_t recv (ACE_Message_Block *message_block,
-                        size_t &number_of_bytes_recvd,
+                        u_long num_bytes_to_read,
                         int flags,
                         int protocol_family,
                         const void *act,
@@ -2137,7 +2136,7 @@ protected:
  *     <ACE_Handler::handle_write_stream> callback.
  */
 class ACE_Export ACE_POSIX_SIG_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_Dgram_Impl,
-                                                public ACE_POSIX_SIG_Asynch_Operation
+                                                    public ACE_POSIX_SIG_Asynch_Operation
 {
 public:
   /// Constructor.

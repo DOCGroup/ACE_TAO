@@ -170,9 +170,9 @@ public:
                                                                               int flags,
                                                                               int protocol_family,
                                                                               const void* act,
-                                                                              ACE_HANDLE event,
-                                                                              int priority,
-                                                                              int signal_number = 0) = 0;
+                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                              int priority = 0,
+                                                                              int signal_number = ACE_SIGRTMIN) = 0;
   
   /// Create the correct implementation class for ACE_Asynch_Write_Dgram::Result.
   virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result (ACE_Handler &handler,
@@ -181,9 +181,9 @@ public:
                                                                                 size_t bytes_to_write,
                                                                                 int flags,
                                                                                 const void* act,
-                                                                                ACE_HANDLE event,
-                                                                                int priority,
-                                                                                int signal_number = 0) = 0;
+                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                                int priority = 0,
+                                                                                int signal_number = ACE_SIGRTMIN) = 0;
 
   /// Create the correct implementation class for ACE_Asynch_Accept::Result.
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
