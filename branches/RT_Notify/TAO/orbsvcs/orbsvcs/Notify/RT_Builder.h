@@ -36,9 +36,6 @@ public:
   /// Destructor
   virtual ~TAO_NS_RT_Builder ();
 
-  /// Build the Filter Factory.
-  virtual CosNotifyFilter::FilterFactory_ptr build_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
-
   /// Apply Thread Pools.
   virtual void apply_thread_pool_concurrency (TAO_NS_Object& object, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL);
 
