@@ -276,9 +276,9 @@
 
 // Always use WS2 when available
 #if (ACE_HAS_WINNT4 != 0)
-	#if !defined(ACE_HAS_WINSOCK2)
+  //	#if !defined(ACE_HAS_WINSOCK2)
 		#define ACE_HAS_WINSOCK2 1
-	#endif
+  //	#endif
 #endif
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
