@@ -3,7 +3,7 @@
 #ifndef BATTLE_CIDL
 #define BATTLE_CIDL
 
-#include "Engagement.idl"
+#include "Battle.idl"
 
 composition session Battle_Impl
 {
