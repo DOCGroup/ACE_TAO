@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:390
+// be\be_codegen.cpp:398
 
 #ifndef _TAO_IDL_ORIG_DOMAINS_H_
 #define _TAO_IDL_ORIG_DOMAINS_H_
@@ -485,7 +485,7 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:997
+// be\be_codegen.cpp:1005
 
 #include "DomainS_T.h"
 
