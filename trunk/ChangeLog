@@ -1,3 +1,13 @@
+Tue Mar  2 22:58:40 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+          Rewrote the output generation to be more human readable
+          by using standard makefile techniques.  Also, discovered
+          a bug in the dependencies (that was also present prior
+          to this change) since it's now easier to grok the
+          generated makefile.  I'll fix it once I've checked in
+          all the other MPC changes in my queue. 
+
 Tue Mar  2 12:28:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bmake.mpd:
