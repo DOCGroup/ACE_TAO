@@ -189,6 +189,7 @@ private:
   /// The <Handle_Set> we are iterating through.
   const ACE_Handle_Set &handles_;
 
+  /// Index of the bit we're examining in the current <word_num_> word.
 #if defined (ACE_WIN32)
   u_int handle_index_;
 #elif !defined (ACE_HAS_BIG_FD_SET)
@@ -197,7 +198,6 @@ private:
   int handle_index_;
   u_long oldlsb_;
 #endif /* ACE_WIN32 */
-  // Index of the bit we're examining in the current <word_num_> word.
 
   /// Number of the word we're iterating over (typically between 0..7).
   int word_num_;

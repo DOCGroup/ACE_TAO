@@ -12,7 +12,7 @@
  *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
- *  @author and Prashant Jain
+ *  @author Prashant Jain
  */
 //=============================================================================
 

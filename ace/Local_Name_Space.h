@@ -8,7 +8,7 @@
  *
  *  @author Prashant Jain (pjain@cs.wustl.edu)
  *  @author Irfan Pyarali (irfan@wuerl.wustl.edu)
- *  @author and Douglas C. Schmidt (schmidt@cs.wustl.edu).
+ *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu).
  */
 //=============================================================================
 
