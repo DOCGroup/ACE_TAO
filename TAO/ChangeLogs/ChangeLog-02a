@@ -1,3 +1,9 @@
+Sun Mar 11 09:02:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/echo/Echo_i.h:
+	* examples/Simple/bank/AccountManager_i.h: Added a operator= to
+	  keep g++ 2.7.2 happy 
+
 Sun Mar 11 07:04:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: Fixed a warning in
