@@ -1,3 +1,19 @@
+Sat Apr 27 18:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService.bor:
+        * orbsvcs/orbsvcs/IFRService.rc:
+          Added new files to build new IFRService library
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Added new IFRService library
+
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+          Updated BCB makefile to use new IFRService library
+
+        * orbsvcs/orbsvcs/ETCL.rc:
+        * orbsvcs/orbsvcs/ETCL.bor:
+          Added resource file
+
 Fri Apr 26 19:15:05 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/IFRService.dsp:
