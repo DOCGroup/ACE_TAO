@@ -1,3 +1,23 @@
+Thu Jan 08 17:48:49 1998    <coryan@CHA-CHA>
+
+	* Naming_Service/NS_CosNaming.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	  ACE_NESTED is only needed in the generated code.
+
+	* Scheduling_Service/Scheduling_Service.cpp: 
+	  MSVC++ 5.0 seems to have a bug: if the implementation for the
+	  scheduling service is stored into a RtecScheduler::Scheduler_ptr
+	  then the server crashes; this is OK in other platforms and looks
+	  OK since the pointers are in fact compatible.
+
+	* tests/Event_Latency/Event_Latency.cpp: 
+	  Removed some warnings by using "CORBA::ULong" instead of "int"
+	  in comparisons against sequence<>::length.
+
+	* Dump_Schedule/Dump_Schedule.dsp: 
+	* orbsvcs/orbsvcs_lib.dsp: 
+	  Fixed some names and missing options.
+
 Thu Jan 08 15:55:21 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tao/objtable.cpp: 
