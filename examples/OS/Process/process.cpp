@@ -23,8 +23,12 @@
 
 #if defined (ACE_WIN32)
 #define EXEC_NAME "c:\\WINNT35\\system32\\MORE.COM"
+const char *DATE_PATH = "c:\\Utils\\bin\\date.exe";
+const char *LS_PATH = "c:\\Utils\\bin\\ls.exe";
 #else
-#define EXEC_NAME "cat";
+#define EXEC_NAME "/pkg/gnu/bin/less"
+const char *DATE_PATH = "/usr/bin/date";
+const char *LS_PATH = "/usr/bin/ls";
 #endif /* ACE_WIN32 */
 
 static char *executable = EXEC_NAME;
@@ -41,10 +45,11 @@ static int run_tokenizer = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "dlx:p:e:gast");
+  ACE_Get_Opt get_opt (argc, argv, "dlx:p:e:gastu");
   int c;
 
   while ((c = get_opt ()) != -1)
+    {
     switch (c)
       {
       case 't':
@@ -74,6 +79,7 @@ parse_args (int argc, char **argv)
       case 'g':
 	get_env = 1;
 	break;
+      case 'u':
       default:
 	ACE_ERROR_RETURN ((LM_ERROR, "Usage:\n"
 			   "-d print date\n"
@@ -87,6 +93,7 @@ parse_args (int argc, char **argv)
 			   "-a run all (d,l,e \"running\")\n"), -1);
 	break;
       }
+    }
 
   return 0;
 }
@@ -126,7 +133,7 @@ static void
 test_date (void)
 {
   ACE_Process_Options options;
-  options.path ("c:\\Utils\\bin\\date.exe");
+  options.path (DATE_PATH);
 
   // Try to create a new process running date.
   ACE_ProcessEx new_process;
@@ -142,10 +149,29 @@ test_date (void)
   ACE_DEBUG ((LM_DEBUG, "date succeeded.\n"));
 }
 
+static void
+test_ls (void)
+{
+  ACE_Process_Options options;
+  options.path (LS_PATH);
+  options.cl_options ("-al");
+  
+  ACE_ProcessEx new_process;
+  if (new_process.start (options) == -1)
+    {
+      int error = ACE_OS::last_error ();
+      ACE_ERROR ((LM_ERROR, "%p errno = %d.\n",
+		  "test_ls", error));
+    }
+
+  new_process.wait ();
+}
+
+#if defined (ACE_WIN32)
 // This is just to test the direct usage of CreateProcess.  I use this
 // occasionally as a sanity check when ACE_Process breaks.
 static void
-test_ls (void)
+win32_test_ls (void)
 {
   PROCESS_INFORMATION process_info;
   STARTUPINFO startup_info;
@@ -198,7 +224,7 @@ test_ls (void)
 // since CreateProcess does not allow us to inherit AND add
 // environment variables.
 static void
-spawn_environment_process (void)
+win32_spawn_environment_process (void)
 {
   PROCESS_INFORMATION process_info;
   STARTUPINFO startup_info;
@@ -288,6 +314,7 @@ spawn_environment_process (void)
       ACE_DEBUG ((LM_ERROR, "spawn_environment_process succeeded.\n"));
     }
 }
+#endif
 
 static void
 test_setenv (const char *argv0)
@@ -295,7 +322,7 @@ test_setenv (const char *argv0)
   ACE_Process_Options options;
   options.setenv ("ACE_PROCESS_TEST", "here's a really large number: %u", 0 - 1);
   options.path (argv0);
-  options.cl_options ("-d -g");
+  options.cl_options ("-g");
   ACE_ProcessEx process;
   if (process.start (options) == -1)
     {
@@ -351,9 +378,6 @@ main (int argc, char *argv[])
       process.wait ();
     }
 
-  if (run_ls)
-    ::test_ls ();
-
   if (run_date)
     ::test_date ();
 
@@ -368,8 +392,13 @@ main (int argc, char *argv[])
 		  value == 0 ? "no value" : value));
     }
 
+  if (run_ls)
+    ::test_ls ();
+
+#if defined (ACE_WIN32)
   if (environment_string != 0)
-    spawn_environment_process ();
+    win32_spawn_environment_process ();
+#endif /* ACE_WIN32 */
 
   if (print_file != 0)
     test_more ();

@@ -1,10 +1,33 @@
 This example shows how to use ACE_Process to "portably" create new
-processes and set their standard handles (stdin, stdout, and stderr).
-On UNIX, ACE_Process uses fork and exec.  On Win32, it uses
-CreateProcess.  Since we can set the standard handles, we can mimic
-UNIX pipes on Win32 by building chains of processes.
+processes.  The ACE_Process_Options class allows applications to
+portably specify path, command-line arguments, environment variable
+values.  It also allows applications to set the new process' standard
+handles (stdin, stdout, and stderr).  ACE_Process is created with the
+ACE_Process_Options and can be used to perform operations on the
+running process.  
 
-Run the application by typing ./process [filename].  It creates a new
-process to print the contents of <filename> (default is the name of
-the file "process.cpp") to the main console.  So all you should see is
-process.cpp printed to the screen.  Not very exciting...
+Run the application as ./process -u to get all the command-line
+options.
+
+Here's an example output:
+
+lambada:OS/Process> ./process -a
+starting...
+starting...
+Fri May  9 01:01:06 CDT 1997
+date succeeded.
+total 598
+drwxr-xr-x   5 harrison doc          512 May  9 00:47 .
+-rw-r--r--   1 harrison doc         9330 May  7 23:54 .#process.cpp.4.3
+drwxr-xr-x   4 harrison doc          512 Apr 21 15:32 ..
+drwx------   2 harrison doc          512 May  8 22:33 .obj
+drwx------   2 harrison doc          512 May  8 22:33 .shobj
+drwxr-xr-x   2 harrison doc          512 May  8 00:11 CVS
+-rw-r--r--   1 harrison doc         1717 Oct 21  1996 Makefile
+-rw-r--r--   1 harrison doc        10048 Oct 21  1996 Process.mak
+-rw-r--r--   1 harrison doc        44032 Oct 21  1996 Process.mdp
+-rw-r--r--   1 harrison doc          585 Oct 21  1996 README
+-rwx--x--x   1 harrison doc       212992 May  9 01:00 process
+-rw-r--r--   1 harrison doc         9960 May  9 01:00 process.cpp
+-rw-------   1 harrison doc         1042 May  9 00:47 process.wst
+
