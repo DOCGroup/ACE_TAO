@@ -465,13 +465,22 @@ IDL_GlobalData::set_read_from_stdin (idl_bool r)
 
 // Have we seen this #include file name before?
 long
-IDL_GlobalData::seen_include_file_before (UTL_String *n)
+IDL_GlobalData::seen_include_file_before (char *n)
 {
   unsigned long i;
+  char *incl = 0;
+  char *tmp = n;
+
+  if (n[0] == '.')
+    {
+      tmp = n + 2;
+    }
 
   for (i = 0; i < this->pd_n_include_file_names; ++i)
     {
-      if (n->compare (this->pd_include_file_names[i]))
+      incl = this->pd_include_file_names[i]->get_string ();
+
+      if (ACE_OS::strcmp (tmp, incl) == 0)
         {
           // We use the index value in the function below. We
           // add 1 so a match on the first try will not return 0.
@@ -489,7 +498,7 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
   UTL_String **o_include_file_names;
   unsigned long o_n_alloced_file_names;
   unsigned long i;
-  long seen = this->seen_include_file_before (n);
+  long seen = this->seen_include_file_before (n->get_string ());
 
   // Check if we need to store it at all or whether we've seen it already.
   if (seen)
@@ -954,11 +963,22 @@ IDL_GlobalData::update_prefix (char *filename)
     }
 
   ACE_CString tmp ("", 0, 0);
-  ACE_CString fn (filename, 0, 0);
-  (void) this->file_prefixes_.trybind (fn, tmp);
+  char *main_filename = this->pd_main_filename->get_string ();
 
-  if (ACE_OS::strcmp (fstring, this->pd_main_filename->get_string ()) != 0
-      && this->pragma_prefixes_.size () > 1)
+  // The first branch is executed if we are finishing an
+  // included IDL file (but the current filename has not yet
+  // been changed). So we check for (1) the current filename is
+  // not the same as the main filename (2) the prefix stack size
+  // is greater than 1 (to skip the case where we are passed the
+  // temporary filename) and (3) we have either seen the filename
+  // passed in before as an included file or we are passed the
+  // main filename. Otherwise we know we are beginning an included
+  // file, so we push a blank prefix on the stack, which may
+  // possibly be changed later.
+  if (ACE_OS::strcmp (fstring, main_filename) != 0
+      && this->pragma_prefixes_.size () > 1
+      && (this->seen_include_file_before (filename) != 0
+          || ACE_OS::strcmp (filename, main_filename) == 0))
     {
       char *trash = 0;
       this->pragma_prefixes_.pop (trash);
