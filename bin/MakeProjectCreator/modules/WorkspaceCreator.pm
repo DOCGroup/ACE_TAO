@@ -617,6 +617,15 @@ sub generate_project_files {
       if ($impl && -d $file) {
         $dir  = $file;
         $file = '';
+
+        ## If the implicit assignment value was not a number, then
+        ## we will add this value to our base projects.
+        if ($impl !~ /^\d+$/) {
+          my($bps) = $generator->get_baseprojs();
+          push(@$bps, split(/\s+/, $impl));
+          $restore = 1;
+          $self->{'cacheok'} = 0;  
+        }
       }
 
       ## Generate the key for this project file
@@ -691,11 +700,10 @@ sub generate_project_files {
       ## Return things to the way they were
       if (defined $self->{'scoped_assign'}->{$ofile}) {
         $impl = $previmpl;
-
-        if ($restore) {
-          $self->{'cacheok'} = $prevcache;
-          $generator->restore_state(\%gstate);
-        }
+      }
+      if ($restore) {
+        $self->{'cacheok'} = $prevcache;
+        $generator->restore_state(\%gstate);
       }
     }
     else {
@@ -845,7 +853,7 @@ sub process_cmdline {
       ## Determine if it's ok to use the cache
       my(@cacheInvalidating) = ('global', 'include', 'baseprojs',
                                 'template', 'ti', 'relative',
-                                'addtemp', 'addproj');
+                                'addtemp', 'addproj', 'feature_file');
       foreach my $key (@cacheInvalidating) {
         if ($self->is_set($key, $options)) {
           $self->{'cacheok'} = 0;

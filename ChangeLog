@@ -1,7 +1,22 @@
+Tue Jul 29 07:46:58 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Change the way the 'implicit' keyword works.  It now takes both
+          boolean values and character strings that represent base projects
+          for implicitly generated projects.  See the README for more
+          details.
+
+        * examples/examples.mwc:
+
+          Utilize the new 'implicit' functionality.
+
 Mon Jul 28 22:00:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/footprint_stats.sh: Added new libraries that were not
-	  covered. 
+        * bin/footprint_stats.sh: Added new libraries that were not
+          covered.
 
 Mon Jul 28 15:06:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -23,16 +38,16 @@ Mon Jul 28 18:29:38 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Jul 28 13:01:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/UUID.h:
-	* ace/UUID.cpp: The implementations are now placed in a namespace
-	  ACE_Utils. Since we can now use namespaces, adding them to a
-	  namspace made more sense.
+        * ace/UUID.h:
+        * ace/UUID.cpp: The implementations are now placed in a namespace
+          ACE_Utils. Since we can now use namespaces, adding them to a
+          namspace made more sense.
 
         * ace/UUID.i: File UUID.i is now renamed to be UUID.inl
-	
-	* ace/UUID.inl: New file. 
-	
-	* tests/UUIDTest.cpp: Changes to confirm to the above changes. 
+
+        * ace/UUID.inl: New file.
+
+        * tests/UUIDTest.cpp: Changes to confirm to the above changes.
 
 Mon Jul 28 12:49:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
