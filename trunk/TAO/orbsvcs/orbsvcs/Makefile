@@ -68,10 +68,11 @@ RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h: RtecEve
 RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h: RtecEventChannelAdmin.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 
+clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
  
 realclean: clean
-	-/bin/rm -rf CosNamingC.* CosNamingS.* 
+	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

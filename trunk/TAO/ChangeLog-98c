@@ -1,3 +1,9 @@
+Thu Dec 18 15:50:01 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  realclean was not removing all the IDL compiler generated
+	  files.
+
 Thu Dec 18 15:06:23 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	Thanks to Keith Nicewarner <knicewar@sanders.com>, Tom Richards
 	<tomr@mcmenterprise.com>, and Carlos O'Ryan <coryan@cs.wustl.edu>
