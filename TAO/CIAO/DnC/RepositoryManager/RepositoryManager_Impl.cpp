@@ -33,7 +33,8 @@ installPackage (const char* installation_name,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
   pc_handler.process_PackageConfiguration (this->pc_);
-  Deployment::DnC_Dump::dump (this->pc_);
+  //Deployment::DnC_Dump::dump (this->pc_);
+  this->pc_table_.bind (installation_name, &(pc_));
 }
 
 void
@@ -56,6 +57,11 @@ findPackageByName (const char* name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
+  Deployment::PackageConfiguration* pc = 0;
+  if (pc_table_.find (name, pc) == 0)
+    {
+      return pc;
+    }
 }
 
 Deployment::PackageConfiguration*
