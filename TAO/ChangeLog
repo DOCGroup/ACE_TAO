@@ -1,3 +1,16 @@
+Wed Oct 15 08:21:33 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.i:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.i:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i:
+          Fixed fuzz error about incorrect file tag.
+
 Tue Oct 14 20:01:10  2003  Kevin Bryan  <bryank@cs.uri.edu>
 
         * orbsvcs/orbsvcs/Makefile:
