@@ -1,3 +1,18 @@
+Sun Jul 29 00:22:30 2001  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Simple/time-date/svc.conf:
+
+	  The support for nested Service Configurator directive processing
+	  that was just added to ACE made it possible to greatly simply
+	  this `svc.conf' file.  It is no longer necessary to pre-load
+	  services that are by default loaded by the ORB.  It is also no
+	  longer necessary to use the "-ORBSkipServiceConfigOpen" ORB
+	  option since the Service Configurator is now
+	  reentrant/thread-safe.
+
+	  Instead of the nine Service Configurator directives that were
+	  listed in this file, only three of them are now necessary.
+
 Sat Jul 28 23:29:21 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Internal.cpp (open_services_i):
