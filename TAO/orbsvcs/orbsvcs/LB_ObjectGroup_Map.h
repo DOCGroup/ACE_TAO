@@ -58,6 +58,18 @@ public:
   TAO_SYNCH_MUTEX lock;
 };
 
+/**
+ * @class TAO_LB_ObjectGroup_Map
+ *
+ * @brief Class that encapsulates hash map operations on an underlying
+ *        object group map.
+ *
+ * This class contains all the operations necessary to manipulate the
+ * underlying object group map.  The canonical hash map operations are
+ * supported, in addition to some other operations needed for mapping
+ * object group reference (rather than ObjectId) to object group map
+ * entry.
+ */
 class TAO_LB_ObjectGroup_Map
 {
 public:
@@ -69,6 +81,9 @@ public:
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
     TAO_SYNCH_MUTEX> Table;
+
+  /// Forward STL-style iterator typedef.
+  typedef Table::iterator iterator;
 
   /// Constructor
   TAO_LB_ObjectGroup_Map (void);
@@ -89,6 +104,14 @@ public:
 
   /// Unbind the given ObjectId from the map.
   int unbind (const PortableServer::ObjectId &oid);
+
+  /// Return forward iterator that points to the beginning of the
+  /// underlying object group map.
+  iterator begin (void);
+
+  /// Return forward iterator that points to the end of the underlying
+  /// object group map.
+  iterator end (void);
 
   //@}
 
@@ -115,6 +138,12 @@ private:
   Table table_;
 
 };
+
+
+#if defined (__ACE_INLINE__)
+#include "LB_ObjectGroup_Map.inl"
+#endif  /* __ACE_INLINE__ */
+
 #include "ace/post.h"
 
 #endif  /* TAO_LB_OBJECTGROUP_MAP_H */
