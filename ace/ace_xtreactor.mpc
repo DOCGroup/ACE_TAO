@@ -2,7 +2,6 @@
 // ace_xtreactor.mpc,v
 
 project(ACE_XtReactor) : acedefaults, aceversion, core, acelib, ace_xt {
-  requires += ace_xtreactor
 
   sharedname   = ACE_XtReactor
   dynamicflags = ACE_XTREACTOR_BUILD_DLL
