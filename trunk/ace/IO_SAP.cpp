@@ -138,6 +138,7 @@ ACE_IO_SAP::disable (int value) const
   return 0;
 #else
   ACE_UNUSED_ARG (value);
+  ACE_NOTSUP_RETURN (-1); 
 #endif /* !ACE_WIN32 */
 }
 
