@@ -1,3 +1,12 @@
+Fri Feb 27 15:03:58 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/connect.cpp (handle_input): Added call to
+ 	Reactor::suspend_handler() in here so that, in the bizarre corner
+ 	case where sub-event loop "A" eventually leads to sub-sub-event
+ 	loop "B" being called, but input becomes available for "A"'s
+ 	descriptor prior to "B"'s descriptor, B's loop won't spin wildly,
+ 	gobbling up CPU.
+
 Fri Feb 27 15:00:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.i (hrtime_to_TimeT): with
