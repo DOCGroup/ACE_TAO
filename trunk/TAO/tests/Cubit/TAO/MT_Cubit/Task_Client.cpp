@@ -123,6 +123,11 @@ Task_State::Task_State (int argc, char **argv)
       datatype_ = CB_OCTET;
     }
   
+  if (use_utilization_test_ == 1)
+    {
+      thread_count_ = 1;      
+    }
+
   // allocate the array of character pointers.
   ACE_NEW (iors_,
            char *[thread_count_]);

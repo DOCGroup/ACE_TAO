@@ -80,7 +80,6 @@ void
 output_taskinfo (void)
 {
   FILE *file_handle = 0;
-  char buffer[BUFSIZ];
   
   if ((file_handle = ACE_OS::fopen ("taskinfo.txt", "w")) == 0)
     perror ("open");
@@ -150,7 +149,12 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                             Task_State *ts)
 {
   int i;
-  u_int j, k;
+  u_int j;
+
+  ACE_High_Res_Timer timer_;
+  ACE_Time_Value delta_t;
+
+  timer_.start ();
 
 #if defined (VXWORKS) 
   char * task_id = 0;
@@ -170,7 +174,6 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 
   double util_task_duration = 0.0;
   double total_latency = 0.0;
-  double total_latency_low = 0.0;
   double total_latency_high = 0.0;
   double total_util_task_duration = 0.0;
 
@@ -207,26 +210,24 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   // Store the time in micro-seconds.
   util_task_duration = pstopTime - pstartTime;
 #else /* CHORUS */
-  ACE_High_Res_Timer timer_;
   // Elapsed time will be in microseconds.
-  ACE_Time_Value delta_t;
   timer_.start ();
-  // execute one computation.
-  for (k=0; k < 1000; k++)
+  // execute computations.
+  for (i = 0; i < 10000; i++)
     util_thread.computation ();
   timer_.stop ();
   timer_.elapsed_time (delta_t);
   // Store the time in milli-seconds.
   util_task_duration = (delta_t.sec () * 
 			ACE_ONE_SECOND_IN_MSECS + 
-			(double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS) / 1000;
+			(double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS) / 10000;
 #endif /* !CHORUS */
 
   // The thread priority 
   ACE_Sched_Priority priority;
 
 #if defined (VXWORKS) 
-  // set a task_id string startiing with "@", so we are able to
+  // set a task_id string starting with "@", so we are able to
   // accurately count the number of context switches.
   strcpy (task_id, "@High");
 #endif /* VXWORKS */
@@ -457,6 +458,9 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) >>>>>>> ending test on %D\n"));
 
+  timer_.stop ();
+  timer_.elapsed_time (delta_t);
+
   if (ts->use_utilization_test_ == 1)
     // signal the utilization thread to finish with its work..
     // only if utilization test was specified.  See
@@ -543,13 +547,14 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 
   if (ts->use_utilization_test_ == 1)
   {
-    for (j = 0; j < ts->loop_count_/ts->granularity_; j ++)
-      total_latency_high += (ts->global_jitter_array_[0][j] * ts->granularity_);
-    
     total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
     
-    total_latency = total_latency_high + total_util_task_duration;
-    
+    total_latency = (delta_t.sec () * 
+                     ACE_ONE_SECOND_IN_MSECS + 
+                     (double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS);    
+
+    total_latency_high = total_latency - total_util_task_duration;
+
     // Calc and print the CPU percentage. I add 0.5 to round to the
     // nearest integer before casting it to int.
     ACE_DEBUG ((LM_DEBUG, 
@@ -726,25 +731,21 @@ main (int argc, char *argv[])
                           -1);
     }
 
+  ACE_High_Res_Timer timer_;
+  ACE_Time_Value delta_t;
+
 #if 0   // this is a debug section that will be removed soon.  1/6/98
   ACE_DEBUG ((LM_MAX, "<<<<<Delay of 5 seconds>>>>>\n"));
 
-  ACE_High_Res_Timer *timer_;
-  ACE_Time_Value delta_t;
-
-  ACE_NEW_RETURN (timer_,
-		  ACE_High_Res_Timer,
-		  -1);
-  timer_->start ();
+  timer_.start ();
 
   const ACE_Time_Value delay (5L, 0L);
   ACE_OS::sleep (delay);
 
-  timer_->stop ();
-  timer_->elapsed_time (delta_t);
+  timer_.stop ();
+  timer_.elapsed_time (delta_t);
 
   ACE_DEBUG ((LM_DEBUG, "5secs= %u secs, %u usecs\n", delta_t.sec (), delta_t.usec ()));
-  delete timer_;
 #endif
 
   initialize ();
@@ -758,7 +759,7 @@ main (int argc, char *argv[])
   // Initialize the PCC timer Chip
   pccTimerInit();
 
-  if(pccTimer(PCC2_TIMER1_START,&pTime) !=K_OK)
+  if(pccTimer(PCC2_TIMER1_START,&pTime) != K_OK)
     {
       printf("pccTimer has a pending benchmark\n");
     }
