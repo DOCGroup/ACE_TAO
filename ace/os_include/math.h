@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// FUZZ: disable check_for_math_include
+
 #if !defined (ACE_LACKS_MATH_H)
 # include /**/ <math.h>
 #endif /* !ACE_LACKS_MATH_H */

@@ -248,6 +248,8 @@ public:
    * these two methods in the  TP_Reactor to keep some compilers
    * silent.
    */
+  using ACE_Select_Reactor::register_handler;
+
   virtual int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = 0,
