@@ -63,6 +63,13 @@ public:
   // print all the values
 
 private:
+  // called by the 2 public versions of check_validity
+  CORBA::Boolean
+  Test_String_Sequence::check_validity_engine (const Param_Test::StrSeq &the_in,
+                                               const Param_Test::StrSeq &the_inout,
+                                               const Param_Test::StrSeq &the_out,
+                                               const Param_Test::StrSeq &the_ret);
+
   char *opname_;
   // operation name
 
@@ -77,6 +84,12 @@ private:
 
   Param_Test::StrSeq_var ret_;
   // return value
+
+  Param_Test::StrSeq dii_out_;
+  // DII out parameter
+
+  Param_Test::StrSeq dii_ret_;
+  // DII return value
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H */
