@@ -415,12 +415,12 @@ Cubit_Client::cube_sequence (int i)
 	  this->error_count_++;
 	}
 
-      int l = output.length ();
+      u_int l = output.length ();
       if (input.length () < l)
 	{
 	  l = input.length ();
 	}
-      for (int j = 0; j < l; ++j)
+      for (u_int j = 0; j < l; ++j)
 	{
 	  int x = input[j];
 	  if (x*x*x != output[j])
