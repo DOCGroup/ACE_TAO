@@ -69,7 +69,7 @@ Mon Oct 20 07:49:54 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/run_tests.vxworks: re-enabled Buffer_Stream_Test now that
 	  ACE_OS::cond_timedwait () is supported on VxWorks.
 
-	* examples/IPC-SAP/TLI-SAP/ftp-server.cpp (main): removed call
+	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp (main): removed call
 	  to ACE_Thread_Manager::open () because it no longer is available.
 
 Mon Oct 20 06:21:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
