@@ -16,7 +16,7 @@ ACE_RCSID (SSLIOP,
 
 TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
-  : TAO_Endpoint (TAO_TAG_IIOP_PROFILE),
+  : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
     object_addr_ (),
     next_ (0),
     iiop_endpoint_ (iiop_endp)
@@ -65,6 +65,9 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
       // that does not contain an SSLIOP tagged component.
       this->ssl_component_.port = 0;
     }
+
+  // Invalidate the Addr until the first attempt to use it is made.
+  this->object_addr_.set_type (-1);
 }
 
 TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
@@ -74,10 +77,21 @@ TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
 int
 TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  // @@ Marina, this is broken.  You're returning the IIOP address,
-  //    not the SSLIOP one, meaning that the port will be incorrect.
-  return
-    this->iiop_endpoint_->addr_to_string (buffer, length);
+  size_t actual_len =
+    ACE_OS::strlen (this->iiop_endpoint_->host ()) // chars in host name
+    + sizeof (':')                                 // delimiter
+    + ACE_OS::strlen ("65536")                     // max port
+    + sizeof ('\0');
+
+  if (length < actual_len)
+    return -1;
+
+  ACE_OS::sprintf (buffer,
+                   "%s:%d",
+                   this->iiop_endpoint_->host (),
+                   this->ssl_component_.port);
+
+  return 0;
 }
 
 void

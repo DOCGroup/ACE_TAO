@@ -1,3 +1,18 @@
+Sat Sep 29 18:58:06 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
+	  (TAO_SSLIOP_Endpoint):
+
+	  Invalidate the object_addr until the first attempt to use it is
+	  made.  Needed for the double checked locking optimization
+	  described below.
+
+	  (addr_to_string):
+
+	  Fixed this method so that it returns the correct stringified
+	  address.  Previously it was returning the stringified non-SSL
+	  INET_Addr instead of the stringified SSL INET_Addr.
+
 Sat Sep 29 18:07:55 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Endpoint.i (object_addr):
