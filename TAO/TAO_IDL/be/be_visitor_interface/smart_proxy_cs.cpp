@@ -288,9 +288,18 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       << be_uidt_nl;
   
   *os << "{" << be_idt_nl
-      << "return ACE_dynamic_cast ( "<< node->local_name() 
-      << "_ptr, base_proxy_.in ());"
-      << be_uidt_nl << "}" << be_nl << be_nl;
+      << "// Obtain the real proxy stored in <base_proxy_>" << be_nl
+      << "if (CORBA::is_nil (this->proxy_.in ()))" << be_idt_nl
+      << "{" << be_idt_nl
+      << "// Necessary to do this else you are stuck in an infinte loop" <<be_nl
+      << "// creating smart proxies!" <<be_nl
+      << "TAO_"<< node->flat_name ()
+      <<"_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();"
+      << be_nl << "this->proxy_ = " << "::" << node->full_name ()
+      << "::_unchecked_narrow (this->base_proxy_.in ());"
+      << be_uidt_nl << "}" << be_nl << be_nl
+      << "return this->proxy_.in ();" << be_uidt_nl
+      << "}" << be_nl << be_nl;
   
   os->indent ();
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \\"
