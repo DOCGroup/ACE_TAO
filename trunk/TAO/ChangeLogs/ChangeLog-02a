@@ -203,9 +203,8 @@ Thu Apr 25 16:36:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	  (shutdown):
 
-	  For the sake of consistency, set the cached pointer to the
-	  TAO_PI_Current object to zero.  Obviously, it should no longer
-	  be used after this point.
+	  Set the cached pointer to the TAO_PICurrent object to zero to
+	  make it obvious that the object no longer exists.
 
 Thu Apr 25 16:42:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
