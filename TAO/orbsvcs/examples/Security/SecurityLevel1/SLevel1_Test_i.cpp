@@ -6,21 +6,24 @@
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(SecurityLevel1, SLevel1_Test_i, "$Id$")
+ACE_RCSID (SecurityLevel1,
+           SLevel1_Test_i,
+           "$Id$")
 
 static int authorize_1 = 1;
 static int authorize_2 = 1;
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level1 (CORBA::Environment &)
+SLevel1_Server_i::authorize_level1 (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
  
   /// Get a reference to the SecurityCurrent object.
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("SecurityCurrent");
-  
-  /// Narrow it down correctly. 
+    orb->resolve_initial_references ("SecurityCurrent", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+    /// Narrow it down correctly. 
   SecurityLevel1::Current_var current =
     SecurityLevel1::Current::_narrow (obj.in ());
   
