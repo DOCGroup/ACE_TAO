@@ -1,4 +1,4 @@
-// $:Id$
+// $Id$
 //
 // FILE  
 //   Program to test the property services.
