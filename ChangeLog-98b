@@ -1,6 +1,14 @@
 Wed Aug  5 11:07:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Queue_T.i: Changed the computation of is_empty_() so
+	* ace/Message_Queue_T.i: Changed the computation of is_empty_i()
+	  so that it's
+	  
+	  return this->cur_bytes_ <= this->low_water_mark_ || this->cur_count_ <= 0;
+
+	  i.e., we use an || rather than a &&.  Thanks to Umar for
+ 	  reporting this.
+
+	* ace/Message_Queue_T.i: Changed the computation of is_empty_i() so
  	  that it doesn't consider the queue to be empty unless the
  	  cur_bytes_ <= the low_water_mark_ (which defaults to 0 so that
  	  no existing code is affected).  This change makes it possible
