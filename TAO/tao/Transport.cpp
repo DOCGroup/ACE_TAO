@@ -76,7 +76,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         {
           ACE_TCHAR header[1024];
           ACE_OS::sprintf (header,
-                           ACE_TEXT("TAO - ") DUMP_IOV_PREFIX ACE_TEXT(" (")
+                           ACE_TEXT("TAO (%P|%t) - ") DUMP_IOV_PREFIX ACE_TEXT(" (")
                            ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT("/")
                            ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT(")\n"),
                            id, location, offset, iov_len);
