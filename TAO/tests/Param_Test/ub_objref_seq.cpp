@@ -93,7 +93,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
           // set the attribute for the in object
           Coffee_ptr tmp = this->in_[i];
 
-          tmp->description (desc, 
+          tmp->description (desc,
                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -202,14 +202,14 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
 
     }
   ACE_ENDTRY;
-  (return -1;
+  return -1;
 }
 
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   ACE_TRY
     {
       this->compare (this->in_,
@@ -221,7 +221,7 @@ Test_ObjRef_Sequence::check_validity (void)
                      this->out_.in (),
                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->compare (this->in_,
                      this->ret_.in (),
                      ACE_TRY_ENV);
@@ -231,7 +231,7 @@ Test_ObjRef_Sequence::check_validity (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_ObjRef_Sequence::check_validity");
 
     }
@@ -318,7 +318,7 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_ObjRef_Sequence::compare");
 
     }
