@@ -1,3 +1,17 @@
+Wed May 13 19:20:27 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS.cpp: Added a substitute gets implementation for when
+	  ACE_LACKS_GETS.  The substitute is actually safer than gets, so
+	  I may end up making gets call the new routine instead of
+	  Standard C's.
+
+	* ace/config-g++-common.h: Changed the g++ common file so that
+	  2.8.1 acts like EGCS does.  This worked on Solaris 2.5.1.  We'll
+	  see how other's fare.
+
+
 Wed May 13 18:13:12 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.3 released.
@@ -8,7 +22,7 @@ Wed May 13 11:29:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  My previous change to add print_results functionality when
 	  ACE_HAS_GETRUSAGE broke this on Win32.
 
-	* ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS): 
+	* ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS):
 	  Made this macro defined for all versions of g++.
 
 Wed May 13 09:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
@@ -20,9 +34,9 @@ Tue May 12 15:16:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/config-WinCE.h:
 	* ace/OS.h: Stopped using non-static object manager for CE.  This
 	  is causing some problem at process shutdown.
-	
+
 	* ace/Acceptor.cpp: Made CE friendly.
-	
+
 	* ace/Process.cpp ([~]ACE_Process_Options): Moved things around to
 	  avoid compilation errors on CE.  Secret: CE doesn't have
 	  environment variables.
