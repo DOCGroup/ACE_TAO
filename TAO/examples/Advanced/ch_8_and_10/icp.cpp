@@ -211,7 +211,7 @@ actual_temp(const StateMap::iterator & pos)
 //---------------------------------------------------------------
 
 
-#if (_MSC_VER >= 1200) && (_MSC_VER < 1300)
+#if (_MSC_VER < 1300)
 namespace std
 {
     size_t min (const size_t len1, const size_t len2)
