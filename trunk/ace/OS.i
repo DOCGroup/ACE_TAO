@@ -3523,6 +3523,23 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #else
   if (name)
     {
+#if defined (sun) || defined (HPUX)
+      // Solaris and HP-UX require the name to start with a slash. Solaris
+      // further requires that there be no other slashes than the first.
+      const char *last_slash = ACE_OS::strrchr (name, '/');
+      char name2[MAXPATHLEN];
+      if (0 == last_slash)
+        {
+          ACE_OS::strcpy (name2, "/");
+          ACE_OS::strcat (name2, name);
+          name = name2;
+        }
+# if defined (sun)
+      else
+        name = last_slash;         // Chop off chars preceding last slash
+# endif /* sun */
+#endif /* sun || HPUX */
+
       ACE_ALLOCATOR_RETURN (s->name_,
                             ACE_OS::strdup (name),
                             -1);
