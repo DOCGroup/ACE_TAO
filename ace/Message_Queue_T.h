@@ -415,7 +415,7 @@ protected:
    * is not changed.  In either case, however, no messages are removed
    * from the queue.  Returns WAS_INACTIVE if queue was inactive before
    * the call and WAS_ACTIVE if queue was active before the call.  */
-  virtual int deactivate_i (int pulse);
+  virtual int deactivate_i (int pulse = 0);
 
   /// Activate the queue.
   virtual int activate_i (void);
