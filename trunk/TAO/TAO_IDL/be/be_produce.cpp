@@ -82,11 +82,6 @@ TAO_IDL_BE_Export void
 BE_cleanup (void)
 {
   idl_global->destroy ();
-  delete idl_global;
-  idl_global = 0;
-
-  delete be_global;
-  be_global = 0;
 }
 
 // Abort this run of the BE.

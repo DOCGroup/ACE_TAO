@@ -85,8 +85,6 @@ void
 BE_cleanup (void)
 {
   idl_global->destroy ();
-  delete idl_global;
-  idl_global = 0;
 
   // Remove the holding scope entry from the repository.
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -114,9 +112,6 @@ BE_cleanup (void)
                            ACE_TEXT ("BE_cleanup"));
     }
   ACE_ENDTRY;
-
-  delete be_global;
-  be_global = 0;
 }
 
 // Abort this run of the BE.

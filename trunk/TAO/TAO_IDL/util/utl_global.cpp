@@ -1037,25 +1037,6 @@ IDL_GlobalData::destroy (void)
     }
 
   this->pd_root->destroy ();
-  delete this->pd_root;
-  this->pd_root = 0;
-
-  delete this->pd_err;
-  this->pd_err = 0;
-  delete this->pd_gen;
-  this->pd_gen = 0;
-  delete this->pd_indent;
-  this->pd_indent = 0;
-  delete [] this->pd_local_escapes;
-  this->pd_local_escapes = 0;
-  delete [] this->tao_root_;
-  this->tao_root_ = 0;
-  delete [] this->gperf_path_;
-  this->gperf_path_ = 0;
-  delete [] this->temp_dir_;
-  this->temp_dir_ = 0;
-  delete [] this->ident_string_;
-  this->ident_string_ = 0;
 }
 
 void
@@ -1483,3 +1464,27 @@ IDL_GlobalData::check_gperf (void)
     }
 }
 
+void
+IDL_GlobalData::fini (void)
+{
+  this->pd_root->fini ();
+  delete this->pd_root;
+  this->pd_root = 0;
+
+  delete this->pd_err;
+  this->pd_err = 0;
+  delete this->pd_gen;
+  this->pd_gen = 0;
+  delete this->pd_indent;
+  this->pd_indent = 0;
+  delete [] this->pd_local_escapes;
+  this->pd_local_escapes = 0;
+  delete [] this->tao_root_;
+  this->tao_root_ = 0;
+  delete [] this->gperf_path_;
+  this->gperf_path_ = 0;
+  delete [] this->temp_dir_;
+  this->temp_dir_ = 0;
+  delete [] this->ident_string_;
+  this->ident_string_ = 0;
+}

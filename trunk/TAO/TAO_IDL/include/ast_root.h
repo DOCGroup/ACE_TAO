@@ -95,6 +95,9 @@ public:
 
   // Cleanup.
   virtual void destroy ();
+  
+  // Final cleanup.
+  void fini (void);
 
 private:
   friend class FE_Declarator;
