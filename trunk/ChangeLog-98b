@@ -1,3 +1,11 @@
+Thu Sep 17 18:33:19 EDT 1998  James CE Johnson  <jcej@lads.com>
+
+        * docs/tutorials/002/server.pp
+
+	  Added necessary templates for explicit instantiation.
+	  Thanks to Krishna Padmasola for providing the proper code
+	  and to Clinton Carr for reminding me to do it!
+
 Thu Sep 17 11:23:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS: Modified ACE_THR_FUNC so that its signature is always
