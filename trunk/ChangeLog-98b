@@ -1,3 +1,8 @@
+Sun Jun 21 23:54:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Defined
+	  ACE_LACKS_MUTEXATTR_PSHARED and ACE_LACKS_CONDATTR_PSHARED.
+
 Sun Jun 21 10:14:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp (server): Fixed
