@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/signal.inl
+ *    pace/win32/signal.inl
  *
  * = AUTHOR
  *    Luther Baker

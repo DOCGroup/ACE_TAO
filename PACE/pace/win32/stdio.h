@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/stdio.h
+ *    pace/win32/stdio.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -428,7 +428,7 @@ typedef FILE PACE_FILE;
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/stdio.inl"
+# include "pace/win32/stdio.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_STDIO_H */

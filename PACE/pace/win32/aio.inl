@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/aio.inl
+ *    pace/win32/aio.inl
  *
  * = AUTHOR
  *    Luther Baker

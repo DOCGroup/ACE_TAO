@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/math.h
+ *    pace/win32/math.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -181,7 +181,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/math.inl"
+# include "pace/win32/math.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_MATH_H */

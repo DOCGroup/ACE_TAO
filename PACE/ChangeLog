@@ -1,7 +1,13 @@
+Wed Jul  5 13:25:34 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/*
+
+	  Removed (posix ace) from files.
+
 Wed Jul 05 12:49:20 2000    <luther@cs.wustl.edu>
 
 	* PACE/config/platform.h
-	  
+
 	  WIN32 doesn't use the makefile.
 	  #define PACE_WIN32 2000
 

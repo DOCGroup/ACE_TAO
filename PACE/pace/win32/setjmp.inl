@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/setjmp.inl
+ *    pace/win32/setjmp.inl
  *
  * = AUTHOR
  *    Luther Baker

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/assert.inl
+ *    pace/win32/assert.inl
  *
  * = AUTHOR
  *    Joe Hoffert
