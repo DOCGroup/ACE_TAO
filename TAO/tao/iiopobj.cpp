@@ -17,17 +17,22 @@ IIOP::Profile::Profile (const IIOP::Profile &src)
   assert (src.iiop_version.major == MY_MAJOR);
   assert (src.iiop_version.minor == MY_MINOR);
 
-  ACE_OS::strcpy (host, src.host);
+  // Free up our host if we've got one.
+  if (this->host)
+    ACE_OS::free (host);
+  
+  this->host = ACE_OS::strdup (src.host);
 
   object_key.length = src.object_key.length;
   object_key.maximum = src.object_key.length;
 
   //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
-  object_key.buffer = new CORBA::Octet [object_key.maximum];
+  this->object_key.buffer = new CORBA::Octet [object_key.maximum];
 
- (void) ACE_OS::memcpy (object_key.buffer,
-                        src.object_key.buffer,
-                        object_key.length);
+  (void) ACE_OS::memcpy (this->object_key.buffer,
+                         src.object_key.buffer,
+                         this->object_key.length);
+  this->set_object_addr ();
 }
 
 IIOP::Profile::Profile (const IIOP::Version &v,
@@ -37,15 +42,17 @@ IIOP::Profile::Profile (const IIOP::Version &v,
   : iiop_version (v),
     port (p)
 {
-  host = ACE_OS::strdup (h);
-  object_key.length = key.length;
-  object_key.maximum = key.length;
+  this->host = ACE_OS::strdup (h);
+  this->object_key.length = key.length;
+  this->object_key.maximum = key.length;
 
-  object_key.buffer = new CORBA::Octet [object_key.maximum];
+  //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
+  this->object_key.buffer = new CORBA::Octet [object_key.maximum];
 
-  (void) ACE_OS::memcpy (object_key.buffer,
+  (void) ACE_OS::memcpy (this->object_key.buffer,
                          key.buffer,
-                         object_key.length);
+                         this->object_key.length);
+  this->set_object_addr ();
 }
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into sets

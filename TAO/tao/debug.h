@@ -25,9 +25,6 @@
 // THREADING NOTE: don't set them except in an unthreaded environment
 // such as process initialization.  They're treated as immutable.
 
-// @@ Please replace these globally -- they should be called
-// "tao_debug_level", etc. to protect the namespace.
-
 // 0 to ??; higher == more
 extern u_int ACE_Svc_Export TAO_debug_level;	
 

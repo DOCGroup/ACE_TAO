@@ -32,7 +32,7 @@ class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.  
-  // @@ Should this be in here or in the default_client.*?
+  // @@ (CJC) Should this be in here or in the default_client.*?
 {
 public:
   // = Intialization method.
@@ -79,10 +79,10 @@ public:
   // and additional information carried in <env>.
 
   virtual void send_response (CDR &response);
-  // @@ Please document me...
+  // @@ (CJC) Please document me...
 
 protected:
-  // @@ Please document all these methods and fields.
+  // @@ (CJC) Please document all these methods and fields.
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 

@@ -46,12 +46,15 @@ public:
   struct Profile
     // = TITLE
     // IOR support ... Profile is encapsulated in an IIOP profile
-    // entry within an IOR.
+    // entry within an IOR.  Note that this structure is specified
+    // by CORBA 2.0, so we can't screw with it too much.
   {
     Version iiop_version;
+    TAO_opaque object_key;
+    // @@ These should really be accessors and not public members, but
+    // I'm too chicken to change it right now.
     char *host;
     CORBA::UShort port;
-    TAO_opaque object_key;
 
     Profile (void);
 
@@ -63,8 +66,18 @@ public:
 
     ~Profile (void);
 
+    void set_object_addr (void);
+    // Sets <object_addr_> cache from <host> and <port>
+
+    ACE_INET_Addr& get_object_addr (void);
+    // Returns the <ACE_INET_Addr> for this profile.
+
   private:
     Profile &operator = (const Profile &src);
+    
+    ACE_INET_Addr object_addr_;
+    // Cached instance of <ACE_INET_Addr> for use in making
+    // invocations, etc.
   };
 };
 
