@@ -17,8 +17,11 @@ TCPU = pentiumpro
 #TCPU = i386
 
 cygwin32 = 1
-threads = 0
-static_libs_only = 1
 optimize = 0
+
+# Cygwin doesn't allow to add the version number of ACE to the dll name
+# because fe ace.dll.5.2.3 isn't a valid dll name
+SONAME=
+SOVERSION=
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
