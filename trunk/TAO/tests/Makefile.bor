@@ -4,6 +4,7 @@
 
 DIRS = \
         AMI \
+        AMI_Timeouts \
         Bidirectional \
         Bidirectional_NestedUpcall \
 	CDR \

@@ -1,3 +1,15 @@
+Mon Feb 26 09:30:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tests/Makefile.bor:
+          Added the AMI_Timouts directory to that makefile.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for pointing
+          this out.
+
+        * tests/AMI_Timeouts/timeout_i.cpp:
+          Added some missing throw specs on method implementations.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for pointing
+          this out.
+
 Mon Feb 26 06:45:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * tao/Asynch_Reply_Dispatcher.cpp:
