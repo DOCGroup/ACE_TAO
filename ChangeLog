@@ -1,3 +1,13 @@
+Thu May 13 22:11:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+	* ace/README (ACE_HAS_MUTABLE_KEYWORD):
+	* ace/config-lite.h (ACE_MUTABLE):
+	* m4/config_h.m4:
+
+	  ACE now requires C++ "mutable" keyword support.  Document this
+	  macro as being deprecated, and removed all related references.
+
 Thu May 13 21:59:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/CDR_Base.h (ACE_CDR::Boolean):
