@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Common_IDL_Gen"=.\Common_IDL_Gen.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Fixed_Priority_Scheduler"=.\fixed_priority_scheduler\Fixed_Priority_Scheduler.dsp - Package Owner=<4>
 
 Package=<5>
@@ -16,6 +28,21 @@ Package=<4>
 ###############################################################################
 
 Project: "MIF_Scheduler"=.\MIF_Scheduler\MIF_Scheduler.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Common_IDL_Gen
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Starter"=.\Starter.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
