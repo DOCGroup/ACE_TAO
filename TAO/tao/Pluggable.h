@@ -50,6 +50,8 @@ class TAO_Wait_Strategy;
 class TAO_Pluggable_Messaging_Interface;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
+class TAO_Base_Connection_Property;
+class TAO_Connection_Handler;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
@@ -98,7 +100,7 @@ public:
                         const ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
-			size_t *bytes_transferred = 0) = 0;
+                        size_t *bytes_transferred = 0) = 0;
   // Write the complete Message_Block chain to the connection.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
@@ -212,11 +214,10 @@ public:
   // connector  side. On the acceptor side the connection handler
   // would take care of the messaging objects.
 
+  void dequeue_all (void);
 protected:
 
   void dequeue_head (void);
-
-  void dequeue_all (void);
 
   void reset_queued_message (ACE_Message_Block *message_block,
                              size_t bytes_delivered);
@@ -363,10 +364,10 @@ public:
   virtual int close (void) = 0;
   // Shutdown Connector bridge and concreate Connector.
 
-  virtual int connect (TAO_Endpoint *endpoint,
+  virtual int connect (TAO_Base_Connection_Property *prop,
                        TAO_Transport *&,
                        ACE_Time_Value *max_wait_time,
-					   CORBA::Environment &ACE_TRY_ENV) = 0;
+                       CORBA::Environment &ACE_TRY_ENV) = 0;
   // To support pluggable we need to abstract away the connect()
   // method so it can be called from the GIOP code independant of the
   // actual transport protocol in use.
@@ -385,20 +386,25 @@ public:
   virtual char object_key_delimiter (void) const = 0;
   // Return the object key delimiter to use or expect.
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  virtual int purge_connections (void) = 0;
-  // Purge "old" connections.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
 protected:
   virtual void make_profile (const char *endpoint,
                              TAO_Profile *&,
                              CORBA::Environment &ACE_TRY_ENV) = 0;
   // Create a profile with a given endpoint.
 
+  void orb_core (TAO_ORB_Core *orb_core);
+  // Set the ORB Core pointer
+
+  TAO_ORB_Core *orb_core (void);
+  // Return the TAO_ORB_Core pointer
+
 private:
+
   CORBA::ULong tag_;
   // IOP protocol tag.
+
+  TAO_ORB_Core *orb_core_;
+  // Pointer to our ORB core
 };
 
 #if defined (__ACE_INLINE__)

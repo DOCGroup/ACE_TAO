@@ -53,7 +53,6 @@ public:
   ACE_Lock* create_profile_lock (void);
   TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
-  virtual ACE_Lock *create_cached_connector_lock (void);
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
 
 private:
@@ -84,9 +83,6 @@ private:
 
   Wait_Strategy wait_strategy_;
   // The wait-for-reply strategy.
-
-  Lock_Type cached_connector_lock_type_;
-  // Type of lock used by the cached connector.
 };
 
 #if defined (__ACE_INLINE__)

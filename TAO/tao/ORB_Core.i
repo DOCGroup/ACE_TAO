@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 // $Id$
 
 ACE_INLINE CORBA::ULong
@@ -23,40 +22,11 @@ TAO_ORB_Core::_decr_refcnt (void)
   return 0;
 }
 
-ACE_INLINE int
-TAO_ORB_Core::register_handle (ACE_HANDLE handle)
+ACE_INLINE TAO_Connection_Cache_Manager &
+TAO_ORB_Core::connection_cache (void)
 {
-  if (handle == ACE_INVALID_HANDLE)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-
-  // Acquire a lock to ensure that modifications to the state within
-  // the handle set are atomic.
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, -1));
-  this->handle_set_.set_bit (handle);
-
-  return 0;
+  return this->connection_cache_;
 }
-
-ACE_INLINE int
-TAO_ORB_Core::remove_handle (ACE_HANDLE handle)
-{
-  if (handle == ACE_INVALID_HANDLE)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-
-  // Acquire a lock to ensure that modifications to the state within
-  // the handle set are atomic.
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, -1));
-  this->handle_set_.clr_bit (handle);
-
-  return 0;
-}
-
 
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,

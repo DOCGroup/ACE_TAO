@@ -130,7 +130,7 @@ private:
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
 
-  TAO_UIOP_Handler_Base::UIOP_Properties uiop_properties_;
+  TAO_UIOP_Properties uiop_properties_;
   // Properties for all connections accepted by this acceptor.
 };
 
