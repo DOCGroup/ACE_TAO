@@ -162,6 +162,20 @@ void CORBA_BOA::dispatch (CORBA_OctetSeq &key,
   // scheduler. How do we do it??
 }
 
+int
+CORBA_BOA::find (const CORBA_OctetSeq &key,
+		 CORBA_Object_ptr &obj)
+{
+  return objtable_->find (key, obj);
+}
+
+int
+CORBA_BOA::bind (const CORBA_OctetSeq &key, 
+		 CORBA_Object_ptr obj)
+{
+  return objtable_->bind (key, obj);
+}
+
 #if !defined (__ACE_INLINE__) 
 #  include "boa.i"
 #endif

@@ -30,7 +30,6 @@
 #include "tao/orb.h"
 #include "tao/sequence.h"
 #include "tao/svrrqst.h"
-#include "tao/objtable.h"
 
 // @@ Shouldn't this go into the CORBA:: namespace?  It doesn't belong
 // at global scope!
