@@ -100,7 +100,14 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     persistent_poa_name_map_ (0),
     transient_poa_map_ (0),
     orb_core_ (orb_core),
-    lock_ (orb_core.server_factory ()->create_poa_lock ())
+    enable_locking_ (orb_core_.server_factory ()->enable_poa_locking ()),
+    thread_lock_ (),
+    lock_ (TAO_Object_Adapter::create_lock (enable_locking_,
+                                            thread_lock_)),
+    reverse_lock_ (*lock_),
+    non_servant_upcall_condition_ (thread_lock_),
+    non_servant_upcall_in_progress_ (0),
+    non_servant_upcall_thread_ (ACE_OS::NULL_thread)
 {
   TAO_Object_Adapter::set_transient_poa_name_size (creation_parameters);
 
@@ -174,7 +181,33 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
   delete this->hint_strategy_;
   delete this->persistent_poa_name_map_;
   delete this->transient_poa_map_;
-  delete this->lock_;
+}
+
+/* static */
+ACE_Lock *
+TAO_Object_Adapter::create_lock (int enable_locking,
+                                 ACE_SYNCH_MUTEX &thread_lock)
+{
+#if defined (ACE_HAS_THREADS)
+  if (enable_locking)
+    {
+      ACE_Lock *the_lock = 0;
+
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (thread_lock),
+                      0);
+
+      return the_lock;
+    }
+#endif /* ACE_HAS_THREADS */
+
+  ACE_Lock *the_lock = 0;
+
+  ACE_NEW_RETURN (the_lock,
+                  ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                  0);
+
+  return the_lock;
 }
 
 void
@@ -200,6 +233,20 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
                                         void *context,
                                         CORBA_Environment &ACE_TRY_ENV)
 {
+  // Check if a non-servant upcall is in progress, and make sure it is
+  // not this thread which is making the upcall.
+  while (this->enable_locking_ &&
+         this->non_servant_upcall_in_progress_ &&
+         this->non_servant_upcall_thread_ != ACE_OS::thr_self ())
+    {
+      // If so wait...
+      int result = this->non_servant_upcall_condition_.wait ();
+      if (result == -1)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
+
   PortableServer::ObjectId id;
   TAO_POA *poa = 0;
 
@@ -233,6 +280,23 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
   current_context.servant (servant);
 
   {
+    // Outstanding_Requests has a magic constructor and destructor.
+    // We increment <POA::outstanding_requests_> in the constructor.
+    // We decrement <POA::outstanding_requests_> in the destructor.
+    // Note that the lock is released after
+    // <POA::outstanding_requests_> is increased and
+    // <POA::outstanding_requests_> is decreased after the lock has
+    // been reacquired.
+    Outstanding_Requests outstanding_requests (*poa,
+                                               *this);
+    ACE_UNUSED_ARG (outstanding_requests);
+
+    // Unlock for the duration of the servant upcall.  Reacquire once
+    // the upcall completes. Even though we are releasing the lock,
+    // the servant entry in the active object map is reference counted
+    // and will not get removed/deleted prematurely.
+    TAO_POA_GUARD (ACE_Lock, monitor, this->reverse_lock (), ACE_TRY_ENV);
+
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
     // Upcall
@@ -271,7 +335,7 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
 
   if (result != 0)
     {
-      ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
 
   {
@@ -300,6 +364,16 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
+  // A recursive thread lock without using a recursive thread lock.
+  // Non_Servant_Upcall has a magic constructor and destructor.  We
+  // unlock the Object_Adapter lock for the duration of the adapter
+  // activator(s) upcalls; reacquiring once the upcalls complete.
+  // Even though we are releasing the lock, other threads will not be
+  // able to make progress since
+  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  Non_Servant_Upcall non_servant_upcall (*this);
+  ACE_UNUSED_ARG (non_servant_upcall);
+
   iteratable_poa_name ipn (folded_name);
   iteratable_poa_name::iterator iterator = ipn.begin ();
   iteratable_poa_name::iterator end = ipn.end ();
@@ -307,7 +381,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   TAO_POA *parent = this->orb_core_.root_poa ();
   if (parent->name () != *iterator)
     {
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         -1);
     }
   else
@@ -697,6 +771,66 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
   return iterator (0,
                    this->folded_name_.length (),
                    this->folded_name_.get_buffer ());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_Object_Adapter &object_adapter)
+  : object_adapter_ (object_adapter)
+{
+  // Mark the fact that a non-servant upcall is in progress.
+  this->object_adapter_.non_servant_upcall_in_progress_ = 1;
+
+  // Remember which thread is calling the adapter activators.
+  this->object_adapter_.non_servant_upcall_thread_ = ACE_OS::thr_self ();
+
+  // Release the Object Adapter lock.
+  this->object_adapter_.lock ().release ();
+}
+
+TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
+{
+  // Reacquire the Object Adapter lock.
+  this->object_adapter_.lock ().acquire ();
+
+  // We are no longer in a non-servant upcall.
+  this->object_adapter_.non_servant_upcall_in_progress_ = 0;
+
+  // Reset thread id.
+  this->object_adapter_.non_servant_upcall_thread_ = ACE_OS::NULL_thread;
+
+  // If locking is enabled.
+  if (this->object_adapter_.enable_locking_)
+    {
+      // Wakeup all waiting threads.
+      this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TAO_Object_Adapter::Outstanding_Requests::Outstanding_Requests (TAO_POA &poa,
+                                                                TAO_Object_Adapter &object_adapter)
+  : object_adapter_ (object_adapter),
+    poa_ (poa)
+{
+  // Increase <poa->outstanding_requests_>.
+  this->poa_.increment_outstanding_requests ();
+}
+
+TAO_Object_Adapter::Outstanding_Requests::~Outstanding_Requests (void)
+{
+  // Decrease <poa->outstanding_requests_>.
+  CORBA::ULong outstanding_requests = this->poa_.decrement_outstanding_requests ();
+
+  // If locking is enabled and some thread is waiting in POA::destroy.
+  if (this->object_adapter_.enable_locking_ &&
+      outstanding_requests == 0 &&
+      this->poa_.destroy_pending_)
+    {
+      // Wakeup all waiting threads.
+      this->poa_.outstanding_requests_condition_.broadcast ();
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

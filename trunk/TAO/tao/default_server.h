@@ -52,11 +52,8 @@ public:
 
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
-  virtual ACE_Lock *create_poa_lock (void);
-  // Creates and returns a lock for POA based on the setting for
-  // <-ORBpoalock>.  A setting of <thread> returns an
-  // ACE_Lock_Adapter<ACE_Thread_Mutex>; a setting of <null> returns
-  // an ACE_Lock_Adapter<ACE_NULL_Mutex>.
+  virtual int enable_poa_locking (void);
+  // Enable POA locking?
 
   virtual ACE_Lock *create_servant_lock (void);
   // Creates and returns a lock for servants based on the setting of

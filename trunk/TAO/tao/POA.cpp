@@ -750,6 +750,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                   const TAO_POA_Policies &policies,
                   TAO_POA *parent,
                   ACE_Lock &lock,
+                  ACE_SYNCH_MUTEX &thread_lock,
                   TAO_ORB_Core &orb_core,
                   CORBA::Environment &ACE_TRY_ENV)
   : name_ (name),
@@ -774,7 +775,10 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     creation_time_ (ACE_OS::gettimeofday ()),
     orb_core_ (orb_core),
     cleanup_in_progress_ (0),
-    etherealize_objects_ (1)
+    etherealize_objects_ (1),
+    outstanding_requests_ (0),
+    outstanding_requests_condition_ (thread_lock),
+    destroy_pending_ (0)
 {
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -944,6 +948,7 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
                              policies,
                              this,
                              this->orb_core_.object_adapter ()->lock (),
+                             this->orb_core_.object_adapter ()->thread_lock (),
                              this->orb_core_,
                              ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
@@ -1116,7 +1121,16 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   this->deactivate_all_objects_i (etherealize_objects,
                                   ACE_TRY_ENV);
 
-  ACE_UNUSED_ARG (wait_for_completion);
+  while (wait_for_completion &&
+         this->outstanding_requests_ > 0)
+    {
+      this->destroy_pending_ = 1;
+      int result = this->outstanding_requests_condition_.wait ();
+      if (result == -1)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
 
   // Commit suicide
   delete this;
@@ -1459,8 +1473,21 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
                              ACE_TRY_ENV);
       ACE_CHECK;
     }
+  else
+    {
+      // It should be noted that there may be a period of time between
+      // an object's deactivation and the etherealization (during
+      // which outstanding requests are being processed) in which
+      // arriving requests on that object should not be passed to its
+      // servant. During this period, requests targeted for such an
+      // object act as if the POA were in holding state until
+      // etherealize completes. If etherealize is called as a
+      // consequence of a deactivate call with a etherealize_objects
+      // parameter of TRUE, incoming requests are rejected.
 
-  // @@ Else mark entry as closed...
+      // Else mark entry as closed...
+      active_object_map_entry->deactivated_ = 1;
+    }
 }
 
 void
@@ -1485,38 +1512,44 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
   // have completed. If there is a ServantActivator, the Servant is
   // consumed by the call to ServantActivator::etherealize instead.
 
+  // First check for a non-zero servant.
+  if (active_object_map_entry->servant_)
+    {
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  if (this->etherealize_objects_ &&
-      this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
-      !CORBA::is_nil (this->servant_activator_.in ()))
-    {
-      PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
-      ACE_CHECK;
+      if (this->etherealize_objects_ &&
+          this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
+          !CORBA::is_nil (this->servant_activator_.in ()))
+        {
+          PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
+          ACE_CHECK;
 
-      CORBA::Boolean remaining_activations =
-        this->active_object_map ().remaining_activations (active_object_map_entry->servant_);
+          CORBA::Boolean remaining_activations =
+            this->active_object_map ().remaining_activations (active_object_map_entry->servant_);
 
-      // If the cleanup_in_progress parameter is TRUE, the reason for the
-      // etherealize operation is that either the deactivate or destroy
-      // operation was called with an etherealize_objects parameter of
-      // TRUE. If the parameter is FALSE, the etherealize operation is
-      // called for other reasons.
-      this->servant_activator_->etherealize (active_object_map_entry->user_id_,
-                                             self.in (),
-                                             active_object_map_entry->servant_,
-                                             this->cleanup_in_progress_,
-                                             remaining_activations,
-                                             ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-  else
+          // If the cleanup_in_progress parameter is TRUE, the reason
+          // for the etherealize operation is that either the
+          // deactivate or destroy operation was called with an
+          // etherealize_objects parameter of TRUE. If the parameter
+          // is FALSE, the etherealize operation is called for other
+          // reasons.
+          this->servant_activator_->etherealize (active_object_map_entry->user_id_,
+                                                 self.in (),
+                                                 active_object_map_entry->servant_,
+                                                 this->cleanup_in_progress_,
+                                                 remaining_activations,
+                                                 ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+      else
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-    {
-      active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
-      ACE_CHECK;
+        {
+          active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
+          ACE_CHECK;
+        }
     }
 
   // This operation causes the association of the Object Id specified
@@ -2254,19 +2287,34 @@ TAO_POA::locate_servant_i (const char *operation,
       PortableServer::POA_var poa = this->_this (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
+      PortableServer::Servant servant = 0;
       if (this->policies ().servant_retention () == PortableServer::RETAIN)
         {
-          // @@
-          // Invocations of incarnate on the servant manager are serialized.
-          // Invocations of etherealize on the servant manager are serialized.
-          // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-          PortableServer::Servant servant = this->servant_activator_->incarnate (poa_current->object_id_,
-                                                                                 poa.in (),
-                                                                                 ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+          {
+            // A recursive thread lock without using a recursive
+            // thread lock.  Non_Servant_Upcall has a magic
+            // constructor and destructor.  We unlock the
+            // Object_Adapter lock for the duration of the servant
+            // activator upcalls; reacquiring once the upcalls
+            // complete.  Even though we are releasing the lock, other
+            // threads will not be able to make progress since
+            // <Object_Adapter::non_servant_upcall_in_progress_> has
+            // been set.
+            TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+            ACE_UNUSED_ARG (non_servant_upcall);
 
-          if (servant == 0)
-            return 0;
+            // @@
+            // Invocations of incarnate on the servant manager are serialized.
+            // Invocations of etherealize on the servant manager are serialized.
+            // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
+            servant = this->servant_activator_->incarnate (poa_current->object_id_,
+                                                           poa.in (),
+                                                           ACE_TRY_ENV);
+            ACE_CHECK_RETURN (0);
+
+            if (servant == 0)
+              return 0;
+          }
 
           // If the incarnate operation returns a servant that is
           // already active for a different Object Id and if the POA
@@ -2308,6 +2356,17 @@ TAO_POA::locate_servant_i (const char *operation,
         // Don't retain servant
         //
         {
+          // A recursive thread lock without using a recursive thread
+          // lock.  Non_Servant_Upcall has a magic constructor and
+          // destructor.  We unlock the Object_Adapter lock for the
+          // duration of the servant activator upcalls; reacquiring
+          // once the upcalls complete.  Even though we are releasing
+          // the lock, other threads will not be able to make progress
+          // since <Object_Adapter::non_servant_upcall_in_progress_>
+          // has been set.
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+          ACE_UNUSED_ARG (non_servant_upcall);
+
           // No serialization of invocations of preinvoke or
           // postinvoke may be assumed; there may be multiple
           // concurrent invocations of preinvoke for the same
@@ -3137,6 +3196,17 @@ TAO_POA_Current::~TAO_POA_Current (void)
 
   if (this->cookie_ != 0)
     {
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->poa_impl_->orb_core_.object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
+
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY_EX (LOCATOR)
         {

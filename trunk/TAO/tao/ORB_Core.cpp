@@ -910,6 +910,7 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                      *policies,
                      0,
                      this->object_adapter ()->lock (),
+                     this->object_adapter ()->thread_lock (),
                      *this,
                      env);
 

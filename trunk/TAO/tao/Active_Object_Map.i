@@ -139,7 +139,11 @@ TAO_Active_Object_Map::find_servant_using_user_id (const PortableServer::ObjectI
                                          entry);
   if (result == 0)
     {
-      if (entry->servant_ == 0)
+      if (entry->deactivated_)
+        {
+          result = -1;
+        }
+      else if (entry->servant_ == 0)
         {
           result = -1;
         }
@@ -175,7 +179,11 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
 
   if (result == 0)
     {
-      if (entry->servant_ == 0)
+      if (entry->deactivated_)
+        {
+          result = -1;
+        }
+      else if (entry->servant_ == 0)
         {
           result = -1;
         }

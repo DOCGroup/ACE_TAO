@@ -6,6 +6,18 @@ TAO_Object_Adapter::lock (void)
   return *this->lock_;
 }
 
+ACE_INLINE ACE_SYNCH_MUTEX &
+TAO_Object_Adapter::thread_lock (void)
+{
+  return this->thread_lock_;
+}
+
+ACE_INLINE ACE_Reverse_Lock<ACE_Lock> &
+TAO_Object_Adapter::reverse_lock (void)
+{
+  return this->reverse_lock_;
+}
+
 /* static */
 ACE_INLINE CORBA::ULong
 TAO_Object_Adapter::transient_poa_name_size ()
