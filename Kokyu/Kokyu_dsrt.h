@@ -111,23 +111,6 @@ namespace Kokyu
     };
 
   /**
-   * @class MIF_Sched_Strategy
-   *
-   * @brief Strategy class implementing Maximum Importance First
-   * reordering strategy.
-   *
-   */
-  template <class QoSDesc>
-  class MIF_Comparator
-  {
-  public:
-    typedef typename QoSDesc::Importance_t Importance_t;
-
-    int operator ()(const QoSDesc& qos1,
-		    const QoSDesc& qos2);
-  };
-
-  /**
    * @class Fixed_Priority_Sched_Strategy
    *
    * @brief Strategy class implementing Fixed Priority reordering
@@ -160,7 +143,24 @@ namespace Kokyu
      int operator ()(const QoSDesc& qos1,
 		     const QoSDesc& qos2);
   };
-  
+
+  /**
+   * @class MLF_Sched_Strategy
+   *
+   * @brief Strategy class implementing Minimal Laxity First
+   * reordering strategy.
+   *
+   */
+  template <class QoSDesc>
+  class MLF_Comparator
+  {
+     public:
+     typedef typename QoSDesc::Time_t Time_t;
+
+     int operator ()(const QoSDesc& qos1,
+                     const QoSDesc& qos2);
+  };
+ 
   /**
    * @class MUF_Sched_Strategy
    *

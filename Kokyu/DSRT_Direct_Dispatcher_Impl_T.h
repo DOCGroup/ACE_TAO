@@ -38,7 +38,7 @@ namespace Kokyu
     typedef typename
     DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
 
-    DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
+    DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
                                  int sched_scope);
 
     int init_i (const DSRT_ConfigInfo&);
@@ -65,12 +65,35 @@ namespace Kokyu
     int shutdown_i ();
 
   private:
+
+    class Guid_Hash
+    {
+    public:
+      /// Returns hash value.
+      u_long operator () (const typename DSRT_Scheduler_Traits::Guid_t &id)
+      {
+        typename DSRT_Scheduler_Traits::Guid_Hash guid_hash;
+        return guid_hash(id);
+      }
+    };
+
+//Maybe I need to change Guid_t to a task ID.
+    typedef ACE_Hash_Map_Manager_Ex<int,
+                                    ACE_Time_Value,
+                                    Guid_Hash,
+                                    ACE_Equal_To<int>,
+                                    ACE_SYNCH_NULL_MUTEX>
+    Release_Time_Map;
+
     typedef ACE_SYNCH_MUTEX cond_lock_t;
     typedef ACE_SYNCH_CONDITION cond_t;
 
     u_int sched_queue_modified_;
     cond_lock_t sched_queue_modified_cond_lock_;
     cond_t sched_queue_modified_cond_;
+    cond_lock_t release_guard_cond_lock_;
+    cond_t release_guard_cond_;
+    Release_Time_Map release_map_;
 
   private:
     int svc (void);
