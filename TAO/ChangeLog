@@ -1,3 +1,13 @@
+Tue Nov 25 21:17:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sunsoft.cpp:
+
+	  Changed code generation for the literal on the rhs of an
+	  unsigned long long constant to be more portable, using
+	  ACE_UINT64_LITERAL instead of a letter suffix. Thanks to
+	  Malcolm McRoberts <mmcroberts@ideorlando.org> for the
+	  suggestion.
+
 Tue Nov 25 20:11:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosEvent:
