@@ -1,5 +1,13 @@
 Mon Jan  4 13:00:07 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/OS.h: Added a macro for ACE_DEFAULT_HTTP_PORT, which
+	  is 80 of course...
+
+	* ace/INET_Addr.cpp: Make sure that addr_to_string() correctly
+ 	  checks the length of its buffer before doing a sprintf().  In
+ 	  addition, added an option to print the results in either ip-addr
+ 	  format or ip-name format.
+
 	* ace/Mem_Map.cpp (map): where ace/Mem_Map.cpp mmap() will succeed
  	  if the length of the file mapping is 0, which will be the case
  	  if we've just created the file.  This was the wrong place to
