@@ -8,8 +8,7 @@ ACE_Token::remove (void)
 {
   ACE_TRACE ("ACE_Token::remove");
   // Don't have an implementation for this yet...
-  errno = ENOTSUP;
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int 

@@ -1034,8 +1034,7 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
 	return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
       }
     default:
-      errno = ENOTSUP;
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
     }
 #else
   int val = ACE_OS::fcntl (handle, F_GETFL, 0);
@@ -1071,8 +1070,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
 	return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
       }
     default:
-      errno = ENOTSUP;
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
     }
 #else
   int val = ACE_OS::fcntl (handle, F_GETFL, 0);
@@ -1908,7 +1906,7 @@ ACE::get_ip_interfaces (size_t &count,
 #else
   ACE_UNUSED_ARG (count);
   ACE_UNUSED_ARG (addrs);
-  ACE_NOTSUP_RETURN (-1);;			// no implentation
+  ACE_NOTSUP_RETURN (-1);;			// no implementation
 #endif /* ACE_WIN32 */
 }
 
