@@ -27,7 +27,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     single_read_optimization_ (1),
     disable_rt_collocation_resolver_ (false)
 {
-  for (int i = 0; i <= TAO_NO_OF_MCAST_SERVICES; ++i)
+  for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {
       this->service_port_[i] = 0;
     }

@@ -1,3 +1,16 @@
+Tue Mar 23 09:36:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CORBA_String.cpp (string_alloc):
+
+	  Intialize the allocated string to null.
+	  
+	* tao/params.cpp (ctor):
+
+	  Wrong usage of the array bounds.
+
+	  Thanks to Andreas <andreas.koehler@sysde.eads.net> for spotting
+	  the problems and suggesting a patch.
+
 Tue Mar 23 07:34:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/TAO_IDL.mwc:
