@@ -1,3 +1,16 @@
+Wed Jun 18 12:47:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/Domain/DomainS.cpp:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+
+	  Added call to TAO_Abstract_ServantBase in the copy constructor
+	  and/or fixed the order of base class constructor calls in the
+	  copy constructor.
+
 Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_enum.cpp:

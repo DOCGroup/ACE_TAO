@@ -1776,8 +1776,9 @@ POA_ImplementationRepository::Locator::Locator (void)
 }
 
 POA_ImplementationRepository::Locator::Locator (const Locator& rhs)
-  :  ACE_NESTED_CLASS (POA_ImplementationRepository,Administration) (rhs),
-    TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs),
+    ACE_NESTED_CLASS (POA_ImplementationRepository,Administration) (rhs)
 {}
 
 POA_ImplementationRepository::Locator::~Locator (void)
