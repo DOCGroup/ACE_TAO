@@ -83,8 +83,8 @@ connector (void *)
     }
 
   conbuf[i] = '\0';
-  ACE_DEBUG ((LM_DEBUG, "(%t) conbuf = %s", conbuf));
-  ACE_ASSERT (ACE_OS::strcmp (conbuf, "this is the acceptor response!\n") == 0);
+  ACE_DEBUG ((LM_DEBUG, "(%t) conbuf = %s\n", conbuf));
+  ACE_ASSERT (ACE_OS::strcmp (conbuf, "this is the acceptor response!") == 0);
 
   c_stream.close ();
   ACE_DEBUG ((LM_DEBUG, "\n(%t) exiting thread\n"));
