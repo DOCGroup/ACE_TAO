@@ -1,3 +1,13 @@
+Fri Nov 14 10:50:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_wait.inl:
+          Moved the wait method below the waitpid method. After searching for
+          hours for the internal compiler error MinGW has the solution was
+          to easy to think of. Because wait calls waitpid it must be below
+          waitpid in the inline file. This fixes the internal compiler
+          error in the MinGW build and restores the order of wait and waitpid
+          to the state before the ACE_OS split up.
+
 Fri Nov 14 00:42:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/DLL_Test.cpp:
