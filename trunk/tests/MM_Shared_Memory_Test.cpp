@@ -135,9 +135,6 @@ spawn (void)
       /* NOTREACHED */
     default:
       child ();
-      // We don't want to return to <main> because this prints out an
-      // extra "ending" message.
-      ACE_OS::exit (0);
       break;
       /* NOTREACHED */
     }
