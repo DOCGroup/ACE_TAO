@@ -67,6 +67,10 @@ ACE_SV_Semaphore_Complex::open (key_t k,
 
   this->key_ = k;
 
+  // Must include a count for the 2 additional semaphores we use
+  // internally.
+  this->sem_number_ = nsems + 2; 
+
   if (create == ACE_SV_Semaphore_Complex::ACE_CREATE)
     {
       int result;
@@ -74,7 +78,8 @@ ACE_SV_Semaphore_Complex::open (key_t k,
       do
 	{
 	  this->internal_id_ = ACE_OS::semget
-	    (this->key_, (u_short) 2 + nsems, perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
+	    (this->key_,
+             (u_short) 2 + nsems, perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
 
 	  if (this->internal_id_ == -1)
 	    return -1; // permission problem or tables full

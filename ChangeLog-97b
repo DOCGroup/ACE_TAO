@@ -1,5 +1,9 @@
 Wed Nov 19 07:54:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/SV_Semaphore_Complex.cpp (open): Make sure initialize the
+ 	  sem_number_ data member, though this isn't actually used for
+ 	  anything.
+
 	* ace/ACE.cpp: Added a #ifdef for __unix since this is the only
  	  case where we'll actually have the ifreq autoptr.  Thanks to
  	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
