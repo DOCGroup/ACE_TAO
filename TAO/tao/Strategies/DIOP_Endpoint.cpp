@@ -183,7 +183,7 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO_DIOP_Endpoint::hash (void)
 {
-  return ACE::hash_pjw (this->host ().in ()) + this->port ();
+  return ACE::hash_pjw (this->host ()) + this->port ();
 }
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
