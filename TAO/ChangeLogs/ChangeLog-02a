@@ -6,11 +6,6 @@ Fri Feb 16 10:53:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
           name clash with a module in another IFL file in this
           test.
 
-        * tests/IDL_Test/Makefile.bor:
-
-          Added patch sent in by Johnny Willemsen <johnny.willemsen@meco.nl> 
-          which added some missing generated source files to the build.
-
 Fri Feb 16 09:41:54 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/IDL_Test: Added a new Makefile.bor.  Thanks to 
