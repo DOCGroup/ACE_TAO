@@ -234,13 +234,13 @@ ACE_Get_Opt::long_option_i (void)
       p = this->long_opts_[option_index];
       ACE_ASSERT (p);
 
-      if (!ACE_OS::strncmp (p->name_, this->nextchar_, len))
+      if (!ACE_OS::strncmp (p->name_.c_str (), this->nextchar_, len))
         {
           // Got at least a partial match.
           pfound = p;
           indfound = option_index;
           hits += 1;
-          if (len == ACE_OS::strlen(p->name_))
+          if (len == p->name_.length ())
             {
               // And in fact, it an exact match, so let's use it.
               exact = 1;
@@ -279,7 +279,7 @@ ACE_Get_Opt::long_option_i (void)
               if (this->opterr)
                   ACE_ERROR ((LM_ERROR,
                               ACE_LIB_TEXT ("%s: long option `--%s' doesn't allow an argument\n"),
-                              this->argv_[0], pfound->name_));
+                              this->argv_[0], pfound->name_.c_str ()));
               // The spec doesn't cover this, so we keep going and the program
               // doesn't know we ignored an argument if opt_err is off!!!
             }
@@ -298,7 +298,7 @@ ACE_Get_Opt::long_option_i (void)
               if (this->opterr)
                 ACE_ERROR ((LM_ERROR,
                             ACE_LIB_TEXT ("%s: long option '--%s' requires an argument\n"),
-                            this->argv_[0], pfound->name_));
+                            this->argv_[0], pfound->name_.c_str ()));
               this->nextchar_ = 0;
               return this->has_colon_ ? ':' : '?';
             }
@@ -517,7 +517,7 @@ ACE_Get_Opt::long_option (void) const
 {
   ACE_TRACE ("ACE_Get_Opt::long_option (void)");
   if (this->long_option_)
-    return this->long_option_->name_;
+    return this->long_option_->name_.c_str ();
   return 0;
 }
 
@@ -606,24 +606,3 @@ ACE_Get_Opt::permute (void)
     }
   return 0;
 }
-
-ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (const ACE_TCHAR *name,
-                                                               int has_arg,
-                                                               int val)
-  :  name_ (ACE::strnew(name)),
-     has_arg_ (has_arg),
-     val_ (val)
-{}
-
-ACE_Get_Opt::ACE_Get_Opt_Long_Option::~ACE_Get_Opt_Long_Option (void)
-{
-  delete [] ACE_const_cast (ACE_TCHAR*, this->name_);
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>;
-template class ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>
-#pragma instantiate ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

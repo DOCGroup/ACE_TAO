@@ -21,6 +21,7 @@ ACE_RCSID (ace, OS_String, "$Id$")
 extern "C" wchar_t *wcsdup __P ((__const wchar_t *__s));
 #endif /* ACE_LACKS_WCSDUP_PROTOTYPE */
 
+
 const char *
 ACE_OS_String::strnstr (const char *s1, const char *s2, size_t len2)
 {

@@ -7189,10 +7189,11 @@ ace_main_i
  * As there is no such thing as text-based programs on Windows
  * CE.  We need to create a windows to read the command prompt
  * and bridge the output windows with the original ACE program
- * entry point.
- *
- * This class is obsolete and will be removed in the future version
- * of ACE.
+ * entry point.  You'll need to link your program with
+ * "ace-windows.lib" for this to work.  You can refer to
+ * $ACE_ROOT/WindowsCE/Main for how I use a dialog box to run
+ * the original ACE programs.  This is certainly not the only
+ * way to use ACE in Windows programs.
  */
 class ACE_OS_Export ACE_CE_Bridge
 

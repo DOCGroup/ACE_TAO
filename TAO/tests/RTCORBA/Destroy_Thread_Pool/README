@@ -1,7 +1,0 @@
-$Id$
-
-Description:
-This is a simple test for creating and destroying thread pools (with
-and without lanes).
-
-See run_test.pl to see how to run this test.
