@@ -139,6 +139,10 @@ CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
                          ACE_TRY_ENV);
 }
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
+
 void
 CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -155,6 +159,10 @@ CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
   stub->do_deferred_call (this,
                           ACE_TRY_ENV);
 }
+
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 void
 CORBA_Request::get_response (CORBA::Environment &ACE_TRY_ENV)
