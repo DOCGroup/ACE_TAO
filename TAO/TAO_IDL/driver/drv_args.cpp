@@ -621,6 +621,14 @@ DRV_parse_args (long ac, char **av)
                 {
                   // optimized typecode support
                   idl_global->gen_locality_constraint (1);
+
+                  // Automatically switch on the generation of
+                  // direct collocated stubs and supress the generation
+                  // of thru_poa collocated stubs and ami_call_back stuff
+                  // if we are building for locality constraint interfaces.
+                  idl_global->gen_thru_poa_collocation (0);
+                  idl_global->gen_direct_collocation (1);
+                  idl_global->ami_call_back (0);
                 }
               else if (av[i][2] == 't')
                 {

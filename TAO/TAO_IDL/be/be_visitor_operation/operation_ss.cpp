@@ -95,6 +95,11 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
+  // Skip the generation of static skeloton if the interface is
+  // locality constraint.
+  if (idl_global->gen_locality_constraint ())
+    return 0;
+
   // generate the signature of the static skeleton
   os->indent ();
   *os << "void " << intf->full_skel_name () << "::";

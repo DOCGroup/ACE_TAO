@@ -69,50 +69,70 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "if (is_a == 0)" << be_idt_nl
       << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
 
-  *os << "return " << node->full_name ()
-      << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   // This may be necessary to work around a GCC compiler bug!
 //  const char *skel_name = node->full_skel_name (); // unused at this time
 //    const char *coll_name = node->full_coll_name ();
 //    assert (coll_name != 0);
 
   // The _unchecked_narrow method
-  *os << node->full_name () << "_ptr " << node->full_name ()
-      << "::_unchecked_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "if (CORBA::is_nil (obj))" << be_idt_nl
-      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
+  if (!idl_global->gen_locality_constraint ())
+    {
+      *os << "return " << node->full_name ()
+          << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
 
-  *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
-      << "stub->_incr_refcnt ();" << be_nl;
+      *os << node->full_name () << "_ptr " << node->full_name ()
+          << "::_unchecked_narrow (" << be_idt << be_idt_nl
+          << "CORBA::Object_ptr obj," << be_nl
+          << "CORBA::Environment &" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "if (CORBA::is_nil (obj))" << be_idt_nl
+          << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
 
-  *os << "if (obj->_is_collocated () && _TAO_collocation_" << node->flat_name ()
-      << "_Stub_Factory_function_pointer != 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << node->local_name () << "_ptr retv = _TAO_collocation_"
-      << node->flat_name ()
-      << "_Stub_Factory_function_pointer (obj);" << be_nl
-      << "if (retv != 0)" << be_idt_nl
-      << "return retv;" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl;
+      *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
+          << "stub->_incr_refcnt ();" << be_nl;
 
-  *os << "return new " << node->full_name () << "(stub);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      *os << "if (obj->_is_collocated () && _TAO_collocation_"
+          << node->flat_name () << "_Stub_Factory_function_pointer != 0)"
+          << be_idt_nl << "{" << be_idt_nl << node->local_name ()
+          << "_ptr retv = _TAO_collocation_"
+          << node->flat_name () << "_Stub_Factory_function_pointer (obj);"
+          << be_nl << "if (retv != 0)" << be_idt_nl << "return retv;"
+          << be_uidt << be_uidt_nl << "}" << be_uidt_nl;
 
-  // The _duplicate method
-  *os << node->full_name () << "_ptr " << be_nl
-      << node->full_name () << "::_duplicate ("
-      << node->full_name () << "_ptr obj)" << be_nl
-      << "{" << be_idt_nl
-      << "if (!CORBA::is_nil (obj))" << be_idt_nl
-      << "obj->_incr_refcnt ();" << be_uidt_nl
-      << "return obj;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      *os << "return new " << node->full_name () << "(stub);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      // The _duplicate method
+      *os << node->full_name () << "_ptr " << be_nl
+          << node->full_name () << "::_duplicate ("
+          << node->full_name () << "_ptr obj)" << be_nl
+          << "{" << be_idt_nl
+          << "if (!CORBA::is_nil (obj))" << be_idt_nl
+          << "obj->_incr_refcnt ();" << be_uidt_nl
+          << "return obj;" << be_uidt_nl;
+    }
+  else
+    {
+      // _narrow implementation for locality constraint object.
+      *os << "void *servant = 0;" << be_nl
+          << "if (!obj->_is_collocated ()" << be_idt << be_idt << be_idt_nl
+          << "|| !obj->_servant ()" << be_nl
+          << "|| (servant = obj->_servant()->_downcast (\""
+          << node->repoID () << "\")) == 0" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "ACE_THROW_RETURN (CORBA::MARSHAL (), "
+          << node->full_name () << "::_nil ());" << be_uidt_nl;
+
+      // Locality constraint objects alway use "direct" collocated
+      // implementation.
+      *os << "return new " << node->full_coll_name (be_interface::DIRECT)
+          << "(" << be_idt << be_idt_nl << "ACE_reinterpret_cast ("
+          << node->full_name () << "_ptr, servant)," << be_nl
+          << "0" << be_uidt_nl << ");" << be_uidt << be_uidt_nl;
+    }
+  *os << "}" << be_nl << be_nl;
 
   // generate code for the elements of the interface
   if (this->visit_scope (node) == -1)
@@ -179,7 +199,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (idl_global->ami_call_back () == I_TRUE)
     {
 
-      be_interface_type_strategy *old_strategy =  
+      be_interface_type_strategy *old_strategy =
         node->set_strategy (new be_interface_ami_handler_strategy (node));
 
       // = Generate the default stub code for Handler.
