@@ -70,26 +70,26 @@ class TAO_Constraint_Interpreter : public TAO_Interpreter
 {
 public:
   
-  TAO_Constraint_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
-			     const char* constraints,
-			     CORBA::Environment& env)
+  TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
+                              const char* constraints,
+                              CORBA::Environment& env)
     TAO_THROW_SPEC (CosTrading::IllegalConstraint);
   
-  TAO_Constraint_Interpreter(TAO_Constraint_Validator& validator,
-			     const char* constraints,
-			     CORBA::Environment& env)
+  TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
+                              const char* constraints,
+                              CORBA::Environment& env)
     TAO_THROW_SPEC (CosTrading::IllegalConstraint);
   // This constructor builds an expression tree representing the
   // constraint specified in <constraints>, and throws an Illegal
   // Constraint exception if the constraint given has syntax errors or
   // semantic errors, such as mismatched types.
   
-  ~TAO_Constraint_Interpreter(void);
+  ~TAO_Constraint_Interpreter (void);
   // Destructor
 
-  CORBA::Boolean evaluate(CosTrading::Offer* offer);
+  CORBA::Boolean evaluate (CosTrading::Offer* offer);
 
-  CORBA::Boolean evaluate(TAO_Constraint_Evaluator& evaluator);
+  CORBA::Boolean evaluate (TAO_Constraint_Evaluator& evaluator);
   
   // Determine whether an offer fits the constraints with which the
   // tree was constructed. This method is thread safe (hopefully).
@@ -115,14 +115,14 @@ class TAO_Preference_Interpreter : public TAO_Interpreter
 {
 public:
 
-  TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
-			     const char* preference,
-			     CORBA::Environment& env)
+  TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
+                              const char* preference,
+                              CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
-  TAO_Preference_Interpreter(TAO_Constraint_Validator& validator,
-			     const char* preference,
-			     CORBA::Environment& env)
+  TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
+                              const char* preference,
+                              CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
   // Parse the preference string, determining first if it's

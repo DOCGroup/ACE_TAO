@@ -18,8 +18,7 @@
 #define TAO_OFFER_DATABASE_H
 
 #include "Trader.h"
-
-class TAO_Offer_Id_Iterator;
+#include "Offer_Iterators.h"
 
 template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
 
@@ -89,47 +88,11 @@ public:
   // Return an iterator that will traverse and return all the offer
   // ids in the service type map.
 
-  // private:
-
-  class Hashable_ULong
-  {
-  public:
-    
-    Hashable_ULong (void)
-      : number_ (0) {}
-    
-    Hashable_ULong (CORBA::ULong number)
-      : number_ (number) {}
-
-    u_long hash (void) const { return number_; }
-
-    Hashable_ULong& operator= (const Hashable_ULong& number)
-      { this->number_ = number.number_; }
-    
-    operator CORBA::ULong (void) const { return number_; }
-    
-    friend int operator== (const Hashable_ULong& left,
-                           const Hashable_ULong& right)
-      { return left.number_ == right.number_; }
-    
-  private:
-    
-    CORBA::ULong number_;   
-  };
-    
-  typedef ACE_Hash_Map_Manager
-    <
-    Hashable_ULong,
-    CosTrading::Offer*,
-    ACE_Null_Mutex
-    >
-    Offer_Map; 
-
  private:
   
   struct Offer_Map_Entry 
   {
-    Offer_Map* offer_map_;
+    TAO_Offer_Map* offer_map_;
     CORBA::ULong counter_;
     LOCK_TYPE lock_;
   };
@@ -171,8 +134,7 @@ public:
 
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))
-    
+  ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))    
     
   LOCK_TYPE db_lock_;
   
@@ -216,12 +178,16 @@ class TAO_Service_Offer_Iterator
   // Protected constructor.
 
   TAO_Offer_Database<LOCK_TYPE>& stm_;
+  // Lock the top_level map.
 
   TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry_;
+  // Entry we're iterating over.
 
-  TAO_Offer_Database<LOCK_TYPE>::Offer_Map::iterator* offer_iter_;
+  TAO_Offer_Map::iterator* offer_iter_;
+  // Iterator over the actual offer map.
   
   const char* type_;
+  // The name of the type. Used for constructing offer ids.
 };
 
 

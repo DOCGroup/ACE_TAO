@@ -116,7 +116,8 @@ TAO_Support_Attributes_Impl (TAO_Lockable &locker)
     supports_modifiable_properties_ (CORBA::B_TRUE),
     supports_dynamic_properties_ (CORBA::B_TRUE),
     supports_proxy_offers_ (CORBA::B_FALSE),
-    type_repos_ (CosTrading::TypeRepository::_nil ())
+    type_repos_ (CosTrading::TypeRepository::_nil ()),
+    service_type_repos_ (CosTradingRepos::ServiceTypeRepository::_nil ())
 {
 }
 
@@ -186,10 +187,22 @@ void
 TAO_Support_Attributes_Impl::
 type_repos (CosTrading::TypeRepository_ptr new_value)
 {
-  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());  
-  this->type_repos_ = new_value;
-}
+  CORBA::Environment _env;  
+  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   
+  this->type_repos_ = new_value;
+  this->service_type_repos_ =
+    CosTradingRepos::ServiceTypeRepository::_narrow (new_value, _env);
+}
+
+CosTradingRepos::ServiceTypeRepository_ptr
+TAO_Support_Attributes_Impl::service_type_repos (void) const
+{
+  ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
+			 CosTradingRepos::ServiceTypeRepository::_nil ());
+  return this->service_type_repos_;
+}
+
 
 TAO_Import_Attributes_Impl::
 TAO_Import_Attributes_Impl (TAO_Lockable &locker)
@@ -878,12 +891,162 @@ sequence_type (CORBA::TypeCode* type_code,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-ACE_MT (template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>);
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+template class TAO_Offer_Database<ACE_RW_Mutex>;
+template class TAO_Service_Offer_Iterator<ACE_RW_Mutex>;
+template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>;
+template class TAO_Lookup<ACE_Thread_Mutex, ACE_RW_Mutex>;
+template class TAO_Register<ACE_Thread_Mutex, ACE_RW_Mutex>;
+template class TAO_Admin<ACE_Thread_Mutex, ACE_RW_Mutex>;
+template class TAO_Link<ACE_Thread_Mutex, ACE_RW_Mutex>;
+template class TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Mutex>;
+template class TAO_Register_Offer_Iterator<ACE_RW_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+#endif /* ACE_MT_SAFE */
+template class TAO_Offer_Database<ACE_Null_Mutex>;
+template class TAO_Service_Offer_Iterator<ACE_Null_Mutex>;
+template class TAO_Register_Offer_Iterator<ACE_Null_Mutex>;
+template class TAO_Trader_Components<POA_CosTrading::Lookup>;
+template class TAO_Support_Attributes<POA_CosTrading::Lookup>;
+template class TAO_Import_Attributes<POA_CosTrading::Lookup>;
+template class TAO_Trader_Components<POA_CosTrading::Register>;
+template class TAO_Support_Attributes<POA_CosTrading::Register>;
+template class TAO_Trader_Components<POA_CosTrading::Admin>;
+template class TAO_Support_Attributes<POA_CosTrading::Admin>;
+template class TAO_Import_Attributes<POA_CosTrading::Admin>;
+template class TAO_Link_Attributes<POA_CosTrading::Admin>;
+template class TAO_Trader_Components<POA_CosTrading::Link>;
+template class TAO_Support_Attributes<POA_CosTrading::Link>;
+template class TAO_Link_Attributes<POA_CosTrading::Link>;
+template class TAO_Trader_Components<POA_CosTrading::Proxy>;
+template class TAO_Support_Attributes<POA_CosTrading::Proxy>;
 template class TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
+template class TAO_Lookup<ACE_Null_Mutex, ACE_Null_Mutex>;
+template class TAO_Register<ACE_Null_Mutex, ACE_Null_Mutex>;
+template class TAO_Admin<ACE_Null_Mutex, ACE_Null_Mutex>;
+template class TAO_Link<ACE_Null_Mutex, ACE_Null_Mutex>;
+template class TAO_Proxy<ACE_Null_Mutex, ACE_Null_Mutex>;
+template class ACE_Node<char*>;
+template class ACE_Unbounded_Queue<char*>;
+template class ACE_Unbounded_Queue_Iterator<char*>;
+template class ACE_Node<CosTrading::Admin::OctetSeq>;
+template class ACE_Unbounded_Set<CosTrading::Admin::OctetSeq>;
+template class ACE_Unbounded_Set_Iterator<CosTrading::Admin::OctetSeq>;
+template class ACE_Node<TAO_String_Hash_Key>;
+template class ACE_Unbounded_Set<TAO_String_Hash_Key>;
+template class ACE_Unbounded_Set_Iterator<TAO_String_Hash_Key>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, int>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CORBA::TypeCode_ptr>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_Hashable_ULong, CosTrading::Offer*>;
+template class ACE_Hash_Map_Manager<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#pragma instantiate TAO_Register_Offer_Iterator<ACE_RW_Mutex>
+#pragma instantiate TAO_Offer_Database<ACE_RW_Mutex>
+#pragma instantiate TAO_Service_Offer_Iterator<ACE_RW_Mutex>
 #pragma instantiate TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>
-#endif /* ACE_MT_SAFE */ 
+#pragma instantiate TAO_Lookup<ACE_Thread_Mutex, ACE_RW_Mutex>
+#pragma instantiate TAO_Register<ACE_Thread_Mutex, ACE_RW_Mutex>
+#pragma instantiate TAO_Admin<ACE_Thread_Mutex, ACE_RW_Mutex>
+#pragma instantiate TAO_Link<ACE_Thread_Mutex, ACE_RW_Mutex>
+#pragma instantiate TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#endif /* ACE_MT_SAFE */
+#pragma instantiate TAO_Offer_Database<ACE_Null_Mutex>
+#pragma instantiate TAO_Service_Offer_Iterator<ACE_Null_Mutex>
+#pragma instantiate TAO_Register_Offer_Iterator<ACE_Null_Mutex>
+#pragma instantiate TAO_Trader_Components<POA_CosTrading::Lookup>
+#pragma instantiate TAO_Support_Attributes<POA_CosTrading::Lookup>
+#pragma instantiate TAO_Import_Attributes<POA_CosTrading::Lookup>
+#pragma instantiate TAO_Trader_Components<POA_CosTrading::Register>
+#pragma instantiate TAO_Support_Attributes<POA_CosTrading::Register>
+#pragma instantiate TAO_Trader_Components<POA_CosTrading::Admin>
+#pragma instantiate TAO_Support_Attributes<POA_CosTrading::Admin>
+#pragma instantiate TAO_Import_Attributes<POA_CosTrading::Admin>
+#pragma instantiate TAO_Link_Attributes<POA_CosTrading::Admin>
+#pragma instantiate TAO_Trader_Components<POA_CosTrading::Link>
+#pragma instantiate TAO_Support_Attributes<POA_CosTrading::Link>
+#pragma instantiate TAO_Link_Attributes<POA_CosTrading::Link>
+#pragma instantiate TAO_Trader_Components<POA_CosTrading::Proxy>
+#pragma instantiate TAO_Support_Attributes<POA_CosTrading::Proxy>
 #pragma instantiate TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>
+#pragma instantiate TAO_Lookup<ACE_Null_Mutex, ACE_Null_Mutex>
+#pragma instantiate TAO_Register<ACE_Null_Mutex, ACE_Null_Mutex>
+#pragma instantiate TAO_Admin<ACE_Null_Mutex, ACE_Null_Mutex>
+#pragma instantiate TAO_Link<ACE_Null_Mutex, ACE_Null_Mutex>
+#pragma instantiate TAO_Proxy<ACE_Null_Mutex, ACE_Null_Mutex>
+#pragma instantiate ACE_Node<char*>
+#pragma instantiate ACE_Unbounded_Queue<char*>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<char*>
+#pragma instantiate ACE_Node<CosTrading::Admin::OctetSeq>
+#pragma instantiate ACE_Unbounded_Set<CosTrading::Admin::OctetSeq>
+#pragma instantiate ACE_Unbounded_Set_Iterator<CosTrading::Admin::OctetSeq>
+#pragma instantiate ACE_Node<TAO_String_Hash_Key>
+#pragma instantiate ACE_Unbounded_Set<TAO_String_Hash_Key>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_String_Hash_Key>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, int>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CORBA::TypeCode_ptr>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_Hashable_ULong, CosTrading::Offer*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Hashable_ULong, CosTrading::Offer*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

@@ -20,17 +20,18 @@
 
 #include "Offer_Iterators_T.h"
 
-template <class TRADER>
-TAO_Register_Offer_Iterator<TRADER>::
-TAO_Register_Offer_Iterator (TRADER &trader,
+template <class MAP_LOCK_TYPE>
+TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
+TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
 			     const TAO_Property_Filter& pfilter)
   : TAO_Offer_Iterator (pfilter),
-    trader_ (trader)
+    db_ (db)
 {
 }
 
-template <class TRADER>
-TAO_Register_Offer_Iterator<TRADER>::~TAO_Register_Offer_Iterator (void)
+template <class MAP_LOCK_TYPE>
+TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
+~TAO_Register_Offer_Iterator (void)
 {
   while (! this->offer_ids_.is_empty ())
     {
@@ -41,38 +42,36 @@ TAO_Register_Offer_Iterator<TRADER>::~TAO_Register_Offer_Iterator (void)
     }
 }
 
-template <class TRADER> void
-TAO_Register_Offer_Iterator<TRADER>::
+template <class MAP_LOCK_TYPE> void
+TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 add_offer (CosTrading::OfferId id,
 	   const CosTrading::Offer* offer)
 {
   this->offer_ids_.enqueue_tail (id);
 }
 
-template <class TRADER> CORBA::ULong 
-TAO_Register_Offer_Iterator<TRADER>::max_left (CORBA::Environment& _env) 
+template <class MAP_LOCK_TYPE> CORBA::ULong 
+TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
+max_left (CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::UnknownMaxLeft))
 {
   return this->offer_ids_.size ();
 }
 
-template <class TRADER> CORBA::Boolean 
-TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n, 
-                                             CosTrading::OfferSeq_out offers,
-					     CORBA::Environment& _env) 
+template <class MAP_LOCK_TYPE> CORBA::Boolean 
+TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
+next_n (CORBA::ULong n, 
+        CosTrading::OfferSeq_out offers,
+        CORBA::Environment& _env) 
   TAO_THROW_SPEC (CORBA::SystemException)
 {
-  offers = new CosTrading::OfferSeq;
-
   CORBA::ULong ret_offers = 0;
   
-  // Get service type map (monitor object).
-  TRADER::Offer_Database &offer_database =
-    this->trader_.offer_database ();
-
   CORBA::ULong max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n : this->offer_ids_.size ();
+
+  ACE_NEW_RETURN (offers, CosTrading::OfferSeq, CORBA::B_FALSE);
   offers->length (max_possible_offers_in_sequence);  
   
   // While there are entries left and we haven't filled <offers>
@@ -89,8 +88,7 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
       TAO_TRY
 	{
 	  CosTrading::OfferId_var offerid_var (id);
-	  CosTrading::Offer* offer =
-	    offer_database.lookup_offer (id, TAO_TRY_ENV);
+	  CosTrading::Offer* offer = this->db_.lookup_offer (id, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  
 	  if (offer != 0)
@@ -106,7 +104,7 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
   // Reset the length to the correct value
   offers->length (ret_offers);
 
-  return (CORBA::Boolean)(ret_offers != 0);
+  return ACE_static_cast (CORBA::Boolean, ret_offers != 0);
 }
 
 #endif /* TAO_REGISTER_OFFER_ITERATOR_C */

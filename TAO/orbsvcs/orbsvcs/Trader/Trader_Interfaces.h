@@ -19,27 +19,36 @@
 #ifndef TAO_TRADER_INTERFACES_H
 #define TAO_TRADER_INTERFACES_H
 
-#include "Trader_T.h"
 #include "Trader_Utils.h"
-#include "Offer_Iterators_T.h"
 #include "Constraint_Interpreter.h"
+#include "Offer_Iterators_T.h"
+
+// Hack because g++ forced this inane circular dependecy!
+
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Lookup;
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Register;
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Admin;
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Proxy;
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Link;
+
+#include "Trader_T.h"
 
   // *************************************************************
   // TAO_Lookup
   // *************************************************************
 
-template<class TRADER, class TRADER_LOCK_TYPE>
+template<class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Lookup :
   public TAO_Trader_Components<POA_CosTrading::Lookup>,
   public TAO_Support_Attributes<POA_CosTrading::Lookup>,
   public TAO_Import_Attributes<POA_CosTrading::Lookup>
-  //
-  // = TITLE
-  //     This class implements CosTrading::Lookup IDL interface.
+//
+// = TITLE
+//     This class implements CosTrading::Lookup IDL interface.
 {    
 public:
   
-  TAO_Lookup (TRADER &trader);
+  TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Lookup (void);
   
@@ -147,16 +156,17 @@ public:
   
 private:
 
-  typedef TRADER::Offer_Database Offer_Database;
- 
+  typedef
+    TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::Offer_Database
+    Offer_Database;
+  
   TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
   // Factory method for creating an appropriate Offer Iterator based
   // on the presence of the Register Interface. 
   
-
   void lookup_all_subtypes (const char* type,
 			    CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
-			    Offer_Database& offer_database,
+                            Offer_Database& offer_database,
 			    CosTradingRepos::ServiceTypeRepository_ptr rep,
 			    TAO_Constraint_Interpreter& constr_inter,
 			    TAO_Preference_Interpreter& pref_inter,
@@ -257,17 +267,13 @@ private:
   // Merge the results from a federated query into the collected results.
   
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER,TRADER_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER, TRADER_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   
-  TRADER &trader_;
+  TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
   // A reference to the trader for obtaining offer maps.
   
-  typedef ACE_Unbounded_Set    
-    <
-    CosTrading::Admin::OctetSeq
-    >
-    Request_Ids;
+  typedef ACE_Unbounded_Set<CosTrading::Admin::OctetSeq> Request_Ids;
   
   Request_Ids request_ids_;
   // A list of recent request_id_stems 
@@ -281,7 +287,7 @@ private:
   // TAO_Register
   // *************************************************************
 
-template <class TRADER>
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Register :
   public TAO_Trader_Components<POA_CosTrading::Register>,
   public TAO_Support_Attributes<POA_CosTrading::Register>
@@ -291,7 +297,7 @@ class TAO_Register :
 {
 public:
 
-  TAO_Register (TRADER &trader);
+  TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   virtual ~TAO_Register (void);
 
@@ -540,7 +546,9 @@ public:
 
  protected:
 
-  typedef TRADER::Offer_Database Offer_Database;
+  typedef
+    TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::Offer_Database
+    Offer_Database;
   
   void validate_properties (const char* type,
 			    const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
@@ -553,8 +561,8 @@ public:
 		     CosTrading::DuplicatePropertyName));
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Register<TRADER> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Register (const TAO_Register<TRADER> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   
   // Type is a known service type.
   
@@ -564,14 +572,14 @@ public:
   
  private:
 
-  TRADER &trader_;
+  TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
 
   // *************************************************************
   // TAO_Admin
   // *************************************************************
 
-template <class TRADER, class TRADER_LOCK_TYPE>
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Admin : 
   public TAO_Trader_Components <POA_CosTrading::Admin>,
   public TAO_Support_Attributes <POA_CosTrading::Admin>,
@@ -600,7 +608,7 @@ class TAO_Admin :
 {
 public:
 
-  TAO_Admin (TRADER &trader);
+  TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Admin (void);
 
@@ -726,10 +734,10 @@ public:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Admin<TRADER,TRADER_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Admin (const TAO_Admin<TRADER,TRADER_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Admin (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
     
-  TRADER &trader_;
+  TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
   
   CosTrading::Admin::OctetSeq stem_id_;
   // Unique prefix to create a sequence number space.
@@ -744,7 +752,7 @@ private:
   // TAO_Link
   // *************************************************************
 
-template <class TRADER, class MAP_TRADER>
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Link : 
   public TAO_Trader_Components <POA_CosTrading::Link>,
   public TAO_Support_Attributes <POA_CosTrading::Link>,
@@ -752,7 +760,7 @@ class TAO_Link :
 {
 public:
 
-  TAO_Link (TRADER &trader);
+  TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Link (void);
 		
@@ -899,14 +907,14 @@ public:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Link<TRADER, MAP_TRADER> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Link (const TAO_Link<TRADER, MAP_TRADER> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   
   typedef ACE_Hash_Map_Manager
   <
   TAO_String_Hash_Key,
   CosTrading::Link::LinkInfo,
-  MAP_TRADER
+  MAP_LOCK_TYPE
   >
   Links;
   
@@ -914,21 +922,21 @@ private:
   // The collection of link connecting this trader to others in the
   // federation. 
   
-  TRADER &trader_;
+  TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
 
   // *************************************************************
   // TAO_Proxy
   // *************************************************************
 
-template <class TRADER>
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Proxy : 
   public TAO_Trader_Components <POA_CosTrading::Proxy>,
   public TAO_Support_Attributes <POA_CosTrading::Proxy>
 {
 public:
 
-  TAO_Proxy (TRADER &trader);
+  TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Proxy (void);
 
@@ -979,11 +987,11 @@ public:
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Proxy<TRADER> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Proxy (const TAO_Proxy<TRADER> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
 
   
-  TRADER &trader_;
+  TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -228,8 +228,6 @@ private:
     ACE_Null_Mutex
     >
     Service_Type_Map;
-  
-  typedef ACE_Unbounded_Queue<const char*>  Service_Type_Queue;
 
   void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
 			      CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
@@ -239,7 +237,7 @@ private:
   // transitive closure of the super type relation.
 
   void collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
-                                      TAO_Service_Type_Repository::Service_Type_Queue& target);
+                                      TAO_String_Queue& target);
   
   void validate_properties (Prop_Map& prop_map,
 			    const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,

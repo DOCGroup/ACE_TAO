@@ -264,13 +264,7 @@ class TAO_Offer_Id_Iterator : public POA_CosTrading::OfferIdIterator
   TAO_Offer_Id_Iterator (const TAO_Offer_Id_Iterator&);
   TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator&);
   
-  typedef ACE_Unbounded_Queue
-    <
-    CosTrading::OfferId
-    >
-    Offer_Id_Queue;
-    
-  Offer_Id_Queue ids_;
+  TAO_String_Queue ids_;
 };
 
 #endif /* TAO_OFFER_ITERATOR */

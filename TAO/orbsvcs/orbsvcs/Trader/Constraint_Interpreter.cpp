@@ -76,13 +76,13 @@ TAO_Interpreter::is_empty_string(const char* str)
   // *************************************************************
 
 TAO_Constraint_Interpreter::
-TAO_Constraint_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
-			   const char* constraints,
-			   CORBA::Environment& _env)
+TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
+                            const char* constraints,
+                            CORBA::Environment& _env)
   TAO_THROW_SPEC (CosTrading::IllegalConstraint)
   : TAO_Interpreter ()
 {
-  TAO_Constraint_Validator type_checker(ts);
+  TAO_Constraint_Validator type_checker (ts);
 
   if (TAO_Interpreter::is_empty_string (constraints))
     this->root_ = new TAO_Literal_Constraint ((CORBA::Boolean) 1);
@@ -136,16 +136,16 @@ TAO_Constraint_Interpreter::evaluate(TAO_Constraint_Evaluator& evaluator)
   // *************************************************************
 
 TAO_Preference_Interpreter::
-TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
+TAO_Preference_Interpreter(const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
 			   const char* preference,
 			   CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
   : TAO_Interpreter ()
 {
-  TAO_Constraint_Validator type_checker(ts);
+  TAO_Constraint_Validator type_checker (ts);
 
-  if (TAO_Interpreter::is_empty_string(preference))
-    this->root_ = new TAO_Noop_Constraint(TAO_FIRST);
+  if (TAO_Interpreter::is_empty_string (preference))
+    this->root_ = new TAO_Noop_Constraint (TAO_FIRST);
   else
     {
       if (this->build_tree (preference) != 0)
@@ -163,8 +163,8 @@ TAO_Preference_Interpreter(TAO_Constraint_Validator& validator,
   TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
     : TAO_Interpreter ()
 {
-  if (TAO_Interpreter::is_empty_string(preference))
-    this->root_ = new TAO_Noop_Constraint(TAO_FIRST);
+  if (TAO_Interpreter::is_empty_string (preference))
+    this->root_ = new TAO_Noop_Constraint (TAO_FIRST);
   else
     {
       if (this->build_tree (preference) != 0)
@@ -184,7 +184,7 @@ TAO_Preference_Interpreter::
 order_offer (CosTrading::Offer* offer,
              CosTrading::OfferId offer_id)
 {
-  TAO_Constraint_Evaluator evaluator(offer);
+  TAO_Constraint_Evaluator evaluator (offer);
   this->order_offer (evaluator, offer, offer_id);
 }
 
@@ -305,7 +305,6 @@ TAO_Lex_String_Input::copy_into(char* buf, int max_size)
 {
   int chars_left =  TAO_Lex_String_Input::end_ - TAO_Lex_String_Input::current_;
   int n = (max_size > chars_left) ? chars_left : max_size;
-
   
   if (n > 0)
     {
@@ -326,8 +325,11 @@ TAO_Lex_String_Input::reset(char* input_string)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>
+template class ACE_Node<TAO_Preference_Interpreter::Preference_Info>;
+template class ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>;
+template class ACE_Unbounded_Queue_Iterator<TAO_Preference_Interpreter::Preference_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<TAO_Preference_Interpreter::Preference_Info>
 #pragma instantiate ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Preference_Interpreter::Preference_Info>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
