@@ -55,7 +55,7 @@ TAO_PG_GenericFactory::~TAO_PG_GenericFactory (void)
 
 CORBA::Object_ptr
 TAO_PG_GenericFactory::create_object (
-    const char * type_id,
+    const PortableGroup::GroupDomainId type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
     ACE_ENV_ARG_DECL)
@@ -306,7 +306,7 @@ TAO_PG_GenericFactory::populate_object_group (
   const CORBA::ULong fcid,
   PortableGroup::ObjectGroup_ptr object_group,
   const PortableServer::ObjectId & oid,
-  const char * type_id,
+  const PortableGroup::GroupDomainId type_id,
   const PortableGroup::FactoryInfos & factory_infos,
   const PortableGroup::InitialNumberMembersValue initial_number_members,
   TAO_PG_Factory_Set & factory_set
@@ -454,7 +454,7 @@ TAO_PG_GenericFactory::get_ObjectId (
 
 void
 TAO_PG_GenericFactory::process_criteria (
-  const char * type_id,
+  const PortableGroup::GroupDomainId type_id,
   const PortableGroup::Criteria & criteria,
   PortableGroup::MembershipStyleValue & membership_style,
   PortableGroup::FactoriesValue *& factory_infos,

@@ -69,7 +69,7 @@ public:
    * method to delete the object.
    */
   virtual CORBA::Object_ptr create_object (
-      const char * type_id,
+      const PortableGroup::GroupDomainId type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
         factory_creation_id
@@ -120,7 +120,7 @@ private:
          const CORBA::ULong fcid,
          PortableGroup::ObjectGroup_ptr object_group,
          const PortableServer::ObjectId & oid,
-         const char * type_id,
+         const PortableGroup::GroupDomainId type_id,
          const PortableGroup::FactoryInfos &factory_infos,
          const PortableGroup::InitialNumberMembersValue initial_number_members,
          TAO_PG_Factory_Set & factory_set
@@ -148,7 +148,7 @@ private:
    * they are the object group creation time criteria.
    */
   void process_criteria (
-    const char * type_id,
+    const PortableGroup::GroupDomainId type_id,
     const PortableGroup::Criteria & criteria,
     PortableGroup::MembershipStyleValue & membership_style,
     PortableGroup::FactoriesValue *& factory_infos,

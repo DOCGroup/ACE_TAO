@@ -130,7 +130,8 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
               "Identity_Client: Requesting Object Group "
               "with id <%s>\n", group_name));
   Load_Balancer::Object_Group_var object_group =
-    factory->resolve (group_name
+    factory->resolve (ACE_const_cast (const Load_Balancer::Group_ID,
+                                      group_name)
                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 

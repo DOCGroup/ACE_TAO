@@ -26,7 +26,9 @@ ACE_RCSID(LifeCycle_Service, Factory_Trader, "$Id$")
 
 // This const char * is used for adding a new type to the service repository
 // the added types will be subclasses of this.
-const char * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID = "IDL:omg.org/CosLifeCycle/GenericFactory:1.0";
+const CosTrading::ServiceTypeName 
+Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID = 
+  "IDL:omg.org/CosLifeCycle/GenericFactory:1.0";
 
 
 Factory_Trader::Factory_Trader (int debug_level)
@@ -163,7 +165,7 @@ Factory_Trader::_cxx_export (const char * name,
 
 
 CORBA::Object_ptr
-Factory_Trader::query (const char* constraint)
+Factory_Trader::query (const CosTrading::Constraint constraint)
 {
   ACE_TRY_NEW_ENV
     {

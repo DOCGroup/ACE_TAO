@@ -393,8 +393,11 @@ Client::test_delete_property (const char *property_name
     {
       CORBA::String_var property_name_var (property_name);
 
-      this->propsetdef_->delete_property (property_name_var.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+      this->propsetdef_->delete_property (
+          ACE_const_cast (CosPropertyService::PropertyName,
+                          property_name_var.in ())
+          ACE_ENV_ARG_PARAMETER
+        );
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ex)
