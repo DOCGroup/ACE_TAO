@@ -1781,7 +1781,7 @@ CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
                                   0);
               }
 
-            if (encap_length != 0xffffffff) // check for indirection
+            if (tc_kind_holder != 0xffffffff) // check for indirection
               {
                 if (!stream.skip_bytes (encap_length))
                   {
@@ -2060,7 +2060,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
                                   CORBA::TypeCode::_nil ());
               }
 
-            if (encap_length != 0xffffffff) // check for indirection
+            if (tc_kind_holder != 0xffffffff) // check for indirection
               {
                 if (!stream.skip_bytes (encap_length))
                   {
