@@ -1,6 +1,7 @@
 // $Id$
 
 #include "NULL_Connection_Purging_Strategy.h"
+#include "tao/Cache_Entries.h"
 
 ACE_RCSID(tao, NULL_Connection_Purging_Strategy, "$Id$")
 
@@ -28,4 +29,3 @@ TAO_NULL_Connection_Purging_Strategy::cache_maximum (void) const
 {
   return -1;
 }
-
