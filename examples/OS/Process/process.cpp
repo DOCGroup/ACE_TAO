@@ -286,7 +286,7 @@ win32_test_ls (void)
                           std_out,
                           ::GetCurrentProcess (),
                           &startup_info.hStdOutput,
-                          NULL,
+                          0,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     {
@@ -302,7 +302,7 @@ win32_test_ls (void)
                             NULL, // No process attributes.
                             NULL, // No thread attributes.
                             TRUE, // Allow handle inheritance.
-                            NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
+                            0, // CREATE_NEW_CONSOLE, // Create a new console window.
                             NULL,
                             0, // Current directory to start in.
                             &startup_info,
@@ -350,7 +350,7 @@ win32_spawn_environment_process (void)
                           std_out,
                           ::GetCurrentProcess(),
                           &startup_info.hStdOutput,
-                          NULL,
+                          0,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     {
@@ -363,7 +363,7 @@ win32_spawn_environment_process (void)
                           std_err,
                           ::GetCurrentProcess(),
                           &startup_info.hStdError,
-                          NULL,
+                          0,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     {
@@ -377,7 +377,7 @@ win32_spawn_environment_process (void)
                           std_in,
                           ::GetCurrentProcess(),
                           &startup_info.hStdInput,
-                          NULL,
+                          0,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     {
@@ -411,7 +411,7 @@ win32_spawn_environment_process (void)
                             NULL, // No process attributes.
                             NULL, // No thread attributes.
                             TRUE, // Allow handle inheritance.
-                            NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
+                            0, // CREATE_NEW_CONSOLE, // Create a new console window.
                             environment, // Environment.
                             //"d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\",
                             0,
@@ -429,7 +429,7 @@ win32_spawn_environment_process (void)
     {
       ::WaitForSingleObject (process_info.hProcess,
                              INFINITE);
-      ACE_DEBUG ((LM_ERROR, 
+      ACE_DEBUG ((LM_ERROR,
                   "spawn_environment_process succeeded.\n"));
     }
 }
