@@ -54,8 +54,9 @@ protected:
   // Print a usage message
 
 private:
-  const char *interface_repository_id_;
-  // The interface repository ID for the object we load balance.
+  const char * repository_id_;
+  // The repository ID for the interface of the object being load
+  // balanced.
 
   // @@ Ossama: the current version just dumps the IOR to a file, we
   // may want to integrate it with the naming service too.

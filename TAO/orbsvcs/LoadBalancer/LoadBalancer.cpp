@@ -9,16 +9,16 @@ ACE_RCSID(LoadBalancer, LoadBalancer, "$Id$")
 
 
 TAO_LoadBalancer::TAO_LoadBalancer (void)
-  :  interface_repository_id_ ("IDL:CORBA/Object:1.0"),
-     load_balancer_file_ ("lb.ior"),
-     strategy_ (0),
-     balancer_ (0)
+  : repository_id_ ("IDL:CORBA/Object:1.0"),
+    load_balancer_file_ ("lb.ior"),
+    strategy_ (0),
+    balancer_ (0)
 {
 }
 
 TAO_LoadBalancer::~TAO_LoadBalancer (void)
 {
-  // @@
+  // No-op
 }
 
 void
@@ -35,7 +35,7 @@ TAO_LoadBalancer::parse_args (int argc,
       switch (c)
         {
         case 'i':
-          this->interface_repository_id_ = get_opts.optarg;
+          this->repository_id_ = get_opts.optarg;
           break;
         case 'o':
           this->load_balancer_file_ = get_opts.optarg;
@@ -99,7 +99,7 @@ TAO_LoadBalancer::init (int argc,
     strategy = &this->minimum_dispersion_;
 
   ACE_NEW (this->balancer_,
-           TAO_LB_LoadBalancer (this->interface_repository_id_,
+           TAO_LB_LoadBalancer (this->repository_id_,
                                 strategy,
                                 this->root_poa_.in ()));
 
