@@ -1,16 +1,17 @@
+##---------------------------------------------------------------------------
+##       $Id$
+##
+##       Makefile for the ACE network services
+##
+##---------------------------------------------------------------------------
 
-!ifndef CFLAGS
-CFLAGS=$(ACE_CFLAGS)
-!endif
+##
+##  Process this file with automake to create Makefile.in
+##
 
-!ifndef CPPDIR
-CPPDIR=.
-!endif
+SUBDIRS = \
+  lib \
+  clients \
+  servers
 
-!ifndef LIBFILES
-LIBFILES= $(ACE_LIB)
-!endif
-
-!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
+EXTRA_DIST = ACE-netsvcs.html

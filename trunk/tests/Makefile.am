@@ -267,7 +267,7 @@ Barrier_Test_SOURCES = Barrier_Test.cpp
 
 Basic_Types_Test_SOURCES = Basic_Types_Test.cpp
 
-Bound_Ptr_Test_SOURCES = Bound_Ptr_Test.cpp
+Bound_Ptr_Test_SOURCES = Bound_Ptr_Test.cpp Bound_Ptr_Test.h
 
 Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
 
@@ -391,7 +391,8 @@ Multihomed_INET_Addr_Test_SOURCES = Multihomed_INET_Addr_Test.cpp
 
 Naming_Test_SOURCES = Naming_Test.cpp
 
-NonBlocking_Conn_Test_SOURCES = NonBlocking_Conn_Test.cpp
+NonBlocking_Conn_Test_SOURCES = \
+  NonBlocking_Conn_Test.cpp NonBlocking_Conn_Test.h
 
 Notify_Performance_Test_SOURCES = Notify_Performance_Test.cpp
 
@@ -490,15 +491,19 @@ TSS_Static_Test_SOURCES = TSS_Static_Test.cpp
 
 Task_Test_SOURCES = Task_Test.cpp
 
-Task_Ex_Test_SOURCES = Task_Ex_Test.cpp
+Task_Ex_Test_SOURCES = Task_Ex_Test.cpp Task_Ex_Test.h
 
 Thread_Manager_Test_SOURCES = Thread_Manager_Test.cpp
 
 Thread_Mutex_Test_SOURCES = Thread_Mutex_Test.cpp
 
-Thread_Pool_Reactor_Test_SOURCES = Thread_Pool_Reactor_Test.cpp
+Thread_Pool_Reactor_Test_SOURCES = \
+  Thread_Pool_Reactor_Test.cpp \
+  Thread_Pool_Reactor_Test.h
 
-Thread_Pool_Reactor_Resume_Test_SOURCES = Thread_Pool_Reactor_Resume_Test.cpp
+Thread_Pool_Reactor_Resume_Test_SOURCES = \
+  Thread_Pool_Reactor_Resume_Test.cpp \
+  Thread_Pool_Reactor_Resume_Test.h
 
 Thread_Pool_Test_SOURCES = Thread_Pool_Test.cpp
 
@@ -526,7 +531,9 @@ UPIPE_SAP_Test_SOURCES = UPIPE_SAP_Test.cpp
 Upgradable_RW_Test_SOURCES = Upgradable_RW_Test.cpp \
                              Upgradable_RW_Test.h
 
-Unbounded_Set_Test_Ex_SOURCES = Unbounded_Set_Test_Ex.cpp
+Unbounded_Set_Test_Ex_SOURCES = \
+  Unbounded_Set_Test_Ex.cpp \
+  Unbounded_Set_Test_Ex.h
 
 Vector_Test_SOURCES = Vector_Test.cpp
 

@@ -22,8 +22,8 @@ man_MANS = ace-config.1
 SUBDIRS = \
   ace \
   apps \
+  netsvcs \
   tests
-##  netsvcs \
 ##  man
 
 ##SUBDIRS = \
