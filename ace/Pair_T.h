@@ -59,6 +59,9 @@ public:
   /// Set second.
   void second (const T2 &t2);
 
+  // Compare pairs.
+  int operator== (const ACE_Pair<T1, T2> &rhs) const;
+
 protected:
   /// First.
   T1 first_;
@@ -94,6 +97,9 @@ public:
 
   /// Access second.
   T2 &second (void) const;
+
+  // Compare pairs.
+  int operator== (const ACE_Reference_Pair<T1, T2> &rhs) const;
 
 protected:
   /// First.
