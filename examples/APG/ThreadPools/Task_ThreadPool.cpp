@@ -17,7 +17,7 @@ public:
   {
     while (1)
       {
-        ACE_Message_Block *mb = NULL;
+        ACE_Message_Block *mb = 0;
         if (this->getq (mb) == -1)
           {
             ACE_DEBUG ((LM_INFO,
@@ -74,7 +74,7 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = NULL;
+        ACE_Message_Block *mb = 0;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
         tv += ACE_OS::time (0);
           
