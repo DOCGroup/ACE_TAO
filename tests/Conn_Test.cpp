@@ -489,7 +489,7 @@ static void
 handler (int /* signum */)
 {
   // No printout here, to be safe.  Signal handlers must not acquire
-  // locks, etc.
+  // locks, etc.  It's not even safe to call ACE_OS::exit ()!
   ACE_OS::exit (0);
 }
 
