@@ -93,6 +93,13 @@ public:
   PortableServer::POA_ptr consumer_poa (CORBA::Environment&);
   // Access the supplier and consumer POAs from the factory.
 
+  ACE_Lock* create_consumer_lock (void);
+  void destroy_consumer_lock (ACE_Lock*);
+  ACE_Lock* create_supplier_lock (void);
+  void destroy_supplier_lock (ACE_Lock*);
+  // Locking strategies for the ProxyPushConsumer and
+  // ProxyPushSupplier objects
+  
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,

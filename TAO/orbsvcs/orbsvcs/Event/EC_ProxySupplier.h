@@ -57,8 +57,8 @@ class TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelAdmin::ProxyPushSupp
   //   reference.
   //
   // = LOCKING
-  //   No provisions for locking, access must be serialized
-  //   externally.
+  //   Locking is strategized, the event channel acts as a factory for 
+  //   the locking strategies.
   //
   // = TODO
   //   We don't need to provide a trivial filter, the object itself
@@ -81,6 +81,8 @@ public:
   RtecEventComm::PushConsumer_ptr consumer (void) const;
   // Return the consumer object reference. It returns nil() if it has
   // not connected yet.
+  // NOTE: This method does not return a new reference!!! Doing so
+  // will increase the locking overhead on the critical path.
 
   const RtecEventChannelAdmin::ConsumerQOS& subscriptions (void) const;
   // The QoS (subscription) used to connect to the EC.
@@ -123,17 +125,27 @@ public:
                              CORBA::Environment& env);
   virtual void push (const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info,
-                     CORBA::Environment& env); 
+                     CORBA::Environment& env);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info,
-                            CORBA::Environment& env); 
+                            CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual void event_ids (TAO_EC_Filter::Headers& headerset);
 
 private:
+  CORBA::Boolean is_connected_i (void) const;
+  // The private version (without locking) of is_connected().
+
+  PortableServer::POA_ptr _default_POA_i ();
+  // The private version (without locking) of _default_POA_i ().
+
+private:
   TAO_EC_Event_Channel* event_channel_;
   // The Event Channel that owns this object.
+
+  ACE_Lock* lock_;
+  // The locking strategy.
 
   RtecEventComm::PushConsumer_var consumer_;
   // The consumer....

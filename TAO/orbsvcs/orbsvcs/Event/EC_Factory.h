@@ -34,6 +34,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Lock;
+
 class TAO_EC_Event_Channel;
 
 class TAO_EC_Dispatching;
@@ -110,6 +112,20 @@ public:
        supplier_poa (CORBA::Environment& env) = 0;
   // The Event Channel uses this methods to control the activation of
   // the run-time servants.
+
+  virtual ACE_Lock* create_consumer_lock (void) = 0;
+  virtual void destroy_consumer_lock (ACE_Lock*) = 0;
+  virtual ACE_Lock* create_supplier_lock (void) = 0;
+  virtual void destroy_supplier_lock (ACE_Lock*) = 0;
+  // Create and destroy the locking strategies for both
+  // ProxyPushConsumers and ProxyPushSuppliers
+
+  virtual ACE_Lock* create_consumer_admin_lock (void) = 0;
+  virtual void destroy_consumer_admin_lock (ACE_Lock*) = 0;
+  virtual ACE_Lock* create_supplier_admin_lock (void) = 0;
+  virtual void destroy_supplier_admin_lock (ACE_Lock*) = 0;
+  // Create and destroy the locking strategies for both
+  // ConsumerAdmin and SupplierAdmin classes.
 };
 
 #if defined (__ACE_INLINE__)
