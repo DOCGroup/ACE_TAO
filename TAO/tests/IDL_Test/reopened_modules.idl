@@ -23,7 +23,7 @@
 // TAO IDL compiler, with reopened modules.
 
 // Tests lookup function when modules are reopened by
-// a chain of inclusions
+// a chain of inclusions.
 #include "reopen_include2.idl"
 
 module AA
@@ -77,6 +77,7 @@ module dot
 
 // Should be no problem in lookup of all the
 // arguments in Operation.
+
 module Outside
 {
   module Reopened
@@ -104,6 +105,7 @@ interface OpHolder
 // to go into an infinite loop looking for return type to
 // getInfo(). Partial solution got rid of infinite loop, 
 // but erroneously returned ::com from lookup.
+
 module com {};
 
 module com 
@@ -124,6 +126,7 @@ module com
 
 // Modules X and Y are also included from reopene_include2.idl.
 // There were problems with the lookup of Y::Z and X::Ex.
+
 module Y 
 {
    interface Z {};
@@ -141,6 +144,7 @@ module X
 
 // Reopened from reopen_include2.idl inclusion. There
 // was a problem with the inheritance lookup.
+
 module XX 
 {
   interface blah_intfc;
@@ -158,6 +162,7 @@ module XX
 
 // Had lookup problems with the operation args and
 // return type.
+
 module frag
 {
   interface frag_iface {};
@@ -177,6 +182,7 @@ interface gather
 
 // Had problems with second opening of module using
 // types declared between the openings.
+
 module foo
 {
   typedef long longdef;
@@ -211,5 +217,36 @@ module A
       X2Seq getSeqOfX2 ();
       string getX3 ();
     };
+  };
+};
+
+// Interface B was not getting redefined, so
+// definition of C would cause an error.
+
+module mB
+{
+  interface B;
+};
+
+module mA
+{
+  interface A
+  {
+    attribute ::mB::B theB;
+  };
+};
+
+module mB
+{
+  interface B : ::mA::A
+  {
+    attribute ::mA::A theA;
+  };
+};
+
+module mC
+{
+  interface C : ::mB::B
+  {
   };
 };
