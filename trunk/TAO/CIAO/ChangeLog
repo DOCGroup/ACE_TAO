@@ -1,3 +1,11 @@
+Sat Aug  7 16:43:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/CIDL/CodeGen/CodeGen.mpc:
+	* tests/IDL3/Homes/Basic/Basic.mpc:
+
+	  Changed the name of the stub library and project names. There
+	  was a clash in project and library names.
+
 Thu Aug  5 17:42:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplGenerator.cpp:
