@@ -23,10 +23,10 @@
 #if !defined (TAO_PRINCIPAL_H)
 #  define TAO_PRINCIPAL_H
 
+#  include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #  include <objbase.h>
 #  include <initguid.h>
 
-#  include "ace/OS.h"
 #  include "ace/Synch.h"
 
 #  include "tao/sequence.h"

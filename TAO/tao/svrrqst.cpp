@@ -4,6 +4,7 @@
 //
 // Implementation of the Dynamic Server Skeleton Interface
 
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 

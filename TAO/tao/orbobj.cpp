@@ -9,6 +9,7 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
+//#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 
@@ -19,6 +20,7 @@
 #include "tao/boa.h"
 #include "tao/roa.h"
 #include "tao/nvlist.h"
+#include "tao/debug.h"
 
 extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA_Environment &env);

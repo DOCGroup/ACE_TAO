@@ -19,6 +19,7 @@
 #if !defined (TAO_ANY_H)
 #define TAO_ANY_H
 
+#include "ace/OS.h"
 #include <objbase.h>
 
 #include "ace/Synch_T.h"
