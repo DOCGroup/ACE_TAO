@@ -1,0 +1,39 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/debug.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+unsigned debug_level=0;              1    43      13     1     0   0.1   0.0
+char*debug_filter=";                 44   44       0     0     0            
+static FILE*debug_stream=stderr;     45   45       0     0     0            
+static pid_t my_pid;                 48   63      13     1     0   0.1   0.0
+static pthread_once_t debug_init=PT  68   71       3     0     0   0.0   0.0
+static void setup_once(){}           75   79       0     4     0 ! ***      
+static void emit_prefix(){}          81   87       0     5     0 ! ***      
+static void setup(){}                91   102      5     6     1   1.2   0.2
+static void setup(){}                109  120      5     6     1   1.2   0.2
+void _EXPFUNC dmsg_filter(const cha  130  170      3    28 ?  12 ? 9.3   4.0
+void _EXPFUNC dmsg_filter(unsigned   172  193      1    15     3 ?15.0   3.0
+void _EXPFUNC dmsg_v(const char*_FA  195  213      1    13     1 ?13.0   1.0
+void _EXPFUNC _dmsg_x(CORBA_Environ  215  239      1    18     1 ?18.0   1.0
+void _EXPFUNC dmsg_opaque(char*_FAR  241  286      1    38 ?  10 !38.0 ?10.0
+void _EXPFUNC dmsg_opaque_full(char  288  335      1    39 ?  11 !39.0 ?11.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                47   189    40   4.0   0.9
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+
