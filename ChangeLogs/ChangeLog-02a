@@ -4,7 +4,9 @@ Fri Jul  6 15:55:54 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Integrated patch from Jody Hagins <jody@atdesk.com>.  Set the
 	  default reactor file descriptor set size to be an integer
-	  constant rather than a preprocessor constant.
+	  constant rather than a preprocessor constant.  Some third party
+	  software #undef FD_SETSIZE in their header files, causing build
+	  problems in ACE.
 
 Fri Jul 06 18:20:39 2001  Steve Huston  <shuston@riverace.com>
 
