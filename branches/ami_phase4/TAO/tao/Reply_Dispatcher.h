@@ -133,6 +133,9 @@ private:
   ACE_SYNCH_CONDITION *leader_follower_condition_variable_;
   // Condition variable used by the leader to notify the follower
   // about the availability of the response.
+
+  TAO_ORB_Core *orb_core_;
+  // Cache the ORB Core pointer.
 };
 
 // *********************************************************************

@@ -1318,11 +1318,8 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
                       ACE_SYNCH_CONDITION (this->leader_follower ().lock ()),
                       0);
     }
-  else
-    {
-      // Return the condtion variable.
-      return tss->leader_follower_condition_variable_;
-    }
+  
+  return tss->leader_follower_condition_variable_;
 }
 
 int
@@ -1434,8 +1431,22 @@ TAO_Leader_Follower::get_next_follower (void)
   if (iterator.first () == 0)
     // means set is empty
     return 0;
+  
+  if (TAO_debug_level >= 4)
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - next follower is %x\n",
+                *iterator));
+  
+  ACE_SYNCH_CONDITION *cond = *iterator;
 
-  return *iterator;
+  // We *must* remove it when we signal it so the same condition is
+  // not signalled for both wake up as a follower and as the next
+  // leader. 
+  // The follower may not be there if the reply is received while the
+  // consumer is not yet waiting for it (i.e. it send the request but
+  // has not blocked to receive the reply yet)
+  (void) this->remove_follower (cond); // Ignore errors..
+
+  return cond;
 }
 
 // ****************************************************************
