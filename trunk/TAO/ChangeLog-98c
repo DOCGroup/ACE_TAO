@@ -1,3 +1,8 @@
+Sun Jul 26 16:58:54 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp : Fixed the argument
+	processing of  low priority servants.
+
 Sun Jul 26 16:02:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Removed a line in unset_leader_wake_up_follower
