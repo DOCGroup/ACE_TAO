@@ -515,7 +515,7 @@ SOURCE=.\miop.idl
 !IF  "$(CFG)" == "PortableGroup - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__MIOP_="..\..\..\bin\Release\tao_idl "	
+USERDEP__MIOP_="..\..\..\bin\Release\tao_idl.exe "	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\miop.idl
 InputName=miop
@@ -604,7 +604,7 @@ SOURCE=.\PortableGroup.idl
 !IF  "$(CFG)" == "PortableGroup - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__PORTA="..\..\..\bin\Release\tao_idl "	
+USERDEP__PORTA="..\..\..\bin\Release\tao_idl.exe "	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\PortableGroup.idl
 InputName=PortableGroup
