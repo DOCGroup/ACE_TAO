@@ -8,11 +8,7 @@
 ACE_INLINE int
 TAO_Internal::open_services (int& argc, char** argv)
 {
-#if 0
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, service_lock_, -1));
-#else
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, *ACE_Static_Object_Lock::instance (), -1));
-#endif /* 0 */
 
   if (TAO_Internal::service_open_count_++ == 0)
     {
@@ -29,11 +25,7 @@ TAO_Internal::open_services (int& argc, char** argv)
 ACE_INLINE int
 TAO_Internal::close_services (void)
 {
-#if 0
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, service_lock_, -1));
-#else
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, *ACE_Static_Object_Lock::instance (), -1));
-#endif /* 0 */
 
   if (service_open_count_ == 0)
     return -1;
