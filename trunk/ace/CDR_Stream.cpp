@@ -33,10 +33,10 @@
 // by external critical sections.
 
 #define ACE_BUILD_DLL
-#include "ace/CDR.h"
+#include "ace/CDR_Stream.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/CDR.i"
+# include "ace/CDR_Stream.i"
 #endif /* ! __ACE_INLINE__ */
 
 int
