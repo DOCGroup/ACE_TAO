@@ -11,22 +11,22 @@ endif # TAO_ROOT
 TAO_IDLFLAGS=-I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 
-BIN = Life_Cycle_Service
+BIN = LifeCycle_Service
 
 
 # The following lines tell the souce code that the trading
 # service is available.
 
-LIFE_CYCLE_SERVICE_SRCS = \
-	Life_Cycle_Service.cpp Life_Cycle_Service_i.cpp \
+LIFECYCLE_SERVICE_SRCS = \
+	LifeCycle_Service.cpp LifeCycle_Service_i.cpp \
 	Factory_Trader.cpp Criteria_Evaluator.cpp
 
 
 LSRC= \
-	Life_Cycle_Service.cpp Life_Cycle_Service_i.cpp \
+	LifeCycle_Service.cpp LifeCycle_Service_i.cpp \
 	Factory_Trader.cpp Criteria_Evaluator.cpp
 
-LIFE_CYCLE_SERVICE_OBJS = Life_Cycle_Service.o Life_Cycle_Service_i.o \
+LIFECYCLE_SERVICE_OBJS = LifeCycle_Service.o LifeCycle_Service_i.o \
 		Factory_Trader.o Criteria_Evaluator.o
 
 LDLIBS = -lorbsvcs -lTAO
@@ -51,7 +51,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs \
 
 realclean: clean
 
-Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
+LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 
@@ -62,7 +62,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Life_Cycle_Service.o .obj/Life_Cycle_Service.so .shobj/Life_Cycle_Service.o .shobj/Life_Cycle_Service.so: Life_Cycle_Service.cpp \
+.obj/LifeCycle_Service.o .obj/LifeCycle_Service.so .shobj/LifeCycle_Service.o .shobj/LifeCycle_Service.so: LifeCycle_Service.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -304,11 +304,11 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
- Life_Cycle_Service.h \
+ LifeCycle_Service.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/TAO.h \
- Life_Cycle_Service_i.h \
+ LifeCycle_Service_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
@@ -342,7 +342,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Service_Type_Repository.h \
  Criteria_Evaluator.h
-.obj/Life_Cycle_Service_i.o .obj/Life_Cycle_Service_i.so .shobj/Life_Cycle_Service_i.o .shobj/Life_Cycle_Service_i.so: Life_Cycle_Service_i.cpp \
+.obj/LifeCycle_Service_i.o .obj/LifeCycle_Service_i.so .shobj/LifeCycle_Service_i.o .shobj/LifeCycle_Service_i.so: LifeCycle_Service_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -593,7 +593,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.i \
- Life_Cycle_Service_i.h \
+ LifeCycle_Service_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
