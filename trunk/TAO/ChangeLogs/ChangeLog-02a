@@ -1,3 +1,23 @@
+Thu Sep 14 18:17:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Simple/bank/client.dsp:
+	* examples/Simple/bank/server.dsp:
+	* examples/Simple/chat/client.dsp:
+	* examples/Simple/chat/server.dsp:
+	* examples/Simple/echo/client.dsp:
+	* examples/Simple/echo/server.dsp:
+	* examples/Simple/grid/client.dsp:
+	* examples/Simple/grid/server.dsp:
+	* examples/Simple/time/client.dsp:
+	* examples/Simple/time/server.dsp:
+	* examples/Simple/time-date/client.dsp:
+	  The library paths were incorrect for the Release build, and some
+	  IDL files did not have all the required dependencies (again on
+	  Release builds).
+
+	* tao/PolicyS.cpp:
+	  Removed obsolete file
+
 Thu Sep 14 17:48:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
