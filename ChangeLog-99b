@@ -3,6 +3,10 @@ Wed Mar 31 10:46:31 1999  Steve Huston  <shuston@riverace.com>
         * ace/Message_Block_T.h: Add template arg to operator = definition for
           ACE_Locked_Data_Block<>.
 
+        * ace/config-aix-4.x.h: Don't set _BSD for AIX 4.2 (or 4.3). Setting
+          it works ok on AIX 4.2, but breaks TAO builds.  Not setting it has
+          caused no regressions on 4.2, and allows TAO to build more.
+
 Tue Mar 30 23:28:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Message_Block.cpp (init_i): This function was not releasing
