@@ -1,3 +1,8 @@
+Wed Dec 04 07:05:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OBV/TC_Alignment/client.dsp:
+	* tests/OBV/TC_Alignment/server.dsp: Fixed release` configurations.
+
 Wed Dec 04 06:59:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw (Project): 
