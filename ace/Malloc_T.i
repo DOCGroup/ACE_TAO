@@ -3,25 +3,25 @@
 
 // Malloc_T.i
 
-template <class T> T *
+template <class T> T * ACE_INLINE
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {
-  return (T*) this;
+  return (T *) this;
 }
 
-template <class T> ACE_Cached_Mem_Pool_Node<T> *
+template <class T> ACE_INLINE ACE_Cached_Mem_Pool_Node<T> *
 ACE_Cached_Mem_Pool_Node<T>::get_next (void) 
 {
   return this->next_;
 }
 
-template <class T> void
+template <class T> ACE_INLINE void
 ACE_Cached_Mem_Pool_Node<T>::set_next (ACE_Cached_Mem_Pool_Node<T> *ptr)
 {
   this->next_ = ptr;
 }
 
-template <class T, class LOCK> void *
+template <class T, class LOCK> ACE_INLINE void *
 ACE_Cached_Allocator<T, LOCK>::malloc (size_t nbytes)
 {
   // Check if size requested fits within pre-determined size.
@@ -33,7 +33,7 @@ ACE_Cached_Allocator<T, LOCK>::malloc (size_t nbytes)
   return this->free_list_.remove ()->addr ();
 }
 
-template <class T, class LOCK> void
+template <class T, class LOCK> ACE_INLINE void
 ACE_Cached_Allocator<T, LOCK>::free (void * ptr)
 {
   this->free_list_.add ((ACE_Cached_Mem_Pool_Node<T> *) ptr) ;

@@ -16,19 +16,19 @@ ACE_Cached_Allocator<T, LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   : pool_ (0),
     free_list_ (ACE_PURE_FREE_LIST)
 {
-  this->pool_ = (T *) new char[ n_chunks * sizeof (T[1])];
+  this->pool_ = (T *) new char[n_chunks * sizeof (*T)];
   // ERRNO could be lost because this is within ctor
   
   for (size_t c = 0 ; c < n_chunks ; c++)
     this->free_list_.add (new (&this->pool_ [c]) ACE_Cached_Mem_Pool_Node<T>);
-  // put into free list using placement contructor, no real memory
-  // allocation in the above new
+  // Put into free list using placement contructor, no real memory
+  // allocation in the above new.
 }
 
 template <class T, class LOCK>
 ACE_Cached_Allocator<T, LOCK>::~ACE_Cached_Allocator (void)
 {
-  delete[] this->pool_;
+  delete [] this->pool_;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Malloc)
