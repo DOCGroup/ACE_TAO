@@ -32,7 +32,7 @@ CC_Lock::~CC_Lock (void)
 }
 
 void 
-CC_Lock::lock (CORBA::Environment &env)
+CC_Lock::lock (CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
@@ -43,7 +43,7 @@ CC_Lock::lock (CORBA::Environment &env)
 }
 
 CORBA::Boolean 
-CC_Lock::try_lock (CORBA::Environment &env)
+CC_Lock::try_lock (CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
@@ -73,7 +73,7 @@ CC_Lock::try_lock (CORBA::Environment &env)
 }
 
 void 
-CC_Lock::unlock (CORBA::Environment &env)
+CC_Lock::unlock (CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
@@ -90,7 +90,7 @@ CC_Lock::unlock (CORBA::Environment &env)
 
 void 
 CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
-                      CORBA::Environment &env)
+                      CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::change_mode\n"));

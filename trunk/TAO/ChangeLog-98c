@@ -1,3 +1,8 @@
+Thu May  7 00:44:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Reverted a bunch of s/_env/env/g changes...  Thanks to Sumedh
+ 	  for reporting these.
+
 Wed May  6 23:58:22 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor.h: 
