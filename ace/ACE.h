@@ -370,6 +370,9 @@ public:
   // Returns a string containing the error message corresponding to a
   // WinSock error.  This works around an omission in the Win32 API...
 
+  static is_process_active (pid_t pid);
+  // Checks if process with <pid> is still alive
+
 private:
   ACE (void);
   // Ensure we can't define an instance of this class...
