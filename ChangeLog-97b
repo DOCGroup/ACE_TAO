@@ -23,6 +23,9 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 	  from dtor to close (), because when Service_Repository is closed,
 	  it calls close () instead of deleting the service.
 
+	* ace/Process_Strategy.cpp (handle_signal): suppress printouts during
+	  shutdown, to prevent using ACE_Log_Msg while it's being deleted.
+
 	* tests/Reactors_Test (~Test_Task): moved ASSERT after the printout,
 	  so we can see why it failed.  (svc): added printout with thread ID.
  	  (main): deleted reactor at end of test to prevent leak.
