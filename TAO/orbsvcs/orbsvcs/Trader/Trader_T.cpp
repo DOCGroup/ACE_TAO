@@ -27,9 +27,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
                    (TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
           this->trading_components ().lookup_if (lookup->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
           lookup->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
 
           this->ifs_[LOOKUP_IF] = lookup;
         }
@@ -41,9 +41,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
                    (TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
           this->trading_components ().register_if (reg->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
           reg->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
 
           this->ifs_[REGISTER_IF] = reg;
         }
@@ -55,9 +55,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
                    (TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
           this->trading_components ().admin_if (admin->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
           admin->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
 
           this->ifs_[ADMIN_IF] = admin;
         }
@@ -69,9 +69,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
                    (TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
           this->trading_components ().proxy_if (proxy->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
           proxy->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
 
           this->ifs_[PROXY_IF] = proxy;
         }
@@ -83,9 +83,9 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
                    (TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
           this->trading_components ().link_if (link->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
           link->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK_ENV;
+          ACE_TRY_CHECK;
 
           this->ifs_[LINK_IF] = link;
         }
@@ -114,14 +114,14 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
             {
               PortableServer::POA_var poa =
                 this->ifs_[i]->_default_POA (ACE_TRY_ENV);
-              ACE_TRY_CHECK_ENV;
+              ACE_TRY_CHECK;
 
               PortableServer::ObjectId_var id =
                 poa->servant_to_id (this->ifs_[i], ACE_TRY_ENV);
-              ACE_TRY_CHECK_ENV;
+              ACE_TRY_CHECK;
 
               poa->deactivate_object (id.in (), ACE_TRY_ENV);
-              ACE_TRY_CHECK_ENV;
+              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {
