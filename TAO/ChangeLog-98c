@@ -1,5 +1,9 @@
 Wed Nov 25 10:26:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao/TAO.h: Added a clarification on the role of the
+ 	  TAO_ORB_Manager.  Thanks to Christian Mueffling <cvm@aiss.de>
+ 	  for motivating this.
+
 	* tao/ORB: Added the rudiments of a way to keep track of the
  	  "default ORB" using the Singleton pattern.  Thanks to Irfan and
  	  Carlos for uncovering the need for this, as well as Jon Biggar
