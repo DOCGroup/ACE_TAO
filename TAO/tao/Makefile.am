@@ -16,6 +16,8 @@ lib_LTLIBRARIES =
 ORB_Core = \
   Abstract_Servant_Base.cpp \
   Adapter.cpp \
+  Adapter_Factory.cpp \
+  Adapter_Registry.cpp \
   Any.cpp \
   AnySeqA.cpp \
   AnySeqC.cpp \
@@ -132,6 +134,8 @@ ORB_Core = \
   Muxed_TMS.cpp \
   NVList.cpp \
   ORB.cpp \
+  orb_typesC.cpp \
+  orb_typesA.cpp \
   ORBInitInfo.cpp \
   ORBInitializer_Registry.cpp \
   ORB_Core.cpp \
@@ -215,6 +219,7 @@ ORB_Core = \
   Transport_Timer.cpp \
   TypeCodeFactory_Adapter.cpp \
   Typecode.cpp \
+  Typecode_typesC.cpp \
   Typecode_Constants.cpp \
   ULongLongSeqA.cpp \
   ULongLongSeqC.cpp \
@@ -329,6 +334,8 @@ nobase_include_HEADERS += \
   Acceptor_Impl.h \
   Acceptor_Registry.h \
   Adapter.h \
+  Adapter_Factory.h \
+  Adapter_Registry.h \
   Allocator.h \
   Any.h \
   AnySeqC.h \
@@ -505,6 +512,8 @@ nobase_include_HEADERS += \
   ORB_Core.h \
   ORB_Core_Auto_Ptr.h \
   ORB_Table.h \
+  orb_typesC.h \
+  orb_typesS.h \
   Object.h \
   ObjectIdListC.h \
   ObjectKey_Table.h \
@@ -613,6 +622,8 @@ nobase_include_HEADERS += \
   Transport_Timer.h \
   TypeCodeFactory_Adapter.h \
   Typecode.h \
+  Typecode_typesS.h \
+  Typecode_typesC.h \
   Typecode_Constants.h \
   UB_String_Argument_T.h \
   UB_String_Arguments.h \
@@ -752,6 +763,7 @@ nobase_include_HEADERS += \
   Messaging_SyncScopeC.inl \
   NVList.i \
   ORB.i \
+  orb_typesC.inl \
   ORBInitInfo.inl \
   ORB_Core.i \
   ORB_Core_Auto_Ptr.inl \
@@ -816,6 +828,7 @@ nobase_include_HEADERS += \
   Transport_Connector.inl \
   Transport_Descriptor_Interface.inl \
   Typecode.i \
+  Typecode_typesC.inl \
   UB_String_Argument_T.inl \
   UB_String_SArgument_T.inl \
   ULongLongSeqC.inl \
@@ -881,6 +894,8 @@ nobase_include_HEADERS += \
   Var_Size_Argument_T.cpp \
   Var_Size_SArgument_T.cpp \
   orb.idl \
+  orb_types.pidl \
+  Typecode_types.pidl \
   AnySeq.pidl \
   BooleanSeq.pidl \
   Bounds.pidl \

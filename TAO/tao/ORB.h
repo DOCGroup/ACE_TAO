@@ -24,6 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orb_typesC.h"
 #include "objectid.h"
 #include "Policy_ForwardC.h"
 #include "OBV_Constants.h"
@@ -52,6 +53,7 @@ class TAO_OutputCDR;
 class TAO_Stub;
 class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
+class TAO_SeqElem_String_Manager;
 
 // ****************************************************************
 
@@ -72,20 +74,7 @@ namespace CORBA
   class Context;
   typedef Context * Context_ptr;
 
-  // Used at present only in Typecode_Constants.cpp, to make _tc_ORBid.
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
-  typedef char * ORBid;
-  typedef String_var ORBid_var;
-  typedef String_out ORBid_out;
-  extern TAO_Export TypeCode_ptr _tc_ORBid;
-
-  // A couple of string typedefs used by various libs and services.
-  typedef char * Identifier;
-  typedef String_var Identifier_var;
-  typedef String_out Identifier_out;
-  typedef char * RepositoryId;
-  typedef String_var RepositoryId_var;
-  typedef String_out RepositoryId_out;
 
   typedef
     TAO_MngSeq_Var_T<
@@ -664,12 +653,6 @@ namespace CORBA
 
     /// The ORB_Core that created us....
     TAO_ORB_Core *orb_core_;
-
-    /// @note No freaking clue why this is in the ORB??
-#if 0
-    /// If non-0 then this is the Factory for OBV unmarshaling
-    TAO_ValueFactory_Map *valuetype_factory_map_;
-#endif /**/
 
     /// Decides whether to use the URL notation or to use IOR notation.
     CORBA::Boolean use_omg_ior_format_;
