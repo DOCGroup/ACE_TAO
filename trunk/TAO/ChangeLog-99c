@@ -1,3 +1,13 @@
+Thu Aug 12 22:07:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_expression.h:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	  Removed create_expression() and be_expression constructor for wchars.
+	  Not needed. Thanks to a SunCC warning reported by David for
+	  making me take a second look at the code.
+
 Thu Aug 12 20:55:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orbconf.h: added TAO_NAMESPACE_CLOSE.  It must now
