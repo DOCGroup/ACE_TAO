@@ -141,7 +141,6 @@ Initiator_Server::init (int argc,
                       this->argv_[0]),
                       -1);
 
-
   ACE_TRY
     {
       // Get Object A
@@ -208,13 +207,12 @@ Initiator_Server::init (int argc,
                               this->object_B_var_.in()),
                   -1);
 
-  CORBA::String_var str  =
-    this->orb_manager_.activate_under_child_poa ("initiator",
-                                                 this->initiator_i_ptr_,
-                                                 ACE_TRY_ENV);
+  this->str_ =
+    this->orb_manager_.activate (this->initiator_i_ptr_,
+                                 ACE_TRY_ENV);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
-              str.in ()));
+              this->str_.in ()));
 
 
   return 0;
@@ -261,8 +259,21 @@ Initiator_Server::~Initiator_Server (void)
     ACE_OS::free (this->object_A_key_);
   if (this->object_B_key_ != 0)
     ACE_OS::free (this->object_B_key_);
-  if (this->initiator_i_ptr_ != 0)
-    delete initiator_i_ptr_;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->orb_manager_.deactivate (this->str_.in (),
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Initiator_Server::~Initiator_Server");
+    }
+  ACE_ENDTRY;
+
+  delete this->initiator_i_ptr_;
 }
 
 int
