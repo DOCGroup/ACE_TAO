@@ -9,6 +9,13 @@ examples:
           C++" by Michi Henning and Steve Vinoski with slight 
           adaptations for TAO.
 
+        . AMH
+
+          Example code that illustrates working of a simple AMH 'Sink-Server'
+          and a more sophisticated AMH 'Middle-Sever' that uses both
+          AMH and AMI. Sample 'one-button' perl scripts are provided that 
+          show how to run the servers.
+
         . Borland 
 
           This directory illustrates how to write a Borland C++
