@@ -1,3 +1,9 @@
+Fri Aug 15 14:37:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+
+	  Added .in() to usage of CORBA::TypeCode_var.
+
 Fri Aug 15 14:32:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
