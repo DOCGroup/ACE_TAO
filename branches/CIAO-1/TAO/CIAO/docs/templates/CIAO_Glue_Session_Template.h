@@ -147,6 +147,9 @@ namespace CIAO_GLUE
 #end
 
   // Operations for provides interfaces.
+#foreach <facet name> with <facet type> in (list of all provided interfaces) generate:
+    <facet type> provide_<facet name> ();
+#end foreach <facet name> with <facet type>
 
   // Operations for receptacles interfaces.
 
@@ -272,6 +275,12 @@ protected:
 
   // My Run-time Context.
   CCM_<component name>_Context_var context_;
+
+  // Cached provided interfaces.
+#foreach <facet name> with <facet type> in (list of all provided interfaces) generate:
+    <facet type>_var provide_<facet name>_;
+#end foreach <facet name> with <facet type>
+
 };
 
 
