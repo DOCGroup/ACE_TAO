@@ -31,40 +31,38 @@ ACE support for multicast.</LI>
 <B>Known issues:</B>
 <UL>
 <LI>
-Some CORBA objects need to have access to the ORB. We tend to use TAO_ORB_Core_instance
-()->orb () to fetch the right ORB the object is using. This is most often
-true when implementing the shutdown method which allow other process to
-shutdown a remote ORB. Althought this may be the "right" thing to do in
-TAO, it is not CORBA compliant and hurts the portability of object implementation.</LI>
 
-<BR>A common way of getting around this problem is to cache the ORB pointer
-in the object when it is created and simply use the cached ORB when needed.
-However, remember that there could be multiple ORBs in a process and a
-POA may be shared by several ORBs. That means, we may not handling the
-object with the same ORB it was created. Collocation optimization further
-complicated the problem.
-<BR>At the moment, using TAO_ORB_Core_instance ()->orb () is the only sane
-way to get arond the problem. Though there may be a better way.
-<BR>&nbsp;
-<BR>&nbsp;
-<LI>
-Object references for objects dynamically created within a server may not
-have proper host. (See also <A HREF="#hostfix">recent fix</A>.) When an
-object is dynamically created and its object reference returned, it simply
-has to "guess" at the host information that is returned in the IIOP Profile.
-Currently, it guesses using the host name, which is a reasonable guess
-in most cases.</LI>
+Some CORBA objects need to have access to the ORB. We tend to use
+<CODE>TAO_ORB_Core_instance()->orb()</CODE> to fetch the right ORB the
+object is using. This is most often true when implementing the
+shutdown method which allow other process to shutdown a remote
+ORB. Althought this may be the "right" thing to do in TAO, it is not
+CORBA compliant and hurts the portability of object implementation.  A
+common way of getting around this problem is to cache the ORB pointer
+in the object when it is created and simply use the cached ORB when
+needed.  However, remember that there could be multiple ORBs in a
+process and a POA may be shared by several ORBs. That means, we may
+not handling the object with the same ORB it was created. Collocation
+optimization further complicated the problem. <P> At the moment, using
+<CODE>TAO_ORB_Core_instance()->orb()</CODE> is the only sane way to
+get arond the problem. Though there may be a better way. <P>
 
-<BR>However, if there are multiple interfaces on a machine <I>and</I> they
-have different host names, it is possible that the desired effect will
-not be realized, i.e., the connection to that new object may use a different
-interface from the original object. Currently the only way to change this
-is to use the <A HREF="../Options.html#-ORBhost"><B>-ORBhost</B> option</A>
-to manually specify that dynamically-created objects bind to a specific
-interface so that their IIOP Profile has the desired hostname. A more desirable
-fix is being investigated.
-<BR>&nbsp;
-<BR>&nbsp;</UL>
+<LI> Object references for objects dynamically created within a server
+may not have proper host. (See also <A HREF="#hostfix">recent
+fix</A>.) When an object is dynamically created and its object
+reference returned, it simply has to "guess" at the host information
+that is returned in the IIOP Profile.  Currently, it guesses using the
+host name, which is a reasonable guess in most cases.  However, if
+there are multiple interfaces on a machine <I>and</I> they have
+different host names, it is possible that the desired effect will not
+be realized, i.e., the connection to that new object may use a
+different interface from the original object. Currently the only way
+to change this is to use the <A
+HREF="../Options.html#-ORBhost"><B>-ORBhost</B> option</A> to manually
+specify that dynamically-created objects bind to a specific interface
+so that their IIOP Profile has the desired hostname. A more desirable
+fix is being investigated.<P> </UL>
+
 <B>Recently Completed Work:</B>
 <UL>
 <LI>
@@ -98,10 +96,8 @@ used by ORB's reacotr. With "<TT>-ORBreactorlock null</TT>" added into
 inside the ORB even on multi-threaded platforms. This eliminate some overheads
 caused by synchronizing access to the Select_Reactor. Usually, if you have
 TSS ORB and are using reactive concurrency startegy, the ORB are not accessed
-by multiple threads, then, you can safely turn the lock off.</LI>
+by multiple threads, then, you can safely turn the lock off. 
 
-<BR>&nbsp;
-<P>&nbsp;
 <LI>
 Strategized the connection management scheme so that we don't always have
 to pay the price of a look up in the connection cache. Basically, we "hold"
@@ -109,43 +105,40 @@ a service handler for a string of requests.</LI>
 
 <LI>
 There is no need to call ORB::open if the port is 0. It will automagically
-be called when the first stub is created.</LI>
+be called when the first stub is created.
 
-<BR>&nbsp;
-<P>&nbsp;
-<LI>
-The ORB now handles nested upcalls correctly. See <A HREF="../leader_follower.html">this
-</A>for details on the design of the solution.</LI>
+<LI> The ORB now handles nested upcalls correctly. See <A
+HREF="../leader_follower.html">this </A>for details on the design of
+the solution. 
 
-<LI>
-Making the collocation table configurable. We can either use a global collocation
-table to share objects among ORBs, or use the per-ORB collocation table.</LI>
+<LI> Making the collocation table configurable. We can either use a
+global collocation table to share objects among ORBs, or use the
+per-ORB collocation table.
 
 <LI>
 Implement the inheritance mechanism in Default_Server_Connection_Handler
 to access the parent's POA. This is necessary when we are using thread-per-connection
-concurrency model.</LI>
+concurrency model.
 
-<LI>
-It is often desireable for a server to start up and not have to specify
-the TCP port number on which the ORB will listen, i.e., let the OS decide.
-While this works properly (by providing an argument <TT>-ORBport 0</TT>),
-the actual port number used by the server won't be available after the
-server starts listening. TAO now tries to bind the address when <TT>-ORBport
-0</TT> is issued so it can get the actual address to publish the IOR for
-clients' use.</LI>
+<LI> It is often desireable for a server to start up and not have to
+specify the TCP port number on which the ORB will listen, i.e., let
+the OS decide.  While this works properly (by providing an argument
+<TT>-ORBport 0</TT>), the actual port number used by the server won't
+be available after the server starts listening. TAO now tries to bind
+the address when <TT>-ORBport 0</TT> is issued so it can get the
+actual address to publish the IOR for clients' use.
 
-<LI>
-Added optimization for collocated objects. This optimization enables TAO
-to bypass communication layers and talks to collocated objects directly.</LI>
+<LI> Added optimization for collocated objects. This optimization
+enables TAO to bypass communication layers and talks to collocated
+objects directly.
 
 <LI>
 Broke the tight coupling between <TT>CORBA_Object</TT> and <TT>IIOP_Object</TT>
 so that multiple <TT>CORBA_Object</TT>s can share a single <TT>IIOP_Object</TT>.
-This has a big win in <TT>_narrow</TT> operations.</LI>
+This has a big win in <TT>_narrow</TT> operations.
 
 <LI>
-Eliminated substantial memory leaks in servers.</LI>
+Eliminated substantial memory leaks in servers.
 
 <LI>
 Added documentation for <B><A HREF="../Options.html#-ORBpoa">-ORBpoa</A></B>,
@@ -153,11 +146,11 @@ which allows individual tweaking of the POA's locality (global vs. thread-specif
 independent of the locality of other ORB resources. Also, <B><A HREF="../Options.html#-ORBpoalock">-ORBpoalock</A></B>
 and <B><A HREF="../Options.html#-ORBpoamgrlock">-ORBpoamgrlock</A></B>
 control locking in the POA and POA manager, respectively, according to
-application needs.</LI>
+application needs.
 
 <LI>
 Began the process of changing the internals of TAO to use the "underbar"
-namespace mapping. This should be completed soon.</LI>
+namespace mapping. This should be completed soon.
 
 <LI>
 The ORBs manipulation of object keys and object ids is now consistent.
@@ -357,11 +350,11 @@ to have a factory in each thread that creates a client and returns an object
 reference to that client within that thread. This is different from the
 model that Sumedh originally had where the factory was trying to turn out
 a client in a separate thread/ORB combination.
-<P>There is no application which attempts this at the moment, so both a
+There is no application which attempts this at the moment, so both a
 client and a server will need to be manufactured. Using existing Cubit-like
 examples (that poor app is so weary) should reduce development time to
 a couple of hours.
-<P>The real strategy/solution is to make <TT>CORBA::Object</TT> not keep
+The real strategy/solution is to make <TT>CORBA::Object</TT> not keep
 a pointer to its orb sitting around anywhere. It should only get it when
 it needs it. This should not be difficult to change.</UL>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The interface Dynamic
