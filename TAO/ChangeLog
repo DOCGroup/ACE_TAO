@@ -1,3 +1,8 @@
+Thu Jun 24 10:32:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation_Base.cpp:
+          Zapped unneeded ACE_UNUSED_ARG
+
 Thu Jun 24 08:38:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
