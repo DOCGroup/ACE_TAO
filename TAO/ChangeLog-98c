@@ -1,3 +1,14 @@
+Tue Dec 29 13:16:08 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  We were generating variables with names that had two consecutive
+	  underscores ('_'). However, as per the C++ standard, variables
+	  with __ are reserved for the compiler. This happened with the
+	  typecode variables with prefix _tc__tc. We now generate
+	  _tc_TAO_tc. Thanks to Jonathan Biggar <jon@floorboard.com> for
+	  noticing this.
+
 Mon Dec 28 16:44:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP: Fixed "used before it was

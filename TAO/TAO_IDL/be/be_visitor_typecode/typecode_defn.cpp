@@ -106,7 +106,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
     }
   *os << be_uidt << "};" << be_nl;
 
-  *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
+  *os << "static CORBA::TypeCode _tc_TAO_tc_" << node->flatname ()
       << " (";
   switch (node->node_type ())
     {
@@ -158,7 +158,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                             -1);
         }
       *os << "TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_"
-          << node->local_name () << ", &_tc__tc_"
+          << node->local_name () << ", &_tc_TAO_tc_"
           << node->flatname () << ")" << be_nl;
       if (this->gen_nested_namespace_end (module) == -1)
         {
@@ -171,7 +171,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   else
     {
       // outermost scope.
-      *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_"
+      *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc_TAO_tc_"
           <<  node->flatname () << ";\n\n";
     }
   return 0;
