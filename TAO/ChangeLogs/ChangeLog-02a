@@ -1,3 +1,16 @@
+Tue Jul 10 11:51:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+
+          Changed code so that the inheritance list of a class
+          declaration consists of fully scoped names. The stub
+          generation was using ACE_NESTED_CLASS, and the skeleton
+          generation was using a computed relative name. Both 
+          generated uncompilable code in some cases. Thanks to
+          Richard L. Johnson <rich@huey.jpl.nasa.gov> for reporting
+          this bug and for sending in the example IDL file.
+
 Tue Jul 10 05:52:09 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/Profile.h,
