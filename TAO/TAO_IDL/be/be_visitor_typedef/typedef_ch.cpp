@@ -194,13 +194,15 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_slice")
           << " " << tdef->nested_type_name (scope, "_slice") << ";" << be_nl;
-      // Typedef the _var, _out, and _forany types.
+      // Typedef the _var, _out, _forany, and _life types.
       *os << "typedef " << bt->nested_type_name (scope, "_var")
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_out")
           << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_forany")
           << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
+      *os << "typedef " << bt->fwd_helper_name () << "_life "
+          << tdef->fwd_helper_name () << "_life;" << be_nl;
 
       // The _alloc, _dup, copy, and free methods
 
@@ -306,7 +308,15 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
 
   // typedef the _out
   *os << "typedef " << bt->nested_type_name (scope, "_out")
-      << " " << tdef->nested_type_name (scope, "_out") << ";";
+      << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+
+  // typedef the _life
+  *os << "typedef " << bt->fwd_helper_name () << "_life "
+      << tdef->fwd_helper_name () << "_life;" << be_nl;
+
+  // typedef the _cast
+  *os << "typedef " << bt->fwd_helper_name () << "_cast "
+      << tdef->fwd_helper_name () << "_cast;";
 
   return 0;
 }
@@ -529,3 +539,44 @@ be_visitor_typedef_ch::visit_union (be_union *node)
 
   return 0;
 }
+
+int
+be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
+
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  // Typedef the object.
+  *os << "typedef " << bt->nested_type_name (scope) << " "
+      << tdef->nested_type_name (scope) << ";" << be_nl;
+
+  // Typedef the _var.
+  *os << "typedef " << bt->nested_type_name (scope, "_var")
+      << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
+
+  // typedef the _out
+  *os << "typedef " << bt->nested_type_name (scope, "_out")
+      << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
+
+  // typedef the _life
+  *os << "typedef " << bt->fwd_helper_name () << "_life "
+      << tdef->fwd_helper_name () << "_life;";
+
+  return 0;
+}
+

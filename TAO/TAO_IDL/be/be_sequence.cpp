@@ -368,13 +368,13 @@ be_sequence::instance_name ()
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Unbounded_Object_Sequence_%s",
-                           this->flat_name ());
+                           prim_type->local_name ()->get_string ());
         }
       else
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Bounded_Object_Sequence_%s_%lu",
-                           this->flat_name (),
+                           prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
 
@@ -384,13 +384,13 @@ be_sequence::instance_name ()
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Unbounded_Abstract_Sequence_%s",
-                           this->flat_name ());
+                           prim_type->local_name ()->get_string ());
         }
       else
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Bounded_Abstract_Sequence_%s_%lu",
-                           this->flat_name (),
+                           prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
 
@@ -400,13 +400,13 @@ be_sequence::instance_name ()
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Unbounded_Valuetype_Sequence_%s",
-                           this->flat_name ());
+                           prim_type->local_name ()->get_string ());
         }
       else
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Bounded_Valuetype_Sequence_%s_%lu",
-                           this->flat_name (),
+                           prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
 
@@ -421,7 +421,7 @@ be_sequence::instance_name ()
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Bounded_String_Sequence_%s",
-                           this->flat_name  ());
+                           prim_type->local_name ()->get_string ());
         }
 
       break;
@@ -435,7 +435,7 @@ be_sequence::instance_name ()
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Bounded_WString_Sequence_%s",
-                           this->flat_name ());
+                           prim_type->local_name ()->get_string ());
         }
 
       break;
@@ -457,14 +457,14 @@ be_sequence::instance_name ()
             {
               ACE_OS::sprintf (namebuf,
                                "_TAO_Unbounded_Sequence_%s",
-                               this->flat_name ());
+                               prim_type->local_name ()->get_string ());
             }
         }
       else
         {
           ACE_OS::sprintf (namebuf,
                            "_TAO_Bounded_Sequence_%s_%lu",
-                            this->flat_name (),
+                            prim_type->local_name ()->get_string (),
                             this->max_size ()->ev ()->u.ulval);
         }
 
