@@ -61,6 +61,9 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#ec">CORBA Event Service</a></li>
 
 <li>
+<a href="#log">CORBA Telecom Log Service</a></li>
+
+<li>
 <a href="ec.html">TAO's Real-time Event Service</a></li>
 
 <li>
@@ -406,7 +409,7 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
             (aka UNIX domain sockets) as the transport mechanism.  The
             protocol is loaded by default.  If no explicit
             <code>-ORBEndpoint</code> option is used (ex:
-            <code>-ORBEndpoint uiop:///tmp/my_rendezvous</code>). 
+            <code>-ORBEndpoint uiop:///tmp/my_rendezvous</code>).
 
 </li><P>
 
@@ -439,7 +442,7 @@ The service configurator is now used to load protocol factories.
             protocols using the same URL formats that
             <code>-ORBEndpoint</code> does. Note that the old
             <em><code>host:port</code></em> format is supported for
-            backwards compatibility, but the user should not depend on 
+            backwards compatibility, but the user should not depend on
             the existence of this old format since it is now deprecated.
 </li><P>
 
@@ -531,7 +534,7 @@ The service configurator is now used to load protocol factories.
                 <P><li>
                   It is important to be consistent in the use of
                   absolute paths and relative paths for rendezvous
-                  points.  The two types of paths should not be used 
+                  points.  The two types of paths should not be used
                   for the same endpoint.  For example, if
                   <code>uiop:///tmp/foo</code> is specified as the
                   server endpoint and <code>uiop://foo</code> as a
@@ -1057,6 +1060,34 @@ you have to say CTRL-C to get back to the prompt.
 </li>
 </ul>
 
+<a NAME="log"></a>CORBA Telecom Service</h3>
+
+<h4>
+Last updated: Fri Sep 3 1999</h4>
+Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
+<p>The CORBA Telecom Service is being implemented.This is based on previous work by <a href="mailto:mjb2@cs.wustl.edu">Matt</a>.
+
+<br>
+<h3>
+Features supported in the first version:</h3>
+
+<ul>
+<li>
+The Log Service (<tt>$TAO_ROOT/orbsvcs/orbsvcs/Log</tt>) will implement the
+<tt>DsLogAdmin </tt>module.
+<br> We could support the <tt>DsEventLogAdmin </tt> module next, which uses the <a href= "#ec">COS Event Service </a>
+<br>
+We do not support the <tt>DsLogNotification </tt> module because it needs the
+    <tt>CORBA Notification Service</tt>
+</li>
+<li>Initially all Log records will be stored in memory, later we will add support for persistant storage.
+
+    </li>
+<li>
+A simple test (<tt>$TAO_ROOT/orbsvcs/examples/Log_Service</tt>) that demonstrates how to create and use the Log Service.</li>
+
+</ul>
+
 <hr WIDTH="100%">
 <!--#include virtual="ec.html" -->
 <p>
@@ -1319,7 +1350,7 @@ Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
 <a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a>
 <p>Status:
 <ul>
-Currently only the callback model of the Messaging Specification is implemented. 
+Currently only the callback model of the Messaging Specification is implemented.
 To activate the AMI for TAO and the TAO IDL
 compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt> and <tt>TAO_HAS_AMI_CALLBACK</tt>
 in your config.h file.
