@@ -241,6 +241,9 @@
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
+
+#define ACE_HAS_SYS_PSTAT_H
+
 // But doesn't have a prototype for syscall()
 #define ACE_LACKS_SYSCALL
 

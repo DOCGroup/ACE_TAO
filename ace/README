@@ -396,11 +396,11 @@ ACE_HAS_NONCONST_READV			Platform omits const qualifier from
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
                                         non-const timeval* (only found
                                         on Linux right now)
-ACE_HAS_NONCONST_SENDMSG		Platform omits const qualifier 
+ACE_HAS_NONCONST_SENDMSG		Platform omits const qualifier
 					from msghdr parameter in sendmsg()
 					prototype.
-ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier 
-					from rlimit parameter in setrlimit() 
+ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier
+					from rlimit parameter in setrlimit()
 					prototype.
 ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
@@ -588,6 +588,10 @@ ACE_HAS_SYS_ERRLIST                     Platform/compiler supports
                                         _sys_errlist symbol
 ACE_HAS_SYS_FILIO_H                     Platform provides
                                         <sys/filio.h> header
+ACE_HAS_SYS_LOADAVG_H                   Compiler/platform contains the
+                                        <sys/loadavg.h> file.
+ACE_HAS_SYS_PSTAT_H                     Compiler/platform contains the
+                                        <sys/pstat.h> file.
 ACE_HAS_SYS_SIGLIST                     Compiler/platform supports
                                         _sys_siglist array
 ACE_HAS_SYS_SOCKIO_H                    Compiler/platform provides the
