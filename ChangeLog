@@ -1,3 +1,10 @@
+Fri Jan 16 09:57:45 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/DLL_Test.bor:
+	* tests/DLL_Test.cpp:
+	  Changed this test so that it works in MPC and non-MPC builds.
+	  We use always the decorator string for the dll name.
+
 Fri Jan 16 08:56:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/config/ec_typed_events.mpb:
