@@ -121,12 +121,11 @@ FILES= $(IDL_FILES) \
 	\
 	Sched/Strategy_Scheduler \
 	\
+	Property/CosPropertyService_i \
 	\
 	Log/Logger_i \
 	\
 	tmplinst-orbsvcs
-
-#### Does not compile:	Property/CosPropertyService_i \
 
 VPATH=.:Naming:Event:Sched:AV:Property:Trader:Concurrency:Log
 
