@@ -366,10 +366,6 @@ TAO_CodeGen::client_inline (void)
 int
 TAO_CodeGen::start_server_header (const char *fname)
 {
-  // @@ We are making use of "included_idl_files" that is in the
-  // idl_global. We need to make sure the validity of those files.
-  idl_global->validate_included_idl_files ();
-
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -385,8 +381,20 @@ TAO_CodeGen::start_server_header (const char *fname)
     {
       return -1;
     }
+    
+  // If we are suppressing skel file generation, bail after generating the
+  // copyright text and an informative message.  
+  if (!be_global->gen_skel_files ())
+    {
+      *this->server_header_ << be_nl
+                            << "// Skeleton file generation suppressed with "
+                            << "command line option -SS" << be_nl;
+                            
+      return 0;
+    }
 
-  *this->server_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *this->server_header_ << be_nl
+                        << "// TAO_IDL - Generated from" << be_nl
                         << "// " << __FILE__ << ":" << __LINE__
                         << be_nl << be_nl;
 
