@@ -740,7 +740,6 @@ nobase_include_HEADERS += \
   IIOP_Endpoint.i \
   IIOP_EndpointsC.inl \
   IIOP_Profile.i \
-  IIOP_Transport.i \
   IOPC.i \
   IOPS.i \
   IOPS_T.i \
