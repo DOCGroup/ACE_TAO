@@ -1,5 +1,9 @@
 Wed Feb 16 08:36:01 2000  Ossama Othman  <ossama@uci.edu>
 
+	* docs/Options.html:
+
+	  Fixed typographical error.
+
 	* docs/pluggable_protocols/index.html:
 	* tao/default_resource.cpp (init_protocol_factories):
 
