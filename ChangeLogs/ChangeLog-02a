@@ -1,3 +1,9 @@
+Tue Jul  2 16:58:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/XML_Types.h:
+
+          Removed unnecessary includes and fixed a typo.
+
 Tue Jul 02 16:35:19 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/Attributes.h:
