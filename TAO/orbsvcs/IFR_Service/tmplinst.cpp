@@ -7,9 +7,15 @@ ACE_RCSID(IFR_Service, tmplinst, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Node<IR::DefinitionKind>;
 template class ACE_Unbounded_Queue<IR::DefinitionKind>;
+template class ACE_Unbounded_Queue_Iterator<IR::DefinitionKind>;
+template class ACE_Node<ACE_TString>;
 template class ACE_Unbounded_Queue<ACE_TString>;
+template class ACE_Unbounded_Queue_Iterator<ACE_TString>;
+template class ACE_Node<ACE_Configuration_Section_Key>;
 template class ACE_Unbounded_Queue<ACE_Configuration_Section_Key>;
+template class ACE_Unbounded_Queue_Iterator<ACE_Configuration_Section_Key>;
 
 template class POA_IR::Repository_tie<TAO_Repository_i>;
 template class POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i>;
@@ -83,9 +89,15 @@ template class auto_ptr<char>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate ACE_Node<IR::DefinitionKind>
 #pragma instantiate ACE_Unbounded_Queue<IR::DefinitionKind>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<IR::DefinitionKind>
+#pragma instantiate ACE_Node<ACE_TString>
 #pragma instantiate ACE_Unbounded_Queue<ACE_TString>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_TString>
+#pragma instantiate ACE_Node<ACE_Configuration_Section_Key>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Configuration_Section_Key>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Configuration_Section_Key>
 
 #pragma instantiate POA_IR::Repository_tie<TAO_Repository_i>
 #pragma instantiate POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i>
