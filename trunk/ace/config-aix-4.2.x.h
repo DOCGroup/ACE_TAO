@@ -36,9 +36,9 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
-#else  /* ! _AIX && ! __GNUG__ */
+#else  /* ! __xlC__ && ! __GNUG__ */
 # error unsupported compiler in ace/config-aix-4.2.x.h
-#endif /* ! _AIX && ! __GNUG__ */
+#endif /* ! __xlC__ && ! __GNUG__ */
 
 
 // Compiling for AIX.
@@ -123,13 +123,14 @@
 
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 #define ACE_HAS_TIMOD_H
 #define ACE_HAS_TIUSER_H
 #define ACE_HAS_TLI
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_TLI_TCP_DEVICE  "/dev/xti/tcp"
 
+#define ACE_HAS_UALARM
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_UNION_WAIT
 #define ACE_HAS_UTIME
@@ -164,17 +165,13 @@
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_DRAFT7
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-#define ACE_HAS_REENTRANT_FUNCTIONS 
+#define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SIGTHREADMASK
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-// ACE_HAS_THREAD_SELF has been defined in the past... it is apparently not
-// needed.  However, if someone comes across a need for it, here it is.
-//#define ACE_HAS_THREAD_SELF
-
 // If ACE doesn't compile due to the lack of these methods, please
-// send email to ace-users@cs.wustl.edu reporting this. 
+// send email to ace-users@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_RWLOCK_T
@@ -187,5 +184,5 @@
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-#define ACE_HAS_UALARM
+
 #endif /* ACE_CONFIG_H */
