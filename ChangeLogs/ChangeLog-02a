@@ -1,3 +1,9 @@
+Thu Jul 27 18:03:24 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* include/makeinclude/platform_linux_lxpthread.GNU:
+
+	  Updated to include the current correct platform_linux.GNU.
+
 Thu Jul 27 18:17:36 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Future.h: Added some comments to ACE_Future_Rep<>::set and
