@@ -4,6 +4,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_stdio.h"
+#if defined (ACE_HAS_TRACE)
+# include "ace/OS_NS_strings.h"
+#endif /* ACE_HAS_TRACE */
 
 #include "Options.h"
 
