@@ -1,94 +1,99 @@
+Fri Aug 14 22:09:41 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp (init_naming_service):
+          dereferenced orb_ with .in () to please g++.
+
 Fri Aug 14 20:13:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h: 
-	* tao/GIOP.h: 
-	* tao/GIOP.cpp: 
-	* tao/corba.h: 
-	* tao/ORB.cpp: 
-	* tao/Principal.h: 
-	* tao/Principal.cpp: 
-	  The operator<< and operator>> for marshaling and demarhaling
-	  return a CORBA_Boolean, this makes the detection of errors
-	  faster that returning a TAO_OutputCDR& or TAO_InputCDR&.
+        * tao/CDR.h:
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao/corba.h:
+        * tao/ORB.cpp:
+        * tao/Principal.h:
+        * tao/Principal.cpp:
+          The operator<< and operator>> for marshaling and demarhaling
+          return a CORBA_Boolean, this makes the detection of errors
+          faster that returning a TAO_OutputCDR& or TAO_InputCDR&.
 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Data.h: 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Data.cpp: 
-	  The custom marshalling methods follow the same protocol as the
-	  (proposed) compiled marshalling ones.
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Data.h:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Data.cpp:
+          The custom marshalling methods follow the same protocol as the
+          (proposed) compiled marshalling ones.
 
 Fri Aug 14 14:44:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Interpreter.cpp: 
-	* tao/deep_free.cpp: 
-	* tao/encode.cpp: 
-	* tao/decode.cpp: 
-	  Completed support for object references inside structures.
+        * tao/IIOP_Interpreter.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+        * tao/decode.cpp:
+          Completed support for object references inside structures.
 
-	* tao/Object.h: 
-	* tao/Object.i: 
-	* tao/Object.cpp: 
-	* tao/varout.h: 
-	* tao/varout.i: 
-	* tao/varout.cpp: 
-	  Added a new class to represent an object reference when
-	  contained inside a structure, it is similar to a T_var class
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Object.cpp:
+        * tao/varout.h:
+        * tao/varout.i:
+        * tao/varout.cpp:
+          Added a new class to represent an object reference when
+          contained inside a structure, it is similar to a T_var class
 
-	* tao/Sequence.h: 
-	* tao/Sequence.i: 
-	* tao/Sequence.cpp: 
-	* tao/Sequence_T.h: 
-	* tao/Sequence_T.i: 
-	* tao/Sequence_T.cpp: 
-	  Sequences contain new methods (_upcast() and _downcast()) that
-	  help in the correct marshaling and demarshaling of sequences of
-	  object references.
-	  New parametric classes were added to support sequences of
-	  pseudo-objects.
+        * tao/Sequence.h:
+        * tao/Sequence.i:
+        * tao/Sequence.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+          Sequences contain new methods (_upcast() and _downcast()) that
+          help in the correct marshaling and demarshaling of sequences of
+          object references.
+          New parametric classes were added to support sequences of
+          pseudo-objects.
 
 
-	* TAO_IDL/be_include/be_sequence.h: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: 
-	  Added support for the new TAO_Unbounded_Pseudo_Sequence<T> used
-	  for pseudo-objects.
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Added support for the new TAO_Unbounded_Pseudo_Sequence<T> used
+          for pseudo-objects.
 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp: 
-	  Generate the new _upcast() and _downcast() methods for sequences
-	  of objects.
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+          Generate the new _upcast() and _downcast() methods for sequences
+          of objects.
 
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: 
-	  Generate the template instantiation for the
-	  TAO_Object_Field_T<T> class.
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          Generate the template instantiation for the
+          TAO_Object_Field_T<T> class.
 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp: 
-	  Object references in structures are defined using a
-	  TAO_Object_Field_T<T> object.
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Object references in structures are defined using a
+          TAO_Object_Field_T<T> object.
 
-	* orbsvcs/orbsvcs/CosTrading.idl: 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp: 
-	  The ORB supports object rereferences inside structures.
+        * orbsvcs/orbsvcs/CosTrading.idl:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+          The ORB supports object rereferences inside structures.
 
-	* orbsvcs/orbsvcs/CosPropertyService.idl: 
-	  Cosmetic changes.
+        * orbsvcs/orbsvcs/CosPropertyService.idl:
+          Cosmetic changes.
 
-	* tests/Param_Test/Makefile: 
-	* tests/Param_Test/README: 
-	* tests/Param_Test/run_test.pl: 
-	* tests/Param_Test/driver.cpp: 
-	* tests/Param_Test/objref_struct.cpp: 
-	* tests/Param_Test/objref_struct.h: 
-	* tests/Param_Test/options.cpp: 
-	* tests/Param_Test/options.h: 
-	* tests/Param_Test/param_test.idl: 
-	* tests/Param_Test/param_test_i.cpp: 
-	* tests/Param_Test/param_test_i.h: 
-	* tests/Param_Test/tests.h: 
-	* tests/Param_Test/ub_objref_seq.cpp: 
-	  Cleanup the object reference sequence test and added a test for
-	  sequences inside structures.
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/README:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/objref_struct.cpp:
+        * tests/Param_Test/objref_struct.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/ub_objref_seq.cpp:
+          Cleanup the object reference sequence test and added a test for
+          sequences inside structures.
 
 Fri Aug 14 09:46:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
