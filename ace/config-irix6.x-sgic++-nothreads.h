@@ -1,13 +1,16 @@
 /* -*- C++ -*- */
 // $Id$
 
-// For IRIX 6.[234] without pthreads support.
-// Note: Exceptions are supported in -n32 mode.
+// NOTE: THIS IS NOT A COMPLETE CONFIG FILE.
+
+// The following configuration file keeps the common part to IRIX 6.2,
+// 6.4 and hopefully 6.3 config files.
+// Any difference is covered in the config-irix6.{2,4} files.
 
 // For IRIX 6.2 there are several patches that should be applied to
-// get reliable operation with exceptions.
-// Specifically you should get a reasonable current IRIX and Compiler
-// patch-sets (and the POSIX patch-set definitely doesn't hurt!)
+// get reliable operation with multi-threading and exceptions.
+// Specifically you should get a reasonable current IRIX, Compiler
+// and POSIX patch-sets.
 
 // For IRIX 6.[34] it's less critical, but it's still recommended
 // that you apply the applicable patch-sets (IRIX and Compiler I believe).
@@ -16,29 +19,21 @@
 // contact or search SGI's web site (http://www.sgi.com) for the latest
 // version.
 
+// Since this files gets included from several config file we cannot
+// call it the true config.h file.
+#if !defined (ACE_CONFIG_IRIX6X_NTHR_H)
+#define ACE_CONFIG_IRIX6X_NTHR_H
 
-#if !defined (ACE_CONFIG_H)
-#define ACE_CONFIG_H
-
-// Platform supports template specialization
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-
-// -n32 and -64 supports exceptions by default (we don't use -64 now,
-// but it's easy to test for.
-#ifdef _MIPS_SIM
-#if _MIPS_SIM == _ABIN32 || _MIPS_SIM == _ABI64
-#define ACE_HAS_EXCEPTIONS
-#endif
-#endif
-
-
-#define ACE_LACKS_SIGNED_CHAR
 #define ACE_HAS_P_READ_WRITE
-
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#define ACE_HAS_SETOWN
+#define ACE_HAS_SYSENT_H
+#define ACE_HAS_SYSINFO
 
 // Include XtReactor into the library.
 #define ACE_HAS_XT
 
+#define ACE_LACKS_SIGNED_CHAR
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 
@@ -63,7 +58,10 @@
 // uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
-// Platform lacks readers/writer locks.
+// Platform has no implementation of pthread_condattr_setpshared(),
+// even though it supports pthreads! (like Irix 6.2)
+#define ACE_LACKS_CONDATTR_PSHARED
+
 #define ACE_LACKS_RWLOCK_T
 
 // Platform/compiler has the sigwait(2) prototype
@@ -80,16 +78,6 @@
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
-
-// Platform provides <sysent.h> header
-#define ACE_HAS_SYSENT_H
-
-// Platform supports system configuration information
-#define ACE_HAS_SYSINFO
-
-// Compiler implements templates that support typedefs inside of
-// classes used as formal arguments to a template class.
-// #define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Compiler/platform supports alloca()
 #define ACE_HAS_ALLOCA 
@@ -111,10 +99,9 @@
 #define ACE_HAS_POSIX_NONBLOCK 
 
 // Platform supports POSIX timers via timestruc_t.
-#define ACE_HAS_POSIX_TIME
+#define ACE_HAS_POSIX_TIME 
+// #define ACE_HAS_SVR4_TIME
 #define ACE_NEEDS_SYSTIME_H
-// Huh?? Removed in 6.4??
-#define ACE_HAS_SVR4_TIME
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS 
@@ -142,8 +129,6 @@
 // Platform supports STREAMS.
 #define ACE_HAS_STREAMS 
 
-#define ACE_LACKS_LINEBUFFERED_STREAMBUF
-
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable
 // it). 
@@ -167,21 +152,32 @@
 // Compiler/platform defines a union semun for SysV shared memory.
 #define ACE_HAS_SEMUN 
 
-// Compiler/platform defines the F_SETOWN macro
-#define ACE_HAS_SETOWN 
-
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
-// Does this work on 6.2???
 // The following three should be enabled/disabled together.
 #define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_REQUIRES_FUNC_DEFINITIONS
+
+// Platform supports exceptions. Under 6.2 this requires an extra flag
+// for the compiler, don't worry is already there in
+// platform_irix6.x.GNU
+#define ACE_HAS_EXCEPTIONS
+
+// Platform supports STREAM pipes (note that this is disabled by
+// default, see the manual page on pipe(2) to find out how to enable
+// it). 
+// #define ACE_HAS_STREAM_PIPES 
+
+// Platform supports POSIX timers via timestruc_t.
+// This will *NOT* work in 6.4, but ACE doesn't use it anymore.
+// #define ACE_HAS_POSIX_TIME 
+// #define ACE_HAS_SVR4_TIME
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_IRIX6X_NTHR_H */
