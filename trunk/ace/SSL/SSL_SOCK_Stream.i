@@ -8,7 +8,7 @@
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
-  if (this->ssl_ == 0)
+  if (this->ssl_ == 0 || fd == ACE_INVALID_HANDLE)
     {
       this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
       return;
@@ -23,11 +23,15 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 
 ASYS_INLINE
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
-  : context_ (context == 0 ? ACE_SSL_Context::instance () : context),
-    ssl_ (::SSL_new (this->context_->context ())),
+  : ssl_ (0),
     stream_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
+
+  ACE_SSL_Context * ctx =
+    (context == 0 ? ACE_SSL_Context::instance () : context);
+
+  this->ssl_ = ::SSL_new (ctx->context ());
 
   if (this->ssl_ == 0)
     ACE_ERROR ((LM_ERROR,
@@ -36,9 +40,32 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
 		""));
 
   ::SSL_set_verify (this->ssl_,
-                    this->context_->default_verify_mode (),
+                    ctx->default_verify_mode (),
                     0);
 }
+
+ASYS_INLINE void
+ACE_SSL_SOCK_Stream::operator= (const ACE_SSL_SOCK_Stream &stream)
+{
+  // NOT thread safe!
+
+  ::SSL_free (this->ssl_);
+
+  // @@ What do we do if SSL_dup() fails, i.e. returns NULL?
+  this->ssl_ = ::SSL_dup (stream.ssl_);
+
+  this->set_handle (stream.get_handle ());
+}
+
+ASYS_INLINE
+ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &stream)
+  : ACE_SSL_SOCK ()
+{
+  // NOT thread safe!
+
+  *this = stream;
+}
+
 
 ASYS_INLINE
 ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
@@ -262,12 +289,6 @@ ACE_SSL_SOCK_Stream::peer (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::peer");
   return this->stream_;
-}
-
-ASYS_INLINE ACE_SSL_Context *
-ACE_SSL_SOCK_Stream::context (void) const
-{
-  return this->context_;
 }
 
 ASYS_INLINE SSL *
