@@ -25,7 +25,7 @@
 #if defined (ACE_HAS_THREADS)
 
 int
-main (void)
+main (int, char *[])
 {
   ACE_START_TEST ("Atomic_Op_Test");
 
@@ -59,7 +59,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
 
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_START_TEST ("Atomic_Op_Test");
 
