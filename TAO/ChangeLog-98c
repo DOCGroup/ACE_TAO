@@ -4,6 +4,9 @@ Fri Jul 10 00:32:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  The skeletons were not releasing the strings allocated while
 	  demarshalling the arguments.
 
+	* docs/implrepo.html: 
+	  Another pass at the design document.
+
 Thu Jul 09 23:02:48 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (create_internal_lock): Change method to watch out
