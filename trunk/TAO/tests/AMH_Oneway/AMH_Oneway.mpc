@@ -7,7 +7,7 @@ project(*client) : taoexe, portableserver, amh {
   }
 }
 
-project(*server) : taoexe, portableserver, amh, strategies {
+project(*server) : taoserver, amh, strategies {
   source_files {
     server.cpp
   }
