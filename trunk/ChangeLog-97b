@@ -5,6 +5,9 @@ Tue Oct 21 21:48:54 1997  David L. Levine  <levine@cs.wustl.edu>
 	  before ! defined ACE_LACKS_PTHREAD_CLEANUP so that only PThreads
 	  platforms need add ACE_LACS_PTHREAD_CLEANUP.
 
+	* tests/Notify_Performance_Test.cpp: added #include of
+	  ace/Thread_Manager.h.  It's needed on OSF-1.
+
 Tue Oct 21 21:09:35 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
         * ace/Memory_Pool.cpp (ACE_MMAP_Memory_Pool): Oops.  Souldn't
