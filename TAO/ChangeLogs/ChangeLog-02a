@@ -1,3 +1,17 @@
+Mon Feb  5 19:41:41 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.h (object_ref_table):
+
+	  Clarified the comment corresponding to this method.  It should
+	  be apparent what the returned table is used for.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp (receive_request_service_contexts):
+
+	  Ignore the "_is_a" operation since it may have been invoked
+	  locally on the server side as a side effect of another call,
+	  meaning that the client hasn't added the service context yet.
+	  Fixes a test failure.
+
 Mon Feb  5 16:48:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.cpp:
