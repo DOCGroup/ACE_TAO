@@ -5,7 +5,7 @@
 #ifndef ACE_FUTURE_CPP
 #define ACE_FUTURE_CPP
 
-#include "ace/Future.h"
+#include /**/ "ace/Future.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,7 +49,7 @@ ACE_Future_Rep<T>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
               "ref_count_ = %d\n",
-              (int) this->ref_count_));
+ (int) this->ref_count_));
   ACE_DEBUG ((LM_INFO,"value_: \n"));
   if (this->value_)
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (NON-NULL)\n")));
@@ -67,11 +67,7 @@ template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::create (void)
 {
   // Yes set ref count to zero.
-  ACE_Future_Rep<T> *t = 0;
-  ACE_NEW_RETURN (t,
-                  ACE_Future_Rep<T>,
-                  0);
-  return t;
+  return new ACE_Future_Rep<T> ();
 }
 
 template <class T> ACE_Future_Rep<T> *
@@ -160,10 +156,10 @@ ACE_Future_Rep<T>::set (const T &r,
                         -1);
 
       // Remove and notify all subscribed observers.
-      ACE_TYPENAME OBSERVER_COLLECTION::iterator iterator =
+      OBSERVER_COLLECTION::iterator iterator =
         this->observer_collection_.begin ();
 
-      ACE_TYPENAME OBSERVER_COLLECTION::iterator end =
+      OBSERVER_COLLECTION::iterator end =
         this->observer_collection_.end ();
 
       for (;
@@ -273,7 +269,7 @@ ACE_Future<T>::ACE_Future (void)
 
 template <class T>
 ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
-  : future_rep_ (FUTURE_REP::attach (( (ACE_Future<T> &) r).future_rep_))
+  : future_rep_ (FUTURE_REP::attach (((ACE_Future<T> &) r).future_rep_))
 {
 }
 

@@ -9,7 +9,7 @@
 // = FILENAME
 //    Future.h
 //
-// = AUTHOR
+// = AUTHOR (S)
 //    Andres Kruse <Andres.Kruse@cern.ch>,
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
 //    Per Andersson <Per.Andersson@hfera.ericsson.se>, and
@@ -20,8 +20,8 @@
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
 
-#include "ace/Synch.h"
-#include "ace/Strategies_T.h"
+#include /**/ "ace/Synch.h"
+#include /**/ "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -61,9 +61,9 @@ class ACE_Future_Observer
   //     ACE_Future_Observer<T>
   //
   // = DESCRIPTION
-  //     An ACE_Future_Observer<T> object implements an object that is
-  //     subscribed with an ACE_Future<T> object so that it may be
-  //     notified when the value of the ACE_Future<T> object is
+  //     An ACE_Future_Observer object implements an object that is
+  //     subscribed with an ACE_Future object so that it may be
+  //     notified when the value of the ACE_Future object is
   //     written to by a writer thread.
   //
   //     It uses the Observer pattern
@@ -71,8 +71,8 @@ public:
   // = Destructor
   virtual ~ACE_Future_Observer (void);
 
-  virtual void update(const ACE_Future<T> &future) = 0;
-  // Called by the ACE_Future<T> in which we are subscribed to when
+  virtual void update (const ACE_Future<T> &future) = 0;
+  // Called by the ACE_Future in which we are subscribed to when
   // its value is written to.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -97,6 +97,33 @@ class ACE_Future_Rep
 private:
   friend class ACE_Future<T>;
 
+  // Create, attach, detach and assign encapsulates the reference
+  // count handling and the object lifetime of ACE_Future_Rep<T>
+  // instances.
+
+  static ACE_Future_Rep<T> *create (void);
+  // Create a ACE_Future_Rep<T> and initialize the reference count.
+
+  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
+  // Increase the reference count and return argument. Uses the
+  // attribute "value_ready_mutex_" to synchronize reference count
+  // updating.
+  //
+  // Precondition (rep != 0).
+
+  static void detach (ACE_Future_Rep<T> *&rep);
+  // Decreases the reference count and and deletes rep if there are no
+  // more references to rep.
+  //
+  // Precondition (rep != 0)
+
+  static void assign (ACE_Future_Rep<T> *&rep,
+                      ACE_Future_Rep<T> *new_rep);
+  // Decreases the rep's reference count and and deletes rep if there
+  // are no more references to rep. Then assigns new_rep to rep.
+  //
+  // Precondition (rep != 0 && new_rep != 0)
+
   int set (const T &r,
            ACE_Future<T> &caller);
   // Set the result value.  The specified <caller> represents the
@@ -111,8 +138,8 @@ private:
   int attach (ACE_Future_Observer<T> *observer,
                ACE_Future<T> &caller);
   // Attaches the specified observer to a subject (i.e. the
-  // ACE_Future_Rep).  The update method of the specified subject will
-  // be invoked with a copy of the written-to ACE_Future as input when
+  // <ACE_Future_Rep>).  The update method of the specified subject will
+  // be invoked with a copy of the written-to <ACE_Future> as input when
   // the result gets set.
   //
   // Returns 0 if the observer is successfully attached, 1 if the
@@ -120,13 +147,13 @@ private:
 
   int detach (ACE_Future_Observer<T> *observer);
   // Detaches the specified observer from a subject (i.e. the
-  // ACE_Future_Rep).  The update method of the specified subject will
-  // not be invoked when the ACE_Future_Reps result gets set.  Returns
+  // <ACE_Future_Rep>).  The update method of the specified subject will
+  // not be invoked when the <ACE_Future_Rep>s result gets set.  Returns
   // 1 if the specified observer was actually attached to the subject
   // prior to this call and 0 if was not.
   //
-  // Returns 0 if the observer was successfully detached, and -1 if the observer was
-  // not attached in the first place.
+  // Returns 0 if the observer was successfully detached, and -1 if the
+  // observer was not attached in the first place.
 
   operator T ();
   // Type conversion. will block forever until the result is
@@ -149,34 +176,6 @@ private:
 
   int ready (void);
   // Is result available?
-
-  // = Handle ref counting and object lifetime for ACE_Future_Rep<T>.
-
-  // These methods must go after the others to work around a bug with
-  // Borland's C++ Builder.
-
-  static ACE_Future_Rep<T> *create (void);
-  // Create a ACE_Future_Rep<T> and initialize the reference count.
-
-  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
-  // Increase the reference count and return argument. Uses the
-  // attribute "value_ready_mutex_" to synchronize reference count
-  // updating.
-  //
-  // Precondition(rep != 0).
-
-  static void detach (ACE_Future_Rep<T> *&rep);
-  // Decreases the reference count and and deletes rep if there are no
-  // more references to rep.
-  //
-  // Precondition(rep != 0)
-
-  static void assign (ACE_Future_Rep<T> *&rep,
-                      ACE_Future_Rep<T> *new_rep);
-  // Decreases the rep's reference count and and deletes rep if there
-  // are no more references to rep. Then assigns new_rep to rep.
-  //
-  // Precondition(rep != 0 && new_rep != 0)
 
   T *value_;
   // Pointer to the result.
@@ -267,8 +266,8 @@ public:
 
   int attach (ACE_Future_Observer<T> *observer);
   // Attaches the specified observer to a subject (i.e. the
-  // ACE_Future).  The update method of the specified subject will be
-  // invoked with a copy of the associated ACE_Future as input when
+  // <ACE_Future>).  The update method of the specified subject will be
+  // invoked with a copy of the associated <ACE_Future> as input when
   // the result gets set.  If the result is already set when this
   // method gets invoked, then the update method of the specified
   // subject will be invoked immediately.
@@ -278,8 +277,8 @@ public:
 
   int detach (ACE_Future_Observer<T> *observer);
   // Detaches the specified observer from a subject (i.e. the
-  // ACE_Future_Rep).  The update method of the specified subject will
-  // not be invoked when the ACE_Future_Reps result gets set.  Returns
+  // <ACE_Future_Rep>).  The update method of the specified subject will
+  // not be invoked when the <ACE_Future_Reps> result gets set.  Returns
   // 1 if the specified observer was actually attached to the subject
   // prior to this call and 0 if was not.
   //
@@ -289,9 +288,9 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
-  ACE_Future_Rep<T> *get_rep();
-  // Get the underlying ACE_Future_Rep<T>*. Note that this method should
-  // rarely, if ever, be used and that modifying the undlerlying ACE_Future_Rep<T>*
+  ACE_Future_Rep<T> *get_rep ();
+  // Get the underlying <ACE_Future_Rep>*. Note that this method should
+  // rarely, if ever, be used and that modifying the undlerlying <ACE_Future_Rep>*
   // should be done with extreme caution.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -304,7 +303,7 @@ private:
   void operator delete (void *);
   // Do not allow delete operator
 
-  void operator &();
+  void operator & ();
   // Do not allow address-of operator.
 
   // the ACE_Future_Rep
