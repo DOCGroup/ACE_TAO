@@ -165,7 +165,8 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
 #endif /* ACE_HAS_THREADS */
 
       /// Get the ORB core from the POA Manager
-      TAO_POA *tao_poa = parent->_tao_poa_downcast();
+      TAO_POA *tao_poa = dynamic_cast<TAO_POA*>(parent);
+
       TAO_ORB_Core &orb_core = tao_poa->orb_core();
 
       /// configure the orb (linear mapping, register interceptor, etc.)
