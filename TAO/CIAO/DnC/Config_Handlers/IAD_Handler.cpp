@@ -168,11 +168,16 @@ namespace CIAO
 
     /// handle location attribute
     void IAD_Handler::process_location
-      (const XMLCh* name, ::Deployment::ImplementationArtifactDescription &iad)
+      (const XMLCh* location, ::Deployment::ImplementationArtifactDescription &iad)
     {
-      if (name)
+      if (location)
         {
-          iad.location = XMLString::transcode (name);
+          // increase the length of the sequence
+          CORBA::ULong i (iad.location.length ());
+          iad.location.length (i + 1);
+
+          // push back the last item
+          iad.location[i] = XMLString::transcode (location);
         }
     }
 
