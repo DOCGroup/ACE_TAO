@@ -97,6 +97,16 @@ Fri Dec  1 13:16:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Modified these files to link to the new library.
 
+	* tao/diffs/InterfaceC.h.diff:
+	* tao/diffs/InterfaceC.h.diff:
+	* tao/diffs/InterfaceC.h.diff:
+	* tao/orbsvcs/IFR_Service/diffs/InterfaceS.h.diff:
+	* tao/orbsvcs/IFR_Service/diffs/InterfaceS.cpp.diff:
+	* tao/orbsvcs/IFR_Service/diffs/InterfaceS_T.i.diff:
+
+	  Added these diff files for regenerating files from
+	  Interface.pidl.
+
 Fri Dec  1 09:31:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * utils/wxNamingViewer/Makefile:
