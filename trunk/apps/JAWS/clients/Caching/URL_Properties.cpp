@@ -63,13 +63,14 @@ ACE_URL_Offer::bsize (void) const
 void
 ACE_URL_Offer::encode (void *buf) const
 {
-  size_t len = ACE_OS::strlen (this->url_) + 1;
-  ACE_OS::memcpy (buf, this->url_, len);
-
-  ACE_UINT32 *s_buf = (ACE_UINT32 *) ((char *) buf + len);
+  ACE_UINT32 *s_buf = (ACE_UINT32 *) buf;
   *s_buf = htonl (this->prop_.size ());
-  len += sizeof (ACE_UINT32);
 
+  size_t len = ACE_OS::strlen (this->url_) + 1;
+  ACE_OS::memcpy ((void *) ((char *) buf + sizeof (ACE_UINT32)),
+		  this->url_, len);
+
+  len += sizeof (ACE_UINT32);
   for (int i = 0; i < this->prop_.size (); i++)
     {
       this->prop_[i].encode ((void *) ((char *) buf + len));
@@ -82,7 +83,8 @@ ACE_URL_Offer::decode (void *buf)
 {
   ACE_URL_Offer *retv;
 
-  ACE_NEW_RETURN (retv, ACE_URL_Offer);
+  ACE_NEW_RETURN (retv, ACE_URL_Offer ((char *) buf + sizeof (ACE_UINT32),
+				       ntohl ((ACE_UINT32 *) buf)));
 
   //
   // Unfinished.
