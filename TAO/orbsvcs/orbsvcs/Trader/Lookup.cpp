@@ -73,7 +73,7 @@ query (const char *type,
   returned_limits_applied = new CosTrading::PolicyNameSeq;
   
   // Get service type map
-  SERVICE_TYPE_MAP& service_type_map = this->trader_.service_type_map ();
+  Service_Type_Map& service_type_map = this->trader_.service_type_map ();
 
   TAO_Policies policies (this->trader_, in_policies, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
@@ -176,7 +176,7 @@ TAO_Lookup<TRADER>::
 perform_lookup (const char* type,
 		const char* constraint,
 		const char* preferences,
-		SERVICE_TYPE_MAP& service_type_map,
+		Service_Type_Map& service_type_map,
 		CosTradingRepos::ServiceTypeRepository_ptr rep,		
 		TAO_Policies& policies,
 		Offer_Queue& ordered_offers,
@@ -247,12 +247,12 @@ perform_lookup (const char* type,
     {
       CosTrading::Offer* offer;
       CosTrading::OfferId offer_id;
-      if (pref_inter.remove_offer (offer_id, offer))
+      if (pref_inter.remove_offer (offer_id, offer) == 0)
 	{
 	  Offer_Info offer_info;
 	  offer_info.offer_id_ = offer_id;
 	  offer_info.offer_ptr_ = offer;
-	  ordered_offers.enqueue_head (offer_info);
+	  ordered_offers.enqueue_tail (offer_info);
 	}
       else
 	break;
@@ -265,7 +265,7 @@ perform_lookup (const char* type,
 template <class TRADER> void
 TAO_Lookup<TRADER>::
 lookup_one_type (const char* type,
-		 SERVICE_TYPE_MAP& service_type_map,
+		 Service_Type_Map& service_type_map,
 		 TAO_Constraint_Interpreter& constr_inter,
 		 TAO_Preference_Interpreter& pref_inter,
 		 TAO_Offer_Filter& offer_filter)
@@ -273,36 +273,32 @@ lookup_one_type (const char* type,
   ACE_DEBUG ((LM_DEBUG, "TAO_Lookup: Performing query for %s\n", type));
   
   // Retrieve an iterator over the offers for a given type.
-  auto_ptr<Local_Offer_Iter>
-    offer_iter (service_type_map.get_offers (type));
+  Service_Type_Map::offer_iterator offer_iter (type, service_type_map);
 
-  if (offer_iter.get () != 0)
+  while (offer_filter.ok_to_consider_more () &&
+	 offer_iter.has_more_offers ())
     {
-      while (offer_filter.ok_to_consider_more () &&
-	     offer_iter->has_more_offers ())
-	{
-	  // For each offer in the iterator, attempt to match it with
-	  // the constraints passed to the Query method. If it matches 
-	  // the constraint, use the TAO_Preference_Interpreter to
-	  // order the matched offers with respect to the preference
-	  // string passed to the method. All the while the offer
-	  // iterator ensures we don't exceed the match cardinality
-	  // constraints. 
-	  CosTrading::Offer* offer = offer_iter->get_offer ();
-
-	  TAO_Constraint_Evaluator evaluator (offer);
-	  if (offer_filter.ok_to_consider (offer) &&
-	      constr_inter.evaluate (evaluator))
-	    {
-	      // Shove the offer and its id into the preference
-	      // ordering object, pref_inter.
-	      CosTrading::OfferId offer_id = offer_iter->get_id ();
-	      pref_inter.order_offer (offer_id, offer, evaluator);
-	      offer_filter.matched_offer ();
-	    }
+      // For each offer in the iterator, attempt to match it with
+      // the constraints passed to the Query method. If it matches 
+      // the constraint, use the TAO_Preference_Interpreter to
+      // order the matched offers with respect to the preference
+      // string passed to the method. All the while the offer
+      // iterator ensures we don't exceed the match cardinality
+      // constraints. 
+      CosTrading::Offer* offer = offer_iter.get_offer ();
       
-	  offer_iter->next_offer ();
+      TAO_Constraint_Evaluator evaluator (offer);
+      if (offer_filter.ok_to_consider (offer) &&
+	  constr_inter.evaluate (evaluator))
+	{
+	  // Shove the offer and its id into the preference
+	  // ordering object, pref_inter.
+	  CosTrading::OfferId offer_id = offer_iter.get_id ();
+	  pref_inter.order_offer (offer_id, offer, evaluator);
+	  offer_filter.matched_offer ();
 	}
+      
+      offer_iter.next_offer ();
     }
 }
 
@@ -310,7 +306,7 @@ template <class TRADER> void
 TAO_Lookup<TRADER>::
 lookup_all_subtypes (const char* type,
 		     CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
-		     SERVICE_TYPE_MAP& service_type_map,
+		     Service_Type_Map& service_type_map,
 		     CosTradingRepos::ServiceTypeRepository_ptr rep,
 		     TAO_Constraint_Interpreter& constr_inter,
 		     TAO_Preference_Interpreter& pref_inter,
@@ -435,6 +431,8 @@ fill_receptacles (const char* type,
       CosTrading::Offer& source = *offer_info_ptr->offer_ptr_;
       CosTrading::Offer& destination = (*offers)[i];
       prop_filter.filter_offer (source, destination);
+
+      CORBA::string_free (offer_info_ptr->offer_id_);
     }
     
   // Any remaining offers go into iterator
@@ -442,7 +440,7 @@ fill_receptacles (const char* type,
     {
       // Create an iterator implementation 
       TAO_Offer_Iterator *oi =
-	this->create_offer_iterator (type, prop_filter);  
+	this->create_offer_iterator (type, prop_filter);
       offer_itr = oi->_this (env);
       TAO_CHECK_ENV_RETURN (env,total_offers - offers_in_iterator);
       
@@ -538,7 +536,7 @@ TAO_Lookup<TRADER>::retrieve_links (TAO_Policies& policies,
       // the suitable ones onto <valid_links>.
       CosTrading::Link_ptr link_interface
 	= this->trader_.trading_components ().link_if ();
-      deque<CosTrading::LinkName> valid_links;
+      ACE_Unbounded_Queue<CosTrading::LinkName> valid_links;
       CosTrading::LinkNameSeq_var link_path =
 	link_interface->list_links (_env);
       TAO_CHECK_ENV_RETURN (_env, should_follow);
@@ -552,14 +550,18 @@ TAO_Lookup<TRADER>::retrieve_links (TAO_Policies& policies,
 	  if (link_rule == CosTrading::always ||
 	      (link_rule == CosTrading::if_no_local &&
 	       offers_returned == 0))
-	    valid_links.push_back ((char *)((const char*) link_path[i]));
+	    valid_links.enqueue_tail ((char *)((const char*) link_path[i]));
 	}
 
       // Collect those valid links into a sequence suitable for
       // passing into the federated_query method.
+      CosTrading::LinkName link_name;
       links = new CosTrading::LinkNameSeq (valid_links.size ());
-      for (i = valid_links.size () - 1; i >= 0; i--, valid_links.pop_front ())
-	links[i] = valid_links.front ();
+      for (i = valid_links.size () - 1; i >= 0; i--)
+	{	  
+	  valid_links.dequeue_head (link_name);
+	  links[i] = (const char *) link_name;
+	}
     }
 
   return should_follow;

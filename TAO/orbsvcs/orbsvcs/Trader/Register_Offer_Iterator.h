@@ -60,7 +60,7 @@ public:
   // to return them comes.
 
   void add_offer (CosTrading::OfferId id,
-		  CosTrading::Offer* offer);
+		  const CosTrading::Offer* offer);
   // Add an offer the iterator should iterate over.
 
 private:
@@ -68,7 +68,7 @@ private:
   TRADER &trader_;
   // A reference to the trader is needed for access to the map of offers.
 
-  ACE_Unbounded_Queue <CosTrading::OfferId_var> offer_ids_;
+  ACE_Unbounded_Queue <CosTrading::OfferId> offer_ids_;
   // Offer ids of offers to iterate over.
 };
 

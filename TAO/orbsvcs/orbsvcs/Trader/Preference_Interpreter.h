@@ -17,7 +17,6 @@
 #ifndef TAO_PREFERENCE_INTERPRETER_H
 #define TAO_PREFERENCE_INTERPRETER_H
 
-#include "stl.h"
 #include "Interpreter.h"
 #include "Constraint_Evaluator.h"
 #include "Constraint_Validator.h"
@@ -74,14 +73,17 @@ public:
 
 private:
 
-  typedef multimap
-  < TAO_Literal_Constraint,
-    pair < CosTrading::OfferId, CosTrading::Offer* >,
-    less < TAO_Literal_Constraint > >
-  ORDERED_OFFERS;
-  // The map of ordered offers to their order value.
-    
-  ORDERED_OFFERS offers_;
+  struct Preference_Info
+  {
+    CORBA::Boolean evaluated_;
+    TAO_Literal_Constraint value_;
+    CosTrading::OfferId offer_id_;
+    CosTrading::Offer* offer_;
+  };
+  
+  typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers; 
+  
+  Ordered_Offers offers_;
 };
 
 #endif /* TAO_PREFERENCE_INTERPRETER_H */

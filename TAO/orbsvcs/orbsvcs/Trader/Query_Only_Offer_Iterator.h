@@ -54,7 +54,7 @@ public:
   // Return the number of items left in the iterator.  
 
   void add_offer (CosTrading::OfferId offer_id,
-		  CosTrading::Offer* offer);
+		  const CosTrading::Offer* offer);
   // Add an offer the iterator should iterate over.
   
 private:
