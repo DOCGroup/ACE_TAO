@@ -842,7 +842,7 @@ dnl    fi
                AS_HELP_STRING([--enable-uses-wchar],
                             [enable use of wide characters [[no]]]),
                [case "${withval}" in
-                 yes) 
+                 yes)
                   AC_DEFINE([ACE_USES_WCHAR])
                   ace_user_enable_wide_char=yes
                   ;;
@@ -863,15 +863,15 @@ AC_DEFUN([ACE_ENABLE_QOS],
 [AC_ARG_ENABLE([qos],
 	       AS_HELP_STRING([--enable-qos],
 			      [compile/use the ACE_QoS library [[no]]]),
-	       [case "${withval}" in
-		 yes) 
+	       [case "${enableval}" in
+		 yes)
 		  ace_user_enable_qos=yes
 		  ;;
 		 no)
 		  ace_user_enable_qos=no
 		  ;;
 		 *)
-		  AC_MSG_ERROR(bad value ${withval} for --with-qos)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-qos)
 		  ;;
 		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_QoS library],
@@ -883,15 +883,15 @@ AC_DEFUN([ACE_ENABLE_SSL],
 [AC_ARG_ENABLE([ssl],
 	       AS_HELP_STRING([--enable-ssl],
 			      [compile/use the ACE_SSL library [[yes]]]),
-	       [case "${withval}" in
-		 yes) 
+	       [case "${enableval}" in
+		 yes)
 		  ace_user_enable_ssl=yes
 		  ;;
 		 no)
 		  ace_user_enable_ssl=no
 		  ;;
 		 *)
-		  AC_MSG_ERROR(bad value ${withval} for --with-ssl)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-ssl)
 		  ;;
 		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
@@ -903,15 +903,15 @@ AC_DEFUN([ACE_ENABLE_ACEXML],
 [AC_ARG_ENABLE([acexml],
 	       AS_HELP_STRING([--enable-acexml],
 			      [compile/use the ACEXML library [[yes]]]),
-	       [case "${withval}" in
-		 yes) 
+	       [case "${enableval}" in
+		 yes)
 		  ace_user_enable_acexml=yes
 		  ;;
 		 no)
 		  ace_user_enable_acexml=no
 		  ;;
 		 *)
-		  AC_MSG_ERROR(bad value ${withval} for --with-acexml)
+		  AC_MSG_ERROR(bad value ${enableval} for --enable-acexml)
 		  ;;
 		esac],
 		[
@@ -980,7 +980,7 @@ AC_ARG_ENABLE([fl-reactor],
                  ace_user_enable_fl_reactor=no
                 ])
 AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
-AM_CONDITIONAL([BUILD_ACE_FLREACTOR], 
+AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
                [test X$ace_enable_fl_reactor = Xyes])
 ])
 
@@ -1009,7 +1009,7 @@ AC_ARG_ENABLE([qt-reactor],
                  ace_user_enable_qt_reactor=no
                 ])
 AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
-AM_CONDITIONAL([BUILD_ACE_QTREACTOR], 
+AM_CONDITIONAL([BUILD_ACE_QTREACTOR],
                [test X$ace_enable_qt_reactor = Xyes])
 ])
 
@@ -1038,7 +1038,7 @@ AC_ARG_ENABLE([tk-reactor],
                  ace_user_enable_tk_reactor=no
                 ])
 AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
-AM_CONDITIONAL([BUILD_ACE_TKREACTOR], 
+AM_CONDITIONAL([BUILD_ACE_TKREACTOR],
                [test X$ace_enable_tk_reactor = Xyes])
 ])
 
@@ -1079,6 +1079,6 @@ dnl line, then "no_x" is set to "yes."
 		])
 AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
-AM_CONDITIONAL([BUILD_ACE_XTREACTOR], 
+AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
                [test X$ace_enable_xt_reactor = Xyes])
 ])
