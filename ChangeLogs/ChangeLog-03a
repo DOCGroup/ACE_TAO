@@ -1,3 +1,7 @@
+Sun Feb 17 16:32:01 2002  Venkita  <venkita@cs.wustl.edu>
+
+        * ACE version 5.2.2 released.
+
 Sun Feb 17 16:03:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* etc/acexml.doxygen: Fixed the output directory name for ACEXML.
