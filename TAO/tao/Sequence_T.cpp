@@ -15,7 +15,7 @@ TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<T> &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   T *tmp1 = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
-  T * const tmp2 = ACE_reinterpret_cast (T * const, rhs.buffer_);
+  T * const tmp2 = ACE_reinterpret_cast (T * ACE_CAST_CONST, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     tmp1[i] = tmp2[i];
@@ -48,7 +48,7 @@ TAO_Unbounded_Sequence<T>::operator= (const TAO_Unbounded_Sequence<T> &rhs)
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
   T *tmp1 = ACE_reinterpret_cast (T *, this->buffer_);
-  T * const tmp2 = ACE_reinterpret_cast (T * const, rhs.buffer_);
+  T * const tmp2 = ACE_reinterpret_cast (T * ACE_CAST_CONST, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     tmp1[i] = tmp2[i];
@@ -106,7 +106,7 @@ TAO_Bounded_Sequence (const TAO_Bounded_Sequence<T, MAX> &rhs)
 {
   T *tmp1 = TAO_Bounded_Sequence<T, MAX>::allocbuf (MAX);
 
-  T * const tmp2 = ACE_reinterpret_cast (T * const, rhs.buffer_);
+  T * const tmp2 = ACE_reinterpret_cast (T * ACE_CAST_CONST, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     tmp1[i] = tmp2[i];
@@ -144,7 +144,7 @@ operator= (const TAO_Bounded_Sequence<T, MAX> &rhs)
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
   T* tmp1 = ACE_reinterpret_cast (T *, this->buffer_);
-  T* const tmp2 = ACE_reinterpret_cast (T * const, rhs.buffer_);
+  T* const tmp2 = ACE_reinterpret_cast (T * ACE_CAST_CONST, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     tmp1[i] = tmp2[i];
@@ -237,7 +237,7 @@ TAO_Unbounded_Object_Sequence (const TAO_Unbounded_Object_Sequence<T> &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   T **tmp1 = TAO_Unbounded_Object_Sequence<T>::allocbuf (this->maximum_);
-  T ** const tmp2 = ACE_reinterpret_cast (T ** const, rhs.buffer_);
+  T ** const tmp2 = ACE_reinterpret_cast (T ** ACE_CAST_CONST, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
@@ -284,7 +284,7 @@ operator= (const TAO_Unbounded_Object_Sequence<T> &rhs)
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
   T **tmp1 = ACE_reinterpret_cast (T **, this->buffer_);
-  T ** const tmp2 = ACE_reinterpret_cast (T ** const, rhs.buffer_);
+  T ** const tmp2 = ACE_reinterpret_cast (T ** ACE_CAST_CONST, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
@@ -398,7 +398,7 @@ TAO_Bounded_Object_Sequence (const TAO_Bounded_Object_Sequence<T, MAX> &rhs)
 {
   T **tmp1 =
     TAO_Bounded_Object_Sequence<T, MAX>::allocbuf (MAX);
-  T ** const tmp2 = ACE_reinterpret_cast (T** const, rhs.buffer_);
+  T ** const tmp2 = ACE_reinterpret_cast (T** ACE_CAST_CONST, rhs.buffer_);
   for (CORBA::ULong i = 0; i < rhs.length_; i++)
     tmp1[i] = T::_duplicate (tmp2[i]);
   this->buffer_ = tmp1;
@@ -439,7 +439,7 @@ TAO_Bounded_Object_Sequence<T, MAX>::operator=
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
   T **tmp1 = ACE_reinterpret_cast (T **, this->buffer_);
-  T ** const tmp2 = ACE_reinterpret_cast (T ** const, rhs.buffer_);
+  T ** const tmp2 = ACE_reinterpret_cast (T ** ACE_CAST_CONST, rhs.buffer_);
   for (CORBA::ULong i=0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
   return *this;
@@ -525,7 +525,8 @@ TAO_Bounded_String_Sequence (const TAO_Bounded_String_Sequence<MAX> &rhs)
 {
   char **tmp1 =
     TAO_Bounded_String_Sequence<MAX>::allocbuf (this->maximum_);
-  char ** const tmp2 = ACE_reinterpret_cast (char ** const, rhs.buffer_);
+  char ** const tmp2 = ACE_reinterpret_cast (char ** ACE_CAST_CONST,
+                                             rhs.buffer_);
 
   for (CORBA::ULong i=0; i < rhs.length_; i++)
     tmp1[i] = CORBA::string_dup (tmp2[i]);
@@ -566,7 +567,8 @@ TAO_Bounded_String_Sequence<MAX>::operator=
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
   char **tmp1 = ACE_reinterpret_cast (char **, this->buffer_);
-  char ** const tmp2 = ACE_reinterpret_cast (char ** const, rhs.buffer_);
+  char ** const tmp2 = ACE_reinterpret_cast (char ** ACE_CAST_CONST,
+                                             rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; i++)
     tmp1[i] = CORBA::string_dup (tmp2[i]);
