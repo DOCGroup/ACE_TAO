@@ -130,7 +130,7 @@ ACE_RT_Task::svc (void)
 
       int priority;
       if (ACE_OS::thr_getprio (self, priority) == 0)
-        ACE_DEBUG ((LM_DEBUG, "(%t) new thread priority = %d.\n", priority));
+        ACE_DEBUG ((LM_DEBUG, "EC (%t) new thread priority = %d.\n", priority));
 
       // Initialize channel thread-specific data.
       ACE_ES_Memory_Pools::thr_init ();
@@ -145,7 +145,7 @@ ACE_RT_Task::svc (void)
           done = this->svc_one ();
         }
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
+      ACE_DEBUG ((LM_DEBUG, "EC (%t) thread exiting.\n"));
     }
   TAO_CATCHANY
     {
@@ -298,7 +298,7 @@ ACE_RT_Task::synch_threads (size_t threads)
             TAO_CHECK_ENV;
           }
 
-          ACE_DEBUG ((LM_DEBUG, "(%t) spawning %d threads at os thread"
+          ACE_DEBUG ((LM_DEBUG, "EC (%t) spawning %d threads at os thread"
                       " priority %d.\n",
                       threads - this->thr_count (),
                       thread_priority));
@@ -334,7 +334,8 @@ ACE_RT_Task::synch_threads (size_t threads)
                     ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
                                                     ACE_SCOPE_THREAD);
 
-                  ACE_DEBUG ((LM_DEBUG, "(%t) task activation at priority %d "
+                  ACE_DEBUG ((LM_DEBUG,
+			      "EC (%t) task activation at priority %d "
                               "with flags 0x%X failed; retry at priority %d "
                               "with flags 0x%X\n",
                               thread_priority,
@@ -350,7 +351,7 @@ ACE_RT_Task::synch_threads (size_t threads)
                                       fallback_priority) == -1)
                     {
                       ACE_DEBUG ((LM_ERROR,
-                                  "(%t) thread spawn at priority %d FAILED "
+                                  "EC (%t) thread spawn at priority %d FAILED "
                                   "(errno is %d%p)!!!!\n",
                                   fallback_priority,
                                   errno,
@@ -381,7 +382,7 @@ ACE_RT_Task::synch_threads (size_t threads)
           if (te == 0)
             return -1;
 
-          ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing thread exit.\n"));
+          ACE_DEBUG ((LM_DEBUG, "EC (%t) enqueueing thread exit.\n"));
           if (this->putq (te) == -1)
             {
               ACE_ERROR ((LM_ERROR, "%p putq failed.\n",
@@ -427,7 +428,7 @@ ACE_RT_Task::shutdown_task (void)
         }
 
       // Enqueue the command.
-      ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing task shutdown.\n"));
+      ACE_DEBUG ((LM_DEBUG, "EC (%t) enqueueing task shutdown.\n"));
       if (this->putq (fq) == -1)
         {
           ACE_ERROR ((LM_ERROR, "%p putq failed.\n",

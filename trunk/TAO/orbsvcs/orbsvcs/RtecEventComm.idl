@@ -26,9 +26,11 @@ module RtecEventComm {
   default: long lval;
   };
 #else
+  typedef sequence<octet> EventPayload;
   struct EventData {
     long x;
     long y;
+    EventPayload payload;
   };
 #endif
 

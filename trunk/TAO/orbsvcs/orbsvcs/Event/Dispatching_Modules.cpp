@@ -220,7 +220,8 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
         if (priority > highest_priority_)
           highest_priority_ = priority;
 
-        ACE_DEBUG ((LM_DEBUG, "Created queue priority = %d.\n", priority));
+        ACE_DEBUG ((LM_DEBUG,
+		    "EC (%t) Created queue priority = %d.\n", priority));
       }
     else
       queue_count_[priority]++;
@@ -245,7 +246,7 @@ ACE_ES_Priority_Dispatching::disconnected (ACE_Push_Consumer_Proxy *consumer)
     // it down.  However, we will not.
     if (--queue_count_[priority] <= 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "(%t) unused dispatch queue priority = %d, "
+        ACE_DEBUG ((LM_DEBUG, "EC (%t) unused dispatch queue priority = %d, "
                     "is_empty = %d.\n",
                     priority, queues_[priority]->msg_queue ()->is_empty ()));
 
@@ -325,7 +326,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Request rejected from closed queue %d.\n",
+                      "EC (%t) Request rejected from closed queue %d.\n",
                       preemption_priority));
         }
     }
@@ -389,7 +390,7 @@ ACE_ES_Priority_Dispatching::shutdown (void)
   if (shutdown_)
     return;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) ACE_ES_Priority_Dispatching "
+  ACE_DEBUG ((LM_DEBUG, "EC (%t) ACE_ES_Priority_Dispatching "
               "module shutting down.\n"));
 
   shutdown_ = 1;
@@ -403,7 +404,8 @@ ACE_ES_Priority_Dispatching::shutdown (void)
   for (int x = 0; x <= highest_priority_; x++)
     if (queues_[x] != 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "shutting down dispatch queue %d.\n", x));
+        ACE_DEBUG ((LM_DEBUG,
+		    "EC (%t) shutting down dispatch queue %d.\n", x));
         queues_[x]->shutdown_task ();
       }
 

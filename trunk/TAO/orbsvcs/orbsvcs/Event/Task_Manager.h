@@ -51,6 +51,9 @@ public:
   // Returns a global ThreadManager for the Task pool.
 
 private:
+  int shutdown_;
+  // The reactors are shutdown, do not attempt to restart them.
+  
   ReactorTask *reactorTasks[ACE_Scheduler_MAX_PRIORITIES];
   // The set of ReactorTasks
 

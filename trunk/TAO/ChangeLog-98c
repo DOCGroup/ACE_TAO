@@ -1,3 +1,25 @@
+Thu Jun 25 17:17:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  We disconnect all consumers and suppliers at shutdown.
+
+	* orbsvcs/orbsvcs/Event/Task_Manager.h: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
+	  Once the class is shutdown it cannot start again. This last two
+	  changes make shutdown clean for the test.
+
+	* orbsvcs/orbsvcs/Event/ReactorTask.cpp: 
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	  The debugging messages start with "EC" to spot (or ignore)
+	  them more easily.
+
+	* orbsvcs/orbsvcs/RtecEventComm.idl: 
+	  I added an octet sequence payload, just to make things more
+	  interesting.
+
 Thu Jun 25 16:31:00 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* tao/GIOP.cpp:

@@ -100,7 +100,7 @@ TAO_EC_Gateway_IIOP::open (const RtecEventChannelAdmin::ConsumerQOS& sub,
         this->supplier_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      //ACE_DEBUG ((LM_DEBUG, "Gateway/Supplier "));
+      //ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
       //ACE_SupplierQOS_Factory::debug (pub);
 
       this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
@@ -120,7 +120,7 @@ TAO_EC_Gateway_IIOP::open (const RtecEventChannelAdmin::ConsumerQOS& sub,
         this->consumer_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      //ACE_DEBUG ((LM_DEBUG, "Gateway/Consumer "));
+      //ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Consumer "));
       //ACE_ConsumerQOS_Factory::debug (sub);
 
       this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
@@ -202,14 +202,16 @@ void
 TAO_EC_Gateway_IIOP::disconnect_push_consumer (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "ECG: Supplier-consumer received disconnect from channel.\n"));
+              "ECG (%t): Supplier-consumer received "
+	      "disconnect from channel.\n"));
 }
 
 void
 TAO_EC_Gateway_IIOP::disconnect_push_supplier (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "ECG: Supplier received disconnect from channel.\n"));
+              "ECG (%t): Supplier received "
+	      "disconnect from channel.\n"));
 }
 
 void

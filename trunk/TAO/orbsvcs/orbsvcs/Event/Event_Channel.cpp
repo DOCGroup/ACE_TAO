@@ -449,7 +449,7 @@ ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr 
   this->push_supplier_ =
     RtecEventComm::PushSupplier::_duplicate(push_supplier);
 
-  //ACE_DEBUG ((LM_DEBUG, "(%t) connect_push_supplier QOS is "));
+  //ACE_DEBUG ((LM_DEBUG, "EC (%t) connect_push_supplier QOS is "));
   //ACE_SupplierQOS_Factory::debug (qos);
 
   // Copy by value.
@@ -527,7 +527,8 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
 
   if (CORBA::is_nil (push_consumer_.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) Push to disconnected consumer %s\n",
+      ACE_DEBUG ((LM_DEBUG,
+		  "EC (%t) Push to disconnected consumer %s\n",
                   ::ACE_ES_Consumer_Name (this->qos ())));
       // ACE_ES_DEBUG_ST (::dump_sequence (events));
       return;
@@ -559,7 +560,7 @@ ACE_Push_Consumer_Proxy::connect_push_consumer (RtecEventComm::PushConsumer_ptr 
   // @@ TODO Find out why are two duplicates needed...
   RtecEventComm::PushConsumer::_duplicate(push_consumer);
 
-  //ACE_DEBUG ((LM_DEBUG, "(%t) connect_push_consumer QOS is "));
+  //ACE_DEBUG ((LM_DEBUG, "EC (%t) connect_push_consumer QOS is "));
   //ACE_ConsumerQOS_Factory::debug (qos);
 
   // Copy by value.
@@ -639,7 +640,8 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
 
 ACE_EventChannel::~ACE_EventChannel (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) ACE_EventChannel deleting all modules.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+	      "EC (%t) ACE_EventChannel deleting all modules.\n"));
 
   TAO_TRY
     {
@@ -651,6 +653,10 @@ ACE_EventChannel::~ACE_EventChannel (void)
       ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_EventChannel::~ACE_EventChannel"));
     }
   TAO_ENDTRY;
+
+  this->dispatching_module_->shutdown ();
+  this->task_manager_->shutdown ();
+
   // @@ TODO: Some of this objects are servants, IMHO we should
   // deactivate them (there is no implicit deactivation in the POA).
   delete rtu_manager_;
@@ -677,7 +683,7 @@ ACE_EventChannel::destroy (CORBA::Environment &)
     return;
 
   destroyed_ = 1;
-  ACE_DEBUG ((LM_DEBUG, "(%t) Event Channel shutting down.\n"));
+  ACE_DEBUG ((LM_DEBUG, "EC (%t) Event Channel shutting down.\n"));
 
   // Send a shutdown message through the modules.
   supplier_module_->shutdown ();
@@ -758,7 +764,7 @@ ACE_EventChannel::report_disconnect_i (u_long event)
   ACE_SET_BITS (state_, event);
   if (state_ == SHUTDOWN)
     ACE_DEBUG ((LM_DEBUG,
-                "(%t) Event Channel has no consumers or suppliers.\n"));
+                "EC (%t) Event Channel has no consumers or suppliers.\n"));
 }
 
 void
@@ -779,7 +785,8 @@ ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
   if (this->gwys_.is_empty ())
     return;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) Event_Channel::update_consumer_gwys\n"));
+  ACE_DEBUG ((LM_DEBUG,
+	      "EC (%t) Event_Channel::update_consumer_gwys\n"));
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   RtecEventChannelAdmin::SupplierQOS s_qos;
@@ -859,7 +866,8 @@ ACE_ES_Subscription_Info::remove (Subscriber_Map &type_map,
   // Find the type set within the type collection.
   if (type_map.find (type, subscribers) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) Info::remove - not found %d\n", type));
+      ACE_DEBUG ((LM_DEBUG,
+		  "EC (%t) Info::remove - not found %d\n", type));
       // type_map does not contain the type.
       return -1;
     }
@@ -1073,7 +1081,8 @@ void
 ACE_ES_Consumer_Module::connected (ACE_Push_Consumer_Proxy *consumer,
                                    CORBA::Environment &_env)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%t) Consumer_Module - connecting consumer %x\n",
+  // ACE_DEBUG ((LM_DEBUG,
+  //             "EC (%t) Consumer_Module - connecting consumer %x\n",
   //  consumer));
 
   this->channel_->report_connect (ACE_EventChannel::CONSUMER);
@@ -1095,7 +1104,8 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
       // everyone can free up any resources.
       this->down_->disconnected (sc->consumer ());
 
-      // ACE_DEBUG ((LM_DEBUG, "(%t) Consumer_Module - remove consumer %x\n",
+      // ACE_DEBUG ((LM_DEBUG,
+      //             "EC (%t) Consumer_Module - remove consumer %x\n",
       //  sc->consumer ()));
 
       CORBA::Boolean dont_update = sc->consumer ()->qos ().is_gateway;
@@ -1113,7 +1123,8 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
       // Tell the channel that we may need to shut down.
       if (all_consumers_.size () <= 0)
         {
-          // ACE_DEBUG ((LM_DEBUG, "(%t) No more consumers connected.\n"));
+          // ACE_DEBUG ((LM_DEBUG,
+	  //             "EC (%t) No more consumers connected.\n"));
           channel_->report_disconnect_i (ACE_EventChannel::CONSUMER);
         }
     }
@@ -1211,7 +1222,7 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   if (act == 0)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
-  // ACE_DEBUG ((LM_DEBUG, "(%t) initiating consumer disconnect.\n"));
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) initiating consumer disconnect.\n"));
 
   // Set a 100ns timer.
   TimeBase::TimeT ns100;
@@ -1238,7 +1249,7 @@ void
 ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
                               CORBA::Environment &_env)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%t) Consumer_Module::push\n"));
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) Consumer_Module::push\n"));
 
   ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ES_CONSUMER_MODULE_PUSH);
   // We'll create a temporary event set with the size of the incoming
@@ -1433,7 +1444,7 @@ ACE_ES_Correlation_Module::push (ACE_ES_Consumer_Rep *consumer,
                                  ACE_ES_Event_Container *event,
                                  CORBA::Environment &_env)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%t) Correlation_Module::push\n"));
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) Correlation_Module::push\n"));
 
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ACE_ES_CORRELATION_MODULE_PUSH);
   ACE_ES_Dispatch_Request *request =
@@ -1466,7 +1477,7 @@ ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consum
   consumer->preemption_priority (::IntervalToPriority (interval));
 
   // ACE_DEBUG ((LM_DEBUG,
-  // "(%t) Adding timer at preemption %d, rate = (%d,%d)\n",
+  // "EC (%t) Adding timer at preemption %d, rate = (%d,%d)\n",
   // consumer->preemption_priority (),
   // interval.low, interval.high));
 
@@ -1969,7 +1980,7 @@ ACE_ES_Dispatch_Request *
 ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
                                    ACE_ES_Event_Container *event)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%t) Consumer_Correlation_Module::push\n"));
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) Consumer_Correlation_Module::push\n"));
 
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ACE_ES_CONSUMER_CORRELATION_PUSH_ENTER);
 
@@ -2237,7 +2248,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
         else
           {
             //ACE_DEBUG ((LM_DEBUG,
-            //          "(%t) No consumers for type %d\n", event_type));
+            //          "EC (%t) No consumers for type %d\n", event_type));
           }
 #endif
 
@@ -2342,7 +2353,7 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
                                          ACE_ES_Event_Container *event,
                                          CORBA::Environment &_env)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%t) Subscription_Module::push_source\n"));
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::push_source\n"));
 
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ACE_ES_SUBSCRIPTION_MODULE_PUSH);
   // If there are now source-based subscribers for this supplier,
@@ -2426,7 +2437,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
                                               CORBA::Environment& _env)
 {
   // ACE_DEBUG ((LM_DEBUG,
-  // "(%t) Subscription_Module::push_source_type: \n"));
+  // "EC (%t) Subscription_Module::push_source_type: \n"));
 
   // Step through each event in the set.  For each event type, find
   // the corresponding set in the type collection.  Push the single
@@ -2454,7 +2465,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
     if (supplier_map.current_size () == 0)
       {
         ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
-        // ACE_DEBUG ((LM_DEBUG, "(%t) Subscription_Module::"
+        // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::"
         // "push_source_type - empty supplier map\n"));
         return 0;
       }
@@ -2462,7 +2473,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
     if (supplier_map.find (event->type_, subscribers) == -1)
       {
         ACE_DEBUG ((LM_ERROR,
-                    "(%t) ACE_ES_Subscription_Module::push_source_type"
+                    "EC (%t) ACE_ES_Subscription_Module::push_source_type"
                     " Warning: event type %d not registered.\n",
                     event->type_));
         ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
@@ -2471,7 +2482,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
 
     if (subscribers->consumers_.size () == 0)
       {
-        // ACE_DEBUG ((LM_DEBUG, "(%t) Subscription_Module::"
+        // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::"
         // "push_source_type - empty consumer set for %d\n",
         // event->type_));
         ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
@@ -2502,7 +2513,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
   if (disconnect_list.size () != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Subscription_Module::push_source_type"
+                  "EC (%t) Subscription_Module::push_source_type"
                   " - disconnecting consumers\n"));
       ACE_ES_WGUARD ace_mon (source->subscription_info ().lock_);
       if (ace_mon.locked () == 0)
@@ -2625,7 +2636,7 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
                                             RtecEventComm::EventType type)
 {
   // ACE_DEBUG ((LM_DEBUG,
-  // "(%t) Subscription_Module::subscribe_type - %d\n", type));
+  // "EC (%t) Subscription_Module::subscribe_type - %d\n", type));
 
   // First insert <consumer> into the global type collection set
   // corresponding to <type>.  The type collection will only be used
@@ -2952,7 +2963,7 @@ ACE_ES_Subscription_Module::push (ACE_Push_Supplier_Proxy *source,
                                   ACE_ES_Event_Container *event,
                                   CORBA::Environment &_env)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%t) Subscription_Module::push\n"));
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::push\n"));
 
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_DELIVER_TO_SUBSCRIPTION_MODULE);
   // These are all inline function calls.
@@ -3056,7 +3067,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 
   if (all_suppliers_.size () <= 0)
     {
-      // ACE_DEBUG ((LM_DEBUG, "(%t) No more suppliers connected.\n"));
+      // ACE_DEBUG ((LM_DEBUG, "EC (%t) No more suppliers connected.\n"));
       channel_->report_disconnect_i (ACE_EventChannel::SUPPLIER);
     }
 
@@ -3125,7 +3136,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
                               const RtecEventComm::EventSet &event,
                               CORBA::Environment &_env)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%t) Supplier_Module::push\n"));
+  // ACE_DEBUG ((LM_DEBUG, "EC (%t) Supplier_Module::push\n"));
   TAO_TRY
     {
       for (CORBA::ULong i = 0; i < event.length(); ++i)

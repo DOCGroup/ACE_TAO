@@ -499,12 +499,28 @@ Test_ECG::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "shutdown the EC\n"));
       ec_impl.shutdown ();
 
+      this->dump_results ();
+
+      if (this->rmt_name_ != 0)
+        {
+	  ec_impl.del_gateway (&this->ecg_);
+
+	  this->ecg_.close (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  this->ecg_.shutdown (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
+
+      this->disconnect_consumers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      this->disconnect_suppliers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
       ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
       tv.set (5, 0);
       if (orb->run (&tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
-      this->dump_results ();
 
       if (this->schedule_file_ != 0)
         {
