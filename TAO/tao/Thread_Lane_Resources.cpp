@@ -2,8 +2,8 @@
 
 #include "tao/Thread_Lane_Resources.h"
 
-ACE_RCSID (tao, 
-           Thread_Lane_Resources, 
+ACE_RCSID (tao,
+           Thread_Lane_Resources,
            "$Id$")
 
 #include "tao/Acceptor_Registry.h"
@@ -78,7 +78,7 @@ TAO_Thread_Lane_Resources::acceptor_registry (void)
   if (this->acceptor_registry_ == 0)
     {
       // @@todo: Wouldnt this crash big time if you happen to
-      // dereference a  null-pointer? Needs fixing.
+      // dereference a null-pointer? Needs fixing.
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         ace_mon,
                         this->lock_,
@@ -162,9 +162,9 @@ TAO_Thread_Lane_Resources::leader_follower (void)
   // Double check.
   if (this->leader_follower_ == 0)
     {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
-                        ace_mon, 
-                        this->lock_, 
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
                         *this->leader_follower_);
 
       if (this->leader_follower_ == 0)
@@ -316,7 +316,7 @@ int
 TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
                                                    ACE_ENV_ARG_DECL)
 {
-  /// Access the acceptor registry.
+  // Access the acceptor registry.
   TAO_Acceptor_Registry &ar = this->acceptor_registry ();
 
   // Open it.
