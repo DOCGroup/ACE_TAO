@@ -7,6 +7,9 @@ Sun May 31 23:05:10 1998  David L. Levine  <levine@cs.wustl.edu>
           easiest to avoid link collisions that way.  And it already
           works.
 
+        * tests/Timeprobe_Test.cpp: removed trailing ; from template
+          instantation pragmas.
+
 Sun May 31 18:31:24 1998  James C Hu  <jxh@cs.wustl.edu>
 
         * ace/RB_Tree.i:
