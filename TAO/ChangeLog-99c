@@ -1,3 +1,14 @@
+Tue Jun 15 15:08:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO-INSTALL.html:
+	  Updated NT installation notes because the ACE_ROOT and/or
+	  TAO_ROOT variable is required.
+
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Event/Performance/run_test.pl:
+	  Use the new features in the Process perl class to timeout any of 
+	  the tests.
+
 Tue Jun 15 14:50:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_i.h:
