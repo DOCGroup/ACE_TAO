@@ -22,8 +22,9 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
     max_size_ (size),
     current_size_ (0)
 {
-  void *space = this->allocator_->malloc ((sizeof (ACE_timeprobe_t)) * this->max_size_);
-  this->timeprobes_ = new ((ACE_timeprobe_t *) space) ACE_timeprobe_t[this->max_size_];
+  ACE_NEW_MALLOC (this->timeprobes_, 
+                  (ACE_timeprobe_t *) this->allocator_->malloc ((sizeof (ACE_timeprobe_t)) * this->max_size_),
+                  ACE_timeprobe_t[this->max_size_]);
 
 #ifdef VXWORKS
   if (sysProcNumGet () == 0)
