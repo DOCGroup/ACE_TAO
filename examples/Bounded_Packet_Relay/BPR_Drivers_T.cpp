@@ -23,7 +23,7 @@
 //
 // ============================================================================
 
-#if !defined (_BPR_DRIVER_T_CPP_)
+#ifndef _BPR_DRIVER_T_CPP_
 #define _BPR_DRIVER_T_CPP_
 
 // #include BPR_Drivers.h instead of BPR_Drivers_T.h

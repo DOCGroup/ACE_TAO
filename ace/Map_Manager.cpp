@@ -1,10 +1,15 @@
 // $Id$
 
-#if !defined (ACE_MAP_MANAGER_C)
+#ifndef ACE_MAP_MANAGER_C
 #define ACE_MAP_MANAGER_C
 
 #define ACE_BUILD_DLL
 #include "ace/Malloc.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Config.h"
 #include "ace/Map_Manager.h"
 

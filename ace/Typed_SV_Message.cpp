@@ -1,10 +1,14 @@
 // Typed_SV_Message.cpp
 // $Id$
 
-#if !defined (ACE_TYPED_SV_MESSAGE_C)
+#ifndef ACE_TYPED_SV_MESSAGE_C
 #define ACE_TYPED_SV_MESSAGE_C
 #define ACE_BUILD_DLL
 #include "ace/Typed_SV_Message.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Typed_SV_Message.i"

@@ -1,11 +1,16 @@
 // $Id$
 
-#if !defined (ACE_TIMER_HASH_T_C)
+#ifndef ACE_TIMER_HASH_T_C
 #define ACE_TIMER_HASH_T_C
 
 #define ACE_BUILD_DLL
 
 #include "ace/Timer_Hash_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/High_Res_Timer.h"
 
 ACE_RCSID(ace, Timer_Hash_T, "$Id$")
@@ -43,8 +48,8 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Hash_Upcall (ACE_Timer
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *,
-						                       ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
-								       ACE_Null_Mutex> &timer_queue,
+                                                                       ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
+                                                                       ACE_Null_Mutex> &timer_queue,
                                                      ACE_Event_Handler *handler,
                                                      const void *arg,
                                                      const ACE_Time_Value &cur_time)
@@ -66,8 +71,8 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_E
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *,
-							  ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
-							  ACE_Null_Mutex> &timer_queue,
+                                                          ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
+                                                          ACE_Null_Mutex> &timer_queue,
                                                           ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
@@ -80,8 +85,8 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::cancellation (ACE_Timer_Queue_T<
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *,
-						      ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
-						      ACE_Null_Mutex> &timer_queue,
+                                                      ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
+                                                      ACE_Null_Mutex> &timer_queue,
                                                       ACE_Event_Handler *handler,
                                                       const void *arg)
 {
@@ -316,9 +321,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> long
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
-						 const void *act,
-						 const ACE_Time_Value &future_time,
-						 const ACE_Time_Value &interval)
+                                                 const void *act,
+                                                 const ACE_Time_Value &future_time,
+                                                 const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::schedule");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
@@ -346,8 +351,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
-					       const void **act,
-					       int dont_call)
+                                               const void **act,
+                                               int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
@@ -363,7 +368,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
 
   if (h->pos_ == this->earliest_position_)
     this->find_new_earliest ();
-  
+
   if (act != 0)
     *act = h->act_;
 
@@ -379,7 +384,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
-					       int dont_call)
+                                               int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::cancel");
 
@@ -445,9 +450,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::find_new_earliest (void)
   for (size_t i = 0; i < this->table_size_; i++)
     if (!this->table_[i]->is_empty ())
       if (this->table_[this->earliest_position_]->is_empty()
-	  || this->earliest_time () == ACE_Time_Value::zero
-	  || this->table_[i]->earliest_time () <= this->earliest_time ())
-	  this->earliest_position_ = i;
+          || this->earliest_time () == ACE_Time_Value::zero
+          || this->table_[i]->earliest_time () <= this->earliest_time ())
+          this->earliest_position_ = i;
 }
 
 
@@ -501,18 +506,18 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
 
           // Check if this is an interval timer.
           if (expired->get_interval () > ACE_Time_Value::zero)
-	    {
-	      // Make sure that we skip past values that have already
-	      // "expired".
-	      do
-	        expired->set_timer_value (expired->get_timer_value () + expired->get_interval ());
-	      while (expired->get_timer_value () <= cur_time);
+            {
+              // Make sure that we skip past values that have already
+              // "expired".
+              do
+                expired->set_timer_value (expired->get_timer_value () + expired->get_interval ());
+              while (expired->get_timer_value () <= cur_time);
 
-	      // Since this is an interval timer, we need to reschedule
-	      // it.
-	      this->reschedule (expired);
-	      reclaim = 0;
-	    }
+              // Since this is an interval timer, we need to reschedule
+              // it.
+              this->reschedule (expired);
+              reclaim = 0;
+            }
 
           // call the functor
           Hash_Token *h = (Hash_Token *)act;
@@ -521,7 +526,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
           if (reclaim)
             {
               // Free up the node and the token
-	      this->free_node (expired);
+              this->free_node (expired);
               delete h;
             }
 

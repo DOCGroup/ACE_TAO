@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (JAWS_PIPELINE_HANDLER_CPP)
+#ifndef JAWS_PIPELINE_HANDLER_CPP
 #define JAWS_PIPELINE_HANDLER_CPP
 
 #include "JAWS/Pipeline_Handler.h"

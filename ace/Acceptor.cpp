@@ -1,11 +1,16 @@
 // Acceptor.cpp
 // $Id$
 
-#if !defined (ACE_ACCEPTOR_C)
+#ifndef ACE_ACCEPTOR_C
 #define ACE_ACCEPTOR_C
 
 #define ACE_BUILD_DLL
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/WFMO_Reactor.h"
@@ -76,12 +81,12 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
                                  reuse_addr) == -1)
     return -1;
 
-  int result = reactor->register_handler 
-    (this, 
+  int result = reactor->register_handler
+    (this,
      ACE_Event_Handler::ACCEPT_MASK);
   if (result != -1)
     this->reactor (reactor);
-  
+
   return result;
 }
 
@@ -300,7 +305,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
 
   if (result == 0 && svc_handler->open ((void *) this) == -1)
     result = -1;
-  
+
   if (result == -1)
     svc_handler->close (0);
 
@@ -341,7 +346,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       SVC_HANDLER *svc_handler = 0;
 
       if (this->make_svc_handler (svc_handler) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,  
+        ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("make_svc_handler")),
                           0);
@@ -1033,7 +1038,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
                            reset_new_handle // reset new handle
                            ) == -1)
     result = -1;
-  if (this->reactor () 
+  if (this->reactor ()
       && this->reactor ()->remove_handler
       (this,
        ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)

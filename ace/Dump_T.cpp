@@ -1,10 +1,14 @@
 // Dump_T.cpp
 // $Id$
 
-#if !defined (ACE_DUMP_T_C)
+#ifndef ACE_DUMP_T_C
 #define ACE_DUMP_T_C
 
 #include "ace/Dump_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, Dump_T, "$Id$")
 
@@ -27,9 +31,9 @@ ACE_Dumpable_Adapter<Concrete>::operator->() const
   return (Concrete *) this->this_;
 }
 
-template <class Concrete> void 
+template <class Concrete> void
 ACE_Dumpable_Adapter<Concrete>::dump (void) const
-{ 
+{
   ACE_TRACE ("ACE_Dumpable_Adapter<Concrete>::dump");
   this->this_->dump ();
 }

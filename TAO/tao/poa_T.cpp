@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (POA_T_CPP)
+#ifndef POA_T_CPP
 #define POA_T_CPP
 
 #include "tao/poa_T.h"

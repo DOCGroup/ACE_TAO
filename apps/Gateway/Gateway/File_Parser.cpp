@@ -1,10 +1,15 @@
 // $Id$
 
-#if !defined (FILE_PARSER_C)
+#ifndef FILE_PARSER_C
 
 #define FILE_PARSER_C
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "File_Parser.h"
 
 ACE_RCSID(Gateway, File_Parser, "$Id$")
@@ -16,7 +21,7 @@ typedef FP::Return_Type FP_RETURN_TYPE;
 // File_Parser stuff.
 
 template <class ENTRY> int
-File_Parser<ENTRY>::open (const char filename[]) 
+File_Parser<ENTRY>::open (const char filename[])
 {
   this->infile_ = ACE_OS::fopen (filename, "r");
   if (this->infile_ == 0)
@@ -27,8 +32,8 @@ File_Parser<ENTRY>::open (const char filename[])
 
 template <class ENTRY> int
 File_Parser<ENTRY>::close (void)
-{ 
-  return ACE_OS::fclose (this->infile_); 
+{
+  return ACE_OS::fclose (this->infile_);
 }
 
 template <class ENTRY> FP_RETURN_TYPE
@@ -75,7 +80,7 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
   else
     return read_result;
 }
-  
+
 
 template <class ENTRY> FP_RETURN_TYPE
 File_Parser<ENTRY>::readword (char buf[])
@@ -88,9 +93,9 @@ File_Parser<ENTRY>::readword (char buf[])
   while ((c = getc (this->infile_)) != EOF && c != '\n')
     if (this->delimiter (c))
       {
-	// We've reached the end of a "word".
-	if (wordlength > 0)
-	  break;
+        // We've reached the end of a "word".
+        if (wordlength > 0)
+          break;
       }
     else
       buf[wordlength++] = c;
@@ -100,10 +105,10 @@ File_Parser<ENTRY>::readword (char buf[])
   if (c == EOF) {
     // If EOF is just a delimiter, don't return EOF so that the word
     // gets processed.
-    if (wordlength > 0) 
+    if (wordlength > 0)
       {
-	ungetc (c, this->infile_);
-	return FP::SUCCESS;
+        ungetc (c, this->infile_);
+        return FP::SUCCESS;
       }
     else
       // else return EOF so that read loops stop
@@ -114,18 +119,18 @@ File_Parser<ENTRY>::readword (char buf[])
       // if the EOLINE is just a delimiter, don't return EOLINE
       // so that the word gets processed
       if (wordlength > 0)
-	ungetc (c, this->infile_);
+        ungetc (c, this->infile_);
       else
-	return FP::EOLINE; 
+        return FP::EOLINE;
     }
 
   // Skip comments.
-  if (this->comments (buf[0])) 
+  if (this->comments (buf[0]))
     {
       if (this->skipline () == EOF)
-	return FP::EOFILE;
+        return FP::EOFILE;
       else
-	return FP::COMMENT;
+        return FP::COMMENT;
     }
   else
     return FP::SUCCESS;
@@ -148,7 +153,7 @@ File_Parser<ENTRY>::skipline (void)
 {
   // Skip the remainder of the line.
 
-  int c; 
+  int c;
 
   while ((c = getc (this->infile_)) != '\n' && c != EOF)
     continue;

@@ -13,7 +13,7 @@
 //
 // ========================================================================
 
-#if !defined TAO_DYNUNION_I_T_C
+#ifndef TAO_DYNUNION_I_T_C
 #define TAO_DYNUNION_I_T_C
 
 #include "tao/DynUnion_i_T.h"
