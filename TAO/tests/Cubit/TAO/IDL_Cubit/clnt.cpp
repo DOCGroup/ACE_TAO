@@ -566,9 +566,7 @@ Cubit_Client::run (void)
       this->cube_octet (i);
       this->cube_long (i);
       this->cube_struct (i);
-      //#if defined (TAO_ALSO_TEST_SEQUENCES)
       this->cube_sequence (i);
-      //#endif /* defined (TAO_ALSO_TEST_SEQUENCES) */
     }
 
   // stop the timer.
@@ -634,7 +632,6 @@ Cubit_Client::run (void)
   // compute call average call time.
   this->print_stats ("cube_union_dii call", elapsed_time);
 
-  //#if defined (TAO_ALSO_TEST_SEQUENCES)
   // Sequences
   timer.start ();
   this->call_count_ = 0;
@@ -650,7 +647,6 @@ Cubit_Client::run (void)
   timer.elapsed_time (elapsed_time);
   // compute call average call time.
   this->print_stats ("cube_sequence", elapsed_time);
-  //#endif /* defined (TAO_ALSO_TEST_SEQUENCES) */
 
 
 
