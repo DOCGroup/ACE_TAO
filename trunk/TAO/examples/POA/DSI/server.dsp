@@ -96,6 +96,7 @@ SOURCE=.\Database_i.cpp
 # Begin Source File
 
 SOURCE=.\DatabaseC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

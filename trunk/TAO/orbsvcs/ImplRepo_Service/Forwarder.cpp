@@ -91,8 +91,8 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       TAO_POA_Current *tao_current =
         ACE_dynamic_cast (TAO_POA_Current*, this->poa_current_var_.in ());
       TAO_POA_Current_Impl *impl = tao_current->implementation ();
-      TAO_ObjectKey::encode_sequence_to_string (key_str,
-                                                impl->object_key ());
+      TAO::ObjectKey::encode_sequence_to_string (key_str,
+                                                 impl->object_key ());
 
       // Append the key_string to the IOR that is received from the
       // activate_server_with_startup function call.

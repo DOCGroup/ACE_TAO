@@ -1147,6 +1147,7 @@ CORBA::name ::_is_a (const char* interface_id) const \
                "IDL:omg.org/CORBA/" #name ":1.0") == 0) \
           || this->SystemException::_is_a (interface_id)); \
 }
+
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -1158,6 +1159,7 @@ CORBA::name ::_downcast (CORBA::Exception* exception) \
     return ACE_dynamic_cast (CORBA::name *, exception); \
   return 0; \
 }
+
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -1167,6 +1169,7 @@ CORBA::name ::_raise (void) \
 { \
   TAO_RAISE (*this); \
 }
+
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -1187,6 +1190,7 @@ CORBA::name ::name (CORBA::ULong code, CORBA::CompletionStatus completed) \
                             completed) \
 { \
 }
+
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -1196,6 +1200,7 @@ CORBA::name ::_type (void) const \
 { \
   return CORBA::_tc_ ## name; \
 }
+
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -1206,6 +1211,7 @@ CORBA::name ::_tao_any_destructor (void *x) \
   CORBA::name *tmp = ACE_static_cast (CORBA::name *, x); \
   delete tmp; \
 }
+
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -1217,180 +1223,113 @@ CORBA::name ::_tao_duplicate (void) const \
   ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
   return result; \
 }
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-static void
-tao_insert_for_insertion_system_exception (CORBA::Any &any,
-                                           const CORBA::SystemException &ex,
-                                           const char *msg)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      TAO_OutputCDR stream;
-      ex._tao_encode (stream ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      any._tao_replace (ex._type (),
-                        TAO_ENCAP_BYTE_ORDER,
-                        stream.begin ());
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (
-          ACE_ANY_EXCEPTION,
-          msg);
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-}
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
-{ \
-  tao_insert_for_insertion_system_exception (any, ex, \
-            "\tCORBA::Any insertion (non-copy) of CORBA::" #name "\n" \
-                               ); \
-}
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-static void
-tao_insert_system_exception (CORBA::Any &any,
-                             CORBA::SystemException *ex,
-                             CORBA::Any::_tao_destructor destructor,
-                             const char *msg)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      TAO_OutputCDR stream;
-      ex->_tao_encode (stream ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      any._tao_replace (ex->_type (),
-                        TAO_ENCAP_BYTE_ORDER,
-                        stream.begin (),
-                        1,
-                        ex,
-                        destructor);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (
-          ACE_ANY_EXCEPTION,
-          msg
-        );
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-}
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA::operator<<= (CORBA::Any &any, CORBA::name *ex) \
-{ \
-  tao_insert_system_exception (any, ex, \
-          CORBA::name ::_tao_any_destructor, \
-          "\tCORBA::Any insertion (non-copy) of CORBA::" #name "\n" \
-                               ); \
-}
 
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-static CORBA::SystemException* _tao_allocator_CORBA_ ## name (void) \
-{ \
-  return new CORBA::name; \
-}
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-static CORBA::Boolean
-tao_insert_in_extractor_system_exception (
-  const CORBA::Any &any,
-  CORBA::SystemException *&tmp,
-  CORBA::SystemException * (*allocator)(void),
-  CORBA::TypeCode_ptr tc_name,
-  CORBA::Any::_tao_destructor destructor,
-  const char *compare_IR_Id,
-  const char *msg)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      CORBA::TypeCode_var type = any.type ();
-      CORBA::Boolean equiv =
-        type->equivalent (tc_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      if (!equiv)
-        return 0;
-      if (any.any_owns_data ())
-        {
-          tmp = (CORBA::SystemException *)any.value ();
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (
-              any._tao_get_cdr (),
-              any._tao_byte_order ()
-            );
-          CORBA::String_var interface_repository_id;
-          if (!(stream >> interface_repository_id.out ()))
-            return 0;
-          if (ACE_OS_String::strcmp (interface_repository_id.in (),
-                                     compare_IR_Id))
-            return 0;
-          CORBA::SystemException *tmp = allocator ();
-          tmp->_tao_decode (stream ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          ((CORBA::Any *)&any)->_tao_replace (
-              tc_name,
-              1,
-              tmp,
-              destructor
-            );
-          return 1;
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (
-          ACE_ANY_EXCEPTION,
-          msg
-        );
-    }
-  ACE_ENDTRY;
-  return 0;
-}
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Boolean \
-CORBA::operator>>= (const CORBA::Any &any, \
-                    const CORBA::name *&ex) \
+TAO::Any_Dual_Impl_T<CORBA::name >::marshal_value (TAO_OutputCDR &cdr) \
 { \
-  ex = 0; \
-  CORBA::SystemException *tmp; \
-  if (tao_insert_in_extractor_system_exception ( \
-        any, \
-        tmp, \
-        _tao_allocator_CORBA_ ## name, \
-        CORBA::_tc_ ## name, \
-        CORBA::name ::_tao_any_destructor, \
-        "IDL:omg.org/CORBA/" #name ":1.0", \
-        "\tCORBA::Any extraction of CORBA::" #name "\n") == 0) \
+  ACE_TRY_NEW_ENV \
     { \
-      ex = 0; \
-      return 0; \
+      this->value_->_tao_encode (cdr \
+                                 ACE_ENV_ARG_PARAMETER); \
+      ACE_TRY_CHECK; \
+      return 1; \
     } \
-  ex = (CORBA::name *) tmp; \
-  return 1; \
+  ACE_CATCHANY \
+    { \
+    } \
+  ACE_ENDTRY; \
+  return 0; \
 }
 
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA::Boolean \
+TAO::Any_Dual_Impl_T<CORBA::name >::demarshal_value (TAO_InputCDR &cdr) \
+{ \
+  ACE_TRY_NEW_ENV \
+    { \
+      this->value_->_tao_decode (cdr \
+                                 ACE_ENV_ARG_PARAMETER); \
+      ACE_TRY_CHECK; \
+      return 1; \
+    } \
+  ACE_CATCHANY \
+    { \
+    } \
+  ACE_ENDTRY; \
+  return 0; \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+void operator<<= (CORBA::Any &any, const CORBA::name &ex) \
+{ \
+  TAO::Any_Dual_Impl_T<CORBA::name >::insert_copy ( \
+      any, \
+      CORBA::name ::_tao_any_destructor, \
+      CORBA::_tc_ ## name, \
+      ex \
+    ); \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+void operator<<= (CORBA::Any &any, CORBA::name *ex) \
+{ \
+  TAO::Any_Dual_Impl_T<CORBA::name >::insert ( \
+      any, \
+      CORBA::name ::_tao_any_destructor, \
+      CORBA::_tc_ ## name, \
+      ex \
+    ); \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA::Boolean operator>>= (const CORBA::Any &any, \
+                            const CORBA::name *&ex) \
+{ \
+  return \
+    TAO::Any_Dual_Impl_T<CORBA::name >::extract ( \
+        any, \
+        CORBA::name ::_tao_any_destructor, \
+        CORBA::_tc_ ## name, \
+        ex \
+      ); \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+template class TAO::Any_Dual_Impl_T<CORBA::name >;
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::name >
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #undef STANDARD_EXCEPTION_LIST
 

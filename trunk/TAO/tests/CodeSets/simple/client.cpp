@@ -22,25 +22,30 @@
 // ------------------------------------------------------------
 // Client
 // ------------------------------------------------------------
-int main(int argc, char *argv[])
+int main (int argc, char *argv[])
 {
   char buf[1000];
+  int error_count = 0;
 
   ACE_TRY_NEW_ENV
     {
       // Init the orb
-      CORBA::ORB_var orb= CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb= CORBA::ORB_init (argc, 
+                                           argv,
+                                           ""
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get IOR from command line (or file)
-      if(argc != 2)
+      if (argc != 2)
         {
           ifstream fstr;
-          fstr.open("server.ior");
-          if (fstr.bad())
+          fstr.open ("server.ior");
+
+          if (fstr.bad ())
             {
               cout << "Cannot open server.ior and no IOR argument!" << endl;
-              exit(1);
+              exit (1);
             }
           else
             {
@@ -49,29 +54,53 @@ int main(int argc, char *argv[])
         }
       else
         {
-          strcpy(buf, argv[1]);
+          ACE_OS::strcpy (buf, argv[1]);
         }
 
       // The first arg should be the IOR
-      CORBA::Object_var object= orb->string_to_object(buf
-                                                      ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var object = 
+        orb->string_to_object (buf
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-         // Get the server
-      CORBA::Environment env;
-      simple_var server= simple::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
+      // Get the server
+      simple_var server = simple::_narrow (object.in () 
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // invoke the call
+      const char *bare_string = "Hello World";
+
+      const char *any_string = "Any World";
+      CORBA::Any inarg;
+      inarg <<= CORBA::string_dup (any_string);
+      CORBA::Any_var outarg;
+
+      // Invoke the call.
       CORBA::String_var reply =
-        server->op1("Hello World" ACE_ENV_ARG_PARAMETER);
+        server->op1 (bare_string,
+                     inarg,
+                     outarg.out ()
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      cout << "sent Hello World, got " << reply << endl;
 
-      reply = server->op1("Goodbye World" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      cout << "sent Goodby World, got " << reply << endl;
+      const char *any_reply;
+      outarg >>= any_reply;
 
+      cout << "Client sent " << bare_string 
+           << ", got " << reply.in () << endl;
+
+      if (ACE_OS::strcmp (bare_string, reply.in ()) != 0)
+        {
+          ++error_count;
+        }
+
+      cout << "Client sent " << any_string 
+           << ", got " << any_reply << endl;
+
+      if (ACE_OS::strcmp (any_string, any_reply) != 0)
+        {
+          ++error_count;
+        }
     }
   ACE_CATCHANY
     {
@@ -81,5 +110,6 @@ int main(int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  return error_count;
 }
 

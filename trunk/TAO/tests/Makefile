@@ -20,6 +20,7 @@ DIRS  = CDR \
 	Bug_1020_Regression \
 	Bug_1361_Regression \
 	Bug_1020_Basic_Regression \
+	CodeSets \
 	Collocation \
 	Connection_Timeout \
         IDL_Test \

@@ -79,7 +79,7 @@ public:
                      CORBA::ULong request_id,
                      CORBA::Boolean response_expected,
                      CORBA::Boolean deferred_flag,
-                     TAO_ObjectKey &object_key,
+                     TAO::ObjectKey &object_key,
                      const char *operation,
                      TAO_OutputCDR &output,
                      TAO_Transport *transport,
@@ -140,7 +140,7 @@ public:
 
   // CORBA::Principal_ptr principal (void) const;
 
-  TAO_ObjectKey &object_key (void);
+  TAO::ObjectKey &object_key (void);
 
   /**
    * @todo This two methods should go away.

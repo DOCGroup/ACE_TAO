@@ -35,7 +35,7 @@ ACE_INLINE void POA_CORBA::Contained::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Contained::destroy_skel (
     TAO_ServerRequest &req,
@@ -68,7 +68,7 @@ ACE_INLINE void POA_CORBA::Contained::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Container::destroy_skel (
     TAO_ServerRequest &req,
@@ -101,7 +101,7 @@ ACE_INLINE void POA_CORBA::Container::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::IDLType::destroy_skel (
     TAO_ServerRequest &req,
@@ -252,7 +252,7 @@ ACE_INLINE void POA_CORBA::TypedefDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::TypedefDef::describe_skel (
     TAO_ServerRequest &req,
@@ -271,7 +271,7 @@ ACE_INLINE void POA_CORBA::TypedefDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::TypedefDef::move_skel (
     TAO_ServerRequest &req,
@@ -318,7 +318,7 @@ ACE_INLINE void POA_CORBA::TypedefDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::TypedefDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -335,4 +335,5 @@ ACE_INLINE void POA_CORBA::TypedefDef::destroy_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
 

@@ -41,6 +41,12 @@ typedef void (*TAO_Skeleton)(
 #endif
   );
 
+namespace CORBA
+{
+  class InterfaceDef;
+  typedef InterfaceDef *InterfaceDef_ptr;
+};
+
 class TAO_Export TAO_Abstract_ServantBase
 {
 public:

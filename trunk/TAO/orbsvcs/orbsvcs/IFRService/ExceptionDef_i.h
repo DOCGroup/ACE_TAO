@@ -45,8 +45,7 @@ class TAO_IFRService_Export TAO_ExceptionDef_i : public virtual TAO_Contained_i,
   //    Represents an exception definition.
   //
 public:
-  TAO_ExceptionDef_i (TAO_Repository_i *repo,
-                      ACE_Configuration_Section_Key section_key);
+  TAO_ExceptionDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_ExceptionDef_i (void);

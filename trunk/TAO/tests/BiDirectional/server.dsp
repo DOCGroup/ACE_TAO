@@ -100,6 +100,15 @@ SOURCE=.\test_i.cpp
 # Begin Source File
 
 SOURCE=.\testC.cpp
+
+!IF  "$(CFG)" == "BiDir Server - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "BiDir Server - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_ArrayDef_i : public virtual TAO_IDLType_i
   //    Represents an IDL array type.
   //
 public:
-  TAO_ArrayDef_i (TAO_Repository_i *repo,
-                  ACE_Configuration_Section_Key section_key);
+  TAO_ArrayDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_ArrayDef_i (void);

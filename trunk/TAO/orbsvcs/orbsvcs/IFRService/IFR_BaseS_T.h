@@ -20,10 +20,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:611
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
 
-#ifndef _TAO_IDL_ORIG_IFR_BASES_T_H_
-#define _TAO_IDL_ORIG_IFR_BASES_T_H_
+#ifndef _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_BASES_T_H_
+#define _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_BASES_T_H_
 
 #include "ace/pre.h"
 
@@ -36,14 +36,14 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_root/root_sth.cpp:116
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_CORBA
 {
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -83,7 +83,7 @@ TAO_NAMESPACE  POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::DefinitionKind def_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -93,7 +93,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -113,7 +113,7 @@ TAO_NAMESPACE  POA_CORBA
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -153,7 +153,7 @@ TAO_NAMESPACE  POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -163,7 +163,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void id (
         const char * id
@@ -174,7 +174,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -184,7 +184,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void name (
         const char * name
@@ -195,7 +195,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * version (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -205,7 +205,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void version (
         const char * version
@@ -216,7 +216,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Container_ptr defined_in (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -226,7 +226,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * absolute_name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -236,7 +236,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Repository_ptr containing_repository (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -246,7 +246,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Contained::Description * describe (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -256,7 +256,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void move (
         CORBA::Container_ptr new_container,
@@ -269,7 +269,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::DefinitionKind def_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -279,7 +279,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -299,7 +299,7 @@ TAO_NAMESPACE  POA_CORBA
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -339,7 +339,7 @@ TAO_NAMESPACE  POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Contained_ptr lookup (
         const char * search_name
@@ -350,7 +350,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::ContainedSeq * contents (
         CORBA::DefinitionKind limit_type,
@@ -362,7 +362,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::ContainedSeq * lookup_name (
         const char * search_name,
@@ -376,7 +376,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Container::DescriptionSeq * describe_contents (
         CORBA::DefinitionKind limit_type,
@@ -389,7 +389,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::ModuleDef_ptr create_module (
         const char * id,
@@ -402,7 +402,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::ConstantDef_ptr create_constant (
         const char * id,
@@ -417,7 +417,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::StructDef_ptr create_struct (
         const char * id,
@@ -431,7 +431,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::UnionDef_ptr create_union (
         const char * id,
@@ -446,7 +446,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::EnumDef_ptr create_enum (
         const char * id,
@@ -460,7 +460,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::AliasDef_ptr create_alias (
         const char * id,
@@ -474,7 +474,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::InterfaceDef_ptr create_interface (
         const char * id,
@@ -488,7 +488,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::ValueDef_ptr create_value (
         const char * id,
@@ -508,7 +508,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::ValueBoxDef_ptr create_value_box (
         const char * id,
@@ -522,7 +522,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::ExceptionDef_ptr create_exception (
         const char * id,
@@ -536,7 +536,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::NativeDef_ptr create_native (
         const char * id,
@@ -549,7 +549,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
         const char * id,
@@ -563,7 +563,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::LocalInterfaceDef_ptr create_local_interface (
         const char * id,
@@ -577,7 +577,27 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
+    ::CORBA::ExtValueDef_ptr create_ext_value (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Boolean is_custom,
+        CORBA::Boolean is_abstract,
+        CORBA::ValueDef_ptr base_value,
+        CORBA::Boolean is_truncatable,
+        const CORBA::ValueDefSeq & abstract_base_values,
+        const CORBA::InterfaceDefSeq & supported_interfaces,
+        const CORBA::ExtInitializerSeq & initializers
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::DefinitionKind def_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -587,7 +607,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -607,7 +627,7 @@ TAO_NAMESPACE  POA_CORBA
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -647,7 +667,7 @@ TAO_NAMESPACE  POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     CORBA::TypeCode_ptr type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -657,7 +677,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::DefinitionKind def_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -667,7 +687,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -687,7 +707,7 @@ TAO_NAMESPACE  POA_CORBA
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -727,7 +747,7 @@ TAO_NAMESPACE  POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -737,7 +757,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void id (
         const char * id
@@ -748,7 +768,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -758,7 +778,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void name (
         const char * name
@@ -769,7 +789,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * version (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -779,7 +799,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void version (
         const char * version
@@ -790,7 +810,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Container_ptr defined_in (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -800,7 +820,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * absolute_name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -810,7 +830,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Repository_ptr containing_repository (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -820,7 +840,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Contained::Description * describe (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -830,7 +850,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void move (
         CORBA::Container_ptr new_container,
@@ -843,7 +863,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     CORBA::TypeCode_ptr type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -853,7 +873,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::DefinitionKind def_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -863,7 +883,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -886,7 +906,7 @@ TAO_NAMESPACE_CLOSE // module CORBA
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1148
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
 
 #if defined (__ACE_INLINE__)
 #include "IFR_BaseS_T.i"
@@ -906,3 +926,4 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 #include "ace/post.h"
 #endif /* ifndef */
+

@@ -5,9 +5,9 @@
 //   BiDirPolicy*.* The command used to generate code
 //   is:
 //
-//     tao_idl \
-//          -Wb,export_macro=TAO_Export \
-//          -Wb,export_include="tao/TAO_Export.h" \
+//     tao_idl -o orig -Ge 1 -Sa -St \
+//          -Wb,export_macro=TAO_BiDirGIOP_Export \
+//          -Wb,export_include="bidirgiop_export.h" \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
 //          BiDirPolicy.pidl
@@ -19,7 +19,7 @@
 
 #pragma prefix "omg.org"
 
-#include "tao/Policy.pidl"
+#include <Policy.pidl>
 
 // Self contained module for Bi-directional GIOP policy
 module BiDirPolicy
@@ -36,9 +36,5 @@ module BiDirPolicy
     readonly attribute BidirectionalPolicyValue value;
   };
 };
-
-
-
-#pragma prefix ""
 
 #endif  /* TAO_BIDIR_POLICY_PIDL*/

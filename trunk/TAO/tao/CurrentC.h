@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_CORBA_CURRENTC_H_
-#define _TAO_IDL_CORBA_CURRENTC_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
+#ifndef _TAO_IDL_ORIG_CURRENTC_H_
+#define _TAO_IDL_ORIG_CURRENTC_H_
 
 #include "ace/pre.h"
 #include "tao/Object.h"
@@ -28,6 +31,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 #include "tao/corbafwd.h"
 #include "tao/varbase.h"
@@ -65,7 +69,6 @@ namespace CORBA
 
 #endif /* end #if !defined */
 
-
 #if !defined (_CORBA_CURRENT___VAR_CH_)
 #define _CORBA_CURRENT___VAR_CH_
 
@@ -91,7 +94,7 @@ namespace CORBA
     Current_ptr ptr (void) const;
 
     // Hooks used by template sequence and object manager classes
-  // for non-defined forward declared interfaces.
+    // for non-defined forward declared interfaces.
     static Current_ptr tao_duplicate (Current_ptr);
     static void tao_release (Current_ptr);
     static Current_ptr tao_nil (void);
@@ -110,7 +113,6 @@ namespace CORBA
 
 
 #endif /* end #if !defined */
-
 
 #if !defined (_CORBA_CURRENT___OUT_CH_)
 #define _CORBA_CURRENT___OUT_CH_
@@ -134,7 +136,9 @@ namespace CORBA
 
 
 #endif /* end #if !defined */
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
 
 #if !defined (_CORBA_CURRENT_CH_)
 #define _CORBA_CURRENT_CH_
@@ -143,37 +147,40 @@ namespace CORBA
     : public virtual CORBA::Object
   {
   public:
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
 
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
 
     static Current_ptr _narrow (
-                                      CORBA::Object_ptr obj
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Current_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Current_ptr _nil (void)
-    {
-      return (Current_ptr)0;
-    }
+      {
+        return (Current_ptr)0;
+      }
 
+    static void _tao_any_destructor (void *);
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
     virtual const char* _interface_repository_id (void) const;
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
     Current (void);
-
     virtual ~Current (void);
 
   private:
@@ -185,14 +192,28 @@ namespace CORBA
 #endif /* end #if !defined */
 }  // End namespace CORBA 
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, CORBA::Current_ptr); // copying
+TAO_Export void operator<<= (CORBA::Any &, CORBA::Current_ptr *); // non-copying
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Current_ptr &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
-#include "tao/CurrentC.i"
+#include "CurrentC.i"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -205,3 +226,4 @@ namespace CORBA
 
 #include "ace/post.h"
 #endif /* ifndef */
+

@@ -21,4 +21,3 @@ module CONV_FRAME {
   };
 };
 
-#pragma prefix ""

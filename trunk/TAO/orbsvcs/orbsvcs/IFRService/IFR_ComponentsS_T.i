@@ -21,40 +21,40 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::ComponentRepository_tie<T>::ComponentRepository_tie (T &t)
+POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentRepository_tie<T>::ComponentRepository_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentRepository_tie<T>::ComponentRepository_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentRepository_tie<T>::ComponentRepository_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EventDef_tie<T>::EventDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentRepository_tie<T>::~ComponentRepository_tie (void)
+POA_CORBA::ComponentIR::EventDef_tie<T>::~EventDef_tie (void)
 {
   if (this->rel_)
     {
@@ -63,13 +63,13 @@ POA_IR::ComponentRepository_tie<T>::~ComponentRepository_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::ComponentRepository_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::EventDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ComponentRepository_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::EventDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -81,7 +81,7 @@ POA_IR::ComponentRepository_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ComponentRepository_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EventDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -93,237 +93,469 @@ POA_IR::ComponentRepository_tie<T>::_tied_object (T *obj, CORBA::Boolean release
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::ComponentRepository_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::EventDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ComponentRepository_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::EventDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::ComponentRepository_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::EventDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
   
-  return this->ComponentRepository::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->EventDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::ComponentDef_ptr POA_IR::ComponentRepository_tie<T>::create_component  (
+::CORBA::ExtInitializerSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::ext_initializers  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->ext_initializers (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::ext_initializers  (
+    const CORBA::ExtInitializerSeq & ext_initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->ext_initializers (
+    ext_initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExtValueDef::ExtFullValueDescription * POA_CORBA::ComponentIR::EventDef_tie<T>::describe_ext_value  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe_ext_value (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExtAttributeDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_ext_attribute  (
     const char * id,
     const char * name,
     const char * version,
-    IR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq & supports_interfaces
+    CORBA::IDLType_ptr type,
+    CORBA::AttributeMode mode,
+    const CORBA::ExceptionDefSeq & get_exceptions,
+    const CORBA::ExceptionDefSeq & set_exceptions
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  return this->ptr_->create_component (
+  return this->ptr_->create_ext_attribute (
     id,
     name,
     version,
-    base_component,
-    supports_interfaces
+    type,
+    mode,
+    get_exceptions,
+    set_exceptions
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::HomeDef_ptr POA_IR::ComponentRepository_tie<T>::create_home  (
+::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::supported_interfaces  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->supported_interfaces (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::supported_interfaces  (
+    const CORBA::InterfaceDefSeq & supported_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->supported_interfaces (
+    supported_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::InitializerSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::initializers  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->initializers (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::initializers  (
+    const CORBA::InitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->initializers (
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::base_value  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->base_value (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::base_value  (
+    CORBA::ValueDef_ptr base_value
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->base_value (
+    base_value
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueDefSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::abstract_base_values  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->abstract_base_values (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::abstract_base_values  (
+    const CORBA::ValueDefSeq & abstract_base_values
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->abstract_base_values (
+    abstract_base_values
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_abstract  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->is_abstract (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::is_abstract  (
+    CORBA::Boolean is_abstract
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->is_abstract (
+    is_abstract
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_custom  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->is_custom (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::is_custom  (
+    CORBA::Boolean is_custom
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->is_custom (
+    is_custom
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_truncatable  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->is_truncatable (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventDef_tie<T>::is_truncatable  (
+    CORBA::Boolean is_truncatable
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->is_truncatable (
+    is_truncatable
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_a  (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->is_a (
+    id
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueDef::FullValueDescription * POA_CORBA::ComponentIR::EventDef_tie<T>::describe_value  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe_value (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueMemberDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_value_member  (
     const char * id,
     const char * name,
     const char * version,
-    IR::HomeDef_ptr base_home,
-    IR::ComponentDef_ptr managed_component,
-    CORBA::ValueDef_ptr primary_key
+    CORBA::IDLType_ptr type,
+    CORBA::Visibility access
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  return this->ptr_->create_home (
+  return this->ptr_->create_value_member (
     id,
     name,
     version,
-    base_home,
-    managed_component,
-    primary_key
+    type,
+    access
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained_ptr POA_IR::ComponentRepository_tie<T>::lookup_id  (
-    const char * search_id
+::CORBA::AttributeDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_attribute  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    CORBA::AttributeMode mode
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  return this->ptr_->lookup_id (
-    search_id
+  return this->ptr_->create_attribute (
+    id,
+    name,
+    version,
+    type,
+    mode
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_IR::ComponentRepository_tie<T>::get_canonical_typecode  (
-    CORBA::TypeCode_ptr tc
+::CORBA::OperationDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_operation  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr result,
+    CORBA::OperationMode mode,
+    const CORBA::ParDescriptionSeq & params,
+    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA::ContextIdSeq & contexts
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  return this->ptr_->get_canonical_typecode (
-    tc
+  return this->ptr_->create_operation (
+    id,
+    name,
+    version,
+    result,
+    mode,
+    params,
+    exceptions,
+    contexts
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::PrimitiveDef_ptr POA_IR::ComponentRepository_tie<T>::get_primitive  (
-    CORBA::PrimitiveKind kind
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->get_primitive (
-    kind
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::StringDef_ptr POA_IR::ComponentRepository_tie<T>::create_string  (
-    CORBA::ULong bound
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->create_string (
-    bound
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::WstringDef_ptr POA_IR::ComponentRepository_tie<T>::create_wstring  (
-    CORBA::ULong bound
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->create_wstring (
-    bound
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::SequenceDef_ptr POA_IR::ComponentRepository_tie<T>::create_sequence  (
-    CORBA::ULong bound,
-    CORBA::IDLType_ptr element_type
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->create_sequence (
-    bound,
-    element_type
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::ArrayDef_ptr POA_IR::ComponentRepository_tie<T>::create_array  (
-    CORBA::ULong length,
-    CORBA::IDLType_ptr element_type
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->create_array (
-    length,
-    element_type
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::FixedDef_ptr POA_IR::ComponentRepository_tie<T>::create_fixed  (
-    CORBA::UShort digits,
-    CORBA::Short scale
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->create_fixed (
-    digits,
-    scale
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::Contained_ptr POA_IR::ComponentRepository_tie<T>::lookup  (
+::CORBA::Contained_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::lookup  (
     const char * search_name
     ACE_ENV_ARG_DECL
   )
@@ -338,10 +570,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContainedSeq * POA_IR::ComponentRepository_tie<T>::contents  (
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited
     ACE_ENV_ARG_DECL
@@ -358,10 +590,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContainedSeq * POA_IR::ComponentRepository_tie<T>::lookup_name  (
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
     CORBA::DefinitionKind limit_type,
@@ -382,10 +614,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container::DescriptionSeq * POA_IR::ComponentRepository_tie<T>::describe_contents  (
+::CORBA::Container::DescriptionSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::describe_contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs
@@ -404,10 +636,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ModuleDef_ptr POA_IR::ComponentRepository_tie<T>::create_module  (
+::CORBA::ModuleDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_module  (
     const char * id,
     const char * name,
     const char * version
@@ -426,10 +658,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ConstantDef_ptr POA_IR::ComponentRepository_tie<T>::create_constant  (
+::CORBA::ConstantDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
@@ -452,10 +684,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::StructDef_ptr POA_IR::ComponentRepository_tie<T>::create_struct  (
+::CORBA::StructDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
@@ -476,10 +708,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::UnionDef_ptr POA_IR::ComponentRepository_tie<T>::create_union  (
+::CORBA::UnionDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
@@ -502,10 +734,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::EnumDef_ptr POA_IR::ComponentRepository_tie<T>::create_enum  (
+::CORBA::EnumDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
@@ -526,10 +758,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AliasDef_ptr POA_IR::ComponentRepository_tie<T>::create_alias  (
+::CORBA::AliasDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
@@ -550,10 +782,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDef_ptr POA_IR::ComponentRepository_tie<T>::create_interface  (
+::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -574,10 +806,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::ComponentRepository_tie<T>::create_value  (
+::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_value  (
     const char * id,
     const char * name,
     const char * version,
@@ -610,10 +842,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueBoxDef_ptr POA_IR::ComponentRepository_tie<T>::create_value_box  (
+::CORBA::ValueBoxDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
@@ -634,10 +866,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ExceptionDef_ptr POA_IR::ComponentRepository_tie<T>::create_exception  (
+::CORBA::ExceptionDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
@@ -658,10 +890,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::NativeDef_ptr POA_IR::ComponentRepository_tie<T>::create_native  (
+::CORBA::NativeDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_native  (
     const char * id,
     const char * name,
     const char * version
@@ -680,10 +912,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AbstractInterfaceDef_ptr POA_IR::ComponentRepository_tie<T>::create_abstract_interface  (
+::CORBA::AbstractInterfaceDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_abstract_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -704,10 +936,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::LocalInterfaceDef_ptr POA_IR::ComponentRepository_tie<T>::create_local_interface  (
+::CORBA::LocalInterfaceDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_local_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -728,155 +960,46 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::ComponentRepository_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
+::CORBA::ExtValueDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::create_ext_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
+  return this->ptr_->create_ext_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentRepository_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-#endif /* ACE_HAS_USING_KEYWORD */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
-
-#if defined (ACE_HAS_USING_KEYWORD)
-
-template <class T> ACE_INLINE
-POA_IR::ProvidesDef_tie<T>::ProvidesDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::ProvidesDef_tie<T>::ProvidesDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::ProvidesDef_tie<T>::ProvidesDef_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::ProvidesDef_tie<T>::ProvidesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::ProvidesDef_tie<T>::~ProvidesDef_tie (void)
-{
-  if (this->rel_)
-    {
-      delete this->ptr_;
-    }
-}
-
-template <class T> ACE_INLINE T *
-POA_IR::ProvidesDef_tie<T>::_tied_object (void)
-{
-  return this->ptr_;
-}
-
-template <class T> ACE_INLINE void
-POA_IR::ProvidesDef_tie<T>::_tied_object (T &obj)
-{
-  if (this->rel_)
-    {
-      delete this->ptr_;
-    }
-  
-  this->ptr_ = &obj;
-  this->rel_ = 0;
-}
-
-template <class T> ACE_INLINE void
-POA_IR::ProvidesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
-{
-  if (this->rel_)
-    {
-      delete this->ptr_;
-    }
-  
-  this->ptr_ = obj;
-  this->rel_ = release;
-}
-
-template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::ProvidesDef_tie<T>::_is_owner (void)
-{
-  return this->rel_;
-}
-
-template <class T> ACE_INLINE void
-POA_IR::ProvidesDef_tie<T>::_is_owner (CORBA::Boolean b)
-{
-  this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::ProvidesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    {
-      return PortableServer::POA::_duplicate (this->poa_.in ());
-    }
-  
-  return this->ProvidesDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::InterfaceDef_ptr POA_IR::ProvidesDef_tie<T>::interface_type  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->interface_type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::ProvidesDef_tie<T>::id  (
+char * POA_CORBA::ComponentIR::EventDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -889,10 +1012,10 @@ char * POA_IR::ProvidesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ProvidesDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::EventDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -907,10 +1030,10 @@ void POA_IR::ProvidesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ProvidesDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::EventDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -923,10 +1046,10 @@ char * POA_IR::ProvidesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ProvidesDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::EventDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -941,10 +1064,10 @@ void POA_IR::ProvidesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ProvidesDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::EventDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -957,10 +1080,10 @@ char * POA_IR::ProvidesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ProvidesDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::EventDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -975,10 +1098,10 @@ void POA_IR::ProvidesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::ProvidesDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -991,10 +1114,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ProvidesDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::EventDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1007,10 +1130,10 @@ char * POA_IR::ProvidesDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::ProvidesDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1023,10 +1146,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::ProvidesDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::EventDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1039,10 +1162,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ProvidesDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::EventDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -1061,10 +1184,26 @@ void POA_IR::ProvidesDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::ProvidesDef_tie<T>::def_kind  (
+CORBA::TypeCode_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::type  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->type (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::EventDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1077,10 +1216,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ProvidesDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::EventDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1095,40 +1234,40 @@ void POA_IR::ProvidesDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::UsesDef_tie<T>::UsesDef_tie (T &t)
+POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::UsesDef_tie<T>::UsesDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::UsesDef_tie<T>::UsesDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::UsesDef_tie<T>::UsesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::Container_tie<T>::Container_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::UsesDef_tie<T>::~UsesDef_tie (void)
+POA_CORBA::ComponentIR::Container_tie<T>::~Container_tie (void)
 {
   if (this->rel_)
     {
@@ -1137,13 +1276,13 @@ POA_IR::UsesDef_tie<T>::~UsesDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::UsesDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::Container_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::UsesDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::Container_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -1155,7 +1294,7 @@ POA_IR::UsesDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::UsesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::Container_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -1167,33 +1306,1890 @@ POA_IR::UsesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::UsesDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::Container_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::UsesDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::Container_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::UsesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::Container_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
   
-  return this->UsesDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->Container::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDef_ptr POA_IR::UsesDef_tie<T>::interface_type  (
+::CORBA::ComponentIR::ComponentDef_ptr POA_CORBA::ComponentIR::Container_tie<T>::create_component  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::ComponentIR::ComponentDef_ptr base_component,
+    const CORBA::InterfaceDefSeq & supports_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_component (
+    id,
+    name,
+    version,
+    base_component,
+    supports_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::HomeDef_ptr POA_CORBA::ComponentIR::Container_tie<T>::create_home  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::ComponentIR::HomeDef_ptr base_home,
+    CORBA::ComponentIR::ComponentDef_ptr managed_component,
+    const CORBA::InterfaceDefSeq & supports_interfaces,
+    CORBA::ValueDef_ptr primary_key
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_home (
+    id,
+    name,
+    version,
+    base_home,
+    managed_component,
+    supports_interfaces,
+    primary_key
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::Container_tie<T>::create_event  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_event (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+#endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
+
+#if defined (ACE_HAS_USING_KEYWORD)
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T &t)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T &t, PortableServer::POA_ptr poa)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T *tp, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::ModuleDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::~ModuleDef_tie (void)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+}
+
+template <class T> ACE_INLINE T *
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::_tied_object (void)
+{
+  return this->ptr_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::_tied_object (T &obj)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = &obj;
+  this->rel_ = 0;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = obj;
+  this->rel_ = release;
+}
+
+template <class T> ACE_INLINE CORBA::Boolean
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::_is_owner (void)
+{
+  return this->rel_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::_is_owner (CORBA::Boolean b)
+{
+  this->rel_ = b;
+}
+
+template <class T> ACE_INLINE PortableServer::POA_ptr
+POA_CORBA::ComponentIR::ModuleDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (!CORBA::is_nil (this->poa_.in ()))
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
+  return this->ModuleDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::ComponentDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_component  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::ComponentIR::ComponentDef_ptr base_component,
+    const CORBA::InterfaceDefSeq & supports_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_component (
+    id,
+    name,
+    version,
+    base_component,
+    supports_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::HomeDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_home  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::ComponentIR::HomeDef_ptr base_home,
+    CORBA::ComponentIR::ComponentDef_ptr managed_component,
+    const CORBA::InterfaceDefSeq & supports_interfaces,
+    CORBA::ValueDef_ptr primary_key
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_home (
+    id,
+    name,
+    version,
+    base_home,
+    managed_component,
+    supports_interfaces,
+    primary_key
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_event  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_event (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Contained_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::lookup  (
+    const char * search_name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->lookup (
+    search_name
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::ModuleDef_tie<T>::contents  (
+    CORBA::DefinitionKind limit_type,
+    CORBA::Boolean exclude_inherited
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->contents (
+    limit_type,
+    exclude_inherited
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::ModuleDef_tie<T>::lookup_name  (
+    const char * search_name,
+    CORBA::Long levels_to_search,
+    CORBA::DefinitionKind limit_type,
+    CORBA::Boolean exclude_inherited
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->lookup_name (
+    search_name,
+    levels_to_search,
+    limit_type,
+    exclude_inherited
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Container::DescriptionSeq * POA_CORBA::ComponentIR::ModuleDef_tie<T>::describe_contents  (
+    CORBA::DefinitionKind limit_type,
+    CORBA::Boolean exclude_inherited,
+    CORBA::Long max_returned_objs
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe_contents (
+    limit_type,
+    exclude_inherited,
+    max_returned_objs
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ModuleDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_module  (
+    const char * id,
+    const char * name,
+    const char * version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_module (
+    id,
+    name,
+    version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ConstantDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_constant  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    const CORBA::Any & value
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_constant (
+    id,
+    name,
+    version,
+    type,
+    value
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::StructDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_struct  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::StructMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_struct (
+    id,
+    name,
+    version,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::UnionDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_union  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr discriminator_type,
+    const CORBA::UnionMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_union (
+    id,
+    name,
+    version,
+    discriminator_type,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::EnumDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_enum  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::EnumMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_enum (
+    id,
+    name,
+    version,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::AliasDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_alias  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr original_type
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_alias (
+    id,
+    name,
+    version,
+    original_type
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_interface  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::InterfaceDefSeq & base_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_interface (
+    id,
+    name,
+    version,
+    base_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::InitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueBoxDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_value_box  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr original_type_def
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_value_box (
+    id,
+    name,
+    version,
+    original_type_def
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExceptionDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_exception  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::StructMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_exception (
+    id,
+    name,
+    version,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::NativeDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_native  (
+    const char * id,
+    const char * name,
+    const char * version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_native (
+    id,
+    name,
+    version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::AbstractInterfaceDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_abstract_interface  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::AbstractInterfaceDefSeq & base_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_abstract_interface (
+    id,
+    name,
+    version,
+    base_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::LocalInterfaceDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_local_interface  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::InterfaceDefSeq & base_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_local_interface (
+    id,
+    name,
+    version,
+    base_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExtValueDef_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::create_ext_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_ext_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::id  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->id (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ModuleDef_tie<T>::id  (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->id (
+    id
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::name  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->name (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ModuleDef_tie<T>::name  (
+    const char * name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->name (
+    name
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::version  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->version (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ModuleDef_tie<T>::version  (
+    const char * version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->version (
+    version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Container_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::defined_in  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->defined_in (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::absolute_name  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->absolute_name (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::containing_repository  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->containing_repository (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::ModuleDef_tie<T>::describe  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ModuleDef_tie<T>::move  (
+    CORBA::Container_ptr new_container,
+    const char * new_name,
+    const char * new_version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->move (
+    new_container,
+    new_name,
+    new_version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::ModuleDef_tie<T>::def_kind  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->def_kind (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ModuleDef_tie<T>::destroy  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+#endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
+
+#if defined (ACE_HAS_USING_KEYWORD)
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T &t)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T &t, PortableServer::POA_ptr poa)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T *tp, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::Repository_tie<T>::Repository_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::Repository_tie<T>::~Repository_tie (void)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+}
+
+template <class T> ACE_INLINE T *
+POA_CORBA::ComponentIR::Repository_tie<T>::_tied_object (void)
+{
+  return this->ptr_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::Repository_tie<T>::_tied_object (T &obj)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = &obj;
+  this->rel_ = 0;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::Repository_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = obj;
+  this->rel_ = release;
+}
+
+template <class T> ACE_INLINE CORBA::Boolean
+POA_CORBA::ComponentIR::Repository_tie<T>::_is_owner (void)
+{
+  return this->rel_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::Repository_tie<T>::_is_owner (CORBA::Boolean b)
+{
+  this->rel_ = b;
+}
+
+template <class T> ACE_INLINE PortableServer::POA_ptr
+POA_CORBA::ComponentIR::Repository_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (!CORBA::is_nil (this->poa_.in ()))
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
+  return this->Repository::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Contained_ptr POA_CORBA::ComponentIR::Repository_tie<T>::lookup_id  (
+    const char * search_id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->lookup_id (
+    search_id
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::TypeCode_ptr POA_CORBA::ComponentIR::Repository_tie<T>::get_canonical_typecode  (
+    CORBA::TypeCode_ptr tc
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->get_canonical_typecode (
+    tc
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::PrimitiveDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::get_primitive  (
+    CORBA::PrimitiveKind kind
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->get_primitive (
+    kind
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::StringDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_string  (
+    CORBA::ULong bound
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_string (
+    bound
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::WstringDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_wstring  (
+    CORBA::ULong bound
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_wstring (
+    bound
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::SequenceDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_sequence  (
+    CORBA::ULong bound,
+    CORBA::IDLType_ptr element_type
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_sequence (
+    bound,
+    element_type
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ArrayDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_array  (
+    CORBA::ULong length,
+    CORBA::IDLType_ptr element_type
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_array (
+    length,
+    element_type
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::FixedDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_fixed  (
+    CORBA::UShort digits,
+    CORBA::Short scale
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_fixed (
+    digits,
+    scale
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::ComponentDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_component  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::ComponentIR::ComponentDef_ptr base_component,
+    const CORBA::InterfaceDefSeq & supports_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_component (
+    id,
+    name,
+    version,
+    base_component,
+    supports_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::HomeDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_home  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::ComponentIR::HomeDef_ptr base_home,
+    CORBA::ComponentIR::ComponentDef_ptr managed_component,
+    const CORBA::InterfaceDefSeq & supports_interfaces,
+    CORBA::ValueDef_ptr primary_key
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_home (
+    id,
+    name,
+    version,
+    base_home,
+    managed_component,
+    supports_interfaces,
+    primary_key
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_event  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_event (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Contained_ptr POA_CORBA::ComponentIR::Repository_tie<T>::lookup  (
+    const char * search_name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->lookup (
+    search_name
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::Repository_tie<T>::contents  (
+    CORBA::DefinitionKind limit_type,
+    CORBA::Boolean exclude_inherited
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->contents (
+    limit_type,
+    exclude_inherited
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::Repository_tie<T>::lookup_name  (
+    const char * search_name,
+    CORBA::Long levels_to_search,
+    CORBA::DefinitionKind limit_type,
+    CORBA::Boolean exclude_inherited
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->lookup_name (
+    search_name,
+    levels_to_search,
+    limit_type,
+    exclude_inherited
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Container::DescriptionSeq * POA_CORBA::ComponentIR::Repository_tie<T>::describe_contents  (
+    CORBA::DefinitionKind limit_type,
+    CORBA::Boolean exclude_inherited,
+    CORBA::Long max_returned_objs
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe_contents (
+    limit_type,
+    exclude_inherited,
+    max_returned_objs
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ModuleDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_module  (
+    const char * id,
+    const char * name,
+    const char * version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_module (
+    id,
+    name,
+    version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ConstantDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_constant  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    const CORBA::Any & value
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_constant (
+    id,
+    name,
+    version,
+    type,
+    value
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::StructDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_struct  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::StructMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_struct (
+    id,
+    name,
+    version,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::UnionDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_union  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr discriminator_type,
+    const CORBA::UnionMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_union (
+    id,
+    name,
+    version,
+    discriminator_type,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::EnumDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_enum  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::EnumMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_enum (
+    id,
+    name,
+    version,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::AliasDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_alias  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr original_type
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_alias (
+    id,
+    name,
+    version,
+    original_type
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_interface  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::InterfaceDefSeq & base_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_interface (
+    id,
+    name,
+    version,
+    base_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::InitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueBoxDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_value_box  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr original_type_def
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_value_box (
+    id,
+    name,
+    version,
+    original_type_def
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExceptionDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_exception  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::StructMemberSeq & members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_exception (
+    id,
+    name,
+    version,
+    members
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::NativeDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_native  (
+    const char * id,
+    const char * name,
+    const char * version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_native (
+    id,
+    name,
+    version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::AbstractInterfaceDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_abstract_interface  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::AbstractInterfaceDefSeq & base_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_abstract_interface (
+    id,
+    name,
+    version,
+    base_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::LocalInterfaceDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_local_interface  (
+    const char * id,
+    const char * name,
+    const char * version,
+    const CORBA::InterfaceDefSeq & base_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_local_interface (
+    id,
+    name,
+    version,
+    base_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExtValueDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_ext_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_ext_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::Repository_tie<T>::def_kind  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->def_kind (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::Repository_tie<T>::destroy  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+#endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
+
+#if defined (ACE_HAS_USING_KEYWORD)
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T &t)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T &t, PortableServer::POA_ptr poa)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T *tp, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::ProvidesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::~ProvidesDef_tie (void)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+}
+
+template <class T> ACE_INLINE T *
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::_tied_object (void)
+{
+  return this->ptr_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::_tied_object (T &obj)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = &obj;
+  this->rel_ = 0;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = obj;
+  this->rel_ = release;
+}
+
+template <class T> ACE_INLINE CORBA::Boolean
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::_is_owner (void)
+{
+  return this->rel_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::_is_owner (CORBA::Boolean b)
+{
+  this->rel_ = b;
+}
+
+template <class T> ACE_INLINE PortableServer::POA_ptr
+POA_CORBA::ComponentIR::ProvidesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (!CORBA::is_nil (this->poa_.in ()))
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
+  return this->ProvidesDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::ProvidesDef_tie<T>::interface_type  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1206,10 +3202,379 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::UsesDef_tie<T>::is_multiple  (
+void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::interface_type  (
+    CORBA::InterfaceDef_ptr interface_type
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->interface_type (
+    interface_type
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::id  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->id (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::id  (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->id (
+    id
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::name  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->name (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::name  (
+    const char * name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->name (
+    name
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::version  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->version (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::version  (
+    const char * version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->version (
+    version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Container_ptr POA_CORBA::ComponentIR::ProvidesDef_tie<T>::defined_in  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->defined_in (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::absolute_name  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->absolute_name (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::ProvidesDef_tie<T>::containing_repository  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->containing_repository (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::describe  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::move  (
+    CORBA::Container_ptr new_container,
+    const char * new_name,
+    const char * new_version
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->move (
+    new_container,
+    new_name,
+    new_version
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::ProvidesDef_tie<T>::def_kind  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->def_kind (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::destroy  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+#endif /* ACE_HAS_USING_KEYWORD */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
+
+#if defined (ACE_HAS_USING_KEYWORD)
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T &t)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T &t, PortableServer::POA_ptr poa)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T *tp, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::UsesDef_tie<T>::UsesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
+{}
+
+template <class T> ACE_INLINE
+POA_CORBA::ComponentIR::UsesDef_tie<T>::~UsesDef_tie (void)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+}
+
+template <class T> ACE_INLINE T *
+POA_CORBA::ComponentIR::UsesDef_tie<T>::_tied_object (void)
+{
+  return this->ptr_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::UsesDef_tie<T>::_tied_object (T &obj)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = &obj;
+  this->rel_ = 0;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::UsesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+{
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
+  this->ptr_ = obj;
+  this->rel_ = release;
+}
+
+template <class T> ACE_INLINE CORBA::Boolean
+POA_CORBA::ComponentIR::UsesDef_tie<T>::_is_owner (void)
+{
+  return this->rel_;
+}
+
+template <class T> ACE_INLINE void
+POA_CORBA::ComponentIR::UsesDef_tie<T>::_is_owner (CORBA::Boolean b)
+{
+  this->rel_ = b;
+}
+
+template <class T> ACE_INLINE PortableServer::POA_ptr
+POA_CORBA::ComponentIR::UsesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (!CORBA::is_nil (this->poa_.in ()))
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
+  return this->UsesDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::UsesDef_tie<T>::interface_type  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->interface_type (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::UsesDef_tie<T>::interface_type  (
+    CORBA::InterfaceDef_ptr interface_type
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->interface_type (
+    interface_type
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::UsesDef_tie<T>::is_multiple  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1222,10 +3587,28 @@ CORBA::Boolean POA_IR::UsesDef_tie<T>::is_multiple  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::UsesDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::UsesDef_tie<T>::is_multiple  (
+    CORBA::Boolean is_multiple
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->is_multiple (
+    is_multiple
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::UsesDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1238,10 +3621,10 @@ char * POA_IR::UsesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::UsesDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::UsesDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -1256,10 +3639,10 @@ void POA_IR::UsesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::UsesDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::UsesDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1272,10 +3655,10 @@ char * POA_IR::UsesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::UsesDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::UsesDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -1290,10 +3673,10 @@ void POA_IR::UsesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::UsesDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::UsesDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1306,10 +3689,10 @@ char * POA_IR::UsesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::UsesDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::UsesDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -1324,10 +3707,10 @@ void POA_IR::UsesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::UsesDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::UsesDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1340,10 +3723,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::UsesDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::UsesDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1356,10 +3739,10 @@ char * POA_IR::UsesDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::UsesDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::UsesDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1372,10 +3755,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::UsesDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::UsesDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1388,10 +3771,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::UsesDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::UsesDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -1410,10 +3793,10 @@ void POA_IR::UsesDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::UsesDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::UsesDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1426,10 +3809,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::UsesDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::UsesDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1444,40 +3827,40 @@ void POA_IR::UsesDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::EventDef_tie<T>::EventDef_tie (T &t)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EventDef_tie<T>::EventDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EventDef_tie<T>::EventDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EventDef_tie<T>::EventDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::EventPortDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EventDef_tie<T>::~EventDef_tie (void)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::~EventPortDef_tie (void)
 {
   if (this->rel_)
     {
@@ -1486,13 +3869,13 @@ POA_IR::EventDef_tie<T>::~EventDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::EventDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::EventDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -1504,7 +3887,7 @@ POA_IR::EventDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::EventDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -1516,33 +3899,67 @@ POA_IR::EventDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::EventDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::EventDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::EventDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::EventPortDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
   
-  return this->EventDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->EventPortDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::EventDef_tie<T>::is_a  (
+::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::EventPortDef_tie<T>::event  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->event (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EventPortDef_tie<T>::event  (
+    CORBA::ComponentIR::EventDef_ptr event
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->event (
+    event
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::EventPortDef_tie<T>::is_a  (
     const char * event_id
     ACE_ENV_ARG_DECL
   )
@@ -1557,26 +3974,10 @@ CORBA::Boolean POA_IR::EventDef_tie<T>::is_a  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::EventDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::EventDef_tie<T>::id  (
+char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1589,10 +3990,10 @@ char * POA_IR::EventDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EventDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::EventPortDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -1607,10 +4008,10 @@ void POA_IR::EventDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::EventDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1623,10 +4024,10 @@ char * POA_IR::EventDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EventDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::EventPortDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -1641,10 +4042,10 @@ void POA_IR::EventDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::EventDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1657,10 +4058,10 @@ char * POA_IR::EventDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EventDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::EventPortDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -1675,10 +4076,10 @@ void POA_IR::EventDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::EventDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::EventPortDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1691,10 +4092,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::EventDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1707,10 +4108,10 @@ char * POA_IR::EventDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::EventDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::EventPortDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1723,10 +4124,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::EventDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::EventPortDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1739,10 +4140,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EventDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::EventPortDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -1761,10 +4162,10 @@ void POA_IR::EventDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::EventDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::EventPortDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1777,10 +4178,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EventDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::EventPortDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1795,40 +4196,40 @@ void POA_IR::EventDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::EmitsDef_tie<T>::EmitsDef_tie (T &t)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EmitsDef_tie<T>::EmitsDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EmitsDef_tie<T>::EmitsDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EmitsDef_tie<T>::EmitsDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::EmitsDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::EmitsDef_tie<T>::~EmitsDef_tie (void)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::~EmitsDef_tie (void)
 {
   if (this->rel_)
     {
@@ -1837,13 +4238,13 @@ POA_IR::EmitsDef_tie<T>::~EmitsDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::EmitsDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::EmitsDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -1855,7 +4256,7 @@ POA_IR::EmitsDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::EmitsDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -1867,19 +4268,19 @@ POA_IR::EmitsDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::EmitsDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::EmitsDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::EmitsDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::EmitsDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
@@ -1890,10 +4291,44 @@ POA_IR::EmitsDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::EmitsDef_tie<T>::is_a  (
+::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::EmitsDef_tie<T>::event  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->event (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::EmitsDef_tie<T>::event  (
+    CORBA::ComponentIR::EventDef_ptr event
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->event (
+    event
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::EmitsDef_tie<T>::is_a  (
     const char * event_id
     ACE_ENV_ARG_DECL
   )
@@ -1908,26 +4343,10 @@ CORBA::Boolean POA_IR::EmitsDef_tie<T>::is_a  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::EmitsDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::EmitsDef_tie<T>::id  (
+char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1940,10 +4359,10 @@ char * POA_IR::EmitsDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EmitsDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::EmitsDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -1958,10 +4377,10 @@ void POA_IR::EmitsDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::EmitsDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1974,10 +4393,10 @@ char * POA_IR::EmitsDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EmitsDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::EmitsDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -1992,10 +4411,10 @@ void POA_IR::EmitsDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::EmitsDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2008,10 +4427,10 @@ char * POA_IR::EmitsDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EmitsDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::EmitsDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -2026,10 +4445,10 @@ void POA_IR::EmitsDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::EmitsDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::EmitsDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2042,10 +4461,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::EmitsDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2058,10 +4477,10 @@ char * POA_IR::EmitsDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::EmitsDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::EmitsDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2074,10 +4493,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::EmitsDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::EmitsDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2090,10 +4509,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EmitsDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::EmitsDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -2112,10 +4531,10 @@ void POA_IR::EmitsDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::EmitsDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::EmitsDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2128,10 +4547,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::EmitsDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::EmitsDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2146,40 +4565,40 @@ void POA_IR::EmitsDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::PublishesDef_tie<T>::PublishesDef_tie (T &t)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PublishesDef_tie<T>::PublishesDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PublishesDef_tie<T>::PublishesDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PublishesDef_tie<T>::PublishesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::PublishesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PublishesDef_tie<T>::~PublishesDef_tie (void)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::~PublishesDef_tie (void)
 {
   if (this->rel_)
     {
@@ -2188,13 +4607,13 @@ POA_IR::PublishesDef_tie<T>::~PublishesDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::PublishesDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::PublishesDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -2206,7 +4625,7 @@ POA_IR::PublishesDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::PublishesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -2218,19 +4637,19 @@ POA_IR::PublishesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::PublishesDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::PublishesDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::PublishesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::PublishesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
@@ -2241,10 +4660,44 @@ POA_IR::PublishesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::PublishesDef_tie<T>::is_a  (
+::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::PublishesDef_tie<T>::event  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->event (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::PublishesDef_tie<T>::event  (
+    CORBA::ComponentIR::EventDef_ptr event
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->event (
+    event
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::PublishesDef_tie<T>::is_a  (
     const char * event_id
     ACE_ENV_ARG_DECL
   )
@@ -2259,26 +4712,10 @@ CORBA::Boolean POA_IR::PublishesDef_tie<T>::is_a  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::PublishesDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::PublishesDef_tie<T>::id  (
+char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2291,10 +4728,10 @@ char * POA_IR::PublishesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::PublishesDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::PublishesDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -2309,10 +4746,10 @@ void POA_IR::PublishesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::PublishesDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2325,10 +4762,10 @@ char * POA_IR::PublishesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::PublishesDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::PublishesDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -2343,10 +4780,10 @@ void POA_IR::PublishesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::PublishesDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2359,10 +4796,10 @@ char * POA_IR::PublishesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::PublishesDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::PublishesDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -2377,10 +4814,10 @@ void POA_IR::PublishesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::PublishesDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::PublishesDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2393,10 +4830,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::PublishesDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2409,10 +4846,10 @@ char * POA_IR::PublishesDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::PublishesDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::PublishesDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2425,10 +4862,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::PublishesDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::PublishesDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2441,10 +4878,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::PublishesDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::PublishesDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -2463,10 +4900,10 @@ void POA_IR::PublishesDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::PublishesDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::PublishesDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2479,10 +4916,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::PublishesDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::PublishesDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2497,40 +4934,40 @@ void POA_IR::PublishesDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::ConsumesDef_tie<T>::ConsumesDef_tie (T &t)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ConsumesDef_tie<T>::ConsumesDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ConsumesDef_tie<T>::ConsumesDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ConsumesDef_tie<T>::ConsumesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::ConsumesDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ConsumesDef_tie<T>::~ConsumesDef_tie (void)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::~ConsumesDef_tie (void)
 {
   if (this->rel_)
     {
@@ -2539,13 +4976,13 @@ POA_IR::ConsumesDef_tie<T>::~ConsumesDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::ConsumesDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ConsumesDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -2557,7 +4994,7 @@ POA_IR::ConsumesDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ConsumesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -2569,19 +5006,19 @@ POA_IR::ConsumesDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::ConsumesDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ConsumesDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::ConsumesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::ConsumesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
@@ -2592,10 +5029,44 @@ POA_IR::ConsumesDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::ConsumesDef_tie<T>::is_a  (
+::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::ConsumesDef_tie<T>::event  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->event (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::event  (
+    CORBA::ComponentIR::EventDef_ptr event
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->event (
+    event
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::Boolean POA_CORBA::ComponentIR::ConsumesDef_tie<T>::is_a  (
     const char * event_id
     ACE_ENV_ARG_DECL
   )
@@ -2610,26 +5081,10 @@ CORBA::Boolean POA_IR::ConsumesDef_tie<T>::is_a  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::ConsumesDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::ConsumesDef_tie<T>::id  (
+char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2642,10 +5097,10 @@ char * POA_IR::ConsumesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ConsumesDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -2660,10 +5115,10 @@ void POA_IR::ConsumesDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ConsumesDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2676,10 +5131,10 @@ char * POA_IR::ConsumesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ConsumesDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -2694,10 +5149,10 @@ void POA_IR::ConsumesDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ConsumesDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2710,10 +5165,10 @@ char * POA_IR::ConsumesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ConsumesDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -2728,10 +5183,10 @@ void POA_IR::ConsumesDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::ConsumesDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::ConsumesDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2744,10 +5199,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ConsumesDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2760,10 +5215,10 @@ char * POA_IR::ConsumesDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::ConsumesDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::ConsumesDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2776,10 +5231,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::ConsumesDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2792,10 +5247,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ConsumesDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -2814,10 +5269,10 @@ void POA_IR::ConsumesDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::ConsumesDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::ConsumesDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2830,10 +5285,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ConsumesDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2848,40 +5303,40 @@ void POA_IR::ConsumesDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::ComponentDef_tie<T>::ComponentDef_tie (T &t)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentDef_tie<T>::ComponentDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentDef_tie<T>::ComponentDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentDef_tie<T>::ComponentDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::ComponentDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::ComponentDef_tie<T>::~ComponentDef_tie (void)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::~ComponentDef_tie (void)
 {
   if (this->rel_)
     {
@@ -2890,13 +5345,13 @@ POA_IR::ComponentDef_tie<T>::~ComponentDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::ComponentDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ComponentDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -2908,7 +5363,7 @@ POA_IR::ComponentDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ComponentDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -2920,19 +5375,19 @@ POA_IR::ComponentDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::ComponentDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::ComponentDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::ComponentDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::ComponentDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
@@ -2943,10 +5398,44 @@ POA_IR::ComponentDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDefSeq * POA_IR::ComponentDef_tie<T>::supported_interfaces  (
+::CORBA::ComponentIR::ComponentDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_component  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->base_component (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_component  (
+    CORBA::ComponentIR::ComponentDef_ptr base_component
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->base_component (
+    base_component
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::supported_interfaces  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -2959,10 +5448,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentDef_tie<T>::supported_interfaces  (
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::supported_interfaces  (
     const CORBA::InterfaceDefSeq & supported_interfaces
     ACE_ENV_ARG_DECL
   )
@@ -2977,122 +5466,10 @@ void POA_IR::ComponentDef_tie<T>::supported_interfaces  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::ComponentDef_ptr POA_IR::ComponentDef_tie<T>::base_component  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->base_component (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::ProvidesDefSeq * POA_IR::ComponentDef_tie<T>::provides_interfaces  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->provides_interfaces (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::UsesDefSeq * POA_IR::ComponentDef_tie<T>::uses_interfaces  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->uses_interfaces (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::EmitsDefSeq * POA_IR::ComponentDef_tie<T>::emits_events  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->emits_events (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::PublishesDefSeq * POA_IR::ComponentDef_tie<T>::publishes_events  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->publishes_events (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::ConsumesDefSeq * POA_IR::ComponentDef_tie<T>::consumes_events  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->consumes_events (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::ComponentDef_tie<T>::is_basic  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->is_basic (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::ProvidesDef_ptr POA_IR::ComponentDef_tie<T>::create_provides  (
+::CORBA::ComponentIR::ProvidesDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_provides  (
     const char * id,
     const char * name,
     const char * version,
@@ -3113,10 +5490,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::UsesDef_ptr POA_IR::ComponentDef_tie<T>::create_uses  (
+::CORBA::ComponentIR::UsesDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_uses  (
     const char * id,
     const char * name,
     const char * version,
@@ -3139,14 +5516,14 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::EmitsDef_ptr POA_IR::ComponentDef_tie<T>::create_emits  (
+::CORBA::ComponentIR::EmitsDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_emits  (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value
+    CORBA::ComponentIR::EventDef_ptr event
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3157,20 +5534,20 @@ template <class T> ACE_INLINE
     id,
     name,
     version,
-    value
+    event
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::PublishesDef_ptr POA_IR::ComponentDef_tie<T>::create_publishes  (
+::CORBA::ComponentIR::PublishesDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_publishes  (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value
+    CORBA::ComponentIR::EventDef_ptr event
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3181,20 +5558,20 @@ template <class T> ACE_INLINE
     id,
     name,
     version,
-    value
+    event
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::ConsumesDef_ptr POA_IR::ComponentDef_tie<T>::create_consumes  (
+::CORBA::ComponentIR::ConsumesDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_consumes  (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value
+    CORBA::ComponentIR::EventDef_ptr event
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3205,16 +5582,16 @@ template <class T> ACE_INLINE
     id,
     name,
     version,
-    value
+    event
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDefSeq * POA_IR::ComponentDef_tie<T>::base_interfaces  (
+::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_interfaces  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3227,10 +5604,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentDef_tie<T>::base_interfaces  (
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_interfaces  (
     const CORBA::InterfaceDefSeq & base_interfaces
     ACE_ENV_ARG_DECL
   )
@@ -3245,10 +5622,10 @@ void POA_IR::ComponentDef_tie<T>::base_interfaces  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::ComponentDef_tie<T>::is_a  (
+CORBA::Boolean POA_CORBA::ComponentIR::ComponentDef_tie<T>::is_a  (
     const char * interface_id
     ACE_ENV_ARG_DECL
   )
@@ -3263,10 +5640,10 @@ CORBA::Boolean POA_IR::ComponentDef_tie<T>::is_a  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDef::FullInterfaceDescription * POA_IR::ComponentDef_tie<T>::describe_interface  (
+::CORBA::InterfaceDef::FullInterfaceDescription * POA_CORBA::ComponentIR::ComponentDef_tie<T>::describe_interface  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3279,10 +5656,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AttributeDef_ptr POA_IR::ComponentDef_tie<T>::create_attribute  (
+::CORBA::AttributeDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_attribute  (
     const char * id,
     const char * name,
     const char * version,
@@ -3305,10 +5682,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::OperationDef_ptr POA_IR::ComponentDef_tie<T>::create_operation  (
+::CORBA::OperationDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_operation  (
     const char * id,
     const char * name,
     const char * version,
@@ -3337,10 +5714,56 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained_ptr POA_IR::ComponentDef_tie<T>::lookup  (
+::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * POA_CORBA::ComponentIR::ComponentDef_tie<T>::describe_ext_interface  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe_ext_interface (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExtAttributeDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_ext_attribute  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    CORBA::AttributeMode mode,
+    const CORBA::ExceptionDefSeq & get_exceptions,
+    const CORBA::ExceptionDefSeq & set_exceptions
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_ext_attribute (
+    id,
+    name,
+    version,
+    type,
+    mode,
+    get_exceptions,
+    set_exceptions
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Contained_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::lookup  (
     const char * search_name
     ACE_ENV_ARG_DECL
   )
@@ -3355,10 +5778,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContainedSeq * POA_IR::ComponentDef_tie<T>::contents  (
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited
     ACE_ENV_ARG_DECL
@@ -3375,10 +5798,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContainedSeq * POA_IR::ComponentDef_tie<T>::lookup_name  (
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
     CORBA::DefinitionKind limit_type,
@@ -3399,10 +5822,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container::DescriptionSeq * POA_IR::ComponentDef_tie<T>::describe_contents  (
+::CORBA::Container::DescriptionSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::describe_contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs
@@ -3421,10 +5844,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ModuleDef_ptr POA_IR::ComponentDef_tie<T>::create_module  (
+::CORBA::ModuleDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_module  (
     const char * id,
     const char * name,
     const char * version
@@ -3443,10 +5866,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ConstantDef_ptr POA_IR::ComponentDef_tie<T>::create_constant  (
+::CORBA::ConstantDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
@@ -3469,10 +5892,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::StructDef_ptr POA_IR::ComponentDef_tie<T>::create_struct  (
+::CORBA::StructDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
@@ -3493,10 +5916,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::UnionDef_ptr POA_IR::ComponentDef_tie<T>::create_union  (
+::CORBA::UnionDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
@@ -3519,10 +5942,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::EnumDef_ptr POA_IR::ComponentDef_tie<T>::create_enum  (
+::CORBA::EnumDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
@@ -3543,10 +5966,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AliasDef_ptr POA_IR::ComponentDef_tie<T>::create_alias  (
+::CORBA::AliasDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
@@ -3567,10 +5990,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDef_ptr POA_IR::ComponentDef_tie<T>::create_interface  (
+::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -3591,10 +6014,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::ComponentDef_tie<T>::create_value  (
+::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_value  (
     const char * id,
     const char * name,
     const char * version,
@@ -3627,10 +6050,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueBoxDef_ptr POA_IR::ComponentDef_tie<T>::create_value_box  (
+::CORBA::ValueBoxDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
@@ -3651,10 +6074,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ExceptionDef_ptr POA_IR::ComponentDef_tie<T>::create_exception  (
+::CORBA::ExceptionDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
@@ -3675,10 +6098,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::NativeDef_ptr POA_IR::ComponentDef_tie<T>::create_native  (
+::CORBA::NativeDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_native  (
     const char * id,
     const char * name,
     const char * version
@@ -3697,10 +6120,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AbstractInterfaceDef_ptr POA_IR::ComponentDef_tie<T>::create_abstract_interface  (
+::CORBA::AbstractInterfaceDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_abstract_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -3721,10 +6144,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::LocalInterfaceDef_ptr POA_IR::ComponentDef_tie<T>::create_local_interface  (
+::CORBA::LocalInterfaceDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_local_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -3745,10 +6168,46 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ComponentDef_tie<T>::id  (
+::CORBA::ExtValueDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::create_ext_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_ext_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3761,10 +6220,10 @@ char * POA_IR::ComponentDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -3779,10 +6238,10 @@ void POA_IR::ComponentDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ComponentDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3795,10 +6254,10 @@ char * POA_IR::ComponentDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -3813,10 +6272,10 @@ void POA_IR::ComponentDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ComponentDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3829,10 +6288,10 @@ char * POA_IR::ComponentDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -3847,10 +6306,10 @@ void POA_IR::ComponentDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::ComponentDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3863,10 +6322,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::ComponentDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3879,10 +6338,10 @@ char * POA_IR::ComponentDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::ComponentDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3895,10 +6354,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::ComponentDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::ComponentDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3911,10 +6370,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -3933,10 +6392,10 @@ void POA_IR::ComponentDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_IR::ComponentDef_tie<T>::type  (
+CORBA::TypeCode_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::type  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3949,10 +6408,10 @@ CORBA::TypeCode_ptr POA_IR::ComponentDef_tie<T>::type  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::ComponentDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::ComponentDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3965,10 +6424,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::ComponentDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::ComponentDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -3983,40 +6442,40 @@ void POA_IR::ComponentDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::PrimaryKeyDef_tie<T>::PrimaryKeyDef_tie (T &t)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PrimaryKeyDef_tie<T>::PrimaryKeyDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PrimaryKeyDef_tie<T>::PrimaryKeyDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PrimaryKeyDef_tie<T>::PrimaryKeyDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::FactoryDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::PrimaryKeyDef_tie<T>::~PrimaryKeyDef_tie (void)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::~FactoryDef_tie (void)
 {
   if (this->rel_)
     {
@@ -4025,13 +6484,13 @@ POA_IR::PrimaryKeyDef_tie<T>::~PrimaryKeyDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::PrimaryKeyDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::PrimaryKeyDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -4043,7 +6502,7 @@ POA_IR::PrimaryKeyDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::PrimaryKeyDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -4055,370 +6514,19 @@ POA_IR::PrimaryKeyDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::PrimaryKeyDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::PrimaryKeyDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::PrimaryKeyDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    {
-      return PortableServer::POA::_duplicate (this->poa_.in ());
-    }
-  
-  return this->PrimaryKeyDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::PrimaryKeyDef_tie<T>::is_a  (
-    const char * primary_key_id
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->is_a (
-    primary_key_id
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::PrimaryKeyDef_tie<T>::primary_key  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->primary_key (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::PrimaryKeyDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_IR::PrimaryKeyDef_tie<T>::id  (
-    const char * id
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->id (
-    id
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::PrimaryKeyDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_IR::PrimaryKeyDef_tie<T>::name  (
-    const char * name
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->name (
-    name
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::PrimaryKeyDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_IR::PrimaryKeyDef_tie<T>::version  (
-    const char * version
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->version (
-    version
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::PrimaryKeyDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-char * POA_IR::PrimaryKeyDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::PrimaryKeyDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::PrimaryKeyDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_IR::PrimaryKeyDef_tie<T>::move  (
-    CORBA::Container_ptr new_container,
-    const char * new_name,
-    const char * new_version
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->move (
-    new_container,
-    new_name,
-    new_version
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::PrimaryKeyDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_IR::PrimaryKeyDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-#endif /* ACE_HAS_USING_KEYWORD */
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
-
-#if defined (ACE_HAS_USING_KEYWORD)
-
-template <class T> ACE_INLINE
-POA_IR::FactoryDef_tie<T>::FactoryDef_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::FactoryDef_tie<T>::FactoryDef_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::FactoryDef_tie<T>::FactoryDef_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::FactoryDef_tie<T>::FactoryDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
-{}
-
-template <class T> ACE_INLINE
-POA_IR::FactoryDef_tie<T>::~FactoryDef_tie (void)
-{
-  if (this->rel_)
-    {
-      delete this->ptr_;
-    }
-}
-
-template <class T> ACE_INLINE T *
-POA_IR::FactoryDef_tie<T>::_tied_object (void)
-{
-  return this->ptr_;
-}
-
-template <class T> ACE_INLINE void
-POA_IR::FactoryDef_tie<T>::_tied_object (T &obj)
-{
-  if (this->rel_)
-    {
-      delete this->ptr_;
-    }
-  
-  this->ptr_ = &obj;
-  this->rel_ = 0;
-}
-
-template <class T> ACE_INLINE void
-POA_IR::FactoryDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
-{
-  if (this->rel_)
-    {
-      delete this->ptr_;
-    }
-  
-  this->ptr_ = obj;
-  this->rel_ = release;
-}
-
-template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::FactoryDef_tie<T>::_is_owner (void)
-{
-  return this->rel_;
-}
-
-template <class T> ACE_INLINE void
-POA_IR::FactoryDef_tie<T>::_is_owner (CORBA::Boolean b)
-{
-  this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::FactoryDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::FactoryDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
@@ -4429,10 +6537,10 @@ POA_IR::FactoryDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_IR::FactoryDef_tie<T>::result  (
+CORBA::TypeCode_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::result  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4445,10 +6553,10 @@ CORBA::TypeCode_ptr POA_IR::FactoryDef_tie<T>::result  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::IDLType_ptr POA_IR::FactoryDef_tie<T>::result_def  (
+::CORBA::IDLType_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::result_def  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4461,10 +6569,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::result_def  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::result_def  (
     CORBA::IDLType_ptr result_def
     ACE_ENV_ARG_DECL
   )
@@ -4479,10 +6587,10 @@ void POA_IR::FactoryDef_tie<T>::result_def  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ParDescriptionSeq * POA_IR::FactoryDef_tie<T>::params  (
+::CORBA::ParDescriptionSeq * POA_CORBA::ComponentIR::FactoryDef_tie<T>::params  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4495,10 +6603,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::params  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::params  (
     const CORBA::ParDescriptionSeq & params
     ACE_ENV_ARG_DECL
   )
@@ -4513,10 +6621,10 @@ void POA_IR::FactoryDef_tie<T>::params  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::OperationMode POA_IR::FactoryDef_tie<T>::mode  (
+::CORBA::OperationMode POA_CORBA::ComponentIR::FactoryDef_tie<T>::mode  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4529,10 +6637,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::mode  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::mode  (
     CORBA::OperationMode mode
     ACE_ENV_ARG_DECL
   )
@@ -4547,10 +6655,10 @@ void POA_IR::FactoryDef_tie<T>::mode  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContextIdSeq * POA_IR::FactoryDef_tie<T>::contexts  (
+::CORBA::ContextIdSeq * POA_CORBA::ComponentIR::FactoryDef_tie<T>::contexts  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4563,10 +6671,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::contexts  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::contexts  (
     const CORBA::ContextIdSeq & contexts
     ACE_ENV_ARG_DECL
   )
@@ -4581,10 +6689,10 @@ void POA_IR::FactoryDef_tie<T>::contexts  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ExceptionDefSeq * POA_IR::FactoryDef_tie<T>::exceptions  (
+::CORBA::ExceptionDefSeq * POA_CORBA::ComponentIR::FactoryDef_tie<T>::exceptions  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4597,10 +6705,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::exceptions  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::exceptions  (
     const CORBA::ExceptionDefSeq & exceptions
     ACE_ENV_ARG_DECL
   )
@@ -4615,10 +6723,10 @@ void POA_IR::FactoryDef_tie<T>::exceptions  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FactoryDef_tie<T>::id  (
+char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4631,10 +6739,10 @@ char * POA_IR::FactoryDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -4649,10 +6757,10 @@ void POA_IR::FactoryDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FactoryDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4665,10 +6773,10 @@ char * POA_IR::FactoryDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -4683,10 +6791,10 @@ void POA_IR::FactoryDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FactoryDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4699,10 +6807,10 @@ char * POA_IR::FactoryDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -4717,10 +6825,10 @@ void POA_IR::FactoryDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::FactoryDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4733,10 +6841,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FactoryDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4749,10 +6857,10 @@ char * POA_IR::FactoryDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::FactoryDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4765,10 +6873,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::FactoryDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::FactoryDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4781,10 +6889,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -4803,10 +6911,10 @@ void POA_IR::FactoryDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::FactoryDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::FactoryDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4819,10 +6927,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FactoryDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::FactoryDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4837,40 +6945,40 @@ void POA_IR::FactoryDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::FinderDef_tie<T>::FinderDef_tie (T &t)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::FinderDef_tie<T>::FinderDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::FinderDef_tie<T>::FinderDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::FinderDef_tie<T>::FinderDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::FinderDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::FinderDef_tie<T>::~FinderDef_tie (void)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::~FinderDef_tie (void)
 {
   if (this->rel_)
     {
@@ -4879,13 +6987,13 @@ POA_IR::FinderDef_tie<T>::~FinderDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::FinderDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::FinderDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -4897,7 +7005,7 @@ POA_IR::FinderDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::FinderDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -4909,19 +7017,19 @@ POA_IR::FinderDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::FinderDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::FinderDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::FinderDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::FinderDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
@@ -4932,10 +7040,10 @@ POA_IR::FinderDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_IR::FinderDef_tie<T>::result  (
+CORBA::TypeCode_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::result  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4948,10 +7056,10 @@ CORBA::TypeCode_ptr POA_IR::FinderDef_tie<T>::result  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::IDLType_ptr POA_IR::FinderDef_tie<T>::result_def  (
+::CORBA::IDLType_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::result_def  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4964,10 +7072,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::result_def  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::result_def  (
     CORBA::IDLType_ptr result_def
     ACE_ENV_ARG_DECL
   )
@@ -4982,10 +7090,10 @@ void POA_IR::FinderDef_tie<T>::result_def  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ParDescriptionSeq * POA_IR::FinderDef_tie<T>::params  (
+::CORBA::ParDescriptionSeq * POA_CORBA::ComponentIR::FinderDef_tie<T>::params  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -4998,10 +7106,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::params  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::params  (
     const CORBA::ParDescriptionSeq & params
     ACE_ENV_ARG_DECL
   )
@@ -5016,10 +7124,10 @@ void POA_IR::FinderDef_tie<T>::params  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::OperationMode POA_IR::FinderDef_tie<T>::mode  (
+::CORBA::OperationMode POA_CORBA::ComponentIR::FinderDef_tie<T>::mode  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5032,10 +7140,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::mode  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::mode  (
     CORBA::OperationMode mode
     ACE_ENV_ARG_DECL
   )
@@ -5050,10 +7158,10 @@ void POA_IR::FinderDef_tie<T>::mode  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContextIdSeq * POA_IR::FinderDef_tie<T>::contexts  (
+::CORBA::ContextIdSeq * POA_CORBA::ComponentIR::FinderDef_tie<T>::contexts  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5066,10 +7174,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::contexts  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::contexts  (
     const CORBA::ContextIdSeq & contexts
     ACE_ENV_ARG_DECL
   )
@@ -5084,10 +7192,10 @@ void POA_IR::FinderDef_tie<T>::contexts  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ExceptionDefSeq * POA_IR::FinderDef_tie<T>::exceptions  (
+::CORBA::ExceptionDefSeq * POA_CORBA::ComponentIR::FinderDef_tie<T>::exceptions  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5100,10 +7208,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::exceptions  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::exceptions  (
     const CORBA::ExceptionDefSeq & exceptions
     ACE_ENV_ARG_DECL
   )
@@ -5118,10 +7226,10 @@ void POA_IR::FinderDef_tie<T>::exceptions  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FinderDef_tie<T>::id  (
+char * POA_CORBA::ComponentIR::FinderDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5134,10 +7242,10 @@ char * POA_IR::FinderDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -5152,10 +7260,10 @@ void POA_IR::FinderDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FinderDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::FinderDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5168,10 +7276,10 @@ char * POA_IR::FinderDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -5186,10 +7294,10 @@ void POA_IR::FinderDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FinderDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::FinderDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5202,10 +7310,10 @@ char * POA_IR::FinderDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -5220,10 +7328,10 @@ void POA_IR::FinderDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::FinderDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5236,10 +7344,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::FinderDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::FinderDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5252,10 +7360,10 @@ char * POA_IR::FinderDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::FinderDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5268,10 +7376,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::FinderDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::FinderDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5284,10 +7392,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -5306,10 +7414,10 @@ void POA_IR::FinderDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::FinderDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::FinderDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5322,10 +7430,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::FinderDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::FinderDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5340,40 +7448,40 @@ void POA_IR::FinderDef_tie<T>::destroy  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
-POA_IR::HomeDef_tie<T>::HomeDef_tie (T &t)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T &t)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::HomeDef_tie<T>::HomeDef_tie (T &t, PortableServer::POA_ptr poa)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T &t, PortableServer::POA_ptr poa)
 	: ptr_ (&t),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::HomeDef_tie<T>::HomeDef_tie (T *tp, CORBA::Boolean release)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T *tp, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_nil ()),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::HomeDef_tie<T>::HomeDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::HomeDef_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
 	: ptr_ (tp),
 	  poa_ (PortableServer::POA::_duplicate (poa)),
 	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
-POA_IR::HomeDef_tie<T>::~HomeDef_tie (void)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::~HomeDef_tie (void)
 {
   if (this->rel_)
     {
@@ -5382,13 +7490,13 @@ POA_IR::HomeDef_tie<T>::~HomeDef_tie (void)
 }
 
 template <class T> ACE_INLINE T *
-POA_IR::HomeDef_tie<T>::_tied_object (void)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::_tied_object (void)
 {
   return this->ptr_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::HomeDef_tie<T>::_tied_object (T &obj)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::_tied_object (T &obj)
 {
   if (this->rel_)
     {
@@ -5400,7 +7508,7 @@ POA_IR::HomeDef_tie<T>::_tied_object (T &obj)
 }
 
 template <class T> ACE_INLINE void
-POA_IR::HomeDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
   if (this->rel_)
     {
@@ -5412,19 +7520,19 @@ POA_IR::HomeDef_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 }
 
 template <class T> ACE_INLINE CORBA::Boolean
-POA_IR::HomeDef_tie<T>::_is_owner (void)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::_is_owner (void)
 {
   return this->rel_;
 }
 
 template <class T> ACE_INLINE void
-POA_IR::HomeDef_tie<T>::_is_owner (CORBA::Boolean b)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_IR::HomeDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ComponentIR::HomeDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
@@ -5435,10 +7543,10 @@ POA_IR::HomeDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::HomeDef_ptr POA_IR::HomeDef_tie<T>::base_home  (
+::CORBA::ComponentIR::HomeDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::base_home  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5451,10 +7559,62 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::ComponentDef_ptr POA_IR::HomeDef_tie<T>::managed_component  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_home  (
+    CORBA::ComponentIR::HomeDef_ptr base_home
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->base_home (
+    base_home
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::supported_interfaces  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->supported_interfaces (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::supported_interfaces  (
+    const CORBA::InterfaceDefSeq & supported_interfaces
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->supported_interfaces (
+    supported_interfaces
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ComponentIR::ComponentDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::managed_component  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5467,10 +7627,28 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::PrimaryKeyDef_ptr POA_IR::HomeDef_tie<T>::primary_key  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::managed_component  (
+    CORBA::ComponentIR::ComponentDef_ptr managed_component
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->managed_component (
+    managed_component
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::primary_key  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5483,61 +7661,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::FactoryDefSeq * POA_IR::HomeDef_tie<T>::factories  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->factories (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::FinderDefSeq * POA_IR::HomeDef_tie<T>::finders  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->finders (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::HomeDef_tie<T>::is_basic  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->is_basic (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::IR::PrimaryKeyDef_ptr POA_IR::HomeDef_tie<T>::create_primary_key  (
-    const char * id,
-    const char * name,
-    const char * version,
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::primary_key  (
     CORBA::ValueDef_ptr primary_key
     ACE_ENV_ARG_DECL
   )
@@ -5545,20 +7672,17 @@ template <class T> ACE_INLINE
     CORBA::SystemException
   ))
 {
-  return this->ptr_->create_primary_key (
-    id,
-    name,
-    version,
+  this->ptr_->primary_key (
     primary_key
     ACE_ENV_ARG_PARAMETER
   );
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::FactoryDef_ptr POA_IR::HomeDef_tie<T>::create_factory  (
+::CORBA::ComponentIR::FactoryDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_factory  (
     const char * id,
     const char * name,
     const char * version,
@@ -5581,10 +7705,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::IR::FinderDef_ptr POA_IR::HomeDef_tie<T>::create_finder  (
+::CORBA::ComponentIR::FinderDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_finder  (
     const char * id,
     const char * name,
     const char * version,
@@ -5607,10 +7731,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDefSeq * POA_IR::HomeDef_tie<T>::base_interfaces  (
+::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::base_interfaces  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5623,10 +7747,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::HomeDef_tie<T>::base_interfaces  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_interfaces  (
     const CORBA::InterfaceDefSeq & base_interfaces
     ACE_ENV_ARG_DECL
   )
@@ -5641,10 +7765,10 @@ void POA_IR::HomeDef_tie<T>::base_interfaces  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::Boolean POA_IR::HomeDef_tie<T>::is_a  (
+CORBA::Boolean POA_CORBA::ComponentIR::HomeDef_tie<T>::is_a  (
     const char * interface_id
     ACE_ENV_ARG_DECL
   )
@@ -5659,10 +7783,10 @@ CORBA::Boolean POA_IR::HomeDef_tie<T>::is_a  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDef::FullInterfaceDescription * POA_IR::HomeDef_tie<T>::describe_interface  (
+::CORBA::InterfaceDef::FullInterfaceDescription * POA_CORBA::ComponentIR::HomeDef_tie<T>::describe_interface  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5675,10 +7799,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AttributeDef_ptr POA_IR::HomeDef_tie<T>::create_attribute  (
+::CORBA::AttributeDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_attribute  (
     const char * id,
     const char * name,
     const char * version,
@@ -5701,10 +7825,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::OperationDef_ptr POA_IR::HomeDef_tie<T>::create_operation  (
+::CORBA::OperationDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_operation  (
     const char * id,
     const char * name,
     const char * version,
@@ -5733,10 +7857,56 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained_ptr POA_IR::HomeDef_tie<T>::lookup  (
+::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * POA_CORBA::ComponentIR::HomeDef_tie<T>::describe_ext_interface  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->describe_ext_interface (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::ExtAttributeDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_ext_attribute  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    CORBA::AttributeMode mode,
+    const CORBA::ExceptionDefSeq & get_exceptions,
+    const CORBA::ExceptionDefSeq & set_exceptions
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_ext_attribute (
+    id,
+    name,
+    version,
+    type,
+    mode,
+    get_exceptions,
+    set_exceptions
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::Contained_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::lookup  (
     const char * search_name
     ACE_ENV_ARG_DECL
   )
@@ -5751,10 +7921,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContainedSeq * POA_IR::HomeDef_tie<T>::contents  (
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited
     ACE_ENV_ARG_DECL
@@ -5771,10 +7941,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ContainedSeq * POA_IR::HomeDef_tie<T>::lookup_name  (
+::CORBA::ContainedSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::lookup_name  (
     const char * search_name,
     CORBA::Long levels_to_search,
     CORBA::DefinitionKind limit_type,
@@ -5795,10 +7965,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container::DescriptionSeq * POA_IR::HomeDef_tie<T>::describe_contents  (
+::CORBA::Container::DescriptionSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::describe_contents  (
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs
@@ -5817,10 +7987,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ModuleDef_ptr POA_IR::HomeDef_tie<T>::create_module  (
+::CORBA::ModuleDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_module  (
     const char * id,
     const char * name,
     const char * version
@@ -5839,10 +8009,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ConstantDef_ptr POA_IR::HomeDef_tie<T>::create_constant  (
+::CORBA::ConstantDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_constant  (
     const char * id,
     const char * name,
     const char * version,
@@ -5865,10 +8035,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::StructDef_ptr POA_IR::HomeDef_tie<T>::create_struct  (
+::CORBA::StructDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_struct  (
     const char * id,
     const char * name,
     const char * version,
@@ -5889,10 +8059,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::UnionDef_ptr POA_IR::HomeDef_tie<T>::create_union  (
+::CORBA::UnionDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_union  (
     const char * id,
     const char * name,
     const char * version,
@@ -5915,10 +8085,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::EnumDef_ptr POA_IR::HomeDef_tie<T>::create_enum  (
+::CORBA::EnumDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_enum  (
     const char * id,
     const char * name,
     const char * version,
@@ -5939,10 +8109,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AliasDef_ptr POA_IR::HomeDef_tie<T>::create_alias  (
+::CORBA::AliasDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_alias  (
     const char * id,
     const char * name,
     const char * version,
@@ -5963,10 +8133,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::InterfaceDef_ptr POA_IR::HomeDef_tie<T>::create_interface  (
+::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -5987,10 +8157,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueDef_ptr POA_IR::HomeDef_tie<T>::create_value  (
+::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_value  (
     const char * id,
     const char * name,
     const char * version,
@@ -6023,10 +8193,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ValueBoxDef_ptr POA_IR::HomeDef_tie<T>::create_value_box  (
+::CORBA::ValueBoxDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_value_box  (
     const char * id,
     const char * name,
     const char * version,
@@ -6047,10 +8217,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::ExceptionDef_ptr POA_IR::HomeDef_tie<T>::create_exception  (
+::CORBA::ExceptionDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_exception  (
     const char * id,
     const char * name,
     const char * version,
@@ -6071,10 +8241,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::NativeDef_ptr POA_IR::HomeDef_tie<T>::create_native  (
+::CORBA::NativeDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_native  (
     const char * id,
     const char * name,
     const char * version
@@ -6093,10 +8263,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::AbstractInterfaceDef_ptr POA_IR::HomeDef_tie<T>::create_abstract_interface  (
+::CORBA::AbstractInterfaceDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_abstract_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -6117,10 +8287,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::LocalInterfaceDef_ptr POA_IR::HomeDef_tie<T>::create_local_interface  (
+::CORBA::LocalInterfaceDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_local_interface  (
     const char * id,
     const char * name,
     const char * version,
@@ -6141,10 +8311,46 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::HomeDef_tie<T>::id  (
+::CORBA::ExtValueDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::create_ext_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_ext_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+char * POA_CORBA::ComponentIR::HomeDef_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6157,10 +8363,10 @@ char * POA_IR::HomeDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::HomeDef_tie<T>::id  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::id  (
     const char * id
     ACE_ENV_ARG_DECL
   )
@@ -6175,10 +8381,10 @@ void POA_IR::HomeDef_tie<T>::id  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::HomeDef_tie<T>::name  (
+char * POA_CORBA::ComponentIR::HomeDef_tie<T>::name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6191,10 +8397,10 @@ char * POA_IR::HomeDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::HomeDef_tie<T>::name  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::name  (
     const char * name
     ACE_ENV_ARG_DECL
   )
@@ -6209,10 +8415,10 @@ void POA_IR::HomeDef_tie<T>::name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::HomeDef_tie<T>::version  (
+char * POA_CORBA::ComponentIR::HomeDef_tie<T>::version  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6225,10 +8431,10 @@ char * POA_IR::HomeDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::HomeDef_tie<T>::version  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::version  (
     const char * version
     ACE_ENV_ARG_DECL
   )
@@ -6243,10 +8449,10 @@ void POA_IR::HomeDef_tie<T>::version  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Container_ptr POA_IR::HomeDef_tie<T>::defined_in  (
+::CORBA::Container_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::defined_in  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6259,10 +8465,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-char * POA_IR::HomeDef_tie<T>::absolute_name  (
+char * POA_CORBA::ComponentIR::HomeDef_tie<T>::absolute_name  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6275,10 +8481,10 @@ char * POA_IR::HomeDef_tie<T>::absolute_name  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Repository_ptr POA_IR::HomeDef_tie<T>::containing_repository  (
+::CORBA::Repository_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::containing_repository  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6291,10 +8497,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::Contained::Description * POA_IR::HomeDef_tie<T>::describe  (
+::CORBA::Contained::Description * POA_CORBA::ComponentIR::HomeDef_tie<T>::describe  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6307,10 +8513,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::HomeDef_tie<T>::move  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::move  (
     CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
@@ -6329,10 +8535,10 @@ void POA_IR::HomeDef_tie<T>::move  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_IR::HomeDef_tie<T>::type  (
+CORBA::TypeCode_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::type  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6345,10 +8551,10 @@ CORBA::TypeCode_ptr POA_IR::HomeDef_tie<T>::type  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_IR::HomeDef_tie<T>::def_kind  (
+::CORBA::DefinitionKind POA_CORBA::ComponentIR::HomeDef_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6361,10 +8567,10 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-void POA_IR::HomeDef_tie<T>::destroy  (
+void POA_CORBA::ComponentIR::HomeDef_tie<T>::destroy  (
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6377,4 +8583,5 @@ void POA_IR::HomeDef_tie<T>::destroy  (
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
 

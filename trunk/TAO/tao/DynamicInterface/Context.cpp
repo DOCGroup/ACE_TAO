@@ -5,7 +5,6 @@ ACE_RCSID (DynamicInterface,
            Context,
            "$Id$")
 
-
 #include "tao/Typecode.h"
 #include "tao/NVList.h"
 

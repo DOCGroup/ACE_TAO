@@ -90,6 +90,7 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\MT_Client_TestC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -19,6 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
 #ifndef _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 #define _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 
@@ -57,50 +60,61 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+
 TAO_NAMESPACE  RTPortableServer
 {
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
 
 #if !defined (_RTPORTABLESERVER_POA___PTR_CH_)
 #define _RTPORTABLESERVER_POA___PTR_CH_
-
+  
   class POA;
   typedef POA *POA_ptr;
 
 #endif /* end #if !defined */
 
-
 #if !defined (_RTPORTABLESERVER_POA___VAR_CH_)
 #define _RTPORTABLESERVER_POA___VAR_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  
   class TAO_RTPortableServer_Export POA_var : public TAO_Base_var
   {
   public:
     POA_var (void); // default constructor
-    POA_var (POA_ptr p) : ptr_ (p) {}
+    POA_var (POA_ptr p) : ptr_ (p) {} 
     POA_var (const POA_var &); // copy constructor
     ~POA_var (void); // destructor
-
+    
     POA_var &operator= (POA_ptr);
     POA_var &operator= (const POA_var &);
     POA_ptr operator-> (void) const;
-
+    
     operator const POA_ptr &() const;
     operator POA_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     POA_ptr in (void) const;
     POA_ptr &inout (void);
     POA_ptr &out (void);
     POA_ptr _retn (void);
     POA_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static POA_ptr tao_duplicate (POA_ptr);
     static void tao_release (POA_ptr);
     static POA_ptr tao_nil (void);
-    static POA_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static POA_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     POA_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -108,13 +122,14 @@ TAO_NAMESPACE  RTPortableServer
     POA_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_RTPORTABLESERVER_POA___OUT_CH_)
 #define _RTPORTABLESERVER_POA___OUT_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
+  
   class TAO_RTPortableServer_Export POA_out
   {
   public:
@@ -127,114 +142,153 @@ TAO_NAMESPACE  RTPortableServer
     operator POA_ptr &();
     POA_ptr &ptr (void);
     POA_ptr operator-> (void);
-
+  
   private:
     POA_ptr &ptr_;
   };
 
-
 #endif /* end #if !defined */
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
 
 #if !defined (_RTPORTABLESERVER_POA_CH_)
 #define _RTPORTABLESERVER_POA_CH_
-
-class TAO_RTPortableServer_Export POA: public virtual PortableServer::POA
+  
+  class TAO_RTPortableServer_Export POA
+    : public virtual PortableServer::POA
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef POA_ptr _ptr_type;
     typedef POA_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-  static int _tao_class_id;
-
-    // the static operations
+    static int _tao_class_id;
+    
+    // The static operations.
     static POA_ptr _duplicate (POA_ptr obj);
+    
     static POA_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static POA_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static POA_ptr _nil (void)
       {
         return (POA_ptr)0;
       }
-
+    
+    static void _tao_any_destructor (void *);
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::Object_ptr create_reference_with_priority (
         const char * intf,
         RTCORBA::Priority priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableServer::POA::WrongPolicy
+        CORBA::SystemException
+        , PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual CORBA::Object_ptr create_reference_with_id_and_priority (
         const PortableServer::ObjectId & oid,
         const char * intf,
         RTCORBA::Priority priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableServer::POA::WrongPolicy
+        CORBA::SystemException
+        , PortableServer::POA::WrongPolicy
       )) = 0;
-
-    virtual PortableServer::ObjectId * activate_object_with_priority (
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::PortableServer::ObjectId * activate_object_with_priority (
         PortableServer::Servant p_servant,
         RTCORBA::Priority priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableServer::POA::ServantAlreadyActive,
-        PortableServer::POA::WrongPolicy
+        CORBA::SystemException
+        , PortableServer::POA::ServantAlreadyActive
+        , PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual void activate_object_with_id_and_priority (
         const PortableServer::ObjectId & oid,
         PortableServer::Servant p_servant,
         RTCORBA::Priority priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableServer::POA::ServantAlreadyActive,
-        PortableServer::POA::ObjectAlreadyActive,
-        PortableServer::POA::WrongPolicy
+        CORBA::SystemException
+        , PortableServer::POA::ServantAlreadyActive
+        , PortableServer::POA::ObjectAlreadyActive
+        , PortableServer::POA::WrongPolicy
       )) = 0;
-
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
-    POA ();
-
+    POA (void);
     virtual ~POA (void);
+    
   private:
     POA (const POA &);
     void operator= (const POA &);
   };
 
-
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POA;
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
 }
 TAO_NAMESPACE_CLOSE // module RTPortableServer
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+
+TAO_RTPortableServer_Export void operator<<= (CORBA::Any &, RTPortableServer::POA_ptr); // copying
+TAO_RTPortableServer_Export void operator<<= (CORBA::Any &, RTPortableServer::POA_ptr *); // non-copying
+TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPortableServer::POA_ptr &);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "RTPortableServerC.i"
@@ -250,3 +304,4 @@ TAO_NAMESPACE_CLOSE // module RTPortableServer
 
 #include "ace/post.h"
 #endif /* ifndef */
+

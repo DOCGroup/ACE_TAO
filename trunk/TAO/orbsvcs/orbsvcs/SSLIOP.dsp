@@ -192,6 +192,7 @@ SOURCE=.\SSLIOP\SSLIOP_X509.cpp
 # Begin Source File
 
 SOURCE=.\SSLIOPC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

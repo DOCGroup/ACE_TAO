@@ -113,11 +113,11 @@ public:
   virtual int encode_endpoints (void);
 
   /// @@ deprecated. return a reference to the Object Key.
-  virtual const TAO_ObjectKey &object_key (void) const;
+  virtual const TAO::ObjectKey &object_key (void) const;
 
   /// Return a pointer to the Object Key.  The caller owns the memory
   /// allocated for the returned key.
-  virtual TAO_ObjectKey *_key (void) const;
+  virtual TAO::ObjectKey *_key (void) const;
 
   /// Return pointer to the head of this profile's endpoints list.
   virtual TAO_Endpoint *endpoint (void);
@@ -201,7 +201,7 @@ private:
   /// object_key associated with this profile.  This is wasted data for
   /// UIPMC since there is no object key here, but is needed to satisfy
   /// some of the API calls.
-  TAO_ObjectKey object_key_;
+  TAO::ObjectKey object_key_;
 
   /// Cached version of our tagged profile.
   IOP::TaggedProfile tagged_profile_;

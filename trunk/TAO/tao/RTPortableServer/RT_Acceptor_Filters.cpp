@@ -20,7 +20,7 @@ TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols)
 }
 
 int
-TAO_Server_Protocol_Acceptor_Filter::fill_profile (const TAO_ObjectKey &object_key,
+TAO_Server_Protocol_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
                                                    TAO_MProfile &mprofile,
                                                    TAO_Acceptor **acceptors_begin,
                                                    TAO_Acceptor **acceptors_end,

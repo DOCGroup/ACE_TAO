@@ -148,7 +148,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
 
               CORBA::Contained_ptr tmp =
                 CORBA::Contained::_narrow (visitor.ir_current ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // Since the enclosing ExceptionDef hasn't been created

@@ -44,8 +44,7 @@ public:
   //    Represents an value box definition.
   //
 public:
-  TAO_ValueBoxDef_i (TAO_Repository_i *repo,
-                     ACE_Configuration_Section_Key section_key);
+  TAO_ValueBoxDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_ValueBoxDef_i (void);

@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_CORBA_OCTETSEQC_H_
-#define _TAO_IDL_CORBA_OCTETSEQC_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
+#ifndef _TAO_IDL_ORIG_OCTETSEQC_H_
+#define _TAO_IDL_ORIG_OCTETSEQC_H_
 
 #include "ace/pre.h"
 #include "corbafwd.h"
@@ -68,9 +71,10 @@ namespace CORBA
   
   class TAO_Export OctetSeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    TAO_Unbounded_Sequence<CORBA::Octet>
+  TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<CORBA::Octet>
+  TAO_Unbounded_Sequence<CORBA::Octet>
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
@@ -98,15 +102,16 @@ namespace CORBA
       )
       : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
-
   };
-  
-#endif /* end #if !defined */
 
+#endif /* end #if !defined */
 
 #if !defined (_CORBA_OCTETSEQ___VAR_CH_)
 #define _CORBA_OCTETSEQ___VAR_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
+  
   // *************************************************************
   // class CORBA::OctetSeq_var
   // *************************************************************
@@ -144,9 +149,7 @@ namespace CORBA
     OctetSeq *ptr_;
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_CORBA_OCTETSEQ___OUT_CH_)
 #define _CORBA_OCTETSEQ___OUT_CH_
@@ -163,17 +166,25 @@ namespace CORBA
     OctetSeq *&ptr (void);
     OctetSeq *operator-> (void);
     CORBA::Octet & operator[] (CORBA::ULong index);
-    
+  
   private:
     OctetSeq *&ptr_;
     // assignment from T_var not allowed
     void operator= (const OctetSeq_var &);
   };
 
-
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_OctetSeq;
 
-}  // End namespace CORBA
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+
+}
+TAO_NAMESPACE_CLOSE // module CORBA
 
 // Proxy Broker Factory function pointer declarations.
 
@@ -184,6 +195,8 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq
 
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CORBA_OctetSeq_H_
 #define _TAO_CDR_OP_CORBA_OctetSeq_H_
@@ -199,9 +212,13 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "OctetSeqC.i"
@@ -217,3 +234,4 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
+

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/corbafwd.h"
 
 #if !defined (__ACE_INLINE__)
@@ -8,7 +10,6 @@
 ACE_RCSID (tao, 
            corbafwd, 
            "$Id$")
-
 
 char *
 CORBA::string_dup (const char *str)
@@ -65,7 +66,7 @@ namespace CORBA
 {
   // ****************************************************************
 
-  const CORBA::ServiceType Security = 1;
+//  const CORBA::ServiceType Security = 1;
 
   // ****************************************************************
 

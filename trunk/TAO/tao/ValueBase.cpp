@@ -1,3 +1,18 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//     TAO
+//
+// = FILENAME
+//     ValueBase.cpp
+//
+// = AUTHOR
+//     Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
+
 #include "tao/CDR.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
@@ -13,7 +28,6 @@ ACE_RCSID (tao,
            ValueBase,
            "$Id$")
 
-
 CORBA::ValueBase::~ValueBase (void)
 {
 }
@@ -24,6 +38,12 @@ CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
   return vt;  // every vt is a CORBA::ValueBase :-)
 }
 
+void
+CORBA::ValueBase::_tao_any_destructor (void *x)
+{
+  CORBA::ValueBase_ptr tmp = ACE_static_cast (CORBA::ValueBase *, x);
+  CORBA::remove_ref (tmp);
+}
 
 // OBV marshaling in principle:
 // _tao_marshal () is called from the CDR operator<< ()

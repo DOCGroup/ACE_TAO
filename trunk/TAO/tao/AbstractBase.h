@@ -23,7 +23,6 @@
 
 #include "ace/CORBA_macros.h"
 
-
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 
@@ -64,6 +63,9 @@ namespace CORBA
 
     static CORBA::AbstractBase_ptr _duplicate (CORBA::AbstractBase_ptr obj);
     static CORBA::AbstractBase_ptr _nil (void);
+
+    /// Used in the implementation of CORBA::Any
+    static void _tao_any_destructor (void*);
 
     CORBA::Object_ptr _to_object (void);
     CORBA::ValueBase *_to_value (void);

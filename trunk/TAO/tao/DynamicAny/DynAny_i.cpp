@@ -1,6 +1,8 @@
+/* -*- C++ -*- */
+// $Id$
+
 #include "DynAny_i.h"
 #include "DynAnyFactory.h"
-
 
 ACE_RCSID (DynamicAny,
            DynAny_i,
@@ -60,7 +62,8 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
     case CORBA::tk_null:
       break;
     case CORBA::tk_void:
-      this->any_ = CORBA::Any (CORBA::_tc_void);
+      this->any_ = CORBA::Any (CORBA::_tc_void,
+                               0);
       break;
     case CORBA::tk_short:
       this->any_ <<= ACE_static_cast (CORBA::Short, 0);
@@ -101,7 +104,8 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       this->any_ <<= ACE_static_cast (CORBA::Double, 0);
       break;
     case CORBA::tk_any:
-      this->any_ <<= CORBA::Any (CORBA::_tc_null);
+      this->any_ <<= CORBA::Any (CORBA::_tc_null,
+                                 0);
       break;
     case CORBA::tk_TypeCode:
       {
@@ -114,9 +118,12 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       {
         TAO_OutputCDR stream;
         stream << CORBA::Object::_nil ();
-        this->any_._tao_replace (tc,
-                                 TAO_ENCAP_BYTE_ORDER,
-                                 stream.begin ());
+        TAO::Unknown_IDL_Type *unk = 0;
+        ACE_NEW (unk,
+                 TAO::Unknown_IDL_Type (tc,
+                                        stream.begin (),
+                                        TAO_ENCAP_BYTE_ORDER));
+        this->any_.replace (unk);
         break;
       }
     case CORBA::tk_string:

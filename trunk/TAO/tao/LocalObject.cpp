@@ -1,3 +1,7 @@
+// -*- C++ -*-
+//
+// $Id$
+
 #include "LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
@@ -6,7 +10,6 @@
 
 #include "PolicyC.h"
 #include "debug.h"
-
 
 ACE_RCSID (tao,
            LocalObject,
@@ -63,7 +66,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj
 // TAO's extensions
 
 
-TAO_ObjectKey *
+TAO::ObjectKey *
 CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (TAO_debug_level > 0)

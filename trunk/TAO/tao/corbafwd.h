@@ -88,7 +88,6 @@ namespace TAO_Collocation_Strategies
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
-
 /**
  * @class CORBA
  *
@@ -280,7 +279,6 @@ namespace CORBA
   typedef TypeCodeFactory *TypeCodeFactory_ptr;
   class TypeCodeFactory_out;
   class TypeCodeFactory_var;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_TypeCodeFactory;
 
   class ValueBase;
   typedef ValueBase *ValueBase_ptr;
@@ -291,6 +289,22 @@ namespace CORBA
   typedef ValueFactoryBase *ValueFactory;
   typedef ValueFactoryBase_var ValueFactory_var;
   class DefaultValueRefCountBase;
+
+  typedef CORBA::Short Visibility;
+  typedef CORBA::Short_out Visibility_out;
+  extern TAO_Export CORBA::TypeCode_ptr _tc_Visibility;
+
+  extern TAO_Export const CORBA::Short PRIVATE_MEMBER;
+  extern TAO_Export const CORBA::Short PUBLIC_MEMBER;
+
+  typedef CORBA::Short ValueModifier;
+  typedef CORBA::Short_out ValueModifier_out;
+  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueModifier;
+
+  extern TAO_Export const CORBA::Short VM_NONE;
+  extern TAO_Export const CORBA::Short VM_CUSTOM;
+  extern TAO_Export const CORBA::Short VM_ABSTRACT;
+  extern TAO_Export const CORBA::Short VM_TRUNCATABLE;
 
   class AbstractBase;
   typedef AbstractBase * AbstractBase_ptr;
@@ -573,7 +587,6 @@ namespace CORBA
   typedef CORBA::UShort ServiceType;
   typedef CORBA::UShort_out ServiceType_out;
   extern TAO_Export CORBA::TypeCode_ptr _tc_ServiceType;
-  extern TAO_Export const ServiceType Security;
 
   typedef CORBA::ULong ServiceOption;
   typedef CORBA::ULong_out ServiceOption_out;
@@ -597,467 +610,12 @@ namespace CORBA
 
   // ****************************************************************
 
-  // =================== Interface Repository =====================
-  typedef char * RepositoryId;
-  typedef CORBA::String_var RepositoryId_var;
-  typedef CORBA::String_out RepositoryId_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_RepositoryId;
-
-  typedef char * Identifier;
-  typedef CORBA::String_var Identifier_var;
-  typedef CORBA::String_out Identifier_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Identifier;
-
-  typedef char * ScopedName;
-  typedef String_var ScopedName_var;
-  typedef String_out ScopedName_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ScopedName;
-
-  typedef char * VersionSpec;
-  typedef String_var VersionSpec_var;
-  typedef String_out VersionSpec_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_VersionSpec;
-
-  typedef CORBA::Short Visibility;
-  typedef CORBA::Short_out Visibility_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Visibility;
-
-  extern TAO_Export const CORBA::Short PRIVATE_MEMBER;
-  extern TAO_Export const CORBA::Short PUBLIC_MEMBER;
-
-  typedef CORBA::Short ValueModifier;
-  typedef CORBA::Short_out ValueModifier_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueModifier;
-
-  extern TAO_Export const CORBA::Short VM_NONE;
-  extern TAO_Export const CORBA::Short VM_CUSTOM;
-  extern TAO_Export const CORBA::Short VM_ABSTRACT;
-  extern TAO_Export const CORBA::Short VM_TRUNCATABLE;
-
-  typedef char * ContextIdentifier;
-  typedef CORBA::String_var ContextIdentifier_var;
-  typedef CORBA::String_out ContextIdentifier_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ContextIdentifier;
-
-  class IRObject;
-  typedef IRObject * IRObject_ptr;
-  class IRObject_var;
-  class IRObject_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_IRObject;
-
-  enum DefinitionKind
-    {
-        dk_none,
-        dk_all,
-        dk_Attribute,
-        dk_Constant,
-        dk_Exception,
-        dk_Interface,
-        dk_Module,
-        dk_Operation,
-        dk_Typedef,
-        dk_Alias,
-        dk_Struct,
-        dk_Union,
-        dk_Enum,
-        dk_Primitive,
-        dk_String,
-        dk_Sequence,
-        dk_Array,
-        dk_Repository,
-        dk_Wstring,
-        dk_Fixed,
-        dk_Value,
-        dk_ValueBox,
-        dk_ValueMember,
-        dk_Native,
-        dk_AbstractInterface,
-        dk_LocalInterface,
-        dk_Component,
-        dk_Home,
-        dk_Factory,
-        dk_Finder,
-        dk_PrimaryKey,
-        dk_Emits,
-        dk_Publishes,
-        dk_Consumes,
-        dk_Provides,
-        dk_Uses,
-        dk_Event
-    };
-
-  typedef DefinitionKind & DefinitionKind_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_DefinitionKind;
-
-  class Contained;
-  typedef Contained * Contained_ptr;
-  class Contained_var;
-  class Contained_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Contained;
-
-  class ContainedSeq;
-  class ContainedSeq_var;
-  class ContainedSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ContainedSeq;
-
-  class Repository;
-  typedef Repository * Repository_ptr;
-  class Repository_var;
-  class Repository_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Repository;
-
-  class Container;
-  typedef Container * Container_ptr;
-  class Container_var;
-  class Container_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Container;
-
-  class ModuleDef;
-  typedef ModuleDef * ModuleDef_ptr;
-  class ModuleDef_var;
-  class ModuleDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ModuleDef;
-
-  class ConstantDef;
-  typedef ConstantDef * ConstantDef_ptr;
-  class ConstantDef_var;
-  class ConstantDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ConstantDef;
-
-  class IDLType;
-  typedef IDLType * IDLType_ptr;
-  class IDLType_var;
-  class IDLType_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_IDLType;
-
-  class StructDef;
-  typedef StructDef * StructDef_ptr;
-  class StructDef_var;
-  class StructDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_StructDef;
-
-  class UnionDef;
-  typedef UnionDef * UnionDef_ptr;
-  class UnionDef_var;
-  class UnionDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_UnionDef;
-
-  class EnumDef;
-  typedef EnumDef * EnumDef_ptr;
-  class EnumDef_var;
-  class EnumDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_EnumDef;
-
-  class AliasDef;
-  typedef AliasDef * AliasDef_ptr;
-  class AliasDef_var;
-  class AliasDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_AliasDef;
-
-  class InterfaceDef;
-  typedef InterfaceDef * InterfaceDef_ptr;
-  class InterfaceDef_var;
-  class InterfaceDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_InterfaceDef;
-
-  class AbstractInterfaceDef;
-  typedef AbstractInterfaceDef * AbstractInterfaceDef_ptr;
-  class AbstractInterfaceDef_var;
-  class AbstractInterfaceDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_AbstractInterfaceDef;
-
-  class LocalInterfaceDef;
-  typedef LocalInterfaceDef * LocalInterfaceDef_ptr;
-  class LocalInterfaceDef_var;
-  class LocalInterfaceDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_LocalInterfaceDef;
-
-  class ExceptionDef;
-  typedef ExceptionDef * ExceptionDef_ptr;
-  class ExceptionDef_var;
-  class ExceptionDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ExceptionDef;
-
-  class NativeDef;
-  typedef NativeDef * NativeDef_ptr;
-  class NativeDef_var;
-  class NativeDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_NativeDef;
-
-  class InterfaceDefSeq;
-  class InterfaceDefSeq_var;
-  class InterfaceDefSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_InterfaceDefSeq;
-
-  class AbstractInterfaceDefSeq;
-  class AbstractInterfaceDefSeq_var;
-  class AbstractInterfaceDefSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_AbstractInterfaceDefSeq;
-
-  class LocalInterfaceDefSeq;
-  class LocalInterfaceDefSeq_var;
-  class LocalInterfaceDefSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_LocalInterfaceDefSeq;
-
-  class ValueDef;
-  typedef ValueDef * ValueDef_ptr;
-  class ValueDef_var;
-  class ValueDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueDef;
-
-  class ValueDefSeq;
-  class ValueDefSeq_var;
-  class ValueDefSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueDefSeq;
-
-  class ValueBoxDef;
-  typedef ValueBoxDef * ValueBoxDef_ptr;
-  class ValueBoxDef_var;
-  class ValueBoxDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueBoxDef;
-
-  struct StructMember;
-  class StructMember_var;
-  class StructMember_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_StructMember;
-
-  class StructMemberSeq;
-  class StructMemberSeq_var;
-  class StructMemberSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_StructMemberSeq;
-
-  struct Initializer;
-  class Initializer_var;
-  class Initializer_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Initializer;
-
-  class InitializerSeq;
-  class InitializerSeq_var;
-  class InitializerSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_InitializerSeq;
-
-  struct UnionMember;
-  class UnionMember_var;
-  class UnionMember_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_UnionMember;
-
-  class UnionMemberSeq;
-  class UnionMemberSeq_var;
-  class UnionMemberSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_UnionMemberSeq;
-
-  class EnumMemberSeq;
-  class EnumMemberSeq_var;
-  class EnumMemberSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_EnumMemberSeq;
-
-  struct ModuleDescription;
-  class ModuleDescription_var;
-  class ModuleDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ModuleDescription;
-
-  struct ConstantDescription;
-  class ConstantDescription_var;
-  class ConstantDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ConstantDescription;
-
-  class TypedefDef;
-  typedef TypedefDef * TypedefDef_ptr;
-  class TypedefDef_var;
-  class TypedefDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_TypedefDef;
-
-  struct TypeDescription;
-  class TypeDescription_var;
-  class TypeDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_TypeDescription;
-
-  class PrimitiveDef;
-  typedef PrimitiveDef * PrimitiveDef_ptr;
-  class PrimitiveDef_var;
-  class PrimitiveDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_PrimitiveDef;
-
-  class StringDef;
-  typedef StringDef * StringDef_ptr;
-  class StringDef_var;
-  class StringDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_StringDef;
-
-  class WstringDef;
-  typedef WstringDef * WstringDef_ptr;
-  class WstringDef_var;
-  class WstringDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_WstringDef;
-
-  class FixedDef;
-  typedef FixedDef * FixedDef_ptr;
-  class FixedDef_var;
-  class FixedDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_FixedDef;
-
-  class SequenceDef;
-  typedef SequenceDef * SequenceDef_ptr;
-  class SequenceDef_var;
-  class SequenceDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_SequenceDef;
-
-  class ArrayDef;
-  typedef ArrayDef * ArrayDef_ptr;
-  class ArrayDef_var;
-  class ArrayDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ArrayDef;
-
-  struct ExceptionDescription;
-  class ExceptionDescription_var;
-  class ExceptionDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ExceptionDescription;
-
-  class ExceptionDefSeq;
-  class ExceptionDefSeq_var;
-  class ExceptionDefSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ExceptionDefSeq;
-
-  class ExcDescriptionSeq;
-  class ExcDescriptionSeq_var;
-  class ExcDescriptionSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ExcDescriptionSeq;
-
-  enum AttributeMode
-  {
-    ATTR_NORMAL,
-    ATTR_READONLY
-  };
-
-  typedef AttributeMode & AttributeMode_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_AttributeMode;
-
-  class AttributeDef;
-  typedef AttributeDef * AttributeDef_ptr;
-  class AttributeDef_var;
-  class AttributeDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_AttributeDef;
-
-  struct AttributeDescription;
-  class AttributeDescription_var;
-  class AttributeDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_AttributeDescription;
-
-  enum PrimitiveKind
-    {
-      pk_null,
-      pk_void,
-      pk_short,
-      pk_long,
-      pk_ushort,
-      pk_ulong,
-      pk_float,
-      pk_double,
-      pk_boolean,
-      pk_char,
-      pk_octet,
-      pk_any,
-      pk_TypeCode,
-      pk_Principal,
-      pk_string,
-      pk_objref,
-      pk_longlong,
-      pk_ulonglong,
-      pk_longdouble,
-      pk_wchar,
-      pk_wstring,
-      pk_value_base
-    };
-
-  typedef PrimitiveKind & PrimitiveKind_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_PrimitiveKind;
-
   enum ParameterMode
     {
       PARAM_IN,
       PARAM_OUT,
       PARAM_INOUT
     };
-
-  typedef ParameterMode & ParameterMode_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ParameterMode;
-
-  struct ParameterDescription;
-  class ParameterDescription_var;
-  class ParameterDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ParameterDescription;
-
-  class ParDescriptionSeq;
-  class ParDescriptionSeq_var;
-  class ParDescriptionSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ParDescriptionSeq;
-
-  class ContextIdSeq;
-  class ContextIdSeq_var;
-  class ContextIdSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ContextIdSeq;
-
-  class OperationDef;
-  typedef OperationDef * OperationDef_ptr;
-  class OperationDef_var;
-  class OperationDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_OperationDef;
-
-  enum OperationMode
-    {
-      OP_NORMAL,
-      OP_ONEWAY
-    };
-
-  typedef OperationMode & OperationMode_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_OperationMode;
-
-  struct OperationDescription;
-  class OperationDescription_var;
-  class OperationDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_OperationDescription;
-
-  class RepositoryIdSeq;
-  class RepositoryIdSeq_var;
-  class RepositoryIdSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_RepositoryIdSeq;
-
-  class OpDescriptionSeq;
-  class OpDescriptionSeq_var;
-  class OpDescriptionSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_OpDescriptionSeq;
-
-  class AttrDescriptionSeq;
-  class AttrDescriptionSeq_var;
-  class AttrDescriptionSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_AttrDescriptionSeq;
-
-  struct InterfaceDescription;
-  class InterfaceDescription_var;
-  class InterfaceDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_InterfaceDescription;
-
-  struct ValueMember;
-  class ValueMember_var;
-  class ValueMember_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueMember;
-
-  class ValueMemberSeq;
-  class ValueMemberSeq_var;
-  class ValueMemberSeq_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueMemberSeq;
-
-  class ValueMemberDef;
-  typedef ValueMemberDef * ValueMemberDef_ptr;
-  class ValueMemberDef_var;
-  class ValueMemberDef_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueMemberDef;
-
-  struct ValueDescription;
-  class ValueDescription_var;
-  class ValueDescription_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueDescription;
-  // ================== Interface Repository =====================
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   class ConstructionPolicy;

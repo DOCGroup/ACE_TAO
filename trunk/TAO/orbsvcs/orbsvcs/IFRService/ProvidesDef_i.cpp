@@ -4,14 +4,15 @@
 #include "Repository_i.h"
 #include "ProvidesDef_i.h"
 
-ACE_RCSID(IFR_Service, ProvidesDef_i, "$Id$")
+ACE_RCSID (IFRService, 
+           ProvidesDef_i, 
+           "$Id$")
 
 TAO_ProvidesDef_i::TAO_ProvidesDef_i (
-    TAO_Repository_i *repo,
-    ACE_Configuration_Section_Key section_key
+    TAO_Repository_i *repo
   )
-  : TAO_IRObject_i (repo, section_key),
-    TAO_Contained_i (repo, section_key)
+  : TAO_IRObject_i (repo),
+    TAO_Contained_i (repo)
 {
 }
 
@@ -32,6 +33,9 @@ TAO_ProvidesDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_WRITE_GUARD;
 
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -47,6 +51,9 @@ TAO_ProvidesDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -65,6 +72,9 @@ TAO_ProvidesDef_i::interface_type (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+
   return this->interface_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -74,4 +84,30 @@ TAO_ProvidesDef_i::interface_type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV
 {
   // TODO
   return 0;
+}
+
+void 
+TAO_ProvidesDef_i::interface_type (
+    CORBA::InterfaceDef_ptr interface_type
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->interface_type_i (interface_type
+                          ACE_ENV_ARG_PARAMETER);
+}
+
+void 
+TAO_ProvidesDef_i::interface_type_i (
+    CORBA::InterfaceDef_ptr /* interface_type */
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException)) 
+{
+  // TODO
 }

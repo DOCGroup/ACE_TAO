@@ -11,7 +11,7 @@ TAO_Target_Specification::TAO_Target_Specification (void)
 }
 
 ACE_INLINE void
-TAO_Target_Specification::target_specifier (const TAO_ObjectKey &key)
+TAO_Target_Specification::target_specifier (const TAO::ObjectKey &key)
 {
   this->specifier_ = TAO_Target_Specification::Key_Addr;
   // @@ Bala: this is a good recipe for a crash, if the <key> was on
@@ -23,7 +23,7 @@ TAO_Target_Specification::target_specifier (const TAO_ObjectKey &key)
   // general is better....  but you are probably right in this case, i
   // suspect this stuff goes right in the critical path, right? So
   // making a copy of the object key would be too expensive..
-  this->u_.object_key_ = ACE_const_cast (TAO_ObjectKey *,
+  this->u_.object_key_ = ACE_const_cast (TAO::ObjectKey *,
                                          &key);
 }
 
@@ -48,7 +48,7 @@ TAO_Target_Specification::target_specifier (IOP::IOR &ior,
       
 }
 
-ACE_INLINE const TAO_ObjectKey*
+ACE_INLINE const TAO::ObjectKey*
 TAO_Target_Specification::object_key (void)
 {
   if (this->specifier_ == TAO_Target_Specification::Key_Addr)

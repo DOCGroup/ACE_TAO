@@ -16,7 +16,8 @@ DIRS  = Cubit \
         RTCorba \
 	Latency \
 	Memory \
-	Throughput
+	Throughput \
+	Anyop
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -6,7 +6,9 @@
 #include "PortableGroup_ORBInitializer.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(PortableGroup, PortableGroup_Loader, "$Id$")
+ACE_RCSID (PortableGroup, 
+           PortableGroup_Loader, 
+           "$Id$")
 
 TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
 {

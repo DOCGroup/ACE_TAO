@@ -98,6 +98,7 @@ SOURCE=.\TX_Object_i.cpp
 # Begin Source File
 
 SOURCE=.\TX_ObjectC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

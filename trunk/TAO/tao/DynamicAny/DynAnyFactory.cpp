@@ -1,4 +1,5 @@
 // $Id$
+
 // =================================================================
 //
 // = LIBRARY
@@ -23,11 +24,9 @@
 
 #include "ace/Auto_Ptr.h"
 
-
 ACE_RCSID (DynamicAny,
            DynAnyFactory,
            "$Id$")
-
 
 // Constructor from typecode
 TAO_DynAnyFactory::TAO_DynAnyFactory (void)

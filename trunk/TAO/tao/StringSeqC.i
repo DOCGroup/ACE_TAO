@@ -23,44 +23,53 @@
 #if !defined (_CORBA_STRINGSEQ_CI_)
 #define _CORBA_STRINGSEQ_CI_
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
+
 // *************************************************************
 // Inline operations for class CORBA::StringSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA::StringSeq_var::StringSeq_var (void) // default constructor
+CORBA::StringSeq_var::StringSeq_var (void)
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA::StringSeq_var::StringSeq_var (CORBA::StringSeq *p)
+CORBA::StringSeq_var::StringSeq_var (StringSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA::StringSeq_var::StringSeq_var (const ::CORBA::StringSeq_var &p) // copy constructor
+CORBA::StringSeq_var::StringSeq_var (const ::CORBA::StringSeq_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::CORBA::StringSeq (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::CORBA::StringSeq (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
 ACE_INLINE
-CORBA::StringSeq_var::~StringSeq_var (void) // destructor
+CORBA::StringSeq_var::~StringSeq_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA::StringSeq_var &
-CORBA::StringSeq_var::operator= (CORBA::StringSeq *p)
+ACE_INLINE
+CORBA::StringSeq_var &
+CORBA::StringSeq_var::operator= (StringSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE ::CORBA::StringSeq_var &
+ACE_INLINE
+::CORBA::StringSeq_var &
 CORBA::StringSeq_var::operator= (const ::CORBA::StringSeq_var &p)
 {
   if (this != &p)
@@ -72,12 +81,16 @@ CORBA::StringSeq_var::operator= (const ::CORBA::StringSeq_var &p)
         }
       else
         {
-          CORBA::StringSeq *deep_copy =
-            new CORBA::StringSeq (*p.ptr_);
+          StringSeq *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              StringSeq (*p.ptr_),
+              *this
+            );
           
           if (deep_copy != 0)
             {
-              CORBA::StringSeq *tmp = deep_copy;
+              StringSeq *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -88,63 +101,68 @@ CORBA::StringSeq_var::operator= (const ::CORBA::StringSeq_var &p)
   return *this;
 }
 
-ACE_INLINE const ::CORBA::StringSeq *
+ACE_INLINE
+const ::CORBA::StringSeq *
 CORBA::StringSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::StringSeq *
+ACE_INLINE
+::CORBA::StringSeq *
 CORBA::StringSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::StringSeq_var::operator const ::CORBA::StringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::StringSeq_var::operator ::CORBA::StringSeq &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::StringSeq_var::operator ::CORBA::StringSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-// variable-size types only
+// Variable-size types only.
 ACE_INLINE
 CORBA::StringSeq_var::operator ::CORBA::StringSeq *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_SeqElem_String_Manager
+ACE_INLINE
+TAO_SeqElem_String_Manager
 CORBA::StringSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const ::CORBA::StringSeq &
+ACE_INLINE
+const ::CORBA::StringSeq &
 CORBA::StringSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::CORBA::StringSeq &
+ACE_INLINE
+::CORBA::StringSeq &
 CORBA::StringSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
-// mapping for variable size 
-ACE_INLINE ::CORBA::StringSeq *&
+ACE_INLINE
+::CORBA::StringSeq *&
 CORBA::StringSeq_var::out (void)
 {
   delete this->ptr_;
@@ -152,7 +170,8 @@ CORBA::StringSeq_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::StringSeq *
+ACE_INLINE
+::CORBA::StringSeq *
 CORBA::StringSeq_var::_retn (void)
 {
   ::CORBA::StringSeq *tmp = this->ptr_;
@@ -160,25 +179,29 @@ CORBA::StringSeq_var::_retn (void)
   return tmp;
 }
 
-ACE_INLINE ::CORBA::StringSeq *
+ACE_INLINE
+::CORBA::StringSeq *
 CORBA::StringSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
 
 // *************************************************************
 // Inline operations for class CORBA::StringSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA::StringSeq_out::StringSeq_out (CORBA::StringSeq *&p)
+CORBA::StringSeq_out::StringSeq_out (StringSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA::StringSeq_out::StringSeq_out (CORBA::StringSeq_var &p) // constructor from _var
+CORBA::StringSeq_out::StringSeq_out (StringSeq_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -186,93 +209,105 @@ CORBA::StringSeq_out::StringSeq_out (CORBA::StringSeq_var &p) // constructor fro
 }
 
 ACE_INLINE
-CORBA::StringSeq_out::StringSeq_out (const ::CORBA::StringSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA::StringSeq_out&, p).ptr_)
+CORBA::StringSeq_out::StringSeq_out (const ::CORBA::StringSeq_out &p)
+  : ptr_ (ACE_const_cast (StringSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE ::CORBA::StringSeq_out &
+ACE_INLINE
+::CORBA::StringSeq_out &
 CORBA::StringSeq_out::operator= (const ::CORBA::StringSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA::StringSeq_out&, p).ptr_;
+  this->ptr_ = ACE_const_cast (StringSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ::CORBA::StringSeq_out &
-CORBA::StringSeq_out::operator= (CORBA::StringSeq *p)
+ACE_INLINE
+::CORBA::StringSeq_out &
+CORBA::StringSeq_out::operator= (StringSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::StringSeq_out::operator ::CORBA::StringSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::StringSeq *&
+ACE_INLINE
+::CORBA::StringSeq *&
 CORBA::StringSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::StringSeq *
+ACE_INLINE
+::CORBA::StringSeq *
 CORBA::StringSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_SeqElem_String_Manager
+ACE_INLINE
+TAO_SeqElem_String_Manager
 CORBA::StringSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_CORBA_WSTRINGSEQ_CI_)
 #define _CORBA_WSTRINGSEQ_CI_
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
 
 // *************************************************************
 // Inline operations for class CORBA::WStringSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA::WStringSeq_var::WStringSeq_var (void) // default constructor
+CORBA::WStringSeq_var::WStringSeq_var (void)
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA::WStringSeq_var::WStringSeq_var (CORBA::WStringSeq *p)
+CORBA::WStringSeq_var::WStringSeq_var (WStringSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA::WStringSeq_var::WStringSeq_var (const ::CORBA::WStringSeq_var &p) // copy constructor
+CORBA::WStringSeq_var::WStringSeq_var (const ::CORBA::WStringSeq_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::CORBA::WStringSeq (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::CORBA::WStringSeq (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
 ACE_INLINE
-CORBA::WStringSeq_var::~WStringSeq_var (void) // destructor
+CORBA::WStringSeq_var::~WStringSeq_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA::WStringSeq_var &
-CORBA::WStringSeq_var::operator= (CORBA::WStringSeq *p)
+ACE_INLINE
+CORBA::WStringSeq_var &
+CORBA::WStringSeq_var::operator= (WStringSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE ::CORBA::WStringSeq_var &
+ACE_INLINE
+::CORBA::WStringSeq_var &
 CORBA::WStringSeq_var::operator= (const ::CORBA::WStringSeq_var &p)
 {
   if (this != &p)
@@ -284,12 +319,16 @@ CORBA::WStringSeq_var::operator= (const ::CORBA::WStringSeq_var &p)
         }
       else
         {
-          CORBA::WStringSeq *deep_copy =
-            new CORBA::WStringSeq (*p.ptr_);
+          WStringSeq *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              WStringSeq (*p.ptr_),
+              *this
+            );
           
           if (deep_copy != 0)
             {
-              CORBA::WStringSeq *tmp = deep_copy;
+              WStringSeq *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -300,63 +339,68 @@ CORBA::WStringSeq_var::operator= (const ::CORBA::WStringSeq_var &p)
   return *this;
 }
 
-ACE_INLINE const ::CORBA::WStringSeq *
+ACE_INLINE
+const ::CORBA::WStringSeq *
 CORBA::WStringSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::WStringSeq *
+ACE_INLINE
+::CORBA::WStringSeq *
 CORBA::WStringSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::WStringSeq_var::operator const ::CORBA::WStringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::WStringSeq_var::operator ::CORBA::WStringSeq &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::WStringSeq_var::operator ::CORBA::WStringSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-// variable-size types only
+// Variable-size types only.
 ACE_INLINE
 CORBA::WStringSeq_var::operator ::CORBA::WStringSeq *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_SeqElem_WString_Manager
+ACE_INLINE
+TAO_SeqElem_WString_Manager
 CORBA::WStringSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const ::CORBA::WStringSeq &
+ACE_INLINE
+const ::CORBA::WStringSeq &
 CORBA::WStringSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::CORBA::WStringSeq &
+ACE_INLINE
+::CORBA::WStringSeq &
 CORBA::WStringSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
-// mapping for variable size 
-ACE_INLINE ::CORBA::WStringSeq *&
+ACE_INLINE
+::CORBA::WStringSeq *&
 CORBA::WStringSeq_var::out (void)
 {
   delete this->ptr_;
@@ -364,7 +408,8 @@ CORBA::WStringSeq_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::WStringSeq *
+ACE_INLINE
+::CORBA::WStringSeq *
 CORBA::WStringSeq_var::_retn (void)
 {
   ::CORBA::WStringSeq *tmp = this->ptr_;
@@ -372,25 +417,29 @@ CORBA::WStringSeq_var::_retn (void)
   return tmp;
 }
 
-ACE_INLINE ::CORBA::WStringSeq *
+ACE_INLINE
+::CORBA::WStringSeq *
 CORBA::WStringSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
 
 // *************************************************************
 // Inline operations for class CORBA::WStringSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA::WStringSeq_out::WStringSeq_out (CORBA::WStringSeq *&p)
+CORBA::WStringSeq_out::WStringSeq_out (WStringSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA::WStringSeq_out::WStringSeq_out (CORBA::WStringSeq_var &p) // constructor from _var
+CORBA::WStringSeq_out::WStringSeq_out (WStringSeq_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -398,51 +447,57 @@ CORBA::WStringSeq_out::WStringSeq_out (CORBA::WStringSeq_var &p) // constructor 
 }
 
 ACE_INLINE
-CORBA::WStringSeq_out::WStringSeq_out (const ::CORBA::WStringSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA::WStringSeq_out&, p).ptr_)
+CORBA::WStringSeq_out::WStringSeq_out (const ::CORBA::WStringSeq_out &p)
+  : ptr_ (ACE_const_cast (WStringSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE ::CORBA::WStringSeq_out &
+ACE_INLINE
+::CORBA::WStringSeq_out &
 CORBA::WStringSeq_out::operator= (const ::CORBA::WStringSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA::WStringSeq_out&, p).ptr_;
+  this->ptr_ = ACE_const_cast (WStringSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ::CORBA::WStringSeq_out &
-CORBA::WStringSeq_out::operator= (CORBA::WStringSeq *p)
+ACE_INLINE
+::CORBA::WStringSeq_out &
+CORBA::WStringSeq_out::operator= (WStringSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::WStringSeq_out::operator ::CORBA::WStringSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::WStringSeq *&
+ACE_INLINE
+::CORBA::WStringSeq *&
 CORBA::WStringSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA::WStringSeq *
+ACE_INLINE
+::CORBA::WStringSeq *
 CORBA::WStringSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_SeqElem_WString_Manager
+ACE_INLINE
+TAO_SeqElem_WString_Manager
 CORBA::WStringSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
 
 #if !defined _TAO_CDR_OP_CORBA_StringSeq_I_
 #define _TAO_CDR_OP_CORBA_StringSeq_I_
@@ -451,6 +506,7 @@ CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const CORBA::StringSeq &
   );
+
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     CORBA::StringSeq &
@@ -458,6 +514,8 @@ CORBA::Boolean TAO_Export operator>> (
 
 #endif /* _TAO_CDR_OP_CORBA_StringSeq_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
 
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_I_
 #define _TAO_CDR_OP_CORBA_WStringSeq_I_
@@ -466,6 +524,7 @@ CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const CORBA::WStringSeq &
   );
+
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     CORBA::WStringSeq &

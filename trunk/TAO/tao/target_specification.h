@@ -81,7 +81,7 @@ public:
   // stack. These methods does not make a copy but holds the pointer
   // passed in.
   /// Set the target specification by giving the object key.
-  void target_specifier (const TAO_ObjectKey &key);
+  void target_specifier (const TAO::ObjectKey &key);
 
 
   /// Set the target specification by passing in an IOP::TaggedProfile.
@@ -101,7 +101,7 @@ public:
    * the stored specifier is not of the right type then this would
    * return a NULL
    */
-  const TAO_ObjectKey* object_key (void);
+  const TAO::ObjectKey* object_key (void);
 
   /**
    * Returns the IOP::TaggedProfile after a check of the stored specifier. If
@@ -124,7 +124,7 @@ public:
 private:
   union
   {
-    TAO_ObjectKey *object_key_;
+    TAO::ObjectKey *object_key_;
     IOP::TaggedProfile *profile_;
     IOP::IOR *ior_;
   } u_;

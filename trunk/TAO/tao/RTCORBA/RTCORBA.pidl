@@ -225,7 +225,8 @@ module RTCORBA
                                                      in long recv_buffer_size,
                                                      in boolean keep_alive,
                                                      in boolean dont_route,
-                                                     in boolean no_delay );
+                                                     in boolean no_delay,
+						     in boolean enable_network_priority);
 
     // Threadpool creation/destruction.
     exception InvalidThreadpool {};
@@ -265,7 +266,5 @@ module RTCORBA
     PrivateConnectionPolicy create_private_connection_policy ();
   };
 };
-
-#pragma prefix ""
 
 #endif /* _RT_CORBA_IDL_ */

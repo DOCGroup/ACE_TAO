@@ -86,6 +86,12 @@ CORBA::Object::_stubobj (void) const
   return this->protocol_proxy_;
 }
 
+ACE_INLINE CORBA::Boolean
+CORBA::Object::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
 // *************************************************************
 // Inline operations for class CORBA::Object_var
 // *************************************************************

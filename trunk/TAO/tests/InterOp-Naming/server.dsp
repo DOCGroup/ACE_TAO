@@ -93,6 +93,7 @@ SOURCE=.\INS.idl
 
 !IF  "$(CFG)" == "InterOp Naming Server - Win32 Release"
 
+USERDEP__INS_I="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\INS.idl
 InputName=INS
@@ -130,6 +131,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "InterOp Naming Server - Win32 Debug"
 
+USERDEP__INS_I="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\INS.idl
 InputName=INS
@@ -215,6 +217,7 @@ SOURCE=.\INS_test_server.cpp
 # Begin Source File
 
 SOURCE=.\INSC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

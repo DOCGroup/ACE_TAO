@@ -4,6 +4,7 @@
 #define TAO_SEQUENCE_T_C
 
 #include "tao/Sequence_T.h"
+#include "tao/Typecode.h"
 #include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)

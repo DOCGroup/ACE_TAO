@@ -1,6 +1,8 @@
+/* -*- C++ -*- */
+// $Id$
+
 #include "DynEnum_i.h"
 #include "DynAnyFactory.h"
-
 
 ACE_RCSID (DynamicAny,
            DynEnum_i,
@@ -238,12 +240,19 @@ TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Any *retval;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any (this->type_.in (),
-                               0,
-                               TAO_ENCAP_BYTE_ORDER,
-                               out_cdr.begin ()),
+                    CORBA::Any,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
+
+  TAO::Unknown_IDL_Type *unk = 0;
+  ACE_NEW_THROW_EX (unk,
+                    TAO::Unknown_IDL_Type (this->type_.in (),
+                                           out_cdr.begin (),
+                                           TAO_ENCAP_BYTE_ORDER),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  retval->replace (unk);
   return retval;
 }
 
