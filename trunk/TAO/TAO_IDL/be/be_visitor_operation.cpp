@@ -3344,6 +3344,7 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
+  return 0;
 }
 
 // ************************************************************
