@@ -82,7 +82,7 @@ ACE_Get_Opt::operator () (void)
     }
 
   int opt; // Character checked for validity.
-  char *oli; // Option letter index.
+  const char *oli; // Option letter index.
 
   if (this->nextchar_ == 0 || *this->nextchar_ == '\0')
     { 
