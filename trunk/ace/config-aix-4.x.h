@@ -185,6 +185,9 @@
 
 #define ACE_LACKS_TCP_H
 
+// AIX uses LIBPATH to search for libraries
+#define ACE_LD_SEARCH_PATH "LIBPATH"
+
 #define ACE_NEEDS_DEV_IO_CONVERSION
 
 // Defines the page size of the system.
