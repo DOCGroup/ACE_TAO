@@ -1,3 +1,31 @@
+Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SString.cpp: Add explicit instantiation of
+          ACE_String_Base<char>::NULL_String_ and
+          ACE_String_Base<ACE_WSTRING_TYPE>::NULL_String.
+        * ace/Based_Pointer_Repository.cpp: Add explicit instantiation of
+          ACE_Singleton<ACE_Based_Pointer_Repository,ACE_SYNCH_RW_MUTEX>::
+          singleton_.
+        * ace/Dynamic.cpp: Add explicit instantiation of
+          ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>::singleton_.
+        * tests/test_config.h: Added explicit instantiation of
+          ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>::singleton_.
+
+        The above are only done when using automatic template instantiation
+        on AIX with g++. Without this, the compiler and linker don't get
+        things done right and static data members in templates don't get
+        instantiated correctly.
+
+        * ace/SSL/Makefile: Set LIBS = $(ACELIB). Else it won't link on
+          AIX, g++.
+
+        * include/makeinclude/platform_aix4_g++.GNU: Removed. Use
+          platform_aix_g++.GNU instead. They were similar, though not equal,
+          and confusing each other.
+
+        * include/makeinclude/platform_aix_g++.GNU: Fixed to work correctly
+          and is now the one to use for AIX 4 and 5 with g++.
+
 Sat Nov 23 18:03:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/String_Base.i (compare): Fix a size_t/int mismatch.

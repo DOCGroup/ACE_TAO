@@ -121,4 +121,7 @@ template class ACE_Map_Iterator_Base<void *, size_t, ACE_Null_Mutex>;
 #pragma instantiate ACE_Map_Iterator<void *, size_t, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<void *, size_t, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<void *, size_t, ACE_Null_Mutex>
+#elif defined (__GNUC__) && defined (_AIX)
+template ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX> *
+  ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
