@@ -1,3 +1,27 @@
+Tue Jun 10 12:16:04 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Makefile: Updated to reflect newly added files
+
+	* ace/Proactor.cpp: Removed template specializations.
+
+	* ace/Reactor.cpp: Removed some template specializations.
+
+	* ace/Timer_Hash.h: Added an include for Timer_Heap.
+
+	* ace/Timer_Hash_T.cpp: Changed a reference to ACE_Timer_Node
+	  to ACE_Timer_Node_T<TYPE>
+
+	* ace/Timer_{Hash,Heap,List,Wheel}_T.h: Changed #include 
+	  "ace/Timer_{...}.h" to "ace/Timer_{...}_T.h".
+
+	* ace/Timer_Queue.cpp: Removed some template specializations.
+
+	* ace/Timer_Queue.h: Removed the including of Timer_Queue.cpp
+	  since there are no templates to warrant it. 
+
+	* ace/Timer_{Hash,Heap,List,Wheel}.cpp: Added these and put the
+	  appropriate template specializations here.
+
 Tue Jun 10 02:08:25 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
 
 	* examples/Log_Msg/README: Revised.
