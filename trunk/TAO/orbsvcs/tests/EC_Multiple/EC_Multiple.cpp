@@ -3,6 +3,7 @@
 //
 
 #include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
 
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -10,6 +11,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
 #include "EC_Multiple.h"
 
@@ -154,6 +156,10 @@ EC_Proxy::shutdown (CORBA::Environment& _env)
 Test_ECP::Test_ECP (void)
   : consumer_ (this),
     supplier_ (this),
+    rmt_ec_name_ ("EC"),
+    lcl_ec_name_ ("EC"),
+    sched_name_ ("ScheduleService"),
+    dyn_sched_ (0),
     event_a_ (0),
     event_b_ (0),
     event_c_ (0),
@@ -200,7 +206,33 @@ Test_ECP::run (int argc, char* argv[])
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_Scheduler_Factory::use_config (naming_context.in ());
+      auto_ptr<ACE_Config_Scheduler> scheduler_impl;
+      if (this->dyn_sched_)
+	{
+	  scheduler_impl = new ACE_Config_Scheduler;
+	  if (scheduler_impl.get () == 0)
+	    return 1;
+
+	  RtecScheduler::Scheduler_var scheduler = 
+	    scheduler_impl->_this (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  CORBA::String_var str =
+	    orb->object_to_string (scheduler.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  ACE_DEBUG ((LM_DEBUG, "The scheduler IOR is <%s>\n", str.in ()));
+
+	  // Register the servant with the Naming Context....
+	  CosNaming::Name schedule_name (1);
+	  schedule_name.length (1);
+	  schedule_name[0].id = CORBA::string_dup (this->sched_name_);
+	  naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
+
+      ACE_Scheduler_Factory::use_config (naming_context.in (),
+					 this->sched_name_);
 
       // Register Event_Service with Naming Service.
       ACE_EventChannel ec_impl;
@@ -253,11 +285,9 @@ Test_ECP::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier\n"));
 
-      if (this->connect_consumer (local_ec.in (),
-                                  TAO_TRY_ENV) == -1)
-        return 1;
-
-      ACE_DEBUG ((LM_DEBUG, "connected consumer\n"));
+      tv.set (5, 0);
+      if (orb->run (&tv) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), 1);
 
       if (this->connect_ecp (local_ec.in (),
                              remote_ec.in (),
@@ -265,6 +295,16 @@ Test_ECP::run (int argc, char* argv[])
         return 1;
 
       ACE_DEBUG ((LM_DEBUG, "connected proxy\n"));
+
+      tv.set (5, 0);
+      if (orb->run (&tv) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), 1);
+
+      if (this->connect_consumer (local_ec.in (),
+                                  TAO_TRY_ENV) == -1)
+        return 1;
+
+      ACE_DEBUG ((LM_DEBUG, "connected consumer\n"));
 
       ACE_DEBUG ((LM_DEBUG, "running multiple EC test\n"));
       if (orb->run () == -1)
@@ -604,8 +644,13 @@ Test_ECP::push (const RtecEventComm::EventSet &events,
 	  ACE_hrtime_t s;
 	  ORBSVCS_Time::TimeT_to_hrtime (s, e.creation_time_);
 	  int nsec = r - s;
-	  ACE_DEBUG ((LM_DEBUG, "Latency[%d]: %d (from %d)\n",
-		      this->supplier_id_, nsec, e.source_));
+	  if (this->supplier_id_ == e.source_)
+	    ACE_DEBUG ((LM_DEBUG, "Latency[LOCAL]: %d\n",
+			nsec));
+	  else
+	    ACE_DEBUG ((LM_DEBUG, "Latency[REMOTE]: %d\n",
+			nsec));
+	    
         }
     }
 }
@@ -629,7 +674,7 @@ Test_ECP::shutdown (CORBA::Environment& _env)
 int
 Test_ECP::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:r:a:b:c:t:m:");
+  ACE_Get_Opt get_opt (argc, argv, "l:r:s:da:b:c:t:m:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -642,6 +687,12 @@ Test_ECP::parse_args (int argc, char *argv [])
         case 'r':
           this->rmt_ec_name_ = get_opt.optarg;
           break;
+	case 's':
+	  this->sched_name_ = get_opt.optarg;
+	  break;
+	case 'd':
+	  this->dyn_sched_ = 1;
+	  break;
         case 'a':
           this->event_a_ =
 	    ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (get_opt.optarg);
@@ -666,6 +717,8 @@ Test_ECP::parse_args (int argc, char *argv [])
                       "Usage: %s "
                       "-l local_ec_name "
                       "-r remote_ec_name "
+		      "-d (use local scheduling service) "
+		      "-s scheduling service name "
                       "<-a event_type_a> "
                       "<-b event_type_b> "
                       "<-c event_type_c> "
@@ -704,9 +757,11 @@ template class ACE_PushConsumer_Adapter<Test_ECP>;
 template class ACE_PushSupplier_Adapter<Test_ECP>;
 template class ACE_PushConsumer_Adapter<EC_Proxy>;
 template class ACE_PushSupplier_Adapter<EC_Proxy>;
+template class auto_ptr<ACE_Config_Scheduler>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_PushConsumer_Adapter<Test_ECP>
 #pragma instantiate ACE_PushSupplier_Adapter<Test_ECP>
 #pragma instantiate ACE_PushConsumer_Adapter<EC_Proxy>
 #pragma instantiate ACE_PushSupplier_Adapter<EC_Proxy>
+#pragma instantiate auto_ptr<ACE_Config_Scheduler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

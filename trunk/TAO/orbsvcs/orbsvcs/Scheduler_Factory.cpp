@@ -91,6 +91,14 @@ RtecScheduler::Scheduler_ptr static_server ()
 int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
 {
+  return ACE_Scheduler_Factory::use_config (naming,
+					    "ScheduleService");
+}
+
+int
+ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
+				   const char* name)
+{
   if (server_ != 0 || entry_count != -1)
     {
       // No errors, runtime execution simply takes precedence over
@@ -101,7 +109,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
   TAO_TRY
     {
       CosNaming::Name schedule_name (1);
-      schedule_name[0].id = CORBA::string_dup ("ScheduleService");
+      schedule_name[0].id = CORBA::string_dup (name);
       schedule_name.length (1);
       CORBA::Object_ptr objref =
         naming->resolve (schedule_name, TAO_TRY_ENV);
@@ -124,41 +132,6 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
   TAO_ENDTRY;
   return 0;
 }
-
-int
-ACE_Scheduler_Factory::use_config (CORBA::ORB_ptr orb)
-{
-  if (server_ != 0 || entry_count != -1)
-    {
-      // No errors, runtime execution simply takes precedence over
-      // config runs.
-      return 0;
-    }
-
-  TAO_TRY
-    {
-      CORBA::Object_ptr objref =
-        orb->resolve_initial_references ("ScheduleService");
-      TAO_CHECK_ENV;
-
-      server_ =
-        RtecScheduler::Scheduler::_narrow(objref, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      RtecScheduler::Scheduler::_duplicate (server_);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      server_ = 0;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ACE_Scheduler_Factory::use_context - "
-                         " exception while resolving server\n"), -1);
-    }
-  TAO_ENDTRY;
-  return 0;
-}
-
 
 RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server (void)

@@ -1,3 +1,26 @@
+Wed Apr 22 15:56:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  The test also has a collocated scheduling service now.
+
+	* orbsvcs/tests/EC_Multiple/svc.conf: 
+	  Added a missing svc.conf file.
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	  The -n option can be used to specify the scheduling service name.
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.h: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	  We can find scheduling services with different names now.
+	  Removed all method that used resolve_initial_references() to
+	  find the scheduling service; this was needed before the naming
+	  service was working.
+
+	* orbsvcs/tests/EC_Multiple/latency.pl: 
+	* orbsvcs/tests/EC_Multiple/gen_data: 
+	  Simple scripts to process the data obtained in the experiments.
+
 Mon Apr 20 16:46:07 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface.cpp: An ACE_NESTED_CLASS was

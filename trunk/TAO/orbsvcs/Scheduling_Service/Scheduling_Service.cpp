@@ -2,10 +2,40 @@
 // $Id$
 //
 
+#include "ace/Get_Opt.h"
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
+
+const char* service_name = "ScheduleService";
+
+int
+parse_args (int argc, char *argv [])
+{
+  ACE_Get_Opt get_opt (argc, argv, "n:");
+  int opt;
+
+  while ((opt = get_opt ()) != EOF)
+    {
+      switch (opt)
+	{
+	case 'n':
+	  service_name = get_opt.optarg;
+	  break;
+	case '?':
+	default:
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Usage: %s "
+		      "-n service_name "
+		      "\n",
+		      argv[0]));
+	  return -1;
+	}
+    }
+
+  return 0;
+}
 
 int main (int argc, char *argv[])
 {
@@ -13,8 +43,11 @@ int main (int argc, char *argv[])
     {
       // Initialize ORB.
       CORBA::ORB_var orb = 
-	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
+	CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      if (parse_args (argc, argv) != 0)
+	return 1;
 
       CORBA::Object_var poa_object = 
 	orb->resolve_initial_references("RootPOA");
@@ -59,7 +92,7 @@ int main (int argc, char *argv[])
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
-      schedule_name[0].id = CORBA::string_dup ("ScheduleService");
+      schedule_name[0].id = CORBA::string_dup (service_name);
       naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 

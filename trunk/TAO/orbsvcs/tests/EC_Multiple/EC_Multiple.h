@@ -165,7 +165,13 @@ private:
 
   char* lcl_ec_name_;
   // The name of the "local" EC.
-  
+
+  char* sched_name_;
+  // The name of the scheduling service.
+
+  int dyn_sched_;
+  // Use a collocated dynamic scheduler.
+
   int event_a_;
   int event_b_;
   int event_c_;
