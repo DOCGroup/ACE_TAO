@@ -19,9 +19,7 @@ Tue Aug 27 12:40:12 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  good idea. 
 
 	* tao/ORB.cpp (shutdown): Added a comment as to why we cannot lock
-	  exceptions within this method. Doing so would render us
-	  non-compliant with the CORBA spec. 
-
+	  exceptions within this method. 
 	 
 Tue Aug 27 10:22:50 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
