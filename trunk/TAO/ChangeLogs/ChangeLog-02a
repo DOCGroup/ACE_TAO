@@ -1,7 +1,7 @@
 Thu Apr 27 22:36:48 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAOC.h: Changed "orbconf.h" to "corbafwd.h".  Otherwise, it
-	  wouldn't compile.
+	  wouldn't compile for minimum CORBA.
 
 	* tao/Interceptor.h:
 	* tao/Interceptor.cpp:
