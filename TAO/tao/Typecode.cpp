@@ -16,7 +16,6 @@
 #include "tao/Environment.h"
 #include "tao/Any.h"
 #include "tao/Exception.h"
-#include "tao/CDR_Interpreter.h"
 #include "tao/Principal.h"
 #include "tao/singletons.h"
 #include "tao/debug.h"
@@ -125,67 +124,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     private_state_ (new TC_Private_State (kind)),
     non_aligned_buffer_ (0)
 {
-  // all these are simple typecodes and the comparison is based solely on
-  this->private_state_->tc_size_known_ = 1;
-  switch (this->kind_)
-    {
-    case CORBA::tk_null:
-    case CORBA::tk_void:
-      this->private_state_->tc_size_ = 0;
-      break;
-    case CORBA::tk_short:
-      this->private_state_->tc_size_ = sizeof (CORBA::Short);
-      break;
-    case CORBA::tk_ushort:
-      this->private_state_->tc_size_ = sizeof (CORBA::UShort);
-      break;
-    case CORBA::tk_long:
-      this->private_state_->tc_size_ = sizeof (CORBA::Long);
-      break;
-    case CORBA::tk_ulong:
-      this->private_state_->tc_size_ = sizeof (CORBA::ULong);
-      break;
-    case CORBA::tk_float:
-      this->private_state_->tc_size_ = sizeof (CORBA::Float);
-      break;
-    case CORBA::tk_double:
-      this->private_state_->tc_size_ = sizeof (CORBA::Double);
-      break;
-    case CORBA::tk_longlong:
-      this->private_state_->tc_size_ = sizeof (CORBA::LongLong);
-      break;
-    case CORBA::tk_ulonglong:
-      this->private_state_->tc_size_ = sizeof (CORBA::ULongLong);
-      break;
-    case CORBA::tk_longdouble:
-      this->private_state_->tc_size_ = sizeof (CORBA::LongDouble);
-      break;
-    case CORBA::tk_boolean:
-      this->private_state_->tc_size_ = sizeof (CORBA::Boolean);
-      break;
-    case CORBA::tk_octet:
-      this->private_state_->tc_size_ = sizeof (CORBA::Octet);
-      break;
-    case CORBA::tk_char:
-      this->private_state_->tc_size_ = sizeof (CORBA::Char);
-      break;
-    case CORBA::tk_wchar:
-      this->private_state_->tc_size_ = sizeof (CORBA::WChar);
-      break;
-    case CORBA::tk_TypeCode:
-      this->private_state_->tc_size_ = sizeof (CORBA::TypeCode_ptr);
-      break;
-    case CORBA::tk_Principal:
-      this->private_state_->tc_size_ = sizeof (CORBA::Principal);
-      break;
-    case CORBA::tk_any:
-      this->private_state_->tc_size_ = sizeof (CORBA::Any);
-      break;
-    default:
-      // we should never be here
-      this->private_state_->tc_size_known_ = 0;
-      break;
-    }
 }
 
 // Constructor for all other typecodes, including constants with
@@ -276,8 +214,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // since we do not have any parents, we are the root
       this->root_tc_base_ = start;
       this->buffer_ = start + 4 + 4;
-      this->private_state_->tc_size_known_ = 1;
-      this->private_state_->tc_size_ = size;
     }
   else
     {
@@ -444,19 +380,6 @@ CORBA_TypeCode::content_type (CORBA::Environment &ACE_TRY_ENV) const
 
 }
 
-// compute the padded size of the discriminant
-CORBA::ULong
-CORBA_TypeCode::TAO_discrim_pad_size (CORBA::Environment &ACE_TRY_ENV)
-{
-  if (this->kind_ != CORBA::tk_union)
-    ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
-
-  if (this->private_state_->tc_discrim_pad_size_known_)
-    return this->private_state_->tc_discrim_pad_size_;
-  else
-    return this->private_discrim_pad_size (ACE_TRY_ENV);
-}
-
 // skip a typecode encoding in a given CDR stream
 // This is just a helper function
 CORBA::Boolean
@@ -515,9 +438,6 @@ TC_Private_State::TC_Private_State (CORBA::TCKind kind)
     tc_default_index_used_known_ (0),
     tc_length_known_ (0),
     tc_content_type_known_ (0),
-    tc_size_known_ (0),
-    tc_alignment_known_ (0),
-    tc_discrim_pad_size_known_ (0),
     tc_id_ (0),
     tc_name_ (0),
     tc_member_count_ (0),
@@ -527,10 +447,7 @@ TC_Private_State::TC_Private_State (CORBA::TCKind kind)
     tc_discriminator_type_ (0),
     tc_default_index_used_ (0),
     tc_length_ (0),
-    tc_content_type_ (0),
-    tc_size_ (0),
-    tc_alignment_ (0),
-    tc_discrim_pad_size_ (0)
+    tc_content_type_ (0)
 {
 }
 
@@ -2211,32 +2128,6 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &ACE_TRY_ENV) const
   ACE_NOTREACHED (return 0);
 }
 
-CORBA::ULong
-CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &ACE_TRY_ENV)
-{
-  // Double checked locking...
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->private_state_->mutex_, 0);
-  if (this->private_state_->tc_discrim_pad_size_known_)
-    return this->private_state_->tc_discrim_pad_size_;
-
-  TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-                       this->byte_order_);
-
-  size_t discrim_size;
-  size_t overall_align;
-
- (void) TAO_CDR_Interpreter::calc_key_union_attributes (&stream,
-                                                         overall_align,
-                                                         discrim_size,
-                                                         ACE_TRY_ENV);
- ACE_CHECK_RETURN (0);
-
- this->private_state_->tc_discrim_pad_size_known_ = 1;
- this->private_state_->tc_discrim_pad_size_ = discrim_size;
- return discrim_size;
-}
-
 // ****************************************************************
 
 void
@@ -2568,77 +2459,6 @@ CORBA_TypeCode::parameter (const CORBA::Long /* slot */,
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
                     0);
-}
-
-// Tell user the size of an instance of the data type described by
-// this typecode ... typically used to allocate memory.
-
-size_t
-CORBA::TypeCode::private_size (CORBA::Environment &ACE_TRY_ENV)
-{
-  if (kind_ >= CORBA::TC_KIND_COUNT)
-    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
-
-  // Double checked locking...
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->private_state_->mutex_, 0);
-  if (this->private_state_->tc_size_known_)
-    return this->private_state_->tc_size_;
-
-  if (TAO_CDR_Interpreter::table_[kind_].calc_ == 0)
-    {
-      private_state_->tc_size_known_ = 1;
-      private_state_->tc_size_ =
-        TAO_CDR_Interpreter::table_[kind_].size_;
-      return private_state_->tc_size_;
-    }
-
-  size_t alignment;
-  TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-                       this->byte_order_);
-
-  private_state_->tc_size_known_ = 1;
-  private_state_->tc_size_ =
-    TAO_CDR_Interpreter::table_[kind_].calc_ (&stream, alignment, ACE_TRY_ENV);
-  return private_state_->tc_size_;
-}
-
-// Tell user the alignment restriction for the data type described by
-// an instance of this data type.  Rarely used; provided for
-// completeness.
-
-size_t
-CORBA::TypeCode::private_alignment (CORBA::Environment &ACE_TRY_ENV)
-{
-  if (kind_ >= CORBA::TC_KIND_COUNT)
-    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
-
-  // Double checked locking...
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->private_state_->mutex_, 0);
-  if (this->private_state_->tc_alignment_known_)
-    return this->private_state_->tc_alignment_;
-
-  if (TAO_CDR_Interpreter::table_[kind_].calc_ == 0)
-    {
-      private_state_->tc_alignment_known_ = 1;
-      private_state_->tc_alignment_ =
-        TAO_CDR_Interpreter::table_[kind_].alignment_;
-      return private_state_->tc_alignment_;
-    }
-
-  size_t alignment;
-  TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-                       this->byte_order_);
-
-  (void) TAO_CDR_Interpreter::table_[kind_].calc_ (&stream,
-                                                    alignment,
-                                                    ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  private_state_->tc_alignment_known_ = 1;
-  private_state_->tc_alignment_ = alignment;
-  return alignment;
 }
 
 // ****************************************************************

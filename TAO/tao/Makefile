@@ -118,7 +118,6 @@ DEFAULT_RESOURCES_FILES = \
 
 INTERPRETIVE_MARSHALING_FILES = \
   append \
-  CDR_Interpreter \
   Marshal \
   skip
 
@@ -361,15 +360,6 @@ ifeq ($(LYNXTARGET),ppc)
 	@echo NOTE: compiling POA.cpp with -O instead of -O2, see Makefile.
 	$(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
 endif # LYNXTARGET == ppc
-
-ifeq (1,$(debug))
-  ifeq (i386-nto-g++,$(findstring i386-nto-g++,$(CXX)))
-  #### CDR_Interpreter.cpp must be compiled without -g for QNX Neutrino/i386.
-  .obj/CDR_Interpreter.o .obj/CDR_Interpreter.so .shobj/CDR_Interpreter.o .shobj/CDR_Interpreter.so: CDR_Interpreter.cpp
-	@echo NOTE: compiling CDR_Interpreter.cpp without -g, see Makefile.
-	$(subst $(DCFLAGS) ,,$(COMPILE.cc)) -o $@ $<
-  endif # i386-nto-g++
-endif # debug
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 LDFLAGS += $(RLDFLAGS)
@@ -11544,110 +11534,6 @@ realclean:
  Marshal.i \
  debug.h
 
-.obj/CDR_Interpreter.o .obj/CDR_Interpreter.so .shobj/CDR_Interpreter.o .shobj/CDR_Interpreter.so: CDR_Interpreter.cpp \
- Sequence.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- try_macros.h \
- orbconf.h \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- corbafwd.i \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- varout.h \
- Object.h \
- Object.i \
- varout.i \
- varout.cpp \
- CDR_Interpreter.h \
- Any.h \
- CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Any.i \
- Union.h
-
 .obj/Marshal.o .obj/Marshal.so .shobj/Marshal.o .shobj/Marshal.so: Marshal.cpp \
  Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -14196,7 +14082,6 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  ORB_Core.i \
  Server_Strategy_Factory.h \
- CDR_Interpreter.h \
  debug.h \
  TAO_Internal.h \
  Marshal.h \
@@ -16302,7 +16187,6 @@ realclean:
  Object.h \
  Object.i \
  Any.i \
- CDR_Interpreter.h \
  Principal.h \
  Sequence.h \
  Managed_Types.h \
@@ -17738,6 +17622,8 @@ realclean:
  varout.i \
  varout.cpp \
  IOPC.i \
+ Environment.h \
+ Environment.i \
  InterceptorC.i \
  Interceptor.i
 
@@ -17840,6 +17726,8 @@ realclean:
  varout.i \
  varout.cpp \
  IOPC.i \
+ Environment.h \
+ Environment.i \
  InterceptorC.i
 
 .obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp \

@@ -1,3 +1,23 @@
+Wed Apr 26 18:30:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/CDR_Interpreter.h:
+        * tao/CDR_Interpreter.cpp:
+          Removed the TAO_CDR_Interpreter class its main clients were the
+          encode() and decode() aspects of the interpretive marshaling
+          engine that was removed sometime ago.  This is part of the work
+          for [BUGID:135]
+
+        * tao/ORB.cpp:
+          There is no need to initialize the TAO_CDR_Interpreter class.
+
+        * tao/Typecode.h:
+        * tao/Typecode.i:
+        * tao/Typecode.cpp:
+          Removed a couple of methods that were using the
+          TAO_CDR_Interpreter.  In turn those methods were not used
+          anymore.
+
 Wed Apr 26 16:57:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/CosEvent/CosEvent.dsw:
