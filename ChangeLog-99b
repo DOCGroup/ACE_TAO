@@ -1,3 +1,13 @@
+1999-09-03  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Added a new overloaded ACE_OS::ioctl () function that takes in 
+	  ACE_QoS as one of the parameters, constructs a windows QOS from 
+	  it and passes it to WSAIoctl (). This function can be used when
+	  the I/O control code is SIO_SET_QOS.
+	
+	* ace/OS.i: 
+	* ace/OS.h:
+
 Fri Sep  3 14:58:51 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * config-aix-4.x.h:
