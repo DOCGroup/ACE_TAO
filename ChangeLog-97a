@@ -1,3 +1,11 @@
+Mon Apr 28 17:32:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: Added
+ 	  template specializations.
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: Added
+ 	  template specializations.
+
 Mon Apr 28 17:26:15 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.cpp: Implemented ACE_OS::pread() and ACE_OS::pwrite() for
