@@ -1236,8 +1236,8 @@ public:
   static ACE_Recursive_Thread_Mutex *instance (void);
   // static lock access point
 
-  static void atexit (void);
-  // clean things up when program exit
+  static void close_singleton (void);
+  // Clean up when program exits.
 
 private:
   static ACE_Recursive_Thread_Mutex *mutex_;
