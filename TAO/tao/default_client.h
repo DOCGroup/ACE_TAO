@@ -68,7 +68,8 @@ private:
 
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)
   // @@ Chris, shouldn't this always be "potentially" the case, even
-  // if a client didn't want to use it? 
+  // if a client didn't want to use it?
+  // @@ Yes, but we don't support this right now...
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 #endif /* TAO_HAS_CLIENT_CONCURRENCY */
 
