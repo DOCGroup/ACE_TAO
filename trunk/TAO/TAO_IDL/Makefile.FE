@@ -147,10 +147,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/ast_array.h \
-  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
-  include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/ast_array.h include/ast_concrete_type.h include/ast_type.h \
+  include/ast_decl.h include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -216,7 +217,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -280,9 +282,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -378,9 +382,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -517,9 +522,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -556,11 +563,12 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/ast_root.h \
-  include/ast_module.h include/ast_decl.h include/utl_scoped_name.h \
-  include/utl_idlist.h include/utl_list.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/ast_root.h include/ast_module.h include/ast_decl.h \
+  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -694,9 +702,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -747,7 +757,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   include/ast_valuetype.h include/ast_interface.h include/ast_type.h \
   include/ast_decl.h include/idl_narrow.h \
@@ -886,9 +897,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -928,8 +941,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -995,7 +1010,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  include/ast_typedef.h $(ACE_ROOT)/ace/ACE.h \
+  include/ast_typedef.h \
+  $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
@@ -1049,9 +1065,19 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -1078,14 +1104,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/String_Base.h \
-  $(ACE_ROOT)/ace/String_Base_Const.h \
-  $(ACE_ROOT)/ace/String_Base.i \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/String_Base.cpp \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i
 
 .obj/y.tab.o .obj/y.tab.so .shobj/y.tab.o .shobj/y.tab.so: fe/y.tab.cpp include/ast_argument.h include/ast_field.h \
@@ -1100,9 +1118,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_array.h include/ast_concrete_type.h include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_array.h include/ast_concrete_type.h \
+  include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -1243,9 +1263,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -1293,10 +1315,11 @@ realclean: clean
   include/utl_strlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/utl_exprlist.h \
-  include/utl_labellist.h include/utl_decllist.h include/utl_string.h \
-  include/utl_err.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/utl_exprlist.h include/utl_labellist.h include/utl_decllist.h \
+  include/utl_string.h include/utl_err.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1416,9 +1439,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1473,8 +1498,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -1554,9 +1581,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_visitor.h
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_visitor.h
 
 .obj/ast_attribute.o .obj/ast_attribute.so .shobj/ast_attribute.o .shobj/ast_attribute.so: ast/ast_attribute.cpp include/ast_attribute.h \
   include/ast_field.h include/ast_decl.h include/utl_scoped_name.h \
@@ -1570,9 +1598,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_exception.h include/ast_structure.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_exception.h include/ast_structure.h \
   include/ast_concrete_type.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
@@ -1705,9 +1734,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -1749,7 +1780,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -1862,9 +1894,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1897,8 +1931,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h include/idl_bool.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  include/idl_bool.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -1926,8 +1960,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2060,9 +2096,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -2105,8 +2143,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2146,8 +2186,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2242,8 +2284,9 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
   include/TAO_IDL_FE_Export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/ast_decl.h \
-  include/idl_narrow.h include/global_extern.h include/idl_global.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/ast_decl.h include/idl_narrow.h include/global_extern.h \
+  include/idl_global.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -2310,9 +2353,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2364,8 +2409,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2502,9 +2549,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -2545,8 +2594,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2678,9 +2729,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -2781,8 +2834,9 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
   include/TAO_IDL_FE_Export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/ast_decl.h \
-  include/idl_narrow.h include/global_extern.h include/idl_global.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/ast_decl.h include/idl_narrow.h include/global_extern.h \
+  include/idl_global.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -2849,9 +2903,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2901,8 +2957,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3035,9 +3093,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -3135,9 +3195,10 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
   include/TAO_IDL_FE_Export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/ast_constant.h \
-  include/ast_decl.h include/idl_narrow.h include/global_extern.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/ast_constant.h include/ast_decl.h include/idl_narrow.h \
+  include/global_extern.h include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -3203,9 +3264,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3258,8 +3321,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3391,9 +3456,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -3437,8 +3504,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3518,9 +3587,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3653,9 +3723,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -3698,9 +3770,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3739,8 +3812,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3873,9 +3948,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -3917,8 +3994,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -4051,9 +4130,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4102,8 +4183,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -4183,9 +4266,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4324,9 +4408,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4370,8 +4456,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -4410,9 +4498,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4481,7 +4570,8 @@ realclean: clean
   include/ast_predefined_type.h include/ast_concrete_type.h \
   include/ast_argument.h include/ast_field.h include/ast_exception.h \
   include/ast_structure.h include/ast_visitor.h include/utl_err.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -4545,9 +4635,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4591,8 +4683,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -4618,7 +4712,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   include/ast_visitor.h include/utl_identifier.h include/global_extern.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
@@ -4713,9 +4808,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4766,9 +4863,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4853,8 +4951,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -4935,8 +5035,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5021,7 +5123,8 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   include/utl_identifier.h include/idl_defines.h include/global_extern.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -5068,9 +5171,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -5112,8 +5217,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5246,9 +5353,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -5291,8 +5400,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5373,8 +5484,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5461,8 +5574,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5502,8 +5617,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5637,9 +5754,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -5683,8 +5802,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5765,9 +5886,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_union_label.h include/ast_visitor.h include/utl_labellist.h
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_union_label.h include/ast_visitor.h \
+  include/utl_labellist.h
 
 .obj/ast_union_label.o .obj/ast_union_label.so .shobj/ast_union_label.o .shobj/ast_union_label.so: ast/ast_union_label.cpp include/ast_union_label.h \
   include/TAO_IDL_FE_Export.h \
@@ -5855,8 +5978,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5988,9 +6113,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -6034,8 +6161,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -6115,9 +6244,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6195,7 +6325,8 @@ realclean: clean
   include/ast_field.h include/ast_union.h include/ast_union_fwd.h \
   include/ast_structure_fwd.h include/ast_union_branch.h \
   include/ast_enum_val.h include/ast_constant.h include/global_extern.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -6259,9 +6390,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -6303,8 +6436,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h
 
 .obj/ast_recursive.o .obj/ast_recursive.so .shobj/ast_recursive.o .shobj/ast_recursive.so: ast/ast_recursive.cpp include/ast_union.h \
   include/ast_structure.h include/ast_concrete_type.h include/ast_type.h \
@@ -6319,8 +6454,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -6387,7 +6524,8 @@ realclean: clean
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   include/ast_typedef.h include/utl_stack.h include/global_extern.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -6451,9 +6589,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -6507,9 +6647,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6640,9 +6781,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -6702,8 +6845,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ACE_export.h \
   include/utl_scope.h include/ast_decl.h include/utl_scoped_name.h \
   include/utl_idlist.h include/utl_list.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6834,9 +6977,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -6876,7 +7021,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/SString.h \
@@ -6991,9 +7137,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7054,9 +7202,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/utl_list.h \
-  include/idl_bool.h include/fe_declarator.h include/utl_scoped_name.h \
-  include/utl_idlist.h $(ACE_ROOT)/ace/iosfwd.h
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/utl_list.h include/idl_bool.h include/fe_declarator.h \
+  include/utl_scoped_name.h include/utl_idlist.h \
+  $(ACE_ROOT)/ace/iosfwd.h
 
 .obj/utl_labellist.o .obj/utl_labellist.so .shobj/utl_labellist.o .shobj/utl_labellist.so: util/utl_labellist.cpp include/utl_labellist.h \
   include/utl_list.h include/TAO_IDL_FE_Export.h \
@@ -7069,7 +7218,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h
 
 .obj/utl_namelist.o .obj/utl_namelist.so .shobj/utl_namelist.o .shobj/utl_namelist.so: util/utl_namelist.cpp include/utl_namelist.h \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
@@ -7083,7 +7233,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
   $(ACE_ROOT)/ace/iosfwd.h
 
 .obj/utl_exceptlist.o .obj/utl_exceptlist.so .shobj/utl_exceptlist.o .shobj/utl_exceptlist.so: util/utl_exceptlist.cpp include/utl_exceptlist.h \
@@ -7097,7 +7248,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h
 
 .obj/utl_strlist.o .obj/utl_strlist.so .shobj/utl_strlist.o .shobj/utl_strlist.so: util/utl_strlist.cpp include/utl_strlist.h \
   include/utl_list.h include/TAO_IDL_FE_Export.h \
@@ -7110,8 +7262,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/utl_string.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/utl_string.h \
   $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
@@ -7163,7 +7317,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
@@ -7214,7 +7369,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h
 
 .obj/utl_err.o .obj/utl_err.so .shobj/utl_err.o .shobj/utl_err.so: util/utl_err.cpp include/utl_err.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -7284,7 +7440,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Memory.inl \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
   include/TAO_IDL_FE_Export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_global.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_global.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -7351,9 +7508,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7393,7 +7552,8 @@ realclean: clean
   include/global_extern.h include/nr_extern.h include/ast_interface.h \
   include/utl_scope.h include/ast_typedef.h include/ast_enum.h \
   include/ast_union.h include/ast_structure.h include/ast_union_label.h \
-  include/idl_defines.h $(ACE_ROOT)/ace/streams.h
+  include/idl_defines.h \
+  $(ACE_ROOT)/ace/streams.h
 
 .obj/utl_indenter.o .obj/utl_indenter.so .shobj/utl_indenter.o .shobj/utl_indenter.so: util/utl_indenter.cpp \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
@@ -7466,7 +7626,8 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
-  include/utl_indenter.h $(ACE_ROOT)/ace/iosfwd.h \
+  include/utl_indenter.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
   $(ACE_ROOT)/ace/streams.h
 
 .obj/utl_identifier.o .obj/utl_identifier.so .shobj/utl_identifier.o .shobj/utl_identifier.so: util/utl_identifier.cpp include/utl_identifier.h \
@@ -7480,7 +7641,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/SString.h \
@@ -7595,9 +7757,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7658,7 +7822,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   include/utl_identifier.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
@@ -7825,9 +7990,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -7860,8 +8027,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h include/idl_bool.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
+  include/idl_bool.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -7893,9 +8060,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
