@@ -1,3 +1,9 @@
+Wed Sep 17 13:51:25 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  I setup autoflush on the logfile, it makes debugging and non
+	  crontab usage a bit easier.
+
 Wed Sep 17 12:59:34 1997    <irfan@TWOSTEP>
 
 	* ace/Local_Name_Space_T.cpp: Fixed warnings caused by SEH macros.

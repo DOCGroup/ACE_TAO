@@ -26,6 +26,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 use File::Basename;
+use FileHandle;
 require POSIX;
 
 # This is the module we will checkout, someday someone could define a
@@ -89,6 +90,8 @@ if (-f $LOGDIR . '/.disable') {
 $LOGFILE = $LOGDIR . '/' . POSIX::strftime("%b%d_%Y.log", localtime);
 open(LOG, '>' . $LOGFILE)
     || mydie "cannot open log file";
+
+LOG->autoflush ();
 
 # The following lines are useful when debugging the script or wrapper.
 # print LOG $CHECKOUT, " ", $BUILD, " ", $LOGDIR, " ", $ADMIN, "\n";
