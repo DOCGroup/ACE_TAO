@@ -209,9 +209,10 @@ client (void *arg)
     {
       // Print out the connections that failed...
       for (size_t i = 0; i < opt_nconnections; i++)
-        if (failed_svc_handlers.get ()[i] != 0)
+        if (failed_svc_handlers.get ()[i])
           {
-            ACE_INET_Addr &failed_addr = failed_svc_handlers.get ()[i];
+            ACE_INET_Addr failed_addr;
+            writers.get ()[i]->peer ().get_local_addr (failed_addr);
             ACE_ERROR ((LM_ERROR, "(%t) connection failed to %s, %d\n",
                         failed_addr.get_host_name (),
                         failed_addr.get_port_number ()));
