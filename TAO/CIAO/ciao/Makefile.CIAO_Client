@@ -290,8 +290,7 @@ TAO_IDLFLAGS += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  CIAO_Client_Export.h \
+  $(TAO_ROOT)/tao/ORB.i CIAO_Client_Export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
@@ -594,8 +593,7 @@ TAO_IDLFLAGS += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  CIAO_Client_Export.h \
+  $(TAO_ROOT)/tao/ORB.i CIAO_Client_Export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
@@ -898,8 +896,7 @@ TAO_IDLFLAGS += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  CIAO_Client_Export.h \
+  $(TAO_ROOT)/tao/ORB.i CIAO_Client_Export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
@@ -1210,8 +1207,7 @@ TAO_IDLFLAGS += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i \
-  CIAO_Client_Export.h \
+  $(TAO_ROOT)/tao/ORB.i CIAO_Client_Export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
@@ -1320,8 +1316,7 @@ TAO_IDLFLAGS += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/Client_init.o .obj/Client_init.so .shobj/Client_init.o .shobj/Client_init.so: Client_init.cpp Client_init.h \
-  $(ACE_ROOT)/ace/pre.h \
-  CIAO_Client_Export.h \
+  $(ACE_ROOT)/ace/pre.h CIAO_Client_Export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1329,9 +1324,8 @@ TAO_IDLFLAGS += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  CIAO_common.h CCM_ComponentC.h \
-  $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/ACE_export.h CIAO_common.h \
+  CCM_ComponentC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
