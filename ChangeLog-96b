@@ -1,5 +1,17 @@
 Mon Dec  2 14:13:44 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace: Changed all occurrences of ACE_Event_Handler
+	  reactorex() to reactorEx() to be consistent.  Thanks to
+	  Matthias for suggesting this.
+
+	* ace/Message_Queue.cpp (close): We didn't allocate the memory for
+ 	  the notification_strategy_, so we darn well can't delete it!
+  	  Thanks to Matthias for finding this.
+
+	* ace/Log_Msg.cpp (ACE_TSS_cleanup): Made the ACE_TSS_cleanup
+ 	  function extern "C" for MVS C++ and compilers like it...  Thanks
+ 	  to Chuck Gehr for reporting this.
+
 	* tests/Naming_Test.cpp (main): Added delete ns_context to close
  	  things down and free up the semaphores.  Thanks to David Levine
  	  for suggesting this.

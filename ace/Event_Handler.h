@@ -132,8 +132,8 @@ public:
   virtual void reactor (ACE_Reactor *reactor);
   virtual ACE_Reactor *reactor (void) const;
 
-  virtual void reactorex (ACE_ReactorEx *reactorex);
-  virtual ACE_ReactorEx *reactorex (void) const;
+  virtual void reactorEx (ACE_ReactorEx *reactorex);
+  virtual ACE_ReactorEx *reactorEx (void) const;
 
   virtual void proactor (ACE_Proactor *proactor);
   virtual ACE_Proactor *proactor (void) const;
