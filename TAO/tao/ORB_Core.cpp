@@ -1064,9 +1064,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Set the list of prefixes from -ORBDefaultInitRef.
   this->orb_params ()->default_init_ref (default_init_ref);
 
-  this->orb_params ()->name_service_port (ns_port);
-  this->orb_params ()->trading_service_port (ts_port);
-  this->orb_params ()->implrepo_service_port (ir_port);
+  this->orb_params ()->service_port (NAMESERVICE, ns_port);
+  this->orb_params ()->service_port (TRADINGSERVICE, ts_port);
+  this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
+  
   this->orb_params ()->mcast_discovery_endpoint (mde);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   this->orb_params ()->nodelay (nodelay);

@@ -119,24 +119,16 @@ public:
   void add_endpoint (ACE_CString &endpoint);
   // Specifies the endpoints on which this server is willing to
   // listen for requests.
-
-  CORBA::UShort name_service_port (void) const;
-  void name_service_port (CORBA::UShort port);
-  // Set/Get the port of our name service.
-
+  
+  CORBA::UShort service_port (MCAST_SERVICEID service_id) const;
+  void service_port (MCAST_SERVICEID service_id, CORBA::UShort port);
+  // Set/Get the port of services locatable through multicast.
+  
   const char *mcast_discovery_endpoint (void) const;
   void mcast_discovery_endpoint (const ACE_CString &mde);
   // Set/Get address:port for Multicast Discovery Protocol for 
   // the Naming Service.
   
-  CORBA::UShort trading_service_port (void) const;
-  void trading_service_port (CORBA::UShort port);
-  // Set/Get the port of our trading service.
-
-  CORBA::UShort implrepo_service_port (void) const;
-  void implrepo_service_port (CORBA::UShort port);
-  // Set/Get the port of the Implementation Repository service.
-
   int sock_rcvbuf_size (void) const;
   void sock_rcvbuf_size (int);
   // Set/Get the size to be used for a socket's receive buffer.
@@ -217,14 +209,8 @@ private:
   TAO_Endpoint_Insertion_Strategy endpoint_insertion_strategy_;
   // Strategy used to insert endpoints into the endpoint container.
 
-  CORBA::UShort name_service_port_;
-  // The port number of our configured Naming Service.
-
-  CORBA::UShort trading_service_port_;
-  // The port number of our configured Trading Service.
-
-  CORBA::UShort implrepo_service_port_;
-  // The port number of our configured Implementation Repository.
+  CORBA::UShort service_port_[NO_OF_MCAST_SERVICES];
+  // Port numbers of the configured services.
 
   ACE_CString mcast_discovery_endpoint_;
   // address:port for Multicast Discovery Protocol for the Naming 
