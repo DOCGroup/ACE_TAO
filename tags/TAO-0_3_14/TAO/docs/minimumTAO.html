@@ -1,0 +1,228 @@
+<title> Minimum TAO </title>
+
+<body text = "#000000"
+      link="#000fff"
+      vlink="#ff0f0f"
+      bgcolor="#ffffff">
+
+<hr>
+<p>
+
+<b> Minimum TAO </b>
+<p>
+
+We have added support for the new <a href =
+"http://www.omg.org/cgi-bin/doc?orbos/98-08-04.pdf"> <em> minimumCORBA
+</em> </a> specification to <a href =
+"http://www.cs.wustl.edu/~schmidt/TAO.html"> TAO</a>.  The <em>
+minimumCORBA </em> specification removes the following features from
+the CORBA <a href = "http://www.omg.org/library/c2indx.html"> 2.2 </a>
+specification.
+
+<ul>
+
+<li> Dynamic Skeleton Interface <br>
+<li> Dynamic Invocation Interface <br>
+<li> Dynamic Any <br>
+<li> Interceptors <br>
+<li> Interface Repository <br>
+<li> Advanced POA features <br>
+<li> CORBA/COM interworking <br>
+
+</ul>
+<p>
+
+To minimize the footprint of TAO, we first <a href =
+"../../ACE-INSTALL.html"> configure </a> ACE to support only those <a
+href = "../../docs/ACE-subsets.html"> components </a> that are
+required by TAO. Secondly, we <a href = "../TAO-INSTALL.html">
+configure </a> TAO to only support the components specified by the
+<em> minimumCORBA </em> specification.  The following two tables show
+the footprint reduction achieved.
+
+<p>
+<hr>
+<p>
+
+<I> Note: All measurement are for ACE 4.6.29 and TAO 0.3.13 using
+egcs-2.91.60 on SunOS5.7 <p> </I>
+
+<p>
+<hr>
+<p>
+
+<center><table cellpadding=4 border=4>
+  <tr>
+    <th>Configuration
+    <th>Component
+    <th>Total
+    <th>OS
+    <th>Utils
+    <th>Logging
+    <th>Threads
+    <th>Demux
+    <th>Connection
+    <th>Sockets
+    <th>IPC
+    <th>Svcconf
+    <th>Streams
+    <th>Memory
+    <th>Token
+    <th>Other
+  <tr>
+    <th rowspan=2>ACE (all components)
+    <th>Size, bytes
+    <td align=center>577623
+    <td align=center>11507
+    <td align=center>116234
+    <td align=center>13997
+    <td align=center>59707
+    <td align=center>39632
+    <td align=center>770
+    <td align=center>13703
+    <td align=center>40218
+    <td align=center>101519
+    <td align=center>19439
+    <td align=center>20847
+    <td align=center>75542
+    <td align=center>64508
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>2
+    <td align=center>20
+    <td align=center>2
+    <td align=center>10
+    <td align=center>7
+    <td align=center>0
+    <td align=center>2
+    <td align=center>7
+    <td align=center>18
+    <td align=center>3
+    <td align=center>4
+    <td align=center>13
+    <td align=center>11
+  <tr>
+    <th rowspan=2>ACE (TAO components)
+    <th>Size, bytes
+    <td align=center>437413
+    <td align=center>11507
+    <td align=center>115998
+    <td align=center>14033
+    <td align=center>59707
+    <td align=center>39632
+    <td align=center>770
+    <td align=center>13703
+    <td align=center>40218
+    <td align=center>101559
+    <td align=center>19439
+    <td align=center>20847
+    <td align=center>0
+    <td align=center>0
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>3
+    <td align=center>27
+    <td align=center>3
+    <td align=center>14
+    <td align=center>9
+    <td align=center>0
+    <td align=center>3
+    <td align=center>9
+    <td align=center>23
+    <td align=center>4
+    <td align=center>5
+    <td align=center>0
+    <td align=center>0
+  <tr>
+    <th>Reduction
+    <th>%
+    <td align=center>24.3
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>100
+    <td align=center>100
+</table></center><p>
+
+<hr>
+
+<p>
+
+<center><table cellpadding=4 border=4>
+  <tr>
+    <th>Configuration
+    <th>Component
+    <th>Total
+    <th>POA
+    <th>Pluggable Protocols
+    <th>Default Resources
+    <th>Interpretive Marshaling
+    <th>IDL Compiler
+    <th>ORB Core
+    <th>Dynamic Any
+  <tr>
+    <th rowspan=2>Complete TAO
+    <th>Size, bytes
+    <td align=center>861985
+    <td align=center>281896
+    <td align=center>14610
+    <td align=center>7919
+    <td align=center>68687
+    <td align=center>10488
+    <td align=center>347080
+    <td align=center>131305
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>33
+    <td align=center>2
+    <td align=center>1
+    <td align=center>8
+    <td align=center>1
+    <td align=center>40
+    <td align=center>15
+  <tr>
+    <th rowspan=2>Minimum  TAO
+    <th>Size, bytes
+    <td align=center>639456
+    <td align=center>207216
+    <td align=center>14674
+    <td align=center>7975
+    <td align=center>68775
+    <td align=center>10512
+    <td align=center>330304
+    <td align=center>0
+  <tr>
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>32
+    <td align=center>2
+    <td align=center>1
+    <td align=center>11
+    <td align=center>2
+    <td align=center>52
+    <td align=center>0
+  <tr>
+    <th>Reduction
+    <th>%
+    <td align=center>25.8
+    <td align=center>26.5
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>0
+    <td align=center>4.8
+    <td align=center>100
+</table></center><p>
+
+<p>
