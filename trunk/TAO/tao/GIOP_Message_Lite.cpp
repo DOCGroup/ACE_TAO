@@ -470,7 +470,7 @@ TAO_GIOP_Message_Lite::get_message_data (TAO_Queued_Data *qd)
 
 int
 TAO_GIOP_Message_Lite::consolidate_fragments (TAO_Queued_Data * /*dqd*/,
-                                              const TAO_Queued_Data */*sqd*/)
+                                              const TAO_Queued_Data * /*sqd*/)
 {
   // We dont know what fragments are???
   return -1;
