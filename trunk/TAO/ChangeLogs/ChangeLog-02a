@@ -1,3 +1,13 @@
+Tue Apr 17 12:19:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+
+          Modified code that used != to compare two typecodes
+          to use TypeCode::equal(). Also added TypeCode_vars
+          to contain the results of CORBA::Any::type(). Thanks
+          to Max Voronoy <m.voronoy@telesens.com.ua> for
+          reporting the != bug.
+
 Tue Apr 17 08:34:27 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* tests/OctetSeq/run_test1.pl:
