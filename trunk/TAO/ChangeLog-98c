@@ -18,8 +18,8 @@ Thu Jun 11 11:25:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 Thu Jun 11 09:39:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Event/Event_Channel.cpp: removed
-          ACE_EC_Gateway template instantiations.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp: changed the
+          ACE_EC_Gateway template instantiations to TAO_EC_Gateway.
 
         * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
           changed types of local i, and global num_of_objs, to u_int
