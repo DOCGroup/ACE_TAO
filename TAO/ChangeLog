@@ -1,3 +1,11 @@
+Mon Apr 26 09:08:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Strategies/SHMIOP_Connector.cpp (TAO_SHMIOP_Connector):
+
+	  Corrected constructor argument type from CORBA::Octet to
+	  CORBA::Boolean to match the one in the header.  These two types
+	  are now distinct.
+
 Mon Apr 26 10:06:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/mfc/client.mpc:
