@@ -292,21 +292,27 @@ CORBA_TypeCode::member_type (CORBA::ULong slot
       && this->private_state_->tc_member_type_list_known_)
     {
       if (slot < this->private_state_->tc_member_count_)
-        typecode = CORBA::TypeCode::_duplicate (
-                       this->private_state_->tc_member_type_list_[slot]
-                     );
+        {
+          typecode = CORBA::TypeCode::_duplicate (
+                         this->private_state_->tc_member_type_list_[slot]
+                       );
+        }
       else
-        ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+        {
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+                            0);
+        }
     }
   else
     {
       typecode = CORBA::TypeCode::_duplicate (
                      this->private_member_type (slot
-                                                 ACE_ENV_ARG_PARAMETER)
+                                                ACE_ENV_ARG_PARAMETER)
                    );
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
     }
 
-    return typecode;
+  return typecode;
 }
 
 // Applicable only to struct, union, and except
@@ -446,8 +452,56 @@ CORBA_TypeCode::content_type (ACE_ENV_SINGLE_ARG_DECL) const
         }
     }
   else
-    ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+    {
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+                        0);
+    }
 
+}
+
+CORBA::Visibility
+CORBA_TypeCode::member_visibility (CORBA::ULong slot
+                                   ACE_ENV_SINGLE_ARG_DECL) const
+{
+  if (this->private_state_->tc_member_count_known_
+      && this->private_state_->tc_member_visibility_list_known_)
+    {
+      if (slot < this->private_state_->tc_member_count_)
+        {
+          return this->private_state_->tc_member_visibility_list_[slot];
+        }
+      else
+        {
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+                            0);
+        }
+    }
+  else
+    {
+      CORBA::Visibility v = 
+        this->private_member_visibility (slot
+                                         ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::PRIVATE_MEMBER);
+
+      return v;
+    }
+}
+
+CORBA::ValueModifier
+CORBA_TypeCode::type_modifier (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  if (this->private_state_->tc_type_modifier_known_)
+    {
+      return this->private_state_->tc_type_modifier_;
+    }
+  else
+    {
+      CORBA::ValueModifier vm = 
+        this->private_type_modifier (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::VM_NONE);
+
+      return vm;
+    }
 }
 
 CORBA::TypeCode_ptr
@@ -529,6 +583,8 @@ TC_Private_State::TC_Private_State (CORBA::TCKind kind)
     tc_length_known_ (0),
     tc_content_type_known_ (0),
     tc_discrim_pad_size_known_ (0),
+    tc_member_visibility_list_known_ (0),
+    tc_type_modifier_known_ (0),
     tc_concrete_base_type_known_ (0),
     tc_id_ (0),
     tc_name_ (0),
@@ -540,6 +596,8 @@ TC_Private_State::TC_Private_State (CORBA::TCKind kind)
     tc_default_index_used_ (0),
     tc_length_ (0),
     tc_content_type_ (0),
+    tc_member_visibility_list_ (0),
+    tc_type_modifier_ (0),
     tc_concrete_base_type_ (0)
 {
 }
@@ -1037,16 +1095,18 @@ CORBA_TypeCode::private_equal_struct (
               && ACE_OS::strlen (tc_member_name) > 1
               && ACE_OS::strcmp (my_member_name,
                                  tc_member_name)) // not same
-            return 0;
+            {
+              return 0;
+            }
         }
 
       // now compare the typecodes of the members
       CORBA::TypeCode_var my_member_tc = this->member_type (i
-                                                             ACE_ENV_ARG_PARAMETER);
+                                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA::TypeCode_var tc_member_tc = tc->member_type (i
-                                                           ACE_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // One of our members may be recursive, but not through us.
@@ -1054,16 +1114,20 @@ CORBA_TypeCode::private_equal_struct (
           && my_member_tc->parent_ == tc_member_tc->parent_
           && my_member_tc->tc_base_ == tc_member_tc->tc_base_
           && my_member_tc->root_tc_base_ == tc_member_tc->root_tc_base_)
-        continue;
+        {
+          continue;
+        }
 
       CORBA::Boolean flag =
         my_member_tc->equ_common (tc_member_tc.in (),
                                   equiv_only
-                                   ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (!flag)
-        return 0;
+        {
+          return 0;
+        }
     }
 
   return 1; // success
@@ -2571,7 +2635,8 @@ CORBA_TypeCode::private_length (ACE_ENV_SINGLE_ARG_DECL) const
       ACE_NOTREACHED (break);
 
     default:
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+                        0);
     }
   ACE_NOTREACHED (return 0);
 }
@@ -2619,7 +2684,7 @@ CORBA_TypeCode::private_content_type (ACE_ENV_SINGLE_ARG_DECL) const
         CORBA_TypeCode::_tao_decode (this,
                                      stream,
                                      this->private_state_->tc_content_type_
-                                      ACE_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         this->private_state_->tc_content_type_known_ = 1;
@@ -2633,30 +2698,154 @@ CORBA_TypeCode::private_content_type (ACE_ENV_SINGLE_ARG_DECL) const
   ACE_NOTREACHED (return 0);
 }
 
-CORBA::TypeCode_ptr
-CORBA_TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::Visibility
+CORBA_TypeCode::private_member_visibility (CORBA::ULong slot
+                                           ACE_ENV_ARG_DECL) const
 {
-  if (kind_ != CORBA::tk_value)
-    ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  if (this->kind_ != CORBA::tk_value)
+    {
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+                        CORBA::PRIVATE_MEMBER);
+    }
+
+  CORBA::ULong mcount = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::PRIVATE_MEMBER);
+
+  if (slot >= mcount)
+    {
+      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                        CORBA::PRIVATE_MEMBER);
+    }
 
   // Double checked locking...
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
-                    this->private_state_->mutex_, 0);
-  if (this->private_state_->tc_concrete_base_type_known_)
-    return this->private_state_->tc_concrete_base_type_;
+                    this->private_state_->mutex_, 
+                    0);
 
-  // setup an encapsulation
-  TAO_InputCDR stream (this->buffer_+4, this->length_-4,
+  if (this->private_state_->tc_member_visibility_list_known_)
+    {
+      return this->private_state_->tc_member_visibility_list_[slot];
+    }
+
+  // Set up an encapsulation.
+  TAO_InputCDR stream (this->buffer_+4, 
+                       this->length_-4,
                        this->byte_order_);
 
-  // skip rest of header (type ID, name, etc) and collect the
-  // number of value members
+  // Skip rest of header (type ID, name, etc) and collect the
+  // number of value members.
+  if (!stream.skip_string ()              // ID
+      || !stream.skip_string ()           // Name
+      || !stream.skip_short ()            // ValueModifier
+      || !this->skip_typecode (stream)    // Concrete base typecode
+      || !stream.skip_ulong ())           // Member count
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                        0);
+    }
+
+  ACE_NEW_THROW_EX (this->private_state_->tc_member_visibility_list_,
+                    CORBA::Visibility[mcount],
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::PRIVATE_MEMBER);
+
+  CORBA::Visibility tmp = CORBA::PRIVATE_MEMBER;
+
+  for (CORBA::ULong i = 0; i < mcount; ++i)
+    {
+      if (!stream.skip_string ()              // Member name
+          || !this->skip_typecode (stream)    // Member TypeCode
+          || !stream.read_short (tmp))        // Read the member visibility
+        {
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                            0);
+        }
+
+      this->private_state_->tc_member_visibility_list_[i] = tmp;
+    }
+
+  this->private_state_->tc_member_visibility_list_known_ = 1;
+  return this->private_state_->tc_member_visibility_list_[slot];
+}
+
+CORBA::ValueModifier
+CORBA_TypeCode::private_type_modifier (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  if (this->kind_ != CORBA::tk_value)
+    {
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+                        0);
+    }
+
+  // Double checked locking...
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 
+                    0);
+
+  if (this->private_state_->tc_type_modifier_known_)
+    {
+      return this->private_state_->tc_type_modifier_;
+    }
+
+  // Set up an encapsulation.
+  TAO_InputCDR stream (this->buffer_+4, 
+                       this->length_-4,
+                       this->byte_order_);
+
+  // Skip rest of header (type ID, name, etc) and collect the
+  // number of value members.
+  if (!stream.skip_string ()          // ID
+      || !stream.skip_string ())      // Name
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                        0);
+    }
+
+  if (!stream.read_short (this->private_state_->tc_type_modifier_))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                        0);
+    }
+
+  this->private_state_->tc_type_modifier_known_ = 1;
+  return this->private_state_->tc_type_modifier_;
+}
+
+CORBA::TypeCode_ptr
+CORBA_TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  if (this->kind_ != CORBA::tk_value)
+    {
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 
+                        0);
+    }
+
+  // Double checked locking...
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
+                    this->private_state_->mutex_, 
+                    0);
+
+  if (this->private_state_->tc_concrete_base_type_known_)
+    {
+      return this->private_state_->tc_concrete_base_type_;
+    }
+
+  // Set up an encapsulation.
+  TAO_InputCDR stream (this->buffer_+4, 
+                       this->length_-4,
+                       this->byte_order_);
+
+  // Skip rest of header (type ID, name, etc) and collect the
+  // number of value members.
   if (!stream.skip_string ()          // ID
       || !stream.skip_string ()       // Name
-      || !stream.skip_ulong ())       // ValueModifier
-    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
+      || !stream.skip_short ())       // ValueModifier
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 
+                        0);
+    }
 
-  // retrieve the concrete base typecode
+  // Retrieve the concrete base typecode.
   CORBA_TypeCode::_tao_decode (this,
                                stream,
                                this->private_state_->tc_concrete_base_type_
