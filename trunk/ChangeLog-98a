@@ -1,7 +1,7 @@
 Mon Dec  1 14:01:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Log_Msg.cpp, ace/Log_Msg.h, ace/Log_Record.cpp, 
-          ace/Log_Record.h ace/OS.h, ace/stdcpp.h:
+          ace/Log_Record.h ace/OS.h, ace/stdcpp.h, tests/test_config.h:
 
 		  Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
           to include iostream when the above is #defined.  Made
