@@ -1,3 +1,9 @@
+Wed Jan 07 17:59:57 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Free_List.i (add): Only delete freeed item when we hit the
+ 	  high water mark, not the other way around.  Thanks to Stuart
+ 	  Myles <smyles@wsj.dowjones.com> for pointing this out.
+
 Wed Jan  7 16:28:16 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Event_Handler_T.cpp: Reordered the initializers in the
