@@ -4,65 +4,50 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/examples/Simple/grid
+//    TAO/examples/Simple/time-date
 //
 // = FILENAME
-//    Grid_Client_i.h
+//    Time_Date_Client_i.h
 //
 // = DESCRIPTION
 //    This class implements the interface calls for RMI.
 //
 // = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
+//   Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //    
 // ============================================================================
 
-#ifndef GRID_CLIENT_I_H
-#define GRID_CLIENT_I_H
+#ifndef TIME_DATE_CLIENT_I_H
+#define TIME_DATE_CLIENT_I_H
 
 #include "../Simple_util.h"
-#include "GridC.h"
+#include "Time_DateC.h"
 
-class Grid_Client_i
+class Time_Date_Client_i
 {
   // = TITLE
-  //   Grid_Client interface subclass.
+  //   Time_Date_Client interface subclass.
   //
   // = DESCRIPTION
   //   This class implements the interface between the interface
-  //   objects and the client .
+  //   objects and the client.
 public:
   // = Initialization and termination methods.
-  Grid_Client_i (void);
+  Time_Date_Client_i (void);
   // Constructor
 
-  virtual ~Grid_Client_i (void);
+  virtual ~Time_Date_Client_i (void);
   // Destructor
 
   virtual int run (char *, int, char *[]);
   // Execute the methods.
 
   virtual int parse_args (int argc, char *argv[]);
-  // Parses the command line arguments.
+  // Parses the command line arguments
 
 private:
-  Client<Grid_Factory, Grid_Factory_var> client;
+  Client<Time_Date_Factory, Time_Date_Factory_var> client;
   // Instantiate the client object.
-
-  CORBA::Short height_;
-  // Height of the grid.
-
-  CORBA::Short width_;
-  // Width of the grid.
-
-  CORBA::Short setx_;
-  // Cell identifier in which a value meeds to be stored.
-
-  CORBA::Short sety_;
-  // Cell identifier in which a value meeds to be stored.
-
-  CORBA::Long value_;
-  // The value that needs to be stored in the cell.
 };
 
 #endif /* TIME_CLIENT_I_H */
