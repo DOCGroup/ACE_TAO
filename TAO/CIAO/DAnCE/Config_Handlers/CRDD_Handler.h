@@ -29,7 +29,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     
-   struct ConnectionResourceDeploymentDescription;
+   class ConnectionResourceDeploymentDescription;
    
    /*
     * @class CRDD_Handler

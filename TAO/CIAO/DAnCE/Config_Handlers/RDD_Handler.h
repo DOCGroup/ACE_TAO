@@ -23,7 +23,7 @@
 
 namespace Deployment
 {
-  class ResourceDeploymentDescription;
+  struct ResourceDeploymentDescription;
 }
 
 

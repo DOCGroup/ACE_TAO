@@ -21,7 +21,7 @@
 
 namespace Deployment
 {
-  class Property;
+  struct Property;
 }
 
 namespace CIAO

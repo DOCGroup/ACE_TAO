@@ -24,7 +24,7 @@
 
 namespace Deployment
 {
-  class ImplementationDependency;
+  struct ImplementationDependency;
 }
 
 

@@ -21,7 +21,7 @@
 namespace Deployment
 {
   struct InstanceDeploymentDescription;
-  struct InstanceDeploymentDescriptions;
+  class InstanceDeploymentDescriptions;
   struct InstanceResourceDeploymentDescription;
 }
 

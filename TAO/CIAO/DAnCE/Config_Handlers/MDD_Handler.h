@@ -21,7 +21,7 @@
 
 namespace Deployment
 {
-  class MonolithicDeploymentDescription;
+  struct MonolithicDeploymentDescription;
   class MonolithicDeploymentDescriptions;
 }
 

@@ -18,7 +18,6 @@ namespace CIAO
     {
     }
 
-
     void
     Any_Handler::extract_into_any (const Any& desc,
                                    CORBA::Any& toconfig)

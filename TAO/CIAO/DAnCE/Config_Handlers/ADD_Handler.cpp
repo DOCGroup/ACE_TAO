@@ -9,10 +9,14 @@ ACE_RCSID (DAnCE,
            ADD_Handler,
            "$Id$")
 
+ 
 namespace CIAO
 {
   namespace Config_Handlers
   {
+    ADD_Handler::IDREF_MAP idref_map_ ();
+    ADD_Handler::POS_MAP pos_map_ ();   
+
     bool
     ADD_Handler::artifact_deployment_descrs (
         const DeploymentPlan &src,
@@ -182,9 +186,9 @@ namespace CIAO
     ADD_Handler::bind_ref (ACE_CString& id, size_t index)
     {
       int retval =
-        idref_map_.bind (id, index);
+        idref_map_->bind (id, index);
       
-      pos_map_.bind (index,id);
+      pos_map_->bind (index,id);
 
       if (retval < 0)
         return false;
@@ -196,7 +200,7 @@ namespace CIAO
     ADD_Handler::find_ref (const ACE_CString& id, size_t val)
     {
       int retval =
-        idref_map_.find (id, val);
+        idref_map_->find (id, val);
 
       if (retval < 0)
         return false;
@@ -208,7 +212,7 @@ namespace CIAO
     ADD_Handler::find_ref (const size_t id, ACE_CString& val)
     {
       int retval =
-        pos_map_.find (id,val);
+        pos_map_->find (id,val);
 
       if (retval < 0)
         return false;
@@ -220,9 +224,9 @@ namespace CIAO
     ADD_Handler::unbind_refs (void)
     {
       int retval =
-        idref_map_.unbind_all ();
+        idref_map_->unbind_all ();
  
-      pos_map_.unbind_all ();
+      pos_map_->unbind_all ();
    
       if (retval < 0)
         return false;
