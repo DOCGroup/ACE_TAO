@@ -1109,8 +1109,11 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   this_timeout = this->timer_queue_->calculate_timeout (max_wait_time,
                                                         &timer_buf);
 
-  // If "this_timeout" != 0, the poll must timeout to allow timers
-  // scheduled in the reactor to fire at the appropriate time.
+  // Check if we have timers to fire.
+  int timers_pending =
+    ((this_timeout != 0 && max_wait_time == 0)
+     || (this_timeout != 0 && max_wait_time != 0
+         && *this_timeout != *max_wait_time) ? 1 : 0);
 
   long timeout =
     (this_timeout == 0 ? -1 /* Infinity */ : this_timeout->msec ());
@@ -1156,15 +1159,8 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   if (nfds > -1)
     this->end_pfds_ = this->start_pfds_ + nfds;
 
-  // Check if we have timers to fire.
-  int timers_pending =
-    ((this_timeout != 0 && max_wait_time == 0)
-     || (this_timeout != 0 && max_wait_time != 0
-         && *this_timeout != *max_wait_time) ? 1 : 0);
-
-  // If timers are pending, override any error condition or timeout
-  // from the poll.
-  return (nfds <= 0 && timers_pending != 0 ? 1 : nfds);
+  // If timers are pending, override any timeout from the poll.
+  return (nfds == 0 && timers_pending != 0 ? 1 : nfds);
 }
 
 
