@@ -59,6 +59,18 @@ TAO_Server_Strategy_Factory::create_object_table (void)
   return 0;
 }
 
+ACE_Lock *
+TAO_Server_Strategy_Factory::create_poa_lock (void)
+{
+  return 0;
+}
+
+ACE_Lock *
+TAO_Server_Strategy_Factory::create_poa_mgr_lock (void)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Creation_Strategy<TAO_Server_Connection_Handler>;
 template class ACE_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
