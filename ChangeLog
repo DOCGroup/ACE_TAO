@@ -1,16 +1,25 @@
+Mon Apr 12 13:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/config-win32-msvc-5.h:
+        * ace/config-win32-msvc-6.h:
+          Moved define ACE_HAS_LLSEEK from msvc5/6 file to the win32 common
+          file. This fixes bugid 1780. Thanks to <pierrebizz@hotmail.com> for
+          reporting this.
+
 Thu Apr  1 15:40:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp (activate_svc_handler): Make sure to 
+	* ace/Strategies_T.cpp (activate_svc_handler): Make sure to
 	  store/restore errno when calling svc_handler->destroy ().
   	  Thanks to Ewald Dieterich <ewald.dieterich@fun.de> for reporting
  	  this.  This fixes bugid 1776.
-  
+
 Sun Apr 11 18:33:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* */*.icc:
 
 	  Axed them from the repo. Thanks to Johnny for reminding me to do
-	  this. 
+	  this.
 
 Sun Apr 11 18:22:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -26,7 +35,7 @@ Sun Apr 11 18:19:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* java/gjt/GJT.DSW:
 	* java/src/JACE.DSW:
 
-	  Removed these. 
+	  Removed these.
 
 Sat Apr 10 23:39:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
