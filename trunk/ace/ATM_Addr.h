@@ -27,7 +27,12 @@
 
 #if !defined (ACE_HAS_FORE_ATM_XTI)
 typedef int ATMSAPAddress;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+#include <winsock2.h>
+#include <ws2atm.h>
+
+typedef ATM_ADDRESS ATMSAPAddress;
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 
 class ACE_Export ACE_ATM_Addr : public ACE_Addr
 {
@@ -145,12 +150,16 @@ protected:
   // Get the local ATM address.
 
 private:
+#if defined (ACE_HAS_FORE_ATM_XTI)
   ATMSAPAddress atm_addr_;
   // Underlying representation - this may be very
   // vendor-implementation specific. Other vendors (besides FORE) may
   // name and define this structure differently. We can work around
   // that problem when we run into other vendors supporting XTI on top
   // of ATM. Is this class specific to XTI?  Not sure.
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+  struct sockaddr_atm atm_addr_;
+#endif // ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2
 };
 
 #if defined (__ACE_INLINE__)
