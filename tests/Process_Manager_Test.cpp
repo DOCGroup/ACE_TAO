@@ -79,9 +79,9 @@ spawn_child (const ACE_TCHAR *argv0,
 #if defined (ACE_WIN32)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
-const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %s %d");
+const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
 #else
-const ACE_TCHAR *cmdline_format = ACE_TEXT("%ls %ls %d");
+const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls %ls %d");
 #endif
   ACE_Process_Options opts;
 
