@@ -1,3 +1,10 @@
+Fri Nov 15 09:29:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component_cs.cpp:
+
+          Fixed up some omissions and signatures in generated code. Thanks to 
+          Nanbor <nanbor@cse.wustl.edu> for uncovering them.
+
 Thu Nov 14 19:45:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Added required paths to the
