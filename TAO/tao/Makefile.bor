@@ -35,9 +35,8 @@ OBJFILES = \
 	$(OBJDIR)\Any_Unknown_IDL_Type.obj \
 	$(OBJDIR)\Any_SystemException.obj \
 	$(OBJDIR)\Argument.obj \
-	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Queued_Message.obj \
-  $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
+   $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
 	$(OBJDIR)\Base_Transport_Property.obj \
 	$(OBJDIR)\Basic_Arguments.obj \
 	$(OBJDIR)\BiDir_Adapter.obj \
@@ -48,13 +47,14 @@ OBJFILES = \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\CDR.obj \
 	$(OBJDIR)\CDR_Encaps_Codec.obj \
+   $(OBJDIR)\Collocated_Invocation.obj \
 	$(OBJDIR)\CONV_FRAMEC.obj \
 	$(OBJDIR)\CORBALOC_Parser.obj \
 	$(OBJDIR)\CORBANAME_Parser.obj \
 	$(OBJDIR)\CORBA_String.obj \
 	$(OBJDIR)\Cache_Entries.obj \
 	$(OBJDIR)\Cleanup_Func_Registry.obj \
-	$(OBJDIR)\ClientInterceptorAdapter.obj \
+   $(OBJDIR)\ClientRequestInterceptor_Adapter.obj \
 	$(OBJDIR)\ClientRequestInfo.obj \
 	$(OBJDIR)\ClientRequestInfo_i.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
@@ -103,8 +103,8 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
-  $(OBJDIR)\IOP_CodecC.obj \
-  $(OBJDIR)\IOP_IORC.obj \
+   $(OBJDIR)\IOP_CodecC.obj \
+   $(OBJDIR)\IOP_IORC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
@@ -116,11 +116,12 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Transport.obj \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IORInterceptor_Adapter.obj \
-  $(OBJDIR)\IORInterceptor_Adapter_Factory.obj \
+   $(OBJDIR)\IORInterceptor_Adapter_Factory.obj \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\Incoming_Message_Queue.obj \
 	$(OBJDIR)\Interceptor_List.obj \
-	$(OBJDIR)\Invocation.obj \
+   $(OBJDIR)\Invocation_Adapter.obj \
+   $(OBJDIR)\Invocation_Base.obj \
 	$(OBJDIR)\Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\LF_Event.obj \
 	$(OBJDIR)\LF_Invocation_Event.obj \
@@ -137,6 +138,8 @@ OBJFILES = \
 	$(OBJDIR)\Leader_Follower.obj \
 	$(OBJDIR)\Leader_Follower_Flushing_Strategy.obj \
 	$(OBJDIR)\LocalObject.obj \
+   $(OBJDIR)\LocateRequest_Invocation.obj \
+   $(OBJDIR)\LocateRequest_Invocation_Adapter.obj \
 	$(OBJDIR)\MProfile.obj \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
@@ -177,17 +180,18 @@ OBJFILES = \
 	$(OBJDIR)\PredefinedType_Seq_Tmplinst.obj \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Profile.obj \
+   $(OBJDIR)\Profile_Transport_Resolver.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\Protocols_Hooks.obj \
 	$(OBJDIR)\Queued_Message.obj \
 	$(OBJDIR)\Reactive_Connect_Strategy.obj \
 	$(OBJDIR)\Reactive_Flushing_Strategy.obj \
 	$(OBJDIR)\Refcounted_ObjectKey.obj \
+   $(OBJDIR)\Remote_Invocation.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
-	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\RequestInfo_Util.obj \
-  $(OBJDIR)\Request_Dispatcher.obj \
+   $(OBJDIR)\Request_Dispatcher.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\Resume_Handle.obj \
 	$(OBJDIR)\Sequence.obj \
@@ -201,6 +205,7 @@ OBJFILES = \
 	$(OBJDIR)\Stub.obj \
 	$(OBJDIR)\Stub_Factory.obj \
 	$(OBJDIR)\Sync_Strategies.obj \
+   $(OBJDIR)\Synch_Invocation.obj \
 	$(OBJDIR)\Synch_Queued_Message.obj \
 	$(OBJDIR)\Synch_Refcountable.obj \
 	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
@@ -232,7 +237,6 @@ OBJFILES = \
 	$(OBJDIR)\Wait_Strategy.obj \
 	$(OBJDIR)\WrongTransactionC.obj \
 	$(OBJDIR)\append.obj \
-	$(OBJDIR)\corbafwd.obj \
 	$(OBJDIR)\debug.obj \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
