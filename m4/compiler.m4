@@ -202,7 +202,12 @@ changequote([, ])dnl
          OCXXFLAGS=""
          ;;
        aCC)
-         CXXFLAGS="$CXXFLAGS"
+         CFLAGS = "$CFLAGS -Ae"
+         # -AA has been available since aC++ x.27 (2001?) - if using a
+         # compiler without this support, must --enable_stdcpplib=no.
+         if test "$ace_user_enable_stdcpplib" = yes; then
+           CXXFLAGS="$CXXFLAGS -AA"
+         fi
          # Warning 930 is spurious when new(std::nothrow) is
          # used. Reported to HP as support call 3201224717. (Steve
          # Huston, 23-Nov-2002)
