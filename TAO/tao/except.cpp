@@ -12,7 +12,7 @@
 #include "tao/corba.h"
 
 #if !defined (__ACE_INLINE__)
-#include "execpt.i"
+#include "except.i"
 #endif /* __ACE_INLINE__ */
 
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
