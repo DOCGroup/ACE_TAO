@@ -19,6 +19,7 @@
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Time_Request_Reply.h"
 
 class ACE_Svc_Export ACE_TS_Server_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
