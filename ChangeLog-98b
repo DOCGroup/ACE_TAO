@@ -1,3 +1,14 @@
+Tue Oct  6 12:49:37 EDT 1998  James CE Johnson  <jcej@lads.com>
+
+        * docs/tutorials/006/client_handler.cpp
+        * docs/tutorials/006/page05.html
+	  Susan Liebeskind discovered that invoking the baseclass
+	  close() after handle_close() in Client_Handler::close()
+	  causes the object to be destructed twice.  I've removed
+	  the call to the baseclass close().  She reports success
+	  on Solaris, Dec and AIX.  I've verified that Linux also
+	  works fine with this fix.
+
 Tue Oct 06 09:53:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-fsu-pthread.h,config-mit-pthread.h,config-mvs.h,

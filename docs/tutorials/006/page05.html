@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (WinNT; I) [Netscape]">
    <META NAME="Author" CONTENT="James CE Johnson">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
    <TITLE>ACE Tutorial 006</TITLE>
@@ -16,22 +16,22 @@
 <P>
 <HR WIDTH="100%">
 
-<P><A HREF="client_handler.cpp">client_handler.cpp</A>
-exposes all the things I've been hinting at.&nbsp; Pay special attention
-to the decision made in open() as well as the bit of cleverness in svc().
+<P><A HREF="client_handler.cpp">client_handler.cpp</A> exposes all the
+things I've been hinting at.&nbsp; Pay special attention to the decision
+made in open() as well as the bit of cleverness in svc().
 
 <P>
 <HR WIDTH="100%">
 
 <P><FONT FACE="Arial,Helvetica">// $Id: client_handler.cpp,v 1.1 1998/08/30
-23:47:13 schmidt Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+23:47:13 schmidt Exp $</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In client_handler.h I alluded
 to the fact that we'll mess around with a</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Client_Acceptor pointer.&nbsp;
 To do so, we need the Client_Acceptor object</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; declaration.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; declaration.</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; We know that including client_handler.h
 is redundant because</FONT>
@@ -39,13 +39,13 @@ is redundant because</FONT>
 it.&nbsp; Still, the sentry prevents double-inclusion</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; from causing problems and
 it's sometimes good to be explicit about what</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we're using.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we're using.</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; On the other hand, we don't
 directly include any ACE header files here.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
 <BR><FONT FACE="Arial,Helvetica">#include "client_acceptor.h"</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "client_handler.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">#include "client_handler.h"</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our constructor doesn't do
@@ -60,7 +60,7 @@ would cause new to return 0 if I failed.&nbsp; Oh</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
 <BR><FONT FACE="Arial,Helvetica">Client_Handler::Client_Handler (void)</FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our destructor doesn't do
@@ -72,7 +72,7 @@ left to do when the destructor gets invoked.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
 <BR><FONT FACE="Arial,Helvetica">Client_Handler::~Client_Handler (void)</FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; The much talked about destroy()
@@ -97,7 +97,7 @@ probably already closed.&nbsp; Still... there are other ways to</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; get here and
 closing a closed peer doesn't hurt.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; this->peer ().close ();</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; this->peer ().close ();</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Tell the reactor
@@ -113,7 +113,7 @@ due to handle_close(), that could cause a bit of nasty</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; this->reactor ()->remove_handler
 (this,</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-ACE_Event_Handler:: READ_MASK | ACE_Event_Handler::DONT_CALL);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+ACE_Event_Handler:: READ_MASK | ACE_Event_Handler::DONT_CALL);</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This is how we're
@@ -124,7 +124,7 @@ own instance, we take care of memory leaks after ensuring</FONT>
 is shut down correctly.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; delete this;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As mentioned before, the
@@ -143,7 +143,7 @@ to store the address of the client that we are now connected</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to.&nbsp; We'll
 use it later to display a debug message.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_INET_Addr addr;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_INET_Addr addr;</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Our ACE_Svc_Handler
@@ -172,7 +172,7 @@ string representing the TCP/IP address.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
 -1;</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Convert the void*
@@ -187,7 +187,7 @@ sure of what you're doing when you do this kind of thing.</FONT>
 the new-style cast operators can save you.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Acceptor *acceptor = (Client_Acceptor
-*) _acceptor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+*) _acceptor;</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Our Client_Acceptor
@@ -197,7 +197,7 @@ to find out what that strategy was.&nbsp; If thread-per-connection</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; was selected
 then we simply activate a thread for ourselves and exit.&nbsp; Our</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; svc() method
-will then begin executing in that thread.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+will then begin executing in that thread.</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; If we are told
 to use the single-threaded strategy, there is no difference</FONT>
@@ -208,7 +208,7 @@ and the Tutorial 5 implementation.</FONT>
 )</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; {</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; return this->activate();</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Our reactor reference
@@ -217,7 +217,7 @@ will be set when we register ourselves but I decided</FONT>
 set it here.&nbsp; No good reason really...</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; this->reactor (acceptor->reactor
-());</FONT><FONT FACE="Arial,Helvetica"></FONT>
+());</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; If we managed
@@ -229,7 +229,7 @@ so quickly that it is invalid by the time we get here. In</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; any case, the
 test above should always be done to ensure that the</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; connection is
-worth keeping.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+worth keeping.</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Now, regiser ourselves
 with a reactor and tell that reactor that we want</FONT>
@@ -247,7 +247,7 @@ to do.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN
 ((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Here, we use
@@ -261,14 +261,14 @@ other reason that a TCP/IP addreess cannot be converted</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; into a host name.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t)
-connected with %s\n", addr.get_host_name ()));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+connected with %s\n", addr.get_host_name ()));</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Always return
 zero on success.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As mentioned in the header,
@@ -282,19 +282,33 @@ us, we'll just forward the request on to that</FONT>
 <BR><FONT FACE="Arial,Helvetica">int Client_Handler::close(u_long flags)</FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Down in the depths of our baseclass, this will eventually cause us</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to be destroyed.&nbsp; Since all of the destructors are virtual, everything</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+gets cleaned up nicely.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 this->handle_close(ACE_INVALID_HANDLE,0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-After we've taken care of ourselves, call the baseclass method</FONT>
+Don't forward the close() to the baseclass!&nbsp; handle_close() above
+has</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-to do any other necessary cleanup.</FONT>
+already taken care of delete'ing.&nbsp; Forwarding close() would cause
+that</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to happen again and things would get really ugly at that point!</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return inherited::close();</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+return 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In the open() method, we
@@ -318,7 +332,7 @@ don't like it when you fail to use a parameter.&nbsp; This macro</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; will keep 'em
 quiet for you.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_handle);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_handle);</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Now, we create
@@ -327,7 +341,7 @@ and initialize a buffer for receiving the data.&nbsp; Since this</FONT>
 test app, we'll use a small buffer size.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; char buf[128];</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; memset (buf, 0, sizeof (buf));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; memset (buf, 0, sizeof (buf));</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Invoke the process()
@@ -344,7 +358,7 @@ It's best if we push that all into the application-logic</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; return this->process (buf, sizeof
 (buf));</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; If we return -1 out of handle_input()
@@ -358,11 +372,11 @@ get rid of our instance.</FONT>
 _handle, ACE_Reactor_Mask _mask)</FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_handle);</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_mask);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_mask);</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; this->destroy ();</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; The ACE_Svc_Handler&lt;>
@@ -386,7 +400,7 @@ here:&nbsp; the buffer is created once when the thread is created</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; instead of for
 each invocation of process().</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; char buf[128];</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; char buf[128];</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; // Forever...</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp; while( 1 )</FONT>
@@ -394,7 +408,7 @@ each invocation of process().</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; // Clean the
 buffer...</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; memset (buf,
-0, sizeof (buf));</FONT><FONT FACE="Arial,Helvetica"></FONT>
+0, sizeof (buf));</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -408,7 +422,7 @@ concurrency strategy.&nbsp; Since process() has all of our application-level</FO
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 logic, it's nice that it doesn't have to change when we decide to go</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-multi-threaded.</FONT><FONT FACE="Arial,Helvetica"></FONT>
+multi-threaded.</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 Notice that since the recv() method call in process() blocks until</FONT>
@@ -422,10 +436,10 @@ there is actually data sent from the client.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; {</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return(-1);</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; }</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; }</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; return(0);</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; And, at last, we get to the
@@ -455,7 +469,7 @@ has happened.&nbsp; The reactor wouldn't have called us if</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; there wasn't
 some kind of read activity but there wouldn't be activity if</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; there were no
-bytes to read...</FONT><FONT FACE="Arial,Helvetica"></FONT>
+bytes to read...</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; On the other hand,
 if we got some data then we can display it in a&nbsp; debug</FONT>
@@ -475,7 +489,7 @@ _rdbuf_len))</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; default:</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_DEBUG
 ((LM_DEBUG, "(%P|%t) from client: %s", _rdbuf));</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
 <BR><FONT FACE="Arial,Helvetica">}</FONT>
@@ -495,8 +509,7 @@ do.
 
 <P>
 <HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial
-Index</A>] [<A HREF="page06.html">Continue
+<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page06.html">Continue
 This Tutorial</A>]</CENTER>
 
 </BODY>
