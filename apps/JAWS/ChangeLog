@@ -1,3 +1,8 @@
+Tue Aug 26 21:34:11 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* clients/Caching/ID_Generator.h: Made some minor changes to
+	  the programming style.
+
 Sun Aug 10 13:44:14 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* server/HTTP_Helpers.cpp (HTTP_date): We can't use
