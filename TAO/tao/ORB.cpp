@@ -1298,7 +1298,7 @@ CORBA::ORB_init (int &argc,
                  CORBA_Environment &ACE_TRY_ENV)
 {
   // This ugly macro will go away once we've merged the two ORB_init's.
-  TAO_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
+  ACE_UNUSED_ARG(ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
