@@ -29,8 +29,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "Context.h"
 #include "ExceptionList.h"
 #include "tao/corbafwd.h"
@@ -369,6 +367,5 @@ private:
 # include "Request.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_REQUEST_H */
