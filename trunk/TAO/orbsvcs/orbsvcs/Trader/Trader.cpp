@@ -630,6 +630,8 @@ TAO_Trader_Factory::TAO_Trader_Factory (int& argc, char** argv)
     max_match_card_ (50),
     def_return_card_ (20),
     max_return_card_ (50),
+    def_hop_count_ (5),
+    max_hop_count_ (10),
     def_follow_policy_ (CosTrading::if_no_local),
     max_follow_policy_ (CosTrading::always)
 {

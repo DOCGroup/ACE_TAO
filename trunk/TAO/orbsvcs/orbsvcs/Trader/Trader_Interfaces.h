@@ -188,7 +188,7 @@ private:
   // TAO_Property_Filter to ensure the returned offers contain the
   // properties specified in the desired_props in parameter.
 
-  void forward_query (const CosTrading::LinkName next_hop,
+  void forward_query (const char* next_hop,
                       const char *type,
 		      const char *constr,
 		      const char *pref,

@@ -1,3 +1,10 @@
+Tue Jul  7 22:11:17 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+	Fixed DEC cxx errors, addressed a memory leak.
+
 Tue Jul  7 19:47:15 198   Jeff Parsons <jp4@cs.wustl.edu>
 	* TAO/tao/Request.cpp: Slight modification (Andy's
 	  suggestion) to send_oneway (), getting rid of an

@@ -226,7 +226,10 @@ private:
     TAO_String_Hash_Key,
     Type_Info*,
     ACE_Null_Mutex
-    > Service_Type_Map;
+    >
+    Service_Type_Map;
+  
+  typedef ACE_Unbounded_Queue<const char*>  Service_Type_Queue;
 
   void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
 			      CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
@@ -234,7 +237,10 @@ private:
   // Build a sequence aggregating the property names from all
   // supertypes of the type, and a sequence representing the
   // transitive closure of the super type relation.
-			      
+
+  void collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
+                                      TAO_Service_Type_Repository::Service_Type_Queue& target);
+  
   void validate_properties (Prop_Map& prop_map,
 			    const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 			    CORBA::Environment& _env)
