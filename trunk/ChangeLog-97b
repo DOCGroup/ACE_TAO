@@ -1,7 +1,31 @@
+Tue Nov  4 01:47:23 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptor): 
+          Changed
+ 
+          if (ACE_Reactor::instance ()->register_handler
+              (&this->acceptor_, ACE_Event_Handler::ACCEPT_MASK) == -1)
+ 
+          to:
+ 
+          if (this->acceptor_.open(this->options ().acceptor_port_,
+            ACE_Reactor::instance (), this->options ().blocking_semantics_) == -1)
+
+	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+	* apps/Gateway/Gateway/Gateway.cpp (parse_args): Changed
+
+	  ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:vw:", 0);
+ 
+          to:
+ 
+          ACE_Get_Opt get_opt (argc, argv, "abC:cdP:p:q:t:vw:", 0);
+
+	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
 Mon Nov  3 23:18:33 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* ace/Synch_T.cpp (dump): 
-	change the field lock_ to mutex_.
+	* ace/Synch_T.cpp (dump): change the field lock_ to mutex_.
 
 Mon Nov  3 22:37:58 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
@@ -9,11 +33,21 @@ Mon Nov  3 22:37:58 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	* ace/Timer_List_T.cpp:
 	* ace/Timer_Hash_T.cpp:  Changed the use of lock_ to mutex_.
 
-Mon Nov 03 21:29:32 1997    <nw1@COYOTE>
-
 	* ace/OS.cpp (cleanup_tss): Added TSS cleanup codes for Win32 when
 	  non-main threads are exiting.  Without them, Thread_Manager won't
 	  cleanup its thread table correctly.
+
+	* ace/SV_Semaphore_Complex.cpp (close): Changed to return 0
+	  only when this->key_ == -1 instead of <= -1.  This was causing
+	  semaphore leaks on Solaris.
+
+	* ace/UNIX_Addr.i (operator ==):
+	* ace/SPIPE_Addr.i (operator ==):
+	* ace/FILE_Addr.i (operator ==):
+	* ace/DEV_Addr.i (operator ==):
+	* ace/INET_Addr.cpp (operator ==):  Added checking for the same
+	  Addr types for addresses under comparison.  Thanks to Stephen
+	  Coy <stevec@magna.com.au> for pointing out the problem.
 
 Mon Nov 03 18:32:42 1997  Carlos O'Ryan  <coryan@MILONGA>
 
@@ -39,12 +73,6 @@ Mon Nov  3 15:49:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* ace/Connector.cpp (connect): "Fixed" so that the service handler
  	  pointer passed in by the caller doesn't change until the connect
  	  completes without errors.
-
-Mon Nov  3 14:16:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
-
-	* ace/SV_Semaphore_Complex.cpp (close): Changed to return 0
-	  only when this->key_ == -1 instead of <= -1.  This was causing
-	  semaphore leaks on Solaris.
 
 Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -75,16 +103,6 @@ Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/preempt.cpp: cleaned up cleanup so that
           it compiles cleanly.
-
-Mon Nov  3 01:30:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
-
-	* ace/UNIX_Addr.i (operator ==):
-	* ace/SPIPE_Addr.i (operator ==):
-	* ace/FILE_Addr.i (operator ==):
-	* ace/DEV_Addr.i (operator ==):
-	* ace/INET_Addr.cpp (operator ==):  Added checking for the same
-	  Addr types for addresses under comparison.  Thanks to Stephen
-	  Coy <stevec@magna.com.au> for pointing out the problem.
 
 Sun Nov 02 18:09:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
