@@ -451,7 +451,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                           if (env.exception () == 0)
                             {
                               // do the matching
-			      CORBA::TypeCode_var type = member_label->type ();
+			                        CORBA::TypeCode_var type = member_label->type ();
                               switch (type->kind (env))
                                 {
                                 case CORBA::tk_short:
@@ -489,9 +489,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                 case CORBA::tk_enum:
                                   {
                                     CORBA::Long l;
-                                    TAO_InputCDR stream ((ACE_Message_Block *)
-                                                         member_label->value
-                                                         ());
+                                    TAO_InputCDR stream (member_label->_tao_get_cdr ());
                                     (void)stream.decode (discrim_tc, &l, 0, env);
                                     if (l == *(CORBA::Long *) &discrim_val)
                                       discrim_matched = 1;

@@ -367,7 +367,7 @@ CORBA_ORB::run (ACE_Time_Value *tv,
   while (this->should_shutdown () == 0)
     {
 #if 0
-      counter++;
+   ^   counter++;
       if (counter == max_iterations)
         {
           ACE_TIMEPROBE_PRINT;
