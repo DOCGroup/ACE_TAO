@@ -1,3 +1,26 @@
+Wed Sep 30 10:32:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * docs/releasenotes/index.html
+          orbsvcs/tests/Simulator/README
+          orbsvcs/tests/Simulator/NavWeap.idl          
+          orbsvcs/tests/Simulator/DOVEBrowser/DataHandler.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
+          orbsvcs/tests/Simulator/DOVEBrowser/NavWeapDataHandler.java
+          orbsvcs/tests/Simulator/DOVEBrowser/Properties.java
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java
+	  orbsvcs/tests/Simulator/DOVEBrowser/make.bat
+	  orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
+	  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.{cpp, dsp}
+	  orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.{cpp, dsp, h}:
+	  Enhancements for Boeing demo: expanded and revised make.bat to build
+          java browser using Visibroker on NT.  Revised supplier and consumer
+	  logic to allow an ACT to indicate whether or not to update the
+	  scheduling information with actual data xollected by the EC.  Added
+	  a logging supplier that sets this ACT to request actual data update.
+	  Modified java consumer so entire event is passed to data handler.
+	  This allows the DOVE Browser to view either simulated or "live"
+	  scheduling data.
+	
 Wed Sep 30 03:47:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* performance-tests/Thruput/TAO/server.cpp:
