@@ -13,10 +13,6 @@ ACE_RCSID (PortableServer,
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-# if !defined (__ACE_INLINE__)
-#   include "ObjectReferenceTemplate.i"
-# endif /* !__ACE_INLINE__ */
-
 TAO_ObjectReferenceTemplate::
 TAO_ObjectReferenceTemplate (const char *server_id,
                              const char *orb_id,
