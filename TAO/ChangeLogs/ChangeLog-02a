@@ -1,3 +1,9 @@
+Wed Mar 28 21:46:24 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+
+          Changed use of some Win32 APIs to ACE_TEXT_* equivalents.
+
 Wed Mar 28 21:44:45 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_Input_Handler.cpp:
