@@ -3,7 +3,7 @@ Wed Jun 05 11:06:22 2002  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/orbsvcs/PortableGroup.bor (OBJFILES):
 	* orbsvcs/orbsvcs/PortableGroup.dsp:
 
-	  Added new PortableGroup files to the list files to build.
+	  Added new PortableGroup files to the list of files to build.
 
 Wed Jun  5 10:59:08 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -16,7 +16,7 @@ Wed Jun  5 10:59:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.PortableGroup (FILES):
 
-	  Added new PortableGroup files to the list files to build.
+	  Added new PortableGroup files to the list of files to build.
 
 Wed Jun 05 10:46:04 2002  Ossama Othman  <ossama@uci.edu>
 
