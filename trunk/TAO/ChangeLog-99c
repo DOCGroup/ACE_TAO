@@ -1,3 +1,19 @@
+Wed Apr 28 02:07:42 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* created the directories orbsvcs/examples/CosEC/Factory
+	* added the following files:
+	   orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+	    idl definition of the CosEventChannelFactory module.
+	   orbsvcs/examples/CosEC/FactoryCosEventChannelFactory_i.h:
+	   orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	    servant implementation of the CosEC Factory.
+	   orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.h:
+	   orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
+	    Decorator for the CosEventChannelAdmin::EventChannel servant.
+	   orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+	    Client to test the Factory.
+	   orbsvcs/examples/CosEC/Factory/Makefile
+
 Wed Apr 28 01:45:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Generic_Servant/MyFooServant.cpp (timed_operation):
