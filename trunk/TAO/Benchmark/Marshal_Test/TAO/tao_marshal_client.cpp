@@ -706,7 +706,7 @@ Tao_Marshal_Client_Proxy::dii_test_short (CORBA_Marshal_Proxy::OPTIONS &options,
   result = result_list->item (0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_short",
 			arglist,
 			result,
@@ -758,7 +758,7 @@ Tao_Marshal_Client_Proxy::dii_test_long (CORBA_Marshal_Proxy::OPTIONS &options,
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_long",
 			arglist,
 			result,
@@ -811,7 +811,7 @@ Tao_Marshal_Client_Proxy::dii_test_octet (CORBA_Marshal_Proxy::OPTIONS &options,
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_octet",
 			arglist,
 			result,
@@ -864,7 +864,7 @@ Tao_Marshal_Client_Proxy::dii_test_char (CORBA_Marshal_Proxy::OPTIONS &options,
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_char",
 			arglist,
 			result,
@@ -917,7 +917,7 @@ Tao_Marshal_Client_Proxy::dii_test_double (CORBA_Marshal_Proxy::OPTIONS &options
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_double",
 			arglist,
 			result,
@@ -974,7 +974,7 @@ Tao_Marshal_Client_Proxy::dii_test_struct (CORBA_Marshal_Proxy::OPTIONS &options
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_struct",
 			arglist,
 			result,
@@ -1032,7 +1032,7 @@ Tao_Marshal_Client_Proxy::dii_test_union (CORBA_Marshal_Proxy::OPTIONS &options,
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_union",
 			arglist,
 			result,
@@ -1077,7 +1077,7 @@ Tao_Marshal_Client_Proxy::dii_test_union (CORBA_Marshal_Proxy::OPTIONS &options,
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_union",
 			arglist,
 			result,
@@ -1143,7 +1143,7 @@ Tao_Marshal_Client_Proxy::dii_test_any (CORBA_Marshal_Proxy::OPTIONS &options,
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_any",
 			arglist,
 			result,
@@ -1247,7 +1247,7 @@ Tao_Marshal_Client_Proxy::dii_test_sequence (CORBA_Marshal_Proxy::OPTIONS &optio
   result = result_list->item(0);
 
   // create a request
-  ref_->_create_request(//ctx,
+  ref_->_create_request(CORBA_Context::_nil (),
 			"test_sequence",
 			arglist,
 			result,
