@@ -1,5 +1,9 @@
 Thu Aug 06 14:59:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Strategies_T.cpp (connect_svc_handler): If <sh> is not
+ 	  connected to the correct address or is busy, we will not use it.
+  	  Therefore we need to set it to zero.
+
 	* ace/Synch: Added template specializations for
  	  ACE_Guard<ACE_Null_Mutex>, ACE_Write_Guard<ACE_Null_Mutex>, and
  	  ACE_Read_Guard<ACE_Null_Mutex>.

@@ -1059,6 +1059,12 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
             // being recycled.
             this->prepare_for_recycling (sh);
           }
+        else
+          {
+            // If <sh> is not connected to the correct address or is
+            // busy, we will not use it.
+            sh = 0;
+          }
       }
 
     // If not found
