@@ -6940,15 +6940,6 @@ void **&
 ACE_TSS_Emulation::tss_base ()
 {
 # if defined (VXWORKS)
-  /* If someone wants tss_base make sure they get one.  This
-     gets used if someone spawns a VxWorks task directly, not
-     through ACE.  The allocated array will never be deleted! */
-  if (0 == taskIdCurrent->ACE_VXWORKS_SPARE)
-    {
-      taskIdCurrent->ACE_VXWORKS_SPARE =
-        ACE_reinterpret_cast (int, new void *[ACE_TSS_THREAD_KEYS_MAX]);
-    }
-
   return (void **&) taskIdCurrent->ACE_VXWORKS_SPARE;
 # elif defined (ACE_PSOS)
   // not supported
@@ -6989,6 +6980,26 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
   t_getreg (0, PSOS_TASK_REG_TSS, &tss_base);
   return ((void **) tss_base)[key_index];
 #else
+# if defined (VXWORKS)
+    /* If someone wants tss_base make sure they get one.  This
+       gets used if someone spawns a VxWorks task directly, not
+       through ACE.  The allocated array will never be deleted! */
+    if (0 == taskIdCurrent->ACE_VXWORKS_SPARE)
+      {
+        taskIdCurrent->ACE_VXWORKS_SPARE =
+          ACE_reinterpret_cast (int, new void *[ACE_TSS_THREAD_KEYS_MAX]);
+
+        // Zero the entire TSS array.  Do it manually instead of using
+        // memset, for optimum speed.  Though, memset may be faster :-)
+        void **tss_base_p =
+          ACE_reinterpret_cast (void **, taskIdCurrent->ACE_VXWORKS_SPARE);
+        for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
+          {
+            *tss_base_p = 0;
+          }
+      }
+#     endif /* VXWORKS */
+
   return tss_base ()[key_index];
 #endif /* defined (ACE_PSOS) */
 }

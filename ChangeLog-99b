@@ -1,57 +1,69 @@
+Thu Nov 18 19:44:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (ACE_TSS_Emulation::tss_base,ts_object): on VxWorks,
+          if ACE_VXWORKS_SPARE is 0, allocate a TSS array (and
+          zero it out) in tss_object () instead of tss_base ().
+          This allow tss_base () to still be used on the left-hand
+          side.  The only way that tss_base () should be called
+          on VxWorks with 0 ACE_VXWORKS_SPARE is through ts_object ().
+          Thanks to Dave Steele <Dave_Steele@Mitel.com> and
+          Dale Wood <Dale_Wood@Mitel.com> for further discussion and
+          insight.
+
 Thu Nov 18 19:20:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.h (SEM_FAILED):
+        * ace/OS.h (SEM_FAILED):
 
-	  Changed SEM_FAILED from ((sem_t *) 0) to ((sem_t *) -1).
-	  Although it makes more sense to have a zero fail value, it
-	  appears that many OSes are still brain damaged enough to use -1
-	  instead.  This change is consistent with what ACE expected as
-	  the sem_open() fail value prior to my updates.
+          Changed SEM_FAILED from ((sem_t *) 0) to ((sem_t *) -1).
+          Although it makes more sense to have a zero fail value, it
+          appears that many OSes are still brain damaged enough to use -1
+          instead.  This change is consistent with what ACE expected as
+          the sem_open() fail value prior to my updates.
 
 Thu Nov 18 16:37:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  If a platform has named POSIX semaphores, define SEM_FAILED if
-	  it isn't already defined.
+          If a platform has named POSIX semaphores, define SEM_FAILED if
+          it isn't already defined.
 
-	* ace/OS.i (sema_init):
+        * ace/OS.i (sema_init):
 
-	  Cast MAP_FAILED to (sem_t *) when comparing to sem_t pointer.
+          Cast MAP_FAILED to (sem_t *) when comparing to sem_t pointer.
 
-	  Check sem_open() failure against SEM_FAILED macro instead of
-	  ((sem_t *) -1) since sem_open() in some named POSIX semaphore
-	  implementations returns ((sem_t *) 0) on failure (e.g. glibc
-	  2.1.x on Linux).
+          Check sem_open() failure against SEM_FAILED macro instead of
+          ((sem_t *) -1) since sem_open() in some named POSIX semaphore
+          implementations returns ((sem_t *) 0) on failure (e.g. glibc
+          2.1.x on Linux).
 
 Thu Nov 18 08:19:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Bcast.cpp: Some systems seem to generate 0
-	  (AF_UNDEF) for the sa_family, even when there are no errors!
-	  Thus, we only print an error if this is not the case, or if
-	  we're in "debugging" mode.  Thanks to Extern Chatterji
-	  <Extern.Chatterji@kmweg.de> for reporting this.
+        * ace/SOCK_Dgram_Bcast.cpp: Some systems seem to generate 0
+          (AF_UNDEF) for the sa_family, even when there are no errors!
+          Thus, we only print an error if this is not the case, or if
+          we're in "debugging" mode.  Thanks to Extern Chatterji
+          <Extern.Chatterji@kmweg.de> for reporting this.
 
 Thu Nov 18 12:08:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Configuration.cpp: Added missing template instantiations for
-	  SunCC5.0 
+        * ace/Configuration.cpp: Added missing template instantiations for
+          SunCC5.0
 
 Thu Nov 18 11:49:39 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Added MD5 checksum generation support.  Each ACE/TAO archive
-	  will now have an associated file that contains its MD5
-	  checksum.  [Bug 48]
+          Added MD5 checksum generation support.  Each ACE/TAO archive
+          will now have an associated file that contains its MD5
+          checksum.  [Bug 48]
 
 Thu Nov 18 08:19:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Log_Msg.cpp: Added a new flag to win32 FormatMessage call,
-	  which removes unneccessary newlines in resulting message. So
- 	  whole logged message fits on one line and logs are then nicer
- 	  and easier to parse.  Thanks to Martin Krumpolec
- 	  <krumpo@pobox.sk> for contributing this.
+        * ace/Log_Msg.cpp: Added a new flag to win32 FormatMessage call,
+          which removes unneccessary newlines in resulting message. So
+          whole logged message fits on one line and logs are then nicer
+          and easier to parse.  Thanks to Martin Krumpolec
+          <krumpo@pobox.sk> for contributing this.
 
 Wed Nov 17 22:45:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
