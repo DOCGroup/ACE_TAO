@@ -45,6 +45,7 @@
 class TAO_EC_ProxyPushSupplier;
 template<class Target,class Object> class TAO_EC_Connected_Command;
 template<class Target,class Object> class TAO_EC_Disconnected_Command;
+template<class Target> class TAO_EC_Shutdown_Command;
 
 class TAO_ORBSVCS_Export TAO_EC_ProxyPushSupplier_Set
 {
@@ -219,6 +220,9 @@ public:
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
 
+  virtual void shutdown (CORBA::Environment&) = 0;
+  // The EC is shutting down, release all our resources
+
 protected:
   virtual void connected_i (TAO_EC_ProxyPushSupplier* supplier,
                             CORBA::Environment &env);
@@ -231,14 +235,20 @@ protected:
   // It decreases the reference count on the supplier if the operation
   // is successful.
 
+  virtual void shutdown_i (CORBA::Environment& env);
+  // Implement the shutdown method, assuming the right locks are
+  // acquired by the base class.
+
   typedef TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier> Connected_Command;
   typedef TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier> Disconnected_Command;
+  typedef TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set> Shutdown_Command;
 
   friend class TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
   friend class TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
-  // This two classes call the connected_i() and disconnected_i()
-  // methods, that's ok because they do while this class is holding
-  // its lock.
+  friend class TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set>;
+  // This classes call the connected_i(), disconnected_i() and
+  // shutdown_i() methods, that's ok because they do while this class
+  // is holding its lock.
 
   virtual void execute_delayed_operations (void);
   // Derived classes that implement delayed disconnects and connects

@@ -1,3 +1,37 @@
+Wed May 12 14:47:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Command.h:
+	* orbsvcs/orbsvcs/Event/EC_Command.i:
+	* orbsvcs/orbsvcs/Event/EC_Command.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	  Fixed several memory leaks on "dirty" shutdowns of the EC
+	  (i.e. shutdowns when there are some consumers or suppliers still 
+	  connected).
+	  Implemented new "delayed" shutdown operation on the
+	  Supplier_Sets.
+	  Handling shutdowns while the EC is still processing events may
+	  prove more tricky, I'm certain that there are some race
+	  conditions still lurking there.
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	  Fixed order of libraries.
+
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	  Reset all pointers to 0 after destruction
+
 Wed May 12 13:58:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/ORB.{h,cpp}:

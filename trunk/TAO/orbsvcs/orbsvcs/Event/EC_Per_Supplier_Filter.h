@@ -58,9 +58,10 @@ public:
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-			  CORBA::Environment &env);
+                          CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-			     CORBA::Environment &env);
+                             CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env);
   virtual void push (const RtecEventComm::EventSet& event,
                      CORBA::Environment &);
 

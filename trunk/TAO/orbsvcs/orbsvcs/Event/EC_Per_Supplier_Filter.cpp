@@ -78,6 +78,12 @@ TAO_EC_Per_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier* supplier,
 }
 
 void
+TAO_EC_Per_Supplier_Filter::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->supplier_set_->shutdown (ACE_TRY_ENV);
+}
+
+void
 TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
