@@ -27,7 +27,7 @@ TAO::TypeCode::Union<StringType,
 
   // Create a CDR encapsulation.
   bool const success =
-    (cdr << TAO_ENCAP_BYTE_ORDER)
+    (cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
     && (cdr << this->base_attributes_.id ())
     && (cdr << this->base_attributes_.name ())
     && (cdr << *(this->discriminant_type_))

@@ -45,8 +45,8 @@ namespace TAO
 
       /// Constructor.
       Sequence (CORBA::TCKind kind,
-             CORBA::ULong length,
-             CORBA::TypeCode_ptr * tc);
+                CORBA::ULong length,
+                CORBA::TypeCode_ptr * tc);
 
       /// Destructor.
       ~Sequence (void);
