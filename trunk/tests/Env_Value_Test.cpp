@@ -31,13 +31,13 @@ int
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
 // arguments.  And on VxWorks, which uses ACE_HAS_NONSTATIC_OBJECT_MANAGER,
 // we can't use spawn because it doesn't have fork ().
-main (int argc, LPTSTR [])
+main (int argc, ASYS_TCHAR* [])
 {
       ACE_UNUSED_ARG (argc);
       ACE_OS::putenv("TEST_VALUE_POSITIVE=10.2");
       ACE_OS::putenv("TEST_VALUE_NEGATIVE=-10.2");
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-main (int argc, LPTSTR [], LPTSTR envp[])
+main (int argc, ASYS_TCHAR* [], ASYS_TCHAR*envp[])
 {
   if (argc == 1)
     {
