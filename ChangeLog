@@ -1,3 +1,30 @@
+Thu Aug 14 10:56:57 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS.h:
+	* ace/SSL/SSL_SOCK_Connector.h:
+
+	  Nuked trailing whitespace.
+
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+
+	  Fixed bug where the "counted down" timeout value was not used in
+	  the ACE::select() call.  This fixes a problem where connection
+	  timeouts lasted longer than they should have.  The corrected
+	  behavior now matches the documented behavior.
+
+	  If the connection timeout value is ACE_Time_Value::zero, block
+	  indefinitely.  This is the documented behavior.  Previously, the
+	  ACE::select() call would end up polling with a zero timeout
+	  value instead of blocking.  Thanks to Leo Stutzmann
+	  <lstutzmann@platform.com> for pointing out the bug and providing
+	  a patch.
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+
+	  Corrected ACE_Time_Value::zero timeout behavior as detailed
+	  above.  Thanks again to Leo Stutzmann <lstutzmann@platform.com>
+	  for pointing out the bug.
+
 Thu Aug 14 04:02:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Kokyu/Makefile.Kokyu:

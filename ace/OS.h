@@ -623,7 +623,7 @@ typedef u_int ACE_thread_key_t;
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
 
-// make sure these are included for VXWORKS.  
+// make sure these are included for VXWORKS.
 // @todo move these to a common place, perhaps the top of the file.
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_netdb.h"
@@ -2284,7 +2284,7 @@ public:
   struct macaddr_node_t {
     unsigned char node[6];
   };
-  
+
   /**
    * Get the first adapter found on the machine.
    */
@@ -4648,4 +4648,3 @@ extern ACE_OS_Export int sys_nerr;
 
 #include /**/ "ace/post.h"
 #endif  /* ACE_OS_H */
-
