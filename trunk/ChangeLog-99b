@@ -1,3 +1,8 @@
+Fri Apr 23 09:11:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Reverse_Lock_Test.cpp:
+	  Fixed template instantiation problems.
+
 Thu Apr 22 21:39:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/Makefile.am: 
