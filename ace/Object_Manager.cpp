@@ -108,7 +108,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_SIG_HANDLER_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
                           ACE_TOKEN_MANAGER_CREATION_LOCK)
-  ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 
   // Hooks for preallocated objects and arrays provided by application.
@@ -201,7 +201,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
                                   ACE_SIG_HANDLER_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
                                   ACE_TOKEN_MANAGER_CREATION_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                  ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 }
