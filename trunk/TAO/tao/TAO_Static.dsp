@@ -262,6 +262,10 @@ SOURCE=.\InconsistentTypeCodeC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\InterfaceC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
@@ -686,6 +690,10 @@ SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\InterfaceC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
@@ -1035,6 +1043,10 @@ SOURCE=.\IIOP_Connect.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
 
