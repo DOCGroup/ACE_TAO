@@ -12,6 +12,14 @@
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+extern "C"
+{
+  u_int wslen (const CORBA::WChar *);
+  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
+}
+#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
 // This is the maximum space require to convert the ulong into a string
 const int TAO_POA::max_space_required_for_ulong = 24;
 
@@ -2714,7 +2722,12 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *id)
   // Size of Id
   // We DO NOT include the zero terminator, as this is simply an
   // artifact of the way strings are stored in C.
-  CORBA::ULong id_length = ACE_OS::strlen (id);
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  CORBA::ULong id_length = wslen (id) + 1;
+#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  CORBA::ULong id_length = ACE_OS::strlen (id) + 1;
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
   size_t bufsize = id_length * sizeof(CORBA::WChar);
 
   // Create the buffer for the Id

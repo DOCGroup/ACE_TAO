@@ -16,7 +16,7 @@ tao.bld
 	:cx_silent=21
 	:cx_silent=191
 	:cx_silent=610
-	:sourcedirs=/home/ace/ACE_wrappers.vxworks
+	:sourcedirs=/home/ace/ACE_wrappers.latest
 	:sourcedirs=..
 	:sourcedirs=./compat
 	:libraries=/appl/newgreen/vxppc603/ghsbltin.o
