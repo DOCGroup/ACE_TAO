@@ -32,8 +32,7 @@ namespace CIAO
   namespace Config_Handler
   {
     IAD_Handler::IAD_Handler (DOMDocument* doc, unsigned long filter)
-      : // traverse_ (doc),
-        root_ (doc->getDocumentElement()),
+      : root_ (doc->getDocumentElement()),
         filter_ (filter),
         iter_ (doc->createNodeIterator (this->root_,
                                               this->filter_,
@@ -43,8 +42,7 @@ namespace CIAO
     {}
 
     IAD_Handler::IAD_Handler (DOMNodeIterator* iter, bool release)
-      : // traverse_ (0),
-	root_ (0), filter_ (0), iter_ (iter), release_ (release)
+      : root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
 
@@ -168,7 +166,7 @@ namespace CIAO
         }
     }
 
-  }
-}
+  }  // namespace Config_Handler
+}  // namespace CIAO
 
 #endif /* IAD_HANDLER_C */

@@ -71,7 +71,7 @@ namespace CIAO
       void process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc);
 
       /// Process the supportedType attribute
-      void process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc);
+      void process_supportedType (const XMLCh* supportedType, ::Deployment::ComponentPortDescription &compportdesc);
 
       /// Process the provider attribute
       void process_provider (const XMLCh* provider, ::Deployment::ComponentPortDescription &compportdesc);

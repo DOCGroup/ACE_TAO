@@ -53,7 +53,7 @@ namespace CIAO
       /// Process elements of type ResourceUsageKind definitions in
       /// the description files.
       static void process_ResourceUsageKind (DOMNodeIterator *iter,
-					     ::Deployment::ResourceUsageKind &ruq);
+					     ::Deployment::ResourceUsageKind &kind);
     };
 
     class Req_Handler
