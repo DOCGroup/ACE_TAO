@@ -127,18 +127,19 @@ TAO_NS_SupplierAdmin::MyOperator (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return this->filter_operator_;
 }
 
-
 CosNotifyChannelAdmin::ProxyIDSeq*
 TAO_NS_SupplierAdmin::push_consumers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  CosNotifyChannelAdmin::ProxyIDSeq* seq;
+  CosNotifyChannelAdmin::ProxyIDSeq* seq_ptr;
 
-  ACE_NEW_THROW_EX (seq,
+  ACE_NEW_THROW_EX (seq_ptr,
                     CosNotifyChannelAdmin::ProxyIDSeq (),
                     CORBA::NO_MEMORY ());
+
+  CosNotifyChannelAdmin::ProxyIDSeq_var seq (seq_ptr);
 
   seq->length (this->proxy_id_list_.size ());
 
@@ -150,7 +151,7 @@ TAO_NS_SupplierAdmin::push_consumers (ACE_ENV_SINGLE_ARG_DECL)
   for (iter.first (); iter.next (object_id); iter.advance (), ++i)
     seq[i] = *object_id;
 
-  return seq;
+  return seq._retn ();
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
@@ -250,7 +251,7 @@ TAO_NS_SupplierAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  this->filter_admin_.get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->filter_admin_.remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr

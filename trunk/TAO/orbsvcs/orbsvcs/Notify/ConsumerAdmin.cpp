@@ -111,11 +111,13 @@ TAO_NS_ConsumerAdmin::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  CosNotifyChannelAdmin::ProxyIDSeq* seq;
+  CosNotifyChannelAdmin::ProxyIDSeq* seq_ptr;
 
-  ACE_NEW_THROW_EX (seq,
+  ACE_NEW_THROW_EX (seq_ptr,
                     CosNotifyChannelAdmin::ProxyIDSeq (),
                     CORBA::NO_MEMORY ());
+
+  CosNotifyChannelAdmin::ProxyIDSeq_var seq (seq_ptr);
 
   seq->length (this->proxy_id_list_.size ());
 
@@ -127,7 +129,7 @@ TAO_NS_ConsumerAdmin::push_suppliers (ACE_ENV_SINGLE_ARG_DECL)
   for (iter.first (); iter.next (object_id); iter.advance (), ++i)
     seq[i] = *object_id;
 
-  return seq;
+  return seq._retn ();
 }
 
 CosNotifyChannelAdmin::ProxySupplier_ptr
@@ -249,7 +251,7 @@ TAO_NS_ConsumerAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  this->filter_admin_.get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->filter_admin_.remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 /************ UNIMPLMENTED METHODS *************************/

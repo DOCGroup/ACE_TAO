@@ -75,7 +75,7 @@ void TAO_NS_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id ACE_
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_NS_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
+TAO_NS_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
@@ -83,12 +83,12 @@ TAO_NS_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DEC
 {
   CosNotifyFilter::Filter_var filter_var;
 
-  if (this->filter_list_.find (filter,
+  if (this->filter_list_.find (filter_id,
                                filter_var) == -1)
     ACE_THROW_RETURN (CosNotifyFilter::FilterNotFound (),
                       0);
 
-  return CosNotifyFilter::Filter::_duplicate (filter_var.in ());
+  return filter_var._retn ();
 }
 
 CosNotifyFilter::FilterIDSeq*
@@ -100,13 +100,15 @@ TAO_NS_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   // Figure out the length of the list.
   size_t len = this->filter_list_.current_size ();
 
-  CosNotifyFilter::FilterIDSeq* list = 0;
+  CosNotifyFilter::FilterIDSeq* list_ptr;
 
   // Allocate the list of <len> length.
-  ACE_NEW_THROW_EX (list,
-                    CosNotifyFilter::FilterIDSeq (len),
+  ACE_NEW_THROW_EX (list_ptr,
+                    CosNotifyFilter::FilterIDSeq,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
+
+  CosNotifyFilter::FilterIDSeq_var list (list_ptr);
 
   list->length (len);
 
@@ -115,15 +117,12 @@ TAO_NS_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 
   u_int index;
 
-  for (index = 0; iter.done () == 0; iter.advance (), ++index)
+  for (index = 0; iter.next (entry) != 0; iter.advance (), ++index)
     {
-      if (iter.next (entry) != 0)
-        {
-          list[index] = entry->ext_id_;
-        }
+      list[index] = entry->ext_id_;
     }
 
-  return list;
+  return list._retn ();
 }
 
 void

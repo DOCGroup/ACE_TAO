@@ -1,3 +1,14 @@
+Tue Nov 05 17:32:22 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+	* orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/Proxy_T.cpp:
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+	
+	  Corrected the way IDSequences are populated. Thanks to Yamuna
+	  for helping to debug this. 
+
 Tue Nov 05 12:01:25 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
