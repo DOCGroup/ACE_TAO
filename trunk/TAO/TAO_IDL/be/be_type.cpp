@@ -96,8 +96,8 @@ be_type::tc_name (void)
 // compiler. In this version, we choose to generate a relative path.
 
 // return the type name using the ACE_NESTED_CLASS macro
-char *
-be_type::nested_type_name (be_decl *use_scope, char *suffix)
+const char *
+be_type::nested_type_name (be_decl *use_scope, const char *suffix)
 {
   // some compilers do not like generating a fully scoped name for a type that
   // was defined in the same enclosing scope in which it was defined. For such,

@@ -162,6 +162,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/giop.i"
 #include "tao/iioporb.i"
 #include "tao/iiopobj.i"
+#include "tao/svrrqst.i"
 //#include "tao/managed_types.i"
 
 #  if defined (do_undef_on_ACE_INLINE)

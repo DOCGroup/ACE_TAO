@@ -153,7 +153,6 @@ public:
                               TAO_OutStream *os);
   // helper method passed to the template method
 
-private:
   void compute_fullskelname (void);
   // compute the fully scoped skel class name
 

@@ -103,6 +103,25 @@ public:
   // Visiting
   virtual int accept (be_visitor *visitor);
 
+  // boolean methods to test if code was already generated
+  idl_bool cli_hdr_gen (void);
+  idl_bool cli_stub_gen (void);
+  idl_bool cli_inline_gen (void);
+  idl_bool srv_hdr_gen (void);
+  idl_bool srv_skel_gen (void);
+  idl_bool srv_inline_gen (void);
+
+  // set the flag indicating that code generation is done
+  void cli_hdr_gen (idl_bool);
+  void cli_stub_gen (idl_bool);
+  void cli_inline_gen (idl_bool);
+  void srv_hdr_gen (idl_bool);
+  void srv_skel_gen (idl_bool);
+  void srv_inline_gen (idl_bool);
+
+  idl_bool is_child (be_decl *node);
+  // am I a direct child of node?
+
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);
   DEF_NARROW_FROM_DECL (be_decl);

@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_union_branch.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_UNION_BRANCH_H)
@@ -65,6 +65,10 @@ public:
   // Narrowing
   DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);
   DEF_NARROW_FROM_DECL (be_union_branch);
+protected:
+  virtual int compute_size_type (void);
+  // compute the size type if it is unknown
+
 };
 
 #endif

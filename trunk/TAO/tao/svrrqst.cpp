@@ -14,10 +14,14 @@ DEFINE_GUID (IID_IIOP_ServerRequest,
 DEFINE_GUID (IID_CORBA_ServerRequest,
 0x4b48d881, 0xf7f0, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-IIOP_ServerRequest::IIOP_ServerRequest (CDR *msg,
+IIOP_ServerRequest::IIOP_ServerRequest (CDR *req,
+                                        CDR *resp,
+                                        CORBA::ULong reqid,
                                         CORBA::ORB_ptr the_orb,
                                         TAO_POA *the_poa)
-  : incoming_ (msg),
+  : incoming_ (req),
+    outgoing_ (resp),
+    reqid_ (reqid),
     params_ (0),
     retval_ (0),
     exception_ (0),
@@ -219,4 +223,173 @@ TAO_POA *
 IIOP_ServerRequest::oa (void)
 {
   return poa_;
+}
+
+// Extension
+void
+IIOP_ServerRequest::demarshal (CORBA::Environment &env,  // exception reporting
+                               const TAO_Call_Data_Skel *info, // call description
+                               ...)                       // ... any parameters
+{
+  // first find out the size of the list to be created. info->count keeps track
+  // of the table size. If "roundtrip" is true => one entry is for RETURN type
+  // which does not go into the NVList
+  CORBA::ULong list_size = info->is_roundtrip ? (info->param_count - 1)
+                                              : info->param_count;
+  CORBA::NVList_ptr nvlist;
+
+  // create an NVList of the appropriate size
+  this->orb ()->create_list (list_size, nvlist);
+
+  // Now, put all "in" and "inout" parameters into the NVList
+  CORBA::ULong i;
+
+  // setup the variable argument list
+  const TAO_Param_Data_Skel *pdp;
+  va_list param_vector;
+  va_start (param_vector, info);
+
+  for (i = 0, pdp = info->params;
+       i < info->param_count;
+       i++, pdp++)
+    {
+      void *ptr = va_arg (param_vector, void *);
+
+      if ((pdp->mode == CORBA::ARG_IN)
+          || (pdp->mode == CORBA::ARG_INOUT))
+        {
+          // populate the NVList
+          (void) nvlist->add_item (0, pdp->mode, env)
+            ->value ()->replace (pdp->tc, ptr, pdp->own, env);
+        }
+      else if (pdp->mode == CORBA::ARG_OUT)
+        {
+          (void) nvlist->add_item (0, pdp->mode, env);
+          // don't add any value
+        }
+    }
+  va_end (param_vector);
+
+  // now demarshal the parameters using a call to params
+  this->params (nvlist, env); // nvlist is now owned by us
+}
+
+// Extension
+void
+IIOP_ServerRequest::marshal (CORBA::Environment &env,  // exception reporting
+                             const TAO_Call_Data_Skel *info, // call description
+                             ...)                       // ... any parameters
+{
+  // Now, put all "in" and "inout" parameters into the NVList
+  CORBA::ULong i, j;
+
+  // setup the variable argument list
+  const TAO_Param_Data_Skel *pdp;
+  va_list param_vector;
+  va_start (param_vector, info);
+
+  j = 0;
+  for (i = 0, pdp = info->params;
+       i < info->param_count;
+       i++, pdp++)
+    {
+      void *ptr = va_arg (param_vector, void *);
+
+      if (pdp->mode == 0) // return type
+        {
+          this->retval_ = new CORBA::Any (pdp->tc, ptr, pdp->own);
+          continue;
+        }
+
+      if (pdp->mode == CORBA::ARG_OUT)
+        {
+          (void) this->params_->item (j, env)->value ()
+            ->replace (pdp->tc, ptr, pdp->own, env);
+          // don't add any value
+        }
+      j++;
+    }
+  va_end (param_vector);
+
+
+  // setup a Reply message
+  this->init_reply (env);
+
+  // Normal reply.
+  if (!env.exception ())
+    {
+      // ... then send any return value ...
+      if (this->retval_)
+        {
+          CORBA::TypeCode_ptr tc = this->retval_->type ();
+          const void *value = this->retval_->value ();
+          if (value)
+            (void) this->outgoing_->encode (tc, value, 0, env);
+        }
+
+      // ... Followed by "inout" and "out" parameters, left to right
+      for (u_int i = 0;
+           i < this->params_->count ();
+           i++)
+        {
+          CORBA::NamedValue_ptr	nv = this->params_->item (i, env);
+          CORBA::Any_ptr any;
+
+          if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
+            continue;
+
+          any = nv->value ();
+          CORBA::TypeCode_ptr tc = any->type ();
+          const void *value = any->value ();
+          (void) this->outgoing_->encode (tc, value, 0, env);
+        }
+    }
+}
+
+void
+IIOP_ServerRequest::init_reply (CORBA::Environment &env)
+{
+  // construct a REPLY header
+  TAO_GIOP::start_message (TAO_GIOP_Reply, *this->outgoing_);
+  TAO_GIOP_ServiceContextList resp_ctx;
+  resp_ctx.length (0);
+  this->outgoing_->encode (&TC_ServiceContextList, &resp_ctx, 0, env);
+  this->outgoing_->put_ulong (this->reqid_);
+
+  // Standard exceptions only.
+  if (env.exception () != 0)
+    {
+      CORBA::Environment env2;
+      CORBA::Exception *x = env.exception ();
+      CORBA::TypeCode_ptr except_tc = x->type ();
+
+      this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+      (void) this->outgoing_->encode (except_tc, x, 0, env2);
+    }
+
+  // Any exception at all.
+  else if (this->exception_)
+    {
+      CORBA::Exception *x;
+      CORBA::TypeCode_ptr except_tc;
+
+      x = (CORBA::Exception *) this->exception_->value ();
+      except_tc = this->exception_->type ();
+
+      // Finish the GIOP Reply header, then marshal the exception.
+      //
+      // XXX x->type () someday ...
+      if (this->ex_type_ == CORBA::SYSTEM_EXCEPTION)
+        this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+      else
+        this->outgoing_->put_ulong (TAO_GIOP_USER_EXCEPTION);
+
+      (void) this->outgoing_->encode (except_tc, x, 0, env);
+    }
+  else
+    {  // Normal reply
+
+      // First finish the GIOP header ...
+      this->outgoing_->put_ulong (TAO_GIOP_NO_EXCEPTION);
+    }
 }

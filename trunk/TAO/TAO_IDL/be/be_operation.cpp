@@ -102,6 +102,14 @@ be_operation::has_native (void)
   return this->has_native_;
 }
 
+be_argument *
+be_operation::add_argument_to_scope (be_argument *arg)
+{
+  this->add_to_scope (arg);
+  this->add_to_referenced (arg, 0);
+  return arg;
+}
+
 // ----------------------------------------
 //            CODE GENERATION METHODS
 // ----------------------------------------
@@ -570,6 +578,7 @@ be_operation::gen_server_header (void)
 
   // every operation is declared virtual
   *sh << "virtual ";
+
 
   // first generate the return type
   bt = be_type::narrow_from_decl (this->return_type ());

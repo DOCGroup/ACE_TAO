@@ -975,11 +975,14 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
       str = (*(char **) data) = CORBA::string_alloc (len - 1);
       // only allocate the string *after* the length was validated.
 
+#if 0
       while (continue_decoding != CORBA::B_FALSE && len-- != 0)
 	{
 	  continue_decoding = stream->get_char (*(CORBA::Char *) str);
 	  str++;
 	}
+#endif
+      continue_decoding = stream->get_string (str, len);
     }
   if (continue_decoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;

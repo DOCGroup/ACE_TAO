@@ -6,9 +6,9 @@
 #if !defined (TAO_BE_VISITOR_SEQUENCE_H)
 #define TAO_BE_VISITOR_SEQUENCE_H
 
-#include "be_visitor.h"
+#include "be_visitor_decl.h"
 
-class be_visitor_sequence_ch : public be_visitor
+class be_visitor_sequence_ch : public be_visitor_decl
 {
   //
   // = TITLE
@@ -19,7 +19,7 @@ class be_visitor_sequence_ch : public be_visitor
   //   sequences
   //
 public:
-  be_visitor_sequence_ch (void);
+  be_visitor_sequence_ch (be_visitor_context *ctx);
   // constructor
 
   ~be_visitor_sequence_ch (void);
@@ -27,16 +27,77 @@ public:
 
   virtual int visit_sequence (be_sequence *node);
   // visit sequence node
+
+  virtual int gen_base_sequence_class (be_sequence *node);
+  // generate the base sequence class
+
+  virtual int gen_var_defn (be_sequence *node);
+  // generate the var defn
+
+  virtual int gen_out_defn (be_sequence *node);
+  // generate the out defn
 };
 
-typedef ACE_Singleton <be_visitor_sequence_ch, ACE_SYNCH_RECURSIVE_MUTEX>
-TAO_BE_VISITOR_SEQUENCE_CH;
-
-class be_visitor_sequence_base_ch : public be_visitor
+class be_visitor_sequence_ci : public be_visitor_decl
 {
   //
   // = TITLE
-  //    be_visitor_sequence_base_ch
+  //    be_visitor_sequence_ci
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the client inline for
+  //   sequences. The only purpose is to generate the implementation for the
+  //   _var and _out classes
+  //
+public:
+  be_visitor_sequence_ci (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_sequence_ci (void);
+  // destructor
+
+  virtual int visit_sequence (be_sequence *node);
+  // visit sequence node
+
+  virtual int gen_var_impl (be_sequence *node);
+  // generate the var impl
+
+  virtual int gen_out_impl (be_sequence *node);
+  // generate the out impl
+};
+
+class be_visitor_sequence_cs : public be_visitor_decl
+{
+  //
+  // = TITLE
+  //    be_visitor_sequence_cs
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the client stubs for
+  //   sequences
+  //
+public:
+  be_visitor_sequence_cs (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_sequence_cs (void);
+  // destructor
+
+  virtual int visit_sequence (be_sequence *node);
+  // visit sequence node
+
+  virtual int gen_base_sequence_class (be_sequence *node);
+  // generate the base sequence class
+
+};
+
+// =helper visitors to generate the base type and element type
+
+class be_visitor_sequence_base : public be_visitor_decl
+{
+  //
+  // = TITLE
+  //    be_visitor_sequence_base
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the template parameters
@@ -45,18 +106,15 @@ class be_visitor_sequence_base_ch : public be_visitor
   // = BUGS
   //   The class name is misleading, eventually this class could be
   //   used to generate code in other files, not only the client
-  //   header. 
+  //   header.
   //   The visitor factory should provide a factory method that builds
   //   this class on the fly.
   //
 public:
-  be_visitor_sequence_base_ch (TAO_OutStream *stream,
-			       be_decl *sequence_scope,
-			       be_type *base_type);
-  // Constructor, set the stream to write to, the scope where the
-  // sequence is defined and the base type for the sequence.
+  be_visitor_sequence_base (be_visitor_context *ctx);
+  // Constructor
 
-  ~be_visitor_sequence_base_ch (void);
+  ~be_visitor_sequence_base (void);
   // destructor
 
   // = Visitor methods.
@@ -72,21 +130,47 @@ public:
   virtual int visit_typedef (be_typedef *node);
 
 protected:
-  be_decl *seq_scope (void);
-  // scope node of the saved sequence node
-
   int visit_node (be_type *);
   // helper that does the common job
 
-private:
-  be_type* current_type_;
-  // The scoped name for the current argument type name.
-  // We cannot use just node->name() because we could be using an
-  // aliased name (through typedefs) in which case the real name must
-  // be used.
 };
 
-class be_visitor_sequence_elemtype : public be_visitor
+class be_visitor_sequence_buffer_type : public be_visitor_decl
+{
+  //
+  // = TITLE
+  //    be_visitor_sequence_buffer_type
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the buffer type
+  //   for a TAO_*_Sequence instantiation.
+  //
+public:
+  be_visitor_sequence_buffer_type (be_visitor_context *ctx);
+  // Constructor
+
+  ~be_visitor_sequence_buffer_type (void);
+  // destructor
+
+  // = Visitor methods.
+  virtual int visit_predefined_type (be_predefined_type *node);
+  virtual int visit_interface (be_interface *node);
+  virtual int visit_interface_fwd (be_interface_fwd *node);
+  virtual int visit_structure (be_structure *node);
+  virtual int visit_enum (be_enum *node);
+  virtual int visit_union (be_union *node);
+  virtual int visit_array (be_array *node);
+  virtual int visit_string (be_string *node);
+  virtual int visit_sequence (be_sequence *node);
+  virtual int visit_typedef (be_typedef *node);
+
+protected:
+  int visit_node (be_type *);
+  // helper that does the common job
+
+};
+
+class be_visitor_sequence_elemtype : public be_visitor_decl
 {
   //
   // = TITLE
@@ -100,11 +184,8 @@ class be_visitor_sequence_elemtype : public be_visitor
   //    This class may eventually go away when the _var and _out classes are
   //    generated using templates
 public:
-  be_visitor_sequence_elemtype (TAO_OutStream *stream,
-				be_decl *sequence_scope,
-				be_type *base_type);
-  // Constructor, set the stream to write to, the scope where the
-  // sequence is defined and the base type for the sequence.
+  be_visitor_sequence_elemtype (be_visitor_context *ctx);
+  // Constructor
 
   ~be_visitor_sequence_elemtype (void);
   // destructor
@@ -122,17 +203,9 @@ public:
   virtual int visit_string (be_string *node);
 
 protected:
-  be_decl *seq_scope (void);
-  // scope node of the saved sequence node
-
   int visit_node (be_type *);
   // helper that does the common job
 
-  be_type* current_type_;
-  // The scoped name for the current argument type name.
-  // We cannot use just node->name() because we could be using an
-  // aliased name (through typedefs) in which case the real name must
-  // be used.
 };
 
 #endif /* TAO_BE_VISITOR_SEQUENCE_H */

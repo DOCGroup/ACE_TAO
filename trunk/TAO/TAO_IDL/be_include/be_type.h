@@ -76,7 +76,7 @@ public:
   UTL_ScopedName *tc_name (void);
   // return the typecode name
 
-  virtual char *nested_type_name (be_decl *d, char *suffix = 0);
+  virtual const char *nested_type_name (be_decl *d, const char *suffix = 0);
   // type name of a node used when generating declarations
 
   virtual int write_as_return (TAO_OutStream *stream,

@@ -72,21 +72,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_interpretive.h"
 
 /*
- * Do the work of this BE. This is the dummy BE so we dont do anything in
- * particular here
+ * Do the work of this BE. This is the starting point for code generation.
  */
+
 void
 BE_produce()
 {
-  TAO_CodeGen *cg = TAO_CODEGEN::instance (); // code generator instance
   be_root *root;   // root of the AST made up of BE nodes
+  be_visitor *root_visitor; // visitor for root
+  be_visitor_context ctx; // context information for the visitor root
 
-  // XXXASG - Here is where we will have a choice of what to initialize
-  cg->visitor_factory (new TAO_Interpretive_Visitor_Factory);
+  // XXXASG - Here is where we will have a choice of what to initialize i.e.,
+  // whether we want a visitor generating "interpetive" or "compiled" form of
+  // stubs/skeletons
+  // TODO - to do this elegantly.
+  // right now we just force it to be the interpretive one.
+  tao_cg->visitor_factory (new TAO_Interpretive_Visitor_Factory);
 
-  AST_Decl *d = idl_global->root ();
-  root = be_root::narrow_from_decl (d);
-  if (root == NULL) // no root
+  AST_Decl *d = idl_global->root (); // get the root
+
+  root = be_root::narrow_from_decl (d); // narrow it to the "be_root"
+  if (!root) // no root
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
@@ -94,81 +100,91 @@ BE_produce()
       BE_abort();
     }
 
-  // get the appropriate visitor from the factory
+  // Code generation involves six steps because of the six files that we
+  // generate.
 
   // (1) generate client header
-  be_visitor *root_visitor_ch = cg->make_visitor (TAO_CodeGen::TAO_ROOT_CH);
-  if (root->accept (root_visitor_ch) == -1)
+  // instantiate a visitor context
+  ctx.state (TAO_CodeGen::TAO_ROOT_CH); // set the codegen state
+  // get a root visitor
+  root_visitor = tao_cg->make_visitor (&ctx);
+  if (root->accept (root_visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client header for Root failed\n"));
       BE_abort();
     }
-
+  (void) tao_cg->end_client_header (); // generate the last #endif
+  delete root_visitor; // it is our responsibility to free up the visitor
 
   // (2) generate client inline
-  be_visitor *root_visitor_ci = cg->make_visitor (TAO_CodeGen::TAO_ROOT_CI);
-  if (root->accept (root_visitor_ci) == -1)
+  // set the context information
+  ctx.state (TAO_CodeGen::TAO_ROOT_CI);
+  // create a visitor
+  root_visitor = tao_cg->make_visitor (&ctx);
+  if (root->accept (root_visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client inline for Root failed\n"));
       BE_abort();
     }
+  delete root_visitor; // it is our responsibility to free up the visitor
 
 
   // (3) generate client stubs
-  be_visitor *root_visitor_cs = cg->make_visitor (TAO_CodeGen::TAO_ROOT_CS);
-  if (root->accept (root_visitor_cs) == -1)
+  ctx.state (TAO_CodeGen::TAO_ROOT_CS);
+  // create a visitor
+  root_visitor = tao_cg->make_visitor (&ctx);
+  if (root->accept (root_visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client stubs for Root failed\n"));
       BE_abort();
     }
-
+  delete root_visitor; // it is our responsibility to free up the visitor
 
   // (4) generate server header
-  be_visitor *root_visitor_sh = cg->make_visitor (TAO_CodeGen::TAO_ROOT_SH);
-  if (root->accept (root_visitor_sh) == -1)
+  ctx.state (TAO_CodeGen::TAO_ROOT_SH);
+  // create a visitor
+  root_visitor = tao_cg->make_visitor (&ctx);
+  if (root->accept (root_visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server header for Root failed\n"));
       BE_abort();
     }
-
+  (void) tao_cg->end_server_header (); // generate the last #endif
+  delete root_visitor; // it is our responsibility to free up the visitor
 
   // (5) generate server inline
-  be_visitor *root_visitor_si = cg->make_visitor (TAO_CodeGen::TAO_ROOT_SI);
-  if (root->accept (root_visitor_si) == -1)
+  ctx.state (TAO_CodeGen::TAO_ROOT_SI);
+  // create a visitor
+  root_visitor = tao_cg->make_visitor (&ctx);
+  if (root->accept (root_visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server inline for Root failed\n"));
       BE_abort();
     }
-
+  delete root_visitor; // it is our responsibility to free up the visitor
 
   // (6) generate server skeletons
-  be_visitor *root_visitor_ss = cg->make_visitor (TAO_CodeGen::TAO_ROOT_SS);
-  if (root->accept (root_visitor_ss) == -1)
+  ctx.state (TAO_CodeGen::TAO_ROOT_SS);
+  // create a visitor
+  root_visitor = tao_cg->make_visitor (&ctx);
+  if (root->accept (root_visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server skeletons for Root failed\n"));
       BE_abort();
     }
-
-#if 0
-  // start the code generation process
-  if (root->gen_idl2cplusplus_mapping() == -1)
-    {
-      cerr << "Mapping process failed" << endl;
-      BE_abort();
-    }
-#endif
+  delete root_visitor; // it is our responsibility to free up the visitor
 }
 
 /*

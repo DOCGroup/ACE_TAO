@@ -119,5 +119,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_factory.h"          // factory
 
 #include 	"be_visitor.h"          // abstract visitor
+#include        "be_visitor_context.h"  // visitor context
 
 #endif           // _BE_BE_HH

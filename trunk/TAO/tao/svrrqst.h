@@ -4,12 +4,12 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    svrrqst.h
 //
 // = DESCRIPTION
-//     
+//
 //    Header file for Win32 C/C++/COM interface to CORBA's Dynamic
 //    Server Skeleton Interface's "Server Request" type.
 //
@@ -18,13 +18,78 @@
 //
 // = VERSION
 //     $Id$
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_SVRRQST_H)
 #define TAO_SVRRQST_H
 
 class TAO_POA;
+
+struct TAO_Param_Data_Skel
+  // = TITLE
+  //   Description of a single parameter.
+  //
+  // = DESCRIPTION
+  //
+  //   If value_size is nonzero for OUT, INOUT, or RETURN parameters,
+  //   it's (a) an indicator that the ORB returns a pointer-to-value
+  //   for this parameter, and also (b) is the size of the top-level
+  //   of the value that's returned (e.g. ignoring nested sequence
+  //   buffers).  That is, it moves CPU cycles from runtime -- some
+  //   calls to tc->size() -- to compile time where they're
+  //   cheap/free.
+  //
+  //   It _must_ only be set for cases where the ORB allocates the
+  //   return value, which must then be ORB::free()d ... e.g. where
+  //   the value is a pointer to data such as a struct, sequence, or
+  //   union.  (The CORBA C++ mapping doesn't require that for all
+  //   "out" structs; only those of "variable size".)  If this value
+  //   is nonzero, the value passed to do_call() must be the address
+  //   of a pointer.
+
+{
+  CORBA::TypeCode_ptr tc;
+  // Type of param.
+
+  CORBA::ULong mode;
+  // Its mode.
+
+  CORBA::Boolean own;
+  // whether we own it or not
+};
+
+struct TAO_Call_Data_Skel
+  // = TITLE
+  //   Descriptions of operations, as used by the stub interpreter.
+  //   Only interpretive marshaling/unmarshaling is used, and the
+  //   stubs don't know what particular on-the-wire protocol is being
+  //   used.
+  //
+  // = DESCRIPTION
+  //   When using C++ exceptions, many C++ compilers will require the
+  //   use of compiled code throw the exception.  As binary standards
+  //   for exception throwing evolve, it may become practical to
+  //   interpretively throw exceptions.
+{
+  const char *opname;
+  // Operation name.
+
+  CORBA::Boolean is_roundtrip;
+  // !oneway
+
+  // When constructing tables of parameters, put them in the same
+  // order they appear in the IDL spec: return value, then parameters
+  // left to right.  Other orders may produce illegal IIOP protocol
+  // messages.
+
+  CORBA::ULong param_count;
+  // # parameters.
+
+  const TAO_Param_Data_Skel *params;
+  // Their descriptions.
+
+};
 
 class TAO_Export CORBA_ServerRequest : public TAO_IUnknown
   // = TITLE
@@ -71,6 +136,22 @@ public:
   virtual CORBA::String  op_name (void) = 0;
   virtual TAO_POA *oa (void) = 0;
   virtual CORBA::ORB_ptr  orb (void) = 0;
+
+  // Extensions
+  virtual void demarshal (CORBA::Environment &env,
+                          const TAO_Call_Data_Skel *info,
+                          ...) = 0;
+  virtual void marshal (CORBA::Environment &env,
+                        const TAO_Call_Data_Skel *info,
+                        ...) = 0;
+  virtual void init_reply (CORBA::Environment &env) = 0;
+  // start a Reply message
+
+  virtual CDR &incoming (void) = 0;
+  // retrieve the incoming stream
+
+  virtual CDR &outgoing (void) = 0;
+  // retrieve the outgoing stream
 };
 
 class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
@@ -80,7 +161,9 @@ class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
 public:
   // Constructor, destructor
 
-  IIOP_ServerRequest (CDR *msg,
+  IIOP_ServerRequest (CDR *req,
+                      CDR *resp,
+                      CORBA::ULong reqid,
 		      CORBA::ORB_ptr the_orb,
 		      TAO_POA *the_poa);
 
@@ -112,9 +195,26 @@ public:
   TAO_HRESULT  QueryInterface (REFIID riid,
                                void **ppv);
 
+  virtual void demarshal (CORBA::Environment &env,
+                          const TAO_Call_Data_Skel *info,
+                          ...);
+  virtual void marshal (CORBA::Environment &env,
+                        const TAO_Call_Data_Skel *info,
+                        ...);
+  virtual void init_reply (CORBA::Environment &env);
+  // start a Reply message
+
+  virtual CDR &incoming (void);
+  // retrieve the incoming stream
+
+  virtual CDR &outgoing (void);
+  // retrieve the outgoing stream
+
   // private:
   CORBA::String opname_;        // Operation name.
   CDR *incoming_;               // Incoming stream.
+  CDR *outgoing_;               // Outgoing stream.
+  CORBA::ULong reqid_;          // request ID
   CORBA::NVList_ptr params_;    // Incoming parameters.
   CORBA::Any_ptr retval_;       // Return value.
   CORBA::Any_ptr exception_;    // Any exception which might be raised.
