@@ -128,16 +128,40 @@ interface AttributeTester
   attribute string<1> a_sb;
 };
 
-/*
- * Illegal recursion.
- * One day I'll add a mechanism to check for illegal IDL
- * files as well as legal ones.
- 
-interface Test
+// All of the 'recursion' below is legal.
+module ParamMod
 {
-  struct TestInfo
+  interface ParameterTester
   {
-    Test atest;
+    exception object_excep_type
+    {
+      ParameterTester objref;
+    };
+  
+    typedef sequence<ParameterTester> object_seq_type;
+    
+    typedef ParameterTester object_array_type[5];
+
+    struct object_struct_type 
+    {
+      octet o1;
+      ParameterTester p1;
+      long l1;        
+    };
+    
+    union object_union_type switch (long)
+    {
+      case 0: string str;
+      case 1: ParameterTester pt;
+    };
+    
+    object_seq_type parameter_tester_op (
+        in object_struct_type inarg,
+        inout object_array_type inoutarg,
+        out object_union_type outarg
+      )
+      raises (object_excep_type); 
   };
 };
-*/
+
+ 
