@@ -158,7 +158,8 @@ TAO_IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 int
 TAO_IIOP_SSL_Connector::make_connection (
   TAO_GIOP_Invocation *invocation,
-  TAO_Transport_Descriptor_Interface *desc)
+  TAO_Transport_Descriptor_Interface *desc,
+  ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -181,21 +182,6 @@ TAO_IIOP_SSL_Connector::make_connection (
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
-
-  ACE_Time_Value *max_wait_time = 0;
-
-  ACE_Time_Value connection_timeout;
-  int timeout = 0;
-
-  this->orb_core ()->connection_timeout (invocation->stub (),
-                                         timeout,
-                                         connection_timeout);
-  if (!timeout)
-    max_wait_time =
-      invocation->max_wait_time ();
-  else
-    max_wait_time = &connection_timeout;
-
 
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
