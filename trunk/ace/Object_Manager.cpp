@@ -122,6 +122,12 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // Initialize the main thread's TS storage.
   ACE_TSS_Emulation::tss_open (ts_storage_);
 #endif /* ACE_HAS_TSS_EMULATION */
+
+  // Open Winsock (no-op on other platforms).
+  ACE_OS::socket_init (ACE_WSOCK_VERSION);
+
+  // Open the main thread's ACE_Log_Msg.
+  (void *) ACE_LOG_MSG;
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
@@ -159,6 +165,9 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Close the main thread's TSS, including its Log_Msg instance.
   ACE_OS::cleanup_tss ();
 
+  // Close down Winsock (no-op on other platforms).
+  ACE_OS::socket_fini ();
+
   ACE_MT (delete lock_;  lock_ = 0);
 
   delete registered_objects_;
@@ -168,7 +177,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_Allocator::close_singleton ();
 
 # if defined (ACE_HAS_THREADS)
-  // Close the ACE_Allocator and ACE_Static_Object_Lock.
+  // Close ACE_Static_Object_Lock.
   ACE_Static_Object_Lock::close_singleton ();
 # endif /* ACE_HAS_THREADS */
 
