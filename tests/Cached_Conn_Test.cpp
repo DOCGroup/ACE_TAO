@@ -124,6 +124,9 @@ typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_
   // The explicit instantiations are necessary with g++ 2.91.66
   // with -frepo, because it misses some of them.
 
+# if defined (ghs) && defined(ACE_WIN32)
+template class ACE_Node<ACE_HANDLE>;
+# endif
 // = Handle Gobbler
 #if (ACE_SIZEOF_INT != 4) && !defined (ACE_WIN32)
 // These might be already instantiated in ace/stats.cpp 
