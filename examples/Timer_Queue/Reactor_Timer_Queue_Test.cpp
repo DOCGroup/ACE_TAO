@@ -25,7 +25,6 @@
 #include "Reactor_Timer_Queue_Test.h"
 
 static const int NO_OF_IO_HANDLERS = 5;
-#define  REACTOR  ACE_Reactor::instance ()
 
 void 
 Reactor_Timer_Handler::set_timer_id (long tid)
@@ -35,7 +34,7 @@ Reactor_Timer_Handler::set_timer_id (long tid)
 
 int 
 Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
-			       const void *)
+				       const void *)
 {
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (tv);
@@ -48,7 +47,8 @@ Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
   return 0;
 }
 
-Input_Handler::Input_Handler (ACE_Timer_Queue *tq, Reactor_Timer_Queue_Test_Driver &timer_queue_driver)
+Input_Handler::Input_Handler (ACE_Timer_Queue *tq,
+			      Reactor_Timer_Queue_Test_Driver &timer_queue_driver)
   : done_ (0),
     driver_ (timer_queue_driver)
 {
@@ -178,9 +178,10 @@ Reactor_Timer_Queue_Test_Driver::init (void)
 		  COMMAND (thandler_, &Input_Handler::shutdown_timer),
 		  -1);
 
-  REACTOR->set_timer_queue (&timer_queue_);
+  ACE_Reactor::instance ()->set_timer_queue (&timer_queue_);
 
-  ACE::register_stdin_handler (&thandler_, REACTOR,
+  ACE::register_stdin_handler (&thandler_,
+			       ACE_Reactor::instance (),
                                ACE_Thread_Manager::instance ());
 
   // print the menu of options.
@@ -200,7 +201,7 @@ Reactor_Timer_Queue_Test_Driver::run_test (void)
 
   // Run until we say stop.
   while (thandler_.done () == 0)
-    REACTOR->handle_events ();
+    ACE_Reactor::instance ()->handle_events ();
 
   ACE_DEBUG ((LM_DEBUG, "TIMER TEST ENDED\n"));
   return 0;

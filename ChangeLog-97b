@@ -2,8 +2,6 @@ Tue Oct 21 01:01:12 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Thread_Manager.h: Added more comments.
 
-Tue Oct 21 00:37:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
-
 	* ace/Thread_Manager.{h,cpp}:  Added a parameter <size> to
 	  Thread_Manager's constructor with default value 0.  This
 	  parameter is currently unused and put in for backward
@@ -18,12 +16,6 @@ Mon Oct 20 22:34:46 1997    <irfan@TWOSTEP>
  	  to ACE_FAIL_RETURN. Also updated the wide-character version of
  	  open().
 
-Mon Oct 20 22:23:42 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
-
-	* tests/Sigset_Ops_Test.cpp (main): It is not legal too for
-	  sigismember to return 0 if we pass an invalid signal to it.
-	  Thanks to Stephen Coy <stevec@magna.com.au> for fixing this.
-
 Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-hpux-10.x.h: Added #define ACE_DEFAULT_BASE_ADDR
@@ -35,13 +27,15 @@ Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  so that it will work on VxWorks.  Thanks to David Levine for
  	  chasing this down and doing most of the changes.
 
+	* ace/OS.h: Added a new special case for _KCC so that its
+ 	  ACE_UNUSED_ARG will work properly.  Thanks to Torbjorn Lindgren
+ 	  <tl@funcom.no> for reporting this.
+
 Mon Oct 20 22:23:42 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tests/Sigset_Ops_Test.cpp (main): It is not legal too for
 	  sigismember to return 0 if we pass an invalid signal to it.
 	  Thanks to Stephen Coy <stevec@magna.com.au> for fixing this.
-
-Mon Oct 20 12:05:39 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* Thread_Manager.*:  Replace the thr_table_ with a double-linked
 	  list thr_list_.  With this change, we can cache the thread
@@ -108,12 +102,6 @@ Mon Oct 20 07:49:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp (main): removed call
 	  to ACE_Thread_Manager::open () because it no longer is available.
-
-Mon Oct 20 06:21:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/OS.h: Added a new special case for _KCC so that its
- 	  ACE_UNUSED_ARG will work properly.  Thanks to Torbjorn Lindgren
- 	  <tl@funcom.no> for reporting this.
 
 Mon Oct 20 02:04:19 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

@@ -281,7 +281,7 @@ _test1_test_throw (CORBA::ServerRequest &req,
 #else
       //
       // XXX right now, we don't have a target() operation on the
-      // BOA ... needs to be added.  Verify the client side memory
+      // POA ... needs to be added.  Verify the client side memory
       // leak of pointers embedded in user exceptions is fixed, too.
       //
       env.exception (new CORBA::IMP_LIMIT (COMPLETED_NO));
@@ -460,7 +460,7 @@ print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
 
 int
 OA_listen (CORBA::ORB_ptr orb_ptr,
-	   CORBA::BOA_ptr oa_ptr,
+	   CORBA::POA_ptr oa_ptr,
 	   CORBA::String key,
 	   int idle)
 {
@@ -477,7 +477,7 @@ OA_listen (CORBA::ORB_ptr orb_ptr,
   obj = oa_ptr->create (obj_key, (CORBA::String) "", env);
   if (env.exception () != 0)
     {
-      print_exception (env.exception (), "BOA::create");
+      print_exception (env.exception (), "POA::create");
       return 1;
     }
 
@@ -510,7 +510,7 @@ OA_listen (CORBA::ORB_ptr orb_ptr,
   // the methods makes us exit.
   //
   // NOTE:  apart from registering the top level skeleton, the rest
-  // of this loop is exactly what BOA::run() does.  It's here to
+  // of this loop is exactly what POA::run() does.  It's here to
   // show there's no magic.
   //
 #if 0
@@ -560,7 +560,7 @@ OA_listen (CORBA::ORB_ptr orb_ptr,
 	  }
 	else
 	  {
-	    print_exception (env.exception (), "BOA::get_request");
+	    print_exception (env.exception (), "POA::get_request");
 	    return 1;
 	  }
       }
@@ -572,7 +572,7 @@ OA_listen (CORBA::ORB_ptr orb_ptr,
   // descriptors, etc).
   //
   // XXX shutdown is not quite the same as release, unless we want mem
-  // leaks to cause some rude failure modes.  BOA just hasn't been
+  // leaks to cause some rude failure modes.  POA just hasn't been
   // updated yet to have any handshake about this though.
   //
   oa_ptr->Release ();
@@ -588,7 +588,7 @@ main (int    argc, char   *argv[])
 {
   CORBA::Environment	env;
   CORBA::ORB_ptr	orb_ptr;
-  CORBA::BOA_ptr		oa_ptr;
+  CORBA::POA_ptr		oa_ptr;
   CORBA::String	key = (CORBA::String) "elvis";
   char		*oa_name = 0;
   char		*orb_name = "internet";
@@ -653,9 +653,9 @@ main (int    argc, char   *argv[])
   }
 
   //
-  // The BOA may or may not actually be named ...
+  // The POA may or may not actually be named ...
   //
-  oa_ptr = CORBA::BOA::get_named_boa (orb_ptr, oa_name, env);
+  oa_ptr = CORBA::POA::get_named_boa (orb_ptr, oa_name, env);
   if (env.exception () != 0) {
     print_exception (env.exception (), "OA init");
     return 1;
