@@ -75,6 +75,8 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 ASNMP \
                 BIBLIOGRAPHY \
                 ChangeLog \
+		ChangeLog-98a \
+		ChangeLog-97b \
                 ChangeLog-97a \
                 ChangeLog-96b \
                 ChangeLog-96a \
