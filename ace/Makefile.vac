@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 all:
-	vacbld_r ace.icc -severity=warning
+	vacbld_r ace.icc -sev=w
 
 realclean:
 	vacbld_r ace.icc -clean
