@@ -19,38 +19,20 @@
 #
 
 !ifdef STATIC
-!ifndef STATIC_DIR
-STATIC_DIR=Static
-!endif
 OBJSTATIC_DIR=Static
 !else
-!ifndef STATIC_DIR
-STATIC_DIR=Dynamic
-!endif
 OBJSTATIC_DIR=Dynamic
 !endif
 
 !ifdef DEBUG
-!ifndef DEBUG_DIR
-DEBUG_DIR=Debug
-!endif
 OBJDEBUG_DIR=Debug
 !else
-!ifndef DEBUG_DIR
-DEBUG_DIR=Release
-!endif
 OBJDEBUG_DIR=Release
 !endif
 
 !ifdef UNICODE
-!ifndef UNICODE_DIR
-UNICODE_DIR=Unicode
-!endif
 OBJUNICODE_DIR=Unicode
 !else
-!ifndef UNICODE_DIR
-UNICODE_DIR=.
-!endif
 OBJUNICODE_DIR=.
 !endif
 
@@ -64,14 +46,12 @@ BASE_BINDIR=.
 BASE_OBJDIR=.\obj
 !endif
 
-CONFIG_SUBDIR=$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
-
 !ifndef BINDIR
-BINDIR=$(BASE_BINDIR)\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
+BINDIR=$(BASE_BINDIR)
 !endif
 
 !ifndef CORE_BINDIR
-CORE_BINDIR=$(ACE_ROOT)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
+CORE_BINDIR=$(ACE_ROOT)\bin
 !endif
 
 !ifdef MKDIR
@@ -93,19 +73,7 @@ MAKE_OBJDIR=if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
 !endif
 
 !ifndef INSTALL_EXEDIR
-!ifndef STATIC
-!ifndef DEBUG
-!ifndef UNICODE
 INSTALL_EXEDIR=$(INSTALL_DIR)\bin
-!else
-INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
-!endif
-!else
-INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
-!endif
-!else
-INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
-!endif
 !endif
 
 !ifdef MKDIR
@@ -116,7 +84,7 @@ MAKE_INSTALL_EXEDIR=if not exist "$(INSTALL_EXEDIR)" mkdir "$(INSTALL_EXEDIR)"
 !endif
 
 !ifndef INSTALL_DLLDIR
-INSTALL_DLLDIR=$(INSTALL_DIR)\bin
+INSTALL_DLLDIR=$(INSTALL_DIR)\lib
 !endif
 
 !ifdef MKDIR
