@@ -23,18 +23,14 @@
 
 #include "ace/OS.h"
 
-#ifndef ACE_STREAMBUF_SIZE
-#define ACE_STREAMBUF_SIZE	1024
-#endif  ACE_STREAMBUF_SIZE
-
 #if defined (__GNUC__)
 #include <String.h>
 
 class QuotedString : public String
 {
 public:
-	inline QuotedString & operator =(char  c) { return((QuotedString&)String::operator=(c)); }
-	inline QuotedString & operator =(char* c) { return((QuotedString&)String::operator=(c)); }
+  inline QuotedString & operator =(char  c) { return (QuotedString&) String::operator=(c); }
+  inline QuotedString & operator =(char* c) { return (QuotedString&) String::operator=(c); }
 };
 #endif /* __GNUC__ */
 
@@ -172,7 +168,7 @@ private:
   // underflow.  It will attempt to fill the read buffer from the
   // peer.
 
-  int get_one_byte(void);
+  int get_one_byte (void);
   // Used by fillbuf and others to get exactly one byte from the peer.
   // recv_n is used to be sure we block until something is available.
 };
@@ -181,19 +177,19 @@ private:
 // We will use it below to quickly override most (all?)  iostream get
 // operators.  Notice how the ipfx() and isfx() functions are used.
 
-#define ACE_OPERATORG(MT,DT)    \
-        inline virtual MT& operator>>(DT v) { \
-        if(ipfx()) iostream::operator>>(v); isfx(); return(*this); \
-        };
+#define ACE_OPERATORG(MT,DT) \
+        inline virtual MT& operator>> (DT v) { \
+        if (ipfx ()) iostream::operator>> (v); isfx (); return *this; \
+        }
 
 // This macro defines the put operator for class MT into datatype DT.
 // We will use it below to quickly override most (all?)  iostream put
 // operators.  Notice how the opfx() and osfx() functions are used.
 
-#define ACE_OPERATORP(MT,DT)    \
-        inline virtual MT& operator<<(DT v) { \
-        if(opfx()) iostream::operator<<(v); osfx(); return(*this); \
-        };
+#define ACE_OPERATORP(MT,DT) \
+        inline virtual MT& operator<< (DT v) { \
+        if (opfx ()) iostream::operator<< (v); osfx (); return *this; \
+        }
 
 // These are necessary in case somebody wants to derive from us and
 // override one of these with a custom approach.

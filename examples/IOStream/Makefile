@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #	@(#)Makefile	1.1	10/18/96
 #
-#	Makefile for the ACE examples directory
+#	Makefile for the ACE IOStream examples
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -10,25 +10,8 @@
 
 INFO  = README
 
-DIRS  =	ASX \
-	Connection \
-	IPC_SAP \
-	IOStream \
-	Logger \
-	Log_Msg \
-	Mem_Map \
-	Misc \
-	Reactor	\
-	Service_Configurator \
-	Shared_Malloc \
-	Shared_Memory \
-	System_V_IPC \
-	Threads
-
-# Makefiles TBD:
-#	ttcp 
-#       CORBA 
-
+DIRS  =	client \
+	server
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
