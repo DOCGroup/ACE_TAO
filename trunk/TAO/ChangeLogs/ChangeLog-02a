@@ -1,3 +1,10 @@
+Tue Mar  5 12:52:30 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+
+          Fix some memory leaks due to misuse of CORBA memory management.
+
 Tue Mar  5 10:56:36 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* TAOACE.dsw: Make AV project depend on ACE_QoS project.
