@@ -2,14 +2,17 @@
 
 // A plain vanilla component definition.
 
-component HelloWorld
+interface Hello
+{
+  // Return the greating string as:
+  //   "Greeting from <helloname>.  How are you, <username>?"
+  string sayhello (in string username);
+};
+
+component HelloWorld supports Hello
 {
   // The name of this greeting machine.
   attribute string helloname;
-
-  // Return the greating string as:
-  //   "Greeting from <helloname>.  How are you, <username>?"
-  string hello (in string username);
 };
 
 
