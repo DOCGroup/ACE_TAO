@@ -1,3 +1,10 @@
+Thu Mar 23 15:09:22 2000  Jody Hagins <jody@atdesk.com>
+
+        * ace/Object_Manager.cpp (ACE_Static_Object_Lock::instance):
+          with ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK #defined,
+          use ACE_RETURN_NEW instead of ACE_RETURN so that a value
+          is returned by the function.
+
 Thu Mar 23 10:39:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/g++dep:
