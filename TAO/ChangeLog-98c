@@ -1,3 +1,9 @@
+Tue Dec 23 11:45:03 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: 
+	  There is no need to set config=1 when compiling
+	  $TAO_ROOT/orbsvcs.
+
 Mon Dec 22 22:02:49 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.46, released Mon Dec 22 22:02:49 1997.
