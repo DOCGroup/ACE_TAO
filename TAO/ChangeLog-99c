@@ -1,3 +1,39 @@
+Sat Aug 28 16:04:10 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Added exceptions for all errors conditions.
+
+	* tao/ORB.cpp (url_ior_string_to_object):
+
+	  Made memory allocation of stub object exception safe by using
+	  TAO_Stub_Auto_Ptr class.
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Changed error checks that return zero to return
+	  CORBA::ORB::_nil() instead.  Both are equivalent in TAO but it
+	  appears to be more technically correct to use the _nil() method.
+
+	* tao/ORB_Core.h (TAO_ORB_Core):
+
+	  Added missing ACE_THROW_SPEC to declaration of open() method.
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core):
+
+	  Change initialization of has_shutdown_ variable from 0 to 1,
+	  indicating that the ORB is instantiated in a shutdown state.
+	  The only way to (re)start the ORB is to call CORBA::ORB_init(),
+	  which calls TAO_ORB_Core::init().  For that reason, only
+	  TAO_ORB_Core::init() should change the ORB shutdown state to
+	  has_shutdown_ = 0, i.e. not shutdown.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Memory allocation failure of ORB pseudo-object was returning
+	  zero, which indicated a successful return.  The memory
+	  allocation now returns -1 upon failure.
+
 Sat Aug 28 15:15:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_structure.cpp:
@@ -171,7 +207,6 @@ Thu Aug 26 21:12:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           Made sure all paths initialize the return value in
           compare_quiet(). Pointed out by a Linux warning.
 
->>>>>>> 1.2605
 Thu Aug 26 20:34:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/Pluggable.h:
