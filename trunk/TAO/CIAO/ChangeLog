@@ -1,3 +1,64 @@
+Fri Apr 23 10:57:26 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+	  struct ConnectionResourceDeploymentDescription: Added a new struct
+	  and corresponding unbounded sequence (Issue 6392).
+
+	  struct PlanSubcomponentPropertyReference: Replaced instanceRef
+	  field with a field called instance of type
+	  InstanceDeploymentDescription. 
+
+	  struct PlanSubcomponentPortEndpoint: Replaced instanceRef and
+	  kind fields with a field called instance of type
+	  InstanceDeploymentDescription. 
+
+	  struct PlanConnectionDescription: Added a field called
+	  deployedResource of type ConnectionResourceDeploymentDescriptions.
+
+	* DnC/Config_Handler/IRDD_Handler.h:
+	* DnC/Config_Handler/IRDD_Handler.cpp:
+	  XML handlers for the InstanceResourceDeploymentDescription artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/IDD_Handler.h:
+	* DnC/Config_Handler/IDD_Handler.cpp:
+	  XML handlers for the InstanceDeploymentDescription artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/IRDD_Handler.h:
+	* DnC/Config_Handler/IRDD_Handler.cpp:
+	  XML handlers for the ConnectionResourceDeploymentDescription artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/PCD_Handler.h:
+	* DnC/Config_Handler/PCD_Handler.cpp:
+	  XML handlers for the PlanConnectionDescription artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/PSPE_Handler.h:
+	* DnC/Config_Handler/PSPE_Handler.cpp:
+	  XML handlers for the PlanSubcomponentPortEndpoint artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/PPM_Handler.h:
+	* DnC/Config_Handler/PPM_Handler.cpp:
+	  XML handlers for the PlanPropertyMapping artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/PSPR_Handler.h:
+	* DnC/Config_Handler/PSPR_Handler.cpp:
+	  XML handlers for the PlanSubcomponentPropertyReference artifact of
+	  the Execution Model.  
+
+	* DnC/Config_Handler/Config_Handlers.mpc:
+	  Added IDD_Handler.cpp
+	  Added IRDD_Handler.cpp
+	  Added CRDD_Handler.cpp
+	  Added PCD_Handler.cpp
+	  Added PSPE_Handler.cpp
+	  Added PPM_Handler.cpp
+	  Added PSPR_Handler.cpp
+
 Fri Apr 23 04:40:12 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DnC/Deployment.idl:

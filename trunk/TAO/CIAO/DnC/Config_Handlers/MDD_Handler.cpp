@@ -44,7 +44,7 @@ namespace CIAO
         this->iter_->release();
     }
 
-    /// handle the deployment plan and populate it
+    /// handle the monolithic deployment description and populate it
     void MDD_Handler::process_MonolithicDeploymentDescription 
     (::Deployment::MonolithicDeploymentDescription &mdd)
     {
