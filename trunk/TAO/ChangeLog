@@ -1,3 +1,9 @@
+Wed Jul  9 22:31:54 2003  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint): Valgrind
+	  found that the local variable `tos' was not initialized in all
+	  possible paths of control flow. 
+
 Tue Jul 08 15:24:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* docs/releasenotes/index.html:
