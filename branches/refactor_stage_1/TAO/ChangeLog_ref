@@ -3,7 +3,7 @@ Mon Apr 21 14:09:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
 
           Fixed CDR operator generation for sequence of Object. Thanks to
-          Bala <bala@dre.vanderbilt.ed> for pointing out the problem in
+          Bala <bala@dre.vanderbilt.edu> for pointing out the problem in
           code generation for PortableGroup.
 
 Mon Apr 21 13:11:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
