@@ -301,7 +301,7 @@ LOGREC_MODULE (Logrec_Formatter);
 class Logrec_Separator : public ACE_Task<ACE_SYNCH>
 {
 private:
-  ACE_Lock_Adapter<ACE_Thread_Mutex> lock_strategy_;
+  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_strategy_;
 
 public:
   virtual int put (ACE_Message_Block *mblk,
