@@ -134,12 +134,6 @@ TAO_CodeGen::start_client_header (const char *fname)
           this->client_header_->print ("#if !defined (%s)\n", macro_name);
           this->client_header_->print ("#define %s\n\n", macro_name);
 
-          // generate the TAO_EXPORT_MACRO macro
-          *this->client_header_ << "#if !defined (TAO_EXPORT_MACRO)\n";
-          *this->client_header_ << "#define TAO_EXPORT_MACRO "
-                                << idl_global->export_macro () << be_nl;
-          *this->client_header_ << "#endif\n";
-
           *this->client_header_ << "#include \"tao/corba.h\"\n";
 
           if (idl_global->export_include () != 0)
@@ -175,6 +169,13 @@ TAO_CodeGen::start_client_header (const char *fname)
             }
           *this->client_header_ << "\n";
 
+          // generate the TAO_EXPORT_MACRO macro
+          *this->client_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
+          *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
+          *this->client_header_ << "#endif\n";
+          *this->client_header_ << "#define TAO_EXPORT_MACRO "
+                                << idl_global->export_macro () << be_nl;
+          
           *this->client_header_ << "#if defined(_MSC_VER)\n"
                                 << "#pragma warning(disable:4250)\n"
                                 << "#endif /* _MSC_VER */\n\n";
