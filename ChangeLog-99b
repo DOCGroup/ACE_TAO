@@ -1,3 +1,10 @@
+Mon Dec 13 02:49:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp (remap): Commented out the remap message in
+	  MMAP_Memory_Pool as this function is called from the signal
+	  handler.  (It didn't really cause any problem but we shouldn't
+	  use ACE_DEBUG from signal handlers anyway.)
+
 Mon Dec 13 01:12:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (update_state): make_changes() calls into
