@@ -87,6 +87,7 @@
 #define ACE_LACKS_U_LONGLONG_T
 
 #define ACE_LACKS_DIFFTIME
+#define ACE_HAS_DIRENT
 
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)

@@ -661,7 +661,7 @@ Timothy Canham <Timothy.Canham@jpl.nasa.gov>
 Chris Uzdavinis <chris@uzdavinis.com>
 Randy Heiland <heiland@ncsa.uiuc.edu>
 Joyce Fu <fu@gsao.med.ge.com>
-Kumar Surender <csk037@lmpsil02.comm.mot.com>
+Surender Kumar <csk037@lmpsil02.comm.mot.com>
 Pradeep Avasthi <Pradeep.Avasthi@motorola.com>
 Guicheney Christophe <guichene@clrhp04.in2p3.fr>
 Madhu Konety <madhu.konety@stdc.com>
@@ -772,7 +772,8 @@ Dmitri Katchalov <Dmitri.Katchalov@computershare.com.au>
 Alok Gupta <alokg@ssind.stpn.soft.net>
 Chien Yueh <cyueh@viasoft.com>
 John K. Black <jblack@s22ct.npt.nuwc.navy.mil>
-Yarmit, Gregory <Gregory.Yarmit@hboc.com>
+Kamen Penev <penev@earthlink.net>
+Gregory Yarmit <Gregory.Yarmit@hboc.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
