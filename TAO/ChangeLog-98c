@@ -1,3 +1,18 @@
+Thu Mar 12 01:03:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/NewPOA/NewPOA.cpp (main): Updated the following files
+ 	  to correctly use CORBA::Policies that are used to create new
+ 	  POAs.  Things that needed fixing included proper exception
+ 	  handling and making sure to destroy the policies once we were
+ 	  through using them.
+
+	  - TAO/tao/tao_util.cpp
+	  - TAO/tests/Cubit/TAO/MT_Cubit/server.cpp
+	  - TAO/tests/POA/Default_Servant/server.cpp
+	  - TAO/tests/POA/Explicit_Activation/server.cpp
+	  - TAO/tests/POA/NewPOA/NewPOA.cpp
+	  - TAO/tests/POA/On_Demand_Activation/server.cpp
+
 Wed Mar 11 21:02:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/svrrqst.cpp (marshal): instead of declaring a new loop
