@@ -2693,7 +2693,9 @@ typedef SOCKET ACE_SOCKET;
 // Reliance on CRT - I don't really like this.
 
 #define O_NDELAY    0
+#if !defined (MAXPATHLEN)
 #define MAXPATHLEN  _MAX_PATH
+#endif /* !MAXPATHLEN */
 #define MAXNAMLEN   _MAX_FNAME
 #define EADDRINUSE WSAEADDRINUSE
 
@@ -2946,7 +2948,7 @@ extern "C"
 #ifdef ACE_HAS_STL_MAP_CONFLICT
 #undef queue
 #endif
-  
+
 #if defined(VXWORKS) && defined(ghs)
 // Works around a lack of proper prototypes for these functions on VxWorks
 unsigned long inet_addr(const char *);
