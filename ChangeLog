@@ -1,3 +1,11 @@
+Thu Nov 20 18:11:32 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Service_Object.{h,cpp}: Added a new constructor for
+	  ACE_Service_Type that is passed an ACE_SHLIB_HANDLE handle.
+  	  This fixes a bug with ACE_DLL_Strategy::make_svc_handler().
+  	  Thanks to Thomas Girard <thomas.g.girard@free.fr> for reporting
+ 	  this.
+
 Fri Nov 21 13:26:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * *Makefile*:
