@@ -51,6 +51,12 @@ class ACE_Svc_Export TAO_OA_Parameters
 //    parameters.
 {
 public:
+  static TAO_OA_Parameters *instance (void);
+  // Global access point to the Singleton.
+
+  static TAO_OA_Parameters *instance (TAO_OA_Parameters*);
+  // Set the Singleton instance.
+
   enum DEMUX_STRATEGY
   {
     TAO_LINEAR,
@@ -134,6 +140,21 @@ public:
   void tablesize (CORBA_ULong tablesize);
   CORBA_ULong tablesize (void);
 
+protected:
+#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  static TAO_OA_Parameters *instance_;
+  // Pointer to the Singleton instance.
+
+  static TAO_OA_Parameters ace_singleton_lock_;
+  // Lock the creation of the singleton.  
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  static TAO_OA_Parameters *&instance_i (void);
+  // Get pointer to the Singleton instance
+
+  static ACE_SYNCH_MUTEX &singleton_lock_i (void);
+  // Get reference to Singleton lock;
+
 private:
 
   int using_threads_;		
@@ -163,8 +184,7 @@ private:
 };
 
 // Create a type for the singleton
-typedef ACE_Singleton<TAO_OA_Parameters, ACE_SYNCH_MUTEX> 
-	TAO_OA_PARAMS;
+typedef TAO_OA_Parameters TAO_OA_PARAMS;
 
 #  if defined(__ACE_INLINE__)
 #    include "params.i"
