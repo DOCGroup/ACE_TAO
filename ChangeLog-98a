@@ -1,3 +1,9 @@
+Thu Mar 12 18:21:15 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/config-linux-common.h: Incorporated changes that were
+	  suggested by Robert Hanzlik <robi@codalan.cz> to get ACE to
+	  compile on Linux using glibc 2.1 and libg++/gcc 2.8.
+
 Thu Mar 12 17:25:28 1998  James C Hu  <jxh@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added a table to Supported Platforms and
