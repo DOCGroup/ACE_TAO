@@ -6,13 +6,13 @@ ObjectGroupManagerHandler::ObjectGroupManagerHandler(ACE_Auto_Event& evt, int nu
 {
 }
 
-void ObjectGroupManagerHandler::start (CORBA::Boolean ami_return_val,
-                                       const FTRT::Location & the_location)
+void ObjectGroupManagerHandler::start (CORBA::Boolean ,
+                                       const FTRT::Location & )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
-void ObjectGroupManagerHandler::start_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+void ObjectGroupManagerHandler::start_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -23,7 +23,7 @@ void ObjectGroupManagerHandler::create_group ()
 }
 
 
-void ObjectGroupManagerHandler::create_group_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+void ObjectGroupManagerHandler::create_group_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -35,7 +35,7 @@ void ObjectGroupManagerHandler::add_member ()
     evt_.signal();
 }
 
-void ObjectGroupManagerHandler::add_member_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+void ObjectGroupManagerHandler::add_member_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->add_member();
@@ -46,7 +46,7 @@ void ObjectGroupManagerHandler::set_state ()
 {
 }
 
-void ObjectGroupManagerHandler::set_state_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * excep_holder)
+void ObjectGroupManagerHandler::set_state_excep (FTRT::AMI_ObjectGroupManagerExceptionHolder * )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
