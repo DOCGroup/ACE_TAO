@@ -1,3 +1,39 @@
+Thu Mar  1 18:24:32 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/POA/Adapter_Activator/server.dsp:
+        * examples/POA/DSI/client.dsp:
+        * examples/POA/DSI/server.dsp:
+        * examples/POA/Default_Servant/client.dsp:
+        * examples/POA/Default_Servant/server.dsp:
+        * examples/POA/FindPOA/FindPOA.dsp:
+        * examples/POA/Forwarding/client.dsp:
+        * examples/POA/Forwarding/server.dsp:
+        * examples/POA/Generic_Servant/client.dsp:
+        * examples/POA/NewPOA/NewPOA.dsp:
+        * examples/POA/On_Demand_Activation/server.dsp:
+        * examples/POA/Reference_Counted_Servant/server.dsp:
+        * examples/POA/RootPOA/RootPOA.dsp:
+        * examples/POA/TIE/client.dsp:
+        * examples/POA/TIE/server.dsp:
+
+          Release executables go into Release subdirectory.
+
+        * examples/POA/Adapter_Activator/run_test.pl:
+        * examples/POA/DSI/run_test.pl:
+        * examples/POA/Default_Servant/run_test.pl:
+        * examples/POA/Explicit_Activation/run_test.pl:
+        * examples/POA/FindPOA/run_test.pl:
+        * examples/POA/Forwarding/run_test.pl:
+        * examples/POA/Loader/run_test.pl:
+        * examples/POA/NewPOA/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/Reference_Counted_Servant/run_test.pl:
+        * examples/POA/RootPOA/run_test.pl:
+        * examples/POA/TIE/run_test.pl:
+
+          More scripts using PerlACE::Run_Test.  Yay!
+
 Thu Mar  1 18:51:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:
