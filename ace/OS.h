@@ -3034,12 +3034,12 @@ extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
 extern "C" ssize_t pread (int fd,
                           void *buf,
                           size_t nbytes,
-                          off_t offset);
+                          off_t offset) ACE_THROW_SPEC (());
 
 extern "C" ssize_t pwrite (int fd,
                            const void *buf,
                            size_t n,
-                           off_t offset);
+                           off_t offset) ACE_THROW_SPEC (());
 #endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) != 500 */
 
 # if defined (ACE_LACKS_UALARM_PROTOTYPE)
