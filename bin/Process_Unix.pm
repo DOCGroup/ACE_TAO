@@ -20,7 +20,7 @@ sub Create
     {
       #child here
       exec $name." ".$args;
-      die "exec failed";
+      die "exec failed for <$name> <$args>";
     }
     elsif ($! =~ /No more process/)
     {
