@@ -29,7 +29,7 @@ RWWR_Test::svc (void)
   while (!this->done ())
     {
       rw_lock.acquire_write ();
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
       buffer++;
       rw_lock.release ();
     }

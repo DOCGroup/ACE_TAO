@@ -29,7 +29,7 @@ Sema_Test::svc (void)
   while (!this->done ())
     {
       sema.acquire ();
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
       buffer++;
       sema.release ();
     }

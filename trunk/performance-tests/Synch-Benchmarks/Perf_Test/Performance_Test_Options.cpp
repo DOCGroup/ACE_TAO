@@ -3,27 +3,27 @@
 #define  ACE_BUILD_SVC_DLL
 #include "Performance_Test_Options.h"
 
-ACE_RCSID(Synch_Benchmarks, Options, "$Id$")
+ACE_RCSID(Synch_Benchmarks, Performance_Test_Options, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 // Manages the options.
-Options options;
+Performance_Test_Options performance_test_options;
 
 size_t
-Options::count (void)
+Performance_Test_Options::count (void)
 {
   size_t total = 0;
 
-  if (options.verbose ())
-    ACE_DEBUG ((LM_DEBUG, "Thread work count size = %d\n", options.thr_wc_size));
+  if (performance_test_options.verbose ())
+    ACE_DEBUG ((LM_DEBUG, "Thread work count size = %d\n", performance_test_options.thr_wc_size));
 
-  for (int i = 0; i < options.thr_wc_size; i++)
+  for (int i = 0; i < performance_test_options.thr_wc_size; i++)
     {
-      if (options.thr_work_count[i] != 0)
+      if (performance_test_options.thr_work_count[i] != 0)
         {
-          //          if (options.verbose ())
-            ACE_DEBUG ((LM_DEBUG, "count[%d] = %d\n", i, options.thr_work_count[i]));
-          total += options.thr_work_count[i];
+          //          if (performance_test_options.verbose ())
+            ACE_DEBUG ((LM_DEBUG, "count[%d] = %d\n", i, performance_test_options.thr_work_count[i]));
+          total += performance_test_options.thr_work_count[i];
         }
     }
 
@@ -31,13 +31,13 @@ Options::count (void)
 }
 
 void
-Options::init (void)
+Performance_Test_Options::init (void)
 {
   for (int i = 0; i < this->thr_wc_size; i++)
     this->thr_work_count[i] = 0;
 }
 
-Options::Options (void)
+Performance_Test_Options::Performance_Test_Options (void)
                  : thr_wc_size (10000),
                    _service_entry (0),
                    _mapped_file (0),
@@ -71,7 +71,7 @@ Options::Options (void)
 }
 
 void
-Options::parse_args (int argc, char *argv[])
+Performance_Test_Options::parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "a:A:bBc:C:dDe:F:g:H:i:L:l:M:m:n:Np:P:s:S:t:T:uvX:Z:", 0);
   int c;
@@ -281,7 +281,7 @@ Options::parse_args (int argc, char *argv[])
 }
 
 void
-Options::print_results (void)
+Performance_Test_Options::print_results (void)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   this->_itimer.elapsed_time (et);
@@ -459,7 +459,7 @@ Options::print_results (void)
                   et.real_time, et.user_time, et.system_time));
 #endif /* ACE_HAS_PRUSAGE_T */
     }
-  if (options.do_eager_exit ())
+  if (performance_test_options.do_eager_exit ())
     ACE_OS::_exit (0);
 }
 #endif /* ACE_HAS_THREADS */

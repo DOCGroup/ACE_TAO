@@ -26,12 +26,12 @@ Pipe_Thr_Test::reader (Pipe_Thr_Test *t)
 {
   ACE_HANDLE handle = t->pipe_handles[0];
   int ni = t->thr_id ();
-  size_t length = options.msg_size ();
+  size_t length = performance_test_options.msg_size ();
   char *to;
   ACE_NEW_RETURN (to, char[length], 0);
 
   while (ACE_OS::read (handle, to, length) > 0)
-    options.thr_work_count[ni]++;
+    performance_test_options.thr_work_count[ni]++;
 
   return 0;
 }
@@ -46,7 +46,7 @@ Pipe_Thr_Test::init (int, char **)
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (Pipe_Thr_Test::reader),
-       (void *) this, options.t_flags ()) == -1)
+       (void *) this, performance_test_options.t_flags ()) == -1)
     ACE_OS::perror ("thr_create"), ACE_OS::exit (1);
 
   return 1;
@@ -55,7 +55,7 @@ Pipe_Thr_Test::init (int, char **)
 int
 Pipe_Thr_Test::svc (void)
 {
-  ssize_t length = options.msg_size ();
+  ssize_t length = performance_test_options.msg_size ();
   ACE_HANDLE handle = this->pipe_handles[1];
   char *from;
   ACE_NEW_RETURN (from, char[length], -1);

@@ -31,7 +31,7 @@ Token_Test::svc (void)
   while (!this->done ())
     {
       token.acquire ();
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
       buffer++;
       token.release ();
     }

@@ -21,7 +21,7 @@ Performance_Test::Performance_Test (void)
 int
 Performance_Test::init (int argc, char **argv)
 {
-  options.parse_args (argc, argv);
+  performance_test_options.parse_args (argc, argv);
   return 0;
 }
 
@@ -29,7 +29,7 @@ int
 Performance_Test::pre_run_test (Benchmark_Base *bb)
 {
   this->orig_n_lwps_ = ACE_Thread::getconcurrency ();
-  this->n_lwps_ = options.n_lwps ();
+  this->n_lwps_ = performance_test_options.n_lwps ();
   Benchmark_Performance *bp = (Benchmark_Performance *) bb;
 
   if (this->n_lwps_ > 0)
@@ -38,9 +38,9 @@ Performance_Test::pre_run_test (Benchmark_Base *bb)
       // We should probably use a "barrier" here rather than
       // THR_SUSPENDED since many OS platforms lack the ability to
       // create suspended threads...
-  if (ACE_Thread_Manager::instance ()->spawn_n 
-      (options.thr_count (), ACE_THR_FUNC (bp->svc_run), 
-       (void *) bp, options.t_flags () | THR_SUSPENDED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn_n
+      (performance_test_options.thr_count (), ACE_THR_FUNC (bp->svc_run),
+       (void *) bp, performance_test_options.t_flags () | THR_SUSPENDED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "couldn't spawn threads", 1));
   return 0;
 }
@@ -54,15 +54,15 @@ Performance_Test::run_test (void)
   // Allow thread(s) to make progress.
   ACE_Thread_Manager::instance ()->resume_all ();
 
-  ACE_Time_Value timeout (options.sleep_time ());
+  ACE_Time_Value timeout (performance_test_options.sleep_time ());
 
   ACE_DEBUG ((LM_DEBUG, "starting timer\n"));
-  options.start_timer ();
+  performance_test_options.start_timer ();
 
   // Use Reactor as a timer (which can be interrupted by a signal).
   ACE_Reactor::run_event_loop (timeout);
 
-  options.stop_timer ();
+  performance_test_options.stop_timer ();
   ACE_DEBUG ((LM_DEBUG, "\nstopping timer\n"));
 
   // Stop thread(s) from making any further progress.
@@ -74,28 +74,28 @@ Performance_Test::run_test (void)
   ACE_DEBUG ((LM_DEBUG, "------------------------------------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "targ 0x%x (%s, %s, %s)\n"
 	     "n_lwps_orig = %d, n_lwps_set = %d, n_lwps_end = %d\n",
-	     options.t_flags (),
-	     (options.t_flags () & THR_DETACHED) ? "THR_DETACHED" : "Not Detached",
-	     (options.t_flags () & THR_BOUND)	? "THR_BOUND"    : "Not Bound",
-	     (options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
+	     performance_test_options.t_flags (),
+	     (performance_test_options.t_flags () & THR_DETACHED) ? "THR_DETACHED" : "Not Detached",
+	     (performance_test_options.t_flags () & THR_BOUND)	? "THR_BOUND"    : "Not Bound",
+	     (performance_test_options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
 	     this->orig_n_lwps_, this->n_lwps_, ACE_Thread::getconcurrency ()));
 
-  int count = options.count ();
-  float rate  = count / (float (options.sleep_time ()));
+  int count = performance_test_options.count ();
+  float rate  = count / (float (performance_test_options.sleep_time ()));
 
   ACE_DEBUG ((LM_DEBUG,
               "to count = %d\nrate = %.3f ops/sec, per operation = %.2f usec\n",
               count,
               rate,
               (1.0e6 / rate) / synch_count));
-  options.print_results ();
+  performance_test_options.print_results ();
 
   // Allow thread(s) to finish up.
   ACE_Thread_Manager::instance ()->resume_all ();
 
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
-  options.init ();
+  performance_test_options.init ();
   return 0;
 }
 
