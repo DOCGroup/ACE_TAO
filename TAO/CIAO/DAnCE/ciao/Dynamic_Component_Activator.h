@@ -18,9 +18,6 @@
 #include "ace/Array_Base.h"
 #include "ciao/CIAO_Server_Export.h"
 
-// @@ Jai, can't you use a forward declaration instead of including
-// the header file?
-#include "ciao/Dynamic_Component_Servant_Base.h"
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -38,6 +35,8 @@
 
 namespace CIAO
 {
+
+  class Dynamic_Component_Servant_Base;
   /**
    * @class Dynamic_Component_Activator
    *
@@ -75,9 +74,9 @@ namespace CIAO
                       ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void update_map (PortableServer::ObjectId &oid,
-                     Dynamic_Component_Servant_Base* servant
-                     ACE_ENV_ARG_DECL);
+    void update_servant_map (PortableServer::ObjectId &oid,
+                             Dynamic_Component_Servant_Base* servant
+                             ACE_ENV_ARG_DECL);
 
   private:
     /// Pointer to our ORB

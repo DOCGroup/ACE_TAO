@@ -79,6 +79,7 @@ namespace CIAO
      Dynamic_Component_Servant_Base* servant
      ACE_ENV_ARG_DECL)
   {
+    this->dsa_->update_servant_map (oid, servant);
   }
 
   void
