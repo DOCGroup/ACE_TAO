@@ -78,7 +78,7 @@ st_client: $(addprefix $(VDIR),$(ST_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
 
 deferred_synch_client: $(addprefix $(VDIR),$(DII_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)

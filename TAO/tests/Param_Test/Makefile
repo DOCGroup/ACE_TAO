@@ -119,7 +119,7 @@ server:	$(addprefix $(VDIR),$(PARAM_TEST_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(PARAM_TEST_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 anyop: $(addprefix $(VDIR),$(PARAM_TEST_ANYOP_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
