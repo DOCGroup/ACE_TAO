@@ -1,3 +1,12 @@
+Tue Dec  1 12:33:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/DOVEMIB/Makefile
+          orbsvcs/tests/Simulator/Event_Supplier/Makefile: fixed problem with
+          tao_idl invocation in Makefiles, added TAO/orbsvcs/orbsvcs include
+          path switch to flags for tao_idl, modified rules to ensure flags were
+          used as part of rule.  Thanks to Joe Loyall <jloyall@bbn.com> for 
+          reporting this.
+
 Tue Dec  1 10:12:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
