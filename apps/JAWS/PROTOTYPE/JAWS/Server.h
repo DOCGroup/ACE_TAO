@@ -24,6 +24,7 @@ private:
   // Parse arguments
 
 private:
+  int ratio_;           // ratio of asynch ops to threads
   int port_;            // port to listen on
   int concurrency_;     // 0 => pool, 1 => per request
   int dispatch_;        // 0 => synch, 1 => asynch

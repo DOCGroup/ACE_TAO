@@ -370,11 +370,8 @@ JAWS_Asynch_IO_Handler::accept_complete (ACE_HANDLE handle)
 
   JAWS_Dispatch_Policy *policy = this->mb_->policy ();
 
-#if 0
   // Irfan says at this point issue another accept
-  if (policy->acceptor () == JAWS_IO_Asynch_Acceptor_Singleton::instance ())
-    policy->acceptor ()->accept (this);
-#endif
+  JAWS_Asynch_IO_Singleton::instance ()->accept (this);
 
   // Do this so that Thread Per Request can spawn a new thread
   policy->concurrency ()->activate_hook ();

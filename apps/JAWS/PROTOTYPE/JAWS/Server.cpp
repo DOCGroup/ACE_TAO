@@ -27,7 +27,8 @@ JAWS_Server::JAWS_Server (void)
 }
 
 JAWS_Server::JAWS_Server (int argc, char *argv[])
-  : port_ (5432),
+  : ratio_ (1),
+    port_ (5432),
     concurrency_ (0),
     dispatch_ (0),
     nthreads_ (5),
@@ -41,6 +42,8 @@ void
 JAWS_Server::init (int argc, char *argv[])
 {
   this->parse_args (argc, argv);
+
+  this->policy_.ratio (this->ratio_);
 
   if (this->concurrency_ == 1)
     {
@@ -128,7 +131,7 @@ JAWS_Server::parse_args (int argc, char *argv[])
   int c;
   int t = 1;
 
-  ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:");
+  ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:r:");
   while ((c = getopt ()) != -1)
     switch (c)
       {
@@ -161,6 +164,9 @@ JAWS_Server::parse_args (int argc, char *argv[])
           this->flags_ |= THR_DAEMON;
         else if (ACE_OS::strcmp (getopt.optarg, "THR_DETACHED") == 0)
           this->flags_ |= THR_DETACHED;
+        break;
+      case 'r':
+        this->ratio_ = ACE_OS::atoi (getopt.optarg);
         break;
       }
 
