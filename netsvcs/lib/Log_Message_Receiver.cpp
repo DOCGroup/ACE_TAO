@@ -1,4 +1,4 @@
-#include "Log_Message_Receiver.cpp"
+#include "Log_Message_Receiver.h"
 
 // Type based log message receiver.
 template<ACE_SYNCH_1> void
