@@ -20,10 +20,6 @@ ifeq (,$(threads))
   threads = 1
 endif
 
-ifeq ($(threads),0)
-  CFLAGS += -DACE_MT_SAFE=0
-endif # threads
-
 ifeq (,$(exceptions))
 exceptions = 0
 endif
@@ -45,15 +41,10 @@ CC              = gcc
 CXX             = g++
 CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
 
-# Test for template instantiation.
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
 ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT
 endif
 
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DLD             = $(CXX)
 LD              = $(CXX)
 LDFLAGS         +=
@@ -66,6 +57,13 @@ RANLIB          = @true
 SOFLAGS         += -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
+
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 
 PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
 PLATFORM_X11_LIBS =-lX11

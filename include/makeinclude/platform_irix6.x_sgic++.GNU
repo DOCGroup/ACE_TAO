@@ -28,8 +28,6 @@ LD		= $(CXX)
 # In Irix 6.2 w/o the thread patches this macro should have no effect.
 ifeq ($(threads),1)
 	CPPFLAGS	+= -D_SGI_MP_SOURCE
-else
-	CPPFLAGS	+= -DACE_MT_SAFE=0
 endif
 
 OCCFLAGS	+= -O -OPT:Olimit=0

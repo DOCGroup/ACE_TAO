@@ -26,11 +26,6 @@ CC              = gcc
 CXX             = g++
 CFLAGS          += -D_REENTRANT
 
-# Test for template instantiation.
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG) -fno-strict-prototypes
 DCFLAGS         += -g
 LD              = $(CXX)
 DLD             = $(CXX)
@@ -44,3 +39,10 @@ RANLIB          = /usr/bin/true
 SOFLAGS         += -shared $(CPPFLAGS) $(ACELIB)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
+
+# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG) -fno-strict-prototypes
