@@ -199,6 +199,16 @@ typedef int key_t;
 #include /**/ <vxWorks.h>
 #endif /* VXWORKS */
 
+#if !defined (ACE_HAS_IP_MULTICAST)
+struct ip_mreq 
+{
+  struct in_addr imr_multiaddr;  
+  // IP multicast address of group
+  struct in_addr imr_interface;  
+  // local IP address of interface
+};
+#endif /* ACE_HAS_IP_MULTICAST */
+
 #if defined (ACE_LACKS_FILELOCKS)
 struct flock 
 {
@@ -2105,6 +2115,18 @@ struct sigaction
 #if !defined (IPC_EXCL)
 #define IPC_EXCL 0
 #endif /* IPC_EXCL */
+
+#if !defined (IP_DROP_MEMBERSHIP)
+#define IP_DROP_MEMBERSHIP 0
+#endif /* IP_DROP_MEMBERSHIP */
+
+#if !defined (IP_ADD_MEMBERSHIP)
+#define IP_ADD_MEMBERSHIP 0
+#endif /* IP_ADD_MEMBERSHIP */
+
+#if !defined (SIOCGIFADDR)
+#define SIOCGIFADDR 0
+#endif /* SIOCGIFADDR */
 
 #if !defined (IPC_PRIVATE)
 #define IPC_PRIVATE ACE_INVALID_SEM_KEY 

@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -59,6 +59,8 @@
 //
 // ============================================================================
 
+#if defined (ACE_HAS_THREADS)
+
 static const char usage [] = "[-? |\n"
                              "       [-c <repeat count, 0 means forever>]\n"
                              "       [-n to spawn a new LWP with each thread\n"
@@ -77,44 +79,38 @@ static const char usage [] = "[-? |\n"
 #endif /* DEBUG */
 
 #if defined (__sun)
-/* Solaris priority values range from low to high with increasing priority */
-static const unsigned int LOW_PRIORITY = 1;
-static const unsigned int HIGH_PRIORITY = 2;
+// Solaris priority values range from low to high with increasing
+// priority.
+static const u_int LOW_PRIORITY = 1;
+static const u_int HIGH_PRIORITY = 2;
 #else
-/* VxWorks and Win32 priority values range from high to low with
-   increasing priority */
-static const unsigned int LOW_PRIORITY = 2;
-static const unsigned int HIGH_PRIORITY = 1;
-#endif
+// VxWorks and Win32 priority values range from high to low with
+// increasing priority.
+static const u_int LOW_PRIORITY = 2;
+static const u_int HIGH_PRIORITY = 1;
+#endif 
 
-
-// global test configuration parameters
-static unsigned long count = 1;
-static unsigned long num_iterations = 1000;
-static unsigned int new_lwp = 0;
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class Low_Priority_Null_Task
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+// global test configuration parameters.
+static u_long count = 1;
+static u_long num_iterations = 1000;
+static u_int new_lwp = 0;
 
 class Low_Priority_Null_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Low_Priority_Null_Task ();
-  virtual ~Low_Priority_Null_Task ();
+  Low_Priority_Null_Task (void);
+  virtual ~Low_Priority_Null_Task (void);
 
-  virtual int svc ();
+  virtual int svc (void);
 
   // called by other task:  it returns when this task is ready to
   // continue
-  void ready () { initialized_.acquire (); }
+  void ready (void) { initialized_.acquire (); }
 
-  void done ();
+  void done (void);
 
-  ACE_hthread_t thread_id () const { return thread_id_; }
+  ACE_hthread_t thread_id (void) const { return thread_id_; }
+
 private:
   ACE_hthread_t thread_id_;
   ACE_Semaphore initialized_;  // blocks until thread_id_ is assigned
@@ -126,10 +122,10 @@ private:
 };
 
 inline
-Low_Priority_Null_Task::Low_Priority_Null_Task() :
-  ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
-  initialized_ (0),  // initialize to locked, then unlock when ready
-  blocked_semaphore_ (0)
+Low_Priority_Null_Task::Low_Priority_Null_Task (void) 
+  : ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
+    initialized_ (0),  // initialize to locked, then unlock when ready
+    blocked_semaphore_ (0)
 {
 #if DEBUG > 0
   cout << "Low_Priority_Null_Task ctor" << endl;
@@ -142,12 +138,12 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
 #endif /* DEBUG */
 }
 
-Low_Priority_Null_Task::~Low_Priority_Null_Task()
+Low_Priority_Null_Task::~Low_Priority_Null_Task (void)
 {
 }
 
 int
-Low_Priority_Null_Task::svc ()
+Low_Priority_Null_Task::svc (void)
 {
 #if DEBUG > 0
   cout << "Low_Priority_Null_Task::svc (), entering" << ::flush;
@@ -172,29 +168,22 @@ Low_Priority_Null_Task::svc ()
 }
 
 void
-Low_Priority_Null_Task::done ()
+Low_Priority_Null_Task::done (void)
 {
   blocked_semaphore_.release ();
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class Suspend_Resume_Test
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 class Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Suspend_Resume_Test (const unsigned long iterations);
-  virtual ~Suspend_Resume_Test ();
+  Suspend_Resume_Test (const u_long iterations);
+  virtual ~Suspend_Resume_Test (void);
 
-  virtual int svc ();
+  virtual int svc (void);
 
-  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
+  ACE_hrtime_t elapsed_time (void) const { return elapsed_time_; }
 private:
-  const unsigned long iterations_;
+  const u_long iterations_;
 
   Low_Priority_Null_Task low_;
 
@@ -203,16 +192,13 @@ private:
   ACE_hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
-  Suspend_Resume_Test ();
+  Suspend_Resume_Test (void);
   Suspend_Resume_Test (const Suspend_Resume_Test &);
   Suspend_Resume_Test &operator= (const Suspend_Resume_Test &);
 };
 
-Suspend_Resume_Test::Suspend_Resume_Test (const unsigned long iterations) :
-  ACE_Task<ACE_MT_SYNCH> (),
-  iterations_ (iterations),
-  low_ (),
-  timer_ ()
+Suspend_Resume_Test::Suspend_Resume_Test (const u_long iterations) 
+  : iterations_ (iterations)
 {
 #if DEBUG > 0
   cout << "Suspend_Resume_Test ctor" << endl;
@@ -221,12 +207,12 @@ Suspend_Resume_Test::Suspend_Resume_Test (const unsigned long iterations) :
   this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, HIGH_PRIORITY);
 }
 
-Suspend_Resume_Test::~Suspend_Resume_Test()
+Suspend_Resume_Test::~Suspend_Resume_Test (void)
 {
 }
 
 int
-Suspend_Resume_Test::svc ()
+Suspend_Resume_Test::svc (void)
 {
 #if DEBUG > 0
   ACE_hthread_t thread_id;
@@ -243,7 +229,7 @@ Suspend_Resume_Test::svc ()
 
   timer_.start ();
 
-  for (unsigned long i = 0; i < iterations_; ++i)
+  for (u_long i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
@@ -269,34 +255,27 @@ Suspend_Resume_Test::svc ()
   return 0;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class High_Priority_Simple_Task
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 class High_Priority_Simple_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  High_Priority_Simple_Task ();
-  virtual ~High_Priority_Simple_Task ();
+  High_Priority_Simple_Task (void);
+  virtual ~High_Priority_Simple_Task (void);
 
-  virtual int svc ();
+  virtual int svc (void);
 
   // called by other task:  it returns when this task is ready to
   // continue
-  void ready () { initialized_.acquire (); }
+  void ready (void) { initialized_.acquire (); }
 
-  void done ();
+  void done (void);
 
-  ACE_hthread_t thread_id () const { return thread_id_; }
-  unsigned long iterations () const { return iterations_; }
+  ACE_hthread_t thread_id (void) const { return thread_id_; }
+  u_long iterations (void) const { return iterations_; }
 private:
   ACE_hthread_t thread_id_;
   ACE_Semaphore initialized_;  // block until thread_id_ is assigned
   int terminate_;
-  unsigned long iterations_;
+  u_long iterations_;
 
   // force proper construction of independent instances
   High_Priority_Simple_Task (const High_Priority_Simple_Task &);
@@ -304,11 +283,10 @@ private:
 };
 
 inline
-High_Priority_Simple_Task::High_Priority_Simple_Task() :
-  ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
-  initialized_ (0),  // initialize to locked, then unlock when ready
-  terminate_ (0),
-  iterations_ (0)
+High_Priority_Simple_Task::High_Priority_Simple_Task (void) 
+  : initialized_ (0),  // initialize to locked, then unlock when ready
+    terminate_ (0),
+    iterations_ (0)
 {
 #if DEBUG > 0
   cout << "High_Priority_Simple_Task ctor" << endl;
@@ -321,12 +299,12 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
 #endif /* DEBUG */
 }
 
-High_Priority_Simple_Task::~High_Priority_Simple_Task()
+High_Priority_Simple_Task::~High_Priority_Simple_Task (void)
 {
 }
 
 int
-High_Priority_Simple_Task::svc ()
+High_Priority_Simple_Task::svc (void)
 {
 #if DEBUG > 0
   cout << "High_Priority_Simple_Task::svc (), entering" << ::flush;
@@ -364,31 +342,23 @@ High_Priority_Simple_Task::svc ()
   return 0;
 }
 
-inline
-void
-High_Priority_Simple_Task::done ()
+inline void
+High_Priority_Simple_Task::done (void)
 {
   terminate_ = 1;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class Ping_Suspend_Resume_Test
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 class Ping_Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Ping_Suspend_Resume_Test (const unsigned long iterations);
-  virtual ~Ping_Suspend_Resume_Test ();
+  Ping_Suspend_Resume_Test (const u_long iterations);
+  virtual ~Ping_Suspend_Resume_Test (void);
 
-  virtual int svc ();
+  virtual int svc (void);
 
-  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
+  ACE_hrtime_t elapsed_time (void) const { return elapsed_time_; }
 private:
-  const unsigned long iterations_;
+  const u_long iterations_;
 
   High_Priority_Simple_Task high_;
 
@@ -397,17 +367,16 @@ private:
   ACE_hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
-  Ping_Suspend_Resume_Test ();
+  Ping_Suspend_Resume_Test (void);
   Ping_Suspend_Resume_Test (const Ping_Suspend_Resume_Test &);
   Ping_Suspend_Resume_Test &operator= (const Ping_Suspend_Resume_Test &);
 };
 
-Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const unsigned long
-                                                    iterations) :
-  ACE_Task<ACE_MT_SYNCH> (),
-  iterations_ (iterations),
-  high_ (),
-  timer_ ()
+Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const u_long
+                                                    iterations) 
+  : iterations_ (iterations),
+    high_ (),
+    timer_ ()
 {
 #if DEBUG > 0
   cout << "Ping_Suspend_Resume_Test ctor" << endl;
@@ -416,12 +385,12 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const unsigned long
   this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, LOW_PRIORITY);
 }
 
-Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test()
+Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test (void)
 {
 }
 
 int
-Ping_Suspend_Resume_Test::svc ()
+Ping_Suspend_Resume_Test::svc (void)
 {
 #if DEBUG > 0
   cout << "Ping_Suspend_Resume_Test::svc (), entering" << ::flush;
@@ -449,7 +418,7 @@ Ping_Suspend_Resume_Test::svc ()
 
   timer_.start ();
 
-  for (unsigned long i = 0; i < iterations_; ++i)
+  for (u_long i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
@@ -491,39 +460,30 @@ Ping_Suspend_Resume_Test::svc ()
   return 0;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class Yield_Test
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 class Yield_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Yield_Test (const unsigned long iterations);
-  virtual ~Yield_Test ();
+  Yield_Test (const u_long iterations);
+  virtual ~Yield_Test (void);
 
-  virtual int svc ();
+  virtual int svc (void);
 
-  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
+  ACE_hrtime_t elapsed_time (void) const { return elapsed_time_; }
 private:
-  const unsigned long iterations_;
+  const u_long iterations_;
 
   ACE_High_Res_Timer timer_;
 
   ACE_hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
-  Yield_Test ();
+  Yield_Test (void);
   Yield_Test (const Yield_Test &);
   Yield_Test &operator= (const Yield_Test &);
 };
 
-Yield_Test::Yield_Test (const unsigned long iterations) :
-  ACE_Task<ACE_MT_SYNCH> (),
-  iterations_ (iterations),
-  timer_ ()
+Yield_Test::Yield_Test (const u_long iterations) 
+  : iterations_ (iterations)
 {
 #if DEBUG > 0
   cout << "Yield_Test ctor" << endl;
@@ -532,12 +492,12 @@ Yield_Test::Yield_Test (const unsigned long iterations) :
   this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 2, 0, LOW_PRIORITY);
 }
 
-Yield_Test::~Yield_Test()
+Yield_Test::~Yield_Test (void)
 {
 }
 
 int
-Yield_Test::svc ()
+Yield_Test::svc (void)
 {
 #if DEBUG > 0
   cout << "Yield_Test::svc (), entering" << ::flush;
@@ -554,7 +514,7 @@ Yield_Test::svc ()
 
   timer_.start ();
 
-  for (unsigned long i = 0; i < iterations_; ++i)
+  for (u_long i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
@@ -576,85 +536,71 @@ Yield_Test::svc ()
   return 0;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// function get_options
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-static
-unsigned int
-get_options (int argc, char *argv [])
+static u_int
+parse_args (int argc, char *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, "c:n?");
   int opt;
-  while ((opt = get_opt ()) != EOF) {
-    switch (opt) {
-    case 'c':
-      if (ACE_OS::atoi (get_opt.optarg) >= 0)
-        {
-          count = ACE_OS::atoi (get_opt.optarg);
-        }
+
+  while ((opt = get_opt ()) != EOF) 
+    {
+      switch (opt) 
+	{
+	case 'c':
+	  if (ACE_OS::atoi (get_opt.optarg) >= 0)
+	    count = ACE_OS::atoi (get_opt.optarg);
+	  else
+	    {
+	      cerr << argv [0] << ": count must be >= 0" << endl;
+	      return 1;
+	    }
+	  break;
+	case 'n':
+	  new_lwp = THR_NEW_LWP;
+	  break;
+	case '?':
+	  cout << "usage: " << argv [0] << " " << usage << endl;
+	  ACE_OS::exit (0);
+	  break;
+	default:
+	  cerr << argv [0] << ": unknown arg, " << (char) opt << endl;
+	  cerr << "usage: " << argv [0] << " " << usage << endl;
+	  return 1;
+	}
+    }
+
+  switch (argc - get_opt.optind) 
+    {
+    case 0:
+      // use default number of iterations
+      break;
+    case 1:
+      if (ACE_OS::atoi (argv [get_opt.optind]) > 0)
+	num_iterations = ACE_OS::atoi (argv [get_opt.optind]);
       else
-        {
-          cerr << argv [0] << ": count must be >= 0" << endl;
-          return 1;
-        }
-      break;
-    case 'n':
-      new_lwp = THR_NEW_LWP;
-      break;
-    case '?':
-      cout << "usage: " << argv [0] << " " << usage << endl;
-      ACE_OS::exit (0);
+	{
+	  cerr << argv [0] << ": iterations must be > 0" << endl;
+	  return 1;
+	}
       break;
     default:
-      cerr << argv [0] << ": unknown arg, " << (char) opt << endl;
+      cerr << argv [0] << ": too many arguments" << endl;
       cerr << "usage: " << argv [0] << " " << usage << endl;
       return 1;
     }
-  }
-
-  switch (argc - get_opt.optind) {
-  case 0:
-    // use default number of iterations
-    break;
-  case 1:
-    if (ACE_OS::atoi (argv [get_opt.optind]) > 0)
-      {
-        num_iterations = ACE_OS::atoi (argv [get_opt.optind]);
-      }
-    else
-      {
-        cerr << argv [0] << ": iterations must be > 0" << endl;
-        return 1;
-      }
-    break;
-  default:
-    cerr << argv [0] << ": too many arguments" << endl;
-    cerr << "usage: " << argv [0] << " " << usage << endl;
-    return 1;
-  }
 
   return 0;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// function main
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 int
 main (int argc, char *argv [])
 {
   if (ACE_High_Res_Timer::supported () == 0)
-    {
-      ACE_OS::fprintf (stderr, "%s: high-resolution time is not supported "
-                               "by ACE on this platform.\n", argv[0]);
-    }
+    ACE_OS::fprintf (stderr, "%s: high-resolution time is not supported "
+		     "by ACE on this platform.\n", argv[0]);
 
-  if (get_options (argc, argv)) ACE_OS::exit (-1);
+  if (parse_args (argc, argv)) 
+    ACE_OS::exit (-1);
 
   if (ACE_OS::sched_params (
         ACE_Sched_Params (
@@ -663,10 +609,8 @@ main (int argc, char *argv [])
           ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
-        {
-          ACE_OS::fprintf (stderr, "%s: user is not superuser, so remain in "
-                                   "time-sharing class\n", argv[0]);
-        }
+	ACE_OS::fprintf (stderr, "%s: user is not superuser, so remain in "
+			 "time-sharing class\n", argv[0]);
       else
         {
           ACE_OS::perror (argv[0]);
@@ -676,20 +620,22 @@ main (int argc, char *argv [])
 
   int forever = count == 0;
 
-  while (forever  ||  count-- > 0)
+  while (forever || count-- > 0)
     {
-      // run suspend/resume test first . . .
+      // Run suspend/resume test first . . .
       Suspend_Resume_Test suspend_resume_test (num_iterations);
+
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
-      // then Ping Suspend/Resume test
+      // Then Ping Suspend/Resume test.
       Ping_Suspend_Resume_Test ping_suspend_resume_test (num_iterations);
+
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
       if (ping_suspend_resume_test.elapsed_time () >
-           suspend_resume_test.elapsed_time ())
+	  suspend_resume_test.elapsed_time ())
         {
           cout << "context switch time is ("
                << setw (9)
@@ -715,8 +661,9 @@ main (int argc, char *argv [])
                << endl;
         }
 
-      // then Yield test
+      // Then Yield test.
       Yield_Test yield_test (num_iterations);
+
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
@@ -725,9 +672,14 @@ main (int argc, char *argv [])
            << " microseconds"
            << endl;
     }
-
   return 0;
 }
+#else
+int 
+main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */
 
-
-// EOF

@@ -1,18 +1,19 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // log_wrapper.h
-// wrapper around sending log messages via multicast
 
 #include "ace/Profile_Timer.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
-#if !defined (_LM_WRAPPER_H)
-#define _LM_WRAPPER_H
+#if !defined (_LOG_WRAPPER_H)
+#define _LOG_WRAPPER_H
 
 class Log_Wrapper 
+  // = TITLE
+  //      Provide a wrapper around sending log messages via IP
+  //      multicast. 
 {
 public:
   Log_Wrapper (void);
@@ -21,11 +22,11 @@ public:
   // = Types of logging messages.
   enum ACE_Log_Priority 
   {
-    LM_MESSAGE,
-    LM_DEBUG, 
-    LM_WARNING,
-    LM_ERROR,
-    LM_EMERG
+    LOG_MESSAGE,
+    LOG_DEBUG, 
+    LOG_WARNING,
+    LOG_ERROR,
+    LOG_EMERG
   };
 
   int open (const int port, const char* mcast_addr);
@@ -59,4 +60,4 @@ private:
   // A logger object.
 };
 
-#endif /* _LM_WRAPPER_H */
+#endif /* _LOG_WRAPPER_H */

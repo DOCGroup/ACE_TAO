@@ -446,5 +446,7 @@ template class ACE_Server_Logging_Handler<ACE_TLI_Stream, ACE_INET_Addr, unsigne
 template class ACE_Strategy_Acceptor<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH>, LOGGING_PEER_ACCEPTOR>;
 template class ACE_Strategy_Acceptor<ACE_Thr_Server_Logging_Handler, LOGGING_PEER_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_TLI_Stream, ACE_INET_Addr, ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
+#if defined (ACE_HAS_THREADS)
 template class ACE_Svc_Handler<ACE_TLI_Stream, ACE_INET_Addr, ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
+#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -107,7 +107,7 @@ public:
 
 // Allow the user to override this in the config.h file.
 #if !defined (ACE_MALLOC_ALIGN)
-#define ACE_MALLOC_ALIGN long
+#define ACE_MALLOC_ALIGN sizeof (long)
 #endif /* ACE_MALLOC_ALIGN */
 
 // For alignment to long boundary 

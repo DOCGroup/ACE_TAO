@@ -62,7 +62,7 @@ spawn (void)
     {
     case -1:
       ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
-      exit (-1);
+      ACE_OS::_exit (-1);
     case 0: // In child
       {
 	ACE_Process_Mutex pm (ACE_WIDE_STRING (name));
@@ -97,7 +97,8 @@ spawn (void)
   ACE_Service_Config::thr_mgr ()->wait ();
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n%a", 1));
+  ACE_ERROR ((LM_ERROR, 
+	      "threads *and* processes not supported on this platform\n%"));
 #endif /* ACE_HAS_THREADS */	
 }
 

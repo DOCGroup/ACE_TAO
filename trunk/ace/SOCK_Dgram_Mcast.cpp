@@ -5,8 +5,6 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/INET_Addr.h"
 
-#if defined (ACE_HAS_IP_MULTICAST)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast)
 
 void
@@ -110,7 +108,8 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
       if (interface_addr.set (mcast_addr.get_port_number (),
 			      net_if) == -1)
 	return -1;
-      multicast_address_.imr_interface.s_addr = htonl (interface_addr.get_ip_address ());      
+      multicast_address_.imr_interface.s_addr = 
+	htonl (interface_addr.get_ip_address ());      
 #endif /* ACE_WIN32 */      
     }
   else
@@ -119,4 +118,3 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
   multicast_address_.imr_multiaddr.s_addr = htonl (mcast_addr.get_ip_address ());
   return 0;
 }  
-#endif /* ACE_HAS_IP_MULTICAST */
