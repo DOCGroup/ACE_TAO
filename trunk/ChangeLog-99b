@@ -1,3 +1,9 @@
+Tue Feb 16 17:08:53 1999  Steve Huston  <shuston@riverace.com>
+
+        * examples/ASX/Event_Server/Transceiver: Moved Event_Transceiver
+          class definition to new file, transceiver.h, to build ok on AIX (P15)
+          and fixed core dump if ctor fails to connect.
+
 Tue Feb 16 16:42:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CORBA_macros.h (ACE_PRINT_EXCEPTION): A new macro that deal
