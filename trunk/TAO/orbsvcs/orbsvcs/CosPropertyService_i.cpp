@@ -20,7 +20,6 @@ TAO_PropertySetFactory::TAO_PropertySetFactory (void)
 {
 }
 
-
 CosPropertyService::PropertySet_ptr
 TAO_PropertySetFactory::create_propertyset (CORBA::Environment &env) 
 {
@@ -113,15 +112,19 @@ TAO_PropertySet::define_property (const char *property_name,
                                   const CORBA::Any &property_value,
                                   CORBA::Environment &env)
 {
-  // @@ Alex, there are a bunch of issues with your programming style
-  // here.  Let's talk about it, ok?
-  EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
+  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
   INT_ID int_id (property_value);
-  int ret;
 
-  ACE_DEBUG ( (LM_DEBUG, "define_property : property_name %s \n", property_name) );
-  if (ret = (this->hash_table_.bind (ext_id, int_id) != 0) ) 
-    ACE_DEBUG ( (LM_DEBUG, "define_property: retval : %d \n", ret) );
+  ACE_DEBUG ((LM_DEBUG,
+              "define_property : property_name %s \n",
+              property_name));
+
+  int ret = this->hash_table_.bind (ext_id, int_id);
+
+  if (ret == 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "define_property: retval : %d \n",
+                ret));
 }
 
 void 
@@ -152,21 +155,19 @@ CORBA::Any *
 TAO_PropertySet::get_property_value (const char *property_name,
                                      CORBA::Environment &env)
 {
-  EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
+  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
   INT_ID int_id;
   
-  ACE_DEBUG ( (LM_DEBUG, " get_prop_value:  Input str : %s, ext_id.pname_.in () : %s \n",
-               property_name,
-               ext_id.pname_.in ()));
+  ACE_DEBUG ((LM_DEBUG, " get_prop_value:  Input str : %s, ext_id.pname_.in () : %s \n",
+              property_name,
+              ext_id.pname_.in ()));
 
   if (this->hash_table_.find (ext_id, int_id) != 0)
-    {
-      ACE_ERROR ((LM_ERROR, "Find failed: \n"));
-    }
+    ACE_ERROR ((LM_ERROR, "Find failed: \n"));
 
   ACE_DEBUG ( (LM_DEBUG, "find fn over \n") );
   
-  return (&int_id.pvalue_);
+  return &int_id.pvalue_;
 }
   
 CORBA::Boolean
@@ -193,16 +194,15 @@ void
 TAO_PropertySet::delete_property (const char *property_name,
                                   CORBA::Environment &env)
 {
-  EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
+  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
   
-  ACE_DEBUG ( (LM_DEBUG, "delete_property : property_name %s, ext_id.pname_.in() %s \n", property_name,
-               ext_id.pname_.in()) );
+  ACE_DEBUG ((LM_DEBUG, "delete_property : property_name %s, ext_id.pname_.in() %s \n", property_name,
+              ext_id.pname_.in()));
   
   // alex: Doing unbinding.. Not getting INT_ID back... Problem if dynamic allocation is done
   if (this->hash_table_.unbind (ext_id) != 0)
-    {
-      ACE_ERROR ( (LM_ERROR, "Unbind failed \n"));
-    }
+    ACE_ERROR ((LM_ERROR,
+                "Unbind failed \n"));
 }
   
 void 
@@ -219,22 +219,17 @@ TAO_PropertySet::delete_all_properties (CORBA::Environment &env)
   return return_val;
 }  
 
-
 // Returns TRUE if the property is defined in the PropertySet.
 
 CORBA::Boolean
 TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environment &env)
 {
-  EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
+  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
  
   if (this->hash_table_.find (ext_id) == 0)
-    {
-      return (CORBA::B_TRUE);
-    }    
+    return CORBA::B_TRUE;
   else
-    {
-      return (CORBA::B_FALSE); 
-    }
+    return CORBA::B_FALSE;
 }  
 
 TAO_PropertySetDef::TAO_PropertySetDef (void)
@@ -369,7 +364,6 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
 {
   CORBA::Boolean return_val;
   
-  ACE_UNUSED_ARG (return_val);
   return return_val;
 }
 
