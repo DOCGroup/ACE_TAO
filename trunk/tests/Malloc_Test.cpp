@@ -213,6 +213,15 @@ main (int argc, ASYS_TCHAR *[])
       ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
       ACE_INIT_LOG (ASYS_TEXT ("Malloc_Test-child"));
 
+#if 0
+      cout << "Sizeof header padding: " << ACE_MALLOC_PADDING << endl
+           << "Sizeof header pointer: " << sizeof (ACE_MALLOC_HEADER_PTR) << endl
+           << "Sizeof size_t: " << sizeof (size_t) << endl
+           << "Sizeof long: " << sizeof (long) << endl
+           << "Sizeof (Malloc Header): " << sizeof (ACE_Malloc_Header) << endl
+        //           << "Sizeof padding size: " << ACE_MALLOC_PADDING_SIZE << endl
+        ;
+#endif
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
       options.command_line (ACE_TEXT (".")
@@ -222,6 +231,7 @@ main (int argc, ASYS_TCHAR *[])
                             ACE_TEXT (" run_as_test"));
 
       MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
+
       Test_Data *data = initialize (myalloc);
       ACE_ASSERT (data != 0);
 
