@@ -233,14 +233,15 @@ Driver::push_consumer (void* /* consumer_cookie */,
       TAO_InputCDR cdr (mb, byte_order);
 
       ECM_IDLData::Info info;
-      cdr.decode (ECM_IDLData::_tc_Info, &info, 0, ACE_TRY_ENV);
-      ACE_CHECK;
+      cdr >> info;
 
       ECM_Data other;
       cdr >> other;
 
       if (!cdr.good_bit ())
 	ACE_ERROR ((LM_ERROR, "Problem demarshalling C++ data\n"));
+
+      ACE_Message_Block::release (mb);
 
       CORBA::ULong n = info.trajectory.length ();
       // ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
