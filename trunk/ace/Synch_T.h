@@ -317,7 +317,9 @@ class ACE_Guard
 {
 public:
   // = Initialization and termination methods.
-  ACE_Guard (ACE_LOCK &l, int block = 1): lock_ (&l)
+  ACE_Guard (ACE_LOCK &l): lock_ (&l) { this->owner_ = this->acquire(); }
+
+  ACE_Guard (ACE_LOCK &l, int block): lock_ (&l)
     {
       if (block)
         this->acquire ();
@@ -327,7 +329,7 @@ public:
   // Implicitly and automatically acquire (or try to acquire) the
   // lock.
 
-  ~ACE_Guard (void) { if (this->owner_ != -1) this->release (); }
+  ~ACE_Guard (void) { this->release (); }
   // Implicitly release the lock.
 
   // = Lock accessors.
@@ -391,7 +393,10 @@ class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
 public:
   // = Initialization method.
 
-  ACE_Write_Guard (ACE_LOCK &m, int block = 1): ACE_Guard<ACE_LOCK> (&m) 
+  ACE_Write_Guard (ACE_LOCK &m): ACE_Guard<ACE_LOCK> (&m)
+    { this->owner_ = this->acquire_write (); }
+
+  ACE_Write_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m) 
     { 
       this->owner_ = block ? this->acquire_write () : this->tryacquire_write ();
     }
@@ -432,7 +437,10 @@ class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 public:
   // = Initialization methods.
 
-  ACE_Read_Guard (ACE_LOCK &m, int block = 1): ACE_Guard<ACE_LOCK> (&m) 
+  ACE_Read_Guard (ACE_LOCK& m): ACE_Guard<ACE_LOCK> (&m) 
+    { this->owner_ = this->acquire_read (); }
+
+  ACE_Read_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m) 
     { 
       this->owner_ = block ? this->acquire_read () : this->tryacquire_read ();
     }

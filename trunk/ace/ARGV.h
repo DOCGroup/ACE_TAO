@@ -29,7 +29,7 @@ class ACE_Export ACE_ARGV
 {
 public:
   // = Initialization and termination.
-  ACE_ARGV (char buf[], int substitute_env_args = 1);
+  ACE_ARGV (const char buf[], int substitute_env_args = 1);
   // Converts <buf> into an <argv>-style vector of strings.  If
   // <substitute_env_args> is enabled then we'll substitute the
   // environment variables for each $ENV encountered in the string.
@@ -75,33 +75,36 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  int add(const char *next_arg);
+  int add (const char *next_arg);
   // Add another argument.  This only works in the ITERATIVE state.
 
-  int state(void) const;
+  int state (void) const;
   // What state is this ACE_ARGV in?
 
   // These are the states possible via the different constructors.
   enum States 
   {
-    TO_STRING = 1,    // ACE_ARGV converts buf[] to char *argv[]
-    TO_PTR_ARRAY = 2, // ACE_ARGV converts char *argv[] to buf[]
-    ITERATIVE = 3    // Builds buf[] or char *argv[] iteratively with add()
+    TO_STRING = 1,    
+    // ACE_ARGV converts buf[] to char *argv[]
+    TO_PTR_ARRAY = 2, 
+    // ACE_ARGV converts char *argv[] to buf[]
+    ITERATIVE = 3    
+    // Builds buf[] or char *argv[] iteratively with add()
   };
 
 private:
 
-  int create_buf_from_queue(void);
-  // Creates buf_ from the queue, deletes previous buf_
+  int create_buf_from_queue (void);
+  // Creates buf_ from the queue, deletes previous buf_.
 
-  void string_to_array(void);
-  // Converts buf_ into the char *argv[] format
+  void string_to_array (void);
+  // Converts buf_ into the char *argv[] format.
 
   int substitute_env_args_;
   // Replace args with environment variable values?
 
   int state_;
-  // Current state marker
+  // Current state marker.
 
   size_t argc_;
   // Number of arguments in the ARGV array. 
