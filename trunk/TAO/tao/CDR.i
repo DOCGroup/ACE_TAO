@@ -707,22 +707,6 @@ TAO_InputCDR::rd_ptr (void)
 // ****************************************************************
 // @@ TODO: Use the CORBA_* types when they become available.
 
-#if defined (ACE_HAS_BOOL)
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, CORBA::Boolean x)
-{
-  cdr.write_boolean (x);
-  return cdr.good_bit ();
-}
-#endif /* ACE_HAS_BOOL */
-
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, CORBA::Octet x)
-{
-  cdr.write_octet (x);
-  return cdr.good_bit ();
-}
-
 ACE_INLINE CORBA_Boolean
 operator<< (TAO_OutputCDR& cdr, CORBA::Short x)
 {
@@ -776,20 +760,6 @@ ACE_INLINE CORBA_Boolean
 operator<< (TAO_OutputCDR& cdr, CORBA::Double x)
 {
   cdr.write_double (x);
-  return cdr.good_bit ();
-}
-
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, CORBA::Char x)
-{
-  cdr.write_char (x);
-  return cdr.good_bit ();
-}
-
-ACE_INLINE CORBA_Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::Char* x)
-{
-  cdr.write_string (x);
   return cdr.good_bit ();
 }
 
@@ -862,21 +832,14 @@ operator<< (TAO_OutputCDR& cdr, CORBA::Any::from_string x)
   return cdr.good_bit ();
 }
 
-#if defined (ACE_HAS_BOOL)
 ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x)
+operator<< (TAO_OutputCDR& cdr, const char* x)
 {
-  cdr.read_boolean (x);
+  cdr.write_string (x);
   return cdr.good_bit ();
 }
-#endif /* ACE_HAS_BOOL */
 
-ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Octet &x)
-{
-  cdr.read_octet (x);
-  return cdr.good_bit ();
-}
+// ****************************************************************
 
 ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Short &x)
@@ -931,20 +894,6 @@ ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Double &x)
 {
   cdr.read_double (x);
-  return cdr.good_bit ();
-}
-
-ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Char &x)
-{
-  cdr.read_char (x);
-  return cdr.good_bit ();
-}
-
-ACE_INLINE CORBA_Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::Char*&x)
-{
-  cdr.read_string (x);
   return cdr.good_bit ();
 }
 
@@ -1017,6 +966,13 @@ operator>> (TAO_InputCDR& cdr, CORBA::Any::to_string x)
   // check if the bounds are satisfied
   return (cdr.good_bit () &&
           (ACE_OS::strlen (x.val_) <= x.bound_));
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, char*& x)
+{
+  cdr.read_string (x);
+  return cdr.good_bit ();
 }
 
 // ***************************************************************************

@@ -311,7 +311,7 @@ TAO_GIOP_Invocation::write_request_header_std
 {
   this->out_stream_ << svc_ctx;
   this->out_stream_ << request_id;
-  this->out_stream_ << is_roundtrip;
+  this->out_stream_ << CORBA::Any::from_boolean (is_roundtrip);
   this->out_stream_ << *key;
   this->out_stream_ << opname;
   this->out_stream_ << principal;
@@ -328,7 +328,7 @@ TAO_GIOP_Invocation::write_request_header_lite
       CORBA::Principal_ptr)
 {
   this->out_stream_ << request_id;
-  this->out_stream_ << is_roundtrip;
+  this->out_stream_ << CORBA::Any::from_boolean (is_roundtrip);
   this->out_stream_ << *key;
   this->out_stream_ << opname;
   return 1;
