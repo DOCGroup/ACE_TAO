@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H
 #include "ace/pre.h"
