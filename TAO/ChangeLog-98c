@@ -1,3 +1,10 @@
+Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/orb_core.cpp: only instantiate ACE_Convert with g++.
+          Even that shouldn't need it, because it's always inline.
+          But, g++ typically creates out-of-line instantiations of
+          inline template member functions.
+
 Sun Mar  1 13:42:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* release.pl: This script will now move the 'Current' tag to
