@@ -10,6 +10,8 @@
 *  strategy on it and enters the node into the AST.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+*  @author Mayur Deshpande <mayur@ics.uci.edu>
+*  @author Carlos O'Ryan   <coryan@uci.edu>
 */
 //=============================================================================
 
@@ -82,6 +84,9 @@ private:
 
   /// Create the exception holder valuetype
   be_valuetype *create_exception_holder (be_interface *node);
+
+  /// And the concrete implemenation of the exception holder valuetype
+  //  be_valuetype *create_exception_holder_concrete (be_valuetype *parent);
 
   /// Creates a raise operation from node and inserts it in
   /// excep_holder, while obeying if it is a normal operation

@@ -41,6 +41,9 @@ public:
   ~be_visitor_obv_operation_arglist (void);
   // destructor
 
+  int is_amh_exception_holder (be_operation *node);
+  // special arglist generation for amh_exceptionholders
+
   int visit_operation (be_operation *node);
   // visit the operation
 

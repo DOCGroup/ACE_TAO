@@ -98,6 +98,31 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
   return count;
 }
 
+int
+be_visitor_operation::is_amh_exception_holder (be_interface *node)
+{
+  int is_an_amh_exception_holder = 0;
+  const char *amh_underbar = "AMH_";
+  const char *node_name = node->local_name ();
+
+  if( amh_underbar[0] == node_name[0] &&
+      amh_underbar[1] == node_name[1] &&
+      amh_underbar[2] == node_name[2] &&
+      amh_underbar[3] == node_name[3]
+      ) // node name starts with "AMH_"
+    {
+      //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder \n"));
+      const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
+      if (last_E != 0
+          && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+        {
+          //ACE_DEBUG ((LM_DEBUG, "Passed second test of amh_excepholder \n"));
+          is_an_amh_exception_holder = 1;
+        }
+    }
+
+  return is_an_amh_exception_holder;
+}
 
 // Method to generate the throw specs for exceptions that are thrown by the
 // operation.
@@ -118,37 +143,41 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
   UTL_Scope *scope = node->defined_in ();
   be_interface *iface = be_interface::narrow_from_scope ( scope );
 
-  // Check if this is IF and it's not VT.
-  if (iface != 0 && !iface->is_valuetype ())
+  // Check if this is (IF and it's not VT) or (it is an AMH ExceptionHolder).
+  if (iface != 0)
     {
-      *os << be_idt_nl << throw_spec_open;
-      *os << be_idt_nl << "CORBA::SystemException";
-
-      if (node->exceptions ())
+      int is_amh_exception_holder = this->is_amh_exception_holder (iface);
+      if(!iface->is_valuetype () || is_amh_exception_holder)
         {
-          // Initialize an iterator to iterate thru the exception list.
-          for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
-               !ei.is_done ();
-               ei.next ())
+          *os << be_idt_nl << throw_spec_open;
+          *os << be_idt_nl << "CORBA::SystemException";
+          
+          if (node->exceptions ())
             {
-              be_exception *excp =
-                be_exception::narrow_from_decl (ei.item ());
-
-              if (excp == 0)
+              // Initialize an iterator to iterate thru the exception list.
+              for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+                   !ei.is_done ();
+                   ei.next ())
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "(%N:%l) be_visitor_operation"
-                                     "gen_throw_spec - "
-                                     "bad exception node\n"),
-                                    -1);
-
+                  be_exception *excp =
+                    be_exception::narrow_from_decl (ei.item ());
+                  
+                  if (excp == 0)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_visitor_operation"
+                                         "gen_throw_spec - "
+                                         "bad exception node\n"),
+                                        -1);
+                      
+                    }
+                  
+                  *os << be_nl << ", ";
+                  *os << excp->name ();
                 }
-
-              *os << be_nl << ", ";
-              *os << excp->name ();
             }
         }
-
+      
       *os << be_uidt_nl << throw_spec_close << be_uidt;
     }
 
