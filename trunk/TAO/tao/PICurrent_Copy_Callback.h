@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   PICurrent_Callback.h
+ *  @file   PICurrent_Copy_Callback.h
  *
  *  $Id$
  *
