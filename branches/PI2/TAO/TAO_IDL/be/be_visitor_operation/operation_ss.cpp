@@ -232,9 +232,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // (b) not needed if exceptions enabled since thats done already (c)
   // not needed if there are no args and exceptions is disabled.
   
-  os->indent ();
-  if (node->argument_count () > 0)
-    *os << ",\n";
+  //  os->indent ();
+  // if (node->argument_count () > 0)
+  // *os << ",\n";
 
   // Generate the formal argument fields which are passed to the RequestInfo object
   ctx = *this->ctx_;
@@ -322,6 +322,48 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // type.
   if (!this->void_return_type (bt))
     {
+      // Heres what we are going to do to have a uniform way of getting the
+      // return value updated for the Request Info:
+      // declare a operation_retval type object and assign the
+      // _tao_safe_retval._retn () to it.
+      // We pass this to the result updation method (note: it hasnt
+      // got destroyed)
+      // We then put it back into the original _tao_safe_retval
+      // object.
+      // And finally the _retn () is returned from the operation w.o
+      // causing any problems.
+
+      // Generate the return type mapping (same as in the header file)
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
+      visitor = tao_cg->make_visitor (&ctx);
+      
+      if ((!visitor) || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for return type failed\n"),
+                            -1);
+        }
+      delete visitor;
+      *os << "  _tao_retval_info = ";
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
+        {
+                    *os << "_tao_retval._retn ();";
+                    *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+                    *os << be_nl << " ri.result (_tao_retval_info);"
+                        << be_nl << "_tao_retval = _tao_retval_info;" <<be_nl;
+        }
+      else
+        {
+          *os << "_tao_retval;";
+          *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+          *os << be_nl << " ri.result (_tao_retval_info);" << be_nl;
+        }
+/*
       *os << "// Update the result" << be_nl
           << "ri.result (";
       ctx = *this->ctx_;
@@ -338,12 +380,12 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                              "codegen for retval assignment failed\n"),
                         -1);
         }
-      *os << ");"<< be_nl;
+        *os << ");"<< be_nl;*/
     }
   *os << "TAO_INTERCEPTOR_CHECK;\n\n";
 
   // do postinvoke, and check for exception.
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+
   *os << be_uidt_nl
       << " _tao_vfr.send_reply (&ri, ACE_TRY_ENV);"<<be_nl
       << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
