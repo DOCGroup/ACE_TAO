@@ -141,7 +141,7 @@ HTTP_Helper::fixyear (int year)
   return year;
 }
 
-char const * const * const
+const char **
 HTTP_Status_Code::instance (void)
 {
   if (HTTP_Status_Code::instance_ == 0) 
