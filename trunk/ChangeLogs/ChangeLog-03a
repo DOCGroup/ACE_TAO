@@ -1,3 +1,8 @@
+Thu May 30 18:02:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.h: Changed EACESS to EACCES to be POSIX compliant.  Thanks
+	  to Eric Eide <eeide@cs.utah.edu> for (re)reporting this!
+
 Thu May 30 10:01:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/UPIPE_Stream.h (ACE_UPIPE_Stream):
