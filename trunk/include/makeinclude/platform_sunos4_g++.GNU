@@ -8,7 +8,7 @@ DLD	= /bin/ld
 LD	= $(CXX)
 #
 # for G++ v2.6.0
-LIBS	+= -lstdc++
+LIBS	+= -lstdc++ -lm
 # LIBS	+= -lnsl -lg++ 
 PIC	= -fpic
 AR	= ar
