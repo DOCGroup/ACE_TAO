@@ -51,6 +51,7 @@ main (int, char *[])
 // Default number of clients/servers.
 static int n_servers = 4;
 static int n_clients = 10;
+static int n_client_iterations = 2;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
 {
@@ -224,41 +225,31 @@ static void
 cached_connect (STRAT_CONNECTOR &con,
                 const ACE_INET_Addr &server_addr)
 {
-  Svc_Handler *svc_handler = 0;
-
-  // Perform a blocking connect to the server using the Strategy
-  // Connector with a connection caching strategy.  Since we are
-  // connecting to the same <server_addr> these calls will return the
-  // same dynamically allocated <Svc_Handler> for each <connect>.
-  if (con.connect (svc_handler, server_addr) == -1)
+  for (size_t i = 0; i < n_client_iterations; i++)
     {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
-      return;
+      Svc_Handler *svc_handler = 0;
+
+      // Perform a blocking connect to the server using the Strategy
+      // Connector with a connection caching strategy.  Since we are
+      // connecting to the same <server_addr> these calls will return the
+      // same dynamically allocated <Svc_Handler> for each <connect>.
+      if (con.connect (svc_handler, server_addr) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+          return;
+        }
+
+      // Send the data to the server.
+      svc_handler->send_data ();
+
+      // Svc_Handler is now idle, so mark it as such and let the cache
+      // recycle it in another thread. 
+      svc_handler->idle (1);
+
+      // Rest for a second to give another thread a chance to reuse the
+      // connection.
+      ACE_OS::sleep (1);
     }
-
-  // Send the data to the server.
-  svc_handler->send_data ();
-
-  // Svc_Handler is now idle.
-  svc_handler->idle (1);
-
-  // Rest for a second
-  ACE_OS::sleep (1);
-
-  svc_handler = 0;
-
-  // Try to reconnect.
-  if (con.connect (svc_handler, server_addr) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
-      return;
-    }
-
-  // Send the data to the server.
-  svc_handler->send_data ();
-
-  // Svc_Handler is now idle.
-  svc_handler->idle (1);
 }
 
 struct Client_Info
@@ -518,12 +509,15 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Conn_Test");
 
-  ACE_Get_Opt getopt (argc, argv, "c:s:", 1);
+  ACE_Get_Opt getopt (argc, argv, "c:i:s:", 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
       case 'c':
         n_clients = atoi (getopt.optarg);
+        break;
+      case 'i':
+        n_client_iterations = atoi (getopt.optarg);
         break;
       case 's':
         n_servers = atoi (getopt.optarg);
