@@ -161,6 +161,76 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
   return this->lock_->tryacquire_write ();
 }
 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock)
+  : lock_ (&lock),
+    delete_lock_ (0)
+{
+}
+
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
+{
+  if (this->delete_lock_)
+    delete this->lock_;
+}
+
+// Explicitly destroy the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::remove (void)
+{
+  return this->lock_->remove ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire (void)
+{
+  return this->lock_->release ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire (void)
+{
+  return this->lock_->tryacquire ();
+}
+
+// Acquire the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::release (void)
+{
+  return this->lock_->acquire ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire_read (void)
+{
+  return this->lock_->acquire_read ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::acquire_write (void)
+{
+  return this->lock_->acquire_write ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_read (void)
+{
+  return this->lock_->tryacquire_read ();
+}
+
+// Release the lock.
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire_write (void)
+{
+  return this->lock_->tryacquire_write ();
+}
+
 #if defined (ACE_HAS_THREADS)
 
 template<class MUTEX> ACE_INLINE int

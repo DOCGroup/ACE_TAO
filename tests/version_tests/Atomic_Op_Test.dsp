@@ -7,16 +7,16 @@
 CFG=Atomic_Op_Test - Win32 DLL Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
-!MESSAGE NMAKE /f "version_tests.mak".
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "atomic_op_test.mak".
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "version_tests.mak" CFG="Atomic_Op_Test - Win32 DLL Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "atomic_op_test.mak" CFG="Atomic_Op_Test - Win32 DLL Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "Atomic_Op_Test - Win32 DLL Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "Atomic_Op_Test - Win32 DLL Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Atomic_Op_Test - Win32 DLL Unicode Debug" (based on "Win32 (x86) Console Application")
@@ -25,7 +25,7 @@ CFG=Atomic_Op_Test - Win32 DLL Debug
 !MESSAGE "Atomic_Op_Test - Win32 static Unicode Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "Atomic_Op_Test - Win32 static Unicode Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Atomic_Op_Test - Win32 DLL Unicode Release" (based on "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -234,7 +234,7 @@ LINK32=link.exe
 # ADD BASE LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 aceu.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
