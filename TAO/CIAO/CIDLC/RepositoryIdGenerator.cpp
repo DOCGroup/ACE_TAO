@@ -41,7 +41,7 @@ namespace
       ScopedName decl_name (ti->declaration ());
 
       DeclarationTable::IteratorPair iters (
-        ti->scope ()->table ().lookup (decl_name));
+        ti->table ().lookup (decl_name));
 
       for (; iters.first != iters.second; ++iters.first)
       {
@@ -99,7 +99,7 @@ namespace
       ScopedName decl_name (tp->declaration ());
 
       DeclarationTable::IteratorPair iters (
-        tp->scope ()->table ().lookup (decl_name));
+        tp->table ().lookup (decl_name));
 
       for (; iters.first != iters.second; ++iters.first)
       {
@@ -112,7 +112,7 @@ namespace
             decl->context ().get<TypePrefixPtr> (
               StringLiterals::STRS[StringLiterals::TYPE_PREFIX]));
 
-          if (prev->prefix () != tp->prefix ())
+          if ((prev->prefix ()) != (tp->prefix ()))
           {
 
             //@@ Seems tp should containt filename and line
@@ -171,6 +171,6 @@ generate (TranslationUnitPtr const& u)
 
     //@@ check errors
   }
-  
+
   return true;
 }
