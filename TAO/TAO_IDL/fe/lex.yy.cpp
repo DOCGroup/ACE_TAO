@@ -2949,7 +2949,9 @@ idl_valid_version (char *s)
 
   char *tmp = minor + 1;
 
-  for (i = 0; tmp[i] != '\0'; ++i)
+  // Some preprocessors leave trailing whitespace, hence the
+  // check for ' '.
+  for (i = 0; tmp[i] != '\0' && tmp[i] != ' '; ++i)
     {
       if (!isdigit (tmp[i]))
         {
