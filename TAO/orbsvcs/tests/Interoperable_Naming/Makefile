@@ -18,7 +18,19 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 IDL_FILES = Web_Server
 IDL_SRC = Web_ServerC.cpp Web_ServerS.cpp
+CLIENT_SRC = client.cpp ncontextext_client_i.cpp
+
+LSRC = $(IDL_SRC) $(CLIENT_SRC)
+
+CLIENT_OBJS= $(IDL_SRC:.cpp=.o) $(CLIENT_SRC:.cpp=.o)
+
+WEB_SERVER_OBJS = Web_ServerC.o \
+		  Web_ServerS.o \
+		  client.o
+
 BIN2 = client
+
+TAO_IDLFLAGS = -Ge 1
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
@@ -26,12 +38,6 @@ TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Naming
-
-SRC = $(addsuffix .cpp, $(BIN2) ncontextext_client_i) $(IDL_SRC)
-
-CLIENT_OBJS=$(addsuffix .o, client ncontextext_client_i) Web_ServerC.o Web_ServerS.o
-
-TAO_IDLFLAGS = -Ge 1
 
 #----------------------------------------------------------------------------
 # Include macros and targets
