@@ -103,7 +103,7 @@ TAO_EC_Trivial_Supplier_Filter_Builder::
 {
 }
 
-TAO_EC_SupplierFiltering*
+TAO_EC_Supplier_Filter*
 TAO_EC_Trivial_Supplier_Filter_Builder::create (
     RtecEventChannelAdmin::SupplierQOS&)
 {
@@ -112,6 +112,6 @@ TAO_EC_Trivial_Supplier_Filter_Builder::create (
 
 void
 TAO_EC_Trivial_Supplier_Filter_Builder::destroy (
-    TAO_EC_SupplierFiltering*)
+    TAO_EC_Supplier_Filter*)
 {
 }

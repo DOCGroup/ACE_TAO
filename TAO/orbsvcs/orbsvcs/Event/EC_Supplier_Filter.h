@@ -7,13 +7,13 @@
 //   ORBSVCS Real-time Event Channel
 //
 // = FILENAME
-//   EC_SupplierFiltering
+//   EC_Supplier_Filter
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
 // = DESCRIPTION
-//   Define the TAO_EC_SupplierFiltering interface and some simple
+//   Define the TAO_EC_Supplier_Filter interface and some simple
 //   implementations.
 //
 // = CREDITS
@@ -26,8 +26,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_EC_SUPPLIERFILTERING_H
-#define TAO_EC_SUPPLIERFILTERING_H
+#ifndef TAO_EC_SUPPLIER_FILTER_H
+#define TAO_EC_SUPPLIER_FILTER_H
 
 #include "orbsvcs/RtecEventCommC.h"
 
@@ -39,18 +39,18 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_SupplierFiltering
+class TAO_ORBSVCS_Export TAO_EC_Supplier_Filter
 {
   // = TITLE
-  //   The strategy to handle filtering close to the supplier.
+  //   The strategy to filter close to the supplier.
   //
   // = DESCRIPTION
   //   After an event is received by the a ProxyPushConsumer it must
   //   be dispatched to the right set of ProxyPushSuppliers;
   //   determining this set is the task of this class.
-  //   Notice that this is an implicit form of filtering, because the
-  //   ProxyPushSuppliers outside the set will *not* receive the
-  //   event.
+  //   Notice that this is in fact a filter, and enforces (in part)
+  //   the subscriptions and publications of the Event Service
+  //   clients.
   //
   //   Several implementations are possible:
   //
@@ -76,23 +76,23 @@ class TAO_ORBSVCS_Export TAO_EC_SupplierFiltering
   //  create the right instance.
   //
 public:
-  virtual ~TAO_EC_SupplierFiltering (void);
+  virtual ~TAO_EC_Supplier_Filter (void);
   // Destructor
 
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer) = 0;
   // Whenever a ProxyPushConsumer is initialized it calls this method
-  // to inform the FilteringStrategy of its identity.
+  // to inform the Supplier_Filter of its identity.
   // Strategies that do not keep ProxyPushConsumer specific
   // information, or that are shared between multiple
   // ProxyPushConsumers can ignore this message.
 
   virtual void unbind (TAO_EC_ProxyPushConsumer* consumer) = 0;
   // Wheneve a ProxyPushConsumer is about to be destroyed it calls
-  // this method to inform the FilteringStrategy that it should
+  // this method to inform the Supplier_Filter that it should
   // release any resources related to it.
-  // Filtering strategies that are bound to a particular ProxyConsumer
-  // can use this opportunity to destroy themselves; filtering
-  // strategies that do not keep ProxyPushConsumer specific
+  // Supplier_Filter strategies that are bound to a particular
+  // ProxyConsumer can use this opportunity to destroy themselves;
+  // filter strategies that do not keep ProxyPushConsumer specific
   // information can simply ignore the message.
 
   virtual void connected (TAO_EC_ProxyPushSupplier *supplier,
@@ -117,7 +117,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_SupplierFiltering.i"
+#include "EC_Supplier_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EC_SUPPLIERFILTERING_H */
+#endif /* TAO_EC_SUPPLIER_FILTER_H */

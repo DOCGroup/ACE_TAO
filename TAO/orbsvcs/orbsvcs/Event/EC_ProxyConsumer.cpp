@@ -2,7 +2,7 @@
 
 #include "EC_ProxyConsumer.h"
 #include "EC_Event_Channel.h"
-#include "EC_SupplierFiltering.h"
+#include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -60,7 +60,7 @@ void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_SupplierFiltering* filter = 0;
+  TAO_EC_Supplier_Filter* filter = 0;
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
@@ -91,7 +91,7 @@ void
 TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_SupplierFiltering* filter = 0;
+  TAO_EC_Supplier_Filter* filter = 0;
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
@@ -273,7 +273,7 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_EC_SupplierFiltering* filter = 0;
+  TAO_EC_Supplier_Filter* filter = 0;
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,

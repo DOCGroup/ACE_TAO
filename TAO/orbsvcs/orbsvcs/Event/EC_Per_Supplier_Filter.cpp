@@ -18,6 +18,7 @@ ACE_RCSID(Event, EC_Per_Supplier_Filter, "$Id$")
 TAO_EC_Per_Supplier_Filter::
     TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel* ec)
   :  event_channel_ (ec),
+     consumer_ (0),
      refcnt_ (1)
 {
   this->supplier_set_ =
@@ -35,13 +36,20 @@ TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter (void)
 void
 TAO_EC_Per_Supplier_Filter::bind (TAO_EC_ProxyPushConsumer* consumer)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  if (this->consumer_ != 0)
+    return;
+
   this->consumer_ = consumer;
 }
 
 void
 TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
 {
-  if (this->consumer_ != 0 && this->consumer_ != consumer)
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  if (this->consumer_ == 0 || this->consumer_ != consumer)
     return;
 
   this->consumer_ = 0;
@@ -51,6 +59,8 @@ void
 TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
                                        CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
   if (this->consumer_ == 0)
     return;
 
@@ -101,11 +111,28 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
 
       TAO_EC_QOS_Info event_info;
-      scheduling_strategy->init_event_qos (e.header,
-                                           this->consumer_,
-                                           event_info,
-                                           ACE_TRY_ENV);
-      ACE_CHECK;
+      {
+        // We need to grab the mutex to check that we are not
+        // disconnected.
+        // @@ This lock could be optimized if we knew that the
+        // scheduling strategy is trivial...
+        ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
+        if (this->consumer_ == 0)
+          return;
+
+        scheduling_strategy->init_event_qos (e.header,
+                                             this->consumer_,
+                                             event_info,
+                                             ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+      // We don't use the consumer_ field anymore, just the
+      // supplier_set_, and that one is safe until we reach the
+      // destructor.  However, the caller has to increase the
+      // reference count before calling us, i.e. we won't be destroyed
+      // until push() returns.
 
       ACE_GUARD_THROW_EX (TAO_EC_ProxyPushSupplier_Set::Busy_Lock,
           ace_mon, this->supplier_set_->busy_lock (),
@@ -131,6 +158,8 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
 CORBA::ULong
 TAO_EC_Per_Supplier_Filter::_incr_refcnt (void)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
   this->refcnt_++;
   return this->refcnt_;
 }
@@ -138,18 +167,20 @@ TAO_EC_Per_Supplier_Filter::_incr_refcnt (void)
 CORBA::ULong
 TAO_EC_Per_Supplier_Filter::_decr_refcnt (void)
 {
-  this->refcnt_--;
-  if (this->refcnt_ == 0)
-    {
-      this->event_channel_->supplier_filter_builder ()->destroy (this);
-      return 0;
-    }
-  return this->refcnt_;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
+    this->refcnt_--;
+    if (this->refcnt_ != 0)
+      return this->refcnt_;
+  }
+  this->event_channel_->supplier_filter_builder ()->destroy (this);
+  return 0;
 }
 
 // ****************************************************************
 
-TAO_EC_SupplierFiltering*
+TAO_EC_Supplier_Filter*
 TAO_EC_Per_Supplier_Filter_Builder::create (
     RtecEventChannelAdmin::SupplierQOS&)
 {
@@ -158,7 +189,7 @@ TAO_EC_Per_Supplier_Filter_Builder::create (
 
 void
 TAO_EC_Per_Supplier_Filter_Builder::destroy (
-    TAO_EC_SupplierFiltering* x)
+    TAO_EC_Supplier_Filter* x)
 {
   delete x;
 }
