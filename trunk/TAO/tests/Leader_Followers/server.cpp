@@ -1,16 +1,19 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Task.h"
 #include "test_i.h"
 
 ACE_RCSID(Leader_Followers, server, "$Id$")
 
 const char *ior_output_file = "ior";
 
+int number_of_event_loop_threads = 1;
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "e:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -19,11 +22,17 @@ parse_args (int argc, char *argv[])
       case 'o':
         ior_output_file = get_opts.optarg;
         break;
+
+      case 'e':
+        number_of_event_loop_threads = ::atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile>"
+                           "-o <iorfile> "
+                           "-e <number of event loop threads> "
                            "\n",
                            argv [0]),
                           -1);
@@ -32,6 +41,42 @@ parse_args (int argc, char *argv[])
   // Indicates sucessful parsing of the command line
   return 0;
 }
+
+class Event_Loop_Task : public ACE_Task_Base
+{
+public:
+  Event_Loop_Task (CORBA::ORB_ptr orb)
+    :  orb_ (CORBA::ORB::_duplicate (orb))
+    {
+    }
+
+  int svc (void)
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+
+      ACE_TRY
+        {
+          if (this->orb_->run (ACE_TRY_ENV) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Exception caught in thread:");
+          return -1;
+        }
+      ACE_ENDTRY;
+
+      ACE_CHECK_RETURN (-1);
+
+      return 0;
+    }
+
+private:
+  CORBA::ORB_var orb_;
+  // ORB reference.
+};
 
 int
 main (int argc, char *argv[])
@@ -87,9 +132,15 @@ main (int argc, char *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      if (orb->run (ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
-      ACE_TRY_CHECK;
+      Event_Loop_Task event_loop_task (orb.in ());
+
+      if (event_loop_task.activate (THR_NEW_LWP | THR_JOINABLE,
+                                    number_of_event_loop_threads) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate event_loop threads\n"),
+                          -1);
+
+      event_loop_task.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "Server: Event loop finished\n"));
 
