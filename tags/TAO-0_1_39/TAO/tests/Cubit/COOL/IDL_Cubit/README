@@ -1,0 +1,34 @@
+This is the cubit example that uses the TAO IDL compiler to generate
+the stubs and skeletons. Additional features include presence of a
+factory to create Cubit objects and testing the _bind call to get the
+factory object reference.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+server:
+-------
+
+% server [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
+              [-n <number-of-cubit-objects>]
+
+The server cubit factory maintained num_of_cubit objects (default =
+1). They are assigned keys that look like "key0", "key1", ...
+
+When the server is started and you have used the -d flag, you should
+see as the first line of output something that looks like
+	iiop:1.0//serverhost:10013/factory (using -ORBobjrefstyle url)
+or
+	IOR:000000000000001649444c3a43756269745... (using default -ORBobjrefstyle ior)
+
+Using -d turns on debugging messages.  It is additive, i.e., the more
+-d options provided, the more debugging you can get.  At the moment,
+only 2 levels of debugging are implemented, and more than 2 -d options
+are ignored.
+
+client:
+-------
+
+% client [-d] -h <hostname> -p <port> -k <cubit key> -n <iterations>
+
+cubit_key corresponds to "key0", "key1", ...
