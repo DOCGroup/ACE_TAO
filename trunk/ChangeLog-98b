@@ -1,9 +1,14 @@
 Wed Jul  8 13:47:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * config-sunx86-sunc++-4.x.h: inserted note to not use this
+        * ace/config-sunx86-sunc++-4.x.h: inserted note to not use this
           config, but to use config-sunos5.5.h instead.  After we
           have installed and tested Sun C++ on Solaris86, we should
           remove this config.
+
+        * ACE-INSTALL.html: added note about increasing NUM_FILES to
+          1000 in VxWorks kernel configuration.  Thanks to
+          Jeff Franks <Jeffrey_Franks@i-o.com> for reminding me about
+          this change from the default VxWorks kernel configuration.
 
 Tue Jul 07 14:36:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
