@@ -1,3 +1,9 @@
+Thu Nov 11 08:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added HTPB library so that this lib is build first in a static
+          msvc build
+
 Wed Nov 10 12:42:45 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_Errno.h:
@@ -37,14 +43,14 @@ Wed Nov 10 12:42:45 2004  Chad Elliott  <elliott_c@ociweb.com>
           This results in loading a new library while holding the Service
           Repository lock resulting in a single threaded deadlock.
           The problem manifests itself in executables that deadlock before
-          reaching main().  The ImR_Activator is one of the programs that 
+          reaching main().  The ImR_Activator is one of the programs that
           currently is broken by this problem.
 
         Wed Sep  1 13:23:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * ace/Service_Repository.cpp:
           Changed the insert method to delete a replaced service
-          after releasing the lock.  This was done to prevent     
+          after releasing the lock.  This was done to prevent
           deadlocks that were occuring on solaris with gcc > 3.2.1
           in the debug mode.
 
