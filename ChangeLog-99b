@@ -5,6 +5,31 @@ Mon Jun 28 12:48:35 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Jun 28 09:32:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/{Future_Set,Future}: Integrated new enhancements to use
+	  the ACE_Hash_Map_Manager rather than the ACE_DLL_Linked_List to
+ 	  speed up notifications for the Future Set.  Thanks to John
+ 	  Tucker <jtucker@infoglide.com> for this enhancement.
+
+	* tests: Integrated the Future_Set_Test into this directory and the 
+	  various batch files.  Thanks to John Tucker
+ 	  <jtucker@infoglide.com> for this test.
+
+	* ace/Map_T,
+	* ace/Map_Manager,
+	* ace/Cache_Map_Manager_T,
+	* ace/Hash_Map_Manager_T: The current_size() and total_size() methods
+	  should be const...
+
+	* ace/OS.i: Fixed a type inconsistency where wchar_t should have been
+	  char and added a missing ';'.
+
+	* ace/OS.i: Fixed a typo where last_error should have been
+	  lerror.  Thanks to Chris Gill for reporting this.
+
+	* ace/OS.cpp (ACE_BEGINTHREADEX): Oops, mistyped "_beginthreadex()"
+	  as "_beingthreadex()".  I must be going through an existential
+ 	  phase ;-).  Thanks to Chris Gill for reporting this.
+  
         * ace/OS.i: Fixed a typo where last_error should have been
           lerror.  Thanks to Chris Gill for reporting this.
 
