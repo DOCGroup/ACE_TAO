@@ -731,9 +731,6 @@ public:
   TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
 #undef  TAO_SYSTEM_EXCEPTION
 
-  static TypeCode_ptr _tc_Bounds;
-  static TypeCode_ptr _tc_BadKind;
-
   static TypeCode_ptr _tc_UnknownUserException;
 
   static ORB_ptr ORB_init (int &argc,

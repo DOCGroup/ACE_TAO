@@ -77,6 +77,9 @@ public:
     virtual int _is_a (const char* interface_id) const;
   };
 
+  static CORBA::TypeCode_ptr _tc_Bounds;
+  static CORBA::TypeCode_ptr _tc_BadKind;
+
   static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
   // Duplicates i.e., increments ref count.
 
@@ -88,7 +91,7 @@ public:
   // Compares two typecodes.
 
   CORBA::Boolean equivalent (CORBA::TypeCode_ptr,
-                             CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                             CORBA_Environment &_env = CORBA_Environment::default_environment ()) const;
   // Unaliases receiver and argument before comparing.                           
 
   CORBA::TCKind kind (CORBA_Environment &_env = CORBA_Environment::default_environment ()) const;
