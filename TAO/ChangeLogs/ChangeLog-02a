@@ -1,9 +1,16 @@
+Tue Oct 10 14:05:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Fault_Tolerance_Service.h:
+	* tao/Fault_Tolerance_Service.i:
+	* orbsvcs/orbsvcs/Fault_Tolerance/FT_Policy_i.cpp: Fixed link
+	  errors on Guajira. They should be hopefully be fixed.
+
 Tue Oct 10 13:11:09 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
 	* tests/Object_Loader/driver.dsp:
 
-	  Made some other project setting to fix lining errors.
+	  Made some other project setting to fix linking errors.
 
 	* tao/PortableServer/Makefile.bor:
 

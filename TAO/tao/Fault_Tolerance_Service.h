@@ -73,11 +73,8 @@ public:
   void client_id (const char *id);
   // Set the client id
 
-  CORBA::Long new_retention_id (void);
-  // Generate and return a new retention id
-
   CORBA::Long retention_id (void);
-  // Return the underlying the retention id
+  // Generate and return a new retention id
 
 private:
 
