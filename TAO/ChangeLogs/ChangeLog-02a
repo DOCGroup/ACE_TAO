@@ -1,3 +1,16 @@
+Fri Nov 24 17:14:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp
+
+	  Changes to keep the indentation of generated code from
+	  growing with each interface.
+
 Fri Nov 24 16:55:29 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
