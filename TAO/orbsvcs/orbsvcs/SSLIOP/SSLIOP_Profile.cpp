@@ -1,9 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
-
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
 
 #include "SSLIOP_Profile.h"
 #include "ssl_endpoints.h"
@@ -326,5 +323,3 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
   // TAO_TAG_SSL_ENDPOINTS component, failure to find it is an error.
   return -1;
 }
-
-#endif  /* ACE_HAS_SSL */

@@ -1,9 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
-
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
 
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Profile.h"
@@ -669,5 +666,3 @@ TAO_SSLIOP_Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
 
   return 0;
 }
-
-#endif  /* ACE_HAS_SSL */

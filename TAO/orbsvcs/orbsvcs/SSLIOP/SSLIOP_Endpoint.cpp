@@ -1,9 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
-
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
 
 #include "SSLIOP_Endpoint.h"
 #include "SSLIOP_Connect.h"
@@ -127,5 +124,3 @@ TAO_SSLIOP_Endpoint::hash (void)
 {
   return this->iiop_endpoint_->hash ();
 }
-
-#endif  /* ACE_HAS_SSL */

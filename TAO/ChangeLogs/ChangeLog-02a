@@ -1,3 +1,30 @@
+Thu Nov 16 19:29:00 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP_Connect.cpp:
+	* orbsvcs/orbsvcs/SSLIOP_Connect.h:
+	* orbsvcs/orbsvcs/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP_Endpoint.cpp:
+	* orbsvcs/orbsvcs/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP_Endpoint.i:
+	* orbsvcs/orbsvcs/SSLIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP_Profile.cpp:
+	* orbsvcs/orbsvcs/SSLIOP_Profile.h:
+	* orbsvcs/orbsvcs/SSLIOP_Profile.i:
+	* orbsvcs/orbsvcs/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP_Transport.h:
+
+	  Removed all "ACE_HAS_SSL" protection.  It isn't needed since
+	  SSLIOP is in a separate library altogether.
+
+	* orbsvcs/orbsvcs/SSLIOP_Factory.cpp:
+
+	  Added ACE_STATIC_SVC_REQUIRE macro to ensure that the SSLIOP
+	  factory is registered with the Service Configurator when linking
+	  statically.
+
 Thu Nov 16 19:06:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/Options.cpp:
