@@ -82,6 +82,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ace/Synch.h"
 #include        "ace/Log_Msg.h"
 #include        "ace/Containers.h"
+#include        "ace/Process.h"
 
 /*
  * BE includes
