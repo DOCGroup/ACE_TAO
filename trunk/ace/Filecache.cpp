@@ -560,13 +560,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename)
       copy_map.remove ();
     }
   else
-    {
-      ACE_OS::memcpy (dst, src, this->size_);
-
-      if (original_map.unmap () == -1 
-	  || copy_map.unmap () == -1)
-	this->error (ACE_Filecache_Object::MEMMAP_FAILED);
-    }
+    ACE_OS::memcpy (dst, src, this->size_);
 
   ACE_OS::close (original);
   ACE_OS::close (copy);

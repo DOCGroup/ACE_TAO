@@ -46,18 +46,18 @@ ACE_Pipe::open (void)
 	  result = -1;
 	}
     }
-      
+
+  // Close down the acceptor endpoint since we don't need it anymore.
+  acceptor.close ();
+  if (result == -1)
+    return -1;
+
   int one = 1;
   // Make sure that the TCP stack doesn't try to buffer small writes.
   // Since this communication is purely local to the host it doesn't
   // affect network performance.
   if (writer.set_option (IPPROTO_TCP, TCP_NODELAY,
 			 &one, sizeof one) == -1)
-    return -1;
-
-  // Close down the acceptor endpoint since we don't need it anymore.
-  acceptor.close ();
-  if (result == -1)
     return -1;
 
   this->handles_[0] = reader.get_handle ();
