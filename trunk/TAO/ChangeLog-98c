@@ -1,3 +1,8 @@
+Sat Apr  4 00:24:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed a typo where
+	  "i" was being defined twice in the same block of code.
+
 Fri Apr  3 18:40:49 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/client.cpp:
