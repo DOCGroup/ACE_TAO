@@ -150,62 +150,13 @@ show_uninit:
 #       Installation targets
 #----------------------------------------------------------------------------
 
-# Set the cleanup targets
-ifeq ($(CLEAN_BIN),)
-  ifneq ($(BIN),)
-    CLEAN_BIN = $(BIN)
-  else
-    ifneq ($(BIN2),)
-      CLEAN_BIN = $(BIN2)
-    else
-      CLEAN_BIN = $(BIN_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_LIB),)
-  ifneq ($(LIB),)
-    CLEAN_LIB = $(LIB)
-  else
-    ifneq ($(LIB2),)
-      CLEAN_LIB = $(LIB2)
-    else
-      CLEAN_LIB = $(LIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_SHLIB),)
-  ifneq ($(SHLIB),)
-    CLEAN_SHLIB = $(SHLIB)
-  else
-    ifneq ($(SHLIB2),)
-      CLEAN_SHLIB = $(SHLIB2)
-    else
-      CLEAN_SHLIB = $(SHLIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_SHLIBA),)
-  ifneq ($(SHLIBA),)
-    CLEAN_SHLIBA = $(SHLIBA)
-  else
-    ifneq ($(SHLIBA2),)
-      CLEAN_SHLIBA = $(SHLIBA2)
-    else
-      CLEAN_SHLIBA = $(SHLIBA2)
-    endif
-  endif
-endif
-
 install.local: $(INSTALL)
 
 deinstall.local:
 	$(RM) $(INSTALL) \
-$(CLEAN_LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
-$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)) \
-$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(SOVERSION))
+$(CLEANUP_LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
+$(CLEANUP_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)) \
+$(CLEANUP_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(SOVERSION))
 
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
@@ -281,7 +232,7 @@ ifneq ($(IDL_FILES),)
 endif
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
-	-$(RM) $(CLEAN_BIN:%=%$(EXEEXT)) $(CLEAN_BIN:%=%_debug$(EXEEXT)) $(CLEAN_BIN:%=%_profile$(EXEEXT)) $(CLEAN_BIN:%=%_optimize$(EXEEXT)) $(CLEAN_LIB:%=%) $(CLEAN_LIB:%=%_debug) $(CLEAN_LIB:%=%_profile) $(CLEAN_LIB:%=%_optimize) $(CLEAN_SHLIB:%=%) $(CLEAN_SHLIB:%=%.*) $(CLEAN_SHLIB:%.so=%.a) $(CLEAN_SHLIB:%=%_debug) $(CLEAN_SHLIB:%=%_profile) $(CLEAN_SHLIB:%=%_optimize) $(CLEAN_SHLIBA:%=%)
+	-$(RM) $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT)) $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize) $(CLEANUP_SHLIB:%=%) $(CLEANUP_SHLIB:%=%.*) $(CLEANUP_SHLIB:%.so=%.a) $(CLEANUP_SHLIB:%=%_debug) $(CLEANUP_SHLIB:%=%_profile) $(CLEANUP_SHLIB:%=%_optimize) $(CLEANUP_SHLIBA:%=%)
 
 #----------------------------------------------------------------------------
 #       Dependency generation target

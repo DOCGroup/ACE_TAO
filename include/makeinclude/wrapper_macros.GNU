@@ -747,3 +747,52 @@ else
 endif # LINK.cc.override
 
 SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+
+# Set the cleanup targets
+ifeq ($(CLEANUP_BIN),)
+  ifneq ($(BIN),)
+    CLEANUP_BIN = $(BIN)
+  else
+    ifneq ($(BIN2),)
+      CLEANUP_BIN = $(BIN2)
+    else
+      CLEANUP_BIN = $(BIN_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEANUP_LIB),)
+  ifneq ($(LIB),)
+    CLEANUP_LIB = $(LIB)
+  else
+    ifneq ($(LIB2),)
+      CLEANUP_LIB = $(LIB2)
+    else
+      CLEANUP_LIB = $(LIB_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEANUP_SHLIB),)
+  ifneq ($(SHLIB),)
+    CLEANUP_SHLIB = $(SHLIB)
+  else
+    ifneq ($(SHLIB2),)
+      CLEANUP_SHLIB = $(SHLIB2)
+    else
+      CLEANUP_SHLIB = $(SHLIB_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEANUP_SHLIBA),)
+  ifneq ($(SHLIBA),)
+    CLEANUP_SHLIBA = $(SHLIBA)
+  else
+    ifneq ($(SHLIBA2),)
+      CLEANUP_SHLIBA = $(SHLIBA2)
+    else
+      CLEANUP_SHLIBA = $(SHLIBA2_UNCHECKED)
+    endif
+  endif
+endif
