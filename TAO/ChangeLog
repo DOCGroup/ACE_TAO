@@ -1,3 +1,11 @@
+Thu Dec 26 09:07:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/Simple/Simple_Util.h: Added a method to return the
+	  client side ORB.
+	* examples/Simple/grid/Grid_Client_i.cpp: Hold the Grid_Factory's
+	  object reference in a var instead of a pointer. This prevents
+	  memory leaks in the application.
+
 Wed Dec 25 17:47:47 2002  Bala  <bala@cs.wustl.edu>
 
         * TAO version 1.2.8 released.

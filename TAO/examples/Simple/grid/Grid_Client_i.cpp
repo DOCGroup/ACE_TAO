@@ -21,6 +21,7 @@ Grid_Client_i::Grid_Client_i (void)
 //Destructor.
 Grid_Client_i::~Grid_Client_i (void)
 {
+  cout << "Called " << endl;
   //no-op
 }
 
@@ -81,7 +82,7 @@ Grid_Client_i::run (const char *name,
     {
       // Make the Grid.
 
-      Grid_ptr grid = client->make_grid (width_,
+      Grid_var grid = client->make_grid (width_,
                                          height_
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -110,6 +111,8 @@ Grid_Client_i::run (const char *name,
         client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
+
+      client.orb ()->destroy ();
       ACE_UNUSED_ARG (ret_val);
     }
   ACE_CATCH (CORBA::UserException, range_ex)
