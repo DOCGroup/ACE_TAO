@@ -69,11 +69,14 @@ module LoadBalancing
   typedef Properties Criteria;
 
   struct FactoryInfo {
-    GenericFactory factory;
+    GenericFactory the_factory;
     Location the_location;
     Criteria the_criteria;
   };
   typedef sequence<FactoryInfo> FactoryInfos;
+
+  typedef unsigned short InitialNumberReplicasValue;
+  typedef unsigned short MinimumNumberReplicasValue;
 
   exception InterfaceNotFound {};
   exception ObjectGroupNotFound {};
