@@ -81,7 +81,7 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -196,7 +196,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INV_OBJREF ());
+    ACE_THROW (CORBA::INTERNAL ());
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (

@@ -16,33 +16,65 @@ print STDERR "\n\n==== Single-threaded test\n";
 
 $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
                        "-o $file");
-sleep 2;
+if (ACE::waitforfile_timed ($file, 3) == -1) {
+  print STDERR "ERROR: cannot find file <$file>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
 
-ACE::waitforfile ($file);
+$CL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
+		       " -x -k file://$file");
 
-$status  = system ($EXEPREFIX."client".$Process::EXE_EXT.
-                   " -x -k file://$file");
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
 
-$SV->Wait ();
+$server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
-unlink ($file);
+if ($client == -1 || $server == -1) {
+  exit 1;
+}
+
+unlink $file;
 
 print STDERR "\n\n==== Multi-threaded test\n";
 
+print STDERR "Grace period, waiting for the system to stabilize....";
 sleep 5;
 
 $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
                        " -o $mtfile");
-sleep 2;
+if (ACE::waitforfile_timed ($mtfile, 3) == -1) {
+  print STDERR "ERROR: cannot find file <$file>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
 
-ACE::waitforfile ($mtfile);
+$CL = Process::Create ($EXEPREFIX."mt_client".$Process::EXE_EXT,
+		       " -x -k file://$mtfile -ORBsvcconf svc.mt.conf");
 
-$status  = system ($EXEPREFIX."mt_client".$Process::EXE_EXT.
-                   " -x -k file://$mtfile -ORBsvcconf svc.mt.conf");
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
 
-$SV->Wait ();
+$server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
-unlink ($mtfile);
+unlink $mtfile;
 
-# @@ Capture any errors from the server too.
-exit $status;
+if ($client == -1 || $server == -1) {
+  exit 1;
+}
+
+exit 0;

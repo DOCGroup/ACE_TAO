@@ -305,7 +305,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -440,7 +440,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -575,7 +575,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -709,7 +709,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -846,7 +846,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -981,7 +981,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1116,7 +1116,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -3243,7 +3243,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   ACE_NEW_RETURN (_tao_retval, PortableServer::ObjectId, _tao_retval);

@@ -175,7 +175,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           << "if (istub == 0)" << be_idt_nl;
 
       // if the stub object was bad, then we raise a system exception
-      if (this->gen_raise_exception (bt, "CORBA::INV_OBJREF",
+      if (this->gen_raise_exception (bt, "CORBA::INTERNAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

@@ -12,7 +12,8 @@ $iorfile = "server.ior";
 
 unlink $iorfile;
 
-$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT, " -o $iorfile");
+$SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+		       " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -32,6 +33,7 @@ if ($client == -1) {
 $SV->Kill (); $SV->TimedWait (1);
 
 unlink $iorfile;
+unlink "test"; # created by the program
 
 if ($client != 0) {
   exit 1;
