@@ -20,14 +20,14 @@ TAO_NS_Supplier_T<Supplier_Traits>::~TAO_NS_Supplier_T ()
 {
 }
 
-template <class Supplier_Traits> TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+template <class Supplier_Traits> ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
 TAO_NS_Supplier_T<Supplier_Traits>::get_proxy_consumer (void)
 {
   return this->get_proxy ();
 }
 
-template <class Supplier_Traits> TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (TAO_NS_Supplier_T<Supplier_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
+template <class Supplier_Traits> ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
 {
   Supplier_Traits traits;
 

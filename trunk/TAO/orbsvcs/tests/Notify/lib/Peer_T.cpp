@@ -27,13 +27,13 @@ TAO_NS_Peer_T<Peer_Traits>::~TAO_NS_Peer_T ()
 {
 }
 
-template <class Peer_Traits> TAO_NS_Peer_T<Peer_Traits>::Proxy_Traits_PTR
+template <class Peer_Traits> ACE_TYPENAME TAO_NS_Peer_T<Peer_Traits>::Proxy_Traits_PTR
 TAO_NS_Peer_T<Peer_Traits>::get_proxy (void)
 {
   return proxy_.in ();
 }
 
-template <class Peer_Traits> TAO_NS_Peer_T<Peer_Traits>::Peer_Traits_PTR
+template <class Peer_Traits> ACE_TYPENAME TAO_NS_Peer_T<Peer_Traits>::Peer_Traits_PTR
 TAO_NS_Peer_T<Peer_Traits>::activate (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
