@@ -7,6 +7,9 @@ Fri Feb 20 08:29:35 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_TSS <ACE_Malloc<...> > template instantiation to use the
           ACE_LOCAL_MEMORY_POOL macro.
 
+        * orbsvcs/orbsvcs/Event/Event_Channel.{h,cpp}
+          (ACE_ES_{Con,Dis}junction_Group): added virtual destructors.
+
 Thu Feb 19 12:54:50 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
