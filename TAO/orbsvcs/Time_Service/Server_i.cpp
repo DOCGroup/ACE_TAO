@@ -280,13 +280,15 @@ Server_i::init (int argc,
       // Register the server object with the Naming Service.
       this->register_server ();
 
-      return 0;
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Exception:");
+      return -1;
     }
   TAO_ENDTRY;
+
+  return 0;
 }
 
 int
@@ -299,11 +301,13 @@ TAO_TRY
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
 			  -1);
-      return 0;
     }
  TAO_CATCHANY
    {
      TAO_TRY_ENV.print_exception ("Exception:");
-   }
+     return -1;
+  }
  TAO_ENDTRY;
+
+ return 0;
 }
