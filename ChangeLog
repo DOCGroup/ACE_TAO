@@ -1,3 +1,8 @@
+Thu Jan 27 18:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Hash_Map_Manager_T.inl:
+          Replaced c-style cast with C++ casts
+
 Thu Jan 27 18:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.cpp:
