@@ -4,35 +4,47 @@ Tue Jul 13 06:45:53 1999  Steve Huston  <shuston@riverace.com>
           definition of Dummy_Data to test_position_independent_malloc.h, a
           new file, to satisfy AIX IBM C++ template instantiation.
 
+        * include/makeinclude/platform_aix4_cset++.GNU: Turn on/off warnings
+          based on compiler version, not OS version. Thanks to Craig
+          Rodrigues <rodrigc@mediaone.net> for sending the code in!
+
+        * THANKS: Added Craig Rodrigues to the hall of fame.
+
+        * ace/config-aix-4.1.x.h, config-aix-4.2.x.h: Added setting for
+          ACE_AIX_MAJOR_VERS and ACE_AIX_MINOR_VERS if they weren't set
+          already. Eases backwards compatibility for those who don't use
+          the ACE build macros (horrors! :-). Thanks to Jeff Donner
+          <jdonner@schedsys.com> for this suggestion.
+
 Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cached_Accept_Conn_Test.cpp:
-	  This tests explicit purging from the server's point of view.
-	  When the acceptor in either its accept_svc_handler () or open ()
-	  runs out of descriptors, purging of unused svc_handlers from the 
-	  connecton cache is requested.
-	
-	* tests/Cached_Conn_Test.cpp:
-	  Defined ACE_HAS_BROKEN_EXTENDED_TEMPLATES for the
-	  Caching_Strategy_Adapter. If this condition is true, then only
-	  Least Recently Used Caching Strategy is available. This was
-	  necessary for compilers which dont accept long template lists,
-	  for example GNUC version < 8.0. Total credit for this hack
-	  to get through the old GNUC compiler goes to Irfan
-	  <irfan@cs.wustl.edu> of the DOC group.	
+        * tests/Cached_Accept_Conn_Test.cpp:
+          This tests explicit purging from the server's point of view.
+          When the acceptor in either its accept_svc_handler () or open ()
+          runs out of descriptors, purging of unused svc_handlers from the 
+          connecton cache is requested.
 
-	* tests/Makefile:
-	  Added Cached_Accept_Conn_Test.cpp.
+        * tests/Cached_Conn_Test.cpp:
+          Defined ACE_HAS_BROKEN_EXTENDED_TEMPLATES for the
+          Caching_Strategy_Adapter. If this condition is true, then only
+          Least Recently Used Caching Strategy is available. This was
+          necessary for compilers which dont accept long template lists,
+          for example GNUC version < 8.0. Total credit for this hack
+          to get through the old GNUC compiler goes to Irfan
+          <irfan@cs.wustl.edu> of the DOC group.	
 
-	* tests/Makefile:
-	* tests/run_tests.sh:
-	* tests/run_pharlap_tests.bat:
-	* tests/run_tests.bat:
-	* tests/run_tests.psosim:
-	* tests/run_tests.vxworks:
-	  Added Cached_Conn_Test, Map_Manager_Test and
-	  Cache_Map_Manager_Test to the above.
-	
+        * tests/Makefile:
+          Added Cached_Accept_Conn_Test.cpp.
+
+        * tests/Makefile:
+        * tests/run_tests.sh:
+        * tests/run_pharlap_tests.bat:
+        * tests/run_tests.bat:
+        * tests/run_tests.psosim:
+        * tests/run_tests.vxworks:
+          Added Cached_Conn_Test, Map_Manager_Test and
+          Cache_Map_Manager_Test to the above.
+
 Mon Jul 12 17:31:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/run_all_win32.pl: Fixed the missing execution output problem
