@@ -1,3 +1,11 @@
+Wed Apr 07 13:27:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POAS.h:
+	* tao/POAC.h: Removed unnecessary TAO_EXPORT_MACRO redefinition.
+	  Made sure warning 4250 is reenabled at the end of header files.
+
+	* tao/POA_CORBA.h: Disabled warnings 4250 on NT.
+
 Wed Apr  7 12:54:49 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.{h,cpp}:
