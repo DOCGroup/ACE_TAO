@@ -1,3 +1,9 @@
+Mon Jun 28 12:19:21 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* examples/Logging/Logger_i.cpp 
+	* examples/Logging/Logging_Service.cpp 
+	  Removed some remaining TAO exceptions macros.
+	
 Mon Jun 28 12:15:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/any.cpp:
