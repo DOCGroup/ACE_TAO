@@ -268,7 +268,7 @@ sub relative {
             $val = '../' x $count;
             $val =~ s/\/$//;
             if ($self->{'prjc'}->convert_slashes()) {
-              $val = slash_to_backslash($val);
+              $val = $self->slash_to_backslash($val);
             }
             substr($value, $start) =~ s/\$\([^)]+\)/$val/;
           }
