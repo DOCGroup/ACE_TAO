@@ -174,7 +174,7 @@ namespace TMCast
                 MessagePtr m (in_link_data_.front ());
                 in_link_data_.pop ();
 
-                std::type_info const* exp (&typeid (*m));
+                std::type_info const* exp = &typeid (*m);
 
                 if (exp == typeid (LinkFailure))
                 {
@@ -184,7 +184,7 @@ namespace TMCast
                 else if (exp == typeid (LinkData))
                 {
 
-                  LinkData* data (dynamic_cast<LinkData*> (m.get ()));
+                  LinkData* data = dynamic_cast<LinkData*> (m.get ());
 
                   // INSYNC, TL, CT
 
@@ -384,7 +384,7 @@ namespace TMCast
           MessagePtr m (in_send_data_.front ());
           in_send_data_.pop ();
 
-          std::type_info const* exp (&typeid (*m));
+          std::type_info const* exp = &typeid (*m);
 
           if (exp == typeid (TMCast::Aborted))
           {
@@ -426,11 +426,11 @@ namespace TMCast
           MessagePtr m (in_recv_data_.front ());
           in_recv_data_.pop ();
 
-          std::type_info const* exp (&typeid (*m));
+          std::type_info const* exp = &typeid (*m);
 
           if (exp == typeid (Recv))
           {
-            Recv* data (dynamic_cast<Recv*> (m.get ()));
+            Recv* data = dynamic_cast<Recv*> (m.get ());
 
             if (size < data->size ()) throw Group::InsufficienSpace ();
 
