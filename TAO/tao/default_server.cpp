@@ -88,13 +88,15 @@ TAO_Default_Server_Strategy_Factory::create_servant_lock (void)
 {
   ACE_Lock *the_lock = 0;
 
-  if (this->concurrency_strategy_ == &this->reactive_strategy_)
-      ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
-                      0);
-  else
+#if defined (ACE_HAS_THREADS)
+  if (this->concurrency_strategy_ != &this->reactive_strategy_)
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Thread_Mutex> (),
+                      0);
+  else
+#endif /* ACE_HAS_THREADS */
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
                       0);
 
   return the_lock;
