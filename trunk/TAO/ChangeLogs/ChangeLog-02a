@@ -1,10 +1,34 @@
+Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO/tao/Invocation.cpp (start and invoke): Removed extra updates
+	  that were being called on the countdown timer.
+
+	* TAO/tao/GIOP.cpp (send_message): Optimized away a call to
+	  TAO_OutputCDR::length().
+
+	* TAO/tao/Wait_Strategy.cpp (sending_request): The assignment of
+	  <reply_received_>, <expecting_response_>, and <calling_thread_>
+	  was protected by the leader/followers lock.  In the case of
+	  oneways, these fields are not used, so this seems excessive. In
+	  the case of twoways, this stuff is done before the request is
+	  actually sent, therefore, there isn't any chance of the leader
+	  resetting these fields simultaneously.  Therefore, the lock has
+	  been removed.
+
+	* TAO/tao/IIOP_Connector.cpp (connect):
+	* TAO/tao/UIOP_Connector.cpp (connect):
+	* TAO/tao/SHMIOP_Connector.cpp (connect):
+
+	  Optimize the creation of the synch options.  Only create it is
+	  there is a timeout specified by the user.
+
 Tue Feb 22 14:51:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_generator.cpp:
 	  Changes to create_module() to handle a module which is
-	  reopened by appearing once in each of a chain of 
-	  #inclusions. Thanks to Lothar Werzinger 
-	  <werzinger.lothar@krones.de> for the example IDL file 
+	  reopened by appearing once in each of a chain of
+	  #inclusions. Thanks to Lothar Werzinger
+	  <werzinger.lothar@krones.de> for the example IDL file
 	  that uncovered this bug.
 
 	* tests/IDL_Test/included.idl:
@@ -14,11 +38,11 @@ Tue Feb 22 14:51:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Feb 22 13:28:19 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp: 
-	
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp:
+
           Fixed compile errors on Redhat Linux. Thanks to
           Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
-	
+
 Tue Feb 22 10:33:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
