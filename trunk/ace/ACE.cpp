@@ -1971,11 +1971,14 @@ ACE::send_n_i (ACE_HANDLE handle,
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              //
+              // No timeouts in this version; just wait for sendable socket.
+              //
               n = 0;
+              ACE::handle_write_ready (handle, 0);
+              errno = 0;
               continue;
             }
-
-          // No timeouts in this version.
 
           // Other errors.
           return -1;
@@ -2183,7 +2186,12 @@ ACE::send_n_i (ACE_HANDLE handle,
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              //
+              // No timeouts in this version; just wait for sendable socket.
+              //
               n = 0;
+              ACE::handle_write_ready (handle, 0);
+              errno = 0;
               continue;
             }
 

@@ -37,6 +37,18 @@ ACE_RCSID(tests, SOCK_Send_Recv_Test, "$Id$")
 // Change to non-zero if test fails
 static int Test_Result = 0;
 
+// In test 3, a large amount of data is sent. The purpose is to overflow the
+// TCP send window, causing the sender to block (it's a send_n). This value
+// is the amount to send. The assumption is that no implementation has a
+// receive window larger than 128K bytes. If one is found, this is the place
+// to change it.
+// For some odd reason, NT will try to send a single large buffer, but not
+// multiple smaller ones that add up to the large size.
+const size_t Test3_Send_Size = 4*1024;
+const int    Test3_Loops = 10;
+const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
+
+
 static void *
 client (void *arg)
 {
@@ -141,6 +153,30 @@ client (void *arg)
         Test_Result = 1;
       }
 
+  //*******************   TEST 3   ******************************
+  //
+  // Do a send_n of a large size. The receive should sleep some to
+  // cause the data reception to be delayed, which will fill up the
+  // TCP window and cause send_n to block at some point. The particular
+  // case this tests only needs to be exercised if the socket is
+  // non-blocking, so set that first.
+
+  ssize_t sent;
+  char buff[Test3_Send_Size];
+  ACE_ASSERT (cli_stream.enable (ACE_NONBLOCK) != -1);
+  for (i = 0; i < Test3_Loops; ++i)
+    {
+      errno = 0;
+      sent = cli_stream.send_n (buff, sizeof (buff));
+      if (errno != 0 || sent != sizeof (buff))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %d, %p\n"),
+                      i, sent, ACE_TEXT ("error")));
+          Test_Result = 1;   // Fail
+        }
+    }
+
   cli_stream.close ();
 
   return 0;
@@ -227,6 +263,34 @@ server (void *arg)
                        &buffer[231],
                        24);
   ACE_ASSERT (len == 255);
+
+  //*******************   TEST 3   ******************************
+  //
+  // The sender is testing send_n to make sure it blocks if the TCP
+  // window fills. So sleep here for a bit to avoid getting the data
+  // yet. Then just read and empty out the received data.
+  ACE_OS::sleep (8);
+  // Keep reading until the peer closes.
+  sock_str.disable (ACE_NONBLOCK);
+  ssize_t got = 1, total_recv = 0;
+  while (got != 0)
+    {
+      errno = 0;
+      got = sock_str.recv (buffer, sizeof (buffer));
+      if (got == -1)
+          break;
+      total_recv += got;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %d bytes\n"),
+              total_recv));
+  if (total_recv == Test3_Total_Size)
+    ACE_ASSERT (got == 0 && errno == 0);
+  else
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %d %p\n"),
+                  Test3_Total_Size, ACE_TEXT ("bytes")));
+      Test_Result = 1;
+    }
 
   sock_str.close();
 
