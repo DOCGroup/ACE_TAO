@@ -6,8 +6,8 @@
 #include "orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/OS_NS_string.h"
-
 #include "ace/Reactor.h"
+#include "ace/os_include/os_fcntl.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_Mcast_EH.i"
