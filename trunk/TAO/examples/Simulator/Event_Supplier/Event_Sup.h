@@ -21,10 +21,24 @@
 #if !defined (EVENT_SUP_H)
 #define EVENT_SUP_H
 
+#include <ctype.h>
+#include <stdio.h>
+#include "ace/OS.h"
 #include "ace/SString.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "NavWeapC.h"
+
+struct Schedule_Viewer_Data
+{
+  char operation_name [BUFSIZ];
+  double utilitzation;
+  double overhead;
+  u_long arrival_time;
+  u_long deadline_time;
+  u_long completion_time;
+  u_long computation_time;
+};
 
 class Demo_Supplier 
 // = TITLE
@@ -89,7 +103,12 @@ public:
 
   void start_generating_events (void);
 
-  void insert_event_data (CORBA::Any &data1, CORBA::Any &data2);
+  void load_schedule_data (
+    ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
+
+  void insert_event_data (
+    CORBA::Any &data, 
+    ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
 
   void push (const RtecEventComm::EventSet &events,
 	     CORBA::Environment &);
