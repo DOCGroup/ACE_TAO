@@ -113,11 +113,19 @@ sub is_warning ()
     # Look for any warnings we should ignore
     return 3 if (/^LINK : warning LNK4089:/);
 
+    # For some reason, there's a false license warning
+    return 3 if (/\(W\).*Compilation will proceed shortly./);
+
+    # AIX reports a bazillion multiple defines when doing templates.
+    return 3 if ($^O eq 'aix'
+                 && m/^ld: \d+-\d+ WARNING: Duplicate symbol:/);
+
     # Look for lines that also should be color coded, but not counted
     # as warnings.
     return 2 if (/see declaration of/);
 
     # Look for warnings
+
     return 1 if ((/warning/i && !/ warning\(s\)/)
                  || /info: /i
                  || /^make.*\*\*\*/);
@@ -127,8 +135,11 @@ sub is_warning ()
         || /^.*\.inl: /
         || /^.*\.cpp: /
         || /^.*\.java: /) {
-      return 1;
+      return 1 if ($^O ne 'aix');
     }
+
+    # IBM's compilers don't say the word "warning" - check for their code
+    return 1 if ($^O eq 'aix' && m/\d+-\d+ \(W\)/);
 
     # didn't find anything
     return 0;
@@ -142,6 +153,11 @@ sub is_warning ()
 sub is_error ()
 {
     # Look for any errors we should ignore
+
+    # AIX reports a bazillion multiple defines when doing templates; some
+    # have the word 'error' in the symbol name - ignore those.
+    return 0 if ($^O eq 'aix'
+                 && m/^ld: \d+-\d+ WARNING: Duplicate symbol:/);
 
     # Look for lines that also should be color coded, but not counted
     # as errors.
@@ -163,6 +179,9 @@ sub is_error ()
     return 1 if ((/error/i && !/ error\(s\), /)
                  || /^Fatal\:/
                  || /: fatal:/);
+
+    # Again, IBM's compilers speak in code langauge
+    return 1 if ($^O eq 'aix' && m/\d+-\d+ \([SI]\)/);
 
     # didn't find anything
     return 0;

@@ -17,13 +17,12 @@
 #ifndef ACE_TS_CLERK_HANDLER_H
 #define ACE_TS_CLERK_HANDLER_H
 
-#include "ace/Connector.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Connector.h"
+#include "ace/Connector.h"
 #include "ace/Malloc.h"
 #include "ace/Time_Request_Reply.h"
 
