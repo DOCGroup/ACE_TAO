@@ -35,7 +35,7 @@ TAO_DynAnyFactory::TAO_DynAnyFactory (void)
 // to extract the TCKind of possibly aliased types.
 CORBA::TCKind
 TAO_DynAnyFactory::unalias (CORBA_TypeCode_ptr tc,
-                            CORBA::Environment& ACE_TRY_ENV)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::TCKind tck = tc->kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::tk_null);
@@ -53,12 +53,33 @@ TAO_DynAnyFactory::unalias (CORBA_TypeCode_ptr tc,
   return tck;
 }
 
+// Same as above, but returns the type code.
+CORBA::TypeCode_ptr
+TAO_DynAnyFactory::strip_alias (CORBA_TypeCode_ptr tc,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA_TypeCode_var retval = CORBA::TypeCode::_duplicate (tc);
+  CORBA::TCKind tck = retval->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  while (tck == CORBA::tk_alias)
+    {
+      retval = retval->content_type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      tck = retval->kind (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+    }
+
+  return retval._retn ();
+}
+
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any (
       const CORBA::Any & value,
       CORBA::Environment &ACE_TRY_ENV
     )
-    ACE_THROW_SPEC ((
+  ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAnyFactory::InconsistentTypeCode
     ))
@@ -71,7 +92,7 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (
       CORBA::TypeCode_ptr type,
       CORBA::Environment &ACE_TRY_ENV
     )
-    ACE_THROW_SPEC ((
+  ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAnyFactory::InconsistentTypeCode
     ))

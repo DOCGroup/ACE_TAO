@@ -176,6 +176,10 @@ SOURCE=.\DynArray_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynCommon.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynEnum_i.cpp
 # End Source File
 # Begin Source File
@@ -220,6 +224,10 @@ SOURCE=.\DynArray_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynCommon.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynEnum_i.h
 # End Source File
 # Begin Source File
@@ -234,10 +242,6 @@ SOURCE=.\DynStruct_i.h
 
 SOURCE=.\DynUnion_i.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\DynUnion_i_T.h
-# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -245,15 +249,6 @@ SOURCE=.\DynUnion_i_T.h
 # Begin Source File
 
 SOURCE=.\DynamicAnyC.i
-# End Source File
-# End Group
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\DynUnion_i_T.cpp
-# PROP Exclude_From_Build 1
 # End Source File
 # End Group
 # End Target

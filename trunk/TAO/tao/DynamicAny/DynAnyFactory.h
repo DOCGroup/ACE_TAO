@@ -5,7 +5,7 @@
 // =========================================================================
 //
 // = LIBRARY
-//    TAO
+//    TAO_DynamicAny
 //
 // = FILENAME
 //    DynAnyFactory.h
@@ -32,7 +32,9 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_DynamicAny_Export TAO_DynAnyFactory : public virtual DynamicAny::DynAnyFactory, public virtual TAO_Local_RefCounted_Object
+class TAO_DynamicAny_Export TAO_DynAnyFactory 
+  : public virtual DynamicAny::DynAnyFactory, 
+    public virtual TAO_Local_RefCounted_Object
 {
   // = DESCRIPTION
   //   Implements the DynamicAnyFactory interface and provides several
@@ -40,32 +42,37 @@ class TAO_DynamicAny_Export TAO_DynAnyFactory : public virtual DynamicAny::DynAn
   //
 public:
   TAO_DynAnyFactory (void);
-  // Constructor
+  // Constructor.
 
   static CORBA::TCKind unalias (CORBA_TypeCode_ptr tc,
-                                CORBA::Environment& ACE_TRY_ENV);
+                                CORBA::Environment &ACE_TRY_ENV);
   // Obtain the kind of object, after all aliasing has been removed.
+
+  static CORBA_TypeCode_ptr strip_alias (CORBA_TypeCode_ptr tc,
+                                         CORBA::Environment &ACE_TRY_ENV);
+  // Same as above, but returns type code instead of TCKind. Caller
+  // must release the return value.
 
   static DynamicAny::DynAny_ptr
      make_dyn_any (const CORBA_Any &any,
                    CORBA::Environment &ACE_TRY_ENV);
-  // Create the correct type of DynAny object for <any>
+  // Create the correct type of DynAny object for <any>.
 
   static DynamicAny::DynAny_ptr
      make_dyn_any (CORBA::TypeCode_ptr tc,
                    CORBA::Environment &ACE_TRY_ENV);
   // Create the correct type of DynAny object for <tc>
 
-  // = The DynamicAnyFactory methods
+  // = The DynamicAnyFactory methods.
   virtual DynamicAny::DynAny_ptr create_dyn_any (
       const CORBA::Any & value,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode
-    ));
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode
+      ));
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
       CORBA::TypeCode_ptr type,
@@ -73,42 +80,12 @@ public:
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode
-    ));
-
-#if 0
-  static DynamicAny::DynAny_ptr
-      create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                            CORBA::Environment& ACE_TRY_ENV);
-  static DynamicAny::DynStruct_ptr
-      create_dyn_struct (CORBA_TypeCode_ptr tc,
-                         CORBA::Environment& ACE_TRY_ENV);
-  static DynamicAny::DynSequence_ptr
-      create_dyn_sequence (CORBA_TypeCode_ptr tc,
-                           CORBA::Environment& ACE_TRY_ENV);
-  static DynamicAny::DynArray_ptr
-      create_dyn_array (CORBA_TypeCode_ptr tc,
-                        CORBA::Environment& ACE_TRY_ENV);
-  static DynamicAny::DynUnion_ptr
-      create_dyn_union (CORBA_TypeCode_ptr tc,
-                        CORBA::Environment& ACE_TRY_ENV);
-  static DynamicAny::DynEnum_ptr
-      create_dyn_enum (CORBA_TypeCode_ptr tc,
-                       CORBA::Environment& ACE_TRY_ENV);
-  static DynamicAny::DynAny_ptr
-      create_dyn_any (CORBA_TypeCode_ptr tc,
-                      CORBA::Environment& ACE_TRY_ENV);
-  // Create particular types of dynamic anys.
-  static DynamicAny::DynAny_ptr
-      create_basic_dyn_any (const CORBA_Any &any,
-                        CORBA::Environment &ACE_TRY_ENV);
-  // Create a basic dynamic any (i.e. one for primitive types) using
-  // just the TypeCode.
-#endif /* 0 */
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode
+      ));
 
 private:
-  // Use copy() or assign() instead of these
+  // Not allowed.
   TAO_DynAnyFactory (const TAO_DynAnyFactory &src);
   TAO_DynAnyFactory &operator= (const TAO_DynAnyFactory &src);
 };
