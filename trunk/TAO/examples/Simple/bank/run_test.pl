@@ -12,6 +12,8 @@ $status = 0;
 
 $iorfile = "bank.ior";
 
+unlink $iorfile;
+
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile ");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
@@ -26,7 +28,7 @@ if ($client->TimedWait (60) == -1) {
   $status = 1;
   $client->Kill (); $client->TimedWait (1);
 }
-  
+
 $SV->Terminate (); if ($SV->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate the server\n";
   $SV->Kill (); $SV->TimedWait (1);
