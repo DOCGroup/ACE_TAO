@@ -1,4 +1,4 @@
-Thu Apr 11 07:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Apr 11 08:16:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.cpp:
           Reverted my change of yesterday. Already the copy constructor is called
@@ -6,6 +6,9 @@ Thu Apr 11 07:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Task.h:
         * ace/Timer_Queue_Adapters.h:
           Fixed some small typos in comment
+
+        * ace/Capabilities.h:
+          Placed right comment with right method
 
 Wed Apr 10 20:00:57 2002  Ossama Othman  <ossama@uci.edu>
 
