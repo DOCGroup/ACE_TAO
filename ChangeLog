@@ -1,3 +1,42 @@
+Wed Apr 28 12:19:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        First checkin of the OpenVMS port of ACE. This port is done by
+        Martin Corino <mcorino@remedy.nl>. This is not finished yet, we have
+        to do more testing but a lot of the ACE tests work without problems.
+        Documentation and readmes will be updated in the near future with
+        an explanation how to use ACE on OpenVMS.
+
+        * ace/Mem_Map.cpp (open):
+          Added special VMS sharing attributes for memory map file ::open()
+
+        * ace/Memory_Pool.cpp (commit_backing_store_name):
+          ::fsync() called to make sure change is commited to disk.
+
+        * ace/Lib_Find.cpp (ldfind, ldname):
+          Added OpenVMS way of finding shared libraries
+
+        * ace/ACE.i (recv_i):
+          OpenVMS cannot ::read() on socket, must use ::recv()
+
+        * ace/OS_NS_sys_stat.inl (fstat):
+          Called ::fsync() before calling ::fstat() to make sure all changes
+          have been commited to disk
+
+        * ace/OS_NS_sys_mman.inl:
+          In ACE_OS::mmap() added ::fsync() before ::mmap() to make sure all
+          is committed to disk.
+          In ACE_OS::shm_open() added special OpenVMS sharing attributes for
+          memory map file ::open()
+
+        * ace/config-openvms.h:
+          New config file for OpenVMS 7.3-2.
+
+        * include/makeinclude/platform_openvms.GNU:
+          New file for OpenVMS 7.3-2
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Use $(EXEEXT) for BIN_UNCHECKED.
+
 Wed Apr 28 09:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
