@@ -1835,7 +1835,11 @@ ACE::get_ip_interfaces (size_t &count,
   // ioctl likes to have an extra ifreq structure to mark the end of what it
   // returned, so increase the num_ifs by one.
   ++num_ifs;
-  auto_ptr<struct ifreq> p_ifs (new struct ifreq[num_ifs]);
+
+  struct ifreq *ifs;
+  ACE_NEW_RETURN (ifs, struct ifreq[num_ifs], -1);
+  ACE_OS::memset (ifs, 0, num_ifs * sizeof (struct ifreq));
+  auto_array_ptr<struct ifreq> p_ifs (ifs);
 
   if (p_ifs.get() == 0) 
     {
@@ -1883,5 +1887,5 @@ ACE::get_ip_interfaces (size_t &count,
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class auto_ptr<struct ifreq>;
+template class auto_array_ptr<struct ifreq>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
