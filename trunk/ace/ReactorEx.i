@@ -20,9 +20,12 @@ ACE_ReactorEx::cancel_timer (int timer_id,
 
 ACE_INLINE int
 ACE_ReactorEx::handle_events (ACE_Time_Value &how_long,
-			      int wait_all)
+			      int wait_all,
+			      ACE_Event_Handler *wait_all_callback,
+			      int alertable)
 {
-  return this->handle_events (&how_long, wait_all);
+  return this->handle_events (&how_long, wait_all, 
+			      wait_all_callback, alertable);
 }
 
 #endif /* ACE_WIN32 */

@@ -64,7 +64,7 @@ public:
   // = Initialization and termination methods.
 
   ACE_Proactor (size_t number_of_threads = 0, ACE_Timer_Queue *tq = 0);
-  // Initialize a proactor.  -number_of_threads- is passed to
+  // Initialize a proactor.  <number_of_threads> is passed to
   // CreateIoCompletionPort.
 
   ~ACE_Proactor (void);
@@ -83,15 +83,15 @@ public:
   // integrate I/O completion ports with the ReactorEx.
 
   // = Event loop methods.
-  virtual int handle_events (ACE_Time_Value *how_long = 0);
-  virtual int handle_events (ACE_Time_Value &how_long);
-  // Main event loop driver that blocks for -how_long- before
+  virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
+  virtual int handle_events (ACE_Time_Value &max_wait_time);
+  // Main event loop driver that blocks for <max_wait_time> before
   // returning (will return earlier if I/O or signal events occur).
-  // Note that -how_long- can be 0, in which case this method blocks
+  // Note that <max_wait_time> can be 0, in which case this method blocks
   // until I/O events or signals occur.  handle_events just blocks
   // on GetQueuedCompletionStatus at completion_port_.  When I/O
   // completions arrive, it calls back the Event_Handler associated
-  // with completed I/O operation.  Returns 0 if -how_long- elapses
+  // with completed I/O operation.  Returns 0 if <max_wait_time> elapses
   // before an event occurs, 1 when if an event occured, and -1 on
   // failure.
 

@@ -644,7 +644,6 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #define THR_SCOPE_PROCESS       0x00200000
 #define THR_INHERIT_SCHED       0x00400000
 #define THR_EXPLICIT_SCHED      0x00800000
-#define THR_USE_AFX             0x01000000
 
 #if !defined (ACE_HAS_STHREADS)
 #if !defined (ACE_HAS_POSIX_SEM)
@@ -663,28 +662,6 @@ struct ACE_sema_t
 };
 #endif /* !ACE_HAS_POSIX_SEM */
 
-// This is used to implement readers/writer locks for POSIX pthreads.
-struct ACE_rwlock_t
-{
-  ACE_mutex_t lock_; 
-  // Serialize access to internal state.
- 
-  ACE_cond_t waiting_readers_;
-  // Reader threads waiting to acquire the lock.
- 
-  int num_waiting_readers_;
-  // Number of waiting readers.
- 
-  ACE_cond_t waiting_writers_;
-  // Writer threads waiting to acquire the lock.
- 
-  int num_waiting_writers_;
-  // Number of waiting writers.
- 
-  int ref_count_;
-  // Value is -1 if writer has the lock, else this keeps track of the
-  // number of readers holding the lock.
-};
 #else
 // If we are on Solaris we can just reuse the existing implementations
 // of these synchronization types.
@@ -751,13 +728,43 @@ typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
 
+#elif defined (ACE_HAS_WTHREADS)
+typedef CRITICAL_SECTION ACE_thread_mutex_t;
+typedef struct
+{
+  int type_; // Either USYNC_THREAD or USYNC_PROCESS
+  union 
+  {
+    HANDLE proc_mutex_;
+    CRITICAL_SECTION thr_mutex_;
+  };
+} ACE_mutex_t;
+typedef HANDLE ACE_sema_t;
+
+// These need to be different values, neither of which can be 0...
+#define USYNC_THREAD 1
+#define USYNC_PROCESS 2
+
+#define THR_CANCEL_DISABLE      0
+#define THR_CANCEL_ENABLE       0
+#define THR_CANCEL_DEFERRED     0
+#define THR_CANCEL_ASYNCHRONOUS 0
+#define THR_DETACHED    0       /* ?? ignore in most places */
+#define THR_BOUND       0       /* ?? ignore in most places */
+#define THR_NEW_LWP     0       /* ?? ignore in most places */
+#define THR_SUSPENDED   CREATE_SUSPENDED
+#define THR_USE_AFX             0x01000000
+#endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+
+#if defined (ACE_LACKS_COND_T)
 struct ACE_cond_t
   // = TITLE
-  //   This structure is used to implement condition variables on VxWorks
+  //     This structure is used to implement condition variables on
+  //     VxWorks and Win32.
   //
   // = DESCRIPTION
-  //   At the current time, this stuff only works for threads
-  //   within the same process, which there's only one of on VxWorks.
+  //     At the current time, this stuff only works for threads
+  //     within the same process.
 {
   long waiters_;
   // Number of waiting threads.
@@ -776,14 +783,17 @@ struct ACE_cond_t
   size_t was_broadcast_;
   // Keeps track of whether we were broadcasting or just signaling.
 };
+#endif /* ACE_LACKS_COND_T */
 
+#if defined (ACE_LACKS_RWLOCK_T)
 struct ACE_rwlock_t
   // = TITLE 
-  //   This is used to implement readers/writer locks on VxWorks
+  //     This is used to implement readers/writer locks on NT,
+  //     VxWorks, and POSIX pthreads.
   //
   // = DESCRIPTION
-  //   At the current time, this stuff only works for threads
-  //   within the same process, which there's only one of on VxWorks.
+  //     At the current time, this stuff only works for threads
+  //     within the same process.
 {
   ACE_mutex_t lock_; 
   // Serialize access to internal state.
@@ -804,75 +814,8 @@ struct ACE_rwlock_t
   // Value is -1 if writer has the lock, else this keeps track of the
   // number of readers holding the lock.
 };
-#elif defined (ACE_HAS_WTHREADS)
-typedef CRITICAL_SECTION ACE_thread_mutex_t;
-typedef struct
-{
-  int type_; // Either USYNC_THREAD or USYNC_PROCESS
-  union 
-  {
-    HANDLE proc_mutex_;
-    CRITICAL_SECTION thr_mutex_;
-  };
-} ACE_mutex_t;
-typedef HANDLE ACE_sema_t;
+#endif /* ACE_LACKS_RWLOCK_T */
 
-struct ACE_cond_t
-  // = TITLE
-  //   This structure is used to implement condition variables on NT.
-  //
-  // = DESCRIPTION
-  //   At the current time, this stuff only works for threads
-  //   within the same process.
-{
-  DWORD waiters_;
-  // Number of waiting threads.
-
-  ACE_sema_t sema_;
-  // Queue up threads waiting for the condition to become signaled.
-};
-
-struct ACE_rwlock_t
-  // = TITLE 
-  //   This is used to implement readers/writer locks on NT.
-  //
-  // = DESCRIPTION
-  //   At the current time, this stuff only works for threads
-  //   within the same process.
-{
-  ACE_mutex_t lock_; 
-  // Serialize access to internal state.
- 
-  ACE_cond_t waiting_readers_;
-  // Reader threads waiting to acquire the lock.
- 
-  int num_waiting_readers_;
-  // Number of waiting readers.
- 
-  ACE_cond_t waiting_writers_;
-  // Writer threads waiting to acquire the lock.
- 
-  int num_waiting_writers_;
-  // Number of waiting writers.
- 
-  int ref_count_;
-  // Value is -1 if writer has the lock, else this keeps track of the
-  // number of readers holding the lock.
-};
-
-// These need to be different values, neither of which can be 0...
-#define USYNC_THREAD 1
-#define USYNC_PROCESS 2
-
-#define THR_CANCEL_DISABLE      0
-#define THR_CANCEL_ENABLE       0
-#define THR_CANCEL_DEFERRED     0
-#define THR_CANCEL_ASYNCHRONOUS 0
-#define THR_DETACHED    0       /* ?? ignore in most places */
-#define THR_BOUND       0       /* ?? ignore in most places */
-#define THR_NEW_LWP     0       /* ?? ignore in most places */
-#define THR_SUSPENDED   CREATE_SUSPENDED
-#endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
 // Give these things some reasonable value...
 #define THR_CANCEL_DISABLE      0
@@ -1806,14 +1749,10 @@ typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
 typedef void *(*ACE_THR_FUNC)(void *);
 #endif /* VXWORKS */
 
-#if defined (ACE_HAS_THR_C_DEST)
-// Needed for frigging MVS C++...
 extern "C" {
-typedef void (*ACE_THR_DEST)(void *);
+typedef void (*ACE_THR_C_DEST)(void *);
 }
-#else
 typedef void (*ACE_THR_DEST)(void *);
-#endif /* ACE_HAS_THR_C_DEST */
 
 extern "C"
 {
@@ -2422,7 +2361,11 @@ public:
   static int thr_getspecific (ACE_thread_key_t key, void **data);
   static int thr_keyfree (ACE_thread_key_t key);
   static int thr_key_detach (void *inst);
+#if defined (ACE_HAS_THR_C_DEST)
+  static int thr_keycreate (ACE_thread_key_t *key, ACE_THR_C_DEST, void *inst = 0);
+#else
   static int thr_keycreate (ACE_thread_key_t *key, ACE_THR_DEST, void *inst = 0);
+#endif /* ACE_HAS_THR_C_DEST */
   static int thr_key_used (ACE_thread_key_t key);
   static size_t thr_min_stack (void);
   static int thr_setconcurrency (int hint);

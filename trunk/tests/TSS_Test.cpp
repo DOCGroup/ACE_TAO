@@ -26,7 +26,6 @@
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS) 
-#if !defined (ACE_TEMPLATES_REQUIRE_PRAGMA) // AIX is evil
 
 static const int ITERATIONS = 100;
 
@@ -157,7 +156,6 @@ handler (int signum)
 template class ACE_TSS<Errno>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
-#endif /* !ACE_TEMPLATES_REQUIRE_PRAGMA */
 #endif /* ACE_HAS_THREADS */
 
 int 
@@ -165,7 +163,7 @@ main (int, char *[])
 {
   ACE_START_TEST ("TSS_Test");
   
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_THREADS)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
 
   // Register a signal handler.
@@ -178,13 +176,10 @@ main (int, char *[])
     ACE_OS::perror ("ACE_Thread_Manager::spawn_n");
 
   ACE_Service_Config::thr_mgr ()->wait ();
-#elif defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-  ACE_ERROR ((LM_ERROR, 
-	      "This platform has an evil template instantiation mechanism...\n"));
 #else
   ACE_ERROR ((LM_ERROR, 
 	      "threads are not supported on this platform\n"));
-#endif /* defined (ACE_MT_SAFE) */
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }

@@ -217,7 +217,7 @@ protected:
   int nonblk_put (ACE_Message_Block *mb);
   // Perform a non-blocking put().
 
-  virtual int send (ACE_Message_Block *);
+  virtual ssize_t send (ACE_Message_Block *);
   // Send an event to a Consumer.
 };
 

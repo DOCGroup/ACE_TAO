@@ -18,7 +18,7 @@ main (int argc, char *argv[])
       else // Use static binding.
 	{
 	  static char *l_argv[3] = { "-d" };
-	  ACE_Service_Object *so = ACE_SVC_INVOKE (ACE_Gateway);
+	  ACE_Service_Object *so = ACE_SVC_INVOKE (Gateway);
 
 	  if (so->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "init", 1));
