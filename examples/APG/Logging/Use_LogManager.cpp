@@ -8,7 +8,7 @@ void foo (void);
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   LOG_MANAGER->redirectToStderr ();
-  ACE_TRACE (ACE_TEXT ("main"));
+  ACE_TRACE ("main");
   LOG_MANAGER->redirectToSyslog ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("%IHi Mom\n")));
   foo ();
@@ -19,7 +19,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 void foo (void)
 {
-  ACE_TRACE (ACE_TEXT ("foo"));
+  ACE_TRACE ("foo");
   LOG_MANAGER->redirectToFile ("output.test");
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("%IHowdy Pardner\n")));
 }

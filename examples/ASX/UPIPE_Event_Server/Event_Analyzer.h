@@ -25,9 +25,9 @@ public:
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
 
   // Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini (void);
-  virtual int info (char **info_string, size_t length) const;
+  virtual int info (ACE_TCHAR **info_string, size_t length) const;
 
 private:
   virtual int control (ACE_Message_Block *);

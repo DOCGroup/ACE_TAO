@@ -10,7 +10,7 @@ void foo (void);
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  TRACE (ACE_TEXT ("main"));
+  TRACE ("main");
     
   MY_DEBUG (ACE_TEXT ("Hi Mom\n"));
   foo ();
@@ -21,7 +21,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
 void foo (void)
 {
-  TRACE (ACE_TEXT ("foo"));
+  TRACE ("foo");
   MY_DEBUG (ACE_TEXT ("Howdy Pardner\n"));
   TRACE_RETURN_VOID ();
 }

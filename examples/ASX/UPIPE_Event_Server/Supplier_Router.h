@@ -50,7 +50,7 @@ protected:
   virtual int svc (void);
 
   // Dynamic linking hooks inherited from Peer_Router.
-  virtual int info (char **info_string, size_t length) const;
+  virtual int info (ACE_TCHAR **info_string, size_t length) const;
 };
 
 #endif /* ACE_HAS_THREADS */

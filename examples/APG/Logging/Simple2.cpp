@@ -6,7 +6,7 @@ void foo(void);
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_TRACE (ACE_TEXT ("main"));
+  ACE_TRACE ("main");
 
   ACE_LOG_MSG->priority_mask (LM_DEBUG | LM_NOTICE,
                               ACE_Log_Msg::PROCESS);
@@ -19,7 +19,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
 void foo(void)
 {
-  ACE_TRACE (ACE_TEXT ("foo"));
+  ACE_TRACE ("foo");
 
   ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("%IHowdy Pardner\n")));
 }

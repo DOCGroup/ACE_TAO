@@ -21,7 +21,7 @@ class Options
 public:
   Options (void);
   ~Options (void);
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
 
   void   stop_timer (void);
   void   start_timer (void);
@@ -47,17 +47,17 @@ public:
   void   t_flags (long flag);
   long   t_flags (void);
 
-  void   supplier_port (const char *port);
-  const char   *supplier_port (void);
+  void   supplier_port (const ACE_TCHAR *port);
+  const ACE_TCHAR  *supplier_port (void);
 
-  void   consumer_port (const char *port);
-  const char   *consumer_port (void);
+  void   consumer_port (const ACE_TCHAR *port);
+  const ACE_TCHAR  *consumer_port (void);
 
-  void   supplier_file (const char *file);
-  const char   *supplier_file (void);
+  void   supplier_file (const ACE_TCHAR *file);
+  const ACE_TCHAR  *supplier_file (void);
 
-  void   consumer_file (const char *file);
-  const char   *consumer_file (void);
+  void   consumer_file (const ACE_TCHAR *file);
+  const ACE_TCHAR  *consumer_file (void);
 
   int    debug (void);
   int    verbose (void);
@@ -75,10 +75,10 @@ private:
   size_t        iterations_;            // Number of iterations to run the test program.
   int           debugging_;             // Extra debugging info.
   int           verbosity_;             // Extra verbose messages.
-  const char    *consumer_port_;        // Port that the Consumer_Router is using.
-  const char    *supplier_port_;        // Port that the Supplier_Router is using.
-  const char    *consumer_file_;        // file that the Consumer_Router is using.
-  const char    *supplier_file_;        // file that the Supplier_Router is using.
+  const ACE_TCHAR *consumer_port_;      // Port that the Consumer_Router is using.
+  const ACE_TCHAR *supplier_port_;      // Port that the Supplier_Router is using.
+  const ACE_TCHAR *consumer_file_;      // file that the Consumer_Router is using.
+  const ACE_TCHAR *supplier_file_;      // file that the Supplier_Router is using.
 };
 
 extern Options options;

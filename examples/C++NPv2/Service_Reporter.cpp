@@ -50,17 +50,17 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
        iterator.next (st) != 0;
        iterator.advance ()) {
     iovec iov[3];
-    iov[0].iov_base = ACE_const_cast (char *, st->name ());
+    iov[0].iov_base = ACE_const_cast (ACE_TCHAR *, st->name ());
     iov[0].iov_len =
       ACE_OS::strlen (st->name ()) * sizeof (ACE_TCHAR);
     const ACE_TCHAR *state = st->active () ?
            ACE_TEXT (" (active) ") : ACE_TEXT (" (paused) ");
-    iov[1].iov_base = ACE_const_cast (char *, state);
+    iov[1].iov_base = ACE_const_cast (ACE_TCHAR *, state);
     iov[1].iov_len =
       ACE_OS::strlen (state) * sizeof (ACE_TCHAR);
     ACE_TCHAR *report = 0;   // Ask info() to allocate buffer
     int len = st->type ()->info (&report, 0);
-    iov[2].iov_base = ACE_static_cast (char *, report);
+    iov[2].iov_base = ACE_static_cast (ACE_TCHAR *, report);
     iov[2].iov_len = ACE_static_cast (size_t, len);
     iov[2].iov_len *= sizeof (ACE_TCHAR);
     peer_stream.sendv_n (iov, 3);

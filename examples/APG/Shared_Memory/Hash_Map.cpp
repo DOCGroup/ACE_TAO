@@ -47,7 +47,7 @@ MAP* smap (ALLOCATOR *shmem_allocator)
 // Listing 6 code/ch17
 int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
 {
-  ACE_TRACE (ACE_TEXT ("::processRecords"));
+  ACE_TRACE ("processRecords");
 
   size_t mapLength = map->current_size ();
   ACE_DEBUG ((LM_DEBUG,
@@ -106,7 +106,7 @@ int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
 // Listing 4 code/ch17
 int addRecords(MAP *map, ALLOCATOR *shmem_allocator)
 {
-  ACE_TRACE (ACE_TEXT ("::addRecords"));
+  ACE_TRACE ("addRecords");
 
   char buf[32];
   int mapLength = ACE_static_cast (int, map->current_size ());
@@ -135,7 +135,7 @@ int addRecords(MAP *map, ALLOCATOR *shmem_allocator)
 // Listing 5 code/ch17
 int handle_child (void)
 {
-  ACE_TRACE (ACE_TEXT ("::handle_child"));
+  ACE_TRACE ("handle_child");
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, coordMutex, -1);
 
@@ -169,7 +169,7 @@ int handle_child (void)
 // Listing 3 code/ch17
 int handle_parent (ACE_TCHAR *cmdLine)
 {
-  ACE_TRACE (ACE_TEXT ("::handle_parent"));
+  ACE_TRACE ("handle_parent");
 
   ALLOCATOR * shmem_allocator = 0;
   ACE_MMAP_Memory_Pool_Options options
@@ -185,7 +185,11 @@ int handle_parent (ACE_TCHAR *cmdLine)
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
-  poptions.command_line("%s a", cmdLine);
+  const ACE_TCHAR *args[3];
+  args[0] = cmdLine;
+  args[1] = ACE_TEXT ("a");
+  args[2] = 0;
+  poptions.command_line (args);
   {
     ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon,
                       coordMutex, -1);

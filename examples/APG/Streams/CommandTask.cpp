@@ -95,7 +95,7 @@ int CommandTask::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("CommandTask::svc() - ")
                   ACE_TEXT ("%s got work request %d\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->module ()->name ()),
+                  this->module ()->name (),
                   command->command_));
 
       if (command->command_ != this->command_)
@@ -110,7 +110,7 @@ int CommandTask::svc (void)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("CommandTask::svc() - ")
                       ACE_TEXT ("%s work request %d result is %d\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (this->module ()->name ()),
+                      this->module ()->name (),
                       command->command_,
                       result));
 
