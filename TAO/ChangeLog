@@ -1,3 +1,8 @@
+Wed Oct  8 22:30:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/Makefile: Made modifications to build
+	  Kokyu_dsrt_schedulers subdirectory only if rt_corba is enabled.
+
 Wed Oct 08 21:31:19 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
     * orbsvcs/orbsvcs/Makefile.FTORB
