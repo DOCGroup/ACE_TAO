@@ -961,7 +961,6 @@ main (int argc, ACE_TCHAR *argv[])
     defined (ACE_HAS_GNU_REPO)
   // The explicit instantiations are necessary with g++ 2.91.66
   // with -frepo, because it misses some of them.
-template class ACE_Equal_To<TYPE>;
 template class ACE_Pair<TYPE, ATTR>;
 template class ACE_Reference_Pair<TYPE, TYPE>;
 template class ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
@@ -994,7 +993,6 @@ template class ACE_Cache_Map_Manager<TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL
 template class ACE_Cache_Map_Iterator<TYPE, TYPE, CACHE_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR>;
 template class ACE_Cache_Map_Reverse_Iterator<TYPE,TYPE, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Equal_To<TYPE>
 #pragma instantiate ACE_Pair<TYPE, ATTR>
 #pragma instantiate ACE_Reference_Pair<TYPE, TYPE>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>

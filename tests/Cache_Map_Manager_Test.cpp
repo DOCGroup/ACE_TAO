@@ -602,7 +602,6 @@ main (int argc, ACE_TCHAR *argv[])
 
 template class ACE_Pair<VALUE, ATTR>;
 template class ACE_Reference_Pair<KEY, VALUE>;
-template class ACE_Equal_To<KEY>;
 
 template class ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
@@ -655,7 +654,6 @@ template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY
 
 #pragma instantiate ACE_Pair<VALUE, ATTR>
 #pragma instantiate ACE_Reference_Pair<KEY, VALUE>
-#pragma instantiate ACE_Equal_To<KEY>
 
 #pragma instantiate ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, Hash_Key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
