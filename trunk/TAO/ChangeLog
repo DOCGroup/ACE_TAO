@@ -1,3 +1,18 @@
+Wed Feb  5 13:34:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp (create_attribute):
+
+          Changed the behavior to eliminate the creation of a corresponding
+          repository entry for the operations asssociated with an
+          attribute in the C++ mapping. On the backend, this mainly affects
+          describe_interface(). Since the latter operation's return type,
+          CORBA::FullInterfaceDescription, contains fields for both
+          attributes and operations, it doesn't seem necessary to include
+          the _get_* and _set_* operations in the operation list. It also
+          seems that this behavior will make the TAO IFR more 
+          iteroperable with IFRs from other ORB vendors. Thanks to
+          Matej Sekoranja <matej.sekoranja@ijs.si> for pointing this out.
+
 Wed Feb  5 10:02:10 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
