@@ -1,3 +1,9 @@
+Mon Jul 09 04:11:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
+
+	  Added missing "ace/post.h" include.
+
 Mon Jul 09 02:43:38 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/Makefile:

@@ -76,4 +76,6 @@ private:
 
 };
 
+#include "ace/post.h"
+
 #endif  /* TAO_QOP_POLICY_H */
