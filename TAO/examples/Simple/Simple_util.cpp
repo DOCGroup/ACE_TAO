@@ -50,15 +50,15 @@ Server<Servant>::parse_args (void)
       case 'i': // For Testing the InterOperable Naming Service.
 	this->ins_ = CORBA::string_dup (get_opts.optarg);
 	break;
-      case '?':  // display help for use of the server.
+      case 'h':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " [-d] [debug]"
+                           " [-d (debug)]"
                            " [-o] <ior_output_file>"
-                           " [-n] [use naming service]"
+                           " [-n (use naming service)]"
                            " [-i] <InterOperable Naming Service simple object key>"
-                           " [-?] [help]"
+                           " [-h (help)]"
                            "\n",
                            argv_ [0]),
                           -1);
@@ -314,16 +314,15 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
       case 'x': // read the flag for shutting down
         this->shutdown_ = 1;
         break;
-      case '?':  // display help for use of the client.
-      default:
+      case 'h':  // display help for use of the client.
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " [-d] [debug]"
+                           " [-d (debug)]"
                            " [-k] <ior>"
                            " [-f] <ior_output_file>"
-                           " [-n] [use naming service]"
-                           " [-x] [shutdown server]"
-                           " [-?] [help]"
+                           " [-n (use naming service)]"
+                           " [-x (shutdown server)]"
+                           " [-h (help)]"
                            "\n",
                            argv_ [0]),
                           -1);
