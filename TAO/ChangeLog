@@ -1,6 +1,13 @@
+Wed Mar 16 10:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FloatSeqA.cpp:
+        * tao/FloatSeqC.{h,cpp,inl}:
+        * tao/FloatSeqS.h:
+          Regenerated. Used the new -SS option to suppress the skeleton files
+
 Wed Mar 16 15:21:56 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Hang_Shutdown/test_i.h: 
+	* tests/Hang_Shutdown/test_i.h:
 	* tests/Hang_Shutdown/client.cpp:
 
 	  Fixed compile errors in emulated exception builds.
