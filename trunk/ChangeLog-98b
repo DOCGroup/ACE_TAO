@@ -1,3 +1,10 @@
+Thu Aug 27 13:12:04 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp : 
+	test_proactor_with_aio.cpp is removed.
+ 	test_proactor.cpp should do well on Win as well as other 
+	POSIX4 compliant platforms (with some known bugs in Solaris2.6).
+
 Thu Aug 27 11:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/ACE-guidelines.html: added rule to declare a loop index
