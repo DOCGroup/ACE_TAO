@@ -1,3 +1,21 @@
+Tue Jun 06 20:59:31 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO/test/ExposedPolicies
+	* TAO/test/ExposedPolicies/Counter.idl
+	* TAO/test/ExposedPolicies/ExposedPolicies.dsw
+	
+	* TAO/test/ExposedPolicies/Server
+	* TAO/test/ExposedPolicies/Server/Server.cpp
+	* TAO/test/ExposedPolicies/Server/Counter_i.h
+	* TAO/test/ExposedPolicies/Server/Counter_i.cpp
+	* TAO/test/ExposedPolicies/Server/Server.dsp
+	
+	* TAO/test/ExposedPolicies/Client
+	* TAO/test/ExposedPolicies/Client/Client.cpp
+	* TAO/test/ExposedPolicies/Client/Clietn.dsp
+	
+	Added test for Client Exposed Policies.
+
 Tue Jun 06 17:26:41 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Pluggable.cpp (send_buffered_messages): If we are successful
