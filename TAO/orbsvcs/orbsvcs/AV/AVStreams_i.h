@@ -20,10 +20,6 @@
 #ifndef AVSTREAMS_I_H
 #define AVSTREAMS_I_H
 
-#if !defined (TAO_AV_Export)
-#define TAO_AV_Export
-#endif /*TAO_AV_Export*/
-
 #include "ace/OS.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ATM_Addr.h"
@@ -743,7 +739,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::noSuchFlow,
-                     notSupported));
+                     AVStreams::notSupported));
   // Used to remove a multicast leaf
 
   virtual ~TAO_StreamEndPoint_A (void);
