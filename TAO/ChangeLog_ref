@@ -1,3 +1,16 @@
+Thu Oct 16 13:24:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	* performance-tests/RTCorba/Thread_Pool/Makefile:
+
+	  Updated dependencies.
+
+	* performance-tests/RTCorba/Thread_Pool/client.cpp: #included
+	  debug.h. 
+
+
 Thu Oct 16 12:49:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp
