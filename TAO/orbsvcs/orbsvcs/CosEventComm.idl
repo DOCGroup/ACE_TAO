@@ -1,5 +1,7 @@
 // $Id$
 
+#pragma prefix "omg.org"
+
 module CosEventComm
 {
   // = TITLE

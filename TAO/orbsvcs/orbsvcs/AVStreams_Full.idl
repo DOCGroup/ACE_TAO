@@ -6,6 +6,8 @@
 // Additional IDL for full profile
 #include "AVStreams.idl"
 
+#pragma prefix "omg.org"
+
 module AVStreams_Full
 {
   exception protocolNotSupported{};

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "CosTimeBase.idl"
+#pragma prefix ""
 
 module RtecScheduler
 {
