@@ -1,3 +1,17 @@
+Mon Jan  5 16:34:18 2004  Steve Huston  <shuston@riverace.com>
+
+	Incorporated these fixes from Riverace's ACE 5.3:
+	Thu Dec 18 11:07:22 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/ace_wchar.inl: When converting narrow<->wide on Windows, use
+	  the current ANSI code page for narrow chars, not CP_OEMCP. This
+	  allows 8-bit narrow characters to be converted correctly.
+
+	Wed Dec 10 14:22:16 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/OS_Test.cpp: Added a test for wide/narrow character string
+	  conversions.
+
 Mon Jan  5 14:09:34 2004  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): 

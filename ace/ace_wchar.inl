@@ -30,7 +30,8 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
     return 0;
 
 # if defined (ACE_WIN32)
-  int len = ::WideCharToMultiByte (CP_OEMCP,
+  UINT cp = GetACP ();
+  int len = ::WideCharToMultiByte (cp,
                                    0,
                                    wstr,
                                    -1,
@@ -51,7 +52,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
   char *str = new char[len];
 
 # if defined (ACE_WIN32)
-  ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, str, len, 0, 0);
+  ::WideCharToMultiByte (cp, 0, wstr, -1, str, len, 0, 0);
 # elif defined (VXWORKS)
   ::wcstombs (str, wstr, len);
 # else /* ACE_WIN32 */
@@ -90,7 +91,8 @@ ACE_Ascii_To_Wide::convert (const char *str)
     return 0;
 
 # if defined (ACE_WIN32)
-  int len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, 0, 0);
+  UINT cp = GetACP ();
+  int len = ::MultiByteToWideChar (cp, 0, str, -1, 0, 0);
 # else /* ACE_WIN32 */
   int len = strlen (str) + 1;
 # endif /* ACE_WIN32 */
@@ -98,7 +100,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
   wchar_t *wstr = new wchar_t[len];
 
 # if defined (ACE_WIN32)
-  ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, wstr, len);
+  ::MultiByteToWideChar (cp, 0, str, -1, wstr, len);
 # elif defined (VXWORKS)
   ::mbstowcs (wstr, str, len);
 # else /* ACE_WIN32 */
