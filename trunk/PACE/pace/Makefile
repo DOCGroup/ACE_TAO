@@ -46,8 +46,7 @@ PACE_FILES = \
   termios \
   time \
   unistd \
-  utime \
-  wait
+  utime
 CONFIG_FILES =
 SYS_FILES = \
   sys/mman \
@@ -174,11 +173,11 @@ POSIX_P_FILES = \
   unistd
 # POSIX_DEVICE_SPECIFIC Unit of Functionality (POSIX.1)
 # pace_cfgetispeed, pace_cfgetospeed, pace_cfsetispeed, pace_cfsetospeed are
-#  in sys/termios.h;
+#  in termios.h;
 # pace_ctermid is in stdio.h;
 # pace_isatty is in unistd.h;
 # pace_tcdrain, pace_tcflow, pace_tcflush, pace_tcgetattr, pace_tcsendbreak,
-#  pace_tcsetattr are in sys/termios.h;
+#  pace_tcsetattr are in termios.h;
 # pace_ttyname is in unistd.h;
 POSIX_DS_FILES = \
   termios \
@@ -203,7 +202,7 @@ POSIX_CLS_FILES = \
   time
 # _POSIX_JOB_CONTROL Unit of Functionality (POSIX.1)
 # pace_setpgid is in unistd.h;
-# pace_tcgetpgrp, pace_tcsetpgrp are in sys/termios.h
+# pace_tcgetpgrp, pace_tcsetpgrp are in termios.h
 _POSIX_JC_FILES = \
   unistd \
   termios
@@ -253,6 +252,7 @@ ifndef PACE_COMPONENTS
     Pace \
     Config \
     Sys
+  CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 endif # PACE_COMPONENTS
 
 ifeq (FOR_ACE,$(PACE_COMPONENTS))
@@ -261,6 +261,7 @@ ifeq (FOR_ACE,$(PACE_COMPONENTS))
     Pace \
     Config \
     Sys
+  CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 else  # ! FOR_ACE
   #### Is there anything in PACE that ACE doesn't need? Probably not
 endif # ! FOR_ACE
@@ -284,108 +285,126 @@ ifneq (,$(findstring Posix_sp,$(PACE_COMPONENTS)))
   FILES = $(POSIX_SP_FILES)
   LIB   = libPACE_SP.a
   SHLIB = libPACE_SP.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_SP_UOF
 endif # Single Process
 
 ifneq (,$(findstring Posix_mp,$(PACE_COMPONENTS)))
   FILES = $(POSIX_MP_FILES)
   LIB   = libPACE_MP.a
   SHLIB = libPACE_MP.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_MP_UOF
 endif # Multi Process
 
 ifneq (,$(findstring Posix_sig,$(PACE_COMPONENTS)))
   FILES = $(POSIX_SIG_FILES)
   LIB   = libPACE_S.a
   SHLIB = libPACE_S.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_SIG_UOF
 endif # Signals
 
 ifneq (,$(findstring Posix_usg,$(PACE_COMPONENTS)))
   FILES = $(POSIX_UG_FILES)
   LIB   = libPACE_UG.a
   SHLIB = libPACE_UG.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_UG_UOF
 endif # User Groups
 
 ifneq (,$(findstring Posix_fs,$(PACE_COMPONENTS)))
   FILES = $(POSIX_FS_FILES)
   LIB   = libPACE_FS.a
   SHLIB = libPACE_FS.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_FS_UOF
 endif # File System
 
 ifneq (,$(findstring Posix_fa,$(PACE_COMPONENTS)))
   FILES = $(POSIX_FA_FILES)
   LIB   = libPACE_FA.a
   SHLIB = libPACE_FA.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_FA_UOF
 endif # File Attributes
 
 ifneq (,$(findstring Posix_fif,$(PACE_COMPONENTS)))
   FILES = $(POSIX_F_FILES)
   LIB   = libPACE_F.a
   SHLIB = libPACE_F.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_F_UOF
 endif # Fifo
 
 ifneq (,$(findstring Posix_di,$(PACE_COMPONENTS)))
   FILES = $(POSIX_DI_FILES)
   LIB   = libPACE_DI.a
   SHLIB = libPACE_DI.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_DI_UOF
 endif # Device Input/Output
 
 ifneq (,$(findstring Posix_fm,$(PACE_COMPONENTS)))
   FILES = $(POSIX_FM_FILES)
   LIB   = libPACE_FM.a
   SHLIB = libPACE_FM.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_FM_UOF
 endif # File Descriptor Management
 
 ifneq (,$(findstring Posix_p,$(PACE_COMPONENTS)))
   FILES = $(POSIX_P_FILES)
   LIB   = libPACE_P.a
   SHLIB = libPACE_P.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_P_UOF
 endif # Pipe
 
 ifneq (,$(findstring Posix_ds,$(PACE_COMPONENTS)))
   FILES = $(POSIX_DS_FILES)
   LIB   = libPACE_DS.a
   SHLIB = libPACE_DS.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_DS_UOF
 endif # Device Specific
 
 ifneq (,$(findstring Posix_sd,$(PACE_COMPONENTS)))
   FILES = $(POSIX_SD_FILES)
   LIB   = libPACE_SD.a
   SHLIB = libPACE_SD.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_SD_UOF
 endif # System Database
 
 ifneq (,$(findstring Posix_cls,$(PACE_COMPONENTS)))
   FILES = $(POSIX_CLS_FILES)
   LIB   = libPACE_CLS.a
   SHLIB = libPACE_CLS.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_CLS_UOF
 endif # C Language Support
 
 ifneq (,$(findstring Posix_jc,$(PACE_COMPONENTS)))
   FILES = $(_POSIX_JC_FILES)
   LIB   = libPACE_JC.a
   SHLIB = libPACE_JC.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_JC_UOF
 endif # Job Control
 
 ifneq (,$(findstring Posix_ugr,$(PACE_COMPONENTS)))
   FILES = $(POSIX_UGR_FILES)
   LIB   = libPACE_UGR.a
   SHLIB = libPACE_UGR.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_UGR_UOF
 endif # User Groups - Reentrant
 
 ifneq (,$(findstring Posix_fl,$(PACE_COMPONENTS)))
   FILES = $(POSIX_FL_FILES)
   LIB   = libPACE_FL.a
   SHLIB = libPACE_FL.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_FL_UOF
 endif # File Locking
 
 ifneq (,$(findstring Posix_clr,$(PACE_COMPONENTS)))
   FILES = $(POSIX_CLSR_FILES)
   LIB   = libPACE_CLSR.a
   SHLIB = libPACE_CLSR.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_CLSR_UOF
 endif # C Language Support - Reentrant
 
 ifneq (,$(findstring Posix_sr,$(PACE_COMPONENTS)))
   FILES = $(POSIX_SDR_FILES)
   LIB   = libPACE_SDR.a
   SHLIB = libPACE_SDR.$(SOEXT)
+  CFLAGS += -DPACE_HAS_POSIX_SDR_UOF
 endif # System Database - Reentrant
 
 LSRC  = $(addsuffix .cpp,$(FILES))

@@ -35,14 +35,18 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.3.2.
    */
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE int pace_creat (const char * path, pace_mode_t mode);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
      PACE's implementation of the POSIX function fcntl.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 6.5.2.
    */
-  # define pace_fcntl fcntl
+#if (PACE_HAS_POSIX_FM_UOF)
+# define pace_fcntl fcntl
+#endif /* PACE_HAS_POSIX_FM_UOF */
   /* int fcntl (int fildes, int cmd, *//* arg *//* ... ); */
 
   /**
@@ -50,7 +54,9 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.3.1.
    */
-  # define pace_open open
+#if (PACE_HAS_POSIX_DI_UOF)
+# define pace_open open
+#endif /* PACE_HAS_POSIX_DI_UOF */
   /* int open (const char *path, int oflag, *//* pace_mode_t mode *//* ... );*/
 
 #if defined (PACE_HAS_INLINE)

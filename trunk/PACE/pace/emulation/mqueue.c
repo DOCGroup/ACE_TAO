@@ -47,6 +47,7 @@ struct mq_attr attrdefault = { 0, 32, 256, 0 };
 #define PACE_MQ_DATAPOSTFIX "mqdata2355"
 
 /* This remains mq_open due to the macro in pace/mqueue.h */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 pace_mqd_t mq_open (const char* name,
                     int oflag,
                     pace_mode_t mode,
@@ -266,7 +267,9 @@ retry:
 
   return result;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int mq_close (pace_mqd_t mqdes)
 {
   if (pace_pthread_mutex_lock (&( ((mqfile*)mqdes->mptr)->mutex)) == -1)
@@ -287,12 +290,16 @@ int mq_close (pace_mqd_t mqdes)
   free (mqdes);
   return 0;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int mq_unlink (const char* name)
 {
   return pace_unlink (name);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int mq_send (pace_mqd_t mqdes,
              const char* ptr,
              pace_size_t length,
@@ -393,7 +400,9 @@ int mq_send (pace_mqd_t mqdes,
   }
   return 0;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 pace_ssize_t mq_receive (pace_mqd_t mqdes,
                          char * msg_ptr,
                          pace_size_t msg_len,
@@ -463,7 +472,9 @@ pace_ssize_t mq_receive (pace_mqd_t mqdes,
 
   return ((message_header*)(&mqdes->mptr[queue->head]))->length;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int mq_getattr (pace_mqd_t mqdes, pace_mq_attr * mqstat)
 {
   mqfile* queue = ((mqfile*)mqdes->mptr);
@@ -479,7 +490,9 @@ int mq_getattr (pace_mqd_t mqdes, pace_mq_attr * mqstat)
 
   return 0;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int mq_setattr(pace_mqd_t mqdes,
                const pace_mq_attr * mqstat,
                pace_mq_attr * omqstat)
@@ -507,7 +520,9 @@ int mq_setattr(pace_mqd_t mqdes,
   pace_pthread_mutex_unlock (&queue->mutex);
   return 0;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int mq_notify (pace_mqd_t mqd, const pace_sigevent* notification)
 {
   mqfile* queue = ((mqfile*)(mqd->mptr));
@@ -545,7 +560,9 @@ int mq_notify (pace_mqd_t mqd, const pace_sigevent* notification)
 
   return 0;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 void print_queue (pace_mqd_t mqd)
 {
 
@@ -574,3 +591,4 @@ void print_queue (pace_mqd_t mqd)
     }
   printf ("\n");
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */

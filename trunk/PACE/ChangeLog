@@ -1,3 +1,107 @@
+Fri Jul 14 15:55:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/sys/mman.h:
+        * pace/sys/stat.h:
+        * pace/sys/times.h:
+        * pace/sys/utsname.h:
+        * pace/sys/wait.h:
+          move closing } for extern "C" to near end of file, after
+          .inl #includes.
+
+        * pace/Makefile:
+          Added defining appropriate macros when subsetting PACE into
+           POSIX units of functionality.
+        
+        * pace/aio.h:
+        * pace/assert.h:
+        * pace/ctype.h:
+        * pace/dirent.h:
+        * pace/fcntl.h:
+        * pace/grp.h:
+        * pace/locale.h:
+        * pace/math.h:
+        * pace/mqueue.h:
+        * pace/pthread.h:
+        * pace/pwd.h:
+        * pace/sched.h:
+        * pace/semaphore.h:
+        * pace/setjmp.h:
+        * pace/signal.h:
+        * pace/stddef.h:
+        * pace/stdio.h:
+        * pace/stdlib.h:
+        * pace/string.h:
+        * pace/termios.h:
+        * pace/time.h:
+        * pace/unistd.h:
+        * pace/utime.h:
+        * pace/emulation/mqueue.c:
+        * pace/emulation/mqueue.h:
+        * pace/posix/aio.inl:
+        * pace/posix/ctype.inl:
+        * pace/posix/dirent.inl:
+        * pace/posix/fcntl.inl:
+        * pace/posix/grp.inl:
+        * pace/posix/locale.inl:
+        * pace/posix/math.inl:
+        * pace/posix/mman.inl:
+        * pace/posix/mqueue.inl:
+        * pace/posix/pthread.inl:
+        * pace/posix/pwd.inl:
+        * pace/posix/sched.inl:
+        * pace/posix/semaphore.inl:
+        * pace/posix/setjmp.inl:
+        * pace/posix/signal.inl:
+        * pace/posix/stat.inl:
+        * pace/posix/stdio.inl:
+        * pace/posix/stdlib.inl:
+        * pace/posix/string.inl:
+        * pace/posix/termios.inl:
+        * pace/posix/time.inl:
+        * pace/posix/times.inl:
+        * pace/posix/unistd.inl:
+        * pace/posix/utime.inl:
+        * pace/posix/utsname.inl:
+        * pace/posix/wait.inl:
+        * pace/win32/aio.inl:
+        * pace/win32/ctype.inl:
+        * pace/win32/dirent.inl:
+        * pace/win32/fcntl.inl:
+        * pace/win32/grp.inl:
+        * pace/win32/locale.inl:
+        * pace/win32/math.inl:
+        * pace/win32/mman.inl:
+        * pace/win32/mqueue.inl:
+        * pace/win32/pthread.inl:
+        * pace/win32/pwd.inl:
+        * pace/win32/sched.inl:
+        * pace/win32/semaphore.inl:
+        * pace/win32/setjmp.inl:
+        * pace/win32/signal.inl:
+        * pace/win32/stat.inl:
+        * pace/win32/stdio.inl:
+        * pace/win32/stdlib.inl:
+        * pace/win32/string.inl:
+        * pace/win32/termios.inl:
+        * pace/win32/time.inl:
+        * pace/win32/times.inl:
+        * pace/win32/unistd.inl:
+        * pace/win32/utime.inl:
+        * pace/win32/utsname.inl:
+        * pace/win32/wait.inl:
+          Wrapped each function with its corresponding POSIX unit of
+           functionality (or the catch-all PACE_HAS_POSIX_NONUOF_FUNCS).
+
+        * pace/config/config.h:
+          Changed to define all the POSIX macros when
+           PACE_HAS_ALL_POSIX_FUNCS is defined.
+
+        * tests/Makefile:
+          Adding default flag of PACE_HAS_ALL_POSIX_FUNCS.
+
+        * tests/Stdio_Test.c:
+          change variable from FILE to PACE_FILE.
+
 Fri Jul 14 15:02:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* PACE/pace/win32/dirent.h:

@@ -13,41 +13,52 @@
  *
  * ============================================================================= */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_aio_cancel (int fildes, pace_aiocb * aiocbp)
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_aio_error (const pace_aiocb * aiocbp)
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_aio_fsync (int op, pace_aiocb * aiocbp)
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_aio_read (pace_aiocb * aiocbp)
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_aio_return (pace_aiocb * aiocbp)
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_aio_suspend (const pace_aiocb * const list[],
@@ -56,14 +67,18 @@ pace_aio_suspend (const pace_aiocb * const list[],
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_aio_write (pace_aiocb * aiocbp)
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_lio_listio (int mode,
@@ -73,3 +88,4 @@ pace_lio_listio (int mode,
 {
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
