@@ -20,6 +20,7 @@
 #include "test_config.h"
 #include "ace/Malloc.h"
 #include "ace/Process.h"
+#include "ace/Auto_Ptr.h"
 #include "Malloc_Test.h"
 
 ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
@@ -32,6 +33,8 @@ USELIB("..\ace\aced.lib");
 #if !defined (__Lynx__) && (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32))
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
+#define MMAP_FILENAME ACE_TEXT ("test_file")
+#define MUTEX_NAME ACE_TEXT ("test_lock")
 
 // Parents <ACE_Malloc> base address in shared memory.
 static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
@@ -53,11 +56,27 @@ static const void *CHILD_BASE_ADDR =
 static MALLOC *
 myallocator (const void *base_addr = 0)
 {
-  static ACE_MMAP_Memory_Pool_Options options (base_addr);
-  static MALLOC static_allocator (ACE_TEXT ("test_file"),
-                                  ACE_TEXT ("test_lock"),
-                                  &options);
-  return &static_allocator;
+  ACE_MMAP_Memory_Pool_Options options (base_addr);
+  static auto_ptr<MALLOC> static_allocator;
+
+  if (static_allocator.get () == 0)
+    {
+      MALLOC *ptr = new MALLOC (MMAP_FILENAME,
+                                MUTEX_NAME,
+                                &options);
+      ACE_AUTO_PTR_RESET(static_allocator, ptr, MALLOC);
+    }
+  return static_allocator.get ();
+}
+
+static void
+init_test (const void *base_addr = 0)
+{
+  // Cleanup the MMAP file so we won't trip over the leftover mmap
+  // file from the previous crash.
+  ACE_MMAP_Memory_Pool_Options options (base_addr);
+  ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
+  mmap.release ();
 }
 
 static Test_Data *
@@ -213,6 +232,8 @@ main (int argc, ASYS_TCHAR *[])
       ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
       ACE_INIT_LOG (ASYS_TEXT ("Malloc_Test-child"));
 
+      init_test (PARENT_BASE_ADDR);
+
 #if 0
       cout << "Sizeof header padding: " << ACE_MALLOC_PADDING << endl
            << "Sizeof header pointer: " << sizeof (ACE_MALLOC_HEADER_PTR) << endl
@@ -281,6 +302,8 @@ main (int argc, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
+template class auto_ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
+template class ACE_Auto_Basic_Ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
 template class ACE_Write_Guard<ACE_Process_Mutex>;
 template class ACE_Read_Guard<ACE_Process_Mutex>;
 template class ACE_Based_Pointer<Test_Data>;
@@ -290,6 +313,8 @@ template class ACE_Based_Pointer_Basic<Long_Test>;
 template class ACE_Based_Pointer<Long_Test>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
+#pragma instantiate auto_ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >
+#pragma instantiate ACE_Auto_Basic_Ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
 #pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Based_Pointer<Test_Data>
