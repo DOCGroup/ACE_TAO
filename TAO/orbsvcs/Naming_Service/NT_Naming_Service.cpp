@@ -1,8 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include /**/ "Naming_Service.h"
 #include /**/ "NT_Naming_Service.h"
+
+#if defined(ACE_WIN32)
+
+#include /**/ "Naming_Service.h"
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 
@@ -147,3 +150,5 @@ TAO_NT_Naming_Service::svc (void)
 
   return 0;
 }
+
+#endif /* ACE_WIN32 */
