@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file UAVEI.idl
+ *
+ * Definition of the UAV component implementation.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+
+#ifndef CIAO_UAVI_IDL
+#define CIAO_UAVI_IDL
+
+#include "UAVE.idl"
+
+module BBN_UAV
+{
+  /**
+   * @interface UAV_Exec
+   *
+   */
+  local interface UAV_Exec :
+    CCM_UAV,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_UAVI_IDL*/

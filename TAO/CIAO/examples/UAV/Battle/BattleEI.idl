@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file BattleEI.idl
+ *
+ * Definition of the Battle component implementation.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+
+#ifndef CIAO_BATTLEI_IDL
+#define CIAO_BATTLEI_IDL
+
+#include "BattleE.idl"
+
+module BBN_UAV
+{
+  /**
+   * @interface Battle_Exec
+   *
+   */
+  local interface Battle_Exec :
+    CCM_Battle,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_BATTLEI_IDL*/

@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file CAOCEI.idl
+ *
+ * Definition of the CAOC component implementation.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+
+#ifndef CIAO_CAOCI_IDL
+#define CIAO_CAOCI_IDL
+
+#include "CAOCE.idl"
+
+module BBN_UAV
+{
+  /**
+   * @interface CAOC_Exec
+   *
+   */
+  local interface CAOC_Exec :
+    CCM_CAOC,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_CAOCI_IDL*/

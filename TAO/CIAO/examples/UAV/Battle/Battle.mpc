@@ -20,7 +20,7 @@ project(Battle_stub): ciao_client {
 project(Battle_svnt) : ciao_servant {
   after +=  BBN_UAV_svnt Battle_stub
   sharedname  = Battle_svnt
-  libs    += Battle_stub 
+  libs    += BBN_UAV_stub BBN_UAV_svnt Battle_stub 
   
   idlflags  +=  -Wb,export_macro=BATTLE_SVNT_Export -Wb,export_include=Battle_svnt_export.h
   dynamicflags = BATTLE_SVNT_BUILD_DLL
@@ -44,17 +44,19 @@ project(Battle_svnt) : ciao_servant {
 project(Battle_exec) : ciao_component {
   after   += BBN_UAV_svnt Battle_svnt
   sharedname = Battle_exec
-  libs      += Battle_stub Battle_svnt 
+  libs      += BBN_UAV_stub BBN_UAV_svnt Battle_stub Battle_svnt 
   
   idlflags  +=  -Wb,export_macro=BATTLE_EXEC_Export -Wb,export_include=Battle_exec_export.h
   dynamicflags   = BATTLE_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+    BattleEI.idl
   }
 
   Source_Files {
-    
+    BattleES.cpp
+    BattleEIC.cpp
+    BattleEIS.cpp
     Battle_exec.cpp
   }
 }

@@ -20,7 +20,7 @@ project(UAV_stub): ciao_client {
 project(UAV_svnt) : ciao_servant {
   after +=  BBN_UAV_svnt UAV_stub
   sharedname  = UAV_svnt
-  libs    += UAV_stub 
+  libs    += BBN_UAV_stub BBN_UAV_svnt UAV_stub 
   
   idlflags  +=  -Wb,export_macro=UAV_SVNT_Export -Wb,export_include=UAV_svnt_export.h
   dynamicflags = UAV_SVNT_BUILD_DLL
@@ -44,17 +44,19 @@ project(UAV_svnt) : ciao_servant {
 project(UAV_exec) : ciao_component {
   after   += BBN_UAV_svnt UAV_svnt
   sharedname = UAV_exec
-  libs      += UAV_stub UAV_svnt 
+  libs      += BBN_UAV_stub BBN_UAV_svnt UAV_stub UAV_svnt 
   
   idlflags  +=  -Wb,export_macro=UAV_EXEC_Export -Wb,export_include=UAV_exec_export.h
   dynamicflags   = UAV_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+    UAVEI.idl
   }
 
   Source_Files {
-    
+    UAVES.cpp
+    UAVEIC.cpp
+    UAVEIS.cpp
     UAV_exec.cpp
   }
 }

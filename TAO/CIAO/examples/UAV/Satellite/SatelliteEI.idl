@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file SatelliteEI.idl
+ *
+ * Definition of the Satellite component implementation.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+
+#ifndef CIAO_SATELLITEI_IDL
+#define CIAO_SATELLITEI_IDL
+
+#include "SatelliteE.idl"
+
+module BBN_UAV
+{
+  /**
+   * @interface Satellite_Exec
+   *
+   */
+  local interface Satellite_Exec :
+    CCM_Satellite,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_SATELLITEI_IDL*/

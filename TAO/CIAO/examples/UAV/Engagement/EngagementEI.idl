@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file EngagementEI.idl
+ *
+ * Definition of the Engagement component implementation.
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+
+#ifndef CIAO_ENGAGEMENTI_IDL
+#define CIAO_ENGAGEMENTI_IDL
+
+#include "EngagementE.idl"
+
+module BBN_UAV
+{
+  /**
+   * @interface Engagement_Exec
+   *
+   */
+  local interface Engagement_Exec :
+    CCM_Engagement,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_ENGAGEMENTI_IDL*/
