@@ -3884,6 +3884,7 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
     }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
+  ///@@@ FOr BiDIr GIOP....
 
   ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
