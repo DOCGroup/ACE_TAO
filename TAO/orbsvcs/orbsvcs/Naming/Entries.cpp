@@ -77,6 +77,18 @@ TAO_ExtId::~TAO_ExtId (void)
 {
 }
 
+const char *
+TAO_ExtId::id (void)
+{
+  return id_.fast_rep ();
+}
+
+const char *
+TAO_ExtId::kind (void)
+{
+  return kind_.fast_rep ();
+}
+
 void
 TAO_ExtId::operator= (const TAO_ExtId &rhs)
 {

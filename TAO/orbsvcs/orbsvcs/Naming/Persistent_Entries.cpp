@@ -114,6 +114,18 @@ TAO_Persistent_ExtId::hash (void) const
   return temp.hash ();
 }
 
+const char *
+TAO_Persistent_ExtId::id (void)
+{
+  return id_;
+}
+
+const char *
+TAO_Persistent_ExtId::kind (void)
+{
+  return kind_;
+}
+
 TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (void)
   : counter_ (0),
     hash_map_ (0)

@@ -14,20 +14,14 @@
 
 #include "Naming_Context.h"
 
-TAO_Naming_Context::TAO_Naming_Context (void)
-  : impl_ (0)
+TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
+  : impl_ (impl)
 {
 }
 
 TAO_Naming_Context::~TAO_Naming_Context (void)
 {
   delete impl_;
-}
-
-void
-TAO_Naming_Context::impl (TAO_Naming_Context_Impl *impl)
-{
-  impl_ = impl;
 }
 
 PortableServer::POA_ptr
