@@ -49,7 +49,7 @@ ACE_INLINE int
 ACE_Sig_Set::empty_set (void)
 {
   ACE_TRACE ("ACE_Sig_Set::empty_set");
-  return ACE_OS::sigemptyset (&this->sigset_);  
+  return ACE_OS::sigemptyset (&this->sigset_);
 }
 
 ACE_INLINE int
@@ -141,9 +141,9 @@ ACE_INLINE void
 ACE_Sig_Action::handler (ACE_SignalHandler handler)
 {
   ACE_TRACE ("ACE_Sig_Action::handler");
-#if !defined(ACE_HAS_TANDEM_SIGNALS)                                  
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
   this->sa_.sa_handler = ACE_SignalHandlerV (handler);
-#else                                                                 
+#else
   this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (handler);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
@@ -178,7 +178,7 @@ ACE_Sig_Action::get (void)
   return &this->sa_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Sig_Action::operator ACE_SIGACTION * ()
 {
   ACE_TRACE ("ACE_Sig_Action::operator ACE_SIGACTION *");
@@ -197,7 +197,7 @@ ACE_Sig_Action::register_action (int signum, ACE_Sig_Action *oaction)
 {
   ACE_TRACE ("ACE_Sig_Action::register_action");
   struct sigaction *sa = oaction == 0 ? 0 : oaction->get ();
-  
+
   return ACE_OS::sigaction (signum, &this->sa_, sa);
 }
 
@@ -216,9 +216,9 @@ ACE_Sig_Action::restore_action (int signum, ACE_Sig_Action &oaction)
   return ACE_OS::sigaction (signum, &this->sa_, 0);
 }
 
-// Block out the signal MASK until the destructor is called. 
+// Block out the signal MASK until the destructor is called.
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
 {
   //ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
@@ -229,29 +229,29 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask)
 #if 0
       ACE_Sig_Set smask (1);
 #endif
-      
+
 
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
       ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) ACE_Object_Manager::default_mask (), (sigset_t *)
-			   this->omask_); 
+                           this->omask_);
 #else
       ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) ACE_Object_Manager::default_mask (), (sigset_t *)
-			      this->omask_);
+                              this->omask_);
 #endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     }
   else
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
     ACE_OS::sigprocmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
-			 this->omask_); 
+                         this->omask_);
 #else
   ACE_OS::thr_sigsetmask (SIG_BLOCK, (sigset_t *) *mask, (sigset_t *)
-			  this->omask_);
+                          this->omask_);
 #endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
 }
 
 // Restore the signal mask.
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
@@ -266,5 +266,5 @@ ACE_INLINE int
 ACE_Sig_Handler::in_range (int signum)
 {
   ACE_TRACE ("ACE_Sig_Handler::in_range");
-  return signum > 0 && signum < NSIG;
+  return signum > 0 && signum < ACE_NSIG;
 }

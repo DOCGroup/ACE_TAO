@@ -4,31 +4,31 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Sigset_Ops_Test.cpp
 //
 // = DESCRIPTION
-//     This program tests the correctness of following functions.  
+//     This program tests the correctness of following functions.
 //     sigfillset(), sigemptyset(), sigaddset(), sigdelset(),
-//     sigismember().  
+//     sigismember().
 //
 // = AUTHOR
 //    Nanbor Wang
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
 #include "ace/OS.h"
 
-void 
-siglistset(sigset_t x, int *sigset) 
+void
+siglistset(sigset_t x, int *sigset)
 {
   int empty = 1 ;
   int retv = 0 ;
 
   ACE_DEBUG ((LM_DEBUG, "Signal(s) in the set = %08x:\n    ", x)) ;
-  for (int i = 1; i < NSIG; i++) {
+  for (int i = 1; i < ACE_NSIG; i++) {
     if ((retv = ACE_OS::sigismember (&x, i)) > 0) {
       ACE_DEBUG ((LM_DEBUG, " %d", i)) ;
       empty = 0 ;
@@ -43,7 +43,7 @@ siglistset(sigset_t x, int *sigset)
   }
 }
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Sigset_Ops_Test");
@@ -54,22 +54,22 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG, "%n uses platform's native sigset*() functions.\n\n")) ;
 #endif
 
-  sigset_t x ;			// examined sigset
-  int sigset [NSIG] ;		// a comparison sigset
+  sigset_t x ;                  // examined sigset
+  int sigset [ACE_NSIG] ;       // a comparison sigset
   int i ;
-  int status = 0;		// 0 is success, else fail code
+  int status = 0;               // 0 is success, else fail code
 
   // Two test signal numbers.  I choose these low value signals to
-  // avoid exceeding the NSIG range.
+  // avoid exceeding the ACE_NSIG range.
   const int tsig1 = 5 ;
   const int tsig2 = 8 ;
 
 
-  // Testing sigfillset 
+  // Testing sigfillset
   ACE_OS::sigfillset (&x) ;
 
   // fill the comparison set
-  for (i = 0 ; i < NSIG ; i++) {
+  for (i = 0 ; i < ACE_NSIG ; i++) {
     sigset [i] = 1 ;
   }
   siglistset (x, sigset) ;
@@ -78,7 +78,7 @@ main (int, char *[])
   ACE_OS::sigemptyset (&x) ;
 
   // empty the comparison set
-  for (i = 0 ; i < NSIG ; i++) {
+  for (i = 0 ; i < ACE_NSIG ; i++) {
     sigset [i] = 0 ;
   }
   siglistset (x, sigset) ;
@@ -104,7 +104,7 @@ main (int, char *[])
   siglistset(x, sigset) ;
 
   // Now testing out of bound signal
-  if (ACE_OS::sigismember (&x, NSIG) >= 0) {
+  if (ACE_OS::sigismember (&x, ACE_NSIG) >= 0) {
     ACE_ERROR((LM_ERROR, "Platform doesn't check for valid signal number.\n"));
     status = 1;
   }
@@ -113,10 +113,10 @@ main (int, char *[])
     status = 1;
   }
 
-  /* Skip this test at this moment 
+  /* Skip this test at this moment
   // Test if platform can catch invalid sigset error
-  // Currently, I can only think of passing a NULL ptr 
-  // If you know other situations that fall into this 
+  // Currently, I can only think of passing a NULL ptr
+  // If you know other situations that fall into this
   // catagory, please let me know.  Thanks.
   ACE_DEBUG ((LM_ERROR, "Now testing invalid sigset.  If your platform gets a \nsegmentation fault, then it doesn't check the error properly.\n")) ;
 
