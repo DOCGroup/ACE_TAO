@@ -1,3 +1,12 @@
+Wed Apr 30 07:44:36 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-osf1-4.0*.h: removed ACE_HAS_SIGWAIT.
+
+	* ace/OS.{h,i}: applied Thilo's patch for sigwait on Digital
+	  Unix 4.0, which defines sigwait as a macro.  Thanks to
+	  Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  this and the above config file patches.
+
 Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
 
         * apps/JAWS/stress_testing/http_tester.cpp : Removed usage
