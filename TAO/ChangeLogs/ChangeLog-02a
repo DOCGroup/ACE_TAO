@@ -1,8 +1,45 @@
+Tue Apr  3 10:54:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/corba.h:
+          Remove "tao/ClientRequestInfo.h" from the #included files,
+          this file is no longer required in the generated code headers.
+
+        * tao/ClientRequestInfo.h:
+          Made a few helper methods public instead of protected or
+          private.  We were generating 'friend' declarations for every
+          class using them, so they were public for all practical
+          purposes.
+          I don't think any fears of 'accidental' missuse are well
+          founded:  the application uses the base class
+          (PortableInterceptors::ClientRequestInfo), so gaining access to
+          those fields would require a downcast to a TAO proprietary
+          interface, anybody doing that can go an step further too, and
+          access the private fields anyway.
+
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_codegen.cpp:
+          Add helper method to generate #include directive, removed a lot
+          of duplicate code using that.
+          Move the #includes related to interceptors from the header files
+          to the .cpp files.
+
+        * TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+          Complete the change that moves interceptor helper classes
+          (per-operation ClientRequestInfo and ServerRequestInfo) to the
+          .cpp file.
+
 Tue Apr  3 13:35:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/Offer_Importer.cpp:
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
-	  Fixed fuzz warnings.
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+          Fixed fuzz warnings.
 
 Tue Apr  3 13:06:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -13,24 +50,24 @@ Tue Apr  3 13:06:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Apr  3 12:23:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp: Fixed a typo in
-	  ACE_TRY_ENV.
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp: Fixed a typo in
+          ACE_TRY_ENV.
 
 Tue Apr  3 12:21:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp: Fuzz warnings.
+        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp: Fuzz warnings.
 
 Tue Apr  3 10:59:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TypeCodeFactory/Makefile:
-	* tao/IFR_Client/Makefile: Made some cosmetic fixes.
+        * tao/TypeCodeFactory/Makefile:
+        * tao/IFR_Client/Makefile: Made some cosmetic fixes.
 
 Tue Apr  3 09:58:47 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
 
           Added portspan option to parse_options method. This part had been
-	  left out by mistake from portspan changes. [Bug 817]
+          left out by mistake from portspan changes. [Bug 817]
 
 Tue Apr  3 09:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -59,15 +96,15 @@ Tue Apr  3 08:27:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Tue Apr  3 08:08:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IFR_Client/Makefile: Added guards for minimum corba. The IFR
-	  shouldn't be compiled for minimum corba.
+        * tao/IFR_Client/Makefile: Added guards for minimum corba. The IFR
+          shouldn't be compiled for minimum corba.
 
 Tue Apr  3 07:58:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tests/InterOp-Naming/INS_test_client.cpp:
-	* tests/MT_Timeout/Client_Task.cpp: Fixed minor compilation
-	  problems
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tests/InterOp-Naming/INS_test_client.cpp:
+        * tests/MT_Timeout/Client_Task.cpp: Fixed minor compilation
+          problems
 
 Mon Apr  2 20:19:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
