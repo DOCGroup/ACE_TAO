@@ -82,6 +82,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i");
 
   this->free_search_structure ();
+  this->total_size_ = 0;
+  this->cur_size_ = 0;
   return 0;
 }
 
@@ -188,8 +190,6 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure (void)
       // Actually free the memory.
       this->allocator_->free (this->search_structure_);
       this->search_structure_ = 0;
-      this->total_size_ = 0;
-      this->cur_size_ = 0;
     }
 }
 
