@@ -1,52 +1,64 @@
+Thu Apr  5 11:14:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/MessagingC.h:
+        * tao/MessagingC.cpp:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/MessagingC.h.diff:
+        * tao/diffs/MessagingS.cpp.diff:
+          Some code was not protected by TAO_HAS_AMI_CALLBACK or
+          TAO_HAS_AMI_POLLABLE, however, it could not compile in
+          configurations missing both options.
+          Luckily only the VxWorks build was failing due to this problem.
+
 Thu Apr  5 12:22:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.h (TAO_Transport):
-	* tao/Transport.cpp:
-	* tao/Transport.inl:
-	  Changed the name of the methods send_request_header () and
-	  start_locate ()  as generate_request_header () and  
-	  generate_locate_request (). Removed the method start_request
-	  (). This was not doing anything and was a dummy call. The
-	  methods generate_request_header () and generate_locate_request
-	  () are not virtual calls like their originals. They have now
-	  been moved to the TAO_Transport class. Added a virtual method
-	  messaging_object () that would return the underlyging messaging
-	  object to the TAO_Transport class.
+        * tao/Transport.h (TAO_Transport):
+        * tao/Transport.cpp:
+        * tao/Transport.inl:
+          Changed the name of the methods send_request_header () and
+          start_locate ()  as generate_request_header () and
+          generate_locate_request (). Removed the method start_request
+          (). This was not doing anything and was a dummy call. The
+          methods generate_request_header () and generate_locate_request
+          () are not virtual calls like their originals. They have now
+          been moved to the TAO_Transport class. Added a virtual method
+          messaging_object () that would return the underlyging messaging
+          object to the TAO_Transport class.
 
           Removed the argument TAO_ORB_Core from the
-	  generate_locate_request () as the argument served no
-	  purpose. The reason it was still there seems to be more
-	  historical. The messaging_object that could be using it has a
-	  copy of the pointer to the TAO_ORB_Core. 
+          generate_locate_request () as the argument served no
+          purpose. The reason it was still there seems to be more
+          historical. The messaging_object that could be using it has a
+          copy of the pointer to the TAO_ORB_Core.
 
-	  The above changes also address some of the comments left for me
-	  in the Transport classes. 
+          The above changes also address some of the comments left for me
+          in the Transport classes.
 
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/Invocation.cpp:
-	* tao/Asynch_Invocation.cpp:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Transport.h:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Tranport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Tranport.h:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.h:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
-	 
-	 Changes that were done as a result of the above changes.
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.cpp:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Tranport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Tranport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+
+         Changes that were done as a result of the above changes.
 
 Thu Apr  5 12:15:40 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/RT_Endpoint_Selector_Factory.cpp:
-	* tao/Endpoint_Selector_Factory.cpp:
-	  Fixed fuzz errors.
+        * tao/RT_Endpoint_Selector_Factory.cpp:
+        * tao/Endpoint_Selector_Factory.cpp:
+          Fixed fuzz errors.
 
 Thu Apr  5 11:30:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Fixed a nagging
-	  warning.
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Fixed a nagging
+          warning.
 
 Thu Apr  5 11:04:52 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 

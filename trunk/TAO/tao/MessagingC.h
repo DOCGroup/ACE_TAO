@@ -2593,9 +2593,13 @@ TAO_NAMESPACE_CLOSE // module Messaging
 
 // Proxy Broker Factory function pointer declarations.
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 extern TAO_Export Messaging::_TAO_ReplyHandler_Proxy_Broker * (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #if (TAO_HAS_AMI_CALLBACK == 1)
 
