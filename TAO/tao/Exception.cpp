@@ -49,7 +49,7 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
 
 CORBA_Exception::CORBA_Exception (void)
   :  type_ (0),
-     refcount_ (1)
+     refcount_ (0)
 {
 }
 
@@ -854,7 +854,7 @@ CORBA_ExceptionList::_decr_refcnt (void)
   this->ref_count_--;
   if (this->ref_count_ == 0)
     delete this;
-  
+
 }
 
 
