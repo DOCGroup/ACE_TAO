@@ -22,8 +22,7 @@ endif
 
 CC      = KCC
 CXX     = $(CC)
-CPPFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
-           -D_GNU_SOURCE
+CPPFLAGS  += -D_REENTRANT -D_GNU_SOURCE
 
 CCFLAGS += $(CFLAGS) -DNULL=0 --one_instantiation_per_object
 DCFLAGS += +K0 -g
