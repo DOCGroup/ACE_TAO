@@ -69,12 +69,12 @@ ImplementationRepository::Locator::Locator (
 // TAO_IDL - Generated from
 // be/be_visitor_interface/cdr_op_ci.cpp:72
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const ImplementationRepository::Locator_ptr
   );
 
-TAO_Export CORBA::Boolean operator>> (
+TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::Locator_ptr &
   );
