@@ -216,10 +216,9 @@ public:
   ~ACE_DNode (void);
   // This isn't necessary, but it keeps the compiler happy.
 
-//private:
+private:
 
   // = Initialization methods
-  ACE_DNode (void) {};
   ACE_DNode (const T &i, ACE_DNode<T> *n = 0, ACE_DNode<T> *p = 0);
 
   ACE_DNode<T> *next_;
@@ -686,23 +685,31 @@ template <class T> class ACE_DLList;
 template <class T> class ACE_DLList_Iterator;
 
 template <class T>
-class ACE_DLList_Node : public ACE_DNode<T*>
+class ACE_DLList_Node
 {
 friend ACE_DLList<T>;
 friend ACE_DLList_Iterator<T>;
 
 public:
   ACE_DLList_Node (void)
-    : next_ ((ACE_DLList_Node<T> *) ACE_DNode<T*>::next_),
-      prev_ ((ACE_DLList_Node<T> *) ACE_DNode<T*>::prev_)
+    : item_ (0),
+      next_ (0),
+      prev_ (0)
     {};
-  ACE_DLList_Node (T *const &i,
+
+  ACE_DLList_Node (T *&i,
                    ACE_DLList_Node<T> *n = 0,
                    ACE_DLList_Node<T> *p = 0)
-    : ACE_DNode<T*> (i, (ACE_DNode<T*> *)n, (ACE_DNode<T*> *)p),
-      next_ ((ACE_DLList_Node<T> *) ACE_DNode<T*>::next_),
-      prev_ ((ACE_DLList_Node<T> *) ACE_DNode<T*>::prev_)
+    : item_ (i),
+      next_ (n),
+      prev_ (p)
     {};
+
+  ~ACE_DLList_Node (void) {};
+  // This isn't necessary, but it keeps the compiler happy.
+
+  T * item_;
+  // Current value of the item in this node.
 
   ACE_DLList_Node<T> *next_;
   ACE_DLList_Node<T> *prev_;
