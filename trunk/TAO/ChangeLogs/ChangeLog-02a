@@ -1,3 +1,8 @@
+Wed Nov  8 20:01:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* tao/ORB.cpp: init_orb_globals() returns void, changed to
+	  ACE_CHECK instead of ACE_CHECK_RETURN.
+	
 Wed Nov  8 17:49:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Cache_Manager.cpp (close_i): Fixed a problem on
