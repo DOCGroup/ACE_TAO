@@ -441,7 +441,6 @@ public:
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. 
    */
-   */
   ACE_Malloc_T (const ACE_TCHAR *pool_name,
                 const ACE_TCHAR *lock_name,
                 const ACE_MEM_POOL_OPTIONS *options = 0);
