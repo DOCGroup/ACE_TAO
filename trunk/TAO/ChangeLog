@@ -1,3 +1,8 @@
+Tue Nov 30 08:38:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+          Fixed compile problems.
+
 Mon Nov 29 21:57:06 MST 2004  Scott Harris <harris_s@ociweb.com>
 
         * examples/Load_Balancing_persistent/Identity_Client.cpp:
@@ -6,7 +11,7 @@ Mon Nov 29 21:57:06 MST 2004  Scott Harris <harris_s@ociweb.com>
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
 
-          Removed extra commas after ACE_TEXT macros that should 
+          Removed extra commas after ACE_TEXT macros that should
           not have been there because the strings should have
           been concatenated.  Originally found a bad log output
           and searched for other similar problems.
