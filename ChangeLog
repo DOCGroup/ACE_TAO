@@ -1,3 +1,22 @@
+Mon Mar 15 08:31:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Warn the user if the version of perl they are using is less than
+          perl 5.6.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug with custom file types where header and inline files
+          would not be considered as generated targets if matching generated
+          source files were not explicitly listed.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Add the $(PATH) to VPATH when using custom commands in case the
+          custom command does not have a path in the exe name, which will
+          allow GNU Make to find the command and process the rule.
+
 Sun Mar 14 15:44:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/APC.cpp:
@@ -104,9 +123,9 @@ Sat Mar 13 18:25:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Mar 13 18:06:57 2004  Olli Savia  <ops@iki.fi>
 
-	* include/makeinclude/platform_g++_common.GNU:
-	* ace/config-lynxos.h:
-	  Enabled implicit template instantiation for LynxOS 3.x.
+        * include/makeinclude/platform_g++_common.GNU:
+        * ace/config-lynxos.h:
+          Enabled implicit template instantiation for LynxOS 3.x.
 
 Sat Mar 13 09:43:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -121,9 +140,9 @@ Sat Mar 13 09:43:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Mar 12 16:29:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/SString_Test.cpp:
+        * tests/SString_Test.cpp:
 
-	  Fixed warnings in g++ builds.
+          Fixed warnings in g++ builds.
 
 Fri Mar 12 12:51:45 2004  Chad Elliott  <elliott_c@ociweb.com>
 
