@@ -1861,12 +1861,12 @@ namespace PortableInterceptor
 // Traits specializations.
 namespace TAO
 {
-
+// Hand crafted. Remove export flag.
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_
 
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<PortableInterceptor::IORInterceptor>
+  struct Objref_Traits<PortableInterceptor::IORInterceptor>
   {
     static PortableInterceptor::IORInterceptor_ptr tao_duplicate (
         PortableInterceptor::IORInterceptor_ptr
@@ -1882,6 +1882,40 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+  // Hand crafted. These are not forward declared, but used by PortableServer.
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<PortableInterceptor::ORBInitializer>
+  {
+    static PortableInterceptor::ORBInitializer_ptr tao_duplicate (
+        PortableInterceptor::ORBInitializer_ptr
+      );
+    static void tao_release (
+        PortableInterceptor::ORBInitializer_ptr
+      );
+    static PortableInterceptor::ORBInitializer_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        PortableInterceptor::ORBInitializer_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<PortableInterceptor::PolicyFactory>
+  {
+    static PortableInterceptor::PolicyFactory_ptr tao_duplicate (
+        PortableInterceptor::PolicyFactory_ptr
+      );
+    static void tao_release (
+        PortableInterceptor::PolicyFactory_ptr
+      );
+    static PortableInterceptor::PolicyFactory_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        PortableInterceptor::PolicyFactory_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
 };
 
 // TAO_IDL - Generated from
