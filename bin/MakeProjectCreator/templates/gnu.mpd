@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #----------------------------------------------------------------------------
-
+<%marker(top)%>
 MAKEFILE        = <%project_file%>
 DEPENDENCY_FILE = .depend.<%project_file%>
 <%if(exename)%>
@@ -73,6 +73,7 @@ endif
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
+<%marker(macros)%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
@@ -176,6 +177,7 @@ TAO_IDLFLAGS += <%idlflags%>
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+<%marker(local)%>
 <%comptarget%>
 <%if(idl_files)%>
 
@@ -224,10 +226,4 @@ realclean: clean <%compclean%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
 
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
-# DO NOT DELETE THIS LINE -- g++dep uses it.
-# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
+<%marker(bottom)%>

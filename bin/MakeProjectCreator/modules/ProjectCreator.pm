@@ -104,6 +104,9 @@ sub new {
   $self->{'want_static_projects'}  = $static;
   $self->{'flag_overrides'}        = {};
 
+  ## Set up the verbatim constructs
+  $self->{'verbatim'} = {};
+
   ## Valid component names within a project along with the valid file extensions
   my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
              'template_files'      => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.c", "_T\\.C", ],
@@ -205,7 +208,8 @@ sub parse_line {
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
             }
-            $self->{'assign'} = {};
+            $self->{'assign'}   = {};
+            $self->{'verbatim'} = {};
           }
         }
         $self->{$typecheck}         = 0;
@@ -228,10 +232,9 @@ sub parse_line {
             }
 
             if (defined $file) {
-              my($rp) = $self->{'reading_parent'};
-              push(@$rp, 1);
+              push(@{$self->{'reading_parent'}}, 1);
               $status = $self->parse_file($file);
-              pop(@$rp);
+              pop(@{$self->{'reading_parent'}});
 
               if (!$status) {
                 $errorString = "ERROR: Invalid parent: $parent";
@@ -314,8 +317,17 @@ sub parse_line {
         }
       }
       else {
-        $errorString = "ERROR: Invalid component name: $comp";
-        $status = 0;
+        if ($comp eq 'verbatim') {
+          my($type, $loc) = split(/\s*,\s*/, $name);
+          if (!$self->parse_verbatim($ih, $comp, $type, $loc)) {
+            $errorString = "ERROR: Unable to process $comp";
+            $status = 0;
+          }
+        }
+        else {
+          $errorString = "ERROR: Invalid component name: $comp";
+          $status = 0;
+        }
       }
     }
     else {
@@ -435,6 +447,41 @@ sub parse_components {
   }
 
   return $status;
+}
+
+
+sub parse_verbatim {
+  my($self)    = shift;
+  my($fh)      = shift;
+  my($tag)     = shift;
+  my($type)    = shift;
+  my($loc)     = shift;
+
+  ## All types are lowercase
+  $type = lc($type);
+
+  if (!defined $self->{'verbatim'}->{$type}) {
+    $self->{'verbatim'}->{$type} = {};
+  }
+  $self->{'verbatim'}->{$type}->{$loc} = [];
+  my($array) = $self->{'verbatim'}->{$type}->{$loc};
+
+  while(<$fh>) {
+    my($line) = $self->strip_line($_);
+
+    if ($line eq "") {
+    }
+    elsif ($line =~ /^}/) {
+      ## This is not an error,
+      ## this is the end of the components
+      last;
+    }
+    else {
+      push(@$array, $line);
+    }
+  }
+
+  return 1;
 }
 
 
@@ -1381,6 +1428,32 @@ sub update_project_info {
   push(@$pi, $arr);
 
   return $value;
+}
+
+
+sub get_verbatim {
+  my($self)   = shift;
+  my($marker) = shift;
+  my($type)   = lc(substr("$self", 0, 3));  ## This number corresponds to
+                                            ## signif in Driver.pm
+  my($str)    = undef;
+  my($thash)  = $self->{'verbatim'}->{$type};
+
+  if (defined $thash) {
+    if (defined $thash->{$marker}) {
+      my($crlf) = $self->crlf();
+      foreach my $line (@{$thash->{$marker}}) {
+        if (!defined $str) {
+          $str = "";
+        }
+        $str .= $self->process_special($line) . $crlf;
+      }
+      if (defined $str) {
+        $str .= $crlf;
+      }
+    }
+  }
+  return $str;
 }
 
 

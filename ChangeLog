@@ -1,3 +1,19 @@
+Fri Nov  8 12:57:57 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Added documentation for the new verbatim keyword.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Added functionality to place test verbatim into a generated
+          project file.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added verbatim markers top, macros, local and bottom.
+
 Fri Nov  8 12:52:16 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:

@@ -26,7 +26,7 @@ my(@keywords) = ('if', 'else', 'endif',
                  'noextension', 'dirname', 'basename', 'basenoextension',
                  'foreach', 'forfirst', 'fornotfirst',
                  'fornotlast', 'forlast', 'endfor',
-                 'comment', 'flag_overrides',
+                 'comment', 'flag_overrides', 'marker',
                 );
 
 # ************************************************************
@@ -666,6 +666,19 @@ sub handle_flag_overrides {
 }
 
 
+sub handle_marker {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!$self->{'if_skip'}) {
+    my($value) = $self->{'prjc'}->get_verbatim($name);
+    if (defined $value) {
+      $self->append_current($value);
+    }
+  }
+}
+
+
 ## Given a line that starts with an identifier, we split
 ## then name from the possible value stored inside ()'s and
 ## we stop looking at the line when we find the %> ending
@@ -743,6 +756,9 @@ sub process_name {
       }
       elsif ($name eq 'flag_overrides') {
         $self->handle_flag_overrides($val);
+      }
+      elsif ($name eq 'marker') {
+        $self->handle_marker($val);
       }
       elsif ($name eq 'noextension') {
         $self->handle_noextension($val);

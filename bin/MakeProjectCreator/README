@@ -112,6 +112,20 @@ depends         Specifies 1 or more project names upon which this project depend
 dllflags	(Windows Only) Specifies preprocessor flags needed for dll's
 libflags	(Windows Only) Specifies preprocessor flags needed for lib's
 
+verbatim        This allows arbitrary information to be place in a generated
+                project file.  The syntax is as follows:
+
+                verbatim(<project type>, <location>) {
+                  ..
+                  ..
+                }
+
+                When MPC is generating a project of type <project type> and
+                comes upon a marker that matches the <location> name, it
+                will place the text found inside the construct directly into
+                the generated project.  If you need to preserve whitespace,
+                the line or lines should be placed inside double quotes.
+
 The Following are GNU only:
 requires        Specifies which tao macros should be set to build the target
 avoids          Specifies which tao macros should not be set to build the target
