@@ -46,21 +46,21 @@ test_duplicates (size_t count)
       size_t handle = ACE_static_cast(size_t, ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
 
       if (ACE_ODD (handle))
-	{
-	  if (handle_set.is_set ((ACE_HANDLE) handle))
-	    duplicates++;
+        {
+          if (handle_set.is_set ((ACE_HANDLE) handle))
+            duplicates++;
 
-	  handle_set.set_bit ((ACE_HANDLE) handle);
-	  sets++;
-	}
+          handle_set.set_bit ((ACE_HANDLE) handle);
+          sets++;
+        }
       else
-	{
-	  if (handle_set.is_set ((ACE_HANDLE) handle))
-	    duplicates--;
+        {
+          if (handle_set.is_set ((ACE_HANDLE) handle))
+            duplicates--;
 
-	  handle_set.clr_bit ((ACE_HANDLE) handle);
-	  clears++;
-	}
+          handle_set.clr_bit ((ACE_HANDLE) handle);
+          clears++;
+        }
     }
 
   ACE_ASSERT (count == sets + clears);
@@ -125,7 +125,7 @@ test_boundaries (void)
 
 static void
 test_performance (size_t max_handles,
-		  size_t max_iterations)
+                  size_t max_iterations)
 {
   ACE_Handle_Set handle_set;
   size_t i;
@@ -144,7 +144,7 @@ test_performance (size_t max_handles,
 
       // Only iterate up to <handle_set.max_set ()>.
       while (iter () != ACE_INVALID_HANDLE)
-	count++;
+        count++;
     }
 
   timer.stop ();
@@ -157,24 +157,24 @@ test_performance (size_t max_handles,
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("real time = %u usecs\n"),
-	      et.real_time));
+              ASYS_TEXT ("real time = %u usecs\n"),
+              et.real_time));
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("time per each of the %d calls = %u usecs\n"),
-	      count,
-	      et.real_time / count));
+              ASYS_TEXT ("time per each of the %d calls = %u usecs\n"),
+              count,
+              et.real_time / count));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
-	      et.real_time,
-	      et.user_time,
-	      et.system_time));
+              ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+              et.real_time,
+              et.user_time,
+              et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("time per each of the %d calls = %f usecs\n"),
-	      count,
-	      et.real_time / double (count) * 1000000));
+              ASYS_TEXT ("time per each of the %d calls = %f usecs\n"),
+              count,
+              et.real_time / double (count) * 1000000));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 }
 
@@ -196,12 +196,12 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+// The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
-template class ACE_Node<ACE_HANDLE>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
 #pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
-#pragma instantiate ACE_Node<ACE_HANDLE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
