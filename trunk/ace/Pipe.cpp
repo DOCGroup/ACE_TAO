@@ -41,7 +41,7 @@ ACE_Pipe::open (void)
   else
     {
       ACE_INET_Addr sv_addr (my_addr.get_port_number (),
-                             ASYS_TEXT ("localhost"));
+                             ACE_LOCALHOST);
 
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
