@@ -1,13 +1,10 @@
 Tue Nov 18 01:37:42 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_operation.cpp,be_state_operation}.cpp: We now
-	properly handle the declaration and assigining to the return
-	value.
+ 	properly handle the declaration and assigning to the return value.
 
 	* TAO_IDL/be/be_state_argument.cpp: Removed a spurious ()
 	appearing after a function call.
-
-Mon Nov 17 23:33:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_structure,be_union}.cpp: Carlos had removed the
 	if !imported check in the member counting function, but it had
