@@ -104,28 +104,28 @@ while the rest of the options are set via the service configurator
 <TH>Option</TH>
 <TH>Description</TH></TR>
 <!-- <TR NAME="ORBsvcconf"> -->
-<TD><CODE>-ORBsvcconf</CODE> <EM>config file name</EM></TD>
+<TD><CODE>-ORBSvcConf</CODE> <EM>config file name</EM></TD>
 <TD>Specifies the name of the file from which it will read dynamic service configuration
 directives <EM>ala</EM> ACE's Service Configurator.</TD></TR>
-<TD><CODE>-ORBsvcconfdirective</CODE> <EM>directivestring</EM></TD>
+<TD><CODE>-ORBSvcConfDirective</CODE> <EM>directivestring</EM></TD>
 <TD>Specifies a service configuration
 directive, which is passed to ACE's Service Configurator.</TD></TR>
 <TR>
-<TD><CODE>-ORBdaemon</CODE></TD>
+<TD><CODE>-ORBDaemon</CODE></TD>
 <TD>Specifies that the ORB should <I>daemonize</I> itself.</TD></TR>
 <TR>
-<TD><CODE>-ORBdebug</CODE></TD>
+<TD><CODE>-ORBDebug</CODE></TD>
 <TD>Turns on the output of debugging messages within ACE's Service Configurator
 componentry.</TD></TR>
 <TR>
-<TD><CODE>-ORBdebuglevel</CODE> <EM>level</EM></TD>
+<TD><CODE>-ORBDebugLevel</CODE> <EM>level</EM></TD>
 <TD>Control the level of debugging in the ORB. Higher number produce
 more output (try 10).
 </TD></TR>
 <TR>
 
-<TD><CODE>-ORBendpoint</CODE> <EM>endpoint</EM></TD> <TD><a
-name="-ORBendpoint"></a>Tells the ORB to listen for requests on the
+<TD><CODE>-ORBEndpoint</CODE> <EM>endpoint</EM></TD> <TD><a
+name="-ORBEndpoint"></a>Tells the ORB to listen for requests on the
 interface specified by <I><EM>endpoint</EM></I>.  Endpoints are
 specified using a URL style format.  An endpoint has the form:
 <blockquote><CODE>
@@ -136,80 +136,80 @@ each address.  An example of an IIOP endpoint is:
 <blockquote><CODE>
 iiop://<I><EM>hostname</EM></I>:<I><EM>port</EM></I>
 </CODE></blockquote>
-Sets of endpoints may be specified using multiple <CODE>-ORBendpoint</CODE>
+Sets of endpoints may be specified using multiple <CODE>-ORBEndpoint</CODE>
 options or by delimiting endpoints with a semi-colon (;).  For example,
 <blockquote><CODE>
--ORBendpoint iiop://localhost:9999 -ORBendpoint uiop:///tmp/mylocalsock
+-ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock
 </CODE></blockquote>
 is equivalent to:
 <blockquote><CODE>
--ORBendpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock'
+-ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock'
 </CODE></blockquote>
 Notice the single quotes (') in the latter option specification.  Single
 quotes are needed to prevent the shell from interpreting text after the
 semi-colon as another command to run.<P>
 If an endpoint is specified without an <CODE>addr</CODE> such as the following:
 <blockquote><CODE>
--ORBendpoint uiop://
+-ORBEndpoint uiop://
 </CODE></blockquote>
 then a default endpoint will be created for the specified protocol.
 </TD></TR>
 
 <TR>
 
-<TD><CODE>-ORBhost</CODE> <EM>hostname</EM></TD> <TD><a
-name="-ORBhost"></a>Tells the ORB to listen for requests on the
+<TD><CODE>-ORBHost</CODE> <EM>hostname</EM></TD> <TD><a
+name="-ORBHost"></a>Tells the ORB to listen for requests on the
 interface associated with the host named
 <I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>
 <STRONG>NOTE:</STRONG> This option has been superceded by the
-<CODE>-ORBendpoint</CODE> option. It will not be supported in the
+<CODE>-ORBEndpoint</CODE> option. It will not be supported in the
 future.</TD></TR>
 
 <TR>
 
-<TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD> <TD>Tells the ORB to
+<TD><CODE>-ORBPort</CODE> <EM>portspec</EM></TD> <TD>Tells the ORB to
 listen for requests on the port specified by
 <I><EM>portspec</EM></I>. If not specified, the OS gets to choose a
 random empty port.  This option is valid only for IIOP endpoints.<BR>
 <STRONG>NOTE:</STRONG> This option has been superceded by the
-<CODE>-ORBendpoint</CODE> option. It will not be supported in the
+<CODE>-ORBEndpoint</CODE> option. It will not be supported in the
 future.</TD>
 
 </TR>
 
 <TR>
-<TD><CODE>-ORBobjrefstyle</CODE> <EM>which</EM></TD>
+<TD><CODE>-ORBObjRefStyle</CODE> <EM>which</EM></TD>
 <TD>Specifies the user-visible style of object references. The range of values
 is <CODE>IOR</CODE>, which is the traditional nonsensical object reference,
 or <CODE>URL</CODE>, which looks more like a URL.</TD></TR>
 <TR>
-<TD><CODE>-ORBrcvsock</CODE> <EM>receive buffer size</EM></TD>
-<TD><A NAME="-ORBrcvsock"></a>Specify the size of the socket receive buffer as a positive, non-zero integer.
+<TD><CODE>-ORBRcvSock</CODE> <EM>receive buffer size</EM></TD>
+<TD><A NAME="-ORBRcvSock"></a>Specify the size of the socket receive buffer as a positive, non-zero integer.
 If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
 <TR>
-<TD><CODE>-ORBsndsock</CODE> <EM>send buffer size</EM></TD>
-<TD><A NAME="-ORBsndsock"></a>Specify the size of the socket send buffer as a positive, non-zero integer.
+<TD><CODE>-ORBSndSock</CODE> <EM>send buffer size</EM></TD>
+<TD><A NAME="-ORBSndSock"></a>Specify the size of the socket send buffer as a positive, non-zero integer.
 If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
 <TR>
-<TD><CODE>-ORBnameserviceport</CODE> <EM>portspec</EM></TD>
+<TD><CODE>-ORBNameServicePort</CODE> <EM>portspec</EM></TD>
 <TD>Specifies which port the Naming Service is listening on for
 multicast requests.</TD></TR>
 <TR>
-<TD><CODE>-ORBnameserviceior</CODE> <EM>ior</EM></TD>
+<TD><CODE>-ORBNameServiceIOR</CODE> <EM>ior</EM></TD>
 <TD>Specifies the IOR for the Naming Service.</TD></TR>
 <TR>
-<TD><CODE>-ORBtradingserviceior"</CODE> <EM>ior</EM></TD>
+<TD><CODE>-ORBTradingServiceIOR"</CODE> <EM>ior</EM></TD>
 <TD>Specifiles the IOR for the Trading Service.</TD></TR>
 <TR>
-<TD><CODE>-ORBtradingserviceport"</CODE> <EM>portspec</EM></TD>
+<TD><CODE>-ORBTradingServicePort"</CODE> <EM>portspec</EM></TD>
 <TD>Specifies to which port the Trading Service is listening on for
     multicast requests.</TD></TR>
 <TR>
-<TD><CODE>-ORBcollocation</CODE> <EM>yes/no</EM></TD>
+<TD><CODE>-ORBCollocation</CODE> <EM>yes/no</EM></TD>
 <TD>Specifies the use of collocation object optimization.  Default is yes.</TD></TR>
 <TR>
   <TD>
-      <CODE>-ORBcollocationstrategy</CODE> <EM>thru_poa/direct</EM>
+      <CODE>-ORBCollocationStrategy</CODE> <EM>thru_poa/direct</EM>
   </TD>
   <TD>
       Specifies what kind of collocated object to use.  If the
@@ -222,7 +222,7 @@ multicast requests.</TD></TR>
 </TR>
 <TR>
   <TD>
-      <CODE>-ORBglobalcollocation</CODE> <EM>yes/no</EM>
+      <CODE>-ORBGlobalCollocation</CODE> <EM>yes/no</EM>
   </TD>
   <TD>
       Specifies whether objects from different ORBs within the same
@@ -231,21 +231,21 @@ multicast requests.</TD></TR>
   </TD>
 </TR>
 <TR>
-<TD><CODE>-ORBpreconnect</CODE> <EM>endpoint</EM></TD>
-<TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to
+<TD><CODE>-ORBPreconnect</CODE> <EM>endpoint</EM></TD>
+<TD><A name="-ORBPreconnect"></a>Pre-establishes a blocking connection to
 each listed <EM>endpoint</EM>. If a connection cannot be established the
 failed preconnection will be ignored and the next preconnection in the list
 will be processed.  Successful and unsuccessful preconnections will be
 displayed if a debugging level greater than or equal to one is specified by
-using the <CODE>-ORBdebuglevel</CODE> option.  Listing the same combination
+using the <CODE>-ORBDebugLevel</CODE> option.  Listing the same combination
 multiple times will properly establish multiple connections to that endpoint.
-The <CODE>-ORBpreconnect</CODE> option uses the same endpoint format as the
-<CODE>-ORBendpoint</CODE> option.  Specifying IIOP endpoints using a comma
+The <CODE>-ORBPreconnect</CODE> option uses the same endpoint format as the
+<CODE>-ORBEndpoint</CODE> option.  Specifying IIOP endpoints using a comma
 delimited list of <EM>host<STRONG>:</STRONG>port</EM> pairs is deprecated
 and will not be supported in the future.</TD></TR>
 <TR>
-<TD><CODE>-ORBcdrtradeoff</CODE> <EM>maxsize</EM></TD>
-<TD><A name="-ORBCDRtradeoff"></a>Control the strategy to tradeoff
+<TD><CODE>-ORBCDRTradeoff</CODE> <EM>maxsize</EM></TD>
+<TD><A name="-ORBCDRTradeoff"></a>Control the strategy to tradeoff
 between copy vs no copy marshalling of octet sequences.
 If an octet sequence is smaller than <EM>maxsize</EM> and the current
 message block contains enough space for it the octet sequence is
@@ -256,14 +256,14 @@ copied instead of appended to the CDR stream.</TD></TR>
 method, which is necessary if the ORB is being linked dynamically via the ACE Service Configurator
 which is not reentrant.</TD></TR>
 <TR>
-<TD><CODE>-ORBgioplite</CODE></TD>
-<TD><A name="-ORBgioplite"></a>Enable a lightweight version of the
+<TD><CODE>-ORBGIOPlite</CODE></TD>
+<TD><A name="-ORBGIOPlite"></a>Enable a lightweight version of the
 	    GIOP protocol. This protocol removes some of the fields in
 	    the GIOP and the Request header. It only works on
 	    homogenous environments..</TD></TR>
 <TR>
-<TD><CODE>-ORBdotteddecimaladdresses</CODE> <EM>boolean (0 / 1)</EM></TD>
-<TD><A name="-ORBdotteddecimaladdresses"></a> Use the dotted decimal
+<TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0 / 1)</EM></TD>
+<TD><A name="-ORBDottedDecimalAddresses"></a> Use the dotted decimal
             notation for addresses.</TD></TR>
 <TR>
 <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
@@ -285,23 +285,23 @@ which is not reentrant.</TD></TR>
 <TH>Option</TH>
 <TH>Description</TH></TR>
 <TR>
-<TD><CODE>-ORBresources</CODE> <EM>which</EM></TD>
+<TD><CODE>-ORBResources</CODE> <EM>which</EM></TD>
 <TD>Specify whether each thread uses a global
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 <TR>
-<TD><CODE>-ORBreactorlock</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBreactorlock"></a>Specify whether the ORB reactor is
+<TD><CODE>-ORBReactorLock</CODE> <EM>which</EM></TD>
+<TD><a name="-ORBReactorLock"></a>Specify whether the ORB reactor is
 	      thread-safe
 (<em>which</em> = <code>token</code>) or not
 (<em>which</em> = <code>null</code>).  Default is <code>token</code>.
 	      <P>This option has been superseeded by
-		<CODE>-ORBreactortype</CODE>
+		<CODE>-ORBReactorType</CODE>
 	      </P>
 </TD></TR>
 <TR>
-<TD><CODE>-ORBreactortype</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBcoltable"></a>Specify what kind of reactor does the
+<TD><CODE>-ORBReactorType</CODE> <EM>which</EM></TD>
+<TD><a name="-ORBColTable"></a>Specify what kind of reactor does the
 	      ORB use, the options are:
   <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
   <TR><TH><em>which</em></TH><TH>Reactor</TH></TR>
@@ -330,13 +330,13 @@ which is not reentrant.</TD></TR>
   </TABLE>
   The default is <code>select_mt</code></TD></TR>
 <TR>
-<TD><CODE>-ORBcoltable</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBcoltable"></a>Specify whether each ORB uses a global
+<TD><CODE>-ORBColTable</CODE> <EM>which</EM></TD>
+<TD><a name="-ORBColTable"></a>Specify whether each ORB uses a global
 (<em>which</em> = <code>global</code>) or a per-ORB
 (<em>which</em> = <code>orb</code>) collocation table.</TD></TR>
 <TR>
-<TD><CODE>-ORBinputcdrallocator</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBinputcdrallocator"></a>
+<TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
+<TD><a name="-ORBInputCDRAllocator"></a>
 	      Specify whether the ORB uses a global
 	      (<em>which</em> = <code>global</code>)
 	      or a per-thread (<em>which</em> = <code>tss</code>)
@@ -357,8 +357,8 @@ which is not reentrant.</TD></TR>
 
 <H3><CODE>TAO_Default_Server_Strategy_Factory</CODE><A NAME="DefaultServer"></A></H3>
 
-<p><em>Note:</em> <code>-ORBdemuxstrategy</code> flag has been changed to <code>-ORBsystemidpolicydemuxstrategy</code> and <code>-ORBuseridpolicydemuxstrategy</code>.
-<p><em>Note:</em> <code>-ORBtablesize</code> flag has been changed to <code>-ORBactiveobjectmapsize</code>.
+<p><em>Note:</em> <code>-ORBDemuxStrategy</code> flag has been changed to <code>-ORBSystemidPolicyDemuxStrategy</code> and <code>-ORBUseridPolicyDemuxStrategy</code>.
+<p><em>Note:</em> <code>-ORBTableSize</code> flag has been changed to <code>-ORBActiveObjectMapSize</code>.
 
 <blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
@@ -367,38 +367,38 @@ which is not reentrant.</TD></TR>
 <TH>Description</TH></TR>
 <TR>
 
-<TD><CODE>-ORBconcurrency</CODE> <EM>which</EM></TD> <TD>Specify which
+<TD><CODE>-ORBConcurrency</CODE> <EM>which</EM></TD> <TD>Specify which
 concurrency strategy to use.  Range of values is <code>reactive</code>
 for a purely Reactor-driven concurrency strategy or
 <code>thread-per-connection</code> for creating a new thread to
 service each connection.</TD></TR> <TR>
 
-<TD><CODE>-ORBactiveobjectmapsize</CODE> <EM>active object map
+<TD><CODE>-ORBActiveObjectMapSize</CODE> <EM>active object map
 size</EM></TD> <TD>Specify the size of the active object map. If not
 specified, the default value is 64.</TD></TR> <TR>
 
-<TD><CODE>-ORBuseridpolicydemuxstrategy</CODE> <EM>user id policy
+<TD><CODE>-ORBUseridPolicyDemuxStrategy</CODE> <EM>user id policy
 based demultiplexing strategy</EM></TD> <TD>Specify the demultiplexing
 lookup strategy to be used with the user id policy.  The
 <EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE> or
 <CODE>linear</CODE>.  This option defaults to use the
 <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
 
-<TD><CODE>-ORBsystemidpolicydemuxstrategy</CODE> <EM>system id policy
+<TD><CODE>-ORBSystemidPolicyDemuxStrategy</CODE> <EM>system id policy
 based demultiplexing strategy</EM></TD> <TD>Specify the demultiplexing
 lookup strategy to be used with the system id policy. The
 <EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE>,
 <CODE>linear</CODE>, or <CODE>active</CODE>. This option defaults to
 use the <CODE>active</CODE> strategy. </TD></TR> <TR>
 
-<TD><CODE>-ORBuniqueidpolicyreversedemuxstrategy</CODE> <EM>unique id
+<TD><CODE>-ORBUniqueidPolicyReverseDemuxStrategy</CODE> <EM>unique id
 policy based reverse demultiplexing strategy</EM></TD> <TD>Specify the
 reverse demultiplexing lookup strategy to be used with the unique id
 policy. The <EM>reverse demultiplexing strategy</EM> can be one of
 <CODE>dynamic</CODE> or <CODE>linear</CODE>. This option defaults to
 use the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
 
-<TD><CODE>-ORBallowreactivationofsystemids</CODE> <EM>allows
+<TD><CODE>-ORBAllowReactivationOfSystemids</CODE> <EM>allows
 reactivation of system ids</EM></TD> <TD>Specify whether system ids
 can be reactivated, i.e., once an id that was generated by the system
 has be deactivated, will the user reactivate a new servant using the
@@ -409,27 +409,27 @@ and some memory on the server side can be saved. The
 <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
 <TR>
 
-<TD><CODE>-ORBactivehintinids</CODE> <EM>adds an active hint in
+<TD><CODE>-ORBActiveHintInIds</CODE> <EM>adds an active hint in
 ids</EM></TD> <TD>Specify whether an active hint should be added to
 ids. With active hints, ids can be found quickly.  However, they lead
 to larger IORs. Note that this option is disregarded
-<CODE>-ORBallowreactivationofsystemids</CODE> is set to
-<CODE>0</CODE>. The <EM>-ORBactivehintinids</EM> can be <CODE>0</CODE>
+<CODE>-ORBAllowReactivationOfSystemids</CODE> is set to
+<CODE>0</CODE>. The <EM>-ORBActiveHintInIds</EM> can be <CODE>0</CODE>
 or <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
 <TR>
 
-<TD><CODE>-ORBpoamapsize</CODE> <EM>poa map size</EM></TD> <TD>Specify
+<TD><CODE>-ORBPoaMapSize</CODE> <EM>poa map size</EM></TD> <TD>Specify
 the size of the poa map. If not specified, the default value is
 24.</TD></TR> <TR>
 
-<TD><CODE>-ORBpersiententidpolicydemuxstrategy</CODE> <EM>persistent
+<TD><CODE>-ORBPersiententidPolicyDemuxStrategy</CODE> <EM>persistent
 id policy based demultiplexing strategy</EM></TD> <TD>Specify the
 demultiplexing lookup strategy to be used with the persistent id
 policy.  The <EM>demultiplexing strategy</EM> can be one of
 <CODE>dynamic</CODE> or <CODE>linear</CODE>.  This option defaults to
 use the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
 
-<TD><CODE>-ORBtransientidpolicydemuxstrategy</CODE> <EM>transient id
+<TD><CODE>-ORBTransientidPolicyDemuxStrategy</CODE> <EM>transient id
 policy based demultiplexing strategy</EM></TD> <TD>Specify the
 demultiplexing lookup strategy to be used with the transient id
 policy. The <EM>demultiplexing strategy</EM> can be one of
@@ -437,38 +437,38 @@ policy. The <EM>demultiplexing strategy</EM> can be one of
 <CODE>active</CODE>. This option defaults to use the
 <CODE>active</CODE> strategy. </TD></TR> <TR>
 
-<TD><CODE>-ORBactivehintinpoanames</CODE> <EM>adds an active hint in
+<TD><CODE>-ORBActiveHintInPOANames</CODE> <EM>adds an active hint in
 poa names</EM></TD> <TD>Specify whether an active hint should be added
 to poa names. With active hints, poa names can be found quickly.
 However, they lead to larger IORs. The
-<EM>-ORBactivehintinpoanames</EM> can be <CODE>0</CODE> or
+<EM>-ORBActiveHintInPOANames</EM> can be <CODE>0</CODE> or
 <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
 <TR>
 
-<TD><CODE>-ORBthreadflags</CODE> <EM>thread flags</EM></TD>
+<TD><CODE>-ORBThreadFlags</CODE> <EM>thread flags</EM></TD>
 <TD>Specify the flags used for thread creation. Flags can be any
 logical-OR combination of <CODE>THR_DETACHED</CODE>,
 <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
 <CODE>THE_SUSPENDED</CODE>.</TD></TR> <TR>
 
-<TD><CODE>-ORBpoalock</CODE> <EM>lock type</EM></TD> <TD><a
-name="-ORBpoalock"></a>Specify the type of lock to be used for POA
+<TD><CODE>-ORBPOALock</CODE> <EM>lock type</EM></TD> <TD><a
+name="-ORBPOALock"></a>Specify the type of lock to be used for POA
 accesses.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
 <code>thread</code>.</TD></TR> <TR>
 
-<TD><CODE>-ORBcoltbllock</CODE> <EM>lock type</EM></TD> <TD><a
-name="-ORBcoltbllock"></a>Specify the type of lock to be used for the
+<TD><CODE>-ORBColTblLock</CODE> <EM>lock type</EM></TD> <TD><a
+name="-ORBColTblLock"></a>Specify the type of lock to be used for the
 global collocation table.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
 <code>thread</code>.</TD></TR> <TR>
 
-<TD><CODE>-ORBconnectorlock</CODE> <EM>lock type</EM></TD> <TD><a
-name="-ORBconnectorlock"></a>Specify the type of lock to be used by
+<TD><CODE>-ORBConnectorLock</CODE> <EM>lock type</EM></TD> <TD><a
+name="-ORBConnectorLock"></a>Specify the type of lock to be used by
 the connector.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
@@ -487,7 +487,7 @@ specifies that no locking be performed.  The default is
 <TH>Option</TH>
 <TH>Description</TH></TR>
 <TR>
-<TD><CODE>-ORBiiopprofilelock</CODE> <EM>which</EM></TD>
+<TD><CODE>-ORBIIOPProfileLock</CODE> <EM>which</EM></TD>
 <TD>
 Specify, whether to use a lock for accessing the IIOP Profile or not.
 Default is <code>thread</code>, which means that a lock is used. The
@@ -496,9 +496,9 @@ This makes sense in case of optiziations and is allowed when
 no forwarding is used or only a single threaded client.
 </TD></TR>
 <TR>
-<TD><CODE>-ORBclientconnectionhandler</CODE> <EM>MT / ST / RW</EM></TD>
+<TD><CODE>-ORBClientConnectionHandler</CODE> <EM>MT / ST / RW</EM></TD>
 
-<TD><A name="-ORBclientconnectionhandler"></a>
+<TD><A name="-ORBClientConnectionHandler"></a>
 
 ST means use the single-threaded client connection handler, i.e., the
 leader follower model will not be used.  However, ST does support
