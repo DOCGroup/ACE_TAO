@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+Here we implement the details of our compression.  By having both
+compression and decompression in one object it's easier to keep track
+of implementation details.  Splitting Xmit/Recv like I did will make
+things more difficult if something has to change in their interaction.
+<HR>
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>Compressor.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Stream.h">ace/SOCK_Stream.h</A>"
+
+<font color=#008888>Compressor::Compressor</font>( void )
+        : Protocol_Task()
+{
+    ;
+}
+
+<font color=#008888>Compressor::~Compressor</font>(void)
+{
+    ;
+}
+
+<font color=red>/* This is where you insert your compression code.  Most compressors
+   want to work on a block of data instead of a byte-stream.
+   Fortunately the message block has a block that can be compressed.
+   Take a look at libz for a quick way to add compression to your
+   apps
+ */</font>
+int <font color=#008888>Compressor::send</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
+{
+    ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) <font color=#008888>Compressor::send</font>() compressing (%s)\n</font>", message->rd_ptr() ));
+
+        <font color=red>// Create a block to hold the compressed data.  I belive libz</font>
+        <font color=red>// recommends a buffer about 10-20% larger than the source.</font>
+        <font color=red>// Other libraries/algorithms may have their own quirks.</font>
+    ACE_Message_Block * compressed = new ACE_Message_Block( message->size() );
+
+        <font color=red>// Perform a bogus compression algorithm.  'CD' just tells me</font>
+        <font color=red>// that this is compressed data and when we "<font color=green>decompress</font>" we'll </font>
+        <font color=red>// look for this signature to validate the data received.</font>
+    <font color=#008888>ACE_OS::sprintf</font>( compressed->wr_ptr(), "<font color=green>CD:%s</font>", message->rd_ptr() );
+    compressed->wr_ptr( strlen(compressed->wr_ptr())+1 );
+
+        <font color=red>// Send the compressed data down the stream to the next module</font>
+    this->put_next( compressed );
+
+        <font color=red>// We're done here.</font>
+    message->release();
+
+    return( 0 );
+}
+
+<font color=red>/* And here's the decompression side.  We've written Xmit/Recv so that 
+   we're guaranteed to get an entire block of compressed data.  If
+   we'd used recv() in the Recv object then we might have gotten a
+   partial block and that may not decompress very nicely.
+ */</font>
+int <font color=#008888>Compressor::recv</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
+{
+    ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) <font color=#008888>Compress::recv</font>() decompressing (%s)\n</font>", message->rd_ptr() ));
+
+        <font color=red>// Room for the decompressed data.  In the real world you</font>
+        <font color=red>// would probably want to send the original (uncompressed)</font>
+        <font color=red>// data size in the message.  You can predict the maximum</font>
+        <font color=red>// possible decompression size but it's cheap and easy just to </font>
+        <font color=red>// send that along.  Look again at how I do exacly that</font>
+        <font color=red>// between Xmit and Recv.</font>
+    ACE_Message_Block * decompressed = new ACE_Message_Block( message->size() );
+
+        <font color=red>// Check for our signature.  Even when you use a real</font>
+        <font color=red>// compression algorithm you may want to include your own</font>
+        <font color=red>// signature so that you can verify the block.  It pays to be</font>
+        <font color=red>// paranoid!</font>
+    if( <font color=#008888>ACE_OS::strncmp</font>( message->rd_ptr(), "<font color=green>CD:</font>", 3  ) )
+    {
+        ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) Improperly encompressed data.\n</font>" ));
+        message->release();
+        return(-1);
+    }
+
+        <font color=red>// Skip past the signature before going any further.</font>
+    message->rd_ptr( 3 );
+    
+        <font color=red>// Perform a bogus decompression algorithm.  This is where you </font>
+        <font color=red>// would feed to libz or your favorite decompressor.  (It's</font>
+        <font color=red>// costly but you could invoke popen() on gzip!)</font>
+    <font color=#008888>ACE_OS::sprintf</font>( decompressed->wr_ptr(), "<font color=green>%s</font>", message->rd_ptr() );
+    decompressed->wr_ptr( strlen(decompressed->wr_ptr())+1 );
+
+        <font color=red>// Recv the decompressed data down the stream to the next module</font>
+    this->put_next( decompressed );
+
+        <font color=red>// We're done here.</font>
+    message->release();
+
+    return( 0 );
+}
+
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page20.html">Continue This Tutorial</A>]</CENTER>
