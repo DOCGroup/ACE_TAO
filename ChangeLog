@@ -1,3 +1,8 @@
+Wed Mar 31 18:11:18 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Functor_String.h:
+	  Fixed compile problem in wchar builds
+
 Wed Mar 31 11:46:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/fuzz.pl:
@@ -13,7 +18,7 @@ Wed Mar 31 17:31:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
           Solaris.  Thanks to Andrew G. Harvey <agh@cisco.com> for
           discovering the problem and providing work arounds.  Also, thanks
           to Kitty for <kitty@dre.vanderbilt.edu> for recommending which
-          one to use. 
+          one to use.
 
 Wed Mar 31 14:43:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -26,7 +31,7 @@ Wed Mar 31 14:43:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
           little bit counter intuitive, as it implies that recursive
           mutexes are supported by the platform.  But in reality, it means
           that all mutexes are recursive.
-        
+
           Added ACE_HAS_NONRECURSIVE_MUTEXES, which, together with
           ACE_HAS_RECURSIVE_MUTEXES means the platform supports both
           recursive and non-recursive mutexes.  This maintains the default
