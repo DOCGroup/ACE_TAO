@@ -4,12 +4,11 @@ Mon Jul 29 17:34:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Corrected emulated exception macro.  "ACE_TRY_CHECK" not
 	  "ACE_CHECK."
-	
+
 	* orbsvcs/LoadBalancer/Makefile (BIN2):
 
 	  Corrected binary name.  "LoadManager," not
 	  "LoadBalancer_Service."
-	
 
 Mon Jul 29 17:29:37 2002  Ossama Othman  <ossama@uci.edu>
 
