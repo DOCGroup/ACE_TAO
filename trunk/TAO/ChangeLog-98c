@@ -1,3 +1,11 @@
+Fri Sep  4 14:20:28 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Slight modification to the constructor-from-cdr. Since this
+	  constructor sets any_owns_data, the value_ should be set to
+	  0, because the destructor deals only with the cdr for anys
+	  that own their data.
+
 Fri Sep 04 14:10:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run): Re-enable
