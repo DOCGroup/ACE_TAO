@@ -162,7 +162,7 @@ public:
   // No. of threads.
 };
 
-typedef ACE_Singleton <Globals,ACE_Thread_Mutex> GLOBALS;
+typedef ACE_Singleton <Globals,ACE_SYNCH_MUTEX> GLOBALS;
 
 class Client : public ACE_Task<ACE_SYNCH>
 // one of these per client thread
