@@ -163,10 +163,12 @@ main (int argc, char *argv[])
                 || i != o)
               {
 #if defined (ACE_LACKS_LONGLONG_T)
+                char bufferi[32];
+                char buffero[32];
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::ULongLong (%s,%s)\n",
-                            i.as_string ().c_str (),
-                            o.as_string ().c_str ()));
+                            i.as_string (bufferi),
+                            o.as_string (buffero)));
 #else
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::ULongLong (%Q,%Q)\n",
