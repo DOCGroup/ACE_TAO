@@ -7,11 +7,9 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/sys/os_loadavg.h"
 
-
 ACE_RCSID (LoadBalancing,
            LB_CPU_Utilization_Monitor,
            "$Id$")
-
 
 double calc_cpu_loading (void)
 {
@@ -19,9 +17,9 @@ double calc_cpu_loading (void)
   static unsigned long prev_idle = 0;
   static double prev_total = 0.0;
 
-  FILE *file_ptr = NULL;
-  char *item = NULL;
-  char *arg = NULL;
+  FILE *file_ptr = 0;
+  char *item = 0;
+  char *arg = 0;
   unsigned long delta_idle = 0;
   unsigned long user = 0;
   unsigned long nice = 0;
@@ -30,15 +28,15 @@ double calc_cpu_loading (void)
 
   double percent_cpu_load = 0.0;
 
-  if ((file_ptr = fopen("/proc/stat", "r")) == NULL)
+  if ((file_ptr = fopen("/proc/stat", "r")) == 0)
           return percent_cpu_load;
 
-  while ((fgets (buf, sizeof (buf), file_ptr)) != NULL)
+  while ((fgets (buf, sizeof (buf), file_ptr)) != 0)
   {
-    item = strtok (buf, " \t\n");
-    arg = strtok (NULL, "\n");
+    item = ACE_OS::strtok (buf, " \t\n");
+    arg = ACE_OS::strtok (0, "\n");
 
-    if (item == NULL || arg == NULL)
+    if (item == 0 || arg == 0)
             continue;
     if (item[0] == 'c' && strlen (item) == 3)
     {
