@@ -31,7 +31,7 @@ class Event_Server : public ACE_Sig_Adapter
   //
   //     Note that by inheriting from the <ACE_Sig_Adapter> we can
   //     shutdown the <ACE_Reactor> cleanly when a SIGINT is
-  //     generated. 
+  //     generated.
 public:
   Event_Server (void);
   // Constructor.
@@ -46,10 +46,10 @@ private:
 
   int configure_stream (void);
   // Setup the plumbing in the stream.
-  
+
   int set_watermarks (void);
   // Set the high and low queue watermarks.
-  
+
   int run_event_loop (void);
   // Run the event-loop for the <Event_Server>.
 
@@ -62,17 +62,17 @@ Event_Server::Event_Server (void)
   : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
   // Shutdown the <ACE_Reactor>'s event loop when a SIGINT is
   // received.
-{  
+{
   // Register to trap STDIN from the user.
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "register_stdin_handler"));
   // Register to trap the SIGINT signal.
-  else if (ACE_Reactor::instance ()->register_handler 
-	   (SIGINT, this) == -1)
+  else if (ACE_Reactor::instance ()->register_handler
+           (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "register_handler"));
@@ -92,6 +92,7 @@ Event_Server::handle_input (ACE_HANDLE)
   // This ought to be > 0, otherwise something very strange has
   // happened!!
   ACE_ASSERT (n > 0);
+  ACE_UNUSED_ARG (n); // To avoid compile warning with ACE_NDEBUG.
 
   Options::instance ()->stop_timer ();
 
@@ -110,15 +111,15 @@ Event_Server::configure_stream (void)
   // Create the <Supplier_Router>'s routing context.  This contains a
   // context shared by both the write-side and read-side of the
   // <Supplier_Router> Module.
-  ACE_NEW_RETURN (src, 
+  ACE_NEW_RETURN (src,
                   Peer_Router_Context (Options::instance ()->supplier_port ()),
                   -1);
 
   MT_Module *srm = 0;
   // Create the <Supplier_Router> module.
   ACE_NEW_RETURN (srm,
-                  MT_Module 
-                  ("Supplier_Router", 
+                  MT_Module
+                  ("Supplier_Router",
                    new Supplier_Router (src),
                    new Supplier_Router (src)),
                   -1);
@@ -126,24 +127,24 @@ Event_Server::configure_stream (void)
   MT_Module *eam = 0;
   // Create the <Event_Analyzer> module.
   ACE_NEW_RETURN (eam,
-                  MT_Module 
-                  ("Event_Analyzer", 
-                   new Event_Analyzer, 
-                   new Event_Analyzer), 
+                  MT_Module
+                  ("Event_Analyzer",
+                   new Event_Analyzer,
+                   new Event_Analyzer),
                   -1);
 
   Peer_Router_Context *crc;
   // Create the <Consumer_Router>'s routing context.  This contains a
   // context shared by both the write-side and read-side of the
   // <Consumer_Router> Module.
-  ACE_NEW_RETURN (crc, 
+  ACE_NEW_RETURN (crc,
                   Peer_Router_Context (Options::instance ()->consumer_port ()),
                   -1);
 
   MT_Module *crm = 0;
   // Create the <Consumer_Router> module.
   ACE_NEW_RETURN (crm,
-                  MT_Module 
+                  MT_Module
                   ("Consumer_Router",
                    new Consumer_Router (crc),
                    new Consumer_Router (crc)),
@@ -212,7 +213,7 @@ Event_Server::run_event_loop (void)
   return ACE_Thread_Manager::instance ()->wait ();
 }
 
-int 
+int
 Event_Server::svc (void)
 {
   if (this->configure_stream () == -1)
@@ -245,7 +246,7 @@ main (int argc, char *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "threads not supported on this platform\n"), 
+                     "threads not supported on this platform\n"),
                     1);
 #endif /* ACE_HAS_THREADS */
 }
