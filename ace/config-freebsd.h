@@ -2,9 +2,6 @@
 // $Id$
 
 // The following configuration file is designed to work for FreeBSD
-// platforms with GNU C++ and the POSIX (pthread) threads package.
-
-// Notice that the threaded version of ACE is only supported for -current.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -221,6 +218,11 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_GETIFADDRS
 #endif
+
+// Note, on FreeBSD 5, POSIX aio is now an optional kernel module which
+// must be loaded.
+// Read the aio(4) man page for what to do, otherwise any aio_* call 
+// will coredump.
 
 // By default use Proactor which does not use POSIX Real-time Signals
 #ifdef ACE_HAS_AIO_CALLS
