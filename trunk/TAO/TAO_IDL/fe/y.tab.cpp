@@ -2215,9 +2215,36 @@ case 133:
           /*
            * An expression which is a scoped name is not resolved now,
            * but only when it is evaluated (such as when it is assigned
-           * as a constant value)
+           * as a constant value).
            */
-          tao_yyval.exval = idl_global->gen()->create_expr(tao_yyvsp[0].idlist);
+          UTL_Scope *s = idl_global->scopes()->top_non_null ();
+          AST_Decl *d = 0;
+          AST_Constant *c = 0;
+
+          d = s->lookup_by_name (tao_yyvsp[0].idlist,
+                                 1);
+
+          if (d != 0)
+            {
+              c = AST_Constant::narrow_from_decl (d);
+            }
+
+          /*
+           * If an array dim, string bound, or sequence bound is an
+           * IDL constant, the constant's value and type must be
+           * assigned to this expression so it can be checked later.
+           */
+          if (c != 0)
+            {
+              tao_yyval.exval = 
+                idl_global->gen()->create_expr (c->constant_value (),
+                                                c->et ());
+            }
+          else
+            {
+              tao_yyval.exval = 
+                idl_global->gen()->create_expr (tao_yyvsp[0].idlist);
+            }
         }
 break;
 case 135:
@@ -2286,8 +2313,56 @@ break;
 case 145:
 #line 1193 "fe/idl.tao_yy"
 {
-            tao_yyvsp[0].exval->evaluate(AST_Expression::EK_const);
-            tao_yyval.exval = idl_global->gen()->create_expr(tao_yyvsp[0].exval, AST_Expression::EV_ulong);
+            int good_expression = 1;
+
+            switch (tao_yyvsp[0].exval->ev ()->et)
+            {
+              case AST_Expression::EV_ushort:
+                if (tao_yyvsp[0].exval->ev ()->u.usval == 0)
+                  {
+                    good_expression = 0;
+                  }
+                break;
+              case AST_Expression::EV_ulong:
+                if (tao_yyvsp[0].exval->ev ()->u.ulval == 0)
+                  {
+                    good_expression = 0;
+                  }
+                break;
+              case AST_Expression::EV_ulonglong:
+                if (tao_yyvsp[0].exval->ev ()->u.ullval == 0)
+                  {
+                    good_expression = 0;
+                  }
+                break;
+              case AST_Expression::EV_octet:
+                if (tao_yyvsp[0].exval->ev ()->u.oval == 0)
+                  {
+                    good_expression = 0;
+                  }
+                break;
+              case AST_Expression::EV_bool:
+                if (tao_yyvsp[0].exval->ev ()->u.bval == 0)
+                  {
+                    good_expression = 0;
+                  }
+                break;
+              default:
+                good_expression = 0;
+                break;
+            }
+
+            if (good_expression)
+              {
+                tao_yyvsp[0].exval->evaluate (AST_Expression::EK_const);
+                tao_yyval.exval = 
+                  idl_global->gen()->create_expr (tao_yyvsp[0].exval, 
+                                                  AST_Expression::EV_ulong);
+              }
+            else
+              {
+                idl_global->err ()->syntax_error (idl_global->parse_state ());
+              }
         }
 break;
 case 146:

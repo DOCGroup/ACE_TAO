@@ -1132,9 +1132,11 @@ unary_expr
 primary_expr
         : scoped_name
         {
-          // An expression which is a scoped name is not resolved now,
-          // but only when it is evaluated (such as when it is assigned
-          // as a constant value).
+          /*
+           * An expression which is a scoped name is not resolved now,
+           * but only when it is evaluated (such as when it is assigned
+           * as a constant value).
+           */
           UTL_Scope *s = idl_global->scopes()->top_non_null ();
           AST_Decl *d = 0;
           AST_Constant *c = 0;
@@ -1147,9 +1149,11 @@ primary_expr
               c = AST_Constant::narrow_from_decl (d);
             }
 
-          // If an array dim, string bound, or sequence bound is an
-          // IDL constant, the constant's value and type must be
-          // assigned to this expression so they can be checked later.
+          /*
+           * If an array dim, string bound, or sequence bound is an
+           * IDL constant, the constant's value and type must be
+           * assigned to this expression so they can be checked later.
+           */
           if (c != 0)
             {
               $$ = idl_global->gen()->create_expr (c->constant_value (),
