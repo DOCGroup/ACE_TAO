@@ -131,33 +131,3 @@ ACE_Parsed_Info::reset (void)
   delete this->init_params_;
   this->init_params_ = 0;
 }
-
-ACE_INLINE
-ACE_Stream_Parsed_Info::ACE_Stream_Parsed_Info ()
-  : ACE_Parsed_Info (),
-    stream_name_ (0)
-{
-}
-
-ACE_INLINE
-ACE_Stream_Parsed_Info::~ACE_Stream_Parsed_Info ()
-{
-  delete this->stream_name_;
-}
-
-ACE_INLINE int
-ACE_Stream_Parsed_Info::stream_name (const ACEXML_Char *n)
-{
-  if (this->stream_name_ == 0)
-    {
-      this->stream_name_ = ACE::strnew (n);
-      return 0;
-    }
-  return -1;
-}
-
-ACE_INLINE const ACEXML_Char *
-ACE_Stream_Parsed_Info::stream_name (void)
-{
-  return this->stream_name_;
-}
