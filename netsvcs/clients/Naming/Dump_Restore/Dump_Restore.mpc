@@ -1,0 +1,16 @@
+project(Dump_Restore): acelib {
+  sharedname    = Dump_Restore
+  dynamicflags += ACE_DUMP_RESTORE_BUILD_DLL
+  Source_Files {
+    Dump_Restore.cpp
+  }
+}
+
+project(main) : aceexe {
+  exename = main
+  libs    += Dump_Restore
+  after   += Dump_Restore
+  Source_Files {
+    main.cpp
+  }
+}
