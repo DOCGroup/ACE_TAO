@@ -3,8 +3,6 @@
 
 // FIFO.i
 
-#include "ace/Log_Msg.h"
-
 ACE_INLINE int 
 ACE_FIFO::get_local_addr (const char *&r) const
 {

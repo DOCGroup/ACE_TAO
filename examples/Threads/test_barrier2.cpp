@@ -16,7 +16,7 @@
 #include <iostream.h>
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-#include "ace/Log_Msg.h"
+
 
 #if defined (ACE_HAS_THREADS)
 

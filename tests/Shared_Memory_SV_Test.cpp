@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -16,18 +16,19 @@
 // 
 // ============================================================================
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Shared_Memory_SV.h"
 #include "test_config.h"
 
-#define SHMSZ 27
-#define SHM_KEY 5678
+const int SHMSZ = 27;
+const int SHM_KEY = 5678;
 
 static void
 client (void)
 {
   char t = 'a';
-  ACE_Shared_Memory_SV shm_client (SHM_KEY, SHMSZ);
+  ACE_Shared_Memory_SV shm_client (SHM_KEY, SHMSZ,
+				   ACE_Shared_Memory_SV::ACE_CREATE);
   char *shm = (char *) shm_client.malloc ();
 
   for (char *s = shm; *s != '\0'; s++)
@@ -69,7 +70,6 @@ main (int, char *argv [])
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "fork"), 1);
     case 0: 
-      ACE_OS::sleep (1); 
       client ();
       break;
     default:

@@ -1,12 +1,8 @@
 // LSOCK_CODgram.cpp
 // $Id$
 
-/* Contains the definitions for the Local ACE_SOCK connection-oriented
-   datagram abstraction. */
-
 #define ACE_BUILD_DLL
 #include "ace/LSOCK_CODgram.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 

@@ -41,6 +41,7 @@ client (void *arg)
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
 
@@ -49,7 +50,7 @@ client (void *arg)
   
   // Attempt a non-blocking connect to the server, reusing the local
   // addr if necessary.
-  if (con.connect (cli_stream, *remote_addr,
+  if (con.connect (cli_stream, server_addr,
 		   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     {
       if (errno != EWOULDBLOCK)
@@ -61,11 +62,11 @@ client (void *arg)
       // and wait up to ACE_DEFAULT_TIMEOUT seconds for it to complete.
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
-      if (con.complete (cli_stream, remote_addr, &tv) == -1)
-	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+      if (con.complete (cli_stream, &server_addr, &tv) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "connection failed"), 0);
       else
 	ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected to %s\n", 
-		    remote_addr->get_host_name ()));
+		    server_addr.get_host_name ()));
     }
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
@@ -233,11 +234,11 @@ spawn (void)
 	}
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Service_Config::thr_mgr ()->spawn 
-	  (ACE_THR_FUNC (client), (void *) &server_addr, THR_NEW_LWP | THR_DETACHED) == -1)
+	  (ACE_THR_FUNC (server), (void *) &peer_acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       if (ACE_Service_Config::thr_mgr ()->spawn 
-	  (ACE_THR_FUNC (server), (void *) &peer_acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
+	  (ACE_THR_FUNC (client), (void *) &server_addr, THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       // Wait for the threads to exit.

@@ -6,7 +6,7 @@
 // ACE_UPIPEs.
 
 // Enable tracing
-#include "ace/Log_Msg.h"
+
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
 #include "ace/UPIPE_Acceptor.h"

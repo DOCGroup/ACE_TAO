@@ -1,6 +1,6 @@
-// This test shows the use of an ACE_Auto_Event as a signaling
 // $Id$
 
+// This test shows the use of an ACE_Auto_Event as a signaling
 // mechanism. Two threads are created (one a reader, the other a
 // writer). The reader waits till the writer has completed
 // calculations. Upon waking up the reader prints the data calculated
@@ -12,6 +12,7 @@
 #include "ace/Singleton.h"
 #include "ace/Thread_Manager.h"
 
+#if defined (ACE_HAS_THREADS)
 // Shared event between reader and writer.  The ACE_Thread_Mutex is
 // necessary to make sure that only one ACE_Auto_Event is created.
 // The default constructor for ACE_Auto_Event sets it initially into
@@ -102,3 +103,11 @@ main (int argc, char **argv)
 
   return 0;
 }
+#else
+int 
+main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */

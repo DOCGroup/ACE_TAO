@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -18,7 +17,6 @@
 #if !defined (ACE_PROCESS_MANAGER_H)
 #define ACE_PROCESS_MANAGER_H
 
-#include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 
 #if 0

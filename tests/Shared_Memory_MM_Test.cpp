@@ -20,7 +20,7 @@
 // 
 // ============================================================================
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Shared_Memory_MM.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
@@ -35,7 +35,7 @@ static ACE_Thread_Manager thr_mgr;
 static void *
 client (void *)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (VXWORKS)
   // Insert thread into thr_mgr
   ACE_Thread_Control thread_control (&thr_mgr);  
   ACE_NEW_THREAD;
@@ -62,7 +62,7 @@ client (void *)
 static void *
 server (void *)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (VXWORKS)
   // Insert thread into thr_mgr
   ACE_Thread_Control thread_control (&thr_mgr);  
   ACE_NEW_THREAD;

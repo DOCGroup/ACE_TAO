@@ -3,7 +3,7 @@
 
 #define SPIPE_CONNECTOR_C
 
-#include "ace/Log_Msg.h"
+
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Get_Opt.h"

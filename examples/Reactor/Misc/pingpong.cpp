@@ -35,7 +35,7 @@
    stop it earlier, just hit the control-C sequence
    and you'll see the same messages. */
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Synch.h"
 #include "ace/Reactor.h"
 #include "ace/Pipe.h"

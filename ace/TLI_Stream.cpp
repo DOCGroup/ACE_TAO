@@ -6,7 +6,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/TLI_Stream.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_TLI)
 

@@ -6,7 +6,7 @@
 // Author : Gerhard Lenzer and Douglas C. Schmidt
 
 #include <fstream.h>
-#include "ace/Log_Msg.h"
+
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "auto_builtin_ptr.h"

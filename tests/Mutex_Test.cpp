@@ -19,7 +19,7 @@
 // ============================================================================
 
 #include "ace/Service_Config.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Thread_Manager.h"
 #include "test_config.h"
 

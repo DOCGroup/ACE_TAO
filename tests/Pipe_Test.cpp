@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -15,50 +17,58 @@
 // ============================================================================
 
 #include "ace/Pipe.h"
+#include "ace/Process.h"
 #include "test_config.h"
 
-void
+static void
 open (ACE_Pipe &pipe, 
       const char *name, 
       int close_pipe = 1)
 {
-  if (pipe.open () == 0)
-    ACE_DEBUG ((LM_DEBUG, "Pipe %s: successful open\n", name));
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, "%p: UNSUCCESSFUL open for pipe %s\n", "pipe.open", name));
-      if (pipe.read_handle () == ACE_INVALID_HANDLE)
-	ACE_DEBUG ((LM_DEBUG, "Reader is invalid\n"));
-      else
-	ACE_DEBUG ((LM_DEBUG, "Reader is valid\n"));
-      if (pipe.write_handle () == ACE_INVALID_HANDLE)
-	ACE_DEBUG ((LM_DEBUG, "Writer is invalid\n"));
-      else
-	ACE_DEBUG ((LM_DEBUG, "Writer is valid\n"));
+  ACE_DEBUG ((LM_DEBUG, "opening %s\n", name));
+  ACE_ASSERT (pipe.open () != -1);
+  ACE_ASSERT (pipe.read_handle () != ACE_INVALID_HANDLE
+	      && pipe.write_handle () != ACE_INVALID_HANDLE);
 
-      ACE_OS::exit (-1);
-    }     
   if (close_pipe)
     pipe.close ();
 }
 
 int 
-main (int, char *argv[])
+main (int argc, char *argv[])
 {
   ACE_START_TEST ("Pipe_Test.cpp");
 
-  ACE_Pipe a, b, c, d, e, f, g, h, i, j;
+  if (argc > 1)
+    {
+      ACE_Pipe a, b, c, d, e;
 
-  ::open (a, "a");
-  ::open (b, "b");
-  ::open (c, "c");
-  ::open (d, "d");
-  ::open (e, "e");
-  ::open (f, "f");
-  ::open (g, "g");
-  ::open (h, "h");
-  ::open (i, "i");
-  ::open (j, "j");
+      open (a, "a");
+      open (b, "b");
+      open (c, "c");
+      open (d, "d");
+      open (e, "e");
+    }
+  else
+    {
+      char *s_argv[3];
+      s_argv[0] = "Pipe_Test" ACE_PLATFORM_EXE_SUFFIX;
+      s_argv[1] = "-r"; // This is just a dummy.
+      s_argv[2] = 0;
+
+      for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
+	{
+	  ACE_Process server;
+
+	  ACE_ASSERT (server.start (s_argv) != -1);
+
+	  ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
+
+	  // Wait for the process we just created to exit.
+	  server.wait ();
+	  ACE_DEBUG ((LM_DEBUG, "Server %d finished\n", server.getpid ()));
+	}
+    }
 
   ACE_END_TEST;
   return 0;

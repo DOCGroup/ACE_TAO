@@ -1,7 +1,7 @@
 #include "ace/Profile_Timer.h"
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 
 static const int DEFAULT_ITERATIONS = 100000000;
 

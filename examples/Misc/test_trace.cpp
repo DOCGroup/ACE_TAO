@@ -2,7 +2,7 @@
 // $Id$
 
 #define ACE_NTRACE 0
-#include "ace/Log_Msg.h"
+
 
 #if defined (ACE_MT_SAFE)
 #include "ace/Thread.h"

@@ -3,7 +3,6 @@
 // This program tests ACE_Process_Mutexes.  To run it, open 3 or 4
 // windows and run this program in each window...
 
-#include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 #include "ace/Signal.h"
 

@@ -4,7 +4,7 @@
 // the length of each line via the use of an ASX Message_Queue.  It
 // illustrates how priorities can be used for ACE Message_Queues.
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Message_Queue.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Thread_Manager.h"

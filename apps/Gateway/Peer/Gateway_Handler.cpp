@@ -1,7 +1,7 @@
 #include "ace/Get_Opt.h"
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "Gateway_Handler.h"
 
 Gateway_Handler::Gateway_Handler (ACE_Thread_Manager *)

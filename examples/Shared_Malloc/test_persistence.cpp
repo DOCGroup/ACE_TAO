@@ -2,7 +2,7 @@
 // $Id$
 
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Malloc.h"
 
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;

@@ -6,7 +6,7 @@
 // addition, this example illustrates how to use the ACE_Reactor for
 // devices that perform I/O via signals (such as SVR4 message queues).
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Service_Config.h"
 
 // Used to shut down the event loop.

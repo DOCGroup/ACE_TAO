@@ -2,7 +2,7 @@
 
 // Test the event server.
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
 #include "Options.h"

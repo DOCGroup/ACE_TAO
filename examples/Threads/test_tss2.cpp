@@ -65,7 +65,7 @@ public:
 
   int open (void *arg);
 
-  void *svc (void *arg);
+  static void *svc (void *arg);
   static int wait_count_;
   static int max_count_;
 
@@ -104,8 +104,8 @@ Test_Task::~Test_Task (void)
   wait_count_--;
 }
 
-int
-Test_Task::svc (void *)
+void *
+Test_Task::svc (void *arg)
 {
   ACE_TSS<TSS_Obj> tss (new TSS_Obj);
 
@@ -147,7 +147,8 @@ Test_Task::svc (void *)
 int 
 Test_Task::open (void *arg)
 {
-  ACE_Thread::spawn (Task_Task::svc, arg);
+  if (ACE_Thread::spawn (Test_Task::svc, arg) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread::spawn"), 0);
 
   return 0;
 }

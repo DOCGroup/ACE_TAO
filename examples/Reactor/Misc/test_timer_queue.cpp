@@ -1,4 +1,4 @@
-#include "ace/Log_Msg.h"
+
 // $Id$
 
 #include "ace/Timer_Queue.h"

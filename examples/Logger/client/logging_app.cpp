@@ -4,7 +4,7 @@
 // than going through the client logging daemon.
 
 #include "ace/SOCK_Connector.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/Log_Record.h"
 
 static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;

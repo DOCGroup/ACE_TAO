@@ -3,7 +3,7 @@
 // This program reads in messages from stdin and sends them to a
 // Log_Wrapper.
 
-#include "ace/Log_Msg.h"
+
 #include "Log_Wrapper.h"
 
 const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;

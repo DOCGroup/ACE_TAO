@@ -519,7 +519,7 @@ ACE_Service_Config::load_defaults (void)
       if (stp == 0)
 	continue;
 
-      const ACE_Service_Record *sr;
+      ACE_Service_Record *sr;
 
       ACE_NEW_RETURN (sr, ACE_Service_Record (ssd->name_, stp, 
 					      0, ssd->active_), -1);

@@ -6,7 +6,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Svc_Handler.h"
-#include "ace/Log_Msg.h"
 #include "ace/Dynamic.h"
 
 #if !defined (__ACE_INLINE__)

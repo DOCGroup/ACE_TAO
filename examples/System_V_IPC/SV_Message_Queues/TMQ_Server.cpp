@@ -2,7 +2,7 @@
 
 #include "ace/Signal.h"
 #include "ace/Typed_SV_Message_Queue.h"
-#include "ace/Log_Msg.h"
+
 #include "test.h"
 
 // Must be global for signal Message...

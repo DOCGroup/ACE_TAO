@@ -6,7 +6,7 @@
 // the fifo.  The child reads from the ACE_FIFO and executes the more
 // command.
 
-#include "ace/Log_Msg.h"
+
 #include "ace/FIFO_Recv.h"
 #include "ace/FIFO_Send.h"
 

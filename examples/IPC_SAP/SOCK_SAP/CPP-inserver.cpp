@@ -2,7 +2,7 @@
 // ACE_SOCK_Acceptor and ACE_SOCK_Stream classes.
 // $Id$
 
-#include "ace/Log_Msg.h"
+
 #include "ace/SOCK_Acceptor.h"                             
 #include "ace/SOCK_Stream.h"
 #include "ace/INET_Addr.h"

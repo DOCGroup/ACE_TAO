@@ -12,7 +12,7 @@
 // if used with the CURRENT_USER predefined registry.
 
 #include "ace/Registry.h"
-#include "ace/Log_Msg.h"
+
 
 // Name for application's naming context
 static ACE_Registry::Name application_context_name;

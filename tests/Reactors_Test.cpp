@@ -181,29 +181,37 @@ main (int, char *argv[])
   ACE_START_TEST ("Reactors_Test.cpp");
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Reactor *react1 = ACE_Service_Config::reactor ();
-  ACE_Reactor *react2;
+  ACE_Service_Config daemon; // We need this to make sure the Reactor Singleton gets deleted!
+  ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
-  ACE_NEW_RETURN (react2, ACE_Reactor, -1);
+  ACE_Reactor *reactor;
+
+  ACE_NEW_RETURN (reactor, ACE_Reactor, -1);
+  ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   Test_Task tt1[MAX_TASKS];
   Test_Task tt2[MAX_TASKS];
 
   for (int i = 0; i < MAX_TASKS; i++)
     {
-      tt1[i].open (react1);
-      tt2[i].open (react2);
+      tt1[i].open (ACE_Service_Config::reactor ());
+      tt2[i].open (reactor);
     }
 
   if (ACE_Service_Config::thr_mgr ()->spawn 
-      (ACE_THR_FUNC (worker), (void *) react1, THR_NEW_LWP) == -1)
+      (ACE_THR_FUNC (worker), (void *) ACE_Service_Config::reactor (), 
+       THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   else if (ACE_Service_Config::thr_mgr ()->spawn 
-      (ACE_THR_FUNC (worker), (void *) react2, THR_NEW_LWP) == -1)
+      (ACE_THR_FUNC (worker), (void *) reactor, 
+       THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   ACE_Service_Config::thr_mgr ()->wait ();
+  reactor->close ();
+  // Note that the destructor of ACE_Service_Config daemon will close
+  // down the ACE_Service_Config::reactor().
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

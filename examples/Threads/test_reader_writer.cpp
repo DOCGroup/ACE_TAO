@@ -3,7 +3,7 @@
 
 // implementation of readers/writer locks on Win32 and Posix pthreads.
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Synch.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"

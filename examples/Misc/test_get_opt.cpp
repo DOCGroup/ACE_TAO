@@ -3,7 +3,7 @@
 // Test the ACE_Get_Opt class.
 
 #include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
+
 
 int
 main (int argc, char *argv[])

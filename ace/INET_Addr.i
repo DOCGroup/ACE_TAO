@@ -3,8 +3,6 @@
 
 // INET_Addr.i
 
-#include "ace/Log_Msg.h"
-
 // Return the port number, converting it into host byte order...
 
 ACE_INLINE u_short

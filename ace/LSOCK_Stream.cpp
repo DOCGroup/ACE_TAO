@@ -2,7 +2,6 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/Log_Msg.h"
 #include "ace/LSOCK_Stream.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)

@@ -17,7 +17,7 @@
 // 
 // ============================================================================
 
-#include "ace/Log_Msg.h"
+
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
@@ -91,4 +91,3 @@ main (int, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-

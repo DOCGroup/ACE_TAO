@@ -3,7 +3,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/UPIPE_Acceptor.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_THREADS)
 

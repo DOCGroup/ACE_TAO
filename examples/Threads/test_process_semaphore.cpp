@@ -3,7 +3,6 @@
 // This program tests ACE_Process_Semaphore.  To run it, open 3 or 4
 // windows and run this program in each window...
 
-#include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 #include "ace/Signal.h"
 
@@ -22,7 +21,7 @@ main (int argc, char *argv[])
 
   ACE_Process_Semaphore pm (1, name);
 
-  ACE_Sig_Action sa (ACE_SignalHandler (handler), SIGINT);
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
   for (int i = 0; i < 100 && !done; i++)
     {
@@ -54,3 +53,4 @@ main (int argc, char *argv[])
     pm.remove ();
   return 0;
 }
+

@@ -55,9 +55,6 @@
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SOCKIO_H
 
-// Compiler has system V signals
-#define ACE_HAS_SVR4_SIGNAL_T
-
 // Compiler/platform supports struct strbuf
 #define ACE_HAS_STRBUF_T
 

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,7 +19,6 @@
 #if !defined (ACE_TTY_H)
 #define ACE_TTY_H
 
-#include "ace/Log_Msg.h"
 #include "ace/OS.h"
 #include "ace/DEV_Addr.h"
 #include "ace/DEV_Connector.h"

@@ -44,25 +44,7 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
       ACE_GUARD_RETURN (LOCK, ace_mon, ace_singleton_lock_, 0);
 
       if (instance_ == 0)
-	{
-	  // We can replace the following lines with this line once we
-	  // update the macro in OS.h 
-	  // ACE_NEW_RETURN (instance_, TYPE, 0);
-
-	  instance_ = new TYPE;
-	  if (instance_ == 0)
-	    {
-	      errno = ENOMEM;
-	      return 0;
-	    }
-	  else if (ACE_LOG_MSG->op_status () == -1)
-	    {
-	      errno = ACE_LOG_MSG->errnum ();
-	      delete instance_;
-	      instance_ = 0;
-	      return 0;
-	    }
-	}
+	ACE_NEW_RETURN (instance_, TYPE, 0);
     }
 
   return instance_;
@@ -74,25 +56,7 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
       ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, LOCK>::ace_singleton_lock_), 0);
 
       if (ACE_Singleton<TYPE, LOCK>::instance_ == 0)
-	{
-	  // We can replace the following lines with this line once we
-	  // update the macro in OS.h 
-	  // ACE_NEW_RETURN ((ACE_Singleton<TYPE, LOCK>::instance_), TYPE, 0);
-
-	  instance_ = new TYPE;
-	  if (instance_ == 0)
-	    {
-	      errno = ENOMEM;
-	      return 0;
-	    }
-	  else if (ACE_LOG_MSG->op_status () == -1)
-	    {
-	      errno = ACE_LOG_MSG->errnum ();
-	      delete instance_;
-	      instance_ = 0;
-	      return 0;
-	    }
-	}
+	ACE_NEW_RETURN ((ACE_Singleton<TYPE, LOCK>::instance_), TYPE, 0);
     }
 
   return ACE_Singleton<TYPE, LOCK>::instance_;

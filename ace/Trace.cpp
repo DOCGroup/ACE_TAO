@@ -23,7 +23,6 @@
 #endif /* !ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/Log_Msg.h"
-
 #include "ace/Trace.h"
 
 #if !defined (__ACE_INLINE__)

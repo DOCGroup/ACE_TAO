@@ -3,7 +3,7 @@
 
 #define CPP_CONNECTOR_C
 
-#include "ace/Log_Msg.h"
+
 #include "CPP-connector.h"
                                                         
 #define PR_ST_1 ACE_PEER_STREAM_1
