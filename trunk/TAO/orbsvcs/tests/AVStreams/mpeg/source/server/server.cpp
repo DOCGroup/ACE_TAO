@@ -17,7 +17,7 @@ Mpeg_Svc_Handler::open (void *)
 
 
 int
-Mpeg_Svc_Handler::svc (void *)
+Mpeg_Svc_Handler::svc (void)
 {
   return this->handle_input ();
 }
