@@ -46,6 +46,13 @@
 # define PACE_LYNXOS 0
 # define PACE_VXWORKS 0
 # define PACE_WIN32 0
+#elif defined (PACE_QNX)
+# define PACE_HAS_POSIX PACE_QNX
+# define PACE_LINUX 0
+# define PACE_SUNOS 0
+# define PACE_LYNXOS 0
+# define PACE_VXWORKS 0
+# define PACE_WIN32 0
 
 /* These platforms are NOT POSIX compliant. */
 
