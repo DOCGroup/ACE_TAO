@@ -49,8 +49,6 @@ namespace TAO
     class TAO_PortableServer_Export Servant_Upcall
     {
     public:
-
-      friend class TAO_POA;
       friend class TAO_RT_Collocation_Resolver;
 
       /**

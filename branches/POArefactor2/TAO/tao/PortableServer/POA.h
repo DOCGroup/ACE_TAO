@@ -91,6 +91,7 @@ namespace TAO
     class Servant_Upcall;
     class POA_Current_Impl;
     class Unique_Id_Uniqueness_Strategy;
+    class Retain_Servant_Retention_Strategy;
   }
 }
 
@@ -131,6 +132,7 @@ public:
 
   // this is temporarily
   friend class TAO::Portable_Server::Unique_Id_Uniqueness_Strategy;
+  friend class TAO::Portable_Server::Retain_Servant_Retention_Strategy;
 
   typedef ACE_CString String;
 
@@ -471,6 +473,10 @@ public:
 
   CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
 
+  CORBA::Boolean system_id (void);
+
+  CORBA::ULong waiting_servant_deactivation (void) const;
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -605,9 +611,11 @@ protected:
                                 TAO_Acceptor_Registry &acceptor_registry
                                 ACE_ENV_ARG_DECL);
 
+// @todo made public so that request_processing_strategy can retrieve it
+public:
   int is_servant_in_map (PortableServer::Servant servant,
                          int &wait_occurred_restart_call);
-
+protected:
   int is_user_id_in_map (const PortableServer::ObjectId &user_id,
                          CORBA::Short priority,
                          int &priorities_match,
@@ -830,8 +838,6 @@ protected:
 
   static CORBA::ULong persistent_key_type_length (void);
 
-  CORBA::Boolean system_id (void);
-
   char system_id_key_type (void);
 
   static char system_id_key_char (void);
@@ -945,8 +951,6 @@ protected:
   CORBA::Boolean waiting_destruction_;
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
-
-  CORBA::ULong waiting_servant_deactivation_;
 
   CORBA::ULong caller_key_to_object_;
 

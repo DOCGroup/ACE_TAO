@@ -33,7 +33,6 @@
 
 #include /**/ "ace/pre.h"
 
-
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -74,13 +73,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-  
+
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -90,15 +89,15 @@ namespace TAO
 
 namespace PortableServer
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_PORTABLESERVER_POALIST_CH_)
 #define _PORTABLESERVER_POALIST_CH_
-  
+
   class POAList;
-  
+
   typedef
     TAO_MngSeq_Var_T<
         POAList,
@@ -108,7 +107,7 @@ namespace PortableServer
           >
       >
     POAList_var;
-  
+
   typedef
     TAO_MngSeq_Out_T<
         POAList,
@@ -119,7 +118,7 @@ namespace PortableServer
           >
       >
     POAList_out;
-  
+
   class TAO_PortableServer_Export POAList
     : public
         TAO_Unbounded_Object_Sequence<
@@ -133,68 +132,68 @@ namespace PortableServer
     POAList (
         CORBA::ULong max,
         CORBA::ULong length,
-        POA_ptr* buffer, 
+        POA_ptr* buffer,
         CORBA::Boolean release = 0
       );
     POAList (const POAList &);
     ~POAList (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef POAList_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POAList;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType THREAD_POLICY_ID = 16U;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType LIFESPAN_POLICY_ID = 17U;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType ID_UNIQUENESS_POLICY_ID = 18U;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType ID_ASSIGNMENT_POLICY_ID = 19U;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType IMPLICIT_ACTIVATION_POLICY_ID = 20U;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID = 21U;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID = 22U;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-  
+
   enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
   };
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   typedef ThreadPolicyValue &ThreadPolicyValue_out;

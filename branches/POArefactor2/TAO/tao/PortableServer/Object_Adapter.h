@@ -403,8 +403,10 @@ protected:
 
   TAO_ORB_Core &orb_core_;
 
+// @todo Made this temporarily public to made the servant_retention_strategy
+public:
   int enable_locking_;
-
+protected:
   TAO_SYNCH_MUTEX thread_lock_;
 
   ACE_Lock *lock_;

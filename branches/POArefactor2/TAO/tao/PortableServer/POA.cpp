@@ -51,6 +51,7 @@ ACE_RCSID (PortableServer,
 #include "Request_Processing_Strategy.h"
 #include "Lifespan_Strategy.h"
 #include "Id_Uniqueness_Strategy.h"
+#include "Servant_Retention_Strategy.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
@@ -240,7 +241,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     wait_for_completion_pending_ (0),
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
-    waiting_servant_deactivation_ (0),
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
 {
@@ -1066,23 +1066,7 @@ TAO_POA::get_servant_manager_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
-  // This operation requires the USE_SERVANT_MANAGER policy; if not
-  // present, the WrongPolicy exception is raised.
-  if (this->cached_policies_.request_processing () !=
-      PortableServer::USE_SERVANT_MANAGER)
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        PortableServer::ServantManager::_nil ());
-    }
-
-  // This operation returns the servant manager associated with the
-  // POA.  If no servant manager has been associated with the POA, it
-  // returns a null reference.
-  if (this->cached_policies_.servant_retention () ==
-      PortableServer::RETAIN)
-    return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
-  else
-    return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
+  return this->active_policy_strategies_.request_processing_strategy()->get_servant_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -1091,37 +1075,8 @@ TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
-  // This operation requires the USE_SERVANT_MANAGER policy; if not
-  // present, the WrongPolicy exception is raised.
-  if (this->cached_policies_.request_processing () != PortableServer::USE_SERVANT_MANAGER)
-    {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
-    }
-
-  // This operation sets the default servant manager associated with
-  // the POA.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      this->servant_activator_ = PortableServer::ServantActivator::_narrow (imgr
-                                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      if (CORBA::is_nil (this->servant_activator_.in ()))
-        {
-          ACE_THROW (PortableServer::POA::WrongPolicy ());
-        }
-    }
-  else
-    {
-      this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr
-                                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      if (CORBA::is_nil (this->servant_locator_.in ()))
-        {
-          ACE_THROW (PortableServer::POA::WrongPolicy ());
-        }
-    }
+  this->active_policy_strategies_.request_processing_strategy()->set_servant_manager (imgr ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 PortableServer::Servant
@@ -1151,43 +1106,8 @@ int
 TAO_POA::is_servant_in_map (PortableServer::Servant servant,
                             int &wait_occurred_restart_call)
 {
-  int deactivated = 0;
-  int servant_in_map =
-    this->active_object_map ().is_servant_in_map (servant,
-                                                  deactivated);
-
-  if (!servant_in_map)
-    {
-      return 0;
-    }
-  else
-    {
-      if (deactivated)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) TAO_POA::is_servant_in_map: waiting for servant to deactivate\n")));
-
-          // We are going to wait on this condition variable; the POA
-          // state may change by the time we get the lock again.
-          // Therefore, indicate to the caller that all conditions
-          // need to be checked again.
-          wait_occurred_restart_call = 1;
-
-          ++this->waiting_servant_deactivation_;
-
-          if (this->object_adapter ().enable_locking_)
-            this->servant_deactivation_condition_.wait ();
-
-          --this->waiting_servant_deactivation_;
-
-          return 0;
-        }
-      else
-        {
-          return 1;
-        }
-    }
+  return this->active_policy_strategies_.servant_retention_strategy()->
+          is_servant_in_map (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
 }
 
 int
@@ -1196,45 +1116,8 @@ TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id,
                             int &priorities_match,
                             int &wait_occurred_restart_call)
 {
-  int deactivated = 0;
-  int user_id_in_map =
-    this->active_object_map ().is_user_id_in_map (id,
-                                                  priority,
-                                                  priorities_match,
-                                                  deactivated);
-
-  if (!user_id_in_map)
-    {
-      return 0;
-    }
-  else
-    {
-      if (deactivated)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) TAO_POA::is_user_id_in_map: waiting for servant to deactivate\n")));
-
-          // We are going to wait on this condition variable; the POA
-          // state may change by the time we get the lock again.
-          // Therefore, indicate to the caller that all conditions
-          // need to be checked again.
-          wait_occurred_restart_call = 1;
-
-          ++this->waiting_servant_deactivation_;
-
-          if (this->object_adapter ().enable_locking_)
-            this->servant_deactivation_condition_.wait ();
-
-          --this->waiting_servant_deactivation_;
-
-          return 0;
-        }
-      else
-        {
-          return 1;
-        }
-    }
+  return this->active_policy_strategies_.servant_retention_strategy()->
+          is_user_id_in_map (id, priority, priorities_match, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -2202,16 +2085,6 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
                    PortableServer::POA::WrongAdapter,
                    PortableServer::POA::WrongPolicy))
 {
-  // This operation requires the RETAIN policy or the
-  // USE_DEFAULT_SERVANT policy. If neither policy is present, the
-  // WrongPolicy exception is raised.
-  if (this->cached_policies_.servant_retention () != PortableServer::RETAIN &&
-      this->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
-    }
-
   // Make sure that the reference is valid.
   if (CORBA::is_nil (reference))
     {
@@ -2219,119 +2092,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
                         0);
     }
 
-  // If the POA has the RETAIN policy and the specified object is
-  // present in the Active Object Map, this operation returns the
-  // servant associated with that object in the Active Object Map.
-  PortableServer::Servant servant = 0;
-  int result = -1;
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      // If the object reference was not created by this POA, the
-      // WrongAdapter exception is raised.
-      PortableServer::ObjectId system_id;
-      TAO_Object_Adapter::poa_name poa_system_name;
-      CORBA::Boolean is_root = 0;
-      CORBA::Boolean is_persistent = 0;
-      CORBA::Boolean is_system_id = 0;
-      TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
-
-      int parse_result =
-        this->parse_key (key.in (),
-                         poa_system_name,
-                         system_id,
-                         is_root,
-                         is_persistent,
-                         is_system_id,
-                         poa_creation_time);
-      if (parse_result != 0 ||
-          !this->root () &&
-          poa_system_name != this->system_name () ||
-          is_root != this->root () ||
-          is_persistent != this->active_policy_strategies_.lifespan_strategy()->persistent () ||
-          is_system_id != this->system_id () ||
-          !this->active_policy_strategies_.lifespan_strategy()->persistent () &&
-          poa_creation_time != this->creation_time_)
-        {
-          ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
-                            0);
-        }
-
-      // Find user id from system id.
-      PortableServer::ObjectId user_id;
-      if (this->active_object_map ().
-          find_user_id_using_system_id (system_id,
-                                        user_id) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
-
-      // This operation returns the active servant associated with the
-      // specified system Object Id value.  If the Object Id value is
-      // not active in the POA, an ObjectNotActive exception is
-      // raised.
-      TAO_Active_Object_Map::Map_Entry *entry = 0;
-
-      result =
-        this->active_object_map ().
-        find_servant_using_system_id_and_user_id (system_id,
-                                                  user_id,
-                                                  servant,
-                                                  entry);
-    }
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  else
-    {
-      // Otherwise, if the POA has the USE_DEFAULT_SERVANT policy and
-      // a default servant has been registered with the POA, this
-      // operation returns the default servant.
-      servant =
-        this->default_servant_.in ();
-
-      if (servant == 0)
-        result = -1;
-      else
-        result = 0;
-    }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  if (result != -1)
-    {
-      // A recursive thread lock without using a recursive thread
-      // lock.  Non_Servant_Upcall has a magic constructor and
-      // destructor.  We unlock the Object_Adapter lock for the
-      // duration of the servant activator upcalls; reacquiring once
-      // the upcalls complete.  Even though we are releasing the lock,
-      // other threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been
-      // set.
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-      ACE_UNUSED_ARG (non_servant_upcall);
-
-      // The POA invokes _add_ref once on the Servant before returning
-      // it. If the application uses reference counting, the caller of
-      // id_to_servant is responsible for invoking _remove_ref once on
-      // the returned Servant when it is finished with it. A
-      // conforming caller need not invoke _remove_ref on the returned
-      // Servant if the type of the Servant uses the default reference
-      // counting inherited from ServantBase.
-      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      return servant;
-    }
-  else
-    {
-      // Otherwise the ObjectNotActive exception is raised.
-      ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                        0);
-    }
+  return this->active_policy_strategies_.servant_retention_strategy()->reference_to_servant (reference ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -2387,38 +2148,10 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
                         0);
     }
 
-  // Do the following if we have the RETAIN policy.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (0);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (0);
 
-      // The object denoted by the reference does not have to be
-      // active for this operation to succeed.
-      PortableServer::ObjectId_var user_id;
-      if (this->active_object_map ().
-          find_user_id_using_system_id (system_id,
-                                        user_id.out ()) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
-
-      return user_id._retn ();
-    }
-  else
-    {
-      // Otherwise, it is the NON_RETAIN policy.  Therefore, the
-      // system id is the id (and no conversion/transformation is
-      // needed).
-      CORBA::OctetSeq *id = 0;
-      ACE_NEW_THROW_EX (id,
-                        PortableServer::ObjectId (system_id),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
-
-      return id;
-    }
+  return this->active_policy_strategies_.servant_retention_strategy()->reference_to_id (reference, system_id ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
@@ -2428,78 +2161,7 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-  // This operation requires the RETAIN policy or the
-  // USE_DEFAULT_SERVANT policy.  If neither policy is present, the
-  // WrongPolicy exception is raised.
-  if (this->cached_policies_.servant_retention () != PortableServer::RETAIN &&
-      this->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
-    }
-
-  // If the POA has the RETAIN policy and the specified ObjectId is in
-  // the Active Object Map, this operation returns the servant
-  // associated with that object in the Active Object Map.
-  PortableServer::Servant servant = 0;
-  int result = -1;
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      result =
-        this->active_object_map ().
-        find_servant_using_user_id (id,
-                                    servant);
-    }
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  else
-    {
-      // Otherwise, if the POA has the USE_DEFAULT_SERVANT policy and
-      // a default servant has been registered with the POA, this
-      // operation returns the default servant.
-      servant =
-        this->default_servant_.in ();
-
-      if (servant == 0)
-        result = -1;
-      else
-        result = 0;
-    }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  if (result != -1)
-    {
-      // A recursive thread lock without using a recursive thread
-      // lock.  Non_Servant_Upcall has a magic constructor and
-      // destructor.  We unlock the Object_Adapter lock for the
-      // duration of the servant activator upcalls; reacquiring once
-      // the upcalls complete.  Even though we are releasing the lock,
-      // other threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been
-      // set.
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-      ACE_UNUSED_ARG (non_servant_upcall);
-
-      // The POA invokes _add_ref once on the Servant before returning
-      // it. If the application uses reference counting, the caller of
-      // id_to_servant is responsible for invoking _remove_ref once on
-      // the returned Servant when it is finished with it. A
-      // conforming caller need not invoke _remove_ref on the returned
-      // Servant if the type of the Servant uses the default reference
-      // counting inherited from ServantBase.
-      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      return servant;
-    }
-  else
-    {
-      // Otherwise the ObjectNotActive exception is raised.
-      ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                        0);
-    }
+  return this->active_policy_strategies_.servant_retention_strategy()->id_to_servant (id ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
@@ -2509,45 +2171,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-  // This operation requires the RETAIN policy; if not present, the
-  // WrongPolicy exception is raised.
-  if (this->cached_policies_.servant_retention () != PortableServer::RETAIN)
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        CORBA::Object::_nil ());
-    }
-
-  // If an object with the specified Object Id value is currently
-  // active, a reference encapsulating the information used to
-  // activate the object is returned.
-  PortableServer::ObjectId_var system_id;
-  PortableServer::Servant servant;
-  CORBA::Short priority;
-
-  if (this->active_object_map ().
-      find_servant_and_system_id_using_user_id (id,
-                                                servant,
-                                                system_id.out (),
-                                                priority) == 0)
-    {
-      // Remember params for potentially invoking <key_to_object> later.
-      this->key_to_object_params_.set (system_id,
-                                       servant->_interface_repository_id (),
-                                       servant,
-                                       1,
-                                       priority);
-
-      return this->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
-                                                  id
-                                                  ACE_ENV_ARG_PARAMETER);
-    }
-  else
-    // If the Object Id value is not active in the POA, an
-    // ObjectNotActive exception is raised.
-    {
-      ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                        CORBA::Object::_nil ());
-    }
+  return this->active_policy_strategies_.servant_retention_strategy()->id_to_reference (id ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::OctetSeq *
@@ -2571,296 +2195,7 @@ TAO_POA::locate_servant_i (const char *operation,
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL)
 {
-  // If we have the RETAIN policy, convert/transform from system id to
-  // user id.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      if (this->active_object_map ().
-          find_user_id_using_system_id (system_id,
-                                        poa_current_impl.object_id_) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
-
-      servant_upcall.user_id (&poa_current_impl.object_id_);
-    }
-  else
-    {
-      // We have the NON_RETAIN policy, user id is the system id.
-
-      // Smartly copy all the data; <poa_current_impl.object_id_> does
-      // not own the data.
-      poa_current_impl.object_id_.replace (system_id.maximum (),
-                                           system_id.length (),
-                                           const_cast <CORBA::Octet *>
-                                                      (system_id.get_buffer ()),
-                                           0);
-
-      servant_upcall.user_id (&system_id);
-    }
-
-  // If the POA has the RETAIN policy, the POA looks in the Active
-  // Object Map to find if there is a servant associated with the
-  // Object Id value from the request. If such a servant exists, the
-  // POA invokes the appropriate method on the servant.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      PortableServer::Servant servant = 0;
-      int result = this->active_object_map ().
-        find_servant_using_system_id_and_user_id (system_id,
-                                                  poa_current_impl.object_id (),
-                                                  servant,
-                                                  servant_upcall.active_object_map_entry_);
-
-      if (result == 0)
-        {
-          // Increment the reference count.
-          ++servant_upcall.active_object_map_entry ()->reference_count_;
-
-          // Success
-          return servant;
-        }
-    }
-
-  // If the POA has the NON_RETAIN policy or has the RETAIN policy but
-  // didn't find a servant in the Active Object Map, the POA takes the
-  // following actions:
-
-  // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
-  // the OBJECT_NOT_EXIST system exception.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
-    {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
-    }
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
-  // has been associated with the POA so the POA will invoke the
-  // appropriate method on that servant. If no servant has been
-  // associated with the POA, the POA raises the OBJ_ADAPTER system
-  // exception.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_DEFAULT_SERVANT)
-    {
-      PortableServer::Servant result = this->default_servant_.in ();
-      if (result == 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
-      else
-        {
-          // Success
-          return result;
-        }
-    }
-
-  // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
-  // has been associated with the POA so the POA will invoke incarnate
-  // or preinvoke on it to find a servant that may handle the
-  // request. (The choice of method depends on the NON_RETAIN or
-  // RETAIN policy of the POA.) If no servant manager has been
-  // associated with the POA, the POA raises the OBJ_ADAPTER system
-  // exception.
-  //
-  // If a servant manager is located and invoked, but the servant
-  // manager is not directly capable of incarnating the object, it
-  // (the servant manager) may deal with the circumstance in a variety
-  // of ways, all of which are the application's responsibility.  Any
-  // system exception raised by the servant manager will be returned
-  // to the client in the reply. In addition to standard CORBA
-  // exceptions, a servant manager is capable of raising a
-  // ForwardRequest exception. This exception includes an object
-  // reference.
-  //
-  if (this->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER)
-    {
-      if (CORBA::is_nil (this->servant_activator_.in ()) &&
-          CORBA::is_nil (this->servant_locator_.in ()))
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
-
-      PortableServer::Servant servant = 0;
-      if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-        {
-          {
-            // A recursive thread lock without using a recursive
-            // thread lock.  Non_Servant_Upcall has a magic
-            // constructor and destructor.  We unlock the
-            // Object_Adapter lock for the duration of the servant
-            // activator upcalls; reacquiring once the upcalls
-            // complete.  Even though we are releasing the lock, other
-            // threads will not be able to make progress since
-            // <Object_Adapter::non_servant_upcall_in_progress_> has
-            // been set.
-            TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-            ACE_UNUSED_ARG (non_servant_upcall);
-
-            // @@
-            // Invocations of incarnate on the servant manager are serialized.
-            // Invocations of etherealize on the servant manager are serialized.
-            // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-            servant = this->servant_activator_->incarnate (poa_current_impl.object_id (),
-                                                           this
-                                                           ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (0);
-
-            if (servant == 0)
-              {
-                ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                  0);
-              }
-          }
-
-          int error = 0;
-
-          // If the incarnate operation returns a servant that is
-          // already active for a different Object Id and if the POA
-          // also has the UNIQUE_ID policy, the incarnate has violated
-          // the POA policy and is considered to be in error. The POA
-          // will raise an OBJ_ADAPTER system exception for the
-          // request.
-          if (this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID)
-            {
-              int result =
-                this->is_servant_in_map (servant,
-                                         wait_occurred_restart_call);
-              if (result)
-                error = 1;
-            }
-
-          // The POA enters the returned Servant value into the Active
-          // Object Map so that subsequent requests with the same
-          // ObjectId value will be delivered directly to that servant
-          // without invoking the servant manager.  Only run if there
-          // are no errors or if a restart is not required.
-          if (!error && !wait_occurred_restart_call)
-            {
-              int result = this->active_object_map ().
-                rebind_using_user_id_and_system_id (servant,
-                                                    poa_current_impl.object_id (),
-                                                    system_id,
-                                                    servant_upcall.active_object_map_entry_);
-              if (result != 0)
-                error = 1;
-            }
-
-          // If error occurred or a restart is required, etherealize
-          // the incarnated servant.
-          if (error || wait_occurred_restart_call)
-            {
-              CORBA::Boolean remaining_activations =
-                this->active_object_map ().remaining_activations (servant);
-
-              // A recursive thread lock without using a recursive
-              // thread lock.  Non_Servant_Upcall has a magic
-              // constructor and destructor.  We unlock the
-              // Object_Adapter lock for the duration of the servant
-              // activator upcalls; reacquiring once the upcalls
-              // complete.  Even though we are releasing the lock,
-              // other threads will not be able to make progress since
-              // <Object_Adapter::non_servant_upcall_in_progress_> has
-              // been set.
-              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-              ACE_UNUSED_ARG (non_servant_upcall);
-
-              CORBA::Boolean cleanup_in_progress = 0;
-              this->servant_activator_->etherealize (poa_current_impl.object_id (),
-                                                     this,
-                                                     servant,
-                                                     cleanup_in_progress,
-                                                     remaining_activations
-                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (0);
-
-              // If error, throw exception.
-              if (error)
-                {
-                  ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                    0);
-                }
-              else
-                {
-                  // We ended up waiting on a condition variable, the
-                  // POA state may have changed while we are waiting.
-                  // Therefore, we need to restart this call.
-                  return 0;
-                }
-            }
-          else
-            {
-              // Increment the reference count.
-              ++servant_upcall.active_object_map_entry ()->reference_count_;
-
-              // Success
-              return servant;
-            }
-        }
-      else
-        //
-        // Don't retain servant
-        //
-        {
-          // No serialization of invocations of preinvoke or
-          // postinvoke may be assumed; there may be multiple
-          // concurrent invocations of preinvoke for the same
-          // ObjectId.
-          //
-          // The same thread will be used to preinvoke the object,
-          // process the request, and postinvoke the object.
-
-          // @@ Note that it is possible for some other thread to
-          // reset the servant locator once the lock is released.
-          // However, this possiblility also exists for postinvoke()
-          // which is also called outside the lock.
-
-          // Release the object adapter lock.
-          this->object_adapter_->lock ().release ();
-
-          // We have release the object adapater lock.  Record this
-          // for later use.
-          servant_upcall.state (TAO::Portable_Server::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
-
-          PortableServer::ServantLocator::Cookie cookie = 0;
-          PortableServer::Servant servant =
-            this->servant_locator_->preinvoke (poa_current_impl.object_id (),
-                                               this,
-                                               operation,
-                                               cookie
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          if (servant == 0)
-            {
-              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                0);
-            }
-
-          // Remember to invoke <postinvoke>
-          servant_upcall.using_servant_locator ();
-
-          // Remember the cookie
-          servant_upcall.locator_cookie (cookie);
-
-          // Remember operation name.
-          servant_upcall.operation (operation);
-
-          // Success
-          return servant;
-        }
-    }
-#else
-  ACE_UNUSED_ARG (operation);
-  ACE_UNUSED_ARG (wait_occurred_restart_call);
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  // Failure
-  ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                    0);
+  return this->active_policy_strategies_.servant_retention_strategy()->locate_servant (operation, system_id, servant_upcall, poa_current_impl, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
 }
 
 /* static */
@@ -3715,90 +3050,8 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                            PortableServer::Servant &servant
                            ACE_ENV_ARG_DECL)
 {
-  // If the POA has the RETAIN policy, the POA looks in the Active
-  // Object Map to find if there is a servant associated with the
-  // Object Id value from the request. If such a servant exists,
-  // return TAO_SERVANT_FOUND.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      // Find user id from system id.
-      PortableServer::ObjectId user_id;
-      if (this->active_object_map ().
-          find_user_id_using_system_id (system_id,
-                                        user_id) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            TAO_SERVANT_NOT_FOUND);
-        }
-
-      TAO_Active_Object_Map::Map_Entry *entry = 0;
-      int result = this->active_object_map ().
-        find_servant_using_system_id_and_user_id (system_id,
-                                                  user_id,
-                                                  servant,
-                                                  entry);
-      if (result == 0)
-        {
-          // Success
-          return TAO_SERVANT_FOUND;
-        }
-    }
-
-  // If the POA has the NON_RETAIN policy or has the RETAIN policy but
-  // didn't find a servant in the Active Object Map, the POA takes the
-  // following actions:
-
-  // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
-  // the OBJECT_NOT_EXIST system exception.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
-    {
-      return TAO_SERVANT_NOT_FOUND;
-    }
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
-  // has been associated with the POA, return TAO_DEFAULT_SERVANT. If
-  // no servant has been associated with the POA, return
-  // TAO_SERVANT_NOT_FOUND.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_DEFAULT_SERVANT)
-    {
-      if (this->default_servant_.in () == 0)
-        {
-          return TAO_SERVANT_NOT_FOUND;
-        }
-      else
-        {
-          // Success
-          return TAO_DEFAULT_SERVANT;
-        }
-    }
-
-  // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
-  // has been associated with the POA, return
-  // TAO_SERVANT_MANAGER. If no servant manager has been
-  // associated with the POA, return TAO_SERVANT_NOT_FOUND.
-  if (this->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER)
-    {
-      if (CORBA::is_nil (this->servant_activator_.in ()) &&
-          CORBA::is_nil (this->servant_locator_.in ()))
-        {
-          return TAO_SERVANT_NOT_FOUND;
-        }
-      else
-        {
-          // Success
-          return TAO_SERVANT_MANAGER;
-        }
-    }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  // Failure
-  return TAO_SERVANT_NOT_FOUND;
+  return this->active_policy_strategies_.servant_retention_strategy()->locate_servant (system_id, servant ACE_ENV_ARG_PARAMETER);
 }
-
-
 
 //
 // ImplRepo related.
@@ -4113,6 +3366,12 @@ TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
   this->servant_ = servant;
   this->collocated_ = collocated;
   this->priority_ = priority;
+}
+
+CORBA::ULong
+TAO_POA::waiting_servant_deactivation (void) const
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->waiting_servant_deactivation ();
 }
 
 void

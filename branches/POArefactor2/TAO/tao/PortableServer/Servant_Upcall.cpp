@@ -416,7 +416,7 @@ namespace TAO
                 }
               ACE_ENDTRY;
 
-              if (this->poa_->waiting_servant_deactivation_ > 0 &&
+              if (this->poa_->waiting_servant_deactivation() > 0 &&
                   this->object_adapter_->enable_locking_)
                 {
                   // Wakeup all waiting threads.

@@ -97,6 +97,11 @@ public:
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy st,
                      const unsigned int length = 0);
+
+  /// @todo Johnny moved this to public because of the policies, have to look at this
+  /// Get this interface's repository id (TAO specific).
+  virtual const char *_interface_repository_id (void) const = 0;
+
 protected:
 
   /// Default constructor, only derived classes can be created.
@@ -117,10 +122,6 @@ protected:
                                              void *servant_upcall,
                                              void *derived_this
                                              ACE_ENV_ARG_DECL);
-
-  /// Get this interface's repository id (TAO specific).
-  virtual const char *_interface_repository_id (void) const = 0;
-
 protected:
   /// The operation table for this servant, it is initialized by the
   /// most derived class.
