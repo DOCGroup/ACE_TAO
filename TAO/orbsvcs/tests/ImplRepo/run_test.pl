@@ -141,6 +141,9 @@ sub both_ir_test
   $ncl_status = $NCL->TimedWait (300);
   $acl_status = $ACL->TimedWait (300);
 
+  system ($tao_imr." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown nestea_server");
+  system ($tao_imr." -ORBInitRef ImplRepoService=file://$implrepo_ior shutdown airplane_server");
+
   $ASV->Kill (); $ASV->Wait ();
   $NSV->Kill (); $NSV->Wait ();
   $NCL->Kill (); $NCL->Wait ();
