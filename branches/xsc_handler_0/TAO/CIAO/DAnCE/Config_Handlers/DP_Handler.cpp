@@ -1,11 +1,12 @@
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"
-#include "ace/Auto_Ptr.h"
+
 #include "CCD_Handler.h"
 #include "ADD_Handler.h"
 #include "MDD_Handler.h"
 #include "IDD_Handler.h"
 #include "cdp.hpp"
+#include "Singleton_IDREF_Map.h"
 
 ACE_RCSID (Config_Handlers,
            DP_Handler,
@@ -18,14 +19,36 @@ namespace CIAO
     DP_Handler::DP_Handler (DeploymentPlan &dp)
       : idl_dp_ (0)
       , dp_ (dp)
+      , retval_ (false)
     {
       if (!this->resolve_plan ())
         throw;
     }
 
     DP_Handler::~DP_Handler (void)
+      throw ()
     {
-      delete this->idl_dp_;
+      (void) Singleton_IDREF_Map::instance ()->unbind_refs ();
+    }
+
+    ::Deployment::DeploymentPlan const *
+    DP_Handler::plan (void) const
+      throw (NoPlan)
+    {
+      if (this->retval_)
+        return this->idl_dp_.get ();
+
+      throw NoPlan ();
+    }
+
+    ::Deployment::DeploymentPlan *
+    DP_Handler::plan (void)
+      throw (NoPlan)
+    {
+      if (this->retval_)
+        return this->idl_dp_.release ();
+
+      throw NoPlan ();
     }
 
     bool
@@ -34,43 +57,39 @@ namespace CIAO
       ::Deployment::DeploymentPlan *tmp =
           new Deployment::DeploymentPlan;
 
-      auto_ptr< ::Deployment::DeploymentPlan>
-        auto_idl_dp (tmp);
+      this->idl_dp_.reset (tmp);
 
-      bool retval =
+      this->retval_ =
         CCD_Handler::component_interface_descr (
           this->dp_.realizes (),
-          (*auto_idl_dp).realizes);
+          this->idl_dp_->realizes);
 
-      if (!retval)
-        return retval;
+      if (!this->retval_)
+        return this->retval_;
 
-      retval =
+      this->retval_ =
         ADD_Handler::artifact_deployment_descrs (
           this->dp_,
-          (*auto_idl_dp).artifact);
+          this->idl_dp_->artifact);
 
-      if (!retval)
-        return retval;
+      if (!this->retval_)
+        return this->retval_;
 
-      retval =
+      this->retval_ =
         MDD_Handler::mono_deployment_descriptions (
           this->dp_.implementation (),
-          (*auto_idl_dp).implementation);
+          this->idl_dp_->implementation);
 
-      if (!retval)
-        return retval;
+      if (!this->retval_)
+        return this->retval_;
 
-      retval =
+      this->retval_ =
         IDD_Handler::instance_deployment_descrs (
           this->dp_,
-          (*auto_idl_dp).instance);
+          this->idl_dp_->instance);
 
-      if (!retval)
-        return retval;
-
-      this->idl_dp_ =
-        auto_idl_dp.release ();
+      if (!this->retval_)
+        return this->retval_;
 
       return true;
     }

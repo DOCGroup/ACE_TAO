@@ -44,6 +44,9 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
     ComponentPropertyDescription_Handler.cpp
     RDD_Handler.cpp
     ID_Handler.cpp
+    XML_Error_Handler.cpp
+    XML_Helper.cpp
+    XML_File_Intf.cpp
   }
 
   Header_Files {
