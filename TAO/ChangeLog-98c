@@ -1,3 +1,17 @@
+Mon Oct  5 18:15:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/Makefile: 
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Simple_Naming/Makefile: 
+	* examples/Quoter/Makefile: 
+	* examples/POA/Forwarding/Makefile: 
+	* examples/POA/Generic_Servant/Makefile: 
+	* orbsvcs/orbsvcs/Makefile: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	  Removed the -Gc options for the IDL compiler, if wanted the
+	  option can be added on the command line when invoking make, as:
+	  $ make TAO_IDLFLAGS=-Gc
+
 Mon Oct  5 17:29:14 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/DynUnion_i.cpp:

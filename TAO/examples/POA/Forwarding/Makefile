@@ -14,7 +14,6 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-TAO_IDLFLAGS=-I$(TAO_ROOT)/tao
 IDL_SRC	= FooC.cpp FooS.cpp
 PROG_SRCS =	$(IDL_SRC) server.cpp client.cpp \
 		MyFooServant.cpp Servant_Locator.cpp
