@@ -81,6 +81,9 @@ public:
   static CORBA::TypeCode_ptr _nil (void);
   // returns a NULL typecode
 
+#if defined(__ACE_INLINE__)
+  ACE_INLINE
+#endif  
   CORBA::Boolean equal (const CORBA::TypeCode_ptr, CORBA::Environment &env) const;
   // compares two typecodes
 

@@ -120,6 +120,18 @@ CORBA_Any::to_string::to_string (char *&s, CORBA::ULong b)
 
 // insertion from special types
 
+// @@ Andy, please take a look at this method and make sure it's what
+// you intended.  I couldn't find it defined anywhere.  --cjc
+ACE_INLINE void
+CORBA_Any::replace (CORBA::TypeCode_ptr type,
+                    const void *value,
+                    CORBA::Boolean orb_owns_data)
+{
+  CORBA_Environment e;
+  this->replace(type, value, orb_owns_data, e);
+}
+
+
 ACE_INLINE void
 CORBA_Any::operator<<= (from_boolean b)
 {

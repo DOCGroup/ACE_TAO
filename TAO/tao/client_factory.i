@@ -15,7 +15,7 @@ TAO_Client_Connection_Handler::in_use (CORBA::Boolean flag)
   in_use_ = flag;
 }
 
-ACE_INLINE CONNECTOR *
+ACE_INLINE TAO_Client_Strategy_Factory::CONNECTOR *
 TAO_Client_Strategy_Factory::connector (void)
 {
   return 0;
