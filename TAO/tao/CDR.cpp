@@ -557,6 +557,16 @@ TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
   this->start_->wr_ptr (bufsiz);
 }
 
+TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
+                            int byte_order,
+                            TAO_Marshal_Factory *factory)
+  : factory_ (factory),
+    do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
+    good_bit_ (1)
+{
+  ACE_NEW (this->start_, ACE_Message_Block (bufsiz));
+}
+
 TAO_InputCDR::TAO_InputCDR (ACE_Message_Block *data,
                             int byte_order,
                             TAO_Marshal_Factory *factory)

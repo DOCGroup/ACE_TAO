@@ -373,6 +373,13 @@ public:
   // exercised wrt alignment, because this contructor will *not* work
   // if the buffer is unproperly aligned.
 
+  TAO_InputCDR (size_t bufsiz,
+		int byte_order = TAO_ENCAP_BYTE_ORDER,
+		TAO_Marshal_Factory *f =
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+  // Create an empty input stream. The caller is responsible for
+  // putting the right data in here.
+
   TAO_InputCDR (ACE_Message_Block *data,
 		int byte_order = TAO_ENCAP_BYTE_ORDER,
 		TAO_Marshal_Factory *f =
