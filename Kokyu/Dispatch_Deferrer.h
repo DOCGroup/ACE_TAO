@@ -47,10 +47,10 @@ class Dispatch_Queue_Item; //forward decl
 class Dispatch_Deferrer : public ACE_Event_Handler
 {
  public:
-  Dispatch_Deferrer();
+  Dispatch_Deferrer(void);
   //Default constructor
 
-  ~Dispatch_Deferrer();
+  virtual ~Dispatch_Deferrer(void);
   //Destructor
 
   int init(const Dispatch_Deferrer_Attributes& attr);

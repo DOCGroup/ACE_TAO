@@ -1,20 +1,20 @@
 // $Id$
 
-#if defined KOKYU_HAS_RELEASE_GUARD
-
 #include "ace/Sched_Params.h"
 #include "Dispatch_Deferrer.h"
 #include "Dispatcher_Task.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Dispatch_Deferrer.i"
-#endif /* __ACE_INLINE__ */
-
-#if defined(ACE_HAS_DSUI) 
+#if defined(ACE_HAS_DSUI)
 #include "kokyu_config.h"
 #include "kokyu_dsui_families.h"
 #include <dsui.h>
 #endif /* defined(ACE_HAS_DSUI) */
+
+#if defined KOKYU_HAS_RELEASE_GUARD
+
+#if ! defined (__ACE_INLINE__)
+#include "Dispatch_Deferrer.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, Dispatch_Deferrer, "$Id$")
 
@@ -59,6 +59,8 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
 
   //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
   //between release and enqueue into dispatch queue because of RG
+  tv = ACE_OS::gettimeofday();
+  ACE_DEBUG ((LM_DEBUG, "Dispatch_Deferrer::dispatch() (%t) : event deferred enqueue at %u\n",tv.msec()));
 #if defined (ACE_HAS_DSUI)
   DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, NULL);
 #endif /* ACE_HAS_DSUI */
@@ -66,7 +68,6 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
   //buffer until timer expires
   return this->rgq_.enqueue_deadline(qitem,&tv);
 }
-
 
 int
 Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
@@ -106,6 +107,8 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED_DEQUEUE Measure
       //time between release and enqueue into dispatch queue because
       //of RG
+      ACE_Time_Value tv = ACE_OS::gettimeofday();
+      ACE_DEBUG ((LM_DEBUG, "Dispatch_Deferrer::handle_timeout() (%t) : event deferred dequeue at %u\n",tv.msec()));
 #if defined (ACE_HAS_DSUI)
       DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, NULL);
 #endif /* ACE_HAS_DSUI */
