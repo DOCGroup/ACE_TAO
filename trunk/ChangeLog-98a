@@ -21,8 +21,8 @@ Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/platform_osf1_4.0.GNU: added comment on how to use DCE threads
           instead of POSIX threads.
 
-        * ace/OS.i (thr_getprio): don't apply the !defined(ACE_LACKS_SETSCHED)
-          check if ACE_HAS_DCETHREADS.
+        * ace/OS.i (thr_{get,set}prio): don't apply the
+          !defined(ACE_LACKS_SETSCHED) test if ACE_HAS_DCETHREADS.
 
         * ace/OS.cpp (thr_create): added || ACE_HAS_DCETHREADS to
           #ifndef ACE_LACKS_SETSCHED, so that priority is set with DCETHREADS.
