@@ -1,3 +1,9 @@
+Wed Aug 13 15:22:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp (create_event_i):
+
+          Fixed an incorrect return type in ACE_CHECK_RETURN.
+
 Wed Aug 13 14:41:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynAny_i.cpp (equal):
