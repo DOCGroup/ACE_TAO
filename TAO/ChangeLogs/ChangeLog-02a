@@ -1,3 +1,16 @@
+Mon Jun 25 11:12:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.h:
+
+          In the yacc file, added a switch case for unsigned short
+          to the code that processes a union discriminator. This 
+          case has always been missing. Also regenerated the
+          corresponding C++ files. Thanks to Jules Colding 
+          <dsl11814@vip.cybercity.dk> for sending in the example
+          IDL file that uncovered this bug.
+
 Mon Jun 25 10:32:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_module.cpp:
