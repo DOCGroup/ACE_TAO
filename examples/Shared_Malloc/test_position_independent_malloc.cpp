@@ -98,6 +98,9 @@ initialize (MALLOC *allocator)
   long longCont_lcl1 = *lt_lcl->bpl_;
   long longCont_lcl4 = lt_lcl->bpl_[4];
 
+  ACE_UNUSED_ARG (longCont_lcl1);
+  ACE_UNUSED_ARG (longCont_lcl4);
+
   return data1;
 }
 
