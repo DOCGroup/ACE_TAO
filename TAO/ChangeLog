@@ -1,3 +1,10 @@
+Wed Oct 27 09:08:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP.idl:
+
+          Removed a misleading comment.  It caused warnings with the Borland
+          compiler anyway.
+
 Wed Oct 27 09:03:24 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp:
