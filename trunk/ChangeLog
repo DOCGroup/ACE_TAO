@@ -1,3 +1,18 @@
+Thu Jul  8 16:00:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Timer_Queue_Adapters.h: If ACE_HAS_DEFERRED_TIMER_COMMANDS is
+	  set, #include "ace/Unbounded_Queue.h" and forward declare
+	  ACE_Command_Base, as these are needed later.
+
+	* examples/Bounded_Packet_Relay/Bounded_Packet_Relay.mpc:
+	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h: Moved
+	  the #define ACE_HAS_DEFERRED_TIMER_COMMANDS macro setting from the
+	  .h file to the .mpc file. Helps poor Visual Age C++ deal with it
+	  correctly when instantiating templates.
+
+	* examples/Bounded_Packet_Relay/BPR_Drivers_T.cpp: Added #include
+	  "ace/OS_NS_string.h" to pick up ACE_OS::memset().
+
 Thu Jul  8 11:32:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace: Renamed config-aix-5.1.h to config-aix-5.x.h since it covers
