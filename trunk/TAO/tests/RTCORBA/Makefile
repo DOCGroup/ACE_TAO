@@ -15,6 +15,7 @@ DIRS  = Banded_Connections \
 	Client_Protocol \
 	Server_Declared \
         Server_Protocol \
+	Private_Connection \
 	MT_Client_Protocol_Priority
 
 ifndef TAO_ROOT
