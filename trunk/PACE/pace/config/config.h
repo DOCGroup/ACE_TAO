@@ -71,6 +71,32 @@
 
 /* Adding appropriate macros for the different POSIX units of
    functionality that PACE supports.
+   These macros define which POSIX functions get included when
+   PACE is built. The functions are grouped according to POSIX
+   Units of Functionality per the POSIX document ?? pp. ??.
+   The following macros correspond to the following POSIX
+   Unit of Functionality:
+
+   PACE_HAS_POSIX_SP_UOF       -> POSIX Single Process UoF
+   PACE_HAS_POSIX_MP_UOF       -> POSIX Multiple Process UoF
+   PACE_HAS_POSIX_SIG_UOF      -> POSIX Signals UoF
+   PACE_HAS_POSIX_UG_UOF       -> POSIX User Groups UoF
+   PACE_HAS_POSIX_FS_UOF       -> POSIX File System UoF
+   PACE_HAS_POSIX_FA_UOF       -> POSIX File Attributes UoF
+   PACE_HAS_POSIX_F_UOF        -> POSIX FIFO UoF
+   PACE_HAS_POSIX_DI_UOF       -> POSIX Device I/O UoF
+   PACE_HAS_POSIX_FM_UOF       -> POSIX File Descriptor Management UoF
+   PACE_HAS_POSIX_P_UOF        -> POSIX Pipe UoF
+   PACE_HAS_POSIX_DS_UOF       -> POSIX Device Specific UoF
+   PACE_HAS_POSIX_SD_UOF       -> POSIX System Database UoF
+   PACE_HAS_POSIX_CLS_UOF      -> POSIX C Language Support UoF
+   PACE_HAS_POSIX_JC_UOF       -> POSIX Job Control UoF
+   PACE_HAS_POSIX_UGR_UOF      -> POSIX User Groups (Reentrant) UoF
+   PACE_HAS_POSIX_FL_UOF       -> POSIX File Locking UoF
+   PACE_HAS_POSIX_CLSR_UOF     -> POSIX C Language Support (Reentrant) UoF
+   PACE_HAS_POSIX_SDR_UOF      -> POSIX System Database (Reentrant) UoF
+   PACE_HAS_POSIX_NONUOF_FUNCS -> Any POSIX function in PACE that is not in
+                                  one of the above units of functionality.
  */
 #if PACE_HAS_ALL_POSIX_FUNCS
 # define PACE_HAS_POSIX_SP_UOF 1
