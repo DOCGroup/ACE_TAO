@@ -471,12 +471,14 @@ ACE_Event_Channel::open (void *)
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 template class ACE_Map_Entry<ACE_INT32, Proxy_Handler *>;
 template class ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Unbounded_Set_Iterator<Proxy_Handler *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_INT32, Proxy_Handler *>
 #pragma instantiate ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
 #pragma instantiate ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
 #pragma instantiate ACE_Unbounded_Set_Iterator<Proxy_Handler *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
