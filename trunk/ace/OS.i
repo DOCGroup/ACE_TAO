@@ -8620,7 +8620,7 @@ ACE_OS::strrchr (wchar_t *s, wint_t c)
 {
   // ACE_TRACE ("ACE_OS::strrchr");
 #if !defined (ACE_HAS_WINCE)
-  return (const wchar_t *) ::wcsrchr (s, c);
+  return (wchar_t *) ::wcsrchr (s, c);
 #else
   wchar_t *p = s + ::wcslen (s);
 
