@@ -1,3 +1,15 @@
+Tue Dec 12  3:23:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
+
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/ast/ast_type.cpp:
+
+          Added flag ifr_fwd_added_. It defaults to 0 and
+          is set by the tao_ifr backend when a forward declaration
+          is seen. A later check of this flag lets us know if a 
+          forward declaration has been seen in the same file, and
+          can help detect redefinition errors when adding the 
+          contents of multiple IDL files to the interface repository.
+
 Tue Dec 12 12:44:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/Options.cpp:
