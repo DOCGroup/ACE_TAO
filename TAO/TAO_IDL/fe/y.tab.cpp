@@ -13,10 +13,6 @@ char tao_yysccsid[] = "@(#)yaccpar      1.4 (Berkeley) 02/25/90 \n\
 extern  "C" int tao_yywrap();
 #endif  /* (defined(apollo) || defined(hpux)) && defined(__cplusplus)*/
 
-#if defined(ACE_GCC_HONORS_STD_NAMESPACE) && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
-using std::cerr;
-#endif
-
 void tao_yyerror (const char *);
 int tao_yylex (void);
 extern "C" int tao_yywrap (void);

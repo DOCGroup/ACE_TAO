@@ -27,10 +27,6 @@
 
 ACE_RCSID(be_visitor_valuetype, valuetype, "$Id$")
 
-#if defined(ACE_GCC_HONORS_STD_NAMESPACE) && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
-using std::cerr;
-#endif
-
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
