@@ -348,7 +348,7 @@ main (int, ACE_TCHAR *[])
 
 
 #if !defined (ACE_WIN32) && defined (_ACE_USE_SV_SEM)
-  ACE_ERROR ((LM_WARNING,
+  ACE_ERROR ((LM_DEBUG,
               ACE_TEXT ("\n *** Platform only support non-scalable SysV semaphores ***\n\n")));
 #endif /* !ACE_WIN32 && _ACE_USE_SV_SEM */
 
