@@ -1,3 +1,8 @@
+Mon Jun 18 21:33:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the Big_Reply tests to the nightly
+	  builds.  
+
 Mon Jun 18 16:20:51 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Thread_Manager_Test.cpp: Added a new function,
