@@ -506,6 +506,7 @@ struct cancel_state
 };
 
 #if defined (ACE_HAS_THREADS)
+
 #if defined (ACE_HAS_STHREADS)
 #include /**/ <synch.h>
 #include /**/ <thread.h>
@@ -526,7 +527,7 @@ struct cancel_state
 #define PTHREAD_EXPLICIT_SCHED          0
 #define PTHREAD_MIN_PRIORITY            0
 #define PTHREAD_MAX_PRIORITY            126
-#endif  //  ACE_HAS_FSU_PTHREADS
+#endif /* ACE_HAS_FSU_PTHREADS */
 
 #if defined (ACE_HAS_SETKIND_NP)
 #define PRIORITY_MAX                    PTHREAD_MAX_PRIORITY
@@ -642,8 +643,13 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 struct ACE_sema_t
 {
   ACE_mutex_t lock_;
+  // Serialize access to internal state.
+
   ACE_cond_t count_nonzero_;
+  // Block until there are no waiters.
+
   u_long count_;
+  // Number of waiters.
 };
 #endif /* !ACE_HAS_POSIX_SEM */
 
@@ -694,9 +700,10 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #define THR_CANCEL_ENABLE       0
 #define THR_CANCEL_DEFERRED     0
 #define THR_CANCEL_ASYNCHRONOUS 0
-#elif defined(VXWORKS)
-#include /**/ <semLib.h>    // for mutex implementation using mutual-exclusion
-                       // semaphores (which can be taken recursively)
+#elif defined (VXWORKS)
+// For mutex implementation using mutual-exclusion semaphores (which
+// can be taken recursively).
+#include /**/ <semLib.h>    
 #include /**/ <taskLib.h>
 
 // task options:  the other options are either obsolete, internal, or for
@@ -776,8 +783,6 @@ struct ACE_rwlock_t
   // Value is -1 if writer has the lock, else this keeps track of the
   // number of readers holding the lock.
 };
-
-#endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #elif defined (ACE_HAS_WTHREADS)
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
 typedef struct
@@ -869,7 +874,9 @@ typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
+#endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #endif /* ACE_HAS_THREADS */
+
 #include /**/ <sys/types.h>
 #include /**/ <assert.h>
 #include /**/ <sys/stat.h>
