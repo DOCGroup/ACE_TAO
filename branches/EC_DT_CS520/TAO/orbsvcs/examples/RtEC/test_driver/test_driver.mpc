@@ -10,6 +10,7 @@ project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, kokyu, ace
     Config_Factory.cpp
     Timer_Event_Handler.cpp
     cpuload.cpp
+    ECConfig_Gateway.cpp
   }
 
   Template_Files {

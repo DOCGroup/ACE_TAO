@@ -6,6 +6,7 @@
 #include "ECConfig.h"
 #include "Consumer.h"
 #include "Supplier.h"
+#include "ECConfig_Gateway.h"
 
 #include <sstream> //for ostringstream
 
@@ -24,7 +25,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventCommC.h"
-#include "orbsvcs/Event/EC_Gateway_Sched.h"
 
 //REACTOR CHANGE
 #include "tao/ORB_Core.h"
@@ -557,7 +557,8 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   ACE_DEBUG((LM_DEBUG,"Creating gateway\n"));
-  TAO_EC_Gateway_Sched *gateway = new TAO_EC_Gateway_Sched();
+  //TAO_EC_Gateway_Sched *gateway = new TAO_EC_Gateway_Sched();
+  ECConfig_Gateway *gateway = new ECConfig_Gateway();
 
   ACE_DEBUG((LM_DEBUG,"Gateway init\n"));
   //for consumer, remote is supplier EC
