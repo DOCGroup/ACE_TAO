@@ -142,6 +142,12 @@ ACE_InputCDR::to_string::to_string (char *&s,
 // Decode the CDR stream.
 
 ACE_INLINE CDR_Boolean
+ACE_OutputCDR::write_octet (CDR_Octet x)
+{
+  return this->write_1 (ACE_reinterpret_cast (const char*,&x));
+}
+
+ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_boolean (CDR_Boolean x)
 {
   return this->write_octet (x ? 1 : 0);
@@ -157,12 +163,6 @@ ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_wchar (ACE_OS::WChar x)
 {
   return this->write_2 (ACE_reinterpret_cast (const ACE_UINT16*,&x));
-}
-
-ACE_INLINE CDR_Boolean
-ACE_OutputCDR::write_octet (CDR_Octet x)
-{
-  return this->write_1 (ACE_reinterpret_cast (const char*,&x));
 }
 
 ACE_INLINE CDR_Boolean 
@@ -372,6 +372,24 @@ ACE_OutputCDR::good_bit (void) const
   return this->good_bit_;
 }
 
+ACE_INLINE int
+ACE_OutputCDR::adjust (size_t size, 
+                       size_t align, 
+                       char*& buf)
+{
+  buf = ptr_align_binary (this->current_->wr_ptr(), 
+                          align);
+  char *end = buf + size;
+
+  if (end <= this->current_->end ())
+    {
+      this->current_->wr_ptr (end);
+      return 0;
+    }
+
+  return this->grow_and_adjust (size, align, buf);
+}
+
 ACE_INLINE int 
 ACE_OutputCDR::adjust (size_t size, char*& buf)
 {
@@ -403,30 +421,18 @@ ACE_OutputCDR::length (void) const
 }
 
 ACE_INLINE int
-ACE_OutputCDR::adjust (size_t size, 
-                       size_t align, 
-                       char*& buf)
-{
-  buf = ptr_align_binary (this->current_->wr_ptr(), 
-                          align);
-  char *end = buf + size;
-
-  if (end <= this->current_->end ())
-    {
-      this->current_->wr_ptr (end);
-      return 0;
-    }
-
-  return this->grow_and_adjust (size, align, buf);
-}
-
-ACE_INLINE int
 ACE_OutputCDR::do_byte_swap (void) const
 {
   return this->do_byte_swap_;
 }
 
 // ****************************************************************
+
+ACE_INLINE CDR_Boolean
+ACE_InputCDR::read_octet (CDR_Octet& x)
+{
+  return this->read_1 (&x);
+}
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_boolean (CDR_Boolean& x)
@@ -451,17 +457,10 @@ ACE_InputCDR::read_wchar (ACE_OS::WChar& x)
 }
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_octet (CDR_Octet& x)
-{
-  return this->read_1 (&x);
-}
-
-ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_short (short &x)
 {
   return this->read_2 (ACE_reinterpret_cast (ACE_UINT16*, &x));
 }
-
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_ushort (u_short &x)
@@ -630,7 +629,7 @@ ACE_InputCDR::read_double_array (double *x,
 
 #  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-ACE_OutputCDR::read_longdouble_array (const long double* x,
+ACE_InputCDR::read_longdouble_array (long double* x,
                                       unsigned long length)
 {
   return this->read_array (x,
@@ -734,6 +733,35 @@ ACE_InputCDR::skip_longdouble (void)
 }
 #  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
+ACE_INLINE char*
+ACE_InputCDR::end (void)
+{
+  return this->start_.end ();
+}
+
+ACE_INLINE char*
+ACE_InputCDR::rd_ptr (void)
+{
+  return this->start_.rd_ptr ();
+}
+
+ACE_INLINE int
+ACE_InputCDR::adjust (size_t size,
+                      size_t align,
+                      char*& buf)
+{
+  buf = ptr_align_binary (this->rd_ptr (), align);
+  char *end = buf + size;
+  if (end <= this->end ())
+    {
+      this->start_.rd_ptr (end);
+      return 0;
+    }
+
+  this->good_bit_ = 0;
+  return -1;
+}
+
 ACE_INLINE int
 ACE_InputCDR::adjust (size_t size,
 		      char*& buf)
@@ -753,39 +781,10 @@ ACE_InputCDR::start (void) const
   return &this->start_;
 }
 
-ACE_INLINE char*
-ACE_InputCDR::end (void)
-{
-  return this->start_.end ();
-}
-
-ACE_INLINE char*
-ACE_InputCDR::rd_ptr (void)
-{
-  return this->start_.rd_ptr ();
-}
-
 ACE_INLINE int
 ACE_InputCDR::good_bit (void) const
 {
   return this->good_bit_;
-}
-
-ACE_INLINE int
-ACE_InputCDR::adjust (size_t size,
-                      size_t align,
-                      char*& buf)
-{
-  buf = ptr_align_binary (this->rd_ptr (), align);
-  char *end = buf + size;
-  if (end <= this->end ())
-    {
-      this->start_.rd_ptr (end);
-      return 0;
-    }
-
-  this->good_bit_ = 0;
-  return -1;
 }
 
 // ****************************************************************
@@ -834,7 +833,7 @@ operator<< (ACE_OutputCDR& os, CDR_ULongLong x)
 
 #  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-operator<< (ACE_OutputCDR& os, CORBA::LongDouble x)
+operator<< (ACE_OutputCDR& os, long double x)
 {
   os.write_longdouble (x);
   return os.good_bit ();

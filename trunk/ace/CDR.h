@@ -227,7 +227,7 @@ public:
   CDR_Boolean write_double (double x);
 
 #if   ACE_SIZEOF_LONG_DOUBLE == 16
-  int write_longdouble (const long double &x);
+  CDR_Boolean write_longdouble (const long double &x);
 #endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
   // For string we offer methods that accept a precomputed length.
@@ -267,7 +267,7 @@ public:
                                   unsigned long length);
 
 #if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean write_longdouble_array (const long double* &x,
+  CDR_Boolean write_longdouble_array (const long double* x,
                                       unsigned long length);
 #endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
@@ -523,7 +523,7 @@ public:
   CDR_Boolean read_double (double &x);
 
 #if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean write_longdouble (long double &x);
+  CDR_Boolean read_longdouble (long double &x);
 #endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
   CDR_Boolean read_string (char *&x);
@@ -560,7 +560,7 @@ public:
                                  unsigned long length);
 
 #if   ACE_SIZEOF_LONG_DOUBLE == 16
-  int read_longdouble_array (long double* x,
+  CDR_Boolean read_longdouble_array (long double* x,
                              unsigned long length);
 #endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 

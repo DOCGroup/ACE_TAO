@@ -241,7 +241,7 @@ ACE_OutputCDR::write_string (int len,
 {
   if (len != 0)
     {
-      if (this->write_ulong (len + 1) != -1)
+      if (this->write_ulong (len + 1))
 	{
           return this->write_char_array (x, len + 1);
 	}
@@ -417,7 +417,7 @@ CDR_Boolean
 ACE_OutputCDR::write_16 (const long double* x)
 {
   char* buf;
-  if (this->adjust (CDR::LONGDOUBLE_SIZE, CDR::LONGDOUBLE_ALIGN, buf) == 0)
+  if (this->adjust (ACE_CDR::LONGDOUBLE_SIZE, ACE_CDR::LONGDOUBLE_ALIGN, buf) == 0)
     {
       if (!this->do_byte_swap_)
         {
@@ -426,7 +426,7 @@ ACE_OutputCDR::write_16 (const long double* x)
         }
       else
         {
-          CDR::swap_16 (ACE_reinterpret_cast (char*, x), buf);
+          ACE_CDR::swap_16 (ACE_reinterpret_cast (char*, x), buf);
           return 1;
         }
     }
