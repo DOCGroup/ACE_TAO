@@ -1,3 +1,8 @@
+Mon Apr  1 18:27:46 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_String.inl (strtok_r): Corrected decision to call
+          wcstok() or wcstok_r(). This fixes builds on HP-UX 11.
+
 Mon Apr  1 16:35:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Containers_T.h (ACE_Array): Added performance characteristics
@@ -27,11 +32,13 @@ Sun Mar 31 22:44:00 2002  Si Mong Park  <spark@ociweb.com>
 Sun Mar 31 22:08:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * ChangeLog:
-          Fixed incorrect path for FaCE related files on prior change log items.
+          Fixed incorrect path for FaCE related files on prior change log
+          items.
 
 Sat Mar 30 08:58:57 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.cpp: (handle_accept): Removed a stray ACE_DEBUG() call.
+	* ace/Asynch_Acceptor.cpp: (handle_accept): Removed a stray
+          ACE_DEBUG() call.
 	  Thanks to Edan Ayal <edanayal@yahoo.com> for reporting this.
 
 Sun Mar 31 01:18:00 2002  Si Mong Park  <spark@ociweb.com>
