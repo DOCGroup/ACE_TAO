@@ -56,7 +56,6 @@ ACE_IPC_SAP::enable (int signum) const
         u_long nonblock = 1;
         return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
       }
-      case 
     default:
       ACE_NOTSUP_RETURN (-1);
     }
