@@ -108,6 +108,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
+  /// Return the locations of the members in the given ObjectGroup.
+  virtual PortableGroup::ObjectGroups * groups_at_location (
+      const PortableGroup::Location & the_location
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Return the ObjectGroupId for the given ObjectGroup.
   /// @note Does this method make sense for load balanced objects?
   virtual PortableGroup::ObjectGroupId get_object_group_id (

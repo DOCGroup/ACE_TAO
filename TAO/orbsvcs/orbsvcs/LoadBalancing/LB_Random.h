@@ -16,11 +16,12 @@
 
 #include "ace/pre.h"
 
-#include "orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/CosLoadBalancingS.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 /**
  * @class TAO_LB_Random
@@ -31,8 +32,8 @@
  * member residing at a random location.
  */
 class TAO_LB_Random
-  : public virtual CosLoadBalancing::Strategy,
-    public virtual CORBA::LocalObject
+  : public virtual POA_CosLoadBalancing::Strategy,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
 
@@ -40,7 +41,7 @@ public:
   /**
    * Seeds the OS' random number generator.
    */
-  TAO_LB_Random (void);
+  TAO_LB_Random (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
@@ -62,6 +63,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosLoadBalancing::StrategyNotAdaptive));
 
+  virtual CosLoadBalancing::LoadList * get_loads (
+      CosLoadBalancing::LoadManager_ptr load_manager,
+      const PortableGroup::Location & the_location
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosLoadBalancing::LocationNotFound));
+
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager
@@ -77,6 +85,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
+  /// Returns the default POA for this servant.
+  virtual PortableServer::POA_ptr _default_POA (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
+
   /// TAO-specific underlying implementation of this Random load
   /// balancing strategy's next_member() method.
   static CORBA::Object_ptr _tao_next_member (
@@ -87,6 +100,18 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
+
+  /// Initialize the random load balancing strategy.
+  /**
+   * If supported by the platform, initialization code will only run
+   * once for a given process.
+   */
+  static void init (void);
+
+private:
+
+  /// This servant's default POA.
+  PortableServer::POA_var poa_;
 
 };
 

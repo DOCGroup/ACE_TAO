@@ -50,6 +50,7 @@ module CosLoadBalancing
   const LoadId Disk = 1;
   const LoadId Memory = 2;
   const LoadId Network = 3;
+  const LoadId RequestsPerSecond = 4;
 
   struct Load {
     LoadId id;
@@ -96,16 +97,16 @@ module CosLoadBalancing
 
     // Ask the Strategy to analyze loads, and enable or disable alerts
     // at object group members residing at appropriate locations.
-    // oneway void analyze_loads (in LoadManager load_manager);
+    oneway void analyze_loads (in PortableGroup::ObjectGroup object_group,
+                               in LoadManager load_manager);
 
     // The loads at the given location should no longer be considered
     // when performing load analysis.
-    void location_removed (in PortableGroup::Location the_location)
-      raises (LocationNotFound);
+    // void location_removed (in PortableGroup::Location the_location)
+    //   raises (LocationNotFound);
   };
 
-  interface CustomStrategy : Strategy {
-  };
+  typedef Strategy CustomStrategy;
 
   // Property value for built-in load balancing Strategy.
   struct StrategyInfo
@@ -180,8 +181,8 @@ module CosLoadBalancing
     // load monitoring style.
 
     // Register a LoadMonitor object for the given location.
-    void register_load_monitor (in LoadMonitor load_monitor,
-                                in PortableGroup::Location the_location)
+    void register_load_monitor (in PortableGroup::Location the_location,
+                                in LoadMonitor load_monitor)
       raises (MonitorAlreadyPresent);
 
     // Retrieve the LoadMonitor object for the given location.

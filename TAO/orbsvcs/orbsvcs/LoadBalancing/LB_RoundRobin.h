@@ -24,7 +24,7 @@
 
 #include "orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
 
-#include "orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/CosLoadBalancingS.h"
 
 /**
  * @class TAO_LB_RoundRobin_Strategy
@@ -35,16 +35,13 @@
  * member residing at the next location.
  */
 class TAO_LB_RoundRobin
-  : public virtual CosLoadBalancing::Strategy,
-    public virtual CORBA::LocalObject
+  : public virtual POA_CosLoadBalancing::Strategy,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
 
   /// Constructor.
-  TAO_LB_RoundRobin (void);
-
-  /// Destructor
-  ~TAO_LB_RoundRobin (void);
+  TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
@@ -66,6 +63,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosLoadBalancing::StrategyNotAdaptive));
 
+  virtual CosLoadBalancing::LoadList * get_loads (
+      CosLoadBalancing::LoadManager_ptr load_manager,
+      const PortableGroup::Location & the_location
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosLoadBalancing::LocationNotFound));
+
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager
@@ -73,16 +77,28 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
+
+  virtual void analyze_loads (
+      PortableGroup::ObjectGroup_ptr object_group,
+      CosLoadBalancing::LoadManager_ptr load_manager
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
+
+  /// Returns the default POA for this servant.
+  virtual PortableServer::POA_ptr _default_POA (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
 
 protected:
 
-  /// Retrieve the least loaded location from the given list of
-  /// locations.
-//   CORBA::Boolean get_location (const PortableGroup::Locations & locations,
-//                                PortableGroup::Location & location);
+  /// Destructor
+  ~TAO_LB_RoundRobin (void);
 
 private:
+
+  /// This servant's default POA.
+  PortableServer::POA_var poa_;
 
   /// Lock used to ensure atomic access to state retained by this
   /// class.

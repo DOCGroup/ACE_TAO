@@ -2,14 +2,26 @@
 
 #include "LB_Random.h"
 
+
 ACE_RCSID (LoadBalancing,
            LB_Random,
            "$Id$")
 
-TAO_LB_Random::TAO_LB_Random (void)
+
+#ifdef ACE_HAS_PTHREADS_STD
+static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
+
+extern "C" void tao_lb_random_init_routine (void)
 {
-  // Seed the random number generator with the current time.
   ACE_OS::srand (ACE_static_cast (unsigned int, ACE_OS::time ()));
+}
+#endif  /* ACE_HAS_PTHREADS_STD */
+
+
+TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
+  : poa_ (PortableServer::POA::_duplicate (poa))
+{
+  TAO_LB_Random::init ();
 }
 
 char *
@@ -47,6 +59,20 @@ TAO_LB_Random::push_loads (
   ACE_THROW (CosLoadBalancing::StrategyNotAdaptive ());
 }
 
+CosLoadBalancing::LoadList *
+TAO_LB_Random::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
+                          const PortableGroup::Location & the_location
+                          ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosLoadBalancing::LocationNotFound))
+{
+  if (CORBA::is_nil (load_manager))
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+
+  return load_manager->get_loads (the_location
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
 CORBA::Object_ptr
 TAO_LB_Random::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -56,6 +82,9 @@ TAO_LB_Random::next_member (
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::MemberNotFound))
 {
+  if (CORBA::is_nil (load_manager))
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
+
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group
                                         ACE_ENV_ARG_PARAMETER);
@@ -74,6 +103,12 @@ TAO_LB_Random::analyze_loads (
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+PortableServer::POA_ptr
+TAO_LB_Random::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 CORBA::Object_ptr
@@ -126,4 +161,15 @@ TAO_LB_Random::_tao_next_member (
   return load_manager->get_member_ref (object_group,
                                        locations[i]
                                        ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_LB_Random::init (void)
+{
+#ifdef ACE_HAS_PTHREADS_STD
+  (void) ::pthread_once (&::tao_lb_once_control,
+                         ::tao_lb_random_init_routine);
+#else
+  ::tao_lb_random_init_routine ();
+#endif  /* ACE_HAS_PTHREADS_STD */
 }

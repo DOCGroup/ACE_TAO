@@ -35,12 +35,6 @@
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
 
 
-/// Forward declarations
-class TAO_LB_RoundRobin;
-class TAO_LB_Random;
-class TAO_LB_LeastLoaded;
-
-
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
   : public virtual POA_CosLoadBalancing::LoadManager,
     public virtual PortableServer::RefCountServantBase
@@ -108,8 +102,8 @@ public:
 
   /// Register a load monitor with the load balancer.
   virtual void register_load_monitor (
-      CosLoadBalancing::LoadMonitor_ptr load_monitor,
-      const PortableGroup::Location & the_location
+      const PortableGroup::Location & the_location,
+      CosLoadBalancing::LoadMonitor_ptr load_monitor
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosLoadBalancing::MonitorAlreadyPresent));
@@ -275,6 +269,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
+  /// Return the locations of the members in the given ObjectGroup.
+  virtual PortableGroup::ObjectGroups * groups_at_location (
+      const PortableGroup::Location & the_location
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Return the ObjectGroupId for the given ObjectGroup.
   virtual PortableGroup::ObjectGroupId get_object_group_id (
       PortableGroup::ObjectGroup_ptr object_group
@@ -392,43 +392,31 @@ private:
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::FactoryInfos & factory_infos) const;
 
-  /// Return a reference to the built-in load balancing strategy named
-  /// "strategy."
-  CosLoadBalancing::Strategy_ptr built_in_strategy (
+  /// Preprocess Strategy or CustomStrategy properties.
+  /**
+   * This method takes care of converting StrategyInfo properties to
+   * Strategy properties, and verifying that CustomStrategy references
+   * are not nil.
+   */
+  void preprocess_properties (PortableGroup::Properties & props
+                              ACE_ENV_ARG_DECL);
+
+  /// Create a built-in load balancing strategy and return a reference
+  /// to it.
+  CosLoadBalancing::Strategy_ptr make_strategy (
     CosLoadBalancing::StrategyInfo * info
     ACE_ENV_ARG_DECL);
-
-  /// Check validity of Strategy or CustomStrategy property.
-  /**
-   * If a "LeastLoaded" Strategy is found in the property list, the
-   * LeastLoaded Strategy implementation will be initialized with the
-   * provided LeastLoaded-specific properties.
-   */
-  void check_strategy_prop (const PortableGroup::Properties & props
-                            ACE_ENV_ARG_DECL);
-
-  /// Initialize the built-in LeastLoaded Strategy with the given
-  /// LeastLoaded properties.
-  void init_least_loaded (const PortableGroup::Properties & props
-                          ACE_ENV_ARG_DECL);
-
-  /// Utility method to extract a CORBA::Float value from the given
-  /// property.
-  /**
-   * @note This method is really only used when initializing the
-   *       LeastLoaded built-in Strategy.
-   */
-  void extract_float_property (const PortableGroup::Property & property,
-                               CORBA::Float & value
-                               ACE_ENV_ARG_DECL);
 
 private:
 
   /// Reactor used when pulling loads from registered load monitors.
   ACE_Reactor * reactor_;
 
-  /// The POA that dispatches requests to the ReplicaLocator.
+  /// The POA that dispatches requests to the MemberLocator.
   PortableServer::POA_var poa_;
+
+  /// The Root POA.
+  PortableServer::POA_var root_poa_;
 
   /// Mutex that provides synchronization for the LoadMonitor map.
   TAO_SYNCH_MUTEX monitor_lock_;
@@ -487,14 +475,18 @@ private:
    */
   //@{
   /// The "RoundRobin" load balancing strategy.
-  TAO_LB_RoundRobin * round_robin_;
+  CosLoadBalancing::Strategy_var round_robin_;
 
   /// The "Random" load balancing strategy.
-  TAO_LB_Random * random_;
+  CosLoadBalancing::Strategy_var random_;
 
   /// The "LeastLoaded" load balancing strategy.
-  TAO_LB_LeastLoaded * least_loaded_;
+  CosLoadBalancing::Strategy_var least_loaded_;
   //@}
+
+  /// Cached instance of the Property name
+  /// "org.omg.CosLoadBalancing.StrategyInfo".
+  PortableGroup::Name built_in_balancing_strategy_info_name_;
 
   /// Cached instance of the Property name
   /// "org.omg.CosLoadBalancing.Strategy".
