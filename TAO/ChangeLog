@@ -5394,9 +5394,9 @@ Fri Feb 18 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           delegates this to the id_uniqueness strategy. The retain servant
           retention strategy and the servant acivator request processing
           strategy just call now the POA instead directly using the
-          id_uniqueness strategy. The strategies should be decoupled from
-          other strategies, this is the first change for that approach, thanks
-          to Bala and Carlos for coming with this approach.
+          id_uniqueness strategy. Added an optimization by adding the
+	  servant created to the AOM thanks to Bala and Carlos for coming
+	  with this approach. 
 
         Mon Nov 15 10:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
