@@ -1,3 +1,8 @@
+Thu Oct 17 16:28:05 UTC 2002  Don Hinton <dhinton@ieee.org>
+
+	* THANKS: Added Jon Franklin <jfranklin@dctd.saic.com>
+	  to the hall of fame.
+
 Thu Oct 17 10:26:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/C++NPv2/display_logfile.cpp (ACE_MT_SYNCH>): Fixed a
