@@ -39,6 +39,8 @@
 #  static_libs_only Only build static libraries.
 #  threads          Build with thread support.
 #  xt_reactor       Build the XtReactor.
+#  fl_reactor       Build the FlReactor.
+#  tk_reactor       Build the TkReactor.    
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -261,6 +263,17 @@ ifneq ($(fl_reactor),)
   LIBS += $(PLATFORM_FL_LIBS)
   LDFLAGS += $(PLATFORM_FL_LDFLAGS)
 endif # fl_reactor
+
+ifeq ($(tk_reactor),0)
+  override tk_reactor =
+endif # tk_reactor
+
+ifneq ($(tk_reactor),)
+  override ace_with_tk=1
+  CPPFLAGS += -DACE_HAS_TK $(PLATFORM_TK_CPPFLAGS)
+  LIBS += $(PLATFORM_TK_LIBS)
+  LDFLAGS += $(PLATFORM_TK_LDFLAGS)
+endif # tk_reactor
 
 ifeq ($(ace_with_gl),0)
   override ace_with_gl =
