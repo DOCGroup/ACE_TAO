@@ -5,18 +5,17 @@
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-BIN =  server vs as main
+BIN =  server vs as 
 
 BUILD = $(BIN)
 
 AV_SERVER_OBJS = server.o
 AV_VS_OBJS = vs.o
 AV_AS_OBJS = as.o
-AV_MAIN_OBJS = main.o
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-FILES = server vs as main
+FILES = server vs as 
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
@@ -54,9 +53,6 @@ vs:$(addprefix $(VDIR),$(AV_VS_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 as:$(addprefix $(VDIR),$(AV_AS_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-main:$(addprefix $(VDIR),$(AV_MAIN_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
