@@ -33,7 +33,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   ACE_TRACE ("ACE_Local_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
 
-  ACE_Auto_Basic_Array_Ptr<char> cp = new char[rounded_bytes];
+  ACE_Auto_Basic_Array_Ptr<char> cp (new char[rounded_bytes]);
 
   if (cp.get () == 0)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) new failed \n")), 0);
