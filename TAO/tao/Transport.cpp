@@ -1041,6 +1041,7 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
                       "TAO (%P|%t) - TAO_Transport[%d]::consolidate_message \n"
                       "queueing up the message \n",
                       this->id ()));
+
         }
 
       // Get a queued data
@@ -1097,6 +1098,7 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
   // Update the missing data...
   missing_data = this->incoming_message_queue_.missing_data_tail ();
+
 
   // Move the read pointer of the <incoming> message block to the end
   // of the copied message  and process the remaining portion...
@@ -1176,6 +1178,13 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
       // Now put the TAO_Queued_Data back in the queue
       this->incoming_message_queue_.enqueue_tail (qd);
+
+      // Any way as we have come this far and are about to return,
+      // just try to process a message if it is there in the queue.
+      if (this->incoming_message_queue_.is_head_complete ())
+        return this->process_queue_head (rh);
+
+      return 0;
     }
 
   // Process a message in the head of the queue if we have one..
@@ -1446,7 +1455,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
                       "TAO(%P|%t) - Transport[%d]::process_queue_head"
                       " the size of the queue is [%d] \n",
                       this->id (),
-                      this->incoming_message_queue_.queue_length ()));
+                      this->incoming_message_queue_.queue_length()));
         }
       // Now that we have pulled out out one message out of the queue,
       // check whether we have one more message in the queue...
