@@ -2,6 +2,10 @@ Mon Jan 12 17:52:17 2004  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Add a section for using GNU autoconf.
 
+	* examples/APG/ThreadPools/Futures.cpp: Don't delete all work
+	  requests; only the Exit requests - the others are allocated on
+	  the stack. Thanks to Andy Harvey <agh@cisco.com> for this fix.
+
 Mon Jan 12 14:24:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Makefile.am: Remove $(libdir) from libTest_Output.la listed
