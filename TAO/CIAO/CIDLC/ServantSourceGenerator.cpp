@@ -2237,14 +2237,7 @@ namespace
          << "_ptr exe," << endl
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : CIAO::Servant_Impl<" << endl
-         << "      POA_" << stripped << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_var," << endl
-         << "      " << t.name () << "_Context" << endl
-         << "    " << "> (exe, c)" << endl
+         << "  : our_base (exe, c)" << endl
          << "{"
          << "this->context_ = "
          << "new " << t.name () << "_Context (h, c, this);"

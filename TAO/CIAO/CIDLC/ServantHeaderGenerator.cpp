@@ -1212,6 +1212,16 @@ namespace
          << "{"
          << "public:" << endl;
 
+      os << "/// Hack for VC6 the most sucky compiler" << endl
+	 << "typedef CIAO::Servant_Impl<" << endl
+	 <<  "POA_" << stripped << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var," << endl
+         << "      " << t.name () << "_Context" << endl
+         << "    > our_base;" << endl << endl;
+
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr executor," << endl
