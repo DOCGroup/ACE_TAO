@@ -61,9 +61,9 @@ TAO_ServantBase::~TAO_ServantBase (void)
 }
 
 PortableServer::POA_ptr
-TAO_ServantBase::_default_POA (CORBA::Environment &env)
+TAO_ServantBase::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
-  return TAO_ORB_Core_instance ()->root_poa_reference (env);
+  return TAO_ORB_Core_instance ()->root_poa_reference (ACE_TRY_ENV);
 }
 
 void
@@ -78,12 +78,16 @@ TAO_ServantBase::_remove_ref (CORBA::Environment &)
 
 CORBA::Boolean
 TAO_ServantBase::_is_a (const char* logical_type_id,
-			CORBA::Environment &env)
+			CORBA::Environment &ACE_TRY_ENV)
 {
-  if (ACE_OS::strcmp (logical_type_id, CORBA::_tc_Object->id (env)) == 0)
+  const char *id = CORBA::_tc_Object->id (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  if (ACE_OS::strcmp (logical_type_id, id) == 0)
     {
       return 1;
     }
+
   return 0;
 }
 
@@ -110,30 +114,28 @@ TAO_ServantBase::_bind (const char *opname,
 }
 
 TAO_Stub *
-TAO_ServantBase::_create_stub (CORBA_Environment &env)
+TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub;
+  TAO_Stub *stub = 0;
 
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current &poa_current = orb_core->poa_current ();
-  TAO_POA_Current_Impl *poa_current_impl = poa_current.implementation ();
+  TAO_POA_Current_Impl *poa_current_impl =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
 
   if (poa_current_impl != 0 &&
       this == poa_current_impl->servant ())
     {
-      stub = orb_core->orb ()->create_stub_object (poa_current_impl->object_key (),
-                                                   this->_interface_repository_id (),
-                                                   env);
+      stub = poa_current_impl->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
+                                                                       this->_interface_repository_id (),
+                                                                       ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
     }
   else
     {
-      PortableServer::POA_var poa = this->_default_POA (env);
-      if (env.exception () != 0)
-	return 0;
+      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
-      CORBA::Object_var object = poa->servant_to_reference (this, env);
-      if (env.exception () != 0)
-	return 0;
+      CORBA::Object_var object = poa->servant_to_reference (this, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       // Get the stub object
       stub = object->_stubobj ();
@@ -301,7 +303,7 @@ TAO_ServantBase_var::_retn (void)
 }
 
 TAO_Stub *
-TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
+TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 {
   PortableServer::ObjectId_var invalid_oid =
     PortableServer::string_to_ObjectId ("invalid");
@@ -310,24 +312,38 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
                          invalid_oid->length (),
                          invalid_oid->get_buffer (),
                          0);
+
   // Note the use of a fake key and no registration with POAs
-  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (tmp_key,
-                                                               this->_interface_repository_id (),
-                                                               env);
+  PortableServer::POA_var poa_stub = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  PortableServer::Servant servant = poa_stub->_servant ();
+  if (servant == 0)
+    {
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        0);
+    }
+
+  void *ptr = servant->_downcast (servant->_interface_repository_id ());
+  POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
+  TAO_POA *poa_impl = ACE_dynamic_cast (TAO_POA *, poa);
+
+  return poa_impl->orb_core ().orb ()->create_stub_object (tmp_key,
+                                                           this->_interface_repository_id (),
+                                                           ACE_TRY_ENV);
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 CORBA::Object_ptr
-TAO_DynamicImplementation::_this (CORBA::Environment &env)
+TAO_DynamicImplementation::_this (CORBA::Environment &ACE_TRY_ENV)
 {
   // The _this() function returns a CORBA::Object_ptr for the target
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
   // incarnate multiple CORBA objects of different types.
-  TAO_Stub *stub = this->_create_stub (env);
-  if (env.exception () != 0)
-    return CORBA::Object::_nil ();
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create a object
   return new CORBA::Object (stub, this, 1);
@@ -350,53 +366,53 @@ TAO_DynamicImplementation::_downcast (const char *repository_id)
 }
 
 TAO_Stub *
-TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
+TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
 {
   // If DynamicImplementation::_this() is invoked outside of the
   // context of a request invocation on a target object being served
   // by the DSI servant, it raises the PortableServer::WrongPolicy
   // exception.
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current &poa_current = orb_core->poa_current ();
-  TAO_POA_Current_Impl *poa_current_impl = poa_current.implementation ();
+  TAO_POA_Current_Impl *poa_current_impl =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
 
-  if (poa_current_impl == 0 &&
-      this != poa_current_impl->servant ())
+  if (poa_current_impl != 0 &&
+      this == poa_current_impl->servant ())
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
-  PortableServer::POA_var poa = poa_current_impl->get_POA (env);
-  if (env.exception () != 0)
-    return 0;
+  PortableServer::POA_var poa = poa_current_impl->get_POA (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::RepositoryId interface = this->_primary_interface (poa_current_impl->object_id (),
                                                             poa.in (),
-                                                            env);
-  if (env.exception () != 0)
-    return 0;
+                                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
-  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (poa_current_impl->object_key (),
-                                                               interface,
-                                                               env);
+  return poa_current_impl->POA_impl ()->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
+                                                                                interface,
+                                                                                ACE_TRY_ENV);
 }
 
 void
 TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
                                       void *context,
-                                      CORBA::Environment &env)
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (context);
 
   // Delegate to user
-  this->invoke (&request, env);
+  this->invoke (&request, ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (request.response_expected ())
     {
-      request.init_reply (env);
-      request.dsi_marshal (env);
+      request.init_reply (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      request.dsi_marshal (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 

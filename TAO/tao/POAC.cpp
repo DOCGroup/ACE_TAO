@@ -311,7 +311,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -446,7 +446,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -581,7 +581,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -715,7 +715,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -852,7 +852,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -987,7 +987,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -1122,7 +1122,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 
@@ -3250,7 +3250,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_object_id",
-      TAO_ORB_Core_instance ()
+      istub->orb_core ()
     );
 
 

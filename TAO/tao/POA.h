@@ -528,6 +528,9 @@ public:
   static void check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completion,
                                                     CORBA::Environment &ACE_TRY_ENV);
 
+  TAO_ORB_Core &orb_core (void) const;
+  // ORB Core for POA.
+
 protected:
 
   const ACE_CString &name (void) const;
@@ -834,6 +837,9 @@ public:
   TAO_POA *POA_impl (void) const;
   // Get the POA imeplemantation
 
+  TAO_ORB_Core &orb_core (void) const;
+  // ORB Core for this current.
+
   void object_id (const PortableServer::ObjectId &id);
   // Set the object ID.
 
@@ -903,7 +909,7 @@ protected:
   const char *operation_;
   // Operation name for this current.
 
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core &orb_core_;
   // ORB Core for this current.
 
   TAO_POA_Current_Impl *previous_current_impl_;

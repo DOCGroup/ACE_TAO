@@ -1,3 +1,38 @@
+Tue Jun 01 23:48:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/corbafwd.h (CORBA): Changed CORBA from a class to a
+	  namespace on platforms that support namespaces.  Thanks to Joerg
+	  Pommnitz <pommnitz@darmstadt.gmd.de> for pointing out this
+	  problem.
+
+	  Files that required changes:
+
+	  - Exception.cpp
+	  - PolicyC.cpp
+	  - Typecode_Constants.cpp
+	  - corbafwd.cpp
+	  - corbafwd.h
+	  - corbafwd.i
+
+	* tao/ORB.h (CORBA_ORB): Removed the <CORBA::instance_>.  This was
+	  non-standard and not needed since you can always get to the
+	  default ORB through ORB_init (0,0,0).
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core_instance): Redone because of the
+	  above change to <CORBA::instance_>.  This method is somewhat
+	  slower now, but should not be used very often.
+
+	* tao/Servant_Base.cpp (TAO_Local_ServantBase::_create_stub,
+	  TAO_DynamicImplementation::_create_stub, and
+	  TAO_ServantBase::_create_stub): Changed implementation such that
+	  it does not use TAO_ORB_Core_instance() and made sure that the
+	  correct ORB is used in creating the stub.
+
+	  Also improved the exception handling.
+
+	* tao/POAC.cpp: IDL compiler generated code uses istub->orb_core()
+	  instead of TAO_ORB_Core_instance().
+
 Thu Jun  3 09:16:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/MT_Client_Test/client.cpp:
@@ -117,8 +152,8 @@ Wed Jun 02 15:17:24 1999    <alex@cs.wustl.edu>
 Wed Jun  2 14:49:36 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/ORB.cpp (resolve_initial_references): Raised a
-	  CORBA::ORB::InvalidName exception if the ORB is unable 
-	  to find the service name in the ORB IOR tables or among 
+	  CORBA::ORB::InvalidName exception if the ORB is unable
+	  to find the service name in the ORB IOR tables or among
 	  the hard-coded service names.
 
 Wed Jun  2 13:18:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -159,7 +194,7 @@ Wed Jun  2 13:18:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Wait_Strategy and its friends.  This was the last thorn in the
 	  PP framework (which could use some polishing, but nothing big).
 	  Renamed the TAO_Client_Connection_Handler to
-	  TAO_IIOP_Client_Connection_Handler, this is more consistent with 
+	  TAO_IIOP_Client_Connection_Handler, this is more consistent with
 	  the UIOP protocol (and puts the class in its right place).
 	  Removed several #includes from header files to minimize
 	  cross-dependencies and optimize (re)compilation time
@@ -194,7 +229,7 @@ Wed Jun  2 10:51:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Stub.cpp:
 	  Removed an "optimization" I had made to DII the other
-	  day (it was broken). I suspected it might be too 
+	  day (it was broken). I suspected it might be too
 	  good to be true.
 
 	* TAO/tests/DynAny_Test/da_tests.idl:
@@ -266,26 +301,26 @@ Tue Jun  1 19:48:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Jun  1 18:00:23 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_State.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_State.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.cpp:
-	  Added missing template instantiation pragmas.		
+	  Added missing template instantiation pragmas.
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/as.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/server/vs.cpp:
-	  Added missing template instantiation pragmas. 
+	  Added missing template instantiation pragmas.
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
 	 Fixed a Any reference to CORBA::Any.
-	
+
 Tue Jun  1 17:27:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	  Removed ACE_NTOHL macro from code generated for 
+	  Removed ACE_NTOHL macro from code generated for
 	  32-bit union case label values (long, ulong and enum).
 	  The bytes were getting swapped one too many times.
 	  Thanks to Carlos for his explanation of the byte-
@@ -303,7 +338,7 @@ Tue Jun  1 14:37:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Jun  1 13:56:09 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	Replaced ACE_U_LongLong * ACE_UINT64 with 
+	Replaced ACE_U_LongLong * ACE_UINT64 with
 	ACE_U_LongLong * ACE_UINT32 in the following files :
 
 	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
