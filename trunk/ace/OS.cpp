@@ -3626,7 +3626,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 
   /* extract the tm structure from time_t */
   ptms[1] = gmtime_r (&t1, &tms[1]);
-  if (ptm[1] == 0) return 0.0;
+  if (ptms[1] == 0) return 0.0;
 
   ptms[0] = gmtime_r (&t0, &tms[0]);
   if (ptms[0] == 0) return 0.0;
@@ -3691,33 +3691,50 @@ ACE_OS::difftime (time_t t1, time_t t0)
 
           tms[0].tm_year += 1;
         }
+
+#undef ISLEAPYEAR
+
     }
   else
     {
       // Normalize
-      tms[1].tm_yday -= tms[0].tm_yday;
-
-      if (tms[1].tm_hour < tms[0].tm_hour)
+      if (tms[1].tm_sec < tms[0].tm_sec)
         {
-          tms[1].tm_yday -= 1;
-          tms[1].tm_hour = (24 + tms[1].tm_hour) - tms[0].tm_hour;
+          if (tms[1].tm_min == 0)
+            {
+              if (tms[1].tm_hour == 0)
+                {
+                  tms[1].tm_yday -= 1;
+                  tms[1].tm_hour += 24;
+                }
+              tms[1].tm_hour -= 1;
+              tms[1].tm_min += 60;
+            }
+          tms[1].tm_min -= 1;
+          tms[1].tm_sec += 60;
         }
-      else
-        tms[1].tm_hour -= tms[0].tm_hour;
+      tms[1].tm_sec -= tms[0].tm_sec;
 
       if (tms[1].tm_min < tms[0].tm_min)
         {
+          if (tms[1].tm_hour == 0)
+            {
+              tms[1].tm_yday -= 1;
+              tms[1].tm_hour += 24;
+            }
           tms[1].tm_hour -= 1;
           tms[1].tm_min += 60;
         }
       tms[1].tm_min -= tms[0].tm_min;
 
-      if (tms[1].tm_sec < tms[0].tm_sec)
+      if (tms[1].tm_hour < tms[0].tm_hour)
         {
-          tms[1].tm_min -= 1;
-          tms[1].tm_sec += 60;
+          tms[1].tm_yday -= 1;
+          tms[1].tm_hour += 24;
         }
-      tms[1].tm_sec -= tms[0].tm_sec;
+      tms[1].tm_hour -= tms[0].tm_hour;
+
+      tms[1].tm_yday -= tms[0].tm_yday;
     }
 
   // accumulate the seconds
