@@ -53,24 +53,33 @@ main (int    argc, char   *argv[])
     CORBA_ORB_ptr	orb_ptr;
     CORBA_Environment	env;
     CORBA_Object_ptr	objref = CORBA_Object::_nil();
-    unsigned		loop_count = 50;
+    unsigned		loop_count = 1;
     int			exit_later = 0;
 
 #if defined (VXWORKS)
+    // Work around VxWorks' lack of command line
 
     loop_count = 50;
     int dummy = 1;
     orb_ptr = CORBA_ORB_init (dummy, (char **)0, "internet", env);
-
-    //
-    // Parse command line and verify parameters.
-    //
+    if (env.exception() != 0)
+      {
+	print_exception(env.exception(), "ORB initialization");
+	return 1;
+      }
 
     hostAdd( "mv2604d", "130.38.183.132" ); 
 
     objref = orb_ptr->string_to_object (
 		(CORBA_String)"iiop:1.0//mv2604d:1000/key0", env);
 #else
+
+    orb_ptr = CORBA_ORB_init(argc, argv, "internet", env);
+    if (env.exception() != 0)
+      {
+	print_exception(env.exception(), "ORB initialization");
+	return 1;
+      }
 
     //
     // Parse command line and verify parameters.
@@ -115,12 +124,6 @@ main (int    argc, char   *argv[])
 			    );
 	    return 1;
         }
-
-    orb_ptr = CORBA_ORB_init (argc, argv, "internet", env);
-    if (env.exception () != 0) {
-       print_exception (env.exception (), "ORB initialisation");
-       return 1;
-    }
 
 #endif
 

@@ -18,7 +18,11 @@
 #    include <corba/boa.hh>
 #  endif
 
+#  include <ace/SOCK_Acceptor.h>
+#  include <ace/Strategies_T.h>
+
 class ROA;
+class ROA_Handler;
 typedef ROA* ROA_ptr;
 
 class ROA_Parameters
@@ -100,6 +104,40 @@ private:
   ForwardFunc forwarder_;	// 
   ROA_ptr oa_;			// Pointer to One True Object Adapter
 };
+
+class ROA_Factory
+{
+public:
+  typedef ACE_Creation_Strategy<ROA_Handler> CREATION_STRATEGY;
+  typedef ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<ROA_Handler> CONCURRENCY_STRATEGY;
+  typedef ACE_Scheduling_Strategy<ROA_Handler> SCHEDULING_STRATEGY;
+
+  CREATION_STRATEGY*    creation_strategy();
+  ACCEPT_STRATEGY*      accept_strategy();
+  CONCURRENCY_STRATEGY* concurrency_strategy();
+  SCHEDULING_STRATEGY*  scheduling_strategy();
+  
+  static ROA_Factory* instance();
+
+protected:
+  ROA_Factory();
+
+private:
+  static ROA_Factory* _instance;
+
+  CONCURRENCY_STRATEGY* concurrency_strategy_;
+  ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;
+
+  // Someday we'll need these!
+#if 0
+  CREATION_STRATEGY*    creation_strategy_;
+  ACCEPT_STRATEGY*      accept_strategy_;
+  SCHEDULING_STRATEGY*  scheduling_strategy_;
+#endif
+
+};
+
 
 #  if defined(__ACE_INLINE__)
 #    include "params.i"

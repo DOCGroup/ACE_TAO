@@ -12,7 +12,7 @@
 class ROA_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  ROA_Handler();
+  ROA_Handler(ACE_Thread_Manager* t = ACE_Service_Config::thr_mgr());
   virtual int open(void*);
   virtual int svc(void);
 
@@ -28,7 +28,7 @@ private:
   ROA_Parameters* params_;
 };
 
-typedef ACE_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR> ROA_Acceptor;
+typedef ACE_Strategy_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR> ROA_Acceptor;
 
 #  if defined(__ACE_INLINE__)
 #    include "connect.i"
