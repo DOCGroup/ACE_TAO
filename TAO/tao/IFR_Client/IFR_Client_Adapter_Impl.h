@@ -15,17 +15,14 @@
 #define TAO_IFR_CLIENT_ADAPTER_IMPL_H
 #include "ace/pre.h"
 
-#include "ifr_client_export.h"
+#include "tao/IFR_Client_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
-#include "tao/IFR_Client_Adapter.h"
+#include "ifr_client_export.h"
 #include "ace/Service_Config.h"
-
-class IR_InterfaceDef;
 
 /**
  * @class TAO_IFR_Client_Adapter_Impl
