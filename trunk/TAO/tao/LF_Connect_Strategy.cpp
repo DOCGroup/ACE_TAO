@@ -4,6 +4,7 @@
 #include "ORB_Core.h"
 #include "LF_Event.h"
 #include "Leader_Follower.h"
+#include "debug.h"
 #include "ace/Synch_Options.h"
 
 
