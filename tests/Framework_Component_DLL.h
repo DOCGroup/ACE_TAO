@@ -20,6 +20,9 @@
 #ifndef ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 #define ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 
+// Turn on tracing for this library
+#define FRAMEWORK_COMPONENT_DLL_NTRACE 0
+
 #include "Framework_Component_DLL_Export.h"
 #include "ace/Log_Msg.h"
 #include "ace/Synch_T.h"
@@ -31,15 +34,16 @@ class Framework_Component_DLL_Export Simple_Service
 public:
   Simple_Service (void)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::Simple_Service\n")));
+      FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::Simple_Service");
     }
   virtual ~Simple_Service (void)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::~Simple_Service\n")));
+      FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::~Simple_Service");
     }
 
   virtual const ACE_TCHAR *dll_name (void) 
     {
+      FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::dll_name");
       return 0;
     }
 
@@ -53,6 +57,7 @@ class FWCT_DLL_Singleton_Adapter_T : public TYPE
 public:
   const ACE_TCHAR *dll_name (void) 
   { 
+    FRAMEWORK_COMPONENT_DLL_TRACE ("FWCT_DLL_Singleton_Adapter_T::dll_name");
     return ACE_TEXT("Framework_Component_DLL");
   }
 };
