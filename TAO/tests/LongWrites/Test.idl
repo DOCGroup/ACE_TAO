@@ -8,7 +8,13 @@ module Test
 
   interface Receiver {
     /// Receive a big payload
-    oneway void receive_data (in Payload the_payload);
+    oneway void receive_data_oneway (in Payload the_payload);
+
+    /// Receive a big payload, using a twoway
+    void receive_data (in Payload the_payload);
+
+    /// Return the same data, useful to check the server side
+    Payload return_data (in Payload the_payload);
   };
 
   interface Sender {
@@ -20,7 +26,7 @@ module Test
                             in unsigned long event_size);
 
     /// Shutdown the sender
-    oneway void shutdown();
+    void shutdown();
   };
 
   interface Coordinator {

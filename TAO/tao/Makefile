@@ -237,7 +237,12 @@ ORB_CORE_FILES = \
   BiDir_Policy_i \
   CodecFactory \
   CodecFactory_ORBInitializer \
-  CDR_Encaps_Codec
+  CDR_Encaps_Codec \
+  Flushing_Strategy \
+  Block_Flushing_Strategy \
+  Reactive_Flushing_Strategy \
+  Queued_Message \
+  Message_Sent_Callback
 
 DYNAMIC_ANY_FILES =
 

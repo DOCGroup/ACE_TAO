@@ -60,7 +60,9 @@ DIRS  = CDR \
 	Client_Leaks \
 	Server_Leaks \
 	Muxing \
-	Hello
+	Hello \
+	Queued_Message_Test \
+	Big_Oneways
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

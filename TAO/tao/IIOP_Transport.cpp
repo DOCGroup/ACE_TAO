@@ -66,14 +66,16 @@ TAO_IIOP_Transport::event_handler_i (void)
 }
 
 ssize_t
-TAO_IIOP_Transport::send_i (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *bytes_transferred)
+TAO_IIOP_Transport::send_i (iovec *iov, int iovcnt,
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
-  return ACE::send_n (this->connection_handler_->get_handle (),
-                      message_block,
-                      max_wait_time,
-                      bytes_transferred);
+  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
+                                                             max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
+
+  return retval;
 }
 
 ssize_t
@@ -125,6 +127,21 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 int
 TAO_IIOP_Transport::register_handler_i (void)
 {
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
+                  this->id ()));
+    }
+  if (this->connection_handler_->is_registered ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport::register_handler %d"
+                  ", already registered\n",
+                  this->id ()));
+      return 0;
+    }
+
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core_->reactor ();
@@ -173,12 +190,8 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (this->messaging_object_->format_message (stream) != 0)
     return -1;
 
-  // Strictly speaking, should not need to loop here because the
-  // socket never gets set to a nonblocking mode ... some Linux
-  // versions seem to need it though.  Leaving it costs little.
-
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -302,7 +315,6 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   this->bidirectional_flag (1);
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
-
 
 int
 TAO_IIOP_Transport::process_message (void)

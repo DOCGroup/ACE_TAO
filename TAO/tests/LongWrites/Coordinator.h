@@ -22,7 +22,8 @@ class Coordinator
 {
 public:
   /// Constructor
-  Coordinator (void);
+  Coordinator (CORBA::ULong initial_payload_size,
+               CORBA::Long test_iterations);
 
   /// Destructor
   virtual ~Coordinator (void);
@@ -46,13 +47,27 @@ public:
   };
 
 private:
+  /// Initial payload size
+  CORBA::ULong initial_payload_size_;
+
+  /// Number of iterations performed by each server.
+  CORBA::Long test_iterations_;
+
+  /// Synchronize internal data structure
   ACE_SYNCH_MUTEX mutex_;
 
+  /// Set to 1 once the test has shutdown
   int shutdown_called_;
 
+  /** @name List of pairs
+   *
+   * Implement a simple list of pairs
+   */
+  //@{
   size_t pairs_count_;
   size_t pairs_length_;
   Pair* pairs_;
+  //@}
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -333,7 +333,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           this->message_handler_.message_state ().byte_order,
                           orb_core);
 
-
   // input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Send the message state for the service layer like FT to log the
@@ -890,7 +889,8 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-  int result = transport->send (&message_block);
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block, bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -1024,7 +1024,9 @@ TAO_GIOP_Message_Base::
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-  if (transport->send (&message_block) == -1 && errno != ENOENT)
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block, bt);
+  if (result == -1)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
