@@ -128,7 +128,7 @@ public:
 
 private:
   /// Type of synchronization mechanism.
-  mutable ACE_LOCK &mutex_;
+  ACE_LOCK &mutex_;
 
   /// Current object decorated by the atomic op.
   TYPE value_;
@@ -231,7 +231,7 @@ public:
 
 private:
   /// Type of synchronization mechanism.
-  mutable ACE_LOCK own_mutex_;
+  ACE_LOCK own_mutex_;
 
   /// Underlying atomic op implementation.
   ACE_Atomic_Op_Ex <ACE_LOCK, TYPE> impl_;
