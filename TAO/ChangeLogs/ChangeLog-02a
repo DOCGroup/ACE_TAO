@@ -1,3 +1,24 @@
+Thu Jun  8 20:48:46 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+
+	  Added missing "ace/pre.h" and "ace/post.h" includes.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
+
+	  Regenerated this file, since the script that generates these
+	  types of headers was updated to add some macros to those
+	  headers.
+
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+
+	  Updated dependencies.
+
 Thu Jun  8 20:23:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:
