@@ -10,7 +10,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, core, tao_output, crosscompile {
 
   Source_Files {
     be_global.cpp
-    be.helper.cpp
+    be_helper.cpp
     be_init.cpp
     be_produce.cpp
     be_sunsoft.cpp
