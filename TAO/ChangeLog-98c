@@ -18,6 +18,11 @@ Wed Apr 29 14:06:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	it. Hence we take the in () of the var object and pass it to
 	_narrow.
 
+	* tao/skip.cpp: In Sequence::skip, we did not have a return
+	TRAVERSE_CONTINUE statement after successfull skipping. Hence we
+	always returned an exception. The same iwas true with Array::skip.
+	Thanks to Alex (alex@cs.wustl.edu) for reporting this bug.
+
 Wed Apr 29 12:26:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/Makefile:
