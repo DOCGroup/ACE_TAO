@@ -273,8 +273,8 @@ void
 FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
                                          UTL_NameList *supports)
 {
-  UTL_NamelistActiveIterator *l = 0;
   AST_Decl *d = 0;
+  UTL_ScopedName *item;
   AST_Interface *i = 0;
   long j, k;
   UTL_NameList *nl = ifaces;
@@ -293,22 +293,21 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
     {
       if (nl != NULL)
         {
-          ACE_NEW (l,
-                   UTL_NamelistActiveIterator  (nl));
-
-          while (!l->is_done ())
+          for (UTL_NamelistActiveIterator l (nl); !l.is_done (); l.next ())
             {
+              item = l.item ();
+
               // Check that scope stack is valid.
-              if (idl_global->scopes  ()->top () == 0)
+              if (idl_global->scopes ()->top () == 0)
                 {
-                  idl_global->err ()->lookup_error (l->item ());
+                  idl_global->err ()->lookup_error (item);
                   return;
                 }
 
               // Look it up.
               UTL_Scope *s = idl_global->scopes ()->top ();
 
-              d = s->lookup_by_name  (l->item (),
+              d = s->lookup_by_name  (item,
                                       I_TRUE);
 
               if (d == 0)
@@ -319,14 +318,14 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
                     {
                       AST_Module *m = AST_Module::narrow_from_decl (sad);
 
-                      d = m->look_in_previous (l->item ()->last_component ());
+                      d = m->look_in_previous (item->last_component ());
                     }
                 }
 
               // Not found?
               if (d == 0)
                 {
-                  idl_global->err ()->lookup_error (l->item ());
+                  idl_global->err ()->lookup_error (item);
                   return;
                 }
 
@@ -389,10 +388,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
               // Next element in header list.
               ++ichecked;
-              l->next ();
             }
-
-          delete l;
         }
 
       in_supports = 1;
@@ -521,7 +517,7 @@ FE_Abstract_InterfaceHeader::is_abstract (void)
   return 1;
 }
 
-// FE_obv_header
+// FE_obv_header.
 
 FE_obv_header::FE_obv_header (UTL_ScopedName *n,
                               UTL_NameList *nl,

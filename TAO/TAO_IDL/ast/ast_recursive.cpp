@@ -126,25 +126,21 @@ AST_illegal_recursive_type (AST_Decl *t)
         }
     }
 
-  // OK, iterate up the stack.
-  UTL_ScopeStackActiveIterator *i = 0;
-  ACE_NEW_RETURN (i,
-                  UTL_ScopeStackActiveIterator (idl_global->scopes ()),
-                  0);
-
   UTL_Scope	*s = 0;
   AST_Structure *st2 = 0;
   AST_Union *un2 = 0;
 
-  while (!i->is_done ())
+  // OK, iterate up the stack.
+  for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());
+       !i.is_done ();
+       i.next ())
     {
-      s = i->item ();
+      s = i.item ();
 
       // If we hit a NULL we're done since it means that we're nested inside
       // a sequence, where recursive types may be used.
       if (s == 0)
         {
-          delete i;
           return I_FALSE;	// NOT ILLEGAL.
         }
 
@@ -156,7 +152,6 @@ AST_illegal_recursive_type (AST_Decl *t)
 
           if (st2 != 0 && st2 == st1)
             {
-	            delete i;
               return I_TRUE;	// ILLEGAL RECURSIVE TYPE USE.
             }
         }
@@ -167,17 +162,12 @@ AST_illegal_recursive_type (AST_Decl *t)
 
           if (un2 != 0 && un2 == un1)
             {
-              delete i;
 	            return I_TRUE;	// ILLEGAL RECURSIVE TYPE USE.
             }
         }
-
-      // This one is fine, get next item.
-      i->next ();
     }
 
   // No more scopes to check. This type was used legally.
-  delete i;
   return I_FALSE;		// NOT ILLEGAL.
 }
 

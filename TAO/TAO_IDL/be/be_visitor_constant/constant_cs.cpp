@@ -85,52 +85,51 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
                   << ";\n\n";
             }
         }
+
       node->cli_stub_gen (I_TRUE);
     }
+
   return 0;
 }
 
-// the following needs to be done to deal with the most bizarre behavior of
-// MSVC++ compiler
+// The following needs to be done until the MSVC++ compiler fixes its
+// broken handling of namespaces (hopefully forthcoming in version 7).
 int
 be_visitor_constant_cs::gen_nested_namespace_begin (be_module *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  UTL_IdListActiveIterator *i;
+  char *item_name = 0;
 
-  i = new UTL_IdListActiveIterator (node->name ());
-  while (!(i->is_done ()))
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
     {
-      if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+      item_name = i.item ()->get_string ();
+
+      if (ACE_OS::strcmp (item_name, "") != 0)
         {
-          // leave the outermost root scope
-          *os << "TAO_NAMESPACE_BEGIN (" << i->item ()->get_string ()
+          // leave the outermost root scope.
+          *os << "TAO_NAMESPACE_BEGIN (" << item_name
               << ")" << be_nl;
         }
-      i->next ();
     }
-  delete i;
+
   return 0;
 }
 
-// the following needs to be done to deal with the most bizarre behavior of
-// MSVC++ compiler
+// The following needs to be done until the MSVC++ compiler fixes its
+// broken handling of namespaces (hopefully forthcoming in version 7).
 int
 be_visitor_constant_cs::gen_nested_namespace_end (be_module *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  UTL_IdListActiveIterator *i;
 
-  i = new UTL_IdListActiveIterator (node->name ());
-  while (!(i->is_done ()))
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
     {
-      if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+      if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
-          // leave the outermost root scope
+          // leave the outermost root scope.
           *os << "TAO_NAMESPACE_END" << be_nl;
         }
-      i->next ();
     }
-  delete i;
+
   return 0;
 }

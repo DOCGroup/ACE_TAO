@@ -204,11 +204,10 @@ AST_Union::in_recursion (AST_Type *node)
   if (this->nmembers () > 0)
     {
       // Initialize an iterator to iterate thru our scope.
-      UTL_ScopeActiveIterator si (this,
-                                  UTL_Scope::IK_decls);
-
       // Continue until each element is visited.
-      while (!si.is_done ())
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
           AST_UnionBranch *field = 
             AST_UnionBranch::narrow_from_decl (si.item ());
@@ -217,7 +216,6 @@ AST_Union::in_recursion (AST_Type *node)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
-              si.next ();
               continue;
             }
 
@@ -236,8 +234,6 @@ AST_Union::in_recursion (AST_Type *node)
             {
               return 1;
             }
-
-          si.next ();
         }
     }
 
@@ -249,18 +245,14 @@ AST_Union::in_recursion (AST_Type *node)
 AST_UnionBranch *
 AST_Union::lookup_default (void)
 {
-  UTL_ScopeActiveIterator *i = 0;
-  ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this,
-                                           IK_both),
-                  0);
-
-  AST_UnionBranch       *b = 0;
+  AST_UnionBranch *b = 0;
   AST_Decl *d = 0;
 
-  while (!i->is_done())
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
+       !i.is_done();
+       i.next ())
     {
-      d = i->item ();
+      d = i.item ();
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
@@ -268,26 +260,21 @@ AST_Union::lookup_default (void)
 
           if (b == 0)
             {
-              i->next ();
               continue;
             }
 
-          if (b->label() != 0
+          if (b->label () != 0
               && b->label ()->label_kind () == AST_UnionLabel::UL_default)
             {
-                    idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+              idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
                                           this,
                                           b);
-                    delete i;
-                    return b;
+              return b;
             }
         }
-
-      i->next ();
     }
 
-  delete i;
-  return NULL;
+  return 0;
 }
 
 // Look up a branch by label.
@@ -313,15 +300,11 @@ AST_Union::lookup_label (AST_UnionBranch *b)
       return b;
     }
 
-  UTL_ScopeActiveIterator       *i = 0;
-  ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this,
-                                           IK_decls),
-                  0);
-
-  while (!i->is_done())
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
+       !i.is_done();
+       i.next ())
     {
-      d = i->item ();
+      d = i.item ();
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
@@ -329,7 +312,6 @@ AST_Union::lookup_label (AST_UnionBranch *b)
 
           if (fb == 0)
             {
-              i->next ();
               continue;
             }
 
@@ -337,18 +319,14 @@ AST_Union::lookup_label (AST_UnionBranch *b)
               && fb->label ()->label_kind () == AST_UnionLabel::UL_label
               && fb->label ()->label_val ()->compare (lv))
             {
-                    idl_global->err ()->error2  (UTL_Error::EIDL_MULTIPLE_BRANCH,
+              idl_global->err ()->error2  (UTL_Error::EIDL_MULTIPLE_BRANCH,
                                            this,
                                            b);
-                    delete i;
-                    return b;
+              return b;
             }
         }
-
-      i->next();
     }
 
-  delete i;
   return 0;
 }
 
@@ -397,15 +375,11 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 
   // OK, now see if this symbol is already used as the label of
   // some other branch.
-  UTL_ScopeActiveIterator       *i = 0;
-  ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this,
-                                           IK_decls),
-                  0);
-
-  while (!i->is_done())
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
+       !i.is_done();
+       i.next ())
     {
-      d = i->item ();
+      d = i.item ();
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
@@ -413,27 +387,22 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 
           if (fb == 0)
             {
-                i->next ();
-                continue;
+              continue;
             }
 
           if (fb->label() != 0
               && fb->label ()->label_kind () == AST_UnionLabel::UL_label
               && fb->label ()->label_val ()->compare (lv))
             {
-                    idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+              idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
                                           this,
                                           b);
-                    delete i;
-                    return b;
+              return b;
             }
         }
-
-      i->next();
     }
 
-  delete i;
-  return NULL;
+  return 0;
 }
 
 // Look up a branch by value. This is the top level branch label resolution
@@ -459,7 +428,7 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
       if (this->pd_udisc_type == AST_Expression::EV_any)
         {
           // CONVENTION: indicates enum discriminant.
-          return lookup_enum(branch);
+          return lookup_enum (branch);
         }
 
       return lookup_label (branch);
@@ -502,10 +471,9 @@ AST_Union::compute_default_value (void)
   int total_case_members = 0;
 
   // Instantiate a scope iterator.
-  UTL_ScopeActiveIterator si (this,
-                              UTL_Scope::IK_decls);
-
-  while (!si.is_done ())
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
       // Get the next AST decl node.
       AST_UnionBranch *ub =
@@ -514,18 +482,14 @@ AST_Union::compute_default_value (void)
       if (ub != 0)
         {
           // If the label is a case label, increment by 1.
-          for (unsigned long i = 0;
-               i < ub->label_list_length ();
-               ++i)
+          for (unsigned long i = 0; i < ub->label_list_length (); ++i)
             {
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 {
-                  total_case_members++;
+                  ++total_case_members;
                 }
             }
         }
-
-      si.next ();
     }
 
   // Check if the total_case_members cover the entire
@@ -697,13 +661,12 @@ AST_Union::compute_default_value (void)
   // Proceed until we have found the appropriate default value.
   while (this->default_value_.computed_ == -2)
     {
-      // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator si (this,
-                                  UTL_Scope::IK_decls);
-
       int break_loop = 0;
 
-      while (!si.is_done () && break_loop == 0)
+      // Instantiate a scope iterator.
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done () && break_loop == 0;
+           si.next ())
         {
           // Get the next AST decl node
           AST_UnionBranch *ub =
@@ -715,8 +678,7 @@ AST_Union::compute_default_value (void)
                    i < ub->label_list_length () && !break_loop;
                    ++i)
                 {
-                  if (ub->label (i)->label_kind ()
-                        == AST_UnionLabel::UL_label)
+                  if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                     {
                       // Not a default.
                       AST_Expression *expr = ub->label (i)->label_val ();
@@ -725,12 +687,14 @@ AST_Union::compute_default_value (void)
                         {
                           // Error.
                           this->default_value_.computed_ = -1;
-                          ACE_ERROR_RETURN
-                            ((LM_ERROR,
+                          ACE_ERROR_RETURN ((
+                              LM_ERROR,
                               ACE_TEXT ("(%N:%l) AST_Union::")
                               ACE_TEXT ("compute_default_value - ")
-                              ACE_TEXT ("Bad case label value\n")),
-                             -1);
+                              ACE_TEXT ("Bad case label value\n")
+                            ),
+                            -1
+                          );
                         }
 
                       switch (expr->ev ()->et)
@@ -823,8 +787,6 @@ AST_Union::compute_default_value (void)
                     } // if label_Kind == label
                 } // End of for loop going thru all labels.
             } // If valid union branch.
-
-          si.next ();
         } // End of while scope iterator loop.
 
       // We have not aborted the inner loops which means we have found the
@@ -857,9 +819,9 @@ AST_Union::compute_default_index (void)
   if (this->nmembers () > 0)
     {
       // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator si (this,
-                                  UTL_Scope::IK_decls);
-      while (!si.is_done ())
+      for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
           // Get the next AST decl node.
           d = si.item ();
@@ -868,13 +830,11 @@ AST_Union::compute_default_index (void)
             {
               ub = AST_UnionBranch::narrow_from_decl (d);
 
-              for (unsigned long j = 0;
-                   j < ub->label_list_length ();
-                   ++j)
+              for (unsigned long j = 0; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
-                  if (ub->label (j)->label_kind ()
-                        == AST_UnionLabel::UL_default)
+                  AST_UnionLabel::UnionLabel ulk = ub->label ()->label_kind ();
+                  if (ulk == AST_UnionLabel::UL_default)
                     {
                       // Zero based indexing.
                       this->default_index_ = i;
@@ -884,10 +844,8 @@ AST_Union::compute_default_index (void)
               // TAO's Typecode class keeps only a member count (not
               // a label count) so this increment has been moved
               // out of the inner loop.
-              i++;
+              ++i;
             }
-
-          si.next ();
         }
     }
 

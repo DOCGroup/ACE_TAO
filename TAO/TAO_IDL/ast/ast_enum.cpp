@@ -112,30 +112,20 @@ AST_Enum::member_count (void)
 UTL_ScopedName *
 AST_Enum::value_to_name (const unsigned long v)
 {
-  UTL_ScopeActiveIterator *iter = 0;
   AST_EnumVal *item = 0;
-  AST_Decl *i = 0;
+  AST_Decl *d = 0;
 
-  ACE_NEW_RETURN (iter,
-                  UTL_ScopeActiveIterator (this,
-                                           IK_decls),
-                  0);
-
-  while (!iter->is_done ())
+  for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
     {
-      i = iter->item  ();
-      item = AST_EnumVal::narrow_from_decl (i);
+      d = i.item  ();
+      item = AST_EnumVal::narrow_from_decl (d);
 
       if (item->constant_value ()->ev ()->u.ulval == v)
         {
-          delete iter;
           return item->name ();
         }
-
-      iter->next ();
     }
 
-  delete iter;
   return 0;
 }
 
@@ -144,29 +134,19 @@ AST_EnumVal *
 AST_Enum::lookup_by_value (const AST_Expression *v)
 {
   AST_EnumVal *item = 0;
-  AST_Decl *i = 0;
+  AST_Decl *d = 0;
 
-  UTL_ScopeActiveIterator *iter = 0;
-  ACE_NEW_RETURN (iter,
-                  UTL_ScopeActiveIterator (this,
-                                           IK_decls),
-                  0);
-
-  while (!iter->is_done ())
+  for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
     {
-      i = iter->item ();
-      item = AST_EnumVal::narrow_from_decl (i);
+      d = i.item ();
+      item = AST_EnumVal::narrow_from_decl (d);
 
       if (item->constant_value () == v)
         {
-          delete iter;
           return item;
         }
-
-      iter->next ();
     }
 
-  delete iter;
   return 0;
 }
 
@@ -221,27 +201,16 @@ munge_name_for_enumval (UTL_ScopedName *n,
 int
 AST_Enum::compute_member_count (void)
 {
-  UTL_ScopeActiveIterator *si = 0;
-
   this->member_count_ = 0;
 
   // If there are elements in this scope
   if (this->nmembers () > 0)
     {
-      // Instantiate a scope iterator.
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!(si->is_done ()))
-              {
-                // Get the next AST decl node.
-          this->member_count_++;
-          si->next ();
+      for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
+        {
+          // Get the next AST decl node.
+          ++this->member_count_;
         }
-
-      delete si;
     }
 
   return 0;
@@ -318,11 +287,6 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 void
 AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 {
-  UTL_ScopeActiveIterator *i = 0;
-  ACE_NEW (i,
-           UTL_ScopeActiveIterator (this,
-                                    IK_decls));
-
   AST_Decl *d = 0;
 
   if (this->is_local ())
@@ -338,19 +302,18 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
   this->local_name ()->dump (o);
   o << " {\n";
 
-  while (!i->is_done ())
+  // Must increment the iterator explicitly inside the loop.
+  for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();)
     {
-      d = i->item ();
+      d = i.item ();
       d->local_name ()->dump (o);
-      i->next ();
+      i.next ();
 
-      if (!i->is_done ())
+      if (!i.is_done ())
         {
           o << ", ";
         }
     }
-
-  delete i;
 
   idl_global->indent ()->skip_to (o);
   o << "}";

@@ -112,20 +112,15 @@ AST_Exception::in_recursion (AST_Type *node)
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      // Initialize an iterator to iterate thru our scope.
-      UTL_ScopeActiveIterator si (this,
-                                  UTL_Scope::IK_decls);
-
       // Continue until each element is visited.
-      while (!si.is_done ())
+      for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
-          AST_Field *field = AST_Field::narrow_from_decl (si.item ());
+          AST_Field *field = AST_Field::narrow_from_decl (i.item ());
 
           if (field == 0)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
-              si.next ();
               continue;
             }
 
@@ -144,8 +139,6 @@ AST_Exception::in_recursion (AST_Type *node)
             {
               return 1;
             }
-
-          si.next ();
         }
     }
 

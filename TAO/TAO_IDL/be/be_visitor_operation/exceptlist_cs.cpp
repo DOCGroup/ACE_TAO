@@ -32,8 +32,9 @@ ACE_RCSID(be_visitor_operation, exceptlist_cs, "$Id$")
 // visitor to generate the exception list for operations
 // ****************************************************************************
 
-be_visitor_operation_exceptlist_cs::be_visitor_operation_exceptlist_cs (be_visitor_context
-                                                            *ctx)
+be_visitor_operation_exceptlist_cs::be_visitor_operation_exceptlist_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -55,13 +56,13 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
           << "_exceptiondata [] = " << be_nl;
       *os << "{" << be_idt_nl;
 
-      // Initialize an iterator to iterate thru the exception list.
-      UTL_ExceptlistActiveIterator ei (node->exceptions ());
-
       AST_Decl *d = 0;
 
+      // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.
-      while (!ei.is_done ())
+      // Iterator must be advanced explicitly inside the loop.
+      for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+           !ei.is_done ();)
         {
           d = ei.item ();
 
@@ -77,7 +78,6 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
             {
               *os << "," << be_nl;
             }
-
         }
 
       *os << be_uidt_nl << "};\n\n";

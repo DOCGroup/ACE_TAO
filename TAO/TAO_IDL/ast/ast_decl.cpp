@@ -256,15 +256,11 @@ AST_Decl::compute_full_name (void)
   else
     {
       long namelen = 0;
-      UTL_IdListActiveIterator *i = 0;
       long first = I_TRUE;
       long second = I_FALSE;
+      char *name = 0;
 
-      // In the first loop, compute the total length.
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
-
-      while (!i->is_done ())
+      for (UTL_IdListActiveIterator i (this->name ());!i.is_done ();i.next ())
         {
           if (!first)
             {
@@ -276,11 +272,12 @@ AST_Decl::compute_full_name (void)
             }
 
           // Print the identifier.
-          namelen += ACE_OS::strlen (i->item ()->get_string ());
+          name = i.item ()->get_string ();
+          namelen += ACE_OS::strlen (name);
 
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -290,11 +287,7 @@ AST_Decl::compute_full_name (void)
                   second = I_TRUE;
                 }
             }
-
-          i->next ();
         }
-
-      delete i;
 
       ACE_NEW (this->full_name_,
                char[namelen + 1]);
@@ -303,10 +296,7 @@ AST_Decl::compute_full_name (void)
       first = I_TRUE;
       second = I_FALSE;
 
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
-
-      while (!(i->is_done ()))
+      for (UTL_IdListActiveIterator j (this->name ());!j.is_done ();j.next ())
         {
           if (!first)
             {
@@ -318,11 +308,12 @@ AST_Decl::compute_full_name (void)
             }
 
           // Print the identifier.
-          ACE_OS::strcat (this->full_name_, i->item ()->get_string ());
+          name = j.item ()->get_string ();
+          ACE_OS::strcat (this->full_name_, name);
 
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -332,11 +323,7 @@ AST_Decl::compute_full_name (void)
                   second = I_TRUE;
                 }
             }
-
-          i->next ();
         }
-
-      delete i;
     }
 
   return;
@@ -355,6 +342,7 @@ AST_Decl::compute_repoID (void)
       long namelen = 4; // for the prefix "IDL:"
       long first = I_TRUE;
       long second = I_FALSE;
+      char *name = 0;
 
       // in the first loop compute the total length
       namelen += ACE_OS::strlen (this->prefix_) + 1;
@@ -370,9 +358,7 @@ AST_Decl::compute_repoID (void)
           namelen += 4;
         }
 
-      UTL_IdListActiveIterator i (this->name ());
-
-      while (!(i.is_done ()))
+      for (UTL_IdListActiveIterator i (this->name ());!i.is_done ();i.next ())
         {
           if (!first)
             {
@@ -384,11 +370,12 @@ AST_Decl::compute_repoID (void)
             }
 
           // Print the identifier.
-          namelen += ACE_OS::strlen (i.item ()->get_string ());
+          name = i.item ()->get_string ();
+          namelen += ACE_OS::strlen (name);
 
           if (first)
             {
-              if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -398,8 +385,6 @@ AST_Decl::compute_repoID (void)
                   second = I_TRUE;
                 }
             }
-
-          i.next ();
         }
 
       ACE_NEW (this->repoID_,
@@ -420,12 +405,10 @@ AST_Decl::compute_repoID (void)
           ACE_OS::strcat (this->repoID_, "/");
         }
 
-      UTL_IdListActiveIterator j (this->name ());
-
       first = I_TRUE;
       second = I_FALSE;
 
-      while (!(j.is_done ()))
+      for (UTL_IdListActiveIterator j (this->name ());!j.is_done ();j.next ())
         {
           if (!first)
             {
@@ -437,12 +420,13 @@ AST_Decl::compute_repoID (void)
             }
 
           // Print the identifier.
+          name = j.item ()->get_string ();
           ACE_OS::strcat (this->repoID_,
-                          j.item ()->get_string ());
+                          name);
 
           if (first)
             {
-              if (ACE_OS::strcmp (j.item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -452,8 +436,6 @@ AST_Decl::compute_repoID (void)
                   second = I_TRUE;
                 }
             }
-
-          j.next ();
         }
 
       if (this->version_ != 0)
@@ -469,8 +451,6 @@ AST_Decl::compute_repoID (void)
                           ":1.0");
         }
     }
-
-  return;
 }
 
 // Public operations.

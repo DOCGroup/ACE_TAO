@@ -33,8 +33,9 @@ ACE_RCSID(be_visitor_valuetype, marshal_ch, "$Id$")
 // Structure visitor for generating  declarations
 // ***************************************************************************
 
-be_visitor_valuetype_marshal_ch::be_visitor_valuetype_marshal_ch
-(be_visitor_context *ctx)
+be_visitor_valuetype_marshal_ch::be_visitor_valuetype_marshal_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -47,6 +48,7 @@ int
 be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
 {
   this->elem_number_ = 0;
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
@@ -66,9 +68,8 @@ be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
 
       if (field)
         {
-          be_visitor_context* new_ctx =
-            new be_visitor_context (*this->ctx_);
-          be_visitor_valuetype_field_cdr_ch visitor (new_ctx);
+          be_visitor_context ctx (*this->ctx_);
+          be_visitor_valuetype_field_cdr_ch visitor (&ctx);
           visitor.pre_ = node->field_pd_prefix ();
           visitor.post_ = node->field_pd_postfix ();
 

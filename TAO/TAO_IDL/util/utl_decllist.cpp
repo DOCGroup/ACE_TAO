@@ -114,8 +114,8 @@ UTL_DeclList::head()
  * Constructor
  */
 
-UTL_DecllistActiveIterator::UTL_DecllistActiveIterator(UTL_DeclList *s)
-			    : UTL_ListActiveIterator(s)
+UTL_DecllistActiveIterator::UTL_DecllistActiveIterator (UTL_DeclList *s)
+  : UTL_ListActiveIterator(s)
 {
 }
 
@@ -131,8 +131,10 @@ UTL_DecllistActiveIterator::UTL_DecllistActiveIterator(UTL_DeclList *s)
 FE_Declarator *
 UTL_DecllistActiveIterator::item()
 {
-  if (source == NULL)
-    return NULL;
+  if (source == 0)
+    {
+      return 0;
+    }
 
   return ((UTL_DeclList *) source)->head();
 }

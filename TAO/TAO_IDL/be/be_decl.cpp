@@ -193,15 +193,14 @@ be_decl::compute_flat_name (void)
   else
     {
       long namelen = 0;
-      UTL_IdListActiveIterator *i = 0;
       long first = I_TRUE;
       long second = I_FALSE;
+      char *item_name = 0;
 
       // In the first loop, compute the total length.
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
-
-      while (!(i->is_done ()))
+      for (UTL_IdListActiveIterator i (this->name ());
+           !i.is_done ();
+           i.next ())
         {
           if (!first)
             {
@@ -213,11 +212,12 @@ be_decl::compute_flat_name (void)
             }
 
           // Print the identifier.
-          namelen += ACE_OS::strlen (i->item ()->get_string ());
+          item_name = i.item ()->get_string ();
+          namelen += ACE_OS::strlen (item_name);
 
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -227,11 +227,7 @@ be_decl::compute_flat_name (void)
                   second = I_TRUE;
                 }
             }
-
-          i->next ();
         }
-
-      delete i;
 
       ACE_NEW (this->flat_name_,
                char[namelen + 1]);
@@ -240,10 +236,9 @@ be_decl::compute_flat_name (void)
       first = I_TRUE;
       second = I_FALSE;
 
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
-
-      while (!(i->is_done ()))
+      for (UTL_IdListActiveIterator j (this->name ());
+           !j.is_done ();
+           j.next ())
         {
           if (!first)
             {
@@ -255,10 +250,12 @@ be_decl::compute_flat_name (void)
             }
 
           // Print the identifier.
-          ACE_OS::strcat (this->flat_name_, i->item ()->get_string ());
+          item_name = j.item ()->get_string ();
+          ACE_OS::strcat (this->flat_name_, item_name);
+
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -268,14 +265,8 @@ be_decl::compute_flat_name (void)
                   second = I_TRUE;
                 }
             }
-
-          i->next ();
         }
-
-      delete i;
     }
-
-  return;
 }
 
 

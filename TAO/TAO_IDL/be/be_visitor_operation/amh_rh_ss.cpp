@@ -16,7 +16,9 @@
 
 #include "be_visitor_operation.h"
 
-be_visitor_amh_rh_operation_ss::be_visitor_amh_rh_operation_ss (be_visitor_context *ctx)
+be_visitor_amh_rh_operation_ss::be_visitor_amh_rh_operation_ss (
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -39,8 +41,13 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   be_interface *intf =
     be_interface::narrow_from_scope (node->defined_in ());
+
   if (this->ctx_->attribute () != 0)
-    intf = be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ());
+    {
+      intf = be_interface::narrow_from_scope (
+                 this->ctx_->attribute()->defined_in ()
+               );
+    }
 
   if (!intf)
     {
@@ -55,7 +62,8 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   intf->compute_full_name ("TAO_", "", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
-  delete[] buf;
+  delete [] buf;
+  buf = 0;
 
   // Step 1 : Generate return type: always void
   *os << be_nl << "void" << be_nl
@@ -66,9 +74,13 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     {
       // now check if we are a "get" or "set" operation
       if (node->nmembers () == 1) // set
-        *os << "_set_";
+        {
+          *os << "_set_";
+        }
       else
-        *os << "_get_";
+        {
+          *os << "_get_";
+        }
     }
 
   *os << node->local_name ();
@@ -76,28 +88,16 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // Step 2 : Generate the params of the method
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_arglist visitor (&ctx);
 
-  if (!visitor)
+  if (node->accept (&visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_amh_rh_operation_ss::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_amh_rh_operation_ss::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   int is_an_exception_reply = 0;
 
@@ -112,13 +112,16 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     {
       if (node->nmembers () == 1)
         {
-          UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
+          UTL_ScopeActiveIterator i (node, 
+                                     UTL_Scope::IK_decls);
+
           if (!i.is_done ())
             {
               be_argument *argument =
                 be_argument::narrow_from_decl (i.item ());
               be_valuetype *vt =
                 be_valuetype::narrow_from_decl (argument->field_type ());
+
               if (vt != 0
                   && vt->original_interface () == intf->original_interface ()
                   && ACE_OS::strstr (vt->full_name (), "ExceptionHolder") != 0)
@@ -135,9 +138,6 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           << "ACE_TRY" << be_nl
           << "{" << be_nl
           << "ACE_UNUSED_ARG (holder);" << be_nl
-        //          << "  holder->raise_" << node->local_name ()
-        //          << "(ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl
-        //          << "  ACE_TRY_CHECK;" << be_nl
           << "}" << be_nl
           << "ACE_CATCH (CORBA::Exception, ex)" << be_nl
           << "{" << be_nl
@@ -167,7 +167,6 @@ int
 be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
   be_visitor_context ctx;
 
   // Now make sure that we have some in and inout parameters. Otherwise, there
@@ -184,11 +183,10 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_compiled_visitor_operation_argument_invoke visitor (&ctx);
 
-      if (!visitor || (node->accept (visitor) == -1))
+      if (node->accept (&visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_amh_rh_operation_ss::"
                              "gen_demarshal_params - "
@@ -207,6 +205,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                              "(%N:%l) gen_raise_exception failed\n"),
                             -1);
         }
+
       *os << be_uidt << "\n";
     }
 

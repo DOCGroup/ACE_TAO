@@ -18,17 +18,17 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_union.h"
+#include "be_visitor_typecode/typecode_defn.h"
 
 ACE_RCSID(be_visitor_union, union_cs, "$Id$")
 
 
 // ******************************************************
-// for client stubs
+// For client stubs.
 // ******************************************************
 
 be_visitor_union_cs::be_visitor_union_cs (be_visitor_context *ctx)
@@ -40,22 +40,23 @@ be_visitor_union_cs::~be_visitor_union_cs (void)
 {
 }
 
-// visit the Union_cs node and its scope
+// Visit the Union_cs node and its scope.
 int be_visitor_union_cs::visit_union (be_union *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt; // for discriminant type
+  TAO_OutStream *os;
+  be_type *bt = 0;
 
   if (!node->cli_stub_gen () && !node->imported ())
     {
       os = this->ctx_->stream ();
 
       be_visitor_context ctx (*this->ctx_);
-      // the discriminant type may have to be defined here if it was an enum
+      // The discriminant type may have to be defined here if it was an enum
       // declaration inside of the union statement. We need to generate its
-      // typecode
+      // typecode.
 
       bt = be_type::narrow_from_decl (node->disc_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -64,49 +65,44 @@ int be_visitor_union_cs::visit_union (be_union *node)
                              "bad discriminant type\n"), -1);
         }
 
-      ctx.state (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CS); // set current code
-                                                          // gen state
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_cs::"
-                             "visit_union - "
-                             "bad visitor\n"), -1);
-        }
-      // generate code for the discriminant
-      if (bt->accept (visitor) == -1)
+      ctx.state (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CS);
+      be_visitor_union_discriminant_cs disc_visitor (&ctx);
+
+      if (bt->accept (&disc_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs::"
                              "visit union - "
-                             "codegen for discrminant failed\n"), -1);
+                             "codegen for discrminant failed\n"), 
+                            -1);
         }
 
-      // first generate code for any of the members (if required, e.g.,
-      // anonymous sequences, structs, unions, arrays)
-      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_CS); // set current code
-                                                            // gen state
+      // First generate code for any of the members (if required, e.g.,
+      // anonymous sequences, structs, unions, arrays).
+      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_CS);
+
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs"
                              "visit_union - "
-                             "codegen for scope failed\n"), -1);
+                             "codegen for scope failed\n"), 
+                            -1);
         }
 
-      // now generate the operations on the union such as the copy constructor
-      // and the assignment operator
+      // Now generate the operations on the union such as the copy constructor
+      // and the assignment operator.
 
       *os << "// *************************************************************"
           << be_nl;
-      *os << "// Operations for union " << node->name () << be_nl;
+      *os << "// Operations for union " << node->name () << be_nl
+          << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl;
       *os << "// *************************************************************\n\n";
 
-      // generate the copy constructor and the assignment operator here
+      // Generate the copy constructor and the assignment operator here.
       os->indent ();
-      *os << "// default constructor" << be_nl
-          << node->name () << "::" << node->local_name () << " (void)" << be_nl
+      *os << node->name () << "::" << node->local_name () << " (void)" << be_nl
           << "{" << be_idt_nl
           << "ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));" << be_nl
           << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl
@@ -117,8 +113,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
       // so that, if the uninitialized union is inserted into an Any,
       // the Any destructor's call to deep_free() will work properly.
       UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-
-      // @@ What if there is no first element?!
 
       // Just get the union's first member.
       AST_Decl *d = si.item ();
@@ -143,16 +137,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
-      // So we know we are generating the copy constructor
+      // So we know we are generating the copy constructor.
       this->ctx_->sub_state (TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR);
 
-      *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name ()
           << " (const ::" << node->name () << " &u)"
           << be_nl;
       *os << "{" << be_idt_nl;
       *os << "this->disc_ = u.disc_;" << be_nl;
-      // now switch based on the disc value
       *os << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
 
@@ -161,7 +153,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs"
                              "visit_union - "
-                             "codegen for copy ctor failed\n"), -1);
+                             "codegen for copy ctor failed\n"), 
+                            -1);
         }
 
       // If there is no explicit default case, but there
@@ -188,24 +181,26 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "}" << be_nl << be_nl;
 
       if (!node->is_local ())
-        *os << "void "
-            << node->name ()
-            << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-            << "{" << be_idt_nl
-            << node->local_name () << " *tmp = ACE_static_cast ("
-            << node->local_name () << "*, _tao_void_pointer);" << be_nl
-            << "delete tmp;" << be_uidt_nl
-            << "}\n" << be_nl;
+        {
+          *os << "void "
+              << node->name ()
+              << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+              << "{" << be_idt_nl
+              << node->local_name () << " *tmp = ACE_static_cast ("
+              << node->local_name () << "*, _tao_void_pointer);" << be_nl
+              << "delete tmp;" << be_uidt_nl
+              << "}\n" << be_nl;
+        }
 
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
       // Reset this for generating the assignment operator.
       this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
 
-      // assignment operator
+      // Assignment operator.
       os->indent ();
       *os << "// assignment operator" << be_nl;
-      *os << node->name () << " &" << be_nl; // return type
+      *os << node->name () << " &" << be_nl;
       *os << node->name () << "::operator= (const ::"
           << node->name () << " &u)" << be_nl;
       *os << "{" << be_idt_nl;
@@ -226,7 +221,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs"
                              "visit_union - "
-                             "codegen for assign op failed\n"), -1);
+                             "codegen for assign op failed\n"), 
+                            -1);
         }
 
       // If there is no explicit default case, but there
@@ -249,7 +245,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "return *this;" << be_uidt_nl;
       *os << "}\n\n";
 
-      // the reset method
+      // The reset method.
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
       os->indent ();
       *os << "// reset method to reset old values of a union" << be_nl;
@@ -258,12 +254,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "{" << be_idt_nl;
       *os << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
+
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs"
                              "visit_union - "
-                             "codegen for reset failed\n"), -1);
+                             "codegen for reset failed\n"), 
+                            -1);
         }
 
       // If there is no explicit default case, but there
@@ -283,27 +281,26 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << be_uidt_nl << "}" << be_uidt_nl
           << "}\n\n";
 
-      if (!node->is_local ())
+      if (!node->is_local () && be_global->tc_support ())
         {
-          // by using a visitor to declare and define the TypeCode, we
-          // have the added advantage to conditionally not generate
-          // any code. This will be based on the command line
-          // options. This is still TO-DO
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
           ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor || (node->accept (visitor) == -1))
+
+          be_visitor_typecode_defn tc_visitor (&ctx);
+
+          if (tc_visitor.visit_union (node) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_union_cs::"
                                  "visit_union - "
-                                 "TypeCode definition failed\n"
-                                 ), -1);
+                                 "TypeCode definition failed\n"), 
+                                -1);
             }
         }
 
       node->cli_stub_gen (I_TRUE);
     }
+
   return 0;
 }

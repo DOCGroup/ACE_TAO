@@ -33,23 +33,27 @@ ACE_RCSID(be_visitor_operation, operation_cs, "$Id$")
 
 be_visitor_operation_cs::be_visitor_operation_cs (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
-    //    operation_name_ (0)
+//    operation_name_ (0)
 {
 }
 
 be_visitor_operation_cs::~be_visitor_operation_cs (void)
 {
-  //  delete[] operation_name_;
+//  delete[] operation_name_;
 }
 
-// processing to be done after every element in the scope is processed
+// Processing to be done after every element in the scope is processed.
 int
 be_visitor_operation_cs::post_process (be_decl *bd)
 {
-  // all we do here is to insert a comma and a newline
+  // All we do here is to insert a comma and a newline.
   TAO_OutStream *os = this->ctx_->stream ();
+
   if (!this->last_node (bd))
-    *os << ",\n";
+    {
+      *os << ",\n";
+    }
+
   return 0;
 }
 
@@ -77,9 +81,9 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       return 0;
     }
 
-  os->indent (); // start with the current indentation level
+  os->indent ();
 
-  // retrieve the operation return type
+  // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
   if (!bt)
@@ -94,19 +98,16 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_rettype rt_visitor = (&ctx);
 
-  if ((!visitor) || (bt->accept (visitor) == -1))
+  if (bt->accept (&rt_visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_cs::"
                          "visit_operation - "
                          "codegen for return type failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   // Generate the operation name
   *os << " " << node->name ();
@@ -115,19 +116,16 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   // in the header file)
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_arglist al_visitor (&ctx);
 
-  if ((!visitor) || (node->accept (visitor) == -1))
+  if (node->accept (&al_visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_cs::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   *os << "{" << be_idt_nl;
   *os << this->gen_environment_var ();
@@ -260,13 +258,11 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 int
 be_visitor_operation_cs::visit_argument (be_argument *node)
 {
-  // this method is used to generate the ParamData table entry
+  // This method is used to generate the ParamData table entry.
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt; // argument type
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
 
-  // retrieve the type for this argument
-  bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -278,6 +274,7 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
 
   os->indent ();
   *os << "{" << bt->tc_name () << ", ";
+
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:
@@ -290,7 +287,7 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
       *os << "PARAM_OUT, ";
       break;
     }
-  *os << "0}";
 
+  *os << "0}";
   return 0;
 }
