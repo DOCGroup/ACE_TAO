@@ -1,3 +1,15 @@
+Thu Jul 24 14:26:12 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* examples/Makefile: 
+
+	Updated the Makefile to include the RTScheduling DIR.  
+	
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+	* examples/RTScheduling/MIF_Scheduler/Makefile:
+
+	Removed rules to compile FP_Scheduling.idl and
+	MIF_Scheduling.idl.
+	
 Thu Jul 24 13:48:33 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* orbsvcs\examples\Notify\ThreadPool\Supplier.cpp

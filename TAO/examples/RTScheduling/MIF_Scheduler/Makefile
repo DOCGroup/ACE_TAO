@@ -15,8 +15,7 @@ endif # ! TAO_ROOT
 LIBS = -lTAO_RTScheduler -lTAO_PortableServer -lTAO_CosNaming
 BIN_UNCHECKED = test Starter
 
-IDL_FILES = ../MIF_Scheduling \
-	    ../Synch \
+IDL_FILES = ../Synch \
             ../Job
 
 SRC = $(addsuffix .cpp, test ../Starter)
@@ -56,7 +55,7 @@ override TAO_IDLFLAGS += -o ../ \
 #       Local targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), ../MIF_Scheduling$(ext) ../Job$(ext) ../Synch$(ext))
+.PRECIOUS: $(foreach ext, $(IDL_EXT), ../Job$(ext) ../Synch$(ext))
 
 test: $(addprefix $(VDIR),$(MIF_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
@@ -74,8 +73,11 @@ realclean: clean
 .obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp test.h \
  $(ACE_ROOT)/ace/pre.h \
  MIF_Scheduler.h \
- $(TAO_ROOT)/tao/RTScheduling/RTSchedulerC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/RTScheduling/RTScheduler.h \
+ $(TAO_ROOT)/tao/RTScheduling/rtscheduler_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -113,6 +115,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/RTScheduling/RTSchedulerC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -144,10 +148,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+ $(ACE_ROOT)/ace/os_include/os_semaphore.h \
  $(ACE_ROOT)/ace/os_include/os_assert.h \
  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
@@ -177,6 +182,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
@@ -251,7 +257,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(ACE_ROOT)/ace/Exception_Macros.h \
- $(ACE_ROOT)/ace/iosfwd.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
  $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
@@ -365,7 +370,6 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_CodecC.i \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/RTScheduling/rtscheduler_export.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -477,7 +481,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/tao/RTScheduling/RTScheduler.h \
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  ../POA_Holder.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -501,6 +504,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -569,10 +575,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/os_include/os_pthread.h \
+ $(ACE_ROOT)/ace/os_include/os_semaphore.h \
  $(ACE_ROOT)/ace/os_include/os_assert.h \
  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
  $(ACE_ROOT)/ace/os_include/netinet/os_tcp.h \
  $(ACE_ROOT)/ace/os_include/sys/os_shm.h \
@@ -602,6 +609,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
@@ -676,7 +684,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(ACE_ROOT)/ace/Exception_Macros.h \
- $(ACE_ROOT)/ace/iosfwd.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
  $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
