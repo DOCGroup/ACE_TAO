@@ -108,10 +108,6 @@
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
 
-#if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
-#  define ACE_LACKS_ARPA_INET_H
-#endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
-
 // OS-specific configuration
 
 #define ACE_HAS_NONCONST_SWAB
