@@ -410,7 +410,7 @@ be_sequence::gen_client_stubs (void)
 
       // set the length
       cs->indent ();
-      *cs << "ACE_INLINE void" << nl;
+      *cs << "void" << nl;
       *cs << this->name () << "::length (CORBA::ULong length)" << nl;
       *cs << "{\n";
       cs->incr_indent ();
