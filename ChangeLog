@@ -1,3 +1,11 @@
+Fri Jul 06 20:13:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/Token_Handler.cpp:
+
+          More ACE_DEBUG disables.
+
 Fri Jul  6 15:55:54 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h (ACE_FD_SETSIZE):

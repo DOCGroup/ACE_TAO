@@ -95,10 +95,12 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
         u_long count = ++this->request_count_;
+#  if 0
         ACE_DEBUG ((LM_DEBUG,
                     "request count = %d, length = %d\n",
                     count,
                     length));
+#  endif /* 0 */
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
         // Perform the actual <recv> this time.
