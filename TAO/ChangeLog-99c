@@ -1,3 +1,18 @@
+Wed Feb 10 14:11:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/Any.{h,cpp}:
+        * tao/NVList.cpp:
+          Added a method to Any called _tao_replace(). NVList method
+          add_value() called Any::replace(). A bug report pointed
+          out that, in the case where the Any arg to add_value() has been 
+          copy-constructed or assigned to, its value_ is 0, and 
+          replace() deals only with value_. _tao_replace is now
+          called in add_value() if the value_ of the Any arg is 0,
+          and _tao_replace() uses the Any's message block instead. A
+          simple test adapted from the bug report code runs ok now
+          with no leaks. Thanks to Barry Hoggard for reporting this
+          bug.
+
 Wed Feb 10 13:05:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Event_Channel.h (pdf): Moved struct
