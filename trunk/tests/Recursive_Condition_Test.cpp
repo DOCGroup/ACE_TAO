@@ -234,7 +234,7 @@ test_4 (void)
   if (!(nesting_level == -1 && errno == ENOTSUP) && nesting_level != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%t) nesting level %d; should be 0\n"),
-                       nesting),
+                       nesting_level),
                       1);
 
   return 0;
