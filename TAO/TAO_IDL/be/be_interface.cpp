@@ -1059,8 +1059,8 @@ be_interface::gen_optable_entries (be_interface *derived)
 
     case TAO_CodeGen::TAO_LINEAR_SEARCH:
     case TAO_CodeGen::TAO_BINARY_SEARCH:
-      // For this also, we call GPERF only.
     case TAO_CodeGen::TAO_PERFECT_HASH:
+      // We call GPERF for all these three strategies.
       // Init the outstream.
       ss = cg->gperf_input_stream ();
 
@@ -1401,7 +1401,7 @@ be_interface::gen_binary_search_class_definition (void)
       << be_nl
       << "public:"
       << be_nl
-      << " const TAO_operation_db_entry * lookup (const char *str, unsigned int len);"
+      << " const TAO_operation_db_entry * lookup (const char *str);"
       << be_nl
       << "};"
       << "\n";
@@ -1425,7 +1425,7 @@ be_interface::gen_linear_search_class_definition (void)
       << be_nl
       << "public:"
       << be_nl
-      << " const TAO_operation_db_entry * lookup (const char *str, unsigned int len);"
+      << " const TAO_operation_db_entry * lookup (const char *str);"
       << be_nl
       << "};"
       << "\n";
@@ -1528,6 +1528,27 @@ be_interface::gen_gperf_lookup_methods (void)
                                     this->flatname ());
       break;
       
+      // Linear search methods from GPERF. Everything and the -z flag.
+    case TAO_CodeGen::TAO_LINEAR_SEARCH:
+      process_options.command_line ("%s"
+                                    " "
+                                    "-b"
+                                    "  "
+                                    "-m -M -J -c -C"
+                                    " "
+                                    "-D -E -T -f 0"
+                                    " "
+                                    "-a -o -t -p -K"
+                                    " "
+                                    "opname_ -L C++"
+                                    " "
+                                    "-Z TAO_%s_Linear_Search_OpTable"
+                                    " "
+                                    "-N lookup",
+                                    idl_global->gperf_path (),
+                                    this->flatname ());
+      break;
+
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
