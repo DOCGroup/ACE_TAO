@@ -26,6 +26,8 @@
 #include "IORInterceptor_Adapter_Factory.h"
 #include "debug.h"
 #include "TAOC.h"
+#include "Endpoint_Selector_Factory.h"
+#include "Client_Strategy_Factory.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 # include "ClientRequestInfo.h"

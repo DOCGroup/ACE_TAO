@@ -4,9 +4,10 @@
 #define TAO_VALUE_VAROUT_T_C
 
 #include "Value_VarOut_T.h"
+#include "tao/CORBA_methods.h"
 
-ACE_RCSID (tao, 
-           Value_VarOut_T, 
+ACE_RCSID (tao,
+           Value_VarOut_T,
            "$Id$")
 
 template<typename T>
@@ -89,7 +90,7 @@ TAO_Value_Var_T<T>::operator= (const TAO_Value_Var_T & p)
     TAO::Value_Traits<T>::tao_add_ref (tmp);
     this->ptr_ = tmp;
   }
-  
+
   return *this;
 }
 

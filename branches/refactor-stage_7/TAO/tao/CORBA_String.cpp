@@ -1,7 +1,7 @@
 #include "CORBA_String.h"
 #include "Managed_Types.h"
 
-#include "ace/OS_String.h"
+#include "ace/OS.h"
 #include "ace/OS_Memory.h"
 #include "ace/streams.h"
 
@@ -77,8 +77,8 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  return ACE_OS_String::strcpy (retval,
-                                str);
+  return ACE_OS::wscpy (retval,
+                        str);
 }
 
 CORBA::WChar*

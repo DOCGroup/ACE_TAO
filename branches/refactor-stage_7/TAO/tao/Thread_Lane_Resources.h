@@ -35,6 +35,11 @@ class TAO_New_Leader_Generator;
 class TAO_Connector_Registry;
 class TAO_Resource_Factory;
 
+namespace CORBA
+{
+  class Environment;
+}
+
 /**
  * @class TAO_Thread_Lane_Resources
  *

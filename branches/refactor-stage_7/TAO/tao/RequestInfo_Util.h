@@ -27,6 +27,7 @@ namespace CORBA
 {
   class StringSeq;
   class Any;
+  class Environment;
 }
 
 namespace Dynamic

@@ -32,6 +32,8 @@ class TAO_ORB_Core;
 namespace CORBA
 {
   typedef ULong PolicyType;
+
+  class Environment;
 }
 
 /**

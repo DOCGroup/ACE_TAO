@@ -33,6 +33,7 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
+#include "tao/default_environment.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"

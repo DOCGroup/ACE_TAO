@@ -28,6 +28,7 @@
 namespace CORBA
 {
   class Policy;
+  class Environment;
 }
 
 class TAO_ORB_Core;

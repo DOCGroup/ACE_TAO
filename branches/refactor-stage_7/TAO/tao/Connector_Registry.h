@@ -14,15 +14,17 @@
 
 #ifndef TAO_CONNECTOR_REGISTRY_H
 #define TAO_CONNECTOR_REGISTRY_H
-
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Environment.h"
+#include "ace/CORBA_macros.h"
+#include "tao/Basic_Types.h"
+#include "ace/Global_Macros.h"
 
 // Forward declarations.
 class TAO_ORB_Core;
@@ -30,6 +32,11 @@ class TAO_Connector;
 class TAO_MProfile;
 class TAO_Profile;
 class TAO_InputCDR;
+
+namespace CORBA
+{
+  class Environment;
+}
 
 typedef TAO_Connector** TAO_ConnectorSetIterator;
 

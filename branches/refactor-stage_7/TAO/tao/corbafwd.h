@@ -161,15 +161,6 @@ namespace CORBA
   class AbstractBase;
   typedef AbstractBase * AbstractBase_ptr;
 
-  enum exception_type
-  {
-    // = Exception type.
-
-    NO_EXCEPTION,
-    USER_EXCEPTION,
-    SYSTEM_EXCEPTION
-  };
-
   extern TAO_Export TypeCode_ptr _tc_exception_type;
 
   /**
@@ -400,23 +391,6 @@ namespace CORBA
   class ConstructionPolicy;
   typedef ConstructionPolicy * ConstructionPolicy_ptr;
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
-
-  /**
-   * @name ORB Initialization
-   *
-   * There could be a single version of these methods, but g++ 2.7.2
-   * gets horribly confused if we used CORBA::default_environment() at
-   * this point.
-   */
-  //@{
-  extern TAO_Export ORB_ptr ORB_init (int & argc,
-                                      char * argv[],
-                                      const char * orb_name = 0);
-  extern TAO_Export ORB_ptr ORB_init (int & argc,
-                                      char * argv[],
-                                      const char * orb_name,
-                                      CORBA::Environment &ACE_TRY_ENV);
-  //@}
 
   // = TAO extensions...
 
@@ -683,10 +657,10 @@ operator<< (TAO_OutputCDR&, const TAO_opaque&);
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_opaque&);
 
-TAO_Export CORBA::Boolean 
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &,
             const CORBA::ParameterMode &);
-TAO_Export CORBA::Boolean 
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &,
             CORBA::ParameterMode &);
 

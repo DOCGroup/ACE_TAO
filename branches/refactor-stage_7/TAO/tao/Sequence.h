@@ -22,7 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
-#include "orbconf.h"
+#include "tao/orbconf.h"
+#include "tao/default_environment.h"
 
 namespace CORBA
 {

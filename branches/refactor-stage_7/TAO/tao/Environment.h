@@ -15,8 +15,6 @@
  * @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef TAO_ENVIRONMENT_H
 #define TAO_ENVIRONMENT_H
 
@@ -32,6 +30,7 @@
 #include "tao/CORBA_methods.h"
 #include "tao/orbconf.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/default_environment.h"
 
 class TAO_ORB_Core;
 
@@ -154,13 +153,6 @@ namespace CORBA
   };
 } // End CORBA namespace
 
-// ****************************************************************
-
-/// Provide a simple function to access the TSS default environment.
-/**
- * @note We tried with CORBA::default_environment() and others.
- */
-TAO_Export CORBA::Environment& TAO_default_environment (void);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Environment.i"

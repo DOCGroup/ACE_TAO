@@ -7,6 +7,7 @@
 #include "tao/Marshal.h"
 #include "tao/Environment.h"
 #include "ace/CORBA_macros.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any_Special_Impl_T.inl"
@@ -154,11 +155,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (tc, 
-                               &cdr 
+      impl->assign_translator (tc,
+                               &cdr
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
