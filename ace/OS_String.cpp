@@ -1029,11 +1029,19 @@ ACE_OS_String::strsncpy (char *dst, const char *src, size_t maxlen)
   register const char *rsrc = src;
   register size_t rmaxlen = maxlen;
 
-  if (rmaxlen > 0 && dst != src)
+  if (rmaxlen > 0)
     {
+      if (rdst!=rsrc)
+        {
+          *rdst = '\0';
+          if (rsrc != 0)
+            strncat (rdst, rsrc, --rmaxlen);
+        }
+    }
+  else
+    {
+      rdst += (rmaxlen - 1);
       *rdst = '\0';
-      if (rsrc != 0)
-        strncat (rdst, rsrc, --rmaxlen);
     }
   return dst;
 }
@@ -1045,11 +1053,19 @@ ACE_OS_String::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen
   register const ACE_WCHAR_T *rsrc = src;
   register size_t rmaxlen = maxlen;
 
-  if (rmaxlen > 0 && dst != src)
+    if (rmaxlen > 0)
     {
+      if (rdst!=rsrc)
+        {
+          *rdst = ACE_TEXT_WIDE ('\0');
+          if (rsrc != 0)
+            strncat (rdst, rsrc, --rmaxlen);
+        }
+    }
+  else
+    {
+      rdst += (rmaxlen - 1);
       *rdst = ACE_TEXT_WIDE ('\0');
-      if (rsrc != 0)
-        strncat (rdst, rsrc ,--rmaxlen);
     }
   return dst;
 }
