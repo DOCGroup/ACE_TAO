@@ -4135,6 +4135,11 @@ public:
     // Handle to the underlying file.
   };
 
+  // = Default Win32 Security Attributes definition.
+#if defined (ACE_WIN32)
+  static LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
+#endif /* ACE_WIN32 */
+
   // = A set of wrappers for miscellaneous operations.
   static int atoi (const char *s);
   static char *getenv (const char *symbol);

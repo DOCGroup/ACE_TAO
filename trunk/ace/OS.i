@@ -720,6 +720,28 @@ ACE_OS::umask (mode_t cmask)
   } \
   return RESULT; } while (0)
 
+ACE_INLINE LPSECURITY_ATTRIBUTES
+ACE_OS::default_win32_security_attributes (LPSECURITY_ATTRIBUTES sa)
+{
+#if defined (ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES)
+  if (sa == 0)
+    {
+      // @@ This is a good place to use pthread_once.
+      static SECURITY_ATTRIBUTES default_sa;
+      static SECURITY_DESCRIPTOR sd;
+      InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION);
+      SetSecurityDescriptorDacl(&sd, TRUE, NULL, FALSE);
+      default_sa.nLength = sizeof(SECURITY_ATTRIBUTES);
+      default_sa.lpSecurityDescriptor = &sd;
+      default_sa.bInheritHandle       = TRUE;
+      sa = &default_sa;
+    }
+  return sa;
+#else /* !ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
+  return sa; 
+#endif /* ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
+}
+
 # if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
@@ -1652,7 +1674,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   switch (type)
     {
     case USYNC_PROCESS:
-      m->proc_mutex_ = ::CreateMutex (sa, FALSE, name);
+      m->proc_mutex_ = ::CreateMutex (ACE_OS::default_win32_security_attributes (sa), FALSE, name);
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
@@ -2413,7 +2435,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
-  *s = ::CreateSemaphore (sa, count, max, name);
+  *s = ::CreateSemaphore (ACE_OS::default_win32_security_attributes (sa), count, max, name);
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);
@@ -3834,7 +3856,7 @@ ACE_OS::event_init (ACE_event_t *event,
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
-  *event = ::CreateEvent (sa,
+  *event = ::CreateEvent (ACE_OS::default_win32_security_attributes(sa),
                           manual_reset,
                           initial_state,
                           name);
@@ -7105,7 +7127,8 @@ ACE_OS::mmap (void *addr,
 
   // Only create a new handle if we didn't have a valid one passed in.
   if (*file_mapping == ACE_INVALID_HANDLE)
-    *file_mapping = ::CreateFileMapping (file_handle, sa,
+    *file_mapping = ::CreateFileMapping (file_handle,
+                                         ACE_OS::default_win32_security_attributes (sa),
                                          prot, 0, len, 0);
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
@@ -7512,7 +7535,8 @@ ACE_OS::open (const char *filename,
 
   ACE_HANDLE h = ::CreateFileA (filename, access,
                                 FILE_SHARE_READ | FILE_SHARE_WRITE,
-                                sa, creation,
+                                ACE_OS::default_win32_security_attributes (sa),
+                                creation,
                                 flags,
                                 0);
 
@@ -7539,7 +7563,8 @@ ACE_OS::shm_open (const char *filename,
   ACE_OSCALL_RETURN (::shm_open (filename, mode, perms), ACE_HANDLE, -1);
 # else  /* ! ACE_HAS_SHM_OPEN */
   // Just used ::open.
-  return ACE_OS::open (filename, mode, perms, sa);
+  return ACE_OS::open (filename, mode, perms,
+                       ACE_OS::default_win32_security_attributes (sa));
 # endif /* ! ACE_HAS_SHM_OPEN */
 }
 #endif /* ! ACE_HAS_MOSTLY_UNICODE_APIS */
@@ -9221,7 +9246,8 @@ ACE_OS::open (const wchar_t *filename,
 
   ACE_HANDLE h = ::CreateFileW (filename, access,
                                 FILE_SHARE_READ | FILE_SHARE_WRITE,
-                                sa, creation,
+                                ACE_OS::default_win32_security_attributes (sa),
+                                creation,
                                 flags,
                                 0);
 
