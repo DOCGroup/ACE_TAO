@@ -1,6 +1,15 @@
+Thu Nov 14 10:04:52 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/client.cpp (test_ami):
+	  (test_ami_errors):
+
+	  Use a PortableServer::ServantBase_var instead of a
+	  TAO::Utils::Servant_var.  MSVC++ 6 can't handle the member
+	  templates in the latter.
+
 Thu Nov 14 11:48:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosNotification.bor: Added a wild card charecter
+	* orbsvcs/orbsvcs/CosNotification.bor: Added a wild card character
 	  to the list of files to be compiled.
 
 Thu Nov 14 09:43:40 2002  Ossama Othman  <ossama@uci.edu>
