@@ -204,10 +204,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual Messaging::SyncScope synchronization (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
+    virtual Messaging::SyncScope synchronization (void);
 
   private:
     SyncScopePolicy_ptr servant_;
@@ -247,10 +245,8 @@ private:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    Messaging::SyncScope synchronization (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
+    Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
+    Messaging::SyncScope synchronization (void);
     CORBA::PolicyType policy_type (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
