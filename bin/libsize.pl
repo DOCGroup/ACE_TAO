@@ -4,12 +4,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # $Id$
 #
-# Provides size breakdown of libACE.a or libTAO.
+# Provides size breakdown of ACE, TAO, or orbsvcs libs.
 #
 # Assumes (or builds) the lib with debug=0.  Allows other make args,
 # such as -j 4, to be passed on the command line.
 
-$usage="$0 [-h, for html output] [-v] [make arguments]\n";
+$usage =
+  "$0 [-h, for html output] [-s, for shared libs] [-v] [make arguments]\n";
 
 ####
 #### Configuration parameters.
@@ -18,10 +19,14 @@ $build_args =
   'debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0';
 $ACE_COMPONENTS =
   'OS Utils Logging Threads Demux Connection Sockets IPC Svcconf ' .
-  'Streams Memory Token Other';
+    'Streams Memory Token Other';
 $TAO_COMPONENTS =
   'POA Pluggable_Protocols Default_Resources Interpretive_Marshaling ' .
-  'IDL_Compiler ORB_Core Dynamic_Any';
+    'IDL_Compiler ORB_Core Dynamic_Any';
+$ORBSVCS_COMPONENTS =
+  'Naming ImplRepo Time Concurrency Property Trader LifeCycle Sched ' .
+    'Event CosEvent Event2 AV';
+
 
 #### The following are only used for VxWorks libraries, and
 #### only if the corresponding environment variable isn't set.
@@ -37,27 +42,23 @@ $make =
 $ACE_ROOT = $ENV{'ACE_ROOT'}  ||
   die "$0: ACE_ROOT was not set!\n";
 
-chop ($pwd = `pwd`);
-
-if ($pwd =~ m%/ace$%) {
-  #### Default: libACE
-  $tao = 0;
-} elsif ($pwd =~ m%/tao$%) {
-  $tao = 1;
-} else {
-  die "$0: unsupported directory; $pwd\n";
-}
 
 $html = $verbose = 0;
+$lib_extension = 'a';
 
 ####
 #### Process command line args.
 ####
-foreach my $arg (@ARGV) {
+@argv = @ARGV;
+foreach my $arg (@argv) {
   if ($arg eq '-h') {
     $html = 1;
     chop ($sysname = `uname -s`);
     chop ($sysrev = `uname -r`);
+    shift;
+  } elsif ($arg eq '-s') {
+    $lib_extension = 'so';
+    $build_args =~ s/ static_libs_only=1//;
     shift;
   } elsif ($arg eq '-v') {
     $verbose = 1;
@@ -72,17 +73,27 @@ foreach my $arg (@ARGV) {
 
 $make_args = join (' ', @ARGV) . $build_args;
 
-if ($tao) {
-  $COMPONENTS = "$TAO_COMPONENTS";
-  $LIB_COMPONENTS = 'TAO_COMPONENTS';
-  $libname = TAO;
-} else {
+$pwd = $ENV{'PWD'};
+chop ($pwd = `pwd`) unless "$pwd";
+
+if ($pwd =~ m%/ace$%) {
+  #### libACE
   $COMPONENTS = "$ACE_COMPONENTS";
   $LIB_COMPONENTS = 'ACE_COMPONENTS';
-  $libname = ACE;
+  $libname = 'ACE';
+} elsif ($pwd =~ m%/tao$%) {
+  $COMPONENTS = "$TAO_COMPONENTS";
+  $LIB_COMPONENTS = 'TAO_COMPONENTS';
+  $libname = 'TAO';
+} elsif ($pwd =~ m%/orbsvcs/orbsvcs$%) {
+  $COMPONENTS = "$ORBSVCS_COMPONENTS";
+  $LIB_COMPONENTS = 'TAO_ORBSVCS';
+  $libname = 'orbsvcs';
+} else {
+  die "$0: unsupported directory; $pwd\n";
 }
 
-$lib = "lib${libname}.a";
+$lib = "lib${libname}.$lib_extension";
 
 
 ####
@@ -107,7 +118,7 @@ if ($ACE_ROOT =~ /vxworks/) {
 ####
 #### Measure the size of the entire library.
 ####
-$sizeTotal = build_lib ("${libname}_COMPONENTS=\"$COMPONENTS\"");
+$sizeTotal = build_lib ("$LIB_COMPONENTS=\"$COMPONENTS\"");
 $components = "   <th>Platform\n    <th>Component\n    <th>Total";
 $componentSize = "   <th>Size, bytes\n    <td align=center>$sizeTotal";
 $componentPercentage =
@@ -163,7 +174,7 @@ sub build_lib ()
     die "$0: unable to open $size\n";
   while (<SIZE>) {
     my (@field) = split;
-    $libSize += $field[3];
+    $libSize += $field[3] if $field[3] =~ /\d/;  #### Skip size header line.
   }
   close (SIZE);
 
