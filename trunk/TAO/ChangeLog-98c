@@ -1,3 +1,9 @@
+Tue Aug 18 19:14:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tests/Cubit/TAO/DII_Cubit/clinet.cpp:
+	  Had an incorrect "owns-data" boolean arg in all the cubit 
+	  test request constructions.
+
 Tue Aug 18 17:54:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed incorrect
