@@ -74,7 +74,7 @@ MyImpl::RoundTripClient_exec_i::start ()
   ACE_Sample_History history (niterations);
 
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i < niterations; ++i)
+  for (i = 0; i < niterations; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
