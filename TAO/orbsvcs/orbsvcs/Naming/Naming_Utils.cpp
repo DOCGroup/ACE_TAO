@@ -101,15 +101,15 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
       char *naming_ior = ACE_OS::strdup (str.in ());
 
       // Instantiate a server which will receive requests for an ior
-      ACE_NEW_RETURN (ior_multicast_,
-                      TAO_IOR_Multicast (naming_ior,
-					 port,
-					 ACE_DEFAULT_MULTICAST_ADDR,
-					 TAO_SERVICEID_NAMESERVICE),
+      ACE_NEW_RETURN (this->ior_multicast_,
+                      IOR_Multicast (naming_ior,
+                                     port,
+                                     ACE_DEFAULT_MULTICAST_ADDR,
+                                     TAO_SERVICEID_NAMESERVICE),
                       -1);
 
       // Register event handler for the ior multicast.
-      if (reactor->register_handler (ior_multicast_,
+      if (reactor->register_handler (this->ior_multicast_,
                                      ACE_Event_Handler::READ_MASK) == -1)
         ACE_DEBUG ((LM_DEBUG,
                     "cannot register Event handler\n"));
@@ -146,5 +146,10 @@ TAO_Naming_Server::operator -> (void) const
 
 TAO_Naming_Server::~TAO_Naming_Server (void)
 {
-  delete ior_multicast_;
+  if (this->ior_multicast_ != 0)
+    {
+      TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->ior_multicast_,
+                                                            ACE_Event_Handler::READ_MASK);
+      delete this->ior_multicast_;
+    }
 }
