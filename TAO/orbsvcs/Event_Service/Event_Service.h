@@ -75,6 +75,8 @@ private:
     ES_OLD_MT          // Prioritized dispatching, old EC.
   };
 
+  enum Sched_type_t {SCHED_NONE, SCHED_GLOBAL, SCHED_LOCAL};
+  
 private:
   TAO_Module_Factory *module_factory_;
   // The module factory for the EC.
@@ -93,6 +95,9 @@ private:
 
   ACE_CString pid_file_name_;
   // The name of a file where the process stores its pid
+
+  Sched_type_t scheduler_type_;
+  // Should we use a global scheduler or a local one or none?
 
   int event_service_type_;
   // The type of event service we will use

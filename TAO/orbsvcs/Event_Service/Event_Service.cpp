@@ -31,8 +31,8 @@ Event_Service::Event_Service (void)
   : module_factory_ (0),
     sched_impl_ (0),
     ec_impl_ (0),
-    event_service_type_ (ES_NEW),
-    global_scheduler_ (0)
+    scheduler_type_ (SCHED_NONE),
+    event_service_type_ (ES_NEW)
 {
 }
 
@@ -102,35 +102,40 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
 
-      if (1) // this->event_service_type_ == ES_OLD_REACTIVE
-             // || this->event_service_type_ == ES_OLD_MT)
+      //the old EC always needs a scheduler. If none is
+      //specified, we default to a local scheduler
+      if (this->scheduler_type_ == SCHED_LOCAL ||
+          (this->scheduler_type_ == SCHED_NONE && 
+           this->event_service_type_ != ES_NEW))
         {
-          // We must find the scheduler object reference...
+          //Create a local scheduler instance
+          ACE_NEW_RETURN (this->sched_impl_,
+                          ACE_Config_Scheduler,
+                          1);
 
-          if (this->global_scheduler_ == 0)
-            {
-              ACE_NEW_RETURN (this->sched_impl_,
-                              ACE_Config_Scheduler,
+          scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // Register the servant with the Naming Context....
+          naming_context->rebind (schedule_name, scheduler.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else if (this->scheduler_type_ == SCHED_GLOBAL)
+        {
+          //Get reference to a scheduler from naming service
+          CORBA::Object_var tmp =
+            naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          
+          scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
+                                                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (scheduler.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               " (%P|%t) Unable to resolve the Scheduling Service.\n"),
                               1);
-
-              scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              // Register the servant with the Naming Context....
-              naming_context->rebind (schedule_name, scheduler.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-          else
-            {
-              CORBA::Object_var tmp =
-                naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
         }
 
       switch (this->event_service_type_)
@@ -139,6 +144,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           {
             TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                                   root_poa.in ());
+
+            if (this->scheduler_type_ != SCHED_NONE)
+              {
+                attr.scheduler = scheduler.in ();
+              }
+
             TAO_EC_Event_Channel* ec;
             ACE_NEW_RETURN (ec,
                             TAO_EC_Event_Channel (attr),
@@ -192,7 +203,9 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       if (ACE_OS::strcmp(this->ior_file_name_.c_str(), "") != 0)
         {
-          FILE *output_file= ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()), ACE_LIB_TEXT("w"));
+          FILE *output_file= 
+            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()), 
+                           ACE_LIB_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
@@ -204,7 +217,9 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       if (ACE_OS::strcmp(this->pid_file_name_.c_str(), "") != 0)
         {
-          FILE *pidf = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->pid_file_name_.c_str()), ACE_LIB_TEXT("w"));
+          FILE *pidf = 
+            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->pid_file_name_.c_str()), 
+                           ACE_LIB_TEXT("w"));
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
@@ -281,19 +296,23 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
           if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("global")) == 0)
             {
-              this->global_scheduler_ = 1;
+              this->scheduler_type_ = SCHED_GLOBAL;
             }
           else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("local")) == 0)
             {
-              this->global_scheduler_ = 0;
+              this->scheduler_type_ = SCHED_LOCAL;
+            }
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("none")) == 0)
+            {
+              this->scheduler_type_ = SCHED_NONE;
             }
           else
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_LIB_TEXT("Unknown scheduling type <%s> ")
-                          ACE_LIB_TEXT("defaulting to local\n"),
+                          ACE_LIB_TEXT("defaulting to none\n"),
                           get_opt.opt_arg ()));
-              this->global_scheduler_ = 0;
+              this->scheduler_type_ = SCHED_NONE;
             }
           break;
 
@@ -314,7 +333,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_LIB_TEXT("Unknown event service type <%s> ")
-                          ACE_LIB_TEXT("defaulting to REACTIVE\n"),
+                          ACE_LIB_TEXT("defaulting to NEW\n"),
                           get_opt.opt_arg ()));
               this->event_service_type_ = ES_NEW;
             }
@@ -327,7 +346,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
                       ACE_LIB_TEXT("-n service_name ")
                       ACE_LIB_TEXT("-o ior_file_name ")
                       ACE_LIB_TEXT("-p pid_file_name ")
-                      ACE_LIB_TEXT("-s <global|local> ")
+                      ACE_LIB_TEXT("-s <global|local|none> ")
                       ACE_LIB_TEXT("-t <new|old_reactive|old_mt> ")
                       ACE_LIB_TEXT("\n"),
                       argv[0]));
