@@ -1,4 +1,12 @@
-Thu May 15 13:10:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Thu May 15 22:19:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp (handle_input): Fixed
+	  a bug in handle_input() where we need to return the result, not 
+	  just 0 or 1.  Thanks to Per Andersson for reporting this.
+
+	* ace/Log_Priority.h: Changed the values of the enums in
+ 	  ACE_Log_Priority so that they can be dealt with via bitwise
+ 	  operations.  Thanks to Per Andersson for this.
 
 	* include/makeinclude/platform_osf1_4.0.GNU: Added support for
  	  templates.  Thanks to Steve Huston and James Johnson for

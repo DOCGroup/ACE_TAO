@@ -14,8 +14,8 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_LM_PRIORITY_H)
-#define ACE_LM_PRIORITY_H
+#if !defined (ACE_LOG_PRIORITY_H)
+#define ACE_LOG_PRIORITY_H
 
 enum ACE_Log_Priority
   // = TITLE
@@ -65,8 +65,13 @@ enum ACE_Log_Priority
   // A panic condition.  This is normally broadcast to all users
   // (decimal 1024).
 
-  LM_MAX = LM_EMERGENCY
+  LM_MAX = LM_EMERGENCY,
   // The maximum logging priority.
+  
+  // Do not use!!, this enum value ensures that the underlying
+  // integral type for this enum is at least 32 bits.
+  ENSURE_32_BITS = 0xFFFFFFFF
 };
 
-#endif /* ACE_LM_PRIORITY_H */
+#endif /* ACE_LOG_PRIORITY_H */
+
