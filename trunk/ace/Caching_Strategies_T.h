@@ -85,6 +85,9 @@ public:
   virtual int clear_cache (CONTAINER &container) = 0;
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
+
+  void dump (void) const = 0;
+  // Dumps the state of the object.
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -157,6 +160,9 @@ public:
 
   IMPLEMENTATION &implementation (void);
   // Accessor to the implementation.
+
+  void dump (void) const;
+  // Dumps the state of the object.
 
 private:
 
