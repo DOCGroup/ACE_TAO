@@ -39,7 +39,8 @@ Object1_impl::~Object1_impl()
 
 void Object1_impl::method1(const char* activity,
     CORBA::Long seconds,
-    char* &output)
+    char* &output
+    ACE_ENV_ARG_DECL)
   throw (testSched::testSchedException)
 {
   const int scale_factor = 2000;
