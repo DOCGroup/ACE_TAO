@@ -12,7 +12,9 @@
 #define CIAO_CONFIG_HANDLERS_IDD_HANDLER_H
 #include /**/ "ace/pre.h"
 
+#include "tao/Basic_Types.h"
 #include "Config_Handlers/Config_Handlers_Export.h"
+#include "IDREF_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,14 +53,18 @@ namespace CIAO
           const DeploymentPlan &src,
           ::Deployment::InstanceDeploymentDescriptions& dest);
 
+      static IDREF_Base IDREF;
+
     private:
       static bool instance_deployment_descr (
           const InstanceDeploymentDescription &src,
-          ::Deployment::InstanceDeploymentDescription &dest);
+          ::Deployment::InstanceDeploymentDescription &dest,
+          CORBA::ULong pos);
 
       static void instance_resource_depl_descr (
         const InstanceResourceDeploymentDescription &src,
-        Deployment::InstanceResourceDeploymentDescription &dest);
+        Deployment::InstanceResourceDeploymentDescription &dest,
+        CORBA::ULong pos);
     };
   }
 }

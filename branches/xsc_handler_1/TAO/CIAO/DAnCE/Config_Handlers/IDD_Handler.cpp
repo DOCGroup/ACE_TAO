@@ -12,6 +12,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    IDREF_Base IDD_Handler::IDREF;
     bool
     IDD_Handler::instance_deployment_descrs (
         const DeploymentPlan &src,
@@ -32,7 +33,7 @@ namespace CIAO
 
           bool retval =
             IDD_Handler::instance_deployment_descr ((*idd_b),
-                                                    dest[len]);
+                                                    dest[len], len);
 
           if (!retval)
             return false;
@@ -44,12 +45,28 @@ namespace CIAO
     bool
     IDD_Handler::instance_deployment_descr (
         const InstanceDeploymentDescription& src,
-        Deployment::InstanceDeploymentDescription& dest)
+        Deployment::InstanceDeploymentDescription& dest,
+        CORBA::ULong pos)
     {
       dest.name =
         src.name ().c_str ();
       dest.node =
         src.node ().c_str ();
+
+      if (src.id_p ())
+        {
+          ACE_CString cstr (src.id ().c_str ());
+          if (!IDD_Handler::IDREF.bind_ref (cstr, pos))
+           {
+             return false;
+           }
+        }
+      else
+        {
+          ACE_DEBUG((LM_ERROR,
+                    "(%P|%t) Warning:  IDD %s has no idref \n",
+                    src.name ().c_str ()));
+        }
 
       // We know there should be only one element
       dest.source.length (1);
@@ -124,7 +141,8 @@ namespace CIAO
     void
     IDD_Handler::instance_resource_depl_descr (
         const InstanceResourceDeploymentDescription &src,
-        ::Deployment::InstanceResourceDeploymentDescription &dest)
+        ::Deployment::InstanceResourceDeploymentDescription &dest,
+        CORBA::ULong pos)
     {
       // resourceUsage is an enumerated type
       switch (src.resourceUsage ().integral ())

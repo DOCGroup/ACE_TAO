@@ -1,6 +1,7 @@
 // $Id$
 
 #include "PSPE_Handler.h"
+#include "IDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
 
@@ -49,8 +50,11 @@ namespace CIAO
           dest.provider = 0;
         }
 
-      dest.instanceRef = 0;
-      
+      CORBA::ULong tmp = 0;
+      bool r = IDD_Handler::IDREF.find_ref
+        (src.instance ().id ().c_str (), tmp);
+      dest.instanceRef = tmp;
+
       if (src.kind () == CCMComponentPortKind::Facet)
         dest.kind = Deployment::Facet;
       if (src.kind () == CCMComponentPortKind::SimplexReceptacle)
