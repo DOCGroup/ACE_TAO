@@ -1,3 +1,11 @@
+Sat May  1 22:25:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Makefile:
+	* GNUMakefile:
+
+	  Renamed "Makefile" to "GNUMakefile" to make it obvious to
+	  users that GNU Make is required to parse the file.
+
 Sat May  1 22:05:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/OBV/Typed_Events/Event_Types_impl.h:
