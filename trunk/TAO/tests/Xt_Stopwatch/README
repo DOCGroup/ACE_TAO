@@ -1,7 +1,7 @@
 # $Id$
 
 Introduction:
-------------
+
 This example illustrates the usage of the XtReactor from TAO.  The
 server creates a small display dialog and the client displays a dialog
 with a start and stop button.  On pressing the start button the server

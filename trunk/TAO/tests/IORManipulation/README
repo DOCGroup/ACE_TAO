@@ -1,5 +1,5 @@
-This program test the basic operation of the 
-IORManipulation interface
+This program test the basic operation of TAO's IORManipulation
+interface.
 
 Run the application as follows.
 
