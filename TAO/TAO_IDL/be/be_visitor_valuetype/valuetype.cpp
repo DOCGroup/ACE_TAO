@@ -1080,16 +1080,83 @@ be_visitor_valuetype::have_operation (be_valuetype* node)
         }
     }
 
+	have_operation = have_operation || be_visitor_valuetype::have_supported_op (node);
+
   return have_operation;
+}
+
+idl_bool
+be_visitor_valuetype::have_supported_op (be_valuetype * node)
+{
+	// Check for operations on supported interfaces
+
+	if (node == 0)
+		return 0;
+
+	idl_bool have_supported_op = 0;
+
+	// Check each supported interface to see if it has operations defined
+	long i; // loop index
+	long n_supports = node->n_supports (); // get the number of supported interfaces
+	AST_Interface ** supports = node->supports ();
+
+	for (i = 0; i < n_supports; i++)
+		{
+			be_interface * vt = be_interface::narrow_from_decl (supports[i]);
+
+			if (vt != 0)
+				{
+
+					if (vt->nmembers () > 0)
+
+					// Initialize an iterator for supported interface elements
+					for (UTL_ScopeActiveIterator si (vt, UTL_Scope::IK_decls); !si.is_done (); si.next())
+						{
+							AST_Decl *d = si.item ();
+
+							if (!d)
+								{
+									ACE_ERROR_RETURN ((LM_ERROR,
+										                 "(%N:%l) be_visitor_valuetype_init::"
+											               "has_operation"
+												             "bad node in this scope\n"),
+													          0);
+
+								}
+
+							AST_Decl::NodeType node_type = d->node_type();
+
+							// Check the type of each element in the supported interface
+							if (node_type == AST_Decl::NT_op)
+								{
+									have_supported_op = 1;
+									continue;
+								}
+
+							if (node_type == AST_Decl::NT_attr)
+								{
+									have_supported_op = 1;
+									continue;
+								}
+						} // end for loop
+
+				  if (have_supported_op)
+					  {
+						  break;
+						}
+				} // end if
+		} // end for loop
+
+	return have_supported_op;
 }
 
 idl_bool
 be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 {
-  // VT needs RefCounter if it has concrete factory and
-  // none of its base VT has ref_counter
+  // VT needs RefCounter if it has concrete factory or supports an
+  // abstract interface and none of its base VT has ref_counter
 
-  if (be_visitor_valuetype::determine_factory_style (node) != FS_CONCRETE_FACTORY)
+  if (be_visitor_valuetype::determine_factory_style (node) != FS_CONCRETE_FACTORY && !node->supports_abstract ())
     {
       return 0;
     }

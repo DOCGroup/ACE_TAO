@@ -107,7 +107,9 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
 
   *os << "public virtual " << "POA_"
-      << concrete->name ();
+      << concrete->name () << ",";
+
+	*os << be_nl << "public virtual " << "::" << node->full_name ();
 
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -118,15 +120,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   // No copy constructor for locality constraint interface.
   *os << class_name.c_str () << " (const " << class_name.c_str () 
       << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
-
-  *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
-  // The _interface_repository_id method.
-  *os << "virtual const char* _interface_repository_id "
-      << "(void) const;" << be_uidt_nl;
+      << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_uidt_nl;
 
   *os << "};" << be_nl << be_nl;
 
