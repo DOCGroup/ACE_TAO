@@ -1,3 +1,10 @@
+Mon Sep 24 01:55:29 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added TAO's PICurrent test to the list of automated regression
+	  tests.
+
 Sun Sep 23 19:28:06 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Reactor.h (ACE_Reactor): Fixed comments for
