@@ -9,6 +9,12 @@ Sun Feb 11 15:33:39 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Fixed to comply with ACE standards.
 
+Sun Feb 11 10:50:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_g++.GNU (exceptions): 
+	  Only set the -fno-exceptions option if we're *not* using GCC
+ 	  2.7.2!  Thanks to Pradeep for explaining how to do this.
+
 Sun Feb 11 10:15:08 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:

@@ -25,11 +25,14 @@ ifeq ($(threads),0)
 endif # threads
 
 ifeq (,$(exceptions))
- exceptions = 0
+exceptions = 0
 endif
-ifeq ($(exceptions),0)
- CFLAGS += -fno-exceptions
+# if we are not working with old gcc ...
+ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
+ifeq ($(exceptions),0) 
+CFLAGS += -fno-exceptions
 endif # exceptions
+endif # ! ACE_HAS_GNUG_PRE_2_8
 
 ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g
