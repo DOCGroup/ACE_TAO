@@ -1,3 +1,8 @@
+Mon Feb  1 12:04:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * bin/make_release: Added zip and gif to the binary files in
+          zips.
+
 Mon Feb 01 12:00:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: With CC 5.0, enabled explicit template
