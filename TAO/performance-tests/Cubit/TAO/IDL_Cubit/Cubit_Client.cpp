@@ -997,10 +997,8 @@ Cubit_Client::run ()
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_oneway", elapsed_time);
 
-#if !defined (VXWORKS)
   // This causes a memPartFree on VxWorks.
   this->shutdown_server (this->shutdown_);
-#endif /* ! VXWORKS */
 
   return this->error_count_ == 0 ? 0 : 1;
 }
@@ -1149,12 +1147,12 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
   TAO_TRY
     {
 #if defined (ACE_WIN32) && (ACE_HAS_DLL == 0)
-      static char* rfactory[] =  { "-ORBresources", "tss", 
+      static char* rfactory[] =  { "-ORBresources", "tss",
                                    "-ORBreactorlock", "null" };
 
       static char* cli_args[] = { "-ORBiiopprofilelock", "null",
                                   "-ORBclientconnectionhandler", "ST" };
-      static char* svr_args[] = { "-ORBconcurrency", "thread-per-connection", 
+      static char* svr_args[] = { "-ORBconcurrency", "thread-per-connection",
                                   "-ORBpoalock", "null",
                                   "-ORBconnectorlock", "null" };
 
