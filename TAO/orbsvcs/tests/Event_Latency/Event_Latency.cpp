@@ -185,7 +185,8 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
     {
       if (events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
         {
-          ACE_DEBUG ((LM_DEBUG, "Latency Consumer: received shutdown event\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Latency Consumer: received shutdown event\n"));
           this->shutdown ();
         }
       else
@@ -206,21 +207,30 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 
               const ACE_hrtime_t now = ACE_OS::gethrtime ();
               const ACE_hrtime_t elapsed = now - creation;
-              ACE_Time_Value latency ((long) (elapsed / ACE_ONE_SECOND_IN_NSECS),
-                                      (long) (ACE_CU64_TO_CU32 (elapsed) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+              ACE_Time_Value latency (ACE_static_cast (long,
+                elapsed / ACE_ONE_SECOND_IN_NSECS),
+                                      ACE_static_cast (long,
+                ACE_CU64_TO_CU32 (elapsed) % ACE_ONE_SECOND_IN_NSECS / 1000));
 
               const long to_ec_nsecs =
                 ACE_static_cast (long, ec_recv - creation);
               ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
-                                    (ACE_CU64_TO_CU32 (to_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+                                    (ACE_CU64_TO_CU32 (to_ec_nsecs) %
+                                       ACE_ONE_SECOND_IN_NSECS) / 1000);
 
               const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
-              ACE_Time_Value in_ec ((long) (in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
-                                    (long) (ACE_CU64_TO_CU32 (in_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+              ACE_Time_Value in_ec (ACE_static_cast (long,
+                in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
+                                    ACE_static_cast (long,
+                ACE_CU64_TO_CU32 (in_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS /
+                  1000));
 
               const ACE_hrtime_t from_ec_nsecs = now - ec_send;
-              ACE_Time_Value from_ec ((long) (from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
-                                      (long) (ACE_CU64_TO_CU32 (from_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+              ACE_Time_Value from_ec (ACE_static_cast (long,
+                from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
+                                      ACE_static_cast (long,
+                ACE_CU64_TO_CU32 (from_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS /
+                  1000));
 
               if (! shutting_down)
                 {
@@ -433,7 +443,8 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 void
 Latency_Supplier::disconnect_push_consumer (CORBA::Environment &)
 {
-  ACE_DEBUG ((LM_DEBUG, "Supplier-consumer received disconnect from channel.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Supplier-consumer received disconnect from channel.\n"));
 }
 
 void
@@ -521,7 +532,8 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
     {
       if (!master_ && events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
         {
-          ACE_DEBUG ((LM_DEBUG, "Latency Supplier: received shutdown event\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Latency Supplier: received shutdown event\n"));
           this->shutdown ();
         }
       else if (events[i].type_ == ACE_ES_EVENT_INTERVAL_TIMEOUT)
@@ -562,7 +574,8 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
               else
                 {
 #if defined (quantify)
-                  // If measuring jitter, just Quantify the supplier-consumer path.
+                  // If measuring jitter, just Quantify the
+                  // supplier-consumer path.
                   if (measure_jitter)
                     {
                       quantify_start_recording_data ();
@@ -619,7 +632,9 @@ Latency_Supplier::shutdown (void)
 
   const ACE_hrtime_t now = ACE_OS::gethrtime ();
   test_stop_time_.set (ACE_static_cast (long, now / ACE_ONE_SECOND_IN_NSECS),
-                       ACE_static_cast (long, (ACE_CU64_TO_CU32 (now) % ACE_ONE_SECOND_IN_NSECS) / 1000));
+                       ACE_static_cast (long, ACE_CU64_TO_CU32 (now) %
+                                                ACE_ONE_SECOND_IN_NSECS /
+                                                1000));
 
   static int total_iterations = 1;
   if (--total_iterations > 0)
@@ -683,7 +698,8 @@ Latency_Supplier::print_stats () /* const */
               total_sent_,
               consumers / suppliers + consumers % suppliers,
               elapsed / 1000,
-              (double) elapsed / total_sent_ / 1000.0));
+              ACE_static_cast (ACE_CAST_CONST double, elapsed) / total_sent_ /
+                1000.0));
 }
 
 
@@ -706,7 +722,7 @@ get_options (int argc, char *argv [])
     case 'c':
       if ((temp = ACE_OS::atoi (get_opt.optarg)) > 0)
         {
-          consumers = (u_int) temp;
+          consumers = ACE_static_cast (u_int, temp);
         }
       else
         {
@@ -724,7 +740,7 @@ get_options (int argc, char *argv [])
     case 'm':
       if ((temp = ACE_OS::atoi (get_opt.optarg)) > 0)
         {
-          total_messages = (u_int) temp;
+          total_messages = ACE_static_cast (u_int, temp);
         }
       else
         {
@@ -736,7 +752,7 @@ get_options (int argc, char *argv [])
     case 's':
       if ((temp = ACE_OS::atoi (get_opt.optarg)) > 0)
         {
-          suppliers = (u_int) temp;
+          suppliers = ACE_static_cast (u_int, temp);
         }
       else
         {
@@ -767,7 +783,7 @@ get_options (int argc, char *argv [])
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: unknown arg, -%c\n"
                          "Usage: %s %s\n",
-                         argv[0], char(opt),
+                         argv[0], ACE_static_cast (char, opt),
                          argv[0], usage), 1);
     }
   }
