@@ -1,3 +1,10 @@
+Tue Mar 06 14:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MEM_Stream_Test.cpp:
+          Fixed the shutdown of this test. When _TEST_USES_THREADS is defined
+          we must do a wait() on the thread manager, else on the process
+          manager.
+
 Tue Mar 05 20:34:22 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS_Thread_Adapter.cpp (invoke):
