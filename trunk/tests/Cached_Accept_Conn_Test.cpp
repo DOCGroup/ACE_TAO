@@ -187,7 +187,6 @@ static int user_has_specified_iterations = 0;
 static size_t keep_handles_available = 100;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 
 // On Win32, the handle gobbling doesn't work.  Therefore, we need
 // more iterations to get to the handle limit.
