@@ -25,21 +25,21 @@
   <partitioning>
   <!-- Install component on 2 processes without any RT extension -->
      <processcollocation>
-      <homeplacement id="a_WorkerHome">
+      <homeplacement id="a25_WorkerHome">
         <componentfileref idref="com-Worker"/>
         <componentinstantiation id="a_W25"/>
         <extension class="RT-POLICY-SET"
                    origin="CIAO">HIGH_POLICY</extension>
       </homeplacement>
 
-      <homeplacement id="a_WorkerHome">
+      <homeplacement id="a50_WorkerHome">
         <componentfileref idref="com-Worker"/>
         <componentinstantiation id="a_W50"/>
         <extension class="RT-POLICY-SET"
                    origin="CIAO">MID_POLICY</extension>
       </homeplacement>
 
-      <homeplacement id="a_WorkerHome">
+      <homeplacement id="a75_WorkerHome">
         <componentfileref idref="com-Worker"/>
         <componentinstantiation id="a_W75"/>
         <extension class="RT-POLICY-SET"
