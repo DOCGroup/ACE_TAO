@@ -1,3 +1,10 @@
+Mon Mar  5 18:58:32 2001  Fuzz Master D <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Fixed some false positives in the resolve_initial_reference
+          test and also added an ACE_CHECK test by Carlos's request.
+
 Mon Mar  5 18:54:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/PerlACE/Process_Unix.pm:
