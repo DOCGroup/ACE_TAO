@@ -1,3 +1,7 @@
+Mon Jun  9 18:59:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* THANKS: Added Gan Deng to the hall of fame.
+
 Mon Jun  9 13:16:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/performance_stats.sh: The sequence<> latency tests will also
