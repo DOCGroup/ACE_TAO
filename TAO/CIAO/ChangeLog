@@ -1,3 +1,84 @@
+Fri May 30 12:29:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BasicSP.dsw:
+        * examples/OEP/BasicSP/BasicSP.idl:
+        * examples/OEP/BasicSP/BasicSP.mpc:
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_stub_export.h:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt_export.h:
+        * examples/OEP/BasicSP/NOTE.txt:
+        * examples/OEP/BasicSP/README:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.idl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedEDEI.idl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/OEP/BasicSP/BMClosedED/config:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.idl:
+        * examples/OEP/BasicSP/BMDevice/BMDeviceEI.idl:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt_export.h:
+        * examples/OEP/BasicSP/BMDevice/config:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.idl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplayEI.idl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/OEP/BasicSP/BMDisplay/config:
+        * examples/OEP/BasicSP/EC/EC.cidl:
+        * examples/OEP/BasicSP/EC/EC.idl:
+        * examples/OEP/BasicSP/EC/ECEI.idl:
+        * examples/OEP/BasicSP/EC/EC_client.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.cpp:
+        * examples/OEP/BasicSP/EC/EC_exec.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.h:
+        * examples/OEP/BasicSP/EC/EC_exec_export.h:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub_export.h:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt_export.h:
+        * examples/OEP/BasicSP/EC/README:
+        * examples/OEP/BasicSP/EC/client.cpp:
+        * examples/OEP/BasicSP/EC/config:
+        * examples/OEP/BasicSP/EC/controller.cpp:
+        * examples/OEP/BasicSP/EC/controller.dsp:
+        * examples/OEP/BasicSP/descriptors/BMClosedED.csd:
+        * examples/OEP/BasicSP/descriptors/BMClosedED.ssd:
+        * examples/OEP/BasicSP/descriptors/BMDevice.csd:
+        * examples/OEP/BasicSP/descriptors/BMDevice.ssd:
+        * examples/OEP/BasicSP/descriptors/BMDisplay.csd:
+        * examples/OEP/BasicSP/descriptors/BMDisplay.ssd:
+        * examples/OEP/BasicSP/descriptors/BasicSP.cad:
+        * examples/OEP/BasicSP/descriptors/CIAO_Installation_Data.ini:
+        * examples/OEP/BasicSP/descriptors/EC.csd:
+        * examples/OEP/BasicSP/descriptors/EC.ssd:
+        * examples/OEP/BasicSP/descriptors/daemon.ior:
+        * examples/OEP/BasicSP/descriptors/ec.ior:
+        * examples/OEP/BasicSP/descriptors/test.dat:
+
+          New example, same as the one in examples/handcrafted/BasicSP,
+          but using CIDL compiler generated code.
+
 Thu May 29 22:25:09 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
         * docs/XML/componentassembly.dtd:
