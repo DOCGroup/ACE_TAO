@@ -531,6 +531,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_CH_Event.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Connect_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -556,6 +560,10 @@ SOURCE=.\LF_Follower_Auto_Adder.cpp
 # Begin Source File
 
 SOURCE=.\LF_Follower_Auto_Ptr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Invocation_Event.cpp
 # End Source File
 # Begin Source File
 
@@ -1347,6 +1355,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_CH_Event.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Connect_Strategy.h
 # End Source File
 # Begin Source File
@@ -1372,6 +1384,10 @@ SOURCE=.\LF_Follower_Auto_Adder.h
 # Begin Source File
 
 SOURCE=.\LF_Follower_Auto_Ptr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Invocation_Event.h
 # End Source File
 # Begin Source File
 
