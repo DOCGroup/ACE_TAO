@@ -116,84 +116,20 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
-  *os << class_name.c_str () << " (const " << class_name.c_str () << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);\n\n"
-      << be_nl
-      << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
+  *os << class_name.c_str () << " (const " << class_name.c_str () 
+      << "& rhs);" << be_nl
+      << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
 
-  *os << "virtual void* _downcast (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
-
-  // Add a skeleton for our _is_a method.
-  *os << "static void _is_a_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
-
-  // Add a skeleton for our _non_existent method.
-  *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
-
-  // Add a skeleton for our _interface method.
-  *os << "static void _interface_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *obj," << be_nl
-      << "void *servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
-
-  // Add the dispatch method.
-  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall" << be_nl
-      << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
-
-  this->this_method (node);
-
-  // The _interface_repository_id method.
-  *os << be_nl
-      << "virtual const char* _interface_repository_id "
-      << "(void) const;\n\n";
-
-  // Generate the _skel operations for the concrete interface we support
-  // and the for its base classes.
-  int status =
-    node->traverse_concrete_inheritance_graph (be_valuetype::gen_skel_helper,
-                                               os);
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_valuetype_sh::"
-                         "visit_valuetype - "
-                         "concrete supported interface "
-                         "inheritance graph traversal failed\n"),
-                        -1);
-    }
-
-  *os << be_uidt << "};\n\n";
-
-  return 0;
-}
-
-void
-be_visitor_valuetype_sh::this_method (be_valuetype *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Print out the _this() method.
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
       << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");\n" << be_uidt;
+      << ");" << be_uidt_nl << be_nl;
+
+  // The _interface_repository_id method.
+  *os << "virtual const char* _interface_repository_id "
+      << "(void) const;" << be_uidt_nl;
+
+  *os << "};\n\n";
+
+  return 0;
 }
 

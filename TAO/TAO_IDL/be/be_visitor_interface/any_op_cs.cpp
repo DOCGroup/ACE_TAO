@@ -50,19 +50,18 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   *os << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  os->indent ();
-
   if (!node->is_local ())
     {
-      os->indent ();
-
       // Generate the Any <<= and >>= operator declarations
       // Any <<= and >>= operators.
-      *os << "void operator<<= (CORBA::Any &_tao_any, "
-          << node->full_name () << "_ptr _tao_elem)" << be_nl
+      *os << "void" << be_nl
+          << "operator<<= (" << be_idt << be_idt_nl
+          << "CORBA::Any &_tao_any," << be_nl
+          << node->full_name () << "_ptr _tao_elem" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "TAO_OutputCDR stream;" << be_nl
-          << "if (stream << _tao_elem)" << be_nl
+          << "if (stream << _tao_elem)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_any._tao_replace (" << be_idt << be_idt_nl
           << node->tc_name () << ", " << be_nl
@@ -72,26 +71,34 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << node->full_name () << "::_duplicate (_tao_elem)," << be_nl
           << node->name () << "::_tao_any_destructor" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "}\n" << be_nl;
+          << "}" << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
 
-      *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
-          << node->full_name () << "_ptr &_tao_elem)" << be_nl
+      *os << "CORBA::Boolean" << be_nl
+          << "operator>>= (" << be_idt << be_idt_nl
+          << "const CORBA::Any &_tao_any," << be_nl
+          << node->full_name () << "_ptr &_tao_elem" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_TRY_NEW_ENV" << be_nl
           << "{" << be_idt_nl
           << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
           << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl << be_nl
-          << "CORBA::Boolean result = type->equivalent (" << node->tc_name ()
-          << " ACE_ENV_ARG_PARAMETER);" << be_nl
+          << "CORBA::Boolean result =" << be_idt_nl
+          << "type->equivalent (" << be_idt << be_idt_nl
+          << node->tc_name () << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "ACE_TRY_CHECK;" << be_nl << be_nl
           << "if (!result)" << be_idt_nl
-          << "return 0; // not equivalent" << be_uidt_nl << be_nl
+          << "{" << be_idt_nl
+          << "return 0; // not equivalent" << be_uidt_nl 
+          << "}" << be_uidt_nl << be_nl
           << "TAO_InputCDR stream (" << be_idt << be_idt_nl
           << "_tao_any._tao_get_cdr ()," << be_nl
           << "_tao_any._tao_byte_order ()" << be_uidt_nl
-          << ");" << be_uidt_nl
-          << "if (stream >> _tao_elem)" << be_nl
+          << ");" << be_uidt_nl << be_nl
+          << "if (stream >> _tao_elem)" << be_idt_nl
           << "{" << be_idt_nl
           << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
           << node->tc_name () << "," << be_nl
@@ -100,7 +107,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << node->name () << "::_tao_any_destructor" << be_uidt_nl
           << ");" << be_uidt_nl
           << "return 1;" << be_uidt_nl
-          << "}" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl
           << "}" << be_nl
           << "ACE_CATCHANY" << be_nl
           << "{" << be_idt_nl

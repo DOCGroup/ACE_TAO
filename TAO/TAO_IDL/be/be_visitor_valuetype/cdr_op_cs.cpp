@@ -66,42 +66,41 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
   *os << "CORBA::Boolean" << be_nl
-      << "operator<< (TAO_OutputCDR &strm, const "
-      << node->full_name ()
-      << " *_tao_valuetype)" << be_nl
+      << "operator<< (" << be_idt << be_idt_nl
+      << "TAO_OutputCDR &strm," << be_nl
+      << "const " << node->full_name ()
+      << " *_tao_valuetype" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << "return CORBA_ValueBase::_tao_marshal (strm,"  << be_idt_nl
-      << "ACE_const_cast (" << node->full_name () << "*, _tao_valuetype)," 
-      << be_nl
-      << "(ptr_arith_t) &" << node->full_name() <<"::_downcast);"
-      << be_uidt<< be_uidt_nl
-      << "}\n\n";
+  *os << "return" << be_idt_nl
+      << "CORBA_ValueBase::_tao_marshal (" << be_idt << be_idt_nl
+      << "strm," << be_nl
+      << "ACE_const_cast (" << be_idt << be_idt_nl
+      << node->full_name () << " *," << be_nl
+      << "_tao_valuetype" << be_uidt_nl
+      << ")," << be_uidt_nl
+      << "(ptr_arith_t) &" << node->full_name () <<"::_downcast" 
+      << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   *os << "CORBA::Boolean" << be_nl
-      << "operator>> (TAO_InputCDR &strm, "
+      << "operator>> (" << be_idt << be_idt_nl
+      << "TAO_InputCDR &strm," << be_nl
       << node->full_name ()
-      << " *&_tao_valuetype)" << be_nl
+      << " *&_tao_valuetype" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << "return " << node->full_name() 
+  *os << "return " << node->full_name () 
       << "::_tao_unmarshal (strm, _tao_valuetype);"
-
-#ifdef obv_marshal_old_version
-  *os << "CORBA::ValueBase *ptr;" << be_nl
-      << "int retval = CORBA_ValueBase::_tao_unmarshal (strm,"
-      << be_idt_nl << "ptr, (ptr_arith_t) &" << node->full_name() <<"::_downcast);"
       << be_uidt_nl
-      << "if (retval) {" << be_idt_nl
-      << "_tao_valuetype = " << node->full_name() << "::_downcast (ptr);"
-      << be_nl << "if (_tao_valuetype) retval = 1;"
-      << be_uidt_nl << "}" << be_idt_nl
-      << "return retval;"
-#endif /* obv_marshal_old_version */
-
-      << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   if (!node->is_abstract ())
     {

@@ -144,8 +144,16 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
     }
 
   *os << " (" << be_idt << be_idt_nl
-      << "TAO_GIOP_Invocation *_tao_invocation," << be_nl
-      << "CORBA::Object_ptr _tao_target";
+      << "TAO_GIOP_Invocation *_tao_invocation," << be_nl;
+
+  if (node->defined_in ()->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr _tao_target";
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr _tao_target";
+    }
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -459,8 +467,16 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
     }
 
   *os << " (" << be_idt << be_idt_nl
-      << "TAO_GIOP_Invocation *_tao_invocation," << be_nl
-      << "CORBA::Object_ptr _tao_target";
+      << "TAO_GIOP_Invocation *_tao_invocation," << be_nl;
+
+  if (node->defined_in ()->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr _tao_target";
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr _tao_target";
+    }
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.

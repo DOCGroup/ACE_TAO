@@ -454,6 +454,7 @@ DRV_check_for_include (const char* buf)
   // we don't want to generate header includes for that.
   if (ACE_OS::strcmp (file_name, "orb.idl"))
     {
+      cout << file_name << endl;
       idl_global->add_to_included_idl_files (file_name);
     }
 }
@@ -781,7 +782,7 @@ DRV_pre_proc (const char *myfile)
 
   FE_set_yyin (ACE_reinterpret_cast (File *, yyin));
 
-  if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
+  if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
       FILE *preproc = ACE_OS::fopen (tmp_file, "r");
       char buffer[ACE_MAXLOGMSGLEN];
@@ -846,7 +847,7 @@ DRV_pre_proc (const char *myfile)
     }
 #endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
 
-  if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
+  if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
       ACE_OS::exit (0);
     }

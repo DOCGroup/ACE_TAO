@@ -52,37 +52,60 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // OBV_ class has no accessors or modifiers if we are optimizing
   // or the valuetype is abstract.
-  if (!(node->opt_accessor () || node->is_abstract ()))
+  if (!node->opt_accessor ())
     {
-      os->indent ();
-
-      *os << "CORBA::Boolean " << be_nl
+      *os << "CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_marshal__" << node->flat_name ()
-          <<    " (TAO_OutputCDR &strm)"
+          <<    " (TAO_OutputCDR &strm)" << be_nl
           << "{" << be_idt_nl
-          <<   "return _tao_marshal_state (strm);" << be_nl
-          << be_uidt_nl << "}\n";
+          << "return _tao_marshal_state (strm);" << be_uidt_nl 
+          << "}" << be_nl << be_nl;
 
-      *os << "CORBA::Boolean "
+      *os << "CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_unmarshal__" << node->flat_name ()
-          <<    " (TAO_InputCDR &strm)"
+          << " (TAO_InputCDR &strm)" << be_nl
           << "{" << be_idt_nl
-          <<   "return _tao_unmarshal_state (strm);" << be_nl
-          << be_uidt_nl << "}\n";
+          << "return _tao_unmarshal_state (strm);" << be_uidt_nl 
+          << "}" << be_nl;
 
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_obv_cs::"
                              "visit_valuetype - "
-                             "visit_scope failed\n"
-                             ), -1);
+                             "visit_scope failed\n"), 
+                            -1);
         }
-      }
+
+      // If we inherit from both CORBA::ValueBase and CORBA::AbstractBase,
+      // we have to add this to avoid ambiguity.
+      if (node->supports_abstract ())
+        {
+          *os << be_nl << "void" << be_nl
+              << node->full_obv_skel_name () 
+              << "::_add_ref (void)" << be_nl
+              << "{" << be_idt_nl
+              << "this->CORBA_DefaultValueRefCountBase::_add_ref ();"
+              << be_uidt_nl
+              << "}" << be_nl;
+
+          *os << be_nl << "void" << be_nl
+              << node->full_obv_skel_name () 
+              << "::_remove_ref (void)" << be_nl
+              << "{" << be_idt_nl
+              << "this->CORBA_DefaultValueRefCountBase::_remove_ref ();"
+              << be_uidt_nl
+              << "}" << be_nl << be_nl;
+        }
+    }
+
   return 0;
 }
 

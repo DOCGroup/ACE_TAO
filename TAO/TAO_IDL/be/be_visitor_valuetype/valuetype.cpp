@@ -915,6 +915,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
                              "bad node in this scope\n"), 
                             -1);
         }
+
       be_field *field = be_field::narrow_from_decl (d);
 
       if (!field)
@@ -971,7 +972,9 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   ctx.state (TAO_CodeGen::TAO_FIELD_CH);
   be_visitor_field_ch visitor (&ctx);
 
-  if (bt->accept(&visitor) == -1)
+  *os << be_nl;
+
+  if (bt->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_ch::"
@@ -982,8 +985,8 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
 
   // Now output the field name.  
   *os << " " << vt->field_pd_prefix ()
-             << node->local_name ()
-             << vt->field_pd_postfix() << ";" << be_nl;
+      << node->local_name ()
+      << vt->field_pd_postfix () << ";";
 
   return 0;
 }

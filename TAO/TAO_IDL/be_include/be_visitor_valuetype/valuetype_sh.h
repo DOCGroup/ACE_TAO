@@ -41,9 +41,6 @@ public:
   
   virtual int visit_valuetype (be_valuetype *node);
   // set the right context and make a visitor
-
-protected:
-  virtual void this_method (be_valuetype *node);
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_SH_H_ */

@@ -40,6 +40,9 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "CORBA::Boolean" << be_nl;
 
   this->class_name (node, os);
@@ -66,14 +69,20 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
           this->class_name (inh, os);
 
-          *os << "::_tao_marshal_state (strm)) return 0;" << be_nl;
+          *os << "::_tao_marshal_state (strm))" << be_idt_nl
+              << "{" << be_idt_nl
+              << "return 0;" << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
         }
       // Can access base class only via virtual function.
       else
         {
-          *os << "if (!this->_tao_marshal__"
+          *os << "if (! this->_tao_marshal__"
               <<       inh->flat_name ()
-              << " (strm)) return 0;" << be_nl;
+              << " (strm))" << be_idt_nl
+              << "{" << be_idt_nl
+              << "return 0;" << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
         }
     }
 
@@ -87,12 +96,16 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   this->gen_fields (node, 
                     *this->ctx_);
 
-  *os << be_uidt_nl << ")"
-      << be_idt_nl
+  *os << be_uidt_nl 
+      << " )" << be_idt_nl
+      << "{" << be_idt_nl
       << "return 1;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "else" << be_idt_nl
-      << "return 0;" << be_uidt_nl << be_uidt_nl
-      << "}\n\n";
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl 
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -121,13 +134,19 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
           this->class_name (inh, os);
 
-          *os << "::_tao_unmarshal_state (strm)) return 0;" << be_nl;
+          *os << "::_tao_unmarshal_state (strm))" << be_idt_nl
+              << "{" << be_idt_nl
+              << "return 0;" << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
         }
       else // only can access base class via virtual function
         {
-          *os << "if (!this->_tao_unmarshal__"
+          *os << "if (! this->_tao_unmarshal__"
               <<       inh->flat_name ()
-              << " (strm)) return 0;" << be_nl;
+              << " (strm))" << be_idt_nl
+              << "{" << be_idt_nl
+              << "return 0;" << be_uidt_nl
+              << "}" << be_uidt_nl << be_nl;
         }
     }
 
@@ -140,12 +159,16 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   this->gen_fields (node, 
                     *this->ctx_);
 
-  *os << be_uidt_nl << ")"
-      << be_idt_nl
+  *os << be_uidt_nl 
+      << " )" << be_idt_nl
+      << "{" << be_idt_nl
       << "return 1;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "else" << be_idt_nl
-      << "return 0;" << be_uidt_nl << be_uidt_nl
-      << "}\n\n";
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   return 0;
 }
@@ -193,6 +216,7 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
                              "bad node in this scope\n"), 
                             -1);
         }
+
       be_field *field = be_field::narrow_from_decl (d);
 
       if (field)

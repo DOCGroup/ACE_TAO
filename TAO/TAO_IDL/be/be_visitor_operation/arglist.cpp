@@ -104,7 +104,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-      if (node->is_local () || node->defined_in ()->is_abstract ())
+      if (node->is_local ())
         {
           *os << " = 0;" << be_nl << be_nl;
         }

@@ -99,7 +99,6 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   os->gen_endif ();
 
   node->cli_hdr_gen (I_TRUE);
-  bfd->cli_hdr_gen (I_TRUE);
 
   return 0;
 }

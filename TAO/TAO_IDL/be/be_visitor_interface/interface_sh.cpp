@@ -361,7 +361,9 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
                                &item_new_name,
                                op->is_local (),
                                op->is_abstract ());
-
+          new_op.set_defined_in (node);
+          be_visitor_interface::add_abstract_op_args (op,
+                                                      new_op);
           ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
           be_visitor_operation_sh op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);

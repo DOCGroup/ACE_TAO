@@ -80,15 +80,12 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   if (factory_style == FS_CONCRETE_FACTORY)
     {
       // Public constructor.
-      os << node->local_name () << "_init ();" << be_nl;
+      os << node->local_name () << "_init (void);" << be_nl;
     }
 
   // Virtual destructor.
-  os << "virtual ~" << node->local_name () << "_init ();" << be_nl;
+  os << "virtual ~" << node->local_name () << "_init (void);";
 
-
-  // custom methods
-  os << be_nl;
 
   if (this->visit_valuetype_scope (node) == -1)
     {
@@ -99,47 +96,44 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  os << be_nl;
-
   // Generate _downcast method.
-  os << "static " << node->local_name () << "_init* "
-     << "_downcast (CORBA_ValueFactoryBase* );" << be_nl;
+  os << be_nl << be_nl
+     << "static " << node->local_name () << "_init* "
+     << "_downcast (CORBA_ValueFactoryBase* );";
 
   if (factory_style == FS_CONCRETE_FACTORY)
     {
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
-      os << be_nl
-         << "virtual CORBA_ValueBase* "
-         << "create_for_unmarshal" << " "
-         << "(void);" << be_nl;
+      os << be_nl << be_nl
+         << "virtual CORBA::ValueBase *"
+         << "create_for_unmarshal (void);";
+
+      if (node->supports_abstract ())
+        {
+          os << be_nl << be_nl
+             << "virtual CORBA::AbstractBase_ptr "
+             << "create_for_unmarshal_abstract (void);";
+        }
     }
 
-  os << be_nl;
+  os << be_nl << be_nl;
 
     // Proprietary extensions.
   os << "// TAO-specific extensions"
      << be_uidt_nl
      << "public:" << be_idt_nl;
-  os << "virtual const char* tao_repository_id (void);\n";
+  os << "virtual const char* tao_repository_id (void);";
 
   if (factory_style == FS_ABSTRACT_FACTORY)
     {
       // Protected constructor.
-      os << be_uidt_nl
+      os << be_uidt_nl << be_nl
          << "protected:" << be_idt_nl;
       os << node->local_name () << "_init ();";
     }
 
   os << be_uidt_nl << "};" << be_nl << be_nl;
-
-  ACE_CString conc (node->local_name (),
-                    0,
-                    0);
-
-  conc += "_init";
-
-  node->gen_var_defn ((char *) conc.c_str ());
 
   // Generate the endif macro.
   os.gen_endif ();

@@ -43,16 +43,9 @@ public:
   // set the right context and make a visitor
 
 protected:
-  virtual void this_method (be_valuetype *node);
-  virtual void dispatch_method (be_valuetype *node);
-
-  virtual int generate_downcast_implementation (be_valuetype *node,
-                                                TAO_OutStream *os);
-  virtual int generate_copy_ctor (be_valuetype *node,
-                                  TAO_OutStream *os);
-  virtual ACE_CString generate_flat_name (be_valuetype *node);
-  virtual ACE_CString generate_local_name (be_valuetype *node);
-  virtual ACE_CString generate_full_skel_name (be_valuetype *node);
+  ACE_CString generate_flat_name (be_valuetype *node);
+  ACE_CString generate_local_name (be_valuetype *node);
+  ACE_CString generate_full_skel_name (be_valuetype *node);
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_SS_H_ */
