@@ -6,6 +6,7 @@
 #include "tao/Connection_Purging_Strategy.h"
 #include "tao/Condition.h"
 #include "ace/Synch_T.h"
+#include "ace/Containers_T.h"
 #include "ace/Handle_Set.h"
 
 #if !defined (__ACE_INLINE__)
@@ -215,6 +216,9 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
         {
           CORBA::Boolean idle =
             this->is_entry_idle (entry);
+  if (entry == 0)
+    return -1;
+
 
           if (idle)
             {
@@ -256,7 +260,7 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
 int
 TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 {
-  if(entry == 0)
+  if (entry == 0)
     return -1;
 
   // First get the entry again (if at all things had changed in the
@@ -355,8 +359,7 @@ TAO_Transport_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
     return 0;
 
   // Remove the entry from the Map
- int retval =
-    this->cache_map_.unbind (entry);
+ int retval = this->cache_map_.unbind (entry);
 
   // Set the entry pointer to zero
   entry = 0;
@@ -448,6 +451,92 @@ TAO_Transport_Cache_Manager::cpscmp(const void* a, const void* b)
 }
 #endif /* ACE_LACKS_QSORT */
 
+int
+TAO_Transport_Cache_Manager::purge (void)
+{
+  ACE_Unbounded_Stack<TAO_Transport*> transports_to_be_closed;
+
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
+
+    DESCRIPTOR_SET sorted_set = 0;
+    int sorted_size = this->fill_set_i (sorted_set);
+
+    // Only call close_entries () if sorted_set != 0.  It takes control of
+    // sorted_set and cleans up any allocated memory.  If sorted_set == 0,
+    // then there is nothing to de-allocate.
+    if (sorted_set != 0)
+      {
+        // BEGIN FORMER close_entries
+        // Calculate the number of entries to purge
+        const int amount = (sorted_size * this->percent_) / 100;
+
+        if (TAO_debug_level > 0)
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
+                                  ACE_TEXT ("Purging %d of %d cache entries\n"),
+                                  amount,
+                                  sorted_size));
+          }
+
+        int count = 0;
+        for(int i = 0; count < amount && i < sorted_size; i++)
+          {
+            if (this->is_entry_idle(sorted_set[i]))
+              {
+                TAO_Transport* transport = sorted_set[i]->int_id_.transport ();
+                if (transports_to_be_closed.push (TAO_Transport::_duplicate(transport)) != 0)
+                  {
+                    ACE_DEBUG ((LM_INFO,
+                                ACE_TEXT ("TAO (%P|%t) - ")
+                                ACE_TEXT ("Unable to push transport %lu on the to-be-closed stack, so it will leak\n"),
+                                transport)); 
+                  }
+
+                if (TAO_debug_level > 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
+                                          ACE_TEXT ("Idle transport found in ")
+                                          ACE_TEXT ("cache: 0x%x\n"),
+                                          transport));
+                  }
+
+                // We need to save the cache_map_entry before we
+                // set it to zero, so we can call purge_entry_i()
+                // after we call close_connection_i().
+                HASH_MAP_ENTRY* entry = transport->cache_map_entry ();
+
+                // This is a bit ugly, but we must do this to
+                // avoid taking and giving locks inside this loop.
+                transport->cache_map_entry (0);
+                this->purge_entry_i (entry);
+
+                // Count this as a successful purged entry
+                count++;
+              }
+          }
+
+      delete [] sorted_set;
+      sorted_set = 0;
+      // END FORMER close_entries
+    }
+  }
+
+  // Now, without the lock held, lets go through and close all the transports.
+  TAO_Transport *transport = 0;
+  while (! transports_to_be_closed.is_empty ())
+    {
+      if (transports_to_be_closed.pop (transport) == 0)
+        {
+          if (transport)
+            transport->close_connection_i ();
+          TAO_Transport::release (transport);
+        }
+    }
+
+  return 0;
+}
+
 
 void
 TAO_Transport_Cache_Manager::sort_set (DESCRIPTOR_SET& entries,
@@ -518,6 +607,7 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
 }
 
 
+#if 0
 void
 TAO_Transport_Cache_Manager::close_entries (DESCRIPTOR_SET& sorted_set,
                                             int sorted_size)
@@ -557,7 +647,6 @@ TAO_Transport_Cache_Manager::close_entries (DESCRIPTOR_SET& sorted_set,
           // avoid taking and giving locks inside this loop.
           transport->cache_map_entry (0);
           transport->close_connection_no_purge ();
-          this->purge_entry_i (entry);
 
           // Count this as a successful purged entry
           count++;
@@ -567,6 +656,7 @@ TAO_Transport_Cache_Manager::close_entries (DESCRIPTOR_SET& sorted_set,
   delete [] sorted_set;
   sorted_set = 0;
 }
+#endif
 
 int
 TAO_Transport_Cache_Manager::wait_for_connection (TAO_Cache_ExtId &extid)
@@ -656,6 +746,8 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId
 template class ACE_Unbounded_Set<ACE_Event_Handler*>;
 template class ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>;
 template class ACE_Node<ACE_Event_Handler*>;
+template class ACE_Unbounded_Stack<TAO_Transport*>;
+template class ACE_Node <TAO_Transport *>;
 
 template class TAO_Condition<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -671,6 +763,8 @@ template class TAO_Condition<ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Unbounded_Set<ACE_Event_Handler*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
 #pragma instantiate ACE_Node<ACE_Event_Handler*>
+#pragma instantiate ACE_Unbounded_Stack<TAO_Transport*>
+#pragma instantiate ACE_Node <TAO_Transport *>
 
 #pragma instantiate TAO_Condition<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
