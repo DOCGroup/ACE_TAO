@@ -1,3 +1,22 @@
+Fri Nov 19 14:42:00 2004  Krishnakumar B  <kitty@dre.vanderbilt.edu>
+
+        * ACEXML/common/NamespaceSupport.cpp:
+        * ACEXML/parser/parser/Parser.cpp:
+
+          Fixes to namespace support in ACEXML. Thanks to Weida Ma
+          <df0004@hotmail.com> for the patches.
+
+        * ACEXML/examples/SAXPrint/broken.xml:
+
+          broken.xml should be broken.  Added some errors to make this
+          file invalid.
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Repeat the parsing twice to make sure that we catch any leaks or
+          memory corruption due to code paths that are not always
+          exercised.
+
 Fri Nov 19 18:19:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/os_include/os_errno.h: Add EPERM for Win32 that doesn't have

@@ -842,6 +842,9 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
     }
   ACEXML_AttributesImpl attributes;
   ACEXML_Char ch;
+  int ns_flag = 0;   // Push only one namespace context onto the stack
+                     // if there are multiple namespaces declared.
+
   const ACEXML_Char* ns_uri = 0;
   const ACEXML_Char* ns_lname = 0; // namespace URI and localName
   for (int start_element_done = 0; start_element_done == 0;)
@@ -879,7 +882,7 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
                                   ns_uri, ns_lname, 0
                                   ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK;
-            if (this->nested_namespace_ >= 1)
+            if (ns_flag)
               {
                 this->xml_namespace_.popContext ();
                 this->nested_namespace_--;
@@ -913,12 +916,17 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
 
             // Handling new namespace if any. Notice that the order of
             // namespace declaration does matter.
-            if (ACE_OS::strcmp (attname, ACE_TEXT("xmlns")) == 0)
+            if (ACE_OS::strncmp (attname, ACE_TEXT("xmlns"), 5) == 0)
               {
                 if (this->namespaces_)
                   {
-                    this->xml_namespace_.pushContext ();
-                    this->nested_namespace_++;
+                    if (!ns_flag)
+                      {
+                        this->xml_namespace_.pushContext ();
+                        this->nested_namespace_++;
+                        ns_flag = 1;
+                      }
+
                     ACEXML_Char* name = ACE_OS::strchr (attname, ':');
                     const ACEXML_Char* ns_name = (name == 0)?
                                                  empty_string:name+1;
@@ -935,7 +943,8 @@ ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
                   {
                     // Namespace_prefixes_feature_ is required. So add the
                     // xmlns:foo to the list of attributes.
-                    if (attributes.addAttribute (0, 0, attname,
+                    if (attributes.addAttribute (ACE_TEXT (""), ACE_TEXT (""),
+                                                 attname,
                                                  default_attribute_type,
                                                  attvalue) == -1)
                       {
