@@ -96,8 +96,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
       Generator *gen = GENERATOR::instance (); // value generator
 
       // get some sequence length (not more than 10)
-      // CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
-      CORBA::ULong len = 1;
+      CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
 
       // set the length of the sequence
       this->in_.length (len);
