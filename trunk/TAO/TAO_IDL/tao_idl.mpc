@@ -4,7 +4,7 @@ project(TAO_IDL_EXE) : aceexe, taoversion, core {
   includes += include be_include fe
   install   = ../../bin
   libflags += TAO_AS_STATIC_LIBS
-  depends  += TAO_IDL_BE TAO_IDL_FE
+  depends  += TAO_IDL_BE TAO_IDL_FE gperf_exe
   idlpreprocessor = 1
 
   Source_Files {
