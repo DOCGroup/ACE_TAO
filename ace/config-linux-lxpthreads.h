@@ -6,24 +6,7 @@
    more information you should check out his Web site:
 
    http://pauillac.inria.fr/~xleroy/linuxthreads/
-
-   The version I have installed and working is an RPM*
-   based on Xavier's 0.5 release. I don't know where
-   the tarball of 0.5 can be found, but I suspect that
-   Xavier's site has it...
-
-        * RPM == Redhat Package Management
-
-        My system is a Caldera-based distribution with many upgraded
-        packages.  If you don't use RPM, there is a program (rpm2cpio)
-        which will extract the files for "normal consumption".
-
-        You may also want to check out the "ACE On Linux" pages at:
-
-                http://users.deltanet.com/users/slg/ACE/
-
-        (They were a little out of date when I last was there
-        however.) */
+*/
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -36,21 +19,15 @@
 
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
-// And they're even POSIX pthreads (MIT implementation)
+// And they're even POSIX pthreads (LinuxThreads implementation)
 #define ACE_HAS_PTHREADS
 // ... and the final standard even!
 #define ACE_HAS_PTHREADS_STD
 
 #if !defined (ACE_MT_SAFE)
-        #define ACE_MT_SAFE 1                           // JCEJ 12/22/96        #1
+#define ACE_MT_SAFE 1                           // JCEJ 12/22/96        #1
 #endif
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE         // jcej 12/22/96        #2
-#define PTHREAD_MIN_PRIORITY            0       // JCEJ 12/22/96        #3
-#if !defined(ACE_LACKS_PTHREAD_SIGMASK)
-#  define PTHREAD_MAX_PRIORITY          99      // CJC  02/11/97
-#else
-#  define PTHREAD_MAX_PRIORITY          32      // JCEJ 12/22/96        #3
-#endif
 
 #define ACE_LACKS_THREAD_STACK_ADDR             // JCEJ 12/17/96
 #define ACE_LACKS_THREAD_STACK_SIZE             // JCEJ 12/17/96
