@@ -1,3 +1,9 @@
+Tue Apr  8 17:01:55 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+
+	  Adjusted explicit template instantiations to ACE_Unbounded_Set_Ex.
+
 Tue Apr  8 000:00:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/DII_Invocation.cpp:

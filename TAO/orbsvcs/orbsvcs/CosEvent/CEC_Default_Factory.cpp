@@ -977,9 +977,9 @@ template class TAO_ESF_Copy_On_Write_Collection<
 template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushConsumer>;
 template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPushConsumer>;
 template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushConsumer>;
-template class ACE_Unbounded_Set<TAO_CEC_ProxyPushConsumer *>;
+template class ACE_Unbounded_Set_Ex<TAO_CEC_ProxyPushConsumer *>;
 template class ACE_Node<TAO_CEC_ProxyPushConsumer *>;
-template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPushConsumer *>;
+template class ACE_Unbounded_Set_Ex_Iterator<TAO_CEC_ProxyPushConsumer *>;
 template class ACE_RB_Tree<TAO_CEC_ProxyPushConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPushConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator<TAO_CEC_ProxyPushConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPushConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Reverse_Iterator<TAO_CEC_ProxyPushConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPushConsumer *>, ACE_Null_Mutex>;
@@ -998,9 +998,9 @@ template class TAO_ESF_Copy_On_Write_Collection<
 template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushSupplier>;
 template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPushSupplier>;
 template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPushSupplier>;
-template class ACE_Unbounded_Set<TAO_CEC_ProxyPushSupplier *>;
+template class ACE_Unbounded_Set_Ex<TAO_CEC_ProxyPushSupplier *>;
 template class ACE_Node<TAO_CEC_ProxyPushSupplier *>;
-template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPushSupplier *>;
+template class ACE_Unbounded_Set_Ex_Iterator<TAO_CEC_ProxyPushSupplier *>;
 template class ACE_RB_Tree<TAO_CEC_ProxyPushSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPushSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator<TAO_CEC_ProxyPushSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPushSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator_Base<TAO_CEC_ProxyPushSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPushSupplier *>, ACE_Null_Mutex>;
@@ -1019,9 +1019,9 @@ template class TAO_ESF_Copy_On_Write_Collection<
 template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullConsumer>;
 template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPullConsumer>;
 template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullConsumer>;
-template class ACE_Unbounded_Set<TAO_CEC_ProxyPullConsumer *>;
+template class ACE_Unbounded_Set_Ex<TAO_CEC_ProxyPullConsumer *>;
 template class ACE_Node<TAO_CEC_ProxyPullConsumer *>;
-template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPullConsumer *>;
+template class ACE_Unbounded_Set_Ex_Iterator<TAO_CEC_ProxyPullConsumer *>;
 template class ACE_RB_Tree<TAO_CEC_ProxyPullConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPullConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator<TAO_CEC_ProxyPullConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPullConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Reverse_Iterator<TAO_CEC_ProxyPullConsumer *, int, ACE_Less_Than<TAO_CEC_ProxyPullConsumer *>, ACE_Null_Mutex>;
@@ -1040,9 +1040,9 @@ template class TAO_ESF_Copy_On_Write_Collection<
 template class TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier>;
 template class TAO_ESF_Proxy_List<TAO_CEC_ProxyPullSupplier>;
 template class TAO_ESF_Proxy_RB_Tree<TAO_CEC_ProxyPullSupplier>;
-template class ACE_Unbounded_Set<TAO_CEC_ProxyPullSupplier *>;
+template class ACE_Unbounded_Set_Ex<TAO_CEC_ProxyPullSupplier *>;
 template class ACE_Node<TAO_CEC_ProxyPullSupplier *>;
-template class ACE_Unbounded_Set_Iterator<TAO_CEC_ProxyPullSupplier *>;
+template class ACE_Unbounded_Set_Ex_Iterator<TAO_CEC_ProxyPullSupplier *>;
 template class ACE_RB_Tree<TAO_CEC_ProxyPullSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPullSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator<TAO_CEC_ProxyPullSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPullSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator_Base<TAO_CEC_ProxyPullSupplier *, int, ACE_Less_Than<TAO_CEC_ProxyPullSupplier *>, ACE_Null_Mutex>;
