@@ -11,6 +11,8 @@
 //
 // = DESCRIPTION
 //    This class implements the server functionality of the UDP test.
+//    We support only single threaded servers, as we have a null mutex
+//    for locking our state.
 //
 // = AUTHOR
 //    Michael Kircher <Michael.Kircher@mchp.siemens.de>
@@ -19,6 +21,8 @@
 
 #ifndef UDP_I_H
 #define UDP_I_H
+
+#include "ace/Synch.h"
 
 #include "UDPS.h"
 
@@ -62,7 +66,7 @@ private:
                             CORBA::Long,
                             ACE_Hash < const char * >,
                             ACE_Equal_To < const char * >,
-                            ACE_Thread_Mutex > request_id_table_;
+                            ACE_Null_Mutex > request_id_table_;
 };
 
 #endif /* UDP_I_H */

@@ -1,3 +1,27 @@
+Sun Mar 11 04:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
+        * examples/PluggableUDP/DIOP/Transport.cpp:
+
+          Added code to support two-way calls, but only for single-
+          threaded servers.
+
+        * examples/PluggableUDP/tests/server.cpp:
+        * examples/PluggableUDP/tests/client.cpp:
+        * tests/AMI_Timeouts.server.cpp:
+
+          Fixed some exception handling and shut down code.
+
+        * examples/PluggableUDP/tests/UDP_i.h:
+
+          Fixed the usage of ACE_Thread_Mutex in the single-thread
+          build. Added an include to "ace/Synch.h" and made the 
+          lock to a ACE_Null_Mutex, as this servant supports only
+          single-threaded servers anyway.
+
 Sat Mar 10 22:27:58 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:

@@ -131,27 +131,31 @@ main (int argc, char *argv[])
       UDP_Client_i* client = new UDP_Client_i (orb.in (),
                                                udp_var.in (),
                                                udpHandler_var.in (),
-											   msec,
-											   iterations);
+                                               msec,
+                                               iterations);
 
       // let the client run in a separate thread
       client->activate ();
 
       // ORB loop, will be shut down by our client thread
-      orb->run ();  // Fetch responses
+      
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
+      root_poa->destroy (true,  // ethernalize objects
+ 					               false, // wait for completion
+						             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // it is save to delete the client, because the client was actually
       // the one calling orb->shutdown () triggering the end of the ORB
       // event loop.
       delete client;
-
     }
   ACE_CATCHANY
     {

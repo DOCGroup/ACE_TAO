@@ -71,7 +71,7 @@ TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
   udp_socket_.close ();
 }
 
-// @@ Frank: Added from DIOP_Connect.cpp
+// DIOP Additions - Begin
 ACE_HANDLE
 TAO_DIOP_Connection_Handler::get_handle (void) const
 {
@@ -93,12 +93,26 @@ TAO_DIOP_Connection_Handler::addr (const ACE_INET_Addr &addr)
 }
 
 
+const ACE_INET_Addr &
+TAO_DIOP_Connection_Handler::local_addr (void)
+{
+  return local_addr_;
+}
+
+
+void
+TAO_DIOP_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
+{
+  local_addr_ = addr;
+}
+
+
 const ACE_SOCK_Dgram &
 TAO_DIOP_Connection_Handler::dgram (void)
 {
   return this->udp_socket_;
 }
-// @@ Frank: End DIOP_Connect.cpp
+// DIOP Additions - End
 
 
 int
@@ -150,7 +164,8 @@ TAO_DIOP_Connection_Handler::open (void*)
   */
 
   // @@ Frank: From DIOP_Connect.cpp
-  this->udp_socket_.open (ACE_sap_any_cast (ACE_INET_Addr &));
+  this->udp_socket_.open (this->local_addr_);
+
   ACE_DEBUG ((LM_DEBUG,
               "Opened connector on %s:%d\n",
               this->addr_.get_host_name (),
@@ -162,7 +177,7 @@ TAO_DIOP_Connection_Handler::open (void*)
 int
 TAO_DIOP_Connection_Handler::open_server (void)
 {
-  this->udp_socket_.open (this->addr_);
+  this->udp_socket_.open (this->local_addr_);
   ACE_DEBUG ((LM_DEBUG,
               "Opened acceptor on %s:%d\n",
               this->addr_.get_host_name (),
