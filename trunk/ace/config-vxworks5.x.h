@@ -2,19 +2,57 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 5.2/5.3 platforms using the GreenHills 1.8.8 (not 1.8.7!!!!) compiler.
+// 5.2/5.3 platforms using one of these compilers:
+// 1) The GNU/Cygnus g++ compiler that is shipped with Tornado 1.0.1.
+// 2) The GreenHills 1.8.8 (not 1.8.7!!!!) compiler.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-// Processor type, if necessary.  GreenHills defines "ppc".
-#if defined (ppc)
-# define ACE_HAS_POWERPC
-#endif /* ppc */
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
+
+// Compiler-specific configuration.
+
+#if defined (__GNUG__)
+# define ACE_HAS_VERBOSE_NOTSUP
+# define ACE_LACKS_IOSTREAM_FX
+# define ACE_MAIN ace_main
+
+# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+# define ACE_TEMPLATES_REQUIRE_SOURCE
+
+  // Even though the documentation suggests that g++/VxWorks 5.3.1
+  // (Tornado 1.0.1) supports long long, Wind River tech support says
+  // that it doesn't.  It causes undefined symbols for math functions.
+# define ACE_LACKS_LONGLONG_T
+
+  // On g++/VxWorks, iostream.h defines a static instance (yes, instance)
+  // of the Iostream_init class.  That causes all files that #include it
+  // to put in the global constructor/destructor hooks.  For files that
+  // don't have any static instances of non-class (built-in) types, the
+  // hooks refer to the file name, e.g., "foo.cpp".  That file name gets
+  // embedded in a variable name by munch.  The output from munch won't
+  // compile, though, because of the period!  So, let g++/VxWorks users
+  // include iostream.h only where they need it.
+# define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+#elif defined (ghs)
+  // Processor type, if necessary.  GreenHills defines "ppc".
+# if defined (ppc)
+#   define ACE_HAS_POWERPC
+# endif /* ppc */
+
+# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+# define ACE_HAS_WCHAR_TYPEDEFS_CHAR
+# define ACE_LACKS_LONGLONG_T
+# define ACE_LACKS_UNISTD_H
+#else  /* ! __GNUG__ && ! ghs */
+# error unsupported compiler on VxWorks
+#endif /* ! __GNUG__ && ! ghs */
+
+// OS-specific configuration
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
 #define ACE_DEFAULT_THREAD_KEYS 16
@@ -34,10 +72,8 @@
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_STRERROR
-#define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #define ACE_HAS_THREADS
 #define ACE_HAS_TSS_EMULATION
-#define ACE_HAS_WCHAR_TYPEDEFS_CHAR
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS_COND_T
 #define ACE_LACKS_EXEC
@@ -47,7 +83,6 @@
 #define ACE_LACKS_GETSERVBYNAME
 #define ACE_LACKS_KEY_T
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
-#define ACE_LACKS_LONGLONG_T
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MEMORY_H
@@ -74,7 +109,6 @@
 #define ACE_LACKS_SYS_NERR
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
-#define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UTSNAME_T
 #if !defined (ACE_MT_SAFE)
@@ -82,6 +116,7 @@
 #endif
 #define ACE_NEEDS_SYSTIME_H
 #define ACE_PAGE_SIZE 4096
+#define ACE_THR_PRI_FIFO_DEF 6
 
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
