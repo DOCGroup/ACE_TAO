@@ -1,3 +1,10 @@
+Thu Aug  1 11:20:39 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* examples/AMH/Sink_Server/mt_server.cpp (main):
+	* examples/AMH/Sink_Server/Base_Server.cpp (start_orb_and_poa):
+	  TRU64 compiler detected an unreachable statement and an implicit
+	  return value from main.  Fixed both warnings.
+
 Thu Aug  1 11:18:47 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.IFRService:

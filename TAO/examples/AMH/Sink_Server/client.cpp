@@ -249,4 +249,6 @@ main (int argc, char *argv[])
     }
 
   task.run_test();
+
+  return 0;
 }
