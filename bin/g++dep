@@ -39,21 +39,12 @@ case $1 in
 
   # -r allows the use of relative pathnames...
   -r) REL="-e s;$ACE_ROOT;\$(ACE_ROOT);g ${ACE_DEPEND_SED_CMD}"
-      if [ ${TAO_ROOT:-no_tao_root} = "no_tao_root" ]; then
-        echo no TAO_ROOT
-      else
-        REL="-e s;$TAO_ROOT;\$(TAO_ROOT);g "$REL
-        echo REL=$REL
-      fi
+      REL="-e s;${TAO_ROOT:=$ACE_ROOT/TAO};\$(TAO_ROOT);g "$REL
       shift ;;
   # -A uses relative pathnames and fixes the .obj line
   #    and it implies -r
   -A) REL="-e s;$ACE_ROOT;\$(ACE_ROOT);g ${ACE_DEPEND_SED_CMD}"
-      if [ ${TAO_ROOT:-no_tao_root} = "no_tao_root" ]; then
-        echo no TAO_ROOT
-      else
-        REL="-e s;$TAO_ROOT;\$(TAO_ROOT);g "$REL
-      fi
+      REL="-e s;${TAO_ROOT:=$ACE_ROOT/TAO};\$(TAO_ROOT);g "$REL
       DO_ACE_MAKE_DEPEND=1
       shift ;;
   *) STOPNOW=1

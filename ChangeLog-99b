@@ -1,9 +1,15 @@
+Sun Dec 19 09:34:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/g++dep: set TAO_ROOT to $ACE_ROOT/TAO if it was
+          unset.  Thanks to Darrell for reporting that TAO_ROOT
+          wasn't being substituted if it wasn't set.
+
 Sat Dec 18 01:16:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (recv_i and send_i): The selection of the next
-	  message block to send/recv was incorrect.  The correct way is to
-	  chase the continuation chain and then go to the next
-	  continuation chain.
+        * ace/ACE.cpp (recv_i and send_i): The selection of the next
+          message block to send/recv was incorrect.  The correct way is to
+          chase the continuation chain and then go to the next
+          continuation chain.
 
 Fri Dec 17 22:25:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
