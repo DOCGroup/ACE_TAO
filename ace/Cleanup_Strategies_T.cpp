@@ -33,15 +33,17 @@ ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
 
 template <class KEY, class VALUE, class CONTAINER> int
 ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
-                                                          KEY *key,
-                                                          VALUE *value)
+                                                                         KEY *key,
+                                                                         VALUE *)
 {
-  value->first ()->recycler (0, 0);
+  VALUE value;
 
-  value->first ()->close ();
-
-  if (container.unbind (*key) == -1)
+  if (container.unbind (*key, value) == -1)
     return -1;
+
+  value.first ()->recycler (0, 0);
+
+  value.first ()->close ();
 
   return 0;
 }
