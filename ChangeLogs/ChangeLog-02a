@@ -1,3 +1,20 @@
+Fri Jul 21 21:24:09 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Parse_Node.cpp: Updated the ACE_Object_Name and ACE_Function_Node
+	  constructors to use the new ACE::ldname() method rather than
+	  ACE::strnew().  Thanks to Chris Kohlhoff for this fix.
+
+	* ace/ACE.cpp: Added a new method called ACE::ldname() so that
+	  dynamic loading performed by the service configurator work the
+ 	  same with BCB as with other compilers. With BCB, exported
+ 	  functions from a DLL all have a "_" prepended. Previously you
+ 	  had to explicitly add the "_" into the svc.conf or when you
+ 	  called ACE_Service_Config::process_directive. This change
+ 	  removes that need and makes BCB stuff source/config compatible
+ 	  with other compilers. This change was prompted by Lothar
+ 	  Werzinger <werzinger.lothar@krones.de> and was provided by
+ 	  Christopher Kohlhoff <chris@kohlhoff.com>.
+
 Fri Jul 21 19:22:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
