@@ -66,6 +66,9 @@ Mon Oct 20 07:49:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-vxworks-ghs-1.8.h: removed ACE_HAS_VERBOSE_NOTSUP.
 
+	* tests/run_tests.vxworks: re-enabled Buffer_Stream_Test now that
+	  ACE_OS::cond_timedwait () is supported on VxWorks.
+
 Mon Oct 20 06:21:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added a new special case for _KCC so that its
