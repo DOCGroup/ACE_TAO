@@ -1,9 +1,16 @@
+Wed Mar 17 10:24:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (argv_to_string): initialized temp to 0 to avoid warnings
+          from VxWorks g++.
+          ace/OS.i (strenvdup): initialized temp to 0 to avoid warnings from
+          VxWorks g++.  Thanks to Hans Rohnert for reporting these.
+
 Wed Mar 17 09:58:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Svc_Conf.l (yy_delete_parse_buffer): Added a check for NULL
- 	  to avoid freeing buffers multiple times.  Thanks to Tom Arbuckle
- 	  <arbuckle@uran.informatik.uni-bonn.de> for this fix and to
-	  Nanbor for noticing the problem in the first place!
+        * ace/Svc_Conf.l (yy_delete_parse_buffer): Added a check for NULL
+          to avoid freeing buffers multiple times.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for this fix and to
+          Nanbor for noticing the problem in the first place!
 
 Wed Mar 17 08:30:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -11,37 +18,37 @@ Wed Mar 17 08:30:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Mar 17 03:12:43 1999  James C. Hu  <jxh@entera.com>
 
-	* ace/Message_Block.i: Changed the definition of space () to be
+        * ace/Message_Block.i: Changed the definition of space () to be
           something more useful than it was.  Thanks to Bill Rizzi
-	  (rizzi@softserv.com) for pointing out the problem.
+          (rizzi@softserv.com) for pointing out the problem.
 
-	* ace/Cache_*: Removed by popular decree.  Can be found in
+        * ace/Cache_*: Removed by popular decree.  Can be found in
           JAWS/PROTOTYPE.
 
 Wed Mar 17 03:06:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (close): Re-enabled cleaning up the lex
-	  buffer.
+        * ace/Service_Config.cpp (close): Re-enabled cleaning up the lex
+          buffer.
 
-	* ace/Svc_Conf_l.cpp (ace_yy_delete_parse_buffer): We should not
-	  remove uninitialize buffer.
+        * ace/Svc_Conf_l.cpp (ace_yy_delete_parse_buffer): We should not
+          remove uninitialize buffer.
 
 Tue Mar 16 19:48:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Makefile and tests/Makefile: Reverted these files to the
-	  pre-Cache_Manager state.  The Cache_Manager files don't compile
-	  on g++ and vxworks and we need to make a release now.
+        * ace/Makefile and tests/Makefile: Reverted these files to the
+          pre-Cache_Manager state.  The Cache_Manager files don't compile
+          on g++ and vxworks and we need to make a release now.
 
-	* ace/Map_T.h (class ACE_Noop_Key_Generator): Added new class.
-	  This class makes it easy to use the map adapters when you don't
-	  care about generating new keys.
+        * ace/Map_T.h (class ACE_Noop_Key_Generator): Added new class.
+          This class makes it easy to use the map adapters when you don't
+          care about generating new keys.
 
 Tue Mar 16 11:36:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: FreeBSD 2.2 and above also support
-	  threads, but siginfo_t is only supported on FreeBSD 3.0 and
-	  above.  Thanks to Goldshtain Dmitry <goldshtain.dmitry@usa.net>
-	  for pointing these out.
+        * ace/config-freebsd-pthread.h: FreeBSD 2.2 and above also support
+          threads, but siginfo_t is only supported on FreeBSD 3.0 and
+          above.  Thanks to Goldshtain Dmitry <goldshtain.dmitry@usa.net>
+          for pointing these out.
 
 Tue Mar 16 16:46:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -145,7 +152,7 @@ Tue Mar 16 03:05:22 1999  James Hu <jxh@entera.com>
         * ace/Makefile: Added above files to Makefile.
 
         * ace/OS.i: FreeBSD does not support the timezone() function as
-          documented by Vischal below.  Using Chris Gill's implementation
+          documented by Vishal below.  Using Chris Gill's implementation
           for LynxOS.
 
         * tests/Makefile:
