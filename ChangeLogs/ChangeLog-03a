@@ -1,3 +1,11 @@
+Tue Jun 18 07:50:14 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Env_Value_T.h:
+
+	  Include "ace/OS.h".  It is required for some types and function
+	  calls made in this header.  Thanks to Michael Kircher for
+	  pointing this out.
+
 Mon Jun 17 17:36:52 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Changed call
