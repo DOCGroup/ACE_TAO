@@ -1,0 +1,98 @@
+// $Id$
+
+#include "Ping.idl"
+
+interface Implementation_Repository
+  // = TITLE
+  //    Interface for communicating with the Implementation Repository
+  //
+  // = DESCRIPTION
+  //    This interface exports all the administration functionality of
+  //    the Implementation Repository.
+{
+  exception Already_Registered {};
+  // Object already bound in the Implementation Repository
+
+  exception Cannot_Activate
+  {
+    string reason_;
+  };
+
+  exception Not_Found {};
+  // Object not found in the Implementation Repository
+
+  struct INET_Addr
+  {
+    string host_;
+    unsigned short port_;
+  };
+  // The location of a server
+
+  struct Process_Options
+  {
+    string command_line_;
+    // Command line options
+    string environment_;
+    // Environment
+    string working_directory_;
+    // Working directory
+    unsigned long creation_flags_;
+    // Creation flags
+  };
+
+  Object activate_object (in Object obj)
+    raises (Not_Found,
+            Cannot_Activate);
+  // Restart server that will contain this persistent object and return the
+  // new Object reference.
+  //
+  // The <Not_Found> exception is raised when <obj> is not found
+  // in the Implementation Repository.  The <Cannot_Activate> exception
+  // is raised when <obj> is found in the Repository but could not be
+  // activated.
+
+  INET_Addr activate_server (in string server)
+    raises (Not_Found,
+            Cannot_Activate);
+  // Restart server that is named <server> and return the host/port
+  //
+  // The <Not_Found> exception is raised when <server> is not found
+  // in the Implementation Repository.  The <Cannot_Activate> exception
+  // is raised when <server> is found in the Repository but could not be
+  // activated.
+
+
+  void register_server (in string server,
+                        in Process_Options options)
+    raises (Already_Registered);
+  // Register the <options> to specify how the <server> should be
+  // restarted when a client asks for it.  
+  //
+  // The <Already_Registered> exception is raised when <server> has
+  // already been registered with the Implementation Repository.
+
+  void reregister_server (in string server,
+                          in Process_Options options);
+  // Update the <options> to specify how the <server> should be
+  // restarted when a client asks for it.  Will register the server
+  // if not already registered.
+
+  void remove_server (in string server)
+    raises (Not_Found);
+  // Remove <server> from the Implementation Repository.
+  //
+  // The <Not_Found> exception is raised when <server> is not found
+  // in the Implementation Repository.
+
+  INET_Addr server_is_running (in string server,
+                               in INET_Addr addr,
+                               in Object ping)
+    raises (Not_Found);
+  // Used to notify the Implementation Repository that <server> is alive and
+  // well at <addr>.
+
+  void server_is_shutting_down (in string server)
+    raises (Not_Found);
+  // Used to tell the Implementation Repository that <server> is shutting
+  // down.
+};
