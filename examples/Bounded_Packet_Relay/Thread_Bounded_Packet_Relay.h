@@ -246,9 +246,6 @@ public:
 
   typedef int (BPR_Handler_Base::*ACTION) (void *);
 
-  // = Trait for callback commands to methods of this base class
-
-  typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> COMMAND;
 
   BPR_Handler_Base (Bounded_Packet_Relay &relay,
                     Thread_Timer_Queue &queue);
@@ -272,6 +269,8 @@ protected:
   // the send timer and handler if there are still sends to perform.
 };
 
+class Send_Handler;
+
 class Send_Handler : public BPR_Handler_Base
 {
   // = TITLE
@@ -289,10 +288,6 @@ public:
   // = Trait for command accessible entry points.
 
   typedef int (Send_Handler::*ACTION) (void *);
-
-  // = Trait for callback commands to methods of this class
-
-  typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> COMMAND;
 
   Send_Handler (u_long send_count,
                 const ACE_Time_Value &duration,
