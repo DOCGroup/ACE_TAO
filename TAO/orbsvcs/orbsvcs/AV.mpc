@@ -20,15 +20,68 @@ project(AV) : orbsvcslib, core, property, naming, qos {
       Null_MediaCtrlS.cpp
       sfpC.cpp
       sfpS.cpp
-      AV
+      AV/AVStreams_i.cpp
+      AV/AV_Core.cpp
+      AV/Endpoint_Strategy.cpp
+      AV/Endpoint_Strategy_T.cpp
+      AV/Fill_ACE_QoS.cpp
+      AV/FlowSpec_Entry.cpp
+      AV/Flows_T.cpp
+      AV/MCast.cpp
+      AV/Nil.cpp
+      AV/Policy.cpp
+      AV/Protocol_Factory.cpp
+      AV/QoS_UDP.cpp
+      AV/RTCP.cpp
+      AV/RTCP_Channel.cpp
+      AV/RTCP_Packet.cpp
+      AV/RTP.cpp
+      AV/TCP.cpp
+      AV/Transport.cpp
+      AV/UDP.cpp
+      AV/default_resource.cpp
+      AV/media_timer.cpp
+      AV/sfp.cpp
     }
+  }
+
+  verbatim(gnuace,top) {
+  ifeq ($(sctp),1)
+    AV += SCTP_SEQ
+  endif
   }
   Header_Files {
     Channel_Clients_T.h
-    AV
+    AV/AVStreams_i.h
+    AV/AV_Core.h
+    AV/AV_export.h
+    AV/Endpoint_Strategy.h
+    AV/Endpoint_Strategy_T.h
+    AV/Fill_ACE_QoS.h
+    AV/FlowSpec_Entry.h
+    AV/Flows_T.h
+    AV/MCast.h
+    AV/Nil.h
+    AV/Policy.h
+    AV/Protocol_Factory.h
+    AV/QoS_UDP.h
+    AV/RTCP.h
+    AV/RTCP_Channel.h
+    AV/RTCP_Packet.h
+    AV/RTP.h
+    AV/Resource_Factory.h
+    AV/UDP.h
+    AV/default_resource.h
+    AV/global.h
+    AV/md5.h
+    AV/media_timer.h
+    AV/ntp-time.h
+    AV/sfp.h
   }
   Template_Files {
     Channel_Clients_T.cpp
-    AV
+    AV/Endpoint_Strategy_T.cpp
+    AV/Flows_T.cpp
   }
+
 }

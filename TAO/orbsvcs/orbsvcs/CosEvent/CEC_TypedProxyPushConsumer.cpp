@@ -6,6 +6,7 @@
 #include "CEC_TypedEventChannel.h"
 #include "CEC_TypedConsumerAdmin.h"
 #include "CEC_DynamicImplementation.h"
+#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_TypedProxyPushConsumer.i"
