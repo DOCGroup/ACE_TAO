@@ -8,11 +8,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = IDL_Cubit \
+DIRS  = Cubit \
+        IDL_Cubit \
 	MT-Cubit \
 	Thruput_test 
-
-# Cubit 
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
