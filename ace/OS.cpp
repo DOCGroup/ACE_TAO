@@ -3132,6 +3132,12 @@ ACE_OS::fork (const char *program_name)
 #endif /* ACE_WIN32 */
 }
 
+void
+ACE_Cleanup::cleanup (void *)
+{
+  delete this;
+}
+
 // This is necessary to work around nasty problems with MVS C++.
 
 extern "C" void

@@ -620,7 +620,9 @@ ACE_Select_Reactor_Token::sleep_hook (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_Token::sleep_hook");
   if (this->select_reactor_->notify () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("sleep_hook failed")));
+    ACE_ERROR ((LM_ERROR, 
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("sleep_hook failed")));
 }
 
 #endif /* ACE_MT_SAFE */
