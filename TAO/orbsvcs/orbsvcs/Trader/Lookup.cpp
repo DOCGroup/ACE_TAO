@@ -128,6 +128,7 @@ query (const char *type,
 			rep,
 			policies,
 			ordered_offers,
+			returned_limits_applied,
 			env);      
   TAO_CHECK_ENV_RETURN (env,);
   
@@ -141,9 +142,6 @@ query (const char *type,
 			    returned_offer_iterator,
 			    env);
   TAO_CHECK_ENV_RETURN (env,);
-
-  // Return the limits applied during the course of the lookup.
-  returned_limits_applied = policies.limits_applied ();
   
   // Determine if we should perform a federated query, and if so
   // construct a sequence of links to follow.
@@ -183,6 +181,7 @@ perform_lookup (const char* type,
 		CosTradingRepos::ServiceTypeRepository_ptr rep,		
 		TAO_Policies& policies,
 		LOOKUP_OFFER_LIST& ordered_offers,
+		PolicyNameSeq_out returned_limits_applied,
 		CORBA::Environment& env)
   TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
 		   CosTrading::Lookup::IllegalPreference,
@@ -229,6 +228,7 @@ perform_lookup (const char* type,
     {
       TAO_CHECK_ENV_RETURN (env,);
       this->lookup_all_subtypes (type,
+				 type_struct->incarnation,
 				 service_type_map,
 				 rep,
 				 constr_inter,
@@ -252,6 +252,9 @@ perform_lookup (const char* type,
       else
 	break;
     }
+
+  // Take note of the limits applied in this query.
+  returned_limits_applied = offer_filter.limits_applied ();
 }
 
 template <class TRADER> void
@@ -301,6 +304,7 @@ lookup_one_type (const char* type,
 template <class TRADER> void
 TAO_Lookup<TRADER>::
 lookup_all_subtypes (const char* type,
+		     SERVICE_TYPE_REPOS::IncarnationNumber& inc_num,
 		     SERVICE_TYPE_MAP& service_type_map,
 		     CosTradingRepos::ServiceTypeRepository_ptr rep,
 		     TAO_Constraint_Interpreter& constr_inter,
@@ -328,12 +332,33 @@ lookup_all_subtypes (const char* type,
   // been located and their offers considered, or we've exhausted the
   // cardinality constraints.
 
-  TYPE_LIST sub_types, unconsidered_types;
+  typedef deque<char*> TYPE_LIST;
+  typedef deque<pair <SERVICE_TYPE_REPOS::IncarnationNumber, char*> >
+    TYPE_NUM_LIST;
+
+  TYPE_NAME_SEQ all_types;
+  TYPE_NUM_LIST sub_types;
+  TYPE_LIST unconsidered_types;
+
   CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
-  TYPE_NAME_SEQ all_types (service_type_map.list_all_types ());
+  
+  // Optimization: Since a subtype can't have a higher incarnation
+  // number than a supertype, we don't need to consider those
+  // types with lower incarnation numbers.  
+  sst._d (SERVICE_TYPE_REPOS::since);
+  sst.incarnation (inc_num);  
+  
+  //  TAO_TRY
+  //    {
+  CORBA::Environment env;
+  all_types = rep->list_types (sst, env);
+  //      TAO_CHECK_ENV;
+  //    }
+  //  TAO_CATCHANY { return; }
+  //  TAO_ENDTRY;  
   
   // All types save the supertype are initially unconsidered.
-  sub_types.push_back ((char *) type);
+  sub_types.push_back (make_pair (inc_num, (char *) type));
   for (int i = all_types->length () - 1; i >= 0; i--)
     {
       if (ACE_OS::strcmp (type, all_types[i]) != 0)
@@ -346,8 +371,10 @@ lookup_all_subtypes (const char* type,
   while (! sub_types.empty () && offer_filter.ok_to_consider_more ())  
   {
     // For each potential supertype, iterate over the remaining types.
-    const char* super_type = sub_types.front ();
+    const char* super_type = sub_types.front ().second;
+    SERVICE_TYPE_REPOS::IncarnationNumber in = sub_types.front ().first;
     sub_types.pop_front ();
+    
     for (int j = unconsidered_types.size () - 1;
 	 j >= 0 && offer_filter.ok_to_consider_more ();
 	 j--)
@@ -369,20 +396,27 @@ lookup_all_subtypes (const char* type,
 	  }
 	TAO_ENDTRY;
 
-	// Determine if the prospective type is a subtype of the current
-	// one -- that is, has the current one as its supertype.
-	for (int k = type_struct->super_types.length () - 1;
-	     k >= 0 &&
-	       ACE_OS::strcmp ((const char *) type_struct->super_types[k],
-			       super_type);
-	     k--)
-	  ;
+	// If this incarnation number is less than the supertype's,
+	// this can't be a subtype. 
+	if (type_struct->incarnation > in)
+	  {	  	  	
+	    // Determine if the prospective type is a subtype of the current
+	    // one -- that is, has the current one as its supertype.
+	    for (int k = type_struct->super_types.length () - 1;
+		 k >= 0; k--)
+	      {
+		is_sub_type = (ACE_OS::strcmp
+			       ((const char *) type_struct->super_types[k],
+				super_type) == 0);
+
+		if (is_sub_type)
+		  break;
+	      }
+	  }
 
 	// If this type isn't a subtype, return it to the queue for
 	// later consideration.
-	if (k < 0)
-	  unconsidered_types.push_back ((char *) type_name);
-	else
+	if (is_sub_type)
 	  {
 	    // Otherwise, perform a constraint match on the type, and
 	    // add it to the queue of potential supertypes.
@@ -391,8 +425,10 @@ lookup_all_subtypes (const char* type,
 				   constr_inter,
 				   pref_inter,
 				   offer_filter);
-	    sub_types.push_back ((char *) type_name);
+	    sub_types.push_back (make_pair (in, (char *) type_name));
 	  }
+	else
+	  unconsidered_types.push_back ((char *) type_name);
       }
   }
 }
@@ -748,7 +784,6 @@ TAO_Lookup<TRADER>
     }
   TAO_ENDTRY;
 }
-
 
 int
 operator< (const CosTrading::Admin::OctetSeq_var& l,
