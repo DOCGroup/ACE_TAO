@@ -134,8 +134,8 @@
 
 #define ACE_HAS_SNPRINTF
 
-# define ACE_HAS_SIGWAIT
-# define ACE_HAS_SIGINFO_T
+#define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGINFO_T
 
 // Cygwin DLL suffix is .dll
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
