@@ -134,6 +134,10 @@ SOURCE=.\AbstractBase_Invocation_Adapter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AbstractBase_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sequence_T.h
 # End Source File
 # Begin Source File
@@ -192,6 +196,11 @@ SOURCE=.\ValueFactory_Map.inl
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\AbstractBase_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
 # Begin Source File
 
 SOURCE=.\Sequence_T.cpp

@@ -69,7 +69,7 @@ namespace TAO
       }
     else
       {
-        proxy = T::_downcast (obj);
+        proxy = dynamic_cast<T *> (obj);
         proxy->_add_ref ();
       }
 
