@@ -27,7 +27,7 @@ require DependencyEditor;
 # Data Section
 # ************************************************************
 
-my($version)  = '0.5';
+my($version)  = '0.6';
 my($os)       = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? 'Windows' : 'UNIX');
 my(%types)    = ('gnu'   => 1,
                  'nmake' => 1,
@@ -101,7 +101,7 @@ sub usageAndExit {
         "Usage: $base [-D<MACRO>[=VALUE]] [-I<include dir>] [-A] " .
         "[-R <VARNAME>]\n" .
         "       " . (" " x length($base)) .
-        " [-f <output file>] [-t <type>] <files...>\n" .
+        " [-f <output file>] [-t <type>] [-n] <files...>\n" .
         "\n" .
         "-D   This option sets a macro to an optional value.\n" .
         "-I   The -I option adds an include directory.\n" .

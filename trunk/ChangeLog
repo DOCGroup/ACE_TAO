@@ -1,22 +1,34 @@
+Wed Nov 19 10:09:12 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/GNUDependencyWriter.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+
+          Modifications that decrease the time to generate dependencies by
+          7 percent.
+
+        * bin/depgen.pl:
+
+          Added the -n option to the usage and updated the version number.
+
 Wed Nov 19 09:53:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-7.h:
 
-	  MSVC 7 supports templates class specialization.
+          MSVC 7 supports templates class specialization.
 
 Tue Nov 18 22:31:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/naming.mpb:
+        * bin/MakeProjectCreator/config/naming.mpb:
 
-	  Naming service now depends on messaging.
+          Naming service now depends on messaging.
 
 Tue Nov 18 22:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Log_Msg.cpp:
-	* ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg.h:
 
-	  Fixed warnings in the daily builds. Further, made some cosmetic
-	  changes. 
+          Fixed warnings in the daily builds. Further, made some cosmetic
+          changes.
 
 Tue Nov 18 21:25:23 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
@@ -25,116 +37,116 @@ Tue Nov 18 21:25:23 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 Tue Nov 18 15:58:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac (AC_PROC_CC, AC_PROG_CPP, AC_PROG_CC_C_O):
+        * configure.ac (AC_PROC_CC, AC_PROG_CPP, AC_PROG_CC_C_O):
 
-	  No need to check for a C compiler and preprocessor.  ACE is only
-	  compiled with a C++ compiler.
+          No need to check for a C compiler and preprocessor.  ACE is only
+          compiled with a C++ compiler.
 
-	  (AC_LIBTOOL_TAGS):
+          (AC_LIBTOOL_TAGS):
 
-	  Added call to this Libtool autoconf macro to only enable C++
-	  library support.  C and FORTRAN support are unnecessary.  Note
-	  that this forces a requirement on Libtool 1.5 or better.
+          Added call to this Libtool autoconf macro to only enable C++
+          library support.  C and FORTRAN support are unnecessary.  Note
+          that this forces a requirement on Libtool 1.5 or better.
 
-	  (ACE_CHECK_TLS):
+          (ACE_CHECK_TLS):
 
-	  Only run the OpenSSL detection tests if SSL support is enabled
-	  by the user.
+          Only run the OpenSSL detection tests if SSL support is enabled
+          by the user.
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Enable TLS/SSL support by default.
+          Enable TLS/SSL support by default.
 
-	* m4/aio.m4:
-	* m4/features.m4:
+        * m4/aio.m4:
+        * m4/features.m4:
 
-	  Renamed `features.m4' file to `aio.m4' to better reflect the
-	  contents of this file, namely asynchronous IO checks.
+          Renamed `features.m4' file to `aio.m4' to better reflect the
+          contents of this file, namely asynchronous IO checks.
 
-	* m4/config_h.m4 (AH_BOTTOM):
+        * m4/config_h.m4 (AH_BOTTOM):
 
-	  Prevent Emacs from inadvertently applying the "Local Variables"
-	  block to be placed in the generated "config.h" header to this
-	  Autoconf/M4 file by splitting the words "Local" and "Variables"
-	  into two separate concatenated M4 quoted blocks.
+          Prevent Emacs from inadvertently applying the "Local Variables"
+          block to be placed in the generated "config.h" header to this
+          Autoconf/M4 file by splitting the words "Local" and "Variables"
+          into two separate concatenated M4 quoted blocks.
 
-	* m4/tls.m4:
+        * m4/tls.m4:
 
-	  New Autoconf OpenSSL detection tests.
+          New Autoconf OpenSSL detection tests.
 
-	* ace/Makefile.am (clean-local):
+        * ace/Makefile.am (clean-local):
 
-	  Updated list of additional files/directories unknown to the
-	  standard "clean" target to be cleaned.
+          Updated list of additional files/directories unknown to the
+          standard "clean" target to be cleaned.
 
-	* ace/SSL/Makefile.am:
+        * ace/SSL/Makefile.am:
 
-	  (AM_CPPFLAGS):
+          (AM_CPPFLAGS):
 
-	  Add preprocessor flags necessary to build applications with
-	  OpenSSL support.  Detected at "configure-time".
+          Add preprocessor flags necessary to build applications with
+          OpenSSL support.  Detected at "configure-time".
 
-	  (libACE_SSL_la_LIBADD):
+          (libACE_SSL_la_LIBADD):
 
-	  Link the OpenSSL libraries detected at "configure-time."
+          Link the OpenSSL libraries detected at "configure-time."
 
-	* tests/Makefile.am (SUBDIRS):
+        * tests/Makefile.am (SUBDIRS):
 
-	  Build the SSL test subdirectory.
+          Build the SSL test subdirectory.
 
-	  (noinst_SCRIPTS):
+          (noinst_SCRIPTS):
 
-	  Removed non-existent files from this list.  Fixes some build
-	  problems.
+          Removed non-existent files from this list.  Fixes some build
+          problems.
 
-	  (libTest_Output_la_LDFLAGS):
+          (libTest_Output_la_LDFLAGS):
 
-	  Removed "-module" libtool flag from libTest_Output.* linker
-	  flags.  This library is meant to be linked at build time, not
-	  loaded dynamically.
+          Removed "-module" libtool flag from libTest_Output.* linker
+          flags.  This library is meant to be linked at build time, not
+          loaded dynamically.
 
-	  (*_SOURCES, LDADD):
+          (*_SOURCES, LDADD):
 
-	  No need to add `Main.cpp' to all test source lists.  Simply
-	  adding `Main.o' to $(LDADD) is much cleaner and provides the
-	  same effect.
+          No need to add `Main.cpp' to all test source lists.  Simply
+          adding `Main.o' to $(LDADD) is much cleaner and provides the
+          same effect.
 
-	  (Reference_Counted_Event_Handler_Test_SOURCES):
+          (Reference_Counted_Event_Handler_Test_SOURCES):
 
-	  Fixed source file list.  This test is now built correctly.
+          Fixed source file list.  This test is now built correctly.
 
-	  (EXTRA_DIST):
+          (EXTRA_DIST):
 
-	  Added `Main.cpp' to the list of files to be explicitly
-	  distributed with the ACE distribution when building a
-	  distribution with the Autoconf support.
+          Added `Main.cpp' to the list of files to be explicitly
+          distributed with the ACE distribution when building a
+          distribution with the Autoconf support.
 
-	  (all-local):
+          (all-local):
 
-	  "$(top_srcdir/tests" -> "$(srcdir)".  The latter is cleaner and
-	  provides the same effect/result.
+          "$(top_srcdir/tests" -> "$(srcdir)".  The latter is cleaner and
+          provides the same effect/result.
 
-	  (clean-local):
+          (clean-local):
 
-	  Updated list of additional files/directories unknown to the
-	  standard "clean" target to be cleaned.
+          Updated list of additional files/directories unknown to the
+          standard "clean" target to be cleaned.
 
-	  (distclean-local):
+          (distclean-local):
 
-	  Removed `bin' directory from the list of directories to be
-	  erased.  It hasn't been generated for quite some time.
+          Removed `bin' directory from the list of directories to be
+          erased.  It hasn't been generated for quite some time.
 
-	* tests/SSL/Makefile.am:
+        * tests/SSL/Makefile.am:
 
-	  New Automake Makefile template for the ACE_SSL library test.
+          New Automake Makefile template for the ACE_SSL library test.
 
 Tue Nov 18 16:37:21 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/IPC_SAP/DEV_SAP/reader/reader.cpp (main): Changed
-	  recv_n() to recv() so that the underlying Windows Read()
- 	  function is called properly (recv_n() doesn't call this).
-  	  Thanks to Mike Gingell <mike.gingell@drdc-rddc.gc.ca> for
- 	  reporting this.
+        * examples/IPC_SAP/DEV_SAP/reader/reader.cpp (main): Changed
+          recv_n() to recv() so that the underlying Windows Read()
+          function is called properly (recv_n() doesn't call this).
+          Thanks to Mike Gingell <mike.gingell@drdc-rddc.gc.ca> for
+          reporting this.
 
 Tue Nov 18 16:22:45 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
@@ -150,9 +162,9 @@ Tue Nov 18 16:22:45 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 Tue Nov 18 16:14:29 2003  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Add preprocessor defs
-	  for threads ability to CPPFLAGS, not CCFLAGS. Thanks to Ossama
-	  Othman <ossama@dre.vanderbilt.edu> for this suggestion.
+        * include/makeinclude/platform_hpux_aCC.GNU: Add preprocessor defs
+          for threads ability to CPPFLAGS, not CCFLAGS. Thanks to Ossama
+          Othman <ossama@dre.vanderbilt.edu> for this suggestion.
 
 Tue Nov 18 16:03:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
