@@ -1,3 +1,10 @@
+Thu Jun 22 09:47:56 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_Dirent.h
+          Added include of unistd.h before dirent.h.  The lack of the
+          STATUS typedef was causing a build failure on VxWorks with the
+          GNU compiler.
+
 Thu Jun 22 08:28:48 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp: Fixed unused argv warning for g++.
