@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  ../../ace
+  ../../apps/gperf/src
+  ../../ACEXML
+  ../tao
+  ../TAO_IDL
+  ../orbsvcs/orbsvcs/CosNaming.mpc
+  ../orbsvcs/orbsvcs/Svc_Utils.mpc
+  ../orbsvcs/orbsvcs/Security.mpc
+  ../orbsvcs/orbsvcs/IFRService.mpc
+  ciao
+  tools
+}

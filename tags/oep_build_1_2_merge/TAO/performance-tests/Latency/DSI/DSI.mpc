@@ -1,0 +1,24 @@
+// -*- MPC -*-
+// $Id$
+
+project(*latency server): taoexe, portableserver, strategies, dynamicinterface {
+  avoids  += minimum_corba
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Roundtrip.cpp
+    server.cpp
+  }
+}
+
+project(*latency client): taoexe, strategies {
+  avoids += minimum_corba
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

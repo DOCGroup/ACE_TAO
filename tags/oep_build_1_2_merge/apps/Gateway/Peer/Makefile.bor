@@ -1,0 +1,11 @@
+#
+# $Id$
+#
+
+NAME = peerd
+OBJFILES = \
+        $(OBJDIR)\Options.obj \
+        $(OBJDIR)\Peer.obj \
+        $(OBJDIR)\peerd.obj
+!include <$(ACE_ROOT)\apps\build.bor>
+

@@ -1,0 +1,231 @@
+<HTML>
+<HEAD>
+  <!-- $Id$ -->
+  <TITLE>Tags used in TAO</TITLE>
+</HEAD>
+
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+    <HR><P><H3 ALIGN=CENTER>Tags used in TAO</H3></P>
+
+    <H3>Overview</H3>
+
+    <P>The <A HREF="http://www.omg.org/library/c2indx.html">CORBA</A>
+      specification defines several tags, a.k.a. <EM>magic numbers</EM>,
+      to distinguish between several otherwise opaque entities.
+      For example,
+      all profiles are transmitted as a CDR encapsulation (a sequence
+      of octets),
+      using a tag the type of the profile can be determined and the
+      encapsulation can be properly interpreted.
+    </P>
+    <P>To ensure that the tags uniquely indentify the entities in each
+      namespace the <A HREF="http://www.omg.org/">OMG</A> acts as an
+      <EM>allocation authority</EM>,
+      keeps a registry of the tags allocated so far and assigning the
+      new tag values on demand.
+      The process to request a tag is very simple,
+      interested readers can consult
+      <A HREF="http://www.omg.org/cgi-bin/doc?ptc/99-02-01">this
+        link</A>
+      for more details
+    </P>
+
+    <P>We have reserved several tags for TAO, this page documents
+      those tags and how they are used, some details are subject to
+      change.  We recommend that interested readers check the
+      <A HREF="../releasenotes/index.html">release notes</A>
+    </P>
+
+    <H3>List of TAGS</H3>
+
+    <H4>ORB Type ID</H4>
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+      <TR><TH>Hex Value</TH><TH>ASCII Representation</TH>
+        <TH>Description</TH></TR>
+      <TR>
+        <TD>0x54414f00</TD><TD>"TAO\0x00"</TD><TD>IIOP profiles
+          contain a component list. One of the elements of this
+          list (the <CODE>IOP::TAG_ORB_TYPE</CODE>) contains a
+          identifier for the ORB that created the profile.
+        </TD>
+      </TR>
+    </TABLE></P>
+
+    <H4>IOR Profile IDs</H4>
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+      <TR><TH>Hex Value</TH><TH>ASCII Representation</TH>
+        <TH>Description</TH></TR>
+      <TR>
+        <TD>0x54414f00</TD><TD>"TAO\0x00"</TD><TD>A TAO local IPC (aka
+          Unix domain) profile.
+        </TD>
+      </TR>
+    </TABLE></P>
+
+    <P>The range <CODE>0x54414f01-0x54414f0f</CODE>
+      (<CODE>"TAO\0x01"-"TAO\0x0f"</CODE>) is reserved for future use.
+      Only for informational purposes we include the following list
+      of potential uses:
+    </P>
+
+    <P><TABLE>
+      <TR><TH>Hex Value</TH><TH>ASCII Representation</TH>
+        <TH>Description</TH></TR>
+      <TR>
+        <TD>0x54414f01</TD><TD>"TAO\0x01"</TD>
+        <TD>GIOP over ATM/AAL5</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f02</TD><TD>"TAO\0x02"</TD>
+        <TD>Shared memory transport</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f03</TD><TD>"TAO\0x03"</TD>
+        <TD>Message queue</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f04</TD><TD>"TAO\0x04"</TD>
+        <TD>UDP</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f05</TD><TD>"TAO\0x05"</TD>
+        <TD>IP multicast</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f06</TD><TD>"TAO\0x06"</TD>
+        <TD>Compact PCI bus</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f07</TD><TD>"TAO\0x07"</TD>
+        <TD>VME bus</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f08</TD><TD>"TAO\0x08"</TD>
+        <TD>NT named pipes</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f09</TD><TD>"TAO\0x09"</TD>
+        <TD>HTTP-NG</TD>
+      </TR>
+      <TR>
+        <TD>0x54414f0A</TD><TD>"TAO\0x0A"</TD>
+        <TD>Pipes (for collocated calls)</TD>
+      </TR>
+    </TABLE></P>
+
+    <H4>Service Context ID</H4>
+
+    <P>The range <CODE>0x54414f00-0x54414f0f</CODE>
+      (<CODE>"TAO\0x00"-"TAO\0x0f"</CODE>) is reserved for future
+      use.
+    </P>
+
+    <H4>Component IDs</H4>
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+      <TR><TH>Hex Value</TH><TH>ASCII Representation</TH>
+        <TH>Description</TH></TR>
+      <TR>
+        <TD>0x54414f00</TD><TD>"TAO\0x00"</TD>
+        <TD>Server side priority for the endpoint in this profile.
+          The component is encoded a two shorts, the minimum and
+          maximum priorities (in that order).
+          The values correspond to the CORBA priorities defined in the
+          real-time CORBA spec.
+          The client will select the endpoint that matches its
+          priorities and policies.
+        </TD>
+      </TR>
+    </TABLE></P>
+
+    <P>The range <CODE>0x54414f01-0x54414f0f</CODE>
+      (<CODE>"TAO\0x00"-"TAO\0x0f"</CODE>) is reserved for future
+      use.
+    </P>
+
+    <H4>Vendor Minor Code ID (VMCID)</H4>
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+      <TR><TH>Hex Value</TH><TH>ASCII Representation</TH>
+        <TH>Description</TH></TR>
+      <TR>
+        <TD>0x54410000</TD><TD>"TA\x00x00"</TD>
+        <TD>System exceptions thrown by TAO have their higher 20 bits
+          set to <CODE>0x54410</CODE>,
+          the other 12 bits are used to describe more precisely the
+          cause of the exception.
+          The lower 4 bits encode the errno that caused the exception,
+          the 8 intermediate bits encode the location where the
+          exception was raised.
+        </TD>
+      </TR>
+    </TABLE></P>
+
+    <P>The following list describes the current use of errno and
+      location encodings:</P>
+
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+      <TR><TH>Errno Value</TH><TH>Description</TH></TR>
+      <TR>
+        <TD>0x00</TD><TD>The error was not caused by a failed system
+          call</TD>
+      </TR>
+      <TR><TD>0x01</TD><TD>ETIMEDTOUT</TD></TR>
+      <TR><TD>0x02</TD><TD>ENFILE</TD></TR>
+      <TR><TD>0x03</TD><TD>EMFILE</TD></TR>
+      <TR><TD>0x04</TD><TD>EPIPE</TD></TR>
+      <TR><TD>0x05</TD><TD>ECONNREFUSED</TD></TR>
+      <TR><TD>0x06</TD><TD>ENOENT</TD></TR>
+      <TR><TD>0x07</TD><TD>EBADF</TD></TR>
+      <TR><TD>0x08</TD><TD>ENOSYS</TD></TR>
+      <TR><TD>0x09</TD><TD>EPERM</TD></TR>
+      <TR><TD>0x0A</TD><TD>EAFNOSUPPORT</TD></TR>
+    </TABLE></P>
+
+    <P>Please consult the documentation for your OS for more details
+      about the errno meanings</P>
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+      <TR><TH>Location encoding</TH><TH>Description</TH></TR>
+      <TR><TD>0x01</TD>
+        <TD>Connect failed</TD></TR>
+      <TR><TD>0x02</TD>
+        <TD>Location forward failed</TD></TR>
+      <TR><TD>0x03</TD>
+        <TD>Send request failed</TD></TR>
+      <TR><TD>0x04</TD>
+        <TD>POA in discarding state</TD></TR>
+      <TR><TD>0x05</TD>
+        <TD>POA in holding state</TD></TR>
+      <TR><TD>0x06</TD>
+        <TD>Unhandled C++ exception in server side</TD></TR>
+      <TR><TD>0x07</TD>
+        <TD>Failure while reading the reply</TD></TR>
+      <TR><TD>0x08</TD>
+        <TD>All protocols failed to parse the IOR</TD></TR>
+      <TR><TD>0x09</TD>
+        <TD>Attempt to use null pointer</TD></TR>
+      <TR><TD>0x0A</TD>
+        <TD>Error during MProfile creation</TD></TR>
+      <TR><TD>0x0B</TD>
+        <TD>Timeout while trying to establish the connection</TD></TR>
+      <TR><TD>0x0C</TD>
+        <TD>Timeout while sending the request</TD></TR>
+      <TR><TD>0x0D</TD>
+        <TD>Timeout while waiting for the reply</TD></TR>
+    </TABLE></P>
+
+    <P><HR></P>
+
+    Back to the TAO <A HREF="index.html">documentation</A>.
+
+    <!--#include virtual="/~schmidt/cgi-sig.html" -->
+  </BODY>
+</HTML>

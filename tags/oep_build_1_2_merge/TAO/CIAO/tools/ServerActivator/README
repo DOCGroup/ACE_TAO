@@ -1,0 +1,47 @@
+$Id$
+
+This directory contains an implementation of ServerActivator, which is
+the per-host daemon process CIAO's deployment and assembling framework
+uses to spawn new component servers on the host.  CIAO currently does
+not define how the deployment and assembling framework can locate
+ServerActivator's so it is recommended that you start up all your
+ServerActivator processes at a specific host.
+
+The ServerActivator implementation registers a simple ObjectKey
+"ServerActivator" to the IORTable, so if you start up the
+ServerActivator process with:
+
+  ServerActivator -ORBEndpoint iiop://hostname:13000
+
+You can get to the ServerActivator interface using the following
+IOR:
+
+  corbaloc:iiop:hostname:13000/ServerActivator
+
+
+Other command line flags supported by ServerActivator include:
+
+  * -n <pathname> : Specify the pathname ServerActivator uses to
+                    startup a ComponentServer process.
+
+  * -o <filename> : Specify the filename ServerActivator uses to
+                    write the IOR.
+
+  * -i <ior> : Specify the IOR for the ComponentInstallation interface.
+               It will be passed as
+
+                  "-ORBInitRef ComponentInstallation=<ior>"
+
+               command line options to the ComponentServer.
+
+  * -d <second> : Specify the time, in second, ServerActivator will
+                  wait for the ComponentServer to callback to notify
+                  ServerActivator their IOR.  ServerActivator
+                  considers the activation fails if the
+                  ComponentServer does not call back in time.
+
+  * -c : Try creating a container and install a home.
+
+There is also a simple test program in this directory called
+ServerActivator_test_client.  It is used to debug ServerActivator
+implementation.

@@ -1,0 +1,12 @@
+#
+# Makefile for building the TAO Load Monitor tests
+#
+# $Id$
+#
+
+
+DIRS = \
+  CPU
+
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

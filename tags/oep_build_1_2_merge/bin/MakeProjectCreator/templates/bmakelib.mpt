@@ -1,0 +1,20 @@
+// -*- MPC -*-
+// $Id$
+
+conditional_include "bmakecommon"
+
+type_is_static = 1
+
+Release {
+  optimize         = 1
+  defines          = NDEBUG
+  intermediate_dir = Release
+  lib_modifier     = s
+}
+
+Debug {
+  optimize         =
+  defines          = _DEBUG
+  intermediate_dir = Debug
+  lib_modifier     = sd
+}
