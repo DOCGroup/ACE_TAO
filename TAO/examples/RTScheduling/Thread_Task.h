@@ -15,18 +15,20 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
 
-  Thread_Task (int importance,
-	       int start_time,
-	       int load,
-	       DT_Creator *dt_creator,
-	       Task *task);
-  
+/*    Thread_Task (int importance, */
+/*  	       int start_time, */
+/*  	       int load, */
+/*  	       DT_Creator *dt_creator); */
+
   int activate_task (RTScheduling::Current_ptr current,
 		     CORBA::Policy_ptr sched_param,
 		     long flags,
+		     ACE_Time_Value* base_time,
 		     ACE_Barrier* barrier
 		     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+  virtual int perform_task (void);
+  
   int importance (void);
 
   int start_time (void);
@@ -34,7 +36,6 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
  protected:
   /// task svc
   virtual int svc (void);
- private:
   RTScheduling::Current_var current_;
   CORBA::Policy_var sched_param_;
   int start_time_;
@@ -43,7 +44,8 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   ACE_Barrier* barrier_;
   int importance_;
   DT_Creator *dt_creator_;
-  Task *task_;
+  //Task *task_;
+  ACE_Time_Value* base_time_;
 };
 
 #endif /* THREAD_TASK_H */

@@ -8,29 +8,31 @@
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_count = 0;
 
-Thread_Task::Thread_Task (int importance,
-			  int start_time,
-			  int load,
-			  DT_Creator *dt_creator,
-			  Task *task)
-{
-  this->load_ = load;
-  this->start_time_ = start_time;
-  this->importance_ = importance;
-  this->dt_creator_ = dt_creator;
-  this->task_ = task;
-}
+//  Thread_Task::Thread_Task (int importance,
+//  			  int start_time,
+//  			  int load,
+//  			  DT_Creator *dt_creator)
+//  {
+//    this->load_ = load;
+//    this->start_time_ = start_time;
+//    this->importance_ = importance;
+//    this->dt_creator_ = dt_creator;
+//    //this->task_ = task;
+//  }
 
 
 int
 Thread_Task::activate_task (RTScheduling::Current_ptr current,
 			    CORBA::Policy_ptr sched_param,
 			    long flags,
+			    ACE_Time_Value* base_time,
 			    ACE_Barrier* barrier
 			    ACE_ENV_ARG_DECL)
 {
   barrier_ = barrier;
    
+  base_time_ = base_time;
+
   current_ = RTScheduling::Current::_narrow (current
 					     ACE_ENV_ARG_PARAMETER);	
   ACE_CHECK;
@@ -96,9 +98,8 @@ Thread_Task::svc (void)
 					    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->task_->perform_task (load_,
-			     count_);
-
+  this->perform_task ();
+  
   this->current_->end_scheduling_segment (name
 					  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -121,3 +122,7 @@ Thread_Task::start_time (void)
   return this->start_time_;
 }
 
+int
+Thread_Task::perform_task (void)
+{
+}
