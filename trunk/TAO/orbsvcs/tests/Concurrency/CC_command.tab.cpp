@@ -1,40 +1,5 @@
 // $Id$
-/*  A Bison parser, made from CC_command.y with Bison version GNU Bison version 1.21
-  */
-
-#define YYBISON 1  /* Identify Bison output.  */
-
-#define yyparse CC_commandparse
-#define yylex CC_commandlex
-#define yyerror CC_commanderror
-#define yylval CC_commandlval
-#define yychar CC_commandchar
-#define yydebug CC_commanddebug
-#define yynerrs CC_commandnerrs
-#define	T_START_CMD	258
-#define	T_CREATE_CMD	259
-#define	T_LOCK_CMD	260
-#define	T_UNLOCK_CMD	261
-#define	T_TRYLOCK_CMD	262
-#define	T_CHANGEMODE_CMD	263
-#define	T_SLEEP_CMD	264
-#define	T_WAIT_CMD	265
-#define	T_REPEAT_CMD	266
-#define	T_EXCEP_CMD	267
-#define	T_PRINT_CMD	268
-#define	T_LOOKUP_CMD	269
-#define	T_TERM	270
-#define	T_READ	271
-#define	T_IREAD	272
-#define	T_UPGRADE	273
-#define	T_WRITE	274
-#define	T_IWRITE	275
-#define	T_IDENT	276
-#define	Q_STRING	277
-#define	T_NUM	278
-
-#line 18 "CC_command.y"
-
+# line 19 "CC_command.y"
 #include "CC_command.h"
 #include "ace/ACE.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
@@ -44,965 +9,859 @@ int CC_commandlex(void);
 
 extern int line_no;
 extern char line_buf[500];
-extern char *CC_commandtext;
+extern char *ace_cc_yytext;
 extern CC_CommandList *cmdlist;
 
-#line 32 "CC_command.y"
-typedef union {
+# line 32 "CC_command.y"
+typedef union
+#ifdef __cplusplus
+	ACE_CC_YYSTYPE
+#endif
+ {
   CC_Command *command;
   CosConcurrencyControl::lock_mode lock_mode;
   char *id;
   int num;
-} YYSTYPE;
+} ACE_CC_YYSTYPE;
+# define T_START_CMD 257
+# define T_CREATE_CMD 258
+# define T_LOCK_CMD 259
+# define T_UNLOCK_CMD 260
+# define T_TRYLOCK_CMD 261
+# define T_CHANGEMODE_CMD 262
+# define T_SLEEP_CMD 263
+# define T_WAIT_CMD 264
+# define T_REPEAT_CMD 265
+# define T_EXCEP_CMD 266
+# define T_PRINT_CMD 267
+# define T_LOOKUP_CMD 268
+# define T_TERM 269
+# define T_READ 270
+# define T_IREAD 271
+# define T_UPGRADE 272
+# define T_WRITE 273
+# define T_IWRITE 274
+# define T_IDENT 275
+# define Q_STRING 276
+# define T_NUM 277
 
-#ifndef YYLTYPE
-typedef
-  struct yyltype
-    {
-      int timestamp;
-      int first_line;
-      int first_column;
-      int last_line;
-      int last_column;
-      char *text;
-   }
-  yyltype;
-
-#define YYLTYPE yyltype
-#endif
-
-#include <stdio.h>
-
-#ifndef __cplusplus
-#ifndef __STDC__
-#define const
-#endif
-#endif
-
-
-
-#define	YYFINAL		66
-#define	YYFLAG		-32768
-#define	YYNTBASE	24
-
-#define YYTRANSLATE(x) ((unsigned)(x) <= 278 ? yytranslate[x] : 31)
-
-static const char yytranslate[] = {     0,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     1,     2,     3,     4,     5,
-     6,     7,     8,     9,    10,    11,    12,    13,    14,    15,
-    16,    17,    18,    19,    20,    21,    22,    23
-};
-
-#if YYDEBUG != 0
-static const short yyprhs[] = {     0,
-     0,     1,     3,     6,     8,    12,    16,    19,    24,    28,
-    33,    37,    42,    46,    52,    57,    61,    64,    68,    72,
-    76,    80,    84,    86,    88,    90,    92,    94,    96,    98
-};
-
-static const short yyrhs[] = {    -1,
-    25,     0,    25,    26,     0,    26,     0,     3,    27,    15,
-     0,     4,    28,    15,     0,     4,    15,     0,     5,    28,
-    30,    15,     0,     5,    30,    15,     0,     6,    28,    30,
-    15,     0,     6,    30,    15,     0,     7,    28,    30,    15,
-     0,     7,    30,    15,     0,     8,    28,    30,    30,    15,
-     0,     8,    30,    30,    15,     0,     9,    23,    15,     0,
-    10,    15,     0,    10,    22,    15,     0,    13,    22,    15,
-     0,    14,    28,    15,     0,    11,    23,    15,     0,    12,
-    29,    15,     0,    21,     0,    21,     0,    21,     0,    16,
-     0,    17,     0,    18,     0,    19,     0,    20,     0
-};
-
-#endif
-
-#if YYDEBUG != 0
-static const short yyrline[] = { 0,
-    51,    52,    60,    61,    64,    66,    68,    70,    72,    74,
-    76,    78,    80,    82,    84,    86,    88,    90,    92,    94,
-    96,    99,   103,   105,   107,   109,   110,   111,   112,   113
-};
-
-static const char * const yytname[] = {   "$","error","$illegal.","T_START_CMD",
-"T_CREATE_CMD","T_LOCK_CMD","T_UNLOCK_CMD","T_TRYLOCK_CMD","T_CHANGEMODE_CMD",
-"T_SLEEP_CMD","T_WAIT_CMD","T_REPEAT_CMD","T_EXCEP_CMD","T_PRINT_CMD","T_LOOKUP_CMD",
-"T_TERM","T_READ","T_IREAD","T_UPGRADE","T_WRITE","T_IWRITE","T_IDENT","Q_STRING",
-"T_NUM","start","cmd_list","cmd","config_file_name","lock_set_name","exception_name",
-"lock_mode",""
-};
-#endif
-
-static const short yyr1[] = {     0,
-    24,    24,    25,    25,    26,    26,    26,    26,    26,    26,
-    26,    26,    26,    26,    26,    26,    26,    26,    26,    26,
-    26,    26,    27,    28,    29,    30,    30,    30,    30,    30
-};
-
-static const short yyr2[] = {     0,
-     0,     1,     2,     1,     3,     3,     2,     4,     3,     4,
-     3,     4,     3,     5,     4,     3,     2,     3,     3,     3,
-     3,     3,     1,     1,     1,     1,     1,     1,     1,     1
-};
-
-static const short yydefact[] = {     1,
-     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     0,     0,     2,     4,    23,     0,     7,    24,     0,    26,
-    27,    28,    29,    30,     0,     0,     0,     0,     0,     0,
-     0,     0,     0,    17,     0,     0,    25,     0,     0,     0,
-     3,     5,     6,     0,     9,     0,    11,     0,    13,     0,
-     0,    16,    18,    21,    22,    19,    20,     8,    10,    12,
-     0,    15,    14,     0,     0,     0
-};
-
-static const short yydefgoto[] = {    64,
-    13,    14,    16,    19,    38,    26
-};
-
-static const short yypact[] = {     0,
-    -1,    14,    20,    20,    20,    20,     7,     4,     8,     1,
-    10,    13,     0,-32768,-32768,    18,-32768,-32768,    27,-32768,
--32768,-32768,-32768,-32768,    31,    28,    31,    29,    31,    30,
-    31,    31,    37,-32768,    38,    39,-32768,    40,    41,    42,
--32768,-32768,-32768,    43,-32768,    44,-32768,    45,-32768,    31,
-    46,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,
-    47,-32768,-32768,    63,    64,-32768
-};
-
-static const short yypgoto[] = {-32768,
--32768,    52,-32768,    12,-32768,    -4
-};
-
-
-#define	YYLAST		65
-
-
-static const short yytable[] = {    28,
-    30,    32,     1,     2,     3,     4,     5,     6,     7,     8,
-     9,    10,    11,    12,    25,    27,    29,    31,    34,    15,
-    44,    37,    46,    40,    48,    35,    50,    51,    17,    33,
-    36,    39,    42,    18,    18,    20,    21,    22,    23,    24,
-    18,    43,    45,    47,    49,    61,    20,    21,    22,    23,
-    24,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-    62,    63,    65,    66,    41
-};
-
-static const short yycheck[] = {     4,
-     5,     6,     3,     4,     5,     6,     7,     8,     9,    10,
-    11,    12,    13,    14,     3,     4,     5,     6,    15,    21,
-    25,    21,    27,    12,    29,    22,    31,    32,    15,    23,
-    23,    22,    15,    21,    21,    16,    17,    18,    19,    20,
-    21,    15,    15,    15,    15,    50,    16,    17,    18,    19,
-    20,    15,    15,    15,    15,    15,    15,    15,    15,    15,
-    15,    15,     0,     0,    13
-};
-/* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "/pkg/gnu/lib/bison.simple"
-
-/* Skeleton output parser for bison,
-   Copyright (C) 1984, 1989, 1990 Bob Corbett and Richard Stallman
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 1, or (at your option)
-   any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
-
-
-#ifndef alloca
-#ifdef __GNUC__
-#define alloca __builtin_alloca
-#else /* not GNU C.  */
-#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi) || defined (__DECCXX_VER)
-#include <alloca.h>
-#else /* not sparc */
-#if defined (MSDOS) && !defined (__TURBOC__)
+#ifdef __STDC__
+#include <stdlib.h>
+#include <string.h>
+#else
 #include <malloc.h>
-#else /* not MSDOS, or __TURBOC__ */
-#if defined(_AIX)
-#include <malloc.h>
- #pragma alloca
-#else /* not MSDOS, __TURBOC__, or _AIX */
-#ifdef __hpux
+#include <memory.h>
+#endif
+
+#include <values.h>
+
 #ifdef __cplusplus
-extern "C" {
-void *alloca (unsigned int);
+
+#ifndef ace_cc_yyerror
+	void ace_cc_yyerror(const char *);
+#endif
+
+#ifndef ace_cc_yylex
+#ifdef __EXTERN_C__
+	extern "C" { int ace_cc_yylex(void); }
+#else
+	int ace_cc_yylex(void);
+#endif
+#endif
+	int ace_cc_yyparse(void);
+
+#endif
+#define ace_cc_yyclearin ace_cc_yychar = -1
+#define ace_cc_yyerrok ace_cc_yyerrflag = 0
+extern int ace_cc_yychar;
+extern int ace_cc_yyerrflag;
+ACE_CC_YYSTYPE ace_cc_yylval;
+ACE_CC_YYSTYPE ace_cc_yyval;
+typedef int ace_cc_yytabelem;
+#ifndef ACE_CC_YYMAXDEPTH
+#define ACE_CC_YYMAXDEPTH 150
+#endif
+#if ACE_CC_YYMAXDEPTH > 0
+int ace_cc_yy_ace_cc_yys[ACE_CC_YYMAXDEPTH], *ace_cc_yys = ace_cc_yy_ace_cc_yys;
+ACE_CC_YYSTYPE ace_cc_yy_ace_cc_yyv[ACE_CC_YYMAXDEPTH], *ace_cc_yyv = ace_cc_yy_ace_cc_yyv;
+#else	/* user does initial allocation */
+int *ace_cc_yys;
+ACE_CC_YYSTYPE *ace_cc_yyv;
+#endif
+static int ace_cc_yymaxdepth = ACE_CC_YYMAXDEPTH;
+# define ACE_CC_YYERRCODE 256
+
+# line 115 "CC_command.y"
+
+
+int ace_cc_yyerror(char *s)
+{
+  printf("%d: %s at %s in:\n%s\n",
+         line_no, s, ace_cc_yytext, line_buf);
+  ACE_OS::exit(-1);
+  return 0;
+}
+ace_cc_yytabelem ace_cc_yyexca[] ={
+-1, 1,
+	0, -1,
+	-2, 0,
+	};
+# define ACE_CC_YYNPROD 31
+# define ACE_CC_YYLAST 102
+ace_cc_yytabelem ace_cc_yyact[]={
+
+    24,    25,    26,    27,    28,    21,     4,     5,     6,     7,
+     8,     9,    10,    11,    14,    15,    12,    13,    24,    25,
+    26,    27,    28,    40,    36,    64,    20,    35,    38,    42,
+    63,    37,    21,    21,    18,    61,    60,    59,    58,    57,
+    56,    55,    54,    53,    50,    48,    46,    44,    43,    23,
+     2,     3,     1,    19,    16,    41,    17,    30,    32,    34,
+    22,    29,    31,    33,     0,     0,     0,    39,     0,     0,
+     0,     0,    45,     0,     0,     0,     0,     0,     0,    47,
+     0,    49,     0,    51,    52,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,    62 };
+ace_cc_yytabelem ace_cc_yypact[]={
+
+  -251,-10000000,  -251,-10000000,  -241,  -243,  -270,  -270,  -270,  -270,
+  -250,  -245,  -248,  -242,  -254,  -246,-10000000,  -221,-10000000,  -222,
+-10000000,-10000000,  -252,  -223,-10000000,-10000000,-10000000,-10000000,-10000000,  -252,
+  -224,  -252,  -225,  -252,  -252,  -226,-10000000,  -227,  -228,  -229,
+  -230,  -231,-10000000,-10000000,-10000000,  -232,-10000000,  -233,-10000000,  -234,
+-10000000,  -252,  -239,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,  -244,-10000000,-10000000 };
+ace_cc_yytabelem ace_cc_yypgo[]={
+
+     0,    51,    56,    53,    55,    49,    52,    50 };
+ace_cc_yytabelem ace_cc_yyr1[]={
+
+     0,     6,     6,     7,     7,     1,     1,     1,     1,     1,
+     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+     1,     1,     1,     2,     3,     4,     5,     5,     5,     5,
+     5 };
+ace_cc_yytabelem ace_cc_yyr2[]={
+
+     0,     0,     3,     5,     3,     7,     7,     5,     9,     7,
+     9,     7,     9,     7,    11,     9,     7,     5,     7,     7,
+     7,     7,     7,     3,     3,     3,     3,     3,     3,     3,
+     3 };
+ace_cc_yytabelem ace_cc_yychk[]={
+
+-10000000,    -6,    -7,    -1,   257,   258,   259,   260,   261,   262,
+   263,   264,   267,   268,   265,   266,    -1,    -2,   275,    -3,
+   269,   275,    -3,    -5,   270,   271,   272,   273,   274,    -3,
+    -5,    -3,    -5,    -3,    -5,   277,   269,   276,   276,    -3,
+   277,    -4,   275,   269,   269,    -5,   269,    -5,   269,    -5,
+   269,    -5,    -5,   269,   269,   269,   269,   269,   269,   269,
+   269,   269,    -5,   269,   269 };
+ace_cc_yytabelem ace_cc_yydef[]={
+
+     1,    -2,     2,     4,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     3,     0,    23,     0,
+     7,    24,     0,     0,    26,    27,    28,    29,    30,     0,
+     0,     0,     0,     0,     0,     0,    17,     0,     0,     0,
+     0,     0,    25,     5,     6,     0,     9,     0,    11,     0,
+    13,     0,     0,    16,    18,    19,    20,    21,    22,     8,
+    10,    12,     0,    15,    14 };
+typedef struct
+#ifdef __cplusplus
+	ace_cc_yytoktype
+#endif
+{ char *t_name; int t_val; } ace_cc_yytoktype;
+#ifndef ACE_CC_YYDEBUG
+#	define ACE_CC_YYDEBUG	0	/* don't allow debugging */
+#endif
+
+#if ACE_CC_YYDEBUG
+
+ace_cc_yytoktype ace_cc_yytoks[] =
+{
+	"T_START_CMD",	257,
+	"T_CREATE_CMD",	258,
+	"T_LOCK_CMD",	259,
+	"T_UNLOCK_CMD",	260,
+	"T_TRYLOCK_CMD",	261,
+	"T_CHANGEMODE_CMD",	262,
+	"T_SLEEP_CMD",	263,
+	"T_WAIT_CMD",	264,
+	"T_REPEAT_CMD",	265,
+	"T_EXCEP_CMD",	266,
+	"T_PRINT_CMD",	267,
+	"T_LOOKUP_CMD",	268,
+	"T_TERM",	269,
+	"T_READ",	270,
+	"T_IREAD",	271,
+	"T_UPGRADE",	272,
+	"T_WRITE",	273,
+	"T_IWRITE",	274,
+	"T_IDENT",	275,
+	"Q_STRING",	276,
+	"T_NUM",	277,
+	"-unknown-",	-1	/* ends search */
 };
-#else /* not __cplusplus */
-void *alloca (unsigned int);
-#endif /* not __cplusplus */
-#endif /* __hpux */
-#endif /* not _AIX */
-#endif /* not MSDOS, or __TURBOC__ */
-#endif /* not sparc.  */
-#endif /* not GNU C.  */
-#endif /* alloca not defined.  */
 
-/* This is the parser code that is written into each bison parser
-  when the %semantic_parser declaration is not specified in the grammar.
-  It was written by Richard Stallman by simplifying the hairy parser
-  used when %semantic_parser is specified.  */
-
-/* Note: there must be only one dollar sign in this file.
-   It is replaced by the list of actions, each action
-   as one case of the switch.  */
-
-#define yyerrok		(yyerrstatus = 0)
-#define yyclearin	(yychar = YYEMPTY)
-#define YYEMPTY		-2
-#define YYEOF		0
-#define YYACCEPT	return(0)
-#define YYABORT 	return(1)
-#define YYERROR		goto yyerrlab1
-/* Like YYERROR except do call yyerror.
-   This remains here temporarily to ease the
-   transition to the new meaning of YYERROR, for GCC.
-   Once GCC version 2 has supplanted version 1, this can go.  */
-#define YYFAIL		goto yyerrlab
-#define YYRECOVERING()  (!!yyerrstatus)
-#define YYBACKUP(token, value) \
-do								\
-  if (yychar == YYEMPTY && yylen == 1)				\
-    { yychar = (token), yylval = (value);			\
-      yychar1 = YYTRANSLATE (yychar);				\
-      YYPOPSTACK;						\
-      goto yybackup;						\
-    }								\
-  else								\
-    { yyerror ("syntax error: cannot back up"); YYERROR; }	\
-while (0)
-
-#define YYTERROR	1
-#define YYERRCODE	256
-
-#ifndef YYPURE
-#define YYLEX		yylex()
-#endif
-
-#ifdef YYPURE
-#ifdef YYLSP_NEEDED
-#define YYLEX		yylex(&yylval, &yylloc)
-#else
-#define YYLEX		yylex(&yylval)
-#endif
-#endif
-
-/* If nonreentrant, generate the variables here */
-
-#ifndef YYPURE
-
-int	yychar;			/*  the lookahead symbol		*/
-YYSTYPE	yylval;			/*  the semantic value of the		*/
-				/*  lookahead symbol			*/
-
-#ifdef YYLSP_NEEDED
-YYLTYPE yylloc;			/*  location data for the lookahead	*/
-				/*  symbol				*/
-#endif
-
-int yynerrs;			/*  number of parse errors so far       */
-#endif  /* not YYPURE */
-
-#if YYDEBUG != 0
-int yydebug;			/*  nonzero means print parse trace	*/
-/* Since this is uninitialized, it does not stop multiple parsers
-   from coexisting.  */
-#endif
-
-/*  YYINITDEPTH indicates the initial size of the parser's stacks	*/
-
-#ifndef	YYINITDEPTH
-#define YYINITDEPTH 200
-#endif
-
-/*  YYMAXDEPTH is the maximum size the stacks can grow to
-    (effective only if the built-in stack extension method is used).  */
-
-#if YYMAXDEPTH == 0
-#undef YYMAXDEPTH
-#endif
-
-#ifndef YYMAXDEPTH
-#define YYMAXDEPTH 10000
-#endif
-
-/* Prevent warning if -Wstrict-prototypes.  */
-#ifdef __GNUC__
-int yyparse (void);
-#endif
-
-#if __GNUC__ > 1		/* GNU C and GNU C++ define this.  */
-#define __yy_bcopy(FROM,TO,COUNT)	__builtin_memcpy(TO,FROM,COUNT)
-#else				/* not GNU C or C++ */
-#ifndef __cplusplus
-
-/* This is the most reliable way to avoid incompatibilities
-   in available built-in functions on various systems.  */
-static void
-__yy_bcopy (from, to, count)
-     char *from;
-     char *to;
-     int count;
+char * ace_cc_yyreds[] =
 {
-  register char *f = from;
-  register char *t = to;
-  register int i = count;
+	"-no such reduction-",
+	"start : /* empty */",
+	"start : cmd_list",
+	"cmd_list : cmd_list cmd",
+	"cmd_list : cmd",
+	"cmd : T_START_CMD config_file_name T_TERM",
+	"cmd : T_CREATE_CMD lock_set_name T_TERM",
+	"cmd : T_CREATE_CMD T_TERM",
+	"cmd : T_LOCK_CMD lock_set_name lock_mode T_TERM",
+	"cmd : T_LOCK_CMD lock_mode T_TERM",
+	"cmd : T_UNLOCK_CMD lock_set_name lock_mode T_TERM",
+	"cmd : T_UNLOCK_CMD lock_mode T_TERM",
+	"cmd : T_TRYLOCK_CMD lock_set_name lock_mode T_TERM",
+	"cmd : T_TRYLOCK_CMD lock_mode T_TERM",
+	"cmd : T_CHANGEMODE_CMD lock_set_name lock_mode lock_mode T_TERM",
+	"cmd : T_CHANGEMODE_CMD lock_mode lock_mode T_TERM",
+	"cmd : T_SLEEP_CMD T_NUM T_TERM",
+	"cmd : T_WAIT_CMD T_TERM",
+	"cmd : T_WAIT_CMD Q_STRING T_TERM",
+	"cmd : T_PRINT_CMD Q_STRING T_TERM",
+	"cmd : T_LOOKUP_CMD lock_set_name T_TERM",
+	"cmd : T_REPEAT_CMD T_NUM T_TERM",
+	"cmd : T_EXCEP_CMD exception_name T_TERM",
+	"config_file_name : T_IDENT",
+	"lock_set_name : T_IDENT",
+	"exception_name : T_IDENT",
+	"lock_mode : T_READ",
+	"lock_mode : T_IREAD",
+	"lock_mode : T_UPGRADE",
+	"lock_mode : T_WRITE",
+	"lock_mode : T_IWRITE",
+};
+#endif /* ACE_CC_YYDEBUG */
+# line	1 "/usr/ccs/bin/yaccpar"
+/*
+ * Copyright (c) 1993 by Sun Microsystems, Inc.
+ */
 
-  while (i-- > 0)
-    *t++ = *f++;
+#pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
+
+/*
+** Skeleton parser driver for yacc output
+*/
+
+/*
+** yacc user known macros and defines
+*/
+#define ACE_CC_YYERROR		goto ace_cc_yyerrlab
+#define ACE_CC_YYACCEPT	return(0)
+#define ACE_CC_YYABORT		return(1)
+#define ACE_CC_YYBACKUP( newtoken, newvalue )\
+{\
+	if ( ace_cc_yychar >= 0 || ( ace_cc_yyr2[ ace_cc_yytmp ] >> 1 ) != 1 )\
+	{\
+		ace_cc_yyerror( "syntax error - cannot backup" );\
+		goto ace_cc_yyerrlab;\
+	}\
+	ace_cc_yychar = newtoken;\
+	ace_cc_yystate = *ace_cc_yyps;\
+	ace_cc_yylval = newvalue;\
+	goto ace_cc_yynewstate;\
 }
-
-#else /* __cplusplus */
-
-/* This is the most reliable way to avoid incompatibilities
-   in available built-in functions on various systems.  */
-static void
-__yy_bcopy (char *from, char *to, int count)
-{
-  register char *f = from;
-  register char *t = to;
-  register int i = count;
-
-  while (i-- > 0)
-    *t++ = *f++;
-}
-
+#define ACE_CC_YYRECOVERING()	(!!ace_cc_yyerrflag)
+#define ACE_CC_YYNEW(type)	malloc(sizeof(type) * ace_cc_yynewmax)
+#define ACE_CC_YYCOPY(to, from, type) \
+	(type *) memcpy(to, (char *) from, ace_cc_yynewmax * sizeof(type))
+#define ACE_CC_YYENLARGE( from, type) \
+	(type *) realloc((char *) from, ace_cc_yynewmax * sizeof(type))
+#ifndef ACE_CC_YYDEBUG
+#	define ACE_CC_YYDEBUG	1	/* make debugging available */
 #endif
-#endif
-
-#line 184 "/pkg/gnu/lib/bison.simple"
-int
-yyparse()
-{
-  register int yystate;
-  register int yyn;
-  register short *yyssp;
-  register YYSTYPE *yyvsp;
-  int yyerrstatus;	/*  number of tokens to shift before error messages enabled */
-  int yychar1;		/*  lookahead token as an internal (translated) token number */
 
-  short	yyssa[YYINITDEPTH];	/*  the state stack			*/
-  YYSTYPE yyvsa[YYINITDEPTH];	/*  the semantic value stack		*/
+/*
+** user known globals
+*/
+int ace_cc_yydebug;			/* set to 1 to get debugging */
 
-  short *yyss = yyssa;		/*  refer to the stacks thru separate pointers */
-  YYSTYPE *yyvs = yyvsa;	/*  to allow yyoverflow to reallocate them elsewhere */
+/*
+** driver internal defines
+*/
+#define ACE_CC_YYFLAG		(-10000000)
 
-#ifdef YYLSP_NEEDED
-  YYLTYPE yylsa[YYINITDEPTH];	/*  the location stack			*/
-  YYLTYPE *yyls = yylsa;
-  YYLTYPE *yylsp;
+/*
+** global variables used by the parser
+*/
+ACE_CC_YYSTYPE *ace_cc_yypv;			/* top of value stack */
+int *ace_cc_yyps;			/* top of state stack */
 
-#define YYPOPSTACK   (yyvsp--, yyssp--, yylsp--)
+int ace_cc_yystate;			/* current state */
+int ace_cc_yytmp;			/* extra var (lasts between blocks) */
+
+int ace_cc_yynerrs;			/* number of errors */
+int ace_cc_yyerrflag;			/* error recovery flag */
+int ace_cc_yychar;			/* current input token number */
+
+
+
+#ifdef ACE_CC_YYNMBCHARS
+#define ACE_CC_YYLEX()		ace_cc_yycvtok(ace_cc_yylex())
+/*
+** ace_cc_yycvtok - return a token if i is a wchar_t value that exceeds 255.
+**	If i<255, i itself is the token.  If i>255 but the neither 
+**	of the 30th or 31st bit is on, i is already a token.
+*/
+#if defined(__STDC__) || defined(__cplusplus)
+int ace_cc_yycvtok(int i)
 #else
-#define YYPOPSTACK   (yyvsp--, yyssp--)
+int ace_cc_yycvtok(i) int i;
 #endif
+{
+	int first = 0;
+	int last = ACE_CC_YYNMBCHARS - 1;
+	int mid;
+	wchar_t j;
 
-  int yystacksize = YYINITDEPTH;
-
-#ifdef YYPURE
-  int yychar;
-  YYSTYPE yylval;
-  int yynerrs;
-#ifdef YYLSP_NEEDED
-  YYLTYPE yylloc;
-#endif
-#endif
-
-  YYSTYPE yyval;		/*  the variable used to return		*/
-				/*  semantic values from the action	*/
-				/*  routines				*/
-
-  int yylen;
-
-#if YYDEBUG != 0
-  if (yydebug)
-    fprintf(stderr, "Starting parse\n");
-#endif
-
-  yystate = 0;
-  yyerrstatus = 0;
-  yynerrs = 0;
-  yychar = YYEMPTY;		/* Cause a token to be read.  */
-
-  /* Initialize stack pointers.
-     Waste one element of value and location stack
-     so that they stay on the same level as the state stack.
-     The wasted elements are never initialized.  */
-
-  yyssp = yyss - 1;
-  yyvsp = yyvs;
-#ifdef YYLSP_NEEDED
-  yylsp = yyls;
-#endif
-
-/* Push a new state, which is found in  yystate  .  */
-/* In all cases, when you get here, the value and location stacks
-   have just been pushed. so pushing a state here evens the stacks.  */
-yynewstate:
-
-  *++yyssp = yystate;
-
-  if (yyssp >= yyss + yystacksize - 1)
-    {
-      /* Give user a chance to reallocate the stack */
-      /* Use copies of these so that the &'s don't force the real ones into memory. */
-      YYSTYPE *yyvs1 = yyvs;
-      short *yyss1 = yyss;
-#ifdef YYLSP_NEEDED
-      YYLTYPE *yyls1 = yyls;
-#endif
-
-      /* Get the current used size of the three stacks, in elements.  */
-      int size = yyssp - yyss + 1;
-
-#ifdef yyoverflow
-      /* Each stack pointer address is followed by the size of
-	 the data in use in that stack, in bytes.  */
-      yyoverflow("parser stack overflow",
-		 &yyss1, size * sizeof (*yyssp),
-		 &yyvs1, size * sizeof (*yyvsp),
-#ifdef YYLSP_NEEDED
-		 &yyls1, size * sizeof (*yylsp),
-#endif
-		 &yystacksize);
-
-      yyss = yyss1; yyvs = yyvs1;
-#ifdef YYLSP_NEEDED
-      yyls = yyls1;
-#endif
-#else /* no yyoverflow */
-      /* Extend the stack our own way.  */
-      if (yystacksize >= YYMAXDEPTH)
-	{
-	  yyerror("parser stack overflow");
-	  return 2;
+	if(i&0x60000000){/*Must convert to a token. */
+		if( ace_cc_yymbchars[last].character < i ){
+			return i;/*Giving up*/
+		}
+		while ((last>=first)&&(first>=0)) {/*Binary search loop*/
+			mid = (first+last)/2;
+			j = ace_cc_yymbchars[mid].character;
+			if( j==i ){/*Found*/ 
+				return ace_cc_yymbchars[mid].tvalue;
+			}else if( j<i ){
+				first = mid + 1;
+			}else{
+				last = mid -1;
+			}
+		}
+		/*No entry in the table.*/
+		return i;/* Giving up.*/
+	}else{/* i is already a token. */
+		return i;
 	}
-      yystacksize *= 2;
-      if (yystacksize > YYMAXDEPTH)
-	yystacksize = YYMAXDEPTH;
-      yyss = (short *) alloca (yystacksize * sizeof (*yyssp));
-      __yy_bcopy ((char *)yyss1, (char *)yyss, size * sizeof (*yyssp));
-      yyvs = (YYSTYPE *) alloca (yystacksize * sizeof (*yyvsp));
-      __yy_bcopy ((char *)yyvs1, (char *)yyvs, size * sizeof (*yyvsp));
-#ifdef YYLSP_NEEDED
-      yyls = (YYLTYPE *) alloca (yystacksize * sizeof (*yylsp));
-      __yy_bcopy ((char *)yyls1, (char *)yyls, size * sizeof (*yylsp));
+}
+#else/*!ACE_CC_YYNMBCHARS*/
+#define ACE_CC_YYLEX()		ace_cc_yylex()
+#endif/*!ACE_CC_YYNMBCHARS*/
+
+/*
+** ace_cc_yyparse - return 0 if worked, 1 if syntax error not recovered from
+*/
+#if defined(__STDC__) || defined(__cplusplus)
+int ace_cc_yyparse(void)
+#else
+int ace_cc_yyparse()
 #endif
-#endif /* no yyoverflow */
+{
+	register ACE_CC_YYSTYPE *ace_cc_yypvt;	/* top of value stack for $vars */
 
-      yyssp = yyss + size - 1;
-      yyvsp = yyvs + size - 1;
-#ifdef YYLSP_NEEDED
-      yylsp = yyls + size - 1;
-#endif
-
-#if YYDEBUG != 0
-      if (yydebug)
-	fprintf(stderr, "Stack size increased to %d\n", yystacksize);
-#endif
-
-      if (yyssp >= yyss + yystacksize - 1)
-	YYABORT;
-    }
-
-#if YYDEBUG != 0
-  if (yydebug)
-    fprintf(stderr, "Entering state %d\n", yystate);
-#endif
-
-  goto yybackup;
- yybackup:
-
-/* Do appropriate processing given the current state.  */
-/* Read a lookahead token if we need one and don't already have one.  */
-/* yyresume: */
-
-  /* First try to decide what to do without reference to lookahead token.  */
-
-  yyn = yypact[yystate];
-  if (yyn == YYFLAG)
-    goto yydefault;
-
-  /* Not known => get a lookahead token if don't already have one.  */
-
-  /* yychar is either YYEMPTY or YYEOF
-     or a valid token in external form.  */
-
-  if (yychar == YYEMPTY)
-    {
-#if YYDEBUG != 0
-      if (yydebug)
-	fprintf(stderr, "Reading a token: ");
-#endif
-      yychar = YYLEX;
-    }
-
-  /* Convert token to internal form (in yychar1) for indexing tables with */
-
-  if (yychar <= 0)		/* This means end of input. */
-    {
-      yychar1 = 0;
-      yychar = YYEOF;		/* Don't call YYLEX any more */
-
-#if YYDEBUG != 0
-      if (yydebug)
-	fprintf(stderr, "Now at end of input.\n");
-#endif
-    }
-  else
-    {
-      yychar1 = YYTRANSLATE(yychar);
-
-#if YYDEBUG != 0
-      if (yydebug)
+#if defined(__cplusplus) || defined(lint)
+/*
+	hacks to please C++ and lint - goto's inside switch should never be
+	executed; ace_cc_yypvt is set to 0 to avoid "used before set" warning.
+*/
+	static int __yaccpar_lint_hack__ = 0;
+	switch (__yaccpar_lint_hack__)
 	{
-	  fprintf (stderr, "Next token is %d (%s", yychar, yytname[yychar1]);
-	  /* Give the individual parser a way to print the precise meaning
-	     of a token, for further debugging info.  */
-#ifdef YYPRINT
-	  YYPRINT (stderr, yychar, yylval);
+		case 1: goto ace_cc_yyerrlab;
+		case 2: goto ace_cc_yynewstate;
+	}
+	ace_cc_yypvt = 0;
 #endif
-	  fprintf (stderr, ")\n");
+
+	/*
+	** Initialize externals - ace_cc_yyparse may be called more than once
+	*/
+	ace_cc_yypv = &ace_cc_yyv[-1];
+	ace_cc_yyps = &ace_cc_yys[-1];
+	ace_cc_yystate = 0;
+	ace_cc_yytmp = 0;
+	ace_cc_yynerrs = 0;
+	ace_cc_yyerrflag = 0;
+	ace_cc_yychar = -1;
+
+#if ACE_CC_YYMAXDEPTH <= 0
+	if (ace_cc_yymaxdepth <= 0)
+	{
+		if ((ace_cc_yymaxdepth = ACE_CC_YYEXPAND(0)) <= 0)
+		{
+			ace_cc_yyerror("yacc initialization error");
+			ACE_CC_YYABORT;
+		}
 	}
 #endif
-    }
 
-  yyn += yychar1;
-  if (yyn < 0 || yyn > YYLAST || yycheck[yyn] != yychar1)
-    goto yydefault;
+	{
+		register ACE_CC_YYSTYPE *ace_cc_yy_pv;	/* top of value stack */
+		register int *ace_cc_yy_ps;		/* top of state stack */
+		register int ace_cc_yy_state;		/* current state */
+		register int  ace_cc_yy_n;		/* internal state number info */
+	goto ace_cc_yystack;	/* moved from 6 lines above to here to please C++ */
 
-  yyn = yytable[yyn];
+		/*
+		** get globals into registers.
+		** branch to here only if ACE_CC_YYBACKUP was called.
+		*/
+	ace_cc_yynewstate:
+		ace_cc_yy_pv = ace_cc_yypv;
+		ace_cc_yy_ps = ace_cc_yyps;
+		ace_cc_yy_state = ace_cc_yystate;
+		goto ace_cc_yy_newstate;
 
-  /* yyn is what to do for this token type in this state.
-     Negative => reduce, -yyn is rule number.
-     Positive => shift, yyn is new state.
-       New state is final state => don't bother to shift,
-       just return success.
-     0, or most negative number => error.  */
+		/*
+		** get globals into registers.
+		** either we just started, or we just finished a reduction
+		*/
+	ace_cc_yystack:
+		ace_cc_yy_pv = ace_cc_yypv;
+		ace_cc_yy_ps = ace_cc_yyps;
+		ace_cc_yy_state = ace_cc_yystate;
 
-  if (yyn < 0)
-    {
-      if (yyn == YYFLAG)
-	goto yyerrlab;
-      yyn = -yyn;
-      goto yyreduce;
-    }
-  else if (yyn == 0)
-    goto yyerrlab;
+		/*
+		** top of for (;;) loop while no reductions done
+		*/
+	ace_cc_yy_stack:
+		/*
+		** put a state and value onto the stacks
+		*/
+#if ACE_CC_YYDEBUG
+		/*
+		** if debugging, look up token value in list of value vs.
+		** name pairs.  0 and negative (-1) are special values.
+		** Note: linear search is used since time is not a real
+		** consideration while debugging.
+		*/
+		if ( ace_cc_yydebug )
+		{
+			register int ace_cc_yy_i;
 
-  if (yyn == YYFINAL)
-    YYACCEPT;
-
-  /* Shift the lookahead token.  */
-
-#if YYDEBUG != 0
-  if (yydebug)
-    fprintf(stderr, "Shifting token %d (%s), ", yychar, yytname[yychar1]);
+			printf( "State %d, token ", ace_cc_yy_state );
+			if ( ace_cc_yychar == 0 )
+				printf( "end-of-file\n" );
+			else if ( ace_cc_yychar < 0 )
+				printf( "-none-\n" );
+			else
+			{
+				for ( ace_cc_yy_i = 0; ace_cc_yytoks[ace_cc_yy_i].t_val >= 0;
+					ace_cc_yy_i++ )
+				{
+					if ( ace_cc_yytoks[ace_cc_yy_i].t_val == ace_cc_yychar )
+						break;
+				}
+				printf( "%s\n", ace_cc_yytoks[ace_cc_yy_i].t_name );
+			}
+		}
+#endif /* ACE_CC_YYDEBUG */
+		if ( ++ace_cc_yy_ps >= &ace_cc_yys[ ace_cc_yymaxdepth ] )	/* room on stack? */
+		{
+			/*
+			** reallocate and recover.  Note that pointers
+			** have to be reset, or bad things will happen
+			*/
+			int ace_cc_yyps_index = (ace_cc_yy_ps - ace_cc_yys);
+			int ace_cc_yypv_index = (ace_cc_yy_pv - ace_cc_yyv);
+			int ace_cc_yypvt_index = (ace_cc_yypvt - ace_cc_yyv);
+			int ace_cc_yynewmax;
+#ifdef ACE_CC_YYEXPAND
+			ace_cc_yynewmax = ACE_CC_YYEXPAND(ace_cc_yymaxdepth);
+#else
+			ace_cc_yynewmax = 2 * ace_cc_yymaxdepth;	/* double table size */
+			if (ace_cc_yymaxdepth == ACE_CC_YYMAXDEPTH)	/* first time growth */
+			{
+				char *newace_cc_yys = (char *)ACE_CC_YYNEW(int);
+				char *newace_cc_yyv = (char *)ACE_CC_YYNEW(ACE_CC_YYSTYPE);
+				if (newace_cc_yys != 0 && newace_cc_yyv != 0)
+				{
+					ace_cc_yys = ACE_CC_YYCOPY(newace_cc_yys, ace_cc_yys, int);
+					ace_cc_yyv = ACE_CC_YYCOPY(newace_cc_yyv, ace_cc_yyv, ACE_CC_YYSTYPE);
+				}
+				else
+					ace_cc_yynewmax = 0;	/* failed */
+			}
+			else				/* not first time */
+			{
+				ace_cc_yys = ACE_CC_YYENLARGE(ace_cc_yys, int);
+				ace_cc_yyv = ACE_CC_YYENLARGE(ace_cc_yyv, ACE_CC_YYSTYPE);
+				if (ace_cc_yys == 0 || ace_cc_yyv == 0)
+					ace_cc_yynewmax = 0;	/* failed */
+			}
 #endif
+			if (ace_cc_yynewmax <= ace_cc_yymaxdepth)	/* tables not expanded */
+			{
+				ace_cc_yyerror( "yacc stack overflow" );
+				ACE_CC_YYABORT;
+			}
+			ace_cc_yymaxdepth = ace_cc_yynewmax;
 
-  /* Discard the token being shifted unless it is eof.  */
-  if (yychar != YYEOF)
-    yychar = YYEMPTY;
+			ace_cc_yy_ps = ace_cc_yys + ace_cc_yyps_index;
+			ace_cc_yy_pv = ace_cc_yyv + ace_cc_yypv_index;
+			ace_cc_yypvt = ace_cc_yyv + ace_cc_yypvt_index;
+		}
+		*ace_cc_yy_ps = ace_cc_yy_state;
+		*++ace_cc_yy_pv = ace_cc_yyval;
 
-  *++yyvsp = yylval;
-#ifdef YYLSP_NEEDED
-  *++yylsp = yylloc;
+		/*
+		** we have a new state - find out what to do
+		*/
+	ace_cc_yy_newstate:
+		if ( ( ace_cc_yy_n = ace_cc_yypact[ ace_cc_yy_state ] ) <= ACE_CC_YYFLAG )
+			goto ace_cc_yydefault;		/* simple state */
+#if ACE_CC_YYDEBUG
+		/*
+		** if debugging, need to mark whether new token grabbed
+		*/
+		ace_cc_yytmp = ace_cc_yychar < 0;
 #endif
+		if ( ( ace_cc_yychar < 0 ) && ( ( ace_cc_yychar = ACE_CC_YYLEX() ) < 0 ) )
+			ace_cc_yychar = 0;		/* reached EOF */
+#if ACE_CC_YYDEBUG
+		if ( ace_cc_yydebug && ace_cc_yytmp )
+		{
+			register int ace_cc_yy_i;
 
-  /* count tokens shifted since error; after three, turn off error status.  */
-  if (yyerrstatus) yyerrstatus--;
+			printf( "Received token " );
+			if ( ace_cc_yychar == 0 )
+				printf( "end-of-file\n" );
+			else if ( ace_cc_yychar < 0 )
+				printf( "-none-\n" );
+			else
+			{
+				for ( ace_cc_yy_i = 0; ace_cc_yytoks[ace_cc_yy_i].t_val >= 0;
+					ace_cc_yy_i++ )
+				{
+					if ( ace_cc_yytoks[ace_cc_yy_i].t_val == ace_cc_yychar )
+						break;
+				}
+				printf( "%s\n", ace_cc_yytoks[ace_cc_yy_i].t_name );
+			}
+		}
+#endif /* ACE_CC_YYDEBUG */
+		if ( ( ( ace_cc_yy_n += ace_cc_yychar ) < 0 ) || ( ace_cc_yy_n >= ACE_CC_YYLAST ) )
+			goto ace_cc_yydefault;
+		if ( ace_cc_yychk[ ace_cc_yy_n = ace_cc_yyact[ ace_cc_yy_n ] ] == ace_cc_yychar )	/*valid shift*/
+		{
+			ace_cc_yychar = -1;
+			ace_cc_yyval = ace_cc_yylval;
+			ace_cc_yy_state = ace_cc_yy_n;
+			if ( ace_cc_yyerrflag > 0 )
+				ace_cc_yyerrflag--;
+			goto ace_cc_yy_stack;
+		}
 
-  yystate = yyn;
-  goto yynewstate;
-
-/* Do the default action for the current state.  */
-yydefault:
-
-  yyn = yydefact[yystate];
-  if (yyn == 0)
-    goto yyerrlab;
-
-/* Do a reduction.  yyn is the number of a rule to reduce with.  */
-yyreduce:
-  yylen = yyr2[yyn];
-  yyval = yyvsp[1-yylen]; /* implement default value of the action */
-
-#if YYDEBUG != 0
-  if (yydebug)
-    {
-      int i;
-
-      fprintf (stderr, "Reducing via rule %d (line %d), ",
-	       yyn, yyrline[yyn]);
-
-      /* Print the symbols being reduced, and their result.  */
-      for (i = yyprhs[yyn]; yyrhs[i] > 0; i++)
-	fprintf (stderr, "%s ", yytname[yyrhs[i]]);
-      fprintf (stderr, " -> %s\n", yytname[yyr1[yyn]]);
-    }
+	ace_cc_yydefault:
+		if ( ( ace_cc_yy_n = ace_cc_yydef[ ace_cc_yy_state ] ) == -2 )
+		{
+#if ACE_CC_YYDEBUG
+			ace_cc_yytmp = ace_cc_yychar < 0;
 #endif
+			if ( ( ace_cc_yychar < 0 ) && ( ( ace_cc_yychar = ACE_CC_YYLEX() ) < 0 ) )
+				ace_cc_yychar = 0;		/* reached EOF */
+#if ACE_CC_YYDEBUG
+			if ( ace_cc_yydebug && ace_cc_yytmp )
+			{
+				register int ace_cc_yy_i;
 
+				printf( "Received token " );
+				if ( ace_cc_yychar == 0 )
+					printf( "end-of-file\n" );
+				else if ( ace_cc_yychar < 0 )
+					printf( "-none-\n" );
+				else
+				{
+					for ( ace_cc_yy_i = 0;
+						ace_cc_yytoks[ace_cc_yy_i].t_val >= 0;
+						ace_cc_yy_i++ )
+					{
+						if ( ace_cc_yytoks[ace_cc_yy_i].t_val
+							== ace_cc_yychar )
+						{
+							break;
+						}
+					}
+					printf( "%s\n", ace_cc_yytoks[ace_cc_yy_i].t_name );
+				}
+			}
+#endif /* ACE_CC_YYDEBUG */
+			/*
+			** look through exception table
+			*/
+			{
+				register int *ace_cc_yyxi = ace_cc_yyexca;
 
-  switch (yyn) {
+				while ( ( *ace_cc_yyxi != -1 ) ||
+					( ace_cc_yyxi[1] != ace_cc_yy_state ) )
+				{
+					ace_cc_yyxi += 2;
+				}
+				while ( ( *(ace_cc_yyxi += 2) >= 0 ) &&
+					( *ace_cc_yyxi != ace_cc_yychar ) )
+					;
+				if ( ( ace_cc_yy_n = ace_cc_yyxi[1] ) < 0 )
+					ACE_CC_YYACCEPT;
+			}
+		}
 
+		/*
+		** check for syntax error
+		*/
+		if ( ace_cc_yy_n == 0 )	/* have an error */
+		{
+			/* no worry about speed here! */
+			switch ( ace_cc_yyerrflag )
+			{
+			case 0:		/* new error */
+				ace_cc_yyerror( "syntax error" );
+				goto skip_init;
+			ace_cc_yyerrlab:
+				/*
+				** get globals into registers.
+				** we have a user generated syntax type error
+				*/
+				ace_cc_yy_pv = ace_cc_yypv;
+				ace_cc_yy_ps = ace_cc_yyps;
+				ace_cc_yy_state = ace_cc_yystate;
+			skip_init:
+				ace_cc_yynerrs++;
+				/* FALLTHRU */
+			case 1:
+			case 2:		/* incompletely recovered error */
+					/* try again... */
+				ace_cc_yyerrflag = 3;
+				/*
+				** find state where "error" is a legal
+				** shift action
+				*/
+				while ( ace_cc_yy_ps >= ace_cc_yys )
+				{
+					ace_cc_yy_n = ace_cc_yypact[ *ace_cc_yy_ps ] + ACE_CC_YYERRCODE;
+					if ( ace_cc_yy_n >= 0 && ace_cc_yy_n < ACE_CC_YYLAST &&
+						ace_cc_yychk[ace_cc_yyact[ace_cc_yy_n]] == ACE_CC_YYERRCODE)					{
+						/*
+						** simulate shift of "error"
+						*/
+						ace_cc_yy_state = ace_cc_yyact[ ace_cc_yy_n ];
+						goto ace_cc_yy_stack;
+					}
+					/*
+					** current state has no shift on
+					** "error", pop stack
+					*/
+#if ACE_CC_YYDEBUG
+#	define _POP_ "Error recovery pops state %d, uncovers state %d\n"
+					if ( ace_cc_yydebug )
+						printf( _POP_, *ace_cc_yy_ps,
+							ace_cc_yy_ps[-1] );
+#	undef _POP_
+#endif
+					ace_cc_yy_ps--;
+					ace_cc_yy_pv--;
+				}
+				/*
+				** there is no state on stack with "error" as
+				** a valid shift.  give up.
+				*/
+				ACE_CC_YYABORT;
+			case 3:		/* no shift yet; eat a token */
+#if ACE_CC_YYDEBUG
+				/*
+				** if debugging, look up token in list of
+				** pairs.  0 and negative shouldn't occur,
+				** but since timing doesn't matter when
+				** debugging, it doesn't hurt to leave the
+				** tests here.
+				*/
+				if ( ace_cc_yydebug )
+				{
+					register int ace_cc_yy_i;
+
+					printf( "Error recovery discards " );
+					if ( ace_cc_yychar == 0 )
+						printf( "token end-of-file\n" );
+					else if ( ace_cc_yychar < 0 )
+						printf( "token -none-\n" );
+					else
+					{
+						for ( ace_cc_yy_i = 0;
+							ace_cc_yytoks[ace_cc_yy_i].t_val >= 0;
+							ace_cc_yy_i++ )
+						{
+							if ( ace_cc_yytoks[ace_cc_yy_i].t_val
+								== ace_cc_yychar )
+							{
+								break;
+							}
+						}
+						printf( "token %s\n",
+							ace_cc_yytoks[ace_cc_yy_i].t_name );
+					}
+				}
+#endif /* ACE_CC_YYDEBUG */
+				if ( ace_cc_yychar == 0 )	/* reached EOF. quit */
+					ACE_CC_YYABORT;
+				ace_cc_yychar = -1;
+				goto ace_cc_yy_newstate;
+			}
+		}/* end if ( ace_cc_yy_n == 0 ) */
+		/*
+		** reduction by production ace_cc_yy_n
+		** put stack tops, etc. so things right after switch
+		*/
+#if ACE_CC_YYDEBUG
+		/*
+		** if debugging, print the string that is the user's
+		** specification of the reduction which is just about
+		** to be done.
+		*/
+		if ( ace_cc_yydebug )
+			printf( "Reduce by (%d) \"%s\"\n",
+				ace_cc_yy_n, ace_cc_yyreds[ ace_cc_yy_n ] );
+#endif
+		ace_cc_yytmp = ace_cc_yy_n;			/* value to switch over */
+		ace_cc_yypvt = ace_cc_yy_pv;			/* $vars top of value stack */
+		/*
+		** Look in goto table for next state
+		** Sorry about using ace_cc_yy_state here as temporary
+		** register variable, but why not, if it works...
+		** If ace_cc_yyr2[ ace_cc_yy_n ] doesn't have the low order bit
+		** set, then there is no action to be done for
+		** this reduction.  So, no saving & unsaving of
+		** registers done.  The only difference between the
+		** code just after the if and the body of the if is
+		** the goto ace_cc_yy_stack in the body.  This way the test
+		** can be made before the choice of what to do is needed.
+		*/
+		{
+			/* length of production doubled with extra bit */
+			register int ace_cc_yy_len = ace_cc_yyr2[ ace_cc_yy_n ];
+
+			if ( !( ace_cc_yy_len & 01 ) )
+			{
+				ace_cc_yy_len >>= 1;
+				ace_cc_yyval = ( ace_cc_yy_pv -= ace_cc_yy_len )[1];	/* $$ = $1 */
+				ace_cc_yy_state = ace_cc_yypgo[ ace_cc_yy_n = ace_cc_yyr1[ ace_cc_yy_n ] ] +
+					*( ace_cc_yy_ps -= ace_cc_yy_len ) + 1;
+				if ( ace_cc_yy_state >= ACE_CC_YYLAST ||
+					ace_cc_yychk[ ace_cc_yy_state =
+					ace_cc_yyact[ ace_cc_yy_state ] ] != -ace_cc_yy_n )
+				{
+					ace_cc_yy_state = ace_cc_yyact[ ace_cc_yypgo[ ace_cc_yy_n ] ];
+				}
+				goto ace_cc_yy_stack;
+			}
+			ace_cc_yy_len >>= 1;
+			ace_cc_yyval = ( ace_cc_yy_pv -= ace_cc_yy_len )[1];	/* $$ = $1 */
+			ace_cc_yy_state = ace_cc_yypgo[ ace_cc_yy_n = ace_cc_yyr1[ ace_cc_yy_n ] ] +
+				*( ace_cc_yy_ps -= ace_cc_yy_len ) + 1;
+			if ( ace_cc_yy_state >= ACE_CC_YYLAST ||
+				ace_cc_yychk[ ace_cc_yy_state = ace_cc_yyact[ ace_cc_yy_state ] ] != -ace_cc_yy_n )
+			{
+				ace_cc_yy_state = ace_cc_yyact[ ace_cc_yypgo[ ace_cc_yy_n ] ];
+			}
+		}
+					/* save until reenter driver code */
+		ace_cc_yystate = ace_cc_yy_state;
+		ace_cc_yyps = ace_cc_yy_ps;
+		ace_cc_yypv = ace_cc_yy_pv;
+	}
+	/*
+	** code supplied by user is placed in this switch
+	*/
+	switch( ace_cc_yytmp )
+	{
+		
 case 2:
-#line 52 "CC_command.y"
+# line 52 "CC_command.y"
 { cmdlist->add(new CC_Sleep_Cmd(0));
 			   /* dummy to check exeption in the last command */
 		  if(cmdlist->execute()!=0) //CC_FAIL
                     { printf(" ** Test succeded!!\n"); }
                   else
-                    { printf(" ** Test FAILED!!\n"); } ;
-    break;}
+                    { printf(" ** Test FAILED!!\n"); } } break;
 case 3:
-#line 60 "CC_command.y"
-{ cmdlist->add(yyvsp[0].command); ;
-    break;}
+# line 60 "CC_command.y"
+{ cmdlist->add(ace_cc_yypvt[-0].command); } break;
 case 4:
-#line 61 "CC_command.y"
-{ cmdlist->add(yyvsp[0].command); ;
-    break;}
+# line 61 "CC_command.y"
+{ cmdlist->add(ace_cc_yypvt[-0].command); } break;
 case 5:
-#line 65 "CC_command.y"
-{ yyval.command = new CC_Start_Cmd(yyvsp[-1].id); ;
-    break;}
+# line 65 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Start_Cmd(ace_cc_yypvt[-1].id); } break;
 case 6:
-#line 67 "CC_command.y"
-{ yyval.command = new CC_CreateLockSet_Cmd(yyvsp[-1].id); ;
-    break;}
+# line 67 "CC_command.y"
+{ ace_cc_yyval.command = new CC_CreateLockSet_Cmd(ace_cc_yypvt[-1].id); } break;
 case 7:
-#line 69 "CC_command.y"
-{ yyval.command = new CC_CreateLockSet_Cmd(""); ;
-    break;}
+# line 69 "CC_command.y"
+{ ace_cc_yyval.command = new CC_CreateLockSet_Cmd(""); } break;
 case 8:
-#line 71 "CC_command.y"
-{ yyval.command = new CC_Lock_Cmd(yyvsp[-2].id, yyvsp[-1].lock_mode); ;
-    break;}
+# line 71 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Lock_Cmd(ace_cc_yypvt[-2].id, ace_cc_yypvt[-1].lock_mode); } break;
 case 9:
-#line 73 "CC_command.y"
-{ yyval.command = new CC_Lock_Cmd("", yyvsp[-1].lock_mode); ;
-    break;}
+# line 73 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Lock_Cmd("", ace_cc_yypvt[-1].lock_mode); } break;
 case 10:
-#line 75 "CC_command.y"
-{ yyval.command = new CC_UnLock_Cmd(yyvsp[-2].id, yyvsp[-1].lock_mode); ;
-    break;}
+# line 75 "CC_command.y"
+{ ace_cc_yyval.command = new CC_UnLock_Cmd(ace_cc_yypvt[-2].id, ace_cc_yypvt[-1].lock_mode); } break;
 case 11:
-#line 77 "CC_command.y"
-{ yyval.command = new CC_UnLock_Cmd("", yyvsp[-1].lock_mode); ;
-    break;}
+# line 77 "CC_command.y"
+{ ace_cc_yyval.command = new CC_UnLock_Cmd("", ace_cc_yypvt[-1].lock_mode); } break;
 case 12:
-#line 79 "CC_command.y"
-{ yyval.command = new CC_TryLock_Cmd(yyvsp[-2].id, yyvsp[-1].lock_mode); ;
-    break;}
+# line 79 "CC_command.y"
+{ ace_cc_yyval.command = new CC_TryLock_Cmd(ace_cc_yypvt[-2].id, ace_cc_yypvt[-1].lock_mode); } break;
 case 13:
-#line 81 "CC_command.y"
-{ yyval.command = new CC_TryLock_Cmd("", yyvsp[-1].lock_mode); ;
-    break;}
+# line 81 "CC_command.y"
+{ ace_cc_yyval.command = new CC_TryLock_Cmd("", ace_cc_yypvt[-1].lock_mode); } break;
 case 14:
-#line 83 "CC_command.y"
-{ yyval.command = new CC_ChangeMode_Cmd(yyvsp[-3].id, yyvsp[-2].lock_mode, yyvsp[-1].lock_mode); ;
-    break;}
+# line 83 "CC_command.y"
+{ ace_cc_yyval.command = new CC_ChangeMode_Cmd(ace_cc_yypvt[-3].id, ace_cc_yypvt[-2].lock_mode, ace_cc_yypvt[-1].lock_mode); } break;
 case 15:
-#line 85 "CC_command.y"
-{ yyval.command = new CC_ChangeMode_Cmd("", yyvsp[-2].lock_mode, yyvsp[-1].lock_mode); ;
-    break;}
+# line 85 "CC_command.y"
+{ ace_cc_yyval.command = new CC_ChangeMode_Cmd("", ace_cc_yypvt[-2].lock_mode, ace_cc_yypvt[-1].lock_mode); } break;
 case 16:
-#line 87 "CC_command.y"
-{ yyval.command = new CC_Sleep_Cmd(yyvsp[-1].num); ;
-    break;}
+# line 87 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Sleep_Cmd(ace_cc_yypvt[-1].num); } break;
 case 17:
-#line 89 "CC_command.y"
-{ yyval.command = new CC_Wait_Cmd(""); ;
-    break;}
+# line 89 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Wait_Cmd(""); } break;
 case 18:
-#line 91 "CC_command.y"
-{ yyval.command = new CC_Wait_Cmd(yyvsp[-1].id); ;
-    break;}
+# line 91 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Wait_Cmd(ace_cc_yypvt[-1].id); } break;
 case 19:
-#line 93 "CC_command.y"
-{ yyval.command = new CC_Print_Cmd(yyvsp[-1].id); ;
-    break;}
+# line 93 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Print_Cmd(ace_cc_yypvt[-1].id); } break;
 case 20:
-#line 95 "CC_command.y"
-{ yyval.command = new CC_Lookup_Cmd(yyvsp[-1].id); ;
-    break;}
+# line 95 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Lookup_Cmd(ace_cc_yypvt[-1].id); } break;
 case 21:
-#line 97 "CC_command.y"
-{ cmdlist->setrepeat(yyvsp[-1].num);
-                          yyval.command = new CC_Dummy_Cmd();;
-    break;}
+# line 97 "CC_command.y"
+{ cmdlist->setrepeat(ace_cc_yypvt[-1].num);
+                          ace_cc_yyval.command = new CC_Dummy_Cmd();} break;
 case 22:
-#line 100 "CC_command.y"
-{ yyval.command = new CC_Excep_Cmd(yyvsp[-1].id); ;
-    break;}
+# line 100 "CC_command.y"
+{ ace_cc_yyval.command = new CC_Excep_Cmd(ace_cc_yypvt[-1].id); } break;
 case 23:
-#line 103 "CC_command.y"
-{yyval.id = yyvsp[0].id; ;
-    break;}
+# line 103 "CC_command.y"
+{ace_cc_yyval.id = ace_cc_yypvt[-0].id; } break;
 case 24:
-#line 105 "CC_command.y"
-{yyval.id = yyvsp[0].id; ;
-    break;}
+# line 105 "CC_command.y"
+{ace_cc_yyval.id = ace_cc_yypvt[-0].id; } break;
 case 25:
-#line 107 "CC_command.y"
-{yyval.id = yyvsp[0].id; ;
-    break;}
+# line 107 "CC_command.y"
+{ace_cc_yyval.id = ace_cc_yypvt[-0].id; } break;
 case 26:
-#line 109 "CC_command.y"
-{ yyval.lock_mode = CosConcurrencyControl::read; ;
-    break;}
+# line 109 "CC_command.y"
+{ ace_cc_yyval.lock_mode = CosConcurrencyControl::read; } break;
 case 27:
-#line 110 "CC_command.y"
-{ yyval.lock_mode = CosConcurrencyControl::intention_read; ;
-    break;}
+# line 110 "CC_command.y"
+{ ace_cc_yyval.lock_mode = CosConcurrencyControl::intention_read; } break;
 case 28:
-#line 111 "CC_command.y"
-{ yyval.lock_mode = CosConcurrencyControl::upgrade; ;
-    break;}
+# line 111 "CC_command.y"
+{ ace_cc_yyval.lock_mode = CosConcurrencyControl::upgrade; } break;
 case 29:
-#line 112 "CC_command.y"
-{ yyval.lock_mode = CosConcurrencyControl::write; ;
-    break;}
+# line 112 "CC_command.y"
+{ ace_cc_yyval.lock_mode = CosConcurrencyControl::write; } break;
 case 30:
-#line 113 "CC_command.y"
-{ yyval.lock_mode = CosConcurrencyControl::intention_write; ;
-    break;}
-}
-   /* the action file gets copied in in place of this dollarsign */
-#line 457 "/pkg/gnu/lib/bison.simple"
-
-  yyvsp -= yylen;
-  yyssp -= yylen;
-#ifdef YYLSP_NEEDED
-  yylsp -= yylen;
-#endif
-
-#if YYDEBUG != 0
-  if (yydebug)
-    {
-      short *ssp1 = yyss - 1;
-      fprintf (stderr, "state stack now");
-      while (ssp1 != yyssp)
-	fprintf (stderr, " %d", *++ssp1);
-      fprintf (stderr, "\n");
-    }
-#endif
-
-  *++yyvsp = yyval;
-
-#ifdef YYLSP_NEEDED
-  yylsp++;
-  if (yylen == 0)
-    {
-      yylsp->first_line = yylloc.first_line;
-      yylsp->first_column = yylloc.first_column;
-      yylsp->last_line = (yylsp-1)->last_line;
-      yylsp->last_column = (yylsp-1)->last_column;
-      yylsp->text = 0;
-    }
-  else
-    {
-      yylsp->last_line = (yylsp+yylen-1)->last_line;
-      yylsp->last_column = (yylsp+yylen-1)->last_column;
-    }
-#endif
-
-  /* Now "shift" the result of the reduction.
-     Determine what state that goes to,
-     based on the state we popped back to
-     and the rule number reduced by.  */
-
-  yyn = yyr1[yyn];
-
-  yystate = yypgoto[yyn - YYNTBASE] + *yyssp;
-  if (yystate >= 0 && yystate <= YYLAST && yycheck[yystate] == *yyssp)
-    yystate = yytable[yystate];
-  else
-    yystate = yydefgoto[yyn - YYNTBASE];
-
-  goto yynewstate;
-
-yyerrlab:   /* here on detecting error */
-
-  if (! yyerrstatus)
-    /* If not already recovering from an error, report this error.  */
-    {
-      ++yynerrs;
-
-#ifdef YYERROR_VERBOSE
-      yyn = yypact[yystate];
-
-      if (yyn > YYFLAG && yyn < YYLAST)
-	{
-	  int size = 0;
-	  char *msg;
-	  int x, count;
-
-	  count = 0;
-	  /* Start X at -yyn if nec to avoid negative indexes in yycheck.  */
-	  for (x = (yyn < 0 ? -yyn : 0);
-	       x < (sizeof(yytname) / sizeof(char *)); x++)
-	    if (yycheck[x + yyn] == x)
-	      size += strlen(yytname[x]) + 15, count++;
-	  msg = (char *) malloc(size + 15);
-	  if (msg != 0)
-	    {
-	      strcpy(msg, "parse error");
-
-	      if (count < 5)
-		{
-		  count = 0;
-		  for (x = (yyn < 0 ? -yyn : 0);
-		       x < (sizeof(yytname) / sizeof(char *)); x++)
-		    if (yycheck[x + yyn] == x)
-		      {
-			strcat(msg, count == 0 ? ", expecting `" : " or `");
-			strcat(msg, yytname[x]);
-			strcat(msg, "'");
-			count++;
-		      }
-		}
-	      yyerror(msg);
-	      free(msg);
-	    }
-	  else
-	    yyerror ("parse error; also virtual memory exceeded");
+# line 113 "CC_command.y"
+{ ace_cc_yyval.lock_mode = CosConcurrencyControl::intention_write; } break;
+# line	532 "/usr/ccs/bin/yaccpar"
 	}
-      else
-#endif /* YYERROR_VERBOSE */
-	yyerror("parse error");
-    }
-
-  goto yyerrlab1;
-yyerrlab1:   /* here on error raised explicitly by an action */
-
-  if (yyerrstatus == 3)
-    {
-      /* if just tried and failed to reuse lookahead token after an error, discard it.  */
-
-      /* return failure if at end of input */
-      if (yychar == YYEOF)
-	YYABORT;
-
-#if YYDEBUG != 0
-      if (yydebug)
-	fprintf(stderr, "Discarding token %d (%s).\n", yychar, yytname[yychar1]);
-#endif
-
-      yychar = YYEMPTY;
-    }
-
-  /* Else will try to reuse lookahead token
-     after shifting the error token.  */
-
-  yyerrstatus = 3;		/* Each real token shifted decrements this */
-
-  goto yyerrhandle;
-
-yyerrdefault:  /* current state does not do anything special for the error token. */
-
-#if 0
-  /* This is wrong; only states that explicitly want error tokens
-     should shift them.  */
-  yyn = yydefact[yystate];  /* If its default is to accept any token, ok.  Otherwise pop it.*/
-  if (yyn) goto yydefault;
-#endif
-
-yyerrpop:   /* pop the current state because it cannot handle the error token */
-
-  if (yyssp == yyss) YYABORT;
-  yyvsp--;
-  yystate = *--yyssp;
-#ifdef YYLSP_NEEDED
-  yylsp--;
-#endif
-
-#if YYDEBUG != 0
-  if (yydebug)
-    {
-      short *ssp1 = yyss - 1;
-      fprintf (stderr, "Error: state stack now");
-      while (ssp1 != yyssp)
-	fprintf (stderr, " %d", *++ssp1);
-      fprintf (stderr, "\n");
-    }
-#endif
-
-yyerrhandle:
-
-  yyn = yypact[yystate];
-  if (yyn == YYFLAG)
-    goto yyerrdefault;
-
-  yyn += YYTERROR;
-  if (yyn < 0 || yyn > YYLAST || yycheck[yyn] != YYTERROR)
-    goto yyerrdefault;
-
-  yyn = yytable[yyn];
-  if (yyn < 0)
-    {
-      if (yyn == YYFLAG)
-	goto yyerrpop;
-      yyn = -yyn;
-      goto yyreduce;
-    }
-  else if (yyn == 0)
-    goto yyerrpop;
-
-  if (yyn == YYFINAL)
-    YYACCEPT;
-
-#if YYDEBUG != 0
-  if (yydebug)
-    fprintf(stderr, "Shifting error token, ");
-#endif
-
-  *++yyvsp = yylval;
-#ifdef YYLSP_NEEDED
-  *++yylsp = yylloc;
-#endif
-
-  yystate = yyn;
-  goto yynewstate;
+	goto ace_cc_yystack;		/* reset registers in driver code */
 }
-#line 115 "CC_command.y"
 
-
-int CC_commanderror(char *s)
-{
-  printf("%d: %s at %s in:\n%s\n",
-         line_no, s, CC_commandtext, line_buf);
-  ACE_OS::exit(-1);
-  return 0;
-}
