@@ -19,12 +19,11 @@ ACE_RCSID(tao, Codeset_Manager, "$Id$")
 
 /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet No. 1
 CONV_FRAME::CodeSetId
-TAO_Codeset_Manager::default_char_codeset = 0x00010001;
+TAO_Codeset_Manager::default_char_codeset = TAO_DEFAULT_CHAR_CODESET_ID;
 /// NCS for wchar is not defaulted by the CORBA specification, but a default
 /// may be set here if desired
 CONV_FRAME::CodeSetId
-TAO_Codeset_Manager::default_wchar_codeset = 0;
-
+TAO_Codeset_Manager::default_wchar_codeset = TAO_DEFAULT_WCHAR_CODESET_ID;
 
 TAO_Codeset_Manager::TAO_Codeset_Manager()
   :codeset_info_ (),
