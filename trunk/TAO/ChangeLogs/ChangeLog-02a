@@ -1,3 +1,61 @@
+Wed Jun  5 18:05:35 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp (visit_valuetype):
+	  AMH ExceptionHolders are (supposed to be) valuetypes.  They are,
+	  except that, they are generated to have a concrete
+	  implementation (unlike valuetypes that are generated as abstract
+	  classes).  The way the generation of the ExceptionHolders
+	  differs from Valuetypers is commented in this method but I'm
+	  repeating it here again:
+	  ---------------------------------------------------------------------
+	  This is how we proceed:
+	  1) Identify it is an AMH_ExceptionHolder class.
+	  2) Inherit from CORBA_DefaultValueBaseRef i.e. provide a CONCRETE
+             implementation for this ValueType!  This is because the alternative
+             design of deriving a concrete-exception-holder class that the IDL
+             compiler again has to generate is superflous, unnecessary,
+	     leads to code bloat and unnecessary information for the
+	     app-programmer.  The changes required for this are:
+             2.1) Generate the raise_method as non-abstract.
+             2.2) Generate a new constructor that takes in a CORBA::Exception*
+             2.3) Make the destructor public (instead of protected) 
+             2.4) Generate a private CORBA::Exception* field.
+             2.5) Generate the tao_marshal and tao_unmarshal methods as 
+                  non-abstarct. 
+          ----------------------------------------------------------------------
+	If someone feels this code is too hackish, too inelegant or that
+	  we need to create a visitor for AMH ExceptionHolders, don't
+	  hesitate to contact me.  I can show you all the files and places
+	  that need to be changed for doing this the "Right Way"[TM] :-)
+	
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (is_amh_exception_holder): 
+	* TAO_IDL/be_include/be_visitor_operation/operation.h: 
+	  If we are an ExceptionHolder operation, then we
+	  go ahead and generate the throw spec for the operation (this is
+	  not done for valuetypes).  Code changed to reflect this logic.
+	  This same change in logic applies to the valuetype visitors
+	  below:
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation): 
+	* TAO_IDL/be_include/be_visitor_valuetype/arglist.h:
+	  Instead of generating the pure vitual method as is done for
+	  valuetypes, we generate a 'normal' method and also go ahead and
+	  define it as well!  All ExceptionHolder operations do only one
+	  thing, raise the stored exception (all ExceptionHolder
+	  constructors are declared to take in an CORBA::Exception
+	  paramter). We generate the code that does that here. 
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp (visit_operation): 
+	  Changed generated '_tao_rh_init_reply' and 'tao_rh_send_reply'
+	  to take in the ACE_ENV_SINGLE_ARG_PARAMTER to be compliant with
+	  the changes in tao/PortableServer/AMH_Response_handler.*	
+	
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp (visit_interface):
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	  Added a node for generating the exception_holder concrete class
+	  for AMH exceptions.  This exception holder class is declared and
+	  defined in the client stub header file by the IDL-compiler.
+
 Wed Jun 05 11:06:22 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup.bor (OBJFILES):

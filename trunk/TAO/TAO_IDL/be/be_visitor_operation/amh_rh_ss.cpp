@@ -180,12 +180,12 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       *os << "{" << be_idt_nl
           << "// TAO_IDL - Generated from "
           << __FILE__ << ":" << __LINE__ << be_nl
-          << "this->_tao_rh_init_reply ();\n" << be_nl << be_nl;
+          << "this->_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_PARAMETER);\n" << be_nl << be_nl;
 
       this->marshal_params (node);
 
       *os << be_nl
-          << "this->_tao_rh_send_reply ();" << be_uidt_nl
+          << "this->_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
           << "}\n" << be_nl;
     }
 
