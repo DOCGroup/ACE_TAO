@@ -1,17 +1,11 @@
-Sun Jan 03 21:48:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* ace/Asynch_Acceptor.cpp: Since this is a template file, I
- 	  removed it from the ace library build on NT.
-
-	* ace/Asynch_Acceptor.cpp (open): Changed C-style cast to use the
- 	  new ACE_sap_any_cast macro from Dr. Schmidt.
-
 Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/ACE: Added a simple dirname() wrapper method.
 
 	* ace/SString: The set(const char *, size_t, int = 1) and
  	  set(const char *, size_t) methods were inherently ambiguous.
-  	  I've fixed this by changing the order of parameters to
- 	  set(size_t, const char *, int = 1).
+  	  I've fixed this by changing removing the default parameters.
+  	  Thanks to Irfan for suggesting this fix.
 
 	* ace/Mem_Map.cpp: mmap() will fail if the length of the file
  	  mapping is 0, which will be the case if we've just created the
@@ -63,6 +57,14 @@ Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  tests/IOStream_Test.cpp,
 	  tests/Conn_Test.cpp: Replaced all the C-style casts for
  	  ACE_Addr::sap_any with the new ACE_sap_any_cast macro.
+
+Sun Jan 03 21:48:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.cpp: Since this is a template file, I
+ 	  removed it from the ace library build on NT.
+
+	* ace/Asynch_Acceptor.cpp (open): Changed C-style cast to use the
+ 	  new ACE_sap_any_cast macro from Dr. Schmidt.
 
 Sun Jan 03 09:12:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
