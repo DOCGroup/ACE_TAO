@@ -1,3 +1,14 @@
+Tue Jan 05 04:51:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp:
+	* tao/ORB_Core.{h,cpp}:
+	* tao/default_server.{h,cpp}:
+	* tao/default_client.{h,cpp}: Added definitions for static service
+	  objects and enabled TAO to use static services if
+	  TAO_USES_STATIC_SERVICE is defined.  This will allow platforms
+	  that doesn't support dynamic linking to change TAO's behavior at
+	  run-time.
+
 Mon Jan 04 17:48:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp (for_suppliers):
