@@ -1,3 +1,23 @@
+Fri Sep  5 01:14:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-aix-4.1.x.h: Added ACE_LACKS_TIMESPEC_T.  Thanks to
+ 	  Rob Head (rhead@virtc.com) for reporting this.
+
+	* ace/OS.cpp (fork_exec): Changed the logic so that we don't
+ 	  create a new console window on Win32.  This isn't done on UNIX,
+ 	  so there's no point in doing it here.  Thanks to Jeff Richard
+ 	  <jrichard@OhioEE.com> for pointing this out.
+
+	* ace/Reactor.cpp: The call to
+ 	  ACE_Reactor_Handler_Repository::open() in the constructor of
+ 	  ACE_Reactor should check for == -1!  Thanks to Brian Mendel for
+ 	  reporting this.
+
+	* ace/Reactor.cpp (remove_handler): Fixed a braino where the
+ 	  conditional compile for NSIG should have been > 0 rather than ==
+ 	  0.  Thanks to fixing this codeKaren Amestoy
+ 	  <kamestoy@CCGATE.HAC.COM> for reporting this fix.
+
 Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp: (tss_open): removed paren from around type in "new"

@@ -2321,7 +2321,7 @@ ACE_OS::fork_exec (char *argv[])
 			   NULL, // No process attributes.
 			   NULL,  // No thread attributes.
 			   TRUE, // Allow handle inheritance.
-			   CREATE_NEW_CONSOLE, // Create a new console window.
+			   0, /* CREATE_NEW_CONSOLE */ // Don't create a new console window.
 			   NULL, // No environment.
 			   NULL, // No current directory.
 			   &startup_info,

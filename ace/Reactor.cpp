@@ -1092,7 +1092,7 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
 
-  if (this->open (ACE_Reactor::DEFAULT_SIZE, 0, sh, tq))
+  if (this->open (ACE_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open failed"));
 }
 
@@ -1208,7 +1208,7 @@ ACE_Reactor::remove_handler (const ACE_Sig_Set &sigset)
   ACE_TRACE ("ACE_Reactor::remove_handler");
   int result = 0;
 
-#if (NSIG == 0)
+#if (NSIG > 0)
   for (int s = 1; s < NSIG; s++)
     if (sigset.is_member (s)
         && this->signal_handler_->remove_handler (s) == -1)
