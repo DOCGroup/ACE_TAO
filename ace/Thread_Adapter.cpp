@@ -62,22 +62,15 @@ ACE_Thread_Adapter::invoke (void)
   // Except if it is null, then the thr_mgr() method crashes.
   // -jxh
 
+  ACE_Thread_Exit *exit_hook_instance = ACE_Thread_Exit::instance ();
+  ACE_Thread_Exit_Maybe exit_hook_maybe (exit_hook_instance == 0);
+  ACE_Thread_Exit *exit_hook_ptr = exit_hook_instance
+                                   ? exit_hook_instance
+                                   : exit_hook_maybe.instance ();
+  ACE_Thread_Exit &exit_hook = *exit_hook_ptr;
+
   if (this->thr_mgr () != 0)
     {
-      ACE_Thread_Exit *exit_hook_instance = ACE_Thread_Exit::instance ();
-      if (exit_hook_instance == 0)
-        {
-          // Using a ACE_Thread_Exit that was created off the stack
-          // gives NT problems.  So, instead, we wait half a second
-          // and then try again.
-
-          ACE_OS::sleep (ACE_Time_Value (0, 500000));
-          exit_hook_instance = ACE_Thread_Exit::instance ();
-
-          // ACE_ASSERT (exit_hook_instance);
-        }
-
-      ACE_Thread_Exit &exit_hook = *ACE_Thread_Exit::instance ();
       // Keep track of the <Thread_Manager> that's associated with this
       // <exit_hook>.
       exit_hook.thr_mgr (this->thr_mgr ());

@@ -74,5 +74,33 @@ private:
   // We don't follow the singleton pattern due to dependency issues.
 };
 
+class ACE_Export ACE_Thread_Exit_Maybe
+  // = TITLE
+  //     A version of ACE_Thread_Exit that is created dynamically
+  //     under the hood if the flag is set to TRUE.
+  // = DESCRIPTION
+  //     Allows the appearance of a "smart pointer", but is not
+  //     always created.
+{
+public:
+  ACE_Thread_Exit_Maybe (int flag = 0);
+  // Don't create an ACE_Thread_Exit instance by default.
+
+  ~ACE_Thread_Exit_Maybe (void);
+  // Destroys the underlying ACE_Thread_Exit instance if it exists.
+
+  ACE_Thread_Exit * operator -> (void) const;
+  // Delegates to underlying instance.
+
+  ACE_Thread_Exit * instance (void) const;
+  // Returns the underlying instance.
+
+private:
+
+  ACE_Thread_Exit *instance_;
+  // Holds the underlying instance.
+
+};
+
 #include "ace/post.h"
 #endif /* ACE_THREAD_EXIT_H */
