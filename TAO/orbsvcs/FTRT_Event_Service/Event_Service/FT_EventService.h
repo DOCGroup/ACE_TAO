@@ -34,7 +34,8 @@ public:
 
 private:
   int parse_args (int argc, ACE_TCHAR* argv []);
-  RtecScheduler::Scheduler_var 
+  RtecScheduler::Scheduler_var
+
     setup_scheduler(CosNaming::NamingContext_ptr naming_context
                     ACE_ENV_ARG_DECL);
 
@@ -49,7 +50,6 @@ private:
   TAO_FTEC_Event_Channel::MEMBERSHIP membership_;
   CORBA::ORB_var orb_;
   TP_Task task_;
-  int fault_no_;
 };
 
 #endif
