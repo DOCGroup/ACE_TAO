@@ -1,3 +1,10 @@
+Wed May  6 18:16:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/NestedUpcall: Added the new "one-button" features for the
+ 	  nested upcalls test so that it can run with a single file, just
+ 	  like IDL_Cubit.  Thanks to Rob Thornton <ret1@cec.wustl.edu> for
+ 	  this enhancement.
+
 Wed May  6 08:46:18 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* rules.tao.GNU: Added dependency of the generated files on the

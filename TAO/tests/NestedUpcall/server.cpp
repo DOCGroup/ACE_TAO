@@ -1,129 +1,175 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    server.cpp
-//
-// = AUTHOR
-//    Chris Cleeland
-//
-// ============================================================================
+#include "server.h"
 
-#include "tao/corba.h"
-#include "tao/TAO.h"
-#include "reactor_i.h"
+NestedUpCalls_Server::NestedUpCalls_Server (void)
+  : use_naming_service_ (1),
+    ior_output_file_ (0)
+{
+}
 
 int
-main (int argc, char* argv[])
+NestedUpCalls_Server::parse_args (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "NestedUpcall server starting\n"));
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:o:s");
+  int c;
 
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'd':  // debug flag.
+        TAO_debug_level++;
+        break;
+	  case 'o': // output the IOR to a file.
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        if (this->ior_output_file_ == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
+        break;
+      case 's': // Don't use the TAO Naming Service.
+        this->use_naming_service_=0;
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " [-d]"
+                           " [-o] <ior_output_file>"
+                           " [-s]"
+                           "\n",
+                           argv_ [0]),
+                          1);
+      }
+
+  // Indicates successful parsing of command line.
+  return 0;
+}
+
+int
+NestedUpCalls_Server::init (int argc,
+                    char** argv,
+                    CORBA::Environment& env)
+{
+  // Call the init of TAO_ORB_Manager to create a child POA
+  // under the root POA.
+  this->orb_manager_.init_child_poa (argc,
+                                     argv,
+                                     "child_poa",
+                                     env);
+
+  TAO_CHECK_ENV_RETURN (env,-1);
+  this->argc_ = argc;
+  this->argv_ = argv;
+
+  this->parse_args ();
+  // ~~ check for the return value here
+
+  CORBA::String_var str  =
+    this->orb_manager_.activate_under_child_poa ("reactor",
+                                                 &this->reactor_impl_,
+                                                 env);
+  ACE_DEBUG ((LM_DEBUG,
+              "The IOR is: <%s>\n",
+              str.in ()));
+
+  if (this->ior_output_file_)
+    {
+      ACE_OS::fprintf (this->ior_output_file_,
+                       "%s",
+                       str.in ());
+      ACE_OS::fclose (this->ior_output_file_);
+    }
+
+  if (this->use_naming_service_)
+    return this->init_naming_service (env);
+
+  return 0;
+}
+
+// Initialisation of Naming Service and register IDL_Cubit Context and
+// cubit_factory object.
+
+int
+NestedUpCalls_Server::init_naming_service (CORBA::Environment& env)
+{
+  int result;
+  CORBA::ORB_var orb;
+  PortableServer::POA_var child_poa;
+
+  orb = this->orb_manager_.orb ();
+  child_poa = this->orb_manager_.child_poa ();
+
+  result = this->my_name_server_.init (orb,
+                                       child_poa);
+  if (result < 0)
+    return result;
+  reactor_ = this->reactor_impl_._this (env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+
+  //Register the nested_up_calls_reactor name with the NestedUpCalls Naming
+  //Context...
+  CosNaming::Name nested_up_calls_context_name (1);
+  nested_up_calls_context_name.length (1);
+  nested_up_calls_context_name[0].id = CORBA::string_dup ("NestedUpCalls");
+  this->naming_context_ =
+    this->my_name_server_->bind_new_context (nested_up_calls_context_name,
+                                             env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+
+  CosNaming::Name reactor_name (1);
+  reactor_name.length (1);
+  reactor_name[0].id = CORBA::string_dup ("nested_up_calls_reactor");
+  this->naming_context_->bind (reactor_name,
+							   reactor_.in (),
+			                   env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+  return 0;
+}
+
+int
+NestedUpCalls_Server::run (CORBA::Environment& env)
+{
+  if (this->orb_manager_.run (env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "NestedUpCalls_Server::run"),
+                      -1);
+  return 0;
+}
+
+NestedUpCalls_Server::~NestedUpCalls_Server (void)
+{
+}
+
+int
+main (int argc, char *argv[])
+{
+  NestedUpCalls_Server nested_up_calls_server;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\n \t NestedUpCalls:SERVER \n \n"));
   TAO_TRY
     {
-#if defined(DONT_USE_ORBMGR)
-      // @@ Chris, can you please try to replace most of this boiler
-      // plate code with the TAO_Object_Manager stuff that Sumedh has
-      // devised?  If we need to generalize his implementation to
-      // handle some of the things you do (e.g., create a special
-      // POAManager) please let me know.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "server", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Initialize the object adapter.
-      CORBA::Object_var poa_object =
-	orb->resolve_initial_references("RootPOA");
-
-      if (CORBA::is_nil (poa_object.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize the POA.\n"),
-			  1);
-
-      PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (poa_object.in(),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      PortableServer::POAManager_var poa_manager =
-	root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CORBA::PolicyList policies (2);
-      policies.length (2);  
-      policies[0] =
-	root_poa->create_id_assignment_policy (PortableServer::USER_ID,
-                                               TAO_TRY_ENV);
-      policies[1] =
-	root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
-                                          TAO_TRY_ENV);
-
-      // We use a different POA, otherwise the user would have to
-      // change the object key each time it invokes the server.
-      PortableServer::POA_var poa =
-	root_poa->create_POA ("Persistent_POA",
-                              poa_manager.in (),
-                              policies,
-                              TAO_TRY_ENV);  
-      TAO_CHECK_ENV;
-#else
-      TAO_ORB_Manager om;
-
-      om.init_child_poa (argc, argv, "Persistent_POA", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CORBA_ORB_var orb = om.orb ();
-#endif      
-      
-
-      // Now that we've got all that done, we need to create our impl
-      // and register!
-      Reactor_i *reactor_impl = 0;
-      ACE_NEW_RETURN (reactor_impl, Reactor_i, -1);
-#if defined(DONT_USE_ORBMGR)
-      PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId ("Reactor");
-
-      poa->activate_object_with_id (id.in (),
-                                    reactor_impl, TAO_TRY_ENV);
-#else
-      CORBA::String s = om.activate_under_child_poa ("Reactor", reactor_impl, TAO_TRY_ENV);
-      CORBA::string_free (s);
-#endif
-      TAO_CHECK_ENV;
-      
-
-      // Stringify the object
-      Reactor_ptr reactor = reactor_impl->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CORBA::String_var str =
-        orb->object_to_string (reactor, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) The reactor IOR is <%s>\n",
-                  str.in ()));
-      
-      // Run the server now.
-#if defined(DONT_USE_ORBMGR)
-      orb->run ();
-#else
-      om.run (TAO_TRY_ENV);
-#endif
-      CORBA::release (reactor);
+      if (nested_up_calls_server.init (argc,argv,TAO_TRY_ENV) == -1)
+        return 1;
+      else
+        {
+          nested_up_calls_server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
     }
-  TAO_CATCHANY
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      TAO_TRY_ENV.print_exception ("orb_init");
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("System Exception");
+      return -1;
+    }
+  TAO_CATCH (CORBA::UserException, userex)
+    {
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
   TAO_ENDTRY;
-
-  ACE_DEBUG ((LM_DEBUG, "NestedUpcall server ending\n"));
   return 0;
 }
