@@ -36,7 +36,7 @@ sub airplane_test
 sub airplane_ir_test
 {
   $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
-                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url");
+                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 

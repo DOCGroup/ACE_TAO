@@ -142,27 +142,27 @@ int
 Airplane_Server_i::run (CORBA::Environment& env)
 {
   TAO_TRY
-  {
-    if (this->use_ir_ == 1)
-      {
-        this->ir_helper_->notify_startup (TAO_TRY_ENV);
-        TAO_CHECK_ENV;
-      }
+    {
+      if (this->use_ir_ == 1)
+        {
+          this->ir_helper_->notify_startup (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
 
-    this->orb_manager_.run (TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      this->orb_manager_.run (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    if (this->use_ir_ == 1)
-      {
-        this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
-        TAO_CHECK_ENV;
-      }
-  }
+      if (this->use_ir_ == 1)
+        {
+          this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+    }
   TAO_CATCHANY
-  {
-    TAO_TRY_ENV.print_exception ("Airplane_Server_i::run");
-    return -1;
-  }
+    {
+      TAO_TRY_ENV.print_exception ("Airplane_Server_i::run");
+      return -1;
+    }
   TAO_ENDTRY;
 
   return 0;
