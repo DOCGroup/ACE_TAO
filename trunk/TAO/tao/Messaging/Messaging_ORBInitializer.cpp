@@ -3,6 +3,7 @@
 #include "Messaging_ORBInitializer.h"
 
 #include "Messaging_Policy_i.h"
+#include "Connection_Timeout_Policy_i.h"
 #include "Messaging_PolicyFactory.h"
 #include "tao/ORB_Core.h"
 
@@ -24,6 +25,12 @@ TAO_Messaging_ORBInitializer::pre_init (
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
   TAO_ORB_Core::set_sync_scope_hook (TAO_Sync_Scope_Policy::hook);
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
+  TAO_ORB_Core::connection_timeout_hook
+    (TAO_ConnectionTimeoutPolicy::hook);
+#endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
+
 }
 
 void
@@ -103,7 +110,10 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
 #if (TAO_HAS_MAX_HOPS_POLICY == 1)
     Messaging::MAX_HOPS_POLICY_TYPE,
 #endif  /* TAO_HAS_MAX_HOPS_POLICY == 1 */
-    Messaging::QUEUE_ORDER_POLICY_TYPE
+    Messaging::QUEUE_ORDER_POLICY_TYPE,
+#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
+    TAO::CONNECTION_TIMEOUT_POLICY_TYPE
+#endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
   };
 
   const CORBA::PolicyType *end = type + sizeof (type) / sizeof (type[0]);
