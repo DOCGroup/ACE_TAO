@@ -8,7 +8,7 @@ dnl       that set/determine which ACE subsets to build.
 dnl 
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 1998, 1999  Ossama Othman
+dnl  Copyright (C) 1998, 1999, 2001  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
@@ -278,6 +278,26 @@ AC_ARG_ENABLE(lib-memory,
                ace_user_enable_lib_full=no
               ],)
 
+
+AC_ARG_ENABLE(lib-timer,
+              [  --enable-lib-timer     build libACE_Timer library     ],
+              [
+               case "${enableval}" in
+                yes)
+                  ACE_CREATE_LIBACE_TIMER
+                  ;;
+                no)
+                  ace_user_enable_lib_timer=no
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-timer)
+                  ;;
+               esac
+
+               dnl Disable full ACE library build
+               ace_user_enable_lib_full=no
+              ],)
+
 AC_ARG_ENABLE(lib-token,
               [  --enable-lib-token      build libACE_Token library      ],
               [
@@ -343,11 +363,12 @@ if test $ace_user_enable_lib_full = no &&
    test $ace_user_enable_lib_svcconf = no &&
    test $ace_user_enable_lib_streams = no &&
    test $ace_user_enable_lib_memory = no &&
+   test $ace_user_enable_lib_timer = no &&
    test $ace_user_enable_lib_token = no &&
    test $ace_user_enable_lib_other = no; then
 
   dnl If we get here then no ACE libraries will be built!
-  AC_MSG_ERROR(no ACE components will be built.  Specify which components to build)
+  AC_MSG_ERROR(No ACE components will be built.  Specify which components to build)
 
 fi  dnl No components will be built!
 
@@ -384,6 +405,9 @@ AM_CONDITIONAL(BUILD_STREAMS_FILES,
 
 AM_CONDITIONAL(BUILD_MEMORY_FILES,
                test X$ace_user_enable_lib_memory = Xyes)
+
+AM_CONDITIONAL(BUILD_TIMER_FILES,
+               test X$ace_user_enable_lib_timer = Xyes)
 
 AM_CONDITIONAL(BUILD_TOKEN_FILES,
                test X$ace_user_enable_lib_token = Xyes)
@@ -513,6 +537,16 @@ AC_DEFUN(ACE_CREATE_LIBACE_MEMORY,
  ACE_CREATE_LIBACE_OS
 ])
 
+dnl Set the component dependencies for the libACE_Timer library
+dnl Usage: ACE_CREATE_LIBACE_TIMER
+AC_DEFUN(ACE_CREATE_LIBACE_TIMER,
+[
+ ace_user_enable_lib_timer=yes
+
+ dnl Be careful not to go into a circular/recursive loop with these macros!
+ ACE_CREATE_LIBACE_OS
+])
+
 dnl Set the component dependencies for the libACE_Token library
 dnl Usage: ACE_CREATE_LIBACE_TOKEN
 AC_DEFUN(ACE_CREATE_LIBACE_TOKEN,
@@ -570,6 +604,7 @@ AC_DEFUN(ACE_CREATE_ALL_COMPONENTS,
  ace_user_enable_lib_svcconf=yes
  ace_user_enable_lib_streams=yes
  ace_user_enable_lib_memory=yes
+ ace_user_enable_lib_timer=yes
  ace_user_enable_lib_token=yes
  ace_user_enable_lib_other=yes
 ])
@@ -589,6 +624,7 @@ AC_DEFUN(ACE_DISABLE_ALL_COMPONENTS,
  ace_user_enable_lib_svcconf=no
  ace_user_enable_lib_streams=no
  ace_user_enable_lib_memory=no
+ ace_user_enable_lib_timer=no
  ace_user_enable_lib_token=no
  ace_user_enable_lib_other=no
 ])
