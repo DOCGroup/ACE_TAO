@@ -1,3 +1,22 @@
+Sun Aug  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QoS/qos.mpc:
+          Also with bmake set macros += ACE_HAS_WINSOCK2_GQOS
+
+        * ace/Select_Reactor_Base.h:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/Global_Macros.h:
+        * ace/Dev_Poll_Reactor.h:
+          Doxygen improvements/fixes
+
+        * ace/config-openvms.h:
+          Removed commented out lines
+
+        * ace/CDR_Stream.h:
+          Changed to signature for the to_string methods from char to
+          ACE_CDR::char so that they match the implementation
+
 Sun Aug  1 09:07:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-04a:
@@ -9,7 +28,7 @@ Sat Jul 31 17:01:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* bin/generate_rel_manpages:
 
 	  This is now executed at tao.dre for generating doxygen
-	  documentation. The files are then scp'ed to the main website. 
+	  documentation. The files are then scp'ed to the main website.
 
 Sat Jul 31 11:13:20 2004  Ossama  <ossama@dre.vanderbilt.edu>
 
