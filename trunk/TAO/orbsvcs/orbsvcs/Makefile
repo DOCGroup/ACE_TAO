@@ -13,9 +13,19 @@ LIBNAME  = liborbsvcs
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
+# Uncomment out the following line (or invoke make with
+# TAO_LACKS_EVENT_CHANNEL_ANY=1)
+# if you don't want support for anys in the Event Channel.
+#### TAO_LACKS_EVENT_CHANNEL_ANY = 1
+ifneq ($(TAO_LACKS_EVENT_CHANNEL_ANY),)
+  override TAO_LACKS_EVENT_CHANNEL_ANY = -DTAO_LACKS_EVENT_CHANNEL_ANY
+endif
+
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h 
+TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export \
+	       -Wb,export_include=orbsvcs_export.h \
+               $(TAO_LACKS_EVENT_CHANNEL_ANY)
 
 IDL_SRCS= \
 	CosConcurrencyControl \
@@ -92,7 +102,7 @@ FILES= $(IDL_FILES) \
 	\
 	Log/Logger_i \
 	\
-	tmplinst-orbsvcs\
+	tmplinst-orbsvcs \
 	AV/AVStreams_i \
 	AV/Endpoint_Strategy
 
