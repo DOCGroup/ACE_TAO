@@ -611,7 +611,7 @@ ACE_INLINE int
 ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 {
   // ACE_TRACE ("ACE_OS::rand_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Prand_r (seed), int, -1);
 #elif defined (HPUX_10)
@@ -619,13 +619,13 @@ ACE_OS::rand_r (ACE_RANDR_TYPE seed)
   // with latest POSIX and will change in a future HP-UX release so that it
   // is consistent.  At that point, this #elif section can be changed or
   // removed, and just call rand_r.
-  seed = seed;
+  ACE_UNUSED_ARG (seed);
   ACE_OSCALL_RETURN (::rand(), int, -1);
 #else
   ACE_OSCALL_RETURN (::rand_r (seed), int, -1);
 #endif /* DIGITAL_UNIX */
 #else
-  seed = seed;
+  ACE_UNUSED_ARG (seed);
   ACE_OSCALL_RETURN (::rand (), int, -1);
 #endif
 }
@@ -1129,7 +1129,7 @@ ACE_INLINE char *
 ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
 {
   // ACE_TRACE ("ACE_OS::strtok_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
   return ::strtok_r (s, tokens, lasts);
 #else
   if (s == NULL)
@@ -1144,7 +1144,7 @@ ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
   if (l_sub != l_org)
     *lasts += 1;
   return s ;
-#endif /* (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
+#endif /* (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
 ACE_INLINE long 
@@ -3275,7 +3275,7 @@ ACE_OS::getprotobyname_r (const char *name,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   if (::getprotobyname_r (name, result, (struct protoent_data *) buffer) == 0)
     return result;
@@ -3301,7 +3301,7 @@ ACE_OS::getprotobyname_r (const char *name,
 
   ACE_SOCKCALL_RETURN (::getprotobyname (name),
 		       struct protoent *, 0);
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) !defined (UNIXWARE) */
 }
 
 ACE_INLINE struct protoent *
@@ -3326,7 +3326,7 @@ ACE_OS::getprotobynumber_r (int proto,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   if (::getprotobynumber_r (proto, result, (struct protoent_data *) buffer) == 0)
     return result;
@@ -3349,7 +3349,7 @@ ACE_OS::getprotobynumber_r (int proto,
 
   ACE_SOCKCALL_RETURN (::getprotobynumber (proto),
 		       struct protoent *, 0);
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE struct servent *
@@ -3539,7 +3539,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
                     char *buffer, int buflen)
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
 #if defined (ACE_HAS_PTHREADS_1003_DOT_1C)
   struct passwd *result;
@@ -3570,7 +3570,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_REENTRANT_FUNCTIONS && ACE_MT_SAFE */
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 #else
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (pwent);
@@ -3596,7 +3596,7 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
@@ -3632,7 +3632,7 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
 
   ACE_SOCKCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type), 
 		       struct hostent *, 0); 
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 		     
 ACE_INLINE struct hostent *
@@ -3647,7 +3647,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #if defined (DIGITAL_UNIX)
   // gethostbyname returns thread-specific storage on Digital Unix
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
@@ -3682,7 +3682,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   ACE_UNUSED_ARG (result);
 
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0); 
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE char *
@@ -3703,7 +3703,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buf);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   ::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
@@ -3732,7 +3732,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 
   ACE_SOCKCALL_RETURN (::getservbyname (svc, proto), 
 		       struct servent *, 0);
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE long 
@@ -5931,7 +5931,7 @@ ACE_INLINE char *
 ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 {
   // ACE_TRACE ("ACE_OS::ctime_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result;
 #if defined (DIGITAL_UNIX)
@@ -5955,7 +5955,7 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
   ACE_OSCALL (::ctime (t), char *, 0, result);
   ::strncpy (buf, result, buflen);
   return buf;
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
 ACE_INLINE struct tm *
@@ -5969,7 +5969,7 @@ ACE_INLINE struct tm *
 ACE_OS::localtime_r (const time_t *t, struct tm *res)
 {
   // ACE_TRACE ("ACE_OS::localtime_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Plocaltime_r(t, res), struct tm *, 0);
 #elif defined (HPUX_10)
@@ -5995,7 +5995,7 @@ ACE_INLINE struct tm *
 ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 {
   // ACE_TRACE ("ACE_OS::localtime_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Pgmtime_r(t, res), struct tm *, 0);
 #elif defined (HPUX_10)
@@ -6023,7 +6023,7 @@ ACE_INLINE char *
 ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 {
   // ACE_TRACE ("ACE_OS::asctime_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result;
 #if defined (DIGITAL_UNIX)
@@ -6045,7 +6045,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_OSCALL (::asctime (t), char *, 0, result);
   ::strncpy (buf, result, buflen);
   return buf;
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
 ACE_INLINE size_t
