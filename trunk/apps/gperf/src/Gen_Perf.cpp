@@ -95,7 +95,7 @@ Gen_Perf::sort_set (char *union_set, int len)
 
       for (curr = i + 1, tmp = (int) union_set[curr];
            curr > 0
-           && Vectors::occurrences[tmp] < Vectors::occurrences[union_set[curr - 1]];
+           && Vectors::occurrences[tmp] < Vectors::occurrences[(int) union_set[curr - 1]];
            curr--)
         union_set[curr] = union_set[curr - 1];
 
