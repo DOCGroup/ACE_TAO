@@ -1,3 +1,24 @@
+Tue May 11 22:28:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          The creation and addition to the AST of the uses-multiple-related
+          implied IDL nodes (a struct containing connection info
+          and a sequence of these structs) has been moved from the
+          class be_visitor_ccm_pre_proc to the parser. An operation
+          returning the sequence appears not only in implied IDL,
+          but also in the generated executor IDL. This means that
+          the sequence must be in the symbol table so it can be
+          looked up, and therefore the addition of implied IDL nodes just
+          before code generation is no longer sufficient.
+
 Tue May 11 11:49:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_interface.cpp:

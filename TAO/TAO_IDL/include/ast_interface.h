@@ -169,6 +169,7 @@ protected:
 protected:
   // Scope Management Protocol.
   friend int tao_yyparse (void);
+  friend class IDL_GlobalData;
 
   virtual AST_Constant *fe_add_constant (AST_Constant *c);
 
