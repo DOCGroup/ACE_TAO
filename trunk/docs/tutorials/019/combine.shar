@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-12-28 16:29 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-04-03 17:08 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/019'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    409 -rw-rw-r-- hdr
 #     71 -rw-rw-r-- bodies
-#   1161 -rw-rw-r-- page01.pre
+#   2009 -rw-rw-r-- page01.pre
 #    563 -rw-rw-r-- page02.pre
 #    219 -rw-rw-r-- page03.pre
 #    676 -rw-rw-r-- page04.pre
@@ -65,7 +65,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh06808; then
+if mkdir _sh12976; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -152,7 +152,7 @@ X      doing this, we can allow our applications to swap data very
 X      efficiently.
 X    <p>
 X      Along the way, we'll have to come up with some sort of
-X      coordintation betweent the processes.  That is the most
+X      coordination betweent the processes.  That is the most
 X      difficult part of a shared memory system.  In the tutorial we're 
 X      just going to take a simplistic approach (eg -- busy loop) but
 X      real-world applications will need to take a serious look at
@@ -163,20 +163,41 @@ X      myself.  This tutorial and the next are very simple-minded and
 X      primitive.  Anyone who wants to provide more realistic
 X      replacements is encouraged to drop me a note
 X      (<A HREF="mailto:jcej@lads.com">jcej@lads.com</A>).
+<P>
+A tutorial wouldn't be complete without Kirthika's abstract:
+<UL>
+This tutorial shows how to use memory as a shared resource between the
+client and server processes. ACE_Shared_Memory_SV has been used for
+creating
+the shared memory segment. Two different approaches have been used. One
+uses the malloc () method to allocate memory while the other uses the
+placement new expression (C++) of allocating a memory chunk in advance
+and using it on demand.
+<P>
+The server has a string of alphabets from a-z which are converted to
+uppercase
+by the client proving that the same memory locations are being shared
+between 
+the two processes. The syncronisation between the server and client is
+done 
+using the ACE_OS::sleep () instead of a semaphore/mutexes with the aim
+of keeping our first dive into shared memory usage simple and easy to
+fathom.
+</UL>
 SHAR_EOF
-  $shar_touch -am 1228154598 'page01.pre' &&
+  $shar_touch -am 0403170299 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-aef26c91d7b1ff2212e955be7e2d6ab9  page01.pre
+fae9aec33b3cc43e8c06d608e00adf2f  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1161 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1161,' 'current size' "$shar_count!"
+    test 2009 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2009,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -185,7 +206,7 @@ if test -f 'page02.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page02.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
-We'll first take a look at the server side.  As ususal with
+We'll first take a look at the server side.  As usual with
 co-operating applications, you need the server up and running first.
 In the case of shared memory applications, the server will create the
 shared memory segment.  In this example, it will also remove the
@@ -196,14 +217,14 @@ of persistence between application instances (at least, until the
 machine comes down.)
 <HR>
 SHAR_EOF
-  $shar_touch -am 1228154698 'page02.pre' &&
+  $shar_touch -am 0403170299 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-f651adc7b68da0c21b92c8a665980a18  page02.pre
+e6c9fee2eb20324a2f0504fb1c687ddd  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
@@ -333,5 +354,5 @@ SHAR_EOF
     $echo 'page06.pre:' 'original size' '401,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh06808
+rm -fr _sh12976
 exit 0

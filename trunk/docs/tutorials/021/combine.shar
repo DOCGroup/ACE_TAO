@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-06 14:26 EST by <jcej@caldera.lads.com>.
-# Source directory was `/scsiA/home/jcej/projects/ACE_wrappers/docs/tutorials/021'.
+# Made on 1999-04-03 17:08 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/021'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -13,12 +13,13 @@
 # ------ ---------- ------------------------------------------
 #    409 -rw-rw-r-- hdr
 #     47 -rw-rw-r-- bodies
-#    562 -rw-rw-r-- page01.pre
-#    281 -rw-rw-r-- page02.pre
-#    201 -rw-rw-r-- page03.pre
-#    287 -rw-rw-r-- page04.pre
-#    287 -rw-rw-r-- page05.pre
+#   2301 -rw-rw-r-- page01.pre
+#    282 -rw-rw-r-- page02.pre
+#    202 -rw-rw-r-- page03.pre
+#    288 -rw-rw-r-- page04.pre
+#    288 -rw-rw-r-- page05.pre
 #    604 -rw-rw-r-- page06.pre
+#    786 -rw-rw-r-- page04.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -65,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh07125; then
+if mkdir _sh12922; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -152,20 +153,56 @@ X      In this tutorial, we'll use ACE_Malloc&lt;&gt; to create a
 X      memory pool that is sharable between a client and server.  We'll 
 X      use a memory mapped file to provide the physical storage but
 X      shared memory works just as well.
+<P>
+Kirthika's abstract:
+<UL>
+The ACE_Malloc class is templatised by the type of memory pool
+and the lock for it. The name of the memory pool provided can be used 
+in the "bind" call made by the server. This helps the other party
+wanting to access it do so by a "find" call. The ACE_Malloc will
+allocate
+memory and on a "malloc" will return memory chunks from its reserve.
+When the memory chunk is freed by the user, it will be appended to the
+free list maintained by the class. Unless a "remove" is done explicitly,
+the memory wont be returned to the OS. Various memory pool types can be
+used,
+X ACE_MMap_Memory_Pool,ACE_Sbrk_Memory_Pool to name a few. 
+For further details: <A HREF="../../ace/Memory_Pool.h">ace/Memory_Pool.h</A>.
+<P>
+In this tutorial, a ACE_Malloc class with ACE_MMAP_MEMORY_POOL
+and a semophore for syncronisation has been used. This is locked by
+the server initially and released after it writes into it so that
+the client waiting for it can go ahead and do its job. There is yet
+another semaphore used by the server to exit only after the client
+has finished its task, which is locked by the client at the start
+and released when its done.  
+<P>
+Some more information regarding memory management:
+ACE also provides the ACE_Allocator class which uses
+dynamic binding and is flexible, though at a cost of using 
+virtual pointer tables. Also, there is an ACE_Allocator_Adapter class
+which has an ACE_Allocator interface but ACE_Malloc functionality.  
+<P>
+Bottomline: Memory can be managed either using the ACE_Allocator
+set of classes which uses polymorphism and is thus flexible but not as
+efficient as the templatised version which is the ACE_Malloc set of
+classes which are more efficient but not as felxible.
+X
+</UL>
 SHAR_EOF
-  $shar_touch -am 0103180499 'page01.pre' &&
+  $shar_touch -am 0403170799 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-83956a1b05e5f8823afbdb8a84d8ac11  page01.pre
+98ac048e325c4933d10e44f97bf27791  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 562 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '562,' 'current size' "$shar_count!"
+    test 2301 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2301,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -190,12 +227,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-1bde237d2082c2f88f4802965e0b393d  page02.pre
+6742359e1f990299bdab5992d0629d96  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 281 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '281,' 'current size' "$shar_count!"
+    test 282 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '282,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -219,12 +256,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pre:' 'MD5 check failed'
-bd3bbfe6dbece827f8259d394d89ff58  page03.pre
+e47af5a3f933ac9eafbb4aae007aa0e6  page03.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
-    test 201 -eq "$shar_count" ||
-    $echo 'page03.pre:' 'original size' '201,' 'current size' "$shar_count!"
+    test 202 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '202,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pre ==============
@@ -249,12 +286,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-a95d570fb8b7aca15802d9abdba84b81  page04.pre
+2366f1603bd1e71955eb8ee3429ca402  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 287 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '287,' 'current size' "$shar_count!"
+    test 288 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '288,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -279,12 +316,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-a95d570fb8b7aca15802d9abdba84b81  page05.pre
+2366f1603bd1e71955eb8ee3429ca402  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 287 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '287,' 'current size' "$shar_count!"
+    test 288 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '288,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page06.pre ==============
@@ -325,5 +362,43 @@ SHAR_EOF
     $echo 'page06.pre:' 'original size' '604,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh07125
+# ============= page04.pst ==============
+if test -f 'page04.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pst' &&
+<HR>
+X    The really hard stuff is done by the ACE_Malloc<> template.  This
+X      template takes two parameters.<sup>*</sup>  The first is a
+X      memory pool class to use.  ACE has several, I've choosen one
+X      that uses a memory-mapped file.  The second parameter is a lock
+X      class of some sort.  This is needed so that the ACE_Malloc<> can 
+X        protect its internal data.  Note that you still have to
+X        provide your own mutex around the data you put into the
+X        malloc'd area.
+X
+<P>
+X          * Actually, some implementations may require a different
+X          number of parameters.
+X        That's why ACE uses those funky macros.  ACE_MMAP_MEMORY_POOL
+X        for instance turns into ACE_MMAP_Memory_Pool on Linux but may
+X        do other things on your platform.
+SHAR_EOF
+  $shar_touch -am 0313161099 'page04.pst' &&
+  chmod 0664 'page04.pst' ||
+  $echo 'restore of' 'page04.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pst:' 'MD5 check failed'
+9e40019f1599341ac0dac0f3eee47341  page04.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
+    test 786 -eq "$shar_count" ||
+    $echo 'page04.pst:' 'original size' '786,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh12922
 exit 0

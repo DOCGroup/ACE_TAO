@@ -24,7 +24,7 @@
       efficiently.
     <p>
       Along the way, we'll have to come up with some sort of
-      coordintation betweent the processes.  That is the most
+      coordination betweent the processes.  That is the most
       difficult part of a shared memory system.  In the tutorial we're 
       just going to take a simplistic approach (eg -- busy loop) but
       real-world applications will need to take a serious look at
@@ -35,5 +35,26 @@
       primitive.  Anyone who wants to provide more realistic
       replacements is encouraged to drop me a note
       (<A HREF="mailto:jcej@lads.com">jcej@lads.com</A>).
+<P>
+A tutorial wouldn't be complete without Kirthika's abstract:
+<UL>
+This tutorial shows how to use memory as a shared resource between the
+client and server processes. ACE_Shared_Memory_SV has been used for
+creating
+the shared memory segment. Two different approaches have been used. One
+uses the malloc () method to allocate memory while the other uses the
+placement new expression (C++) of allocating a memory chunk in advance
+and using it on demand.
+<P>
+The server has a string of alphabets from a-z which are converted to
+uppercase
+by the client proving that the same memory locations are being shared
+between 
+the two processes. The syncronisation between the server and client is
+done 
+using the ACE_OS::sleep () instead of a semaphore/mutexes with the aim
+of keeping our first dive into shared memory usage simple and easy to
+fathom.
+</UL>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>

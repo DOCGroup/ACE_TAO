@@ -1,3 +1,12 @@
+Sat Apr  3 17:02:48 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/*: Regenerated all the HTML to get the hyperlinks 
+	into the various headers.  I'm sure somebody will let me know if I 
+	munged it all.
+
+	* docs/tutorials/(019|020|021) : Finally made myself sit down and
+	add Kirthika's last abstracts.
+	
 Sat Apr  3 15:27:07 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile.am
