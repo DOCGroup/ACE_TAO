@@ -43,9 +43,9 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_LACKS_MSGBUF_T)
-   struct msgbuf {};
-#endif /* ACE_LACKS_MSGBUF_T */
+   // Declare opaque type.  Needed for ACE_OS wrappers on systems
+   // without SysV IPC.
+   struct msqid_ds;
 
 #if defined (ACE_LACKS_SYSV_MSQ_PROTOS)
    int msgget (key_t, int);
@@ -53,10 +53,6 @@ extern "C"
    int msgsnd (int, const void *, size_t, int);
    int msgctl (int, int, struct msqid_ds *);
 #endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
-
-#if defined (ACE_LACKS_MSQID_DS_T)
-   struct msqid_ds {};
-#endif /* ACE_LACKS_MSQID_DS_T */
 
 #ifdef __cplusplus
 }

@@ -511,6 +511,9 @@ AC_CHECK_HEADER([sys/msg.h],
   ],
   [AC_DEFINE([ACE_LACKS_SYS_MSG_H])])
 
+AC_CHECK_HEADER([sys/sem.h],,)
+AC_CHECK_HEADER([sys/shm.h],,)
+
 AC_CHECK_HEADER([sys/param.h],
   [],
   [AC_DEFINE([ACE_LACKS_PARAM_H])])
@@ -1217,7 +1220,6 @@ ACE_CHECK_STRUCT([dirent],[dirent.h],,[AC_DEFINE([ACE_LACKS_STRUCT_DIR])])
 ACE_CHECK_STRUCT([flock],[fcntl.h],,[AC_DEFINE([ACE_LACKS_FILELOCKS])])
 ACE_CHECK_STRUCT([rwlock_t],[synch.h],,[AC_DEFINE([ACE_LACKS_RWLOCK_T])])
 ACE_CHECK_STRUCT([strbuf],[stropts.h],[AC_DEFINE([ACE_HAS_STRBUF_T])],)
-ACE_CHECK_STRUCT([msgbuf],[sys/msg.h],,[AC_DEFINE([ACE_LACKS_MSGBUF_T])])
 case "$host" in
 *irix*)
   dnl IRIX prusage fields don't match what ACE currently supports.
@@ -3696,25 +3698,40 @@ dnl FIXME:  How do we check for a working sbrk()?  Do we need to?
 AC_CHECK_FUNC([sbrk],, [AC_DEFINE([ACE_LACKS_SBRK])])
 
 dnl Check for SYSV IPC functions
-AC_CHECK_FUNC([msgctl],,)
+dnl
+dnl Although Darwin/OS X does not implement any of the SysV IPC API,
+dnl its C library contains stubs for all the system calls (probably
+dnl left over from the BSD libc).  This causes false positives from
+dnl AC_CHECK_FUNC which results in configure reporting that SysV IPC
+dnl is supported.  We avoid this problem by avoiding the function 
+dnl checks if the cooresponding headers were not detected earlier.
+dnl
+if test "$ac_cv_header_sys_msg_h" = yes; then
+  AC_CHECK_FUNC([msgctl],,)
 
-AC_CHECK_FUNC([msgget],,)
+  AC_CHECK_FUNC([msgget],,)
 
-AC_CHECK_FUNC([msgrcv],,)
+  AC_CHECK_FUNC([msgrcv],,)
+fi dnl test "$ac_cv_header_sys_msg_h" = yes
 
-AC_CHECK_FUNC([semctl],,)
+if test "$ac_cv_header_sys_sem_h" = yes; then
+  AC_CHECK_FUNC([semctl],,)
 
-AC_CHECK_FUNC([semget],,)
+  AC_CHECK_FUNC([semget],,)
 
-AC_CHECK_FUNC([semop],,)
+  AC_CHECK_FUNC([semop],,)
+fi dnl test "$ac_cv_header_sys_sem_h" = yes
 
-AC_CHECK_FUNC([shmat],,)
+if test "$ac_cv_header_sys_shm_h" = yes; then
+  AC_CHECK_FUNC([shmat],,)
 
-AC_CHECK_FUNC([shmctl],,)
+  AC_CHECK_FUNC([shmctl],,)
 
-AC_CHECK_FUNC([shmdt],,)
+  AC_CHECK_FUNC([shmdt],,)
 
-AC_CHECK_FUNC([shmget],,)
+  AC_CHECK_FUNC([shmget],,)
+fi dnl test "$ac_cv_header_sys_shm_h" = yes
+
 dnl End check for SYSV IPC functions
 
 AC_CHECK_FUNC([read_real_time],

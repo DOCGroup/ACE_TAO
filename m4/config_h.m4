@@ -1071,9 +1071,6 @@ AH_TEMPLATE([ACE_LACKS_MPROTECT],
 AH_TEMPLATE([ACE_LACKS_MSG_ACCRIGHTS],
 [Platform defines ACE_HAS_MSG, but lacks msg_accrights{len}.])
 
-AH_TEMPLATE([ACE_LACKS_MSGBUF_T],
-[Platform lacks struct msgbuf (e.g., NT and MSV).])
-
 AH_TEMPLATE([ACE_LACKS_MSYNC],[Platform lacks msync()])
 
 AH_TEMPLATE([ACE_HAS_BROKEN_NETBSD_MSYNC],
