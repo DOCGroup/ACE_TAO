@@ -111,18 +111,20 @@ public:
         , RtecScheduler::SYNCHRONIZATION_FAILURE
       ))
   {
-    Supplier *supplier_impl1_1;
-    Timeout_Consumer *timeout_consumer_impl1_1;
-    ACE_NEW(supplier_impl1_1,
+    ACE_Time_Value tv;
+    /*
+    Supplier *supplier_impl1;
+    Timeout_Consumer *timeout_consumer_impl1;
+    ACE_NEW(supplier_impl1,
             Supplier(1));
-    ACE_NEW(timeout_consumer_impl1_1,
-            Timeout_Consumer(supplier_impl1_1));
-    ACE_Time_Value tv(4,0); //period
-    add_supplier_with_timeout(supplier_impl1_1,
-                              "supplier1_1",
+    ACE_NEW(timeout_consumer_impl1,
+            Timeout_Consumer(supplier_impl1));
+    tv.set(4,0); //period
+    add_supplier_with_timeout(supplier_impl1,
+                              "supplier1",
                               ACE_ES_EVENT_UNDEFINED,
-                              timeout_consumer_impl1_1,
-                              "supplier1_1_timeout_consumer",
+                              timeout_consumer_impl1,
+                              "supplier1_timeout_consumer",
                               tv,
                               RtecScheduler::VERY_LOW_CRITICALITY,
                               RtecScheduler::VERY_LOW_IMPORTANCE
@@ -130,27 +132,65 @@ public:
                               );
     ACE_CHECK;
 
-    Supplier *supplier_impl1_2;
-    ACE_NEW(supplier_impl1_2,
+    Supplier *supplier_impl2_1;
+    ACE_NEW(supplier_impl2_1,
             Supplier(2));
-    Consumer * consumer_impl1_1;
-    ACE_NEW(consumer_impl1_1,
-            Consumer(supplier_impl1_2));
+    Timeout_Consumer * timeout_consumer_impl2_1;
+    ACE_NEW(timeout_consumer_impl2_1,
+            Timeout_Consumer(supplier_impl2_1));
+    tv.set (6, 0); //Period
+    add_supplier_with_timeout(supplier_impl2_1,
+                              "supplier2_1",
+                              ACE_ES_EVENT_UNDEFINED+1,
+                              timeout_consumer_impl2_1,
+                              "supplier2_1_timeout_consumer",
+                              tv,
+                              RtecScheduler::VERY_HIGH_CRITICALITY,
+                              RtecScheduler::VERY_HIGH_IMPORTANCE
+                              ACE_ENV_ARG_PARAMETER
+                              );
+    ACE_CHECK;
+
+    Consumer * consumer_impl1_2;
+    ACE_NEW(consumer_impl1_2,
+            Consumer);
 
     tv.set(1,0);
-    consumer_impl1_1->setWorkTime(tv);
+    consumer_impl1_2->setWorkTime(tv);
+    //consumer's rate won't get propagated from the remote supplier
+    //so need to specify a period here.
+    tv.set(4,0); //Period
+    add_consumer(consumer_impl1_2, //deleted in destructor
+                 "consumer1_2",
+                 tv,
+                 ACE_ES_EVENT_UNDEFINED,
+                 RtecScheduler::VERY_LOW_CRITICALITY,
+                 RtecScheduler::VERY_LOW_IMPORTANCE
+                 ACE_ENV_ARG_PARAMETER
+                 );
+    ACE_CHECK;
+    */
+    Supplier *supplier_impl1_3;
+    ACE_NEW(supplier_impl1_3,
+            Supplier(3));
+    Consumer * consumer_impl1_2;
+    ACE_NEW(consumer_impl1_2,
+            Consumer(supplier_impl1_3));
+
+    tv.set(1,0);
+    consumer_impl1_2->setWorkTime(tv);
     //consumer's rate will get propagated from the supplier.
     //so no need to specify a period here.
     tv.set(4,0); //Period
-    add_consumer_with_supplier(consumer_impl1_1, //deleted in consumer
-                               "consumer1_1",
+    add_consumer_with_supplier(consumer_impl1_2, //deleted in consumer
+                               "consumer1_2",
                                tv,
-                               ACE_ES_EVENT_UNDEFINED,
+                               ACE_ES_EVENT_UNDEFINED+1,
                                RtecScheduler::VERY_LOW_CRITICALITY,
                                RtecScheduler::VERY_LOW_IMPORTANCE,
-                               supplier_impl1_2,
-                               "supplier1_2",
-                               ACE_ES_EVENT_UNDEFINED+1
+                               supplier_impl1_3,
+                               "supplier1_3",
+                               ACE_ES_EVENT_UNDEFINED+2
                                ACE_ENV_ARG_PARAMETER
                                );
     ACE_CHECK;

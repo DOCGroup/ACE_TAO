@@ -57,7 +57,7 @@ Consumer::push (const RtecEventComm::EventSet& events
 
   //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
   //when work triggered by event starts.
-  //DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, guid, 0, NULL);
+  //DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, guid, 0, NULL);
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Consumer in thread %t START_SERVICE at %u\n",tv.msec()));
 
@@ -68,7 +68,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   oid.queue_id = events[0].header.eid.queue_id;
   oid.type = events[0].header.type;
 
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   //TODO: do work on push()
   ACE_High_Res_Timer timer;
@@ -127,20 +127,20 @@ Consumer::push (const RtecEventComm::EventSet& events
 
       //@BT INSTRUMENT with event ID: EVENT_WORK_DEADLINE_MISSED Measure time when
       //work triggered by event finishes and deadline missed.
-      //DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
+      //DSTRM_EVENT (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MISSED) at %u\n",tv.msec()));
-      DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(Object_ID), (char*)&oid);
+      DSTRM_EVENT (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(Object_ID), (char*)&oid);
 
     }
   ACE_Allocator::instance()->free(extra_info);
 */
   //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
   //work triggered by event finishes.
-  //DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
+  //DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MADE) at %u\n",tv.msec()));
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   //now, trigger the next subtask if any
   if (this->fwddest_ != 0)
