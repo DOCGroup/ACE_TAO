@@ -202,7 +202,7 @@ main (int argc, char *argv [])
   // Get the Proactor interface out of it.
   ACE_Proactor proactor2 (&posix_proactor);
 #else /* ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR */
-  ACE_Proactor2 proactor2;
+  ACE_Proactor proactor2;
 #endif /* ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR */
 
   // = Create Tasks. One pool of threads to handle completions on
