@@ -89,8 +89,13 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   // @todo Make this configurable so that the load average over the
   //       last 5 and 15 minutes can be used instead.
   double loadavg[1];
-  if (::getloadavg (loadavg, 1) == 1)
+
+  int samples = ::getloadavg (loadavg, 1);
+
+  if (samples == 1)
     load = loadavg[0] / ::sysconf (_SC_NPROCESSORS_ONLN);
+  else
+    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
 
 #else
 
