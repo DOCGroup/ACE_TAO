@@ -45,7 +45,7 @@ namespace TAO
   Invocation_Status
   DII_Invocation_Adapter::invoke_twoway (
         TAO_Operation_Details &op,
-        CORBA::Object *&effective_target,
+        CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL)
