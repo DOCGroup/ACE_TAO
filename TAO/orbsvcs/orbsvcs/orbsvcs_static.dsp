@@ -17,17 +17,16 @@ CFG=ORB Services Static - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ORB Services Static - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "ORB Services Static - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "ORB Services Static - Win32 Release" (based on\
+ "Win32 (x86) Static Library")
+!MESSAGE "ORB Services Static - Win32 Debug" (based on\
+ "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
-# PROP WCE_FormatVersion ""
 CPP=cl.exe
-RSC=rc.exe
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
@@ -41,11 +40,12 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /D TAO_ORBSVCS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -65,10 +65,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D TAO_ORBSVCS_HAS_DLL=0 /YX /FD /c
+RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
+# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D TAO_ORBSVCS_HAS_DLL=0 /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -148,6 +149,10 @@ SOURCE=.\CosConcurrencyControlC.cpp
 # Begin Source File
 
 SOURCE=.\CosConcurrencyControlS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosEvent_Utilities.cpp
 # End Source File
 # Begin Source File
 
@@ -684,6 +689,10 @@ SOURCE=.\CosConcurrencyControlC.h
 # Begin Source File
 
 SOURCE=.\CosConcurrencyControlS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosEvent_Utilities.h
 # End Source File
 # Begin Source File
 
@@ -1374,7 +1383,9 @@ InputPath=.\AVStreams.idl
 InputName=AVStreams
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1413,7 +1424,8 @@ InputPath=.\AVStreams.idl
 InputName=AVStreams
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1459,7 +1471,9 @@ InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1498,7 +1512,8 @@ InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1544,7 +1559,9 @@ InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1583,7 +1600,8 @@ InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1629,7 +1647,9 @@ InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1668,7 +1688,8 @@ InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1714,7 +1735,9 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1753,7 +1776,8 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1799,7 +1823,9 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1838,7 +1864,8 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1884,7 +1911,9 @@ InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1923,7 +1952,8 @@ InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1969,7 +1999,9 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2008,7 +2040,8 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2054,7 +2087,9 @@ InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2092,7 +2127,8 @@ InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2138,7 +2174,9 @@ InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2176,7 +2214,8 @@ InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2222,7 +2261,9 @@ InputPath=.\ImplRepo.idl
 InputName=ImplRepo
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2261,7 +2302,8 @@ InputPath=.\ImplRepo.idl
 InputName=ImplRepo
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2307,7 +2349,9 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2346,7 +2390,8 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2392,7 +2437,9 @@ InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2431,7 +2478,8 @@ InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2477,7 +2525,9 @@ InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2516,7 +2566,8 @@ InputPath=.\Null_MediaCtrl.idl
 InputName=Null_MediaCtrl
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2562,7 +2613,9 @@ InputPath=.\Ping.idl
 InputName=Ping
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2601,7 +2654,8 @@ InputPath=.\Ping.idl
 InputName=Ping
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2647,7 +2701,9 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2686,7 +2742,8 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2732,7 +2789,9 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2771,7 +2830,8 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2817,7 +2877,9 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2856,7 +2918,8 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2902,7 +2965,9 @@ InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2941,7 +3006,8 @@ InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -2987,7 +3053,9 @@ InputPath=.\sfp.idl
 InputName=sfp
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3026,7 +3094,8 @@ InputPath=.\sfp.idl
 InputName=sfp
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3072,7 +3141,9 @@ InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3111,7 +3182,8 @@ InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3157,7 +3229,9 @@ InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -I../../      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h      $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -I../../\
+      -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h\
+      $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3196,7 +3270,8 @@ InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+      -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
