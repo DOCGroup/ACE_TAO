@@ -3848,11 +3848,12 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   // ACE_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
-  // Solaris rwlocks don't support the upgrade feature...
+  // Some native rwlocks, such as those on Solaris, don't
+  // support the upgrade feature . . .
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 # else /* NT, POSIX, and VxWorks don't support this natively. */
-
+  // The ACE rwlock emulation does support upgrade . . .
   int result = 0;
 
 #   if defined (ACE_HAS_PTHREADS)
