@@ -88,6 +88,14 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
+// 10 millisecond fudge factor to account for Solaris timers...
+//
+// Believe me, this timer skew is necessary ;-)
+//
+#if !defined (ACE_TIMER_SKEW)
+# define ACE_TIMER_SKEW 1000 * 10
+#endif /* ACE_TIMER_SKEW */
+
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
