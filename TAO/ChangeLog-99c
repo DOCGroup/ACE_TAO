@@ -1,3 +1,9 @@
+Wed Feb 24 16:01:53 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/Stub.cpp: Fred and I fixed up Location Forward logic in 
+          do_static_call ().  It wasn't advancing the profiles when a
+          location forward message was returned.
+
 Wed Feb 24 14:13:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/index.html: Added a link to
