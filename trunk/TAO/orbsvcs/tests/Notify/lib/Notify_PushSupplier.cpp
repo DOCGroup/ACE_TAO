@@ -25,19 +25,27 @@ void TAO_Notify_PushSupplier::init
 }
 
 void
-TAO_Notify_PushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL)
+TAO_Notify_PushSupplier::connect (
+    CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin 
+    TAO_ENV_ARG_DECL
+  )
 {
-  // Activate the consumer with the default_POA_
-  CosNotifyComm::PushSupplier_var objref = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  // Activate the consumer with the default_POA_.
+  CosNotifyComm::PushSupplier_var objref = 
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::ANY_EVENT, this->my_id_ TAO_ENV_ARG_PARAMETER);
+    supplier_admin->obtain_notification_push_consumer (
+                        CosNotifyChannelAdmin::ANY_EVENT, 
+                        this->my_id_ 
+                        TAO_ENV_ARG_PARAMETER
+                      );
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
-  // narrow
+  // Narrow.
   this->consumer_proxy_ =
     CosNotifyChannelAdmin::ProxyPushConsumer::_narrow (proxyconsumer.in ()
                                                        TAO_ENV_ARG_PARAMETER);
@@ -48,7 +56,7 @@ TAO_Notify_PushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr suppl
                                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // give ownership to POA
+  // Give ownership to POA.
   this->_remove_ref ();
 }
 
@@ -77,13 +85,15 @@ TAO_Notify_PushSupplier::deactivate (TAO_ENV_SINGLE_ARG_DECL)
 void
 TAO_Notify_PushSupplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->consumer_proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_proxy_->disconnect_push_consumer (
+                             TAO_ENV_SINGLE_ARG_PARAMETER
+                           );
   ACE_CHECK;
   this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_PushSupplier::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* env */)
+TAO_Notify_PushSupplier::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
@@ -93,19 +103,15 @@ TAO_Notify_PushSupplier::subscription_change
    (const CosNotification::EventTypeSeq &/*added*/,
     const CosNotification::EventTypeSeq &/*removed*/
     TAO_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((
-                       CORBA::SystemException,
-                       CosNotifyComm::InvalidEventType
-                       ))
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosNotifyComm::InvalidEventType))
 {
   // TODO:
 }
 
 void
 TAO_Notify_PushSupplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
 }

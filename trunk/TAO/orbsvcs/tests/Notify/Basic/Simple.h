@@ -39,13 +39,11 @@ public:
 
   // = PushSupplier methods
   virtual void push (
-        const CORBA::Any & data
-        TAO_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      const CORBA::Any & data
+      TAO_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected));
 
 protected:
   Simple_Test * test_client_;
@@ -59,7 +57,7 @@ public:
   Event_AnyPushSupplier (Simple_Test * test_client);
   // Constructor.
 
-  virtual ~Event_AnyPushSupplier ();
+  virtual ~Event_AnyPushSupplier (void);
   // Destructor.
 
 protected:
@@ -73,11 +71,14 @@ class Simple_Test : public Notify_Test_Client
 public:
   // Initialization and termination code
   Simple_Test (void);
-  virtual ~Simple_Test ();
+  virtual ~Simple_Test (void);
 
-  int parse_args(int argc, char *argv[]) ;
+  int parse_args (int argc, 
+                  char *argv[]) ;
 
-  int init (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  int init (int argc, 
+            char *argv [] 
+            TAO_ENV_ARG_DECL);
   // initialization.
 
   void on_event_received (void);
@@ -112,10 +113,10 @@ protected:
   // The supplier admin used by suppliers.
 
   TAO_Notify_PushConsumer* consumer_;
-  // Consumer
+  // Consumer.
 
   TAO_Notify_PushSupplier* supplier_;
-  // Supplier
+  // Supplier.
 
 private:
   friend class Event_AnyPushSupplier;

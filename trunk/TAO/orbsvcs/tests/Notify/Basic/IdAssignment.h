@@ -22,24 +22,37 @@ class IdAssignment
 {
 public:
   IdAssignment (void);
-  ~IdAssignment ();
+  ~IdAssignment (void);
 
-  int parse_args(int argc, char *argv[]);
-  void init(int argc, char *argv[] TAO_ENV_ARG_DECL);
-  void run_test(TAO_ENV_SINGLE_ARG_DECL);
+  int parse_args (int argc, 
+                  char *argv[]);
+  void init (int argc, 
+             char *argv[] 
+             TAO_ENV_ARG_DECL);
+  void run_test (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
-  CosNotifyChannelAdmin::ChannelID create_ec(TAO_ENV_SINGLE_ARG_DECL);
-  void destroy_ec(CosNotifyChannelAdmin::ChannelID id
-                  TAO_ENV_ARG_DECL);
+  CosNotifyChannelAdmin::ChannelID create_ec (TAO_ENV_SINGLE_ARG_DECL);
+  void destroy_ec (CosNotifyChannelAdmin::ChannelID id
+                   TAO_ENV_ARG_DECL);
 
-  CosNotifyChannelAdmin::AdminID create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id TAO_ENV_ARG_DECL);
-  CosNotifyChannelAdmin::AdminID create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id TAO_ENV_ARG_DECL);
+  CosNotifyChannelAdmin::AdminID create_supplier_admin (
+      CosNotifyChannelAdmin::ChannelID channel_id 
+      TAO_ENV_ARG_DECL
+    );
+  CosNotifyChannelAdmin::AdminID create_consumer_admin (
+      CosNotifyChannelAdmin::ChannelID channel_id 
+      TAO_ENV_ARG_DECL
+    );
 
-  void destroy_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id, CosNotifyChannelAdmin::AdminID admin_id TAO_ENV_ARG_DECL);
-  void destroy_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id, CosNotifyChannelAdmin::AdminID admin_id TAO_ENV_ARG_DECL);
+  void destroy_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id, 
+                               CosNotifyChannelAdmin::AdminID admin_id 
+                               TAO_ENV_ARG_DECL);
+  void destroy_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id, 
+                               CosNotifyChannelAdmin::AdminID admin_id 
+                               TAO_ENV_ARG_DECL);
 
-  // = Data members
+  // = Data members.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 
   int iter_;

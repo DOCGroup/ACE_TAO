@@ -17,33 +17,38 @@ ACE_RCSID (Notify_Tests, Throughput, "$Id$")
 
 /***************************************************************************/
 
-Throughput_StructuredPushConsumer::Throughput_StructuredPushConsumer (Notify_Throughput *test_client)
+Throughput_StructuredPushConsumer::Throughput_StructuredPushConsumer (
+    Notify_Throughput *test_client
+  )
   : test_client_ (test_client),
     push_count_ (0)
 {
 }
 
 void
-Throughput_StructuredPushConsumer::accumulate_into (ACE_Throughput_Stats &throughput) const
+Throughput_StructuredPushConsumer::accumulate_into (
+    ACE_Throughput_Stats &throughput
+  ) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
-Throughput_StructuredPushConsumer::dump_stats (const char* msg, ACE_UINT32 gsf)
+Throughput_StructuredPushConsumer::dump_stats (const char* msg, 
+                                               ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }
 
 void
-Throughput_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & notification
-                                                          TAO_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
+Throughput_StructuredPushConsumer::push_structured_event (
+    const CosNotification::StructuredEvent & notification
+    TAO_ENV_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosEventComm::Disconnected))
 {
-  // extract payload;
+  // Extract payload.
   const char* msg;
   CORBA::Boolean ok = (notification.remainder_of_body >>= msg);
 
@@ -61,7 +66,9 @@ Throughput_StructuredPushConsumer::push_structured_event (const CosNotification:
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->push_count_ == 0)
+    {
     this->throughput_start_ = ACE_OS::gethrtime ();
+    }
 
   ++this->push_count_;
 
@@ -73,19 +80,25 @@ Throughput_StructuredPushConsumer::push_structured_event (const CosNotification:
                             now - Throughput_base);
 
   if (this->push_count_%1000 == 0)
-    ACE_DEBUG ((LM_DEBUG,"(%P)(%t) event count = %d\n", this->push_count_));
-
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P)(%t) event count = %d\n", 
+                  this->push_count_));
+    }
 
   if (push_count_ == test_client_->perconsumer_count_)
   {
-    ACE_DEBUG ((LM_DEBUG, "(%t)expected count reached\n"));
+    ACE_DEBUG ((LM_DEBUG, 
+                "(%t)expected count reached\n"));
     test_client_->peer_done ();
   }
 }
 
 /***************************************************************************/
 
-Throughput_StructuredPushSupplier::Throughput_StructuredPushSupplier (Notify_Throughput* test_client)
+Throughput_StructuredPushSupplier::Throughput_StructuredPushSupplier (
+    Notify_Throughput* test_client
+  )
   :test_client_ (test_client),
    push_count_ (0)
 {
@@ -96,13 +109,16 @@ Throughput_StructuredPushSupplier::~Throughput_StructuredPushSupplier ()
 }
 
 void
-Throughput_StructuredPushSupplier::accumulate_into (ACE_Throughput_Stats &throughput) const
+Throughput_StructuredPushSupplier::accumulate_into (
+    ACE_Throughput_Stats &throughput
+  ) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
-Throughput_StructuredPushSupplier::dump_stats (const char* msg, ACE_UINT32 gsf)
+Throughput_StructuredPushSupplier::dump_stats (const char* msg, 
+                                               ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }
@@ -110,10 +126,10 @@ Throughput_StructuredPushSupplier::dump_stats (const char* msg, ACE_UINT32 gsf)
 int
 Throughput_StructuredPushSupplier::svc (void)
 {
-  // Initialize a time value to pace the test
+  // Initialize a time value to pace the test.
   ACE_Time_Value tv (0, test_client_->burst_pause_);
 
-  // operations:
+  // Operations.
   CosNotification::StructuredEvent event;
 
   // EventHeader
@@ -154,7 +170,7 @@ Throughput_StructuredPushSupplier::svc (void)
           TimeBase::TimeT Throughput_base;
           ORBSVCS_Time::hrtime_to_TimeT (Throughput_base,
                                          start);
-          // any
+          // Any.
           event.filterable_data[0].value <<= Throughput_base;
 
           this->proxy_consumer_->push_structured_event (event
@@ -196,7 +212,8 @@ Notify_Throughput::Notify_Throughput (void)
 Notify_Throughput::~Notify_Throughput ()
 {
   TAO_ENV_DECLARE_NEW_ENV;
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 
+                        TAO_ENV_ARG_PARAMETER);
 
   delete payload_;
 }
@@ -204,47 +221,52 @@ Notify_Throughput::~Notify_Throughput ()
 int
 Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 {
-  // init base class
-  Notify_Test_Client::init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
+  // Initialize base class.
+  Notify_Test_Client::init_ORB (argc, 
+                                argv 
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  #if (TAO_HAS_CORBA_MESSAGING == 1)
-      CORBA::Object_var manager_object =
-        orb_->resolve_initial_references ("ORBPolicyManager"
-                                         TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+  CORBA::Object_var manager_object =
+    orb_->resolve_initial_references ("ORBPolicyManager"
+                                     TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
-      CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (manager_object.in ()
-                                       TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+  CORBA::PolicyManager_var policy_manager =
+    CORBA::PolicyManager::_narrow (manager_object.in ()
+                                   TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
-      CORBA::Any sync_scope;
-      sync_scope <<= Messaging::SYNC_WITH_TARGET;
+  CORBA::Any sync_scope;
+  sync_scope <<= Messaging::SYNC_WITH_TARGET;
 
-      CORBA::PolicyList policy_list (1);
-      policy_list.length (1);
-      policy_list[0] =
-        orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_scope
-                            TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+  CORBA::PolicyList policy_list (1);
+  policy_list.length (1);
+  policy_list[0] =
+    orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                        sync_scope
+                        TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  policy_manager->set_policy_overrides (policy_list,
+                                        CORBA::SET_OVERRIDE
+                                        TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 #else
-      ACE_DEBUG ((LM_DEBUG,
-                  "CORBA Messaging disabled in this configuration,"
-                  " test may not be optimally configured\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "CORBA Messaging disabled in this configuration,"
+              " test may not be optimally configured\n"));
 #endif /* TAO_HAS_MESSAGING */
 
   worker_.orb (this->orb_.in ());
 
   if (worker_.activate (THR_NEW_LWP | THR_JOINABLE,
                         this->nthreads_) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Cannot activate client threads\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Cannot activate client threads\n"));
+    }
+
   // Create all participents ...
   this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -263,8 +285,12 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
-  consumers_ = new Throughput_StructuredPushConsumer*[this->consumer_count_];
-  suppliers_ = new Throughput_StructuredPushSupplier*[this->supplier_count_];
+  ACE_NEW_RETURN (consumers_,
+                  Throughput_StructuredPushConsumer*[this->consumer_count_],
+                  -1);
+  ACE_NEW_RETURN (suppliers_,
+                  Throughput_StructuredPushSupplier*[this->supplier_count_],
+                  -1);
 
   // ----
 
@@ -272,8 +298,11 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 
   for (i = 0; i < this->consumer_count_; ++i)
     {
-      consumers_[i] = new Throughput_StructuredPushConsumer (this);
-      consumers_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
+      ACE_NEW_RETURN (consumers_[i],
+                      Throughput_StructuredPushConsumer (this),
+                      -1);
+      consumers_[i]->init (root_poa_.in () 
+                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       consumers_[i]->connect (this->consumer_admin_.in ()
@@ -283,10 +312,13 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 
   for (i = 0; i < this->supplier_count_; ++i)
     {
-      suppliers_[i] = new Throughput_StructuredPushSupplier (this);
-      suppliers_[i]->
-        TAO_Notify_StructuredPushSupplier::init (root_poa_.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+      ACE_NEW_RETURN (suppliers_[i],
+                      Throughput_StructuredPushSupplier (this),
+                      -1);
+      suppliers_[i]->TAO_Notify_StructuredPushSupplier::init (
+                         root_poa_.in ()
+                         TAO_ENV_ARG_PARAMETER
+                       );
       ACE_CHECK_RETURN (-1);
       suppliers_[i]->connect (this->supplier_admin_.in ()
                               TAO_ENV_ARG_PARAMETER);
@@ -295,7 +327,7 @@ Notify_Throughput::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 
   // ----
 
-  // Setup the CA to receive all type of events
+  // Set up the CA to receive all type of events.
   CosNotification::EventTypeSeq added(1);
   CosNotification::EventTypeSeq removed (0);
   added.length (1);
@@ -363,7 +395,9 @@ Notify_Throughput::parse_args(int argc, char *argv[])
       else if ((current_arg = arg_shifter.get_the_parameter ("-payload")))
         {
           this->payload_size_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (this->payload_, char [this->payload_size_], -1);
+          ACE_NEW_RETURN (this->payload_, 
+                          char [this->payload_size_], 
+                          -1);
           //
           arg_shifter.consume_arg ();
         }
@@ -401,10 +435,10 @@ Notify_Throughput::parse_args(int argc, char *argv[])
         }
       else
         {
-            arg_shifter.ignore_arg ();
+          arg_shifter.ignore_arg ();
         }
     }
-    // recalc..
+    // Recalculate.
     peer_done_count_ = consumer_count_ + supplier_count_;
     return 0;
 }
@@ -429,7 +463,7 @@ Notify_Throughput::create_EC (TAO_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
     }
 
-  // A channel name was specified, use that to resolve the service...
+  // A channel name was specified, use that to resolve the service.
   if (this->ec_name_.length () != 0)
     {
       CosNaming::Name name (1);
@@ -489,25 +523,31 @@ Notify_Throughput::run_test (TAO_ENV_SINGLE_ARG_DECL)
       ACE_CHECK;
 
       if (suppliers_[i]->activate (THR_NEW_LWP | THR_JOINABLE) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    "Cannot activate client threads\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Cannot activate client threads\n"));
+        }
     }
 
-  // wait till we're signalled done.
+  // Wait till we're signalled done.
   {
     ACE_DEBUG ((LM_DEBUG, "(%t)Waiting for shutdown signal in main..\n"));
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, lock_);
+
     while (this->peer_done_count_ != 0)
-      condition_.wait ();
+      {
+        condition_.wait ();
+      }
   }
 
   if (this->ec_name_.length () == 0) // we are not using a global EC
     {
-      // destroy the ec
+      // Destroy the ec.
       this->ec_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
-  // signal the workers..
+
+  // Signal the workers.
   this->worker_.done_ = 1;
 }
 
@@ -529,6 +569,7 @@ Notify_Throughput::dump_results (void)
   ACE_Throughput_Stats throughput;
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   char buf[BUFSIZ];
+
   for (int j = 0; j < this->consumer_count_; ++j)
     {
       ACE_OS::sprintf (buf, "Consumer [%02d]", j);
@@ -536,9 +577,11 @@ Notify_Throughput::dump_results (void)
       this->consumers_[j]->dump_stats (buf, gsf);
       this->consumers_[j]->accumulate_into (throughput);
     }
+
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
   ACE_Throughput_Stats suppliers;
+
   for (int i = 0; i < this->supplier_count_; ++i)
     {
       ACE_OS::sprintf (buf, "Supplier [%02d]", i);
@@ -564,7 +607,9 @@ main (int argc, char* argv[])
   Notify_Throughput events;
 
   if (events.parse_args (argc, argv) == -1)
-    return 1;
+    {
+      return 1;
+    }
 
   ACE_TRY_NEW_ENV
     {

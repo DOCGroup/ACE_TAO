@@ -11,7 +11,7 @@ TAO_Notify_SequencePushSupplier::TAO_Notify_SequencePushSupplier (void)
 
 TAO_Notify_SequencePushSupplier::~TAO_Notify_SequencePushSupplier ()
 {
-  // release all resources ...
+  // Release all resources.
   this->default_POA_ = PortableServer::POA::_nil ();
 
   this->proxy_consumer_ =
@@ -32,21 +32,31 @@ TAO_Notify_SequencePushSupplier::get_proxy_consumer (void)
 }
 
 void
-TAO_Notify_SequencePushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL)
+TAO_Notify_SequencePushSupplier::connect (
+    CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin 
+    TAO_ENV_ARG_DECL
+  )
 {
   CosNotifyComm::SequencePushSupplier_var supplier_ref =
     this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::SEQUENCE_EVENT, proxy_consumer_id_ TAO_ENV_ARG_PARAMETER);
+    supplier_admin->obtain_notification_push_consumer (
+                        CosNotifyChannelAdmin::SEQUENCE_EVENT, 
+                        proxy_consumer_id_ 
+                        TAO_ENV_ARG_PARAMETER
+                      );
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
-  // narrow
+  // Narrow.
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow (proxyconsumer.in () TAO_ENV_ARG_PARAMETER);
+    CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow (
+        proxyconsumer.in () 
+        TAO_ENV_ARG_PARAMETER
+      );
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
@@ -55,7 +65,7 @@ TAO_Notify_SequencePushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_p
                                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // give ownership to POA
+  // Give ownership to POA.
   this->_remove_ref ();
 }
 
@@ -64,7 +74,9 @@ TAO_Notify_SequencePushSupplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->disconnect_sequence_push_consumer(TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_consumer_->disconnect_sequence_push_consumer (
+                             TAO_ENV_SINGLE_ARG_PARAMETER
+                           );
   ACE_CHECK;
 
   this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
@@ -75,16 +87,16 @@ TAO_Notify_SequencePushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
     TAO_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ))
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosNotifyComm::InvalidEventType))
 {
   //No-Op.
 }
 
 PortableServer::POA_ptr
-TAO_Notify_SequencePushSupplier::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* env */)
+TAO_Notify_SequencePushSupplier::_default_POA (
+    TAO_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
@@ -113,16 +125,24 @@ TAO_Notify_SequencePushSupplier::disconnect_sequence_push_supplier (
         CORBA::SystemException
       ))
 {
-  this->proxy_consumer_->disconnect_sequence_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_consumer_->disconnect_sequence_push_consumer (
+                             TAO_ENV_SINGLE_ARG_PARAMETER
+                           );
   ACE_CHECK;
   this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_SequencePushSupplier::send_events (const CosNotification::EventBatch & notifications TAO_ENV_ARG_DECL)
+TAO_Notify_SequencePushSupplier::send_events (
+    const CosNotification::EventBatch & notifications 
+    TAO_ENV_ARG_DECL
+  )
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->push_structured_events (notifications TAO_ENV_ARG_PARAMETER);
+  this->proxy_consumer_->push_structured_events (
+                             notifications 
+                             TAO_ENV_ARG_PARAMETER
+                           );
   ACE_CHECK;
 }

@@ -35,7 +35,7 @@ class ConnectDisconnect;
 
 class CD_Entity
 {
-  // The entity that connects/disconnects
+  // The entity that connects/disconnects.
 public:
   CD_Entity (ConnectDisconnect* cd, int id);
   ~CD_Entity ();
@@ -64,16 +64,19 @@ CD_DECLARE_ENTITY(SequencePushSupplier)
 class ConnectDisconnect : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  // Initialization and termination code.
   ConnectDisconnect (void);
   virtual ~ConnectDisconnect ();
 
   void on_entity_destroyed (void);
-  // keeps track of how many objects were destroyed.
+  // Keeps track of how many objects were destroyed.
 
-  int parse_args(int argc, char *argv[]) ;
+  int parse_args (int argc, 
+                  char *argv[]);
 
-  int init (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  int init (int argc, 
+            char *argv [] 
+            TAO_ENV_ARG_DECL);
   // initialization.
 
   void run_test (TAO_ENV_SINGLE_ARG_DECL);
@@ -83,11 +86,11 @@ public:
   // End the test.
 
   int check_results (void);
-  // check if we got the expected results.
+  // Check if we got the expected results.
 
 protected:
   void create_EC (TAO_ENV_SINGLE_ARG_DECL);
-  // Create EC
+  // Create EC.
 
   CosNotifyChannelAdmin::EventChannel_var ec_;
   // The one channel that we create using the factory.
@@ -101,7 +104,7 @@ protected:
   TAO_Notify_PushConsumer** any_consumer_;
   TAO_Notify_StructuredPushConsumer** structured_consumer_;
   TAO_Notify_SequencePushConsumer** sequence_consumer_;
-  // arrays of Consumers
+  // Arrays of Consumers.
 
   TAO_Notify_PushSupplier** any_supplier_;
   TAO_Notify_StructuredPushSupplier** structured_supplier_;
@@ -109,14 +112,14 @@ protected:
   // arrays of Suppliers
 
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // count of clients destroyed. for c consumers, s suppliers and for t times.
-  // this should be (s+c)*t
+  // Count of clients destroyed. for c consumers, s suppliers and for t times.
+  // this should be (s+c)*t.
 
   int expected_count_; // (s+c)*t
 
   // = command line params
 
-  int  count_;
+  int count_;
   // The number of iterations to connect disconnect.
 
   int consumers_;

@@ -34,9 +34,12 @@ public:
   AdminProperties_Test (void);
   ~AdminProperties_Test (void);
 
-  int parse_args(int argc, char *argv[]) ;
+  int parse_args (int argc, 
+                  char *argv[]) ;
 
-  int init (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  int init (int argc, 
+            char *argv [] 
+            TAO_ENV_ARG_DECL);
   // Initialization.
 
   void run_test (TAO_ENV_SINGLE_ARG_DECL);

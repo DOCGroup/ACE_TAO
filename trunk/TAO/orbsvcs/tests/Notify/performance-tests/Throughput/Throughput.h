@@ -58,7 +58,8 @@ private:
 
 class Notify_Throughput;
 
-class Throughput_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
+class Throughput_StructuredPushConsumer 
+  : public TAO_Notify_StructuredPushConsumer
 {
 public:
   Throughput_StructuredPushConsumer (Notify_Throughput *test_client);
@@ -98,7 +99,9 @@ protected:
 
 /***************************************************************************/
 
-class Throughput_StructuredPushSupplier : public TAO_Notify_StructuredPushSupplier, public ACE_Task_Base
+class Throughput_StructuredPushSupplier 
+  : public TAO_Notify_StructuredPushSupplier, 
+    public ACE_Task_Base
 {
 public:
   Throughput_StructuredPushSupplier (Notify_Throughput * test_client);
