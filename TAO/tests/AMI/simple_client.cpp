@@ -198,7 +198,7 @@ main (int argc, char *argv[])
                       "<%d> Asynchronous methods issued\n",
                       niterations));
         }
-      */
+      
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
