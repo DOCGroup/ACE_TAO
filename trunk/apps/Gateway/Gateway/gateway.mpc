@@ -18,7 +18,7 @@ project(Gateway) : acelib {
 }
 
 project(gatewayd) : aceexe {
-
+  exename = gatewayd
   after += Gateway
   libs  += Gateway
 
