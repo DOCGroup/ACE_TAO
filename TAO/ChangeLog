@@ -8,6 +8,10 @@ Wed Aug  4 21:23:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  redundant since these typedefs are already encapsulated within
 	  the TAO_IIOP_Acceptor class.
 
+	* tao/ORB_Table.cpp (get_orbs):
+
+	  Minor TAO coding convention update.
+
 Wed Aug  4 21:16:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp
