@@ -29,6 +29,12 @@ Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
           so simple :-)  Before, it was a typedef of tid_t on platforms
           that had ACE_HAS_TID_T but not ACE_HAS_PTHREAD_T.  There were
           no such platforms; so, it was pthread_t on all PTHREADS platforms.
+          Thanks to Ossama, Arturo, and Steve for sorting all this out.
+          We ended up with just a single typedef, so it was worth it.
+
+        * ace/OS.i (thr_cmp): use pthread_equal with PTHREADS, same as
+          in ACE_OS::thr_equal ().  Thanks to Ossama for pointing out that
+          they were different, but shouldn't have been.
 
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
