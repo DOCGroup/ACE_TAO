@@ -990,6 +990,11 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i");
 
+  if (new_item == 0)
+  {
+    return -1;
+  }
+
   int result = 0;
 
   // get the current time
@@ -1012,7 +1017,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
         // do is insert <new_item> into the tail of the queue.
         pending_head_ = new_item;
         pending_tail_ = pending_head_;
-        result = this->enqueue_tail_i (new_item);
+        return this->enqueue_tail_i (new_item);
       }
       else
       {
@@ -1036,13 +1041,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
         {
           // Check for simple case of an empty pending queue, where all
           // we need to do is insert <new_item> into the tail of the queue.
-          result = this->enqueue_tail_i (new_item);
+          return this->enqueue_tail_i (new_item);
         }
         else if (this->beyond_late_tail_ == 0)
         {
           // Check for simple case of an empty beyond late queue, where all
           // we need to do is insert <new_item> into the head of the queue.
-          result = this->enqueue_head_i (new_item);
+          return this->enqueue_head_i (new_item);
         }
         else
         {
@@ -1072,7 +1077,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
         // we need to do is insert <new_item> into the head of the queue.
         beyond_late_head_ = new_item;
         beyond_late_tail_ = beyond_late_head_;
-        result = this->enqueue_head_i (new_item);
+        return this->enqueue_head_i (new_item);
       }
       else
       {
@@ -1101,7 +1106,22 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
       break;
   }
 
-  return result;
+  if (result < 0)
+  {
+    return result;
+  }
+
+  for (ACE_Message_Block *temp = new_item;
+       temp != 0;
+       temp = temp->cont ())
+    this->cur_bytes_ += temp->size ();
+
+  this->cur_count_++;
+
+  if (this->signal_dequeue_waiters () == -1)
+    return -1;
+  else
+    return this->cur_count_;
 }
   // Enqueue an <ACE_Message_Block *> in accordance with its priority.
   // priority may be *dynamic* or *static* or a combination or *both*
@@ -1144,7 +1164,18 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::sublist_enqueue_i (ACE_Message_Block *
   {
     // if the new message has highest priority of any,
     // put it at the head of the list (and sublist)
-    result = enqueue_head_i (new_item);
+    new_item->prev (0);
+    new_item->next (this->head_);
+    if (this->head_ != 0)
+    {    
+      this->head_->prev (new_item);
+    }
+    else
+    {
+      this->tail_ = new_item;
+      sublist_tail = new_item;
+    }
+    this->head_ = new_item;
     sublist_head = new_item;
   }
   else
@@ -1284,7 +1315,24 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
     result = -1;
   }
 
-  return result;
+  if (result < 0)
+  {
+    return result;
+  }
+
+  // Make sure to subtract off all of the bytes associated with this
+  // message.
+  for (ACE_Message_Block *temp = first_item;
+       temp != 0;
+       temp = temp->cont ())
+    this->cur_bytes_ -= temp->size ();
+
+  this->cur_count_--;
+
+  if (this->signal_enqueue_waiters () == -1)
+    return -1;
+  else
+    return this->cur_count_;
 }
   // Dequeue and return the <ACE_Message_Block *> at the head of the
   // logical queue.  Attempts first to dequeue from the pending
