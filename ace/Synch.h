@@ -729,6 +729,10 @@ public:
   /// Returns -1 with <errno> == <ETIME>.
   int wait (const ACE_Time_Value * = 0);
 
+  /// Returns -1 with <errno> == <ETIME>.
+  int wait (ACE_Null_Mutex &m,
+            const ACE_Time_Value * = 0);
+
   /// Returns 0.
   int signal (void);
 
@@ -1546,12 +1550,12 @@ struct ACE_Export ACE_Sub_Barrier
  * "barrier synchronization".   After all the threads call <wait()>
  * on the barrier they are all atomically released and can begin a new
  * round.
- * 
+ *
  * This implementation uses a "sub-barrier generation numbering"
  * scheme to avoid overhead and to ensure that all threads wait to
  * leave the barrier correct.  This code is based on an article from
  * SunOpsis Vol. 4, No. 1 by Richard Marejka
- * (Richard.Marejka@canada.sun.com). 
+ * (Richard.Marejka@canada.sun.com).
  */
 class ACE_Export ACE_Barrier
 {
@@ -1774,10 +1778,10 @@ class ACE_Condition;
 ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Condition<ACE_Recursive_Thread_Mutex>
- * 
+ *
  * @brief ACE_Condition template specialization written using
  *  @a ACE_Recursive_Thread_Mutex.  This allows threads to block until
- *  shared data changes state using recursive mutexes. 
+ *  shared data changes state using recursive mutexes.
  */
 class ACE_Export ACE_Condition<ACE_Recursive_Thread_Mutex>
 {
@@ -1812,7 +1816,7 @@ public:
    * and sets errno to ETIME.
    */
   int wait (ACE_Recursive_Thread_Mutex &mutex,
-            const ACE_Time_Value *abstime = 0); 
+            const ACE_Time_Value *abstime = 0);
 
   /// Signal one waiting thread.
   int signal (void);
@@ -1838,9 +1842,9 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Condition (const ACE_Condition<ACE_Recursive_Thread_Mutex> &))
 };
 
-class ACE_Export ACE_Condition_Recursive_Thread_Mutex 
+class ACE_Export ACE_Condition_Recursive_Thread_Mutex
   : public ACE_Condition<ACE_Recursive_Thread_Mutex>
-{        
+{
 public:
   /// Initialize the condition variable with a recursive mutex.
   ACE_Condition_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &m):
