@@ -674,9 +674,16 @@ If you use the GNU GCC g++ compiler please note the following:
       and 105490-07.<p>
 
       If you need or want to use egcs' shared libraries, build it
-      with the <code>--enable-shared</code> egcs config option.  Be
-      sure to set your <code>LD_LIBRARY_PATH</code> environment variable,
-      if necessary, to pick up those shared libraries.<p>
+      with the <code>--enable-shared</code> egcs config option.  The
+      <code>--enable-shared</code> option is <strong>not</strong> an
+      egcs run-time option.  Build egcs in a way similar to the
+      following example:
+      <pre><code>
+         $ ./configure --enable-shared
+         $ make bootstrap
+      </code></pre>
+      Be sure to set your <code>LD_LIBRARY_PATH</code> environment
+      variable, if necessary, to pick up those shared libraries.<p>
 
   <li>On DEC Alpha, egcs through version 1.03a, at least, may fail
       to build ACE if debugging (-g) is enabled.  The fix is to
