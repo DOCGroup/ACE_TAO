@@ -1,5 +1,4 @@
 #include "ace/Log_Msg.h"
-#include "ace/streams.h"
 #include "serverC.h"
 #include "client_i.h"
 
