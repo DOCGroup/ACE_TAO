@@ -21,7 +21,7 @@
 #if !defined (_CC_LOCK_H)
 #define _CC_LOCK_H
 
-#include "ace/SV_Semaphore_Simple.h"
+#include "ace/Synch.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 
 class TAO_ORBSVCS_Export CC_Lock {
@@ -42,17 +42,18 @@ public:
   ~CC_Lock();
   // Deletes the lock
 
-  void lock(void);
+  void lock(CORBA::Environment &_env);
   // Acquires this lock. Blocks until lock is obtained
 
-  CORBA::Boolean try_lock();
+  CORBA::Boolean try_lock(CORBA::Environment &_env);
   // Tries to acquire this lock. If it is not possible to acquire the
   // lock, false is returned
 
-  void unlock(void);
+  void unlock(CORBA::Environment &_env);
   // Releases this lock
 
-  void change_mode(CosConcurrencyControl::lock_mode new_mode);
+  void change_mode(CosConcurrencyControl::lock_mode new_mode,
+                   CORBA::Environment &_env);
   // Changes the mode of this lock
   
   CORBA::Boolean Compatible(const CC_Lock &other);
@@ -67,8 +68,10 @@ protected:
   CosConcurrencyControl::lock_mode mode_;
   // Holds the lock's mode
 private:
-  ACE_SV_Semaphore_Simple semaphore_;
+  ACE_Thread_Semaphore semaphore_;
   // holds the semaphore for this lock
+  int lock_held_;
+  // if greater than zero the lock is held (that number of times)
   static CORBA::Boolean compatible_[5][5];
   // defines the compatibility of the locks. 5 = number of lock modes
 };

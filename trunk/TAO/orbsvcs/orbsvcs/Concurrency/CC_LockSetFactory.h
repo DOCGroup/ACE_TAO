@@ -24,7 +24,7 @@
 // #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlS.h"
 
-class TAO_ORBSVCS_Export CC_LockSetFactory : POA_CosConcurrencyControl::LockSetFactory
+class TAO_ORBSVCS_Export CC_LockSetFactory : public POA_CosConcurrencyControl::LockSetFactory
   // = TITLE
   //     CC_LockSetFactory
   //
@@ -53,5 +53,7 @@ private:
 //#if defined (__ACE_INLINE__)
 //#include "CC_LockSetFactory.i"
 //#endif // defined INLINE
+
+typedef CC_LockSetFactory *CC_LockSetFactory_var ;
 
 #endif /* _CC_LOCKSETFACTORY_H */

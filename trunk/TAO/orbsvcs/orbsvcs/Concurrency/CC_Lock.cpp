@@ -18,39 +18,63 @@
 //
 // ============================================================================
 
-// #include "tao/corba.h"
 #include "CC_Lock.h"
+#include "tao/corba.h"
 
-CC_Lock::CC_Lock(CosConcurrencyControl::lock_mode mode) : mode_ (mode)
+CC_Lock::CC_Lock(CosConcurrencyControl::lock_mode mode)
+  : mode_ (mode), lock_held_ (0)
 {
-  semaphore_.open("test"); // @@ The semaphore must have a unique name??
 }
 
 CC_Lock::~CC_Lock()
 {
-  semaphore_.close();
 }
 
-void CC_Lock::lock(void)
+void CC_Lock::lock(CORBA::Environment &_env)
 {
-  semaphore_.acquire();
+  lock_held_++;
+  int success = semaphore_.acquire();
+  if(success==-1) {
+    TAO_THROW(CORBA::INTERNAL(CORBA::COMPLETED_NO));
+  }
 }
 
-CORBA::Boolean CC_Lock::try_lock()
+CORBA::Boolean CC_Lock::try_lock(CORBA::Environment &_env)
 {
-  semaphore_.tryacquire(); //@@ What does tryacquire return??
-  return CORBA::B_TRUE;
+  lock_held_++;
+  int success = semaphore_.tryacquire();
+  if(success==-1) {
+    if(errno==EBUSY) {
+      lock_held_--;
+      return CORBA::B_FALSE;
+    }
+    else
+      TAO_THROW_RETURN(CORBA::INTERNAL(CORBA::COMPLETED_NO), CORBA::B_FALSE);
+  }
+  else {
+    this->lock(_env);
+  }
 }
 
-void CC_Lock::unlock(void)
+void CC_Lock::unlock(CORBA::Environment &_env)
 {
-  semaphore_.release();
+  if(lock_held_==0)
+    TAO_THROW(CosConcurrencyControl::LockNotHeld);
+  int success = semaphore_.release();
+  if(success==-1) {
+    TAO_THROW(CORBA::INTERNAL(CORBA::COMPLETED_NO));
+  }
+  lock_held_--;
 }
 
-void CC_Lock::change_mode(CosConcurrencyControl::lock_mode new_mode)
+void CC_Lock::change_mode(CosConcurrencyControl::lock_mode new_mode,
+                          CORBA::Environment &_env)
 {
   // @@TAO Hmmm, we cannot really do anything at present since there is
   // only one lock per lock set and that lock is essentially a write lock
+  if(lock_held_==0)
+    TAO_THROW(CosConcurrencyControl::LockNotHeld);
+  this->mode_ = new_mode;
 }
   
 CORBA::Boolean CC_Lock::Compatible(const CC_Lock &other)
