@@ -810,7 +810,7 @@ Client::run_tests (Cubit_ptr cb,
 #if defined (ACE_LACKS_FLOATING_POINT)
           double calls_per_second = (call_count * ACE_ONE_SECOND_IN_USECS) / latency;
 #endif /* ACE_LACKS_FLOATING_POINT */
-
+printf("@@@@ Latency = %f\n", latency);
           latency /= call_count; // calc average latency
 
           if (latency > 0)
