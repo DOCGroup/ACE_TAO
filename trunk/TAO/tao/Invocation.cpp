@@ -21,6 +21,7 @@
 #include "Pluggable_Messaging_Utils.h"
 #include "Endpoint_Selector_Factory.h"
 #include "Invocation_Endpoint_Selectors.h"
+#include "TAOC.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -147,7 +148,7 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 
 void
 TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
   TAO_MINIMAL_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
@@ -298,7 +299,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
 void
 TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Then fill in the rest of the RequestHeader
 
@@ -370,7 +371,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
 int
 TAO_GIOP_Invocation::invoke (CORBA::Boolean is_synchronous
                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Countdown_Time countdown (this->max_wait_time_);
 
@@ -805,7 +806,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
 
 void
 TAO_GIOP_Twoway_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -936,38 +937,34 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
                                argument_flag,
                                orb_core,
                                byte_order),
-    sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
+    sync_scope_ (Messaging::SYNC_WITH_TRANSPORT)
 {
   int has_synchronization = 0;
-  int scope = this->sync_scope_;
   this->orb_core_->call_sync_scope_hook (this->stub_,
                                          has_synchronization,
-                                         scope);
-
-  this->sync_scope_ = scope;
+                                         this->sync_scope_);
 }
 
 void
 TAO_GIOP_Oneway_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
 }
 
 int
 TAO_GIOP_Oneway_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->sync_scope_ == TAO::SYNC_NONE
+  if (this->sync_scope_ == Messaging::SYNC_NONE
       || this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING
       || this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
       return TAO_GIOP_Invocation::invoke (0
                                           ACE_ENV_ARG_PARAMETER);
     }
-  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT)
+  if (this->sync_scope_ == Messaging::SYNC_WITH_TRANSPORT)
     {
       return TAO_GIOP_Invocation::invoke (1
                                           ACE_ENV_ARG_PARAMETER);
@@ -1008,7 +1005,7 @@ TAO_GIOP_Oneway_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_GIOP_Locate_Request_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;

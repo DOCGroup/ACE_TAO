@@ -4,7 +4,9 @@
 #include "tao/Stub.h"
 #include "tao/debug.h"
 
-ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
+ACE_RCSID (TAO,
+           Messaging_Policy_i,
+           "$Id$")
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -12,12 +14,14 @@ ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 #include "tao/Messaging/Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
-TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry)
+TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
+  const TimeBase::TimeT& relative_expiry)
   :  relative_expiry_ (relative_expiry)
 {
 }
 
-TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs)
+TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
+  const TAO_RelativeRoundtripTimeoutPolicy &rhs)
   : Messaging::RelativeRoundtripTimeoutPolicy (),
     TAO_Local_RefCounted_Object (),
     relative_expiry_ (rhs.relative_expiry_)
@@ -25,19 +29,19 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TA
 }
 
 TimeBase::TimeT
-TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->relative_expiry_;
 }
 
 CORBA::PolicyType
-TAO_RelativeRoundtripTimeoutPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RelativeRoundtripTimeoutPolicy::policy_type (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Future policy implementors: notice how this minimizes the
-  // footprint of the class.
-  return TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE;
+  return Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE;
 }
 
 void
@@ -46,12 +50,10 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                                           int &has_timeout,
                                           ACE_Time_Value &time_value)
 {
-  CORBA::Policy_var policy = 0;
-
-  if (stub == 0)
-    policy = orb_core->stubless_relative_roundtrip_timeout ();
-  else
-    policy = stub->relative_roundtrip_timeout ();
+  CORBA::Policy_var policy =
+    (stub == 0
+     ? orb_core->stubless_relative_roundtrip_timeout ()
+     : stub->relative_roundtrip_timeout ());
 
   if (CORBA::is_nil (policy.in ()))
     {
@@ -61,8 +63,9 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
   ACE_TRY_NEW_ENV
     {
       Messaging::RelativeRoundtripTimeoutPolicy_var p =
-        Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+        Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
+          policy.in ()
+          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TimeBase::TimeT t = p->relative_expiry (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -78,13 +81,13 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 0)
         {
           CORBA::ULong msecs =
-            ACE_static_cast(CORBA::ULong, microseconds / 1000);
+            ACE_static_cast (CORBA::ULong, microseconds / 1000);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
                       msecs));
         }
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCHANY
     {
       // Ignore all exceptions...
     }
@@ -198,18 +201,10 @@ void
 TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                              TAO_Stub *stub,
                              int &has_synchronization,
-                             int &scope)
+                             Messaging::SyncScope &scope)
 {
-  CORBA::Policy_var policy;
-
-  if (stub == 0)
-    {
-      CORBA::Policy_ptr tmp;
-      orb_core->stubless_sync_scope (tmp);
-      policy = tmp;
-    }
-  else
-    policy = stub->sync_scope ();
+  CORBA::Policy_var policy =
+    (stub == 0 ? orb_core->stubless_sync_scope () : stub->sync_scope ());
 
   if (CORBA::is_nil (policy.in ()))
     {
@@ -231,9 +226,10 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                 CORBA::COMPLETED_NO));
 
       has_synchronization = 1;
-      scope = p->synchronization ();
+      scope = p->synchronization (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCHANY
     {
       // Ignore all exceptions...
     }
