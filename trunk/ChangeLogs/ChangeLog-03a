@@ -1,3 +1,10 @@
+Thu May  2 15:45:34 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Dev_Poll_Reactor_Test.cpp:
+
+	  New one-button test for the Dev_Poll_Reactor.  Currently it is
+	  fairly simple.  Improvements to be added soon.
+
 Thu May  2 15:22:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Dev_Poll_Reactor.h (work_pending_i):
