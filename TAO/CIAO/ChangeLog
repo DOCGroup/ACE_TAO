@@ -1,3 +1,8 @@
+Wed May  7 16:36:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/CCM_Core.mpc: Added missing libraries that were essential
+	  due to the subsetting effort.
+
 Wed May  7 16:22:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/Container_Base.cpp: Fixed warnings with gcc.
