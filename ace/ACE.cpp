@@ -3064,46 +3064,6 @@ ACE::sock_error (int error)
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_WIN32)
-// Return value in buffer for a key/name pair from the Windows
-// Registry up to buf_len size.
-
-static int
-get_reg_value (const ACE_TCHAR *key,
-               const ACE_TCHAR *name,
-               ACE_TCHAR *buffer,
-               DWORD &buf_len)
-{
-  HKEY hk;
-  DWORD buf_type;
-  LONG rc = ACE_TEXT_RegOpenKeyEx (HKEY_LOCAL_MACHINE,
-                                   key,
-                                   0,
-                                   KEY_READ,
-                                   &hk);
-  // 1. open key that defines the interfaces used for TCP/IP?
-  if (rc != ERROR_SUCCESS)
-    // print_error_string(ACE_LIB_TEXT ("RegOpenKeyEx"), rc);
-    return -1;
-
-  rc = ACE_TEXT_RegQueryValueEx (hk,
-                                 name,
-                                 0,
-                                 &buf_type,
-                                 (u_char *) buffer,
-                                 &buf_len);
-  if (rc != ERROR_SUCCESS)
-    {
-      // print_error_string(ACE_LIB_TEXT ("RegEnumKeyEx"), rc);
-      RegCloseKey (hk);
-      return -2;
-    }
-
-  ::RegCloseKey (hk);
-  return 0;
-}
-#endif /* ACE_WIN32 */
-
 char *
 ACE::strndup (const char *str, size_t n)
 {

@@ -125,7 +125,6 @@
 // Platform provides ACE_TLI function prototypes.
 // For Win32, this is not really true, but saves a lot of hassle!
 # define ACE_HAS_TLI_PROTOTYPES
-# define ACE_HAS_GNU_CSTRING_H
 
 // Platform support linebuffered streaming is broken
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF

@@ -2134,6 +2134,25 @@ SOURCE=.\OS_Dirent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_Errno.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\OS_Log_Msg_Attributes.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -4773,6 +4792,10 @@ SOURCE=.\OS_Dirent.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_Errno.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OS_Log_Msg_Attributes.h
 # End Source File
 # Begin Source File
@@ -5742,6 +5765,10 @@ SOURCE=.\OS.i
 # Begin Source File
 
 SOURCE=.\OS_Dirent.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Errno.inl
 # End Source File
 # Begin Source File
 

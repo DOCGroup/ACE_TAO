@@ -10,9 +10,9 @@
 //=============================================================================
 
 #if defined (ACE_HAS_PACE)
-# include "pace/string.h"
-# include "pace/ctype.h"
-# include "pace/stdlib.h"
+# include /**/ "pace/string.h"
+# include /**/ "pace/ctype.h"
+# include /**/ "pace/stdlib.h"
 #endif /* ACE_HAS_PACE */
 
 // Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
@@ -150,9 +150,9 @@ ACE_OS_String::strchr (char *s, int c)
 {
 #if defined (ACE_HAS_PACE)
   return pace_strchr (s, c);
-#elif defined (ACE_HAS_WINCE)
+#elif defined (ACE_LACKS_STRCHR)
   return ACE_OS_String::strchr_emulation (s, c);
-#else  /* ! ACE_HAS_WINCE */
+#else  /* ! ACE_LACKS_STRCHR */
   return ::strchr (s, c);
 #endif /* ACE_HAS_PACE */
 }
@@ -233,6 +233,16 @@ ACE_OS_String::strcspn (const wchar_t *s, const wchar_t *reject)
 #  endif /* ACE_LACKS_WCSCSPN */
 }
 #endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE char *
+ACE_OS_String::strerror (int errnum)
+{
+#if defined (ACE_LACKS_STRERROR)
+  return ACE_OS_String::strerror_emulation (errnum);
+#else /* ACE_LACKS_STRERROR */
+  return ::strerror (errnum);
+#endif /* ACE_LACKS_STRERROR */
+}
 
 ACE_INLINE size_t
 ACE_OS_String::strlen (const char *s)
@@ -327,6 +337,8 @@ ACE_OS_String::strpbrk (const char *s1, const char *s2)
 {
 #if defined (ACE_HAS_PACE)
   return (const char*) pace_strpbrk (s1, s2);
+#elif defined (ACE_LACKS_STRPBRK)
+  return ACE_OS_String::strpbrk_emulation (s1, s2);
 #else  /* ACE_HAS_PACE */
   return (const char *) ::strpbrk (s1, s2);
 #endif /* ACE_HAS_PACE */
@@ -349,9 +361,11 @@ ACE_OS_String::strpbrk (char *s1, const char *s2)
 {
 #if defined (ACE_HAS_PACE)
   return pace_strpbrk (s1, s2);
+#elif defined (ACE_LACKS_STRPBRK)
+  return ACE_OS_String::strpbrk_emulation (s1, s2);
 #else /* ACE_HAS_PACE */
   return ::strpbrk (s1, s2);
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ACE_HAS_PACE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -413,6 +427,8 @@ ACE_OS_String::strspn (const char *s, const char *t)
 {
 #if defined (ACE_HAS_PACE)
   return pace_strspn (s, t);
+#elif defined (ACE_LACKS_STRSPN)
+  return ACE_OS_String::strspn_emulation (s, t);
 #else /* ACE_HAS_PACE */
   return ::strspn (s, t);
 #endif /* ACE_HAS_PACE */
@@ -492,28 +508,27 @@ ACE_OS_String::strtok (wchar_t *s, const wchar_t *tokens)
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
 
-
 ACE_INLINE int
-ACE_OS_String::ace_isprint (const ACE_TCHAR s)
+ACE_OS_String::ace_isprint (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
-  return ::iswprint (s);
+  return iswprint (c);
 #elif defined (ACE_HAS_PACE)
-  return pace_isprint (s);
+  return pace_isprint (c);
 #else /* ACE_USES_WCHAR */
-  return isprint (s);
+  return isprint (c);
 #endif /* ACE_USES_WCHAR */
 }
 
 ACE_INLINE int
-ACE_OS_String::ace_isspace (const ACE_TCHAR s)
+ACE_OS_String::ace_isspace (const ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
-  return ::iswspace (s);
+  return iswspace (c);
 #elif defined (ACE_HAS_PACE)
-  return pace_isspace (s);
+  return pace_isspace (c);
 #else /* ACE_HAS_PACE */
-  return isspace (s);
+  return isspace (c);
 #endif /* ACE_HAS_PACE */
 }
 
@@ -661,6 +676,7 @@ ACE_OS_String::strtok_r (char *s, const char *tokens, char **lasts)
 #endif /* (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
+#if !defined (ACE_LACKS_STRTOD)
 ACE_INLINE double
 ACE_OS_String::strtod (const char *s, char **endptr)
 {
@@ -670,6 +686,7 @@ ACE_OS_String::strtod (const char *s, char **endptr)
   return ::strtod (s, endptr);
 #endif /* ACE_HAS_PACE */
 }
+#endif /* !ACE_LACKS_STRTOD */
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOD)
 ACE_INLINE double
@@ -684,6 +701,8 @@ ACE_OS_String::strtol (const char *s, char **ptr, int base)
 {
 #if defined (ACE_HAS_PACE)
   return pace_strtol (s, ptr, base);
+#elif defined (ACE_LACKS_STRTOL)
+  return ACE_OS_String::strtol_emulation (s, ptr, base);
 #else  /* ACE_HAS_PACE */
   return ::strtol (s, ptr, base);
 #endif /* ACE_HAS_PACE */
@@ -702,7 +721,9 @@ ACE_OS_String::strtoul (const char *s, char **ptr, int base)
 {
 #if defined (ACE_HAS_PACE)
   return pace_strtoul (s, ptr, base);
-#else  /* ACE_HAS_PACE */
+#elif defined (ACE_LACKS_STRTOUL)
+  return ACE_OS_String::strtoul_emulation (s, ptr, base);
+#else /* ACE_HAS_PACE */
   return ::strtoul (s, ptr, base);
 #endif /* ACE_HAS_PACE */
 }

@@ -44,8 +44,8 @@ public:
    *
    *  Included are the functions defined in <cstring> and their <cwchar>
    *  equivalents.
-   *
-   *  @todo To be complete, we should add strcoll, strerror, and strxfrm.
+   * 
+   *  @todo To be complete, we should add strcoll, and strxfrm.
    */
   //@{
 
@@ -119,6 +119,9 @@ public:
   static size_t strcspn (const wchar_t *s, const wchar_t *reject);
 #endif /* ACE_HAS_WCHAR */
 
+  /// Returns a system error message.
+  static char *strerror (int errnum);
+  
   /// Finds the length of a string (char version).
   static size_t strlen (const char *s);
 
@@ -233,16 +236,15 @@ public:
    *  to_lower).
    *
    *  @todo To be complete, we should add: isalnum, isalpha, iscntrl
-   *  isdigit, isgraph, islower, ispunct, isupper, isxdigit, and
-   *  toupper.
+   *  isdigit, isgraph, islower, ispunct, isupper, isxdigit, and toupper.
    */
   //@{
 
   /// Returns true if the character is a printable character.
-  static int ace_isprint (const ACE_TCHAR s);
+  static int ace_isprint (const ACE_TCHAR c);
 
   /// Returns true if the character is a space character.
-  static int ace_isspace (const ACE_TCHAR s);
+  static int ace_isspace (const ACE_TCHAR c);
 
   /// Converts a character to lower case (char version).
   static int to_lower (int c);
@@ -344,8 +346,10 @@ public:
   /// Finds the next token in a string (safe char version).
   static char *strtok_r (char *s, const char *tokens, char **lasts);
 
+#if !defined (ACE_LACKS_STRTOD)
   /// Converts a string to a double value (char version).
   static double strtod (const char *s, char **endptr);
+#endif /* !ACE_LACKS_STRTOD */
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOD)
   /// Converts a string to a double value (wchar_t version).
@@ -417,6 +421,17 @@ private:
   static const char *strchr_emulation (const char *s, int c);
 #endif /* ACE_LACKS_STRCHR */
 
+#if defined (ACE_LACKS_STRERROR)
+  /// Emulated strerror - Returns a system error message.
+  static char *strerror_emulation (int errnum);
+#endif /* ACE_LACKS_STRERROR */
+
+#if defined (ACE_LACKS_STRPBRK)
+  /// Emulated strpbrk - Searches for characters in a string.
+  static char *strpbrk_emulation (const char *string,
+                                  const char *charset);
+#endif /* ACE_LACKS_STRPBRK */
+
 #if defined (ACE_LACKS_STRRCHR)
   /// Emulated strrchr (char version) - Finds the last occurance of a
   /// character in a string.
@@ -431,6 +446,22 @@ private:
   /// Emulated strtok_r.
   static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
 #endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
+
+#if defined (ACE_LACKS_STRSPN)
+  /// Emulated wcsspn.
+  static size_t strspn_emulation (const char *string, 
+                                  const char *charset);
+#endif /* ACE_LACKS_STRSPN */
+
+#if defined (ACE_LACKS_STRTOL)
+  static long strtol_emulation (const char *nptr, char **endptr, int base);
+#endif /* ACE_LACKS_STRTOL */
+
+#if defined (ACE_LACKS_STRTOUL)
+  static unsigned long strtoul_emulation (const char *nptr, 
+                                          char **endptr, 
+                                          int base);
+#endif /* ACE_LACKS_STRTOUL */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCAT)
   /// Emulated wcscat - Appends a string.
@@ -511,7 +542,7 @@ private:
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSRCHR */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCSPN)
-  /// Emulated wcsspn.
+  /// Emulated wcscspn.
   static size_t wcscspn_emulation (const wchar_t *string,
                                    const wchar_t *reject);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCSPN */

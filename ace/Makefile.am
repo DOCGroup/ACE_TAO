@@ -135,6 +135,7 @@ libACE_OS_la_SOURCES = \
   Basic_Types.cpp \
   OS.cpp \
   OS_Dirent.cpp \
+  OS_Errno.cpp \
   OS_Memory.cpp \
   OS_String.cpp \
   OS_TLI.cpp \
@@ -628,6 +629,7 @@ HEADER_FILES = \
   Naming_Context.h \
   OS.h \
   OS_Dirent.h \
+  OS_Errno.h \
   OS_Export.h \
   OS_Log_Msg_Attributes.h \
   OS_Memory.h \
@@ -967,6 +969,7 @@ INLINE_FILES = \
   CDR_Base.inl \
   File_Lock.inl \
   OS_Dirent.inl \
+  OS_Errno.inl \
   OS_Log_Msg_Attributes.inl \
   OS_Memory.inl \
   OS_String.inl \

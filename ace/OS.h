@@ -28,6 +28,7 @@
 #include "ace/OS_String.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_TLI.h"
+#include "ace/OS_Errno.h"
 
 /// States of a recyclable object.
 enum ACE_Recyclable_State
@@ -95,10 +96,6 @@ enum ACE_Recyclable_State
 typedef long long longlong_t;
 typedef long      id_t;
 # endif /* ACE_PSOS_TM */
-
-# if defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE)
-#   define ACE_NO_INLINE
-# endif /* defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE) */
 
 // Deal with MSVC++ insanity for CORBA...
 # if defined (ACE_HAS_BROKEN_NAMESPACES)
@@ -411,7 +408,7 @@ typedef long      id_t;
 #   endif /* ACE_NON_BLOCKING_BUG_DELAY */
 
 #   if defined (_DEBUG) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
-class ACE_Export ACE_No_Heap_Check
+class ACE_OS_Export ACE_No_Heap_Check
 {
 public:
   ACE_No_Heap_Check (void)
@@ -494,22 +491,22 @@ typedef int key_t;
 ///////////////////////////////////////////
 
 #if defined (ACE_HAS_PACE)
-# include "pace/dirent.h"
-# include "pace/fcntl.h"
-# include "pace/sys/mman.h"
-# include "pace/pthread.h"
-# include "pace/pwd.h"
-# include "pace/stdio.h"
-# include "pace/stdlib.h"
-# include "pace/sched.h"
-# include "pace/semaphore.h"
-# include "pace/signal.h"
-# include "pace/sys/stat.h"
-# include "pace/stdio.h"
-# include "pace/time.h"
-# include "pace/unistd.h"
-# include "pace/sys/utsname.h"
-# include "pace/sys/wait.h"
+# include /**/ "pace/dirent.h"
+# include /**/ "pace/fcntl.h"
+# include /**/ "pace/sys/mman.h"
+# include /**/ "pace/pthread.h"
+# include /**/ "pace/pwd.h"
+# include /**/ "pace/stdio.h"
+# include /**/ "pace/stdlib.h"
+# include /**/ "pace/sched.h"
+# include /**/ "pace/semaphore.h"
+# include /**/ "pace/signal.h"
+# include /**/ "pace/sys/stat.h"
+# include /**/ "pace/stdio.h"
+# include /**/ "pace/time.h"
+# include /**/ "pace/unistd.h"
+# include /**/ "pace/sys/utsname.h"
+# include /**/ "pace/sys/wait.h"
 #endif /* ACE_HAS_PACE */
 
 # if defined (ACE_PSOS)
@@ -868,7 +865,7 @@ typedef struct timespec
 #if defined (ACE_PSOS_HAS_TIME)
 
 // Use pSOS time, wrapped . . .
-class ACE_Export ACE_PSOS_Time_t
+class ACE_OS_Export ACE_PSOS_Time_t
 {
 public:
     /// default ctor: date, time, and ticks all zeroed.
@@ -1044,11 +1041,11 @@ typedef int clockid_t;
 // compilers and they can be removed once MS release a SP that contains
 // the fix.
 class ACE_Time_Value;
-ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
+ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
+                                         const ACE_Time_Value &tv2);
 
-ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
+ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
+                                         const ACE_Time_Value &tv2);
 
 // -------------------------------------------------------------------
 
@@ -1063,7 +1060,7 @@ ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
  * <ACE_Time_Value> makes the use of these mechanisms portable
  * across OS platforms,
  */
-class ACE_Export ACE_Time_Value
+class ACE_OS_Export ACE_Time_Value
 {
 public:
   // = Useful constants.
@@ -1168,35 +1165,35 @@ public:
   ACE_Time_Value &operator *= (double d);
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
-  friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
 
   /// Subtracts two ACE_Time_Value objects, returns the difference.
-  friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
 
   /// True if tv1 < tv2.
-  friend ACE_Export int operator < (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export int operator < (const ACE_Time_Value &tv1,
                                     const ACE_Time_Value &tv2);
 
   /// True if tv1 > tv2.
-  friend ACE_Export int operator > (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export int operator > (const ACE_Time_Value &tv1,
                                     const ACE_Time_Value &tv2);
 
   /// True if tv1 <= tv2.
-  friend ACE_Export int operator <= (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export int operator <= (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
 
   /// True if tv1 >= tv2.
-  friend ACE_Export int operator >= (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export int operator >= (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
 
   /// True if tv1 == tv2.
-  friend ACE_Export int operator == (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export int operator == (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
 
   /// True if tv1 != tv2.
-  friend ACE_Export int operator != (const ACE_Time_Value &tv1,
+  friend ACE_OS_Export int operator != (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
 
   /// Dump the state of an object.
@@ -1224,7 +1221,7 @@ private:
  * time the <stop> method is called the <max_wait_time> is
  * updated.
  */
-class ACE_Export ACE_Countdown_Time
+class ACE_OS_Export ACE_Countdown_Time
 {
 public:
   // = Initialization and termination methods.
@@ -1511,7 +1508,6 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 
 #endif /* !ACE_LACKS_STATIC_CONSTRUCTORS */
 
-
 // More generic dynamic/static service macros.
 # define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *);
 # define ACE_FACTORY_DEFINE(CLS,X) \
@@ -1637,7 +1633,7 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
     if (OBJ.locked () == 0) return RETURN;
 
 #if defined (ACE_HAS_PACE)
-# include "pace/semaphore.h"
+# include /**/ "pace/semaphore.h"
 #   if !defined (SEM_FAILED)
 #     define SEM_FAILED ((pace_sem_t *) -1)
 #   endif  /* !SEM_FAILED */
@@ -2022,7 +2018,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
  * POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
  * it's a different type than the POSIX <sem_t>.
  */
-class ACE_Export ACE_sema_t
+class ACE_OS_Export ACE_sema_t
 {
 friend class ACE_OS;
 protected:
@@ -2069,11 +2065,11 @@ typedef sema_t ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
 
 typedef cond_t ACE_cond_t;
-struct ACE_Export ACE_condattr_t
+struct ACE_OS_Export ACE_condattr_t
 {
   int type;
 };
-struct ACE_Export ACE_mutexattr_t
+struct ACE_OS_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -2102,7 +2098,7 @@ typedef u_long ACE_hthread_t;
 #if defined (ACE_PSOS_HAS_COND_T)
 typedef u_long ACE_cond_t;
 typedef u_long ACE_condattr_t;
-struct ACE_Export ACE_mutexattr_t
+struct ACE_OS_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -2280,7 +2276,7 @@ typedef HANDLE ACE_sema_t;
  *
  * @brief Semaphore simulation for Windows CE.
  */
-class ACE_Export ACE_sema_t
+class ACE_OS_Export ACE_sema_t
 {
 public:
   /// Serializes access to <count_>.
@@ -2327,7 +2323,7 @@ public:
  * At the current time, this stuff only works for threads
  * within the same process.
  */
-class ACE_Export ACE_cond_t
+class ACE_OS_Export ACE_cond_t
 {
 public:
   friend class ACE_OS;
@@ -2367,7 +2363,7 @@ protected:
   size_t was_broadcast_;
 };
 
-struct ACE_Export ACE_condattr_t
+struct ACE_OS_Export ACE_condattr_t
 {
   int type;
 };
@@ -2375,7 +2371,7 @@ struct ACE_Export ACE_condattr_t
 #     if defined (ACE_HAS_PACE)
 typedef pace_pthread_mutexattr_t ACE_mutexattr_t;
 #     else
-struct ACE_Export ACE_mutexattr_t
+struct ACE_OS_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -2393,7 +2389,7 @@ struct ACE_Export ACE_mutexattr_t
  *     At the current time, this stuff only works for threads
  *     within the same process.
  */
-struct ACE_Export ACE_rwlock_t
+struct ACE_OS_Export ACE_rwlock_t
 {
 protected:
   friend class ACE_OS;
@@ -2546,11 +2542,11 @@ public:
 #   endif /* ! USYNC_PROCESS */
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
-struct ACE_Export ACE_condattr_t
+struct ACE_OS_Export ACE_condattr_t
 {
   int type;
 };
-struct ACE_Export ACE_mutexattr_t
+struct ACE_OS_Export ACE_mutexattr_t
 {
   int type;
 };
@@ -2582,7 +2578,7 @@ typedef u_int ACE_thread_key_t;
 # if defined (ACE_PSOS)
 
 // Wrapper for NT events on pSOS.
-class ACE_Export ACE_event_t
+class ACE_OS_Export ACE_event_t
 {
   friend class ACE_OS;
 
@@ -2688,10 +2684,13 @@ typedef unsigned int size_t;
 #   include /**/ <sched.h>
 # endif /* ACE_NEEDS_SCHED_H */
 
-# if defined (ACE_HAS_WINCE)
-#   define islower iswlower
-#   define isdigit iswdigit
-# endif /* ACE_HAS_WINCE */
+#if !defined (ACE_OSTREAM_TYPE)
+# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#   define ACE_OSTREAM_TYPE FILE
+# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#   define ACE_OSTREAM_TYPE ostream
+# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* ! ACE_OSTREAM_TYPE */
 
 #if !defined (ACE_DEFAULT_LOG_STREAM)
 # if defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -3332,7 +3331,7 @@ typedef int ACE_exitcode;
 #   define ACE_DEV_NULL "/dev/null"
 
 // Wrapper for NT events on UNIX.
-class ACE_Export ACE_event_t
+class ACE_OS_Export ACE_event_t
 {
   friend class ACE_OS;
 protected:
@@ -4250,7 +4249,7 @@ typedef const ACE_TCHAR * ACE_DL_TYPE;
 #    if defined (ACE_HAS_PACE)
 typedef pace_siginfo_t siginfo_t;
 #    else
-struct ACE_Export siginfo_t
+struct ACE_OS_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
   siginfo_t (ACE_HANDLE *handles);      // JCEJ 12/23/96
@@ -4299,7 +4298,7 @@ typedef int ucontext_t;
  *
  * @brief Defines a platform-independent thread ID.
  */
-class ACE_Export ACE_Thread_ID
+class ACE_OS_Export ACE_Thread_ID
 {
 public:
   // = Initialization method.
@@ -4381,7 +4380,7 @@ struct strbuf
  *
  * @brief Simple wrapper for STREAM pipes strbuf.
  */
-class ACE_Export ACE_Str_Buf : public strbuf
+class ACE_OS_Export ACE_Str_Buf : public strbuf
 {
 public:
   // = Initialization method
@@ -4428,7 +4427,7 @@ int ACE_SEH_Default_Exception_Handler (void *);
  *
  * @brief Base class for objects that are cleaned by ACE_Object_Manager.
  */
-class ACE_Export ACE_Cleanup
+class ACE_OS_Export ACE_Cleanup
 {
 public:
   /// No-op constructor.
@@ -4442,7 +4441,7 @@ public:
 };
 
 // Adapter for cleanup, used by ACE_Object_Manager.
-extern "C" ACE_Export
+extern "C" ACE_OS_Export
 void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
 
 /**
@@ -4450,7 +4449,7 @@ void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
  *
  * @brief Hold cleanup information for thread/process
  */
-class ACE_Export ACE_Cleanup_Info
+class ACE_OS_Export ACE_Cleanup_Info
 {
 public:
   /// Default constructor.
@@ -4481,7 +4480,7 @@ class ACE_Cleanup_Info_Node;
  *
  * For internal use by the ACE library, only.
  */
-class ACE_Export ACE_OS_Exit_Info
+class ACE_OS_Export ACE_OS_Exit_Info
 {
 public:
   /// Default constructor.
@@ -4630,7 +4629,7 @@ struct ACE_Protocol_Info
  * @brief Wrapper class that defines the flow spec QoS information,
  *    which is used by IntServ (RSVP) and DiffServ.
  */
-class ACE_Export ACE_Flow_Spec
+class ACE_OS_Export ACE_Flow_Spec
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   : public FLOWSPEC
 #endif /* ACE_HAS_WINSOCK2 */
@@ -4716,7 +4715,7 @@ private:
  * @brief Wrapper class that holds the sender and receiver flow spec 
  *     information, which is used by IntServ (RSVP) and DiffServ.
  */
-class ACE_Export ACE_QoS
+class ACE_OS_Export ACE_QoS
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   : public QOS
 #endif /* ACE_HAS_WINSOCK2 */
@@ -4750,7 +4749,7 @@ private:
  * @brief Wrapper class that simplifies the information passed to the QoS
  * enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
  */
-class ACE_Export ACE_QoS_Params
+class ACE_OS_Export ACE_QoS_Params
 {
 public:
   /**
@@ -4839,7 +4838,7 @@ typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
  * @brief Wrapper class that simplifies the information passed to the QoS
  * enabled <ACE_OS::accept> method.
  */
-class ACE_Export ACE_Accept_QoS_Params
+class ACE_OS_Export ACE_Accept_QoS_Params
 {
 public:
   /**
@@ -4898,7 +4897,7 @@ private:
  * in this directory for complete information on the meaning of
  * the various macros.
  */
-class ACE_Export ACE_OS
+class ACE_OS_Export ACE_OS
   : public ACE_OS_Dirent,
     public ACE_OS_String,
     public ACE_OS_Memory,
@@ -4980,14 +4979,17 @@ public:
   /// This method computes the smallest integral value not less than x.
   static double ceil (double x);
 
+# if !defined (ACE_LACKS_ENV)
   static char *getenv (const char *symbol);
-# if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
+#   if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
   static wchar_t *getenv (const wchar_t *symbol);
-# endif /* ACE_HAS_WCHAR && ACE_WIN32 */
+#   endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
   static int putenv (const ACE_TCHAR *string);
   static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
   static ACE_TCHAR *getenvstrings (void);
+
+# endif /* ACE_LACKS_ENV */
 
   static int getopt (int argc,
                      char *const *argv,
@@ -5030,14 +5032,17 @@ public:
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
   //@}
 
+
   //@{ @name Wrappers to obtain the current user id
+# if !defined (ACE_LACKS_CUSERID)
   static char *cuserid (char *user,
                         size_t maxlen = ACE_MAX_USERID);
 
-# if defined (ACE_HAS_WCHAR)
+#   if defined (ACE_HAS_WCHAR)
   static wchar_t *cuserid (wchar_t *user,
                            size_t maxlen = ACE_MAX_USERID);
-# endif /* ACE_HAS_WCHAR */
+#   endif /* ACE_HAS_WCHAR */
+# endif /* ACE_LACKS_CUSERID */
   //@}
 
   //@{ @name Wrappers to obtain configuration info
@@ -5045,7 +5050,6 @@ public:
   static long sysinfo (int cmd,
                        char *buf,
                        long count);
-
   static int hostname (char *name,
                        size_t maxnamelen);
 
@@ -5597,11 +5601,14 @@ public:
 
   //@{ @name A set of wrappers for directory operations.
   static mode_t umask (mode_t cmask);
+
+#if !defined (ACE_LACKS_CHDIR)
   static int chdir (const char *path);
 
 #if defined (ACE_HAS_WCHAR)
   static int chdir (const wchar_t *path);
 #endif /* ACE_HAS_WCHAR */
+#endif /* ACE_LACKS_CHDIR */
 
   static int mkdir (const ACE_TCHAR *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);
@@ -6163,6 +6170,19 @@ public:
 #endif /* ACE_HAS_STRPTIME */
 
 private:
+
+#if defined (ACE_LACKS_WRITEV)
+  static int writev_emulation (ACE_HANDLE handle, 
+                               ACE_WRITEV_TYPE *iov, 
+                               int iovcnt);
+#endif /* ACE_LACKS_WRITEV */
+
+#if defined (ACE_LACKS_READV)
+  static ssize_t readv_emulation (ACE_HANDLE handle, 
+                                  ACE_READV_TYPE *iov, 
+                                  int iovcnt);
+#endif /* ACE_LACKS_READV */
+
   /// Function that is called by <ACE_OS::exit>, if non-null.
   static ACE_EXIT_HOOK exit_hook_;
 
@@ -6195,7 +6215,7 @@ private:
  *
  * Encapsulates the most useful ACE_Object_Manager data structures.
  */
-class ACE_Export ACE_Object_Manager_Base
+class ACE_OS_Export ACE_Object_Manager_Base
 {
 # if (defined (ACE_PSOS) && defined (__DIAB))  || \
      (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
@@ -6284,7 +6304,7 @@ ACE_OS_Object_Manager_Internal_Exit_Hook (void);
 // @@ This forward declaration should go away.
 class ACE_Log_Msg;
 
-class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
+class ACE_OS_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
 {
 public:
   /// Explicitly initialize.
@@ -6469,7 +6489,7 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
  * native TSS, or have a TSS with limitations such as the
  * number of keys or lack of support for removing keys.
  */
-class ACE_Export ACE_TSS_Emulation
+class ACE_OS_Export ACE_TSS_Emulation
 {
 public:
   typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
@@ -6976,7 +6996,7 @@ private:
 #   define ACE_PTHREAD_CLEANUP_POP(A) pace_pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
-extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
+extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
@@ -7093,34 +7113,7 @@ ace_main_i
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-# if defined (ACE_HAS_WINCE)
-#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-/**
- * @class ACE_CE_Errno
- Some versions of CE don't support <errno> and some versions'
- * implementations are busted.  So we implement our own.
- * Our implementation takes up one Tls key, however, it does not
- * allocate memory fromt the heap so there's no problem with cleanin
- * up the errno when a thread exit.
- */
-class ACE_Export ACE_CE_Errno
-{
-public:
-  ACE_CE_Errno () {}
-  static void init ();
-  static void fini ();
-  static ACE_CE_Errno *instance ();
-
-  operator int (void) const;
-  int operator= (int);
-
-private:
-  static ACE_CE_Errno *instance_;
-  static DWORD errno_key_;
-};
-
-#     define errno (* (ACE_CE_Errno::instance ()))
-#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+#if defined (ACE_HAS_WINCE)
 
 /**
  * @class ACE_CE_Bridge
@@ -7137,7 +7130,8 @@ private:
  * the original ACE programs.  This is certainly not the only
  * way to use ACE in Windows programs.
  */
-class ACE_Export ACE_CE_Bridge
+class ACE_OS_Export ACE_CE_Bridge
+
 {
 public:
   /// Default ctor.
@@ -7194,68 +7188,6 @@ private:
 
 # endif /* ACE_HAS_WINCE */
 
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-#  define ACE_ERRNO_TYPE ACE_CE_Errno
-#else
-#  define ACE_ERRNO_TYPE int
-#endif /* ACE_HAS_WINCE */
-
-/**
- * @class ACE_Errno_Guard
- *
- * @brief Provides a wrapper to improve performance when thread-specific
- * errno must be saved and restored in a block of code.
- *
- * The typical use-case for this is the following:
- * int error = errno;
- * call_some_function_that_might_change_errno ();
- * errno = error;
- * This can be replaced with
- * {
- * ACE_Errno_Guard guard (errno);
- * call_some_function_that_might_change_errno ();
- * }
- * This implementation is more elegant and more efficient since it
- * avoids an unnecessary second access to thread-specific storage
- * by caching a pointer to the value of errno in TSS.
- */
-class ACE_Export ACE_Errno_Guard
-{
-public:
-  // = Initialization and termination methods.
-  ///  Stash the value of <error> into <error_> and initialize the
-  ///  <errno_ptr_> to the address of <errno_ref>.
-  ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
-                   int error);
-
-  ///  Stash the value of <errno> into <error_> and initialize the
-  ///  <errno_ptr_> to the address of <errno_ref>.
-  ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
-
-  /// Reset the value of <errno> to <error>.
-  ~ACE_Errno_Guard (void);
-
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-  /// Assign <errno_ref> to <error_>.
-  int operator= (const ACE_ERRNO_TYPE &errno_ref);
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
-  /// Assign <error> to <error_>.
-  int operator= (int error);
-
-  /// Compare <error> with <error_> for equality.
-  int operator== (int error);
-
-  /// Compare <error> with <error_> for inequality.
-  int operator!= (int error);
-
-private:
-#if defined (ACE_MT_SAFE)
-  ACE_ERRNO_TYPE *errno_ptr_;
-#endif /* ACE_MT_SAFE */
-  int error_;
-};
-
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
                          && ! defined (ACE_HAS_PHARLAP)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
@@ -7284,22 +7216,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   define ACE_WAIT_FAILED LONG_MAX
 #   define ACE_WAIT_TIMEOUT LONG_MAX
 # endif /* ACE_WIN32 */
-
-
-// Some ACE classes always use inline functions to maintain high
-// performance, but some platforms have buggy inline function support.
-// In this case, we don't use inline with them.
-# if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#   if defined (ASYS_INLINE)
-#     undef ASYS_INLINE
-#   endif /* ASYS_INLINE */
-#   define ASYS_INLINE
-#   if defined (ACE_HAS_INLINED_OSCALLS)
-#     undef ACE_HAS_INLINED_OSCALLS
-#   endif /* ACE_HAS_INLINED_OSCALLS */
-# else
-#   define ASYS_INLINE inline
-# endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 # if !defined (ACE_HAS_MINIMAL_ACE_OS)
 #   include "ace/Trace.h"
@@ -7507,6 +7423,10 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #define ACE_SIGRTMIN 0
 #define ACE_SIGRTMAX 0
 #endif /* ACE_HAS_AIO_CALLS */
+
+# if defined (ACE_LACKS_SYS_NERR)
+extern ACE_OS_Export int sys_nerr;
+# endif /* ACE_LACKS_SYS_NERR */
 
 #if defined (ACE_LEGACY_MODE)
 # include "ace/Log_Msg.h"

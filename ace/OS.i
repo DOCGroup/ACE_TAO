@@ -64,14 +64,6 @@ extern int setregid (gid_t rgid, gid_t egid);
 # endif /* ACE_LACKS_SETREGID_PROTOTYPE */
 #endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
 
-#if defined (ACE_LACKS_WRITEV)
-extern "C" ACE_Export int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
-#endif /* ACE_LACKS_WRITEV */
-
-#if defined (ACE_LACKS_READV)
-extern "C" ACE_Export ssize_t readv (ACE_HANDLE handle, ACE_READV_TYPE *iov, int iovcnt);
-#endif /* ACE_LACKS_READV */
-
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);
 #endif /* ACE_NEEDS_FTRUNCATE */
@@ -143,89 +135,6 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 #if !defined (ACE_LACKS_MALLOC_H)
 # include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
-
-ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
-                                  int error)
-  :
-#if defined (ACE_MT_SAFE)
-    errno_ptr_ (&errno_ref),
-#endif /* ACE_MT_SAFE */
-    error_ (error)
-{
-#if !defined(ACE_MT_SAFE)
-  ACE_UNUSED_ARG (errno_ref);
-#endif /* ACE_MT_SAFE */
-}
-
-ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref)
-  :
-#if defined (ACE_MT_SAFE)
-    errno_ptr_ (&errno_ref),
-#endif /* ACE_MT_SAFE */
-    error_ (errno_ref)
-{
-}
-
-ACE_INLINE
-ACE_Errno_Guard::~ACE_Errno_Guard (void)
-{
-#if defined (ACE_MT_SAFE)
-  *errno_ptr_ = this->error_;
-#else
-  errno = this->error_;
-#endif /* ACE_MT_SAFE */
-}
-
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-ACE_INLINE int
-ACE_Errno_Guard::operator= (const ACE_ERRNO_TYPE &error)
-{
-  return this->error_ = error;
-}
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
-ACE_INLINE int
-ACE_Errno_Guard::operator= (int error)
-{
-  return this->error_ = error;
-}
-
-ACE_INLINE int
-ACE_Errno_Guard::operator== (int error)
-{
-  return this->error_ == error;
-}
-
-ACE_INLINE int
-ACE_Errno_Guard::operator!= (int error)
-{
-  return this->error_ != error;
-}
-
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-ACE_INLINE ACE_CE_Errno *
-ACE_CE_Errno::instance ()
-{
-  // This should be inlined.
-  return ACE_CE_Errno::instance_;
-}
-
-ACE_INLINE
-ACE_CE_Errno::operator int (void) const
-{
-  return (int) TlsGetValue (ACE_CE_Errno::errno_key_);
-}
-
-ACE_INLINE int
-ACE_CE_Errno::operator= (int x)
-{
-  // error checking?
-  TlsSetValue (ACE_CE_Errno::errno_key_, (void *) x);
-  return x;
-}
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
 // Returns the value of the object as a timeval.
 
@@ -576,6 +485,7 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
 # endif /* ACE_HAS_PACE */
 }
 
+#if !defined (ACE_LACKS_CHDIR)
 ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
@@ -618,6 +528,7 @@ ACE_OS::chdir (const wchar_t *path)
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
+#endif /* ACE_LACKS_CHDIR */
 
 #if !defined (ACE_LACKS_MKTEMP)
 ACE_INLINE ACE_TCHAR *
@@ -1315,6 +1226,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
 # endif /* ACE_HAS_PACE */
 }
 
+#if !defined (ACE_LACKS_CUSERID)
 ACE_INLINE char *
 ACE_OS::cuserid (char *user, size_t maxlen)
 {
@@ -1332,9 +1244,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
-#elif defined (CHORUS) || defined (ACE_HAS_WINCE) || defined (ACE_PSOS) || defined (__QNXNTO__)
-  // @@ WinCE doesn't support GetUserName.  But there should be a way
-  // to get around this.
+#elif defined (CHORUS) || defined (ACE_PSOS) || defined (__QNXNTO__)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
@@ -1441,7 +1351,8 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
   return result;
 # endif /* ACE_WIN32 */
 }
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR  */
+#endif /* ACE_LACKS_CUSERID */
 
 ACE_INLINE int
 ACE_OS::atexit (ACE_EXIT_HOOK func)
@@ -8129,7 +8040,13 @@ ACE_OS::readv (ACE_HANDLE handle,
                int iovlen)
 {
   ACE_OS_TRACE ("ACE_OS::readv");
+#if defined (ACE_LACKS_READV)
+  ACE_OSCALL_RETURN (ACE_OS::readv_emulation (handle, iov, iovlen), 
+                     ssize_t, 
+                     -1);
+#else /* ACE_LACKS_READV */
   ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
+#endif /* ACE_LACKS_READV */
 }
 
 ACE_INLINE ssize_t
@@ -8138,7 +8055,15 @@ ACE_OS::writev (ACE_HANDLE handle,
                 int iovcnt)
 {
   ACE_OS_TRACE ("ACE_OS::writev");
-  ACE_OSCALL_RETURN (::writev (handle, (ACE_WRITEV_TYPE *) iov, iovcnt), int, -1);
+#if defined (ACE_LACKS_WRITEV)
+  ACE_OSCALL_RETURN (ACE_OS::writev_emulation (handle, 
+                                               (ACE_WRITEV_TYPE *) iov, 
+                                               iovcnt), int, -1);
+#else /* ACE_LACKS_WRITEV */
+  ACE_OSCALL_RETURN (::writev (handle, 
+                               (ACE_WRITEV_TYPE *) iov, 
+                               iovcnt), int, -1);
+#endif /* ACE_LACKS_WRITEV */
 }
 
 ACE_INLINE ssize_t
@@ -8345,11 +8270,11 @@ ACE_OS::access (const char *path, int amode)
 ACE_INLINE int
 ACE_OS::access (const wchar_t *path, int amode)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
-#else /* ACE_WIN32 */
+#else /* ACE_WIN32 && !ACE_HAS_WINCE */
   return ACE_OS::access (ACE_Wide_To_Ascii (path).char_rep (), amode);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -8400,13 +8325,7 @@ ACE_INLINE int
 ACE_OS::hostname (char name[], size_t maxnamelen)
 {
   ACE_OS_TRACE ("ACE_OS::hostname");
-#if defined (ACE_HAS_WINCE)
-  // @@ WINCE: Don't know how to implement this (yet.)  Can probably get around
-  // this by peeking into the Register set.
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (maxnamelen);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_PHARLAP)
   // PharLap only can do net stuff with the RT version.
 #   if defined (ACE_HAS_PHARLAP_RT)
   // @@This is not at all reliable... requires ethernet and BOOTP to be used.
@@ -8418,12 +8337,12 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   ACE_UNUSED_ARG (maxnamelen);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_PHARLAP_RT */
+#elif defined (VXWORKS) || defined (ACE_HAS_WINCE)
+  ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name,
                                                         LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
-#elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (CHORUS)
   if (::gethostname (name, maxnamelen) == -1)
     return -1;
@@ -8438,7 +8357,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
         }
       return 0;
     }
-#else /* ACE_HAS_WINCE */
+#else /* ACE_HAS_PHARLAP */
   struct utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
@@ -8448,18 +8367,18 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
       ACE_OS::strncpy (name, host_info.nodename, maxnamelen);
       return 0;
     }
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_PHARLAP */
 }
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (GetComputerNameW (name,
                                                         LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
-#else /* ACE_WIN32 */
+#else /* ACE_WIN32 && !ACE_HAS_WINCE */
   // Emulate using the char version
   char *char_name = 0;
   int result = 0;
@@ -8471,7 +8390,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 
   delete [] char_name;
   return result;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -11102,18 +11021,19 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
 #endif /* ACE_HAS_PACE */
 }
 
+#if !defined (ACE_LACKS_ENV)
 ACE_INLINE char *
 ACE_OS::getenv (const char *symbol)
 {
   ACE_OS_TRACE ("ACE_OS::getenv");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_getenv (symbol), char*, 0);
-#elif defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
+#elif defined (ACE_PSOS)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
-#else /* ACE_HAS_WINCE || ACE_PSOS */
+#else /* ACE_PSOS */
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
-#endif /* symbol */
+#endif /* ACE_HAS_PACE */
 }
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
@@ -11139,6 +11059,7 @@ ACE_OS::putenv (const ACE_TCHAR *string)
   ACE_OSCALL_RETURN (::putenv ((char *) string), int, -1);
 #endif /* ACE_HAS_WINCE */
 }
+#endif /* !ACE_LACKS_ENV */
 
 ACE_INLINE
 ACE_Str_Buf::ACE_Str_Buf (void *b, int l, int max)
@@ -11727,6 +11648,7 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
 }
 #endif /* ACE_WIN32 */
 
+# if !defined (ACE_LACKS_ENV)
 // Return a dynamically allocated duplicate of <str>, substituting the
 // environment variable if <str[0] == '$'>.  Note that the pointer is
 // allocated with <ACE_OS::malloc> and must be freed by
@@ -11748,6 +11670,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
     return ACE_OS::strdup (str);
 #endif /* ACE_HAS_WINCE */
 }
+#endif /* ACE_LACKS_ENV */
 
 ACE_INLINE int
 ACE_Countdown_Time::start (void)
