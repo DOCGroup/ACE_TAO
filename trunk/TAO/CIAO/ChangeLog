@@ -1,3 +1,18 @@
+Sat Mar 19 15:36:55 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/RDD_Handler.cpp:
+        * DAnCE/Config_Handlers/RDD_Handler.h:
+        * DAnCE/Config_Handlers/Req_Handler.cpp:
+        * DAnCE/Config_Handlers/Req_Handler.h:
+        * DAnCE/Config_Handlers/XML_Error_Handler.cpp:
+        * DAnCE/Config_Handlers/XML_Error_Handler.h:
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+        * DAnCE/Config_Handlers/XML_File_Intf.h:
+        * DAnCE/Config_Handlers/XML_Helper.cpp:
+        * DAnCE/Config_Handlers/XML_Helper.h:
+
+          More XSC config handlers.
+
 Sat Mar 19 15:29:45 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/Any_Handler.h:
