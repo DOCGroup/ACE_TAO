@@ -1,3 +1,15 @@
+Fri Sep 20 12:53:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+
+	  For the Linux case, only obtain the load average via
+	  ::getloadavg() if Glibc 2.2 or better is used, and if either
+	  _BSD_SOURCE or _GNU_SOURCE is defined.  Otherwise, obtain the
+	  load average directly from the `/proc/loadavg' virtual file.
+	  This address problems compiling the new load balancer on older
+	  Linux distributions.  Thanks to Knut-Ha*vard Aksnes for
+	  reporting the problem.  [Bug 1311]
+
 Wed Sep 18 09:23:44 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (reregister_server): 
