@@ -592,23 +592,6 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 
   ACE_TRY_NEW_ENV
     {
-      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (kind == CORBA::tk_any)
-        {
-          tc->_decr_refcnt ();
-          CORBA::Any nested_any;
-
-          TAO::Any_Any_Impl *any_impl = 0;
-          ACE_NEW_RETURN (any_impl,
-                          TAO::Any_Any_Impl (nested_any),
-                          0);
-
-          any.replace (any_impl);
-          return any_impl->demarshal_value (cdr);
-        }
-
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc,
@@ -798,8 +781,12 @@ operator<<= (CORBA::Any &any, CORBA::LongDouble ld)
 void
 operator<<= (CORBA::Any &any, const CORBA::Any &a)
 {
-  TAO::Any_Any_Impl::insert_copy (any,
-                                  a);
+  TAO::Any_Dual_Impl_T<CORBA::Any>::insert_copy (
+      any,
+      CORBA::Any::_tao_any_destructor,
+      CORBA::_tc_any,
+      a
+    );
 }
 
 // Insertion of Any - non-copying.
@@ -1068,15 +1055,6 @@ operator>>= (const CORBA::Any &any, CORBA::LongDouble &ld)
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, const CORBA::Any &a)
-{
-  return TAO::Any_Any_Impl::extract_ref (
-      any,
-      ACE_const_cast (CORBA::Any &, a)
-    );
-}
-
-CORBA::Boolean
 operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
 {
   return TAO::Any_Dual_Impl_T<CORBA::Any>::extract (
@@ -1118,109 +1096,6 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
       CORBA::_tc_TypeCode,
       tc
     );
-}
-
-// =======================================================================
-
-TAO::Any_Any_Impl::Any_Any_Impl (void)
-  : TAO::Any_Dual_Impl_T<CORBA::Any> (CORBA::_tc_any),
-    any_holder_ (CORBA::Any ())
-{
-  this->value_ = &this->any_holder_;
-}
-
-TAO::Any_Any_Impl::Any_Any_Impl (const CORBA::Any &val)
-  : TAO::Any_Dual_Impl_T<CORBA::Any> (CORBA::_tc_any),
-    any_holder_ (val)
-{
-  this->value_ = &this->any_holder_;
-}
-
-TAO::Any_Any_Impl::~Any_Any_Impl (void)
-{
-}
-
-void
-TAO::Any_Any_Impl::insert_copy (CORBA::Any & any,
-                                const CORBA::Any & value)
-{
-  TAO::Any_Any_Impl *new_impl = 0;
-  ACE_NEW (new_impl,
-           TAO::Any_Any_Impl (value));
-  any.replace (new_impl);
-}
-
-CORBA::Boolean
-TAO::Any_Any_Impl::extract_ref (const CORBA::Any & any,
-                                CORBA::Any & _tao_elem)
-{
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean _tao_equiv = any_tc->equivalent (CORBA::_tc_any
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (_tao_equiv == 0)
-        {
-          return 0;
-        }
-
-      TAO::Any_Impl *impl = any.impl ();
-
-      TAO::Any_Any_Impl *narrow_impl =
-        dynamic_cast <TAO::Any_Any_Impl *> (impl);
-
-      if (narrow_impl != 0)
-        {
-          _tao_elem = *narrow_impl->value_;
-          return 1;
-        }
-
-      ACE_Message_Block *mb = impl->_tao_get_cdr ();
-
-      if (mb == 0)
-        {
-          return 0;
-        }
-
-      TAO::Any_Any_Impl *replacement = 0;
-      ACE_NEW_RETURN (replacement,
-                      TAO::Any_Any_Impl,
-                      0);
-                      
-      auto_ptr<TAO::Any_Any_Impl> replacement_safety (replacement);
-
-      TAO_InputCDR cdr (mb->data_block (),
-                        ACE_Message_Block::DONT_DELETE,
-                        mb->rd_ptr () - mb->base (),
-                        mb->wr_ptr () - mb->base (),
-                        impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
-
-      CORBA::Boolean result = replacement->demarshal_value (cdr);
-
-      if (result == 1)
-        {
-          _tao_elem = *replacement->value_;
-          ACE_const_cast (CORBA::Any &, any).replace (replacement);
-          replacement_safety.release ();
-          return result;
-        }
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-  
-  return 0;
-}
-
-void
-TAO::Any_Any_Impl::free_value (void)
-{
-  this->any_holder_.impl ()->free_value ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

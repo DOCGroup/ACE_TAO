@@ -263,27 +263,27 @@ Test_Complex_Any::comp_engine (const Param_Test::AnySeq *level2_in_seq,
               return 0;
             }
 
-          CORBA::Any level6_in_any;
-          CORBA::Any level6_test_any;
-          CORBA::Any level7_in_any;
-          CORBA::Any level7_test_any;
+          const CORBA::Any *level6_in_any;
+          const CORBA::Any *level6_test_any;
+          const CORBA::Any *level7_in_any;
+          const CORBA::Any *level7_test_any;
 
           if (!(level4_in_struct->level5_any >>= level6_in_any))
             return 0;
           if (!(level4_test_struct->level5_any >>= level6_test_any))
             return 0;
 
-          if (!(level6_in_any >>= level7_in_any))
+          if (!((*level6_in_any) >>= level7_in_any))
             return 0;
-          if (!(level6_test_any >>= level7_test_any))
+          if (!((*level6_test_any) >>= level7_test_any))
             return 0;
 
           Param_Test::level8 *level8_in_struct;
           Param_Test::level8 *level8_test_struct;
 
-          if (!(level7_in_any >>= level8_in_struct))
+          if (!((*level7_in_any) >>= level8_in_struct))
             return 0;
-          if (!(level7_test_any >>= level8_test_struct))
+          if (!((*level7_test_any) >>= level8_test_struct))
             return 0;
 
           if (ACE_OS::strcmp (level8_in_struct->level9_string,

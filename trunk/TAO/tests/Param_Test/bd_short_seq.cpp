@@ -88,12 +88,12 @@ Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr /*objref*/
   this->in_->length (len);
   this->inout_->length (len);
   // now set each individual element
-  for (CORBA::ULong i=0; i < this->in_->maximum (); i++)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
       this->in_[i] = i;
-      this->inout_[i] = i+1; // different from in_
+      this->inout_[i] = i + 1; // different from in_
     }
 
   this->inout_->length (0);
@@ -176,7 +176,8 @@ Test_Bounded_Short_Sequence::print_values (void)
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->in_.ptr () && (i < this->in_->length ()); i++)
+
+  for (i = 0; this->in_.ptr () && (i < this->in_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -184,40 +185,59 @@ Test_Bounded_Short_Sequence::print_values (void)
                   i,
                   this->in_[i]));
     }
+
   if (!this->in_.ptr ())
-    ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+    }
+
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); i++)
+
+  for (i = 0; this->inout_.ptr () && (i < this->inout_->length ()); ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "inout : %d\n",
+                  i,
+                  this->inout_[i]));
+    }
+
+  if (!this->inout_.ptr ())
+    {
+      ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
+
+  for (i = 0; this->out_.ptr () && (i < this->out_->length ()); ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "out : %d\n",
+                  i,
+                  this->out_[i]));
+    }
+
+  if (!this->out_.ptr ())
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
+
+  for (i = 0; this->ret_.ptr () && (i < this->ret_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "in : %d\n",
                   i,
-                  this->inout_[i]));
-    }
-  if (!this->inout_.ptr ())
-    ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
-  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->out_.ptr () && (i < this->out_->length ()); i++)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
-                  "in : %s\n",
-                  i,
-                  this->out_[i]));
-    }
-  if (!this->out_.ptr ())
-    ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
-  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); i++)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
-                  "in : %s\n",
-                  i,
                   this->ret_[i]));
     }
+
   if (!this->ret_.ptr ())
-    ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+    }
+
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }

@@ -416,18 +416,18 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
       }
     case CORBA::tk_any:
       {
-        CORBA::Any rhs_v;
+        const CORBA::Any *rhs_v;
         rhs_n->any_ >>= rhs_v;
-        CORBA::Any lhs_v;
+        const CORBA::Any *lhs_v;
         this->any_ >>= lhs_v;
 
         DynamicAny::DynAny_var rhs_dyn =
-          TAO_DynAnyFactory::make_dyn_any (rhs_v
+          TAO_DynAnyFactory::make_dyn_any (*rhs_v
                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         DynamicAny::DynAny_var lhs_dyn =
-          TAO_DynAnyFactory::make_dyn_any (lhs_v
+          TAO_DynAnyFactory::make_dyn_any (*lhs_v
                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 

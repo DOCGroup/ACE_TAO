@@ -175,7 +175,7 @@ Test_Objref_Struct::check_validity (void)
       if (CORBA::is_nil (this->in_.y.in ())
           || CORBA::is_nil (this->out_->y.in ())
           || CORBA::is_nil (this->ret_->y.in ())
-          | CORBA::is_nil (this->inout_->y.in ()) )
+          || CORBA::is_nil (this->inout_->y.in ()))
         {
           return 0;
         }
@@ -235,18 +235,34 @@ Test_Objref_Struct::print_values (void)
 
   ACE_TRY
     {
-
-      Coffee::Desc_var s_in = this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+      Coffee::Desc_var s_in = 
+        this->in_.y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Coffee::Desc_var s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Coffee::Desc_var s_inout = new Coffee::Desc;
+      Coffee::Desc_var s_out = new Coffee::Desc;
+      Coffee::Desc_var s_ret = new Coffee::Desc;
+      s_inout->name = CORBA::string_dup ("");
+      s_out->name = CORBA::string_dup ("");
+      s_ret->name = CORBA::string_dup ("");
 
-      Coffee::Desc_var s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (this->out_->y.in ()))
+        {
+          s_out = this->out_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
-      Coffee::Desc_var s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (this->inout_->y.in ()))
+        {
+          s_inout = this->inout_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (!CORBA::is_nil (this->ret_->y.in ()))
+        {
+          s_ret = this->ret_->y->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"

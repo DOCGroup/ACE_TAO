@@ -1,3 +1,36 @@
+Fri Apr  4 19:46:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any_T.h:
+
+          Changes to fix errors in Param_Test. Removed
+          the special class and demarshaling code for the case
+          where an Any contains an Any, it is now handled by
+          Any_Dual_Impl_T. Also removed the non-spec extraction
+          operator to CORBA::Any&.
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+
+          Changes to use the compliant Any extraction operator
+          to const Any*, instead of the removed signature above.
+
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref_struct.cpp:
+
+          Fixed errors in debugging code.
+
+        * tests/Param_Test/typecode.cpp:
+
+          Added duplication to Any insertion in DII version of
+          the test, since there is no copying Any insertion for
+          CORBA::TypeCode_ptr, as there is for CORBA::Object and
+          other interfaces.
+
 Fri Apr  4 12:06:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:

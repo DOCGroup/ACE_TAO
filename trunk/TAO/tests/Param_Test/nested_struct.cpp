@@ -92,7 +92,7 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr
   // set the length of the sequence
   this->in_.vs.seq.length (len);
   // now set each individual element
-  for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); i++)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
@@ -195,6 +195,7 @@ Test_Nested_Struct::print_values (void)
                   "inout (len = %d): %s\n"
                   "out (len = %d): %s\n"
                   "ret (len = %d): %s\n",
+                  i,
                   this->in_.vs.seq.length (),
                   (this->in_.vs.seq.length ()? (const char *)this->in_.vs.seq[i]:"<nul>"),
                   this->inout_->vs.seq.length (),
