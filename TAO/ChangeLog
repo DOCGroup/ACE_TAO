@@ -1,3 +1,11 @@
+Thu Aug 26 10:38:49 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+	  Fix fuzz build complaints about returning 'int' rather than
+	  'bool' from operator== and operator!=.
+
 Thu Aug 26 10:17:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
