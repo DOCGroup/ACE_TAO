@@ -5,6 +5,11 @@ project(MFC Server): namingexe, mfc {
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp
 
+  specific(em3, vc6) {
+    type_description = Application
+    type_code        = 0x0101
+  }
+
   Source_Files {
     MainFrm.cpp
     server.cpp

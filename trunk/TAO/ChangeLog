@@ -1,175 +1,197 @@
+Mon Mar 22 09:10:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAOACE.mwc:
+
+          Replace the reference to TAO_IDL/TAO_IDL.mwc with the TAO_IDL
+          directory.
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Turn optimization off only for the backend when building with vc6
+          and vc71.  This was previously done in the TAO_IDL.mwc file.
+
+        * examples/mfc/server.mpc:
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Added specific settings that were particular to vc6 and vc71.
+
+        * TAO_IDL/TAO_IDL.mwc:
+        * examples/mfc/mfc.mwc:
+
+          Removed these files.  They were no longer necessary.
+
 Sun Mar 21 22:30:29 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
-	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
-	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+        * orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
 
-	  Fixed one or other problems wit makefiles that made the builds
-	  on solaris fail. 
-	
+          Fixed one or other problems wit makefiles that made the builds
+          on solaris fail.
+
 Sun Mar 21 22:07:09 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
+        * orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
 
-	  A -- in front of alibrary name borke builds on Solaris. Fixed
-	  this problem. 
+          A -- in front of alibrary name borke builds on Solaris. Fixed
+          this problem.
 
 Sat Mar 20 19:16:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/RTScheduling/Scheduling_Interceptor/Makefile:
+        * tests/RTScheduling/Scheduling_Interceptor/Makefile:
 
-	  The SRC target was incompletely defined which lead to problems
-	  while dependencies were regenerated.
+          The SRC target was incompletely defined which lead to problems
+          while dependencies were regenerated.
 
 Sat Mar 20 18:39:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
-	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
-	* tests/RTScheduling/Scheduling_Interceptor/Makefile:
-	* tests/RTScheduling/VoidData/Makefile:
+        * orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
+        * tests/RTScheduling/Scheduling_Interceptor/Makefile:
+        * tests/RTScheduling/VoidData/Makefile:
 
-	  Added dependencies on the IDL_SRC for the for client and server
-	  objects. Thanks to Don for help with this.
+          Added dependencies on the IDL_SRC for the for client and server
+          objects. Thanks to Don for help with this.
 
 Sat Mar 20 08:41:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
-	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
-	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
 
-	  We have seen this before and we will see it more and more. I am
-	  talking about the abuse/misuse of the environment macros. Fixed
-	  few such problems here. The tests should now compile in the
-	  daily builds. Thanks to Johnny for reporting it.
+          We have seen this before and we will see it more and more. I am
+          talking about the abuse/misuse of the environment macros. Fixed
+          few such problems here. The tests should now compile in the
+          daily builds. Thanks to Johnny for reporting it.
 
 Fri Mar 19 09:57:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
-          Set the conditions at the time of node creation for the implied 
+
+          Set the conditions at the time of node creation for the implied
           home implicit, explicit, and equivalent interfaces, so that the
           repository ids, which are, from a recent change, all computed at
           construction time, will be correct.
 
 Thu Mar 18 22:52:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Thread_Per_Connection_Handler.cpp:
-	* tao/Thread_Per_Connection_Handler.h:
+        * tao/Thread_Per_Connection_Handler.cpp:
+        * tao/Thread_Per_Connection_Handler.h:
 
-	  Reverted the change "Fri Mar  5 23:31:34 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>".  
-	
- 	* orbsvcs/LoadBalancer/Signal_Handler.cpp:
-	* orbsvcs/LoadBalancer/Signal_Handler.h:
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	* orbsvcs/orbsvcs/Event/RT_Task.h:
+          Reverted the change "Fri Mar  5 23:31:34 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>".
 
-	  Reverted the change "Wed Mar 10 19:41:01 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" 
+        * orbsvcs/LoadBalancer/Signal_Handler.cpp:
+        * orbsvcs/LoadBalancer/Signal_Handler.h:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
+
+          Reverted the change "Wed Mar 10 19:41:01 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>"
 
 Thu Mar 18 12:57:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * toa/FloatSeqS.h:
-        
+
           Removed inclusion of FloatSeqS.i.
-          
-        * tao/ShortSeq.pidl:  
+
+        * tao/ShortSeq.pidl:
         * tao/ShortSeqA.cpp:
         * tao/ShortSeqC.cpp:
         * tao/ShortSeqC.h:
         * tao/ShortSeqC.i:
         * tao/ShortSeqS.h:
-        
+
           New files, adding the predefined sequence of CORBA::Short
           to the ORB files.
-          
+
         * tao/tao.mpc:
-        
+
           Added new files to the MPC generator.
 
 Thu Mar 18 12:13:36 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.{h,cpp}: 
-	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.{h,cpp}: 
-	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.{h,cpp}:
-	  
-	  Added implementations for pure virtual functions - copy and
-	  destroy for policy classes. This fixes compile errors on a lot
-	  of builds.
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.{h,cpp}:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.{h,cpp}:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.{h,cpp}:
+
+          Added implementations for pure virtual functions - copy and
+          destroy for policy classes. This fixes compile errors on a lot
+          of builds.
 
 Thu Mar 18 12:21:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/FloatSeqS.h:
-        
+
           Forgot to add this needed empty file to the repository.
-          
+
         * tao/tao.mpc:
-        
+
           And to the generator.
 
 Thu Mar 18 10:45:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Basic_Impl.cpp (create_empty):
-         
+
           For the default case (excluding long long and long double),
           replaced the 8-char zeroed array (passed as a buffer to the
           Any_Basic_Impl constructor) with a CORBA::ULonglong set to 0.
           This is simpler and we know it always works since the spec
           requires CORBA::ULonglong to be 8 bytes.
-          
-        * tao/FloatSeq.pidl:  
+
+        * tao/FloatSeq.pidl:
         * tao/FloatSeqA.cpp:
         * tao/FloatSeqC.cpp:
         * tao/FloatSeqC.i:
         * tao/FloatSeqC.h:
-        
+
           New files, adding sequence of CORBA::Float to TAO's growing list
           of predefined sequences of basic types.
-          
+
         * tao/tao.mpc:
-        
+
           Added the above new files to the generator.
 
 Thu Mar 18 15:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/IDL_Test/Makefile.bor:
-	  Fixed the Makefile to exclude removed cpp files.
+        * tests/IDL_Test/Makefile.bor:
+          Fixed the Makefile to exclude removed cpp files.
 
 Wed Mar 17 18:06:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/PICurrent_Guard.cpp:
+        * tao/PortableServer/PICurrent_Guard.cpp:
 
-	  Fixed a type which gave warnings with MSVC6.
+          Fixed a type which gave warnings with MSVC6.
 
 Wed Mar 17 13:56:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/CORBA_String.cpp:
+        * tao/CORBA_String.cpp:
 
-	  Reverted the change "Tue Mar 16 09:36:42 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since MSVC barfs.
+          Reverted the change "Tue Mar 16 09:36:42 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since MSVC barfs.
 
-	* tao/ULongSeqS.cpp:
-	* tao/ULongSeqS.i:
-	* tao/UShortSeqS.cpp:
-	* tao/UShortSeqS.i:
+        * tao/ULongSeqS.cpp:
+        * tao/ULongSeqS.i:
+        * tao/UShortSeqS.cpp:
+        * tao/UShortSeqS.i:
 
-	  They serve no purpose. So removed them from the repo.
+          They serve no purpose. So removed them from the repo.
 
 Wed Mar 17 10:12:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
 
-	  Fixed a typo that prevented this service being compiled in our
-	  daily builds.  Thanks to Jaffar Shaikh <Jaffar_Shaikh@Mitel.com>
-	  for reporting this.
+          Fixed a typo that prevented this service being compiled in our
+          daily builds.  Thanks to Jaffar Shaikh <Jaffar_Shaikh@Mitel.com>
+          for reporting this.
 
 Wed Mar 17 05:44:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/IDL_Test/Makefile:
+        * tests/IDL_Test/Makefile:
 
-	  Fixed the Makefile to exclude removed cpp files.
+          Fixed the Makefile to exclude removed cpp files.
 
 Tue Mar 16 17:01:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -237,17 +259,17 @@ Tue Mar 16 11:43:28 2004  Amogh Kavimandan  <amoghk@dre.vanderbilt.edu>
 
 Tue Mar 16 09:36:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any_Unknown_IDL_Type.cpp (_tao_decode):
+        * tao/Any_Unknown_IDL_Type.cpp (_tao_decode):
 
-	  Update the byte order from the incoming CDR stream.
+          Update the byte order from the incoming CDR stream.
 
-	* tao/CORBA_String.cpp:
+        * tao/CORBA_String.cpp:
 
-	  Applied patches from Oliver Kellog and Paolo Carlini
-	  <pcarlini@suse.de> which helps TAO to get compiling with
-	  g++ 3.4 (prerelease). Paolo mentions that this should make things
-	  more portable. It compiles fine with g++ atleast. We need to see how
-	  things go on other platforms.
+          Applied patches from Oliver Kellog and Paolo Carlini
+          <pcarlini@suse.de> which helps TAO to get compiling with
+          g++ 3.4 (prerelease). Paolo mentions that this should make things
+          more portable. It compiles fine with g++ atleast. We need to see how
+          things go on other platforms.
 
 Tue Mar 16 09:40:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -291,167 +313,167 @@ Tue Mar 16 09:40:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jan 06 15:20:39 2000  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	  Removed UlongSeqS.cpp and UShortSeqS.cpp from the project file
-	  since including them would necessitate inclusion of the POA
-	  library.
+          Removed UlongSeqS.cpp and UShortSeqS.cpp from the project file
+          since including them would necessitate inclusion of the POA
+          library.
 
 Tue Mar 16 01:28:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
-	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.cpp:
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.cpp:
 
-	  Clarified some debugging/progress messages.
+          Clarified some debugging/progress messages.
 
-	* tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
+        * tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
 
-	  Changed order of one method call (invoke_you).  Invoking it at
-	  its previous location caused the TSC to be clobbered, which
-	  ended up causing the test to fail.  It turns out the TSC
-	  clobbering is the correct behavior, meaning that the new test
-	  failure revealed a bug in the previous TAO PICurrent code.  In
-	  particular, the TSC was previously not clobbered when it should
-	  have.  Reordering the method call in question delays TSC
-	  clobbering until after the test has a chance to extract data
-	  from the TSC.  In that particular case, we're testing data
-	  extraction, not TSC clobbering.
+          Changed order of one method call (invoke_you).  Invoking it at
+          its previous location caused the TSC to be clobbered, which
+          ended up causing the test to fail.  It turns out the TSC
+          clobbering is the correct behavior, meaning that the new test
+          failure revealed a bug in the previous TAO PICurrent code.  In
+          particular, the TSC was previously not clobbered when it should
+          have.  Reordering the method call in question delays TSC
+          clobbering until after the test has a chance to extract data
+          from the TSC.  In that particular case, we're testing data
+          extraction, not TSC clobbering.
 
-	* tests/Portable_Interceptors/PICurrent/README:
+        * tests/Portable_Interceptors/PICurrent/README:
 
-	  Updated expected output.
+          Updated expected output.
 
-	* tests/Portable_Interceptors/PICurrent/Makefile:
+        * tests/Portable_Interceptors/PICurrent/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Mar 16 00:49:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	The following changes are an overhaul that address a number of
-	problems with TAO's PICurrent support.  [Bug 1215, 1738]
+        The following changes are an overhaul that address a number of
+        problems with TAO's PICurrent support.  [Bug 1215, 1738]
 
-	* tao/PICurrent_Copy_Callback.h:
-	* tao/PICurrent_Copy_Callback.cpp:
+        * tao/PICurrent_Copy_Callback.h:
+        * tao/PICurrent_Copy_Callback.cpp:
 
-	  New PICurrent copy callback object implementation designed to
-	  provide cleaner logical/deep copying code.
+          New PICurrent copy callback object implementation designed to
+          provide cleaner logical/deep copying code.
 
-	* tao/ClientRequestInfo_i.h (TAO_ClientRequestInfo_i):
-	* tao/TAO_Server_Request.h (TAO_ServerRequest):
+        * tao/ClientRequestInfo_i.h (TAO_ClientRequestInfo_i):
+        * tao/TAO_Server_Request.h (TAO_ServerRequest):
 
-	  Added new PICurrent_Copy_Callback member responsible for
-	  performing deep copies from the RSC to TSC or vice versa when
-	  necessary.
+          Added new PICurrent_Copy_Callback member responsible for
+          performing deep copies from the RSC to TSC or vice versa when
+          necessary.
 
-	* tao/ClientRequestInfo_i.cpp (setup_picurrent):
-	* tao/PICurrent.h:
-	* tao/PICurrent.inl:
-	* tao/PICurrent.cpp:
-	* tao/PortableServer/ServerInterceptorAdapter.cpp:
-	* tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/ClientRequestInfo_i.cpp (setup_picurrent):
+        * tao/PICurrent.h:
+        * tao/PICurrent.inl:
+        * tao/PICurrent.cpp:
+        * tao/PortableServer/ServerInterceptorAdapter.cpp:
+        * tao/PortableServer/ServerRequestInfo.cpp:
 
-	  Use new copy callback to improve RSC/TSC copying code.
+          Use new copy callback to improve RSC/TSC copying code.
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Updated PICurrent initialization method call to conform to new
-	  signature.
+          Updated PICurrent initialization method call to conform to new
+          signature.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
 
-	  TAO's PICurrent class is now in the "TAO" namespace.  Updated
-	  all "TAO_PICurrent" instances accordingly.
+          TAO's PICurrent class is now in the "TAO" namespace.  Updated
+          all "TAO_PICurrent" instances accordingly.
 
-	* tao/PICurrent_ORBInitializer.cpp (pre_init):
+        * tao/PICurrent_ORBInitializer.cpp (pre_init):
 
-	  Pass the ORB Core pointer to the PICurrent constructor.  There
-	  is no need to pass it to the later explicit initialization call
-	  that occurs during CORBA::ORB_init().
+          Pass the ORB Core pointer to the PICurrent constructor.  There
+          is no need to pass it to the later explicit initialization call
+          that occurs during CORBA::ORB_init().
 
-	* tao/Profile_Transport_Resolver.h:
+        * tao/Profile_Transport_Resolver.h:
 
-	  Corrected typo in documentation.
+          Corrected typo in documentation.
 
-	* tao/TAO_Server_Request.cpp (TAO_ServerRequest):
+        * tao/TAO_Server_Request.cpp (TAO_ServerRequest):
 
-	  Initialize PICurrent_Copy_Callback object in base member
-	  initializer list.
+          Initialize PICurrent_Copy_Callback object in base member
+          initializer list.
 
-	* tao/TAO_Server_Request.i (pi_current_copy_callback):
+        * tao/TAO_Server_Request.i (pi_current_copy_callback):
 
-	  New accessor for the PICurrent_Copy_Callback object.
+          New accessor for the PICurrent_Copy_Callback object.
 
-	* tao/orbconf.h (TAO_HAS_EXTENDED_FT_INTERCEPTORS):
+        * tao/orbconf.h (TAO_HAS_EXTENDED_FT_INTERCEPTORS):
 
-	  Added missing default definition for this preprocessor symbol.
-	  Addresses "undefined symbol" warnings exhibited by GNU g++ when
-	  using the "-Wundef" flag.
+          Added missing default definition for this preprocessor symbol.
+          Addresses "undefined symbol" warnings exhibited by GNU g++ when
+          using the "-Wundef" flag.
 
-	* tao/Makefile.bor:
-	* tao/Makefile.tao:
-	* tao/TAO.dsp:
-	* tao/tao.mpc:
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+        * tao/TAO.dsp:
+        * tao/tao.mpc:
 
-	  Added new PICurrent_Copy_Callback.{h,cpp} files to the source
-	  lists in these files.
+          Added new PICurrent_Copy_Callback.{h,cpp} files to the source
+          lists in these files.
 
-	* tao/PortableServer/PICurrent_Guard.cpp:
-	* tao/PortableServer/PICurrent_Guard.h:
+        * tao/PortableServer/PICurrent_Guard.cpp:
+        * tao/PortableServer/PICurrent_Guard.h:
 
-	  Moved PICurrent_Guard implementation from core TAO library
-	  (client side) to the PortableServer library since it is only
-	  used on the server side.
+          Moved PICurrent_Guard implementation from core TAO library
+          (client side) to the PortableServer library since it is only
+          used on the server side.
 
-	* tao/Domain/DomainS.cpp:
-	* tao/PortableServer/ImR_LocatorS.cpp:
-	* tao/PortableServer/ImplRepoS.cpp:
-	* tao/PortableServer/PolicyS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * tao/Domain/DomainS.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
 
-	  Updated files to match modified PICurrent_Guard related code in
-	  generated skeletons.
+          Updated files to match modified PICurrent_Guard related code in
+          generated skeletons.
 
-	* tao/PortableServer/Makefile:
-	* tao/PortableServer/Makefile.bor:
-	* tao/PortableServer/PortableServer.mpc:
-	* tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/Makefile.bor:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/PortableServer/TAO_PortableServer.dsp:
 
-	  Added new PICurrent_Guard files to these files.
+          Added new PICurrent_Guard files to these files.
 
-	* tao/Domain/Makefile:
-	* tao/IORInterceptor/Makefile:
-	* tao/ObjRefTemplate/Makefile:
-	* tao/Valuetype/Makefile:
-	* orbsvcs/orbsvcs/Makefile.IFRService:
-	* TAO_IDL/Makefile.BE:
-	* TAO_IDL/Makefile.EXE:
-	* TAO_IDL/Makefile.FE:
+        * tao/Domain/Makefile:
+        * tao/IORInterceptor/Makefile:
+        * tao/ObjRefTemplate/Makefile:
+        * tao/Valuetype/Makefile:
+        * orbsvcs/orbsvcs/Makefile.IFRService:
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.EXE:
+        * TAO_IDL/Makefile.FE:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* TAO_IDL/be/be_codegen.cpp (gen_skel_src_includes):
+        * TAO_IDL/be/be_codegen.cpp (gen_skel_src_includes):
 
-	  No need to generated include directive for "tao/PICurrent.h".
-	  "tao/PortableServer/PICurrent_Guard.h" is enough.  This may also
-	  help with compile times, at least slightly.
+          No need to generated include directive for "tao/PICurrent.h".
+          "tao/PortableServer/PICurrent_Guard.h" is enough.  This may also
+          help with compile times, at least slightly.
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (visit_operation):
 
-	  Updated generated skeleton code to use new PICurrent_Guard name
-	  (i.e. TAO_PICurrent -> TAO::PICurrent).
+          Updated generated skeleton code to use new PICurrent_Guard name
+          (i.e. TAO_PICurrent -> TAO::PICurrent).
 
 Tue Mar 16 00:07:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IFR_Client_Adapter.h:
+        * tao/IFR_Client_Adapter.h:
 
-	  Include "tao/orbconf.h" to pull in TAO_HAS_MINIMUM_CORBA macro
-	  definition.  Addresses a warning when using the GNU g++
-	  "-Wundef" flag regarding an undefined preprocessor symbol.
+          Include "tao/orbconf.h" to pull in TAO_HAS_MINIMUM_CORBA macro
+          definition.  Addresses a warning when using the GNU g++
+          "-Wundef" flag regarding an undefined preprocessor symbol.
 
 Tue Mar 16 08:04:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -460,48 +482,48 @@ Tue Mar 16 08:04:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar 14 20:49:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	  Added the new files into the project file.
+          Added the new files into the project file.
 
 Sun Mar 14 10:19:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ULongSeq.pidl:
-	* tao/ULongSeqA.cpp:
-	* tao/ULongSeqC.cpp:
-	* tao/ULongSeqC.h:
-	* tao/ULongSeqC.i:
-	* tao/ULongSeqS.cpp:
-	* tao/ULongSeqS.h:
-	* tao/ULongSeqS.i:
-	* tao/UShortSeq.pidl:
-	* tao/UShortSeqA.cpp:
-	* tao/UShortSeqC.cpp:
-	* tao/UShortSeqC.h:
-	* tao/UShortSeqC.i:
-	* tao/UShortSeqS.cpp:
-	* tao/UShortSeqS.h:
-	* tao/UShortSeqS.i:
+        * tao/ULongSeq.pidl:
+        * tao/ULongSeqA.cpp:
+        * tao/ULongSeqC.cpp:
+        * tao/ULongSeqC.h:
+        * tao/ULongSeqC.i:
+        * tao/ULongSeqS.cpp:
+        * tao/ULongSeqS.h:
+        * tao/ULongSeqS.i:
+        * tao/UShortSeq.pidl:
+        * tao/UShortSeqA.cpp:
+        * tao/UShortSeqC.cpp:
+        * tao/UShortSeqC.h:
+        * tao/UShortSeqC.i:
+        * tao/UShortSeqS.cpp:
+        * tao/UShortSeqS.h:
+        * tao/UShortSeqS.i:
 
-	  I am not going to say what these are since these are
-	  self-explanatory. These are required for ARMS and probably in
-	  DnC spec implementation too. We should be having more of this
-	  (for other basic types) once x.4.1 goes off. Till then to
-	  satisfy the shorter term goal, checking the generated code into
-	  the repository.
+          I am not going to say what these are since these are
+          self-explanatory. These are required for ARMS and probably in
+          DnC spec implementation too. We should be having more of this
+          (for other basic types) once x.4.1 goes off. Till then to
+          satisfy the shorter term goal, checking the generated code into
+          the repository.
 
- 	* tao/Makefile.bor:
-	* tao/Makefile.tao:
-	* tao/tao.mpc:
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+        * tao/tao.mpc:
 
-	  Added the new files for compilation
+          Added the new files for compilation
 
 Fri Mar 12 17:24:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
 
-	  Added dummy_label to the MPC  to get the stuff compiling for
-	  now.
+          Added dummy_label to the MPC  to get the stuff compiling for
+          now.
 
 Fri Mar 12 14:04:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
