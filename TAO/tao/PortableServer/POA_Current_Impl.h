@@ -70,8 +70,7 @@ namespace TAO
     class TAO_PortableServer_Export POA_Current_Impl
     {
     public:
-
-      friend class TAO_Root_POA;
+      friend class ::TAO_Root_POA;
 
       /// Return pointer to the invoking POA.  Raises the
       /// <CORBA::NoContext> exception.
