@@ -82,6 +82,7 @@ main (int argc, char *argv[])
             }
           catch (Simple_Server::Failure &fail)
             {
+              ACE_UNUSED_ARG (fail);
               // Do nothing, this is the normal behavior...
             }
         }
