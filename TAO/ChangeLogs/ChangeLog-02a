@@ -17,7 +17,10 @@ Tue Jan 18 17:26:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/deep_free.cpp:
 	  Fixed a memory leak in recursive unions. The fix also
 	  removes leaks in unions that contain anonymous 
-	  sequences. 
+	  sequences. Thanks to 
+	  Lothar Werzinger <werzinger.lothar@krones.de> for 
+	  reporting this leak and sending in an example IDL
+	  file.
 	* tao/DynStruct_i.cpp:
 	  Fixed some mismatched forms of ACE_CHECK that I added
 	  earlier today.
