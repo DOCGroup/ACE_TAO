@@ -383,6 +383,11 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Typed_SV_Message.cpp
       Typed_SV_Message_Queue.cpp
       Vector_T.cpp
+      TSS_T.cpp
+      Condition_T.cpp
+      Unbounded_Set_Ex.cpp
+      Reverse_Lock_T.cpp
+      Lock_Adapter_T.cpp
   }
 
   Inline_Files {
@@ -390,6 +395,19 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Handle_Gobbler.inl
     Refcounted_Auto_Ptr.inl
     ace_wchar.inl
+    OS.inl
+    OS_Dirent.inl
+    OS_Memory.inl
+    OS_String.inl
+    Synch.inl
+    Synch_T.inl
+    TSS_T.inl
+    Swap.inl
+    Condition_T.inl
+    Test_and_Set.inl
+    Unbounded_Set_Ex.inl
+    Reverse_Lock_T.inl
+    Lock_Adapter_T.inl
   }
 
   Header_Files {
@@ -414,6 +432,10 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Null_Condition.h
     Null_Mutex.h
     Null_Semaphore.h
+    OS.h
+    OS_Dirent.h
+    OS_Memory.h
+    OS_String.h
     OS_NS_macros.h
     Proactor_Impl.h
     Reactor_Impl.h
@@ -448,6 +470,17 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     pre.h
     streams.h
     svc_export.h
+    Synch.h
+    TSS_T.h
+    Swap.h
+    Pair.h
+    Condition_T.h
+    If_Then_Else.h
+    Object_Manager_Base.h
+    OS_Thread_Adapter.h
+    Unbounded_Set_Ex.h
+    Reverse_Lock_T.h
+    Lock_Adapter_T.h
   }
 
   Documentation_Files {
