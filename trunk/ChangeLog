@@ -1,3 +1,10 @@
+Wed Nov 24 14:40:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/NonBlocking_Conn_Test.cpp (test): Don't leave bogus
+	  ACE_INET_Addr entries in addresses[] if a name lookup fails.
+	  Doing so causes screwups later when each entry is assumed to
+	  have a legit address to form into a string.
+
 Wed Nov 24 13:32:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/msvc_static_order.lst:
