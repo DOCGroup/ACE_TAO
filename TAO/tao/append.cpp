@@ -398,7 +398,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
                           member_label = tc->member_label (i, env);
                           if (env.exception () == 0)
                             {
-			      CORBA::TypeCode_var type = member_label->type ();
+			                        CORBA::TypeCode_var type = member_label->type ();
                               // do the matching
                               switch (type->kind (env))
                                 {
@@ -452,10 +452,12 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
                                   }
                                   break;
                                 case CORBA::tk_wchar:
-                                  // @@ ASG TO-DO
-                                  if (*(CORBA::WChar *) member_label->value ()
-                                      == *(CORBA::WChar *) &discrim_val)
-                                    discrim_matched = 1;
+                                  {
+                                    CORBA::WChar wc;
+                                    *member_label >>= CORBA::Any::to_wchar (wc);
+                                    if (wc == *(CORBA::WChar *) &discrim_val)
+                                      discrim_matched = 1;
+                                  }
                                   break;
                                 case CORBA::tk_boolean:
                                   {
