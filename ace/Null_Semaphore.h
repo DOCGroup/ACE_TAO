@@ -47,11 +47,11 @@ class ACE_Time_Value;
 class ACE_Export ACE_Null_Semaphore
 {
 public:
-  ACE_Null_Semaphore (unsigned int count = 1, // By default make this unlocked.
-                       int type = 0,
-                       const ACE_TCHAR *name = 0,
+  ACE_Null_Semaphore (unsigned int = 1,
+                       int = 0,
+                       const ACE_TCHAR * = 0,
                        void * = 0,
-                       int max = 0x7fffffff) {}
+                       int = 0x7fffffff) {}
   ~ACE_Null_Semaphore (void) {}
   /// Return 0.
   int remove (void) {return 0;}

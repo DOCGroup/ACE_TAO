@@ -1,3 +1,17 @@
+Wed Aug  6 02:27:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Modified the test for whether or not GNU ld supports the -E
+          option needed to enable dynamic_casting of objects passed to
+          shared libraries.  Thanks to Chris Cleeland
+          <cleeland@ociweb.com> for suggesting we dynamically obtain which
+          ld is in use by passing the -print-prog-name to gcc, and
+          Krishnakumar B <kitty@cse.wustl.edu> for the patch.
+
+        * ace/Null_Mutex.h:
+        * ace/Null_Semaphore.h:
+          Removed unused variable name to silence warnings.
+
 Tue Aug  5 17:25:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Dev_Poll_Reactor.{cpp,h}:
