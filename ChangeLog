@@ -1,13 +1,18 @@
+Sun Nov  9 13:14:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Makefile.bor:
+	  Added OS_main
+
 Sun Nov  9 00:01:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/fuzz.pl:
 
-	  Fixed a typo. "streams" was spelt as "steams".  
+	  Fixed a typo. "streams" was spelt as "steams".
 
 Sun Nov  9 04:37:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
-	
+
           Removed STDERR from print statements for new checks.  They
           didn't work well and got the messages out of order.  Thanks to
           Bala for motivating this.
@@ -16,7 +21,7 @@ Sat Nov  8 22:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/TkReactor_Test.cpp:
 
-	  Fixed a compile error by removing cerr. 
+	  Fixed a compile error by removing cerr.
 
 Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
