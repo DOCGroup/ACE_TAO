@@ -2,6 +2,33 @@
 
 [Current difficulties]
 
+  [Bugs in cross compiler for SH series CPU]
+     
+    [Inline functions]
+        are not supported at least for debug build for DLL.  I have to
+        un-inline _all_ inline functions in ACE to get it to work.
+        Not sure if inlining works for Release version or other CPUs
+        (namely, MIPS series.)  It appears to work fine for x86
+        emulator.  
+
+    [Lost string literals]
+        The following format string in ACE_OS::ctime_r was
+        misteriously replaced with garbage by SH compiler:
+
+          ACE_OS::sprintf (buf, __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n"),.....
+                
+        The solution for this is to define the format string in global
+        namespace as:
+
+          static const ASYS_TCHAR *fmtstr = __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+
+        And call the sprintf as:
+
+          ACE_OS::sprintf (buf, fmtstr,....);
+
+        There doesn't seem to be any recognizable pattern on how this
+        will happen (otherwise, I'll call this a feature.)
+
 [Hints on writing portable code using ACE]
 
   [Testing Non-Window based ACE programs]
