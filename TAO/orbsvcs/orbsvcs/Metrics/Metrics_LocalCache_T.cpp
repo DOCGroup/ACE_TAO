@@ -10,7 +10,7 @@
 #endif
 
 //////////////////////////////////////
-// Class TAO_Metrics_LocalTimeprobe //
+// Class TAO_Metrics_LocalTimeprobe //g
 //////////////////////////////////////
 
 // Default constructor.
@@ -33,15 +33,15 @@ void
 TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_full_interval_times)
 {
    u_long data_set_length = 0;
-  
+
    // Modified by BRM.  This should also work for ACE_Based_Pointer since the conversion
    // operator should fire.
-   //  Metrics::TimeprobeParameter_Set * data_set = data_set_.addr (); 
-   Metrics::TimeprobeParameter_Set * data_set = data_set_; 
-   
+   //  Metrics::TimeprobeParameter_Set * data_set = data_set_.addr ();
+   Metrics::TimeprobeParameter_Set * data_set = data_set_;
+
    ACE_Time_Value full_start_time (ACE_Time_Value::zero);
    ACE_Time_Value full_stop_time (ACE_Time_Value::zero);
-   
+
    if (!data_set)
    {
 #if defined (METRICS_CACHE_ERROR_OUTPUT_ENABLED)
@@ -55,10 +55,10 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
    {
       data_set_length = data_set->length ();
    }
-   
+
    if (this->current_size_ == 0 && this->report_buffer_full_ == 0)
       return;
-   
+
    u_long valid_intervals = 0;
    int good_interval;
 
@@ -83,7 +83,7 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
       {
          // If we see the start event, then reset the cross thread indicator
          is_cross_thread_event = 0;
-         
+
          if (!full_interval_start_ndx_set)
          {
             full_interval_start_ndx_set = 1;
@@ -93,10 +93,10 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
          // Accumulates elapsed time in the measured interval, taking
          // into account paired suspend and resume markers.
          ACE_Time_Value elapsed_time (ACE_Time_Value::zero);
-         
+
          // Stores current start time: either from a start or resume event.
          ACE_Time_Value start_time (this->timeprobes ()[start_evt_ndx].time_);
-         
+
          // Check if this start time is less than the full interval for worse
          // case time.
          if (full_start_time == ACE_Time_Value::zero ||
@@ -111,9 +111,9 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
             full_stop_time.set (this->timeprobes ()[start_evt_ndx].time_.sec (),
                this->timeprobes ()[start_evt_ndx].time_.usec ());
          }
-         
+
          good_interval = 1;
-         
+
          // Increment past the start event and start looking for the stop event
          u_long stop_or_suspend_evt_ndx = (start_evt_ndx + 1) % this ->max_size_; // Modulus increment: loops around at the end.
          do
@@ -123,7 +123,7 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
             {
                break;
             }
-           
+
             // This needs to be rethought...  Events that occur across threads are a real thing.
             // So for now, the behavior is to just indicate the events that are cross thread
 //            if (this->timeprobes ()[start_evt_ndx].thread_ != this->timeprobes ()[stop_or_suspend_evt_ndx].thread_)
@@ -131,7 +131,7 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
 //               stop_or_suspend_evt_ndx = (stop_or_suspend_evt_ndx + 1) % this ->max_size_; // Modulus increment: loops around at the end.
 //               continue;
 //            }
-   
+
             // Check for the stop event
             if (is_event (this->timeprobes ()[stop_or_suspend_evt_ndx],
               ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::WORK_STOP))
@@ -145,11 +145,11 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
 
                  is_cross_thread_event = 1;
               }
-              
+
               // done this way for efficiency: no temporaries constructed
               elapsed_time += this->timeprobes ()[stop_or_suspend_evt_ndx].time_;
               elapsed_time -= start_time;
-              
+
                // This doesn't make sense.  Full start time better be the result of
                // a start event.
 //               if (full_start_time == ACE_Time_Value::zero ||
@@ -158,7 +158,7 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
 //                  full_start_time.set (this->timeprobes()[j].time_.sec (),
 //                     this->timeprobes()[j].time_.usec());
 //               }
-  
+
               if (full_stop_time == ACE_Time_Value::zero ||
                   this->timeprobes ()[stop_or_suspend_evt_ndx].time_ > full_stop_time)
               {
@@ -223,11 +223,11 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
                     // start and the suspend event.
                     elapsed_time +=
                         this->timeprobes ()[stop_or_suspend_evt_ndx].time_ - start_time;
-                    
+
                     // Update the start time to be that of the
                     // resume event.
                      start_time = this->timeprobes ()[resume_evt_ndx].time_;
-                    
+
                      // This code doesn't make sense here.  It always has to hit the stop to
                      // adjust the stop time.  Anything else is a partial and invalid.
 //                     if (full_start_time == ACE_Time_Value::zero ||
@@ -243,9 +243,9 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
 //                        full_stop_time.
 //                           set (this->timeprobes()[resume_evt_ndx].time_.sec (),
 //                               this->timeprobes()[resume_evt_ndx].time_.usec ());
-//	                    }
-                    
-                    
+//                          }
+
+
                     // Keep looking for the end of the interval
                     // after the resume event.
                      stop_or_suspend_evt_ndx = resume_evt_ndx;
@@ -263,9 +263,9 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
                     good_interval = 0;
                     break;
                  }
-                 
+
                   resume_evt_ndx = (resume_evt_ndx + 1) % this ->max_size_; // Modulus increment: loops around at the end.
-                  
+
                } while (resume_evt_ndx != this->current_size_);
             }
 
@@ -280,17 +280,17 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::report_intervals (int report_fu
               // just ignore the previous start time stamp.
               break;
            }
-           
+
             stop_or_suspend_evt_ndx = (stop_or_suspend_evt_ndx + 1) % this ->max_size_; // Modulus increment: loops around at the end.
-            
+
             } while (stop_or_suspend_evt_ndx != this->current_size_ && good_interval);
-            
-            // If we found the stop of 
+
+            // If we found the stop of
             start_evt_ndx = stop_or_suspend_evt_ndx;
         }
-        
+
         start_evt_ndx = (start_evt_ndx + 1) % this ->max_size_; // Modulus increment: loops around at the end.
-        
+
     } while (start_evt_ndx < this->current_size_);
 
 
@@ -339,7 +339,7 @@ TAO_Metrics_LocalTimeprobe<ACE_LOCK, ALLOCATOR>::flush_TAO_Metrics_LocalTimeprob
 
 
 template <class ACE_LOCK, class ALLOCATOR>
-void 
+void
 TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR>::reset_statistics ()
 {
   // Call the base class reset method first.
@@ -360,8 +360,8 @@ TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR>::reset_statistics ()
           data_base = (*base_iter).int_id_;
       // Modified by BRM.  This should also work for ACE_Based_Pointer since the conversion
       // operator should fire.
-//      if (data_base.addr ()) 
-      if (data_base) 
+//      if (data_base.addr ())
+      if (data_base)
       {
          data_base->probe.reset ();
       }
@@ -381,13 +381,13 @@ TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR>::reset_statistics ()
           // operator should fire.
 //          data = (*data_iter).int_id_.addr ();
           data = (*data_iter).int_id_;
-      if (data) 
-	{
+      if (data)
+        {
           data->probe.reset ();
           data->missed_deadlines = 0;
           data->made_deadlines = 0;
           data->cancellations = 0;
-	}
+        }
     }
 }
 
@@ -415,8 +415,8 @@ flush_TAO_Metrics_LocalCache ()
 
   // flush the monitor data map hash table
   // cacheFlush (DATA_CACHE,
-  //	         &monitor_maps_ [this->consumer_index_],
-  //	         sizeof (METRICS_MONITOR_MAP));
+  //             &monitor_maps_ [this->consumer_index_],
+  //             sizeof (METRICS_MONITOR_MAP));
 
   // flush the nodes in the monitor data map hash table
   // and the data stored in the nodes.
@@ -459,7 +459,7 @@ flush_TAO_Metrics_LocalCache ()
   //   DATA_CACHE,
   //   this->enqueue_probes_ [this->consumer_index_],
   //   this->
-  //     probe_set_size_ 
+  //     probe_set_size_
   //   * sizeof (ACE_Metrics_Timeprobe<ACE_LOCK,ALLOCATOR> *));
   // cacheFlush (
   //   DATA_CACHE,
@@ -487,4 +487,3 @@ flush_TAO_Metrics_LocalCache ()
 #endif /* __ACE_INLINE__ */
 
 #endif /* METRICS_LOCAL_CACHE_T_CPP */
-

@@ -50,7 +50,7 @@ endif
 #----------------------------------------------------------------------------
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-LSRC   = $(addsuffix .cpp, $(FILES))
+LSRC   = $(addsuffix .cpp, $(FILES)) $(IDL_SRC)
 ifeq (,$(TAO_ORBSVCS))
 BUILD += ORBSVCS_COMPONENTS
 else
@@ -67,7 +67,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao
+CPPFLAGS     += -I../../orbsvcs -I../.. -I../../tao -I../../.. 
 ifeq ($(shared_libs),1)
 ifneq ($(SHLIB),)
 CPPFLAGS     += -DTAO_METRICS_BUILD_DLL
@@ -80,15 +80,10 @@ endif
 endif
 
 
-LDFLAGS      += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-TAO_IDLFLAGS += -I$(TAO_ROOT) \
-  -Ge 1 \
-  -Wb,export_macro=TAO_Metrics_Export \
-  -Wb,export_include=Metrics/metrics_export.h \
-  -Wb,pre_include=ace/pre.h \
-  -Wb,post_include=ace/post.h
+LDFLAGS      += -L../../orbsvcs/orbsvcs -L../../tao -L../../../ace
+TAO_IDLFLAGS += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming/naming_export.h -I../.. -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc
 
-ACE_SHLIBS = -lTAO_PortableServer -lTAO $(ACELIB)
+ACE_SHLIBS = -lTAO_RtecScheduler -lTAO_TimeBase -lTAO_PortableServer -lTAO $(ACELIB)
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -107,9 +102,27 @@ ADDITIONAL_IDL_TARGETS =
 
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
 
-all: idl_stubs
+all: TimeBaseC.h RtecBaseC.h RtecSchedulerC.h CosNamingC.h RtecEventCommC.h RtecDefaultEventDataC.h
+	$(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+RtecSchedulerC.h: RtecScheduler.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $(TAO_IDLFLAGS) RtecScheduler.idl
+
+TimeBaseC.h: TimeBase.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $(TAO_IDLFLAGS) TimeBase.idl
+
+RtecBaseC.h: RtecBase.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $(TAO_IDLFLAGS) RtecBase.idl
+
+RtecEventCommC.h: RtecEventComm.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $(TAO_IDLFLAGS) RtecEventComm.idl
+
+RtecDefaultEventDataC.h: RtecDefaultEventData.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $(TAO_IDLFLAGS) RtecDefaultEventData.idl
+
+CosNamingC.h: CosNaming.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl $(TAO_IDLFLAGS) CosNaming.idl
+
 
 realclean: clean compclean
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))

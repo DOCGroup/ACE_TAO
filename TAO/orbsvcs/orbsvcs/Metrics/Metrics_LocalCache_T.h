@@ -30,7 +30,7 @@
 //DCL:Commented out to remove Linux compile error
 //#include "orbsvcs/Metrics/Metrics_LocalCache.h"
 
-template <class ACE_LOCK, class ALLOCATOR>
+template <typename ACE_LOCK, typename ALLOCATOR>
 class TAO_Metrics_LocalTimeprobe
   : public ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>
 {
@@ -163,7 +163,7 @@ public:
   // Type of entry in monitor map.
 
   typedef ACE_Hash_Map_Iterator_Ex<RtecScheduler::handle_t,
-	                           ACE_METRICS_CACHE_DATA_TYPE,
+                                   ACE_METRICS_CACHE_DATA_TYPE,
                                    ACE_Hash<RtecScheduler::handle_t>,
                                    ACE_Equal_To<RtecScheduler::handle_t>,
                                    ACE_Null_Mutex>
@@ -326,4 +326,3 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* METRICS_LOCAL_CACHE_T_H */
-
