@@ -321,11 +321,11 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
 
   if (this->type_count_ <= 0)
     {
+      this->type_count_ = 1;
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of event types "
                          "suppliers out of range, reset to default (1)\n",
                          argv[0]), -1);
-      this->type_count_ = 1;
     }
 
   return 0;
