@@ -169,6 +169,14 @@ ACE_OS::strcspn (const wchar_t *s, const wchar_t *reject)
 ACE_INLINE char *
 ACE_OS::strerror (int errnum)
 {
+#if defined (WIN32)
+  if (error >= WSAEINTR && error <= WSASYSCALLFAILURE) 
+    {
+      const char *errortext = ACE:sock_error (error);
+      if (ACE_OS::strstr (errortext, "unknown") != errortext)
+        return errortext;
+    }
+#endif /* WIN32 */
 #if defined (ACE_LACKS_STRERROR)
   return ACE_OS::strerror_emulation (errnum);
 #else /* ACE_LACKS_STRERROR */

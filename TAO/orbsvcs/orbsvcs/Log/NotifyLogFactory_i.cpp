@@ -185,11 +185,12 @@ TAO_NotifyLogFactory_i::create_with_id (
   ACE_CHECK_RETURN (notify_log._retn ());
 
   // Add to the Hash table..
-  if (hash_map_.bind (id, notify_log.in ()) == -1)
+  if (hash_map_.bind (id, 
+                      DsNotifyLogAdmin::NotifyLog::_duplicate (notify_log.in ())) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       DsNotifyLogAdmin::NotifyLog::_nil ());
 
-  notifier_->object_creation (notify_log.in (),
+  notifier_->object_creation (DsNotifyLogAdmin::NotifyLog::_duplicate (notify_log.in ()),
                               id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
