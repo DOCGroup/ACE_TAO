@@ -282,8 +282,8 @@ CORBA::Boolean
 Audio_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                           CORBA::Environment &env) 
 {
-  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Server_StreamEndPoint::handle_connection_requested:() %s \n",
-  //              the_spec[0]));
+   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Server_StreamEndPoint::handle_connection_requested:() %s \n",
+               the_spec[0]));
 
   char *server_string;
 
