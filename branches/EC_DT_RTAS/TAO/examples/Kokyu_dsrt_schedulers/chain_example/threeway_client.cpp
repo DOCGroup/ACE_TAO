@@ -244,7 +244,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): main thread prio is %d\n", prio));
 
-  CPULoad::calibrate(10);
+  CPULoad::calibrate(5);
 
   //print out the start time of the program.
   ACE_Time_Value start_time=ACE_OS::gettimeofday();
