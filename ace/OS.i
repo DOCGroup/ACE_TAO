@@ -502,6 +502,9 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
 {
   // ACE_TRACE ("ACE_OS::fcntl");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (cmd);
+  ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::fcntl (handle, cmd, value), int, -1);
@@ -532,6 +535,9 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 {
   // ACE_TRACE ("ACE_OS::getopt");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+  ACE_UNUSED_ARG (optstring);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_POSIX_PROTO)
   ACE_OSCALL_RETURN (::getopt (argc, (const char* const *) argv, optstring), int, -1);
@@ -564,6 +570,8 @@ ACE_OS::mkfifo (const char *file, mode_t mode)
 {
   // ACE_TRACE ("ACE_OS::mkfifo");
 #if defined (VXWORKS) || defined (CHORUS)
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
@@ -575,6 +583,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 {
   // ACE_TRACE ("ACE_OS::pipe");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (fds);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::pipe (fds), int, -1);
@@ -660,6 +669,7 @@ ACE_OS::umask (mode_t cmask)
 {
   // ACE_TRACE ("ACE_OS::umask");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (cmask);
   ACE_NOTSUP_RETURN (-1);
 #else
   return ::umask (cmask); // This call shouldn't fail...
@@ -906,6 +916,8 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
 {
   // ACE_TRACE ("ACE_OS::tempnam");
 #if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM)
+  ACE_UNUSED_ARG (dir);
+  ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #else
 #if defined (WIN32)
@@ -922,6 +934,8 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
 {
   // ACE_TRACE ("ACE_OS::cuserid");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
   // Hackish because of missing buffer size!
@@ -1545,6 +1559,13 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 #endif /* ACE_HAS_THREADS */		     
 }
 
+#if ! defined (ACE_WIN32) && ! defined (VXWORKS)
+//
+// NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
+//       here because the ACE_OS::sema_* functions below need them.
+//       However, ACE_WIN32 and VXWORKS define the ACE_OS::cond_* functions
+//       using the ACE_OS::sema_* functions.  So, they appear after
+//       the ACE_OS::sema_* functions.
 ACE_INLINE int 
 ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
@@ -1554,14 +1575,6 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_destroy (cv), ace_result_), int, -1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), ace_result_), int, -1);
-#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-#if defined (ACE_HAS_WTHREADS)
-  ACE_OS::event_destroy (&cv->waiters_done_);
-#elif defined (VXWORKS)
-  ACE_OS::sema_destroy (&cv->waiters_done_);
-#endif /* VXWORKS */
-  ACE_OS::thread_mutex_destroy (&cv->waiters_lock_);
-  return ACE_OS::sema_destroy (&cv->sema_);
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (cv);
@@ -1613,28 +1626,12 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_init (cv, type, arg), 
 				       ace_result_), 
 		     int, -1);
-#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-  cv->waiters_ = 0;
-  cv->was_broadcast_ = 0;
-
-  int result = 0;
-  if (ACE_OS::sema_init (&cv->sema_, 0, type, name, arg) == -1)
-    result = -1;
-  else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
-    result = -1;
-#if defined (VXWORKS)
-  else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
-#else
-  else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
-#endif /* VXWORKS */
-    result = -1;
-  return result;
 #endif /* ACE_HAS_STHREADS */
 #else
-  cv = cv;
-  type = type;
-  name = name;
-  arg = arg;
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1648,18 +1645,9 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_signal (cv), ace_result_), int, -1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_signal (cv), ace_result_), int, -1);
-#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-  // If there aren't any waiters, then this is a no-op.  Note that
-  // this function *must* be called with the <external_mutex> held
-  // since other wise there is a race condition that can lead to the
-  // lost wakeup bug...
-  if (cv->waiters_ > 0)
-    return ACE_OS::sema_post (&cv->sema_);
-  else
-    return 0; // No-op
 #endif /* ACE_HAS_STHREADS */
 #else
-  cv = cv;
+  ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1677,38 +1665,9 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_broadcast (cv), 
 				       ace_result_), 
 		     int, -1);
-#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-  // The <external_mutex> must be locked before this call is made.
-
-  if (cv->waiters_ == 0)
-    return 0; // No-op
-  else // We are broadcasting, even if there is just one waiter...
-    {
-      int result = 0;
-      // Record the fact that we are broadcasting.  This helps the
-      // cond_wait() method know how to optimize itself.
-      cv->was_broadcast_ = 1;
-
-      // Wake up all the waiters.
-
-      if (ACE_OS::sema_post (&cv->sema_, cv->waiters_) == -1)
-	result = -1;
-
-      // Wait for all the awakened threads to acquire their part of the
-      // counting semaphore. 
-#if defined (VXWORKS)
-      else if (ACE_OS::sema_wait (&cv->waiters_done_) == -1)
-#else
-      else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
-#endif /* VXWORKS */
-	result = -1;
-
-      cv->was_broadcast_ = 0;
-      return result;
-    }
 #endif /* ACE_HAS_STHREADS */
 #else
-  cv = cv;
+  ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1725,85 +1684,6 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), ace_result_), 
 		     int, -1);
-#elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
-  cv->waiters_++;
-
-  int result = 0;
-  int error = 0;
-
-#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
-  if (external_mutex->type_ == USYNC_PROCESS)
-    // This call will automatically release the mutex and wait on the semaphore.
-    ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
-							 cv->sema_, INFINITE, FALSE), 
-				  result),
-		int, -1, result);
-  else
-#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
-    {
-      // We keep the lock held just long enough to increment the count of
-      // waiters by one.  Note that we can't keep it held across the call
-      // to ACE_OS::sema_wait() since that will deadlock other calls to
-      // ACE_OS::cond_signal().
-      if (ACE_OS::mutex_unlock (external_mutex) != 0)
-	return -1;
-
-      // Wait to be awakened by a ACE_OS::cond_signal() or
-      // ACE_OS::cond_broadcast().
-      result = ACE_OS::sema_wait (&cv->sema_);
-    }
-
-  // Reacquire lock to avoid race conditions.
-  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_--;
-
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
-
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-
-#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
-  if (external_mutex->type_ == USYNC_PROCESS)
-    {
-      if (last_waiter)
-
-	// This call atomically signals the waiters_done_ event and waits
-	// until it can acquire the mutex.  This is important to prevent
-	// unfairness.
-	ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
-							     external_mutex->proc_mutex_,
-							     INFINITE, FALSE), 
-				      result),
-		    int, -1, result);
-      else
-	// We must always regain the external mutex, even when errors
-	// occur because that's the guarantee that we give to our
-	// callers.
-	ACE_OS::mutex_lock (external_mutex);
-    }
-  else
-#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
-  if (result != -1)
-    {
-      // If we're the last waiter thread during this particular
-      // broadcast then let all the other threads proceed.
-      if (last_waiter)
-#if defined (VXWORKS)
-	ACE_OS::sema_post (&cv->waiters_done_);
-#else
-	ACE_OS::event_signal (&cv->waiters_done_);
-#endif /* VXWORKS */
-    }
-
-  // We must always regain the external mutex, even when errors
-  // occur because that's the guarantee that we give to our
-  // callers.
-  ACE_OS::mutex_lock (external_mutex);
-
-  // Reset errno in case mutex_lock() also fails...
-  errno = error;
-  return result;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (cv);
@@ -1819,114 +1699,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_WTHREADS)
-  // Handle the easy case first.
-  if (timeout == 0)
-    return ACE_OS::cond_wait (cv, external_mutex);
-
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
-  cv->waiters_++;
-
-  int result = 0;
-  int error = 0;
-  int msec_timeout;
-
-  if (timeout->sec () == 0 && timeout->usec () == 0)
-    msec_timeout = 0; // Do a "poll."
-  else
-    {
-      // Note that we must convert between absolute time (which is
-      // passed as a parameter) and relative time (which is what
-      // WaitForSingleObjects() expects).
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-
-      // Watchout for situations where a context switch has caused the
-      // current time to be > the timeout.
-      if (relative_time < ACE_Time_Value::zero)
-	msec_timeout = 0;
-      else
-	msec_timeout = relative_time.msec ();
-    }
-  
-#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
-  if (external_mutex->type_ == USYNC_PROCESS)
-    // This call will automatically release the mutex and wait on the semaphore.
-    result = ::SignalObjectAndWait (external_mutex->proc_mutex_, 
-				    cv->sema_, msec_timeout, FALSE);
-  else
-#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
-    {
-      // We keep the lock held just long enough to increment the count of
-      // waiters by one.  Note that we can't keep it held across the call
-      // to WaitForSingleObject since that will deadlock other calls to
-      // ACE_OS::cond_signal().
-      if (ACE_OS::mutex_unlock (external_mutex) != 0)
-	return -1;
-
-      // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
-      result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-    }
-
-  // Reacquire lock to avoid race conditions.
-  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_--;
-
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
-
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-
-  if (result != WAIT_OBJECT_0)
-    {
-      switch (result)
-	{
-	case WAIT_ABANDONED:
-	  error = WAIT_ABANDONED;
-	  break;
-	case WAIT_TIMEOUT:
-	  error = ETIME;
-	  break;
-	default:
-	  error = ::GetLastError ();
-	  break;
-	}
-      result = -1;  
-    }
-#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
-  else if (external_mutex->type_ == USYNC_PROCESS)
-    {
-      if (last_waiter)
-	// This call atomically signals the waiters_done_ event and waits
-	// until it can acquire the mutex.  This is important to prevent
-	// unfairness.
-	ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
-							     external_mutex->proc_mutex_,
-							     INFINITE, FALSE), 
-				      result),
-		    int, -1, result);
-      else
-	// We must always regain the external mutex, even when errors
-	// occur because that's the guarantee that we give to our
-	// callers.
-	ACE_OS::mutex_lock (external_mutex);
-    }
-#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
-  else if (last_waiter)
-    // Release the signaler/broadcaster if we're the last waiter.
-    ACE_OS::event_signal (&cv->waiters_done_);
-
-  // We must always regain the external mutex, even when errors occur
-  // because that's the guarantee that we give to our callers.
-  ACE_OS::mutex_lock (external_mutex);
-
-  errno = error;
-  return result;
-#elif defined (VXWORKS)
-  // POSIX semaphores don't have a timed wait.  Should implement conds
-  // with VxWorks semaphores instead, they do have a timed wait.  But
-  // all of the other cond operations would have to be modified.
-  ACE_NOTSUP_RETURN (-1);
-#else /* PTHREADS or STHREADS or DCETHREADS */
   int result;
   timestruc_t ts = *timeout; // Calls ACE_Time_Value::operator timestruc_t().
 
@@ -1949,7 +1721,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #endif /* ACE_HAS_STHREADS */
   timeout->set (ts); // Update the time value before returning.
   return result;
-#endif /* ACE_HAS_WTHREADS */
 #else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (external_mutex);
@@ -1957,158 +1728,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
-
-#if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
-ACE_INLINE int 
-ACE_OS::cond_timedwait (ACE_cond_t *cv, 
-			ACE_thread_mutex_t *external_mutex, 
-			ACE_Time_Value *timeout)
-{
-  // ACE_TRACE ("ACE_OS::cond_timedwait");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_WTHREADS)
-  // Handle the easy case first.
-  if (timeout == 0)
-    return ACE_OS::cond_wait (cv, external_mutex);
-
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
-  cv->waiters_++;
-
-  int result = 0;
-  int error = 0;
-  int msec_timeout;
-
-  if (timeout->sec () == 0 && timeout->usec () == 0)
-    msec_timeout = 0; // Do a "poll."
-  else
-    {
-      // Note that we must convert between absolute time (which is
-      // passed as a parameter) and relative time (which is what
-      // WaitForSingleObjects() expects).
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-
-      // Watchout for situations where a context switch has caused the
-      // current time to be > the timeout.
-      if (relative_time < ACE_Time_Value::zero)
-	msec_timeout = 0;
-      else
-	msec_timeout = relative_time.msec ();
-    }
-  
-  // We keep the lock held just long enough to increment the count of
-  // waiters by one.  Note that we can't keep it held across the call
-  // to WaitForSingleObject since that will deadlock other calls to
-  // ACE_OS::cond_signal().
-  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
-    return -1;
-
-  // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
-  result = ::WaitForSingleObject (cv->sema_, msec_timeout);
-
-  // Reacquire lock to avoid race conditions.
-  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_--;
-
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-
-  if (result != WAIT_OBJECT_0)
-    {
-      switch (result)
-	{
-	case WAIT_ABANDONED:
-	  error = WAIT_ABANDONED;
-	  break;
-	case WAIT_TIMEOUT:
-	  error = ETIME;
-	  break;
-	default:
-	  error = ::GetLastError ();
-	  break;
-	}
-      result = -1;
-    }
-  else if (last_waiter)
-    // Release the signaler/broadcaster if we're the last waiter.
-    ACE_OS::event_signal (&cv->waiters_done_);
-
-  // We must always regain the external mutex, even when errors occur
-  // because that's the guarantee that we give to our callers.
-  ACE_OS::thread_mutex_lock (external_mutex);
-  errno = error;
-  return result;
-#endif /* ACE_HAS_WTHREADS */
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */		     
-}
-
-ACE_INLINE int 
-ACE_OS::cond_wait (ACE_cond_t *cv, 
-		   ACE_thread_mutex_t *external_mutex)
-{
-  // ACE_TRACE ("ACE_OS::cond_wait");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_WTHREADS)
-  // It's ok to increment this because the <external_mutex> must be
-  // locked by the caller.
-  cv->waiters_++;
-
-  int result = 0;
-  int error = 0;
-
-  // We keep the lock held just long enough to increment the count of
-  // waiters by one.  Note that we can't keep it held across the call
-  // to ACE_OS::sema_wait() since that will deadlock other calls to
-  // ACE_OS::cond_signal().
-  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
-    return -1;
-
-  // Wait to be awakened by a ACE_OS::cond_signal() or
-  // ACE_OS::cond_broadcast().
-  result = ::WaitForSingleObject (cv->sema_, INFINITE);
-
-  // Reacquire lock to avoid race conditions.
-  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_--;
-
-  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
-
-  if (result != WAIT_OBJECT_0)
-    {
-      switch (result)
-	{
-	case WAIT_ABANDONED:
-	  error = WAIT_ABANDONED;
-	  break;
-	case WAIT_TIMEOUT:
-	  error = ETIME;
-	  break;
-	default:
-	  error = ::GetLastError ();
-	  break;
-	}
-    }
-  else if (last_waiter)
-    // Release the signaler/broadcaster if we're the last waiter.
-    ACE_OS::event_signal (&cv->waiters_done_);
-
-  // We must always regain the external mutex, even when errors
-  // occur because that's the guarantee that we give to our
-  // callers.
-  ACE_OS::thread_mutex_lock (external_mutex);
-
-  // Reset errno in case mutex_lock() also fails...
-  errno = error;
-  return result;
-#endif /* ACE_HAS_WTHREADS */
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */		     
-}
-#endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
+#endif /* ! ACE_WIN32 && ! VXWORKS */
 
 ACE_INLINE int 
 ACE_OS::sema_destroy (ACE_sema_t *s)
@@ -2379,6 +1999,488 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
+
+#if defined (ACE_WIN32) || defined (VXWORKS)
+//
+// NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are defined
+//       here because they need the ACE_OS::sema_* functions above.
+//       However, some Unix platforms define the ACE_OS::sema_* functions
+//       using the ACE_OS::cond_* functions.  So, they appear before
+//       the ACE_OS::sema_* functions above.
+ACE_INLINE int 
+ACE_OS::cond_destroy (ACE_cond_t *cv)
+{
+  // ACE_TRACE ("ACE_OS::cond_destroy");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_WTHREADS)
+  ACE_OS::event_destroy (&cv->waiters_done_);
+#elif defined (VXWORKS)
+  ACE_OS::sema_destroy (&cv->waiters_done_);
+#endif /* VXWORKS */
+  ACE_OS::thread_mutex_destroy (&cv->waiters_lock_);
+  return ACE_OS::sema_destroy (&cv->sema_);
+#else
+  ACE_UNUSED_ARG (cv);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
+{
+// ACE_TRACE ("ACE_OS::cond_init");
+#if defined (ACE_HAS_THREADS)
+  cv->waiters_ = 0;
+  cv->was_broadcast_ = 0;
+
+  int result = 0;
+  if (ACE_OS::sema_init (&cv->sema_, 0, type, name, arg) == -1)
+    result = -1;
+  else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
+    result = -1;
+#if defined (VXWORKS)
+  else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
+#else
+  else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
+#endif /* VXWORKS */
+    result = -1;
+  return result;
+#else
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::cond_signal (ACE_cond_t *cv)
+{
+// ACE_TRACE ("ACE_OS::cond_signal");
+#if defined (ACE_HAS_THREADS)
+  // If there aren't any waiters, then this is a no-op.  Note that
+  // this function *must* be called with the <external_mutex> held
+  // since other wise there is a race condition that can lead to the
+  // lost wakeup bug...
+  if (cv->waiters_ > 0)
+    return ACE_OS::sema_post (&cv->sema_);
+  else
+    return 0; // No-op
+#else
+  ACE_UNUSED_ARG (cv);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::cond_broadcast (ACE_cond_t *cv)
+{
+// ACE_TRACE ("ACE_OS::cond_broadcast");
+#if defined (ACE_HAS_THREADS)
+  // The <external_mutex> must be locked before this call is made.
+
+  if (cv->waiters_ == 0)
+    return 0; // No-op
+  else // We are broadcasting, even if there is just one waiter...
+    {
+      int result = 0;
+      // Record the fact that we are broadcasting.  This helps the
+      // cond_wait() method know how to optimize itself.
+      cv->was_broadcast_ = 1;
+
+      // Wake up all the waiters.
+
+      if (ACE_OS::sema_post (&cv->sema_, cv->waiters_) == -1)
+	result = -1;
+
+      // Wait for all the awakened threads to acquire their part of the
+      // counting semaphore. 
+#if defined (VXWORKS)
+      else if (ACE_OS::sema_wait (&cv->waiters_done_) == -1)
+#else
+      else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
+#endif /* VXWORKS */
+	result = -1;
+
+      cv->was_broadcast_ = 0;
+      return result;
+    }
+#else
+  ACE_UNUSED_ARG (cv);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::cond_wait (ACE_cond_t *cv, 
+		   ACE_mutex_t *external_mutex)
+{
+  // ACE_TRACE ("ACE_OS::cond_wait");
+#if defined (ACE_HAS_THREADS)
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
+  cv->waiters_++;
+
+  int result = 0;
+  int error = 0;
+
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  if (external_mutex->type_ == USYNC_PROCESS)
+    // This call will automatically release the mutex and wait on the semaphore.
+    ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
+							 cv->sema_, INFINITE, FALSE), 
+				  result),
+		int, -1, result);
+  else
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+    {
+      // We keep the lock held just long enough to increment the count of
+      // waiters by one.  Note that we can't keep it held across the call
+      // to ACE_OS::sema_wait() since that will deadlock other calls to
+      // ACE_OS::cond_signal().
+      if (ACE_OS::mutex_unlock (external_mutex) != 0)
+	return -1;
+
+      // Wait to be awakened by a ACE_OS::cond_signal() or
+      // ACE_OS::cond_broadcast().
+      result = ACE_OS::sema_wait (&cv->sema_);
+    }
+
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  if (external_mutex->type_ == USYNC_PROCESS)
+    {
+      if (last_waiter)
+
+	// This call atomically signals the waiters_done_ event and waits
+	// until it can acquire the mutex.  This is important to prevent
+	// unfairness.
+	ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
+							     external_mutex->proc_mutex_,
+							     INFINITE, FALSE), 
+				      result),
+		    int, -1, result);
+      else
+	// We must always regain the external mutex, even when errors
+	// occur because that's the guarantee that we give to our
+	// callers.
+	ACE_OS::mutex_lock (external_mutex);
+    }
+  else
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+  if (result != -1)
+    {
+      // If we're the last waiter thread during this particular
+      // broadcast then let all the other threads proceed.
+      if (last_waiter)
+#if defined (VXWORKS)
+	ACE_OS::sema_post (&cv->waiters_done_);
+#else
+	ACE_OS::event_signal (&cv->waiters_done_);
+#endif /* VXWORKS */
+    }
+
+  // We must always regain the external mutex, even when errors
+  // occur because that's the guarantee that we give to our
+  // callers.
+  ACE_OS::mutex_lock (external_mutex);
+
+  // Reset errno in case mutex_lock() also fails...
+  errno = error;
+  return result;
+#else
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (external_mutex);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::cond_timedwait (ACE_cond_t *cv, 
+			ACE_mutex_t *external_mutex, 
+			ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE_OS::cond_timedwait");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_WTHREADS)
+  // Handle the easy case first.
+  if (timeout == 0)
+    return ACE_OS::cond_wait (cv, external_mutex);
+
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
+  cv->waiters_++;
+
+  int result = 0;
+  int error = 0;
+  int msec_timeout;
+
+  if (timeout->sec () == 0 && timeout->usec () == 0)
+    msec_timeout = 0; // Do a "poll."
+  else
+    {
+      // Note that we must convert between absolute time (which is
+      // passed as a parameter) and relative time (which is what
+      // WaitForSingleObjects() expects).
+      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+
+      // Watchout for situations where a context switch has caused the
+      // current time to be > the timeout.
+      if (relative_time < ACE_Time_Value::zero)
+	msec_timeout = 0;
+      else
+	msec_timeout = relative_time.msec ();
+    }
+  
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  if (external_mutex->type_ == USYNC_PROCESS)
+    // This call will automatically release the mutex and wait on the semaphore.
+    result = ::SignalObjectAndWait (external_mutex->proc_mutex_, 
+				    cv->sema_, msec_timeout, FALSE);
+  else
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+    {
+      // We keep the lock held just long enough to increment the count of
+      // waiters by one.  Note that we can't keep it held across the call
+      // to WaitForSingleObject since that will deadlock other calls to
+      // ACE_OS::cond_signal().
+      if (ACE_OS::mutex_unlock (external_mutex) != 0)
+	return -1;
+
+      // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
+      result = ::WaitForSingleObject (cv->sema_, msec_timeout);
+    }
+
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
+  if (result != WAIT_OBJECT_0)
+    {
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
+      result = -1;  
+    }
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  else if (external_mutex->type_ == USYNC_PROCESS)
+    {
+      if (last_waiter)
+	// This call atomically signals the waiters_done_ event and waits
+	// until it can acquire the mutex.  This is important to prevent
+	// unfairness.
+	ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
+							     external_mutex->proc_mutex_,
+							     INFINITE, FALSE), 
+				      result),
+		    int, -1, result);
+      else
+	// We must always regain the external mutex, even when errors
+	// occur because that's the guarantee that we give to our
+	// callers.
+	ACE_OS::mutex_lock (external_mutex);
+    }
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+  else if (last_waiter)
+    // Release the signaler/broadcaster if we're the last waiter.
+    ACE_OS::event_signal (&cv->waiters_done_);
+
+  // We must always regain the external mutex, even when errors occur
+  // because that's the guarantee that we give to our callers.
+  ACE_OS::mutex_lock (external_mutex);
+
+  errno = error;
+  return result;
+#elif defined (VXWORKS)
+  // POSIX semaphores don't have a timed wait.  Should implement conds
+  // with VxWorks semaphores instead, they do have a timed wait.  But
+  // all of the other cond operations would have to be modified.
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (external_mutex);
+  ACE_UNUSED_ARG (timeout);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WTHREADS */
+#else
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (external_mutex);
+  ACE_UNUSED_ARG (timeout);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+#if defined (ACE_HAS_WTHREADS)
+ACE_INLINE int 
+ACE_OS::cond_timedwait (ACE_cond_t *cv, 
+			ACE_thread_mutex_t *external_mutex, 
+			ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE_OS::cond_timedwait");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_WTHREADS)
+  // Handle the easy case first.
+  if (timeout == 0)
+    return ACE_OS::cond_wait (cv, external_mutex);
+
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
+  cv->waiters_++;
+
+  int result = 0;
+  int error = 0;
+  int msec_timeout;
+
+  if (timeout->sec () == 0 && timeout->usec () == 0)
+    msec_timeout = 0; // Do a "poll."
+  else
+    {
+      // Note that we must convert between absolute time (which is
+      // passed as a parameter) and relative time (which is what
+      // WaitForSingleObjects() expects).
+      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+
+      // Watchout for situations where a context switch has caused the
+      // current time to be > the timeout.
+      if (relative_time < ACE_Time_Value::zero)
+	msec_timeout = 0;
+      else
+	msec_timeout = relative_time.msec ();
+    }
+  
+  // We keep the lock held just long enough to increment the count of
+  // waiters by one.  Note that we can't keep it held across the call
+  // to WaitForSingleObject since that will deadlock other calls to
+  // ACE_OS::cond_signal().
+  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
+    return -1;
+
+  // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
+  result = ::WaitForSingleObject (cv->sema_, msec_timeout);
+
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
+  if (result != WAIT_OBJECT_0)
+    {
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
+      result = -1;
+    }
+  else if (last_waiter)
+    // Release the signaler/broadcaster if we're the last waiter.
+    ACE_OS::event_signal (&cv->waiters_done_);
+
+  // We must always regain the external mutex, even when errors occur
+  // because that's the guarantee that we give to our callers.
+  ACE_OS::thread_mutex_lock (external_mutex);
+  errno = error;
+  return result;
+#endif /* ACE_HAS_WTHREADS */
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::cond_wait (ACE_cond_t *cv, 
+		   ACE_thread_mutex_t *external_mutex)
+{
+  // ACE_TRACE ("ACE_OS::cond_wait");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_WTHREADS)
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
+  cv->waiters_++;
+
+  int result = 0;
+  int error = 0;
+
+  // We keep the lock held just long enough to increment the count of
+  // waiters by one.  Note that we can't keep it held across the call
+  // to ACE_OS::sema_wait() since that will deadlock other calls to
+  // ACE_OS::cond_signal().
+  if (ACE_OS::thread_mutex_unlock (external_mutex) != 0)
+    return -1;
+
+  // Wait to be awakened by a ACE_OS::cond_signal() or
+  // ACE_OS::cond_broadcast().
+  result = ::WaitForSingleObject (cv->sema_, INFINITE);
+
+  // Reacquire lock to avoid race conditions.
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
+
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
+  if (result != WAIT_OBJECT_0)
+    {
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
+    }
+  else if (last_waiter)
+    // Release the signaler/broadcaster if we're the last waiter.
+    ACE_OS::event_signal (&cv->waiters_done_);
+
+  // We must always regain the external mutex, even when errors
+  // occur because that's the guarantee that we give to our
+  // callers.
+  ACE_OS::thread_mutex_lock (external_mutex);
+
+  // Reset errno in case mutex_lock() also fails...
+  errno = error;
+  return result;
+#endif /* ACE_HAS_WTHREADS */
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+#endif /* ACE_HAS_WTHREADS */
+#endif /* ACE_WIN32 || VXWORKS */
 
 ACE_INLINE int 
 ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
@@ -3032,6 +3134,9 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
   // ACE_TRACE ("ACE_OS::gethostbyaddr");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (length);
+  ACE_UNUSED_ARG (type);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyaddr ((char *) addr, (ACE_SOCKET_LEN) length, type), 
@@ -3142,6 +3247,7 @@ ACE_INLINE struct protoent *
 ACE_OS::getprotobyname (const char *name)
 {
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
@@ -3158,6 +3264,9 @@ ACE_OS::getprotobyname_r (const char *name,
 			  ACE_PROTOENT_DATA buffer)
 {
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
@@ -3192,7 +3301,8 @@ ACE_INLINE struct protoent *
 ACE_OS::getprotobynumber (int proto)
 {
 #if defined (VXWORKS)
-  ACE_NOTSUP_RETURN( 0 );
+  ACE_UNUSED_ARG (proto);
+  ACE_NOTSUP_RETURN (0);
 #else
   ACE_SOCKCALL_RETURN (::getprotobynumber (proto),
 		       struct protoent *, 0);
@@ -3205,6 +3315,9 @@ ACE_OS::getprotobynumber_r (int proto,
 			    ACE_PROTOENT_DATA buffer)
 {
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (proto);
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
@@ -3237,6 +3350,8 @@ ACE_OS::getservbyname (const char *svc, const char *proto)
 {
   // ACE_TRACE ("ACE_OS::getservbyname");
 #if defined (ACE_LACKS_GETSERVBYNAME)
+  ACE_UNUSED_ARG (svc);
+  ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) proto),
@@ -3467,6 +3582,12 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
 {
   // ACE_TRACE ("ACE_OS::gethostbyaddr_r");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (length);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
@@ -3514,6 +3635,10 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 {
   // ACE_TRACE ("ACE_OS::gethostbyname_r");
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
 #if defined (DIGITAL_UNIX)
@@ -3566,6 +3691,10 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 {
   // ACE_TRACE ("ACE_OS::getservbyname_r");
 #if defined (ACE_LACKS_GETSERVBYNAME)
+  ACE_UNUSED_ARG (svc);
+  ACE_UNUSED_ARG (proto);
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (buf);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
 #if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
@@ -4931,6 +5060,8 @@ ACE_OS::access (const char *path, int amode)
 {
   // ACE_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
+  ACE_UNUSED_ARG (path);
+  ACE_UNUSED_ARG (amode);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)  
   ACE_OSCALL_RETURN (::_access (path, amode), int, -1);  
@@ -5447,6 +5578,13 @@ ACE_OS::mmap (void *addr,
 				      prot, flags, file_handle, off),
 		     void *, MAP_FAILED);
 #else
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (prot);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (file_handle);
+  ACE_UNUSED_ARG (off);
+  ACE_UNUSED_ARG (file_mapping);
   ACE_NOTSUP_RETURN (MAP_FAILED);
 #endif /*ACE_WIN32 */
 }
@@ -5466,6 +5604,9 @@ ACE_OS::mprotect (void *addr, size_t len, int prot)
 #elif !defined (ACE_LACKS_MPROTECT)
   ACE_OSCALL_RETURN (::mprotect ((ACE_MMAP_TYPE) addr, len, prot), int, -1);
 #else
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (prot);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -5481,6 +5622,9 @@ ACE_OS::msync (void *addr, size_t len, int sync)
 #elif !defined (ACE_LACKS_MSYNC)
   ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len, sync), int, -1);
 #else
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (sync);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -5496,6 +5640,8 @@ ACE_OS::munmap (void *addr, size_t len)
 #elif !defined (ACE_LACKS_MMAP)
   ACE_OSCALL_RETURN (::munmap ((ACE_MMAP_TYPE) addr, len), int, -1);
 #else
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -5513,6 +5659,9 @@ ACE_OS::madvise (caddr_t addr, size_t len, int advice)
 #elif !defined (ACE_LACKS_MADVISE)
   ACE_OSCALL_RETURN (::madvise (addr, len, advice), int, -1);
 #else
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (advice);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -5939,6 +6088,10 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -5962,6 +6115,10 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 0, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -5985,6 +6142,10 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -6009,6 +6170,10 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -6033,6 +6198,10 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFileEx (lock->handle_, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -6214,6 +6383,7 @@ ACE_OS::dup (ACE_HANDLE handle)
     ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
   /* NOTREACHED */
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::dup (handle), ACE_HANDLE, ACE_INVALID_HANDLE);
@@ -6354,9 +6524,11 @@ ACE_OS::getpgid (pid_t pid)
 {
   // ACE_TRACE ("ACE_OS::getpid");
 #if defined (ACE_LACKS_GETPGID)
+  ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS) 
   // getpid() is not supported, only one process anyway.
+  ACE_UNUSED_ARG (pid);
   return 0;
 #else
   ACE_OSCALL_RETURN (::getpgid (pid), pid_t, -1);
@@ -6559,6 +6731,7 @@ ACE_OS::mkdir (const char *path, mode_t mode)
   
   ACE_OSCALL_RETURN (::_mkdir (path), int, -1);  
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::mkdir ((char *) path), int, -1);  
 #else
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
@@ -7042,6 +7215,7 @@ ACE_OS::sbrk (int brk)
   // ACE_TRACE ("ACE_OS::sbrk");
 
 #if defined (ACE_LACKS_SBRK)
+  ACE_UNUSED_ARG (brk);
   ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
