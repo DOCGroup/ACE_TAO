@@ -71,6 +71,11 @@ Wed Mar 05 14:47:14 1997  David L. Levine  <levine@cs.wustl.edu>
 	  6) added ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
 	     to set the current thread's priority, only.
 
+	  Many thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
+	  for his careful review of this class design, thoughtful comments,
+	  and assistance with implementation, especially for PTHREADS
+	  platforms.
+
 Wed Mar  5 14:36:59 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* SString.cpp: Fixed ACE*String initialization bugs. Thanks to
