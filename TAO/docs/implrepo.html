@@ -344,11 +344,18 @@ for such things as the ORB type and server name.</p>
       // The &lt;Not_Found&gt; exception is raised when &lt;server&gt; is not found
       // in the Implementation Repository.
 
-    void server_is_alive (in string server,
-                          in INET_Addr addr, 
-                          in TAO_Ping_Object ping);
+    void server_is_running (in string server,
+                            in INET_Addr addr, 
+                            in TAO_Ping_Object ping);
       // Used to notify the Implementation Repository that &lt;server&gt; is alive and
       // well at &lt;addr&gt;.
+      //
+      // The Ping Object is an object that supports just one method,
+      // void ping (void); which is used to test the liveness of the server.
+
+    void server_is_leaving (in string server);
+      // Used to tell the Implementation Repository that &lt;server&gt; is shutting
+      // down.
     };
 };</pre>
 
@@ -392,7 +399,7 @@ command line options or environment variables. </p>
 
 <h2>How the Client Side works</h2>
 
-<p>The first part should work on all clients that support IIOP 1.1:
+<p>The first part should work on all clients that support IIOP 1.1: 
 
 <ul>
   <li>Client obtains a Persistent Object Reference, which contains multiple profiles to both
