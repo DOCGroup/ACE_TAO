@@ -1,6 +1,6 @@
 #
 # Makefile for building the Grid example
-# 
+#
 
 NAME = Grid_Server
 
@@ -11,13 +11,16 @@ OBJFILES = \
 	$(OBJDIR)\Simple_util.obj \
 	$(OBJDIR)\server.obj
 
-CPPDIR = .;.. 
+IDLFILES = \
+        $(IDLDIR)\Grid.idl
+
+CPPDIR = .;..
 
 IDLDIR = .
 
 !include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
 
-#       
+#
 # IDL Build rules
 #
 
