@@ -1,3 +1,11 @@
+Wed Jun 18 13:08:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
+	* TAO_IDL/be/be_interface.cpp (copy_ctor_helper);
+
+	  Changed the order of base class constructor calls in code 
+	  generation for the interface copy constructor.
+
 Wed Jun 18 12:50:15 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h
@@ -5,7 +13,6 @@ Wed Jun 18 12:50:15 2003  George Edwards <g.edwards@vanderbilt.edu>
           
           Fixed bug in factory generation for valuetypes that
           support interfaces
-
 
 Wed Jun 18 12:47:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -20,7 +27,6 @@ Wed Jun 18 12:47:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  and/or fixed the order of base class constructor calls in the
 	  copy constructor.
 
-
 Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_enum.cpp:
@@ -30,7 +36,7 @@ Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed mistakes in constructor reordering from
 
-	        Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+	  Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 18 13:53:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
