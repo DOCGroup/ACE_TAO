@@ -63,12 +63,12 @@ TAO_ServantBase::_default_POA (CORBA::Environment &env)
 }
 
 void
-TAO_ServantBase::_add_ref (CORBA::Environment &env)
+TAO_ServantBase::_add_ref (CORBA::Environment &)
 {
 }
 
 void
-TAO_ServantBase::_remove_ref (CORBA::Environment &env)
+TAO_ServantBase::_remove_ref (CORBA::Environment &)
 {
 }
 
@@ -147,13 +147,13 @@ TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
 }
 
 void
-TAO_RefCountServantBase::_add_ref (void)
+TAO_RefCountServantBase::_add_ref (CORBA::Environment &)
 {
   ++this->ref_count_;
 }
 
 void
-TAO_RefCountServantBase::_remove_ref (void)
+TAO_RefCountServantBase::_remove_ref (CORBA::Environment &)
 {
   CORBA::ULong new_count = --this->ref_count_;
   if (new_count == 0)

@@ -127,10 +127,10 @@ public:
   ~TAO_RefCountServantBase (void);
   // Destructor.
 
-  virtual void _add_ref (void);
+  virtual void _add_ref (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Increase reference count by one.
 
-  virtual void _remove_ref (void);
+  virtual void _remove_ref (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Decreases reference count by one; if the resulting reference
   // count equals zero, _remove_ref invokes delete on its this pointer
   // in order to destroy the servant.
