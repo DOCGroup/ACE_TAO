@@ -38,17 +38,50 @@
 	</P>
       </LI>
 
-      <LI><P>Add support for multiple Profiles in the ORB (completing
-          the IIOP 1.0 support)
-          <BR>[ASSIGNED TO:] Fred
-        </P>
-      </LI>
-
       <LI><P>Implement a nice example of the COS Event Channel,
           showing how it can provide filtering when combined with the
           real-time Event Channel.
           <BR>[ASSIGNED TO:] Pradeep
         </P>
+      </LI>
+
+      <LI><P><B>EC:</B> Complete the implementation of the new EC,
+	  specially generate the strategies and changes required to
+	  support hard real-time behavior.
+          <BR>[ASSIGNED TO:] Carlos
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B> We need to provide simple operations to update
+	  the subscriptions of a consumer, as well as the publications 
+	  of a supplier, the current scheme (disconnecting and
+	  connecting again) is inefficient.
+          <BR>[ASSIGNED TO:] Carlos
+        </P>
+      </LI>
+
+      <LI><P>Implement the Interoperable Naming Service spec,
+	  specially the new standard features to bootstrap the initial 
+	  object references in the ORB.
+          <BR>[ASSIGNED TO:] Vishal
+	  <BR>[STATUS] He is making good progress, near completion by
+	  now.
+        </P>
+      </LI>
+
+      <LI><P>Improve the connection recycling strategies, for
+	  instance,
+	  several strategies are possible: limit the maximum number of
+	  open sockets, probably with both HWM and LWM bounds,
+	  with different policies to choose the socket to close (LFU,
+	  MRU?);
+	  or maybe be more aggresive and recycle a socket once
+	  all the object references pointing to a server are closed.
+	  The later approach could be easily implemented if each
+	  IIOP_Object held a reference to the set of sockets opened to
+	  a certain TCP/IP address.
+          <BR>[ASSIGNED TO:] Kirthika
+	</P>
       </LI>
 
     </OL>
@@ -76,22 +109,14 @@
 	incoming data buffer, thus improving interleaving between the
 	client and server (the client does something useful before
 	starting to wait for the server).
+	The client could also deallocate the outgoing buffers before
+	waiting for the reply.
       <P></LI>
 
       <LI>The data blocks and their buffers could be allocated in a
 	single operation, using the beginning of a buffer to contain
 	the data block and the rest of it to contain the actual buffer
       <P></LI>
-
-      <LI><P>Some applications cannot afford compiled marshaling for
-	  all the stubs and skeletons,
-	  the generated code size would be too big.
-	  Yet some operations could be critical and require code as
-	  efficient as possible;
-	  a <CODE>#pragma</CODE> can be added to give users
-          fine-grained control over code generation.
-	</P>
-      </LI>
 
       <LI><P>For extremely low latency applications we could remove
 	  some fields from the IIOP protocol, for instance:
@@ -106,7 +131,7 @@
 	  </LI>
 	  </UL>
 	<BR>[STATUS] Most of this optimizations were implemented,
-	and can be enabled using the <CODE>-ORBiioplite</CODE> command
+	and can be enabled using the <CODE>-ORBgioplite</CODE> command
 	line option.
       </P>
       </LI>
@@ -184,23 +209,6 @@
 	</P>
       </LI>
 
-      <LI><P>In the collocated case the generated
-          <CODE>_narrow()</CODE> method calls the
-          <CODE>_create_stub()</CODE> method that allocates several
-          temporary objects.
-        </P>
-      </LI>
-           
-      <LI><P>For various projects, we need to produce a
-          minimal-footprint TAO ORB.  One thing we could probably do
-          very easily would be to provide an #ifdef that will
-          conditionally omit the servant manager, POA manager, and
-          adapter activator features from TAO, along with all the
-          demuxing features that aren't active demuxing or perfect
-          hashing.
-        </P>
-      </LI>
-
       <LI><P>The CDR streaming classes compute the alignment on each
           operation, but they could remember the alingment from the
           previous insertion or extraction operation; saving a few
@@ -208,37 +216,34 @@
         </P>
       </LI>
 
+      <LI><P>Some applications cannot afford compiled marshaling for
+	  all the stubs and skeletons,
+	  the generated code size would be too big.
+	  Yet some operations could be critical and require code as
+	  efficient as possible;
+	  a <CODE>#pragma</CODE> can be added to give users
+          fine-grained control over code generation.
+	</P>
+      </LI>
+
     </OL>
 
     <H4>New features and Bug fixes</H4>
     <OL>
-      <LI><P><B>EC:</B>Complete the implementation of the new EC,
-	  specially generate the strategies and changes required to
-	  support hard real-time behavior.
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B>Optimize the updates to the SupplierFiltering
+      <LI><P><B>EC:</B> Optimize the updates to the SupplierFiltering
 	  module, specially when it is a singleton: currently it
 	  receives a <CODE>connected</CODE> call for each supplier,
 	  event though one would be enough.
         </P>
       </LI>
 
-      <LI><P><B>EC:</B>The supplier filters could depend on the QoS
+      <LI><P><B>EC:</B> The supplier filters could depend on the QoS
 	  data, as consumer filters do. We should provide a factory
 	  for them too.
         </P>
       </LI>
 
-      <LI><P><B>EC:</B>We need to provide simple operations to update
-	  the subscriptions of a consumer, as well as the publications 
-	  of a supplier, the current scheme (disconnecting and
-	  connecting again) is inefficient.
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B>We need some strategy in the EC to periodically 
+      <LI><P><B>EC:</B> We need some strategy in the EC to periodically 
 	  flush out mibehaving suppliers and consumers. Examples of
 	  misbehavior include: suppliers flooding the EC;
 	  consumers or suppliers that are destroyed, but were not
@@ -249,14 +254,17 @@
         </P>
       </LI>
 
-      <LI><P><B>EC:</B>Sometimes the Event Channel dead-locks during
-          shutdown. According to Ulf Jährig &lt;jaehrig@desys.com&gt>;, an
-          easy way to reproduce the problem is to run the
-          EC_Throughput test under windows NT.
+      <LI><P><B>EC:</B> Sometimes the Event Channel dead-locks during
+          shutdown. According to Ulf Jährig
+	  &lt;jaehrig@desys.com&gt>;, an easy way to reproduce the
+	  problem is to run the EC_Throughput test under windows NT.
+	  <BR>[STATUS] The test in question works perfectly on NT; it
+	  looks like a race condition. Apparently this is only a
+	  problem with the old EC.
         </P>
       </LI>
 
-      <LI><P><B>IDL Compiler:</B>Support for the <CODE>version</CODE>
+      <LI><P><B>IDL Compiler:</B> Support for the <CODE>version</CODE> 
 	  pragma, this also requires some changes in the
 	  <CODE>_is_a()</CODE> implementation.
 	</P>
@@ -311,27 +319,31 @@
 	    <BR>[DONE]
 	  <P></LI>
 
-	  <LI><B>IDL Compiler:</B>The IDL compiler should be able to
+	  <LI><B>IDL Compiler:</B> The IDL compiler should be able to
             generate the 
 	    alternative mapping, but with the TSS default for the env
 	    argument.
 	    <BR>[DONE]
 	  <P></LI>
 
-	  <LI><B>IDL Compiler:</B>The IDL compiler should generate the
+	  <LI><B>IDL Compiler:</B> The IDL compiler should generate the
             standard mapping, without the environment argument.
 	  <P></LI>
 	  
-	  <LI>In general we will need to complete and debug the
-	    <CODE>TAO_TRY</CODE> macros;
-	    they have limitations when dealing with the
-	    alternative mapping, but are very useful.
-	    <BR>[STATUS] This seems to be OK now, the code seems to
-	    compile and work correctly now.
-	    <BR>[STATUS] We need a new macro (TAO_TRY_THROW) to use
-	    inside the TAO_TRY blocks, because TAO_THROW will not go
-	    into the TAO_CATCH blocks, even if the exceptions match.
-	  <P></LI>
+	  <LI><P>In general we will need to complete and debug the
+	      <CODE>TAO_TRY</CODE> macros;
+	      they have limitations when dealing with the
+	      alternative mapping, but are very useful.
+	      <BR>[STATUS] This seems to be OK now, the code seems to
+	      compile and work correctly now.
+	      <BR>[STATUS] We need a new macro (TAO_TRY_THROW) to use
+	      inside the TAO_TRY blocks, because TAO_THROW will not go
+	      into the TAO_CATCH blocks, even if the exceptions match.
+	      <BR>[STATUS] Nanbor implemented a much better set of
+	      macros, that can be used with other ORBs, it is
+	      implemented in <CODE>$ACE_ROOT/ace/CORBA_macros.h</CODE>
+	    </P>
+	  </LI>
 
 	  <LI>We need to test the ORB for resource leaking in the
 	    presence of exceptions.
@@ -411,15 +423,20 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> can be
+      <LI><P><B>EC:</B> The <CODE>TAO_EC_Gateway_IIOP</CODE> can be
 	  required to subscribe for events by source, but the source
 	  can be local instead of remote.
 	  This is not a problem since the Event Channel supports
 	  multiple supplier IDs,
 	  but we could check the local publications and remove those
 	  events from the Gateway publication and subscription list.
+	  <BR>[STATUS] The task is a second order optimization and has 
+	  very low priority.
 	</P>
       </LI>
+
+      <LI>Support GIOP 1.1 in the ORB (fragments)
+      <P></LI>
 
       <LI>Support IIOP 1.1 in the ORB
       <P></LI>
@@ -429,9 +446,6 @@ class POA_Foo {
       <P></LI>
 
       <LI>Support IIOP 1.2 in the ORB
-      <P></LI>
-
-      <LI>Support GIOP 1.1 in the ORB (fragments)
       <P></LI>
 
       <LI>The size of pre-allocated buffer for the outgoing CDR
@@ -461,9 +475,11 @@ class POA_Foo {
 	in the IDL compiler is incomplete.
       <P></LI>
 
-      <LI>It seems that some memory is leaked from the ORB cached
-	connector.
-      <P></LI>
+      <LI><P>It seems that some memory is leaked from the ORB cached
+	  connector; but Purify gets confused by the fact that TAO
+	  dynamically loads libTAO, so it could be just a bogus report.
+	</P>
+      </LI>
 
       <LI><B>IDL Compiler:</B>Support for the <CODE>fixed</CODE> data
         type in the IDL compiler 
@@ -473,40 +489,11 @@ class POA_Foo {
         least untested.
       <P></LI>
 
-      <LI>Add a <CODE>corbafwd.h</CODE> header file to eliminate the
-        deep (and recursive) header dependencies in TAO.
-      <P></LI>
-
       <LI>Add &lt&lt and &gt&gt operators to the
 	<CODE>CORBA::Request</CODE> class, to simplify DII invocations
 	(this is an Orbix-sism).
 	The IDL compiler has to generate them for the user defined
 	types.
-      <P></LI>
-
-      <LI>Several helper structs for <CODE>Any</CODE> have to be
-	added, mainly: <CODE>to_object</CODE>, <CODE>to_wchar</CODE>,
-	<CODE>to_wstring</CODE> and their <CODE>from_</CODE>
-	<BR>[STATUS] Jeff added several of them, I need to check what
-	is missing.
-      <P></LI>
-
-      <LI>Prepare the 1.0 release:<P>
-	<OL>
-	  <LI>Integrate the compiled marshalling approach.
-            <BR>[STATUS] Andy has made great progress on this. 
-	  </LI>
-	  <LI>Verify the GPERF is working in all the relevant
-	    platforms.
-            <BR>[STATUS] As far as we know it is working correctly.
-	  </LI>
-	  <LI>Integrate active demux of operations?
-	  </LI>
-	</OL>
-      <P></LI>
-
-      <LI>Support the Sun bootstrapping mechanism for the Naming
-	Service
       <P></LI>
 
       <LI>Add a -ORBlogfile flag so we can set the ACE_ERROR and
@@ -533,11 +520,6 @@ class POA_Foo {
       <LI><B>EC:</B> Debug interval computation in Linux (and NT?)
       <P></LI>
 
-      <LI><P>Remove the uneeded methods from CORBA::Object
-	  <BR>[STATUS] This task seems to be complete
-	</P>
-      </LI>
-
       <LI><B>IDL Compiler:</B> The IDL compiler could generate a static
         method to access the interface repository ID of a class.
       <P></LI>
@@ -557,11 +539,18 @@ class POA_Foo {
 	<BR>[STATUS] The user can control collocation, but we need a
 	dynamic way to do it (or an example) that exploits the Service
 	Configurator. We also may need to split the library.
+	<BR>[STATUS] David added a mechanism to compile only the
+	services that we want.
       <P></LI>
 
-      <LI><B>EC:</B> Use the Service_Configurator to dynamically load
-	the EC Module_Factory thus making it really configurable.
-      <P></LI>
+      <LI><P><B>EC:</B> Use the Service_Configurator to dynamically load
+	  the EC Module_Factory thus making it really configurable.
+	  The same feature is needed for the new
+	  <CODE>EC_Factory</CODE> class.
+	  <BR>[STATUS] Notice that this is fairly easy to implement,
+	  there doesn't seem to be much demand for it.
+	</P>
+      </LI>
 
       <LI><B>EC:</B> Cleanup the IDL structures for subscriptions,
 	publications, etc. (in the EC).
@@ -607,16 +596,22 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P>Test Any with variable sized types, such as structures
-	  that contain a string inside. Jeff reports that there is a
+      <LI><P>Test <CODE>Any</CODE> with variable sized types, such as
+	  structures that contain a string inside.
+	  Jeff reports that there is a
 	  problem when destroying Anys initialized with this types,
-	  even if the IDL compiler generated <<= operator is used.
+	  even if the IDL compiler generated &lt&lt= operator is
+	  used.
+	  <BR>[STATUS] Many of the services do this kind of thing, for 
+	  example the Trading service passes all kinds of data in
+	  Anys.  The current version seems to be working , so this is
+	  not a high priority task.
 	</P>
       </LI>
 
-      <LI><P>Include a regression test to verify that
-	  <CODE>octet</CODE> is <B>not</B> a valid discriminator for
-	  unions
+      <LI><P><B>IDL Compiler:</B> Include a regression test to verify
+	  that <CODE>octet</CODE> is <B>not</B> a valid discriminator
+	  for unions
 	</P>
       </LI>
 
@@ -626,9 +621,9 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P>Verify that the typecode for unions use a
-	  <CODE>octet</CODE> with value <CODE>0</CODE> for the default
-	  discriminator
+      <LI><P><P><B>IDL Compiler:</B> Verify that the typecode for
+	  unions use a <CODE>octet</CODE> with value <CODE>0</CODE>
+	  for the default discriminator.
 	</P>
       </LI>
 
@@ -641,27 +636,26 @@ class POA_Foo {
 	  right exception is <CODE>TRANSIENT</CODE>, not
 	  <CODE>COMM_FAILURE</CODE>; this and other exception
 	  inconsistencies have to be checked
+	  <BR>[STATUS] Most of this work has been completed, there are 
+	  a few i's to dot and t's to cross, for example:
+	  what is the right exception to raise when a
+	  <CODE>write()</CODE> fails? The answer is
+	  none, we must transparently retry the current profile, not
+	  the next one.
 	</P>
       </LI>
 
-      <LI><P>The spec (CORBA 2.2, 20.17) defines accesor methods for the
-	  fields of a <CODE>SystemException</CODE>.
+      <LI><P><P><B>IDL Compiler:</B> In some platforms it may be
+	  necessary to add an extra value to an enum to force it to be
+	  32-bits wide.
 	</P>
       </LI>
 
-      <LI><P>In some platforms it may be necessary to add an extra
-	  value to an enum to force it to be 32-bits wide.
-	</P>
-      </LI>
-
-      <LI><P>The spec requires that strings as fields of structures be
-	  initialized to the empty (not the null) string.
-	</P>
-      </LI>
-
-      <LI><P>The <CODE>SINGLE_THREAD_MODEL</CODE> for the POA requires
-	  that the execution for all request on that POA happen on the
-	  same thread.
+      <LI><P><B>POA:</B> The <CODE>SINGLE_THREAD_MODEL</CODE> for the
+	  POA requires that at most one concurrent call is invoked on
+	  each servant in that POA.
+	  <BR>[STATUS] Irfan is working on it as part of the POA
+	  concurrency fixes.
 	</P>
       </LI>
 
@@ -671,54 +665,41 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P>The <CODE>_duplicate()</CODE> and <CODE>_narrow()</CODE>
-	  functions can throw exceptions, yet our mapping does not
-	  contain an <CODE>CORBA::Environment</CODE> argument.
-	  A similar problem ocurs with
-	  <CODE>ORB::resolve_initial_references</CODE>, the ORB can
-	  throw the <CODE>InvalidName</CODE> exception.
+      <LI><P>Can <CODE>_duplicate()</CODE> raise an exception?
+	  If so the mapping that we generate is not correct for
+	  platforms without native C++ exceptions.
 	</P>
       </LI>
 
-      <LI><P>Apparently the implementation for the leader-follower
+      <LI><P>The implementation for the leader-follower
 	  model on the client side has bug:
 	  it will add the current thread to the follower list every
 	  time it returns from waiting in the condition variable,
 	  assuming that it was signaled and removed every time.
+	  <BR>[STATUS] This is not a big problem because only a
+	  warning is printed out.
 	</P>
       </LI>
 
       <LI><P>By default TAO disables Nagle's algorithm, this should be
 	  an optional feature, otherwise TAO will perform poorly over
 	  WANs.
-	</P>
-      </LI>
-
-      <LI><P>Improve the connection recycling strategies, for
-	  instance,
-	  several strategies are possible: limit the maximum number of
-	  open sockets, probably with both HWM and LWM bounds,
-	  with different policies to choose the socket to close (LFU,
-	  MRU?);
-	  or maybe be more aggresive and recycle a socket once
-	  all the object references pointing to a server are closed.
-	  The later approach could be easily implemented if each
-	  IIOP_Object held a reference to the set of sockets opened to
-	  a certain TCP/IP address.
+	  <BR>[STATUS] An alternative: this could be fixed as part of
+	  the real-time spec that introduces transport specific
+	  policies.
 	</P>
       </LI>
 
       <LI><P>Check that system calls like <CODE>recv()</CODE> and
           <CODE>send()</CODE> are restarted if a signal is received by
           the process while they are executing.
+	  <BR>[STATUS] In general this is done by ACE, but there have
+	  been bug reports related to this.
         </P>
       </LI>
 
-      <LI><P>Update the collocated test in Cubit
-        </P>
-      </LI>
-
-      <LI><P><B>IDL Compiler:</B> The CORBA 2.3 spec clarifies the scope of a
+      <LI><P><B>IDL Compiler:</B> The CORBA 2.3 spec clarifies the
+	  scope of a
           <CODE>#pragma prefix</CODE>:
           the prefix is supposed to get cleared after each
           <CODE>#include</CODE>,
@@ -754,13 +735,6 @@ class POA_Foo {
         </P>
       </LI>
 
-      <LI><P><B>IDL Compiler:</B> Tom Ziomek
-          &lt;tomz@cc.comm.mot.com&gt; reports that the IDL
-          compiler does not verify that <CODE>oneway</CODE> operations
-          cannot include a <CODE>raise</CODE> expression.
-        </P>
-      </LI>
-
       <LI><P><B>IDL Compiler:</B> We must also check that oneways do
           not contain any <CODE>out</CODE> or <CODE>inout</CODE>
           parameters.
@@ -791,6 +765,12 @@ class POA_Foo {
 	  How do the ImplRepo and pluggable protocols interact? What
 	  if the ImplRepo is using a protocol that is not implemented
 	  in the server? Or vice-versa?
+        </P>
+      </LI>
+
+      <LI><P>We need support for the timeout policies specified in
+	  CORBAmessaging. The timeouts can control connection and
+	  total request time.
         </P>
       </LI>
 
@@ -939,7 +919,6 @@ encapsulation format.
 	    interpretive marshalling in the CORBAlite framework (where
 	    TypeCodes don't have enough methods as to traverse them).
       </P>
-      <P>
     </LI>
 
     <LI><P>Consider decompositions of the ORB that would allow
@@ -1005,6 +984,111 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>IDL Compiler:</B> Tom Ziomek
+          &lt;tomz@cc.comm.mot.com&gt; reports that the IDL
+          compiler does not verify that <CODE>oneway</CODE> operations
+          cannot include a <CODE>raise</CODE> expression.
+	  <BR>[DONE] Andy fixed this.
+        </P>
+      </LI>
+
+      <LI><P>The <CODE>_duplicate()</CODE> and <CODE>_narrow()</CODE>
+	  functions can throw exceptions, yet our mapping does not
+	  contain an <CODE>CORBA::Environment</CODE> argument.
+	  A similar problem ocurs with
+	  <CODE>ORB::resolve_initial_references</CODE>, the ORB can
+	  throw the <CODE>InvalidName</CODE> exception.
+	  <BR>[DONE] But the status of <CODE>_duplicate()</CODE>
+	  remains, I added an entry for it.
+	</P>
+      </LI>
+
+      <LI><P>The spec requires that strings as fields of structures be
+	  initialized to the empty (not the null) string.
+	  <BR>[DONE] Andy this this is the <CODE>String_Manager</CODE> 
+	  class.
+	</P>
+      </LI>
+
+      <LI><P>The spec (CORBA 2.2, 20.17) defines accesor methods for the
+	  fields of a <CODE>SystemException</CODE>.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
+      <LI><P>Remove the unneeded methods from CORBA::Object
+	  <BR>[STATUS] This task seems to be complete
+	  <BR>[DONE]
+	</P>
+      </LI>
+
+      <LI><P>Support the Sun bootstrapping mechanism for the Naming
+	  Service
+	  <BR>[STATUS] Replaced by the interoperable naming service
+	  bootstraping.
+	</P>
+      </LI>
+
+      <LI><P>Integrate the compiled marshalling approach.
+	  <BR>[STATUS] Andy has made great progress on this.
+	  <BR>[DONE]
+	</P>
+      </LI>
+      <LI><P>Verify the GPERF is working in all the relevant
+	  platforms.
+	  <BR>[STATUS] As far as we know it is working correctly.
+	  <BR>[DONE]
+	</P>
+      </LI>
+      <LI><P>Integrate active demux of operations?
+	  <BR>[STATUS] We use perfect hashing instead.
+	<P>
+      </LI>
+
+      <LI><P>Several helper structs for <CODE>Any</CODE> have to be
+	  added, mainly: <CODE>to_object</CODE>, <CODE>to_wchar</CODE>,
+	  <CODE>to_wstring</CODE> and their <CODE>from_</CODE>
+	  <BR>[DONE] Jeff added them to the Any class, later they were 
+	  moved to the CDR streaming classes because they are needed
+	  there too.
+	</P>
+      </LI>
+
+      <LI><P>Add a <CODE>corbafwd.h</CODE> header file to eliminate
+	  the deep (and recursive) header dependencies in TAO.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
+      <LI><P>In the collocated case the generated
+          <CODE>_narrow()</CODE> method calls the
+          <CODE>_create_stub()</CODE> method that allocates several
+          temporary objects.
+	  <BR>[DONE]
+        </P>
+      </LI>
+           
+      <LI><P>For various projects, we need to produce a
+          minimal-footprint TAO ORB.  One thing we could probably do
+          very easily would be to provide an #ifdef that will
+          conditionally omit the servant manager, POA manager, and
+          adapter activator features from TAO, along with all the
+          demuxing features that aren't active demuxing or perfect
+          hashing.
+	  <BR>[DONE] Irfan implemented exactly this. We still have
+	  room for more footprint size optimizations, but they are
+	  second order things.
+        </P>
+      </LI>
+
+      <LI><P>Add support for multiple Profiles in the ORB (completing
+          the IIOP 1.0 support)
+          <BR>[ASSIGNED TO:] Fred
+	  <BR>[DONE] Fred added support for multiple profiles as part
+	  of the pluggable protocols effort.
+        </P>
+      </LI>
+
       <LI><P><B>EC:</B> The current architecture of the real-time
           Event Channel does not support some features, such as:
 	  <UL>
