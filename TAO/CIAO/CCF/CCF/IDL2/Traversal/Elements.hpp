@@ -324,7 +324,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& e)
+        pre (Type&)
         {
         }
 
@@ -335,12 +335,12 @@ namespace CCF
         }
 
         virtual void
-        name (Type& e)
+        name (Type&)
         {
         }
 
         virtual void
-        post (Type& e)
+        post (Type&)
         {
         }
       };
@@ -395,7 +395,7 @@ namespace CCF
       public:
         /* GCC#13590/DR#39
         using Node<T>::edge_traverser;
-	*/
+        */
 
         virtual void
         traverse (T& s)
