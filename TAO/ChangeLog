@@ -1,3 +1,26 @@
+Sun Nov 10 20:24:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+
+	  Changed handling of reopened modules. In the case where a
+	  module and its member have both been seen before, tao_ifr
+	  now assumes that it is re-processing the IDL file in which
+	  the module and member were first seen, and ignores the member.
+	  It is possible that there is actually an illegal name clash, but
+	  it is not possible to tell the difference in every case, so we
+	  choose the behavior assuming that the common case will be the
+	  re-processing of an already-loaded IDL file. Thanks to Nick
+	  Cross <nick.cross@prismtechnologies.com> for reporting the
+	  problem when loading CosNaming.idl twice and then trying to
+	  look at the IFR contents.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+
+	  Cosmetic changes.	  
+
 Sun Nov 10 18:02:51 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp: Fixed a problem
