@@ -1,3 +1,12 @@
+Tue May 30 14:13:00 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ACE_wrappers/pace/pace/posix
+	* ACE_wrappers/pace/pace/win32
+	* ACE_wrappers/pace/pace/vxworks
+	* ACE_wrappers/pace/THANKS
+
+          Added to the repository to facilitate cross-platform work.
+
 Wed May 24 18:56:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/ACE_Integration.txt: (added)
