@@ -232,10 +232,12 @@ JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
                       unsigned int size)
 {
   ACE_Asynch_Read_Stream ar;
+  JAWS_Asynch_IO_Handler *aioh =
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
-  if (ar.open (*(ioh->handler ()), ioh->handle ()) == -1
+  if (ar.open (*(aioh->handler ()), aioh->handle ()) == -1
       || ar.read (mb, size) == -1)
-    ioh->read_error ();
+    aioh->read_error ();
 }
 
 void

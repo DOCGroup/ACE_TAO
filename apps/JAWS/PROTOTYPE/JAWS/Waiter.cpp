@@ -33,7 +33,7 @@ JAWS_Waiter::index (void)
   ACE_thread_t thr_name;
   thr_name = ACE_OS::thr_self ();
 
-  ACE_Thread_ID tid (thr_handle, thr_name);
+  ACE_Thread_ID tid (thr_name, thr_handle);
 #endif /* 0 */
 
   return JAWS_Waiter_Base::index (tid);
