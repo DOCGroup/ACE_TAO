@@ -518,17 +518,8 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
       return;
     }
 
-  // Can we seek?
-  if (ACE_OS::lseek (this->handle_, this->size_ - 1, SEEK_SET) == -1)
-    {
-      this->error_i (ACE_Filecache_Object::ACE_OPEN_FAILED,
-                     "ACE_Filecache_Object::acquire: lseek");
-      ACE_OS::close (this->handle_);
-      return;
-    }
-
   // Can we write?
-  if (ACE_OS::pwrite (this->handle_, "", 1) != 1)
+  if (ACE_OS::pwrite (this->handle_, "", 1, this->size_ - 1) != 1)
     {
       this->error_i (ACE_Filecache_Object::ACE_WRITE_FAILED,
                      "ACE_Filecache_Object::acquire: write");

@@ -1,3 +1,11 @@
+Mon Sep 14 21:02:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Mem_Map.cpp (map_it): Removed the code for
+ 	  !ACE_HAS_P_READ_WRITE since we cover it in ACE_OS::pwrite.
+
+	* ace/Filecache.cpp (ACE_Filecache_Object): Changed the
+ 	  lseek/write combo to pwrite.
+
 Mon Sep 14 17:09:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-win32-common.h,OS.h,README: Removed all mention of
