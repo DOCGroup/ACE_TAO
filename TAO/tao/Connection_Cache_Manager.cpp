@@ -233,7 +233,6 @@ int
 TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 {
 
-  cout <<"Size of map " <<this->cache_map_.current_size () <<endl;
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
        iter != this->cache_map_.end ();
        ++iter)
@@ -258,7 +257,7 @@ TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 
   // Unbind all the entries in the map
   this->cache_map_.unbind_all ();
-  
+
   return 0;
 }
 
