@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Locator_XMLHandler.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (ImplRepo_Service,Locator_XMLHandler,"$Id$")
 

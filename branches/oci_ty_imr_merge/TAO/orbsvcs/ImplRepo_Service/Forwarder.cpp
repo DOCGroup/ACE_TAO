@@ -15,6 +15,9 @@
 #include "ImR_Locator_i.h"
 
 #include "tao/ORB.h"
+#include "tao/Object_KeyC.h"
+#include "tao/ORB_Constants.h"
+
 #include "tao/PortableServer/Object_Adapter.h"
 
 /**
@@ -98,7 +101,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       ACE_dynamic_cast (TAO_POA_Current*, this->poa_current_var_.in ());
     ACE_ASSERT(tao_current != 0);
     TAO_POA_Current_Impl* impl = tao_current->implementation ();
-    TAO_ObjectKey::encode_sequence_to_string (key_str.out(), impl->object_key ());
+    TAO::ObjectKey::encode_sequence_to_string (key_str.out(), impl->object_key ());
  
     ior += key_str.in();
  

@@ -1,6 +1,8 @@
-project(ImR_Activator_IDL) : orbsvcslib, portableserver {
+project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging {
   sharedname = TAO_ImR_Activator_IDL
   dynamicflags = ACTIVATOR_IDL_BUILD_DLL
+  after       += TAO_Valuetype
+  libs        += TAO_Valuetype
   idlflags += -GH -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h
   idl_files {
     ImR_Activator.idl

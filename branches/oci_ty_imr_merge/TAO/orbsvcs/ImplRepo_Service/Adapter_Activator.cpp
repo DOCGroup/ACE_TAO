@@ -11,6 +11,8 @@
 
 #include "Adapter_Activator.h"
 
+#include "ace/Log_Msg.h"
+
 ImR_Adapter::ImR_Adapter(void)
 : servant_locator_(0)
 {
