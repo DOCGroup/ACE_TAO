@@ -16,28 +16,6 @@ TAO_Transport_Cache_Manager::bind (TAO_Cache_ExtId &ext_id,
 
 
 ACE_INLINE int
-TAO_Transport_Cache_Manager::find (const TAO_Cache_ExtId &key,
-                                    TAO_Cache_IntId &value)
-{
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock,
-                             guard,
-                             *this->cache_lock_,
-                             -1));
-
-  int status =  this->find_i (key,
-                              value);
-
-  if (status == 0)
-    {
-      // Update the purging strategy information while we
-      // are holding our lock
-      this->purging_strategy_->update_item (value.transport ());
-    }
-  return status;
-}
-
-
-ACE_INLINE int
 TAO_Transport_Cache_Manager::cache_transport (
     TAO_Transport_Descriptor_Interface *prop,
     TAO_Transport *transport)
@@ -50,44 +28,6 @@ TAO_Transport_Cache_Manager::cache_transport (
                      int_id);
 
 }
-
-ACE_INLINE int
-TAO_Transport_Cache_Manager::rebind (const TAO_Cache_ExtId &key,
-                                     const TAO_Cache_IntId &value)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
-
-  return this->rebind_i (key,
-                         value);
-}
-
-ACE_INLINE int
-TAO_Transport_Cache_Manager::unbind (const TAO_Cache_ExtId &key)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
-
-  return this->unbind_i (key);
-}
-
-ACE_INLINE int
-TAO_Transport_Cache_Manager::unbind (const TAO_Cache_ExtId &key,
-                                      TAO_Cache_IntId &value)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
-
-  return this->unbind_i (key,
-                         value);
-}
-
 
 ACE_INLINE int
 TAO_Transport_Cache_Manager::purge (void)

@@ -27,11 +27,27 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS (void)
 CORBA::ULong
 TAO_Exclusive_TMS::request_id (void)
 {
+  this->request_id_generator_++;
+
+  // if TAO_Transport::bidirectional_flag_
+  //  ==  1 --> originating side
+  //  ==  0 --> other side
+  //  == -1 --> no bi-directional connection was negotiated
+  // The originating side must have an even request ID, and the other
+  // side must have an odd request ID.  Make sure that is the case.
+  int bidir_flag =
+    this->transport_->bidirectional_flag ();
+
+  if ((bidir_flag == 1 && ACE_ODD (this->request_id_generator_))
+       || (bidir_flag == 0 && ACE_EVEN (this->request_id_generator_)))
+    ++this->request_id_generator_;
+
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::request_id - <%d>\n"),
                 this->request_id_generator_));
-  return this->request_id_generator_++;
+
+  return this->request_id_generator_;
 }
 
 // Bind the handler with the request id.

@@ -25,11 +25,12 @@
 
 ACE_RCSID (tao, IIOP_Transport, "$Id$")
 
+
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
-					TAO_ORB_Core *orb_core,
-					CORBA::Boolean flag)
+                                        TAO_ORB_Core *orb_core,
+                                        CORBA::Boolean flag)
   : TAO_Transport (TAO_TAG_IIOP_PROFILE,
-		   orb_core)
+                   orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
@@ -37,13 +38,13 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
     {
       // Use the lite version of the protocol
       ACE_NEW (this->messaging_object_,
-	       TAO_GIOP_Message_Lite (orb_core));
+               TAO_GIOP_Message_Lite (orb_core));
     }
   else
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
-	       TAO_GIOP_Message_Base (orb_core));
+               TAO_GIOP_Message_Base (orb_core));
     }
 }
 
@@ -66,11 +67,11 @@ TAO_IIOP_Transport::messaging_object (void)
 
 ssize_t
 TAO_IIOP_Transport::send_i (iovec *iov, int iovcnt,
-			    size_t &bytes_transferred,
-			    const ACE_Time_Value *max_wait_time)
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
   ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
-							     max_wait_time);
+                                                             max_wait_time);
   if (retval > 0)
     bytes_transferred = retval;
 
@@ -79,12 +80,12 @@ TAO_IIOP_Transport::send_i (iovec *iov, int iovcnt,
 
 ssize_t
 TAO_IIOP_Transport::recv_i (char *buf,
-			    size_t len,
-			    const ACE_Time_Value *max_wait_time)
+                            size_t len,
+                            const ACE_Time_Value *max_wait_time)
 {
   ssize_t n = this->connection_handler_->peer ().recv (buf,
-						       len,
-						       max_wait_time);
+                                                       len,
+                                                       max_wait_time);
 
   // Do not print the error message if it is a timeout, which could
   // occur in thread-per-connection.
@@ -93,16 +94,16 @@ TAO_IIOP_Transport::recv_i (char *buf,
       errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("TAO (%P|%t) - %p \n"),
-		  ACE_TEXT ("TAO - read message failure ")
-		  ACE_TEXT ("recv_i () \n")));
+                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO - read message failure ")
+                  ACE_TEXT ("recv_i () \n")));
     }
 
   // Error handling
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
-	return 0;
+        return 0;
 
 
       return -1;
@@ -126,8 +127,8 @@ TAO_IIOP_Transport::register_handler_i (void)
   if (TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
-		  this->id ()));
+                  "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
+                  this->id ()));
     }
 
   ACE_Reactor *r = this->orb_core_->reactor ();
@@ -142,25 +143,25 @@ TAO_IIOP_Transport::register_handler_i (void)
 
   // Register the handler with the reactor
   return  r->register_handler (this->connection_handler_,
-			       ACE_Event_Handler::READ_MASK);
+                               ACE_Event_Handler::READ_MASK);
 }
 
 
 int
 TAO_IIOP_Transport::send_request (TAO_Stub *stub,
-				  TAO_ORB_Core *orb_core,
-				  TAO_OutputCDR &stream,
-				  int two_way,
-				  ACE_Time_Value *max_wait_time)
+                                  TAO_ORB_Core *orb_core,
+                                  TAO_OutputCDR &stream,
+                                  int two_way,
+                                  ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
-				  two_way) == -1)
+                                  two_way) == -1)
     return -1;
 
   if (this->send_message (stream,
-			  stub,
-			  two_way,
-			  max_wait_time) == -1)
+                          stub,
+                          two_way,
+                          max_wait_time) == -1)
 
     return -1;
 
@@ -169,9 +170,9 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
 int
 TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
-				  TAO_Stub *stub,
-				  int twoway,
-				  ACE_Time_Value *max_wait_time)
+                                  TAO_Stub *stub,
+                                  int twoway,
+                                  ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)
@@ -179,17 +180,17 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = this->send_message_i (stub,
-				    twoway,
-				    stream.begin (),
-				    max_wait_time);
+                                    twoway,
+                                    stream.begin (),
+                                    max_wait_time);
 
   if (n == -1)
     {
       if (TAO_debug_level)
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
-		    this->id (),
-		    ACE_TEXT ("send_message ()\n")));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    this->id (),
+                    ACE_TEXT ("send_message ()\n")));
 
       return -1;
     }
@@ -199,8 +200,8 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 
 int
 TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
-					     TAO_Target_Specification &spec,
-					     TAO_OutputCDR &msg)
+                                             TAO_Target_Specification &spec,
+                                             TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir IIOP policy set, whether the
   // messaging objects are ready to handle bidirectional connections
@@ -214,24 +215,25 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
 
       // Set the flag to 0  (i.e., originating side)
       this->bidirectional_flag (0);
-    }
 
-  // Modify the request id if we have BiDirectional client/server
-  // setup
-  opdetails.modify_request_id (this->bidirectional_flag ());
+      // Modify the request id if we have BiDirectional client/server
+      // setup.
+      // @@ Is this needed at all?
+      opdetails.modify_request_id (this->bidirectional_flag ());
+    }
 
 
   return TAO_Transport::generate_request_header (opdetails,
-						 spec,
-						 msg);
+                                                 spec,
+                                                 msg);
 }
 
 int
 TAO_IIOP_Transport::messaging_init (CORBA::Octet major,
-				    CORBA::Octet minor)
+                                    CORBA::Octet minor)
 {
   this->messaging_object_->init (major,
-				 minor);
+                                 minor);
   return 1;
 }
 
@@ -272,12 +274,12 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
     {
       // Check whether it is a IIOP acceptor
       if ((*acceptor)->tag () == TAO_TAG_IIOP_PROFILE)
-	{
-	  // @@ Why isn't the return value checked!
-	  //	  -Ossama
-	  this->get_listen_point (listen_point_list,
-				  *acceptor);
-	}
+        {
+          // @@ Why isn't the return value checked!
+          //      -Ossama
+          this->get_listen_point (listen_point_list,
+                                  *acceptor);
+        }
     }
 
   // We have the ListenPointList at this point. Create a output CDR
@@ -291,7 +293,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-						    cdr);
+                                                    cdr);
 
   return;
 }
@@ -303,7 +305,7 @@ TAO_IIOP_Transport::get_listen_point (
 {
   TAO_IIOP_Acceptor *iiop_acceptor =
     ACE_dynamic_cast (TAO_IIOP_Acceptor *,
-		      acceptor );
+                      acceptor );
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
   const ACE_INET_Addr *endpoint_addr =
@@ -320,10 +322,10 @@ TAO_IIOP_Transport::get_listen_point (
       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 ACE_TEXT ("(%P|%t) Could not resolve local ")
-			 ACE_TEXT ("host address in ")
-			 ACE_TEXT ("get_listen_point()\n")),
-			-1);
+                         ACE_TEXT ("(%P|%t) Could not resolve local ")
+                         ACE_TEXT ("host address in ")
+                         ACE_TEXT ("get_listen_point()\n")),
+                        -1);
     }
 
   // Note: Looks like there is no point in sending the list of
@@ -333,13 +335,13 @@ TAO_IIOP_Transport::get_listen_point (
 
   // Get the hostname for the local address
   if (iiop_acceptor->hostname (this->orb_core_,
-			       local_addr,
-			       local_interface.out ()) == -1)
+                               local_addr,
+                               local_interface.out ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 ACE_TEXT ("(%P|%t) Could not resolve local host")
-			 ACE_TEXT (" name \n")),
-			-1);
+                         ACE_TEXT ("(%P|%t) Could not resolve local host")
+                         ACE_TEXT (" name \n")),
+                        -1);
     }
 
   for (size_t index = 0;
@@ -347,20 +349,20 @@ TAO_IIOP_Transport::get_listen_point (
        index++)
     {
       if (local_addr.get_ip_address()
-	  == endpoint_addr[index].get_ip_address())
-	{
-	  // Get the count of the number of elements
-	  CORBA::ULong len = listen_point_list.length ();
+          == endpoint_addr[index].get_ip_address())
+        {
+          // Get the count of the number of elements
+          CORBA::ULong len = listen_point_list.length ();
 
-	  // Increase the length by 1
-	  listen_point_list.length (len + 1);
+          // Increase the length by 1
+          listen_point_list.length (len + 1);
 
-	  // We have the connection and the acceptor endpoint on the
-	  // same interface
-	  IIOP::ListenPoint &point = listen_point_list[len];
-	  point.host = CORBA::string_dup (local_interface.in ());
-	  point.port = endpoint_addr[index].get_port_number ();
-	}
+          // We have the connection and the acceptor endpoint on the
+          // same interface
+          IIOP::ListenPoint &point = listen_point_list[len];
+          point.host = CORBA::string_dup (local_interface.in ());
+          point.port = endpoint_addr[index].get_port_number ();
+        }
     }
 
   return 1;
