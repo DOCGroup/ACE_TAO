@@ -1,3 +1,11 @@
+Fri Jul  9 11:14:03 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated the UIOP pluggable transport protocol usage guidelines
+	  about the importance of using absolute and relative paths
+	  consistently with a given UIOP rendezvous point.
+
 Fri Jul  9 10:58:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/run_test.pl:
