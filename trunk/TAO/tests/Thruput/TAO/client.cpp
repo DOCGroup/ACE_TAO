@@ -25,7 +25,7 @@ int print_usage (void);
 char Usage[] =
      "Usage: client [-options] \n"
      "Common options:\n"
-     "-i <ior> IOR string that the server outputs when started\n"
+     "-i <ior> Object reference string that the server outputs when started\n"
      "-l ##    length of bufs read from or written to network (default 8192)\n"
      "-v       verbose: print more statistics\n"
      "-d ##    debug level\n"
@@ -33,8 +33,8 @@ char Usage[] =
      "-L ##    Output file name to store results\n"
      "-S ##    Total Data Size to be sent\n"
      "-q <type> Send Sequence: Enumeration for various data types:\n"
-     "s = short, l = long,  d = double, c = char\n"
-     "o = octet, S = BinStruct \n";
+     "          s = short, l = long,  d = double, c = char\n"
+     "          o = octet, S = BinStruct \n";
 
 CORBA::Long trans = 1;          // we are a client - used for debugging purposes
 CORBA::Long buflen = 8 * 1024;	// length of buffer, default 8,192 bytes

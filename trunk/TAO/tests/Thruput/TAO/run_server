@@ -1,4 +1,4 @@
-#!/bin/csh
+#!/bin/csh -x
 #
 # Usage: server <switches>
 # -u : use IOR 
@@ -7,4 +7,5 @@
 # -OAhost <host name>  ************* must provide this for this version
 # -OAthread : use threaded version as opposed to reactive
 #
-server -f m -ORBhost mambo.cs.wustl.edu #-OAthread
+
+server -d 1 -f m -ORBhost `hostname` -ORBobjrefstyle url #-OAthread

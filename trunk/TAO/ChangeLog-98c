@@ -1,3 +1,11 @@
+Thu Mar 12 20:40:09 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
+
+	* tests/Thruput/TAO/client.cpp:
+	* tests/Thruput/TAO/run_client:
+	* tests/Thruput/TAO/run_server:	
+	* tests/Thruput/TAO/run_test: Minor fixes in the scripts and usage
+ 	message.
+
 Thu Mar 12 18:02:06 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* tao/request.cpp:
