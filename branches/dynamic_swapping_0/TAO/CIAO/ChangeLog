@@ -1,3 +1,21 @@
+Wed Nov 10 10:45:41 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * examples/Hello/Sender/New_Sender_svnt.h:
+        * examples/Hello/Sender/New_Sender_svnt.cpp:
+        * DAnCE/ciao/Swapping_Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Swapping_Servant_Impl_Bas.h:
+        * DAnCE/ciao/Swapping_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Swapping_Servant_Impl_T.h:
+        * DAnCE/ciao/Swapping_Container.cpp:
+        * DAnCE/ciao/Swapping_Container.h:
+        * DAnCE/ciao/Swapping_Container.inl:
+        * DAnCE/ciao/Dynamic_Component_Activator.cpp:
+        * DAnCE/ciao/Dynamic_Component_Activator.h:
+        * DAnCE/ciao/Dynamic_Component_Servant_Base.h:
+
+          Added initial check-ins for allowing dynamic swapping
+          of component implementations.
+
 Fri Nov  5 09:55:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTrip/client.cpp:
