@@ -1,3 +1,9 @@
+Thu Apr 24 08:14:42 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Fix a bug with cd() caused by relative paths in directories.
+
 Thu Apr 24 11:06:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_auto_compile.pl:
@@ -26,17 +32,17 @@ Thu Apr 24 07:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Apr 23 18:19:07 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/iosfwd.h:
+        * ace/iosfwd.h:
 
-	  Fixed another configuration where forward declarations would not
-	  exist (i.e. ACE_HAS_STANDARD_CPP_LIBRARY &&
-	  ACE_USES_OLD_IOSTREAMS).
+          Fixed another configuration where forward declarations would not
+          exist (i.e. ACE_HAS_STANDARD_CPP_LIBRARY &&
+          ACE_USES_OLD_IOSTREAMS).
 
 Wed Apr 23 16:57:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Multihomed_INET_Addr.cpp: Added explicit template
-	  instantiations. This should fix big chunk of the problems in our
-	  daily builds.
+        * ace/Multihomed_INET_Addr.cpp: Added explicit template
+          instantiations. This should fix big chunk of the problems in our
+          daily builds.
 
 Wed Apr 23 21:22:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
@@ -53,18 +59,18 @@ Wed Apr 23 21:22:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
 Wed Apr 23 15:31:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_Acceptor.cpp: Removed the use of len_ptr variable in
-	  accept method as it is not needed it at all for MEM_Acceptor and
-	  the accept were trying to dereference the the null pointer when
-	  resolving the remote address.  Thanks to Subhabrata Biswas
-	  <Subhabrata.Biswas@roamware.com> for reporting the problem.
+        * ace/MEM_Acceptor.cpp: Removed the use of len_ptr variable in
+          accept method as it is not needed it at all for MEM_Acceptor and
+          the accept were trying to dereference the the null pointer when
+          resolving the remote address.  Thanks to Subhabrata Biswas
+          <Subhabrata.Biswas@roamware.com> for reporting the problem.
 
 Wed Apr 23 16:10:07 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/config-win32-msvc-6.h:
+        * ace/config-win32-msvc-6.h:
 
-	  VC 6 does not have support for member templates.  Therefore,
-	  added #define ACE_LACKS_MEMBER_TEMPLATES to the config file.
+          VC 6 does not have support for member templates.  Therefore,
+          added #define ACE_LACKS_MEMBER_TEMPLATES to the config file.
 
 Wed Apr 23 13:54:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -94,19 +100,19 @@ Wed Apr 23 12:32:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Apr 23 09:40:26 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/DSRT_Schedulers.cpp:
-	* Kokyu/DSRT_Schedulers.h:
+        * Kokyu/DSRT_Schedulers.cpp:
+        * Kokyu/DSRT_Schedulers.h:
 
-	  Added two new files while restructuring DSRT Scheduler classes.
+          Added two new files while restructuring DSRT Scheduler classes.
 
-	* Kokyu/DSRT_Dispatcher_Impl.cpp:
-	* Kokyu/DSRT_Dispatcher_Impl.h:
-	* Kokyu/Kokyu.cpp:
-	* Kokyu/Kokyu.h:
-	* Kokyu/tests/DSRT_MIF/Makefile:
-	* Kokyu/Makefile:
+        * Kokyu/DSRT_Dispatcher_Impl.cpp:
+        * Kokyu/DSRT_Dispatcher_Impl.h:
+        * Kokyu/Kokyu.cpp:
+        * Kokyu/Kokyu.h:
+        * Kokyu/tests/DSRT_MIF/Makefile:
+        * Kokyu/Makefile:
 
-	  Restructured the DSRT related scheduler classes.
+          Restructured the DSRT related scheduler classes.
 
 Wed Apr 23 06:30:04 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -116,17 +122,17 @@ Wed Apr 23 06:30:04 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 22 19:37:14 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ChangeLog:
+        * ChangeLog:
 
-	  Removed some entries in this Changelog, which should have been
-	  added to the TAO ChangeLog. Thanks to Steve Huston for pointing
-	  this out.
+          Removed some entries in this Changelog, which should have been
+          added to the TAO ChangeLog. Thanks to Steve Huston for pointing
+          this out.
 
 Tue Apr 22 18:29:18 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/ace.mpc: Moved ARGV.cpp and Argv_Type_Converter.cpp from the
-	  Utils section to the OS section. This is a follow-up to:
-	  Fri Mar 28 16:04:28 2003  Steve Huston  <shuston@riverace.com>
+        * ace/ace.mpc: Moved ARGV.cpp and Argv_Type_Converter.cpp from the
+          Utils section to the OS section. This is a follow-up to:
+          Fri Mar 28 16:04:28 2003  Steve Huston  <shuston@riverace.com>
 
 Tue Apr 22 17:25:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
