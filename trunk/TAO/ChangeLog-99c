@@ -1,7 +1,7 @@
 Wed Apr 28 09:47:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO/tests/CDR/octet_sequence.cpp: replaced use of cout
-          with ACE_DEBUG statements.  Thanks to James D Rucker
+          with ACE_DEBUG statements.  Thanks to James D. Rucker
           <jdrucker@huey.jpl.nasa.gov> for reporting that it
           didn't build on VxWorks.
 
