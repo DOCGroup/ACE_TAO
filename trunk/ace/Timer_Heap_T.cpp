@@ -144,7 +144,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Heap_T (void)
   ACE_TRACE ("ACE_Timer_Heap::~ACE_Timer_Heap");
 
   // Clean up all the nodes still in the queue
-  for (size_t i = 0; i < this->cur_size_; )
+  for (size_t i = 0; i < this->cur_size_; i++)
     {
       this->upcall_functor ().deletion (*this, 
                                         this->heap_[i]->get_type (), 
