@@ -1,3 +1,21 @@
+Mon Sep 17 11:36:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/run_tests.lst: This is the script used by the shell
+	  script in that directory. As the name is confusing this is being
+	  moved as a new file.
+
+	* tests/run_tests_remote.lst: Renamed the run_tests.lst as
+	  run_tests_shell.lst. This is invoked by run_tests.sh 
+
+	* tests/run_tests.sh: Renamed as a new file.
+	
+	* tests/run_tests_remote.sh: Renamed the file run_tests.sh as this
+	  one. This script can be used to run tests remotely on a
+	  CHORUS/ClassiX/MVME targets. Further this can also be used to
+	  run tests on platforms that dont support perl or do not have
+	  perl. 
+	
+
 Sun Sep 16 11:19:01 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.20 released.
