@@ -11,9 +11,9 @@
 //
 // = DESCRIPTION
 //
-//   The RTPortableServer module specified in ptc/99-05-03 (Real-Time
-//   CORBA Joint Revised Submission May 28, 1999).  This file is
-//   equivalent to OMG's RTPortableServer.idl.
+//   The RTPortableServer module specified in CORBA v2.4.2 Chapter
+//   24 (February, 2001).  This file is equivalent to OMG's
+//   RTPortableServer.idl.
 //
 //   This file was used to generate the code in
 //   RTPOA{C,S,S_T}.{h,i,cpp} The command used to generate code

@@ -1,5 +1,5 @@
---- orig/RTCORBAC.cpp	Tue Jan 30 19:10:17 2001
-+++ RTCORBAC.cpp	Tue Jan 30 19:07:30 2001
+--- orig/RTCORBAC.cpp	Sun Mar  4 10:31:32 2001
++++ RTCORBAC.cpp	Sun Mar  4 10:36:38 2001
 @@ -21,6 +21,11 @@
  
  #include "RTCORBAC.h"
@@ -12,8 +12,8 @@
  #if TAO_HAS_INTERCEPTORS == 1
  #include "tao/RequestInfo_Util.h"
  #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-@@ -843,6 +848,20 @@
-   return "IDL:omg.org/RTCORBA/ProtocolProperties:1.0";
+@@ -851,6 +856,20 @@
+   return "IDL:omg.org/RTCORBA/PrivateConnectionPolicy:1.0";
  }
  
 +//////////////////////////////////////////////////////

@@ -149,6 +149,21 @@ public:
                       RTCORBA::RTORB::MutexNotFound
                       ));
 
+  /**
+   * Create and return a TCPProtocolProperties instance with the specified
+   * parameters.
+   */
+  virtual RTCORBA::TCPProtocolProperties_ptr
+  create_tcp_protocol_properties (
+                                  CORBA::Long send_buffer_size,
+                                  CORBA::Long recv_buffer_size,
+                                  CORBA::Boolean keep_alive,
+                                  CORBA::Boolean dont_route,
+                                  CORBA::Boolean no_delay,
+                                  CORBA::Environment
+                                  &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException ));
+
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
   virtual RTCORBA::ThreadpoolId
   create_threadpool (CORBA::ULong stacksize,

@@ -82,11 +82,9 @@ module IOP
   // const ServiceId FORWARDED_IDENTITY = 8;
   const ServiceId UnknownExceptionInfo = 9;
 
-  // The following are defined in the ptc/99-05-03:
-  // Real-Time CORBA Joint Revised Submission May 28, 1999
+  // The following are defined in CORBA v2.4.2 Chapter 24 (February, 2001):
   const ServiceId RTCorbaPriority = 10;
   const ServiceId RTCorbaPriorityRange = 11;
-
 
   // The following are defined in the ptc/2000-04-04:
   // Fault Tolerant CORBA Specification, V1.0

@@ -77,7 +77,7 @@ RTCORBA::ThreadpoolLane_var::operator= (const ::RTCORBA::ThreadpoolLane_var &p)
         {
           ThreadpoolLane *deep_copy =
             new ThreadpoolLane (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               ThreadpoolLane *tmp = deep_copy;
@@ -87,7 +87,7 @@ RTCORBA::ThreadpoolLane_var::operator= (const ::RTCORBA::ThreadpoolLane_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -122,13 +122,13 @@ RTCORBA::ThreadpoolLane_var::operator const ::RTCORBA::ThreadpoolLane &() const 
 }
 
 ACE_INLINE
-RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() // cast 
+RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() const // cast 
+RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() const // cast
 {
   return *this->ptr_;
 }
@@ -145,7 +145,7 @@ RTCORBA::ThreadpoolLane_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::RTCORBA::ThreadpoolLane &
 RTCORBA::ThreadpoolLane_var::out (void)
 {
@@ -166,7 +166,7 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CI_
 
@@ -179,24 +179,24 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
     ACE_NEW_RETURN (retval, RTCORBA::ThreadpoolLane[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (RTCORBA::ThreadpoolLane *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -205,7 +205,7 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs)
   // Copy constructor.
@@ -215,10 +215,10 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
     {
       RTCORBA::ThreadpoolLane *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (this->maximum_);
       RTCORBA::ThreadpoolLane * const tmp2 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -226,14 +226,14 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator= (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -246,18 +246,18 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     RTCORBA::ThreadpoolLane *tmp1 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane *, this->buffer_);
     RTCORBA::ThreadpoolLane * const tmp2 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE RTCORBA::ThreadpoolLane &
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator[] (CORBA::ULong i)
@@ -267,7 +267,7 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
     RTCORBA::ThreadpoolLane* tmp = ACE_reinterpret_cast(RTCORBA::ThreadpoolLane*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const RTCORBA::ThreadpoolLane &
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator[] (CORBA::ULong i) const
   // operator []
@@ -276,9 +276,9 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
     RTCORBA::ThreadpoolLane * const tmp = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE RTCORBA::ThreadpoolLane *
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::get_buffer (CORBA::Boolean orphan)
   {
@@ -312,13 +312,13 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
     }
     return result;
   }
-  
+
   ACE_INLINE const RTCORBA::ThreadpoolLane *
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const RTCORBA::ThreadpoolLane * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -335,11 +335,11 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_RTCORBA_THREADPOOLLANES_CI_)
 #define _RTCORBA_THREADPOOLLANES_CI_
@@ -402,7 +402,7 @@ RTCORBA::ThreadpoolLanes_var::operator= (const ::RTCORBA::ThreadpoolLanes_var &p
         {
           ThreadpoolLanes *deep_copy =
             new ThreadpoolLanes (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               ThreadpoolLanes *tmp = deep_copy;
@@ -412,7 +412,7 @@ RTCORBA::ThreadpoolLanes_var::operator= (const ::RTCORBA::ThreadpoolLanes_var &p
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -440,20 +440,20 @@ RTCORBA::ThreadpoolLanes_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ThreadpoolLanes_var::operator const ::RTCORBA::ThreadpoolLanes &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() // cast 
+ACE_INLINE
+RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() const // cast 
+ACE_INLINE
+RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() const // cast
 {
   return *this->ptr_;
 }
@@ -482,7 +482,7 @@ RTCORBA::ThreadpoolLanes_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::RTCORBA::ThreadpoolLanes *&
 RTCORBA::ThreadpoolLanes_var::out (void)
 {
@@ -543,7 +543,7 @@ RTCORBA::ThreadpoolLanes_out::operator= (ThreadpoolLanes *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ThreadpoolLanes_out::operator ::RTCORBA::ThreadpoolLanes *&() // cast
 {
   return this->ptr_;
@@ -620,14 +620,14 @@ RTCORBA::PriorityModelPolicy_var::operator= (const ::RTCORBA::PriorityModelPolic
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::PriorityModelPolicy_var::operator const ::RTCORBA::PriorityModelPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::PriorityModelPolicy_var::operator ::RTCORBA::PriorityModelPolicy_ptr &() // cast 
+ACE_INLINE
+RTCORBA::PriorityModelPolicy_var::operator ::RTCORBA::PriorityModelPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -719,7 +719,7 @@ RTCORBA::PriorityModelPolicy_out::operator= (PriorityModelPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::PriorityModelPolicy_out::operator ::RTCORBA::PriorityModelPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -790,14 +790,14 @@ RTCORBA::ThreadpoolPolicy_var::operator= (const ::RTCORBA::ThreadpoolPolicy_var 
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ThreadpoolPolicy_var::operator const ::RTCORBA::ThreadpoolPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ThreadpoolPolicy_var::operator ::RTCORBA::ThreadpoolPolicy_ptr &() // cast 
+ACE_INLINE
+RTCORBA::ThreadpoolPolicy_var::operator ::RTCORBA::ThreadpoolPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -889,7 +889,7 @@ RTCORBA::ThreadpoolPolicy_out::operator= (ThreadpoolPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ThreadpoolPolicy_out::operator ::RTCORBA::ThreadpoolPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -903,897 +903,6 @@ RTCORBA::ThreadpoolPolicy_out::ptr (void) // ptr
 
 ACE_INLINE ::RTCORBA::ThreadpoolPolicy_ptr
 RTCORBA::ThreadpoolPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CI_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::PrivateConnectionPolicy_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::PrivateConnectionPolicy_var::PrivateConnectionPolicy_var (void) // default constructor
-  : ptr_ (PrivateConnectionPolicy::_nil ())
-{}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::PrivateConnectionPolicy_var::PrivateConnectionPolicy_var (const ::RTCORBA::PrivateConnectionPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (PrivateConnectionPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-RTCORBA::PrivateConnectionPolicy_var::~PrivateConnectionPolicy_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE RTCORBA::PrivateConnectionPolicy_var &
-RTCORBA::PrivateConnectionPolicy_var::operator= (PrivateConnectionPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::PrivateConnectionPolicy_var &
-RTCORBA::PrivateConnectionPolicy_var::operator= (const ::RTCORBA::PrivateConnectionPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::PrivateConnectionPolicy_var::operator const ::RTCORBA::PrivateConnectionPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::PrivateConnectionPolicy_var::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr &
-RTCORBA::PrivateConnectionPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr &
-RTCORBA::PrivateConnectionPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::PrivateConnectionPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CI_)
-#define _RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::PrivateConnectionPolicy_out
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (PrivateConnectionPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (PrivateConnectionPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (const ::RTCORBA::PrivateConnectionPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (PrivateConnectionPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_out &
-RTCORBA::PrivateConnectionPolicy_out::operator= (const ::RTCORBA::PrivateConnectionPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (PrivateConnectionPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::PrivateConnectionPolicy_out &
-RTCORBA::PrivateConnectionPolicy_out::operator= (const ::RTCORBA::PrivateConnectionPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE RTCORBA::PrivateConnectionPolicy_out &
-RTCORBA::PrivateConnectionPolicy_out::operator= (PrivateConnectionPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::PrivateConnectionPolicy_out::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr &
-RTCORBA::PrivateConnectionPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class RTCORBA::PriorityBand_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::PriorityBand_var::PriorityBand_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-RTCORBA::PriorityBand_var::PriorityBand_var (PriorityBand *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-RTCORBA::PriorityBand_var::PriorityBand_var (const ::RTCORBA::PriorityBand_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, ::RTCORBA::PriorityBand (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-// fixed-size types only
-ACE_INLINE
-RTCORBA::PriorityBand_var::PriorityBand_var (const ::RTCORBA::PriorityBand &p)
-{
-  ACE_NEW (this->ptr_, ::RTCORBA::PriorityBand (p));
-}
-
-ACE_INLINE
-RTCORBA::PriorityBand_var::~PriorityBand_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE RTCORBA::PriorityBand_var &
-RTCORBA::PriorityBand_var::operator= (PriorityBand *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBand_var &
-RTCORBA::PriorityBand_var::operator= (const ::RTCORBA::PriorityBand_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          PriorityBand *deep_copy =
-            new PriorityBand (*p.ptr_);
-          
-          if (deep_copy != 0)
-            {
-              PriorityBand *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-// fixed-size types only
-ACE_INLINE RTCORBA::PriorityBand_var &
-RTCORBA::PriorityBand_var::operator= (const ::RTCORBA::PriorityBand &p)
-{
-  if (this->ptr_ != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::PriorityBand (p), *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const ::RTCORBA::PriorityBand *
-RTCORBA::PriorityBand_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBand *
-RTCORBA::PriorityBand_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::PriorityBand_var::operator const ::RTCORBA::PriorityBand &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() const // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const ::RTCORBA::PriorityBand &
-RTCORBA::PriorityBand_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBand &
-RTCORBA::PriorityBand_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for fixed size 
-ACE_INLINE ::RTCORBA::PriorityBand &
-RTCORBA::PriorityBand_var::out (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBand
-RTCORBA::PriorityBand_var::_retn (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBand *
-RTCORBA::PriorityBand_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CI_
-
-  // = Static operations.
-  ACE_INLINE RTCORBA::PriorityBand *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    RTCORBA::PriorityBand *retval = 0;
-    ACE_NEW_RETURN (retval, RTCORBA::PriorityBand[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (RTCORBA::PriorityBand *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum,
-    CORBA::ULong length,
-    RTCORBA::PriorityBand *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      RTCORBA::PriorityBand *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->maximum_);
-      RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator= (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
-        _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    RTCORBA::PriorityBand *tmp1 = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
-    RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    return *this;
-  }
-  
-  // = Accessors.
-  ACE_INLINE RTCORBA::PriorityBand &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::PriorityBand* tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const RTCORBA::PriorityBand &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::PriorityBand * const tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE RTCORBA::PriorityBand *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (CORBA::Boolean orphan)
-  {
-    RTCORBA::PriorityBand *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (RTCORBA::PriorityBand*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const RTCORBA::PriorityBand *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const RTCORBA::PriorityBand * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  RTCORBA::PriorityBand *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
-  
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_RTCORBA_PRIORITYBANDS_CI_)
-#define _RTCORBA_PRIORITYBANDS_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::PriorityBands_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::PriorityBands_var::PriorityBands_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-RTCORBA::PriorityBands_var::PriorityBands_var (PriorityBands *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-RTCORBA::PriorityBands_var::PriorityBands_var (const ::RTCORBA::PriorityBands_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, ::RTCORBA::PriorityBands (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-// fixed-size base types only
-ACE_INLINE
-RTCORBA::PriorityBands_var::PriorityBands_var (const ::RTCORBA::PriorityBands &p)
-{
-  ACE_NEW (this->ptr_, ::RTCORBA::PriorityBands (p));
-}
-
-ACE_INLINE
-RTCORBA::PriorityBands_var::~PriorityBands_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE RTCORBA::PriorityBands_var &
-RTCORBA::PriorityBands_var::operator= (PriorityBands *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands_var &
-RTCORBA::PriorityBands_var::operator= (const ::RTCORBA::PriorityBands_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          PriorityBands *deep_copy =
-            new PriorityBands (*p.ptr_);
-          
-          if (deep_copy != 0)
-            {
-              PriorityBands *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-// fixed-size types only
-ACE_INLINE ::RTCORBA::PriorityBands_var &
-RTCORBA::PriorityBands_var::operator= (const ::RTCORBA::PriorityBands &p)
-{
-  if (this->ptr_ != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::PriorityBands (p), *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const ::RTCORBA::PriorityBands *
-RTCORBA::PriorityBands_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands *
-RTCORBA::PriorityBands_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::PriorityBands_var::operator const ::RTCORBA::PriorityBands &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() const // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE RTCORBA::PriorityBand &
-RTCORBA::PriorityBands_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const RTCORBA::PriorityBand &
-RTCORBA::PriorityBands_var::operator[] (CORBA::ULong index) const
-{
-  return ACE_const_cast (const RTCORBA::PriorityBand &, this->ptr_->operator[] (index));
-}
-
-ACE_INLINE const ::RTCORBA::PriorityBands &
-RTCORBA::PriorityBands_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands &
-RTCORBA::PriorityBands_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE ::RTCORBA::PriorityBands *&
-RTCORBA::PriorityBands_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands *
-RTCORBA::PriorityBands_var::_retn (void)
-{
-  ::RTCORBA::PriorityBands *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands *
-RTCORBA::PriorityBands_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class RTCORBA::PriorityBands_out
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::PriorityBands_out::PriorityBands_out (PriorityBands *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-RTCORBA::PriorityBands_out::PriorityBands_out (PriorityBands_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-RTCORBA::PriorityBands_out::PriorityBands_out (const ::RTCORBA::PriorityBands_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (PriorityBands_out&, p).ptr_)
-{}
-
-ACE_INLINE ::RTCORBA::PriorityBands_out &
-RTCORBA::PriorityBands_out::operator= (const ::RTCORBA::PriorityBands_out &p)
-{
-  this->ptr_ = ACE_const_cast (PriorityBands_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands_out &
-RTCORBA::PriorityBands_out::operator= (PriorityBands *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::PriorityBands_out::operator ::RTCORBA::PriorityBands *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands *&
-RTCORBA::PriorityBands_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBands *
-RTCORBA::PriorityBands_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE RTCORBA::PriorityBand &
-RTCORBA::PriorityBands_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CI_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::PriorityBandedConnectionPolicy_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::PriorityBandedConnectionPolicy_var::PriorityBandedConnectionPolicy_var (void) // default constructor
-  : ptr_ (PriorityBandedConnectionPolicy::_nil ())
-{}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::PriorityBandedConnectionPolicy_var::PriorityBandedConnectionPolicy_var (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (PriorityBandedConnectionPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-RTCORBA::PriorityBandedConnectionPolicy_var::~PriorityBandedConnectionPolicy_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_var &
-RTCORBA::PriorityBandedConnectionPolicy_var::operator= (PriorityBandedConnectionPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_var &
-RTCORBA::PriorityBandedConnectionPolicy_var::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::PriorityBandedConnectionPolicy_var::operator const ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::PriorityBandedConnectionPolicy_var::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr &
-RTCORBA::PriorityBandedConnectionPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr &
-RTCORBA::PriorityBandedConnectionPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::PriorityBandedConnectionPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CI_)
-#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::PriorityBandedConnectionPolicy_out
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (const ::RTCORBA::PriorityBandedConnectionPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (PriorityBandedConnectionPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_out &
-RTCORBA::PriorityBandedConnectionPolicy_out::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (PriorityBandedConnectionPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_out &
-RTCORBA::PriorityBandedConnectionPolicy_out::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_out &
-RTCORBA::PriorityBandedConnectionPolicy_out::operator= (PriorityBandedConnectionPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::PriorityBandedConnectionPolicy_out::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr &
-RTCORBA::PriorityBandedConnectionPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -1851,14 +960,14 @@ RTCORBA::ProtocolProperties_var::operator= (const ::RTCORBA::ProtocolProperties_
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ProtocolProperties_var::operator const ::RTCORBA::ProtocolProperties_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ProtocolProperties_var::operator ::RTCORBA::ProtocolProperties_ptr &() // cast 
+ACE_INLINE
+RTCORBA::ProtocolProperties_var::operator ::RTCORBA::ProtocolProperties_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1950,7 +1059,7 @@ RTCORBA::ProtocolProperties_out::operator= (ProtocolProperties_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ProtocolProperties_out::operator ::RTCORBA::ProtocolProperties_ptr &() // cast
 {
   return this->ptr_;
@@ -1964,686 +1073,6 @@ RTCORBA::ProtocolProperties_out::ptr (void) // ptr
 
 ACE_INLINE ::RTCORBA::ProtocolProperties_ptr
 RTCORBA::ProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___VAR_CI_)
-#define _RTCORBA_TCPPROTOCOLPROPERTIES___VAR_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::TCPProtocolProperties_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::TCPProtocolProperties_var::TCPProtocolProperties_var (void) // default constructor
-  : ptr_ (TCPProtocolProperties::_nil ())
-{}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::TCPProtocolProperties_var::TCPProtocolProperties_var (const ::RTCORBA::TCPProtocolProperties_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (TCPProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-RTCORBA::TCPProtocolProperties_var::~TCPProtocolProperties_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE RTCORBA::TCPProtocolProperties_var &
-RTCORBA::TCPProtocolProperties_var::operator= (TCPProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::TCPProtocolProperties_var &
-RTCORBA::TCPProtocolProperties_var::operator= (const ::RTCORBA::TCPProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::TCPProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::TCPProtocolProperties_var::operator const ::RTCORBA::TCPProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::TCPProtocolProperties_var::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr &
-RTCORBA::TCPProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr &
-RTCORBA::TCPProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::TCPProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___OUT_CI_)
-#define _RTCORBA_TCPPROTOCOLPROPERTIES___OUT_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::TCPProtocolProperties_out
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (TCPProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (TCPProtocolProperties_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (const ::RTCORBA::TCPProtocolProperties_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (TCPProtocolProperties_out &, p).ptr_)
-{}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_out &
-RTCORBA::TCPProtocolProperties_out::operator= (const ::RTCORBA::TCPProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (TCPProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::TCPProtocolProperties_out &
-RTCORBA::TCPProtocolProperties_out::operator= (const ::RTCORBA::TCPProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE RTCORBA::TCPProtocolProperties_out &
-RTCORBA::TCPProtocolProperties_out::operator= (TCPProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::TCPProtocolProperties_out::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr &
-RTCORBA::TCPProtocolProperties_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___VAR_CI_)
-#define _RTCORBA_GIOPPROTOCOLPROPERTIES___VAR_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::GIOPProtocolProperties_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::GIOPProtocolProperties_var::GIOPProtocolProperties_var (void) // default constructor
-  : ptr_ (GIOPProtocolProperties::_nil ())
-{}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::GIOPProtocolProperties_var::GIOPProtocolProperties_var (const ::RTCORBA::GIOPProtocolProperties_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (GIOPProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-RTCORBA::GIOPProtocolProperties_var::~GIOPProtocolProperties_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE RTCORBA::GIOPProtocolProperties_var &
-RTCORBA::GIOPProtocolProperties_var::operator= (GIOPProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::GIOPProtocolProperties_var &
-RTCORBA::GIOPProtocolProperties_var::operator= (const ::RTCORBA::GIOPProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::GIOPProtocolProperties_var::operator const ::RTCORBA::GIOPProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::GIOPProtocolProperties_var::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr &
-RTCORBA::GIOPProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr &
-RTCORBA::GIOPProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::GIOPProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___OUT_CI_)
-#define _RTCORBA_GIOPPROTOCOLPROPERTIES___OUT_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::GIOPProtocolProperties_out
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (GIOPProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (GIOPProtocolProperties_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (const ::RTCORBA::GIOPProtocolProperties_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (GIOPProtocolProperties_out &, p).ptr_)
-{}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_out &
-RTCORBA::GIOPProtocolProperties_out::operator= (const ::RTCORBA::GIOPProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (GIOPProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::GIOPProtocolProperties_out &
-RTCORBA::GIOPProtocolProperties_out::operator= (const ::RTCORBA::GIOPProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE RTCORBA::GIOPProtocolProperties_out &
-RTCORBA::GIOPProtocolProperties_out::operator= (GIOPProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::GIOPProtocolProperties_out::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr &
-RTCORBA::GIOPProtocolProperties_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CI_)
-#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::UnixDomainProtocolProperties_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::UnixDomainProtocolProperties_var::UnixDomainProtocolProperties_var (void) // default constructor
-  : ptr_ (UnixDomainProtocolProperties::_nil ())
-{}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::UnixDomainProtocolProperties_var::UnixDomainProtocolProperties_var (const ::RTCORBA::UnixDomainProtocolProperties_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (UnixDomainProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-RTCORBA::UnixDomainProtocolProperties_var::~UnixDomainProtocolProperties_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE RTCORBA::UnixDomainProtocolProperties_var &
-RTCORBA::UnixDomainProtocolProperties_var::operator= (UnixDomainProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::UnixDomainProtocolProperties_var &
-RTCORBA::UnixDomainProtocolProperties_var::operator= (const ::RTCORBA::UnixDomainProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::UnixDomainProtocolProperties_var::operator const ::RTCORBA::UnixDomainProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::UnixDomainProtocolProperties_var::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr &
-RTCORBA::UnixDomainProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr &
-RTCORBA::UnixDomainProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::UnixDomainProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CI_)
-#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::UnixDomainProtocolProperties_out
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (const ::RTCORBA::UnixDomainProtocolProperties_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (UnixDomainProtocolProperties_out &, p).ptr_)
-{}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_out &
-RTCORBA::UnixDomainProtocolProperties_out::operator= (const ::RTCORBA::UnixDomainProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (UnixDomainProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::UnixDomainProtocolProperties_out &
-RTCORBA::UnixDomainProtocolProperties_out::operator= (const ::RTCORBA::UnixDomainProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE RTCORBA::UnixDomainProtocolProperties_out &
-RTCORBA::UnixDomainProtocolProperties_out::operator= (UnixDomainProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::UnixDomainProtocolProperties_out::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr &
-RTCORBA::UnixDomainProtocolProperties_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CI_)
-#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::SharedMemoryProtocolProperties_var
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::SharedMemoryProtocolProperties_var::SharedMemoryProtocolProperties_var (void) // default constructor
-  : ptr_ (SharedMemoryProtocolProperties::_nil ())
-{}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-RTCORBA::SharedMemoryProtocolProperties_var::SharedMemoryProtocolProperties_var (const ::RTCORBA::SharedMemoryProtocolProperties_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (SharedMemoryProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-RTCORBA::SharedMemoryProtocolProperties_var::~SharedMemoryProtocolProperties_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_var &
-RTCORBA::SharedMemoryProtocolProperties_var::operator= (SharedMemoryProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_var &
-RTCORBA::SharedMemoryProtocolProperties_var::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::SharedMemoryProtocolProperties_var::operator const ::RTCORBA::SharedMemoryProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTCORBA::SharedMemoryProtocolProperties_var::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr &
-RTCORBA::SharedMemoryProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr &
-RTCORBA::SharedMemoryProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::SharedMemoryProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CI_)
-#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CI_
-
-// *************************************************************
-// Inline operations for class RTCORBA::SharedMemoryProtocolProperties_out
-// *************************************************************
-
-ACE_INLINE
-RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-}
-
-ACE_INLINE
-RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (const ::RTCORBA::SharedMemoryProtocolProperties_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (SharedMemoryProtocolProperties_out &, p).ptr_)
-{}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_out &
-RTCORBA::SharedMemoryProtocolProperties_out::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (SharedMemoryProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_out &
-RTCORBA::SharedMemoryProtocolProperties_out::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_out &
-RTCORBA::SharedMemoryProtocolProperties_out::operator= (SharedMemoryProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTCORBA::SharedMemoryProtocolProperties_out::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr &
-RTCORBA::SharedMemoryProtocolProperties_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -2702,7 +1131,7 @@ RTCORBA::Protocol_var::operator= (const ::RTCORBA::Protocol_var &p)
         {
           Protocol *deep_copy =
             new Protocol (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               Protocol *tmp = deep_copy;
@@ -2712,7 +1141,7 @@ RTCORBA::Protocol_var::operator= (const ::RTCORBA::Protocol_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -2735,20 +1164,20 @@ RTCORBA::Protocol_var::operator const ::RTCORBA::Protocol &() const // cast
 }
 
 ACE_INLINE
-RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() // cast 
+RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() const // cast 
+RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-RTCORBA::Protocol_var::operator ::RTCORBA::Protocol *&() // cast 
+RTCORBA::Protocol_var::operator ::RTCORBA::Protocol *&() // cast
 {
   return this->ptr_;
 }
@@ -2765,7 +1194,7 @@ RTCORBA::Protocol_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::RTCORBA::Protocol *&
 RTCORBA::Protocol_var::out (void)
 {
@@ -2826,7 +1255,7 @@ RTCORBA::Protocol_out::operator= (Protocol *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::Protocol_out::operator ::RTCORBA::Protocol *&() // cast
 {
   return this->ptr_;
@@ -2846,7 +1275,7 @@ RTCORBA::Protocol_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CI_
 
@@ -2859,24 +1288,24 @@ RTCORBA::Protocol_out::operator-> (void)
     ACE_NEW_RETURN (retval, RTCORBA::Protocol[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (RTCORBA::Protocol *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -2885,7 +1314,7 @@ RTCORBA::Protocol_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs)
   // Copy constructor.
@@ -2895,10 +1324,10 @@ RTCORBA::Protocol_out::operator-> (void)
     {
       RTCORBA::Protocol *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (this->maximum_);
       RTCORBA::Protocol * const tmp2 = ACE_reinterpret_cast (RTCORBA::Protocol * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -2906,14 +1335,14 @@ RTCORBA::Protocol_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList &
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator= (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -2926,18 +1355,18 @@ RTCORBA::Protocol_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     RTCORBA::Protocol *tmp1 = ACE_reinterpret_cast (RTCORBA::Protocol *, this->buffer_);
     RTCORBA::Protocol * const tmp2 = ACE_reinterpret_cast (RTCORBA::Protocol * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE RTCORBA::Protocol &
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator[] (CORBA::ULong i)
@@ -2947,7 +1376,7 @@ RTCORBA::Protocol_out::operator-> (void)
     RTCORBA::Protocol* tmp = ACE_reinterpret_cast(RTCORBA::Protocol*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const RTCORBA::Protocol &
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator[] (CORBA::ULong i) const
   // operator []
@@ -2956,9 +1385,9 @@ RTCORBA::Protocol_out::operator-> (void)
     RTCORBA::Protocol * const tmp = ACE_reinterpret_cast (RTCORBA::Protocol* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE RTCORBA::Protocol *
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::get_buffer (CORBA::Boolean orphan)
   {
@@ -2992,13 +1421,13 @@ RTCORBA::Protocol_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const RTCORBA::Protocol *
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const RTCORBA::Protocol * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -3015,11 +1444,11 @@ RTCORBA::Protocol_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_RTCORBA_PROTOCOLLIST_CI_)
 #define _RTCORBA_PROTOCOLLIST_CI_
@@ -3075,7 +1504,7 @@ RTCORBA::ProtocolList_var::operator= (const ::RTCORBA::ProtocolList_var &p)
         {
           ProtocolList *deep_copy =
             new ProtocolList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               ProtocolList *tmp = deep_copy;
@@ -3085,7 +1514,7 @@ RTCORBA::ProtocolList_var::operator= (const ::RTCORBA::ProtocolList_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -3101,27 +1530,27 @@ RTCORBA::ProtocolList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ProtocolList_var::operator const ::RTCORBA::ProtocolList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() // cast 
+ACE_INLINE
+RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() const // cast 
+ACE_INLINE
+RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList *&() // cast 
+RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList *&() // cast
 {
   return this->ptr_;
 }
@@ -3150,7 +1579,7 @@ RTCORBA::ProtocolList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::RTCORBA::ProtocolList *&
 RTCORBA::ProtocolList_var::out (void)
 {
@@ -3211,7 +1640,7 @@ RTCORBA::ProtocolList_out::operator= (ProtocolList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ProtocolList_out::operator ::RTCORBA::ProtocolList *&() // cast
 {
   return this->ptr_;
@@ -3288,14 +1717,14 @@ RTCORBA::ServerProtocolPolicy_var::operator= (const ::RTCORBA::ServerProtocolPol
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ServerProtocolPolicy_var::operator const ::RTCORBA::ServerProtocolPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ServerProtocolPolicy_var::operator ::RTCORBA::ServerProtocolPolicy_ptr &() // cast 
+ACE_INLINE
+RTCORBA::ServerProtocolPolicy_var::operator ::RTCORBA::ServerProtocolPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3387,7 +1816,7 @@ RTCORBA::ServerProtocolPolicy_out::operator= (ServerProtocolPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ServerProtocolPolicy_out::operator ::RTCORBA::ServerProtocolPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -3458,14 +1887,14 @@ RTCORBA::ClientProtocolPolicy_var::operator= (const ::RTCORBA::ClientProtocolPol
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ClientProtocolPolicy_var::operator const ::RTCORBA::ClientProtocolPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::ClientProtocolPolicy_var::operator ::RTCORBA::ClientProtocolPolicy_ptr &() // cast 
+ACE_INLINE
+RTCORBA::ClientProtocolPolicy_var::operator ::RTCORBA::ClientProtocolPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3557,7 +1986,7 @@ RTCORBA::ClientProtocolPolicy_out::operator= (ClientProtocolPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::ClientProtocolPolicy_out::operator ::RTCORBA::ClientProtocolPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -3571,6 +2000,1577 @@ RTCORBA::ClientProtocolPolicy_out::ptr (void) // ptr
 
 ACE_INLINE ::RTCORBA::ClientProtocolPolicy_ptr
 RTCORBA::ClientProtocolPolicy_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CI_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::PrivateConnectionPolicy_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_var::PrivateConnectionPolicy_var (void) // default constructor
+  : ptr_ (PrivateConnectionPolicy::_nil ())
+{}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
+RTCORBA::PrivateConnectionPolicy_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_var::PrivateConnectionPolicy_var (const ::RTCORBA::PrivateConnectionPolicy_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (PrivateConnectionPolicy::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_var::~PrivateConnectionPolicy_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE RTCORBA::PrivateConnectionPolicy_var &
+RTCORBA::PrivateConnectionPolicy_var::operator= (PrivateConnectionPolicy_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::PrivateConnectionPolicy_var &
+RTCORBA::PrivateConnectionPolicy_var::operator= (const ::RTCORBA::PrivateConnectionPolicy_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_var::operator const ::RTCORBA::PrivateConnectionPolicy_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_var::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
+RTCORBA::PrivateConnectionPolicy_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
+RTCORBA::PrivateConnectionPolicy_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr &
+RTCORBA::PrivateConnectionPolicy_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr &
+RTCORBA::PrivateConnectionPolicy_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
+RTCORBA::PrivateConnectionPolicy_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::RTCORBA::PrivateConnectionPolicy_ptr val = this->ptr_;
+  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CI_)
+#define _RTCORBA_PRIVATECONNECTIONPOLICY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::PrivateConnectionPolicy_out
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (PrivateConnectionPolicy_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (PrivateConnectionPolicy_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (const ::RTCORBA::PrivateConnectionPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (PrivateConnectionPolicy_out &, p).ptr_)
+{}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_out &
+RTCORBA::PrivateConnectionPolicy_out::operator= (const ::RTCORBA::PrivateConnectionPolicy_out &p)
+{
+  this->ptr_ = ACE_const_cast (PrivateConnectionPolicy_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::PrivateConnectionPolicy_out &
+RTCORBA::PrivateConnectionPolicy_out::operator= (const ::RTCORBA::PrivateConnectionPolicy_var &p)
+{
+  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE RTCORBA::PrivateConnectionPolicy_out &
+RTCORBA::PrivateConnectionPolicy_out::operator= (PrivateConnectionPolicy_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::PrivateConnectionPolicy_out::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr &
+RTCORBA::PrivateConnectionPolicy_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PrivateConnectionPolicy_ptr
+RTCORBA::PrivateConnectionPolicy_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___VAR_CI_)
+#define _RTCORBA_TCPPROTOCOLPROPERTIES___VAR_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::TCPProtocolProperties_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_var::TCPProtocolProperties_var (void) // default constructor
+  : ptr_ (TCPProtocolProperties::_nil ())
+{}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
+RTCORBA::TCPProtocolProperties_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_var::TCPProtocolProperties_var (const ::RTCORBA::TCPProtocolProperties_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (TCPProtocolProperties::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_var::~TCPProtocolProperties_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE RTCORBA::TCPProtocolProperties_var &
+RTCORBA::TCPProtocolProperties_var::operator= (TCPProtocolProperties_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::TCPProtocolProperties_var &
+RTCORBA::TCPProtocolProperties_var::operator= (const ::RTCORBA::TCPProtocolProperties_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::RTCORBA::TCPProtocolProperties::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_var::operator const ::RTCORBA::TCPProtocolProperties_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_var::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
+RTCORBA::TCPProtocolProperties_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
+RTCORBA::TCPProtocolProperties_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr &
+RTCORBA::TCPProtocolProperties_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr &
+RTCORBA::TCPProtocolProperties_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
+RTCORBA::TCPProtocolProperties_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::RTCORBA::TCPProtocolProperties_ptr val = this->ptr_;
+  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES___OUT_CI_)
+#define _RTCORBA_TCPPROTOCOLPROPERTIES___OUT_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::TCPProtocolProperties_out
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (TCPProtocolProperties_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (TCPProtocolProperties_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (const ::RTCORBA::TCPProtocolProperties_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (TCPProtocolProperties_out &, p).ptr_)
+{}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_out &
+RTCORBA::TCPProtocolProperties_out::operator= (const ::RTCORBA::TCPProtocolProperties_out &p)
+{
+  this->ptr_ = ACE_const_cast (TCPProtocolProperties_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::TCPProtocolProperties_out &
+RTCORBA::TCPProtocolProperties_out::operator= (const ::RTCORBA::TCPProtocolProperties_var &p)
+{
+  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE RTCORBA::TCPProtocolProperties_out &
+RTCORBA::TCPProtocolProperties_out::operator= (TCPProtocolProperties_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::TCPProtocolProperties_out::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr &
+RTCORBA::TCPProtocolProperties_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::TCPProtocolProperties_ptr
+RTCORBA::TCPProtocolProperties_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___VAR_CI_)
+#define _RTCORBA_GIOPPROTOCOLPROPERTIES___VAR_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::GIOPProtocolProperties_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_var::GIOPProtocolProperties_var (void) // default constructor
+  : ptr_ (GIOPProtocolProperties::_nil ())
+{}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
+RTCORBA::GIOPProtocolProperties_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_var::GIOPProtocolProperties_var (const ::RTCORBA::GIOPProtocolProperties_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (GIOPProtocolProperties::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_var::~GIOPProtocolProperties_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE RTCORBA::GIOPProtocolProperties_var &
+RTCORBA::GIOPProtocolProperties_var::operator= (GIOPProtocolProperties_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::GIOPProtocolProperties_var &
+RTCORBA::GIOPProtocolProperties_var::operator= (const ::RTCORBA::GIOPProtocolProperties_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_var::operator const ::RTCORBA::GIOPProtocolProperties_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_var::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
+RTCORBA::GIOPProtocolProperties_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
+RTCORBA::GIOPProtocolProperties_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr &
+RTCORBA::GIOPProtocolProperties_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr &
+RTCORBA::GIOPProtocolProperties_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
+RTCORBA::GIOPProtocolProperties_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::RTCORBA::GIOPProtocolProperties_ptr val = this->ptr_;
+  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES___OUT_CI_)
+#define _RTCORBA_GIOPPROTOCOLPROPERTIES___OUT_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::GIOPProtocolProperties_out
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (GIOPProtocolProperties_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (GIOPProtocolProperties_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (const ::RTCORBA::GIOPProtocolProperties_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (GIOPProtocolProperties_out &, p).ptr_)
+{}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_out &
+RTCORBA::GIOPProtocolProperties_out::operator= (const ::RTCORBA::GIOPProtocolProperties_out &p)
+{
+  this->ptr_ = ACE_const_cast (GIOPProtocolProperties_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::GIOPProtocolProperties_out &
+RTCORBA::GIOPProtocolProperties_out::operator= (const ::RTCORBA::GIOPProtocolProperties_var &p)
+{
+  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE RTCORBA::GIOPProtocolProperties_out &
+RTCORBA::GIOPProtocolProperties_out::operator= (GIOPProtocolProperties_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::GIOPProtocolProperties_out::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr &
+RTCORBA::GIOPProtocolProperties_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::GIOPProtocolProperties_ptr
+RTCORBA::GIOPProtocolProperties_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CI_)
+#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::UnixDomainProtocolProperties_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_var::UnixDomainProtocolProperties_var (void) // default constructor
+  : ptr_ (UnixDomainProtocolProperties::_nil ())
+{}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
+RTCORBA::UnixDomainProtocolProperties_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_var::UnixDomainProtocolProperties_var (const ::RTCORBA::UnixDomainProtocolProperties_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (UnixDomainProtocolProperties::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_var::~UnixDomainProtocolProperties_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE RTCORBA::UnixDomainProtocolProperties_var &
+RTCORBA::UnixDomainProtocolProperties_var::operator= (UnixDomainProtocolProperties_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::UnixDomainProtocolProperties_var &
+RTCORBA::UnixDomainProtocolProperties_var::operator= (const ::RTCORBA::UnixDomainProtocolProperties_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_var::operator const ::RTCORBA::UnixDomainProtocolProperties_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_var::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
+RTCORBA::UnixDomainProtocolProperties_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
+RTCORBA::UnixDomainProtocolProperties_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr &
+RTCORBA::UnixDomainProtocolProperties_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr &
+RTCORBA::UnixDomainProtocolProperties_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
+RTCORBA::UnixDomainProtocolProperties_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::RTCORBA::UnixDomainProtocolProperties_ptr val = this->ptr_;
+  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CI_)
+#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::UnixDomainProtocolProperties_out
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (const ::RTCORBA::UnixDomainProtocolProperties_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (UnixDomainProtocolProperties_out &, p).ptr_)
+{}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_out &
+RTCORBA::UnixDomainProtocolProperties_out::operator= (const ::RTCORBA::UnixDomainProtocolProperties_out &p)
+{
+  this->ptr_ = ACE_const_cast (UnixDomainProtocolProperties_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::UnixDomainProtocolProperties_out &
+RTCORBA::UnixDomainProtocolProperties_out::operator= (const ::RTCORBA::UnixDomainProtocolProperties_var &p)
+{
+  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE RTCORBA::UnixDomainProtocolProperties_out &
+RTCORBA::UnixDomainProtocolProperties_out::operator= (UnixDomainProtocolProperties_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::UnixDomainProtocolProperties_out::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr &
+RTCORBA::UnixDomainProtocolProperties_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::UnixDomainProtocolProperties_ptr
+RTCORBA::UnixDomainProtocolProperties_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CI_)
+#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::SharedMemoryProtocolProperties_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_var::SharedMemoryProtocolProperties_var (void) // default constructor
+  : ptr_ (SharedMemoryProtocolProperties::_nil ())
+{}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
+RTCORBA::SharedMemoryProtocolProperties_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_var::SharedMemoryProtocolProperties_var (const ::RTCORBA::SharedMemoryProtocolProperties_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (SharedMemoryProtocolProperties::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_var::~SharedMemoryProtocolProperties_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_var &
+RTCORBA::SharedMemoryProtocolProperties_var::operator= (SharedMemoryProtocolProperties_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_var &
+RTCORBA::SharedMemoryProtocolProperties_var::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_var::operator const ::RTCORBA::SharedMemoryProtocolProperties_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_var::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
+RTCORBA::SharedMemoryProtocolProperties_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
+RTCORBA::SharedMemoryProtocolProperties_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr &
+RTCORBA::SharedMemoryProtocolProperties_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr &
+RTCORBA::SharedMemoryProtocolProperties_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
+RTCORBA::SharedMemoryProtocolProperties_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::RTCORBA::SharedMemoryProtocolProperties_ptr val = this->ptr_;
+  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CI_)
+#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::SharedMemoryProtocolProperties_out
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (const ::RTCORBA::SharedMemoryProtocolProperties_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (SharedMemoryProtocolProperties_out &, p).ptr_)
+{}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_out &
+RTCORBA::SharedMemoryProtocolProperties_out::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_out &p)
+{
+  this->ptr_ = ACE_const_cast (SharedMemoryProtocolProperties_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_out &
+RTCORBA::SharedMemoryProtocolProperties_out::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_var &p)
+{
+  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE RTCORBA::SharedMemoryProtocolProperties_out &
+RTCORBA::SharedMemoryProtocolProperties_out::operator= (SharedMemoryProtocolProperties_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::SharedMemoryProtocolProperties_out::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr &
+RTCORBA::SharedMemoryProtocolProperties_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::SharedMemoryProtocolProperties_ptr
+RTCORBA::SharedMemoryProtocolProperties_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class RTCORBA::PriorityBand_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::PriorityBand_var::PriorityBand_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+RTCORBA::PriorityBand_var::PriorityBand_var (PriorityBand *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+RTCORBA::PriorityBand_var::PriorityBand_var (const ::RTCORBA::PriorityBand_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::RTCORBA::PriorityBand (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+// fixed-size types only
+ACE_INLINE
+RTCORBA::PriorityBand_var::PriorityBand_var (const ::RTCORBA::PriorityBand &p)
+{
+  ACE_NEW (this->ptr_, ::RTCORBA::PriorityBand (p));
+}
+
+ACE_INLINE
+RTCORBA::PriorityBand_var::~PriorityBand_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE RTCORBA::PriorityBand_var &
+RTCORBA::PriorityBand_var::operator= (PriorityBand *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBand_var &
+RTCORBA::PriorityBand_var::operator= (const ::RTCORBA::PriorityBand_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          PriorityBand *deep_copy =
+            new PriorityBand (*p.ptr_);
+
+          if (deep_copy != 0)
+            {
+              PriorityBand *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+
+  return *this;
+}
+
+// fixed-size types only
+ACE_INLINE RTCORBA::PriorityBand_var &
+RTCORBA::PriorityBand_var::operator= (const ::RTCORBA::PriorityBand &p)
+{
+  if (this->ptr_ != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::PriorityBand (p), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::RTCORBA::PriorityBand *
+RTCORBA::PriorityBand_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBand *
+RTCORBA::PriorityBand_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBand_var::operator const ::RTCORBA::PriorityBand &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE const ::RTCORBA::PriorityBand &
+RTCORBA::PriorityBand_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBand &
+RTCORBA::PriorityBand_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for fixed size
+ACE_INLINE ::RTCORBA::PriorityBand &
+RTCORBA::PriorityBand_var::out (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBand
+RTCORBA::PriorityBand_var::_retn (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBand *
+RTCORBA::PriorityBand_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CI_
+
+  // = Static operations.
+  ACE_INLINE RTCORBA::PriorityBand *
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    RTCORBA::PriorityBand *retval = 0;
+    ACE_NEW_RETURN (retval, RTCORBA::PriorityBand[size], 0);
+    return retval;
+  }
+
+  ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (RTCORBA::PriorityBand *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+
+  ACE_INLINE
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void) // Default constructor.
+  {
+  }
+
+  ACE_INLINE
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (maximum))
+  {
+  }
+
+  ACE_INLINE
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum,
+    CORBA::ULong length,
+    RTCORBA::PriorityBand *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+
+  ACE_INLINE
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      RTCORBA::PriorityBand *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->maximum_);
+      RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
+
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+
+  ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands &
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator= (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
+        _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
+
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+
+    RTCORBA::PriorityBand *tmp1 = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
+    RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
+
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+
+    return *this;
+  }
+
+  // = Accessors.
+  ACE_INLINE RTCORBA::PriorityBand &
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    RTCORBA::PriorityBand* tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
+    return tmp[i];
+  }
+
+  ACE_INLINE const RTCORBA::PriorityBand &
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    RTCORBA::PriorityBand * const tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+  ACE_INLINE RTCORBA::PriorityBand *
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (CORBA::Boolean orphan)
+  {
+    RTCORBA::PriorityBand *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->length_);
+        this->buffer_ = result;
+        this->release_ = 1;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (RTCORBA::PriorityBand*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+
+  ACE_INLINE const RTCORBA::PriorityBand *
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const RTCORBA::PriorityBand * ACE_CAST_CONST, this->buffer_);
+  }
+
+  ACE_INLINE void
+  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  RTCORBA::PriorityBand *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
+      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
+#if !defined (_RTCORBA_PRIORITYBANDS_CI_)
+#define _RTCORBA_PRIORITYBANDS_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::PriorityBands_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::PriorityBands_var::PriorityBands_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+RTCORBA::PriorityBands_var::PriorityBands_var (PriorityBands *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+RTCORBA::PriorityBands_var::PriorityBands_var (const ::RTCORBA::PriorityBands_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::RTCORBA::PriorityBands (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+// fixed-size base types only
+ACE_INLINE
+RTCORBA::PriorityBands_var::PriorityBands_var (const ::RTCORBA::PriorityBands &p)
+{
+  ACE_NEW (this->ptr_, ::RTCORBA::PriorityBands (p));
+}
+
+ACE_INLINE
+RTCORBA::PriorityBands_var::~PriorityBands_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE RTCORBA::PriorityBands_var &
+RTCORBA::PriorityBands_var::operator= (PriorityBands *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands_var &
+RTCORBA::PriorityBands_var::operator= (const ::RTCORBA::PriorityBands_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          PriorityBands *deep_copy =
+            new PriorityBands (*p.ptr_);
+
+          if (deep_copy != 0)
+            {
+              PriorityBands *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+
+  return *this;
+}
+
+// fixed-size types only
+ACE_INLINE ::RTCORBA::PriorityBands_var &
+RTCORBA::PriorityBands_var::operator= (const ::RTCORBA::PriorityBands &p)
+{
+  if (this->ptr_ != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::PriorityBands (p), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::RTCORBA::PriorityBands *
+RTCORBA::PriorityBands_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands *
+RTCORBA::PriorityBands_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBands_var::operator const ::RTCORBA::PriorityBands &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE RTCORBA::PriorityBand &
+RTCORBA::PriorityBands_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const RTCORBA::PriorityBand &
+RTCORBA::PriorityBands_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const RTCORBA::PriorityBand &, this->ptr_->operator[] (index));
+}
+
+ACE_INLINE const ::RTCORBA::PriorityBands &
+RTCORBA::PriorityBands_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands &
+RTCORBA::PriorityBands_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size
+ACE_INLINE ::RTCORBA::PriorityBands *&
+RTCORBA::PriorityBands_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands *
+RTCORBA::PriorityBands_var::_retn (void)
+{
+  ::RTCORBA::PriorityBands *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands *
+RTCORBA::PriorityBands_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class RTCORBA::PriorityBands_out
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::PriorityBands_out::PriorityBands_out (PriorityBands *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBands_out::PriorityBands_out (PriorityBands_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBands_out::PriorityBands_out (const ::RTCORBA::PriorityBands_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (PriorityBands_out&, p).ptr_)
+{}
+
+ACE_INLINE ::RTCORBA::PriorityBands_out &
+RTCORBA::PriorityBands_out::operator= (const ::RTCORBA::PriorityBands_out &p)
+{
+  this->ptr_ = ACE_const_cast (PriorityBands_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands_out &
+RTCORBA::PriorityBands_out::operator= (PriorityBands *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBands_out::operator ::RTCORBA::PriorityBands *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands *&
+RTCORBA::PriorityBands_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBands *
+RTCORBA::PriorityBands_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE RTCORBA::PriorityBand &
+RTCORBA::PriorityBands_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CI_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::PriorityBandedConnectionPolicy_var
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_var::PriorityBandedConnectionPolicy_var (void) // default constructor
+  : ptr_ (PriorityBandedConnectionPolicy::_nil ())
+{}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
+RTCORBA::PriorityBandedConnectionPolicy_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_var::PriorityBandedConnectionPolicy_var (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (PriorityBandedConnectionPolicy::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_var::~PriorityBandedConnectionPolicy_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_var &
+RTCORBA::PriorityBandedConnectionPolicy_var::operator= (PriorityBandedConnectionPolicy_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_var &
+RTCORBA::PriorityBandedConnectionPolicy_var::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_var::operator const ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_var::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
+RTCORBA::PriorityBandedConnectionPolicy_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
+RTCORBA::PriorityBandedConnectionPolicy_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr &
+RTCORBA::PriorityBandedConnectionPolicy_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr &
+RTCORBA::PriorityBandedConnectionPolicy_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
+RTCORBA::PriorityBandedConnectionPolicy_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::RTCORBA::PriorityBandedConnectionPolicy_ptr val = this->ptr_;
+  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CI_)
+#define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class RTCORBA::PriorityBandedConnectionPolicy_out
+// *************************************************************
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
+}
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (const ::RTCORBA::PriorityBandedConnectionPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (PriorityBandedConnectionPolicy_out &, p).ptr_)
+{}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_out &
+RTCORBA::PriorityBandedConnectionPolicy_out::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_out &p)
+{
+  this->ptr_ = ACE_const_cast (PriorityBandedConnectionPolicy_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_out &
+RTCORBA::PriorityBandedConnectionPolicy_out::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p)
+{
+  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE RTCORBA::PriorityBandedConnectionPolicy_out &
+RTCORBA::PriorityBandedConnectionPolicy_out::operator= (PriorityBandedConnectionPolicy_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+RTCORBA::PriorityBandedConnectionPolicy_out::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr &
+RTCORBA::PriorityBandedConnectionPolicy_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::RTCORBA::PriorityBandedConnectionPolicy_ptr
+RTCORBA::PriorityBandedConnectionPolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -3628,14 +3628,14 @@ RTCORBA::Current_var::operator= (const ::RTCORBA::Current_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::Current_var::operator const ::RTCORBA::Current_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::Current_var::operator ::RTCORBA::Current_ptr &() // cast 
+ACE_INLINE
+RTCORBA::Current_var::operator ::RTCORBA::Current_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3727,7 +3727,7 @@ RTCORBA::Current_out::operator= (Current_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::Current_out::operator ::RTCORBA::Current_ptr &() // cast
 {
   return this->ptr_;
@@ -3798,14 +3798,14 @@ RTCORBA::Mutex_var::operator= (const ::RTCORBA::Mutex_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::Mutex_var::operator const ::RTCORBA::Mutex_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::Mutex_var::operator ::RTCORBA::Mutex_ptr &() // cast 
+ACE_INLINE
+RTCORBA::Mutex_var::operator ::RTCORBA::Mutex_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3897,7 +3897,7 @@ RTCORBA::Mutex_out::operator= (Mutex_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::Mutex_out::operator ::RTCORBA::Mutex_ptr &() // cast
 {
   return this->ptr_;
@@ -3976,14 +3976,14 @@ RTCORBA::RTORB_var::operator= (const ::RTCORBA::RTORB_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::RTORB_var::operator const ::RTCORBA::RTORB_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-RTCORBA::RTORB_var::operator ::RTCORBA::RTORB_ptr &() // cast 
+ACE_INLINE
+RTCORBA::RTORB_var::operator ::RTCORBA::RTORB_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4075,7 +4075,7 @@ RTCORBA::RTORB_out::operator= (RTORB_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 RTCORBA::RTORB_out::operator ::RTCORBA::RTORB_ptr &() // cast
 {
   return this->ptr_;
@@ -4106,7 +4106,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::Thread
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::ThreadpoolLane &_tao_aggregate)
@@ -4119,7 +4119,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::ThreadpoolLan
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -4147,12 +4147,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityModel
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (RTCORBA::PriorityModel, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -4165,7 +4165,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::Priori
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityBand &_tao_aggregate)
@@ -4177,7 +4177,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityBand 
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -4194,4 +4194,3 @@ CORBA::Boolean TAO_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_RTCORBA_PriorityBands_I_ */
-
