@@ -146,13 +146,13 @@ TAO_Transport::provide_handler (TAO_Connection_Handler_Set &handlers)
   handlers.insert (this->connection_handler_i ());
 }
 
-int
+bool
 TAO_Transport::idle_after_send (void)
 {
   return this->tms ()->idle_after_send ();
 }
 
-int
+bool
 TAO_Transport::idle_after_reply (void)
 {
   return this->tms ()->idle_after_reply ();
