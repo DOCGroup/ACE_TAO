@@ -24,7 +24,7 @@ ACE_RCSID (Param_Test,
 
 // Parses the command line arguments and returns an error status.
 static FILE *ior_output_file = 0;
-static char *ior_output_filename = "test.ior";
+static const char *ior_output_filename = "test.ior";
 
 static int
 parse_args (int argc, char *argv[])
