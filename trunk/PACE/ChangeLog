@@ -1,3 +1,9 @@
+Fri Jul 14 19:06:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/pthread.h:
+	  Added (void) in arguments to pointers to functions
+	  which were otherwise interpreted as (...) args.
+
 Fri Jul 14 18:50:07 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/unistd.h:
@@ -49,7 +55,7 @@ Fri Jul 14 15:55:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
         * pace/Makefile:
           Added defining appropriate macros when subsetting PACE into
            POSIX units of functionality.
-        
+
         * pace/aio.h:
         * pace/assert.h:
         * pace/ctype.h:
