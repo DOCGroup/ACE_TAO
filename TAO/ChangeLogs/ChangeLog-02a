@@ -1,3 +1,17 @@
+Sat Dec 15 11:10:45 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/amh/AMH_discussions.html:
+	* docs/amh/AMH_discussions_files/filelist.xml:
+	* docs/amh/AMH_discussions_files/image001.wmz:
+	* docs/amh/AMH_discussions_files/image002.gif:
+	* docs/amh/AMH_discussions_files/image003.wmz:
+	* docs/amh/AMH_discussions_files/image004.gif:
+	* docs/amh/AMH_discussions_files/image005.wmz:
+	* docs/amh/AMH_discussions_files/image006.gif:
+	* docs/amh/AMH_discussions_files/oledata.mso:
+	  Removed discussion document that had no place in the
+	  distribution.
+
 Sat Dec 15 10:53:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Scalability/client.cpp:
@@ -6,7 +20,7 @@ Sat Dec 15 10:53:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Sat Dec 15 12:53:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Objref_Sequence_Test/client.cpp: Fixed a Win2000 warning. 
+	* tests/Objref_Sequence_Test/client.cpp: Fixed a Win2000 warning.
 	* tests/Objref_Sequence_Test/server.cpp (main):  Fixed a warning
 	  in GCC 3.0.2 builds
 
