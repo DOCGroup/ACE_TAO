@@ -1,3 +1,9 @@
+Fri Dec 11 21:51:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/DLL_Test.cpp (main): STL's implementation of auto_ptr
+	  doesn't define an assignment operator that takes a pointer of T.
+	  Changed to use constructor to initialize the auto_ptr my_hello.
+
 Fri Dec 11 16:30:44 1998  Ossama Othman  <othman@tango.cs.wustl.edu>
 
 	* tests/Time_Value_Test.cpp: Removed the ACE_DISABLE_AUTOCONF_LONGLONG
