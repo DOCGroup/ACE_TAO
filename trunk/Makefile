@@ -184,7 +184,7 @@ releaseall: release
 	@(cd ..; \
          find $(ALL_RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE+TAO.tar.gz; \
-         chmod a+r ACE+TAO.tar.gz \
+         chmod a+r ACE+TAO.tar.gz; \
          mv ACE+TAO.tar.gz ./ACE_wrappers/)
 
 ACE-INSTALL: ACE-INSTALL.html
