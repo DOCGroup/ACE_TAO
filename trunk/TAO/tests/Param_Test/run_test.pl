@@ -15,7 +15,11 @@ $SV = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                        "-ORBobjrefstyle url -ORBport ".$port." -o ".$iorfile." 2");
 sleep (2);     # Give the server a chance to start up
 
-@types= ("short", "ubstring", "fixed_struct", "strseq", "var_struct", "nested_struct", "struct_seq", "objref");
+# "any" should be added at some time.
+
+@types = ("short", "ubstring", "fixed_struct", "strseq", "bounded_strseq", "var_struct", "nested_struct", 
+          "struct_seq", "bounded_struct_seq", "objref", "objref_sequence", "any_sequence", 
+          "short_sequence", "long_sequence", "bounded_short_sequence", "bounded_long_sequence");
 
 
 foreach $type (@types)
