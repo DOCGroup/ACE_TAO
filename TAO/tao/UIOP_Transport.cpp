@@ -341,8 +341,8 @@ TAO_UIOP_Transport::send (const ACE_Message_Block *mblk,
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
   return ACE::send_n (this->handle (),
-                      message_block,
-                      max_wait_time);
+                      mblk,
+                      max_time_wait);
 }
 
 ssize_t
