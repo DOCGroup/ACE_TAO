@@ -1,3 +1,28 @@
+Tue Jul  6 11:59:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Service_Config.cpp: Reverted the following change.
+
+
+          Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P4
+          * ace/Service_Config.cpp: Insert component into repository before
+            calling init as in the init the component may access the
+	    service repository.
+
+	  Dr. Schmidt opines that this change is wrong for the following
+	  reasons:
+
+	  (1) If the init () call returns a -1, the component should not
+	      be in the repository in the first place. 
+
+	  (2) If the component is in the repository, there is a
+	      possibility that another application thread could access the
+	      component in the repository before the component is
+	      initialized. 
+
+
+	   Unless we address the above concerns to satisfaction, this
+	   change is being pulled out. 
+
 Tue Jul  6 12:03:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* netsvcs/lib/Token_Handler.cpp (parse_args): The inherited
