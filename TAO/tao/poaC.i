@@ -594,6 +594,12 @@ PortableServer::_tao_seq_Policy_out::operator[] (CORBA::ULong index)
 // Inline operations for class PortableServer::POA_var
 // *************************************************************
 
+ACE_INLINE PortableServer::POA_ptr
+PortableServer::POA::_nil (void)
+{
+  return (PortableServer::POA_ptr)0;
+}
+
 ACE_INLINE
 PortableServer::POA_var::POA_var (void) // default constructor
 	: ptr_ (PortableServer::POA::_nil ())
@@ -3317,12 +3323,6 @@ PortableServer::POA::POA(
 ACE_INLINE
 PortableServer::POA::~POA (void) // destructor
 {}
-
-ACE_INLINE PortableServer::POA_ptr
-PortableServer::POA::_nil (void)
-{
-  return (PortableServer::POA_ptr)0;
-}
 
 
 #if !defined (_PORTABLESERVER_POA___VAR_CI_)
