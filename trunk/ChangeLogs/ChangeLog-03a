@@ -1,3 +1,10 @@
+Thu Apr 26 07:38:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp: Fixed a compile
+	  error. The ACE_MEM_IO::fini () was taking an integer
+	  value. There was no method with a signature fini (int). Removed
+	  the integer argument.
+
 Wed Apr 25 23:24:25 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/MEM_Stream_Test.cpp: Changed the error message on SysV
