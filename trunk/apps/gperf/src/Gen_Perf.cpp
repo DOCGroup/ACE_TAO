@@ -407,23 +407,20 @@ Gen_Perf::run (void)
       if (this->compute_binary_search () == -1)
         return 1;
     }
+  else if (option[LINEARSEARCH])
+    {
+      if (this->compute_linear_search () == -1)
+	return 1;
+    }
   else
     {
-      if (option[LINEARSEARCH])
-	{
-	  if (this->compute_linear_search () == -1)
-	    return 1;
-	}
-      else
-	{
-	  if (this->compute_perfect_hash () == -1)
-	    return 1;
+      if (this->compute_perfect_hash () == -1)
+	return 1;
 
-	  // Sorts the key word list by hash value, and then outputs the list.
-	  // The generated hash table code is only output if the early stage
-	  // of processing turned out O.K.
-	  this->key_list.sort ();
-	}
+      // Sorts the key word list by hash value, and then outputs the
+      // list.  The generated hash table code is only output if the
+      // early stage of processing turned out O.K.
+      this->key_list.sort ();
     }
 
   this->key_list.output ();
