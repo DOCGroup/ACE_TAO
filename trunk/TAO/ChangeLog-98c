@@ -1,3 +1,12 @@
+Fri Nov 14 19:45:01 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp : 
+	* tests/Cubit/TAO/DII_Cubit/clnt.h : 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp : 
+	- Fixed the difference in latency problem from DII and IDL.  
+	- Changed the DII_Cubit client interface to be similar to IDL, now
+ 	you can specify hostname and port number, instead of the IOR.
+
 Fri Nov 14 17:48:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp: 
