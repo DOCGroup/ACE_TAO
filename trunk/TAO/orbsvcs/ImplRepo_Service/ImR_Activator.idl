@@ -2,7 +2,7 @@
 
 // $Id$
 
-#include "tao/PortableServer/ImplRepo.idl"
+#include "tao/PortableServer/ImplRepo.pidl"
 
 module ImplementationRepository
 {
