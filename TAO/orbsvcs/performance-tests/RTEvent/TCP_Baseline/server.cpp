@@ -133,7 +133,7 @@ Svc_Handler::handle_close(ACE_HANDLE h, ACE_Reactor_Mask m)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Closed connection\n"));
   this->peer().close();
   int r =
-    this->ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>::handle_close(h,m);
+    this->ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>::handle_close (h,m);
   return r;
 }
 

@@ -15,7 +15,7 @@ ACE_RCSID (EventChannel,
 /// a deadlock.
 Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
 : sequence_num_(0)
-, mutex_(mt ? new ACE_Recursive_Thread_Mutex : 0)
+, mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : 0)
 {
 }
 
@@ -52,7 +52,7 @@ Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
 
 void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
                        const FTRT::State& state
-                       ACE_ENV_ARG_DECL) 
+                       ACE_ENV_ARG_DECL)
 {
   bool finished = true;
   do {
@@ -62,7 +62,7 @@ void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
     }
     ACE_CATCH(CORBA::COMM_FAILURE, ex) {
       if (ex.minor() == 6)   finished = false;
-      else  
+      else
         ACE_RE_THROW;
     }
     ACE_ENDTRY;
@@ -152,4 +152,3 @@ int  Basic_Replication_Strategy::release (void)
 {
   return mutex_ ? mutex_->release() : 0;
 }
-

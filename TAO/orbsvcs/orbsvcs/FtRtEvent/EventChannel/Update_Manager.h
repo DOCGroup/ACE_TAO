@@ -43,7 +43,7 @@ private:
   int num_backups_;
   int transaction_level_;
   bool& success_;
-  ACE_Thread_Mutex mutex_;
+  ACE_SYNCH_MUTEX mutex_;
 };
 
 #endif
