@@ -2,6 +2,7 @@
 
 #include "Notify_Structured_Push_Consumer.h"
 #include "common.h"
+#include "tao/debug.h"
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
                                             const char* name,
@@ -64,25 +65,31 @@ Notify_Structured_Push_Consumer::push_structured_event (
                           ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Received event:\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG, "Received event:\n"));
+
   CORBA::ULong hlength = event.header.variable_header.length ();
   for (CORBA::ULong hi = 0; hi < hlength; hi++)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s = %s\n",
-                  (const char*)event.header.variable_header[hi].name,
-                  Any_String (event.header.variable_header[hi].value)));
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    "%s = %s\n",
+                    (const char*)event.header.variable_header[hi].name,
+                    Any_String (event.header.variable_header[hi].value)));
     }
   CORBA::ULong flength = event.filterable_data.length ();
   for (CORBA::ULong i = 0; i < flength; i++)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s = %s\n",
-                  (const char*)event.filterable_data[i].name,
-                  Any_String (event.filterable_data[i].value)));
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    "%s = %s\n",
+                    (const char*)event.filterable_data[i].name,
+                    Any_String (event.filterable_data[i].value)));
     }
-  ACE_DEBUG ((LM_DEBUG,
-              "-------------------------\n"));
+
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "-------------------------\n"));
   this->count_++;
   if (this->count_ > this->expected_)
     {

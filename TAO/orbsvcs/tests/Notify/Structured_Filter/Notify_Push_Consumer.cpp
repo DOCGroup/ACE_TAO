@@ -2,6 +2,7 @@
 // $Id$
 
 #include "Notify_Push_Consumer.h"
+#include "tao/debug.h"
 
 CORBA::Short Notify_Push_Consumer::event_count = 0;
 
@@ -56,7 +57,7 @@ Any_String (const CORBA::Any& any)
       ACE_OS_String::strcpy (out, ull.as_string (out));
 #else
       // @@@@ (JP) Need to cast to signed int64 to cast to
-      // double on Win32, but this hack may not fly on 
+      // double on Win32, but this hack may not fly on
       // other platforms.
       double temp = (double) (CORBA::LongLong) ull;
       ACE_OS::sprintf (out, "%.0f", temp);
@@ -78,13 +79,13 @@ Notify_Push_Consumer::push_structured_event (
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "%s %d (sent recv) %s %s\n",
-              Any_String (event.filterable_data[1].value),
-              event_count,
-              (const char*)event.filterable_data[0].name,
-              Any_String (event.filterable_data[0].value)));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "%s %d (sent recv) %s %s\n",
+                Any_String (event.filterable_data[1].value),
+                event_count,
+                (const char*)event.filterable_data[0].name,
+                Any_String (event.filterable_data[0].value)));
 
   event_count ++;
 }
-

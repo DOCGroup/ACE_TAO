@@ -6,6 +6,7 @@
 #include "ace/Synch.h"
 #include "ace/OS.h"
 #include "orbsvcs/Time_Utilities.h"
+#include "tao/debug.h"
 
 ACE_RCSID(Notify, RedGreen_Test, "$Id$")
 
@@ -492,11 +493,12 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (
   const char* type_name =
     notification.header.fixed_header.event_type.type_name;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Consumer %d event, domain = %s, type =  %s\n",
-              this->proxy_supplier_id_,
-              domain_name,
-              type_name));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "Consumer %d event, domain = %s, type =  %s\n",
+                this->proxy_supplier_id_,
+                domain_name,
+                type_name));
 
   TimeBase::TimeT latency_base_recorded;
   ACE_hrtime_t latency_base;
