@@ -296,11 +296,16 @@ ACE_Process_Manager::handle_input (ACE_HANDLE proc)
                   "handle_input: GetExitCodeProcess failed",
                   0));
     }
-#else   // !defined(ACE_WIN32)
+#else /* !defined(ACE_WIN32) */
   ACE_UNUSED_ARG (proc);        // proc is dummy_handle_ on unix.
-  while (this->reap () > 0)
-    continue;
-#endif
+
+   pid_t pid;
+
+   do 
+     pid = this->wait (0, ACE_Time_Value::zero);
+   while (pid != 0 && pid != ACE_INVALID_PID);
+
+#endif /* defined (ACE_WIN32) */
   return 0;
 }
 
@@ -618,7 +623,7 @@ ACE_Process_Manager::find_proc (pid_t pid)
 // Locate the index in the table associated with <h>.  Must be
 // called with the lock held.
 
-size_t
+ssize_t
 ACE_Process_Manager::find_proc (ACE_HANDLE h)
 {
   ACE_TRACE ("ACE_Process_Manager::find_proc");
@@ -640,24 +645,27 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
   ACE_TRACE ("ACE_Process_Manager::wait");
 
   ACE_Time_Value until = timeout;
+  ACE_Time_Value remaining = timeout;
 
   if (until < ACE_Time_Value::max_time)
     until += ACE_OS::gettimeofday ();
 
   while (current_count_ > 0) 
     {
-      ACE_Time_Value remaining = until < ACE_Time_Value::max_time
-        ? until - ACE_OS::gettimeofday ()
-        : ACE_Time_Value::max_time;
-      if (remaining <= ACE_Time_Value::zero)
-        break;
-
       pid_t pid = this->wait (0, remaining);
 
       if (pid == ACE_INVALID_PID)       // wait() failed
         return -1;
-      if (pid == 0)     // timeout
+      else if (pid == 0)     // timeout
         break;
+
+      remaining = until < ACE_Time_Value::max_time
+        ? until - ACE_OS::gettimeofday ()
+        : ACE_Time_Value::max_time;
+ 
+      if (remaining <= ACE_Time_Value::zero)
+        break;
+ 
       // else Process terminated...wait for more...
     }
   return current_count_;
@@ -868,11 +876,7 @@ ACE_Process_Manager::notify_proc_handler (ACE_HANDLE h,
       proc_desc.process_->exit_code (exit_code);
 
       if (proc_desc.exit_notify_ != 0) 
-        {
-          proc_desc.exit_notify_->handle_exit (proc_desc.process_);
-          proc_desc.exit_notify_->handle_close (h, 0);
-          proc_desc.exit_notify_ = 0;
-        }
+        proc_desc.exit_notify_->handle_exit (proc_desc.process_);
       else if (this->default_exit_handler_ != 0
                && this->default_exit_handler_->handle_exit
                (proc_desc.process_) < 0) {
