@@ -974,16 +974,31 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
         }
 
       AST_Expression::AST_ExprValue *ev = node->constant_value ()->ev ();
+      AST_Decl *td = ev->tdef;
 
-      CORBA::PrimitiveKind pkind = this->expr_type_to_pkind (ev->et);
-
-      CORBA::IDLType_var idl_type =
-        be_global->repository ()->get_primitive (pkind
+      if (td != 0 && td->node_type () == AST_Decl::NT_typedef)
+        {
+          // This constant's type is a typedef - look up the typedef to
+          // pass to create_constant().
+          CORBA::Contained_var contained =
+            be_global->repository ()->lookup_id (td->repoID ()
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
+
+          this->ir_current_ = CORBA::IDLType::_narrow (contained.in ()
+                                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          CORBA::PrimitiveKind pkind = this->expr_type_to_pkind (ev->et);
+          this->ir_current_ =
+            be_global->repository ()->get_primitive (pkind
+                                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       CORBA::Any any;
-
       this->load_any (ev,
                       any);
 
@@ -996,7 +1011,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
                 id,
                 node->local_name ()->get_string (),
                 node->version (),
-                idl_type.in (),
+                this->ir_current_.in (),
                 any
                 ACE_ENV_ARG_PARAMETER
               );
