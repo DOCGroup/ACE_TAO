@@ -961,21 +961,6 @@ typedef struct
   // Name of the semaphore: really a 32 bit number to pSOS
 } ACE_sema_t;
 
-// Used for ACE_MMAP_Memory_Pool
-#   if !defined (ACE_DEFAULT_BACKING_STORE)
-#     define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX"
-#   endif /* ACE_DEFAULT_BACKING_STORE */
-
-// Used for ACE_FILE_Connector
-#   if !defined (ACE_DEFAULT_TEMP_FILE)
-#     define ACE_DEFAULT_TEMP_FILE "/tmp/ace-file-XXXXXX"
-#   endif /* ACE_DEFAULT_TEMP_FILE */
-
-// Used for logging
-#   if !defined (ACE_DEFAULT_LOGFILE)
-#     define ACE_DEFAULT_LOGFILE "/tmp/logfile"
-#   endif /* ACE_DEFAULT_LOGFILE */
-
 // Used for dynamic linking.
 #   if !defined (ACE_DEFAULT_SVC_CONF)
 #     define ACE_DEFAULT_SVC_CONF "./svc.conf"
@@ -991,11 +976,6 @@ typedef struct
 
 #   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
-
-// Define the name of the environment variable that defines the temp
-// directory.
-#   define ACE_DEFAULT_TEMP_DIR_ENV_A "TMP"
-#   define ACE_DEFAULT_TEMP_DIR_ENV_W L"TMP"
 
 #   define ACE_DLL_SUFFIX ".so"
 #   define ACE_DLL_PREFIX "lib"
@@ -1045,11 +1025,7 @@ typedef struct
 #     define MAP_FIXED 0
 #   endif /* ACE_LACKS_MMAP */
 
-// The following 3 defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
-#     define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
-#   endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
-
+// The following 2 defines are used by the ACE Name Server...
 #   if !defined (ACE_DEFAULT_LOCALNAME_A)
 #     define ACE_DEFAULT_LOCALNAME_A "localnames"
 #   endif /* ACE_DEFAULT_LOCALNAME_A */
@@ -1059,9 +1035,6 @@ typedef struct
 #   endif /* ACE_DEFAULT_GLOBALNAME_A */
 
 #   if defined (ACE_HAS_UNICODE)
-#     if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
-#       define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
-#     endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #     if !defined (ACE_DEFAULT_LOCALNAME_W)
 #       define ACE_DEFAULT_LOCALNAME_W L"localnames"
 #     endif /* ACE_DEFAULT_LOCALNAME_W */
@@ -1069,9 +1042,6 @@ typedef struct
 #       define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
 #     endif /* ACE_DEFAULT_GLOBALNAME_W */
 #   else
-#     if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
-#       define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
-#     endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #     if !defined (ACE_DEFAULT_LOCALNAME_W)
 #       define ACE_DEFAULT_LOCALNAME_W "localnames"
 #     endif /* ACE_DEFAULT_LOCALNAME_W */
@@ -3182,14 +3152,6 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   endif /* ACE_HAS_WINCE */
 
 // The following defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
-#     define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp"
-#   endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
-
-#   if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
-#     define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
-#   endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
-
 #   if !defined (ACE_DEFAULT_LOCALNAME_A)
 #     define ACE_DEFAULT_LOCALNAME_A "localnames"
 #   endif /* ACE_DEFAULT_LOCALNAME_A */
@@ -3216,21 +3178,6 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
 #   define ACE_PLATFORM_W L"Win32"
 #   define ACE_PLATFORM_EXE_SUFFIX_W L".exe"
-
-// Used for ACE_MMAP_Memory_Pool
-#   if !defined (ACE_DEFAULT_BACKING_STORE)
-#     define ACE_DEFAULT_BACKING_STORE ACE_TEXT ("C:\\temp\\ace-malloc-XXXXXX")
-#   endif /* ACE_DEFAULT_BACKING_STORE */
-
-// Used for ACE_FILE_Connector
-#   if !defined (ACE_DEFAULT_TEMP_FILE)
-#     define ACE_DEFAULT_TEMP_FILE ACE_TEXT ("C:\\temp\\ace-file-XXXXXX")
-#   endif /* ACE_DEFAULT_TEMP_FILE */
-
-// Used for logging
-#   if !defined (ACE_DEFAULT_LOGFILE)
-#     define ACE_DEFAULT_LOGFILE "C:\\temp\\logfile"
-#   endif /* ACE_DEFAULT_LOGFILE */
 
 // Used for dynamic linking
 #   if !defined (ACE_DEFAULT_SVC_CONF)
@@ -3297,11 +3244,6 @@ typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 #   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
 #   define ACE_DLL_SUFFIX ".dll"
 #   define ACE_DLL_PREFIX ""
-
-// Define the name of the environment variable that defines the temp
-// directory.
-#   define ACE_DEFAULT_TEMP_DIR_ENV_A "TEMP"
-#   define ACE_DEFAULT_TEMP_DIR_ENV_W L"TEMP"
 
 // This will help until we figure out everything:
 #   define NFDBITS 32 /* only used in unused functions... */
@@ -3566,11 +3508,6 @@ typedef char TCHAR;
 #   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
 
-// Define the name of the environment variable that defines the temp
-// directory.
-#   define ACE_DEFAULT_TEMP_DIR_ENV_A "TMP"
-#   define ACE_DEFAULT_TEMP_DIR_ENV_W L"TMP"
-
 // We're some kind of UNIX...
 #   define ACE_PLATFORM_A "UNIX"
 #   define ACE_PLATFORM_EXE_SUFFIX_A ""
@@ -3601,11 +3538,7 @@ typedef char TCHAR;
 #     define ACE_DLL_PREFIX "lib"
 #   endif /* ACE_DLL_PREFIX */
 
-// The following 3 defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
-#     define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
-#   endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
-
+// The following 2 defines are used by the ACE Name Server...
 #   if !defined (ACE_DEFAULT_LOCALNAME_A)
 #     define ACE_DEFAULT_LOCALNAME_A "localnames"
 #   endif /* ACE_DEFAULT_LOCALNAME_A */
@@ -3615,9 +3548,6 @@ typedef char TCHAR;
 #   endif /* ACE_DEFAULT_GLOBALNAME_A */
 
 #   if defined (ACE_HAS_UNICODE)
-#     if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
-#       define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
-#     endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #     if !defined (ACE_DEFAULT_LOCALNAME_W)
 #       define ACE_DEFAULT_LOCALNAME_W L"localnames"
 #     endif /* ACE_DEFAULT_LOCALNAME_W */
@@ -3625,9 +3555,6 @@ typedef char TCHAR;
 #       define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
 #     endif /* ACE_DEFAULT_GLOBALNAME_W */
 #   else
-#     if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
-#       define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
-#     endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 #     if !defined (ACE_DEFAULT_LOCALNAME_W)
 #       define ACE_DEFAULT_LOCALNAME_W "localnames"
 #     endif /* ACE_DEFAULT_LOCALNAME_W */
@@ -3635,21 +3562,6 @@ typedef char TCHAR;
 #       define ACE_DEFAULT_GLOBALNAME_W "globalnames"
 #     endif /* ACE_DEFAULT_GLOBALNAME_W */
 #   endif /* ACE_HAS_UNICODE */
-
-// Used for ACE_MMAP_Memory_Pool
-#   if !defined (ACE_DEFAULT_BACKING_STORE)
-#     define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX"
-#   endif /* ACE_DEFAULT_BACKING_STORE */
-
-// Used for ACE_FILE_Connector
-#   if !defined (ACE_DEFAULT_TEMP_FILE)
-#     define ACE_DEFAULT_TEMP_FILE "/tmp/ace-file-XXXXXX"
-#   endif /* ACE_DEFAULT_TEMP_FILE */
-
-// Used for logging
-#   if !defined (ACE_DEFAULT_LOGFILE)
-#     define ACE_DEFAULT_LOGFILE "/tmp/logfile"
-#   endif /* ACE_DEFAULT_LOGFILE */
 
 // Used for dynamic linking.
 #   if !defined (ACE_DEFAULT_SVC_CONF)
@@ -8279,9 +8191,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 
 # if defined (UNICODE)
 
-#   if !defined (ACE_DEFAULT_NAMESPACE_DIR)
-#     define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_W
-#   endif /* ACE_DEFAULT_NAMESPACE_DIR */
 #   if !defined (ACE_DEFAULT_LOCALNAME)
 #     define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_W
 #   endif /* ACE_DEFAULT_LOCALNAME */
@@ -8306,15 +8215,9 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   if !defined (ACE_DEFAULT_MUTEX)
 #     define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_W
 #   endif /* ACE_DEFAULT_MUTEX */
-#   if !defined (ACE_DEFAULT_TEMP_DIR_ENV)
-#     define ACE_DEFAULT_TEMP_DIR_ENV ACE_DEFAULT_TEMP_DIR_ENV_W
-#   endif /* ACE_DEFAULT_TEMP_DIR_ENV */
 
 # else
 
-#   if !defined (ACE_DEFAULT_NAMESPACE_DIR)
-#     define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_A
-#   endif /* ACE_DEFAULT_NAMESPACE_DIR */
 #   if !defined (ACE_DEFAULT_LOCALNAME)
 #     define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_A
 #   endif /* ACE_DEFAULT_LOCALNAME */
@@ -8339,9 +8242,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   if !defined (ACE_DEFAULT_MUTEX)
 #     define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_A
 #   endif /* ACE_DEFAULT_MUTEX */
-#   if !defined (ACE_DEFAULT_TEMP_DIR_ENV)
-#     define ACE_DEFAULT_TEMP_DIR_ENV ACE_DEFAULT_TEMP_DIR_ENV_A
-#   endif /* ACE_DEFAULT_TEMP_DIR_ENV */
 # endif /* UNICODE */
 
 // Some ACE classes always use inline functions to maintain high

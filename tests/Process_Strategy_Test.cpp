@@ -170,7 +170,7 @@ Options::filename (void)
 }
 
 Options::Options (void)
-  :
+  : 
   // Choose to use processes by default.
 #if !defined (ACE_LACKS_FORK)
   concurrency_type_ (PROCESS)
@@ -184,8 +184,8 @@ Options::Options (void)
 
 Options::~Options (void)
 {
-  delete concurrency_strategy_;
-  concurrency_strategy_ = 0;
+  delete this->concurrency_strategy_;
+  this->concurrency_strategy_ = 0;
 }
 
 int
@@ -193,8 +193,12 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("p:c:f:"));
 
-  this->filename_ = ASYS_TEXT (ACE_TEMP_FILE_NAME_A);
+  // - 26 is for the "process_strategy_test_temp" that is appended
+  if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 26) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Temporary path too long\n"), -1);
 
+  ACE_OS::strcat (this->filename_, "process_strategy_test_temp");
+  
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
@@ -219,7 +223,7 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
                       get_opt.optarg));
         break;
       case 'f':
-        this->filename_ = get_opt.optarg;
+        ACE_OS::strcpy (this->filename_, get_opt.optarg);
         break;
       default:
         ACE_DEBUG ((LM_DEBUG,

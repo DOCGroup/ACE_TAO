@@ -312,7 +312,7 @@ private:
   const ASYS_TCHAR *nameserver_host_;
   // Hostname of nameserver.
 
-  LPCTSTR namespace_dir_;
+  LPTSTR namespace_dir_;
   // Directory to hold name_bindings.
 
   LPCTSTR process_name_;

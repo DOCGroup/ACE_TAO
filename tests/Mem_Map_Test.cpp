@@ -56,7 +56,7 @@ reverse_file (ACE_HANDLE file_handle,
 }
 
 static int
-create_test_file (int line_length, int num_lines)
+create_test_file (TCHAR *filename, int line_length, int num_lines)
 {
   char *mybuf = 0;
 
@@ -64,7 +64,7 @@ create_test_file (int line_length, int num_lines)
   char *c = ACE_ALPHABET;
   char *d = c;
 
-  ACE_HANDLE file_handle = ACE_OS::open (ACE_DEFAULT_TEST_FILE,
+  ACE_HANDLE file_handle = ACE_OS::open (filename,
                                          O_RDWR | O_CREAT | O_TRUNC,
                                          0666);
 
@@ -111,18 +111,39 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Mem_Map_Test"));
 
+  // = Initialize the temporary variable names
+
+  TCHAR test_file[MAXPATHLEN + 1]; 
+  TCHAR temp_file1[MAXPATHLEN + 1]; 
+  TCHAR temp_file2[MAXPATHLEN + 1]; 
+
+  // Get the temporary directory
+  // - 18 is for the filenames, ace_mem_map_temp_1 is the longest
+  if (ACE::get_temp_dir (test_file, MAXPATHLEN - 18) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Temporary path too long\n"), -1);
+
+  // Copy the temp directory to the other variables
+  ACE_OS::strcpy (temp_file1, test_file);
+  ACE_OS::strcpy (temp_file2, test_file);
+
+  // Add the filenames to the end
+  ACE_OS::strcat (test_file, ACE_TEXT ("ace_mem_map_test"));
+  ACE_OS::strcat (temp_file1, ACE_TEXT ("ace_mem_map_temp_1"));
+  ACE_OS::strcat (temp_file2, ACE_TEXT ("ace_mem_map_temp_2"));
+
+
   // First create a test file to work on
-  if (create_test_file (LINE_LENGTH, NUM_LINES) != 0)
+  if (create_test_file (test_file, LINE_LENGTH, NUM_LINES) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Create test file failed\n")), -1);
 
   ACE_Mem_Map mmap;
 
   // First memory map the test file
-  if (mmap.map (ACE_DEFAULT_TEST_FILE) == -1)
+  if (mmap.map (test_file) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%n: %p\n%a"), ASYS_TEXT ("mmap")), -1);
 
   // Now create a temporary file for intermediate processing
-  ACE_HANDLE temp_file_handle = ACE_OS::open (ACE_TEMP_FILE_NAME,
+  ACE_HANDLE temp_file_handle = ACE_OS::open (temp_file1,
                                               O_RDWR | O_TRUNC | O_CREAT,
                                               0666);
 
@@ -140,16 +161,10 @@ main (int, ASYS_TCHAR *[])
   ACE_Mem_Map temp_mmap;
 
   // Now memory map the temporary file
-  if (temp_mmap.map (ACE_TEMP_FILE_NAME) == -1)
+  if (temp_mmap.map (temp_file1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%n: %p\n%a"), ASYS_TEXT ("mmap")), -1);
 
-  TCHAR temp_file_name[BUFSIZ];
-
-  // Create another temporary file that would hold the output of
-  // reversing the first temporary file
-  ACE_OS::sprintf (temp_file_name, ACE_TEXT ("%s%s"),
-                   ACE_TEMP_FILE_NAME, ACE_TEXT ("2"));
-  if ((temp_file_handle = ACE_OS::open (temp_file_name,
+  if ((temp_file_handle = ACE_OS::open (temp_file2,
                                         O_RDWR | O_TRUNC | O_CREAT,
                                         0666)) == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Open failed\n")), -1);
@@ -165,7 +180,7 @@ main (int, ASYS_TCHAR *[])
   // Memory map the second temporary file
   ACE_Mem_Map temp_mmap2;
 
-  if (temp_mmap2.map (temp_file_name) == -1)
+  if (temp_mmap2.map (temp_file2) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%n: %p\n%a"), ASYS_TEXT ("mmap")), -1);
 
   // Now do a memcmp -- the orig file and the second temporary file
@@ -174,7 +189,7 @@ main (int, ASYS_TCHAR *[])
                               mmap.addr (),
                               mmap.size ()) == 0);
 
-  // Delete ACE_DEFAULT_TEST_FILE
+  // Delete the test file
   mmap.remove ();
 
   // Delete ACE_TEMP_TEST_FILE

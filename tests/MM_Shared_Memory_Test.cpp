@@ -29,7 +29,7 @@
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
 
 const int SHMSZ = 27;
-static TCHAR shm_key[] = ACE_TEMP_FILE_NAME ACE_TEXT ("XXXXXX");
+static TCHAR *shm_key;
 
 #if defined (ACE_LACKS_FORK)
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
@@ -186,6 +186,19 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("MM_Shared_Memory_Test"));
 
+  TCHAR temp_file[MAXPATHLEN + 1]; 
+
+  // Get the temporary directory, 
+  // The - 24 is for the filename, mm_shared_mem_testXXXXXX
+  if (ACE::get_temp_dir (temp_file, MAXPATHLEN - 24) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Temporary path too long\n"), -1);
+
+  // Add the filename to the end
+  ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
+  
+  // Store in the global variable.
+  shm_key = temp_file;
+
   if (ACE_OS::mktemp (shm_key) == 0
       || (ACE_OS::unlink (shm_key) == -1
           && errno == EPERM))
@@ -194,6 +207,8 @@ main (int, ASYS_TCHAR *[])
                        shm_key),
                       1);
   spawn ();
+
+
 
   ACE_END_TEST;
   return 0;

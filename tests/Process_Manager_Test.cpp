@@ -31,7 +31,7 @@
 
 ACE_RCSID(tests, Process_Manager_Test, "Process_Manager_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
-#if !defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
+#if (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32)) && defined (ACE_HAS_THREADS)
 
 static u_int debug_test = 0;
 
@@ -78,9 +78,9 @@ spawn_child (const char *argv0,
 {
   ACE_Process_Options opts;
 
-  opts.command_line ("%s %s %d",
-                     argv0,
-                     debug_test ? "-d" : "",
+  opts.command_line (ACE_TEXT("%s %s %d"),
+                     ACE_WIDE_STRING(argv0),
+                     debug_test ? ACE_TEXT ("-d") : ACE_TEXT (""),
                      sleep_time);
 
   pid_t  result = mgr.spawn (opts);
@@ -260,7 +260,7 @@ main (int argc, ASYS_TCHAR *argv[])
   return result;
 }
 
-#else
+#else /* (!ACE_LACKS_FORK || ACE_WIN32) && ACE_HAS_THREADS */
 int
 main (int, ASYS_TCHAR *[])
 {
@@ -270,4 +270,4 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* !ACE_LACKS_FORK && ACE_HAS_THREADS */
+#endif /* (!ACE_LACKS_FORK || ACE_WIN32) && ACE_HAS_THREADS */

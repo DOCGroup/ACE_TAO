@@ -54,7 +54,7 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 	case 's':
 	  // Ensure that the OSTREAM flag is set
 	  ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
-          ACE_OS::free ((void *) this->filename_);
+          delete [] this->filename_;
 	  this->filename_ = ACE_OS::strdup (get_opt.optarg);
 	  break;
         case 'w':
@@ -70,14 +70,30 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 }
 
 ACE_Logging_Strategy::ACE_Logging_Strategy (void)
-  : filename_ (ACE_OS::strdup (ACE_DEFAULT_LOGFILE))
 {
+#if defined (ACE_DEFAULT_LOGFILE)
+  this->filename_ = ACE_OS::strnew (ACE_DEFAULT_LOGFILE);
+#else /* ACE_DEFAULT_LOGFILE */
+  ACE_NEW (this->filename_, char[MAXPATHLEN + 1]);
+
+  // Get the temporary directory
+  if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 7) == -1)  // 7 for "logfile"
+    {
+      ACE_ERROR ((LM_ERROR, 
+                  "Temporary path too long, defaulting to current directory\n"));
+      this->filename_[0] = 0;
+    }
+
+  // Add the filename to the end
+  ACE_OS::strcat (this->filename_, "logfile");
+  
+#endif /* ACE_DEFAULT_LOGFILE */
 }
 
 int
 ACE_Logging_Strategy::fini (void)
 {
-  ACE_OS::free ((void *) this->filename_);
+  delete [] this->filename_;
   return 0;
 }
 

@@ -10,14 +10,44 @@ ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
   : delta_time_ (0)
 {
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");
+
+  // Only create a new unique filename for the memory pool file
+  // if the user didn't supply one...
+  if (poolname == 0)
+    {
+#if defined (ACE_DEFAULT_BACKING_STORE)
+      // Create a temporary file.
+      ACE_OS::strcpy (this->poolname_,
+                      ACE_DEFAULT_BACKING_STORE);
+#else /* ACE_DEFAULT_BACKING_STORE */
+      if (ACE::get_temp_dir (this->poolname_, 
+                             MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      "Temporary path too long, "
+                      "defaulting to current directory\n"));
+          this->poolname_[0] = 0;
+        }
+
+      // Add the filename to the end
+      ACE_OS::strcat (this->poolname_, ACE_TEXT ("ace-malloc-XXXXXX"));
+  
+#endif /* ACE_DEFAULT_BACKING_STORE */
+    }
+  else
+    ACE_OS::strncpy (this->poolname_,
+                     poolname,
+                     (sizeof this->poolname_ / sizeof (TCHAR)));
+
+  
   ACE_NEW (this->shmem_,
-           ALLOCATOR (poolname));
+           ALLOCATOR (this->poolname_));
 }
 
 ACE_System_Time::~ACE_System_Time (void)
 {
-  delete this->shmem_;
   ACE_TRACE ("ACE_System_Time::~ACE_System_Time");
+  delete this->shmem_;
 }
 
 // Get the local system time.

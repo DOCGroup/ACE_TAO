@@ -22,9 +22,25 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 {
   if (sa.get_type () == AF_ANY)
     {
+#if defined (ACE_DEFAULT_TEMP_FILE)
       // Create a temporary file.
       ACE_OS::strcpy (this->filename_,
                       ACE_DEFAULT_TEMP_FILE);
+#else /* ACE_DEFAULT_TEMP_FILE */
+      if (ACE::get_temp_dir (this->filename_, 
+                             MAXPATHLEN - 15) == -1) // -15 for ace-file-XXXXXX
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      "Temporary path too long, "
+                      "defaulting to current directory\n"));
+          this->filename_[0] = 0;
+        }
+
+      // Add the filename to the end
+      ACE_OS::strcat (this->filename_, ACE_TEXT ("ace-file-XXXXXX"));
+  
+#endif /* ACE_DEFAULT_TEMP_FILE */
+  
       ACE_OS::mktemp (this->filename_);
       this->base_set (AF_FILE,
                       ACE_OS::strlen (this->filename_) + 1);
