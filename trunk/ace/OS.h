@@ -1395,6 +1395,13 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_TYPENAME
 # endif /* ACE_HAS_TYPENAME_KEYWORD */
 
+# if defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
+#   define ACE_TEMPLATE_SPECIALIZATION template<>
+# else
+#   define ACE_TEMPLATE_SPECIALIZATION
+# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
+
+
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
 // arguments... ;-(.  Luckily, using the C++ preprocessor I can hide
