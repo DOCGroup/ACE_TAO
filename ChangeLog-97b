@@ -88,6 +88,11 @@ Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/Logger/simple-server/Logging_Handler.cpp (handle_close):
 	  removed declaration of unused arg "mask".
 
+	* include/makeinclude/rules.local.GNU: added show_statics and
+	  show_uninit targets.  They show the statics (that have static
+	  destructor calls) and uninitialized data in the object files
+	  in the current directory.
+
 Wed Oct 22 05:04:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.25, released Wed Oct 22 05:04:07 1997.
