@@ -63,7 +63,7 @@ main (int argc, char *argv[])
       // Initialize the Object Adapter
       CORBA::Object_var poa_object = 
 	orb->resolve_initial_references("RootPOA");
-      if (poa_object == 0)
+      if (CORBA::is_nil(poa_object.in()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),
 			  1);

@@ -1,3 +1,16 @@
+Fri Jan 23 16:49:19 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Param_Test/{server.cpp,param_test_i.h,param_test_i.cpp}:
+ 	Updated to compile with new POA.
+
+	* tests/Param_Test/Makefile: Moved LDFLAGS up, included the
+ 	rules.tao.GNU, and removed the dependencies which were causing me
+ 	no end of grief.
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Changed the check on
+ 	return value from resolve_initial_references() to use the
+ 	CORBA::is_nil() check.
+
 Fri Jan 23 16:43:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
