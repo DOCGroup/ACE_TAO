@@ -20,9 +20,9 @@ Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
             #define NSIG 0
             #endif /* NSIG */
 
-          We #define NSIG elsewhere on platforms (VxWorks, MVS) that need
-          it.  #defining it to be 0 isn't good; better to catch the lack
-          of NSIG at compile time than at run time.
+          We #define NSIG elsewhere on platforms (VxWorks, MVS) that need it.
+          #defining it to be 0 isn't good; it's better to catch the lack of
+          NSIG at compile time than at run time.
 
         * ace/{Log_Msg.cpp,OS.i,Select_Reactor.cpp,Signal.*,WFMO_Reactor.i},
           tests/Sigset_Ops_Test.cpp: replace NSIG with ACE_NSIG.
