@@ -330,7 +330,8 @@ ifeq ($(AIX_TEMPLATE_HACK),1)
 endif
 
 LSRC  = $(addsuffix .cpp,$(FILES))
-#### don't need???? LSRC2 = $(addsuffix .cpp,$(TEMPLATE_FILES))
+
+BUILD += ACE_COMPONENTS
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -346,6 +347,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+
+.PHONY: ACE_COMPONENTS
+ACE_COMPONENTS:
+	@$(ACE_ROOT)/bin/ace_components --ace --set " $(ACE_COMPONENTS) "
+
+realclean:
+	@$(ACE_ROOT)/bin/ace_components --ace --remove
 
 #### Setting ACELIB to null allows it to be used for building shared libraries,
 #### including libACE.$(SOEXT,) on certain platforms.

@@ -107,10 +107,13 @@ if [ ! "$chorus" ]; then
   start_test_resources=`ipcs | egrep $user`
 fi # ! chorus
 
+ACE_BUILD_COMPONENTS=`$ACE_ROOT/bin/ace_components --ace`
+OTHER=`echo $ACE_BUILD_COMPONENTS | egrep ' Other '`
+TOKEN=`echo $ACE_BUILD_COMPONENTS | egrep ' Token '`
+
 echo "Starting ACE version $ace_version tests . . ."
 
 mv -f "$compilation_log" "$compilation_log.bak" > /dev/null 2>&1
-
 
 run Basic_Types_Test
 test $chorus || run Env_Value_Test      # tests Env_Value_T and Process
@@ -125,7 +128,8 @@ run SString_Test                        # tests ACE_CString and ACE_SString
 run Collection_Test                     # tests ACE Collection classes
 test $chorus || test $LynxOS || test $Unicos || run DLL_Test # tests ACE_DLL class
 # Naming_Test: UNICOS fails due to feature not supported
-test $chorus || test $LynxOS || test $Unicos || run Naming_Test # tests ACE_Naming_Context, ACE_WString
+test $OTHER && \
+  (test $chorus || test $LynxOS || test $Unicos || run Naming_Test) # tests ACE_Naming_Context, ACE_WString
 
 run Handle_Set_Test                     # tests ACE_Handle_Set
 run OrdMultiSet_Test                    # tests ACE_Ordered_MultiSet
@@ -154,7 +158,7 @@ run Reactors_Test                       # tests ACE_Task, ACE_Mutex, ACE_Reactor
 run Reactor_Exceptions_Test             # tests ACE_Reactor and C++ exceptions
 run Reactor_Notify_Test                 # tests ACE_Reactor's notify() method, ACE_Task
 run Reactor_Timer_Test                  # tests ACE_Event_Handler, ACE_Reactor
-# run Thread_Pool_Reactor_Test            # tests ACE_TP_Reactor, ACE_Select_Reactor, ACE_Acceptor...
+# test $OTHER && run Thread_Pool_Reactor_Test            # tests ACE_TP_Reactor, ACE_Select_Reactor, ACE_Acceptor...
 test $chorus || test $LynxOS || run Reactor_Performance_Test # tests ACE_Event_Handler, ACE_Reactor
 run Notify_Performance_Test             # tests ACE_Event_Handler, ACE_Reactor
 run Reader_Writer_Test                  # tests ACE_Thread_Manager, ACE_Mutex
@@ -174,10 +178,10 @@ run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursiv
 
 # Time_Service_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 if [ -f ../netsvcs/servers/main ]; then
-  test $chorus || test $LynxOS || test $Unicos || run Time_Service_Test # tests libnetsvcs
+  test $TOKEN && (test $chorus || test $LynxOS || test $Unicos || run Time_Service_Test) # tests libnetsvcs
 fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
-test $chorus || test $LynxOS || test $Unicos || run Tokens_Test # tests ACE_Token
+test $TOKEN && (test $chorus || test $LynxOS || test $Unicos || run Tokens_Test) # tests ACE_Token
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Map_Test                            # tests ACE_Map + Forward and Reverse Map Iterators.

@@ -36,7 +36,6 @@ BIN =   Aio_Platform_Test \
         Message_Block_Test \
         Message_Queue_Test \
         Message_Queue_Notifications_Test \
-        Naming_Test \
         Notify_Performance_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
@@ -65,23 +64,33 @@ BIN =   Aio_Platform_Test \
         Task_Test \
         Thread_Manager_Test \
         Thread_Mutex_Test \
-        Thread_Pool_Reactor_Test \
         Thread_Pool_Test \
         Timeprobe_Test \
         Time_Service_Test \
         Time_Value_Test \
         Timer_Queue_Test \
-        Tokens_Test \
         TSS_Test \
         UPIPE_SAP_Test \
-        Upgradable_RW_Test \
-        XtReactor_Test
+        Upgradable_RW_Test
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the ACE library wasn't built with all components, don't
+#### try to build certain tests.
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  BIN += Naming_Test \
+         Thread_Pool_Reactor_Test \
+         XtReactor_Test
+endif # ! Other
+ifeq (Token,$(findstring Token,$(ACE_COMPONENTS)))
+  BIN += Tokens_Test
+endif # ! Token
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
