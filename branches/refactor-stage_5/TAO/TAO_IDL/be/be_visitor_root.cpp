@@ -57,6 +57,8 @@
 #include "be_visitor_component.h"
 #include "be_visitor_component_fwd.h"
 #include "be_visitor_home.h"
+#include "be_visitor_traits.h"
+#include "be_visitor_tmplinst.h"
 #include "be_visitor_context.h"
 
 #include "be_visitor_root/root.cpp"

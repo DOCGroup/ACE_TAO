@@ -21,6 +21,10 @@
 #include "tao/Collocation_Resolver.h"
 #include "ace/Service_Config.h"
 
+namespace CORBA
+{
+  class Environment;
+}
 /**
  * @class TAO_Default_Collocation_Resolver
  *

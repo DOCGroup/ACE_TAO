@@ -111,10 +111,6 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_SystemException.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
@@ -204,6 +200,10 @@ SOURCE=.\Codeset_Manager.cpp
 # Begin Source File
 
 SOURCE=.\Codeset_Translator_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocated_Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -447,6 +447,14 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Base.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
@@ -468,10 +476,6 @@ SOURCE=.\IOR_Parser.cpp
 # Begin Source File
 
 SOURCE=.\IORInterceptor_Adapter.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORInterceptor_Adapter_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -560,6 +564,10 @@ SOURCE=.\MProfile.cpp
 # Begin Source File
 
 SOURCE=.\Muxed_TMS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -971,10 +979,6 @@ SOURCE=.\Any_Specializations.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_SystemException.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\arg_shifter.h
 # End Source File
 # Begin Source File
@@ -1072,6 +1076,14 @@ SOURCE=.\Codeset_Manager.h
 # Begin Source File
 
 SOURCE=.\Codeset_Translator_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocated_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocation_Proxy_Broker.h
 # End Source File
 # Begin Source File
 
@@ -1339,6 +1351,14 @@ SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
@@ -1372,10 +1392,6 @@ SOURCE=.\IORInfo.h
 # Begin Source File
 
 SOURCE=.\IORInterceptor_Adapter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORInterceptor_Adapter_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1500,6 +1516,10 @@ SOURCE=.\MProfile.h
 # Begin Source File
 
 SOURCE=.\Muxed_TMS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify_Handler.h
 # End Source File
 # Begin Source File
 

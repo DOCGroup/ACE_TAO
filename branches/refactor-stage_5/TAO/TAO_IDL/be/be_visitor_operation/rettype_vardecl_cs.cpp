@@ -43,18 +43,18 @@ int
 be_visitor_operation_rettype_vardecl_cs::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
 
-  if (this->ctx_->alias ())
+  *os << be_idt_nl
+      << node->name () << "," << be_nl
+      << node->name () << "_slice," << be_nl
+      << node->name () << "_var," << be_nl;
+
+  if (node->size_type () == AST_Type::VARIABLE)
     {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
+      *os << node->name () << "_out," << be_nl;
     }
 
-  *os << bt->name () << "_var _tao_retval;";
+  *os << node->name () << "_forany" << be_uidt_nl;
 
   return 0;
 }
@@ -74,7 +74,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_enum (be_enum *node)
       bt = node;
     }
 
-  *os << bt->name () << " _tao_retval = (" << bt->name () << ")0;";
+  *os << bt->name ();
 
   return 0;
 }
@@ -266,14 +266,14 @@ be_visitor_operation_rettype_vardecl_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
-  if (node->width () == (long) sizeof (char))
+  *os << "CORBA::";
+
+  if (node->width () != (long) sizeof (char))
     {
-      *os << "CORBA::String_var _tao_retval;";
+      *os << "W";
     }
-  else
-    {
-      *os << "CORBA::WString_var _tao_retval;";
-    }
+
+  *os << "Char *";
 
   return 0;
 }

@@ -41,7 +41,8 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
 
   *os << "// Factory function Implementation." << be_nl
       << node->full_strategized_proxy_broker_name ()
-      << " *" << node->full_strategized_proxy_broker_name () << "::the"
+      << " *" << be_nl
+      << node->full_strategized_proxy_broker_name () << "::the"
       << node->strategized_proxy_broker_name ()
       << " (void)" << be_nl
       << "{" << be_idt_nl
@@ -53,141 +54,94 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   // Constructor Implementation.
   *os << node->full_strategized_proxy_broker_name () << "::"
       << node->strategized_proxy_broker_name () << " (void)" << be_nl
-      << "{" << be_idt_nl
-      << "for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)"
-      << be_idt_nl
-      << "{" << be_idt_nl
-      << "this->proxy_cache_[i] = 0;" << be_uidt_nl
-      << "}"
-      << be_uidt << be_uidt_nl
+      << "{" << be_nl
       << "}" << be_nl << be_nl;
 
   // Destructor Implementation.
   *os << node->full_strategized_proxy_broker_name () << "::~"
       << node->strategized_proxy_broker_name () << " (void)" << be_nl
-      << "{" << be_idt_nl
-      << "for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)"
-      << be_idt_nl
-      << "{" << be_idt_nl
-      << "delete this->proxy_cache_[i];"
-      << be_nl << be_nl
-      << "// Hack to prevent bug mentioned in 1204. Refer to 1204"
-      << be_nl
-      << "// for details.."
-      << be_nl
-      << "this->proxy_cache_[i] = 0;"
-      << be_uidt_nl
-      << "}"
-      << be_uidt  << be_uidt_nl
+      << "{" << be_nl
       << "}" << be_nl << be_nl;
 
-  // select_proxy impementation
-  *os << node->full_base_proxy_impl_name () << "&" << be_nl
+  // get_strategy() impementation.
+  *os << "TAO::Collocation_Strategy" << be_nl
       <<node->full_strategized_proxy_broker_name () << "::"
-      << "select_proxy ("
-      << be_idt << be_idt_nl
-      << "::" << node->full_name () << " *object" << be_nl
-      << "ACE_ENV_ARG_DECL"
-      << be_uidt_nl
-      << ")"
-      << be_uidt_nl
-      << "{"
-      << be_idt_nl
-      << "int strategy ="
-      << be_idt_nl
-      << "TAO_ORB_Core::collocation_strategy (object ACE_ENV_ARG_PARAMETER);"
-      << be_uidt_nl
-      << "ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);"
-      << be_nl << be_nl
-      << "if (this->proxy_cache_[strategy] != 0)"
-      << be_idt_nl
+      << "get_strategy (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return *this->proxy_cache_[strategy];" << be_uidt_nl
-      << "}"
-      << be_uidt_nl << be_nl
-      << "this->create_proxy (strategy ACE_ENV_ARG_PARAMETER);"
-      << be_nl
-      << "ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);"
-      << be_nl << be_nl
-      << "return *this->proxy_cache_[strategy];"
+      << "TAO::Collocation_Strategy strategy =" << be_idt_nl
+      << "TAO_ORB_Core::collocation_strategy_new (obj ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl
+      << "ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);" << be_nl << be_nl
+      << "return strategy;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // create_proxy implementation
-  *os << "void " << be_nl
-      <<node->full_strategized_proxy_broker_name () << "::"
-      << "create_proxy ("
-      << be_idt << be_idt_nl
-      << "int strategy"
-      << be_nl
-      << "ACE_ENV_ARG_DECL"
-      << be_uidt_nl
-      << ")"
-      << be_uidt_nl
-      << "{"
-      << be_idt_nl
-      << "ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);"
-      << be_nl << be_nl
-      << "if (this->proxy_cache_[strategy] == 0)"
-      << be_idt_nl
-      << "{"
-      << be_idt_nl
-      << "switch (strategy)"
-      << be_idt_nl
-      << "{" << be_nl;
+  *os << "void" << be_nl
+      << node->full_strategized_proxy_broker_name () << "::"
+      << "dispatch (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj," << be_nl
+      << "CORBA::Object_out forward_obj," << be_nl
+      << "TAO::Argument ** args," << be_nl
+      << "int num_args," << be_nl
+      << "const char * op," << be_nl
+      << "size_t op_len," << be_nl
+      << "TAO::Collocation_Strategy strategy" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY" << be_idt_nl
+      << "{" << be_idt_nl
+      << "switch (strategy)" << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (be_global->gen_thru_poa_collocation ())
     {
-    *os << "case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:"
-        << be_idt_nl
-        << "ACE_NEW_THROW_EX ("
-        << be_idt << be_idt_nl
-        << "this->proxy_cache_[strategy]," << be_nl
-        << node->full_thru_poa_proxy_impl_name () << "," << be_nl
-        << "CORBA::NO_MEMORY ()"
-        << be_uidt << be_uidt_nl
-        << ");" << be_nl
-        << "ACE_CHECK;" << be_nl
-        << "break;"
-        << be_nl << be_uidt_nl;
-      }
+      *os << "case TAO::TAO_CS_THRU_POA_STRATEGY:" << be_idt_nl
+          << "// Here is where we need table lookups." << be_nl;
+
+      this->gen_thru_poa_operations (node, os);
+
+      *os << "break;" << be_uidt_nl;
+    }
 
   if (be_global->gen_direct_collocation ())
     {
-      *os << "case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:"
-          << be_idt_nl
-          << "ACE_NEW_THROW_EX ("
-          << be_idt << be_idt_nl
-          << "this->proxy_cache_[strategy]," << be_nl
-          << node->full_direct_proxy_impl_name () << "," << be_nl
-          << "CORBA::NO_MEMORY ()"
-          << be_uidt << be_uidt_nl
-          << ");" << be_nl
-          << "ACE_CHECK;" << be_nl
-          << "break;"
-          << be_nl << be_uidt_nl;
-        }
+      *os << "case TAO::TAO_CS_DIRECT_STRATEGY:" << be_idt_nl;
 
-  *os << "case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:" << be_nl
-      << "default:"
+      this->gen_direct_operations (node, os);
+
+      *os << "break;" << be_uidt_nl;
+    }
+
+  *os << "default:" << be_idt_nl
+      << "ACE_THROW (CORBA::INTERNAL ());" << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt
+      << "\n#if (TAO_HAS_MINIMUM_CORBA == 0)" << be_nl
+      << "ACE_CATCH (PortableServer::ForwardRequest, forward_request)" 
       << be_idt_nl
-      << "ACE_NEW_THROW_EX ("
-      << be_idt << be_idt_nl
-      << "this->proxy_cache_[strategy]," << be_nl
-      << "::" << node->full_remote_proxy_impl_name () << "," << be_nl
-      << "CORBA::NO_MEMORY ()"
-      << be_uidt << be_uidt_nl
-      << ");" << be_nl
-      << "ACE_CHECK;" << be_nl
-      << "break;"
+      << "{" << be_idt_nl
+      << "forward_obj =" << be_idt_nl
+      << "CORBA::Object::_duplicate (forward_request.forward_reference.in ());"
       << be_uidt_nl
-      << "}"
-      << be_uidt << be_uidt_nl
-      << "}"
-      << be_uidt << be_uidt_nl
-      << "}" << be_nl;
+      << "return;" << be_uidt_nl
+      << "}" << be_uidt
+      << "\n#else" << be_nl
+      << "ACE_CATCHANY" << be_idt_nl
+      << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG (forward_obj);" << be_nl
+      << "ACE_RE_THROW;" << be_uidt_nl
+      << "}" << be_uidt
+      << "\n#endif /* TAO_HAS_MINIMUM_CORBA */" << be_nl
+      << "ACE_ENDTRY;" << be_uidt_nl
+      << "}";
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "//" << be_nl
       << "//        End Strategized Proxy Broker Implementation" << be_nl
       << "///////////////////////////////////////////////////////////////////////";
@@ -195,10 +149,62 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   return 0;
 }
 
-int be_visitor_interface_strategized_proxy_broker_ss::visit_component (
+int 
+be_visitor_interface_strategized_proxy_broker_ss::visit_component (
     be_component *node
   )
 {
   return this->visit_interface (node);
+}
+
+void
+be_visitor_interface_strategized_proxy_broker_ss::gen_thru_poa_operations (
+    be_interface *node,
+    TAO_OutStream *os
+  )
+{
+  int index = 0;
+  AST_Decl *d = 0;
+
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      d = si.item ();
+
+      if (d->node_type () != AST_Decl::NT_op)
+        {
+          continue;
+        }
+
+      if (index != 0)
+        {
+          *os << "else ";
+        }
+
+      ++index;
+
+      *os << "if (ACE_OS::strcmp (op, \"" << d->local_name () << "\") == 0)"
+          << be_idt_nl
+          << "{" << be_idt_nl
+          << node->full_thru_poa_proxy_impl_name () << "::" 
+          << d->local_name () << " (" << be_idt << be_idt_nl
+          << "obj," << be_nl
+          << "forward_obj," << be_nl
+          << "args," << be_nl
+          << "num_args" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
+          << ");" << be_uidt_nl
+          << "ACE_TRY_CHECK;" << be_uidt_nl
+          << "}" << be_uidt_nl;
+    }
+}
+
+void
+be_visitor_interface_strategized_proxy_broker_ss::gen_direct_operations (
+    be_interface *,
+    TAO_OutStream *
+  )
+{
 }
 

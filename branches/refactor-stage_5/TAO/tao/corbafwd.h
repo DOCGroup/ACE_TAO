@@ -20,7 +20,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CORBAFWD_H
 #define TAO_CORBAFWD_H
 
@@ -30,6 +29,9 @@
 
 // @@ Why is this here?  It should be moved to IOPC.h.
 //       -Ossama
+// @@ Maybe this should not be here, but please, no
+// more hacking on generated files
+//       -Jeff
 #if defined (HPUX)
 #  if defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
@@ -44,6 +46,8 @@
 
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/OBV_Constants.h"
 
 #include "ace/OS_Memory.h"
 
@@ -66,8 +70,30 @@
 #endif /* _MSC_VER */
 
 /// Define symbolic names for the ORB collocation strategies.
-namespace TAO_Collocation_Strategies
+namespace TAO
 {
+  enum Collocation_Strategy {
+    /// i.e no collocation.
+    TAO_CS_REMOTE_STRATEGY,
+
+    /// Calls to the collocated object are forwarded by the POA.
+    TAO_CS_THRU_POA_STRATEGY,
+
+    /// Calls to the collocated object are made directly to its
+    /// servant.
+    TAO_CS_DIRECT_STRATEGY,
+
+    /// This value should always be the last value in the enumeration.
+    /// It provides the count for the number of collocation
+    /// strategies.
+    TAO_CS_LAST
+  };
+}
+
+/// Define symbolic names for the ORB collocation strategies.
+/// @@Backward compatibililty to get things compiling.Needs removal.
+namespace TAO_Collocation_Strategies {
+
   enum {
     /// i.e no collocation.
     CS_REMOTE_STRATEGY,
@@ -98,86 +124,12 @@ template <class T> class TAO_Unbounded_Sequence;
  */
 namespace CORBA
 {
-  /**
-   * @name CORBA Primitive Types
-   *
-   * Declarations of all CORBA primitive types.
-   */
-  //@{
-  typedef ACE_CDR::Boolean Boolean;
-  typedef Boolean &Boolean_out;
-
-  typedef ACE_CDR::Octet Octet;
-  typedef Octet  &Octet_out;
-
-  typedef ACE_CDR::Short Short;
-  typedef Short &Short_out;
-
-  typedef ACE_CDR::UShort UShort;
-  typedef UShort &UShort_out;
-
-  typedef ACE_CDR::Long Long;
-  typedef Long &Long_out;
-
-  typedef ACE_CDR::ULong ULong;
-  typedef ULong &ULong_out;
-
-  typedef ACE_CDR::LongLong LongLong;
-  typedef LongLong &LongLong_out;
-
-  typedef ACE_CDR::ULongLong ULongLong;
-  typedef ULongLong &ULongLong_out;
-
-  typedef ACE_CDR::Float Float;
-  typedef Float &Float_out;
-
-  typedef ACE_CDR::Double Double;
-  typedef Double &Double_out;
-
-  typedef ACE_CDR::LongDouble LongDouble;
-  typedef LongDouble &LongDouble_out;
-
-  typedef ACE_CDR::Char Char;
-  typedef Char &Char_out;
-
-  typedef ACE_CDR::WChar WChar;
-  typedef WChar &WChar_out;
-  //@}
-
   // enum values defined in tao/NVList.h, bitwise ORed.
   typedef ULong Flags;
 
   // CORBA::TypeCode typedefs.
   class TypeCode;
   typedef TypeCode * TypeCode_ptr;
-
-  /**
-   * @name CORBA String Memory Management
-   *
-   * CORBA string memory management functions.
-   */
-  //@{
-  TAO_NAMESPACE_INLINE_FUNCTION char * string_alloc (ULong len);
-  extern TAO_Export  char * string_dup (const char *);
-  TAO_NAMESPACE_INLINE_FUNCTION void string_free (char *);
-  //@}
-
-  class String_var;
-  class String_out;
-
-  /**
-   * @name CORBA Wide String Memory Management
-   *
-   * CORBA wide string memory management functions.
-   */
-  //@{
-  TAO_NAMESPACE_INLINE_FUNCTION WChar * wstring_alloc (ULong len);
-  extern TAO_Export  WChar * wstring_dup (const WChar * const);
-  TAO_NAMESPACE_INLINE_FUNCTION void wstring_free (WChar * const);
-  //@}
-
-  class WString_var;
-  class WString_out;
 
   class StringSeq;
   extern TAO_Export TypeCode_ptr _tc_StringSeq;
@@ -248,17 +200,6 @@ namespace CORBA
   typedef ValueFactoryBase *ValueFactory;
   class DefaultValueRefCountBase;
 
-  typedef CORBA::Short Visibility;
-  typedef CORBA::Short_out Visibility_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Visibility;
-
-  extern TAO_Export const CORBA::Short PRIVATE_MEMBER;
-  extern TAO_Export const CORBA::Short PUBLIC_MEMBER;
-
-  typedef CORBA::Short ValueModifier;
-  typedef CORBA::Short_out ValueModifier_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueModifier;
-
   extern TAO_Export const CORBA::Short VM_NONE;
   extern TAO_Export const CORBA::Short VM_CUSTOM;
   extern TAO_Export const CORBA::Short VM_ABSTRACT;
@@ -266,15 +207,6 @@ namespace CORBA
 
   class AbstractBase;
   typedef AbstractBase * AbstractBase_ptr;
-
-  enum CompletionStatus
-  {
-    // = Completion Status for System exceptions
-
-    COMPLETED_YES,     // successful or exceptional completion
-    COMPLETED_NO,      // didn't change any state; retry is OK
-    COMPLETED_MAYBE    // can't say what happened; retry unsafe
-  };
 
   enum exception_type
   {
@@ -372,64 +304,6 @@ namespace CORBA
   extern TAO_Export void release (ServerRequest_ptr);
   extern TAO_Export void release (Context_ptr);
   //@}
-
-  enum TCKind
-  {
-    // = Kinds of typecodes.
-
-    // Do not change these enum values, or duplicate them if you need
-    // to add values.  They are used to index tables, and if you
-    // change the values you'll need to find and update all of those
-    // tables.  The values are also part of the Common Data
-    // Representation, and hence are part of IIOP and other ORB
-    // protocols.
-
-    tk_null               = 0,
-    tk_void               = 1,
-    tk_short              = 2,
-    tk_long               = 3,
-    tk_ushort             = 4,
-    tk_ulong              = 5,
-    tk_float              = 6,
-    tk_double             = 7,
-    tk_boolean            = 8,
-    tk_char               = 9,
-    tk_octet              = 10,
-    tk_any                = 11,
-    tk_TypeCode           = 12,
-    tk_Principal          = 13,
-    tk_objref             = 14,
-    tk_struct             = 15,
-    tk_union              = 16,
-    tk_enum               = 17,
-    tk_string             = 18,
-    tk_sequence           = 19,
-    tk_array              = 20,
-    tk_alias              = 21,
-    tk_except             = 22,
-
-    tk_longlong           = 23,
-    tk_ulonglong          = 24,
-    tk_longdouble         = 25,
-    tk_wchar              = 26,
-    tk_wstring            = 27,
-    tk_fixed              = 28,
-    tk_value              = 29,
-    tk_value_box          = 30,
-    tk_native             = 31,
-    tk_abstract_interface = 32,
-    tk_local_interface    = 33,
-    tk_component          = 34,
-    tk_home               = 35,
-    tk_event              = 36,
-
-    // This symbol is not defined by CORBA 3.0.  It's used to speed up
-    // dispatch based on TCKind values, and lets many important ones
-    // just be table lookups.  It must always be the last enum value!!
-
-    TC_KIND_COUNT
-  };
-  typedef TCKind &TCKind_out;
 
   /**
    * @name TypeCode Constants
@@ -857,13 +731,6 @@ operator<< (TAO_OutputCDR&, const TAO_opaque&);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_opaque&);
-
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
-
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::TCKind &);
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/corbafwd.i"

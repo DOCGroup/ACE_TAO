@@ -95,10 +95,18 @@ be_interface::be_interface (UTL_ScopedName *n,
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
 
-  if (abstract && this->is_defined ())
+  if (this->is_defined ())
     {
+      // Set the flag that says we have a interface in this IDL file.
       ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.abstract_iface_seen_);
+                    idl_global->decls_seen_masks.interface_seen_);
+
+      if (abstract)
+        {
+          // Set the flag for abstract interface seen in this IDL file.
+          ACE_SET_BITS (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.abstract_iface_seen_);
+        }
     }
 }
 
@@ -585,52 +593,21 @@ be_interface:: gen_var_out_seq_decls (void)
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
-                       "odds_n_ends");
+                       "var_out");
 
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
-      << "typedef " << lname << " *" << lname << "_ptr;" << be_nl
-      << "struct tao_" << lname << "_life;" << be_nl << be_nl
+      << "typedef " << lname << " *" << lname << "_ptr;" << be_nl << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
-      << lname << "," << be_nl
-      << "tao_" << lname << "_life" << be_uidt_nl
+      << lname << be_uidt_nl
       << ">" << be_uidt_nl
       << lname << "_var;" << be_uidt_nl << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Objref_Out_T<" << be_idt << be_idt_nl
-      << lname << "," << be_nl
-      << "tao_" << lname << "_life" << be_uidt_nl
+      << lname << be_uidt_nl
       << ">" << be_uidt_nl
       << lname << "_out;" << be_uidt;
-
-  *os << be_nl << be_nl
-      << "struct " << be_global->stub_export_macro ()
-      << " tao_" << lname << "_life" << be_nl
-      << "{" << be_idt_nl
-      << "static " << lname << "_ptr tao_duplicate ("
-      << lname << "_ptr);" << be_nl
-      << "static void tao_release (" << lname << "_ptr);" << be_nl
-      << "static " << lname << "_ptr tao_nil (void);" << be_nl
-      << "static CORBA::Boolean tao_marshal (" << be_idt << be_idt_nl
-      << lname << "_ptr," << be_nl
-      << "TAO_OutputCDR &" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "};";
-
-  if (! this->is_abstract ())
-    {
-      *os << be_nl << be_nl
-          << "struct " << be_global->stub_export_macro ()
-          << " tao_" << lname << "_cast" << be_nl
-          << "{" << be_idt_nl
-          << "static " << lname << "_ptr tao_narrow (" << be_idt << be_idt_nl
-          << "CORBA::Object_ptr"
-          << be_nl << "ACE_ENV_ARG_DECL" << be_uidt_nl
-          << ");" << be_uidt_nl
-          << "static CORBA::Object_ptr tao_upcast (void *);" << be_uidt_nl
-          << "};";
-    }
 
   os->gen_endif ();
 

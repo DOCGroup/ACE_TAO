@@ -81,38 +81,16 @@ TAO_NAMESPACE  TAO
   
   typedef
     TAO_Objref_Var_T<
-        ConnectionTimeoutPolicy,
-        tao_ConnectionTimeoutPolicy_life
+        ConnectionTimeoutPolicy
       >
     ConnectionTimeoutPolicy_var;
   
   typedef
     TAO_Objref_Out_T<
-        ConnectionTimeoutPolicy,
-        tao_ConnectionTimeoutPolicy_life
+        ConnectionTimeoutPolicy
       >
     ConnectionTimeoutPolicy_out;
   
-  struct TAO_Messaging_Export tao_ConnectionTimeoutPolicy_life
-  {
-    static ConnectionTimeoutPolicy_ptr tao_duplicate (ConnectionTimeoutPolicy_ptr);
-    static void tao_release (ConnectionTimeoutPolicy_ptr);
-    static ConnectionTimeoutPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ConnectionTimeoutPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Messaging_Export tao_ConnectionTimeoutPolicy_cast
-  {
-    static ConnectionTimeoutPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from

@@ -54,58 +54,6 @@
 
 int ImplementationRepository::ServerObject::_tao_class_id = 0;
 
-ImplementationRepository::ServerObject_ptr
-ImplementationRepository::tao_ServerObject_life::tao_duplicate (
-    ServerObject_ptr p
-  )
-{
-  return ServerObject::_duplicate (p);
-}
-
-void
-ImplementationRepository::tao_ServerObject_life::tao_release (
-    ServerObject_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ImplementationRepository::ServerObject_ptr
-ImplementationRepository::tao_ServerObject_life::tao_nil (
-    void
-  )
-{
-  return ServerObject::_nil ();
-}
-
-CORBA::Boolean
-ImplementationRepository::tao_ServerObject_life::tao_marshal (
-    ServerObject_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-ImplementationRepository::ServerObject_ptr
-ImplementationRepository::tao_ServerObject_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ServerObject::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-ImplementationRepository::tao_ServerObject_cast::tao_upcast (
-    void *src
-  )
-{
-  ServerObject **tmp =
-    ACE_static_cast (ServerObject **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2813,58 +2761,6 @@ TAO_NAMESPACE_END
 // be/be_visitor_interface/interface_cs.cpp:57
 
 int ImplementationRepository::Administration::_tao_class_id = 0;
-
-ImplementationRepository::Administration_ptr
-ImplementationRepository::tao_Administration_life::tao_duplicate (
-    Administration_ptr p
-  )
-{
-  return Administration::_duplicate (p);
-}
-
-void
-ImplementationRepository::tao_Administration_life::tao_release (
-    Administration_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ImplementationRepository::Administration_ptr
-ImplementationRepository::tao_Administration_life::tao_nil (
-    void
-  )
-{
-  return Administration::_nil ();
-}
-
-CORBA::Boolean
-ImplementationRepository::tao_Administration_life::tao_marshal (
-    Administration_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-ImplementationRepository::Administration_ptr
-ImplementationRepository::tao_Administration_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Administration::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-ImplementationRepository::tao_Administration_cast::tao_upcast (
-    void *src
-  )
-{
-  Administration **tmp =
-    ACE_static_cast (Administration **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -6750,58 +6646,6 @@ TAO_NAMESPACE_END
 // be/be_visitor_interface/interface_cs.cpp:57
 
 int ImplementationRepository::ServerInformationIterator::_tao_class_id = 0;
-
-ImplementationRepository::ServerInformationIterator_ptr
-ImplementationRepository::tao_ServerInformationIterator_life::tao_duplicate (
-    ServerInformationIterator_ptr p
-  )
-{
-  return ServerInformationIterator::_duplicate (p);
-}
-
-void
-ImplementationRepository::tao_ServerInformationIterator_life::tao_release (
-    ServerInformationIterator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ImplementationRepository::ServerInformationIterator_ptr
-ImplementationRepository::tao_ServerInformationIterator_life::tao_nil (
-    void
-  )
-{
-  return ServerInformationIterator::_nil ();
-}
-
-CORBA::Boolean
-ImplementationRepository::tao_ServerInformationIterator_life::tao_marshal (
-    ServerInformationIterator_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-ImplementationRepository::ServerInformationIterator_ptr
-ImplementationRepository::tao_ServerInformationIterator_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ServerInformationIterator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-ImplementationRepository::tao_ServerInformationIterator_cast::tao_upcast (
-    void *src
-  )
-{
-  ServerInformationIterator **tmp =
-    ACE_static_cast (ServerInformationIterator **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class

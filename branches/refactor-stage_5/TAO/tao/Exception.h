@@ -15,10 +15,9 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
-#include /**/"ace/pre.h"
 
-
-#include "tao/corbafwd.h"
+#include "ace/pre.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,10 +30,12 @@
 #define TAO_RAISE(EXCEPTION)
 #endif /* TAO_HAS_EXCEPTIONS */
 
+#include "tao/Basic_Types.h"
+
 #include "ace/CORBA_macros.h"
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
-
+#include "ace/Global_Macros.h"
 #include <stdarg.h>
 #include <stdio.h>   /* For "FILE" typedef. */
 
@@ -43,8 +44,32 @@ class ACE_Allocator;
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
+// This is already done in orbconf.h. But this file is totally
+// decoupled from its contents that we have to do this here. Including
+// orbconf.h is probably going to be a overhead.
+#if defined (minor)
+#undef minor
+#endif /* minor */
+
 namespace CORBA
 {
+  class TypeCode;
+  typedef TypeCode *TypeCode_ptr;
+
+  class Environment;
+
+  class Any;
+  typedef Any *Any_ptr;
+
+  enum CompletionStatus
+  {
+    // = Completion Status for System exceptions
+
+    COMPLETED_YES,     // successful or exceptional completion
+    COMPLETED_NO,      // didn't change any state; retry is OK
+    COMPLETED_MAYBE    // can't say what happened; retry unsafe
+  };
+
   /**
    * @class Exception
    *
@@ -203,6 +228,8 @@ namespace CORBA
     UserException (void);
   };
 
+
+
   /**
    * @class SystemException
    *
@@ -211,12 +238,12 @@ namespace CORBA
    * System exceptions are those defined in the CORBA spec; OMG-IDL
    * defines these.
    */
-  class TAO_Export SystemException : public CORBA::Exception
+  class TAO_Export SystemException : public Exception
   {
   public:
-
     /// Default constructtor
     SystemException (void);
+
 
     /// Copy constructor.
     SystemException (const SystemException &src);
@@ -228,10 +255,10 @@ namespace CORBA
     SystemException &operator= (const SystemException &src);
 
     /// Get the minor status.
-    CORBA::ULong minor (void) const;
+    ULong minor (void) const;
 
     /// Set the minor status.
-    void minor (CORBA::ULong m);
+    void minor (ULong m);
 
     /// Get the completion status.
     CORBA::CompletionStatus completed (void) const;

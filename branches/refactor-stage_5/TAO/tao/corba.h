@@ -22,6 +22,7 @@
 
 #ifndef TAO_MASTER_CORBA_H
 #define TAO_MASTER_CORBA_H
+
 #include /**/ "ace/pre.h"
 
 // ACE specific includes

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TYPECODE_H
 #define TAO_TYPECODE_H
 
@@ -25,10 +24,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 #include "tao/Exception.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
+#include "tao/OBV_Constants.h"
+#include "tao/corbafwd.h"
 
-// Forward declarations
+// Forward declarations.
 class TAO_InputCDR;
 class TAO_OutputCDR;
 
@@ -41,8 +45,68 @@ namespace CORBA
 {
   class TypeCode;
 
+  class Environment;
+
   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
   typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
+
+  enum TCKind
+  {
+    // = Kinds of typecodes.
+
+    // Do not change these enum values, or duplicate them if you need
+    // to add values.  They are used to index tables, and if you
+    // change the values you'll need to find and update all of those
+    // tables.  The values are also part of the Common Data
+    // Representation, and hence are part of IIOP and other ORB
+    // protocols.
+
+    tk_null               = 0,
+    tk_void               = 1,
+    tk_short              = 2,
+    tk_long               = 3,
+    tk_ushort             = 4,
+    tk_ulong              = 5,
+    tk_float              = 6,
+    tk_double             = 7,
+    tk_boolean            = 8,
+    tk_char               = 9,
+    tk_octet              = 10,
+    tk_any                = 11,
+    tk_TypeCode           = 12,
+    tk_Principal          = 13,
+    tk_objref             = 14,
+    tk_struct             = 15,
+    tk_union              = 16,
+    tk_enum               = 17,
+    tk_string             = 18,
+    tk_sequence           = 19,
+    tk_array              = 20,
+    tk_alias              = 21,
+    tk_except             = 22,
+
+    tk_longlong           = 23,
+    tk_ulonglong          = 24,
+    tk_longdouble         = 25,
+    tk_wchar              = 26,
+    tk_wstring            = 27,
+    tk_fixed              = 28,
+    tk_value              = 29,
+    tk_value_box          = 30,
+    tk_native             = 31,
+    tk_abstract_interface = 32,
+    tk_local_interface    = 33,
+    tk_component          = 34,
+    tk_home               = 35,
+    tk_event              = 36,
+
+    // This symbol is not defined by CORBA 3.0.  It's used to speed up
+    // dispatch based on TCKind values, and lets many important ones
+    // just be table lookups.  It must always be the last enum value!!
+
+    TC_KIND_COUNT
+  };
+  typedef TCKind &TCKind_out;
 
   /**
    * @class TypeCode
@@ -542,6 +606,15 @@ namespace CORBA
 
 namespace TAO
 {
+  /// Used in generated code if CORBA::TypeCode is an argument or return type.
+  template<>
+  class TAO_Export Arg_Traits<CORBA::TypeCode>
+    : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,
+                                 CORBA::TypeCode_var,
+                                 CORBA::TypeCode_out>
+  {
+  };
+
   /**
    * @class TC_Private_State
    *
@@ -626,11 +699,16 @@ private:
 
 };
 
-// These operators are too complex to be inline....
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
                                       const CORBA::TypeCode *x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
                                       CORBA::TypeCode *&x);
+
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
+                                      const CORBA::TCKind &);
+
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
+                                      CORBA::TCKind &);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Typecode.i"

@@ -121,25 +121,25 @@ TAO_Bounded_Sequence<T, MAX>::operator[] (CORBA::ULong i) const
 // Inline operations for class TAO_Object_Manager<T>
 // *************************************************************
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>::~TAO_Object_Manager (void)
+TAO_Object_Manager<T,T_var>::~TAO_Object_Manager (void)
 {
 }
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>::TAO_Object_Manager (
-    const TAO_Object_Manager<T,T_var,T_life> & rhs
+TAO_Object_Manager<T,T_var>::TAO_Object_Manager (
+    const TAO_Object_Manager<T,T_var> & rhs
   )
   : ptr_ (rhs.ptr_),
     release_ (rhs.release_)
 {
 }
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>::TAO_Object_Manager (
+TAO_Object_Manager<T,T_var>::TAO_Object_Manager (
     T ** buffer,
     CORBA::Boolean release
   )
@@ -148,46 +148,46 @@ TAO_Object_Manager<T,T_var,T_life>::TAO_Object_Manager (
 {
 }
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
 ACE_INLINE T *
-TAO_Object_Manager<T,T_var,T_life>::operator-> (void) const
+TAO_Object_Manager<T,T_var>::operator-> (void) const
 {
   return *this->ptr_;
 }
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>::operator const T_var () const
+TAO_Object_Manager<T,T_var>::operator const T_var () const
 {
-  return T_life::tao_duplicate (*this->ptr_);
+  return TAO::Objref_Traits<T>::tao_duplicate (*this->ptr_);
 }
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>::operator const T *() const
-{
-  return *this->ptr_;
-}
-
-template <typename T, typename T_var, typename T_life>
-ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>::operator T *&()
+TAO_Object_Manager<T,T_var>::operator const T *() const
 {
   return *this->ptr_;
 }
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
+ACE_INLINE
+TAO_Object_Manager<T,T_var>::operator T *&()
+{
+  return *this->ptr_;
+}
+
+template <typename T, typename T_var>
 ACE_INLINE
 T *
-TAO_Object_Manager<T,T_var,T_life>::in (void) const
+TAO_Object_Manager<T,T_var>::in (void) const
 {
   return *this->ptr_;
 }
 
-template <typename T, typename T_var, typename T_life>
+template <typename T, typename T_var>
 ACE_INLINE
 T *&
-TAO_Object_Manager<T,T_var,T_life>::inout (void)
+TAO_Object_Manager<T,T_var>::inout (void)
 {
   return *this->ptr_;
 }
@@ -285,28 +285,28 @@ TAO_Pseudo_Object_Manager<T,T_var>::_retn (void)
 // class TAO_Unbounded_Object_Sequence
 // *************************************************************
 
-template <typename T, typename T_var, typename T_life, typename T_cast>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::
-TAO_Unbounded_Object_Sequence (void)
+TAO_Unbounded_Object_Sequence<T,T_var>::TAO_Unbounded_Object_Sequence (void)
 {
 }
 
-template <typename T, typename T_var, typename T_life, typename T_cast>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::
-TAO_Unbounded_Object_Sequence (CORBA::ULong maximum,
-                               CORBA::ULong length,
-                               T* *value,
-                               CORBA::Boolean release)
+TAO_Unbounded_Object_Sequence<T,T_var>::TAO_Unbounded_Object_Sequence (
+    CORBA::ULong maximum,
+    CORBA::ULong length,
+    T* *value,
+    CORBA::Boolean release
+  )
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {
 }
 
-template <typename T, typename T_var, typename T_life, typename T_cast>
+template <typename T, typename T_var>
 ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>
-TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::operator[] (
+TAO_Object_Manager<T,T_var>
+TAO_Unbounded_Object_Sequence<T,T_var>::operator[] (
     CORBA::ULong slot
   ) const
 {
@@ -314,47 +314,35 @@ TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::operator[] (
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST,
                                          this->buffer_);
   return
-    TAO_Object_Manager<T,T_var,T_life> (tmp + slot, this->release_);
+    TAO_Object_Manager<T,T_var> (tmp + slot, this->release_);
 }
 
 // *************************************************************
 // class TAO_Bounded_Object_Sequence
 // *************************************************************
 
-template <typename T,
-          typename T_var,
-          typename T_life,
-          typename T_cast,
-          size_t MAX>
+template <typename T, typename T_var, size_t MAX>
 ACE_INLINE
-TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::
-~TAO_Bounded_Object_Sequence (void)
+TAO_Bounded_Object_Sequence<T,T_var,MAX>::~TAO_Bounded_Object_Sequence (void)
 {
   this->_deallocate_buffer ();
 }
 
-template <typename T,
-          typename T_var,
-          typename T_life,
-          typename T_cast,
-          size_t MAX>
+template <typename T, typename T_var, size_t MAX>
 ACE_INLINE
-TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::
-TAO_Bounded_Object_Sequence (CORBA::ULong length,
-                             T ** value,
-                             CORBA::Boolean release)
+TAO_Bounded_Object_Sequence<T,T_var,MAX>::TAO_Bounded_Object_Sequence (
+    CORBA::ULong length,
+    T ** value,
+    CORBA::Boolean release
+  )
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
 
-template <typename T,
-          typename T_var,
-          typename T_life,
-          typename T_cast,
-          size_t MAX>
+template <typename T, typename T_var, size_t MAX>
 ACE_INLINE
-TAO_Object_Manager<T,T_var,T_life>
-TAO_Bounded_Object_Sequence<T, T_var,T_life,T_cast,MAX>::operator[] (
+TAO_Object_Manager<T,T_var>
+TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator[] (
     CORBA::ULong slot
   ) const
 {
@@ -362,7 +350,7 @@ TAO_Bounded_Object_Sequence<T, T_var,T_life,T_cast,MAX>::operator[] (
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST,
                                          this->buffer_);
   return
-    TAO_Object_Manager<T,T_var,T_life> (tmp + slot, this->release_ );
+    TAO_Object_Manager<T,T_var> (tmp + slot, this->release_ );
 }
 
 // *************************************************************

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_VALUETYPE_ADAPTER_H
 #define TAO_VALUETYPE_ADAPTER_H
 #include /**/ "ace/pre.h"

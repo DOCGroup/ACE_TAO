@@ -54,58 +54,6 @@
 
 int ImplementationRepository::Locator::_tao_class_id = 0;
 
-ImplementationRepository::Locator_ptr
-ImplementationRepository::tao_Locator_life::tao_duplicate (
-    Locator_ptr p
-  )
-{
-  return Locator::_duplicate (p);
-}
-
-void
-ImplementationRepository::tao_Locator_life::tao_release (
-    Locator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ImplementationRepository::Locator_ptr
-ImplementationRepository::tao_Locator_life::tao_nil (
-    void
-  )
-{
-  return Locator::_nil ();
-}
-
-CORBA::Boolean
-ImplementationRepository::tao_Locator_life::tao_marshal (
-    Locator_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-ImplementationRepository::Locator_ptr
-ImplementationRepository::tao_Locator_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Locator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-ImplementationRepository::tao_Locator_cast::tao_upcast (
-    void *src
-  )
-{
-  Locator **tmp =
-    ACE_static_cast (Locator **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<

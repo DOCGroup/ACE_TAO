@@ -73,6 +73,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_visitor.h"
 #include "ace/streams.h"
+#include "utl_identifier.h"
+#include "idl_defines.h"
+#include "global_extern.h"
 
 ACE_RCSID (ast, 
            ast_string, 
@@ -107,6 +110,41 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
+
+  Identifier *id = 0;
+  UTL_ScopedName *new_name = 0;
+  UTL_ScopedName *conc_name = 0;
+
+  ACE_NEW (id,
+           Identifier (this->width () == 1 ? "Char *" : "WChar *"));
+
+  ACE_NEW (conc_name,
+           UTL_ScopedName (id,
+                           0));
+
+  ACE_NEW (id,
+           Identifier ("CORBA"));
+
+  ACE_NEW (new_name,
+           UTL_ScopedName (id,
+                           conc_name));
+
+  this->set_name (new_name);
+
+  unsigned long bound = ms->ev ()->u.ulval;
+
+  if (bound > 0)
+    {
+      static char namebuf[NAMEBUFSIZE];
+      ACE_OS::memset (namebuf,
+                      '\0',
+                      NAMEBUFSIZE);
+      ACE_OS::sprintf (namebuf,
+                       "CORBA_%sSTRING_%d",
+                       (wide == 1 ? "" : "W"),
+                       bound);
+      this->flat_name_ = ACE::strnew (namebuf);
+    }
 }
 
 AST_String::~AST_String (void)

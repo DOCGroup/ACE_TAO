@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
 #include /**/ "ace/pre.h"
@@ -33,17 +32,11 @@ namespace CORBA
   extern TAO_Valuetype_Export void add_ref (ValueFactoryBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueFactoryBase *);
 
-  typedef TAO_Value_Var_T<ValueFactoryBase, 
-                          tao_ValueFactoryBase_life> 
+  typedef TAO_Value_Var_T<ValueFactoryBase> 
     ValueFactoryBase_var;
 
   typedef ValueFactoryBase_var ValueFactory_var;
 
-  struct TAO_Valuetype_Export tao_ValueFactoryBase_life
-  {
-    static void tao_add_ref (ValueFactoryBase *);
-    static void tao_remove_ref (ValueFactoryBase *);
-  };
 
   class TAO_Valuetype_Export ValueFactoryBase
   {

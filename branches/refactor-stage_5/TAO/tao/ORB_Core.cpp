@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ORB_Core.h"
 #include "ORB_Table.h"
 
@@ -2624,7 +2623,7 @@ TAO_ORB_Core::stubless_sync_scope (void)
 
 void
 TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
-                                 int &has_timeout,
+                                 bool &has_timeout,
                                  ACE_Time_Value &time_value)
 {
   Timeout_Hook timeout_hook =
@@ -2632,10 +2631,11 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
 
   if (timeout_hook == 0)
     {
-      has_timeout = 0;
+      has_timeout = false;
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
+  has_timeout = true;
 }
 
 void
@@ -2686,7 +2686,7 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 void
 TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
-                                  int &has_timeout,
+                                  bool &has_timeout,
                                   ACE_Time_Value &time_value)
 {
   Timeout_Hook connection_timeout_hook =
@@ -2694,10 +2694,12 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
 
   if (connection_timeout_hook == 0)
     {
-      has_timeout = 0;
+      has_timeout = false;
       return;
     }
+
   (*connection_timeout_hook) (this, stub, has_timeout, time_value);
+  has_timeout = true;
 }
 
 void
@@ -2946,6 +2948,48 @@ TAO_ORB_Core_instance (void)
   return orb_table->first_orb ();
 }
 
+
+TAO::Collocation_Strategy
+TAO_ORB_Core::collocation_strategy_new (CORBA::Object_ptr object
+                                        ACE_ENV_ARG_DECL)
+{
+
+  TAO_Stub *stub = object->_stubobj ();
+  if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
+      stub->servant_orb_var ()->orb_core () != 0)
+    {
+      TAO_ORB_Core *orb_core =
+        stub->servant_orb_var ()->orb_core ();
+
+      int collocated =
+        orb_core->collocation_resolver ().is_collocated (object
+                                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
+
+      if (collocated)
+        {
+          switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
+            {
+            case THRU_POA:
+              return TAO::TAO_CS_THRU_POA_STRATEGY;
+
+            case DIRECT:
+              {
+                /////////////////////////////////////////////////////////////
+                // If the servant is null and you are collocated this means
+                // that the POA policy NON-RETAIN is set, and with that policy
+                // using the DIRECT collocation strategy is just insane.
+                /////////////////////////////////////////////////////////////
+                ACE_ASSERT (object->_servant () != 0);
+                return TAO::TAO_CS_DIRECT_STRATEGY;
+              }
+            }
+        }
+    }
+
+  // In this case the Object is a client.
+  return TAO::TAO_CS_REMOTE_STRATEGY;
+}
 
 int
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object

@@ -10,16 +10,19 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_MANAGED_TYPES_H
 #define TAO_MANAGED_TYPES_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/pre.h"
+
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/TAO_Export.h"
+#include "tao/CORBA_String.h"
 
 /****************************************************************/
 

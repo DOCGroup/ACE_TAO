@@ -78,42 +78,19 @@ TAO_NAMESPACE  IOP
   
   class Codec;
   typedef Codec *Codec_ptr;
-  struct tao_Codec_life;
   
   typedef
     TAO_Objref_Var_T<
-        Codec,
-        tao_Codec_life
+        Codec
       >
     Codec_var;
   
   typedef
     TAO_Objref_Out_T<
-        Codec,
-        tao_Codec_life
+        Codec
       >
     Codec_out;
   
-  struct TAO_Export tao_Codec_life
-  {
-    static Codec_ptr tao_duplicate (Codec_ptr);
-    static void tao_release (Codec_ptr);
-    static Codec_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        Codec_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_Codec_cast
-  {
-    static Codec_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -425,42 +402,19 @@ TAO_NAMESPACE  IOP
   
   class CodecFactory;
   typedef CodecFactory *CodecFactory_ptr;
-  struct tao_CodecFactory_life;
   
   typedef
     TAO_Objref_Var_T<
-        CodecFactory,
-        tao_CodecFactory_life
+        CodecFactory
       >
     CodecFactory_var;
   
   typedef
     TAO_Objref_Out_T<
-        CodecFactory,
-        tao_CodecFactory_life
+        CodecFactory
       >
     CodecFactory_out;
   
-  struct TAO_Export tao_CodecFactory_life
-  {
-    static CodecFactory_ptr tao_duplicate (CodecFactory_ptr);
-    static void tao_release (CodecFactory_ptr);
-    static CodecFactory_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        CodecFactory_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Export tao_CodecFactory_cast
-  {
-    static CodecFactory_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from

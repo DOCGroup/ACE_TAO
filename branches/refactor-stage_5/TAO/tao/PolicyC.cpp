@@ -487,62 +487,40 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
-
-int CORBA::Policy::_tao_class_id = 0;
+// =======================================================
+// Hand-crafted
 
 CORBA::Policy_ptr
-CORBA::tao_Policy_life::tao_duplicate (
-    CORBA::Policy_ptr p
-  )
+TAO::Objref_Traits<CORBA::Policy>::tao_duplicate (CORBA::Policy_ptr p)
 {
   return CORBA::Policy::_duplicate (p);
 }
 
 void
-CORBA::tao_Policy_life::tao_release (
-    CORBA::Policy_ptr p
-  )
+TAO::Objref_Traits<CORBA::Policy>::tao_release (CORBA::Policy_ptr p)
 {
   CORBA::release (p);
 }
 
 CORBA::Policy_ptr
-CORBA::tao_Policy_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<CORBA::Policy>::tao_nil (void)
 {
   return CORBA::Policy::_nil ();
 }
 
 CORBA::Boolean
-CORBA::tao_Policy_life::tao_marshal (
-    CORBA::Policy_ptr p,
-    TAO_OutputCDR &cdr
-  )
+TAO::Objref_Traits<CORBA::Policy>::tao_marshal (CORBA::Policy_ptr p,
+                                                TAO_OutputCDR & cdr)
 {
   return p->marshal (cdr);
 }
 
-CORBA::Policy_ptr
-CORBA::tao_Policy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::Policy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
+// =================================================================
 
-CORBA::Object *
-CORBA::tao_Policy_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::Policy **tmp =
-    ACE_static_cast (CORBA::Policy **, src);
-  return *tmp;
-}
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+
+int CORBA::Policy::_tao_class_id = 0;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -1821,58 +1799,6 @@ TAO_NAMESPACE_END
 
 int CORBA::PolicyManager::_tao_class_id = 0;
 
-CORBA::PolicyManager_ptr
-CORBA::tao_PolicyManager_life::tao_duplicate (
-    CORBA::PolicyManager_ptr p
-  )
-{
-  return CORBA::PolicyManager::_duplicate (p);
-}
-
-void
-CORBA::tao_PolicyManager_life::tao_release (
-    CORBA::PolicyManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-CORBA::PolicyManager_ptr
-CORBA::tao_PolicyManager_life::tao_nil (
-    void
-  )
-{
-  return CORBA::PolicyManager::_nil ();
-}
-
-CORBA::Boolean
-CORBA::tao_PolicyManager_life::tao_marshal (
-    CORBA::PolicyManager_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-CORBA::PolicyManager_ptr
-CORBA::tao_PolicyManager_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::PolicyManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::tao_PolicyManager_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::PolicyManager **tmp =
-    ACE_static_cast (CORBA::PolicyManager **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2042,58 +1968,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int CORBA::PolicyCurrent::_tao_class_id = 0;
-
-CORBA::PolicyCurrent_ptr
-CORBA::tao_PolicyCurrent_life::tao_duplicate (
-    CORBA::PolicyCurrent_ptr p
-  )
-{
-  return CORBA::PolicyCurrent::_duplicate (p);
-}
-
-void
-CORBA::tao_PolicyCurrent_life::tao_release (
-    CORBA::PolicyCurrent_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-CORBA::PolicyCurrent_ptr
-CORBA::tao_PolicyCurrent_life::tao_nil (
-    void
-  )
-{
-  return CORBA::PolicyCurrent::_nil ();
-}
-
-CORBA::Boolean
-CORBA::tao_PolicyCurrent_life::tao_marshal (
-    CORBA::PolicyCurrent_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-CORBA::PolicyCurrent_ptr
-CORBA::tao_PolicyCurrent_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::PolicyCurrent::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::tao_PolicyCurrent_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::PolicyCurrent **tmp =
-    ACE_static_cast (CORBA::PolicyCurrent **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class

@@ -227,58 +227,6 @@ template class
 
 int TAO::BufferingConstraintPolicy::_tao_class_id = 0;
 
-TAO::BufferingConstraintPolicy_ptr
-TAO::tao_BufferingConstraintPolicy_life::tao_duplicate (
-    TAO::BufferingConstraintPolicy_ptr p
-  )
-{
-  return TAO::BufferingConstraintPolicy::_duplicate (p);
-}
-
-void
-TAO::tao_BufferingConstraintPolicy_life::tao_release (
-    TAO::BufferingConstraintPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-TAO::BufferingConstraintPolicy_ptr
-TAO::tao_BufferingConstraintPolicy_life::tao_nil (
-    void
-  )
-{
-  return TAO::BufferingConstraintPolicy::_nil ();
-}
-
-CORBA::Boolean
-TAO::tao_BufferingConstraintPolicy_life::tao_marshal (
-    TAO::BufferingConstraintPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-TAO::BufferingConstraintPolicy_ptr
-TAO::tao_BufferingConstraintPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return TAO::BufferingConstraintPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-TAO::tao_BufferingConstraintPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  TAO::BufferingConstraintPolicy **tmp =
-    ACE_static_cast (TAO::BufferingConstraintPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<

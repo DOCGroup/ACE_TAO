@@ -1,17 +1,8 @@
 
 // $Id$
 
-exception one_bad {};
-exception two_bad {};
-
 interface foo
 {
-  string all_str (in string inarg,
-                 inout string inoutarg,
-                 out string outarg)
-                 raises (one_bad, two_bad);
-
-
-  oneway void push (in string inarg);
+  attribute long attr;
 };
 

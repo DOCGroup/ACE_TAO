@@ -50,58 +50,6 @@
 
 int CORBA::DomainManager::_tao_class_id = 0;
 
-CORBA::DomainManager_ptr
-CORBA::tao_DomainManager_life::tao_duplicate (
-    CORBA::DomainManager_ptr p
-  )
-{
-  return CORBA::DomainManager::_duplicate (p);
-}
-
-void
-CORBA::tao_DomainManager_life::tao_release (
-    CORBA::DomainManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-CORBA::DomainManager_ptr
-CORBA::tao_DomainManager_life::tao_nil (
-    void
-  )
-{
-  return CORBA::DomainManager::_nil ();
-}
-
-CORBA::Boolean
-CORBA::tao_DomainManager_life::tao_marshal (
-    CORBA::DomainManager_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-CORBA::DomainManager_ptr
-CORBA::tao_DomainManager_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::DomainManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::tao_DomainManager_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::DomainManager **tmp =
-    ACE_static_cast (CORBA::DomainManager **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -801,58 +749,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int CORBA::ConstructionPolicy::_tao_class_id = 0;
-
-CORBA::ConstructionPolicy_ptr
-CORBA::tao_ConstructionPolicy_life::tao_duplicate (
-    CORBA::ConstructionPolicy_ptr p
-  )
-{
-  return CORBA::ConstructionPolicy::_duplicate (p);
-}
-
-void
-CORBA::tao_ConstructionPolicy_life::tao_release (
-    CORBA::ConstructionPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-CORBA::ConstructionPolicy_ptr
-CORBA::tao_ConstructionPolicy_life::tao_nil (
-    void
-  )
-{
-  return CORBA::ConstructionPolicy::_nil ();
-}
-
-CORBA::Boolean
-CORBA::tao_ConstructionPolicy_life::tao_marshal (
-    CORBA::ConstructionPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-CORBA::ConstructionPolicy_ptr
-CORBA::tao_ConstructionPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::ConstructionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::tao_ConstructionPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::ConstructionPolicy **tmp =
-    ACE_static_cast (CORBA::ConstructionPolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -1563,9 +1459,7 @@ CORBA::DomainManagerList::DomainManagerList (void)
 CORBA::DomainManagerList::DomainManagerList (CORBA::ULong max)
   : TAO_Unbounded_Object_Sequence<
         CORBA::DomainManager,
-        CORBA::DomainManager_var,
-        CORBA::tao_DomainManager_life,
-        CORBA::tao_DomainManager_cast
+        CORBA::DomainManager_var
       >
     (max)
 {}
@@ -1578,9 +1472,7 @@ CORBA::DomainManagerList::DomainManagerList (
   )
   : TAO_Unbounded_Object_Sequence<
         CORBA::DomainManager,
-        CORBA::DomainManager_var,
-        CORBA::tao_DomainManager_life,
-        CORBA::tao_DomainManager_cast
+        CORBA::DomainManager_var
       >
     (max, length, buffer, release)
 {}
@@ -1588,9 +1480,7 @@ CORBA::DomainManagerList::DomainManagerList (
 CORBA::DomainManagerList::DomainManagerList (const DomainManagerList &seq)
   : TAO_Unbounded_Object_Sequence<
         CORBA::DomainManager,
-        CORBA::DomainManager_var,
-        CORBA::tao_DomainManager_life,
-        CORBA::tao_DomainManager_cast
+        CORBA::DomainManager_var
       >
     (seq)
 {}

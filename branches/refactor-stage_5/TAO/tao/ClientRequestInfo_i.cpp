@@ -1,10 +1,11 @@
 #include "ClientRequestInfo_i.h"
-#include "Invocation.h"
+#include "Invocation_Base.h"
 #include "Stub.h"
 #include "Profile.h"
 #include "Tagged_Components.h"
 #include "Valuetype_Adapter.h"
 #include "debug.h"
+#include "Service_Context.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -18,7 +19,7 @@ ACE_RCSID (TAO,
 #   include "ClientRequestInfo_i.inl"
 # endif /* !__ACE_INLINE__ */
 
-TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
+TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv,
                                                   CORBA::Object_ptr target)
   : invocation_ (inv),
     target_ (target), // No need to duplicate.
@@ -32,7 +33,7 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
 }
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
-    TAO_GIOP_Invocation *inv,
+    TAO::Invocation_Base *inv,
     CORBA::AbstractBase_ptr abstract_target
   )
   : invocation_ (inv),
@@ -91,7 +92,7 @@ TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->target_))
     {
-      
+
       TAO_Valuetype_Adapter *adapter =
         ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
             TAO_ORB_Core::valuetype_adapter_name ()
@@ -118,7 +119,7 @@ TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL)
       // TAO_GIOP_Invocation::forward_reference() already duplicates
       // the reference before returning it so there is no need to
       // duplicate it here.
-      return this->invocation_->forward_reference ();
+      return this->invocation_->forwarded_reference ();
     }
 
   if (CORBA::is_nil (this->target_))
@@ -455,25 +456,21 @@ char *
 TAO_ClientRequestInfo_i::operation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup (this->invocation_->operation ());
+  return CORBA::string_dup (this->invocation_->operation_name ());
 }
 
 Dynamic::ParameterList *
 TAO_ClientRequestInfo_i::arguments (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  return this->invocation_->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 Dynamic::ExceptionList *
 TAO_ClientRequestInfo_i::exceptions (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  return this->invocation_->exceptions (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 Dynamic::ContextList *
@@ -511,25 +508,10 @@ TAO_ClientRequestInfo_i::response_expected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 Messaging::SyncScope
-TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_GIOP_Oneway_Invocation *inv =
-    ACE_dynamic_cast (TAO_GIOP_Oneway_Invocation *,
-                      this->invocation_);
-
-  // The response_expected_ check is a precautionary measure for
-  // platforms that do not support RTTI, i.e. where the dynamic_cast
-  // above would incorrectly work.  If the response_expected flag is
-  // not equal to zero then it is fairly safe to assume that the
-  // invocation is not a one-way, meaning that the sync_scope() method
-  // is not available.
-  if (inv != 0 && this->response_expected_ == 0)
-    return inv->sync_scope ();
-
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    -1);
+  return this->invocation_->sync_scope ();
 }
 
 PortableInterceptor::ReplyStatus
@@ -561,7 +543,7 @@ TAO_ClientRequestInfo_i::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
   // TAO_GIOP_Invocation::forward_reference() already duplicates the
   // reference before returning it so there is no need to duplicate it
   // here.
-  return this->invocation_->forward_reference ();
+  return this->invocation_->forwarded_reference ();
 }
 
 CORBA::Any *
@@ -629,15 +611,15 @@ TAO_ClientRequestInfo_i::get_service_context_i (
 }
 
 void
-TAO_ClientRequestInfo_i::reply_status (int invoke_status)
+TAO_ClientRequestInfo_i::reply_status (TAO::Invocation_Status invoke_status)
 {
   switch (invoke_status)
     {
-    case TAO_INVOKE_OK:
+    case TAO::TAO_INVOKE_SUCCESS:
       this->reply_status_ = PortableInterceptor::SUCCESSFUL;
       break;
-    case TAO_INVOKE_RESTART:
-      if (this->invocation_->received_location_forward ())
+    case TAO::TAO_INVOKE_RESTART:
+      if (this->invocation_->is_forwarded ())
         this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
       else
         this->reply_status_ = PortableInterceptor::TRANSPORT_RETRY;
@@ -649,6 +631,11 @@ TAO_ClientRequestInfo_i::reply_status (int invoke_status)
       this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
       break;
     }
+}
+
+void
+TAO_ClientRequestInfo_i::reply_status (int )
+{
 }
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

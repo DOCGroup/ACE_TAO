@@ -46,10 +46,10 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      os->indent ();
-
-      *os << "static TAO_Exception_Data " << "_tao_" << node->flat_name ()
-          << "_exceptiondata [] = " << be_nl;
+      *os << be_nl << be_nl
+          << "static TAO_Exception_Data" << be_nl
+          << "_tao_" << node->flat_name ()
+          << "_exceptiondata [] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
 
       AST_Decl *d = 0;
@@ -72,11 +72,11 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
 
           if (!ei.is_done ())
             {
-              *os << "," << be_nl;
+              *os << "," << be_nl << be_nl;
             }
         }
 
-      *os << be_uidt_nl << "};\n\n";
+      *os << be_uidt_nl << "};" << be_uidt;
     }
 
   return 0;

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file   Protocol_Factory.h
@@ -10,7 +9,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_PROTOCOL_FACTORY_H
 #define TAO_PROTOCOL_FACTORY_H

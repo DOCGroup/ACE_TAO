@@ -181,6 +181,12 @@ ORB_CORE_FILES = \
   Default_Protocols_Hooks \
   Messaging_SyncScopeC \
   Invocation \
+  Invocation_Base \
+  Invocation_Adapter \
+  Profile_Transport_Resolver \
+  Remote_Invocation \
+  Collocated_Invocation \
+  Synch_Invocation \
   Invocation_Endpoint_Selectors \
   Asynch_Invocation \
   operation_details \
@@ -300,7 +306,12 @@ ORB_CORE_FILES = \
   Request_Dispatcher \
   Valuetype_Adapter \
   ObjectKey_Table \
-  Refcounted_ObjectKey
+  Refcounted_ObjectKey \
+  Argument \
+  Basic_Arguments \
+  Special_Basic_Arguments \
+  UB_String_Arguments
+
 
 DYNAMIC_ANY_FILES =
 
@@ -323,6 +334,15 @@ TEMPLATE_FILES = \
   Seq_Var_T \
   Value_VarOut_T \
   VarOut_T \
+  Basic_Argument_T \
+  BD_String_Argument_T \
+  Object_Argument_T \
+  Special_Basic_Argument_T \
+  UB_String_Argument_T \
+  Fixed_Size_Argument_T \
+  Var_Size_Argument_T \
+  Fixed_Array_Argument_T \
+  Var_Array_Argument_T \
   TAO_Singleton
 
 ifndef TAO_ROOT

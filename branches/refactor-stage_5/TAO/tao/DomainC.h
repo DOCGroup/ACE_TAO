@@ -69,29 +69,8 @@ TAO_NAMESPACE  CORBA
 
   class DomainManager;
   typedef DomainManager *DomainManager_ptr;
-  struct tao_DomainManager_life;
-  typedef TAO_Objref_Var_T<DomainManager, tao_DomainManager_life> DomainManager_var;
-  typedef TAO_Objref_Out_T<DomainManager, tao_DomainManager_life> DomainManager_out;
-
-  struct TAO_Export tao_DomainManager_life
-  {
-    static DomainManager_ptr tao_duplicate (DomainManager_ptr);
-    static void tao_release (DomainManager_ptr);
-    static DomainManager_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        DomainManager_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Export tao_DomainManager_cast
-  {
-    static DomainManager_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<DomainManager> DomainManager_var;
+  typedef TAO_Objref_Out_T<DomainManager> DomainManager_out;
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
@@ -335,29 +314,8 @@ TAO_NAMESPACE  CORBA
 
   class ConstructionPolicy;
   typedef ConstructionPolicy *ConstructionPolicy_ptr;
-  struct tao_ConstructionPolicy_life;
-  typedef TAO_Objref_Var_T<ConstructionPolicy, tao_ConstructionPolicy_life> ConstructionPolicy_var;
-  typedef TAO_Objref_Out_T<ConstructionPolicy, tao_ConstructionPolicy_life> ConstructionPolicy_out;
-
-  struct TAO_Export tao_ConstructionPolicy_life
-  {
-    static ConstructionPolicy_ptr tao_duplicate (ConstructionPolicy_ptr);
-    static void tao_release (ConstructionPolicy_ptr);
-    static ConstructionPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ConstructionPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Export tao_ConstructionPolicy_cast
-  {
-    static ConstructionPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<ConstructionPolicy> ConstructionPolicy_var;
+  typedef TAO_Objref_Out_T<ConstructionPolicy> ConstructionPolicy_out;
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
@@ -605,8 +563,7 @@ TAO_NAMESPACE  CORBA
         DomainManagerList,
         TAO_Object_Manager<
             CORBA::DomainManager,
-            CORBA::DomainManager_var,
-            CORBA::tao_DomainManager_life
+            CORBA::DomainManager_var
           >
       >
     DomainManagerList_var;
@@ -617,8 +574,7 @@ TAO_NAMESPACE  CORBA
         DomainManagerList_var,
         TAO_Object_Manager<
             CORBA::DomainManager,
-            CORBA::DomainManager_var,
-            CORBA::tao_DomainManager_life
+            CORBA::DomainManager_var
           >
       >
     DomainManagerList_out;
@@ -627,9 +583,7 @@ TAO_NAMESPACE  CORBA
     : public
         TAO_Unbounded_Object_Sequence<
             CORBA::DomainManager,
-            CORBA::DomainManager_var,
-            CORBA::tao_DomainManager_life,
-            CORBA::tao_DomainManager_cast
+            CORBA::DomainManager_var
           >
   {
   public:

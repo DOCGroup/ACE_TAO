@@ -14,57 +14,28 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TARGET_SPECIFICATION_H
 #define TAO_TARGET_SPECIFICATION_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/Object_KeyC.h"
-#include "tao/IOPC.h"
+#include "tao/TAO_Export.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/IOP_IORC.h"
+#include "tao/Object_KeyC.h"
 
 /**
  * @class TAO_Target_Specification
  *
  * @brief A class to encapsulate all the ways of specifying targets.
  *
- * @@ Bala: do we have examples of how other protocols map object
- * keys?
- * @@ Carlos: The way HTTP-NG does is not quite intuitive. But
- * they too have a sequnce of Octet which more or less fits this
- * model. You are also allowed to specify is a Cache Index (14
- * bits). I think that can also be worked out and shouldn't be
- * a big deal.
- * @@ Bala:What if they pass something around that does not fit
- * this model?
- * @@ Carlos:As long as we dont know it is ok. But then if we get
- * to some point where we have something floating around,
- * obviously we would have well defined data structure in
- * TAO. BTW, in IMHO it is not possible for me to think the
- * myriad data structures that a designer can come up with. So,
- * I can look ahead possibily a couple of days but not a life
- * time  :-) But you have a good question though. Please sont
- * remove these discussions. It could be useful for someone
- * someday.
  */
 class TAO_Export TAO_Target_Specification
 {
-
-  //   @@ Bala: i hate to be picky on these matters, but you are not
-  //   writing a novel or your memoirs, 'I foresee' does not look like
-  //   the right kind of comment in a class description.
-  //
-  //   The motivation behind this is GIOP 1.2 althought I foresee
-  //   other messaging protocols doing something similar.
-  //   The Invocation classes (client side) were
-  //   passing the object key that they had extracted from the
-  //   profiles with every invocation. This extraction would be done
-  //   based on the policies that are specified for the client side
-  //   ORB. Further the client side  ORB need not just send the object
-  //   key. They can send send the IOP::TaggedProfile or IOP::IOR
-  //   profile. So I am putting these possibilites in this class and
-  //   pass it to the messaging layer. It would extract what is
-  //   required.
 public:
 
   /// Ctor

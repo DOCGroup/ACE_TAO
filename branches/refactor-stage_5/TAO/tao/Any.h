@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Any.h
@@ -9,7 +8,6 @@
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================
-
 
 #ifndef TAO_ANY_H
 #define TAO_ANY_H
@@ -24,6 +22,7 @@
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
+#include "tao/Var_Size_Argument_T.h"
 
 namespace TAO
 {
@@ -264,6 +263,15 @@ namespace CORBA
 
 namespace TAO
 {
+  /// Used in generated code if CORBA::Any is an argument or return type.
+  template<>
+  class TAO_Export Arg_Traits<CORBA::Any>
+    : public Var_Size_Arg_Traits_T<CORBA::Any, 
+                                   CORBA::Any_var, 
+                                   CORBA::Any_out>
+  {
+  };
+
   /**
    * @class Any_Impl
    *
@@ -407,7 +415,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::TypeCode_ptr &);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const char *&);
+                                       const CORBA::Char *&);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::WChar *&);
 

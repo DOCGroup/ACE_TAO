@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H
 #include /**/ "ace/pre.h"
@@ -29,7 +28,12 @@
 
 class TAO_MProfile;
 class TAO_GIOP_Invocation;
+class ACE_Time_Value;
 
+namespace TAO
+{
+  class Profile_Transport_Resolver;
+}
 
 /**
  * @class TAO_Invocation_Endpoint_Selector
@@ -57,6 +61,10 @@ public:
   /// Select the endpoint and set @a invocation's @c profile_ and
   /// @c endpoint_ data members accordingly.
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
+                                ACE_ENV_ARG_DECL) = 0;
+
+  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                                ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL) = 0;
 
   /**
@@ -103,6 +111,9 @@ public:
   virtual ~TAO_Default_Endpoint_Selector (void);
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
+                                ACE_ENV_ARG_DECL);
+  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                                ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL);
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile

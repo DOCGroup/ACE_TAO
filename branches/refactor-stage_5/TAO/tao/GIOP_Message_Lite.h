@@ -10,8 +10,10 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 // ===================================================================
+
 #ifndef TAO_GIOP_MESSAGE_LITE_H
 #define TAO_GIOP_MESSAGE_LITE_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Pluggable_Messaging.h"
@@ -19,7 +21,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
@@ -200,6 +201,8 @@ private:
   /// Header length
   virtual size_t header_length (void) const;
 
+  virtual TAO_OutputCDR &out_stream (void);
+
 private:
 
   /// Write the request header in to <msg>
@@ -258,6 +261,8 @@ private:
   // The byte order..
   // NOTE: GIOP lite cannot work between heterogenous platforms..
   CORBA::Octet byte_order_;
+
+  TAO_OutputCDR cdr_;
 };
 
 

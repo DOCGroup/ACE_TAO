@@ -26,8 +26,6 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
 {
 
   TAO_OutStream *os = this->ctx_->stream ();
-  // Generate the class declaration.
-  os->indent ();
 
   *os << be_nl << be_nl
       << "///////////////////////////////////////////////////////////////////////" 
@@ -39,55 +37,47 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "class " << be_global->skel_export_macro () << " "
-      << node->strategized_proxy_broker_name () << " : public virtual "
-      << "::" << node->full_base_proxy_broker_name () << be_nl <<  "{" 
+      << node->strategized_proxy_broker_name () << be_idt_nl
+      << ": public virtual "
+      << "TAO::Collocation_Proxy_Broker" << be_uidt_nl <<  "{" 
       << be_nl
-      << "public: " << be_idt_nl;
+      << "public: " << be_idt;
 
   // Constructor
-  *os << node->strategized_proxy_broker_name () << " (void);" << be_nl << be_nl;
+  *os << be_nl
+      << node->strategized_proxy_broker_name () << " (void);";
 
   // Destructor
-  *os << "virtual ~" << node->strategized_proxy_broker_name () << " (void);" 
-      << be_nl << be_nl;
+  *os << be_nl << be_nl
+      << "virtual ~" << node->strategized_proxy_broker_name () << " (void);";
 
-  // Accessor Method
-  *os << "virtual " << "::" << node->full_base_proxy_impl_name () << " &" 
-      << "select_proxy (" << be_idt_nl;
-
-  *os << "::" << node->full_name () << " *object" << be_nl
+  *os << be_nl << be_nl
+      << "TAO::Collocation_Strategy" << be_nl
+      << "get_strategy (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ")" << be_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException));" << be_uidt;
 
+  *os << be_nl << be_nl
+      << "void" << be_nl
+      << "dispatch (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj," << be_nl
+      << "CORBA::Object_out forward_obj," << be_nl
+      << "TAO::Argument ** args," << be_nl
+      << "int num_args," << be_nl
+      << "const char * op," << be_nl
+      << "size_t op_len," << be_nl
+      << "TAO::Collocation_Strategy strategy" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException));" << be_uidt;
 
-  *os << "private:" << be_idt_nl
-      << "// Helper methods that takes care to create the proxy" << be_nl
-      << "// as soon as their use is necessary." << be_nl
-      << "void create_proxy (" << be_idt_nl << "int collocation_strategy"
-      << be_nl << "ACE_ENV_ARG_DECL"
-      << be_uidt_nl << ");"
-      << be_nl << be_nl
-      << "// Caches the proxy implementations. The proxy implementation" 
-      << be_nl
-      << "// are totally stateless, and those can be shared by all the" 
-      << be_nl
-      << "// instances of a given IDL interface type." << be_nl
-      << "::" << node->full_base_proxy_impl_name () << be_nl
-      << "*proxy_cache_[TAO_Collocation_Strategies::CS_LAST];"
-      << be_nl << be_nl
-      << "TAO_SYNCH_MUTEX mutex_;" << be_nl;
-
-  // Factory Function declaration.
-  *os << "// This funxtion is used to get an handle to the unique instance" 
-      << be_nl
-      << "// of the Strategized Proxy Broker that is available for a given" 
-      << be_nl
-      << "// interface."
-      << be_uidt_nl << be_nl;
-
-  *os << "public:" << be_idt_nl
-      << "static " << node->strategized_proxy_broker_name ()
-      << " *the" << node->strategized_proxy_broker_name ()
+  *os << be_uidt_nl << be_nl
+      << "private:" << be_idt_nl
+      << "static" << be_nl
+      << node->strategized_proxy_broker_name () << " *" << be_nl 
+      << "the" << node->strategized_proxy_broker_name ()
       << " (void);" << be_uidt_nl;
 
   *os << "};";
