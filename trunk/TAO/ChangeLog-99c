@@ -9,41 +9,87 @@ Thu Dec  2 00:32:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  TAO optimizations that were possible, without breaking any laws
 	  of physics.
 
+Wed Dec  1 23:11:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * docs/implrepo/tao_ir.html:
+        * docs/implrepo/usersguide.html:
+          Added documentation for the new activation mode support.
+          Servers registered in TAO's Implementation Repository now
+          can have an activation mode of either NORMAL, MANUAL, or
+          PER_CLIENT.
+
+          NORMAL is the default and is what the ImplRepo normally
+          does.  MANUAL specifies that the server shouldn't be
+          activated with a request but can be activated through
+          tao_ir or via the command line.  PER_CLIENT specifies
+          that each request to the ImplRepo will result in a new
+          server process started up.  Because clients cache the
+          forwarded reference, there is one server per client
+          (more or less).
+
+          Thanks to Klaus Hofmann <Klaus.Hofmann@astrum.de> and
+          Mirko Brandner <mbrandner@yahoo.com> for inquiring
+          about activation modes.
+
+        * orbsvcs/orbsvcs/ImplRepo.idl:
+          Added an ActivationMode enum and a new member of that
+          type to the StartupOptions structure.
+
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.h:
+          Added the activation mode to the Server_Info structure
+          and the other interfaces.
+
+        * orbsvcs/ImplRepo_Service/tao_ir_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_ir_i.h:
+          Added support for specifying Activation modes in add
+          and list commands.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+          Added support for the activation modes.
+
+        * tao/Exception.cpp:
+        * tao/corbafwd.h:
+          Added a new TRANSIENT exception minor code.  It is used for
+          when the Implementation Repository cannot activate a MANUAL
+          server.
+
 Wed Dec  1 23:05:19 1999  Marina Spivak  <marina@cs.wustl.edu>
 
         * performance-tests/RTCorba/Multiple_Endpoints/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/test.idl
-	* performance-tests/RTCorba/Multiple_Endpoints/test_i.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/test_i.h
-	* performance-tests/RTCorba/Multiple_Endpoints/test_i.i
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.conf
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/README
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.conf
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/README
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
-	  Added the above-listed files and directories.  This is a set of
-	  benchmarks for comparing performance/priority inversions in
-	  three different client/server scenarios: 1) endpoint per
-	  priority (the recently added capability), 2) orb per
-	  priority (the old way to achieve the same goals as in item 1), and 3) a
-	  single orb and single endpoint (lack of
-	  prioritized treatment of requests in the server).
+        * performance-tests/RTCorba/Multiple_Endpoints/test.idl
+        * performance-tests/RTCorba/Multiple_Endpoints/test_i.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/test_i.h
+        * performance-tests/RTCorba/Multiple_Endpoints/test_i.i
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.conf
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/README
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.conf
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/README
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
+          Added the above-listed files and directories.  This is a set of
+          benchmarks for comparing performance/priority inversions in
+          three different client/server scenarios: 1) endpoint per
+          priority (the recently added capability), 2) orb per
+          priority (the old way to achieve the same goals as in item 1), and 3) a
+          single orb and single endpoint (lack of
+          prioritized treatment of requests in the server).
 
 Wed Dec 01 17:21:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
