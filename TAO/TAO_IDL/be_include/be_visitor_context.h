@@ -85,6 +85,12 @@ public:
   be_attribute *attribute (void);
   // get the attribute node
 
+  void exception (idl_bool);
+  // is it the special ctor for exceptions?
+
+  idl_bool exception (void);
+  // is it the special ctor for exceptions?
+
   void comma (idl_bool);
   // scope supoorts generation of comma after each element
 
@@ -208,6 +214,9 @@ private:
 
   be_attribute *attr_;
   // attribute node stored here while generating its code
+
+  idl_bool exception_;
+  // is it the special ctor for exceptions?
 
   idl_bool comma_;
   // whether scope should generate a comma after every element

@@ -485,6 +485,16 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "bad primitive base type\n"
                              ),  -1);
         }
+
+      // accept on this base type, but generate code for the typedef node
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_typedef - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
     }
   else
     {
@@ -502,33 +512,32 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "bad base type\n"
                              ),  -1);
         }
-    }
 
-  // accept on this base type, but generate code for the typedef node
-  if (bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typedef_ch::"
-                         "visit_typedef - "
-                         "failed to accept visitor\n"
-                         ),  -1);
-    }
+      // accept on this base type, but generate code for the typedef node
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_typedef - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
 
-  be_typedef *tdef = this->ctx_->tdef ();
-  // generate the typecode decl for this typedef node
-  if (tdef->is_nested ())
-    {
-      // we have a scoped name
-      os->indent ();
-      *os << "static CORBA::TypeCode_ptr "
-          << tdef->tc_name ()->last_component () << ";\n\n";
-    }
-  else
-    {
-      // we are in the ROOT scope
-      os->indent ();
-      *os << "extern CORBA::TypeCode_ptr "
-          << tdef->tc_name ()->last_component () << ";\n\n";
+      // generate the typecode decl for this typedef node
+      if (node->is_nested ())
+        {
+          // we have a scoped name
+          os->indent ();
+          *os << "static CORBA::TypeCode_ptr "
+              << node->tc_name ()->last_component () << ";\n\n";
+        }
+      else
+        {
+          // we are in the ROOT scope
+          os->indent ();
+          *os << "extern CORBA::TypeCode_ptr "
+              << node->tc_name ()->last_component () << ";\n\n";
+        }
     }
 
   return 0;
@@ -547,7 +556,8 @@ be_visitor_typedef_ch::visit_array (be_array *node)
   else
     bt = node;
 
-  if (bt->node_type () == AST_Decl::NT_array) // direct typedef of a base node
+  if (!bt->imported () &&
+      bt->node_type () == AST_Decl::NT_array) // direct typedef of a base node
                                               // type
     {
       // let the base class visitor handle this case
@@ -1063,6 +1073,15 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
                              "bad primitive base type\n"
                              ),  -1);
         }
+      // accept on this base type
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_typedef - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
     }
   else
     {
@@ -1080,38 +1099,38 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
                              "bad base type\n"
                              ),  -1);
         }
-    }
+      // accept on this base type
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_typedef - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
 
-  // accept on this base type
-  if (bt->accept (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typedef_ch::"
-                         "visit_typedef - "
-                         "failed to accept visitor\n"
-                         ),  -1);
-    }
+      // generate the typecode information here
+      os->indent (); // start from current indentation level
+      *os << "static const CORBA::Long _oc_" << node->flatname () << "[] ="
+          << be_nl;
+      *os << "{\n";
+      os->incr_indent (0);
+      if (node->gen_encapsulation () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "Error generating typecode\n\n"));
+          return -1;
+        }
+      os->decr_indent ();
+      *os << "};" << be_nl;
 
-  // generate the typecode information here
-  os->indent (); // start from current indentation level
-  *os << "static const CORBA::Long _oc_" << node->flatname () << "[] ="
-      << be_nl;
-  *os << "{\n";
-  os->incr_indent (0);
-  if (node->gen_encapsulation () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "Error generating typecode\n\n"));
-      return -1;
-    }
-  os->decr_indent ();
-  *os << "};" << be_nl;
+      *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
+          << " (CORBA::tk_alias, sizeof (_oc_" << node->flatname ()
+          << "), (unsigned char *) &_oc_" << node->flatname ()
+          << ", CORBA::B_FALSE);" << be_nl;
+      *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_"
+          << node->flatname () << ";\n\n";
 
-  *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
-      << " (CORBA::tk_alias, sizeof (_oc_" << node->flatname ()
-      << "), (unsigned char *) &_oc_" << node->flatname ()
-      << ", CORBA::B_FALSE);" << be_nl;
-  *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_"
-      << node->flatname () << ";\n\n";
+    }
 
   return 0;
 }

@@ -29,6 +29,7 @@
 #include "be_visitor_attribute.h"
 #include "be_visitor_constant.h"
 #include "be_visitor_enum.h"
+#include "be_visitor_exception.h"
 #include "be_visitor_field.h"
 #include "be_visitor_interface.h"
 #include "be_visitor_interface_fwd.h"
@@ -258,6 +259,18 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SS:
       return new be_visitor_attribute (new_ctx);
 
+    case TAO_CodeGen::TAO_EXCEPTION_CH:
+      return new be_visitor_exception_ch (new_ctx);
+    case TAO_CodeGen::TAO_EXCEPTION_CI:
+      return new be_visitor_exception_ci (new_ctx);
+    case TAO_CodeGen::TAO_EXCEPTION_CS:
+      return new be_visitor_exception_cs (new_ctx);
+    case TAO_CodeGen::TAO_EXCEPTION_CTOR_CH:
+    case TAO_CodeGen::TAO_EXCEPTION_CTOR_CS:
+      return new be_visitor_exception_ctor (new_ctx);
+    case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS:
+      return new be_visitor_exception_ctor_assign (new_ctx);
+
     case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
     case TAO_CodeGen::TAO_ARGUMENT_CH:
     case TAO_CodeGen::TAO_ARGUMENT_CS:
@@ -285,12 +298,6 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_PRE_UPCALL_SS:
     case TAO_CodeGen::TAO_ATTRIBUTE_UPCALL_SS:
     case TAO_CodeGen::TAO_ATTRIBUTE_POST_UPCALL_SS:
-    case TAO_CodeGen::TAO_EXCEPTION_CH:
-    case TAO_CodeGen::TAO_EXCEPTION_CTOR_CH:
-    case TAO_CodeGen::TAO_EXCEPTION_CS:
-    case TAO_CodeGen::TAO_EXCEPTION_CTOR_CS:
-    case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS:
-    case TAO_CodeGen::TAO_EXCEPTION_CI:
     default:
       return new be_visitor_decl (new_ctx);
     }

@@ -31,6 +31,7 @@ be_visitor_context::be_visitor_context (void)
     alias_ (0),
     tdef_ (0),
     attr_ (0),
+    exception_ (0),
     comma_ (0)
 {
 }
@@ -43,6 +44,7 @@ be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
     alias_ (ctx.alias_),
     tdef_ (ctx.tdef_),
     attr_ (ctx.attr_),
+    exception_ (ctx.exception_),
     comma_ (ctx.comma_)
 {
 }
@@ -57,6 +59,7 @@ be_visitor_context::operator= (const be_visitor_context &ctx)
   this->alias_ = ctx.alias_;
   this->tdef_ = ctx.tdef_;
   this->attr_ = ctx.attr_;
+  this->exception_ = ctx.exception_;
   this->comma_ = ctx.comma_;
 
   return *this;
@@ -151,6 +154,18 @@ be_attribute *
 be_visitor_context::attribute (void)
 {
   return this->attr_;
+}
+
+void
+be_visitor_context::exception (idl_bool ib)
+{
+  this->exception_ = ib;
+}
+
+idl_bool
+be_visitor_context::exception (void)
+{
+  return this->exception_;
 }
 
 void
