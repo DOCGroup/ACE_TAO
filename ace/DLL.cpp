@@ -12,13 +12,15 @@ ACE_RCSID(ace, DLL, "$Id$")
 // The close_on_destruction flag feature is added on object constuction.
 
 ACE_DLL::ACE_DLL (int close_on_destruction)
+  :close_mode_ (close_on_destruction)
 {
+  
   // This flag closes the library automagically on destruction of the
   // object.  The default value is zero.
 
-  // @@ Kirthika, please move this into the "base/member"
+  // *done*@@  Kirthika, please move this into the "base/member"
   // initialization section...
-  this->close_mode_ = close_on_destruction;
+  //this->close_mode_ = close_on_destruction;
 }
   
 // The library is closed before the class gets destroyed depending on
