@@ -1,3 +1,10 @@
+Mon Jun 28 23:42:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-lynxos.h (ACE_HAS_NONCONST_MSGSND):
+
+	  LynxOS 4's msgsnd() function accepts a non-const "void *" buffer
+	  argument.  Addresses a compile-time error.
+
 Tue Jun 29 06:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Naming/Nodelocal.cpp:
@@ -19,7 +26,7 @@ Mon Jun 28 16:34:29 2004  Steve Huston  <shuston@riverace.com>
 	* m4/subsets.m4: Added the Filecache, Metrics, and UUID components
 	  to the selectable subsets of ACE.
 
-	* m4/confg_h.m4: Added a template for ACE_LACKS_ACE_UUID and
+	* m4/config_h.m4: Added a template for ACE_LACKS_ACE_UUID and
 	  ACE_HAS_3_PARAM_WCSTOK.
 
 	Note that I also removed the subset-building support from the MPC
