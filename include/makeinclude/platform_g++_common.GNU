@@ -61,6 +61,8 @@ endif
 # Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast 
 # for shared libraries. (see http://gcc.gnu.org/faq.html#dso)
 ifeq ($(shared_libs), 1)
-  LDFLAGS += -Wl,-E
+  ifneq ($(static_libs_only), 1)
+    LDFLAGS += -Wl,-E
+  endif # static_libs_only
 endif # shared_libs
 
