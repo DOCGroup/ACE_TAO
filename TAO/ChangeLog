@@ -1,3 +1,15 @@
+Wed Mar 30 10:38:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+	  (visit_valuetype, visit_members):
+
+	  Only count members with PUBLIC or PRIVATE visibility in the data
+	  member count.
+
+	* tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
+
+	  Regenerated.
+
 Wed Mar 30 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:

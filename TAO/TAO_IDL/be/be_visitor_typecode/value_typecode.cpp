@@ -32,7 +32,8 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   size_t const count =
-    node->data_members_count ();
+    node->data_members_count (AST_Field::vis_PUBLIC)
+    + node->data_members_count (AST_Field::vis_PRIVATE);
 
   /*
   if (count == 1 &&
@@ -146,7 +147,8 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
   TAO_OutStream & os = *this->ctx_->stream ();
 
   size_t const count =
-    node->data_members_count ();
+    node->data_members_count (AST_Field::vis_PUBLIC)
+    + node->data_members_count (AST_Field::vis_PRIVATE);
 
   size_t i = 0;
 

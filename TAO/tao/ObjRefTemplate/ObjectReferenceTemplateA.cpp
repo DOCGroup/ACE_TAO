@@ -65,10 +65,7 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/value_typecode.cpp:32
 
-static TAO::TypeCode::Value_Field<char const *> _tao_fields_PortableInterceptor_ObjectReferenceTemplate[] =
-  {
-    
-  };
+static TAO::TypeCode::Value_Field<char const *>  * const _tao_fields_PortableInterceptor_ObjectReferenceTemplate = 0;
 
 static TAO::TypeCode::Value<char const *,
                             TAO::TypeCode::Value_Field<char const *> const *,
@@ -80,7 +77,7 @@ static TAO::TypeCode::Value<char const *,
     CORBA::VM_ABSTRACT,
     &CORBA::_tc_null,
     _tao_fields_PortableInterceptor_ObjectReferenceTemplate,
-    3);
+    0);
   
 namespace PortableInterceptor
 {
@@ -96,7 +93,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:785
 
 namespace TAO
 {
