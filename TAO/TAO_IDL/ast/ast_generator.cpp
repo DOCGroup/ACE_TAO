@@ -1,3 +1,4 @@
+// $Id$
 /*
 
 COPYRIGHT
@@ -72,8 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * of every AST class.
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+
+#include "ace/inc_user_config.h"
 
 /*
  * Constructors
@@ -92,8 +95,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 AST_PredefinedType *
 AST_Generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
-				    UTL_ScopedName *n,
-				    UTL_StrList *p)
+                                    UTL_ScopedName *n,
+                                    UTL_StrList *p)
 {
   return new AST_PredefinedType(t, n, p);
 }
@@ -101,7 +104,7 @@ AST_Generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
 /*
  * Construct an AST_Module node (a module)
  */
-AST_Module	*
+AST_Module      *
 AST_Generator::create_module(UTL_ScopedName *n, UTL_StrList *p)
 {
   return new AST_Module(n, p);
@@ -112,7 +115,7 @@ AST_Generator::create_module(UTL_ScopedName *n, UTL_StrList *p)
  */
 AST_Root *
 AST_Generator::create_root(UTL_ScopedName *n,
-			  UTL_StrList *p)
+                          UTL_StrList *p)
 {
     return new AST_Root(n, p);
 }
@@ -120,11 +123,11 @@ AST_Generator::create_root(UTL_ScopedName *n,
 /*
  * Construct an AST_Interface node (an interface)
  */
-AST_Interface	*
+AST_Interface   *
 AST_Generator::create_interface(UTL_ScopedName *n,
-			       AST_Interface **ih,
-			       long nih,
-			       UTL_StrList *p)
+                               AST_Interface **ih,
+                               long nih,
+                               UTL_StrList *p)
 {
   return new AST_Interface(n, ih, nih, p);
 }
@@ -142,7 +145,7 @@ AST_Generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
 /*
  * Construct an AST_Exception node (an exception)
  */
-AST_Exception	*
+AST_Exception   *
 AST_Generator::create_exception(UTL_ScopedName *n, UTL_StrList *p)
 {
   return new AST_Exception(n, p);
@@ -151,7 +154,7 @@ AST_Generator::create_exception(UTL_ScopedName *n, UTL_StrList *p)
 /*
  * Construct an AST_Structure node (a struct)
  */
-AST_Structure	*
+AST_Structure   *
 AST_Generator::create_structure(UTL_ScopedName *n, UTL_StrList *p)
 {
   return new AST_Structure(n, p);
@@ -160,7 +163,7 @@ AST_Generator::create_structure(UTL_ScopedName *n, UTL_StrList *p)
 /*
  * Construct an AST_Enum node (an enum)
  */
-AST_Enum	*
+AST_Enum        *
 AST_Generator::create_enum(UTL_ScopedName *n, UTL_StrList *p)
 {
   return new AST_Enum(n, p);
@@ -169,11 +172,11 @@ AST_Generator::create_enum(UTL_ScopedName *n, UTL_StrList *p)
 /*
  * Construct an AST_Operation node (an operation on an interface)
  */
-AST_Operation	*
+AST_Operation   *
 AST_Generator::create_operation(AST_Type *rt,
-			       AST_Operation::Flags fl,
-			       UTL_ScopedName *n,
-			       UTL_StrList *p)
+                               AST_Operation::Flags fl,
+                               UTL_ScopedName *n,
+                               UTL_StrList *p)
 {
   return new AST_Operation(rt, fl, n, p);
 }
@@ -181,7 +184,7 @@ AST_Generator::create_operation(AST_Type *rt,
 /*
  * Construct an AST_Field node (a field in a struct, union or exception)
  */
-AST_Field	*
+AST_Field       *
 AST_Generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
 {
   return new AST_Field(ft, n, p);
@@ -190,11 +193,11 @@ AST_Generator::create_field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p)
 /*
  * Construct an AST_Argument node (an argument to an operation)
  */
-AST_Argument	*
+AST_Argument    *
 AST_Generator::create_argument(AST_Argument::Direction d,
-			      AST_Type *ft,
-			      UTL_ScopedName *n,
-			      UTL_StrList *p)
+                              AST_Type *ft,
+                              UTL_ScopedName *n,
+                              UTL_StrList *p)
 {
   return new AST_Argument(d, ft, n, p);
 }
@@ -202,11 +205,11 @@ AST_Generator::create_argument(AST_Argument::Direction d,
 /*
  * Construct an AST_Attribute node (an attribute)
  */
-AST_Attribute	*
+AST_Attribute   *
 AST_Generator::create_attribute(idl_bool ro,
-			       AST_Type *ft,
-			       UTL_ScopedName *n,
-			       UTL_StrList *p)
+                               AST_Type *ft,
+                               UTL_ScopedName *n,
+                               UTL_StrList *p)
 {
   return new AST_Attribute(ro, ft, n, p);
 }
@@ -214,10 +217,10 @@ AST_Generator::create_attribute(idl_bool ro,
 /*
  * Construct an AST_Union node (a union)
  */
-AST_Union	*
+AST_Union       *
 AST_Generator::create_union(AST_ConcreteType *dt,
-			   UTL_ScopedName *n,
-			   UTL_StrList *p)
+                           UTL_ScopedName *n,
+                           UTL_StrList *p)
 {
   return new AST_Union(dt, n, p);
 }
@@ -227,9 +230,9 @@ AST_Generator::create_union(AST_ConcreteType *dt,
  */
 AST_UnionBranch *
 AST_Generator::create_union_branch(AST_UnionLabel *lab,
-				 AST_Type *ft,
-				 UTL_ScopedName *n,
-				 UTL_StrList *p)
+                                 AST_Type *ft,
+                                 UTL_ScopedName *n,
+                                 UTL_StrList *p)
 {
   return new AST_UnionBranch(lab, ft, n, p);
 }
@@ -237,9 +240,9 @@ AST_Generator::create_union_branch(AST_UnionLabel *lab,
 /*
  * Construct an AST_UnionLabel node (a label in a union)
  */
-AST_UnionLabel	*
+AST_UnionLabel  *
 AST_Generator::create_union_label(AST_UnionLabel::UnionLabel ul,
-				AST_Expression *v)
+                                AST_Expression *v)
 {
   return new AST_UnionLabel(ul, v);
 }
@@ -247,11 +250,11 @@ AST_Generator::create_union_label(AST_UnionLabel::UnionLabel ul,
 /*
  * Construct an AST_Constant node (a constant)
  */
-AST_Constant	*
+AST_Constant    *
 AST_Generator::create_constant(AST_Expression::ExprType et,
-			      AST_Expression *ev,
-			      UTL_ScopedName *n,
-			      UTL_StrList *p)
+                              AST_Expression *ev,
+                              UTL_ScopedName *n,
+                              UTL_StrList *p)
 {
   return new AST_Constant(et, ev, n, p);
 }
@@ -259,7 +262,7 @@ AST_Generator::create_constant(AST_Expression::ExprType et,
 /*
  * Construct an AST_Expression node denoting a symbolic name
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(UTL_ScopedName *n)
 {
   return new AST_Expression(n);
@@ -268,7 +271,7 @@ AST_Generator::create_expr(UTL_ScopedName *n)
 /*
  * Construct an AST_Expression denoting a coercion
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(AST_Expression *v, AST_Expression::ExprType t)
 {
   return new AST_Expression(v, t);
@@ -278,10 +281,10 @@ AST_Generator::create_expr(AST_Expression *v, AST_Expression::ExprType t)
  * Construct an AST_Expression node denoting a binary combinator
  * of two other AST_Expression nodes
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(AST_Expression::ExprComb c,
-			   AST_Expression *v1,
-			   AST_Expression *v2)
+                           AST_Expression *v1,
+                           AST_Expression *v2)
 {
   return new AST_Expression(c, v1, v2);
 }
@@ -289,7 +292,7 @@ AST_Generator::create_expr(AST_Expression::ExprComb c,
 /*
  * Construct an AST_Expression node denoting a long integer
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(long v)
 {
   return new AST_Expression(v);
@@ -299,7 +302,7 @@ AST_Generator::create_expr(long v)
  * Construct an AST_Expression node denoting a long integer being used
  * as a boolean
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(long v, AST_Expression::ExprType t)
 {
   return new AST_Expression(v, t);
@@ -308,7 +311,7 @@ AST_Generator::create_expr(long v, AST_Expression::ExprType t)
 /*
  * Construct an AST_Expression node denoting an unsigned long integer
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(unsigned long v)
 {
   return new AST_Expression(v);
@@ -318,7 +321,7 @@ AST_Generator::create_expr(unsigned long v)
  * Construct an AST_Expression node denoting a string (a char *
  * encapsulated as String)
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(String *s)
 {
   return new AST_Expression(s);
@@ -327,7 +330,7 @@ AST_Generator::create_expr(String *s)
 /*
  * Construct an AST_Expression node denoting a character
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(char c)
 {
   return new AST_Expression(c);
@@ -336,7 +339,7 @@ AST_Generator::create_expr(char c)
 /*
  * Construct an AST_Expression node denoting a 64-bit floating point number
  */
-AST_Expression	*
+AST_Expression  *
 AST_Generator::create_expr(double d)
 {
   return new AST_Expression(d);
@@ -345,10 +348,10 @@ AST_Generator::create_expr(double d)
 /*
  * Construct an AST_EnumVal node (an enumerator)
  */
-AST_EnumVal	*
+AST_EnumVal     *
 AST_Generator::create_enum_val(unsigned long v,
-			     UTL_ScopedName *n,
-			     UTL_StrList *p)
+                             UTL_ScopedName *n,
+                             UTL_StrList *p)
 {
   return new AST_EnumVal(v, n, p);
 }
@@ -356,10 +359,10 @@ AST_Generator::create_enum_val(unsigned long v,
 /*
  * Construct an AST_Array node (an array type or field modifier)
  */
-AST_Array	*
+AST_Array       *
 AST_Generator::create_array(UTL_ScopedName *n,
-			   unsigned long ndims,
-			   UTL_ExprList *dims)
+                           unsigned long ndims,
+                           UTL_ExprList *dims)
 {
   return new AST_Array(n, ndims, dims);
 }
@@ -367,7 +370,7 @@ AST_Generator::create_array(UTL_ScopedName *n,
 /*
  * Construct an AST_Sequence node (a sequence type definition)
  */
-AST_Sequence	*
+AST_Sequence    *
 AST_Generator::create_sequence(AST_Expression *ms, AST_Type *bt)
 {
   return new AST_Sequence(ms, bt);
@@ -376,7 +379,7 @@ AST_Generator::create_sequence(AST_Expression *ms, AST_Type *bt)
 /*
  * Construct an AST_String node (a string type definition)
  */
-AST_String	*
+AST_String      *
 AST_Generator::create_string(AST_Expression *ms)
 {
   return new AST_String(ms);
@@ -385,16 +388,22 @@ AST_Generator::create_string(AST_Expression *ms)
 /*
  * Construct an AST_String node denoting a wide string type definition
  */
-AST_String	*
+AST_String      *
 AST_Generator::create_wstring(AST_Expression *ms)
 {
-  return new AST_String(ms, sizeof(wchar_t));
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  typedef short WChar;
+#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  typedef wchar_t WChar;
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
+  return new AST_String(ms, sizeof(WChar));
 }
 
 /*
  * Construct an AST_Typedef node (a typedef)
  */
-AST_Typedef	*
+AST_Typedef     *
 AST_Generator::create_typedef(AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p)
 {
   return new AST_Typedef(bt, n, p);
