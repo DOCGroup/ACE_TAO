@@ -1,5 +1,5 @@
 //
-// $Id$
+// $id: any_op_cs.cpp,v 1.12 1998/10/30 19:46:55 levine Exp $
 //
 
 // ============================================================================
@@ -77,6 +77,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
       << node->name () << "_ptr &_tao_elem)" << be_nl
       << "{" << be_idt_nl
+      << "CORBA::Object_ptr *tmp = 0;" << be_nl
       << "TAO_TRY" << be_nl
       << "{" << be_idt_nl
       << "_tao_elem = " << node->name () << "::_nil ();" << be_nl
@@ -84,19 +85,21 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "if (!type->equal (" << node->tc_name ()
       << ", TAO_TRY_ENV)) return 0; // not equal" << be_nl
       << "TAO_CHECK_ENV;" << be_nl
-      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
+      << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any._tao_get_cdr ());"
       << be_nl
       << "CORBA::Object_var _tao_obj_var;" << be_nl
+      << "ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);" << be_nl
       << "if (stream.decode (" << node->tc_name ()
       << ", &_tao_obj_var.out (), 0, TAO_TRY_ENV)" << be_nl
-      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
+      << "   == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl
       << "_tao_elem = " << node->name ()
       << "::_narrow (_tao_obj_var.in (), TAO_TRY_ENV);" << be_nl
       << "TAO_CHECK_ENV;" << be_nl
-      << "_tao_obj_var = _tao_elem;" << be_nl
+      << "*tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object"
+      << be_nl
       << "((CORBA::Any *)&_tao_any)->replace ("
-      << node->tc_name () << ", &_tao_obj_var.inout (), 1, TAO_TRY_ENV);" << be_nl
+      << node->tc_name () << ", tmp, 1, TAO_TRY_ENV);" << be_nl
       << "TAO_CHECK_ENV;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
@@ -104,6 +107,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "}" << be_nl
       << "TAO_CATCHANY" << be_nl
       << "{" << be_idt_nl
+      << "delete tmp;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_ENDTRY;" << be_nl
