@@ -61,7 +61,7 @@ public:
   ACE_Name_Request (void);
   // Default constructor.
 
-  ACE_Name_Request (ACE_UINT32 msg_type, // Type of request.
+  ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
 		    const ACE_USHORT16 name[], //
 		    const size_t name_length,
 		    const ACE_USHORT16 value[],
@@ -80,8 +80,8 @@ public:
   void length (ACE_UINT32);
 
   // = Set/get the type of the message.
-  ACE_UINT32 msg_type (void) const;
-  void msg_type (ACE_UINT32);
+  ACE_INT32 msg_type (void) const;
+  void msg_type (ACE_INT32);
 
   // = Set/get the blocking semantics.
   ACE_UINT32 block_forever (void) const;
@@ -205,8 +205,8 @@ public:
   void length (ACE_UINT32);
 
   // = Set/get the type of the message.
-  ACE_UINT32 msg_type (void) const;
-  void msg_type (ACE_UINT32);
+  ACE_INT32 msg_type (void) const;
+  void msg_type (ACE_INT32);
 
   // = Set/get the status of the reply (0 == success, -1 == failure).
   ACE_INT32 status (void) const;
