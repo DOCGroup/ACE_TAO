@@ -121,7 +121,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
         if (policy->ratio () > 1)
           {
-            for (int i = 1; i < policy->ratio (); i++)
+            while (policy->ratio () > 1)
               {
                 JAWS_IO_Handler *ioh = this->new_handler (data);
                 if (handler == 0)
@@ -134,8 +134,9 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
                     ioh->factory ()->destroy_io_handler (ioh);
                     break;
                   }
+                int i = policy->ratio () - 1;
+                policy->ratio (i);
               }
-            policy->ratio (1);
           }
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 

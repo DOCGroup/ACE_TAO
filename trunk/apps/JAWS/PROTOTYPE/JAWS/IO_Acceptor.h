@@ -45,7 +45,7 @@ public:
                       int reset_new_handle = 0) const;
   // Synchronously accept the connection
 
-  virtual int accept (size_t bytes_to_read = 0);
+  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
   virtual ACE_HANDLE get_handle (void);
@@ -78,7 +78,7 @@ public:
   // Get the listener's handle
 
 private:
-  virtual int accept (size_t bytes_to_read = 0);
+  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
 
 private:
   JAWS_IO_SOCK_Acceptor acceptor_;
@@ -95,7 +95,7 @@ public:
   virtual int open (const ACE_HANDLE &socket);
   // Initiate an asynchronous passive connection
 
-  virtual int accept (size_t bytes_to_read = 0);
+  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
   virtual ACE_HANDLE get_handle (void);
@@ -111,7 +111,7 @@ private:
 
 private:
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  ACE_Asynch_Accept acceptor_;
+  ACE_Asynch_Acceptor<JAWS_Asynch_Handler> acceptor_;
   ACE_HANDLE handle_;
 #endif /* defined (ACE_WIN32) */
 };

@@ -118,10 +118,10 @@ public:
 };
 
 #if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
-class JAWS_Export JAWS_Asynch_Handler : public ACE_Handler
+class JAWS_Export JAWS_Asynch_Handler : public ACE_Handler //, public ACE_Service_Handler
 {
 public:
-  JAWS_Asynch_Handler (JAWS_IO_Handler *);
+  JAWS_Asynch_Handler (void);
   virtual ~JAWS_Asynch_Handler (void);
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
@@ -147,6 +147,12 @@ public:
 
   virtual void dispatch_handler (void);
 
+  virtual void open (ACE_HANDLE h, ACE_Message_Block &mb);
+  // Call back entry point for ACE_Asynch_Acceptor
+
+  virtual void act (const void *act_ref);
+  // Receives the ACT.
+
 private:
   JAWS_IO_Handler *ioh_;
 };
@@ -155,6 +161,9 @@ private:
 
 class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
 {
+#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
+friend class JAWS_Asynch_Handler;
+#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
   // Provide implementations for the common functions.
 public:
   JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory);
@@ -216,7 +225,7 @@ protected:
   // The reference to the handler's factory.
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  JAWS_Asynch_Handler handler_;
+  JAWS_Asynch_Handler *handler_;
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 };
 
