@@ -57,7 +57,7 @@ public:
 
   // Two "user exceptions" are defined for manipulating TypeCodes. These
   // two classes are defined inside the TypeCode class.
-  class Bounds : public CORBA_UserException
+  class TAO_Export Bounds : public CORBA_UserException
   {
   public:
     Bounds (void);
@@ -67,7 +67,7 @@ public:
     virtual int _is_a (const char* interface_id) const;
   };
 
-  class BadKind : public CORBA_UserException
+  class TAO_Export BadKind : public CORBA_UserException
   {
   public:
     BadKind (void);
