@@ -63,7 +63,7 @@ CORBA_ORB::Release (void)
 
 CORBA_ORB_ptr
 CORBA_ORB_init (int &/* argc */,
-		char *const */* argv */,
+		char *const /* argv */,
 		char *orb_name,
 		CORBA_Environment &env)
 {
