@@ -31,7 +31,7 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
 			 (strbuf *) &send_msg, 
 			 0);
 #else
-  struct iovec iov[2];
+  struct ACE_IO_Vector_Base iov[2];
 
   iov[0].iov_base = (char *) &send_msg.len;
   iov[0].iov_len  = sizeof send_msg.len;

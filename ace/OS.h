@@ -4251,6 +4251,18 @@ typedef WSABUF ACE_IO_Vector_Base;
 typedef iovec ACE_IO_Vector_Base;
 # endif /* ACE_HAS_WINSOCK2 */
 
+class ACE_Export ACE_IO_Vector : public ACE_IO_Vector_Base
+{
+  // = TITLE
+  //   This little adapter class makes it easier to use writev() and
+  //   readv() portably on Win32 and UNIX.
+public:
+  ssize_t length (void) const;
+  void length (ssize_t new_length);
+  void *buffer (void) const;
+  void buffer (void *new_buffer);
+};
+
 class ACE_Export ACE_OS
 {
   // = TITLE
@@ -5548,7 +5560,7 @@ extern "C" ssize_t write_timedwait (ACE_HANDLE handle,
                                     size_t n,
                                     struct timespec *timeout);
 extern "C" ssize_t readv_timedwait (ACE_HANDLE handle,
-                                    struct iovec *iov,
+                                    ACE_IO_Vector_Base *iov,
                                     int iovcnt,
                                     struct timespec* timeout);
 extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
@@ -6126,18 +6138,6 @@ private:
 # else
 #   define ACE_INLINE_FOR_GNUC
 # endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
-
-class ACE_Export ACE_IO_Vector : public ACE_IO_Vector_Base
-{
-  // = TITLE
-  //   This little adapter class makes it easier to use writev() and
-  //   readv() portably on Win32 and UNIX.
-public:
-  ssize_t length (void) const;
-  void length (ssize_t new_length);
-  void *buffer (void) const;
-  void buffer (void *new_buffer);
-};
 
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;

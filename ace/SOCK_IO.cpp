@@ -24,7 +24,7 @@ ACE_SOCK_IO::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_IO::recv (iovec *io_vec)
+ACE_SOCK_IO::recv (ACE_IO_Vector_Base *io_vec)
 {
 #if defined (FIONREAD)
   u_long inlen;
@@ -107,7 +107,7 @@ ACE_SOCK_IO::send (size_t n, ...) const
 }
 
 // This is basically an interface to ACE_OS::readv, that doesn't use
-// the struct iovec explicitly.  The ... can be passed as an arbitrary
+// the struct ACE_IO_Vector_Base explicitly.  The ... can be passed as an arbitrary
 // number of (char *ptr, int len) tuples.  However, the count N is the
 // *total* number of trailing arguments, *not* a couple of the number
 // of tuple pairs!

@@ -29,12 +29,12 @@ class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
   //     Create a Local ACE_SOCK stream. 
 public:
   // = Send/recv methods.
-  ssize_t send_msg (const iovec iov[],
+  ssize_t send_msg (const ACE_IO_Vector_Base iov[],
                     size_t n,
                     ACE_HANDLE handle);
   // Send iovecs via <::writev>.
 
-  ssize_t recv_msg (iovec iov[],
+  ssize_t recv_msg (ACE_IO_Vector_Base iov[],
                     size_t n,
                     ACE_HANDLE &handle);
   // Send iovecs via <::writev>.

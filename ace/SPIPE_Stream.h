@@ -78,10 +78,10 @@ public:
 		int *flags) const;
   // Recv bytes via STREAM pipes using "band" mode.
 
-  ssize_t send (const iovec iov[], size_t n) const;
+  ssize_t send (const ACE_IO_Vector_Base iov[], size_t n) const;
   // Send iovecs via <::writev>.
 
-  ssize_t recv (iovec iov[], size_t n) const;
+  ssize_t recv (ACE_IO_Vector_Base iov[], size_t n) const;
   // Recv iovecs via <::readv>.
 
   ssize_t send (size_t n, ...) const;

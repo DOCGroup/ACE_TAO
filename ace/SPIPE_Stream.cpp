@@ -36,11 +36,11 @@ ACE_SPIPE_Stream::send (size_t n, ...) const
   // ACE_TRACE ("ACE_SPIPE_Stream::send");
   va_list argp;  
   size_t total_tuples = n / 2;
-  iovec *iovp;
+  ACE_IO_Vector_Base *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = (ACE_IO_Vector_Base *) alloca (total_tuples * sizeof (ACE_IO_Vector_Base));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, ACE_IO_Vector_Base[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
@@ -60,7 +60,7 @@ ACE_SPIPE_Stream::send (size_t n, ...) const
 }
 
 // This is basically an interface to ACE_OS::readv, that doesn't use
-// the struct iovec explicitly.  The ... can be passed as an arbitrary
+// the struct ACE_IO_Vector_Base explicitly.  The ... can be passed as an arbitrary
 // number of (char *ptr, int len) tuples.  However, the count N is the
 // *total* number of trailing arguments, *not* a couple of the number
 // of tuple pairs!
@@ -71,11 +71,11 @@ ACE_SPIPE_Stream::recv (size_t n, ...) const
   ACE_TRACE ("ACE_SPIPE_Stream::recv");
   va_list argp;  
   size_t total_tuples = n / 2;
-  iovec *iovp;
+  ACE_IO_Vector_Base *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = (ACE_IO_Vector_Base *) alloca (total_tuples * sizeof (ACE_IO_Vector_Base));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp, ACE_IO_Vector_Base[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
