@@ -1,3 +1,8 @@
+Sun Nov 16 09:42:05 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	  Fixed output for structs and union test.
+
 Sun Nov 16 05:51:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.31, released Sun Nov 16 05:51:38 1997.

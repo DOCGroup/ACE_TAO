@@ -550,8 +550,8 @@ Cubit_Client::run (void)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   ACE_DEBUG ((LM_DEBUG,
-	      "cube_struct_dii() call:\treal_time\t= %0.06f ms, \t"
-	      "user_time\t= %0.06f ms, \t"
+	      "cube_struct_dii() call:\n\treal_time\t= %0.06f ms, \n\t"
+	      "user_time\t= %0.06f ms, \n\t"
 	      "system_time\t= %f ms\n",
 	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
@@ -565,8 +565,8 @@ Cubit_Client::run (void)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   ACE_DEBUG ((LM_DEBUG,
-	      "cube_union_dii() call:\treal_time\t= %0.06f ms, \t"
-	      "user_time\t= %0.06f ms, \t"
+	      "cube_union_dii() call:\n\treal_time\t= %0.06f ms, \n\t"
+	      "user_time\t= %0.06f ms, \n\t"
 	      "system_time\t= %f ms\n",
 	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
