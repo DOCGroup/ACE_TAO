@@ -1,3 +1,16 @@
+Workspace Declarations
+----------------------
+
+workspace(workspace_name) {
+  file.mpc
+  directory
+}
+
+Workspaces can contain individual mpc files or directories.  In the case of
+a directory, the workspace creator will traverse it and use any mpc files
+that are found.  The workspace files should have an 'mwc' extension.
+
+
 Project Declarations
 --------------------
 
