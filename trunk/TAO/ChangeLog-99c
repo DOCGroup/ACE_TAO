@@ -1,3 +1,9 @@
+Sat Sep 05 02:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+	
+	* TAO_IDL/driver/drv_preproc.cpp: 
+	  The exit code argument of Process::wait changed from
+	  "int" to "ACE_exitcode".
+
 Sat Sep 03 19:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/simple_client_muxed.conf,

@@ -875,7 +875,7 @@ DRV_check_gperf (void)
 #endif /* ACE_WIN32 */
 
   // Wait for gperf to complete.
-  int wait_status = 0;
+  ACE_exitcode wait_status = 0;
   if (process.wait (&wait_status) == -1)
     return -1;
   else
