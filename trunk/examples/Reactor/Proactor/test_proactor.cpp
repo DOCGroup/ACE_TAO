@@ -115,7 +115,9 @@ Receiver::open (ACE_HANDLE handle,
   this->file_offset_ = 0;
 
   // Open dump file (in OVERLAPPED mode)
-  this->dump_file_ = ACE_OS::open (dump_file, O_CREAT | O_RDWR | O_TRUNC | FILE_FLAG_OVERLAPPED);
+  this->dump_file_ = ACE_OS::open (dump_file,
+                                   O_CREAT | O_RDWR | O_TRUNC | FILE_FLAG_OVERLAPPED,
+                                   0644);
   if (this->dump_file_ == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_OS::open"));
@@ -314,7 +316,7 @@ Sender::Sender (void)
     transmit_file_done_ (0)
 {
   // Moment of inspiration :-)
-  static char *data = "Welcome to Irfan World! Irfan RULES here !!";
+  static char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
   this->welcome_message_.init (data, ACE_OS::strlen (data));
   this->welcome_message_.wr_ptr (ACE_OS::strlen (data));
 }
@@ -386,7 +388,7 @@ Sender::transmit_file (void)
   // Header and trailer data for the file
   this->header_and_trailer_.header_and_trailer (&this->welcome_message_,
 						this->welcome_message_.length (),
-						&this->welcome_message_,
+						this->welcome_message_.duplicate (),
 						this->welcome_message_.length ());
 
   // Starting position
