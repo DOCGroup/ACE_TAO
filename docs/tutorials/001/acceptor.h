@@ -33,9 +33,6 @@
  */
 class Logging_Acceptor : public ACE_Event_Handler
 {
-
-friend class Logging_Handler;
-
 public:
 
   /*
@@ -96,8 +93,17 @@ private:
     When an accept request arrives, the reactor will invoke the handle_input()
     callback.  This is where we deal with the connection request.
    */
-  int handle_input (ACE_HANDLE)
+  virtual int handle_input (ACE_HANDLE _handle)
   {
+    /*
+      The handle provided to us by the reactor is the one that triggered
+      our up-call.  In some advanced situations, you might actually
+      register a single handler for multiple connections.  The _handle
+      parameter is a way to sort 'em out.  Since we don't use that
+      here, we simply ignore the parameter with the ACE_UNUSED_ARG() macro.
+     */
+    ACE_UNUSED_ARG(_handle);
+
     /*
       In response to the connection request, we create a new Logging_Handler.
       This new object will be used to interact with the client until it
