@@ -79,6 +79,7 @@ class ACE_Svc_Export Benchmark_Method_Base : public Benchmark_Base
 {
   // = TITLE
   //     This class identifies itself as Benmarking Method class.
+  //     It defines a method as of how the test is setup and measured.
 public:
   int exec (ACE_Service_Repository_Iterator *sri);
   // Run the test and advanced the service repository iterator

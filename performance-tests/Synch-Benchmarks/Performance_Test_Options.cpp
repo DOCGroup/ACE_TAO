@@ -1,7 +1,7 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
-#include "Options.h"
+#include "Performance_Test_Options.h"
 
 ACE_RCSID(Synch_Benchmarks, Options, "$Id$")
 
