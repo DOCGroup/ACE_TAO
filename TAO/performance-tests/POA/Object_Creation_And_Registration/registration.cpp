@@ -67,7 +67,7 @@ reverse_map_effectiveness (test_i *servants);
 static int measure_reverse_map_effectiveness = 0;
 
 // Default iterations
-static int iterations = 1000;
+static u_long iterations = 1000;
 
 static int
 parse_args (int argc, char **argv)
@@ -79,7 +79,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_static_cast (u_long, ACE_OS::atoi (get_opts.optarg));
         break;
 
       case 'r':
@@ -145,7 +145,7 @@ main (int argc, char **argv)
         }
 
       // Index counter
-      int i = 0;
+      u_long i = 0;
 
       {
         // Profile timer
@@ -293,7 +293,7 @@ reverse_map_effectiveness (test_i *servants)
   u_long *hash_counter = new u_long[active_object_map_size];
 
   // Index counter
-  int i = 0;
+  u_long i = 0;
 
   // Initialize the hash counters
   for (i = 0; i < active_object_map_size; i++)

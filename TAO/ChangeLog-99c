@@ -1,4 +1,7 @@
-Mon May 31 19:52:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Mon May 31 20:22:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp
+	  (parse_args): Fixed signed/unsigned comparison.
 
 	* tao/orb.idl: Included the Policy.pidl file in orb.idl.  This
 	  will bring the Policy interface into the CORBA module.
