@@ -240,7 +240,7 @@ private:
 
 };
 
-CORBA::Boolean TAO_find_string (TAO_Sequences::StringSeq& sequence, const char* element);
+CORBA::Boolean TAO_find_string (CosTradingSequences::StringSeq& sequence, const char* element);
 
   // *************************************************************
   // TAO_Constraint_Validator

@@ -230,6 +230,32 @@ private:
   const TAO_Link_Attributes_Impl& attrs_;
 };
 
+  // *************************************************************
+  // TAO_Sequence_Extracter
+  // *************************************************************
+
+template <class SEQ_TYPE>
+class TAO_Sequence_Extracter : public TAO_Sequence_Extracter_Base
+// = TITLE
+//  Happy hack to extract sequence data out of user defined sequence
+//  that may have x number of typedef aliases. 
+{
+ public:
+
+  TAO_Sequence_Extracter (CORBA::TypeCode* type_code)
+    : typcode_ (type_code) {}
+  
+  CORBA::Boolean extract (const CORBA::Any&, SEQ_TYPE*&);
+  // Extract the underlying sequence value into a newly allocated
+  // sequence of type SEQ_TYPE. The any assumes ownership of the
+  // sequence, so don't release it.
+
+ private:
+
+    CORBA::TypeCode* typecode_;
+};
+
+
 template <class SEQ, class OPERAND_TYPE>
 CORBA::Boolean TAO_find (SEQ& sequence, const OPERAND_TYPE operand);
 

@@ -636,7 +636,7 @@ TAO_Trader_Factory::TAO_Trader_Factory (int& argc, char** argv)
   this->parse_args (argc, argv);
 }
 
-TAO_TRADER*
+TAO_Trader_Factory::TAO_TRADER*
 TAO_Trader_Factory::manufacture_trader (void)
 {
   typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TRADER;
@@ -838,6 +838,35 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
         arg_shifter.ignore_arg ();
     }
 }
+
+CORBA::TCKind
+TAO_Sequence_Extracter_Base::
+sequence_type (CORBA::TypeCode* type_code,
+               CORBA::Environment& env)
+  TAO_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::TCKind return_value = CORBA::tk_void,
+    type_kind = type_code->kind (env);
+  
+  if (type_kind == CORBA::tk_alias || type_kind == CORBA::tk_sequence)
+    {
+      CORBA::TypeCode_ptr base = type_code;
+      
+      while (base->kind (env) == CORBA::tk_alias)
+        base = base->content_type (env);
+
+      if (base->kind (env) == CORBA::tk_sequence)
+        {
+          base = base->content_type (env);
+          TAO_CHECK_ENV_RETURN (env, return_value);
+          
+          return_value = base->kind (env);
+        }
+    }
+
+  return return_value;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 ACE_MT (template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>);

@@ -51,6 +51,8 @@ class TAO_ORBSVCS_Export TAO_Trader_Factory
 {
 public:
 
+  enum Conformance { QUERY, SIMPLE, STANDALONE, LINKED };
+  
   typedef TAO_Trader_Base TAO_TRADER;
 
   static TAO_TRADER* create_trader (int& argc, char** argv);
@@ -74,10 +76,8 @@ public:
   // -TSmax_follow_policy {always,if_no_local,local_only}, default is always
 
 private:
-
-  TAO_Trader_Factory (int& argc, char** argv);
   
-  enum Conformance { QUERY, SIMPLE, STANDALONE, LINKED };
+  TAO_Trader_Factory (int& argc, char** argv);
 
   TAO_TRADER* manufacture_trader (void);
   
@@ -467,6 +467,24 @@ public:
 
   u_long hash (void) const; 
   // The function that computes a hash value. 
+};
+
+
+class TAO_Sequence_Extracter_Base
+{
+public:
+
+  static CORBA::TCKind sequence_type (CORBA::TypeCode* code,
+                                      CORBA::Environment& env)
+    TAO_THROW_SPEC ((CORBA::SystemException));
+  // Return the sequence element type for the sequence whose typecode
+  // is <code>.
+
+  static CORBA::Boolean extract_value (const CORBA::Any& source,
+                                       const CORBA::TypeCode *,
+                                       void* new_mem) { return CORBA::B_TRUE; }
+  // Extract the contents of the any into the buffer pointed to by
+  // <new_mem>.
 };
 
 
