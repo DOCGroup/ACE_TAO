@@ -6,7 +6,9 @@
 
 ACE_RCSID(ace, Arg_Shifter, "$Id$")
 
-ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc, char **argv, char **temp)
+ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc,
+                                  char **argv,
+                                  char **temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -17,7 +19,8 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc, char **argv, char **temp)
 {
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
-    this->temp_ = new char *[this->total_size_];
+    ACE_NEW (this->temp_,
+             char *[this->total_size_]);
   
   if (this->temp_ != 0)
     {

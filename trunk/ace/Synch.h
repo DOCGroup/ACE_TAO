@@ -264,7 +264,9 @@ public:
   //
   // NOTE: Solaris threads do not support timed semaphores.
   // Therefore, if you're running on Solaris you might want to
-  // consider using the POSIX pthreads wrapper instead.
+  // consider using the ACE POSIX pthreads implementation instead,
+  // which can be enabled by compiling ACE with
+  // -D_POSIX_PTHREAD_SEMANTICS.
 
   int tryacquire (void);
   // Conditionally decrement the semaphore if count is greater than 0
