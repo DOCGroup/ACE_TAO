@@ -2029,22 +2029,6 @@ CORBA::ORB::url_ior_string_to_object (const char* str
 
 // ****************************************************************
 
-void
-CORBA::ORB::_optimize_collocation_objects (CORBA::Boolean opt)
-{
-  if (this->orb_core_ != 0)
-    this->orb_core_->optimize_collocation_objects (opt);
-}
-
-CORBA::Boolean
-CORBA::ORB::_optimize_collocation_objects (void) const
-{
-  if (this->orb_core_ != 0)
-    return this->orb_core_->optimize_collocation_objects ();
-  else
-    return 0; // Need to return something
-}
-
 ACE_Time_Value *
 CORBA::ORB::get_timeout (void)
 {
