@@ -33,15 +33,15 @@ Legend:
 [1111x ] 	POA/FindPOA runs
 [1111x ] POA/NewPOA compiles
 [1111x ] 	POA/NewPOA runs
-[1101  ] POA/Generic_Servant compiles
-[1101  ] 	POA/Generic_Servant runs
-[1101  ] POA/On_Demand_Activation compiles
-[1100  ] 	POA/On_Demand_Activation runs
-[1101  ] POA/Explicit_Activation compiles
-[0100  ] 	POA/Explicit_Activation runs
-[x101x ] POA/Default_Servant compiles
-[x000x ] 	POA/Default_Servant runs
-    
+[1111  ] POA/Generic_Servant compiles
+[11x1  ] 	POA/Generic_Servant runs
+[1111  ] POA/On_Demand_Activation compiles
+[11x0  ] 	POA/On_Demand_Activation runs
+[1111  ] POA/Explicit_Activation compiles
+[01x0  ] 	POA/Explicit_Activation runs
+[x111x ] POA/Default_Servant compiles
+[x0x0x ] 	POA/Default_Servant runs
+
 [1111x ] Param_Test compiles
 [1111x ] 	SII short
 [1111x ] 	SII ubstring
@@ -51,7 +51,7 @@ Legend:
 [0111x ] 	SII nested_struct
 [0000x ] 	SII struct_seq
 [0000x ] 	SII objref
-    
+
 [11x1x ] 	DII short
 [11x1x ] 	DII ubstring
 [11x1x ] 	DII fixed_struct
@@ -60,7 +60,7 @@ Legend:
 [00x0x ] 	DII nested_struct
 [00x0x ] 	DII struct_seq
 [00x0x ] 	DII objref
-    
+
 [0x0x0 ] Thruput/TAO compiles
 
 [1111x ] liborbsvcs compiles
@@ -77,13 +77,13 @@ Legend:
 [11xxx ]        Dump_Schedule runs
 [11x11 ] Event_Latency compiles
 [11x0x ]        Event_Latency runs
- 
+
 [110100] MT_Cubit compiles
 [xxx0xx] 	runs for Octet
 [xxx0xx] 	runs for Short
 [xxx0xx] 	runs for Long
 [xxx0xx] 	runs for Struct
- 
+
 NOTES
 * Solaris/CC
 ** orbsvcs/tests/Logger does not compile
@@ -91,22 +91,15 @@ NOTES
 ** ParamTest/var_struct,nested_struct,struct_seq - seg. fault , but
    able to fix manually the tao_idl compiler generated files, works
    fine then.
- 
+
 * NT
 ** Warnings on libTAO and tao_idl compilation.
 ** Param_Test with struct_seq segfaults server.
 ** MT_Cubit client segfaults after transactions made.
- 
+
 * Solaris/g++
 ** Warnings during tao_idl compilation.
-** SII,DII struct_seq causes a bus error on the server.
-** SII objref causes marshal exceptions, but no fatalities.
-** DII objref client gets illegal instruction.
-** orbsvcs fails with missing stuff in ACE_Map_Manager.
-** MT_Cubit gets relocation error on startup:
-   ld.so.1: ./svr: fatal: relocation error: symbol not found:
-   ACE_Task_Base::activate(long, int, int, long, int, ACE_Task_Base *,
-   unsigned int *): referenced in ./svr
+** MT Cubit fails to link due to missing -lposix4 library
 
 * IRIX
 ** Event Latency won't work because unproper detection of failures for
