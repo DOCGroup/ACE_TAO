@@ -1164,8 +1164,8 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
   if (this->start_.size () >= dwr_pos)
     this->start_.wr_ptr (dwr_pos);
 
-  CORBA::Octet dmajor = cdr.major_version_;
-  CORBA::Octet dminor = cdr.minor_version_;
+  ACE_CDR::Octet dmajor = cdr.major_version_;
+  ACE_CDR::Octet dminor = cdr.minor_version_;
 
   // Exchange the GIOP version info
   cdr.major_version_ = this->major_version_;
@@ -1185,7 +1185,7 @@ ACE_InputCDR::steal_contents (void)
 
   // If at all our message had a DONT_DELETE flag set, just clear it
   // off.
-  this->start_.clr_self_bit (ACE_Message_Block::DONT_DELETE);
+  this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 
   ACE_CDR::mb_align (&this->start_);
 
@@ -1199,7 +1199,7 @@ ACE_InputCDR::reset_contents (void)
                            ());
 
   // Reset the flags...
-  this->start_.clr_self_bit (ACE_Message_Block::DONT_DELETE);
+  this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 }
 
 // --------------------------------------------------------------
