@@ -24,7 +24,7 @@ main (int argc, char* argv [])
 									      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       
-      TAO_Scheduler scheduler;
+      TAO_Scheduler scheduler (orb);
       
       manager->rtscheduler (&scheduler);
       
@@ -39,17 +39,6 @@ main (int argc, char* argv [])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "Cancelling Threads.....\n"));
-
-      /*
-	DT_Hash_Map_Iterator iterator (*orb->orb_core ()->dt_hash ());
-	DT_Hash_Map_Entry *entry;
-	
-	for (;iterator.next (entry) != 0; iterator.advance ())
-	{
-	RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (entry->int_id_);
-	DT->cancel (ACE_ENV_ARG_PARAMETER);
-	}
-      */
 
       CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
       
@@ -67,6 +56,8 @@ main (int argc, char* argv [])
 	}
 
       orb->run ();
+
+      ACE_Thread_Manager::instance ()->wait ();
     }
   ACE_CATCHANY
     {

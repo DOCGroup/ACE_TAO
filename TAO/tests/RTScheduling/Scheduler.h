@@ -11,7 +11,7 @@ public RTScheduling::Scheduler,
 {
  public:
 
-  TAO_Scheduler (void);
+  TAO_Scheduler (CORBA::ORB_ptr orb);
 
   ~TAO_Scheduler (void);
 
@@ -119,6 +119,8 @@ public RTScheduling::Scheduler,
   virtual void cancel (const RTScheduling::Current::IdType & guid
 		       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+ private:
+  RTScheduling::Current_var current_;
 };
 
 #endif //SCHEDULER_H
