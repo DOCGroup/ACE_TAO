@@ -223,7 +223,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
 	    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put"));
 #ifdef delay_put
 	  ACE_OS::sleep (1); // this sleep helps to shutdown correctly -> was an error!
-#endif delay_put
+#endif /* delay_put */
 	}
       //          cout << "\nnach loop, dump of task msg queue:\n" << endl;
       //          this->msg_queue ()->dump ();
