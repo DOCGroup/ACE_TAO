@@ -1,7 +1,8 @@
 Mon Mar 13 22:20:11 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Smart_Proxies/On_Demand/svc.conf: Added a comment before
-	  $Id.
+	  $Id. Thanks to Bala <bala@cs.wustl.edu> of the DOC group for 
+	  trying out this test.
 	
 Mon Mar 13 18:20:11 2000  Darrell Brunsch  <brunsch@uci.edu>
 
