@@ -47,7 +47,8 @@ CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
     previous_ (0)
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
-  exception_->_incr_refcnt ();
+  if (this->exception_)
+    this->exception_->_incr_refcnt ();
 }
 
 CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
