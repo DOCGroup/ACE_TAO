@@ -1,3 +1,9 @@
+
+Mon Jul 20 18:17:02 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated the IDL compiler entry
+	(GPERF-IDL integration).
+
 Mon Jul 20 17:51:01 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
