@@ -1,5 +1,9 @@
 Thu Apr 17 08:25:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* netsvcs/lib/Name_Handler.h: Arrgh, there was still one more
+ 	  missing #include that I forgot to move into the *.h file.
+  	  Thanks to David Levine for noticing this.
+
 	* ace/Synch.cpp (wait): There was a bug in
  	  ACE_Condition::wait(MUTEX& mutex, const ACE_Time_Value
  	  *abstime.)  Basically when abstime is zero, it ignores the

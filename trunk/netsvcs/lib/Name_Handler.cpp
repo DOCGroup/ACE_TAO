@@ -4,8 +4,6 @@
 #define ACE_BUILD_SVC_DLL
 #include "ace/Set.h"
 #include "ace/Get_Opt.h"
-#include "ace/Naming_Context.h"
-#include "ace/Name_Request_Reply.h"
 #include "Name_Handler.h"
 
 // Simple macro that does bitwise AND -- useful in table lookup

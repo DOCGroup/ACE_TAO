@@ -20,6 +20,8 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SString.h"
+#include "ace/Naming_Context.h"
+#include "ace/Name_Request_Reply.h"
 
 // Forward declaration.
 class ACE_Naming_Context;

@@ -5,7 +5,6 @@
 #include "ace/SString.h"
 #include "ace/Set.h"
 #include "ace/Get_Opt.h"
-#include "ace/Time_Request_Reply.h"
 #include "TS_Server_Handler.h"
 
 int
