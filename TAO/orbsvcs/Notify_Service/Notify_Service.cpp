@@ -78,7 +78,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                       ACE_ENV_ARG_PARAMETER) != 0)
   return -1;
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
+  this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
 
   if (this->notify_service_ == 0)
     {
