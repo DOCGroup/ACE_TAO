@@ -21,7 +21,7 @@ module Hello
     
     consumes timeout click_in;
   };
-
+  
   home ReceiverHome manages Receiver
   {
   };

@@ -1,3 +1,15 @@
+Fri Mar  4 17:13:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Hello_Base/Hello_Base.idl:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Receiver/Receiver.idl:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+        
+          Cosmetic changes to IDL files and changes to MPC files to
+          eliminate unnecessary files in a given project and bring
+          in missing export header files.
+
 Thu Mar  3 10:31:10 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplGenerator.cpp:
