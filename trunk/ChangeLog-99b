@@ -1,4 +1,6 @@
-Fri Aug 06 11:19:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Aug 06 12:06:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (strptime_getnum): getnum should be strptim_getnum.
 
 	* ace/config-win32-common.h: Added ACE_LACKS_STRPTIME.  Thanks to
 	  Andy for pointing this out.
