@@ -352,7 +352,7 @@ ACE_Service_Config::load_static_svcs (void)
       ACE_Service_Type_Impl *stp =
         ace_create_service_type (ssd->name_,
                                  ssd->type_,
-                                 (const void *) (*ssd->alloc_)(),
+                                 (*ssd->alloc_)(),
                                  ssd->flags_);
       if (stp == 0)
         continue;
