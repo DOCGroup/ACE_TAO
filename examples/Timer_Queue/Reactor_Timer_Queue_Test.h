@@ -34,6 +34,7 @@
 /// fixed. Atleast on g++
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Heap.h"
+#include "ace/svc_export.h"
 
 class Reactor_Timer_Queue_Test_Driver;
 
@@ -95,7 +96,7 @@ private:
   // all drivers.
 };
 
-class Reactor_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
+class ACE_Svc_Export Reactor_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
 {
   // = TITLE
   //   Implements a test driver for a reactive timer queue using
