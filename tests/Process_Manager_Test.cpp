@@ -286,7 +286,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Time_Value how_long (10);
 
-  ACE_Reactor::instance ()->run_event_loop (how_long);
+  ACE_Reactor::instance ()->run_reactor_event_loop (how_long);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Reactor loop done!\n") ));

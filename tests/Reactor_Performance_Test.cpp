@@ -138,7 +138,7 @@ Read_Handler::handle_close (ACE_HANDLE handle,
 
   // If no connections are open.
   if (waiting_ == 0)
-    ACE_Reactor::instance ()->end_event_loop ();
+    ACE_Reactor::instance ()->end_reactor_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Read_Handler::handle_close closing down\n")));
@@ -384,7 +384,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Profile_Timer timer;
   timer.start ();
-  const int status = ACE_Reactor::instance()->run_event_loop (run_limit);
+  const int status =
+    ACE_Reactor::instance ()->run_reactor_event_loop (run_limit);
   timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;

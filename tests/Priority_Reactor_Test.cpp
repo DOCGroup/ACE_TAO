@@ -138,7 +138,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Last svc_handler closed, shutting down\n")));
-          ACE_Reactor::instance()->end_event_loop();
+          ACE_Reactor::instance()->end_reactor_event_loop();
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -363,7 +363,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Reactor::instance()->register_handler
     (&acceptor, ACE_Event_Handler::READ_MASK);
-  ACE_Reactor::instance()->run_event_loop (tv);
+  ACE_Reactor::instance()->run_reactor_event_loop (tv);
 
   if (Read_Handler::get_countdown () != 0)
     {
