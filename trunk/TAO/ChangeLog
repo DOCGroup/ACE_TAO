@@ -1,3 +1,17 @@
+Wed Mar 17 13:56:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CORBA_String.cpp:
+
+	  Reverted the change "Tue Mar 16 09:36:42 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>" since MSVC barfs. 
+	  
+	* tao/ULongSeqS.cpp:
+	* tao/ULongSeqS.i:
+	* tao/UShortSeqS.cpp:
+	* tao/UShortSeqS.i:
+
+	  They serve no purpose. So removed them from the repo.
+
 Wed Mar 17 10:12:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Scheduling_Service/Makefile:
