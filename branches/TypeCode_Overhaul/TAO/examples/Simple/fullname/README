@@ -1,0 +1,3 @@
+This is a simple example that would take the first name and the last
+name of a person and return the full name of the individual through
+the "out" argument in the operation signature of the IDL.

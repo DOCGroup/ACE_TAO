@@ -1,0 +1,30 @@
+#include "Version.h"
+
+1 VERSIONINFO
+ FILEVERSION CIAO_MAJOR_VERSION,CIAO_MINOR_VERSION,CIAO_BETA_VERSION,0
+ PRODUCTVERSION CIAO_MAJOR_VERSION,CIAO_MINOR_VERSION,CIAO_BETA_VERSION,0
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "CIAO\0"
+            VALUE "FileVersion", CIAO_VERSION "\0"
+            VALUE "InternalName", "CIAODLL\0"
+            VALUE "LegalCopyright", "\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "CIAO.DLL\0"
+            VALUE "ProductName", "CIAO\0"
+            VALUE "ProductVersion", CIAO_VERSION "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

@@ -1,0 +1,15 @@
+# $Id$
+
+	This directory contains what possibly is the simplest example
+for a COS Event Service.  It contains three executables; a consumer,
+supplier and a program to create the event channel itself.
+
+	To test is use the run_test.pl script, or:
+
+$ ./Service -o ec.ior
+$ ./Consumer file://ec.ior
+$ ./Supplier file://ec.ior
+
+	more advanced tests are located in:
+
+$TAO_ROOT/orbsvcs/tests/CosEvent

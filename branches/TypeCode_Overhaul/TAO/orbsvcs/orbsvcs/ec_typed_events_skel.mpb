@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+feature(ec_typed_events) {
+  macros   += TAO_HAS_TYPED_EVENT_CHANNEL
+
+  Source_Files {
+    CosTypedEventCommS.cpp
+    CosTypedEventChannelAdminS.cpp
+  }
+
+  Header_Files {
+    CosTypedEventCommS.h
+    CosTypedEventChannelAdminS.h
+  }
+
+  Inline_Files {
+    CosTypedEventCommS.inl
+    CosTypedEventChannelAdminS.inl
+  }
+}

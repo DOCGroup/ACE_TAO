@@ -1,0 +1,78 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i GPS"
+// This file has been manually modified to add a second component implementation.
+
+project(GPS_stub): ciao_client {
+  after += HUDisplay_stub
+  sharedname = GPS_stub
+  idlflags += -Wb,stub_export_macro=GPS_STUB_Export -Wb,stub_export_include=GPS_stub_export.h -Wb,skel_export_macro=GPS_SVNT_Export -Wb,skel_export_include=GPS_svnt_export.h
+  dynamicflags   = GPS_STUB_BUILD_DLL
+
+  IDL_Files {
+    GPS.idl
+  }
+
+  Source_Files {
+    GPSC.cpp
+  }
+}
+
+project(GPS_svnt) : ciao_servant {
+  after += HUDisplay_svnt GPS_stub
+  sharedname  = GPS_svnt
+  libs    += GPS_stub HUDisplay_stub HUDisplay_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=GPS_SVNT_Export -Wb,export_include=GPS_svnt_export.h
+  dynamicflags = GPS_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    GPS.cidl
+  }
+
+  IDL_Files {
+    GPSE.idl
+  }
+
+  Source_Files {
+    GPSEC.cpp
+    GPSS.cpp
+    GPS_svnt.cpp
+  }
+}
+
+
+project(GPS_exec) : ciao_component {
+  after   += GPS_svnt
+  sharedname = GPS_exec
+  libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
+  dynamicflags   = GPS_EXEC_BUILD_DLL
+
+  IDL_Files {
+    GPSEI.idl
+  }
+
+  Source_Files {
+    GPSEIC.cpp
+    GPS_exec.cpp
+  }
+}
+
+project(GPS_tracing_exec) : ciao_component {
+  after   += GPS_svnt
+  sharedname = GPS_tracing_exec
+  libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
+  dynamicflags   = GPS_EXEC_BUILD_DLL
+
+  IDL_Files {
+    GPSEI.idl
+  }
+
+  Source_Files {
+    GPSEIC.cpp
+    GPS_tracing_exec.cpp
+  }
+}
