@@ -18,7 +18,7 @@ class PushConsumer_impl :
 public virtual POA_RtecEventComm::PushConsumer
 {
 public:
-	PushConsumer_impl(CORBA::ORB_ptr orb);
+  PushConsumer_impl(CORBA::ORB_ptr orb);
 
     virtual void push (
         const RtecEventComm::EventSet & data
@@ -35,8 +35,8 @@ public:
         CORBA::SystemException
       ));
 private:
-	CORBA::ORB_var orb_;
-	PushConsumer_impl(const PushConsumer_impl&);
-	void operator==(const PushConsumer_impl&);
+  CORBA::ORB_var orb_;
+  PushConsumer_impl(const PushConsumer_impl&);
+  void operator==(const PushConsumer_impl&);
 };
 #endif

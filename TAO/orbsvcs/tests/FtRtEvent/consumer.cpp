@@ -14,8 +14,8 @@
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
-ACE_RCSID (consumer,
-           PushConsumer.cpp,
+ACE_RCSID (FtRtEvent,
+           PushConsumer,
            "$Id$")
 
 CORBA::ORB_var orb;
@@ -25,8 +25,8 @@ RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-	  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("gi:"));
-	  int opt;
+    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("gi:"));
+    int opt;
     int use_gateway = 0;
 
     while ((opt = get_opt ()) != EOF)
@@ -61,7 +61,7 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      channel	= resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
+      channel  = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
         name
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -78,65 +78,65 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 
 int main(int argc, ACE_TCHAR** argv)
 {
-	ACE_TRY_NEW_ENV {
-		orb = CORBA::ORB_init(argc, argv
-			ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_NEW_ENV {
+    orb = CORBA::ORB_init(argc, argv
+      ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-		RtecEventChannelAdmin::EventChannel_var channel
+    RtecEventChannelAdmin::EventChannel_var channel
       = get_event_channel(argc, argv ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
 
-		if (CORBA::is_nil(channel.in()))
-			ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
+    if (CORBA::is_nil(channel.in()))
+      ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
 
-		PortableServer::POA_var poa =
-			resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
-														ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    PortableServer::POA_var poa =
+      resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
+                            ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		PushConsumer_impl push_consumer_impl(orb.in());
-		RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-			channel->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    PushConsumer_impl push_consumer_impl(orb.in());
+    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+      channel->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-			consumer_admin->obtain_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
+      consumer_admin->obtain_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		RtecEventChannelAdmin::ConsumerQOS qos;
-		qos.is_gateway = 1;
-		qos.dependencies.length(1);
+    RtecEventChannelAdmin::ConsumerQOS qos;
+    qos.is_gateway = 1;
+    qos.dependencies.length(1);
 
-		RtecEventComm::EventHeader& h0 =
-			qos.dependencies[0].event.header;
-		h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
-		h0.source = ACE_ES_EVENT_SOURCE_ANY;
+    RtecEventComm::EventHeader& h0 =
+      qos.dependencies[0].event.header;
+    h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
+    h0.source = ACE_ES_EVENT_SOURCE_ANY;
 
-		RtecEventComm::PushConsumer_var push_consumer =
-			push_consumer_impl._this();
+    RtecEventComm::PushConsumer_var push_consumer =
+      push_consumer_impl._this();
 
-		supplier->connect_push_consumer(push_consumer.in(),
-			qos	 ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    supplier->connect_push_consumer(push_consumer.in(),
+      qos   ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-		orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-	}
-	ACE_CATCHANY {
-		ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
-	}
-	ACE_ENDTRY;
+  }
+  ACE_CATCHANY {
+    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+  }
+  ACE_ENDTRY;
 
     ACE_CHECK_RETURN(-1);
 
-	return 0;
+  return 0;
 }
 
