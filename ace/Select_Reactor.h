@@ -839,8 +839,8 @@ protected:
   int state_changed_;
   // True if state has changed during dispatching of
   // <ACE_Event_Handlers>, else false.  This is used to determine
-  // whether we need to make another trip through the <Select_Reactor>'s
-  // <wait_for_multiple_events> loop.
+  // whether we need to make another trip through the
+  // <Select_Reactor>'s <wait_for_multiple_events> loop.
 
   ACE_Select_Reactor_Token token_;
   // Synchronization token for the MT_SAFE ACE_Select_Reactor.
@@ -849,7 +849,8 @@ protected:
   // Adapter used to return internal lock to outside world.
 
   ACE_Select_Reactor_Notify notify_handler_;
-  // Callback object that unblocks the ACE_Select_Reactor if it's sleeping.
+  // Callback object that unblocks the ACE_Select_Reactor if it's
+  // sleeping.
 
   void renew (void);
   // Enqueue ourselves into the list of waiting threads at the
