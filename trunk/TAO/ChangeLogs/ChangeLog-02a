@@ -1,3 +1,8 @@
+Tue Jul 31 13:40:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Oneways_Invoking_Twoways/client.dsp: Fixed a compile error
+	  in release builds.
+
 Tue Jul 31 10:39:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/gperf.idl:
@@ -46,15 +51,15 @@ Tue Jul 31 06:58:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	was the fact that it took sometime to figure out this race
 	condition. We have now added a lock that will be held by the
 	thread  before the variable is manipulated.
-	
+
 	* tao/Connection_Handler.cpp:
 	* tao/Connection_Handler.h:
 	* tao/ Connection_Handler.inl: Added a lock to the class. Also
 	  added three methods, incr_pending_upcalls (),
 	  decr_pending_upcalls () and pending_upcalls (). The first two
 	  does the manipulation of the pending_upcalls_ variable after
-	  holding the lock.  
-	
+	  holding the lock.
+
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/IIOP_Connection_Handler.h: Removed he peding_upcalls_
 	  variable and called the incr_pending_upcalls () and
@@ -65,11 +70,11 @@ Tue Jul 31 06:58:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp
 	* tao/Strategies/SHMIOP_Connection_Handler.h
 	* tao/Strategies/UIOP_Connection_Handler.cpp
-	* tao/Strategies/UIOP_Connection_Handler.h: 
+	* tao/Strategies/UIOP_Connection_Handler.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	  Replicated the changes from IIOP to the above protocols. 
-	
+	  Replicated the changes from IIOP to the above protocols.
+
 
 Sun Jul 29 19:31:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -135,7 +140,7 @@ Sat Jul 28 23:29:21 2001  Ossama Othman  <ossama@uci.edu>
 
 Wed Jul 25 23:48:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Blocking_Sync_None/client.cpp (main): Changed an 
+	* tests/Blocking_Sync_None/client.cpp (main): Changed an
 	  error messages so that the "Right Thing[TM]" will happen when
  	  this test fails, i.e., the build system will automagically
  	  detect it.  Thanks to Johnny Willemsen for reportng this.
@@ -150,7 +155,7 @@ Fri Jul 27 21:48:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  Lite. Now we will run this in our nightly builds. This test uses
 	  IIOP_Lite & UIOP_Lite to run the IDL_Cubit test. Having a
 	  protocol that we are not sure whether it works may be a bad
-	  idea. 
+	  idea.
 
 Fri Jul 27 21:38:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -158,8 +163,8 @@ Fri Jul 27 21:38:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  the places where dump_msg () is called. Though dump_msg ()
 	  prints out information only if the TAO_debug_level is set, this
 	  extra guard will prevent us from calling this method when we are
-	  trying to do performance measurements. 
-	
+	  trying to do performance measurements.
+
 	* tao/GIOP_Message_Lite.cpp: For some reason this class never had
 	  a hexdump. Added the hexdump in dump_msg ().
 
@@ -204,7 +209,7 @@ Fri Jul 27 12:25:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  after dispatching the reply. It was thought that it would fix a
 	  race condition. I had a long discussion with Irfan yesterday,
 	  and looks like the possibility of a race condition is not
-	  there at all. 
+	  there at all.
 
 Fri Jul 27 11:09:25 2001  Chad Elliott  <elliott_c@ociweb.com>
 
