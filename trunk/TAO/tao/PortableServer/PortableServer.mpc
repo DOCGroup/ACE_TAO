@@ -2,4 +2,42 @@ project : taolib, core, objreftemplate, valuetype, iorinterceptor {
   sharedname   = TAO_PortableServer
   dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
   include_dir  = tao/PortableServer
+
+  Source_Files {
+    Active_Object_Map.cpp
+    AMH_Response_Handler.cpp
+    Collocation_Object_Proxy_Broker.cpp
+    Default_Acceptor_Filter.cpp
+    Default_ORTC.cpp
+    Default_Policy_Validator.cpp
+    Default_Servant_Dispatcher.cpp
+    ImplRepo_i.cpp
+    ImplRepoC.cpp
+    ImplRepoS.cpp
+    ImR_ActivatorC.cpp
+    ImR_ActivatorS.cpp
+    ImR_LocatorC.cpp
+    ImR_LocatorS.cpp
+    IORInfo.cpp
+    Key_Adapters.cpp
+    Object_Adapter.cpp
+    ObjectReferenceTemplate.cpp
+    Operation_Table.cpp
+    ORB_Manager.cpp
+    POA.cpp
+    POA_Cached_Policies.cpp
+    POA_Policies.cpp
+    POA_Policy_Set.cpp
+    POAManager.cpp
+    PolicyS.cpp
+    PortableGroup_Hooks.cpp
+    PortableServer.cpp
+    PortableServer_ORBInitializer.cpp
+    PortableServer_PolicyFactory.cpp
+    PortableServerC.cpp
+    Servant_Base.cpp
+    Servant_Dispatcher.cpp
+    ServerInterceptorAdapter.cpp
+    ServerRequestInfo.cpp
+  }  
 }
