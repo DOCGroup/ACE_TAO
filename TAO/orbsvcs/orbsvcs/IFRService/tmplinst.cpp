@@ -235,6 +235,7 @@ template class TAO_IFR_Generic_Utils<TAO_PublishesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_FinderDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_FactoryDef_i>;
+template class TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>;
 template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>;
@@ -382,6 +383,7 @@ template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_FinderDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_FactoryDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>
 #pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>
