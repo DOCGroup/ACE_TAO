@@ -1,3 +1,17 @@
+Tue Mar 30 17:53:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/templates/sle.mpd:
+        * bin/MakeProjectCreator/templates/sledll.mpt:
+        * bin/MakeProjectCreator/templates/sleexe.mpt:
+        * bin/MakeProjectCreator/modules/SLEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/SLEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/MWC.pm:
+        * bin/MakeProjectCreator/modules/MPC.pm:
+          Added a new MPC template for Visual SlickEdit 8.1. This template is
+          not 100% ready yet, but hereby the first version so that workspaces
+          and projects are generated for simple project types.
+
 Mon Mar 29 20:52:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Functor_String.h:
@@ -6,8 +20,8 @@ Mon Mar 29 20:52:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Mar 29 12:24:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* examples/Threads/manual_event.cpp (worker): 
-	* tests/Upgradable_RW_Test.cpp (run_main): 
+	* examples/Threads/manual_event.cpp (worker):
+	* tests/Upgradable_RW_Test.cpp (run_main):
 	* tests/Conn_Test.cpp (client): Changed the name "barrier"
 	  to "thread_barrier" to fix a problem with macro conflicts on
  	  certain OS platforms.  Thanks to Levente Torok <tealev@yahoo.com>
