@@ -10,11 +10,11 @@ require Process;
 
 $iorfile = "grid.ior";
 
-$SV = Process::Create ("server$Process::EXE_EXT", "-o $iorfile ");
+$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-o $iorfile ");
 
 ACE::waitforfile ($iorfile);
 
-$status  = system ("client$Process::EXE_EXT -f $iorfile -s -w 12 -h 12 -x 2 -y 2 -v 2345");
+$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile -s -w 12 -h 12 -x 2 -y 2 -v 2345");
 
 $SV->Kill (); $SV->Wait ();
 
