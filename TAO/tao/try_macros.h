@@ -27,7 +27,7 @@
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 #define TAO_TRY \
-do {
+do { \
 CORBA_Environment TAO_TRY_ENV; \
 try {
 #define TAO_CATCH(TYPE,VAR) \
