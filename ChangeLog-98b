@@ -1,3 +1,11 @@
+Sat May 16 15:10:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Service_Config.h (ACE_Service_Config): Moved the
+ 	  process_directive() into the public part of the class so this
+ 	  can be called by applications one the Service Configurator is
+ 	  open.  Thanks to Tom Arbuckle
+ 	  <arbuckle@uran.informatik.uni-bonn.de> for suggesting this.
+
 Sat May 16 14:12:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,i,cpp} (class ACE_Thread_Descriptor_Base):
