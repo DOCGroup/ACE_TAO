@@ -97,6 +97,14 @@ public:
   // Most types cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
 
+  // Accessors/mutators for the private members.
+
+  idl_bool ifr_added (void);
+  void ifr_added (idl_bool val);
+
+  idl_bool ifr_fwd_added (void);
+  void ifr_fwd_added (idl_bool val);
+
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Type);
@@ -104,6 +112,7 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+protected:
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
   idl_bool ifr_added_;

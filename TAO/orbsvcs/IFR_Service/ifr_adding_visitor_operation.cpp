@@ -7,8 +7,9 @@
 
 ACE_RCSID(IFR_Service, ifr_adding_visitor_operation, "$Id$")
 
-ifr_adding_visitor_operation::ifr_adding_visitor_operation (void)
-  : index_ (0)
+ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
+  : ifr_adding_visitor (scope),
+    index_ (0)
 {
 }
 
@@ -85,21 +86,6 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
         {
           ex = ex_iter.item ();
 
-          // If we got to visit_operation from a forward declared interface,
-          // this node may not yet be in the repository. If it is, this
-          // call will merely update ir_current_.
-          if (ex->ast_accept (this) == -1)
-            {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
-                  ACE_TEXT ("visit_operation - AST_Exception failed to ")
-                  ACE_TEXT ("accept visitor\n")
-                ),  
-                -1
-              );
-            }
-
           prev_def =
             be_global->repository ()->lookup_id (ex->repoID (),
                                                  ACE_TRY_ENV);
@@ -146,20 +132,10 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       AST_Type *return_type = node->return_type ();
 
-      // If this type already has a repository entry, the call
-      // will just update the current IR object holder. Otherwise,
-      // it will create the entry.
-      if (return_type->ast_accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
-              ACE_TEXT ("visit_operation -")
-              ACE_TEXT (" failed to accept visitor\n")
-            ),  
-            -1
-          );
-        }
+      // Updates ir_current_.
+      this->get_referenced_type (return_type,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Is the operation oneway?
       CORBA::OperationMode mode = node->flags () == AST_Operation::OP_oneway 
@@ -223,34 +199,40 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
   AST_Type *arg_type = node->field_type ();
 
-  // If this type already has a repository entry, the call
-  // will just update the current IR object holder. Otherwise,
-  // it will create the entry.
-  if (arg_type->ast_accept (this) == -1)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
-          ACE_TEXT ("visit_argument - failed to accept visitor\n")
-        ),  
-        -1
-      );
+      // Updates ir_current_.
+      this->get_referenced_type (arg_type,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->params_[this->index_].type_def = 
+        CORBA_IDLType::_duplicate (this->ir_current_.in ());
+
+
+      // Fortunately, AST_Field::Direction and CORBA_ParameterMode 
+      // are ordered identically.
+      this->params_[this->index_].mode = 
+        (CORBA::ParameterMode) node->direction ();
+
+      // IfR method create_operation does not use this - it just needs
+      // to be non-zero for marshaling.
+      this->params_[this->index_].type =
+        CORBA::TypeCode::_duplicate (CORBA::_tc_void);
+
+      ++this->index_;
     }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (
+          ACE_ANY_EXCEPTION,
+          ACE_TEXT ("ifr_adding_visitor_operation::visit_argument")
+        );
 
-  this->params_[this->index_].type_def = 
-    CORBA_IDLType::_duplicate (this->ir_current_.in ());
-
-  // Fortunately, AST_Field::Direction and CORBA_ParameterMode 
-  // are ordered identically.
-  this->params_[this->index_].mode = 
-    (CORBA::ParameterMode) node->direction ();
-
-  // IfR method create_operation does not use this - it just needs
-  // to be non-null for marshaling.
-  this->params_[this->index_].type =
-    CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-
-  ++this->index_;
+      return -1;
+    }
+  ACE_ENDTRY;
 
   return 0;
 }

@@ -104,6 +104,10 @@ public:
 
   AST_Expression::ExprType et (void);
 
+  // Accessors for the private member.
+  idl_bool ifr_added (void);
+  void ifr_added (idl_bool val);
+
   // Narrowing
   DEF_NARROW_METHODS1(AST_Constant, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Constant);
@@ -121,6 +125,9 @@ private:
 
   AST_Expression::ExprType pd_et;
   // Its expression type.
+
+  idl_bool ifr_added_;
+  // Has this node been added to the IFR?
 };
 
 #endif           // _AST_CONSTANT_AST_CONSTANT_HH

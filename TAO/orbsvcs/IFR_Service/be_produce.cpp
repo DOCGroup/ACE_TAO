@@ -91,6 +91,33 @@ BE_cleanup (void)
   idl_global->destroy ();
   delete idl_global;
   idl_global = 0;
+
+  // Remove the holding scope entry from the repository.
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA_Contained_var result =
+        be_global->repository ()->lookup_id (be_global->holding_scope_name (),
+                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (!CORBA::is_nil (result.in ()))
+        {
+          CORBA_ModuleDef_var scope =
+            CORBA_ModuleDef::_narrow (result.in (),
+                                      ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          scope->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("BE_cleanup"));
+    }
+  ACE_ENDTRY;
 }
 
 // Abort this run of the BE.
@@ -165,26 +192,61 @@ BE_ifr_init (int &ac,
   return 0;
 }
  
+void
+BE_create_holding_scope (CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA_ModuleDef_ptr scope = CORBA_ModuleDef::_nil ();
+
+  // If we are multi-threaded, it may already be created.
+  CORBA_Contained_var result =
+    be_global->repository ()->lookup_id (be_global->holding_scope_name (),
+                                         ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (result.in ()))
+    {
+      scope =
+        be_global->repository ()->create_module (
+                                      be_global->holding_scope_name (),
+                                      be_global->holding_scope_name (),
+                                      "1.0",
+                                      ACE_TRY_ENV
+                                    );
+      ACE_CHECK;
+    }
+  else
+    {
+      scope = CORBA_ModuleDef::_narrow (result.in (),
+                                        ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  be_global->holding_scope (scope);
+}
+
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IFR_BE_Export void
 BE_produce (void)
 {
-  // Get the root node.
-  AST_Decl *d = idl_global->root ();
-  AST_Root *root = AST_Root::narrow_from_decl (d);
-
-  if (root == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%N:%l) BE_produce - ")
-                  ACE_TEXT ("No Root\n")));
-
-      BE_abort ();
-    }
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      BE_create_holding_scope (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Get the root node.
+      AST_Decl *d = idl_global->root ();
+      AST_Root *root = AST_Root::narrow_from_decl (d);
+
+      if (root == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%N:%l) BE_produce - ")
+                      ACE_TEXT ("No Root\n")));
+
+          BE_abort ();
+        }
+
       if (be_global->removing ())
         {
           ifr_removing_visitor visitor;
@@ -204,7 +266,7 @@ BE_produce (void)
         }
       else
         {
-          ifr_adding_visitor visitor;
+          ifr_adding_visitor visitor (d);
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 

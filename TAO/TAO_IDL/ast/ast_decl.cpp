@@ -545,6 +545,27 @@ AST_Decl::has_ancestor (AST_Decl *s)
   return ScopeAsDecl (pd_defined_in)->has_ancestor (s);
 }
 
+idl_bool
+AST_Decl::is_child (AST_Decl *s)
+{
+  if (this->defined_in ())
+    {
+      AST_Decl *d = ScopeAsDecl (this->defined_in ());
+
+      if (d == 0)
+        {
+          return 0;
+        }
+
+      if (ACE_OS::strcmp (d->full_name (), s->full_name ()) == 0)
+        {
+          return 1;
+        }
+    }
+
+  return 0; // Not a child.
+}
+
 // Dump this AST_Decl to the ostream o.
 void
 AST_Decl::dump (ostream &o)

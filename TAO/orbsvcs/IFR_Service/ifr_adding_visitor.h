@@ -38,7 +38,7 @@ class ifr_adding_visitor : public ifr_visitor
   //    to the Interface Repository.
   //
 public:
-  ifr_adding_visitor (void);
+  ifr_adding_visitor (AST_Decl *scope);
   // Constructor.
 
   virtual ~ifr_adding_visitor (void);
@@ -86,9 +86,6 @@ public:
   virtual int visit_union (AST_Union *node);
   // Visit union.
 
-  virtual int visit_union_branch (AST_UnionBranch *node);
-  // Visit union branch.
-
   virtual int visit_constant (AST_Constant *node);
   // Visit a constant.
 
@@ -127,17 +124,23 @@ protected:
   // Creates or looks up the element type of an array or sequence,
   // and stores the result in ir_current_.
 
-  void redef_warning (AST_Decl *node);
-  // If a type that can be forward declared is seen in an IDL file,
-  // and there is already a repository entry for a declaration of
-  // the same type, it may be an error. This warning lets the user
-  // decide.
+  int create_interface_def (AST_Interface *node,
+                            CORBA::Environment &ACE_TRY_ENV);
+  // Common code factored out of visit_interface().
+
+  void get_referenced_type (AST_Type *node,
+                            CORBA::Environment &ACE_TRY_ENV);
+  // Utility method to update ir_current_ for struct members, union
+  // members, operation parameters and operation return types.
 
   CORBA_IDLType_var ir_current_;
   // Holder for the IR object most recently created or looked up by
   // the visitor. This makes it accessible by visitor methods that
   // need the result of a call to another visitor method that
   // creates an IR object.
+
+  AST_Decl *scope_;
+  // Store the node whose scope (if any) we will be visiting.
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_H */

@@ -251,6 +251,9 @@ public:
   // Return TRUE if "this" has "s" as an ancestor.
   idl_bool has_ancestor (AST_Decl *s);
 
+  // Return TRUE if "this" is a child of "s".
+  idl_bool is_child (AST_Decl *s);
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor.

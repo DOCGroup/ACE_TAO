@@ -762,29 +762,6 @@ be_decl::accept (be_visitor *visitor)
 }
 
 idl_bool
-be_decl::is_child (be_decl *node)
-{
-  if (this->defined_in ())
-    {
-      be_decl *bd = 0;
-
-      bd = be_scope::narrow_from_scope (this->defined_in ())->decl ();
-
-      if (bd == 0)
-        {
-          return 0;
-        }
-
-      if (!ACE_OS::strcmp (bd->full_name (), node->full_name ()))
-        {
-          return 1;
-        }
-    }
-
-  return 0; // Not a child.
-}
-
-idl_bool
 be_decl::has_constructor (void)
 {
   return this->has_constructor_;
