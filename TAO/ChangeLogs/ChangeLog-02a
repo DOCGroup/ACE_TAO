@@ -1,3 +1,23 @@
+Thu Dec 28 10:05:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/server_shmiop.conf: 
+
+	* tests/RTCORBA/Explicit_Binding/svc.conf: 
+	* tests/RTCORBA/Client_Protocol/svc.conf: 
+	  Added the new files.
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf: 
+	  Added the new entry to use MMapFilePrefix for SHMIOP in all the
+	  above conf files. Updated the perl script to use the
+	  corresponding conf file.
+	
+	
+	* tao/Strategies/advanced_resource.cpp (init): 
+	  Moving the call to set the resource_factory to
+	  "Advanced_Resource_Factory" back to the constructor of
+	  TAO_Resource_Factory_Changer.	
+
 Wed Dec 27 21:02:25 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 	* tao/Makefile.bor:

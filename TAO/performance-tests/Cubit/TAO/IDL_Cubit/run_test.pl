@@ -222,7 +222,7 @@ print stderr "\nRunning IDL_Cubit with the SHMIOP protocol.\n\n";
 # Save the original server flags.
 $save_svflags = $svflags;
 
-$svflags .= " -ORBEndpoint shmiop://";
+$svflags .= " -ORBEndpoint shmiop:// -ORBSvcconf server_shmiop.conf ";
 
 $SV = Process::Create ($exepref."server".$EXE_EXT,
                        $svflags.
