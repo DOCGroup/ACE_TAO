@@ -4941,7 +4941,8 @@ public:
                  ACE_SERVICE_TYPE service_type,
                  u_long max_sdu_size,
                  u_long minimum_policed_size,
-                 int ttl);
+                 int ttl,
+                 int priority);
   // Constructor that initializes all the fields.
 
   // = Get/set the token rate in bytes/sec.
@@ -4979,6 +4980,10 @@ public:
   // = Get/set the time-to-live.
   int ttl (void);
   void ttl (int t);
+
+  // = Get/set the priority.
+  int priority (void);
+  void priority (int p);
 };
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
