@@ -1,3 +1,72 @@
+Mon Jun 26 12:44:40 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.cpp.h:
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Split this overly large method into several small helper
+	  methods: extract_endpoint_options(), extract_endpoint_version(),
+	  open_i().
+
+	  (extract_endpoint_options):
+
+	  Helper method that extracts endpoint-specific options from the
+	  endpoint string provided on the command line.
+
+	  (extract_endpoint_version):
+
+	  Helper method that extracts desired endpoint/protocol version
+	  from the endpoint string provided on the command line.
+
+	  (open_i):
+
+	  Helper method that iterates over all addresses in an endpoint,
+	  and creates acceptors for each one.
+
+	  (open_default):
+
+	  The following:
+
+		-ORBEndpoint iiop://1.1@
+
+	  now works as expected, i.e. this forces TAO to open an IIOP 1.1
+	  endpoint, instead of the 1.2 default.  [Bug 463]
+
+	* tao/Pluggable.h (open_default):
+
+	  Added major/minor version arguments to make it possible to pass
+	  desired protocol version this method.  [Bug 463]
+
+	* tao/IIOP_Acceptor.h (open_default):
+	* tao/IIOP_Acceptor.cpp (open_default)
+	* tao/SHMIOP_Acceptor.h (open_default):
+	* tao/SHMIOP_Acceptor.cpp (open_default)
+	* tao/SHMIOP_Acceptor.h (open_default):
+	* tao/SHMIOP_Acceptor.cpp (open_default):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h (open_default):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (open_default):
+
+	  Updated to accept and use major/minor protocol version.
+	  [Bug 463]
+
+	* tao/POA.cpp:
+
+	  Removed inclusion of "tao/Acceptor_Registry.cpp."  It wasn't
+	  needed.
+
+	* tao/Pluggable.cpp:
+
+	  Removed inclusion of "tao/Stub.h" and "tao/Reply_Dispatcher.h."
+	  They weren't needed.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
+	* docs/ORBEndpoint.html:
+
+	  Added examples that illustrate to specify a default endpoint
+	  with a desired version.
+
 Sat Jun 24 20:15:47 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* examples/Load_Balancing/README:
