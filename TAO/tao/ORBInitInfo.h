@@ -96,7 +96,7 @@ public:
   /// Register a mapping between a string and a corresponding object
   /// reference with the ORB being initialized.
   /**
-   * This methid is particularly useful for registering references to
+   * This method is particularly useful for registering references to
    * local (locality constrained) objects.  Note that this method
    * should be called in ORBInitializer::pre_init() so that the
    * registered reference will be available to the
