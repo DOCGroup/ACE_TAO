@@ -103,7 +103,7 @@ Param_Test_Client<T>::run_sii_test (void)
                       i));
           continue;
         }
-      // reset parameters for the test
+      // reset parameters for the test.
       if (this->test_object_->reset_parameters () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) client.cpp - run_dii_test:"
