@@ -4,6 +4,13 @@
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
 
+//tmp
+/*
+#include <iostream>
+using std::cerr;
+using std::endl;
+*/
+
 using namespace Introspection;
 
 namespace CCF
@@ -74,7 +81,8 @@ namespace CCF
 
         unsigned long max = compute_levels (n->type_info (), 0, levels);
 
-        //cerr << "starting dispatch process for "
+
+        // cerr << "starting dispatch process for "
         //     << n->type_info ().type_id () << " with "
         //     << max << " levels" << endl;
 

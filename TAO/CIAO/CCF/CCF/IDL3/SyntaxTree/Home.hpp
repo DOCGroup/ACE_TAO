@@ -66,6 +66,36 @@ namespace CCF
           copy_supports_list (supports);
         }
 
+      protected:
+        HomeDef (SimpleName const& name,
+                 Order const& order,
+                 ScopePtr const& scope,
+                 HomeDefRef const& inherits,
+                 InterfaceDefRefSetName const& supports,
+                 ComponentDefRef const& manages)
+            : Declaration (name, order, scope),
+              inherits_ (inherits),
+              supports_ (supports),
+              manages_ (manages)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new  HomeDef (name,
+                          order,
+                          scope,
+                          inherits_,
+                          supports_,
+                          manages_));
+        }
+        
       private:
         void
         copy_supports_list (ScopedNameSet const& supports)

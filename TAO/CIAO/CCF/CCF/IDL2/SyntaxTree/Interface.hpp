@@ -140,6 +140,7 @@ namespace CCF
         //
         InterfaceDef ();
 
+
       public:
         typedef
         InterfaceDefRefSetName::const_iterator
@@ -157,7 +158,21 @@ namespace CCF
           return inherits_.end ();
         }
 
-        // Runtime declaration type information
+      protected:
+        ScopedNameSet
+        inherits () const
+        {
+          ScopedNameSet s;
+
+          for (Iterator i (inherits_begin ()), end (inherits_end ());
+               i != end;
+               ++i) s.insert (i->name ());
+
+          return s;
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -238,7 +253,27 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        AbstractInterfaceForwardDecl (SimpleName const& name,
+                                      Order const& order,
+                                      ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new AbstractInterfaceForwardDecl (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -271,7 +306,29 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        AbstractInterfaceDef (SimpleName const& name,
+                              Order const& order,
+                              ScopePtr const& scope,
+                              ScopedNameSet const& inherits)
+            : Declaration (name, order, scope),
+              InterfaceDef (inherits)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new AbstractInterfaceDef (name, order, scope, inherits ()));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -337,7 +394,27 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        LocalInterfaceForwardDecl (SimpleName const& name,
+                                   Order const& order,
+                                   ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new LocalInterfaceForwardDecl (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -370,7 +447,29 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        LocalInterfaceDef (SimpleName const& name,
+                           Order const& order,
+                           ScopePtr const& scope,
+                           ScopedNameSet const& inherits)
+            : Declaration (name, order, scope),
+              InterfaceDef (inherits)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new LocalInterfaceDef (name, order, scope, inherits ()));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -457,12 +556,12 @@ namespace CCF
         }
 
       public:
-        virtual DeclarationPtr
-        clone_temporary (SimpleName const& name,
-                         Order const& order,
-                         ScopePtr const& scope)
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
         {
-          return DeclarationPtr (
+          return TypeDeclPtr (
             new UnconstrainedInterfaceForwardDecl (name, order, scope));
         }
 
@@ -500,23 +599,25 @@ namespace CCF
           type_info (static_type_info ());
         }
 
+      protected:
         UnconstrainedInterfaceDef (SimpleName const& name,
                                    Order const& order,
-                                   ScopePtr const& scope)
+                                   ScopePtr const& scope,
+                                   ScopedNameSet const& inherits)
             : Declaration (name, order, scope),
-              InterfaceDef (ScopedNameSet ()) //@@ broken
+              InterfaceDef (inherits)
         {
           type_info (static_type_info ());
         }
 
       public:
-        virtual DeclarationPtr
-        clone_temporary (SimpleName const& name,
-                         Order const& order,
-                         ScopePtr const& scope)
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
         {
-          return DeclarationPtr (
-            new UnconstrainedInterfaceDef (name, order, scope));
+          return TypeDeclPtr (
+            new UnconstrainedInterfaceDef (name, order, scope, inherits ()));
         }
 
         // Runtime declaration type information

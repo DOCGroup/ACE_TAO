@@ -71,6 +71,25 @@ namespace CCF
           type_info (static_type_info ());
         }
 
+      protected:
+        ComponentForwardDecl (SimpleName const& name,
+                              Order const& order,
+                              ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new ComponentForwardDecl (name, order, scope));
+        }
+
         // Runtime declaration type information
       public:
         virtual std::string
@@ -127,6 +146,29 @@ namespace CCF
         {
           type_info (static_type_info ());
           copy_supports_list (supports);
+        }
+
+      protected:
+        ComponentDef (SimpleName const& name,
+                      Order const& order,
+                      ScopePtr const& scope,
+                      ComponentDefRef const& inherits,
+                      InterfaceDefRefSetName const& supports)
+            : Declaration (name, order, scope),
+              inherits_ (inherits),
+              supports_ (supports)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new ComponentDef (name, order, scope, inherits_, supports_));
         }
 
       private:

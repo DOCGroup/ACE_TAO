@@ -254,6 +254,10 @@ int main (int argc, char* argv[])
   {
     cerr << "exception: " << "Declaration::NotInScope" << endl;
   }
+  catch (NodePtr::NotInitialized const& e)
+  {
+    cerr << "exception: " << e.what () << endl;
+  }
   catch (...)
   {
     cerr << "exception: " << "unknow" << endl;

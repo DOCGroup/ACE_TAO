@@ -641,12 +641,6 @@ namespace CCF
       StrictPtr<Scope>
       ScopePtr;
 
-      class Declaration;
-
-      typedef
-      StrictPtr<Declaration>
-      DeclarationPtr;
-
       class DeclarationTable;
 
       class Declaration : public virtual Node
@@ -688,19 +682,6 @@ namespace CCF
         }
 
       public:
-        //@@ returned object should be constant
-        //
-        //@@ it should probably take ScopedName
-        //
-        virtual DeclarationPtr
-        clone_temporary (SimpleName const& name,
-                         Order const& order,
-                         ScopePtr const& scope)
-        {
-          throw 0;
-        }
-
-      public:
 
         ScopedName
         name () const;
@@ -735,6 +716,9 @@ namespace CCF
         DeclarationRef<Scope> scope_;
       };
 
+      typedef
+      StrictPtr<Declaration>
+      DeclarationPtr;
 
       //
       //
@@ -940,6 +924,13 @@ namespace CCF
       //
       //
       //
+
+      class TypeDecl;
+
+      typedef
+      StrictPtr<TypeDecl>
+      TypeDeclPtr;
+
       class TypeDecl : public virtual Declaration
       {
       protected:
@@ -951,12 +942,30 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Type completeness
+        // Typedef support.
+        //
+      public:
+        //@@ returned object should be constant
+        //
+        //@@ it should probably take ScopedName
+        //
+        //@@ should it be constant?
+        //
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope) = 0;
+
+
+        // Type completeness.
+        //
       public:
         virtual bool
         defined () const = 0;
 
-        // Runtime declaration type information
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -968,10 +977,6 @@ namespace CCF
         static Introspection::TypeInfo const&
         static_type_info ();
       };
-
-      typedef
-      StrictPtr<TypeDecl>
-      TypeDeclPtr;
 
       typedef
       DeclarationRef<TypeDecl>

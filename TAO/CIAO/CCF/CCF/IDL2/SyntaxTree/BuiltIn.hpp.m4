@@ -25,7 +25,24 @@ define(`built_in_type_impl', `
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        $1 (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new $1 (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()

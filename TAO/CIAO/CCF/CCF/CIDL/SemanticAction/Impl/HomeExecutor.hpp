@@ -74,9 +74,10 @@ namespace CCF
               test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
-                std::string type = d->declaration_class ();
-
-                if (type != "home") throw IncompatibleType (type);
+                if (!d->is_a<HomeDef> ())
+                {
+                  throw IncompatibleType (d->declaration_class ());
+                }
 
                 return d->dynamic_type<TypeDecl> ()->defined ();
               }

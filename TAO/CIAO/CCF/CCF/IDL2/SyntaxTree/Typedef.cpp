@@ -12,6 +12,18 @@ namespace CCF
   {
     namespace SyntaxTree
     {
+      TypeDeclPtr TypedefDecl::
+      clone_typedef_temporary (SimpleName const& name,
+                               Order const& order,
+                               ScopePtr const& scope)
+      {
+        return underlying_type ()->clone_typedef_temporary (
+          name,
+          order,
+          scope);
+      }
+
+
       //@@ It seems throwing exception in DeclarationTable::lookup ()
       //   in case declaration not found or type mismatched is not
       //   not right.
@@ -40,9 +52,10 @@ namespace CCF
       NodePtr TypedefDecl::
       dynamic_type (Introspection::TypeInfo const& ti)
       {
-        NodePtr n = TypeDecl::dynamic_type (ti);
-
-        if (n != 0) return n;
+        if (TypeDecl::is_a (ti))
+        {
+          return NodePtr (ReferenceCounting::add_ref (this));
+        }
 
         // Try virtual type.
         //
@@ -53,18 +66,14 @@ namespace CCF
         else return v;
       }
 
-      NodePtr TypedefDecl::
-      virtual_type ()
+      TypeDeclPtr TypedefDecl::
+      underlying_type ()
       {
         // Try to return TypeDef if there is one, otherwise TypeDecl.
         //
         try
         {
-          TypeDefPtr def (table ().lookup<TypeDef> (type_));
-
-          return def->clone_temporary (name ().simple (),
-                                       order (),
-                                       scope ());
+          return table ().lookup<TypeDef> (type_);
         }
         catch (DeclarationTable::DeclarationNotFound const&)
         {
@@ -75,11 +84,7 @@ namespace CCF
         {
           try
           {
-            TypeDeclPtr decl (table ().lookup<TypeDecl> (type_));
-
-            return decl->clone_temporary (name ().simple (),
-                                          order (),
-                                          scope ());
+            return table ().lookup<TypeDecl> (type_);
           }
           catch (DeclarationTable::DeclarationNotFound const&)
           {
@@ -96,6 +101,16 @@ namespace CCF
             abort ();
           }
         }
+      }
+
+
+      NodePtr TypedefDecl::
+      virtual_type ()
+      {
+        return underlying_type ()->clone_typedef_temporary (
+          name ().simple (),
+          order (),
+          scope ());
       }
 
 

@@ -135,6 +135,11 @@ namespace CCF
       };
 
 
+      // ConcreteEventTypeForwardDecl is not implemented yet.
+      //
+      //
+
+
       //
       //
       //
@@ -152,6 +157,27 @@ namespace CCF
               ValueTypeDef (inherits)
         {
           type_info (static_type_info ());
+        }
+
+      protected:
+        ConcreteEventTypeDef (SimpleName const& name,
+                              Order const& order,
+                              ScopePtr const& scope,
+                              ScopedNameSet const& inherits)
+            : Declaration (name, order, scope),
+              ValueTypeDef (inherits)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (
+            new ConcreteEventTypeDef (name, order, scope, inherits ()));
         }
 
         // Runtime declaration type information
