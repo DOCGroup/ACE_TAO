@@ -18,7 +18,7 @@ print STDERR "\n\n==== InitRef test\n";
 unlink $file;
 
 $SV = Process::Create ($EXEPREFIX."INS_test_server".$EXE_EXT,
-                       "-ORBendpoint iiop://localhost:$port "
+                       "-ORBEndpoint iiop://localhost:$port "
                        . " -i object_name -o $file");
 
 if (ACE::waitforfile_timed ($file, 3) == -1) {
