@@ -1,5 +1,23 @@
 Thu Feb 26 03:18:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp (init_naming_service,main):
+	  Appended a return at the end.
+
+	* tests/cubit/tao/idl_cubit/client.dsp:
+	* tests/cubit/tao/idl_cubit/server.dsp: Updated project file
+	  lists.
+
+	* tao/TAO.dsp: Added tao_util.cpp into this project.
+	
+	* tao/tao_util.h (TAO_ORB_Manager): Added TAO_Export flag.
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Added Ior_Multicast.cpp and
+	  Naming_Utils.cpp into this project.
+	
+	* orbsvcs/orbsvcs/Naming/Ior_Multicast.h: 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Added
+	  TAO_ORBSVCS_Export flag.
+	  
 	* orbsvcs/Naming_Service/Naming_Service.cpp: Added a return
 	  statement to muffle MSVC.
 
