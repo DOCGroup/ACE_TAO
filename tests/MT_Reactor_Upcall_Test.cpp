@@ -249,6 +249,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_WIN32 */
 
 #else /* ACE_HAS_THREADS */
+  ACE_UNUSED_ARG(argc);
+  ACE_UNUSED_ARG(argv);
 
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads not supported on this platform\n")));
