@@ -16,12 +16,13 @@ Thu Mar 14 14:13:02 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Mar 14 12:03:21 2002  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ClientRequestInfo_i.cpp (~TAO_ClientRequestInfo_i):
+	* tao/PICurrent.cpp (~TAO_PICurrent_Impl):
 
-	  Make sure the TSC no longer considers the current RSC its peer
-	  since that RSC is destroyed when this ClienRequestInfo object is
-	  destroyed.  Thanks to Jeffrey Shaffer <jeffs@integ.com> for
-	  reporting the problem, and for confirming that this fix works.
+	  Make sure the peer TAO_PICurrent_Impl object no longer considers
+	  this TAO_PICurrent_Impl its peer since this object will no
+	  longer exist once this destructor completes execution..  Thanks
+	  to Jeffrey Shaffer <jeffs@integ.com> for reporting the problem,
+	  and for confirming that this fix works.
 
 Thu Mar 14 13:50:59 2002  Chad Elliott  <elliott_c@ociweb.com>
 
