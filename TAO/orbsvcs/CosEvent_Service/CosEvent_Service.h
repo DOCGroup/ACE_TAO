@@ -143,7 +143,7 @@ class CosEvent_Service
 
   int remote_Rtec_;
   // Flag to indicate if the RtEC is local/remote,
-  // 0 => local, 1 => remote, default is remote.\
+  // 0 => local, 1 => remote, default is remote.
 
   char* eventTypeIds_;
   // The list of EventTypeIDs (for ConsumerQOS) seperated by spaces. e.g. "1 2 3 4"

@@ -38,22 +38,22 @@ public:
   // Constructor.
 
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-             CORBA::Environment &TAO_TRY_ENV);
+             CORBA::Environment &ACE_TRY_ENV);
   // This method connects the supplier to the EC.
 
-  void close (CORBA::Environment &TAO_TRY_ENV);
+  void close (CORBA::Environment &ACE_TRY_ENV);
   // Disconnect from the EC.
 
-  void connect (CORBA::Environment &TAO_TRY_ENV);
+  void connect (CORBA::Environment &ACE_TRY_ENV);
 
-  void disconnect (CORBA::Environment &TAO_TRY_ENV);
+  void disconnect (CORBA::Environment &ACE_TRY_ENV);
   // Disconnect from the EC, but do not forget about it or close it.
 
   void send_event (const CORBA::Any &data,
-                   CORBA::Environment &TAO_TRY_ENV);
+                   CORBA::Environment &ACE_TRY_ENV);
   // Send one event.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &);
+  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV);
   // The POA_CosEventComm::PushSupplier method.
 
   void run (void);
