@@ -41,6 +41,7 @@ $ENV{'SIGNATURE'} ||
 my $hostname;
 chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
 unless ("$hostname" eq 'ace') {
+  #### For efficiency sake . . .
   die "$0: must run on host ace\n";
 }
 
@@ -148,6 +149,7 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
     die "$usage$long_usage";
   }
   shift;
+
 }
 
 die "$0: must specify a -k option\n" unless "$kit";
@@ -168,7 +170,7 @@ my $egrep = "${gnu}egrep";
 my $find = "${gnu}find";
 my $gzip = "${gnu}gzip";
 my $make = "${gnu}make -s";
-my $mv = '/bin/mv';
+my $mv = '/bin/mv -f';
 my $rm = "${gnu}/rm -f";
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
@@ -218,7 +220,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
   #### Create the kit.
 
   #### If a tag was specified, export using the tag from a staging area.
-  #### Default: create a kit from the current directory.
+  #### If not, create a kit from the current directory.
   my $stage_dir = '..';
   if ("$ace_tag"  ||  "$tao_tag") {
     $stage_dir = "/tmp/ACE_wrappers_stage-$$/";
@@ -269,9 +271,13 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
   }
 
   if ("$ace_tag"  ||  "$tao_tag") {
-    chdir "..";
-    &ex ("$rm -r $stage_dir")  &&
-      warn "$0: failed to remove $stage_dir\n";
+    if ($install) {
+      chdir "..";
+      &ex ("$rm -r $stage_dir")  &&
+        warn "$0: failed to remove $stage_dir\n";
+    } else {
+      warn "$0: kits are in $stage_dir\n";
+    }
   }
 }
 &cleanup;
@@ -484,12 +490,7 @@ sub update_changelog () {
                      }' ChangeLog");
   return 1 if $? >> 8;
 
-  my $version_h;
-  if ($kit =~ /^ace/) {
-    $version_h = 'ace/Version.h';
-  } elsif ($kit =~ /tao/) {
-    $version_h = 'tao/Version.h';
-  }
+  my $version_h = $kit =~ /^ace/  ?  'ace/Version.h'  :  'tao/Version.h';
 
   &ex ("$cvs commit -m'$version' " .
        "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h  &&  " .
@@ -549,13 +550,8 @@ sub diff () {
 ######## Create the tar file(s) and move to their proper location.
 ########
 sub create_kit () {
-  my $dest;
-
-  if ($install) {
-    $dest = "$export_dir";
-  } else {
-    $dest = 'ACE_wrappers/';
-  }
+  my $dest = $install  ?  "$export_dir"  :  'created';
+  my $dispose = $install  ?  "$mv"  :  'echo';
 
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
@@ -581,8 +577,8 @@ sub create_kit () {
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
         "$chmod a+r ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
-        "$mv -f ACE.zip ACE-lib.zip $dest &&" .
-        "$mv -f ACE.tar.gz ACE-lib.tar.gz $dest; ";
+        "$dispose ACE.zip ACE-lib.zip $dest &&" .
+        "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
     } else {
       $build_command = 
         "$find $release_files $release_filter | $cpio -o -H tar | " .
@@ -590,7 +586,7 @@ sub create_kit () {
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
         "$chmod a+r ACE.tar.gz ACE-lib.tar.gz && " .
-        "$mv -f ACE.tar.gz ACE-lib.tar.gz $dest; ";
+        "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
     }
   }
   
@@ -605,13 +601,13 @@ sub create_kit () {
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz ACE+TAO.zip && " .
-        "$mv -f ACE+TAO.tar.gz ACE+TAO.zip $dest";
+        "$dispose ACE+TAO.tar.gz ACE+TAO.zip $dest";
     } else {
       $build_command .= 
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz && " .
-        "$mv -fACE+TAO.tar.gz $dest";
+        "$dispose ACE+TAO.tar.gz $dest";
     }
   }
 
