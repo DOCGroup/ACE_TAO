@@ -1260,7 +1260,7 @@ TAO_ORB_Core::fini (void)
   if (this-> message_block_buffer_allocator_)
     this->message_block_buffer_allocator_->remove ();
   delete this->message_block_buffer_allocator_;
-  
+
   if (this->message_block_msgblock_allocator_)
     this->message_block_msgblock_allocator_->remove ();
   delete this->message_block_msgblock_allocator_;
@@ -2715,7 +2715,6 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 
   ACE_Allocator *dblock_allocator;
   ACE_Allocator *buffer_allocator;
-  ACE_Allocator *msgblock_allocator;
 
   if (this->use_tss_resources_)
     {
@@ -2731,8 +2730,6 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
         this->input_cdr_dblock_allocator_i (tss);
       buffer_allocator =
         this->input_cdr_buffer_allocator_i (tss);
-      msgblock_allocator =
-        this->input_cdr_msgblock_allocator_i (tss);
 
     }
   else
@@ -2741,8 +2738,6 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
         this->input_cdr_dblock_allocator ();
       buffer_allocator =
         this->input_cdr_buffer_allocator ();
-      msgblock_allocator =
-        this->input_cdr_msgblock_allocator ();
 
     }
 
@@ -2755,7 +2750,6 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
   return this->create_data_block_i (size,
                                     buffer_allocator,
                                     dblock_allocator,
-                                    msgblock_allocator,
                                     lock_strategy);
 }
 
@@ -2765,14 +2759,11 @@ TAO_ORB_Core::data_block_for_message_block (size_t size)
 
   ACE_Allocator *dblock_allocator;
   ACE_Allocator *buffer_allocator;
-  ACE_Allocator *msgblock_allocator;
 
   dblock_allocator =
     this->message_block_dblock_allocator ();
   buffer_allocator =
     this->message_block_buffer_allocator ();
-  msgblock_allocator =
-    this->message_block_msgblock_allocator ();
 
   ACE_Lock* lock_strategy = 0;
   if (this->resource_factory ()->use_locked_data_blocks ())
@@ -2783,7 +2774,6 @@ TAO_ORB_Core::data_block_for_message_block (size_t size)
   return this->create_data_block_i (size,
                                     buffer_allocator,
                                     dblock_allocator,
-                                    msgblock_allocator,
                                     lock_strategy);
 }
 
@@ -2834,7 +2824,6 @@ ACE_Data_Block *
 TAO_ORB_Core::create_data_block_i (size_t size,
                                    ACE_Allocator *buffer_allocator,
                                    ACE_Allocator *dblock_allocator,
-                                   ACE_Allocator *msgblock_allocator,
                                    ACE_Lock *lock_strategy)
 {
   ACE_Data_Block *nb = 0;
