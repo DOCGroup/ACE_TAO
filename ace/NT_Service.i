@@ -9,7 +9,8 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
                                  svc_handle_(0),
                                  svc_sc_handle_(0),
                                  name_(0),
-                                 desc_(0)
+                                 desc_(0),
+                                 host_(0)
 {
   svc_status_.dwServiceType = service_type;
   svc_status_.dwCurrentState = 0;
@@ -30,7 +31,8 @@ ACE_NT_Service::ACE_NT_Service (LPCTSTR name,
                                  svc_handle_(0),
                                  svc_sc_handle_(0),
                                  name_(ACE::strnew(name)),
-                                 desc_(ACE::strnew(desc))
+                                 desc_(ACE::strnew(desc)),
+                                 host_(0)
 {
   svc_status_.dwServiceType = service_type;
   svc_status_.dwCurrentState = 0;
@@ -60,6 +62,13 @@ LPCTSTR
 ACE_NT_Service::desc (void) const
 {
   return desc_;
+}
+
+ACE_INLINE
+LPCTSTR
+ACE_NT_Service::host (void) const
+{
+  return host_;
 }
 
 ACE_INLINE void

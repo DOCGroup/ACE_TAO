@@ -155,6 +155,12 @@ public:
   LPCTSTR desc (void) const;
   // Get the service description.
 
+  void host (LPCTSTR host);
+  // Sets the host machine
+
+  LPCTSTR host (void) const;
+  // Get the host machine.
+
   int insert (DWORD start_type = SERVICE_DEMAND_START,
               DWORD error_control = SERVICE_ERROR_IGNORE,
               LPCTSTR exe_path = 0,
@@ -303,6 +309,7 @@ protected:
   // Service's SCM handle
   LPTSTR name_;
   LPTSTR desc_;
+  LPTSTR host_;
 
 };
 
@@ -342,6 +349,7 @@ protected:
   }
 
 #define ACE_NT_SERVICE_REFERENCE(SVCNAME)                                  \
+extern ACE_NT_Service * _ace_nt_svc_obj_##SVCNAME;                         \
 extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc, LPTSTR *lpszArgv);
 
 #define ACE_NT_SERVICE_ENTRY(SVCDESC, SVCNAME)                             \
