@@ -1,3 +1,13 @@
+Fri Apr 09 10:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          enable -fno-implicit-templates for targets other than
+          Intel.  It appears to work for PPC targets, and is necessary
+          to avoid compiler warnings about different symbol sizes
+          in object files.  Thanks to Thomas Mehrkam <Thomas_Mehrkam@i-o.com>
+          for tracking down the source of the warnings, and verifying
+          that -fno-implicit-templates works for PPC targets.
+
 Fri Apr 09 08:14:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU: replaced "ln -s" with
