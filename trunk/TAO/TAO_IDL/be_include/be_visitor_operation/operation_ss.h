@@ -72,6 +72,16 @@ public:
   virtual int gen_check_exception (be_type *, const char *env);
   // helper that generates code for checking for an exception
 
+  virtual int gen_check_interceptor_exception (be_type *, const char *env);
+  // helper that generates code for checking for an exception within
+  // an interceptor try block.
+
+  virtual const char *compute_operation_name (be_operation *node);
+  // Compute the servant operation name to invoke.  Notice that
+  // this method _does_ include the double-quotes.
+
+private:
+  char *operation_name_;
 };
 
 // concrete visitors

@@ -22,9 +22,11 @@ CFG=TAO LIB - Win32 Debug
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 CPP=cl.exe
+RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO LIB - Win32 Release"
 
@@ -38,12 +40,11 @@ CPP=cl.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -63,11 +64,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -259,6 +259,18 @@ SOURCE=.\IIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\InconsistentTypeCodeC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Interceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterceptorC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterceptorS.cpp
 # End Source File
 # Begin Source File
 
@@ -690,6 +702,18 @@ SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterceptorC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterceptorS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
@@ -1043,6 +1067,14 @@ SOURCE=.\IIOP_Connect.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Interceptor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterceptorC.i
 # End Source File
 # Begin Source File
 

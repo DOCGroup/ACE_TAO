@@ -130,8 +130,7 @@ public:
 
   virtual const TAO_ObjectKey &object_key (void) const;
 
-  virtual const IOP::ServiceContextList &request_service_info (void) const;
-  virtual const IOP::ServiceContextList &reply_service_info (void);
+  virtual IOP::ServiceContextList &service_info (void);
 
   // The pseudo object methods, not really needed because the class is
   // not in the spec, but we add them for the sake of completeness.
@@ -141,7 +140,7 @@ public:
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
 
-  CORBA::ULong request_id (void);
+  virtual CORBA::ULong request_id (void);
 
   CORBA::Object_ptr forward_location (void);
   // get the forward_location
@@ -201,10 +200,8 @@ private:
   // The version for the GIOP request, the reply must have the same
   // one.
 
-  IOP::ServiceContextList request_service_info_;
+  IOP::ServiceContextList service_info_;
   // The service context for the request (CORBA Reference?)
-
-  IOP::ServiceContextList reply_service_info_;
 
   CORBA::ULong request_id_;
   // Unique identifier for a request
