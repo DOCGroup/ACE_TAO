@@ -21,7 +21,7 @@ $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        " -ORBSvcConf server_nopasswd.conf "
                        . " -o $iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
