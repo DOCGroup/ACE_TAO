@@ -7,6 +7,8 @@ Tue Sep 21 13:04:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           in a component for the presence of an operation or
           factory. If either is found, code generation for registering
           the associated _init class with the container's ORB is skipped.
+          Also added command line option to toggle off generation of
+          the factory registration in all cases.
 
 Tue Sep 21 13:00:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
