@@ -1,3 +1,7 @@
+Thu Apr  3 13:32:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Reply_Handler.cpp: Cosmetic fix. 
+
 Thu Apr  3 13:13:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Muxed_TMS.cpp (connection_closed): Fix for bug 1482. Please
