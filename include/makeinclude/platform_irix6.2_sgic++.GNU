@@ -26,4 +26,4 @@ ARFLAGS		= r
 RANLIB		= echo
 SOFLAGS		= -shared $(CPPFLAGS) -all
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
-		 $(SOLINK.cc) -o $@@ $(LDFLAGS) $(VSHDIR)$*.o
+		 $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o

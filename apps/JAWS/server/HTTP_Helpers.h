@@ -13,7 +13,7 @@
 class HTTP_Status_Code
 {
 public:
-  static char const * const * const instance(void);
+  static const char *instance(void);
 
   enum STATUS_CODE {
     STATUS_OK = 200,
