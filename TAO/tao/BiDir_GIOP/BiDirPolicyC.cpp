@@ -106,10 +106,10 @@ BiDirPolicy::BidirectionalPolicy::_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-
+  
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
-
+  
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
@@ -123,10 +123,10 @@ BiDirPolicy::BidirectionalPolicy::_unchecked_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-
+  
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
-
+  
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
@@ -137,7 +137,7 @@ BiDirPolicy::BidirectionalPolicy::_duplicate (BidirectionalPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -166,11 +166,11 @@ BiDirPolicy::BidirectionalPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -182,11 +182,11 @@ const char* BiDirPolicy::BidirectionalPolicy::_interface_repository_id (void) co
 CORBA::Boolean
 BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -187,11 +187,11 @@ TAO::BufferingConstraintPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -203,7 +203,7 @@ const char* TAO::BufferingConstraintPolicy::_interface_repository_id (void) cons
 CORBA::Boolean
 TAO::BufferingConstraintPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -234,7 +234,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

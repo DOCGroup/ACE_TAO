@@ -149,26 +149,26 @@ namespace Messaging
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/field_ch.cpp:412
+    // be\be_visitor_valuetype/field_ch.cpp:424
     
     virtual void is_system_exception (CORBA::Boolean) = 0;
     virtual CORBA::Boolean is_system_exception (void) const = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/field_ch.cpp:412
+    // be\be_visitor_valuetype/field_ch.cpp:424
     
     virtual void byte_order (CORBA::Boolean) = 0;
     virtual CORBA::Boolean byte_order (void) const = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/field_ch.cpp:485
+    // be\be_visitor_valuetype/field_ch.cpp:497
     
     virtual void marshaled_exception (const CORBA::OctetSeq &) = 0;
     virtual const CORBA::OctetSeq &marshaled_exception (void) const = 0;
     virtual CORBA::OctetSeq &marshaled_exception (void) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/valuetype_ch.cpp:238
+    // be\be_visitor_valuetype/valuetype_ch.cpp:246
   
   protected:
     ExceptionHolder (void);
@@ -371,19 +371,19 @@ namespace OBV_Messaging
     virtual ~ExceptionHolder (void);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/field_ch.cpp:412
+    // be\be_visitor_valuetype/field_ch.cpp:424
     
     virtual void is_system_exception (CORBA::Boolean);
     virtual CORBA::Boolean is_system_exception (void) const;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/field_ch.cpp:412
+    // be\be_visitor_valuetype/field_ch.cpp:424
     
     virtual void byte_order (CORBA::Boolean);
     virtual CORBA::Boolean byte_order (void) const;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_valuetype/field_ch.cpp:485
+    // be\be_visitor_valuetype/field_ch.cpp:497
     
     virtual void marshaled_exception (const CORBA::OctetSeq &);
     virtual const CORBA::OctetSeq &marshaled_exception (void) const;

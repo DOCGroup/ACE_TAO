@@ -260,11 +260,11 @@ RTCORBA::PriorityModelPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -276,7 +276,7 @@ const char* RTCORBA::PriorityModelPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::PriorityModelPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -403,11 +403,11 @@ RTCORBA::ThreadpoolPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -419,7 +419,7 @@ const char* RTCORBA::ThreadpoolPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::ThreadpoolPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -542,11 +542,11 @@ RTCORBA::ProtocolProperties::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -558,7 +558,7 @@ const char* RTCORBA::ProtocolProperties::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::ProtocolProperties::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -751,11 +751,11 @@ RTCORBA::ServerProtocolPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -767,7 +767,7 @@ const char* RTCORBA::ServerProtocolPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::ServerProtocolPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -894,11 +894,11 @@ RTCORBA::ClientProtocolPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -910,7 +910,7 @@ const char* RTCORBA::ClientProtocolPolicy::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::ClientProtocolPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1037,11 +1037,11 @@ RTCORBA::PrivateConnectionPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1053,7 +1053,7 @@ const char* RTCORBA::PrivateConnectionPolicy::_interface_repository_id (void) co
 CORBA::Boolean
 RTCORBA::PrivateConnectionPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1180,11 +1180,11 @@ RTCORBA::TCPProtocolProperties::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1196,7 +1196,7 @@ const char* RTCORBA::TCPProtocolProperties::_interface_repository_id (void) cons
 CORBA::Boolean
 RTCORBA::TCPProtocolProperties::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1323,11 +1323,11 @@ RTCORBA::GIOPProtocolProperties::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1339,7 +1339,7 @@ const char* RTCORBA::GIOPProtocolProperties::_interface_repository_id (void) con
 CORBA::Boolean
 RTCORBA::GIOPProtocolProperties::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1466,11 +1466,11 @@ RTCORBA::UnixDomainProtocolProperties::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1482,7 +1482,7 @@ const char* RTCORBA::UnixDomainProtocolProperties::_interface_repository_id (voi
 CORBA::Boolean
 RTCORBA::UnixDomainProtocolProperties::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1609,11 +1609,11 @@ RTCORBA::SharedMemoryProtocolProperties::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1625,7 +1625,7 @@ const char* RTCORBA::SharedMemoryProtocolProperties::_interface_repository_id (v
 CORBA::Boolean
 RTCORBA::SharedMemoryProtocolProperties::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1752,11 +1752,11 @@ RTCORBA::UserDatagramProtocolProperties::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1768,7 +1768,7 @@ const char* RTCORBA::UserDatagramProtocolProperties::_interface_repository_id (v
 CORBA::Boolean
 RTCORBA::UserDatagramProtocolProperties::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1895,11 +1895,11 @@ RTCORBA::StreamControlProtocolProperties::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1911,7 +1911,7 @@ const char* RTCORBA::StreamControlProtocolProperties::_interface_repository_id (
 CORBA::Boolean
 RTCORBA::StreamControlProtocolProperties::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -2104,11 +2104,11 @@ RTCORBA::PriorityBandedConnectionPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -2120,7 +2120,7 @@ const char* RTCORBA::PriorityBandedConnectionPolicy::_interface_repository_id (v
 CORBA::Boolean
 RTCORBA::PriorityBandedConnectionPolicy::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -2247,11 +2247,11 @@ RTCORBA::Current::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -2263,7 +2263,7 @@ const char* RTCORBA::Current::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::Current::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -2386,11 +2386,11 @@ RTCORBA::Mutex::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -2402,7 +2402,7 @@ const char* RTCORBA::Mutex::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::Mutex::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -2504,7 +2504,7 @@ CORBA::Exception *RTCORBA::RTORB::MutexNotFound::_alloc (void)
 CORBA::Exception *
 RTCORBA::RTORB::MutexNotFound::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::RTCORBA::RTORB::MutexNotFound (*this),
@@ -2636,7 +2636,7 @@ CORBA::Exception *RTCORBA::RTORB::InvalidThreadpool::_alloc (void)
 CORBA::Exception *
 RTCORBA::RTORB::InvalidThreadpool::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::RTCORBA::RTORB::InvalidThreadpool (*this),
@@ -2791,11 +2791,11 @@ RTCORBA::RTORB::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -2807,7 +2807,7 @@ const char* RTCORBA::RTORB::_interface_repository_id (void) const
 CORBA::Boolean
 RTCORBA::RTORB::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -3025,7 +3025,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_RTCORBA_PriorityBands_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

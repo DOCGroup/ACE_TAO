@@ -162,11 +162,11 @@ CORBA::Pollable::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -178,7 +178,7 @@ const char* CORBA::Pollable::_interface_repository_id (void) const
 CORBA::Boolean
 CORBA::Pollable::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -297,11 +297,11 @@ CORBA::DIIPollable::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -313,7 +313,7 @@ const char* CORBA::DIIPollable::_interface_repository_id (void) const
 CORBA::Boolean
 CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -408,7 +408,7 @@ CORBA::Exception *CORBA::PollableSet::NoPossiblePollable::_alloc (void)
 CORBA::Exception *
 CORBA::PollableSet::NoPossiblePollable::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::CORBA::PollableSet::NoPossiblePollable (*this),
@@ -492,7 +492,7 @@ CORBA::Exception *CORBA::PollableSet::UnknownPollable::_alloc (void)
 CORBA::Exception *
 CORBA::PollableSet::UnknownPollable::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::CORBA::PollableSet::UnknownPollable (*this),
@@ -596,11 +596,11 @@ CORBA::PollableSet::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -612,11 +612,11 @@ const char* CORBA::PollableSet::_interface_repository_id (void) const
 CORBA::Boolean
 CORBA::PollableSet::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

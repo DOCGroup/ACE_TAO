@@ -50,7 +50,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::AlreadyBound::AlreadyBound (void)
@@ -102,7 +102,7 @@ CORBA::Exception *IORTable::AlreadyBound::_alloc (void)
 CORBA::Exception *
 IORTable::AlreadyBound::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::IORTable::AlreadyBound (*this),
@@ -125,7 +125,7 @@ void IORTable::AlreadyBound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -138,13 +138,13 @@ void IORTable::AlreadyBound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::NotFound::NotFound (void)
@@ -196,7 +196,7 @@ CORBA::Exception *IORTable::NotFound::_alloc (void)
 CORBA::Exception *
 IORTable::NotFound::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::IORTable::NotFound (*this),
@@ -219,7 +219,7 @@ void IORTable::NotFound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -232,7 +232,7 @@ void IORTable::NotFound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -294,10 +294,10 @@ IORTable::Table::_narrow (
     {
       return Table::_nil ();
     }
-
+  
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-
+  
   return Table::_duplicate (proxy);
 }
 
@@ -311,10 +311,10 @@ IORTable::Table::_unchecked_narrow (
     {
       return Table::_nil ();
     }
-
+  
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-
+  
   return Table::_duplicate (proxy);
 }
 
@@ -325,7 +325,7 @@ IORTable::Table::_duplicate (Table_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -350,11 +350,11 @@ IORTable::Table::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -366,7 +366,7 @@ const char* IORTable::Table::_interface_repository_id (void) const
 CORBA::Boolean
 IORTable::Table::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -425,10 +425,10 @@ IORTable::Locator::_narrow (
     {
       return Locator::_nil ();
     }
-
+  
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-
+  
   return Locator::_duplicate (proxy);
 }
 
@@ -442,10 +442,10 @@ IORTable::Locator::_unchecked_narrow (
     {
       return Locator::_nil ();
     }
-
+  
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-
+  
   return Locator::_duplicate (proxy);
 }
 
@@ -456,7 +456,7 @@ IORTable::Locator::_duplicate (Locator_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -481,11 +481,11 @@ IORTable::Locator::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -497,7 +497,7 @@ const char* IORTable::Locator::_interface_repository_id (void) const
 CORBA::Boolean
 IORTable::Locator::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -541,7 +541,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
