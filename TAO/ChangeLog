@@ -1,3 +1,9 @@
+Fri Jul 19 23:44:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/common_args.cpp: 
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp: Fixed
+	  compile errors in build where exceptions are turned off.
+
 Thu Jul 18 08:46:16 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV.mpc:
