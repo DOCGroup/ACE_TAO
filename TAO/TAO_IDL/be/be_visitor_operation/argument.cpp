@@ -56,10 +56,11 @@ be_visitor_operation_argument::post_process (be_decl *bd)
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+	case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
         case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
         case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
         case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
-          *os << ",\n";
+          *os << "," << be_nl;
           break;
         default:
           break;
@@ -90,6 +91,7 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+	case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
         case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
           // applicable only to these cases where the actual upcall is made 
 
@@ -167,6 +169,9 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);
       break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS);
+      break;
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_DEMARSHAL_SS);
       break;
@@ -181,6 +186,9 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS);

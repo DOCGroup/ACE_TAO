@@ -60,6 +60,10 @@ int be_visitor_args_compiled_marshal_ss::visit_argument (be_argument *node)
 
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
+  if (this->direction () == AST_Argument::dir_IN
+      && this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGS_DEMARSHAL_CS)
+    return 0;
+
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       switch (this->direction ())
