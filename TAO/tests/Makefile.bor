@@ -8,6 +8,8 @@ DIRS = \
         AMI_Timeouts \
         Bidirectional \
         Bidirectional_NestedUpcall \
+        Big_Oneways \
+        Big_Twoways \
         Blocking_Sync_None \
 	CDR \
 	Client_Leaks \
