@@ -4232,6 +4232,11 @@ typedef double ACE_timer_t;
     typedef int ACE_Rusage;
 #endif /* ACE_HAS_PRUSAGE_T */
 
+// We need this for MVS...
+extern "C" {
+  typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
+}
+
 class ACE_Export ACE_OS
 {
   // = TITLE
@@ -4435,11 +4440,11 @@ public:
                         const void *base,
                         size_t nel,
                         size_t size,
-                        int (*compar)(const void *, const void *));
+                        ACE_COMPARE_FUNC);
   static void qsort (void *base,
                      size_t nel,
                      size_t width,
-                     int (*compar) (const void *, const void *));
+                     ACE_COMPARE_FUNC);
 
   // = A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock,
