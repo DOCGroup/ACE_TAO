@@ -1,5 +1,10 @@
 // $Id$
 
+// The templatized method parameters needed by this file are
+// hopelessly broken on pre-2.8 versions of g++
+#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
+(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+
 #include "orbsvcs/Time_Utilities.h"
 #include "Reconfig_Scheduler.h"
 #include "ace/Auto_Ptr.h"
@@ -1233,3 +1238,5 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecSch
   rt_info.preemption_priority = 0;
   rt_info.volatile_token = 0;
 }
+
+#endif /* __GNUC__ */

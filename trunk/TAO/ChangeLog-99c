@@ -1,3 +1,10 @@
+Wed Jun 30 14:20:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp, h},
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: Added conditional
+	  macros around Reconfig Scheduler code for old g++: the templatized
+          method parameters break that compiler hopelessly.
+
 Wed Jun 30 14:03:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/DynAny_Test/driver.cpp:
@@ -66,7 +73,7 @@ Wed Jun 30 10:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
 	  Fixed syntax errors.
 
-Tue Jun 28 17:22:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
+Wed Jun 30 09:40:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp: added intermediate
           const cast for const void * args in qsort comparison function.
@@ -233,7 +240,7 @@ Tue Jun 29 16:49:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Guicheney Christophe <guichene@clrhp04.in2p3.fr> for reporting
 	  this.
 
-Tue Jun 28 17:22:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
+Tue Jun 29 17:22:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile
           orbsvcs/orbsvcs/Sched/Makefile.am

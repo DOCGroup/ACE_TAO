@@ -7,7 +7,7 @@
 //    orbsvcs
 //
 // = FILENAME
-//    Reconfig_Scheduler.h
+//    Reconfig_Scheduler_Utils.h
 //
 // = AUTHOR
 //     Chris Gill <cdgill@cs.wustl.edu>
@@ -16,6 +16,11 @@
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_H
 #define TAO_RECONFIG_SCHED_UTILS_H
+
+// The templatized method parameters needed by this file are
+// hopelessly broken on pre-2.8 versions of g++
+#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
+(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
@@ -587,5 +592,7 @@ public:
 #if defined (__ACE_INLINE__)
 #include "Reconfig_Sched_Utils.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_H */
