@@ -1454,7 +1454,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
-  int status = pthread_mutex_trylock(m);
+  int status = pthread_mutex_trylock (m);
   if (status == 1)
     status = 0;
   else if (status == 0) {
