@@ -504,16 +504,16 @@ ACE_SString
 ACE_SString::substring (size_t offset,
                         ssize_t length) const
 {
-  ACE_SString nil;
+  ACE_SString nill;
   size_t count = length;
 
   // case 1. empty string
   if (len_ == 0)
-    return nil;
+    return nill;
 
   // case 2. start pos l
   if (offset >= len_)
-    return nil;
+    return nill;
 
   // get all remaining bytes
   if (length == -1)
