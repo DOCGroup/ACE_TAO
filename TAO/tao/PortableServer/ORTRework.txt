@@ -1,3 +1,15 @@
+Fri Aug 20 11:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/iorinterceptor.mpb:
+          When using iorinterceptor use portableserver and objreftemplate
+
+        * bin/MakeProjectCreator/config/objreftemplate.mpb:
+          When using objreftemplate, you must use portableserver
+
+        * bin/MakeProjectCreator/config/portableserver.mpb:
+          When using portableserver there is no need to use objreftemplate and
+          iorinterceptor
+
 Fri Aug 20 11:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor.mpc:
