@@ -104,10 +104,12 @@ main (int argc, char *argv[])
 
       ACE_Process_Options options;
       if (release_mutex == 0)
-        options.command_line (__TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+        options.command_line (__TEXT (".") __TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
+                              __TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
                               __TEXT (" -c -n %s -d"), ACE_WIDE_STRING (mutex_name));
       else
-        options.command_line (__TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+        options.command_line (__TEXT (".") __TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
+                              __TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
                               __TEXT (" -c -n %s"), ACE_WIDE_STRING (mutex_name));
 
       // Spawn ACE_MAX_PROCESSES processes that will contend for the
@@ -125,20 +127,8 @@ main (int argc, char *argv[])
 
       for (i = 0; i < ACE_MAX_PROCESSES; i++)
         {
-#if defined (sun) && (defined (i386) || defined (__i386__))
-          // On g++/Solaris 2.6/i386 on a two-CPU machine, the test
-          // sometimes hangs because a child process hangs in either
-          // destruction of static objects (without
-          // ACE_HAS_NONSTATIC_OBJECT_MANAGER) or at the spawn above
-          // (with ACE_HAS_NONSTATIC_OBJECT_MANAGER).  This hack masks
-          // that problem by killing each child process that is still
-          // alive.
-          ACE_OS::sleep (2);
-          ACE_OS::kill (servers[i].getpid (), 1);
-#else
           // Wait for the process we created to exit.
           ACE_ASSERT (servers[i].wait () != -1);
-#endif /* sun && (i386 || __i386__) */
           ACE_DEBUG ((LM_DEBUG,
                       "Server %d finished\n",
                       servers[i].getpid ()));
