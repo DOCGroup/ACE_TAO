@@ -279,6 +279,12 @@ private:
   static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
                                  ACE_OS::ACE_HRTIMER_GETTIME);
 
+  /// Calculate the difference between two ACE_hrtime_t values. It is assumed
+  /// that the end time is later than start time, so if end is a smaller
+  /// value, the time counter has wrapped around.
+  static ACE_hrtime_t elapsed_hrtime (const ACE_hrtime_t end,
+                                      const ACE_hrtime_t start);
+
   /// Starting time.
   ACE_hrtime_t start_;
 

@@ -1,3 +1,11 @@
+Fri Sep 10 15:39:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/High_Res_Timer.{h inl cpp}: Added a new static method that
+	  calculates the difference between two ACE_hrtime_t quantities.
+	  Takes into account that the time counter may have wrapped around
+	  between the start and end. Changed all time difference calculations
+	  to use the new elapsed_hrtime() method.
+
 Fri Sep 10 13:53:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/Time_Value.h:

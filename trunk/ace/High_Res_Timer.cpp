@@ -334,16 +334,17 @@ ACE_High_Res_Timer::reset (void)
 {
   ACE_TRACE ("ACE_High_Res_Timer::reset");
 
-  start_ = 0;
-  end_ = 0;
-  total_ = 0;
-  start_incr_ = 0;
+  this->start_ = 0;
+  this->end_ = 0;
+  this->total_ = 0;
+  this->start_incr_ = 0;
 }
 
 void
 ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv) const
 {
-  hrtime_to_tv (tv, end_ - start_);
+  hrtime_to_tv (tv,
+                ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_));
 }
 
 #if defined (ACE_HAS_POSIX_TIME)
@@ -361,12 +362,14 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
-  u_long nseconds = static_cast<u_long> ((this->end_ - this->start_) %
+  ACE_hrtime_t elapsed =
+    ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_);
+  u_long nseconds = static_cast<u_long> (elapsed %
                                          global_scale_factor () * 1000u /
                                          global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor ());
+  ACE_UINT32 useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
 
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
@@ -394,10 +397,10 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   // native 64-bit ints. In particular, division can be a problem.
   // For more background on this, please see bugzilla #1024.
 #if defined (ACE_WIN32)
-  nanoseconds = (this->end_ - this->start_)
+  nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
             * (1024000000u / ACE_High_Res_Timer::global_scale_factor());
 #else
-  nanoseconds = (this->end_ - this->start_)
+  nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
 #endif /* ACE_WIN32 */
   // Caution - Borland has a problem with >>=, so resist the temptation.
