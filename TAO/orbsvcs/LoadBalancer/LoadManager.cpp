@@ -8,6 +8,8 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 
+#include "tao/IORTable/IORTable.h"
+
 #if defined (linux) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"
 #endif /* linux && ACE_HAS_THREADS */
@@ -218,6 +220,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (load_manager.in ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // to support corbaloc
+      // Get a reference to the IOR table.
+      CORBA::Object_var tobj = orb->resolve_initial_references("IORTable");
+      IORTable::Table_var table = IORTable::Table::_narrow(tobj.in());
+
+      // bind your stringified IOR in the IOR table
+      table->bind("LoadManager", str.in());
 
       FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
       ACE_OS::fprintf (lm_ior, "%s", str.in ());
