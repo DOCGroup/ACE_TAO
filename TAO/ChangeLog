@@ -1,3 +1,10 @@
+Thu Nov 14 10:55:01 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/Server_Interceptor.cpp
+	  (send_reply, send_exception):
+
+	  Fixed unused argument warning in emulated exceptions case.
+
 Thu Nov 14 10:04:52 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/AMI/client.cpp (test_ami):
