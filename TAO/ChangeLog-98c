@@ -21,6 +21,9 @@ Sat Aug 15 08:19:26 1998  David L. Levine  <levine@cs.wustl.edu>
           TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG.  This avoids a warning
           about TAO_TRY_LABEL being declared but not referenced.
 
+        * orbsvcs/tests/Trading/Makefile: added LIBS, for use when
+          building libTTest.
+
 Fri Aug 14 22:09:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Logger/Logging_Test_i.cpp (init_naming_service):
