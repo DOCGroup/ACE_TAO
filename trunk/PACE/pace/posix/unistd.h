@@ -40,20 +40,11 @@ extern "C" {
 
   PACE_INLINE int pace_dup2 (int fildes, int fildes2);
 
-  #define pace_execl(X)  execl X
-  #define pace_execle(X) execle X
-  #define pace_execlp(X) execlp X
-  /* int execl (const char *path, const char *arg0, ...,
-   *            const char *argn, char * (*//*NULL*//*) );
-   * int execle (const char *path, char *const arg0[], ...,
-   *             const char *argn, char * (*//*NULL*//*), char *const envp[]);
-   * int execlp (const char *file, const char  *arg0,  ...,
-   *             const char *argn, char * (*//*NULL*//*));
-   *
-   * PLEASE PAY SPECIAL ATTENTION HERE!
-   * This is a macro and requires an additional set of parenthesis
-   * surrounding the arguments.
-   */
+  int execl (const char* path, const char* arg, ...);
+
+  int execle (const char* path, const char* arg, ...);
+
+  int execlp (const char* file, const char* arg,  ...);
 
   PACE_INLINE int pace_execv (const char * path, char * const argv[]);
 
