@@ -64,11 +64,11 @@ public:
   virtual int visit_component (be_component *node);
   // visit a component
 
-  virtual int visit_home (be_home *node);
-  // visit a home
-
   virtual int visit_component_fwd (be_component_fwd *node);
   // visit a component forward node
+
+  virtual int visit_home (be_home *node);
+  // visit a home
 
   virtual int visit_valuetype (be_valuetype *node);
   // visit a valuetype
