@@ -133,7 +133,6 @@ extern "C" pthread_t pthread_self (void);
 #     define SEM_FAILED ((sem_t *) -1)
 #   endif  /* !SEM_FAILED */
 
-
 typedef struct
 {
   sem_t *sema_;

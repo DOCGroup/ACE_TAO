@@ -2622,34 +2622,33 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
       s->sema_ = 0;
       return result;
     }
-# if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_STHREADS)
+#elif defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), ace_result_), int, -1);
-#   elif defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   int r1 = ACE_OS::mutex_destroy (&s->lock_);
   int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
-#   elif defined (ACE_HAS_WTHREADS)
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+# elif defined (ACE_HAS_WTHREADS)
+#   if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
-#     else /* ACE_USES_WINCE_SEMA_SIMULATION */
+#   else /* ACE_USES_WINCE_SEMA_SIMULATION */
   // Free up underlying objects of the simulated semaphore.
   int r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
   int r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   elif defined (ACE_PSOS)
+#   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
+# elif defined (ACE_PSOS)
   int result;
   ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_delete (s->sema_), result), int, -1, result);
   s->sema_ = 0;
   return result;
-#   elif defined (VXWORKS)
+# elif defined (VXWORKS)
   int result;
   ACE_OSCALL (::semDelete (s->sema_), int, -1, result);
   s->sema_ = 0;
   return result;
-#   endif /* ACE_HAS_STHREADS */
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
