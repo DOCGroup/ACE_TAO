@@ -316,6 +316,50 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   (void) DEEP_COPY (type_, src.value_, value_, env);
 }
 
+
+//a&a : Added on 14 feb 1998
+CORBA_Any &
+CORBA_Any::operator= (const CORBA_Any &src)
+{  
+
+  if (this == &src)
+    {
+      this->AddRef ();
+      return *this;
+    }
+
+
+  this->Release ();
+
+  type_ = src.type_ != 0 ? src.type_ : CORBA::_tc_null;
+
+  orb_owns_data_ = CORBA::B_TRUE;
+
+  refcount_ = 1;
+
+  CORBA::Environment env;
+  size_t size;
+
+  type_->AddRef ();
+
+  size = type_->size (env);           // XXX check error status
+  value_ = (char *) calloc (1, size);
+
+
+
+#if 0
+  (void) type_->traverse (src.value_,
+                          value_,
+                          (CORBA::TypeCode::VisitRoutine) deep_copy,
+                          0,
+                          env);
+#endif /* replaced by our optimizations */
+
+  (void) DEEP_COPY (type_, src.value_, value_, env);
+}
+
+
+
 // Helper routine for "Any" destructor.
 //
 // This frees all the memory pointed to by any given value held inside
