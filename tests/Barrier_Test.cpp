@@ -17,7 +17,6 @@
 // 
 // ============================================================================
 
-
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
@@ -26,16 +25,16 @@
 #if defined (ACE_HAS_THREADS)
 
 struct Tester_Args
-// = TITLE
-//     These arguments are passed into each test thread.
+  // = TITLE
+  //     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
     : tester_barrier_ (tb), 
     n_iterations_ (i) {}
 
   ACE_Barrier &tester_barrier_;
-  // Reference to the tester barrier.  This controls each miteration of
-  // the tester function running in every thread.
+  // Reference to the tester barrier.  This controls each miteration
+  // of the tester function running in every thread.
 
   int n_iterations_;
   // Number of iterations to run.
@@ -47,7 +46,6 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ()); // Insert thread into thread_manager
   ACE_NEW_THREAD;
 
   for (int iterations = 1; 
@@ -75,16 +73,42 @@ main (int, char *[])
   int n_iterations = ACE_MAX_ITERATIONS;
 
   ACE_Barrier tester_barrier (n_threads);
+  ACE_hthread_t *thread_handles;
+  
+  ACE_NEW_RETURN (thread_handles, ACE_hthread_t, -1)
   
   Tester_Args args (tester_barrier, n_iterations);
 
-  if (ACE_Thread_Manager::instance ()->spawn_n 
-      (n_threads, ACE_THR_FUNC (tester), 
-       (void *) &args, THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+  for (int iteration_count = 0;
+       iteration_count < 10;
+       iteration_count++)
+    {
+      ACE_DEBUG ((LM_DEBUG, "starting iteration %d\n", 
+		  iteration_count));
 
-  // Wait for all the threads to reach their exit point.
-  ACE_Thread_Manager::instance ()->wait ();
+      if (ACE_Thread_Manager::instance ()->spawn_n 
+	  (0,
+	   n_threads,
+	   ACE_THR_FUNC (tester), 
+	   (void *) &args,
+	   THR_NEW_LWP | THR_DETACHED,
+	   ACE_DEFAULT_THREAD_PRIORITY,
+	   -1,
+	   0,
+	   0,
+	   thread_handles) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+
+      // Wait for all the threads to reach their exit point and then join
+      // with all the exiting threads.
+      for (int i = 0;
+	   i < n_threads;
+	   i++)
+	if (ACE_Thread::join (thread_handles[i]) == -1)
+	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
+    }
+       
+  ACE_DEBUG ((LM_DEBUG, "test done\n"));
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
