@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -47,9 +47,11 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->cli_inline_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
-  // instantiation
+  // Instantiation.
 
   if (this->instantiate_sequence (node) == -1)
     {
@@ -60,12 +62,12 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  // end of instantiation
+  // End of instantiation.
 
-  // generate the ifdefined macro for the sequence type
+  // Generate the ifdefined macro for the sequence type.
   os->gen_ifdef_macro (node->flat_name ());
 
-  // all we do is generate the _var and _out implementations
+  // All we do is generate the _var and _out implementations.
   if (this->gen_var_impl (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,7 +84,7 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
                          "codegen for _out failed\n"), -1);
     }
 
-  // generate the endif macro for the sequence type
+  // Generate the endif macro for the sequence type.
   os->gen_endif ();
   node->cli_inline_gen (1);
 
@@ -92,10 +94,9 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
 {
-  be_type *bt;
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
-  bt = be_type::narrow_from_decl (node->base_type ());
-  if (!bt)
+  if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
@@ -103,34 +104,42 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // generate the appropriate sequence type
+  // Generate the appropriate sequence type.
   switch (node->managed_type ())
     {
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
       if (node->unbounded ())
-        this->gen_unbounded_obj_sequence (node);
+        {
+          this->gen_unbounded_obj_sequence (node);
+        }
       else
-        this->gen_bounded_obj_sequence (node);
+        {
+          this->gen_bounded_obj_sequence (node);
+        }
+
       break;
-    case be_sequence::MNG_STRING: // sequence of strings
+    case be_sequence::MNG_STRING: // Sequence of strings
       if (!node->unbounded ())
-        this->gen_bounded_str_sequence (node);
-      // else
-      //   inheriting from the right class is enough
+        {
+          this->gen_bounded_str_sequence (node);
+        }
+
       break;
-    case be_sequence::MNG_WSTRING: // sequence of strings
+    case be_sequence::MNG_WSTRING: // Sequence of wstrings
       if (!node->unbounded ())
-        this->gen_bounded_wstr_sequence (node);
-      // else
-      //   inheriting from the right class is enough
+        {
+          this->gen_bounded_wstr_sequence (node);
+        }
+
       break;
-    default: // not a managed type
+    default: // Not a managed type.
       if (node->unbounded ())
 	      {
 	        // TAO provides extensions for octet sequences, first find out
-	        // if the base type is an octet (or an alias for octet)
+	        // if the base type is an octet (or an alias for octet).
 	        be_predefined_type *predef = 0;
+
 	        if (bt->base_node_type () == AST_Type::NT_pre_defined)
 	          {
 	            be_typedef* alias =
@@ -149,6 +158,7 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
                       );
 		            }
 	          }
+
 	        if (predef != 0)
 	          {
 	            if (predef->pt() != AST_PredefinedType::PT_octet)
@@ -165,8 +175,9 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
         {
           this->gen_bounded_sequence (node);
         }
+
       break;
-    } // end of switch
+    } // End of switch.
 
   return 0;
 }
@@ -174,10 +185,10 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
 int
 be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 {
-  TAO_OutStream *os; // output stream
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _var names
-  be_type *bt;  // base type
+  TAO_OutStream *os = this->ctx_->stream ();
+  char fname [NAMEBUFSIZE];
+  char lname [NAMEBUFSIZE];
+  be_type *bt = 0;
 
 
   ACE_OS::memset (fname, 
@@ -196,11 +207,10 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
                    "%s_var", 
                    node->local_name ()->get_string ());
 
-  os  = this->ctx_->stream ();
-
-  // retrieve base type
+  // Retrieve base type.
   bt = be_type::narrow_from_decl (node->base_type ());
-  if (!bt)
+
+  if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
@@ -208,22 +218,22 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // generate the var implementation in the inline file
-  os->indent (); // start with whatever was our current indent level
+  // Generate the var implementation in the inline file.
+  os->indent ();
 
   *os << "// *************************************************************"
       << be_nl;
   *os << "// Inline operations for class " << fname << be_nl;
   *os << "// *************************************************************\n\n";
 
-  // default constr
+  // Default constuctor.
   *os << "ACE_INLINE" << be_nl
       << fname << "::" << lname
       << " (void) // default constructor" << be_nl
       << "  " << ": ptr_ (0)" << be_nl
       << "{}\n\n";
 
-  // constr from a _ptr
+  // Constuctorr from a _ptr.
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->local_name () 
@@ -231,11 +241,11 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "  : ptr_ (p)" << be_nl;
   *os << "{}\n\n";
 
-  // copy constructor
+  // Copy constructor.
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::" << lname << " (const ::" << fname <<
-    " &p) // copy constructor" << be_nl;
+  *os << fname << "::" << lname << " (const ::" << fname 
+      << " &p) // copy constructor" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "if (p.ptr_)" << be_idt_nl;
@@ -246,7 +256,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // fixed-size base types only
+  // Fixed-size base types only.
   if (bt->size_type () == be_decl::FIXED)
     {
       *os << "// fixed-size base types only" << be_nl;
@@ -261,7 +271,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       *os << "}\n\n";
     }
 
-  // destructor
+  // Destructor.
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::~" << lname << " (void) // destructor" << be_nl;
@@ -271,7 +281,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // assignment operator from a pointer
+  // Assignment operator from a pointer.
   os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (" << node->local_name () 
@@ -284,11 +294,11 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // assignment operator from _var
+  // Assignment operator from _var.
   os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
-  *os << fname << "::operator= (const ::" << fname <<
-    " &p) // deep copy" << be_nl;
+  *os << fname << "::operator= (const ::" << fname 
+      << " &p) // deep copy" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "if (this != &p)" << be_nl;
@@ -303,7 +313,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // fixed-size base types only
+  // Fixed-size base types only.
   if (bt->size_type () == be_decl::FIXED)
     {
       os->indent ();
@@ -326,7 +336,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       *os << "}\n\n";
     }
 
-  // two arrow operators
+  // Two arrow operators.
   os->indent ();
   *os << "ACE_INLINE const ::" << node->name () << " *" << be_nl;
   *os << fname << "::operator-> (void) const" << be_nl;
@@ -345,7 +355,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // other extra methods - 3 cast operator ()
+  // Other extra methods - 3 cast operator ().
   os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator const ::" << node->name () 
@@ -376,7 +386,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // variable-size base types only
+  // Variable-size base types only.
   if (bt->size_type () == be_decl::VARIABLE)
     {
       os->indent ();
@@ -391,14 +401,17 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       *os << "}\n\n";
     }
 
-  // operator []
+  // The [] operators.
+
+  // Non-const.
   os->indent ();
   *os << "ACE_INLINE ";
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
+
+  if (visitor == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
@@ -414,7 +427,6 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
                          "[] ret type gen failed\n"),
                         -1);
     }
-  delete visitor;
 
   *os << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
@@ -424,7 +436,41 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // in, inout, out, and _retn
+  // Const.
+  os->indent ();
+  *os << "ACE_INLINE const ";
+
+  if (bt->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_ci::"
+                         "gen_var_impl - "
+                         "[] ret type gen failed\n"),
+                        -1);
+    }
+
+  *os << be_nl;
+  *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
+  *os << "{\n";
+  os->incr_indent ();
+  *os << "return ACE_const_cast (const ";
+
+  if (bt->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_ci::"
+                         "gen_var_impl - "
+                         "[] ret type gen failed\n"),
+                        -1);
+    }
+
+  *os << ", this->ptr_->operator[] (index));\n";
+  os->decr_indent ();
+  *os << "}\n\n";
+
+  delete visitor;
+
+  // in, inout, out, and _retn.
   os->indent ();
   *os << "ACE_INLINE const ::" << node->name () << " &" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
@@ -466,7 +512,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // the additional ptr () member function
+  // The additional ptr () member function.
   os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *" << be_nl;
   *os << fname << "::ptr (void) const" << be_nl;
@@ -482,10 +528,10 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
 int
 be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
 {
-  TAO_OutStream *os; // output stream
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _out names
-  be_type *bt;  // base type
+  TAO_OutStream *os = this->ctx_->stream ();
+  char fname [NAMEBUFSIZE];
+  char lname [NAMEBUFSIZE];
+  be_type *bt = 0;
 
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
@@ -494,11 +540,10 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_out", node->local_name ()->get_string ());
 
-  os = this->ctx_->stream ();
-
-  // retrieve base type
+  // Retrieve base type.
   bt = be_type::narrow_from_decl (node->base_type ());
-  if (!bt)
+
+  if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
@@ -506,16 +551,16 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // generate the out implementation in the inline file
+  // Generate the out implementation in the inline file.
 
-  os->indent (); // start with whatever was our current indent level
+  os->indent ();
 
   *os << "// *************************************************************"
       << be_nl;
   *os << "// Inline operations for class " << fname << be_nl;
   *os << "// *************************************************************\n\n";
 
-  // constr from a pointer
+  // Constuctorr from a pointer.
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->local_name () 
@@ -527,7 +572,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // constructor from _var &
+  // Constructor from _var &.
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->local_name () 
@@ -540,7 +585,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // copy constructor
+  // Copy constructor.
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const ::" << fname 
@@ -549,11 +594,11 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
       << "&, p).ptr_)" << be_nl;
   *os << "{}\n\n";
 
-  // assignment operator from _out &
+  // Assignment operator from _out &.
   os->indent ();
   *os << "ACE_INLINE ::" << fname << " &" << be_nl;
-  *os << fname << "::operator= (const ::" << fname <<
-    " &p)" << be_nl;
+  *os << fname << "::operator= (const ::" << fname 
+      << " &p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "this->ptr_ = ACE_const_cast (" << lname 
@@ -562,9 +607,9 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // assignment from _var is not allowed by a private declaration
+  // Assignment from _var is not allowed by a private declaration.
 
-  // assignment operator from pointer
+  // Assignment operator from pointer.
   os->indent ();
   *os << "ACE_INLINE ::" << fname << " &" << be_nl;
   *os << fname << "::operator= (" << node->local_name () 
@@ -576,7 +621,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // other extra methods - cast operator ()
+  // Other extra methods - cast operator ().
   os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator ::" << node->name () 
@@ -587,7 +632,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // ptr function
+  // ptr function.
   os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *&" << be_nl;
   *os << fname << "::ptr (void) // ptr" << be_nl;
@@ -597,7 +642,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // operator ->
+  // operator ->.
   os->indent ();
   *os << "ACE_INLINE ::" << node->name () << " *" << be_nl;
   *os << fname << "::operator-> (void)" << be_nl;
@@ -607,14 +652,15 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  // sequence has an additional method
+  // Sequence has an additional method.
   os->indent ();
   *os << "ACE_INLINE ";
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
+
+  if (visitor == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
@@ -630,6 +676,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
                          "[] ret type gen failed\n"),
                         -1);
     }
+
   delete visitor;
 
   *os << be_nl;
