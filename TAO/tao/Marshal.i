@@ -69,3 +69,9 @@ ACE_INLINE
 TAO_Marshal_WString::TAO_Marshal_WString (void)
 {
 }
+
+ACE_INLINE
+TAO_Marshal_Value::TAO_Marshal_Value (void)
+        : nested_processing_ (0)
+{
+}

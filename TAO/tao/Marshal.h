@@ -47,6 +47,7 @@ class TAO_Marshal_Array;
 class TAO_Marshal_Alias;
 class TAO_Marshal_Except;
 class TAO_Marshal_WString;
+class TAO_Marshal_Value;
 
 /**
  * @class TAO_Marshal_Object
@@ -416,6 +417,34 @@ public:
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest
                                                    TAO_ENV_ARG_DECL);
+
+};
+
+/**
+ * @class TAO_Marshal_Value:
+ *
+ * @brief TAO_Marshal_Value
+ *
+ * marshal a valuetype
+ */
+class TAO_Export TAO_Marshal_Value: public TAO_Marshal_Object
+{
+public:
+  TAO_Marshal_Value (void);
+
+  /// skip operation
+  virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
+                                                 TAO_InputCDR *context
+                                                 TAO_ENV_ARG_DECL);
+
+  /// append operation
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest
+                                                   TAO_ENV_ARG_DECL);
+
+private:
+  CORBA::Boolean nested_processing_;
 
 };
 
