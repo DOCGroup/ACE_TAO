@@ -147,4 +147,6 @@ extern "C"
   int putenv (const char *);
 }
 
+#define ACE_MALLOC_ALIGN 8
+
 #endif /* ACE_CONFIG_H */

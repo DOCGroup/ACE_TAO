@@ -26,6 +26,10 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if !defined (ACE_MALLOC_ALIGN)
+#define ACE_MALLOC_ALIGN ((int) sizeof (long))
+#endif /* ACE_MALLOC_ALIGN */
+
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
 #define ACE_EBCDIC_SIZE 256

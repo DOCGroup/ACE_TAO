@@ -240,4 +240,5 @@
 #endif /* #if !defined (ACE_USE_RCSID) */
 #define ACE_LACKS_MKFIFO
 
+#define ACE_MALLOC_ALIGN 8
 #endif /* ACE_CONFIG_H */

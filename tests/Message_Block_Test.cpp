@@ -34,10 +34,10 @@ USELIB("..\ace\aced.lib");
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;
 
-// Size of a memory block (multiple of ACE_MALLOC_ALIGN)
+// Size of a memory block (multiple of ACE_MALLOC_ALIGN).
 static const int ACE_ALLOC_SIZE = 5;
 
-// Amount of memory block preallocated
+// Amount of memory block preallocated.
 static const size_t ACE_ALLOC_AMOUNT = 48;
 
 #if defined (ACE_HAS_THREADS)

@@ -205,5 +205,5 @@
 #define ACE_PSOS_TBD
 #endif /* ACE_PSOS_TBD */
 #define ACE_LACKS_MKFIFO
-
+#define ACE_MALLOC_ALIGN 8
 #endif /* ACE_CONFIG_H */
