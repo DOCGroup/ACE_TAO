@@ -1,3 +1,8 @@
+Thu Jul  8 01:09:32 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace: Renamed config-aix5.1.h to config-aix-5.1.h to be consistent 
+	  with the other AIX config*.h files.
+
 Wed Jul  7 21:26:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dev_Poll_Reactor.h:
