@@ -1,3 +1,12 @@
+Sat Dec 18 20:08:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+
+	  Changed BasicLog_Test::test_log_destroy() to explicitly catch
+	  CORBA::OBJECT_NOT_EXIST, the expected results of this test; and
+	  to invoke ACE_PRINT_EXCEPTION() for unexpected exceptions only.
+	  This avoids false positives on the nightly scoreboard.
+
 Sat Dec 18 09:56:04 2004  Olli Savia  <ops@iki.fi>
 
         * tao/Exception.h:
