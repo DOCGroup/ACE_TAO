@@ -14,13 +14,15 @@
 // 
 // ============================================================================
 
-//  Thanks to Nathan Myers and Fergus Henderson for this little beauty
-
-#if !defined (BASE_OPTIMIZER_H
+#if !defined (BASE_OPTIMIZER_H)
 #define BASE_OPTIMIZER_H
 
 template<class Base, class Member> 
 struct Base_Optimizer : Base
+// = TITLE
+//
+// = DESCRIPTION
+//     Thanks to Nathan Myers and Fergus Henderson for this little beauty
 {
   Base_Optimizer (void);
   Base_Optimizer (const Base &base);
