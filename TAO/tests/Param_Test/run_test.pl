@@ -16,6 +16,8 @@ $other = "";
 $debug = "";
 $type = "";
 
+unlink $iorfile;
+
 sub run_test
 {
   my $type = shift(@_);
