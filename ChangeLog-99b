@@ -1,3 +1,11 @@
+Tue Jul 20 21:23:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.* (next_key,total_keys):  with TSS_EMULATION,
+          added guard (using preallocated ACE_TSS_KEY_LOCK)
+          to access of next_key_.  Uninlined both of these
+          functions because they now have the guards.  Thanks
+          to Jake Hamby <jehamby@anobject.com> for reporting this.
+
 Tue Jul 20 21:11:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
