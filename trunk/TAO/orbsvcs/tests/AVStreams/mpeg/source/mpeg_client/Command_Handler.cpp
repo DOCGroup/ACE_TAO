@@ -4,7 +4,6 @@
 
 // %% yikes!!!
 #include "ctr.cpp"
-#include "ace/SOCK_Connector.h"
 
 const char *TAO_AV_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
 
@@ -37,7 +36,7 @@ Command_Handler::init (void)
       return -1;
     }
   TAO_ENDTRY;
-      
+  return 0;
 }
 
 int
@@ -324,6 +323,7 @@ Command_Handler::init_video (void)
 int
 Command_Handler::init_video_channel (char *phostname, char *videofile)
 {  
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
   int dataSocket = -1;
 
   //  if (ComOpenConnPair(phostname, &videoSocket,
@@ -339,6 +339,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
 
   /* Initialize with VS */
   {
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
     Video_Control::INITvideoPara_var  para (new Video_Control::INITvideoPara);
     Video_Control::INITvideoReply_var reply (new Video_Control::INITvideoReply);
 
@@ -450,6 +451,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
         videoSocket = -1;
         return -1;
       }
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
   
     /* create VB, and put INIT frame to VB*/
     {
@@ -472,6 +474,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
           exit(1);
           break;
         case 0:
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
           if (realTimeFlag) {
             SetRTpriority("VB", -1);
           }
@@ -511,6 +514,9 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
               exit(1);
             }
             while (msgo + msgs < pkts) {
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+              cerr << "expecting a packet of size " << sizeof (*msg)
+                   << endl;
               VideoRead(buf, sizeof(*msg));
               //~~ we need to read the first frame from the 
               //  data socket instead of control socket.
@@ -519,6 +525,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
               msgo = ntohl(msg->msgOffset);
               msgs = ntohl(msg->msgSize);
               if (shared->videoMaxPktSize >= 0) {  /* non-discard mode */
+                ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
                 write_bytes(sp[0], buf, sizeof(*msg));
                 bytes = msgs;
                 while (bytes > 0) {
@@ -529,6 +536,8 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
                 }
               }
               else {
+                cerr << "expecting a packet of size " << msgs
+                     << endl;
                 VideoRead(buf + sizeof(*msg), msgs);
                 bytes = sizeof(*msg) + msgs;
                 while ((res = write(sp[0], buf, bytes)) == -1) {
@@ -554,73 +563,6 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
         }
     }
   }
-#ifdef STAT
-  if (shared->config.collectFrameInfo && (!shared->live))
-    {
-      int i;
-      int count = 0;
-      char ch;
-      char buf[100];
-      FILE *fp;
-    
-      for (;;)
-        {
-          sprintf(buf, "struct.%d", count++);
-          if (access(buf, 0))
-            break;
-          if (count > 10000)
-            {
-              fprintf(stderr, "CTR generating struct file, weired thing happened.\n");
-              exit(1);
-            }
-        }
-      fprintf(stderr, "MPEG info collected to %s. . .", buf);
-      fp = fopen(buf, "w");
-      if (fp == NULL)
-        {
-          fprintf(stderr, "CTR failed to open %s for write.\n", buf);
-          perror("");
-          exit(1);
-        }
-      {
-        time_t val = time(NULL);
-        get_hostname(buf, 100);
-        buf[99] = 0;
-        fprintf(fp, "ClientHost: %s\n", buf);
-        fprintf(fp, "Date: %s\n", ctime(&val));
-      }
-      fprintf(fp, "VideoHost: %s\nVideoFile: %s\n", vh, videofile);
-      fprintf(fp, "AudioHost: %s\nAudioFile: %s\n\n", ah, af);
-      fprintf(fp, "TotalFrames: %d\nTotalGroups: %d\n",
-              shared->totalFrames, shared->totalGroups);
-      fprintf(fp, "TotalHeaders: %d\n", shared->totalHeaders);
-      fprintf(fp, "PictureRate: %f\nPictureSize: %d x %d\n",
-              shared->pictureRate, shared->horizontalSize, shared->verticalSize);
-      fprintf(fp, "AverageFrameSize: %d\n", shared->averageFrameSize);
-      shared->pattern[shared->patternSize] = 0;
-      fprintf(fp, "Pattern(%d frames): %s\n\n", shared->patternSize, shared->pattern);
-      shared->pattern[shared->patternSize] = 'I';
-      {
-        fprintf(fp, "FrameInfo:\n      ");
-        for (i = 0; i < 10; i++)
-          fprintf(fp, " %-6d", i);
-        fprintf(fp, "\n      ----------------------------------------------------");
-        ch = CmdSTATstream;
-        VideoWrite(&ch, 1);
-        for (i = 0; i < shared->totalFrames; i++)
-          {
-            short size;
-            VideoRead(&ch, 1);
-            VideoRead((char*)&size, 2);
-            size = ntohs(size);
-            if (i % 10 == 0)
-              fprintf(fp, "\n%4d: ", i / 10);
-            fprintf(fp, "%c%-6d", ch, (int)size);
-          }
-      }
-    }
-#endif
-
   return 0;
 }
 
@@ -1311,16 +1253,15 @@ Command_Handler::connect_to_server (char *address,
                                     int *max_pkt_size)
 {
 
-
   // set the pointers to the correct values
-
   *max_pkt_size = -INET_SOCKET_BUFFER_SIZE;
+
   // construct the server addr
   ACE_INET_Addr server_addr (VCR_TCP_PORT,
                              address);
 
   if (this->connector_.connect (this->stream_,
-                         server_addr) == -1)
+                                server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Connection to server failed: %p\n",
                        "connect"),
@@ -1357,15 +1298,18 @@ Command_Handler::connect_to_server (char *address,
 // 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   CORBA::Short server_port;
+  ACE_INET_Addr local_addr;
+  CORBA::String client_address_string;
   TAO_TRY
     {
-      ACE_INET_Addr local_addr;
-      CORBA::String client_address_string;
       ACE_NEW_RETURN (client_address_string,
                       char [BUFSIZ],
                       -1);
-      // Get the local address
-      this->stream_.get_local_addr (local_addr);
+      // Get the local UDP address
+      this->dgram_.open (ACE_Addr::sap_any,
+                         ACE_Addr::sap_any);
+
+      this->dgram_.get_local_addr (local_addr);
       // form a string 
       ::sprintf (client_address_string,
                  "%s:%d",
@@ -1392,15 +1336,26 @@ Command_Handler::connect_to_server (char *address,
     }
   TAO_ENDTRY;
 
-  ACE_INET_Addr server_udp_addr (server_port,
-                                 address);
+  //  ACE_INET_Addr server_udp_addr (server_port,
+  //                                 address);
 
-  if (this->dgram_.open (server_udp_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Command_Handler::connect_to_server:%p\n",
-                       "dgram.open "),
-                      -1);
+  //  if (this->dgram_.open (server_udp_addr,
+  //                         local_addr) == -1)
+  //    ACE_ERROR_RETURN ((LM_ERROR,
+  //                       "(%P|%t) Command_Handler::connect_to_server:%p\n",
+  //                       "dgram.open "),
+  //                      -1);
   
+  this->dgram_.get_local_addr (local_addr);
+  // form a string 
+  ::sprintf (client_address_string,
+             "%s:%d",
+             local_addr.get_host_name (),
+             local_addr.get_port_number ());
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Client string is %s\n",
+              client_address_string));
   // set the pointers to the correct values
 
   //  *ctr_fd = this->stream_.get_handle ();
