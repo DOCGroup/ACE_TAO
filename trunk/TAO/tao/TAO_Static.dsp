@@ -163,6 +163,10 @@ SOURCE=.\Connection_Cache_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Descriptor_Interface.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
@@ -855,6 +859,10 @@ SOURCE=.\Connection_Cache_Manager.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Descriptor_Interface.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
@@ -1424,6 +1432,10 @@ SOURCE=.\ClientRequestInfo.cpp
 # Begin Source File
 
 SOURCE=.\Connection_Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 

@@ -1,25 +1,22 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Connection_Property.h
-//
-// = AUTHOR
-//    Bala Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file  Base_Connection_Property.h
+ *
+ *  $Id$
+ *
+ *  @author DOC Center - Washington University at St. Louis
+ *  @author DOC Laboratory - University of California at Irvine
+ */
+// ===================================================================
 
 #ifndef TAO_BASE_CONNECTION_PROPERTY_H
 #define TAO_BASE_CONNECTION_PROPERTY_H
 #include "ace/pre.h"
 
-#include "tao/Endpoint.h"
-
+#include "tao/Connection_Descriptor_Interface.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,76 +30,49 @@
 #endif /* _MSC_VER */
 
 
+/**
+ * @class TAO_Base_Connection_Property
+ *
+ * @brief A concrete implementation for connnection property
+ *
+ * This class is a concrete implementation of a simple connection
+ * property class. This provides an implementation for the virtual
+ * functions declared in TAO_Connection_Descriptor_Interface.
+ */
 
-class TAO_Export TAO_Base_Connection_Property
+
+class TAO_Export TAO_Base_Connection_Property:
+  public TAO_Connection_Descriptor_Interface
 {
-  // = TITLE
-  //     Abstracts the base properties of the connection, which will
-  //     be used to look up connections in the cache
-  //
-  // = DESCRIPTION
-  //     This class has the fundamental property of the connection
-  //     viz. the peer to which it is connected. This class will be
-  //     used to do a look up of the connection from the cache.
-  //     Note 1: Additional properties for connection like Qos,
-  //     Priority that the RT folks would need, can be added by
-  //     inheriting from this class and providing the following
-  //     methods.
-  //     1. duplicate ()
-  //     2. operator==
-  //     3. operator=
-  //     4. operator!=
-  //     5. hash ()
 public:
 
+  /// Default constructor
   TAO_Base_Connection_Property (void);
-  // Default constructor
 
 
+  /// Constructor
   TAO_Base_Connection_Property (TAO_Endpoint *endpoint,
                                 CORBA::Boolean flag = 0);
-  // Constructor
 
+  /// Dtor
   virtual ~TAO_Base_Connection_Property (void);
-  // Dtor
 
-  // = Operations that need to be overloaded in all the inherited
-  //   classes. Without these the caching of connections may not work
-  //   right way.
 
+  /// The copy constructor.
   TAO_Base_Connection_Property (
       const TAO_Base_Connection_Property &rhs);
-  // The copy constructor.
 
-  virtual TAO_Base_Connection_Property *duplicate (void);
-  // This call allocates and copies the contents of this class and
-  // returns the pointer
 
-  TAO_Endpoint *endpoint (void);
-  // Return the underlying endpoint oject
+  /// This call allocates and copies the contents of this class and
+  /// returns the pointer
+  virtual  TAO_Connection_Descriptor_Interface *duplicate (void);
 
-  void operator= (const TAO_Base_Connection_Property &rhs);
-  // Assignment operator (does copy memory).
+  /// Try to determine if this object is same as the <other_prop>.
+  virtual CORBA::Boolean is_equivalent (
+      const TAO_Connection_Descriptor_Interface *other_prop);
 
-  int operator== (const TAO_Base_Connection_Property &rhs) const;
-  // Equality comparison operator
-
-  int operator!= (const TAO_Base_Connection_Property &rhs) const;
-  // Inequality comparison operator.
-
-  u_long hash (void) const;
-  // Generate hash value for our class
-
-private:
-
-  TAO_Endpoint *endpoint_;
-  // The base property of the connection ie. the peer's endpoint
-  // Note: This endpoint will have a minimal info about the
-  // endpoint. This should not be used for any invocation.
-
-  CORBA::Boolean endpoint_flag_;
-  // Is the endpoint allocated on the heap? If so, we will have to
-  // delete it when we destruct ourselves.
+  /// Generate hash value for our class
+  virtual u_long hash (void) const;
 };
 
 #if defined (__ACE_INLINE__)

@@ -13,6 +13,7 @@
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/Base_Connection_Property.h"
 #include "SHMIOP_Endpoint.h"
 
 #if !defined (__ACE_INLINE__)

@@ -7,6 +7,7 @@
 
 #include "SHMIOP_Profile.h"
 #include "tao/debug.h"
+#include "tao/Base_Connection_Property.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
