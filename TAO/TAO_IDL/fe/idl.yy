@@ -3530,11 +3530,17 @@ operation :
                 } 
               else 
                 {
+                  AST_Decl *d = ScopeAsDecl (s);
+                  AST_Decl::NodeType nt = d->node_type ();
+                  idl_bool local = 
+                    s->is_local () 
+                    || nt == AST_Decl::NT_valuetype
+                    || nt == AST_Decl::NT_eventtype;
                   o = 
                     idl_global->gen ()->create_operation (tp,
                                                           $1,
                                                           &n,
-                                                          s->is_local (),
+                                                          local,
                                                           s->is_abstract ());
                   (void) s->fe_add_operation (o);
                 }

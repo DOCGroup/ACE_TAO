@@ -1,3 +1,17 @@
+Fri Apr 18 18:13:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Modified the error checking for local interface used as
+          operation parameter to disable the diagnostic if the
+          operation is defined in a valuetype. Since operations
+          in valuetypes are executed locally, the arguments are
+          not marshaled and there is no problem with a local
+          interface parameter. Thanks to Proum Chauk-Mean 
+          <Chauk-Mean.Proum@fr.thalesgroup.com> and Nanbor Wang
+          <nanbor@cse.wustl.edu> for reporting the problem.
+
 Fri Apr 18 17:17:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
