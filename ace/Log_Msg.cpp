@@ -44,9 +44,36 @@ static ACE_FIFO_Send_Msg message_queue_;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
+// This is only needed here because we can't afford to call
+// ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else
+// we will recurse infinitely!
+
+#define ACE_NEW_RETURN_I(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     } while (0)
+
 #if defined (ACE_MT_SAFE)
 // Synchronize output operations.
-static ACE_Thread_Mutex *lock_ = 0;
+class ACE_Log_Msg_Lock
+{
+public:
+  static ACE_Thread_Mutex *instance (void);
+
+private:
+  static ACE_Thread_Mutex *lock_;
+};
+
+ACE_Thread_Mutex *ACE_Log_Msg_Lock::lock_ = 0;
+
+ACE_Thread_Mutex *
+ACE_Log_Msg_Lock::instance (void)
+{
+  if (ACE_Log_Msg_Lock::lock_ == 0)
+    ACE_NEW_RETURN_I (ACE_Log_Msg_Lock::lock_, ACE_Thread_Mutex, 0);
+
+  return ACE_Log_Msg_Lock::lock_;
+}
 
 #if !defined(VXWORKS)
 static ACE_thread_key_t key_;
@@ -63,41 +90,24 @@ ACE_TSS_cleanup (void *ptr)
 }
 #endif /* ACE_MT_SAFE */
 
-// This is only needed here because we can't afford to call
-// ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else
-// we will recurse infinitely!
-
-#define ACE_NEW_RETURN_I(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-     } while (0)
-
 ACE_Log_Msg *
 ACE_Log_Msg::instance (void)
 {
 #if defined (ACE_MT_SAFE)
 #if defined (VXWORKS)
-  // TSS Singleton implementation for VxWorks.
-  static int once_ = 0;
-
-  // This isn't thread safe . . .
-  if (once_ == 0 && lock_ == 0)
-    {
-      // Initialize the static recursive lock here.  Note that we
-      // can't rely on the constructor being called at this point.
-      ACE_NEW_RETURN_I (lock_, ACE_Thread_Mutex, 0);
-      once_ = 1;
-    }  
+  // Allocate the Singleton lock.  Note that this isn't thread-safe
+  // but VxWorks doesn't provide any good solutions here...
+  ACE_Log_Msg_Lock::instance ();
 
   // Get the tss_log_msg from thread-specific storage, using one of
   // the "spare" fields in the task control block.  Note that no locks
-  // are required here since this is within our thread context.
-  // This assumes that the sizeof the spare1 field is the same size
-  // as a pointer; it is (it's an int) in VxWorks 5.2-5.3.
+  // are required here since this is within our thread context.  This
+  // assumes that the sizeof the spare1 field is the same size as a
+  // pointer; it is (it's an int) in VxWorks 5.2-5.3.
   ACE_Log_Msg **tss_log_msg = (ACE_Log_Msg **) &taskIdCurrent->spare1;
 
-  // Check to see if this is the first time in for this thread.
-  // This assumes that the spare1 field in the task control block is
+  // Check to see if this is the first time in for this thread.  This
+  // assumes that the spare1 field in the task control block is
   // initialized to 0, which holds true for VxWorks 5.2-5.3.
   if (*(int **) tss_log_msg == 0)
     // Allocate memory off the heap and store it in a pointer in
@@ -121,11 +131,11 @@ ACE_Log_Msg::instance (void)
       ACE_thread_mutex_t &lock = (ACE_thread_mutex_t &) keylock_.lock ();
 
       ACE_OS::thread_mutex_lock (&lock);
+
       if (once_ == 0)
 	{
-	  // Initialize the static recursive lock here.  Note that we
-	  // can't rely on the constructor being called at this point.
-	  ACE_NEW_RETURN_I (lock_, ACE_Thread_Mutex, 0);
+	  // Allocate the Singleton lock.
+	  ACE_Log_Msg_Lock::instance ();
 
 	  if (ACE_OS::thr_keycreate (&key_,
 				     &ACE_TSS_cleanup) != 0)
@@ -208,7 +218,7 @@ ACE_Log_Msg::flags (void)
 {
   ACE_TRACE ("ACE_Log_Msg::flags");
   u_long result;
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance (), 0));
 
   result = ACE_Log_Msg::flags_;
   return result;
@@ -218,7 +228,7 @@ void
 ACE_Log_Msg::set_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::set_flags");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance ()));
 
   ACE_SET_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -227,7 +237,7 @@ void
 ACE_Log_Msg::clr_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::clr_flags");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance ()));
 
   ACE_CLR_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -237,7 +247,7 @@ ACE_Log_Msg::acquire (void)
 {
   ACE_TRACE ("ACE_Log_Msg::acquire");
 #if defined (ACE_MT_SAFE)
-  return lock_->acquire ();
+  return ACE_Log_Msg_Lock::instance ()->acquire ();
 #else
   return 0;
 #endif /* ACE_MT_SAFE */
@@ -263,7 +273,7 @@ ACE_Log_Msg::release (void)
   ACE_TRACE ("ACE_Log_Msg::release");
 
 #if defined (ACE_MT_SAFE)
-  return lock_->release ();
+  return ACE_Log_Msg_Lock::instance ()->release ();
 #else
   return 0;
 #endif /* ACE_MT_SAFE */
@@ -303,7 +313,7 @@ ACE_Log_Msg::open (const char *prog_name,
 		   LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance (), -1));
 
   if (prog_name)
     ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
@@ -692,7 +702,7 @@ ACE_Log_Msg::log (const char *format_str,
       ACE_Sig_Guard sb;
 
       // Make sure that the lock is held during all this.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock_, -1));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance (), -1));
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR) 
 	  && abort_prog == 0) // We'll get this further down.
@@ -814,7 +824,7 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nmsg_off_ = %d\n", this->msg_off_));
   message_queue_.dump ();
 #if defined (ACE_MT_SAFE)  
-  lock_->dump ();
+  ACE_Log_Msg_Lock::instance ()->dump ();
   // Synchronize output operations.  
 #endif /* ACE_MT_SAFE */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
