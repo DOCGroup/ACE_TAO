@@ -183,10 +183,10 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
       // Wait until the lock is held by the spawning thread.
     }
 
-  this->run_test ();
-  baseline_options.reset_params (this->current_test_->multiply_factor (),
-                                 this->current_test_->iteration (),
-                                 this->current_test_->yield_method ());
+//   this->run_test ();
+//   baseline_options.reset_params (this->current_test_->multiply_factor (),
+//                                  this->current_test_->iteration (),
+//                                  this->current_test_->yield_method ());
 
   return 0;
 }
