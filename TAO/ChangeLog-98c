@@ -1,3 +1,9 @@
+Thu Mar 19 08:41:27 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context): replaced
+          ???! with ???? in comment to avoid g++ "warning: 1 trigraph(s)
+          encountered".
+
 Thu Mar 19 05:26:10 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/typecode.cpp: In private_member_name, the return value of
