@@ -14,13 +14,24 @@ ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
 
 #define  THE_IOR "theior"
 
+struct Barriers
+{
+  Barriers (unsigned int init)
+    : server_init_ (init),
+      client_fini_ (init)
+  {}
+
+  ACE_Barrier server_init_;
+  ACE_Barrier client_fini_;
+};
+
 static const char *server_cmd = 0;
 
 void *
 svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
-  ACE_Barrier *barrier = (ACE_Barrier *) arg;
+  Barriers *barrier = (Barriers *) arg;
 
   char cmd_line[1024];
   ACE_OS::strcpy (cmd_line, "server ");
@@ -39,11 +50,11 @@ svr_worker (void *arg)
       if (result == -1)
         return (void *) 1;
 
-      barrier[0].wait ();
+      barrier->server_init_.wait ();
       cubit_server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      barrier[1].wait ();
+      barrier->client_fini_.wait ();
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -91,7 +102,7 @@ main (int argc, char **argv)
   ACE_OS::strcat (cmd_line, " -f " THE_IOR);
   ACE_ARGV args (cmd_line);
 
-  ACE_Barrier barrier [2] = {2, 2};
+  Barriers barrier (2);
 
   int retv = 1;
 
@@ -101,7 +112,7 @@ main (int argc, char **argv)
   ACE_Thread_Manager tm;
   tm.spawn (ACE_reinterpret_cast (ACE_THR_FUNC, &svr_worker),
             &barrier);
-  barrier[0].wait ();
+  barrier.server_init_.wait ();
   ACE_OS::sleep (1);
 
   Cubit_Client cubit_client (1);
@@ -112,7 +123,7 @@ main (int argc, char **argv)
   else
     retv = cubit_client.run ();
 
-  barrier[1].wait ();
+  barrier.client_fini_.wait ();
   tm.wait ();
 
   ACE_OS::unlink (THE_IOR);
