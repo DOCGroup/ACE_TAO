@@ -25,151 +25,202 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "IORManip_Loader.h"
-#include "tao/Typecode.h"
+#include "IORC.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Property[] =
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_TAO_IOP_EmptyProfileList = 0;
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_except,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_EmptyProfileList (
+    "IDL:TAO_IOP/EmptyProfileList:1.0",
+    "EmptyProfileList",
+    _tao_fields_TAO_IOP_EmptyProfileList,
+    0);
+  
+namespace TAO_IOP
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f502f), 
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f525f), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727479), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Property:1.0
-    17,
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f525f), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727479), 
-  ACE_NTOHL (0x0),  // name = TAO_IOR_Property
-  };
+  ::CORBA::TypeCode_ptr const _tc_EmptyProfileList =
+    &_tao_tc_TAO_IOP_EmptyProfileList;
+}
 
-static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Property (
-    CORBA::tk_objref,
-    sizeof (_oc_TAO_IOP_TAO_IOR_Property),
-    (char *) &_oc_TAO_IOP_TAO_IOR_Property,
-    0,
-    0
-  );
 
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/struct_typecode.cpp:34
+
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_TAO_IOP_NotFound = 0;
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_except,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_NotFound (
+    "IDL:TAO_IOP/NotFound:1.0",
+    "NotFound",
+    _tao_fields_TAO_IOP_NotFound,
+    0);
+  
+namespace TAO_IOP
+{
+  ::CORBA::TypeCode_ptr const _tc_NotFound =
+    &_tao_tc_TAO_IOP_NotFound;
+}
+
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/struct_typecode.cpp:34
+
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_TAO_IOP_Duplicate = 0;
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_except,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_Duplicate (
+    "IDL:TAO_IOP/Duplicate:1.0",
+    "Duplicate",
+    _tao_fields_TAO_IOP_Duplicate,
+    0);
+  
+namespace TAO_IOP
+{
+  ::CORBA::TypeCode_ptr const _tc_Duplicate =
+    &_tao_tc_TAO_IOP_Duplicate;
+}
+
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/struct_typecode.cpp:34
+
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_TAO_IOP_Invalid_IOR = 0;
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_except,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_Invalid_IOR (
+    "IDL:TAO_IOP/Invalid_IOR:1.0",
+    "Invalid_IOR",
+    _tao_fields_TAO_IOP_Invalid_IOR,
+    0);
+  
+namespace TAO_IOP
+{
+  ::CORBA::TypeCode_ptr const _tc_Invalid_IOR =
+    &_tao_tc_TAO_IOP_Invalid_IOR;
+}
+
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/struct_typecode.cpp:34
+
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_TAO_IOP_MultiProfileList = 0;
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_except,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_MultiProfileList (
+    "IDL:TAO_IOP/MultiProfileList:1.0",
+    "MultiProfileList",
+    _tao_fields_TAO_IOP_MultiProfileList,
+    0);
+  
+namespace TAO_IOP
+{
+  ::CORBA::TypeCode_ptr const _tc_MultiProfileList =
+    &_tao_tc_TAO_IOP_MultiProfileList;
+}
+
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/objref_typecode.cpp:73
+
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_TAO_IOR_Property (
+    "IDL:TAO_IOP/TAO_IOR_Property:1.0",
+    "TAO_IOR_Property");
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Property =
-    &_tc_TAO_tc_TAO_IOP_TAO_IOR_Property;
+    &_tao_tc_TAO_IOP_TAO_IOR_Property;
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
 
-static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_IORList[] =
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/alias_typecode.cpp:31
+
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_defn.cpp:743
+
+namespace TAO
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f502f), 
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f525f), 
-  ACE_NTOHL (0x4d616e69), 
-  ACE_NTOHL (0x70756c61), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x2f494f52), 
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/IORList:1.0
-    8,
-  ACE_NTOHL (0x494f524c), 
-  ACE_NTOHL (0x69737400),  // name = IORList
-    CORBA::tk_sequence, // typecode kind
-  68, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_objref,
-    52, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      29,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f4f62), 
-      ACE_NTOHL (0x6a656374), 
-      ACE_NTOHL (0x3a312e30), 
-      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
-            7,
-      ACE_NTOHL (0x4f626a65), 
-      ACE_NTOHL (0x63740000),  // name = Object
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      TAO_IOP_TAO_IOR_Manipulation_IORList_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_Object,
+        0U);
       
-    0U,
+    ::CORBA::TypeCode_ptr const tc_TAO_IOP_TAO_IOR_Manipulation_IORList_0 =
+      &TAO_IOP_TAO_IOR_Manipulation_IORList_0;
+    
+  }
+}
 
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_IORList (
-    CORBA::tk_alias,
-    sizeof (_oc_TAO_IOP_TAO_IOR_Manipulation_IORList),
-    (char *) &_oc_TAO_IOP_TAO_IOR_Manipulation_IORList,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_TAO_IOR_Manipulation_IORList (
+    "IDL:TAO_IOP/TAO_IOR_Manipulation/IORList:1.0",
+    "IORList",
+    &TAO::TypeCode::tc_TAO_IOP_TAO_IOR_Manipulation_IORList_0);
+  
 ::CORBA::TypeCode_ptr const TAO_IOP::TAO_IOR_Manipulation::_tc_IORList =
-  &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_IORList;
+  &_tao_tc_TAO_IOP_TAO_IOR_Manipulation_IORList;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
-static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f502f), 
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f525f), 
-  ACE_NTOHL (0x4d616e69), 
-  ACE_NTOHL (0x70756c61), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation:1.0
-    21,
-  ACE_NTOHL (0x54414f5f), 
-  ACE_NTOHL (0x494f525f), 
-  ACE_NTOHL (0x4d616e69), 
-  ACE_NTOHL (0x70756c61), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x0),  // name = TAO_IOR_Manipulation
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation (
-    CORBA::tk_objref,
-    sizeof (_oc_TAO_IOP_TAO_IOR_Manipulation),
-    (char *) &_oc_TAO_IOP_TAO_IOR_Manipulation,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IOP_TAO_IOR_Manipulation (
+    "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0",
+    "TAO_IOR_Manipulation");
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Manipulation =
-    &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation;
+    &_tao_tc_TAO_IOP_TAO_IOR_Manipulation;
 }
 
-// TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/any_op_cs.cpp:50
+
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<TAO_IOP::EmptyProfileList>::demarshal_value (
     TAO_InputCDR & cdr
@@ -252,9 +303,9 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<TAO_IOP::NotFound>::demarshal_value (
     TAO_InputCDR & cdr
@@ -337,9 +388,9 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<TAO_IOP::Duplicate>::demarshal_value (
     TAO_InputCDR & cdr
@@ -422,9 +473,9 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<TAO_IOP::Invalid_IOR>::demarshal_value (
     TAO_InputCDR & cdr
@@ -507,9 +558,9 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<TAO_IOP::MultiProfileList>::demarshal_value (
     TAO_InputCDR & cdr
@@ -592,9 +643,9 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -604,14 +655,14 @@ TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::demarshal_value (TAO_InputCDR &)
 {
@@ -661,9 +712,9 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -673,14 +724,14 @@ TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::demarshal_value (TAO_InputCDR &)
 {
@@ -730,7 +781,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 
@@ -755,7 +806,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::insert_copy (
       _tao_any,
       TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
-      TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+      TAO::TypeCode::tc_TAO_IOP_TAO_IOR_Manipulation_IORList_0,
       _tao_elem
     );
 }
@@ -769,7 +820,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::insert (
       _tao_any,
       TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
-      TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+      TAO::TypeCode::tc_TAO_IOP_TAO_IOR_Manipulation_IORList_0,
       _tao_elem
     );
 }
@@ -796,7 +847,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::extract (
         _tao_any,
         TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
-        TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+        TAO::TypeCode::tc_TAO_IOP_TAO_IOR_Manipulation_IORList_0,
         _tao_elem
       );
 }
