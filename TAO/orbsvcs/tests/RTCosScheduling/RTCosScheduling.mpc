@@ -1,0 +1,16 @@
+project(*server): rtcosscheduling, rt_server, orbsvcsexe {
+  exename = server
+  comps = 
+  Source_Files {
+    Object1_i.cpp
+    server.cpp
+  }
+}
+
+project(*client): rtcosscheduling, rt_client, orbsvcsexe {
+  exename = client
+  comps = 
+  Source_Files {
+    client.cpp
+  }
+}

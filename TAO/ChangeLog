@@ -1,3 +1,44 @@
+Tue Oct 14 20:01:10  2003  Kevin Bryan  <bryank@cs.uri.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/orbsvcs/RTCosScheduling.bor:
+        * orbsvcs/orbsvcs/RTCosScheduling.dsp:
+        * orbsvcs/orbsvcs/RTCosScheduling.mak:
+        * orbsvcs/orbsvcs/RTCosScheduling.mpc:
+        * orbsvcs/orbsvcs/RTCosScheduling.pidl:
+        * orbsvcs/orbsvcs/RTCosScheduling_Static.dsp:
+        * orbsvcs/orbsvcs/RTCosScheduling.vcproj:
+        * orbsvcs/orbsvcs/RTCosScheduling/README:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.i:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_export.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.i:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+        * orbsvcs/tests/RTCosScheduling/Makefile:
+        * orbsvcs/tests/RTCosScheduling/Object1_i.cpp:
+        * orbsvcs/tests/RTCosScheduling/Object1_i.h:
+        * orbsvcs/tests/RTCosScheduling/README:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.dsp:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client_Static.dsp:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server.dsp:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server_Static.dsp:
+        * orbsvcs/tests/RTCosScheduling/run_test.pl:
+        * orbsvcs/tests/RTCosScheduling/schedule.cfg:
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
+        * orbsvcs/tests/RTCosScheduling/svc.conf:
+        * orbsvcs/tests/Makefile:
+        * tao/PortableServer/PortableServerS.h:
+
+        Added the RT Corba 1.0 Scheduling Service.
+
 Tue Oct 14 17:51:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.h:
