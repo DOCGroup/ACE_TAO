@@ -9,9 +9,7 @@
 #include "TestS.h"
 
 #if defined (_MSC_VER)
-# if (_MSC_VER >= 1200)
-#  pragma warning(push)
-# endif /* _MSC_VER >= 1200 */
+# pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
@@ -36,7 +34,7 @@ public:
   CORBA::Boolean get_status ();
 
   // Silence the builds
-  void send_large_octet_array (const Test::Octets & 
+  void send_large_octet_array (const Test::Octets &
                                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -55,7 +53,7 @@ private:
   CORBA::Boolean large_request_status_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
