@@ -17,7 +17,7 @@ namespace TAO
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
                                   void *value)
     : Any_Impl (0, tc),
-      kind_ (tc->kind_)
+      kind_ (tc ? tc->kind_ : CORBA::tk_null)
   {
     CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind,
                                             this->kind_);
