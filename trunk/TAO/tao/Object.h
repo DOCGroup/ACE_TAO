@@ -99,16 +99,16 @@ public:
                                 CORBA_Environment &TAO_IN_ENV = 
                                   CORBA::default_environment ());
 
-  virtual void _create_request2 (CORBA::Context_ptr ctx,
-                                 const CORBA::Char *operation,
-                                 CORBA::NVList_ptr arg_list,
-                                 CORBA::NamedValue_ptr result,
-                                 CORBA::ExceptionList_ptr exclist,
-                                 CORBA::ContextList_ptr ctxtlist,
-                                 CORBA::Request_ptr &request,
-                                 CORBA::Flags req_flags,
-                                 CORBA_Environment &TAO_IN_ENV = 
-                                   CORBA::default_environment ());
+  virtual void _create_request (CORBA::Context_ptr ctx,
+                                const CORBA::Char *operation,
+                                CORBA::NVList_ptr arg_list,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::ExceptionList_ptr exclist,
+                                CORBA::ContextList_ptr ctxtlist,
+                                CORBA::Request_ptr &request,
+                                CORBA::Flags req_flags,
+                                CORBA_Environment &TAO_IN_ENV = 
+                                  CORBA::default_environment ());
 
   // The default implementation of this method uses the same simple,
   // multi-protocol remote invocation interface as is assumed by the
