@@ -530,10 +530,10 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
         && this->version_.minor <= TAO_UIOP_Profile::DEF_UIOP_MINOR))
   {
     ACE_DEBUG ((LM_DEBUG,
-                "detected new v%d.%d UIOP profile",
+                "detected new v%d.%d UIOP profile\n",
                 this->version_.major,
                 this->version_.minor));
-    return 0;
+    return -1;
   }
 
   if (this->rendezvous_point_)
@@ -590,7 +590,10 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   // encapsulation, as nothing needs stronger alignment than
   // this longword; it guarantees the rest is aligned for us.
 
-  CORBA::ULong rendezvous_pointlen = ACE_OS::strlen ((char *) this->rendezvous_point_);
+  CORBA::ULong rendezvous_pointlen = 0;
+  if (this->rendezvous_point_ != 0)
+    rendezvous_pointlen = ACE_OS::strlen (this->rendezvous_point_);
+
   CORBA::ULong encap_len =
     1                              // byte order
     + 1                            // version major
