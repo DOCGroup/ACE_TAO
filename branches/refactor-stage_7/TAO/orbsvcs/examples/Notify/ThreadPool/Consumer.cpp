@@ -4,6 +4,8 @@
 
 ACE_RCSID(Notify, TAO_Notify_ThreadPool_Consumer, "$id$")
 
+#include "tao/debug.h"
+
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 

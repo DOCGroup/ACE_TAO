@@ -11,13 +11,13 @@
 
 #ifndef TAO_Notify_CONSUMER_CLIENT_H
 #define TAO_Notify_CONSUMER_CLIENT_H
+
 #include /**/ "ace/pre.h"
+#include "ace/Task.h"
+#include "ace/SString.h"
 
 #include "ORB_Objects.h"
-#include "ace/Task.h"
-#include "tao/corba.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "ace/SString.h"
 
 class TAO_Notify_ThreadPool_Consumer;
 
