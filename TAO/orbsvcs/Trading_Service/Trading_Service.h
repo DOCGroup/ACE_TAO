@@ -31,23 +31,26 @@ class Trading_Service;
 
 class Trading_Shutdown : public ACE_Event_Handler
 {
+  // = TITLE
+  //   A class that shutsdown a Trading Service instance.
 public:
-
   Trading_Shutdown (Trading_Service& trader);
+  // Constructor.
 
-  virtual int handle_signal (int, siginfo_t*, ucontext_t*);
+  virtual int handle_signal (int,
+                             siginfo_t *,
+                             ucontext_t *);
+  // Signal handler.
 
-private:
-
-  Trading_Service& trader_;
+protected:
+  Trading_Service &trader_;
   ACE_Sig_Handler shutdown_;
 };
 
-
 class Trading_Service
-// = TITLE
-//   A class that initializes a Trading Service instance.
 {
+  // = TITLE
+  //   A class that initializes a Trading Service instance.
 public:
 
   Trading_Service (void);
@@ -56,7 +59,9 @@ public:
   ~Trading_Service (void);
   // Destructor
 
-  int init (int argc, char* argv[], CORBA::Environment &ACE_TRY_ENV);
+  int init (int argc,
+            char *argv[],
+            CORBA::Environment &ACE_TRY_ENV);
   // Initialize the Trading Service with arguments.
 
   int run (CORBA::Environment &ACE_TRY_ENV);
@@ -64,15 +69,16 @@ public:
 
   int shutdown (void);
 
-private:
-
+protected:
   int init_multicast_server (void);
-  // Enable the Trading Service to answer multicast requests for its IOR.
+  // Enable the Trading Service to answer multicast requests for its
+  // IOR.
 
   int bootstrap_to_federation (CORBA::Environment &ACE_TRY_ENV);
   // Bootstrap to another trader, and attach to its trader network.
 
-  int parse_args (int& argc, char *argv[]);
+  int parse_args (int &argc,
+                  char *argv[]);
   // parses the arguments.
 
   TAO_ORB_Manager orb_manager_;
@@ -105,6 +111,5 @@ private:
   TAO_IOR_Multicast ior_multicast_;
   // Event handler that responds to resolve_initial_references requests.
 };
-
 
 #endif /* _TRADING_SERVICE_H */
