@@ -23,11 +23,14 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
 {
   ACE_UNUSED_ARG (ev);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "BMDisplay - Doing computations \n"));
+  if (CIAO::debug_level () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "BMDisplay - Doing computations \n"));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "BMDisplay - Doing data fetch \n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "BMDisplay - Doing data fetch \n"));
+    }
 
   // Refresh position
   BasicSP::ReadData_var dat
@@ -54,7 +57,8 @@ MyImpl::BMDisplay_exec_impl::set_session_context (Components::SessionContext_ptr
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::set_session_context\n"));
 
   this->context_ =
     BasicSP::CCM_BMDisplay_Context::_narrow (ctx
@@ -78,7 +82,8 @@ MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::ccm_activate\n"));
 
   // @@ This hack work around a missing feature in CIAO's assembly
   // mechanism where a Softpkg descriptor can specify it's dependency
@@ -113,7 +118,8 @@ MyImpl::BMDisplay_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::ccm_passivate\n"));
 }
 
 void
@@ -121,7 +127,8 @@ MyImpl::BMDisplay_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDisplay_exec_impl::ccm_remove\n"));
 }
 
 /// Default ctor.

@@ -27,11 +27,12 @@ const char *installation_datafile_ = "CIAO_Installation_Data.ini";
 char *section_name_ = 0;
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
+char *extra_flags_ = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:n:o:d:s:c:m:");
+  ACE_Get_Opt get_opts (argc, argv, "f:i:n:o:d:s:c:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -66,6 +67,10 @@ parse_args (int argc, char *argv[])
         svcconf_config_ = get_opts.opt_arg ();
         break;
 
+      case 'f':  // get the extra command line flags for starting component server.
+        extra_flags_ = get_opts.opt_arg ();
+        break;
+
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -74,11 +79,20 @@ parse_args (int argc, char *argv[])
                            "-o <ior_output_file>\n"
                            "-d <time (in second) to wait for component server>\n"
                            "-i <installation data filename>\n"
+                           "-c <default svc.conf file for starting ComponentServer>\n"
+                           "-m <svc.conf mapping data file>\n"
                            "-s <section name to use in installation data file>\n"
-                           "\n",
+                           "-f <extra command line flags for component server>\n",
                            argv [0]),
                           -1);
       }
+
+  // Perform some minimum test of the validity of the arguments here.
+  // @@ This didn't work well because of win32 file extension name.
+//   ACE_stat csstat;
+//   if (ACE_OS::stat (comserv_path_, &csstat) != 0)
+//     ACE_DEBUG ((LM_ERROR,
+//                 "Invalid pathname for ComponentServer\n"), -1);
 
   return 0;
 }
@@ -198,7 +212,8 @@ main (int argc, char *argv[])
                                spawn_wait_,
                                str.in (),
                                default_svcconf_,
-                               svcconf_config_
+                               svcconf_config_,
+                               extra_flags_
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -1,6 +1,8 @@
 // $Id$
 
+
 #include "GPS_exec.h"
+#include "CIAO_common.h"
 
 #include "ace/OS_NS_time.h"
 
@@ -67,7 +69,8 @@ MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_GPS_Context::_narrow (ctx
@@ -91,7 +94,8 @@ MyImpl::GPS_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_activate\n"));
 }
 
 void
@@ -106,7 +110,8 @@ MyImpl::GPS_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_passivate\n"));
 }
 
 void
@@ -114,7 +119,8 @@ MyImpl::GPS_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.

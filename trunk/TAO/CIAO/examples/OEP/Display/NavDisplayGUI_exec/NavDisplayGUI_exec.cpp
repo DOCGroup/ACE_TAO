@@ -1,7 +1,7 @@
 // $Id$
 
 #include "NavDisplayGUI_exec.h"
-#include "ciao/CIAO_common.h"
+#include "CIAO_common.h"
 #include <qapplication.h>
 #include <qevent.h>
 
@@ -19,13 +19,15 @@ static char *argv[] =
 MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUI_exec_impl ()
 : unit_(1, "Model T3+"), loc_(50, 20, 0)
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUI_exec_impl ()\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUI_exec_impl ()\n"));
 }
 
 /// Default destructor.
 MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUI_exec_impl ()
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUI_exec_impl ()\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUI_exec_impl ()\n"));
 }
 
 // Operations from HUDisplay::NavDisplay
@@ -78,7 +80,8 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_NavDisplay_Context::_narrow (ctx
@@ -102,7 +105,8 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::ccm_activate\n"));
 
   int argc = sizeof(argv)/sizeof(argv[0]);
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
@@ -127,7 +131,8 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   QApplication::postEvent(worker_->getMainWindow(), evt);
 
 
-  ACE_DEBUG ((LM_DEBUG, "LEAVE: MyImpl::NavDisplayGUI_exec_impl::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "LEAVE: MyImpl::NavDisplayGUI_exec_impl::ccm_activate\n"));
 }
 
 void
@@ -142,7 +147,8 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::ccm_passivate\n"));
 
   RootPanel *target = worker_->getMainWindow();
   if(target)
@@ -161,19 +167,24 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::ccm_remove\n"));
 }
 
 /// Default ctor.
 MyImpl::NavDisplayGUIHome_exec_impl::NavDisplayGUIHome_exec_impl ()
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUIHome_exec_impl ()\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUIHome_exec_impl ()\n"));
 }
 
 /// Default dtor.
 MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl ()
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUIHome_exec_impl ()\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUIHome_exec_impl ()\n"));
 }
 
 // Explicit home operations.
@@ -185,7 +196,9 @@ MyImpl::NavDisplayGUIHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUIHome_exec_impl::create()\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "MyImpl::NavDisplayGUIHome_exec_impl::create()\n"));
   return new MyImpl::NavDisplayGUI_exec_impl;
 }
 
@@ -193,6 +206,7 @@ MyImpl::NavDisplayGUIHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
 extern "C" NAVDISPLAY_EXEC_Export ::Components::HomeExecutorBase_ptr
 createNavDisplayHome_Impl (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "createNavDisplayHome_Impl()\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "createNavDisplayHome_Impl()\n"));
   return new MyImpl::NavDisplayGUIHome_exec_impl;
 }

@@ -6,6 +6,7 @@
 #include "ace/Null_Mutex.h"
 #include "ciao/Server_init.h"
 #include "ciao/CIAO_ServersC.h"
+#include "ciao/CIAO_common.h"
 #include "../XML_Helpers/XML_Utils.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
@@ -44,7 +45,8 @@ add_rtcad_configs (const char *rtcadfile,
       configs[len] = newconfig;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Done adding RTCAD config\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "Done adding RTCAD config\n"));
 }
 
 int
@@ -165,13 +167,15 @@ CIAO::ComponentServer_Task::svc ()
       if (this->options_.ior_output_filename_.length () != 0)
         CIAO::Utility::write_IOR (this->options_.ior_output_filename_.c_str (),
                                   str.in ());
-      ACE_DEBUG ((LM_INFO, "RTComponentServer IOR: %s\n", str.in ()));
 
       // End Deployment part
+      if (CIAO::debug_level () > 10)
+        {
+          ACE_DEBUG ((LM_INFO, "RTComponentServer IOR: %s\n", str.in ()));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Running RTComponentServer...\n"));
-
+          ACE_DEBUG ((LM_DEBUG,
+                      "Running RTComponentServer...\n"));
+        }
 
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -53,9 +53,9 @@ Svcconf_Handler::endDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Svcconf_Handler::endElement (const ACEXML_Char *,
-                                    const ACEXML_Char *,
-                                    const ACEXML_Char *qName
-                                    ACEXML_ENV_ARG_DECL)
+                             const ACEXML_Char *,
+                             const ACEXML_Char *qName
+                             ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 

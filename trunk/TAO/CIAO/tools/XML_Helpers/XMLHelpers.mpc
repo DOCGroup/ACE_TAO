@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(XML_Helpers): taolib_with_idl, rtcorba, portableserver, acexml {
+project(XML_Helpers): taolib_with_idl, rtcorba, portableserver, acexml, ciao_client {
   sharedname    = CIAO_XML_Helpers
   idlflags     += -Sc -Wb,export_include=XML_Helpers_Export.h \
                   -Wb,export_macro=CIAO_XML_HELPERS_Export

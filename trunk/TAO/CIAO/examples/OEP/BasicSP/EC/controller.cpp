@@ -1,4 +1,5 @@
 // $Id$
+
 /**
  * @file controller.cpp
  *
@@ -6,10 +7,9 @@
  * EC.
  */
 
-
 #include "ECC.h"
 #include "ace/Get_Opt.h"
-
+#include "ace/streams.h"
 
 char *rategen_ior_ = 0;
 int rate = 2;
