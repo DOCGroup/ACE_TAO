@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_OS_H
+#include "ace/pre.h"
 # define ACE_OS_H
 
 // This file should be a link to the platform/compiler-specific
@@ -8527,4 +8528,5 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #define ACE_SIGRTMAX 0
 #endif /* ACE_HAS_AIO_CALLS */
 
+#include "ace/post.h"
 #endif  /* ACE_OS_H */
