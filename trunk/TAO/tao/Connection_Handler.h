@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -9,12 +9,13 @@
  *  @author Balachandran Natarajan  <bala@cs.wustl.edu>
  */
 //=============================================================================
+
 #ifndef TAO_CONNECTION_HANDLER_H
 #define TAO_CONNECTION_HANDLER_H
+
 #include "ace/pre.h"
 
 #include "LF_Event.h"
-#include "ace/SOCK.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +24,9 @@
 
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
-class ACE_Reactor;
-class ACE_Event_Handler;
+class TAO_Transport;
+class ACE_SOCK;
+class ACE_Lock;
 
 /**
  * @class TAO_Connection_Handler
@@ -134,4 +136,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /*TAO_CONNECTION_HANDLER_H*/

@@ -1,5 +1,6 @@
 #include "Object_Ref_Table.h"
 #include "Object.h"
+#include "ORB.h"
 #include "Exception.h"
 #include "Environment.h"
 #include "CORBA_String.h"
@@ -29,14 +30,9 @@ TAO_Object_Ref_Table::register_initial_reference (
   CORBA::Object_ptr obj
   ACE_ENV_ARG_DECL)
 {
-  if (id == 0)
-    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
-                                 CORBA::COMPLETED_NO));
-  else if (ACE_OS_String::strlen (id) == 0)
-    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
-                                 CORBA::COMPLETED_NO));
-
-  if (CORBA::is_nil (obj))
+  if (id == 0 || ACE_OS_String::strlen (id) == 0)
+    ACE_THROW (CORBA::ORB::InvalidName ());
+  else if (CORBA::is_nil (obj))
     ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
                                  CORBA::COMPLETED_NO));
 
@@ -51,7 +47,7 @@ TAO_Object_Ref_Table::register_initial_reference (
                     "the ORB\n",
                     id));
 
-      ACE_THROW (CORBA::INV_OBJREF ());
+      ACE_THROW (CORBA::ORB::InvalidName ());
     }
 
   if (result == -1)
