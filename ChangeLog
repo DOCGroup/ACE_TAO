@@ -1,3 +1,10 @@
+Fri Feb 20 18:47:26 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_static_order.lst:
+	  Added FaultTolerance.dsp, RTCosScheduling and FtRtEvent.dsp to this
+	  file, so that they are build first with all other needed libs in the
+	  static builds.
+
 Fri Feb 20 16:40:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* apps/mkcsregdb/mkcsregdb.cpp:
@@ -464,15 +471,15 @@ Fri Feb  6 09:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 <<<<<<< ChangeLog
 	  Reverted the change "Fri Feb  6 09:31:30 2004  Balachandran
 	  Natarajan  <bala@dre.vanderbilt.edu>" since it creates more
-	  problems. 
+	  problems.
 
 	* ace/config-sunos5.5.h:
 
 	  Added ACE_LACKS_SWAB. This is a lie. There are signatures
 	  mismatch and adding compile time options that get the right
 	  signatures messes things up a lot. Someone needs to take a look
-	  at it fix the compile time options properly. 
-	
+	  at it fix the compile time options properly.
+
 Fri Feb  6 09:35:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
