@@ -1,3 +1,8 @@
+Fri May 21 21:12:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_Manager.i (operator==): Since <map_man_> is a pointer
+	  now, we must compare by value, rather than by address.
+
 Fri May 21 12:56:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: fixed to
