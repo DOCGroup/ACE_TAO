@@ -1,3 +1,14 @@
+Tue Nov  4 21:21:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentsC.h:
+	* ciao/ComponentsS.h;
+
+	  Regenerated these files. Not sure why this is maintained in the repo. 
+	
+	* examples/handcrafted/Hello/hello_executors.h:
+
+	  #include "tao/LocalObject.h"
+
 Tue Nov 04 19:35:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* COPYING: Added ACE/TAO/CIAO Copyright disclaimer.  Thanks to

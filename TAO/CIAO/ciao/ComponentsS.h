@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:487
+// be/be_codegen.cpp:390
 
 #ifndef _TAO_IDL_COMPONENTSS_H_
 #define _TAO_IDL_COMPONENTSS_H_
@@ -39,11 +39,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Collocated_Object.h"
-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -55,6 +53,15 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
+
+// TAO_IDL - Generated from 
+// be/be_codegen.cpp:946
+
+#include "ComponentsS_T.h"
+
+#if defined (__ACE_INLINE__)
+#include "ComponentsS.i"
+#endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
