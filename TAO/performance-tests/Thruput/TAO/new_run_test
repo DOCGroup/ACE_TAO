@@ -1,0 +1,48 @@
+#!/pkg/gnu/bin/perl
+
+#   $1  <Total_Data_Size> 
+#   $2  <Max_msg_size_in_Kb?> <-- currently not used? $2 == $argv[2] ??
+#   $3  <Output file name>
+#   $4  <seq_type>
+#   $5  <ior_from_server>
+# e.g. 
+# % run_test 10000 512 mambo\! s iiop:1.0//128.252.165.144:10015/P350892cc000ad963RootPOA/RootPOA_is_BAD/TTCP_IIOP_test
+#
+
+$TOTAL_DATA_SIZE = shift (@ARGV);
+$MAX_MSG_SIZE_IN_KB = shift (@ARGV);
+$OUTPUT_FILE_NAME = shift (@ARGV);
+$SEQ_TYPE = shift (@ARGV);
+$IOR_FROM_SERVER = shift (@ARGV);
+$msize = 1024;
+$limit = ($MAX_MSG_SIZE_IN_KB * 1024);
+
+while ($msize <= $limit){
+    print "-->", "\n";
+    print "--> ITERATION #1", "\n"; 
+    print "  client -S ", $TOTAL_DATA_SIZE, " -m m -l ", $msize, " -L ", $OUTPUT_FILE_NAME, " -q ", $SEQ_TYPE, " -f ior", "\n";
+    print "-->", "\n";
+    system ("./client -S $TOTAL_DATA_SIZE -m m -l $msize -L $OUTPUT_FILE_NAME -q $SEQ_TYPE  -f ior");
+
+    sleep 5;
+    foreach $i (2) {
+	print "-->", "\n";
+	print "--> ITERATION #", $i, "\n"; 
+	print "  client -S ", $TOTAL_DATA_SIZE, " -m m -l ", $msize, " -L ", $OUTPUT_FILE_NAME, " -q ", $SEQ_TYPE, " -f ior", "\n";
+	print "-->";
+	system ("client -S $TOTAL_DATA_SIZE -m m -l $msize -L $OUTPUT_FILE_NAME -q $SEQ_TYPE -f ior");
+    }
+
+    print "---------------------------";
+    $msize = $msize * 2;
+    sleep 5;
+}
+
+print " ", "\n";
+print "Done at:", "\n"; 
+system ("date");
+
+
+
+
+

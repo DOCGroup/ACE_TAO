@@ -1,0 +1,63 @@
+#!/pkg/gnu/bin/perl
+#
+#new_client_test <filename to store results in> [FILEPERMISSION (default is 755)] [OBJ_REF]
+
+$TEST_NAME = shift (@ARGV);
+$TEST_RES_BASE_DIR = "./results/REMOTE/";
+$TEST_DIR = $TEST_RES_BASE_DIR . $TEST_NAME;
+$FILE_PERMISSIONS = shift (@ARGV);
+$OBJ_REF = shift (@ARGV);
+$FILE_TO_WRITE_EXT = $TEST_DIR . '/sun-iiop.atm1.64';
+
+#if the file permissions aren't specified, default to 755
+if ($FILE_PERMISSIONS == NULL){
+   $FILE_PERMISSIONS = 755;
+}
+
+if (! (-d $TEST_DIR)) {
+   chdir $TEST_RES_BASE_DIR;
+   mkdir ($TEST_NAME, 0755);
+   system ("chmod  $FILE_PERMISSIONS $TEST_NAME");
+   chdir "../../";
+}
+
+# shorts
+system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT s $OBJ_REF");
+sleep 5;		      
+# longs		      
+system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT l $OBJ_REF");
+sleep 5;		      
+# octets	      
+system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT o $OBJ_REF");
+sleep 5;		      
+# doubles	      
+system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT d $OBJ_REF");
+sleep 5;		      
+# chars		      
+system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT c $OBJ_REF");
+sleep 5;	      
+# structures	      
+system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT S $OBJ_REF");
+sleep 5;		      
+#Composite Structs   
+system ("new_run_test 67108864 128 $FILE_TO_WRITE_EXT C $OBJ_REF");
+sleep 5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
