@@ -1,22 +1,44 @@
+Thu Feb 03 16:12:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Leader_Follower.i (~TAO_LF_Server_Thread_Helper): The
+	  charanga (Linux box) Exceptions auto build caught the type
+	  problem described in bug 416.  In this case, a client thread
+	  completed its twoway call and while giving up leadership, it
+	  noticed that there were server threads waiting to become the
+	  leaders. Hence it sent a broadcast to the server threads and did
+	  not wake any of the followers.  In the meantime, however, the
+	  server threads had timed out, and therefore did not select a new
+	  leader.
+
+	  So the fix is for the server thread to always select a new
+	  leader if needed, irrespective of whether a server thread was
+	  able to become a leader or it had timed out.
+	  reset_server_thread() was removed and
+	  ~TAO_LF_Server_Thread_Helper was given the responsibility.
+
+	* tao/ORB_Core.cpp (run): No need to call
+	  server_thread_helper.reset_server_thread() explicitly anymore.
+	  ~TAO_LF_Server_Thread_Helper will take care of it.
+
 Thu Feb  3 13:40:42 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp: 
-	  
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+
 	  Fixed all the TAO_ exception macros to ACE_ exception macros.
-	
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile: 
-	  
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
+
 	  Added libAVSvc to the LDLIBS and -DTAO_ORBSVCS_HAS_Trader to the
 	  Makefile so that the TAO_String_Hash_Key class doesn't get defined
 	  twice.
 
         Thanks to Alex Luk <fluk7@ie.cuhk.edu.hk> and Kenneth Osenbroch
         <kennetho@stud.cs.uit.no> for reporting this.
-	
+
 Thu Feb  3 10:31:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
