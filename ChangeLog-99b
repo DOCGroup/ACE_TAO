@@ -1,3 +1,9 @@
+Mon Aug 09 16:06:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Applied smart eg++
+	  recognizer.  Thanks to Craig Anderson <chanders@timing.com> for
+	  prividing the patch.
+
 Mon Aug  9 11:29:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* bin: Fixed html-windex so that it works when class names contain
