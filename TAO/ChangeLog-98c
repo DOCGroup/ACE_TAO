@@ -1,8 +1,26 @@
+Thu Apr 16 10:31:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp: I had forgotten to generate
+	a "return TRUE" statement in the code for the >>= operator on
+	interfaces.
+
+	* TAO/tao/Any.cpp: All the basic >>= operators were using plain
+	casts. However, according to the new strategy, if the Any owns the
+	value, then it is a CDR stream. So we make this distinction in the
+	code.
+
+	* TAO/tao/POAS.cpp: In the initialization section of a number of
+	skeleton class constructors, we were initializing
+	_tao_collocated_Policy without specifying its fully scoped name
+	which happens to be POA_CORBA::_tao_collated_Policy. g++ was
+	complaining. However, it remains to be seen if MSVC++ accepts this
+	new style.
+
 Thu Apr 16 10:10:16 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tests\Quoter\Quoter_Impl.cpp: Improved the move operation
 		* tests\Quoter\client.{h,cpp}: Using the move operation
-		  Status: Bootstraping and moving of Lifecycle Objects works. 
+		  Status: Bootstraping and moving of Lifecycle Objects works.
 
 Thu Apr 16 08:36:16 1998  David L. Levine  <levine@cs.wustl.edu>
 

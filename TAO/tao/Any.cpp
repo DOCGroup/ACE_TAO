@@ -290,8 +290,16 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
 
   if (this->type_->equal (CORBA::_tc_short, env))
     {
-      s = *(CORBA::Short *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_short (s);
+        }
+      else
+        {
+          s = *(CORBA::Short *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -304,8 +312,16 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
 
   if (this->type_->equal (CORBA::_tc_ushort, env))
     {
-      s = *(CORBA::UShort *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_ushort (s);
+        }
+      else
+        {
+          s = *(CORBA::UShort *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -318,8 +334,16 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
 
   if (this->type_->equal (CORBA::_tc_long, env))
     {
-      l = *(CORBA::Long *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_long (l);
+        }
+      else
+        {
+          l = *(CORBA::Long *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -332,8 +356,16 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
 
   if (this->type_->equal (CORBA::_tc_ulong, env))
     {
-      l = *(CORBA::ULong *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_ulong (l);
+        }
+      else
+        {
+          l = *(CORBA::ULong *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -346,8 +378,16 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
 
   if (this->type_->equal (CORBA::_tc_float, env))
     {
-      f = *(CORBA::Float *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_float (f);
+        }
+      else
+        {
+          f = *(CORBA::Float *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -360,8 +400,16 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
 
   if (this->type_->equal (CORBA::_tc_double, env))
     {
-      d = *(CORBA::Double *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_double (d);
+        }
+      else
+        {
+          d = *(CORBA::Double *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -374,8 +422,17 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
 
   if (this->type_->equal (CORBA::_tc_any, env))
     {
-      a = *(CORBA::Any *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return (stream.decode (CORBA::_tc_any, &a, 0, env)
+                  == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+        }
+      else
+        {
+          a = *(CORBA::Any *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -388,8 +445,16 @@ CORBA_Any::operator>>= (char *&s) const
 
   if (this->type_->equal (CORBA::_tc_string, env))
     {
-      s = *(char **) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_string (s);
+        }
+      else
+        {
+          s = *(char **) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -404,8 +469,16 @@ CORBA_Any::operator>>= (to_boolean b) const
 
   if (this->type_->equal (CORBA::_tc_boolean, env))
     {
-      b.ref_ = *(CORBA::Boolean *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_boolean (b.ref_);
+        }
+      else
+        {
+          b.ref_ = *(CORBA::Boolean *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -418,8 +491,16 @@ CORBA_Any::operator>>= (to_octet o) const
 
   if (this->type_->equal (CORBA::_tc_octet, env))
     {
-      o.ref_ = *(CORBA::Octet *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_octet (o.ref_);
+        }
+      else
+        {
+          o.ref_ = *(CORBA::Octet *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -432,8 +513,16 @@ CORBA_Any::operator>>= (to_char c) const
 
   if (this->type_->equal (CORBA::_tc_char, env))
     {
-      c.ref_ = *(CORBA::Char *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return stream.read_char (c.ref_);
+        }
+      else
+        {
+          c.ref_ = *(CORBA::Char *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
@@ -452,8 +541,16 @@ CORBA_Any::operator>>= (to_string s) const
       CORBA::ULong bound = this->type_->length (env);
       if (s.bound_ == bound) // bounds are same
         {
-          s.val_ = *(char **) this->value_;
-          return CORBA::B_TRUE;
+          if (this->any_owns_data_)
+            {
+              TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+              return stream.read_string (s.val_);
+            }
+          else
+            {
+              s.val_ = *(char **) this->value_;
+              return CORBA::B_TRUE;
+            }
         }
     }
 
@@ -468,8 +565,17 @@ CORBA_Any::operator>>= (to_object obj) const
 
   if (this->type_->equal (CORBA::_tc_Object, env))
     {
-      obj.ref_ = *(CORBA::Object_ptr *) this->value_;
-      return CORBA::B_TRUE;
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          return (stream.decode (CORBA::_tc_Object, &obj.ref_, 0, env)
+                  == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+        }
+      else
+        {
+          obj.ref_ = *(CORBA::Object_ptr *) this->value_;
+          return CORBA::B_TRUE;
+        }
     }
   else
     return CORBA::B_FALSE;
