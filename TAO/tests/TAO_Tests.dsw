@@ -111,6 +111,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MT_Server Client"=.\MT_Server\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_Server Server"=.\MT_Server\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Multiple Inheritance Client"=.\Multiple_Inheritance\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -124,30 +148,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Multiple Inheritance Server"=.\Multiple_Inheritance\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Native Exceptions Client"=.\Native_Exceptions\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Native Exceptions Server"=.\Native_Exceptions\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -244,6 +244,30 @@ Package=<4>
 ###############################################################################
 
 Project: "OctetSeq"=.\OctetSeq\OctetSeq.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OctetSeq Client"=.\OctetSeq\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OctetSeq Server"=.\OctetSeq\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
