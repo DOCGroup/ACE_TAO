@@ -49,8 +49,7 @@ TAO_NAMESPACE  Dynamic
   {
         PARAM_IN,
         PARAM_OUT,
-        PARAM_INOUT,
-        ParameterMode_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
+        PARAM_INOUT
   };
   typedef ParameterMode &ParameterMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;
