@@ -10,9 +10,9 @@ Sun Jun 27 11:54:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Sun Jun 27 09:17:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/DynAny_i.cpp: added explicit template instantiations.
-          Thanks to Alex for reporting that they're necessary without
-          __ACE_INLINE__.
+        * tao/DynAny_i.cpp: added ACE_Auto_Basic_Ptr explicit template
+          instantiations.  Thanks to Alex for reporting that they're
+          necessary without __ACE_INLINE__.
 
 Sat Jun 26 19:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
