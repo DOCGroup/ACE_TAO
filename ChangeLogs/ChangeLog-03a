@@ -1,3 +1,9 @@
+Mon Aug  7 21:05:35 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* examples/QOS/server.dsp:
+	* examples/QOS/client.dsp: Made changes to add the relative path
+	  for aced.lib. 
+
 Mon Aug 07 07:31:23 2000  Peter Fischer <fischer@softec.de>
 
         * ace/OS.cpp (cond_timedwait): on VxWorks, handle
