@@ -60,21 +60,7 @@ do_priority_inversion_test (Task_State &ts)
   
   // Now activate the high priority client.
   
-  // @@ Sumedh, can you please document why we need this VxWorks
-  // #ifdef?  Is there a way to make this more general so we don't
-  // need the #ifdef?  In other words, please check with David or
-  // Brian about this.
-  
-#if !defined (VXWORKS)
-  priority = 
-    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, 
-                                    ACE_SCOPE_THREAD);
-#else
-  ACE_Sched_Priority priority = 60;
-#endif /* !defined (VXWORKS) */
-      
-  ACE_DEBUG ((LM_DEBUG,
-              "Creating client with high priority\n"));
+  priority = ACE_THR_PRI_FIFO_DEF;
   
   if (high_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
                                      1,
