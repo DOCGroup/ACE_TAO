@@ -685,7 +685,7 @@ ACE_WString::length (void) const
 ACE_INLINE u_long
 ACE_WString::hash (void) const
 {
-  return ACE::hash_pjw (ACE_reinterpret_cast (const char *, this->rep_), 
+  return ACE::hash_pjw (ACE_reinterpret_cast (char * const, this->rep_), 
                         this->len_ * sizeof (ACE_WSTRING_TYPE));
 }
 
