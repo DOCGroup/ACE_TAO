@@ -3,6 +3,7 @@
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
 #include "Task_Stats.h"
+#include "tao/ORB_Core.h"
 
 //#include "test.h"
 
@@ -39,24 +40,37 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
 
-  this->count_ = ++thread_count.value_i ();
- 
-//    ACE_DEBUG ((LM_DEBUG,
-//  	      "thr_id = %d \n importance = %d\n",
-//  	      count_,
-//  	      importance_));
-
-  if (this->activate (flags,
-		      1,
-		      0,
-		      this->importance_) == -1)
-    {
-      if (ACE_OS::last_error () == EPERM)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
-			  -1);
-    }
+  //  this->count_ = ++thread_count.value_i ();
   
+  //    ACE_DEBUG ((LM_DEBUG,
+  //  	      "thr_id = %d \n importance = %d\n",
+  //  	      count_,
+  //  	      importance_));
+
+  long sched_policy = dt_creator_->orb ()->orb_core ()->orb_params ()->sched_policy ();
+
+  if (sched_policy == THR_SCHED_FIFO || sched_policy == THR_SCHED_RR)
+    {
+      if (this->activate (flags,
+			  1,
+			  0,
+			  this->importance_) == -1)
+	{
+	  if (ACE_OS::last_error () == EPERM)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       ACE_TEXT ("Insufficient privilege to run this test.\n")),
+			      -1);
+	}
+    }
+  else 
+    if (this->activate (flags,
+			1) == -1)
+      {
+	if (ACE_OS::last_error () == EPERM)
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     ACE_TEXT ("Insufficient privilege to run this test.\n")),
+			    -1);
+      }
   return 0;
 }
 
@@ -75,8 +89,12 @@ Thread_Task::svc (void)
 					    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  ACE_OS::memcpy (&count_,
+		  this->current_->id ()->get_buffer (),
+		  this->current_->id ()->length ());
+
   this->perform_task ();
-  
+
   this->current_->end_scheduling_segment (name
 					  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

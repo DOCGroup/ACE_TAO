@@ -24,7 +24,8 @@ class DT_Creator : public ACE_Service_Object
 					     RTScheduling::Current_ptr  current
 					     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   
-  virtual void yield (int suspend_time) = 0;
+  virtual void yield (int suspend_time,
+		      Thread_Task* task) = 0;
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
   
@@ -41,7 +42,9 @@ class DT_Creator : public ACE_Service_Object
 
   void log_msg (char* msg);
 
- private:
+  CORBA::ORB_ptr orb (void);
+
+ protected:
   DT_LIST dt_list_;
   //Fixed_Priority_Scheduler* scheduler_;
   ACE_Barrier* barrier_;
@@ -52,6 +55,8 @@ class DT_Creator : public ACE_Service_Object
   ACE_Lock* shutdown_lock_;
   int active_dt_count_;
   char** log;
+  ACE_Time_Value* base_time_;
+  RTScheduling::Current_var current_; 
 };
 
 

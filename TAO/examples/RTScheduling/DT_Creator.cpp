@@ -82,6 +82,8 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
   
   orb_ = CORBA::ORB::_duplicate (orb);  
 
+  current_ = RTScheduling::Current::_duplicate (current);
+  
   long flags;
   flags = THR_NEW_LWP | THR_JOINABLE;
   flags |= 
@@ -89,30 +91,29 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
     orb_->orb_core ()->orb_params ()->sched_policy ();
 
   CORBA::Policy_var sched_param;
-  sched_param = CORBA::Policy::_duplicate (this->sched_param (15));
+  sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
   const char * name = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
-  current->begin_scheduling_segment (name,
-				     sched_param.in (),
-				     implicit_sched_param
-				     ACE_ENV_ARG_PARAMETER);
+  current_->begin_scheduling_segment (name,
+				      sched_param.in (),
+				      implicit_sched_param
+				      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  ACE_Time_Value* base_time;
-  ACE_NEW (base_time,
+  ACE_NEW (base_time_,
 	   ACE_Time_Value (ACE_OS::gettimeofday ()));
-
+  
   for (int i = 0; i < this->dt_count_; i++)
     {
       ACE_Time_Value now (ACE_OS::gettimeofday ());
       
-      ACE_Time_Value elapsed_time =  now - *base_time;
+      ACE_Time_Value elapsed_time =  now - *base_time_;
       
       char buf [BUFSIZ];
-      ACE_OS::sprintf (buf, "elapsed time = %d\n now = %d\n base_time = %d\n",
+      ACE_OS::sprintf (buf, "elapsed time = %d\n now = %d\n base_time_ = %d\n",
 		       (int) elapsed_time.sec (),
 		       (int) now.sec (),
-		       (int) base_time->sec());
+		       (int) base_time_->sec());
       
       log [log_index++] = ACE_OS::strdup (buf) ; 
       
@@ -125,22 +126,23 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
 	  ACE_OS::sprintf (buf,"suspension_tome = %d\n",
 			   suspension_time);
 	  log [log_index++] = ACE_OS::strdup (buf);
-	  yield (suspension_time);
+	  yield (suspension_time,
+		 dt_list_[i]);
 	}
       
       sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
       dt_list_ [i]->activate_task (current,
 				   sched_param.in (),
 				   flags,
-				   base_time,
+				   base_time_,
 				   barrier_
 				   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
     }
   
-  current->end_scheduling_segment (name
-				   ACE_ENV_ARG_PARAMETER);
+  current_->end_scheduling_segment (name
+				    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
@@ -221,4 +223,10 @@ void
 DT_Creator::log_msg (char* msg)
 {
   log [log_index++] = ACE_OS::strdup (msg);
+}
+
+CORBA::ORB_ptr
+DT_Creator::orb (void)
+{
+  return this->orb_.in ();
 }

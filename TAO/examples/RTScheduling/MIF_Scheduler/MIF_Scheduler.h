@@ -5,7 +5,21 @@
 
 #include "tao/RTScheduling/RTSchedulerC.h"
 #include "MIF_SchedulingC.h"
+#include "ace/Message_Queue.h"
 
+class DT : public ACE_Message_Block
+{
+ public:
+  DT (ACE_Thread_Mutex *lock,
+      int guid);
+
+  void suspend (void);
+  void resume (void);
+
+ private:
+  ACE_Condition_Thread_Mutex dt_cond_;
+  int guid_;
+};
 
 class Segment_Sched_Param_Policy:
 public MIF_Scheduling::SegmentSchedulingParameterPolicy,
@@ -17,10 +31,12 @@ public MIF_Scheduling::SegmentSchedulingParameterPolicy,
   
   virtual void importance (CORBA::Short importance)
     ACE_THROW_SPEC ((CORBA::SystemException));
-
+  
  private:
-  RTCORBA::Priority value_;
+  CORBA::Short importance_;
 };
+
+typedef ACE_Message_Queue<ACE_NULL_SYNCH> DT_Message_Queue;
 
 class MIF_Scheduler:
 public MIF_Scheduling::MIF_Scheduler,
@@ -33,7 +49,7 @@ public TAO_Local_RefCounted_Object
   ~MIF_Scheduler (void);
 
   virtual MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr 
-    create_segment_scheduling_parameter (RTCORBA::Priority segment_priority)
+    create_segment_scheduling_parameter (CORBA::Short segment_priority)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
@@ -143,6 +159,9 @@ public TAO_Local_RefCounted_Object
 
  private:
   RTScheduling::Current_var current_;
+  ACE_Thread_Mutex lock_;  
+  DT_Message_Queue ready_que_;
+  DT_Message_Queue wait_que_;
 };
 
 #endif //MIF_SCHEDULER_H

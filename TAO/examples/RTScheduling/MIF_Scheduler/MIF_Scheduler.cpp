@@ -5,18 +5,37 @@
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
-RTCORBA::Priority 
-Segment_Sched_Param_Policy::value (void)
+DT::DT (ACE_Thread_Mutex *lock,
+	int guid)
+  : dt_cond_ (*lock),
+    guid_ (guid)
+{
+}
+
+void
+DT::suspend (void)
+{
+  this->dt_cond_.wait ();
+}
+
+void
+DT::resume (void)
+{
+  this->dt_cond_.signal ();
+}
+
+CORBA::Short 
+Segment_Sched_Param_Policy::importance (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->value_;
+  return this->importance_;
 }
 
 void 
-Segment_Sched_Param_Policy::value (RTCORBA::Priority value)
+Segment_Sched_Param_Policy::importance (CORBA::Short importance)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->value_ = value;
+  this->importance_ = importance;
 }
 
 MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
@@ -37,7 +56,7 @@ MIF_Scheduler::~MIF_Scheduler (void)
 }
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr 
-MIF_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority segment_priority)
+MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr segment_policy;
@@ -49,7 +68,7 @@ MIF_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority segment_pr
 				       ENOMEM),
 				      CORBA::COMPLETED_NO));
 
-  segment_policy->value (segment_priority);
+  segment_policy->importance (importance);
 
   return segment_policy;
 
@@ -57,31 +76,41 @@ MIF_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority segment_pr
 
   
 void 
-MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
-							const char *,
-							CORBA::Policy_ptr sched_policy,
-							CORBA::Policy_ptr
-							ACE_ENV_ARG_DECL)
+MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &guid,
+					     const char *,
+					     CORBA::Policy_ptr sched_policy,
+					     CORBA::Policy_ptr
+					     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param = 
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
+  
+  CORBA::Short desired_priority = sched_param->importance ();
 
-  RTCORBA::Priority desired_priority = sched_param->value ();
-  this->current_->the_priority (desired_priority
-				ACE_ENV_ARG_PARAMETER);
+  int count;
+  ACE_OS::memcpy (&count,
+		  this->current_->id ()->get_buffer (),
+		  this->current_->id ()->length ());
   
-  CORBA::Short priority = 
-    this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+  DT* new_dt;
+  ACE_NEW (new_dt,
+	   DT (&this->lock_,
+	       count));
   
+  new_dt->msg_priority (desired_priority);
   
-  if (desired_priority != priority)
+  if (count != 1)
     {
-      ACE_ERROR ((LM_ERROR,
-		  "ERROR: Unable to set thread "
-		  "priority to %d\n", desired_priority));
-      ACE_THROW ((CORBA::INTERNAL ()));
+      //NOT Main Thread
+      ready_que_.enqueue_prio (new_dt);
+      DT* main_dt;
+      ACE_Message_Block* msg;
+      wait_que_.dequeue_head (msg);
+      main_dt = ACE_dynamic_cast (DT*, msg);
+      main_dt->resume ();
+      new_dt->suspend ();
     }
 }
 
@@ -104,20 +133,56 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 
 void 
 MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &guid,
-						     const char *name,
-						     CORBA::Policy_ptr sched_param,
-						     CORBA::Policy_ptr implicit_sched_param
-						     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-		     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
+					  const char *name,
+					  CORBA::Policy_ptr sched_policy,
+					  CORBA::Policy_ptr implicit_sched_param
+					  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
-  this->begin_new_scheduling_segment (guid,
-				      name,
-				      sched_param,
-				      implicit_sched_param
-				      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  int count;
+  ACE_OS::memcpy (&count,
+		  this->current_->id ()->get_buffer (),
+		  this->current_->id ()->length ());
+
+  MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param = 
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
   
+  CORBA::Short desired_priority = sched_param->importance ();
+
+  DT* new_dt;
+  ACE_NEW (new_dt,
+	   DT (&this->lock_,
+	       count));
+  
+  new_dt->msg_priority (desired_priority);
+  
+  if (count == 1)
+    {
+      wait_que_.enqueue_prio (new_dt);
+      DT* run_dt;
+      ACE_Message_Block* msg;
+      ready_que_.dequeue_head (msg);
+      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt->resume ();
+      new_dt->suspend ();
+    }
+  else
+    {
+      ready_que_.enqueue (new_dt);
+      DT* run_dt;
+      ACE_Message_Block* msg;
+      wait_que_.dequeue_head (msg);
+      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt->resume ();
+      new_dt->suspend ();
+    }
+  //    this->begin_new_scheduling_segment (guid,
+  //  				      name,
+  //  				      sched_param,
+  //  				      implicit_sched_param
+  //  				      ACE_ENV_ARG_PARAMETER);
+  //    ACE_CHECK;
 }
     
 void 

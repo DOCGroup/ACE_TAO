@@ -8,11 +8,12 @@
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
 #include "ace/Synch.h"
+#include "ace/Task.h"
 #include "MIF_DT_Creator.h"
 
 class Task_Stats;
 
-class DT_Test 
+class DT_Test :public ACE_Task <ACE_SYNCH>
 {
  public:
   
@@ -28,7 +29,12 @@ class DT_Test
 
   void dt_creator (MIF_DT_Creator* dt_creator);
 
-  Fixed_Priority_Scheduler* scheduler (void);
+  MIF_Scheduler* scheduler (void);
+
+  int activate_task (void);
+  protected:
+  /// task svc
+  virtual int svc (void);
 
  private:
   /// = Policies
