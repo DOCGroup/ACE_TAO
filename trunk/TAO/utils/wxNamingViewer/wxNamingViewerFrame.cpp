@@ -9,6 +9,10 @@
 #include "wxNamingViewer.h"
 #include "wxSelectNSDialog.h"
 
+#if defined(__WXGTK__) || defined(__WXMOTIF__)
+#include "mondrian.xpm"
+#endif
+
 
 enum {
     menuQuit = 1,
@@ -148,7 +152,7 @@ void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
 // TODO: need hourglass
         CORBA::Object_var object = pOrb->string_to_object(
             selectNS->getIOR().c_str());
-        rootContext = CosNaming::NamingContext::_narrow( object);
+        rootContext = CosNaming::NamingContext::_narrow( object.in ());
         server = selectNS->getServerName();
         serverText->SetValue( server);
         resolve();
@@ -180,7 +184,7 @@ void WxNamingViewerFrame::onUpdateUICopy( wxUpdateUIEvent& event)
 
 void WxNamingViewerFrame::resolve()
 {
-  tree->resolve( rootContext);
+  tree->resolve( rootContext.in ());
 }
 
 

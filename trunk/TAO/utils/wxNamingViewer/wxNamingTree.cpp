@@ -80,21 +80,19 @@ WxNamingTree::~WxNamingTree()
   clearChildren();
 }
 
+void WxNamingTree::clearChildren( void)
+{
+  wxTreeItemId item = GetRootItem();
+  if (item) {
+
+    clearChildren( item);
+    Delete( item);
+
+  }
+}
 
 void WxNamingTree::clearChildren( wxTreeItemId& item)
 {
-  if (item == wxTreeItemId( 0)) {
-
-    wxTreeItemId item = GetRootItem();
-    if (item) {
-
-      clearChildren( item);
-      Delete( item);
-
-    }
-    return;
-
-  }
   long cookie;
   wxTreeItemId child = GetFirstChild( item, cookie);
   while( child) {
@@ -128,18 +126,17 @@ void WxNamingTree::copySelectedToClipboard()
 }
 
 
+WxNamingObject* WxNamingTree::getTreeObject( void) const
+{
+  wxTreeItemId item = GetSelection();
+  if (item == wxTreeItemId( (wxGenericTreeItem*)0)) {
+    return 0;
+  }
+  return getTreeObject (item);
+}
+
 WxNamingObject* WxNamingTree::getTreeObject( wxTreeItemId& item) const
 {
-  if (item == wxTreeItemId( 0)) {
-
-    item = GetSelection();
-    if (item == wxTreeItemId( 0)) {
-
-      return 0;
-
-    }
-
-  }
   WxNamingObject* object = static_cast<WxNamingObject*>(
       GetItemData( item));
   return object;
@@ -206,7 +203,7 @@ void WxNamingTree::listContext( wxTreeItemId& item)
     // Get the item's object and make sure we have a context
     WxNamingObject* namingObject = getTreeObject( item);
     CosNaming::NamingContext_var context = namingObject->NamingContext();
-    if (CORBA::is_nil( context)) {
+    if (CORBA::is_nil( context.in ())) {
 
       return;
 
@@ -217,7 +214,7 @@ void WxNamingTree::listContext( wxTreeItemId& item)
     CosNaming::BindingIterator_var bi;
     context->list( listQuantum, bl, bi);
     listBindingList( item, context, bl);
-    if (!CORBA::is_nil( bi)) {
+    if (!CORBA::is_nil( bi.in ())) {
 
       while( bl->length()) {
 
@@ -263,14 +260,14 @@ void WxNamingTree::onContextPopupBindContext( wxCommandEvent& event)
 
     WxNamingObject* object = getTreeObject();
     CosNaming::NamingContext_var context = object->NamingContext();
-    if (CORBA::is_nil( context)) {
+    if (CORBA::is_nil( context.in ())) {
 
       return;
 
     }
     CosNaming::NamingContext_var newContext =
         CosNaming::NamingContext::_narrow( dialog->getObject());
-    if (CORBA::is_nil( newContext)) {
+    if (CORBA::is_nil( newContext.in ())) {
 
       wxMessageBox(
           "Object is not a CosNaming::NamingContext",
@@ -282,7 +279,7 @@ void WxNamingTree::onContextPopupBindContext( wxCommandEvent& event)
     }
     context->bind_context(
         dialog->getName(),
-        newContext);
+        newContext.in ());
     onContextPopupRefresh( event);
 
   } catch( CORBA::Exception& ex) {
@@ -311,7 +308,7 @@ void WxNamingTree::onContextPopupBindObject( wxCommandEvent& event)
     wxTreeItemId item = GetSelection();
     WxNamingObject* object = getTreeObject( item);
     CosNaming::NamingContext_var context = object->NamingContext();
-    if (CORBA::is_nil( context)) {
+    if (CORBA::is_nil( context.in ())) {
 
       return;
 
@@ -334,7 +331,7 @@ void WxNamingTree::onContextPopupBindNewContext( wxCommandEvent& event)
   wxTreeItemId item = GetSelection();
   WxNamingObject* object = getTreeObject( item);
   CosNaming::NamingContext_var context = object->NamingContext();
-  if (CORBA::is_nil( context)) {
+  if (CORBA::is_nil( context.in ())) {
 
     return;
 
@@ -348,7 +345,7 @@ void WxNamingTree::onContextPopupBindNewContext( wxCommandEvent& event)
   try {
 
     CosNaming::NamingContext_var newContext = context->new_context();
-    context->bind_context( dialog->getName(), newContext);
+    context->bind_context( dialog->getName(), newContext.in ());
     onContextPopupRefresh( event);
 
   } catch( CORBA::Exception& ex) {
@@ -361,7 +358,7 @@ void WxNamingTree::onContextPopupBindNewContext( wxCommandEvent& event)
 }
 
 
-void WxNamingTree::onContextPopupDestroy( wxCommandEvent& event)
+void WxNamingTree::onContextPopupDestroy( wxCommandEvent&)
 {
   if (wxMessageBox(
       "Are you sure you want to destroy this object?",
@@ -400,7 +397,7 @@ void WxNamingTree::onContextPopupDestroy( wxCommandEvent& event)
 }
 
 
-void WxNamingTree::onContextPopupRefresh( wxCommandEvent& event)
+void WxNamingTree::onContextPopupRefresh( wxCommandEvent&)
 {
   wxTreeItemId item = GetSelection();
   clearChildren( item);
@@ -408,7 +405,7 @@ void WxNamingTree::onContextPopupRefresh( wxCommandEvent& event)
 }
 
 
-void WxNamingTree::onContextPopupUnbind( wxCommandEvent& event)
+void WxNamingTree::onContextPopupUnbind( wxCommandEvent&)
 {
   if (wxMessageBox(
       "Are you sure you want to unbind this context?",
@@ -447,7 +444,7 @@ void WxNamingTree::onItemExpanding( wxTreeEvent& event)
 
   wxTreeItemId item = event.GetItem();
   // If this item has a child it has already been listed so nothing to do.
-  if (GetLastChild( item) != wxTreeItemId( 0)) {
+  if (GetLastChild( item) != wxTreeItemId( 0L)) {
 
     return;
 
@@ -472,7 +469,7 @@ void WxNamingTree::onLeftDClick( wxMouseEvent& event)
 }
 
 
-void WxNamingTree::onObjectPopupUnbind( wxCommandEvent& event)
+void WxNamingTree::onObjectPopupUnbind( wxCommandEvent& )
 {
   if (wxMessageBox(
       "Are you sure you want to unbind this object?",
@@ -508,7 +505,7 @@ void WxNamingTree::onObjectPopupUnbind( wxCommandEvent& event)
 }
 
 
-void WxNamingTree::onPopupViewReference( wxCommandEvent& event)
+void WxNamingTree::onPopupViewReference( wxCommandEvent&)
 {
   WxAutoDialog<WxViewIORDialog> dialog( new WxViewIORDialog(
       orb,
@@ -530,7 +527,7 @@ void WxNamingTree::onRMouseUClick( wxMouseEvent& event)
   SelectItem( item);
   WxNamingObject* object = getTreeObject( item);
   CosNaming::NamingContext_var context = object->NamingContext();
-  if (CORBA::is_nil( context)) {
+  if (CORBA::is_nil( context.in ())) {
 
     PopupMenu( objectPopup, event.m_x, event.m_y);
 

@@ -38,7 +38,9 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent):
   config = new ACE_Configuration_Win32Registry( hKey);
 #else
   // TODO: non-windoz
-    assert( config);
+  ACE_Configuration_Heap *heap = new ACE_Configuration_Heap;
+  heap->open ();
+  config = heap;
 #endif
   ACE_Configuration_Section_Key section = config->root_section();
   int index = 0;
@@ -149,4 +151,3 @@ void WxSelectNSDialog::onRemove( wxCommandEvent& WXUNUSED(event))
 
   }
 }
-

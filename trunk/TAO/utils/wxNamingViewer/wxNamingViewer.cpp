@@ -66,8 +66,7 @@ bool WxNamingViewer::OnInit()
       "wxNamingViewer",
       wxDefaultPosition,
       wxSize( 248, 198),
-      orb);
+      orb.in ());
   frame->Show( TRUE);
   return TRUE;
 }
-

@@ -1,3 +1,18 @@
+Fri Dec  1 09:31:28 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * utils/wxNamingViewer/Makefile:
+        * utils/wxNamingViewer/mondrian.xpm:
+        * utils/wxNamingViewer/wxNamingObject.cpp:
+        * utils/wxNamingViewer/wxNamingTree.h:
+        * utils/wxNamingViewer/wxNamingTree.cpp:
+        * utils/wxNamingViewer/wxNamingViewer.cpp:
+        * utils/wxNamingViewer/wxNamingViewerFrame.cpp:
+        * utils/wxNamingViewer/wxSelectNSDialog.cpp:
+          Got it to compile and run under Linux with wxGTK (the GTK
+          version of wxWindows).
+          It crashes sometimes and the fonts are way too small, but it is
+          a good start.
+        
 Fri Dec  1 09:15:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:

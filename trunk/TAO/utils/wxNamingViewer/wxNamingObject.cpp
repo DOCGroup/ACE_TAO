@@ -2,7 +2,7 @@
 // wxNamingObject.cpp
 
 #include "pch.h"
-#include "WxNamingObject.h"
+#include "wxNamingObject.h"
 
 
 WxNamingObject::WxNamingObject(
