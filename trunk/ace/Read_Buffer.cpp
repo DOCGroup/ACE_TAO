@@ -124,7 +124,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
     }
 
   // Increment the number of bytes.
-  this->size_ += slot;
+  // @@@ Temporary hack. We should solve this by abstracting the end-of-line
+  // conventions and using it throughout ACE
+  this->size_ += slot == 0 ? 0 : slot - 1;
 
   // Don't bother going any farther if the total size is 0.
   if (this->size_ == 0)

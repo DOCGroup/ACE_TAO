@@ -219,6 +219,9 @@
 
 typedef ACE_UINT16 ACE_USHORT16;
 
+// Define a generic byte for use in codecs
+typedef unsigned char ACE_Byte;
+
 // Define a pseudo wide character type when wchar is not supported so we
 // can support basic wide character string operations.
 
