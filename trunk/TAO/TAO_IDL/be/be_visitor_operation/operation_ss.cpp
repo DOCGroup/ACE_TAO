@@ -339,7 +339,7 @@ int
 be_visitor_operation_ss::gen_raise_exception (be_type *,
                                               const char *excep,
                                               const char *completion_status,
-                                              const char *env)
+                                              const char * /* env */)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -351,7 +351,7 @@ be_visitor_operation_ss::gen_raise_exception (be_type *,
 }
 
 int
-be_visitor_operation_ss::gen_check_exception (be_type *, const char *env)
+be_visitor_operation_ss::gen_check_exception (be_type *, const char * /* env */)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   

@@ -1,3 +1,10 @@
+Thu Mar  4 16:53:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+	  Removed some more unused args, as noted by Irfan and
+	  g++.
+
 Thu Mar 04 16:29:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
