@@ -1133,3 +1133,9 @@ ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
   delete [] x;
   return flag;
 }
+
+ACE_INLINE int
+ACE_InputCDR::do_byte_swap (void) const
+{
+  return this->do_byte_swap_;
+}
