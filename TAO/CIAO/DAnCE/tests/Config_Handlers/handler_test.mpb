@@ -1,12 +1,13 @@
 //$Id$
 
-project : taoexe, ciao_client_dnc, ciao_deployment_stub  {   // , portableserver, typecodefactory {
+project : taoexe, ciao_client_dnc, ciao_deployment_stub  { 
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(XERCESCROOT)/include /usr/include $(ACE_ROOT)/TAO/CIAO/DAnCE
   libpaths += $(XERCESCROOT)/lib /usr/lib // $(ACE_ROOT)/lib 
   libs     += xerces-c Config_Handlers // Deployment_stub Deployment_svnt
+  libs     += CIAO_DnC_Server
   after    += Config_Handlers
 
   Template_Files {
