@@ -1,13 +1,26 @@
+Tue Nov 18 16:22:45 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_assembly_deployer.doxygen :
+        * etc/ciao_componentserver.doxygen :
+        * etc/ciao_daemon.doxygen :
+        * etc/ciao_serveractivator.doxygen :
+        * etc/ciao_xml_helpers.doxygen :
+        * bin/generate_doxygen.pl :
+        * html/index.html :
+        Added some more doxygen files.
+
 Tue Nov 18 16:14:29 2003  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_hpux_aCC.GNU: Add preprocessor defs
 	  for threads ability to CPPFLAGS, not CCFLAGS. Thanks to Ossama
 	  Othman <ossama@dre.vanderbilt.edu> for this suggestion.
 
+
 Tue Nov 18 16:03:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Thanks to Olli Savia <ops@iki.fi> for the following patches:
-        
+
         * ace/OS_NS_sys_mman.inl:
           Added #include OS_NS_sys_stat.h if __Lynx__ is defined.
 
