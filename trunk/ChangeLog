@@ -1,6 +1,13 @@
+Wed Jul 18 15:59:03 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-tru64.h:
+
+          Removed _LIBC_POLLUTION_H. It seems that this macro is causing
+          problems for some users.
+
 Tue Jul 17 13:00:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/run_test.lst: Enabled the MEM_Stream test on Linux. 
+	* tests/run_test.lst: Enabled the MEM_Stream test on Linux.
 
 Mon Jul 16 14:59:32 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -553,7 +560,7 @@ Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
           contain Other.  The netsvcs library requires Naming_Context.
 
 Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-  
+
         * ace/Makefile (LOGGING_FILES): Added support for
           Log_Msg_UNIX_Syslog.
 
