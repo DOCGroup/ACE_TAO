@@ -1962,7 +1962,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   // Free up underlying objects of the simulated semaphore.
-  int r1 = ACE_OS::mutex_destroy (&s->lock_);
+  int r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
   int r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
@@ -2067,13 +2067,19 @@ ACE_OS::sema_init (ACE_sema_t *s,
   // the semaphore count.  Notice that we initialize the
   // event object as "manually reset" so we can amortize the
   // cost for singling/reseting the event.
-  if (ACE_OS::mutex_init (&s->lock_, type, name, arg, sa) == 0
-      && ACE_OS::event_init (&s->count_nonzero_, 1, 1, type, name, arg, sa) == 0
-      && ACE_OS::mutex_lock (&s->lock_) == 0)
+  // @@ I changed the mutex type to thread_mutex.  Notice that this
+  // is basically a CriticalSection object and doesn't not has
+  // any security attribute whatsoever.  However, since this
+  // semaphore implementation only works within a process, there
+  // shouldn't any security issue at all.
+  if (ACE_OS::thread_mutex_init (&s->lock_, type, name, arg) == 0
+      && ACE_OS::event_init (&s->count_nonzero_, 1,
+                             count > 0, type, name, arg, sa) == 0
+      && ACE_OS::thread_mutex_lock (&s->lock_) == 0)
     {
       s->count_ = count;
 
-      if (ACE_OS::mutex_unlock (&s->lock_) == 0)
+      if (ACE_OS::thread_mutex_unlock (&s->lock_) == 0)
         result = 0;
     }
 
@@ -2082,7 +2088,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   // for errors.
   if (result == -1)
     {
-      ACE_OS::mutex_destroy (&s->lock_);
+      ACE_OS::thread_mutex_destroy (&s->lock_);
       ACE_OS::event_destroy (&s->count_nonzero_);
     }
   return result;
@@ -2155,7 +2161,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 
   // Since we are simulating semaphores, we need to update semaphore
   // count manually.  Grab the lock to prevent race condition first.
-  if (ACE_OS::mutex_lock (&s->lock_) == 0)
+  if (ACE_OS::thread_mutex_lock (&s->lock_) == 0)
     {
       // Check the original state of event object.  Single the event
       // object in transition from semaphore not available to
@@ -2165,7 +2171,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
       else
         result = 0;
 
-      ACE_OS::mutex_unlock (&s->lock_);
+      ACE_OS::thread_mutex_unlock (&s->lock_);
     }
   return result;
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
@@ -2257,7 +2263,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
 
   if (result == WAIT_OBJECT_0)	// Proceed when it is available.
     {
-      ACE_OS::mutex_lock (&s->lock_);
+      ACE_OS::thread_mutex_lock (&s->lock_);
 
       // Need to double check if the semaphore is still available.
       // The double checking scheme will slightly affect the
@@ -2273,7 +2279,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
           result = 0;
         }
 
-      ACE_OS::mutex_unlock (&s->lock_);
+      ACE_OS::thread_mutex_unlock (&s->lock_);
     }
 
   // Translate error message to errno used by ACE.
@@ -2372,7 +2378,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     switch (::WaitForSingleObject (s->count_nonzero_, INFINITE))
       {
       case WAIT_OBJECT_0:
-        ACE_OS::mutex_lock (&s->lock_);
+        ACE_OS::thread_mutex_lock (&s->lock_);
 
         // Need to double check if the semaphore is still available.
 	// This time, we shouldn't wait at all.
@@ -2386,7 +2392,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
             result = 0;
           }
 
-        ACE_OS::mutex_unlock (&s->lock_);
+        ACE_OS::thread_mutex_unlock (&s->lock_);
 	// if we didn't get a hold on the semaphore, the result won't
 	// be 0 and thus, we'll start from the beginning again.
         if (result == 0)
@@ -2499,7 +2505,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       switch (::WaitForSingleObject (s->count_nonzero_, relative_time.msec ()))
         {
         case WAIT_OBJECT_0:
-          ACE_OS::mutex_lock (&s->lock_);
+          ACE_OS::thread_mutex_lock (&s->lock_);
 
           // Need to double check if the semaphore is still available.
 	  // We can only do a "try lock" styled wait here to avoid
@@ -2514,7 +2520,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
               result = 0;
             }
 
-          ACE_OS::mutex_unlock (&s->lock_);
+          ACE_OS::thread_mutex_unlock (&s->lock_);
 
 	  // Only return when we successfully get the semaphore.
           if (result == 0)
