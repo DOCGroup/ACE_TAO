@@ -3,14 +3,16 @@
 #include "RT_Protocols_Hooks.h"
 #include "RT_Policy_i.h"
 
-#include "tao/Invocation.h"
-#include "tao/Stub.h"
-#include "tao/MProfile.h"
-#include "tao/Priority_Mapping_Manager.h"
+#include "Invocation.h"
+#include "Stub.h"
+#include "MProfile.h"
+#include "Priority_Mapping_Manager.h"
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(tao, RT_Protocols_Hooks, "$Id$");
+ACE_RCSID (tao,
+           RT_Protocols_Hooks,
+           "$Id$")
 
 #if (TAO_HAS_RT_CORBA == 1)
 
