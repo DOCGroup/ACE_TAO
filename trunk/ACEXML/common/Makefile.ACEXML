@@ -9,30 +9,30 @@ SHLIB_UNCHECKED = libACEXML.$(SOEXT)
 
 
 FILES = \
-  SAXExceptions \
-  Attributes_Def_Builder \
   AttributesImpl \
-  Transcode \
-  Mem_Map_Stream \
-  Validator \
-  Exception \
+  Attributes_Def_Builder \
   CharStream \
-  XMLFilterImpl \
+  DefaultHandler \
+  DTD_Manager \
+  Element_Def_Builder \
+  Encoding \
+  Env \
+  Exception \
+  FileCharStream \
+  HttpCharStream \
   InputSource \
   LocatorImpl \
+  Mem_Map_Stream \
   NamespaceSupport \
-  URL_Addr \
+  SAXExceptions \
   StrCharStream \
-  DTD_Manager \
-  DefaultHandler \
-  Env \
-  FileCharStream \
-  Element_Def_Builder \
   StreamFactory \
-  HttpCharStream \
-  ZipCharStream \
-  Encoding \
-  XML_Codecs
+  Transcode \
+  URL_Addr \
+  Validator \
+  XMLFilterImpl \
+  XML_Codecs \
+  ZipCharStream
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -40,9 +40,10 @@ FILES = \
 LIB   = $(LIB_UNCHECKED)
 SHLIB = $(SHLIB_UNCHECKED)
 
+ACE_SHLIBS = -lACE
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 LSRC   = $(addsuffix .cpp, $(FILES))
-ACELIB = -lACE
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -51,8 +52,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS     += -I../..
-
-
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
     CPPFLAGS += -DACEXML_BUILD_DLL

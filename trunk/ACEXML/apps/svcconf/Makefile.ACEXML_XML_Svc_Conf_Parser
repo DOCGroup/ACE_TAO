@@ -18,9 +18,10 @@ FILES = \
 LIB   = $(LIB_UNCHECKED)
 SHLIB = $(SHLIB_UNCHECKED)
 
+ACE_SHLIBS = -lACE
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 LSRC   = $(addsuffix .cpp, $(FILES))
-ACELIB = -lACE
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -29,8 +30,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS     += -I../../..
-
-
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
     CPPFLAGS += -DACE_AS_STATIC_LIBS
