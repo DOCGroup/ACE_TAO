@@ -71,6 +71,10 @@ public:
   // Write the contents of the logging record to the appropriate
   // <ostream>.
 #else
+  int format_msg (const ASYS_TCHAR host_name[],
+                  u_long verbose_flag,
+                  CString *msg);
+
   int print (const ASYS_TCHAR host_name[], 
 	     u_long verbose_flag, 
 	     FILE *fp);
