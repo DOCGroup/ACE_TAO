@@ -404,16 +404,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:ImplementationRepository/ServerObject:
 
 void POA_ImplementationRepository::ServerObject::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_ImplementationRepository::ServerObject::_interface_repository_id (void) const
@@ -1626,16 +1617,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:ImplementationRepository/Administratio
 
 void POA_ImplementationRepository::Administration::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_ImplementationRepository::Administration::_interface_repository_id (void) const
@@ -2418,16 +2400,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:ImplementationRepository/ServerInforma
 
 void POA_ImplementationRepository::ServerInformationIterator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_ImplementationRepository::ServerInformationIterator::_interface_repository_id (void) const

@@ -219,15 +219,7 @@ void POA_CORBA::Policy::_non_existent_skel (
 
 void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-    {
-      ACE_THROW (CORBA_BAD_OPERATION ());
-    }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
