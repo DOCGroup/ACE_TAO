@@ -187,9 +187,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->endpoint_selector_factory_,
            TAO_Endpoint_Selector_Factory);
 
-  ACE_NEW (this->default_endpoint_selector_,
-           TAO_Default_Endpoint_Selector);
-
   ACE_NEW (this->priority_endpoint_selector_,
            TAO_Priority_Endpoint_Selector);
 
@@ -222,6 +219,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+  ACE_NEW (this->default_endpoint_selector_,
+           TAO_Default_Endpoint_Selector);
 
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
