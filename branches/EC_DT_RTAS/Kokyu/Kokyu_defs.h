@@ -146,9 +146,9 @@ namespace Kokyu
 
       void destroy (void);
 
-      const ACE_Object_Counter::object_id getID (void) const;
-      const ACE_Object_Counter::object_id* getID_ptr (void) const;
-      void setID (ACE_Object_Counter::object_id);
+      const Object_ID getID (void) const;
+      const Object_ID* getID_ptr (void) const;
+      void setID (Object_ID);
 
     protected:
       /// Destructor
@@ -161,7 +161,7 @@ namespace Kokyu
       ACE_Allocator *allocator_;
       //if this object has to be deleted, then delete it using the allocator
       //if one is present.
-      ACE_Object_Counter::object_id oid_;
+      Object_ID oid_;
     };
 
   enum DSRT_Sched_Type_t

@@ -54,7 +54,7 @@ public:
 
   Dispatch_Command* command ();
 
-  void set_ID (ACE_Object_Counter::object_id oid);
+  void set_ID (Object_ID oid);
 
   //Any reason why this shouldn't be visible?
   const QoSDescriptor& qos_info() const;
