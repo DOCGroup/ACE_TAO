@@ -1,12 +1,17 @@
+Tue Jan 21 19:29:04 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * bin/auto_run_tests.lst: Disabled orbsvcs/Test/EC_MT_MCast on 
+          static builds.
+
 Tue Jan 21 08:43:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/generate_doxygen.pl: Fixed a cut and paste error. 
+        * bin/generate_doxygen.pl: Fixed a cut and paste error.
 
 Mon Jan 20 16:22:43 2003  Heather Drury <drury_h@ociweb.com>
 
         * ace/NT_Service.cpp: Modified return statement as the
-	  wait_for_service_state function is declared as void and it was
-	  returning an int.
+          wait_for_service_state function is declared as void and it was
+          returning an int.
 
 Mon Jan 20 15:48:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
