@@ -1,3 +1,9 @@
+Thu Jul 29 13:40:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	  More fine tuning on the scripts so they won't give false
+	  negatives on slow machines.
+
 Thu Jul 29 12:12:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
