@@ -22,7 +22,7 @@ ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
   ACE_Sig_Handler::dispatch (signum, info, context);
 }
 
-static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ace_sig_handler_dispatch);
+#define ace_signal_handler_dispatcher ACE_SignalHandler(ace_sig_handler_dispatch)
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 extern "C" void
@@ -32,14 +32,14 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
   ACE_Sig_Handlers::dispatch (signum, info, context);
 }
 
-static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ace_sig_handlers_dispatch);
+#define ace_signal_handlers_dispatcher ACE_SignalHandler(ace_sig_handlers_dispatch)
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #else
-static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ACE_Sig_Handler::dispatch);
+#define ace_signal_handler_dispatcher ACE_SignalHandler(ACE_Sig_Handler::dispatch)
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ACE_Sig_Handlers::dispatch);
+#define ace_signal_handlers_dispatcher ACE_SignalHandler(ACE_Sig_Handlers::dispatch)
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_HAS_SIG_C_FUNC */
 
@@ -528,10 +528,8 @@ int ACE_Sig_Handlers::sigkey_ = 0;
 int ACE_Sig_Handlers::third_party_sig_handler_ = 0;
 
 // Make life easier by defining typedefs...
-typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
-        ACE_SIG_HANDLERS_SET;
-typedef ACE_Fixed_Set_Iterator <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>
-        ACE_SIG_HANDLERS_ITERATOR;
+typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_SET;
+typedef ACE_Fixed_Set_Iterator <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_ITERATOR;
 
 class ACE_Sig_Handlers_Set
 {
