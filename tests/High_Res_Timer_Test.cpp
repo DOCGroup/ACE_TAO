@@ -118,7 +118,7 @@ main (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        iterations = ACE_OS::atoi (getopt.optarg);
+        iterations = ACE_OS::atoi (getopt.opt_arg ());
         break;
       }
 

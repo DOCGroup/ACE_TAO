@@ -1,406 +1,523 @@
+Wed Dec 26 11:18:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Get_Opt.cpp (permute): Add ACE_TEXT() around the
+	  "--" string to make things work properly on Unicode builds.
+  	  Thanks to Johnny Willemsen and Don Hinton for contributing this
+ 	  fix!
+
+Wed Dec 26 09:07:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+        * tests/*.cpp: Replaced all uses of getopt.optarg with
+	  getopt.opt_arg() and all uses of getopt.optind with
+ 	  getopt.opt_ind().
+
+        * ace/Logging_Strategy.cpp
+          ace/Naming_Context.cpp
+          ace/Service_Config.cpp
+          ace/Service_Manager.cpp
+          performance-tests/Misc/basic_perf.cpp
+          performance-tests/Misc/childbirth_time.cpp
+          performance-tests/Misc/context_switch_time.cpp
+          performance-tests/Misc/preempt.cpp
+          performance-tests/Misc/test_guard.cpp
+          performance-tests/RPC/client.cpp
+          performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp
+          performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp
+          performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp
+          performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp
+          performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp
+          performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp
+          performance-tests/TCP/tcp_test.cpp
+          performance-tests/UDP/udp_test.cpp
+          apps/Gateway/
+          gperf/Options.cpp
+          drwho/Options.cpp
+          netsvcs/clients/Tokens/collection/collection.cpp
+          netsvcs/clients/Tokens/collection/rw_locks.cpp
+          netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp
+          netsvcs/clients/Tokens/manual/manual.cpp
+          netsvcs/clients/Tokens/mutex/test_mutex.cpp
+          netsvcs/clients/Tokens/rw_lock/rw_locks.cpp
+          netsvcs/lib/Client_Logging_Handler.cpp
+          netsvcs/lib/Name_Handler.cpp
+          netsvcs/lib/TS_Server_Handler.cpp
+          netsvcs/lib/Server_Logging_Handler_T.cpp
+          netsvcs/lib/TS_Clerk_Handler.cpp
+          netsvcs/lib/Token_Handler.cpp
+          examples/ASX/Event_Server/Event_Server/Options.cpp
+          examples/ASX/Event_Server/Transceiver/transceiver.cpp
+          examples/ASX/UPIPE_Event_Server/Options.cpp
+          examples/ASX/UPIPE_Event_Server/Peer_Router.cpp
+          examples/Connection/blocking/SPIPE-connector.cpp
+          examples/Connection/blocking/SPIPE-acceptor.cpp
+          examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp
+          examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp
+          examples/IPC_SAP/SSL_SAP/SSL-client.cpp
+          examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp
+          examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp
+          examples/Logger/Acceptor-server/server_loggerd.cpp
+          examples/Logger/simple-server/server_loggerd.cpp
+          examples/Mem_Map/IO-tests/test_io.cpp
+          examples/Misc/test_get_opt.cpp
+          examples/NT_Service/main.cpp
+          examples/OS/Process/process.cpp
+          examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp
+          examples/QOS/Change_Sender_TSpec/QoS_Util.cpp
+          examples/QOS/Simple/QoS_Util.cpp
+          examples/Reactor/Multicast/client.cpp
+          examples/Reactor/Ntalker/ntalker.cpp
+          examples/Reactor/Proactor/simple_test_proactor.cpp
+          examples/Reactor/Proactor/test_cancel.cpp
+          examples/Reactor/Proactor/test_proactor.cpp
+          examples/Reactor/Proactor/test_proactor2.cpp
+          examples/Reactor/Proactor/test_proactor3.cpp
+          examples/Reactor/Proactor/test_udp_proactor.cpp
+          examples/Reactor/WFMO_Reactor/test_multithreading.cpp
+          examples/Reactor/WFMO_Reactor/test_talker.cpp
+          examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp
+          examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp
+          examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp
+          examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i
+          examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.i
+          examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.i
+          examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i
+          examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i
+          examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.i
+          examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.i
+          examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i
+          examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i
+          examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp
+          examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i
+          examples/Shared_Malloc/Options.cpp
+          examples/Shared_Malloc/test_position_independent_malloc.cpp
+          examples/Synch/proc_sema.cpp
+          examples/Threads/process_manager.cpp
+          examples/Threads/reader_writer.cpp
+          examples/Threads/recursive_mutex.cpp
+          examples/Web_Crawler/Options.cpp: Replaced all uses of getopt.optarg
+          with getopt.opt_arg().
+
+        * examples/Misc/test_get_opt.cpp (main): 
+        * examples/OS/Process/imore.cpp (parse_args):
+        * examples/NT_Service/main.cpp (parse_args): Replaced all uses
+          of getopt.optind with getopt.opt_ind ().
+
+        * ace/Get_Opt.h: Made the optind, optarg, opterr, argv_, and argc_
+          data members public rather than private to avoid breaking
+          existing code.  Also removed the new optind and optarg macros to
+          avoid breaking existing code that used those names as
+          identifiers!
+
 Wed Dec 26 06:19:32 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Proactor.cpp: 
-	* ace/Proactor.h: The #include "ace/Proactor.i" must come inside
-	  of the #ifdefs that determine if the Proactor will be available
-	  on a particular platform.
+        * ace/Proactor.cpp: 
+        * ace/Proactor.h: The #include "ace/Proactor.i" must come inside
+          of the #ifdefs that determine if the Proactor will be available
+          on a particular platform.
 
-	* examples/Reactor/Misc/test_reactors.cpp: Removed a duplicate
-	  ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int> instantiation.
+        * examples/Reactor/Misc/test_reactors.cpp: Removed a duplicate
+          ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int> instantiation.
 
 Tue Dec 25 19:43:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Updated dependencies that were left behind from the last one. 
+        * Updated dependencies that were left behind from the last one. 
 
 Tue Dec 25 09:30:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Makefile: 
-  	* tests/Makefile.bor: Added the new Proactor_Timer_Test.
+        * tests/Makefile: 
+        * tests/Makefile.bor: Added the new Proactor_Timer_Test.
     
-	* tests/run_test.lst: Added the new Proactor_Timer_Test.
+        * tests/run_test.lst: Added the new Proactor_Timer_Test.
 
-	* tests: Added the new Proactor_Timer_Test.cpp and
-	  Proactor_Timer_Test.dsp to exercise the new high-resolution
- 	  support in the ACE_Proactor.  Thanks to Miljenko Norsic for
- 	  contributing this.
+        * tests: Added the new Proactor_Timer_Test.cpp and
+          Proactor_Timer_Test.dsp to exercise the new high-resolution
+          support in the ACE_Proactor.  Thanks to Miljenko Norsic for
+          contributing this.
   
-	* ace/Proactor.cpp: Added support for high-resolution timers to
-	  the proactor.  Thanks to Miljenko Norsic for contributing this.
+        * ace/Proactor.cpp: Added support for high-resolution timers to
+          the proactor.  Thanks to Miljenko Norsic for contributing this.
 
-	* ace/OS.{h,i}:  Changed the ACE_OS::event_timedwait() method to
-	  allow callers to specify either relative or absolute time.
-  	  Thanks to Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se> for
- 	  contributing this.
+        * ace/OS.{h,i}:  Changed the ACE_OS::event_timedwait() method to
+          allow callers to specify either relative or absolute time.
+          Thanks to Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se> for
+          contributing this.
 
-	* ace/Synch.{h,cpp}: Changed the timed wait() method on ACE_Event so
-	  allow callers to specify either relative or absolute time.
-  	  Thanks to Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se> for
- 	  contributing this.
+        * ace/Synch.{h,cpp}: Changed the timed wait() method on ACE_Event so
+          allow callers to specify either relative or absolute time.
+          Thanks to Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se> for
+          contributing this.
   
 Tue Dec 25 12:55:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* Updated all dependencies.
+        * Updated all dependencies.
 
 Tue Dec 25 09:30:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Get_Opt_Test.cpp: Make the "test_args" parameter to 
-	  parse_args() a *const* ACE_TCHAR rather than just an ACE_TCHAR.
-	
-	* tests/Get_Opt_Test.cpp (main): Added an ACE_UNUSED_ARG(argv) and
-	  replaced the name of the test so the log file stuff will work
- 	  properly.
+        * tests/Get_Opt_Test.cpp: Make the "test_args" parameter to 
+          parse_args() a *const* ACE_TCHAR rather than just an ACE_TCHAR.
+        
+        * tests/Get_Opt_Test.cpp (main): Added an ACE_UNUSED_ARG(argv) and
+          replaced the name of the test so the log file stuff will work
+          properly.
 
-	* ace/Get_Opt.{h,i}: Changed the return type of opt_ind() from
-	  int to int& so that optind++ will work correctly!  Thanks
-	  to Don Hinton for this fix.
+        * ace/Get_Opt.{h,i}: Changed the return type of opt_ind() from
+          int to int& so that optind++ will work correctly!  Thanks
+          to Don Hinton for this fix.
 
 Tue Dec 25 09:07:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Threads/tss2.cpp: 
-	* examples/Threads/TSS_Task.h:
-	* examples/Threads/task_two.cpp:
-	* examples/Threads/reader_writer.cpp:
-	* examples/Threads/manual_event.cpp:
-	* examples/Threads/future2.cpp:
-	* examples/Threads/future1.cpp: 
-	* examples/Reactors/Misc/teste_reactors.cpp:
-	* netsvcs/lib/Server_Logging_T.cpp:
-	* netsvcs/lib/Server_Logging.cpp: Added #include of
-	  Atomic_Op.h. Added template instantiations for ACE_Atomic_Op_Ex
-	  in places that was required.
+        * examples/Threads/tss2.cpp: 
+        * examples/Threads/TSS_Task.h:
+        * examples/Threads/task_two.cpp:
+        * examples/Threads/reader_writer.cpp:
+        * examples/Threads/manual_event.cpp:
+        * examples/Threads/future2.cpp:
+        * examples/Threads/future1.cpp: 
+        * examples/Reactors/Misc/teste_reactors.cpp:
+        * netsvcs/lib/Server_Logging_T.cpp:
+        * netsvcs/lib/Server_Logging.cpp: Added #include of
+          Atomic_Op.h. Added template instantiations for ACE_Atomic_Op_Ex
+          in places that was required.
 
-	* netsvcs/lib/Makefile:
-	* netsvcs/servers/makefile: Updated dependencies.
+        * netsvcs/lib/Makefile:
+        * netsvcs/servers/makefile: Updated dependencies.
 
 Mon Dec 25 01:05:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Atomic_Op.h: Added a #include to get it compiling on win32
-	  platforms.   
+        * ace/Atomic_Op.h: Added a #include to get it compiling on win32
+          platforms.   
 
 Mon Dec 25 00:18:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Merry Christmas to the members of the doc_group and to all the
-	  users the world over.
+        * Merry Christmas to the members of the doc_group and to all the
+          users the world over.
 
-	* ace/ace_lib.dsp:
-	* ace/ace_dll.dsp: Added Atomic_Op.{h,cpp} to the project files. 
+        * ace/ace_lib.dsp:
+        * ace/ace_dll.dsp: Added Atomic_Op.{h,cpp} to the project files. 
 
 Mon Dec 24 23:52:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Synch_T.cpp:
-	* ace/Synch_T.h: Removed ACE_Atomic_Op to a new file.  
+        * ace/Synch_T.cpp:
+        * ace/Synch_T.h: Removed ACE_Atomic_Op to a new file.  
 
-	* ace/Atomic_Op.h:
-	* ace/Atomic_Op.i:
-	* ace/Atomic_Op.cpp: The class ACE_Atomic_Op is in this file now. 
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.i:
+        * ace/Atomic_Op.cpp: The class ACE_Atomic_Op is in this file now. 
 
-	* ace/Functor.h:
-	* ace/Functor.i: Added template specializations for some base
-	  types like ACE_UINT16. Thanks to Joe Hoffert for giving the
-	  patches.  
-	
-	* ace/RMCast/RMCast_Reassembly.cpp: Removed a template
-	  instantation for ACE_Equal_To.
-	  
-	* tests/Atomic_Op_Test.cpp:
-	* tests/Auto_IncDec_Test.cpp:
-	* tests/Cache_Map_Manager_Test.cpp:
-	* tests/Future_Set_Test.cpp:
-	* tests/Future_Test.cpp:
-	* tests/Hash_Map_Bucket_Iterator_Test.cpp:
-	* tests/MEM_Stream_Test.cpp:
-	* tests/Map_Manager_Test.cpp:
-	* tests/Message_Queue_Notifications_Test.cpp:
-	* tests/Notify_Performance_Test.cpp:
-	* tests/Reactors_Test.cpp:
-	* tests/Reader_Writer_Test.cpp:
-	* tests/Upgradable_RW_Test.cpp: Added #include of Atomic_Op.h in
-	  all the above files.
+        * ace/Functor.h:
+        * ace/Functor.i: Added template specializations for some base
+          types like ACE_UINT16. Thanks to Joe Hoffert for giving the
+          patches.  
+        
+        * ace/RMCast/RMCast_Reassembly.cpp: Removed a template
+          instantation for ACE_Equal_To.
+          
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Auto_IncDec_Test.cpp:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Future_Set_Test.cpp:
+        * tests/Future_Test.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Upgradable_RW_Test.cpp: Added #include of Atomic_Op.h in
+          all the above files.
 
 Mon Dec 24 20:12:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Synch_T.h: 
-	* ace/Synch_T.cpp: Changed a copy constructor in ACE_Atomic_Op to 
-  	  take ACE_Atomic_Op  as an argument instead of
-	  ACE_Atomic_Op_Ex. This should fix compile errors in g++. 
+        * ace/Synch_T.h: 
+        * ace/Synch_T.cpp: Changed a copy constructor in ACE_Atomic_Op to 
+          take ACE_Atomic_Op  as an argument instead of
+          ACE_Atomic_Op_Ex. This should fix compile errors in g++. 
 
-	* ace/Atomic_Op.i: Made a cosmetic change.
+        * ace/Atomic_Op.i: Made a cosmetic change.
 
 
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Atomic_Op.i: Make sure to initialize the mutex_ reference in the 
-	  ACE_Atomic_Op_Ex copy constructor. 	
+        * ace/Atomic_Op.i: Make sure to initialize the mutex_ reference in the 
+          ACE_Atomic_Op_Ex copy constructor.    
 
-	* ace/OS.cpp (pwrite): The lseek() call must use SEEK_CUR rather
-	  than SEEK_SET.  Thanks to Duane Binder
- 	  <duane.binder@veritas.com> for reporting this.  This fixes bugid
- 	  1095.
+        * ace/OS.cpp (pwrite): The lseek() call must use SEEK_CUR rather
+          than SEEK_SET.  Thanks to Duane Binder
+          <duane.binder@veritas.com> for reporting this.  This fixes bugid
+          1095.
 
-	* ace/Proactor.i (run_event_loop): Refactored the code to
-	  use the new ACE_Proactor::check_reconfiguration() static method,
- 	  just like the Reactor!
+        * ace/Proactor.i (run_event_loop): Refactored the code to
+          use the new ACE_Proactor::check_reconfiguration() static method,
+          just like the Reactor!
 
-	* ace/Proactor.h: Added the check_reconfiguration() static method
-	  to ACE_Proactor, a la the Reactor!
+        * ace/Proactor.h: Added the check_reconfiguration() static method
+          to ACE_Proactor, a la the Reactor!
 
-	* tests/Thread_Pool_Reactor_Resume_Test.cpp,
-	* tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp,
-	* tests/Thread_Pool_Reactor_Test.cpp: Changed the signature of the
-	  reactor_event_hook() method to conform to the minor
- 	  modifications outlined below.
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp,
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp,
+        * tests/Thread_Pool_Reactor_Test.cpp: Changed the signature of the
+          reactor_event_hook() method to conform to the minor
+          modifications outlined below.
 
-	* ace/Reactor.h: Changed the signature of
-	  ACE_Reactor::check_reconfiguration() to reflect the following
- 	  change.
-	
-	* ace/Reactor.h: Changed the REACTOR_EVENT_HOOK typedef to take a pointer
-	  to the ACE_Reactor.  Thanks to Alex Libman for suggesting this.
+        * ace/Reactor.h: Changed the signature of
+          ACE_Reactor::check_reconfiguration() to reflect the following
+          change.
+        
+        * ace/Reactor.h: Changed the REACTOR_EVENT_HOOK typedef to take a pointer
+          to the ACE_Reactor.  Thanks to Alex Libman for suggesting this.
 
-	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp: 
-	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp: 
-	* examples/Threads/tss2.cpp: 
-	* examples/Reactor/Misc/test_reactors.cpp: 
-	* examples/Reactor/Proactor/post_completions.cpp: 
-	* examples/Reactor/Proactor/test_timeout.cpp: 
-	* examples/Threads/manual_event.cpp: 
-	* examples/Threads/future1.cpp: 
-	* examples/Threads/future2.cpp: 
-	* examples/Threads/reader_writer.cpp:
-	* examples/Threads/task_two.cpp: 
-	* tests/Atomic_Op_Test.cpp: 
-	* tests/Auto_IncDec_Test.cpp: 
-	* tests/Future_Set_Test.cpp: 
-	* tests/Future_Test.cpp: 
-	* tests/MEM_Stream_Test.cpp:   
-	* tests/Message_Queue_Notifications_Test.cpp: 
-	* tests/Notify_Performance_Test.cpp: 
-	* tests/Reactors_Test.cpp: 
-	* tests/Upgradable_RW_Test.cpp: 
-	* tests/Reader_Writer_Test.cpp: 
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp: 
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp: 
+        * examples/Threads/tss2.cpp: 
+        * examples/Reactor/Misc/test_reactors.cpp: 
+        * examples/Reactor/Proactor/post_completions.cpp: 
+        * examples/Reactor/Proactor/test_timeout.cpp: 
+        * examples/Threads/manual_event.cpp: 
+        * examples/Threads/future1.cpp: 
+        * examples/Threads/future2.cpp: 
+        * examples/Threads/reader_writer.cpp:
+        * examples/Threads/task_two.cpp: 
+        * tests/Atomic_Op_Test.cpp: 
+        * tests/Auto_IncDec_Test.cpp: 
+        * tests/Future_Set_Test.cpp: 
+        * tests/Future_Test.cpp: 
+        * tests/MEM_Stream_Test.cpp:   
+        * tests/Message_Queue_Notifications_Test.cpp: 
+        * tests/Notify_Performance_Test.cpp: 
+        * tests/Reactors_Test.cpp: 
+        * tests/Upgradable_RW_Test.cpp: 
+        * tests/Reader_Writer_Test.cpp: 
           Added explicit template instantiation for ACE_Atomic_Op_Ex<>.
 
-	* ace/Malloc_Allocator.cpp: Added explicit template instantiation
-	  for ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>.
+        * ace/Malloc_Allocator.cpp: Added explicit template instantiation
+          for ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>.
 
-	* ace/Atomic_Op.i,
-	* ace/Synch_T.{h,cpp}: Factored out some of the structure/logic
-	  from ACE_Atomic_Op into a new base class called
- 	  ACE_Atomic_Op_Ex.  ACE_Atomic_Op_Ex uses extra parameter -
- 	  reference to ACE_LOCK to allow several ACE_Atomic_Op_Ex share
- 	  the same lock.  ACE_Atomic_Op is derived from ACE_Atomic_Op_Ex
- 	  and its interface is the same as it was. It has only
- 	  constructors implementation and operators =.  All other methods
- 	  are inherited from ACE_Atomic_Op_Ex.  Templates instantiation
- 	  for ACE_Atomic_Op_Ex should be added to all files that have
- 	  templates instantiation for ACE_Atomic_Op.  Thanks to Alex
- 	  Libman <alibman@@ihug.com.au> for contributing this.
+        * ace/Atomic_Op.i,
+        * ace/Synch_T.{h,cpp}: Factored out some of the structure/logic
+          from ACE_Atomic_Op into a new base class called
+          ACE_Atomic_Op_Ex.  ACE_Atomic_Op_Ex uses extra parameter -
+          reference to ACE_LOCK to allow several ACE_Atomic_Op_Ex share
+          the same lock.  ACE_Atomic_Op is derived from ACE_Atomic_Op_Ex
+          and its interface is the same as it was. It has only
+          constructors implementation and operators =.  All other methods
+          are inherited from ACE_Atomic_Op_Ex.  Templates instantiation
+          for ACE_Atomic_Op_Ex should be added to all files that have
+          templates instantiation for ACE_Atomic_Op.  Thanks to Alex
+          Libman <alibman@@ihug.com.au> for contributing this.
 
-	* ace/Service_Config.cpp (close_singletons): Add support to close
-	  the Proactor singleton, just like the Reactor singleton.  Thanks
- 	  to Alex Libman <alibman@@ihug.com.au> for contributing this.
+        * ace/Service_Config.cpp (close_singletons): Add support to close
+          the Proactor singleton, just like the Reactor singleton.  Thanks
+          to Alex Libman <alibman@@ihug.com.au> for contributing this.
 
-	* ace/WIN32_Proactor.cpp: Make sure to remove all the pending 
-	  results from the I/O completion port queue when we close down to
- 	  avoid memory leaks.  Thanks to Alex Libman
- 	  <alibman@@ihug.com.au> for contribuging this.
+        * ace/WIN32_Proactor.cpp: Make sure to remove all the pending 
+          results from the I/O completion port queue when we close down to
+          avoid memory leaks.  Thanks to Alex Libman
+          <alibman@@ihug.com.au> for contribuging this.
 
-	* ace/Proactor.{h,i,cpp}: Added Alex Libman's <alibman@@ihug.com.au> 
-	  enhancements that make the ACE_Proactor behave more like the
- 	  ACE_Reactor with respect to singletons etc.  In particular:
-	  
-	  1. For each static ACE_Proactor method XXX_event_loop there is
-	     the non-static proactor_XXX_event_loop method.
-	  2. There is a new method proactor_post_wakeup_completions which
-	     is called from static post_wakeup_completions.
-	  3. The end_event_loop_ and event_loop_thread_count_ are now
-	     instance members, not globals!
-	  4. The proactor instance has its own mutex to protect work with
-	     end_event_loop_ and event_loop_thread_count_.
-	  5. Method ACE_Proactor::instance() now has a second parameter
-	     delete_proactor (default value 0 means don't delete).  It
-	     returns the pointer to the previous global instance of
-	     Proactor.  The caller now is responsible for deletion of this
-	     previous instance. 
-	  6. Method ACE_Proactor::cleanup() is removed since the behavior
-	     of singleton is simular to Reactor singleton. 
+        * ace/Proactor.{h,i,cpp}: Added Alex Libman's <alibman@@ihug.com.au> 
+          enhancements that make the ACE_Proactor behave more like the
+          ACE_Reactor with respect to singletons etc.  In particular:
+          
+          1. For each static ACE_Proactor method XXX_event_loop there is
+             the non-static proactor_XXX_event_loop method.
+          2. There is a new method proactor_post_wakeup_completions which
+             is called from static post_wakeup_completions.
+          3. The end_event_loop_ and event_loop_thread_count_ are now
+             instance members, not globals!
+          4. The proactor instance has its own mutex to protect work with
+             end_event_loop_ and event_loop_thread_count_.
+          5. Method ACE_Proactor::instance() now has a second parameter
+             delete_proactor (default value 0 means don't delete).  It
+             returns the pointer to the previous global instance of
+             Proactor.  The caller now is responsible for deletion of this
+             previous instance. 
+          6. Method ACE_Proactor::cleanup() is removed since the behavior
+             of singleton is simular to Reactor singleton. 
           7. Methods ACE_Proactor::proactor_run_event_loop (....)
-	     have now an extra parameter: (PROACTOR_EVENT_HOOK = 0),
-	     where the PROACTOR event hook is defined as
-	     typedef int (*PROACTOR_EVENT_HOOK)(ACE_Proactor *);
+             have now an extra parameter: (PROACTOR_EVENT_HOOK = 0),
+             where the PROACTOR event hook is defined as
+             typedef int (*PROACTOR_EVENT_HOOK)(ACE_Proactor *);
   
- 	* ace/Logging_Strategy.cpp
- 	* ace/Naming_Context.cpp
- 	* ace/Service_Manager.cpp: Removed the explicit template instantiations 
-	  for ACE_Array_Base<> to avoid problems with multiply defined
- 	  symbols.	
+        * ace/Logging_Strategy.cpp
+        * ace/Naming_Context.cpp
+        * ace/Service_Manager.cpp: Removed the explicit template instantiations 
+          for ACE_Array_Base<> to avoid problems with multiply defined
+          symbols.      
   
-	* ace/Service_Config.cpp: Added explicit template instantiations
-	  for template class ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>.
+        * ace/Service_Config.cpp: Added explicit template instantiations
+          for template class ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>.
 
-	* docs/tutorials/014/page02.html,
-  	* docs/tutorials/014/page03.html,
-  	* docs/tutorials/014/page04.html,
-  	* docs/tutorials/014/page05.html,
-  	* docs/tutorials/014/stream.cpp,
-  	* docs/tutorials/014/Task.{h,cpp}: Fixed the tutorial so that it
-	  uses the correct synchronization mechanism for the message
- 	  blocks.  Thanks to Ulrich Voigt <Ulrich.Voigt@ddg.de> for
- 	  reporting this.
+        * docs/tutorials/014/page02.html,
+        * docs/tutorials/014/page03.html,
+        * docs/tutorials/014/page04.html,
+        * docs/tutorials/014/page05.html,
+        * docs/tutorials/014/stream.cpp,
+        * docs/tutorials/014/Task.{h,cpp}: Fixed the tutorial so that it
+          uses the correct synchronization mechanism for the message
+          blocks.  Thanks to Ulrich Voigt <Ulrich.Voigt@ddg.de> for
+          reporting this.
 
-	* ace/Log_Msg.cpp: Moved the call to ACE_Log_Msg_Manager::close()
-	  to first in the ACE_Log_Msg::close() method to avoid memory
- 	  leaks.  Fixes BugId 1103.  Thanks to Ahmed Riza
- 	  <Ahmed.Riza@ubsw.com> for reporting this.
+        * ace/Log_Msg.cpp: Moved the call to ACE_Log_Msg_Manager::close()
+          to first in the ACE_Log_Msg::close() method to avoid memory
+          leaks.  Fixes BugId 1103.  Thanks to Ahmed Riza
+          <Ahmed.Riza@ubsw.com> for reporting this.
 
 Sun Dec 23 23:02:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/QOS/Diffserv/Diffserv.dsw:
-	* examples/QOS/Diffserv/diffserv_test.dsp:
-	* examples/QOS/Diffserv/server.dsp:
-	* examples/Reactor/FIFO/FIFO.dsw:
-	* examples/Reactor/FIFO/client.dsp:
-	* examples/Reactor/FIFO/server.dsp:
-	* examples/Shared_Memory/Shared_Memory.dsw:
-	* examples/Shared_Memory/test_MM.dsp:
-	* examples/Shared_Memory/test_SV.dsp:
-	  Add more missing project files and workspaces.
+        * examples/QOS/Diffserv/Diffserv.dsw:
+        * examples/QOS/Diffserv/diffserv_test.dsp:
+        * examples/QOS/Diffserv/server.dsp:
+        * examples/Reactor/FIFO/FIFO.dsw:
+        * examples/Reactor/FIFO/client.dsp:
+        * examples/Reactor/FIFO/server.dsp:
+        * examples/Shared_Memory/Shared_Memory.dsw:
+        * examples/Shared_Memory/test_MM.dsp:
+        * examples/Shared_Memory/test_SV.dsp:
+          Add more missing project files and workspaces.
 
 Mon Dec 24 00:48:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/tests.dsw:
-	* tests/Get_Opt_Test.dsp: Added this new project file.
+        * tests/tests.dsw:
+        * tests/Get_Opt_Test.dsp: Added this new project file.
 
 Sun Dec 23 12:25:55 2001  Don Hinton  <dhinton@gmx.net>
 
- 	* ace/Logging_Strategy.cpp
- 	* ace/Naming_Context.cpp
- 	* ace/Service_Config.cpp
- 	* ace/Service_Manager.cpp
- 	* ace/Get_Opt{h,i,cpp}:
+        * ace/Logging_Strategy.cpp
+        * ace/Naming_Context.cpp
+        * ace/Service_Config.cpp
+        * ace/Service_Manager.cpp
+        * ace/Get_Opt{h,i,cpp}:
 
- 	Added long option support to ACE_Get_Opt that closely minimics
- 	getopt_long(3c) functionality as follows: made all member
- 	variables private; added accessor functions and macros wrappers to
- 	transparently provide backward compatibility; added new function,
- 	long_option(), that can be used to add long options with/without
- 	corresponding short options.
+        Added long option support to ACE_Get_Opt that closely minimics
+        getopt_long(3c) functionality as follows: made all member
+        variables private; added accessor functions and macros wrappers to
+        transparently provide backward compatibility; added new function,
+        long_option(), that can be used to add long options with/without
+        corresponding short options.
 
- 	* tests/Makefile
- 	* tests/Makefile.bor
- 	* tests/run_test.lst
- 	* tests/Get_Opt_Test.cpp:
+        * tests/Makefile
+        * tests/Makefile.bor
+        * tests/run_test.lst
+        * tests/Get_Opt_Test.cpp:
 
- 	Added a new one-button test for ACE_Get_Opt that tests new long option
- 	support and demonstrates its use.
+        Added a new one-button test for ACE_Get_Opt that tests new long option
+        support and demonstrates its use.
 
 Sat Dec 22 23:12:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Misc/Misc.dsw:
-	* examples/Misc/test_XtReactor1.dsp:
-	* examples/Misc/test_XtReactor2.dsp:
-	* examples/Misc/test_dump.dsp:
-	* examples/Misc/test_get_opt.dsp:
-	* examples/Misc/test_profile_timer.dsp:
-	* examples/Misc/test_read_buffer.dsp:
-	* examples/Misc/test_set.dsp:
-	* examples/Misc/test_sstring.dsp:
-	* examples/Misc/test_trace.dsp:
-	* examples/IPC_SAP/DEV_SAP/reader/reader.dsp:
-	* examples/IPC_SAP/DEV_SAP/reader/reader.dsw:
-	* examples/IPC_SAP/DEV_SAP/writer/writer.dsp:
-	* examples/IPC_SAP/DEV_SAP/writer/writer.dsw:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.dsp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.dsp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-client.dsp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-server.dsp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-test.dsp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO_SAP.dsw:
-	* examples/IPC_SAP/SPIPE_SAP/NPClient.dsp:
-	* examples/IPC_SAP/SPIPE_SAP/NPServer.dsp:
-	* examples/IPC_SAP/SPIPE_SAP/SPIPE_SAP.dsw:
-	* examples/IPC_SAP/SPIPE_SAP/client.dsp:
-	* examples/IPC_SAP/SPIPE_SAP/consumer_msg.dsp:
-	* examples/IPC_SAP/SPIPE_SAP/consumer_read.dsp:
-	* examples/IPC_SAP/SPIPE_SAP/producer_msg.dsp:
-	* examples/IPC_SAP/SPIPE_SAP/producer_read.dsp:
-	* examples/IPC_SAP/SPIPE_SAP/server.dsp:
-	* examples/IPC_SAP/TLI_SAP/CPP-ATM-client.dsp:
-	* examples/IPC_SAP/TLI_SAP/CPP-ATM-server.dsp:
-	* examples/IPC_SAP/TLI_SAP/CPP-client.dsp:
-	* examples/IPC_SAP/TLI_SAP/CPP-server.dsp:
-	* examples/IPC_SAP/TLI_SAP/TLI_SAP.dsw:
-	* examples/IPC_SAP/TLI_SAP/db-client.dsp:
-	* examples/IPC_SAP/TLI_SAP/db-server.dsp:
-	* examples/IPC_SAP/TLI_SAP/ftp-client.dsp:
-	* examples/IPC_SAP/TLI_SAP/ftp-server.dsp:
-	* examples/IPC_SAP/UPIPE_SAP/UPIPE_SAP.dsw:
-	* examples/IPC_SAP/UPIPE_SAP/ex1.dsp:
-	* examples/IPC_SAP/UPIPE_SAP/ex2.dsp:
-	* examples/IPC_SAP/UPIPE_SAP/ex3.dsp:
-	  Add yet more missing project files.
+        * examples/Misc/Misc.dsw:
+        * examples/Misc/test_XtReactor1.dsp:
+        * examples/Misc/test_XtReactor2.dsp:
+        * examples/Misc/test_dump.dsp:
+        * examples/Misc/test_get_opt.dsp:
+        * examples/Misc/test_profile_timer.dsp:
+        * examples/Misc/test_read_buffer.dsp:
+        * examples/Misc/test_set.dsp:
+        * examples/Misc/test_sstring.dsp:
+        * examples/Misc/test_trace.dsp:
+        * examples/IPC_SAP/DEV_SAP/reader/reader.dsp:
+        * examples/IPC_SAP/DEV_SAP/reader/reader.dsw:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.dsp:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.dsw:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.dsp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.dsp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-client.dsp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-server.dsp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.dsp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO_SAP.dsw:
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.dsp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.dsp:
+        * examples/IPC_SAP/SPIPE_SAP/SPIPE_SAP.dsw:
+        * examples/IPC_SAP/SPIPE_SAP/client.dsp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_msg.dsp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_read.dsp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.dsp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_read.dsp:
+        * examples/IPC_SAP/SPIPE_SAP/server.dsp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.dsp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.dsp:
+        * examples/IPC_SAP/TLI_SAP/CPP-client.dsp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.dsp:
+        * examples/IPC_SAP/TLI_SAP/TLI_SAP.dsw:
+        * examples/IPC_SAP/TLI_SAP/db-client.dsp:
+        * examples/IPC_SAP/TLI_SAP/db-server.dsp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.dsp:
+        * examples/IPC_SAP/TLI_SAP/ftp-server.dsp:
+        * examples/IPC_SAP/UPIPE_SAP/UPIPE_SAP.dsw:
+        * examples/IPC_SAP/UPIPE_SAP/ex1.dsp:
+        * examples/IPC_SAP/UPIPE_SAP/ex2.dsp:
+        * examples/IPC_SAP/UPIPE_SAP/ex3.dsp:
+          Add yet more missing project files.
 
-	* examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
-	* examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
-	* examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
-	  Fixed minor syntax errors for Win32 builds.
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+          Fixed minor syntax errors for Win32 builds.
 
 Sat Dec 22 11:27:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* bin/auto_compile:
-	  Add missing -i flags for make_pretty.pl.
+        * bin/auto_compile:
+          Add missing -i flags for make_pretty.pl.
 
 Sat Dec 22 11:24:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Service_Configurator/IPC-tests/client/client.dsw:
-	* examples/Service_Configurator/IPC-tests/client/broadcast_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/local_stream_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.dsp:
-	* examples/Service_Configurator/IPC-tests/server/server.dsw:
-	* examples/Service_Configurator/IPC-tests/server/Server.dsp:
-	* examples/Service_Configurator/IPC-tests/server/Server_static.dsp:
-	* examples/Service_Configurator/IPC-tests/server/server_test.dsp:
-	  Add missing project files and workspaces.
+        * examples/Service_Configurator/IPC-tests/client/client.dsw:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.dsp:
+        * examples/Service_Configurator/IPC-tests/server/server.dsw:
+        * examples/Service_Configurator/IPC-tests/server/Server.dsp:
+        * examples/Service_Configurator/IPC-tests/server/Server_static.dsp:
+        * examples/Service_Configurator/IPC-tests/server/server_test.dsp:
+          Add missing project files and workspaces.
 
-	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
-	  Add export directives for Win32 builds.
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
+          Add export directives for Win32 builds.
 
 Fri Dec 21 14:39:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Map_Manager/Map_Manager.dsw:
-	* examples/Map_Manager/test_hash_map_manager.dsp:
-	* examples/ASX/CCM_App/CCM_App.dsp:
-	* examples/ASX/CCM_App/CCM_App.dsw:
-	* examples/ASX/CCM_App/CCM_App_static.dsp:
-	* examples/ASX/CCM_App/SC_Client.dsp:
-	* examples/ASX/CCM_App/SC_Server.dsp:
-	* examples/Connection/misc/Connection_Handler.dsp:
-	* examples/Connection/misc/misc.dsw:
-	* examples/Connection/misc/test_upipe.dsp:
-	* examples/IOStream/client/client.dsw:
-	* examples/IOStream/client/iostream_client.dsp:
-	* examples/IOStream/server/server.dsw:
-	* examples/IOStream/server/iostream_server.dsp:
-	* examples/Smart_Pointers/Smart_Pointers.dsw:
-	* examples/Smart_Pointers/gadget_test.dsp:
-	* examples/Smart_Pointers/widget_test.dsp:
-	  Add missing project files and workspaces.
+        * examples/Map_Manager/Map_Manager.dsw:
+        * examples/Map_Manager/test_hash_map_manager.dsp:
+        * examples/ASX/CCM_App/CCM_App.dsp:
+        * examples/ASX/CCM_App/CCM_App.dsw:
+        * examples/ASX/CCM_App/CCM_App_static.dsp:
+        * examples/ASX/CCM_App/SC_Client.dsp:
+        * examples/ASX/CCM_App/SC_Server.dsp:
+        * examples/Connection/misc/Connection_Handler.dsp:
+        * examples/Connection/misc/misc.dsw:
+        * examples/Connection/misc/test_upipe.dsp:
+        * examples/IOStream/client/client.dsw:
+        * examples/IOStream/client/iostream_client.dsp:
+        * examples/IOStream/server/server.dsw:
+        * examples/IOStream/server/iostream_server.dsp:
+        * examples/Smart_Pointers/Smart_Pointers.dsw:
+        * examples/Smart_Pointers/gadget_test.dsp:
+        * examples/Smart_Pointers/widget_test.dsp:
+          Add missing project files and workspaces.
 
 Fri Dec 21 16:22:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -413,10 +530,10 @@ Fri Dec 21 16:00:00 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Dec 21 11:30:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Shared_Malloc/multiple_mallocs.dsp:
-	  Add Malloc.cpp and Options.cpp to this project.  Though not
-	  strictly required for Win32 the files are used in Unix builds.
-	  Having the .dsp and Makefile consistent is helpful for samwise.
+        * examples/Shared_Malloc/multiple_mallocs.dsp:
+          Add Malloc.cpp and Options.cpp to this project.  Though not
+          strictly required for Win32 the files are used in Unix builds.
+          Having the .dsp and Makefile consistent is helpful for samwise.
 
 Fri Dec 21 14:14:51 2001  Steve Huston  <shuston@riverace.com>
 
@@ -427,15 +544,15 @@ Fri Dec 21 14:14:51 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Dec 21 16:13:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Makefile: Added Makefile.bor to the list of controlled files for
-	  the  release.
+        * Makefile: Added Makefile.bor to the list of controlled files for
+          the  release.
 
 Thu Dec 20 18:20:51 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/RB_Tree.cpp: Added checks in the RB_tree_predecessor() and
-	  RB_tree_successor() methods to guard against indirections via a
- 	  NULL pointer.  Thanks to Craig Ching <cching@mqsoftware.com> for
- 	  reporting this fix.
+        * ace/RB_Tree.cpp: Added checks in the RB_tree_predecessor() and
+          RB_tree_successor() methods to guard against indirections via a
+          NULL pointer.  Thanks to Craig Ching <cching@mqsoftware.com> for
+          reporting this fix.
 
 Thu Dec 20 18:05:32 2001  Steve Huston  <shuston@riverace.com>
 
@@ -484,7 +601,7 @@ Thu Dec 20 11:43:29 2001  Steve Huston  <shuston@riverace.com>
 Thu Dec 20 11:34:51 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Acceptor.(h cpp i):
-        * ace/SSL/SSL_SOCK_Connector.(h cpp i):	Series of changes:
+        * ace/SSL/SSL_SOCK_Connector.(h cpp i): Series of changes:
              - Does not use an ACE_Reactor any longer. Waiting for socket
                I/O possibility is done using ACE::select. It's simpler and
                doesn't suffer on Win32.
@@ -509,13 +626,13 @@ Thu Dec 20 11:34:51 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Dec 20 09:03:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
-	* Makefile.bor:
+        * Makefile.bor:
           Only build ace and its tests because the rest is not fully
           unicode compliant
 
 Wed Dec 19 22:28:00 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/WFMO_Reactor.cpp (upcall): Corrected syntax error.
+        * ace/WFMO_Reactor.cpp (upcall): Corrected syntax error.
 
 Wed Dec 19 21:54:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -524,25 +641,25 @@ Wed Dec 19 21:54:29 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Dec 19 11:10:35 2001  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp: Use the ACE_BIT_ENABLED macro
-	  rather than the '&' operator directly.
+        * ace/WFMO_Reactor.cpp: Use the ACE_BIT_ENABLED macro
+          rather than the '&' operator directly.
 
 2001-12-18  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* Both Irfan Pyarali and Chris Gill are now *Dr.* Pyarali and
-	  *Dr.* Gill.  Congrats to both on a job well done!
+        * Both Irfan Pyarali and Chris Gill are now *Dr.* Pyarali and
+          *Dr.* Gill.  Congrats to both on a job well done!
 
 Wed Dec 19 10:02:53 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Makefile.bor:
-	  Made changes for Borland ace-only builds as per
-	  Johnny Willemsen <johnny.willemsen@meco.nl>.
+        * Makefile.bor:
+          Made changes for Borland ace-only builds as per
+          Johnny Willemsen <johnny.willemsen@meco.nl>.
 
 Wed Dec 19 09:39:03 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp:
+        * tests/Message_Queue_Test_Ex.cpp:
 
-	  Fixed compiler warning. Deleted an unused variable declaration.
+          Fixed compiler warning. Deleted an unused variable declaration.
 
 Wed Dec 19 10:31:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -606,45 +723,45 @@ Tue Dec 18 17:47:44 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Dec 18 14:43:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/Sock_Connect.cpp:
-	* ace/config-cygwin32-common.h:
-	  Use the #include /**/ trick to shut up the WinCE warnings.
+        * ace/Sock_Connect.cpp:
+        * ace/config-cygwin32-common.h:
+          Use the #include /**/ trick to shut up the WinCE warnings.
 
 Tue Dec 18 22:05:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/make_release: Added comment to indicate the problem in
-	  producing diffs  when a beta after a major or minor release is
-	  cut. This needs fixing. Will get to this when the other pending
-	  changes go in.
+        * bin/make_release: Added comment to indicate the problem in
+          producing diffs  when a beta after a major or minor release is
+          cut. This needs fixing. Will get to this when the other pending
+          changes go in.
 
 Tue Dec 18 16:01:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS_Dirent.cpp (readdir_emulation): Fixed an "off-by-one"
-	  memory allocation error.  Thanks to Kyle Brost
- 	  <Kyle.Brost@quest.com> for reporting this.
+        * ace/OS_Dirent.cpp (readdir_emulation): Fixed an "off-by-one"
+          memory allocation error.  Thanks to Kyle Brost
+          <Kyle.Brost@quest.com> for reporting this.
 
 Mon Dec 17 09:04:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.i (ctime_r): Replaced ACE_OS::strsncpy() with
-	  ACE_OS::strncpy() to fix a bug on Linux.  Thanks to Vlado
- 	  Chovanec <Vladimir.CHOVANEC@asset.sk> for reporting this.
-	  This fixes BugID 1101.
+        * ace/OS.i (ctime_r): Replaced ACE_OS::strsncpy() with
+          ACE_OS::strncpy() to fix a bug on Linux.  Thanks to Vlado
+          Chovanec <Vladimir.CHOVANEC@asset.sk> for reporting this.
+          This fixes BugID 1101.
 
 Tue Dec 18 13:04:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* bin/make_pretty.pl:
-	  Incorporate numerous pending changes and improvements.
+        * bin/make_pretty.pl:
+          Incorporate numerous pending changes and improvements.
 
 Tue Dec 18 12:45:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* bin/nightlybuilds/builds.lst:
-	  Updated to use the new build standard.
+        * bin/nightlybuilds/builds.lst:
+          Updated to use the new build standard.
 
-	* bin/nightlybuilds/scoreboard_update.pl:
-	  Incorporate changes to support multiple "groups" (for external
-	  builds), to print out the last reported status of each build
-	  (such as "COMPILING"), and to adjust the build timeouts on a
-	  per-build basis.
+        * bin/nightlybuilds/scoreboard_update.pl:
+          Incorporate changes to support multiple "groups" (for external
+          builds), to print out the last reported status of each build
+          (such as "COMPILING"), and to adjust the build timeouts on a
+          per-build basis.
 
 Tue Dec 18 11:11:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -653,39 +770,39 @@ Tue Dec 18 11:11:29 2001  Steve Huston  <shuston@riverace.com>
 Mon Dec 17 18:30:41 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SPIPE_Acceptor.(h cpp): For Windows, use the event handle
-	  instead of the pipe handle for the handle value stored in the
-	  ACE_IPC_SAP class. The pipe handle is pretty useless for doing
-	  anything like detecting when the pipe connect is done - the
-	  event handle is what's really useful there, and it stays
-	  consistent across accepts, while the pipe handle changes.  This
-	  change allows the get_handle() value to be registered with the
-	  reactor, albeit for signal, not input.
+          instead of the pipe handle for the handle value stored in the
+          ACE_IPC_SAP class. The pipe handle is pretty useless for doing
+          anything like detecting when the pipe connect is done - the
+          event handle is what's really useful there, and it stays
+          consistent across accepts, while the pipe handle changes.  This
+          change allows the get_handle() value to be registered with the
+          reactor, albeit for signal, not input.
 
 Mon Dec 17 00:13:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/String_Base_Const.h:
-	* ace/String_Base_Const.cpp: Added a new base class for
-	  ACE_String_Base extracting out the static member data to
-	  circumvent a SunCC compilation problem which only happen when
-	  debug=0 is defined.
+        * ace/String_Base_Const.h:
+        * ace/String_Base_Const.cpp: Added a new base class for
+          ACE_String_Base extracting out the static member data to
+          circumvent a SunCC compilation problem which only happen when
+          debug=0 is defined.
 
-	* ace/String_Base.h:
-	* ace/String_Base.cpp: Removed the offending static member sata.
+        * ace/String_Base.h:
+        * ace/String_Base.cpp: Removed the offending static member sata.
 
-	* ace/Makefile:
-	* ace/Makefile.bor:
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	* ace/ace.icc:
-	* ace/ace-lib.icc:
-	* ace/ace-dll.icc: Added String_Base_Const.* to various project files.
+        * ace/Makefile:
+        * ace/Makefile.bor:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+        * ace/ace.icc:
+        * ace/ace-lib.icc:
+        * ace/ace-dll.icc: Added String_Base_Const.* to various project files.
 
 Sun Dec 16 10:33:17 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Select_Reactor_T.h: Improve the documentation of the
- 	  ACE_Select_Reactor_T() constructor to clarify the mask_signals
- 	  and disable_notify_pipe parameters.  Thanks to Bob Jolliffe
- 	  <bjolliffe@cs.up.ac.za> for motivating this.
+        * ace/Select_Reactor_T.h: Improve the documentation of the
+          ACE_Select_Reactor_T() constructor to clarify the mask_signals
+          and disable_notify_pipe parameters.  Thanks to Bob Jolliffe
+          <bjolliffe@cs.up.ac.za> for motivating this.
 
 Sun Dec 16 16:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -708,44 +825,44 @@ Sun Dec 16 16:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sun Dec 16 08:04:23 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp : fixed a compiler error
+        * tests/Message_Queue_Test_Ex.cpp : fixed a compiler error
 
 Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp (main): Fixed a minor bug
-	  by removing the size-hint from the call to User_Class.  Thanks
- 	  to Venkita Subramonian <venkita@cs.wustl.edu> for reporting
- 	  this.
+        * tests/Message_Queue_Test_Ex.cpp (main): Fixed a minor bug
+          by removing the size-hint from the call to User_Class.  Thanks
+          to Venkita Subramonian <venkita@cs.wustl.edu> for reporting
+          this.
 
-	* ace/config-win32-mingw.h.  Added #define ACE_HAS_BROKEN_SAP_ANY
-	  so that it'll compile on MinGW32.  Thanks to Ben Flight
- 	  <ben.flight@wanadoo.fr> for reporting this.
+        * ace/config-win32-mingw.h.  Added #define ACE_HAS_BROKEN_SAP_ANY
+          so that it'll compile on MinGW32.  Thanks to Ben Flight
+          <ben.flight@wanadoo.fr> for reporting this.
 
-	* tests/Logging_Strategy_Test.cpp: include ace/Logging_Strategy.h
-	  rather than ace/Logging_Strategy.cpp.  Thanks to Mike Connors
- 	  <mike.connors@ghs.com> for reporting this.
+        * tests/Logging_Strategy_Test.cpp: include ace/Logging_Strategy.h
+          rather than ace/Logging_Strategy.cpp.  Thanks to Mike Connors
+          <mike.connors@ghs.com> for reporting this.
 
 Sat Dec 15 16:20:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/ace_os_dll.vcp: Added the files OS_QoS.{h,cpp}.
+        * ace/ace_os_dll.vcp: Added the files OS_QoS.{h,cpp}.
 
 Sat Dec 15 09:52:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* examples/Misc/test_set.cpp:
-	  Add missing #include for Tru64/DU/CXX, probably implicitly
-	  included on other platforms due to the
-	  ACE_TEMPLATES_REQUIRE_SOURCE.
+        * examples/Misc/test_set.cpp:
+          Add missing #include for Tru64/DU/CXX, probably implicitly
+          included on other platforms due to the
+          ACE_TEMPLATES_REQUIRE_SOURCE.
 
 Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp: Improved the example to use
-	  a user-defined class parameter for ACE_Message_Queue_Ex rather
- 	  than ACE_Message_Block.  Thanks to Bill Fulton
- 	  <Bill_A_Fulton@raytheon.com> for reporting this.
+        * tests/Message_Queue_Test_Ex.cpp: Improved the example to use
+          a user-defined class parameter for ACE_Message_Queue_Ex rather
+          than ACE_Message_Block.  Thanks to Bill Fulton
+          <Bill_A_Fulton@raytheon.com> for reporting this.
 
-	* ace/Configuration.cpp: Make the return code of enumerate_values()
-	  consistent with enumerate_sections().  Thanks to Kevin Burge
- 	  <kevin.burge@systemware.com> for reporting this.
+        * ace/Configuration.cpp: Make the return code of enumerate_values()
+          consistent with enumerate_sections().  Thanks to Kevin Burge
+          <kevin.burge@systemware.com> for reporting this.
 
 Fri Dec 14 21:36:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -761,101 +878,101 @@ Fri Dec 14 21:36:29 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Dec 14 14:05:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/svc_export.h:
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsp:
-	  Found a better way to deal with the inconsistencies in the
-	  ACE_Svc_Export macro.
+        * ace/svc_export.h:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsp:
+          Found a better way to deal with the inconsistencies in the
+          ACE_Svc_Export macro.
 
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
-	  Fixed project file for static library.
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
+          Fixed project file for static library.
 
 Fri Dec 14 11:35:01 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/SSL/SSL_SOCK_Acceptor.h:
-	* ace/SSL/SSL_SOCK_Connector.h:
-	* examples/QOS/Simple/Fill_ACE_QoS.h:
-	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h:
-	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h:
-	  Add #include "ace/OS_QoS.h".
+        * ace/SSL/SSL_SOCK_Acceptor.h:
+        * ace/SSL/SSL_SOCK_Connector.h:
+        * examples/QOS/Simple/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h:
+          Add #include "ace/OS_QoS.h".
 
 Thu Dec 13 22:16:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/svc_export.h:
-	  Support ACE_Svc_BUILD_DLL also, to be consistent with all the
-	  other export macros.
+        * ace/svc_export.h:
+          Support ACE_Svc_BUILD_DLL also, to be consistent with all the
+          other export macros.
 
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
-	  Add missing ACE_Svc_Export to the class.
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
+          Add missing ACE_Svc_Export to the class.
 
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsw:
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsp:
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
-	* netsvcs/clients/Naming/Dump_Restore/main.dsp:
-	  Add missing project files and a workspace.
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsw:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsp:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
+        * netsvcs/clients/Naming/Dump_Restore/main.dsp:
+          Add missing project files and a workspace.
 
 Fri Dec 14 00:08:57 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/OS.h: Move around definitions of ACE_SOCK_GROUP
-	  and ACE_OVERLAPPED_COMPLETION_FUNCTION_FUNC to fix
-	  Win32 builds.
+        * ace/OS.h: Move around definitions of ACE_SOCK_GROUP
+          and ACE_OVERLAPPED_COMPLETION_FUNCTION_FUNC to fix
+          Win32 builds.
 
-	* ace/OS.cpp: Add #include "ace/OS_QoS.h" to fix Win32
-	  builds.
+        * ace/OS.cpp: Add #include "ace/OS_QoS.h" to fix Win32
+          builds.
 
 Thu Dec 13 22:21:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Updated dependencies of many Makefile's.
+        * Updated dependencies of many Makefile's.
 
 Thu Dec 13 21:36:15 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/OS.cpp: Remove ACE_INLINE from join_leaf().
-	* ace/OS_QoS.cpp: Remove ACE_INLINE.
-	* ace/OS_QoS.h: Add include for pre.h.
+        * ace/OS.cpp: Remove ACE_INLINE from join_leaf().
+        * ace/OS_QoS.cpp: Remove ACE_INLINE.
+        * ace/OS_QoS.h: Add include for pre.h.
 
 Thu Dec 13 16:53:00 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added TAO/orbsvcs/tests/Security/Callback test to the list of
-	  tests to run in our automated regression test suite.
+          Added TAO/orbsvcs/tests/Security/Callback test to the list of
+          tests to run in our automated regression test suite.
 
 Thu Dec 13 18:11:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/OS.h:  Move QoS data structures to OS_QoS.h.  Forward
-	  declare QoS data structures now contained in OS_QoS.h and
-	  OS_QoS.cpp.
+        * ace/OS.h:  Move QoS data structures to OS_QoS.h.  Forward
+          declare QoS data structures now contained in OS_QoS.h and
+          OS_QoS.cpp.
 
-	* ace/OS.i:
-	* ace/OS.cpp:  Move QoS enabled socket API functions from OS.i to
-	  OS.cpp.
+        * ace/OS.i:
+        * ace/OS.cpp:  Move QoS enabled socket API functions from OS.i to
+          OS.cpp.
 
-	* ace/OS_QoS.h (added):
-	* ace/OS_QoS.cpp (added):  OS specific QoS data structures go here.
+        * ace/OS_QoS.h (added):
+        * ace/OS_QoS.cpp (added):  OS specific QoS data structures go here.
 
-	* ace/MEM_Acceptor.h:
-	* ace/SOCK_Acceptor.cpp:
-	* ace/SOCK_Connector.cpp:
-	* ace/QoS/QoS_Session.h: Add #include "ace/OS_QoS.h".
+        * ace/MEM_Acceptor.h:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/QoS/QoS_Session.h: Add #include "ace/OS_QoS.h".
 
-	* ace/QoS/QoS_Session_Impl.cpp: Add u_long casts to eliminate
-	  compiler warnings.
+        * ace/QoS/QoS_Session_Impl.cpp: Add u_long casts to eliminate
+          compiler warnings.
 
-	* ace/Makefile: Add rule for OS_QoS.
-	* ace/Makefile.bor: Same.
-	* ace/ace_dll.dsp: Same.
-	* ace/ace_lib.dsp: Same.
+        * ace/Makefile: Add rule for OS_QoS.
+        * ace/Makefile.bor: Same.
+        * ace/ace_dll.dsp: Same.
+        * ace/ace_lib.dsp: Same.
 
 Thu Dec 13 14:58:43 2001  Ossama Othman  <ossama@uci.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Greg Burley  <Burley@tabq.com.au> to our Hall of Fame.
+          Added Greg Burley  <Burley@tabq.com.au> to our Hall of Fame.
 
 Thu Dec 13 14:11:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/ace_dll.vcp:
-	  Remove Strategies.* from the WinCE project
-	  files, and add the new files that replace it.
+        * ace/ace_dll.vcp:
+          Remove Strategies.* from the WinCE project
+          files, and add the new files that replace it.
 
 Thu Dec 13 16:41:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -877,44 +994,44 @@ Thu Dec 13 16:41:39 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Dec 12 16:29:17 2001  Greg Burley  <Burley@tabq.com.au>
 
-	* ace/SSL/SSL_Context.h:
-	* ace/SSL/SSL_Context.inl:
-	* ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.inl:
+        * ace/SSL/SSL_Context.cpp:
 
-	  Made it possible to specify certificate authority locations
-	  after the verification mode has been set.
+          Made it possible to specify certificate authority locations
+          after the verification mode has been set.
 
 Wed Dec 12 12:38:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Accept_Handler.cpp:
-	* ace/SSL/SSL_Connect_Handler.cpp:
+        * ace/SSL/SSL_Accept_Handler.cpp:
+        * ace/SSL/SSL_Connect_Handler.cpp:
 
-	  Added missing "ace/Reactor.h" include.  ACE_Reactor is only
-	  forward declared otherwise.
+          Added missing "ace/Reactor.h" include.  ACE_Reactor is only
+          forward declared otherwise.
 
 Wed Dec 12 12:21:11 2001  Vladimir Chovanec  <Vladimir.CHOVANEC@asset.sk>
 
-	* ace/SSL/SSL_Accept_Handler.cpp (handle_input, handle_output):
+        * ace/SSL/SSL_Accept_Handler.cpp (handle_input, handle_output):
 
-	  On Win32 platforms, cancel any previously scheduled "wakeup"
-	  before attempting to perform IO.  If necessary, a "wakeup" will
-	  be scheduled if the IO call would block.
+          On Win32 platforms, cancel any previously scheduled "wakeup"
+          before attempting to perform IO.  If necessary, a "wakeup" will
+          be scheduled if the IO call would block.
 
-	  (ssl_accept):
+          (ssl_accept):
 
-	  On Win32 platforms, it is necessary to schedule a "wakeup" in
-	  the Reactor if an IO call would block.  This is necessary since
-	  Windows events are only notified once.  Hence, event handlers
-	  must be rescheduled.
+          On Win32 platforms, it is necessary to schedule a "wakeup" in
+          the Reactor if an IO call would block.  This is necessary since
+          Windows events are only notified once.  Hence, event handlers
+          must be rescheduled.
 
-	* ace/SSL/SSL_Connect_Handler.cpp (handle_input, handle_output,
-	  ssl_connect):
+        * ace/SSL/SSL_Connect_Handler.cpp (handle_input, handle_output,
+          ssl_connect):
 
-	  Likewise.
+          Likewise.
 
 Wed Dec 12 06:56:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Petr Tuma to the hall of fame.
+        * THANKS: Added Petr Tuma to the hall of fame.
 
 Wed Dec 12 07:29:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -923,39 +1040,39 @@ Wed Dec 12 07:29:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Dec 11 12:17:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Accept_Handler.h (ACE_SSL_Accept_Handler):
-	* ace/SSL/SSL_Connect_Handler.h (ACE_SSL_Connect_Handler):
+        * ace/SSL/SSL_Accept_Handler.h (ACE_SSL_Accept_Handler):
+        * ace/SSL/SSL_Connect_Handler.h (ACE_SSL_Connect_Handler):
 
-	  Accept a reference to the flag that causes the calling thread's
-	  event loop to stop on error.  See below for details.
+          Accept a reference to the flag that causes the calling thread's
+          event loop to stop on error.  See below for details.
 
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
-	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+        * ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+        * ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
 
-	  Return 1 if errno == EWOULDBLOCK and SSL_pending() return a
-	  value greater than zero.  The event handler should be called
-	  back before waiting for more in events in the reactor.  This
-	  change causes the behavior for this case to match that of the
-	  SSL_ERROR_WANT_{READ,WRITE} cases.  Thanks to Vladimir Chovanec
-	  <Vladimir.CHOVANEC@asset.sk> for providing this fix.
+          Return 1 if errno == EWOULDBLOCK and SSL_pending() return a
+          value greater than zero.  The event handler should be called
+          back before waiting for more in events in the reactor.  This
+          change causes the behavior for this case to match that of the
+          SSL_ERROR_WANT_{READ,WRITE} cases.  Thanks to Vladimir Chovanec
+          <Vladimir.CHOVANEC@asset.sk> for providing this fix.
 
-	  (handle_close):
+          (handle_close):
 
-	  Set the "handler_closed" flag to one.  This will notify the
-	  event loop in the SSL_SOCK_{Acceptor,Connector} that it should
-	  stop handling events in the event of an error.
+          Set the "handler_closed" flag to one.  This will notify the
+          event loop in the SSL_SOCK_{Acceptor,Connector} that it should
+          stop handling events in the event of an error.
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
-	  Pass a flag by reference to the event handler responsible for
-	  completing the non-blocking SSL connection.  The event handler
-	  will set the flag to 1 in order to cause the event loop in this
-	  method to stop if the event handler is closed on error.
+          Pass a flag by reference to the event handler responsible for
+          completing the non-blocking SSL connection.  The event handler
+          will set the flag to 1 in order to cause the event loop in this
+          method to stop if the event handler is closed on error.
 
-	  Stop the event loop if a timeout occurs, i.e. handle_events()
-	  returns 0.  In conjunction with the above change, this fixes an
-	  infinite loop that would occur in such a timeout situation.
+          Stop the event loop if a timeout occurs, i.e. handle_events()
+          returns 0.  In conjunction with the above change, this fixes an
+          infinite loop that would occur in such a timeout situation.
 
 Tue Dec 11 07:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -969,207 +1086,207 @@ Tue Dec 11 07:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Dec 10 19:10:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Refcountable.h:
-	* ace/Recyclable.h:
-	* ace/Hashable.h:
-	* ace/Hashable.inl:
-	* ace/Notification_Strategy.inl:
-	* ace/Reactor_Notification_Strategy.inl: Fixed fuzz errors.
+        * ace/Refcountable.h:
+        * ace/Recyclable.h:
+        * ace/Hashable.h:
+        * ace/Hashable.inl:
+        * ace/Notification_Strategy.inl:
+        * ace/Reactor_Notification_Strategy.inl: Fixed fuzz errors.
 
 Mon Dec 10 18:54:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added the new files and removed old ones.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added the new files and removed old ones.
 
 Mon Dec 10 15:39:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	Merged from my branch. This checkin actually splits classes in
-	Strategies.h to multiple files. We also remove Strategies.* files
-	from the repo.
+        Merged from my branch. This checkin actually splits classes in
+        Strategies.h to multiple files. We also remove Strategies.* files
+        from the repo.
 
-	Tue Nov 27 12:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Tue Nov 27 12:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Refcountable.h: Added a #define for the inlined file.
+        * ace/Refcountable.h: Added a #define for the inlined file.
 
-	* examples/Reactor/Misc/test_demuxing.cpp:
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
-	* examples/Timer_Queue/main_reactor.cpp: Added  #includes
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+        * examples/Timer_Queue/main_reactor.cpp: Added  #includes
 
-	* examples/*/Makefile:
-	* tests/Makefile: Updated dependencies
+        * examples/*/Makefile:
+        * tests/Makefile: Updated dependencies
 
-	Wed Nov 21 10:44:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Wed Nov 21 10:44:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Cached_Accept_Conn_Test.h:
-	* tests/Cached_Conn_Test.cpp:
-	* tests/Conn_Test.cpp:
-	* tests/Message_Queue_Notifications_Test.cpp:
-	* tests/Priority_Reactor_Test.cpp:
-	* tests/Reactors_Test.cpp:
-	* tests/Service_Config_DLL.cpp:
-	* tests/RMCast/Makefile: Fixed compilation errors.
+        * tests/Cached_Accept_Conn_Test.h:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Service_Config_DLL.cpp:
+        * tests/RMCast/Makefile: Fixed compilation errors.
 
-	Wed Nov 21 10:42:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Wed Nov 21 10:42:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Svc_Handler.cpp:
-	* ace/Connector.h:
-	* ace/Strategies_T.h:
-	* ace/Acceptor.h:
-	* ace/Svc_Handler.h: Fixed compilation errors.
+        * ace/Svc_Handler.cpp:
+        * ace/Connector.h:
+        * ace/Strategies_T.h:
+        * ace/Acceptor.h:
+        * ace/Svc_Handler.h: Fixed compilation errors.
 
-	Tue Nov 20 12:48:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+        Tue Nov 20 12:48:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Strategies.h:
-	* ace/Strategies.cpp:
-	* ace/Strategies.i: Removed from the repo as the files are being
-	  replaced with  multiple files, with one class per file. Please
-	  see below for details.  The conglomeration of all the classes in
-	  the same file made very less sense.
+        * ace/Strategies.h:
+        * ace/Strategies.cpp:
+        * ace/Strategies.i: Removed from the repo as the files are being
+          replaced with  multiple files, with one class per file. Please
+          see below for details.  The conglomeration of all the classes in
+          the same file made very less sense.
 
-	* ace/Connection_Recycling_Strategy.h:
-	* ace/Connection_Recycling_Strategy.cpp: Added a new file for the
-	  class ACE_Connection_Recycling_Strategy
+        * ace/Connection_Recycling_Strategy.h:
+        * ace/Connection_Recycling_Strategy.cpp: Added a new file for the
+          class ACE_Connection_Recycling_Strategy
 
-	* ace/Hashable.h:
-	* ace/Hashable.cpp:
-	* ace/Hashable.inl: New file for the class ACE_Hashable
+        * ace/Hashable.h:
+        * ace/Hashable.cpp:
+        * ace/Hashable.inl: New file for the class ACE_Hashable
 
-	* ace/Notification_Strategy.h:
-	* ace/Notification_Strategy.cpp:
-	* ace/Notification_Strategy.inl: New file for the class
-	  ACE_Notification_Strategy.
+        * ace/Notification_Strategy.h:
+        * ace/Notification_Strategy.cpp:
+        * ace/Notification_Strategy.inl: New file for the class
+          ACE_Notification_Strategy.
 
-	* ace/Reactor_Notification_Strategy.h:
-	* ace/Reactor_Notification_Strategy.cpp:
-	* ace/Reactor_Notification_Strategy.inl: New file for the class
-	  ACE_Reactor_Notification_Strategy
+        * ace/Reactor_Notification_Strategy.h:
+        * ace/Reactor_Notification_Strategy.cpp:
+        * ace/Reactor_Notification_Strategy.inl: New file for the class
+          ACE_Reactor_Notification_Strategy
 
-	* ace/Recyclable.h:
-	* ace/Recyclable.cpp:
-	* ace/Recyclable.inl: New file for the class ACE_Recyclable
+        * ace/Recyclable.h:
+        * ace/Recyclable.cpp:
+        * ace/Recyclable.inl: New file for the class ACE_Recyclable
 
-	* ace/Refcountable.h:
-	* ace/Refcountable.cpp:
-	* ace/Refcountable.inl: New file for the class ACE_Refcountable.
+        * ace/Refcountable.h:
+        * ace/Refcountable.cpp:
+        * ace/Refcountable.inl: New file for the class ACE_Refcountable.
 
-	* ace/OS.h: Moved the enum ACE_Recyclable_State to Recyclable.h
+        * ace/OS.h: Moved the enum ACE_Recyclable_State to Recyclable.h
 
-	* ace/Acceptor.h:
-	* ace/Caching_Utility_T.cpp:
-	* ace/Message_Queue.h:
-	* ace/Message_Queue_T.cpp:
-	* ace/Strategies_T.h:
-	* ace/Svc_Handler.cpp: Removed inclusion of Strategies.h.
+        * ace/Acceptor.h:
+        * ace/Caching_Utility_T.cpp:
+        * ace/Message_Queue.h:
+        * ace/Message_Queue_T.cpp:
+        * ace/Strategies_T.h:
+        * ace/Svc_Handler.cpp: Removed inclusion of Strategies.h.
 
-	* ace/Procator.cpp: #included Service_Config.h
+        * ace/Procator.cpp: #included Service_Config.h
 
-	* ace/Makefile: Added new file and generated dependencies
+        * ace/Makefile: Added new file and generated dependencies
 
-	* ace/SSL/Makefile:
-	* ace/RMCast/Makefile: Generated dependencies.
+        * ace/SSL/Makefile:
+        * ace/RMCast/Makefile: Generated dependencies.
 
 Mon Dec 10 14:10:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Makefile.bor: Added an ace_only target for Borland_wchar nightly
-	  build.
+        * Makefile.bor: Added an ace_only target for Borland_wchar nightly
+          build.
 
 Sun Dec  9 08:54:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Activation_Queue.cpp (enqueue): Fixed a leak where the
-	  dynamically allocated ACE_Message_Block wasn't being released if
- 	  enqueue_prio() failed.  Thanks to Dan Gilboa
- 	  <dgilboa@qualcomm.com> for reporting this.
+        * ace/Activation_Queue.cpp (enqueue): Fixed a leak where the
+          dynamically allocated ACE_Message_Block wasn't being released if
+          enqueue_prio() failed.  Thanks to Dan Gilboa
+          <dgilboa@qualcomm.com> for reporting this.
 
-	* tests/Logging_Strategy_Test.cpp (run_reactor): Fixed a warning.
+        * tests/Logging_Strategy_Test.cpp (run_reactor): Fixed a warning.
 
-	* tests/MEM_Stream_Test.cpp: Added a call to ACE_Thread_Manager::wait()
-	  to ensure the test shuts down in the right order.  Thanks to
- 	  Michael Searles <msearles@base16.com> for reporting this.
+        * tests/MEM_Stream_Test.cpp: Added a call to ACE_Thread_Manager::wait()
+          to ensure the test shuts down in the right order.  Thanks to
+          Michael Searles <msearles@base16.com> for reporting this.
 
-	* ace/Message_Queue_T.i (dequeue): Call dequeue_head() rather than
-	  queue_.dequeue() to get the proper type enforcement.  Thanks to
-	  Bill Fulton <Bill_A_Fulton@raytheon.com> for contributing this fix.
+        * ace/Message_Queue_T.i (dequeue): Call dequeue_head() rather than
+          queue_.dequeue() to get the proper type enforcement.  Thanks to
+          Bill Fulton <Bill_A_Fulton@raytheon.com> for contributing this fix.
 
 Sat Dec  8 17:07:01 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/fuzz.pl (check_for_missing_rir_env):
+        * bin/fuzz.pl (check_for_missing_rir_env):
 
-	  Check for TAO_ENV_ARG_PARAMETER instead of ACE_TRY_ENV.  TAO now
-	  uses the former instead of the latter.
+          Check for TAO_ENV_ARG_PARAMETER instead of ACE_TRY_ENV.  TAO now
+          uses the former instead of the latter.
 
 Sat Dec  8 09:39:48 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.cpp (string_to_argv): Improved the support for quoted strings.
-	  Thanks to Kevin Burge <kevin.burge@systemware.com> for reporting
- 	  this.
+        * ace/OS.cpp (string_to_argv): Improved the support for quoted strings.
+          Thanks to Kevin Burge <kevin.burge@systemware.com> for reporting
+          this.
 
-	* ace/Profile_Timer.cpp,
-	  ace/OS.i,
-	  ace/OS.h,
-	  ace/OS.cpp,
-	  ace/High_Res_Timer.i,
-	  ace/High_Res_Timer.cpp,
-	  ace/config-win32-ghs.h,
-	  ace/config-win32-common.h: Added improved support for ACE_LACKS_LONGLONG_T.
-	  Thanks to Alain Decamps for contributing this.
+        * ace/Profile_Timer.cpp,
+          ace/OS.i,
+          ace/OS.h,
+          ace/OS.cpp,
+          ace/High_Res_Timer.i,
+          ace/High_Res_Timer.cpp,
+          ace/config-win32-ghs.h,
+          ace/config-win32-common.h: Added improved support for ACE_LACKS_LONGLONG_T.
+          Thanks to Alain Decamps for contributing this.
 
 Fri Dec  7 07:57:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.cpp (cond_timedwait): Fixed a bug in the WinCE semaphore
-	  simulation version of ACE_OS::cond_timedwait().  Thanks to
- 	  Michael Graf <mg@leutek.de> for helping to find this.
+        * ace/OS.cpp (cond_timedwait): Fixed a bug in the WinCE semaphore
+          simulation version of ACE_OS::cond_timedwait().  Thanks to
+          Michael Graf <mg@leutek.de> for helping to find this.
 
 Fri Dec 07 14:28:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/ACE_Init_Test.cpp:
-	* tests/ACE_Init_TestDlg.cpp:
-	  Fix order of #includes to work under unicode builds.
+        * tests/ACE_Init_Test.cpp:
+        * tests/ACE_Init_TestDlg.cpp:
+          Fix order of #includes to work under unicode builds.
 
 Fri Dec 07 15:42:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Registry_Name_Space.cpp: Changed to conditionally use
-	  char_rep for binding/unbinding/resolving name bindings.  This is
-	  because ACE_CString and ACE_WString no longer allow
-	  initialization with different string type.
+        * ace/Registry_Name_Space.cpp: Changed to conditionally use
+          char_rep for binding/unbinding/resolving name bindings.  This is
+          because ACE_CString and ACE_WString no longer allow
+          initialization with different string type.
 
 Fri Dec  7 10:22:25 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i (close):
+        * ace/SSL/SSL_SOCK_Stream.i (close):
 
-	  Do not invalidate the handle when closing the
-	  ACE_SSL_SOCK_Stream.  Doing so causes subtle side-effects when a
-	  reactor invokes an event handler that uses a shutdown
-	  ACE_SSL_SOCK_Stream.  For example, if an SSL handshake fails
-	  then the stream andle will be invalidated.  This prevents the
-	  ACE_SSL_Accept_Handler from being removed from the reactor.
-	  Later when handle_events() is called the reactor will attempt
-	  to call the ACE_SSL_Accept_Handler with the shutdown
-	  ACE_SSL_SOCK_Stream, which appears to cause an access violation
-	  on Windows, and a "hang" on Unix platforms.  Thanks to Vladimir
-	  Chovanec <Vladimir.CHOVANEC@asset.sk> for tracking down this
-	  problem.
+          Do not invalidate the handle when closing the
+          ACE_SSL_SOCK_Stream.  Doing so causes subtle side-effects when a
+          reactor invokes an event handler that uses a shutdown
+          ACE_SSL_SOCK_Stream.  For example, if an SSL handshake fails
+          then the stream andle will be invalidated.  This prevents the
+          ACE_SSL_Accept_Handler from being removed from the reactor.
+          Later when handle_events() is called the reactor will attempt
+          to call the ACE_SSL_Accept_Handler with the shutdown
+          ACE_SSL_SOCK_Stream, which appears to cause an access violation
+          on Windows, and a "hang" on Unix platforms.  Thanks to Vladimir
+          Chovanec <Vladimir.CHOVANEC@asset.sk> for tracking down this
+          problem.
 
 Thu Dec  6 18:48:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Lib_Find.cpp: Fixed the ldfind() method so that it
-	  does a case-insensitive comparison on Windows platforms.  Thanks
- 	  to Kevin Burge <kevin.burge@systemware.com> for reporting this.
+        * ace/Lib_Find.cpp: Fixed the ldfind() method so that it
+          does a case-insensitive comparison on Windows platforms.  Thanks
+          to Kevin Burge <kevin.burge@systemware.com> for reporting this.
 
 Thu Dec  6 09:02:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Sock_Connect.cpp: Added MACOSX support.  Thanks to
-	  John Michael Zorko <j.zorko@att.net> for contributing this.
+        * ace/Sock_Connect.cpp: Added MACOSX support.  Thanks to
+          John Michael Zorko <j.zorko@att.net> for contributing this.
 
-	* tests/Logging_Strategy_Test.cpp: Add a "wait()" at the
-	  end of the main function to avoid problems when the main thread
- 	  exits before the reactor thread.  Thanks to Michael Searles
- 	  <msearles@base16.com> for reporting this.
+        * tests/Logging_Strategy_Test.cpp: Add a "wait()" at the
+          end of the main function to avoid problems when the main thread
+          exits before the reactor thread.  Thanks to Michael Searles
+          <msearles@base16.com> for reporting this.
 
 Thu Dec 06 20:28:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/SString.cpp (ACE_NS_WString): Char string constructor only
-	  initialized the buffer length but not the string length.  This
-	  was causing string comparisons to fail.
+        * ace/SString.cpp (ACE_NS_WString): Char string constructor only
+          initialized the buffer length but not the string length.  This
+          was causing string comparisons to fail.
 
 Thu Dec  6 18:51:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -1180,27 +1297,27 @@ Thu Dec  6 18:51:39 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Dec 06 14:06:22 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Config_Test.cpp: The string literals used to initialize
-	  ACE_TString need to be enclosed in an ACE_TEXT macro.
+        * tests/Config_Test.cpp: The string literals used to initialize
+          ACE_TString need to be enclosed in an ACE_TEXT macro.
 
-	* ace/Registry_Name_Space.h:
-	* ace/Registry_Name_Space.cpp: Changed ACE_WString to
-	  ACE_NS_WString.  I missed these last time.
+        * ace/Registry_Name_Space.h:
+        * ace/Registry_Name_Space.cpp: Changed ACE_WString to
+          ACE_NS_WString.  I missed these last time.
 
-	* ace/SString.i: Added an ACE_NS_WString constructor that I
-	  missed.
+        * ace/SString.i: Added an ACE_NS_WString constructor that I
+          missed.
 
 Thu Dec  6 11:19:18 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
-	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
-	  Fixed warnings in gcc 3.0.2
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+          Fixed warnings in gcc 3.0.2
 
 Thu Dec  6 11:15:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
-	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
-	  Fixed Fuzz errors in these files.
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+          Fixed Fuzz errors in these files.
 
 Thu Dec  6 07:39:07 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1214,14 +1331,14 @@ Thu Dec  6 07:39:07 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Dec 06 00:06:52 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Misc/test_naming.cpp: Replaced the use of
-	  ACE_WString with ACE_NS_WString as ACE_WString no longer support
-	  initization using char string.
+        * performance-tests/Misc/test_naming.cpp: Replaced the use of
+          ACE_WString with ACE_NS_WString as ACE_WString no longer support
+          initization using char string.
 
 Wed Dec 05 17:13:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/SString.h: The concatenation oeprator needed to be
-	  exported.
+        * ace/SString.h: The concatenation oeprator needed to be
+          exported.
 
 Wed Dec  5 19:58:42 2001  Steve Huston  <shuston@riverace.com>
 
@@ -1235,184 +1352,184 @@ Wed Dec  5 19:58:42 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Dec  5 15:35:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* apps/Makefile.am:
-	* docs/ACE-categories.html:
-	  Removed left over references to Orbix handler.
+        * apps/Makefile.am:
+        * docs/ACE-categories.html:
+          Removed left over references to Orbix handler.
 
-	* apps/JAWS/remora/app/Makefile:
-	* apps/JAWS/remora/app/stdmk:
-	* apps/JAWS/remora/app/test.cc:
-	* apps/JAWS/remora/app/remora.idl:
-	* apps/JAWS/remora/app/Remora_Export.h:
-	* apps/JAWS/remora/app/Remora_Export.i:
-	* apps/JAWS/remora/app/Remora_Export.cc:
-	* apps/JAWS/remora/app/Remora_Import.h:
-	* apps/JAWS/remora/app/Remora_Import.i:
-	* apps/JAWS/remora/app/Remora_Import.cc:
-	  Another directory that could only compile if ORBeline was still
-	  available.
+        * apps/JAWS/remora/app/Makefile:
+        * apps/JAWS/remora/app/stdmk:
+        * apps/JAWS/remora/app/test.cc:
+        * apps/JAWS/remora/app/remora.idl:
+        * apps/JAWS/remora/app/Remora_Export.h:
+        * apps/JAWS/remora/app/Remora_Export.i:
+        * apps/JAWS/remora/app/Remora_Export.cc:
+        * apps/JAWS/remora/app/Remora_Import.h:
+        * apps/JAWS/remora/app/Remora_Import.i:
+        * apps/JAWS/remora/app/Remora_Import.cc:
+          Another directory that could only compile if ORBeline was still
+          available.
 
 Wed Dec 05 14:47:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	  Removed CORBA_Handler.* and CORBA_Ref.* classes from the project
-	  files.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Removed CORBA_Handler.* and CORBA_Ref.* classes from the project
+          files.
 
 Wed Dec  5 16:38:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/SString_Test.cpp:
-	* examples/Misc/test_sstring.cpp (main): Changed from ACE_WString
-	  to ACE_NS_WString so we can still initialize the test string
-	  from char strings.  We can no longer initialize ACE_WString's
-	  with char strings.  ACE_NS_WString maintains the old behavior,
-	  however.
+        * tests/SString_Test.cpp:
+        * examples/Misc/test_sstring.cpp (main): Changed from ACE_WString
+          to ACE_NS_WString so we can still initialize the test string
+          from char strings.  We can no longer initialize ACE_WString's
+          with char strings.  ACE_NS_WString maintains the old behavior,
+          however.
 
-	* ace/SString.h:
-	* ace/SString.i: Added string contatenation operator
-	  ACE_NS_WString::operator+.
+        * ace/SString.h:
+        * ace/SString.i: Added string contatenation operator
+          ACE_NS_WString::operator+.
 
 Wed Dec  5 12:37:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* Removed all code to support Orbix and any references to it in
-	  the documentation (at least all references that I found).
-	  We haven't tested this code in ages, so it was probably broken,
-	  furthermore, IONA does not sell Orbix-2.X nor Orbix-3.X (the
-	  versions our code was based on), and will probably stop
-	  supporting old versions of Orbix before ACE-5.3 (or 6.0) come
-	  out.
+        * Removed all code to support Orbix and any references to it in
+          the documentation (at least all references that I found).
+          We haven't tested this code in ages, so it was probably broken,
+          furthermore, IONA does not sell Orbix-2.X nor Orbix-3.X (the
+          versions our code was based on), and will probably stop
+          supporting old versions of Orbix before ACE-5.3 (or 6.0) come
+          out.
 
-	* ace/Makefile:
-	* ace/Makefile.am:
-	* ace/Makefile.bor:
-	* ace/ace-dll.icc:
-	* ace/ace-lib.icc:
-	* ace/ace.icc:
-	* ace/CORBA_Handler.h:
-	* ace/CORBA_Handler.i:
-	* ace/CORBA_Handler.cpp:
-	* ace/CORBA_Ref.h:
-	* ace/CORBA_Ref.cpp:
-	* ace/config-hpux-9.x-orbix.h:
-	* ace/config-sunos4-sun4.x-orbix.h:
-	* ace/config-sunos5.4-sunc++-4.x-orbix.h:
-	* ace/config-sunos5.x-sunc++-4.x-orbix.h:
-	* apps/Makefile:
-	* apps/Makefile.am:
-	* apps/Orbix-Examples/Makefile:
-	* apps/Orbix-Examples/Event_Comm/Makefile:
-	* apps/Orbix-Examples/Event_Comm/README:
-	* apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.h:
-	* apps/Orbix-Examples/Event_Comm/Consumer/Makefile:
-	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.h:
-	* apps/Orbix-Examples/Event_Comm/Consumer/consumer.cpp:
-	* apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.h:
-	* apps/Orbix-Examples/Event_Comm/Supplier/Makefile:
-	* apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.cpp:
-	* apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.h:
-	* apps/Orbix-Examples/Event_Comm/Supplier/supplier.cpp:
-	* apps/Orbix-Examples/Event_Comm/include/Event_Comm.hh:
-	* apps/Orbix-Examples/Event_Comm/include/Event_Comm_i.h:
-	* apps/Orbix-Examples/Event_Comm/include/Notification_Receiver_i.h:
-	* apps/Orbix-Examples/Event_Comm/include/Notifier_i.h:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm.hh:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm.idl:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommC.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommS.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm_i.h:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Makefile:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notification.idl:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver.idl:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.h:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier.idl:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.cpp:
-	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.h:
-	* apps/Orbix-Examples/Logger/Logger.cpp:
-	* apps/Orbix-Examples/Logger/Logger.h:
-	* apps/Orbix-Examples/Logger/Makefile:
-	* apps/Orbix-Examples/Logger/Orbix.hostgroups:
-	* apps/Orbix-Examples/Logger/Orbix.hosts:
-	* apps/Orbix-Examples/Logger/README:
-	* apps/Orbix-Examples/Logger/a1.tex:
-	* apps/Orbix-Examples/Logger/client.cpp:
-	* apps/Orbix-Examples/Logger/logger.hh:
-	* apps/Orbix-Examples/Logger/logger.idl:
-	* apps/Orbix-Examples/Logger/loggerS.cpp:
-	* apps/Orbix-Examples/Logger/logger_i.cpp:
-	* apps/Orbix-Examples/Logger/logger_i.h:
-	* apps/Orbix-Examples/Logger/server.cpp:
-	* examples/CORBA/Makefile:
-	* examples/CORBA/Test.idl:
-	* examples/CORBA/Test_i.cpp:
-	* examples/CORBA/Test_i.h:
-	* examples/CORBA/client.cpp:
-	* examples/CORBA/server.cpp:
-	* include/makeinclude/platform_hpux_orbix.GNU:
-	* include/makeinclude/platform_sunos4_sunc++4.x_orbix.GNU:
-	* include/makeinclude/platform_sunos5_centerline_orbix.GNU:
-	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU:
-	  Removed examples and classes to support orbix with ACE.
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/ace-dll.icc:
+        * ace/ace-lib.icc:
+        * ace/ace.icc:
+        * ace/CORBA_Handler.h:
+        * ace/CORBA_Handler.i:
+        * ace/CORBA_Handler.cpp:
+        * ace/CORBA_Ref.h:
+        * ace/CORBA_Ref.cpp:
+        * ace/config-hpux-9.x-orbix.h:
+        * ace/config-sunos4-sun4.x-orbix.h:
+        * ace/config-sunos5.4-sunc++-4.x-orbix.h:
+        * ace/config-sunos5.x-sunc++-4.x-orbix.h:
+        * apps/Makefile:
+        * apps/Makefile.am:
+        * apps/Orbix-Examples/Makefile:
+        * apps/Orbix-Examples/Event_Comm/Makefile:
+        * apps/Orbix-Examples/Event_Comm/README:
+        * apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.h:
+        * apps/Orbix-Examples/Event_Comm/Consumer/Makefile:
+        * apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.h:
+        * apps/Orbix-Examples/Event_Comm/Consumer/consumer.cpp:
+        * apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.h:
+        * apps/Orbix-Examples/Event_Comm/Supplier/Makefile:
+        * apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.cpp:
+        * apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.h:
+        * apps/Orbix-Examples/Event_Comm/Supplier/supplier.cpp:
+        * apps/Orbix-Examples/Event_Comm/include/Event_Comm.hh:
+        * apps/Orbix-Examples/Event_Comm/include/Event_Comm_i.h:
+        * apps/Orbix-Examples/Event_Comm/include/Notification_Receiver_i.h:
+        * apps/Orbix-Examples/Event_Comm/include/Notifier_i.h:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm.hh:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm.idl:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_CommC.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_CommS.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm_i.h:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Makefile:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notification.idl:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver.idl:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.h:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notifier.idl:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.cpp:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.h:
+        * apps/Orbix-Examples/Logger/Logger.cpp:
+        * apps/Orbix-Examples/Logger/Logger.h:
+        * apps/Orbix-Examples/Logger/Makefile:
+        * apps/Orbix-Examples/Logger/Orbix.hostgroups:
+        * apps/Orbix-Examples/Logger/Orbix.hosts:
+        * apps/Orbix-Examples/Logger/README:
+        * apps/Orbix-Examples/Logger/a1.tex:
+        * apps/Orbix-Examples/Logger/client.cpp:
+        * apps/Orbix-Examples/Logger/logger.hh:
+        * apps/Orbix-Examples/Logger/logger.idl:
+        * apps/Orbix-Examples/Logger/loggerS.cpp:
+        * apps/Orbix-Examples/Logger/logger_i.cpp:
+        * apps/Orbix-Examples/Logger/logger_i.h:
+        * apps/Orbix-Examples/Logger/server.cpp:
+        * examples/CORBA/Makefile:
+        * examples/CORBA/Test.idl:
+        * examples/CORBA/Test_i.cpp:
+        * examples/CORBA/Test_i.h:
+        * examples/CORBA/client.cpp:
+        * examples/CORBA/server.cpp:
+        * include/makeinclude/platform_hpux_orbix.GNU:
+        * include/makeinclude/platform_sunos4_sunc++4.x_orbix.GNU:
+        * include/makeinclude/platform_sunos5_centerline_orbix.GNU:
+        * include/makeinclude/platform_sunos5_sunc++_orbix.GNU:
+          Removed examples and classes to support orbix with ACE.
 
-	* ACE-INSTALL.html:
-	* FAQ:
-	* README:
-	* TODO:
-	* acconfig.h:
-	* ace/README:
-	* ace/config-win32-common.h:
-	* apps/README:
-	* ace/config-tandem.h:
-	* docs/ACE-configuration.txt:
-	* include/makeinclude/platform_aix4_cset++.GNU:
-	* include/makeinclude/platform_dgux4_epc.GNU:
-	* include/makeinclude/platform_m88k.GNU:
-	* include/makeinclude/platform_sunos4_g++.GNU:
-	* include/makeinclude/platform_sunos5_g++.GNU:
-	* include/makeinclude/platform_sunos5_kcc.GNU:
-	* include/makeinclude/platform_sunos5_sunc++.GNU:
-	* include/makeinclude/platform_unixware_g++.GNU:
-	* include/makeinclude/platform_unixware_udk.GNU:
-	* include/makeinclude/rules.local.GNU:
-	* include/makeinclude/wrapper_macros.GNU:
-	* m4/ace.m4:
-	* performance-tests/README:
-	* performance-tests/TTCP/C/README:
-	  Files that referenced Orbix support or documented how to use
-	  it.
+        * ACE-INSTALL.html:
+        * FAQ:
+        * README:
+        * TODO:
+        * acconfig.h:
+        * ace/README:
+        * ace/config-win32-common.h:
+        * apps/README:
+        * ace/config-tandem.h:
+        * docs/ACE-configuration.txt:
+        * include/makeinclude/platform_aix4_cset++.GNU:
+        * include/makeinclude/platform_dgux4_epc.GNU:
+        * include/makeinclude/platform_m88k.GNU:
+        * include/makeinclude/platform_sunos4_g++.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_sunos5_kcc.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_unixware_g++.GNU:
+        * include/makeinclude/platform_unixware_udk.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * m4/ace.m4:
+        * performance-tests/README:
+        * performance-tests/TTCP/C/README:
+          Files that referenced Orbix support or documented how to use
+          it.
 
-	* examples/Reactor/Multicast/Log_Wrapper.h:
-	* examples/Reactor/Multicast/Log_Wrapper.cpp:
-	  Fixed documentation, it was referencing Orbix but actually it
-	  uses UDP multicast, looks like a cut&paste error to me.
+        * examples/Reactor/Multicast/Log_Wrapper.h:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+          Fixed documentation, it was referencing Orbix but actually it
+          uses UDP multicast, looks like a cut&paste error to me.
 
 Wed Dec  5 12:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/SString.cpp:
-	  Add missing template instantiations, only a problem when
-	  inlining was disabled.
+        * ace/SString.cpp:
+          Add missing template instantiations, only a problem when
+          inlining was disabled.
 
-	* tests/Hash_Map_Manager_Test.cpp:
-	  Rename global variable 'alloc' to 'ace_test_allocator', the
-	  former conflicts with STL symbols under Linux.
+        * tests/Hash_Map_Manager_Test.cpp:
+          Rename global variable 'alloc' to 'ace_test_allocator', the
+          former conflicts with STL symbols under Linux.
 
-	* tests/Map_Test.cpp:
-	  Rename the value_type and expanded_value global typedefs to have
-	  an ace_ prefix.  Though only used in this test they conflict
-	  with some STL symbols by the same name.
+        * tests/Map_Test.cpp:
+          Rename the value_type and expanded_value global typedefs to have
+          an ace_ prefix.  Though only used in this test they conflict
+          with some STL symbols by the same name.
 
-	* tests/DLList_Test.cpp:
-	  Remove unused global variable 'alloc' looks like a cut&paste
-	  carry-over.
+        * tests/DLList_Test.cpp:
+          Remove unused global variable 'alloc' looks like a cut&paste
+          carry-over.
 
 Wed Dec 05 10:08:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* rpc++/*:
-	  Removed, this directory was not distributed with ACE and having
-	  it around just made the administration harder.
+        * rpc++/*:
+          Removed, this directory was not distributed with ACE and having
+          it around just made the administration harder.
 
 Wed Dec  5 12:10:42 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1441,109 +1558,109 @@ Wed Dec  5 09:21:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Dec  4 22:26:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS_String.h:
-	* ace/OS_String.i:
-	* ace/OS_String.cpp (strncpy, wcsncat_emulation): One more
-	  string function that needs to be available.  (See next entry.)
+        * ace/OS_String.h:
+        * ace/OS_String.i:
+        * ace/OS_String.cpp (strncpy, wcsncat_emulation): One more
+          string function that needs to be available.  (See next entry.)
 
 Tue Dec 04 22:12:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS_String.h:
-	* ace/OS_String.cpp (strsncpy): Made the wchar_t version of this
-	  function available on all platforms and changed it to use type
-	  ACE_WCHAR_T.
+        * ace/OS_String.h:
+        * ace/OS_String.cpp (strsncpy): Made the wchar_t version of this
+          function available on all platforms and changed it to use type
+          ACE_WCHAR_T.
 
 Tue Dec 04 20:08:49 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  Merged in the new String_Base template class.
+          Merged in the new String_Base template class.
 
-	* ace/Makefile: Added String_Base into the list of template
-	  files.
+        * ace/Makefile: Added String_Base into the list of template
+          files.
 
-	* ace/Basic_Types.h: Added definitions of ACE_WCHAR_T and
-	  ACE_WINT_T which are defined to wchat_t and wint_t when
-	  ACE_HAS_WCHAR are defined, and ACE_USHORT16 otherwise.  They are
-	  needed to support various "wide character" string operations
-	  that we need to support the templatized ACE_WString, which uses
-	  ACE_USHORT16 as the wide char type when wchar_t is not
-	  supported.
+        * ace/Basic_Types.h: Added definitions of ACE_WCHAR_T and
+          ACE_WINT_T which are defined to wchat_t and wint_t when
+          ACE_HAS_WCHAR are defined, and ACE_USHORT16 otherwise.  They are
+          needed to support various "wide character" string operations
+          that we need to support the templatized ACE_WString, which uses
+          ACE_USHORT16 as the wide char type when wchar_t is not
+          supported.
 
-	* ace/OS_String.h:
-	* ace/OS_String.inl:
-	* ace/OS_String.cpp: Made several wchar version string functions
-	  available no matter ACE_HAS_WCHAR is defined or not.  There are
-	  more functions (the ones that have *_emulation helpers
-	  available) that can be made availabe at all time, but I just
-	  fixed the ones that ACE_WString needed for now.  We can add more
-	  later.
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/OS_String.cpp: Made several wchar version string functions
+          available no matter ACE_HAS_WCHAR is defined or not.  There are
+          more functions (the ones that have *_emulation helpers
+          available) that can be made availabe at all time, but I just
+          fixed the ones that ACE_WString needed for now.  We can add more
+          later.
 
-	* ace/SString.h: Changed the definition of ACE_WSTRING_TYPE to
-	  ACE_WCHAR_T.  ACE_WCHAR_T is defined in the same fashion as
-	  ACE_WSTRING_TYPE was originally defined.
+        * ace/SString.h: Changed the definition of ACE_WSTRING_TYPE to
+          ACE_WCHAR_T.  ACE_WCHAR_T is defined in the same fashion as
+          ACE_WSTRING_TYPE was originally defined.
 
-	* ace/Local_Name_Space.cpp: ACE_NS_WString::char_rep works just
-	  fine.  We don't need to use ACE_Wide_To_Ascii::convert
-	  explicitly since it is not available when ACE_HAS_WCHAR isn't
-	  defined.
+        * ace/Local_Name_Space.cpp: ACE_NS_WString::char_rep works just
+          fine.  We don't need to use ACE_Wide_To_Ascii::convert
+          explicitly since it is not available when ACE_HAS_WCHAR isn't
+          defined.
 
-	* ace/SString.cpp (operator<<): Avoided the problem of printing
-	  wchar strings temporarily.  Using ACE_Wide_To_Ascii didn't work
-	  on platforms that don't support wchar.  Thanks to Keith Hamburg
-	  for pointing this out.
+        * ace/SString.cpp (operator<<): Avoided the problem of printing
+          wchar strings temporarily.  Using ACE_Wide_To_Ascii didn't work
+          on platforms that don't support wchar.  Thanks to Keith Hamburg
+          for pointing this out.
 
-	* ace/String_Base.cpp: Fixed incorrect RCSID name.  Thanks to
-	  Keith Hamburg <khamburg@cs.wustl.edu> for reporting it.
+        * ace/String_Base.cpp: Fixed incorrect RCSID name.  Thanks to
+          Keith Hamburg <khamburg@cs.wustl.edu> for reporting it.
 
-	* ace/SString.cpp:
-	* ace/SString.h:
-	* ace/SString.i: Changed ACE_WString to be a typedef of
-	  ACE_String_Base<ACE_WSTRING_TYPE> and added a subclass of it
-	  called ACE_NS_WString to maintain backward compatibility.
+        * ace/SString.cpp:
+        * ace/SString.h:
+        * ace/SString.i: Changed ACE_WString to be a typedef of
+          ACE_String_Base<ACE_WSTRING_TYPE> and added a subclass of it
+          called ACE_NS_WString to maintain backward compatibility.
 
-	* tests/Naming_Test.cpp:
-	* ace/Local_Name_Space.cpp:
-	* ace/Local_Name_Space.h:
-	* ace/Local_Name_Space_T.cpp:
-	* ace/Local_Name_Space_T.h:
-	* ace/Name_Space.cpp:
-	* ace/Name_Space.h:
-	* ace/Naming_Context.cpp:
-	* ace/Naming_Context.h:
-	* ace/Remote_Name_Space.cpp:
-	* ace/Remote_Name_Space.h:
-	* netsvcs/clients/Naming/Client/Client_Test.cpp:
-	* netsvcs/lib/Name_Handler.cpp:
-	* netsvcs/lib/Name_Handler.h:  Changed the use of ACE_WString to
-	  ACE_NS_WString.
+        * tests/Naming_Test.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Local_Name_Space_T.h:
+        * ace/Name_Space.cpp:
+        * ace/Name_Space.h:
+        * ace/Naming_Context.cpp:
+        * ace/Naming_Context.h:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Remote_Name_Space.h:
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Name_Handler.h:  Changed the use of ACE_WString to
+          ACE_NS_WString.
 
-	* tests/SString_Test.cpp: Added ACE_TEXT_WIDE to convert char
-	  strings to wchar strings for initializing ACE_WString as you can
-	  no longer initialize a ACE_WString with a char string.
+        * tests/SString_Test.cpp: Added ACE_TEXT_WIDE to convert char
+          strings to wchar strings for initializing ACE_WString as you can
+          no longer initialize a ACE_WString with a char string.
 
-	* ace/String_Base.h:
-	* ace/String_Base.i:
-	* ace/String_Base.cpp: Abstracted out ACE_CString and ACE_WString
-	  into a templatized String_Base.
+        * ace/String_Base.h:
+        * ace/String_Base.i:
+        * ace/String_Base.cpp: Abstracted out ACE_CString and ACE_WString
+          into a templatized String_Base.
 
-	* ace/CDR_Stream.h: Removed forward declarating ACE_CString and
-	  added inclusion of <SString.h>.
+        * ace/CDR_Stream.h: Removed forward declarating ACE_CString and
+          added inclusion of <SString.h>.
 
-	* ace/SString.h:
-	* ace/SString.i:
-	* ace/SString.cpp: Changed ACE_CString to be a typedef of
-	  ACE_String_Base<char>.
+        * ace/SString.h:
+        * ace/SString.i:
+        * ace/SString.cpp: Changed ACE_CString to be a typedef of
+          ACE_String_Base<char>.
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added String_Base.* to appropriate folders.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added String_Base.* to appropriate folders.
 
 Tue Dec  4 20:57:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
 
-	  Added a outgoing queue to the test. This should more or less
-	  represent a simple CORBA invocation. Reduced a call to new to by
-	  using a shared data block with a lock.
+          Added a outgoing queue to the test. This should more or less
+          represent a simple CORBA invocation. Reduced a call to new to by
+          using a shared data block with a lock.
 
 Tue Dec  4 19:10:22 2001  Steve Huston  <shuston@riverace.com>
 
@@ -1564,13 +1681,13 @@ Tue Dec  4 13:52:44 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Dec  4 09:27:21 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Reverted the change that added group write permissions to the
-	  default file and directory permissions.  Doug correctly points
-	  out that this introduces a security hole.  Users who need less
-	  restrictive permissions can redefine these macros in their
-	  config.h header.
+          Reverted the change that added group write permissions to the
+          default file and directory permissions.  Doug correctly points
+          out that this introduces a security hole.  Users who need less
+          restrictive permissions can redefine these macros in their
+          config.h header.
 
 Tue Dec  4 10:07:31 2001  Steve Huston  <shuston@riverace.com>
 
@@ -1580,17 +1697,17 @@ Tue Dec  4 10:07:31 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Dec  4 06:59:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
-	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
 
-	  New tests for measuring the throughput of two different server
-	  concurrency architectures.  The idea is to make it simpler than
-	  what is already there and hence the tests. The old tests were a
-	  bit confusing and very complicated. The old tests have been
-	  retained. The tests are for getting some ball-park figures for
-	  RT_CORBA and for TAO in general.
+          New tests for measuring the throughput of two different server
+          concurrency architectures.  The idea is to make it simpler than
+          what is already there and hence the tests. The old tests were a
+          bit confusing and very complicated. The old tests have been
+          retained. The tests are for getting some ball-park figures for
+          RT_CORBA and for TAO in general.
 
 Tue Dec  4 10:00:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -1602,46 +1719,46 @@ Tue Dec  4 10:00:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Dec  3 18:19:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/fuzz.pl (check_for_id_string):
+        * bin/fuzz.pl (check_for_id_string):
 
-	  Corrected capitalization of "\$Id\$" in output message.
+          Corrected capitalization of "\$Id\$" in output message.
 
 Mon Dec  3 16:30:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Added group write permissions to the default file and directory
-	  permission macros supplied by ACE.  Allows the ACE_Process_Mutex
-	  to be used with process from different user in the same group.
-	  Thanks to Michael Brinkmann <michael.brinkmann@materna.de> for
-	  providing a fix.
+          Added group write permissions to the default file and directory
+          permission macros supplied by ACE.  Allows the ACE_Process_Mutex
+          to be used with process from different user in the same group.
+          Thanks to Michael Brinkmann <michael.brinkmann@materna.de> for
+          providing a fix.
 
 Mon Dec  3 16:22:56 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Process_Mutex.h:
+        * ace/Process_Mutex.h:
 
-	  Corrected Doxygen documentation.
+          Corrected Doxygen documentation.
 
 Mon Dec 03 14:22:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	  Add UNIX-only files.  Though strictly not required to compile
-	  ACE under NT, putting them in the project makes this directory
-	  more amenable for samwise.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Add UNIX-only files.  Though strictly not required to compile
+          ACE under NT, putting them in the project makes this directory
+          more amenable for samwise.
 
-	* ace/POSIX_Proactor.cpp:
-	  Remove duplicate ACE_BUILD_DLL macro, when needed this is
-	  defined via options in the project file.
+        * ace/POSIX_Proactor.cpp:
+          Remove duplicate ACE_BUILD_DLL macro, when needed this is
+          defined via options in the project file.
 
 Mon Dec  3 13:59:06 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/README:
+        * ace/README:
 
-	  The ACE_HAS_IP6 macro has been superceded by the ACE_HAS_IPV6
-	  macro.  Also added description of the
-	  ACE_USES_IPV4_IPV6_MIGRATION macro based on Steve's description
-	  below.
+          The ACE_HAS_IP6 macro has been superceded by the ACE_HAS_IPV6
+          macro.  Also added description of the
+          ACE_USES_IPV4_IPV6_MIGRATION macro based on Steve's description
+          below.
 
 Mon Dec  3 15:50:42 2001  Steve Huston  <shuston@riverace.com>
 
@@ -1702,17 +1819,17 @@ Mon Dec  3 15:50:42 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Dec  3 10:54:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.h:
-	  Document CDR default buffer sizes and control macros
-	  using Doxygen.
-	  Document memory alignment macros in Doxygen form.
+        * ace/OS.h:
+          Document CDR default buffer sizes and control macros
+          using Doxygen.
+          Document memory alignment macros in Doxygen form.
 
-	* ace/Sample_History.h:
-	* ace/Sample_History.inl:
-	  Add accessor to get the samples saved on the history.
+        * ace/Sample_History.h:
+        * ace/Sample_History.inl:
+          Add accessor to get the samples saved on the history.
 
-	* ace/RMCast/RMCast_Singleton_Factory.h:
-	  Document constructor in more detail.
+        * ace/RMCast/RMCast_Singleton_Factory.h:
+          Document constructor in more detail.
 
 Mon Dec 03 07:54:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -1721,53 +1838,53 @@ Mon Dec 03 07:54:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sun Dec 02 15:13:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.cpp:
-	  Fixed Fuzz problems, the ACE_TRACE calls in operator++/--
-	  definitions had less whitespace than the actual operators.
+        * ace/OS.cpp:
+          Fixed Fuzz problems, the ACE_TRACE calls in operator++/--
+          definitions had less whitespace than the actual operators.
 
 Sun Dec 02 15:17:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (join): This method mistakenly used the
-	  local copy of Thread_Descriptor to change the thread status when
-	  it found a thread to join from the <thr_list_>.  This prevented
-	  the status of the original Thread_Descriptor to be updated
-	  correctly and the same descriptor got put into the
-	  <terminated_thr_list_> again, which caused the same thread to be
-	  waiting on in some cases.  Changed to manipulate the descriptor
-	  directly to avoid the problem.  Thanks to Eyal Lubetzky
-	  <eyall@BANDWIZ.COM> for reporting the problem and providing a
-	  nice example to showcase it.
+        * ace/Thread_Manager.cpp (join): This method mistakenly used the
+          local copy of Thread_Descriptor to change the thread status when
+          it found a thread to join from the <thr_list_>.  This prevented
+          the status of the original Thread_Descriptor to be updated
+          correctly and the same descriptor got put into the
+          <terminated_thr_list_> again, which caused the same thread to be
+          waiting on in some cases.  Changed to manipulate the descriptor
+          directly to avoid the problem.  Thanks to Eyal Lubetzky
+          <eyall@BANDWIZ.COM> for reporting the problem and providing a
+          nice example to showcase it.
 
 Sun Dec  2 12:44:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/ACE_Init_Test.cpp:
-	* tests/ACE_Init_TestDlg.cpp:
-	  Protect this test against compilation on non-Win32 platforms,
-	  that makes it easier to compile using samwise.
+        * tests/ACE_Init_Test.cpp:
+        * tests/ACE_Init_TestDlg.cpp:
+          Protect this test against compilation on non-Win32 platforms,
+          that makes it easier to compile using samwise.
 
-	* tests/RMCast/RMCast_Fragment_Test.cpp:
-	* tests/RMCast/RMCast_Membership_Test.cpp:
-	* tests/RMCast/RMCast_Reassembly_Test.cpp:
-	* tests/RMCast/RMCast_Reordering_Test.cpp:
-	* tests/RMCast/RMCast_Retransmission_Test.cpp:
-	* tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
-	  Change #include "test_config.h" to #include "../test_config.h",
-	  it is easier to generate makefiles and projects files with
-	  samwise if we do that.
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+          Change #include "test_config.h" to #include "../test_config.h",
+          it is easier to generate makefiles and projects files with
+          samwise if we do that.
 
 Sun Dec 02 12:15:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.cpp:
-	  Fixed typos in ACE_Time_Value::operator++ implementations.
-	  Also moved the implementation outside the #ifdef ACE_WIN32
-	  section.
+        * ace/OS.cpp:
+          Fixed typos in ACE_Time_Value::operator++ implementations.
+          Also moved the implementation outside the #ifdef ACE_WIN32
+          section.
 
 Sun Dec  2 12:17:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Reactor.i: Fixed a warning in TRU 64. Thanks to
-	  <krumpo@pobox.sk>  which reminded me of the fix in one of my
-	  workspaces. This shows up only in V6.3-013 (cxx) of the
-	  compiler.
+        * ace/Reactor.i: Fixed a warning in TRU 64. Thanks to
+          <krumpo@pobox.sk>  which reminded me of the fix in one of my
+          workspaces. This shows up only in V6.3-013 (cxx) of the
+          compiler.
 
 Sat Dec  1 19:39:22 2001  Steve Huston  <shuston@riverace.com>
 
@@ -1793,46 +1910,46 @@ Sat Dec  1 19:39:22 2001  Steve Huston  <shuston@riverace.com>
 
 Sat Dec  1 18:03:51 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/config-macosx.h:
-  	* include/makeinclude/platform_macosx.GNU:
-	  Added support so that ACE will build and run on Mac OS X 10.1.
-  	  Thanks to John Michael Zorko <j.zorko@att.net> for contributing
- 	  this.
+        * ace/config-macosx.h:
+        * include/makeinclude/platform_macosx.GNU:
+          Added support so that ACE will build and run on Mac OS X 10.1.
+          Thanks to John Michael Zorko <j.zorko@att.net> for contributing
+          this.
 
 Fri Nov 30 19:08:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/ARGV.cpp (dump): Fixed a bug with dump() so that it
-	  works properly even if argv_ changes.  Thanks to Kyle Brost
- 	  <Kyle.Brost@quest.com> for this fix.
+        * ace/ARGV.cpp (dump): Fixed a bug with dump() so that it
+          works properly even if argv_ changes.  Thanks to Kyle Brost
+          <Kyle.Brost@quest.com> for this fix.
 
 Thu Nov 29 16:31:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.{h,i,cpp}: Changed the return value of
-	  ACE_Time_Value::operator+= and operator -= to be ACE_Time_Value
- 	  & rather than void.  Also, added overloaded operator++ and
- 	  operator--.  This is all to make this stuff work better with
- 	  ACE_Atomic_Op.  Thanks to Kelly F. Hickel <kfh@mqsoftware.com>
- 	  for suggesting this.
+        * ace/OS.{h,i,cpp}: Changed the return value of
+          ACE_Time_Value::operator+= and operator -= to be ACE_Time_Value
+          & rather than void.  Also, added overloaded operator++ and
+          operator--.  This is all to make this stuff work better with
+          ACE_Atomic_Op.  Thanks to Kelly F. Hickel <kfh@mqsoftware.com>
+          for suggesting this.
 
-	* ace/Asynch_Acceptor.cpp (parse_address): Changed
-   	  the "message_block.size () - 2 * this->address_size ()" argument
- 	  to "bytes_to_read_" to work properly on Win32.  Thanks to Kelly
- 	  F. Hickel <kfh@mqsoftware.com> for reporting this.
+        * ace/Asynch_Acceptor.cpp (parse_address): Changed
+          the "message_block.size () - 2 * this->address_size ()" argument
+          to "bytes_to_read_" to work properly on Win32.  Thanks to Kelly
+          F. Hickel <kfh@mqsoftware.com> for reporting this.
 
 Wed Nov 28 17:44:26 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS_Dirent.cpp (readdir_emulation): Fixed a memory leak
-	  in the dirent emulation.  Thanks to Olivier Brunet
- 	  <obrunet@groupama-ccama.tm.fr> for reporting this.
+        * ace/OS_Dirent.cpp (readdir_emulation): Fixed a memory leak
+          in the dirent emulation.  Thanks to Olivier Brunet
+          <obrunet@groupama-ccama.tm.fr> for reporting this.
 
-	* ace/SPIPE_Acceptor.h (ACE_SPIPE_Acceptor): Clarified the
-	  return value of open().  Thanks to Garth Watney
- 	  <Garth.J.Watney@jpl.nasa.gov> for motivating this.
+        * ace/SPIPE_Acceptor.h (ACE_SPIPE_Acceptor): Clarified the
+          return value of open().  Thanks to Garth Watney
+          <Garth.J.Watney@jpl.nasa.gov> for motivating this.
 
-	* ace/OS.h: Added a workaround to the Borland bug for
-	  ACE_OS::stat().  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> and Chris Able <cable@scires.com> for
- 	  reporting/fixing this.
+        * ace/OS.h: Added a workaround to the Borland bug for
+          ACE_OS::stat().  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> and Chris Able <cable@scires.com> for
+          reporting/fixing this.
 
 Sat Dec 01 09:26:27 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -1854,116 +1971,116 @@ Wed Nov 28 09:28:09 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Nov 26 16:07:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/make_release: The distribution will be available in bzip2
-	  compressed format too. Made modifications to the release scripts
-	  to put out the beta in bzip2 compressed format.
+        * bin/make_release: The distribution will be available in bzip2
+          compressed format too. Made modifications to the release scripts
+          to put out the beta in bzip2 compressed format.
 
 Sat Nov 24 10:23:00 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Unbounded_Set.h (class ACE_Unbounded_Set): Moved the
-	  insert_tail() method from the private part of the class to the
- 	  public part since it's needed by the examples/Misc/test_set.cpp
- 	  file.
+        * ace/Unbounded_Set.h (class ACE_Unbounded_Set): Moved the
+          insert_tail() method from the private part of the class to the
+          public part since it's needed by the examples/Misc/test_set.cpp
+          file.
 
-	* examples/Misc/test_set.cpp (main): Somehow the contents of this file
-	  got lost.  Thanks to Johnny Willemsen for reporting this!
+        * examples/Misc/test_set.cpp (main): Somehow the contents of this file
+          got lost.  Thanks to Johnny Willemsen for reporting this!
 
 Fri Nov 23 08:40:33 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Refcounted_Auto_Ptr_Test.cpp: Added some ACE_DEBUGs to
-	  print out the reference count.
+        * tests/Refcounted_Auto_Ptr_Test.cpp: Added some ACE_DEBUGs to
+          print out the reference count.
 
-	* ace/Refcounted_Auto_Ptr.h: Added a count() accessor method to
-	  return the reference count.  Thanks to Andrea Bernicchia
- 	  <a.bernicchia@acsys.it> for contributing this.
+        * ace/Refcounted_Auto_Ptr.h: Added a count() accessor method to
+          return the reference count.  Thanks to Andrea Bernicchia
+          <a.bernicchia@acsys.it> for contributing this.
 
 Thu Nov 22 05:24:51 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* examples/QOS/Diffserv: Added a simple example to illustrate
-	  how to set Diffserv Codepoints on an ACE_SOCK_CODgram.
-	* examples/QOS/Makefile: Updated.
+        * examples/QOS/Diffserv: Added a simple example to illustrate
+          how to set Diffserv Codepoints on an ACE_SOCK_CODgram.
+        * examples/QOS/Makefile: Updated.
 
 Wed Nov 21 11:35:50 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* ace/Bound_Ptr.h
-	* ace/Bound_Ptr.i
-	* ace/Future.cpp
-	* ace/Future.h
-	* ace/Refcounted_Auto_Ptr.h
-	* ace/Refcounted_Auto_Ptr.i
+        * ace/Bound_Ptr.h
+        * ace/Bound_Ptr.i
+        * ace/Future.cpp
+        * ace/Future.h
+        * ace/Refcounted_Auto_Ptr.h
+        * ace/Refcounted_Auto_Ptr.i
 
-	  Made the memory allocation failure behavior consistent
-	  to the behavior prior to the change on Sun Oct 28 13:15:00 2001.
-	  Thanks to Christopher Kohlhoff <chris@kohlhoff.com> who prepared
-	  this change.
-	  The problem was that with the above mentioned change failed
-	  allocations would return 0 in either case, if exceptions were
-	  enabled by the platform or not. This was incosistent to the
-	  behavior before, as new threw bad_alloc on allocation failure
-	  when exceptions were supported by the platform.
+          Made the memory allocation failure behavior consistent
+          to the behavior prior to the change on Sun Oct 28 13:15:00 2001.
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> who prepared
+          this change.
+          The problem was that with the above mentioned change failed
+          allocations would return 0 in either case, if exceptions were
+          enabled by the platform or not. This was incosistent to the
+          behavior before, as new threw bad_alloc on allocation failure
+          when exceptions were supported by the platform.
 
-	  To fix this we faced the following forces:
-	  - Not to introduce yet another macro
-	  - Minimize impact of changes, localize the problem
-	  - Keep the new calls wrapped by a ACE_NEW macro to allow
-	    users to eventually redefine the macro (using e.g. new (nothrow)
+          To fix this we faced the following forces:
+          - Not to introduce yet another macro
+          - Minimize impact of changes, localize the problem
+          - Keep the new calls wrapped by a ACE_NEW macro to allow
+            users to eventually redefine the macro (using e.g. new (nothrow)
 
-	  As the ACE_NEW macros are quite restrictive in their supported
-	  semantics, e.g. you can only return on error, we decided to introduce
-	  a new method (as inline) internal_create which does the allocation.
-	  internal_create is called by create which does the differentiation
-	  between the exception-supported and exception-not-supported case.
+          As the ACE_NEW macros are quite restrictive in their supported
+          semantics, e.g. you can only return on error, we decided to introduce
+          a new method (as inline) internal_create which does the allocation.
+          internal_create is called by create which does the differentiation
+          between the exception-supported and exception-not-supported case.
 
 Wed Nov 21 09:07:37 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.h: Updated the ACE_GUARD_ACTION macro and added a new
-	  ACE_GUARD_REACTION macro.  Then, reimplemented the ACE_GUARD and
- 	  ACE_GUARD_RETURN macros in terms of these new macros.  Thanks to
- 	  Don Hinton for contributing these.
+        * ace/OS.h: Updated the ACE_GUARD_ACTION macro and added a new
+          ACE_GUARD_REACTION macro.  Then, reimplemented the ACE_GUARD and
+          ACE_GUARD_RETURN macros in terms of these new macros.  Thanks to
+          Don Hinton for contributing these.
 
-	* ace/Log_Msg_Callback.h: Improved the comments to explain why
-	  ACE_Log_Msg_Callback isn't inherited.  Thanks to
-	  Alexey Chalimov <alexey@allcharge.com> for motivating this.
+        * ace/Log_Msg_Callback.h: Improved the comments to explain why
+          ACE_Log_Msg_Callback isn't inherited.  Thanks to
+          Alexey Chalimov <alexey@allcharge.com> for motivating this.
 
 Tue Nov 20 15:36:52 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ACE-INSTALL.html: Pointed out that on Solaris with g++ you may
-	  need to use GNU as instead of /usr/ccs/bin/as, if you want
- 	  -gstabs+ and -pipe support.  Thanks to C Chan
- 	  <CChan@md.aacisd.com> for reporting this.
+        * ACE-INSTALL.html: Pointed out that on Solaris with g++ you may
+          need to use GNU as instead of /usr/ccs/bin/as, if you want
+          -gstabs+ and -pipe support.  Thanks to C Chan
+          <CChan@md.aacisd.com> for reporting this.
 
 Mon Nov 19 07:24:05 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/Synch/proc_sema.cpp: Added the ACE_TEXT macro so that
-	  ACE_Get_Opt works correctly.  Thanks to Johnny Willemsen for
-	  contributing this.
+        * examples/Synch/proc_sema.cpp: Added the ACE_TEXT macro so that
+          ACE_Get_Opt works correctly.  Thanks to Johnny Willemsen for
+          contributing this.
 
-	* tests/Aio_Platform_Test.cpp (main): Fixed the code so that it
-	  compiles when ACE_USES_WCHAR.  Thanks to Johnny Willemsen for
- 	  reporting this.
+        * tests/Aio_Platform_Test.cpp (main): Fixed the code so that it
+          compiles when ACE_USES_WCHAR.  Thanks to Johnny Willemsen for
+          reporting this.
 
-	* docs/ACE-categories.html: Updated the Doxygen URLs to use the
-	  new format.  Thanks to Peter J. Mason <peter.mason@retriever.com.au>
-	  for reporting the problem.
+        * docs/ACE-categories.html: Updated the Doxygen URLs to use the
+          new format.  Thanks to Peter J. Mason <peter.mason@retriever.com.au>
+          for reporting the problem.
 
 Fri Nov 16 10:39:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* docs: Moved minimumTAO.html from $TAO_ROOT/docs/ to
- 	  $ACE_ROOT/docs.
+        * docs: Moved minimumTAO.html from $TAO_ROOT/docs/ to
+          $ACE_ROOT/docs.
 
-	* ace/OS.h: Added two new macros ACE_GUARD_ACTION and
-	  ACE_GUARD_ACTION_RETURN.  Thanks to Boris Kaminer
- 	  <boris.kaminer@orcsoftware.com> for suggesting these.
+        * ace/OS.h: Added two new macros ACE_GUARD_ACTION and
+          ACE_GUARD_ACTION_RETURN.  Thanks to Boris Kaminer
+          <boris.kaminer@orcsoftware.com> for suggesting these.
 
-	* ace/NT_Service.cpp (state): Fixed a bug where calling
-	  ACE_NT_Service::state(x,x) while the service is stopped was
- 	  causing the internal status variables of ACE_NT_Service to
- 	  become corrupt.  If the control_mask is set to
- 	  SERVICE_ACCEPT_STOP in the constructor, the call to state will
- 	  cause this mask to be reset (if the service is not running).
-  	  This ultimately results in an NT Service that can be started but
- 	  not stopped.  Thanks to Kyle Brost <Kyle.Brost@quest.com> for
- 	  providing this fix.
+        * ace/NT_Service.cpp (state): Fixed a bug where calling
+          ACE_NT_Service::state(x,x) while the service is stopped was
+          causing the internal status variables of ACE_NT_Service to
+          become corrupt.  If the control_mask is set to
+          SERVICE_ACCEPT_STOP in the constructor, the call to state will
+          cause this mask to be reset (if the service is not running).
+          This ultimately results in an NT Service that can be started but
+          not stopped.  Thanks to Kyle Brost <Kyle.Brost@quest.com> for
+          providing this fix.
 
 Wed Nov 21 10:00:20 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -2025,19 +2142,19 @@ Tue Nov 20 13:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Nov 19 20:35:44 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp:
-	  This class allow application to subscribe a single socket to
- 	  many multicast groups.  However, the unsubscribe operation
- 	  failed to work with more than one group.  For some strange
- 	  reason it was storing the first multicast group subscription in
- 	  a class member and using that member in all the paths for the
- 	  unsubscribe methods.
+        * ace/SOCK_Dgram_Mcast.cpp:
+          This class allow application to subscribe a single socket to
+          many multicast groups.  However, the unsubscribe operation
+          failed to work with more than one group.  For some strange
+          reason it was storing the first multicast group subscription in
+          a class member and using that member in all the paths for the
+          unsubscribe methods.
 
-	  We have changed the unsubscribe(const ACE_INET_Addr&,...) method
- 	  to work as adversited, i.e. unsubscribe the *given* multicast
- 	  address, not the stored one, as an added benefit the method is
- 	  now re-entrant.  The unsubscribe(void) method works as before.
-  	  The code has been re-factored to minimize duplication.
+          We have changed the unsubscribe(const ACE_INET_Addr&,...) method
+          to work as adversited, i.e. unsubscribe the *given* multicast
+          address, not the stored one, as an added benefit the method is
+          now re-entrant.  The unsubscribe(void) method works as before.
+          The code has been re-factored to minimize duplication.
 
 Mon Nov 19 11:03:07 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -2126,9 +2243,9 @@ Sun Nov 11 09:50:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
           char to ACE_TCHAR.  Thanks to Johnny Willemsen for reporting
           this.
 
-	* tests/Aio_Platform_Test.cpp: The argv parameter of main() should
-	  be ACE_TCHAR rather than char.  Thanks to Johnny Willemsen for
- 	  reporting this.
+        * tests/Aio_Platform_Test.cpp: The argv parameter of main() should
+          be ACE_TCHAR rather than char.  Thanks to Johnny Willemsen for
+          reporting this.
 
 Thu Nov 15 15:43:20 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -2663,11 +2780,11 @@ Wed Oct 24 23:59:13 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Wed Oct 31 16:45:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h (llseek):
+        * ace/OS.h (llseek):
 
-	  Made ACE_OS::llseek() a static method, as it was originally
-	  intended to be.  Thanks to Doron Rajwan <doron@BANDWIZ.COM> for
-	  pointing out the problem.
+          Made ACE_OS::llseek() a static method, as it was originally
+          intended to be.  Thanks to Doron Rajwan <doron@BANDWIZ.COM> for
+          pointing out the problem.
 
 Tue Oct 30 22:53:57 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -2824,61 +2941,61 @@ Sun Oct 21 12:50:39 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           without setting the I/O handle.  Thanks to Rick Ohnemus
           <rick.ohnemus@systemware.com> for reporting this.
 
-	* ace/config-freebsd-pthread.h: Changed
+        * ace/config-freebsd-pthread.h: Changed
           #if (__FreeBSD_version > 430000) to
-	  #if (__FreeBSD_version > 440000) to get ACE to work with FreeBSD 4.4.
-	  Thanks to Gu Song <gusong_m@yahoo.com> for reporting this.
+          #if (__FreeBSD_version > 440000) to get ACE to work with FreeBSD 4.4.
+          Thanks to Gu Song <gusong_m@yahoo.com> for reporting this.
 
 Fri Oct 19 06:44:17 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
-	  Don't use a global Event_Handler object since this violates the
- 	  design rules for the ACE_Reactor.
+        * examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
+          Don't use a global Event_Handler object since this violates the
+          design rules for the ACE_Reactor.
 
 Sun Oct 21 13:39:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the Quoter example in
-	  $TAO_ROOT/examples to the list of tests in the daily builds.
+        * bin/auto_run_tests.lst: Added the Quoter example in
+          $TAO_ROOT/examples to the list of tests in the daily builds.
 
 Thu Oct 18 20:56:53 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp:
+        * tests/Proactor_Test.cpp:
 
-	  Added no-op main() function for platforms that do not support
-	  asynchronous IO.
+          Added no-op main() function for platforms that do not support
+          asynchronous IO.
 
 Thu Oct 18 22:46:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp: Fixed warnings in Sun CC and TRU 64 builds.
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp: Fixed warnings in Sun CC and TRU 64 builds.
 
 Thu Oct 18 20:42:55 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp:
+        * tests/Proactor_Test.cpp:
 
-	  Fixed Unicode build errors.
+          Fixed Unicode build errors.
 
 Thu Oct 18 19:52:44 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-	* ace/SString.h: clarify example in comments to ACE_Tokenize
+        * ace/SString.h: clarify example in comments to ACE_Tokenize
            so that constant strings are not passed in its constructor.
 
-	* examples/OS/Process/process.cpp: do not pass constant strings
-	   to ACE_Tokenize constructor.  Thanks to
-	   Werner Buchert <w.buchert@medat.de> and
-	   Don Hinton <dhinton@swan.fr>.
+        * examples/OS/Process/process.cpp: do not pass constant strings
+           to ACE_Tokenize constructor.  Thanks to
+           Werner Buchert <w.buchert@medat.de> and
+           Don Hinton <dhinton@swan.fr>.
 
 Wed Oct 17 23:56:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp:
-	* tests/Proactor_Test.dsp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test.dsp:
 
-	  Proactor test contributed by Alexander Libman
-	  <alibman@baltimore.com>.
+          Proactor test contributed by Alexander Libman
+          <alibman@baltimore.com>.
 
-	* tests/tests.dsw:
+        * tests/tests.dsw:
 
-	  Added Proactor_Test project to the tests workspace.
+          Added Proactor_Test project to the tests workspace.
 
 Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -2889,222 +3006,222 @@ Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Wed Oct 17 09:15:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-linux-common.h: Clarified that this file should
-	  not be included directly!  Thanks to Suresh N
- 	  <suresh.n@vergiltech.com> for reporting this.
+        * ace/config-linux-common.h: Clarified that this file should
+          not be included directly!  Thanks to Suresh N
+          <suresh.n@vergiltech.com> for reporting this.
 
 Wed Oct 17 16:00:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Graeme Clark to the Hall of Fame.
+        * THANKS: Added Graeme Clark to the Hall of Fame.
 
 Wed Oct 17 15:49:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp:
-	* ace/TP_Reactor.h: Added remove_handler () calls to the
-	  TP_Reactor.  Before this, the  call on the reactor used to be
-	  handled by the Select_Reactor's implementation. The
-	  implementation has a problem. It tries to call handle_close ()
-	  (an upcall) as one of the calls after holding the token. This
-	  was asking for trouble. This could lead to deadlocks as
-	  mentioned in [BUG ID 1055].
+        * ace/TP_Reactor.cpp:
+        * ace/TP_Reactor.h: Added remove_handler () calls to the
+          TP_Reactor.  Before this, the  call on the reactor used to be
+          handled by the Select_Reactor's implementation. The
+          implementation has a problem. It tries to call handle_close ()
+          (an upcall) as one of the calls after holding the token. This
+          was asking for trouble. This could lead to deadlocks as
+          mentioned in [BUG ID 1055].
 
-	  The method in the TP_Reactor now calls remove_handler () on the
-	  Select_Reactor (its base class) with a DONT_CALL flag. Then it
-	  calls handle_close () on the Event_Handler if the user did not
-	  pass in the DONT_CALL mask. This two step process would get
-	  around the problem that was mentioned before. Thanks to Graeme
-	  Clark <gclark@opentext.com> for reporting the problem and
-	  testing this fix.
+          The method in the TP_Reactor now calls remove_handler () on the
+          Select_Reactor (its base class) with a DONT_CALL flag. Then it
+          calls handle_close () on the Event_Handler if the user did not
+          pass in the DONT_CALL mask. This two step process would get
+          around the problem that was mentioned before. Thanks to Graeme
+          Clark <gclark@opentext.com> for reporting the problem and
+          testing this fix.
 
-	  This should close [BUG ID 1055].
+          This should close [BUG ID 1055].
 
 Wed Oct 17 10:40:17 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
-	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+        * ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+        * ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
 
-	  If errno is set to EWOULDBLOCK for the SSL_ERROR_SYSCALL case,
- 	  then continue the connection establishment loop.  Do not return
- 	  right away.  Fixes non-blocking connection establishment on AIX.
-  	  Thanks to Vladimir Chovanec <Vladimir.CHOVANEC@asset.sk> for
- 	  providing this fix.
+          If errno is set to EWOULDBLOCK for the SSL_ERROR_SYSCALL case,
+          then continue the connection establishment loop.  Do not return
+          right away.  Fixes non-blocking connection establishment on AIX.
+          Thanks to Vladimir Chovanec <Vladimir.CHOVANEC@asset.sk> for
+          providing this fix.
 
-	* ace/SSL/SSL_SOCK_Stream.h (notify):
+        * ace/SSL/SSL_SOCK_Stream.h (notify):
 
-	  Made this method protected.  It isn't intended to be used
-	  internally by the ACE_SSL_SOCK_Stream class.
+          Made this method protected.  It isn't intended to be used
+          internally by the ACE_SSL_SOCK_Stream class.
 
 Wed Oct 17 12:15:15 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* ace/Select_Reactor_T.cpp (handle_error, check_handles): Add
-	  vxworks to the ever-growing list of OSs which return
-	  unpredictable values in errno when there's a bad file descriptor
-	  in a select mask. [Bug 1058].
+        * ace/Select_Reactor_T.cpp (handle_error, check_handles): Add
+          vxworks to the ever-growing list of OSs which return
+          unpredictable values in errno when there's a bad file descriptor
+          in a select mask. [Bug 1058].
 
-	  Thanks to Dave Arndt <darndt@oresis.com>, Tad Hetke
-	  <thetke@oresis.com>, and Erik Johannes <ejohannes@oresis.com>
-	  for tracking down and providing this fix.
+          Thanks to Dave Arndt <darndt@oresis.com>, Tad Hetke
+          <thetke@oresis.com>, and Erik Johannes <ejohannes@oresis.com>
+          for tracking down and providing this fix.
 
 Tue Oct 16 23:08:27 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf.h (ACE_Svc_Conf_Param):
+        * ace/Svc_Conf.h (ACE_Svc_Conf_Param):
 
-	  Added a new ACE_Obstack attribute that is passed down to the
-	  parser and scanner.  This obviates the need for the global
-	  pointer to the ACE_Obstack that was formally used, which in turn
-	  avoids a race condition.
+          Added a new ACE_Obstack attribute that is passed down to the
+          parser and scanner.  This obviates the need for the global
+          pointer to the ACE_Obstack that was formally used, which in turn
+          avoids a race condition.
 
-	  (ace_obstack):
+          (ace_obstack):
 
-	  No longer a need to maintain a global pointer to the ACE_Obstack
-	  instance used during parsing/scanning.
+          No longer a need to maintain a global pointer to the ACE_Obstack
+          instance used during parsing/scanning.
 
-	* ace/Svc_Conf.y:
-	* ace/Svc_Conf.l:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf.l:
 
-	  Retrieve the Obstack from the parameter passed down to yyparse()
-	  and yylex() instead of using the (now non-existent) global
-	  instance.  This is part of a race condition fix.
+          Retrieve the Obstack from the parameter passed down to yyparse()
+          and yylex() instead of using the (now non-existent) global
+          instance.  This is part of a race condition fix.
 
-	* ace/Svc_Conf_y.cpp:
-	* ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Conf_l.cpp:
 
-	  Updated to pull in the changes made to the source files from
-	  which these files were generated.
+          Updated to pull in the changes made to the source files from
+          which these files were generated.
 
-	* ace/Service_Config.cpp (process_directives_i):
+        * ace/Service_Config.cpp (process_directives_i):
 
-	  The global ACE_Obstack pointer used during each Service
-	  Configurator parse has been removed.  An ACE_Obstack instance is
-	  now passed down to the parser and scanner in a
-	  reentrant/thread-safe manner via the new ACE_Svc_Conf_Param
-	  parameter.  As such, there is no longer any need to maintain a
-	  global pointer to the ACE_Obstack instance in use, nor is it
-	  necessary to store/restore the previous value when performing
-	  nested or parallel Service Configurator directive processing.
-	  This fixes a race condition that was causing some memory
-	  corruption when parsing Service Configurator directives in
-	  parallel.
+          The global ACE_Obstack pointer used during each Service
+          Configurator parse has been removed.  An ACE_Obstack instance is
+          now passed down to the parser and scanner in a
+          reentrant/thread-safe manner via the new ACE_Svc_Conf_Param
+          parameter.  As such, there is no longer any need to maintain a
+          global pointer to the ACE_Obstack instance in use, nor is it
+          necessary to store/restore the previous value when performing
+          nested or parallel Service Configurator directive processing.
+          This fixes a race condition that was causing some memory
+          corruption when parsing Service Configurator directives in
+          parallel.
 
-	  Note that the ACE_Obstack is now instantiated on the stack
-	  rather than the heap, thus improving Service Configurator
-	  directive processing performance.
+          Note that the ACE_Obstack is now instantiated on the stack
+          rather than the heap, thus improving Service Configurator
+          directive processing performance.
 
 Mon Oct 15 23:16:55 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Service_Config.h (process_directives_i):
+        * ace/Service_Config.h (process_directives_i):
 
-	  Updated the signature of this method to accept a parameter that
-	  will eventually passed to the parser and the scanner.
+          Updated the signature of this method to accept a parameter that
+          will eventually passed to the parser and the scanner.
 
-	* ace/Service_Config.cpp:
+        * ace/Service_Config.cpp:
 
-	  No need to include "ace/Svc_Conf_Lexer_Guard.h" and
-	  "ace/Object_Manager.h".
+          No need to include "ace/Svc_Conf_Lexer_Guard.h" and
+          "ace/Object_Manager.h".
 
-	  (process_directives_i):
+          (process_directives_i):
 
-	  Updated the signature of this method to accept a parameter that
-	  will eventually passed to the parser and the scanner.
+          Updated the signature of this method to accept a parameter that
+          will eventually passed to the parser and the scanner.
 
-	  Pass the "ACE_Svc_Conf_Param" parameter to the yyparse() call.
-	  This is reentrant/thread-safe.
+          Pass the "ACE_Svc_Conf_Param" parameter to the yyparse() call.
+          This is reentrant/thread-safe.
 
-	  Check the error count found in the "ACE_Svc_Conf_Param" object.
-	  It's count is incremented in a thread-safe/reentrant manner.
+          Check the error count found in the "ACE_Svc_Conf_Param" object.
+          It's count is incremented in a thread-safe/reentrant manner.
 
-	  (process_directive, process_directives):
+          (process_directive, process_directives):
 
-	  The ACE_Svc_Conf_Lexer_Guard and its accompanying
-	  synchronization has been moved to the generated scanner code.
-	  This makes locking finer grained.  Specifically, instead of
-	  holding a lock for the duration of the scope within which
-	  service configurator directive parsing and scanning is
-	  performed (e.g. for the duration of the yyparse() call), the
-	  lock is only held for the duration of the scope where service
-	  configurator directive scanning occurs (i.e. the entire yylex()
-	  call is synchronized).  This is part of the core fix that
-	  corrects a deadlock that occurred when activating an ACE_Task,
-	  in conjunction with the singleton instance of the
-	  ACE_Thread_Manager, during Service Object initialization.
-	  [Bug 1036]
+          The ACE_Svc_Conf_Lexer_Guard and its accompanying
+          synchronization has been moved to the generated scanner code.
+          This makes locking finer grained.  Specifically, instead of
+          holding a lock for the duration of the scope within which
+          service configurator directive parsing and scanning is
+          performed (e.g. for the duration of the yyparse() call), the
+          lock is only held for the duration of the scope where service
+          configurator directive scanning occurs (i.e. the entire yylex()
+          call is synchronized).  This is part of the core fix that
+          corrects a deadlock that occurred when activating an ACE_Task,
+          in conjunction with the singleton instance of the
+          ACE_Thread_Manager, during Service Object initialization.
+          [Bug 1036]
 
-	* ace/Service_Config.i:
+        * ace/Service_Config.i:
 
-	  Cosmetic update.
+          Cosmetic update.
 
-	* ace/Svc_Conf.h:
+        * ace/Svc_Conf.h:
 
-	  Added declaration and method definitions for the
-	  ACE_Svc_Conf_Param class.  Instances of this class contain the
-	  state used when parsing/scanning a given service configurator
-	  file or service configurator directive.
+          Added declaration and method definitions for the
+          ACE_Svc_Conf_Param class.  Instances of this class contain the
+          state used when parsing/scanning a given service configurator
+          file or service configurator directive.
 
-	  (ACE_SERVICE_DIRECTIVE_STACK_DEPTH):
+          (ACE_SERVICE_DIRECTIVE_STACK_DEPTH):
 
-	  There is no longer any hard-coded limit on the maximum depth
-	  nested service configurator directives may be processed.  Only
-	  process resource limits limit the maximum nesting depth.
+          There is no longer any hard-coded limit on the maximum depth
+          nested service configurator directives may be processed.  Only
+          process resource limits limit the maximum nesting depth.
 
-	  (ace_yyparse, ace_yylex):
+          (ace_yyparse, ace_yylex):
 
-	  Updated the parser and lexer entry points to accept an
-	  additional parameter, i.e. a pointer to an ACE_Svc_Conf_Param
-	  object.
+          Updated the parser and lexer entry points to accept an
+          additional parameter, i.e. a pointer to an ACE_Svc_Conf_Param
+          object.
 
-	  (ace_yy_push_buffer, ace_yy_pop_buffer):
+          (ace_yy_push_buffer, ace_yy_pop_buffer):
 
-	  Pass a pointer to the buffer that will be "switched" in our out
-	  when processing nested service configurator directives those
-	  that are processed in parallel.
+          Pass a pointer to the buffer that will be "switched" in our out
+          when processing nested service configurator directives those
+          that are processed in parallel.
 
-	* ace/Svc_Conf.l:
+        * ace/Svc_Conf.l:
 
-	  Removed array that implemented the service configurator
-	  directive stack.  The "stack" is now implemented using the
-	  function call stack itself.  Hence there is no hard-coded limit
-	  to the stack size.
+          Removed array that implemented the service configurator
+          directive stack.  The "stack" is now implemented using the
+          function call stack itself.  Hence there is no hard-coded limit
+          to the stack size.
 
-	  Removed all references to ACE_{LPAREN, RPAREN, LBRACE, RBRACE,
-	  COLON, STAR}.  Just return their corresponding symbolic integer
-	  constants (e.g. ACE_COLON --> ':').
+          Removed all references to ACE_{LPAREN, RPAREN, LBRACE, RBRACE,
+          COLON, STAR}.  Just return their corresponding symbolic integer
+          constants (e.g. ACE_COLON --> ':').
 
-	  Increment error and line count in the ACE_Svc_Conf_Param object
-	  passed to the yylex() function from yyparse().  This improves
-	  reentrance/thread-safety when tracking error counts.
+          Increment error and line count in the ACE_Svc_Conf_Param object
+          passed to the yylex() function from yyparse().  This improves
+          reentrance/thread-safety when tracking error counts.
 
-	  (yy_push_buffer, yy_pop_buffer):
+          (yy_push_buffer, yy_pop_buffer):
 
-	  Pass a pointer to the buffer that will be "switched" in our out
-	  when processing nested service configurator directives those
-	  that are processed in parallel.
+          Pass a pointer to the buffer that will be "switched" in our out
+          when processing nested service configurator directives those
+          that are processed in parallel.
 
-	* ace/Svc_Conf.y:
+        * ace/Svc_Conf.y:
 
-	  Removed all references to ACE_{LPAREN, RPAREN, LBRACE, RBRACE,
-	  COLON, STAR}.  Just use their corresponding symbolic integer
-	  constants (e.g. ACE_COLON --> ':').
+          Removed all references to ACE_{LPAREN, RPAREN, LBRACE, RBRACE,
+          COLON, STAR}.  Just use their corresponding symbolic integer
+          constants (e.g. ACE_COLON --> ':').
 
-	  Increment error and line count in the ACE_Svc_Conf_Param object
-	  passed to the yylex() function from yyparse().  This improves
-	  reentrance/thread-safety when tracking error counts.
+          Increment error and line count in the ACE_Svc_Conf_Param object
+          passed to the yylex() function from yyparse().  This improves
+          reentrance/thread-safety when tracking error counts.
 
-	* ace/Svc_Conf_Lexer_Guard.h:
+        * ace/Svc_Conf_Lexer_Guard.h:
 
-	  Store a pointer the lexer buffer currently being scanned.
+          Store a pointer the lexer buffer currently being scanned.
 
-	* ace/Svc_Conf_Lexer_Guard.cpp:
+        * ace/Svc_Conf_Lexer_Guard.cpp:
 
-	  Updated constructor to accept a pointer to an ACE_Svc_Conf_Param
-	  object.  If the buffer in that object is zero, it will be
-	  initialized.
+          Updated constructor to accept a pointer to an ACE_Svc_Conf_Param
+          object.  If the buffer in that object is zero, it will be
+          initialized.
 
-	* ace/Svc_Conf_l.cpp:
-	* ace/Svc_Conf_y.cpp:
-	* ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Conf_Tokens.h:
 
-	  Regenerated these files in order to pull in the updates made to
-	  their corresponding source files (i.e. Svc_Conf.{l,y}).
+          Regenerated these files in order to pull in the updates made to
+          their corresponding source files (i.e. Svc_Conf.{l,y}).
 
 Mon Oct 15 11:26:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -3117,9 +3234,9 @@ Mon Oct 15 11:26:39 2001  Steve Huston  <shuston@riverace.com>
 
 Sun Oct 14 17:05:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/C++NPv1/Logging_Handler.{h,cpp}: Changed log_file_ from
-	  a reference to a pointer so that it can be initialized
- 	  correctly.  Thanks to Kitty for reporting this.
+        * examples/C++NPv1/Logging_Handler.{h,cpp}: Changed log_file_ from
+          a reference to a pointer so that it can be initialized
+          correctly.  Thanks to Kitty for reporting this.
 
 Fri Oct 12 14:54:58 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -3169,10 +3286,10 @@ Wed Oct 10 06:16:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
         * examples/Reactor/WFMO_Reactor/test_apc.cpp (main):
         * examples/Reactor/WFMO_Reactor/test_abandoned.cpp (main): Don't
           use a global Event_Handler since this violates the design rules
- 	  for the ACE_Reactor.  Thanks to Heping He
- 	  <heping.he@riskmetrics.com> and Hartmut Quast
- 	  <HartmutQuast@t-online.de> for reporting this and to Irfan for
- 	  suggesting where the problem arose.
+          for the ACE_Reactor.  Thanks to Heping He
+          <heping.he@riskmetrics.com> and Hartmut Quast
+          <HartmutQuast@t-online.de> for reporting this and to Irfan for
+          suggesting where the problem arose.
 
 Tue Oct  9 07:46:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 

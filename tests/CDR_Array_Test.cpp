@@ -913,7 +913,7 @@ main (int argc, ACE_TCHAR *argv[])
         {
           if (opts[i].c == opt)
             {
-              int v = ACE_OS::atoi (get_opt.optarg);
+              int v = ACE_OS::atoi (get_opt.opt_arg ());
               if (!(opts[i].checkf) (v))
                 {
                   usage(argv[0]);

@@ -124,13 +124,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
     {
     case 's':
-      n_release_count = ACE_OS::atoi (get_opt.optarg);
+      n_release_count = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 'w':
-      n_workers = ACE_OS::atoi (get_opt.optarg);
+      n_workers = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.optarg);
+      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     default:
       print_usage_and_die ();

@@ -610,11 +610,11 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'c':
         {
-          if (ACE_OS::strcmp (get_opt.optarg, ACE_LIB_TEXT ("PROC_LOCAL")) == 0)
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("PROC_LOCAL")) == 0)
             this->context (ACE_Naming_Context::PROC_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, ACE_LIB_TEXT ("NODE_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("NODE_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NODE_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, ACE_LIB_TEXT ("NET_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("NET_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NET_LOCAL);
         }
         break;
@@ -625,27 +625,27 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->use_registry_ = 1;
         break;
       case 'h':
-        this->nameserver_host (get_opt.optarg);
+        this->nameserver_host (get_opt.opt_arg ());
         break;
       case 'l':
-        this->namespace_dir (get_opt.optarg);
+        this->namespace_dir (get_opt.opt_arg ());
         break;
       case 'P':
-        this->process_name (get_opt.optarg);
+        this->process_name (get_opt.opt_arg ());
         break;
       case 'p':
-        this->nameserver_port (ACE_OS::atoi (get_opt.optarg));
+        this->nameserver_port (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 's':
-        this->database (get_opt.optarg);
+        this->database (get_opt.opt_arg ());
         break;
       case 'b':
-        this->base_address (ACE_reinterpret_cast (char *, ACE_OS::atoi (get_opt.optarg)));
+        this->base_address (ACE_reinterpret_cast (char *, ACE_OS::atoi (get_opt.opt_arg ())));
         break;
       case 'T':
-        if (ACE_OS::strcasecmp (get_opt.optarg, ACE_LIB_TEXT ("ON")) == 0)
+        if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("ON")) == 0)
           ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (get_opt.optarg, ACE_LIB_TEXT ("OFF")) == 0)
+        else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("OFF")) == 0)
           ACE_Trace::stop_tracing ();
         break;
       case 'v':

@@ -326,10 +326,10 @@ main (int argc, ACE_TCHAR *argv[])
         opt_wfmo_reactor = 1;
         break;
       case 'c':
-        opt_nconnections = ACE_OS::atoi (getopt.optarg);
+        opt_nconnections = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'l':
-        opt_nloops = ACE_OS::atoi (getopt.optarg);
+        opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'd':
         opt_debug = 1;

@@ -449,7 +449,7 @@ main (int argc, ACE_TCHAR *argv[])
           switch (opt)
             {
             case 'p':
-              iport = ACE_OS::atoi (opts.optarg);
+              iport = ACE_OS::atoi (opts.opt_arg ());
               port = ACE_static_cast (u_short, iport);
               break;
 
