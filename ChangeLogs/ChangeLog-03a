@@ -1,3 +1,11 @@
+Sat Dec 16 09:36:56 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Date_Time: Added a new method update() to reset the current
+	  date/time and also added a new constructor that calls update()
+ 	  to initialize an ACE_Date_Time implicitly, rather than having to
+ 	  pass all the values into the constructor.  Thanks to Jerry
+ 	  Odenwelder <jerryo@atl.fundtech.com> for contributing this.
+
 Fri Dec 15 15:27:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:

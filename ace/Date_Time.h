@@ -6,10 +6,8 @@
  *
  *  $Id$
  *
- *  @author Tim Harrison (harrison@cs.wustl.edu) (and he's darn proud
- of this ;-))
-
- * Well he shouldn't be no const accessors tsck tsck tsck ;-)
+ *  @author Tim Harrison (harrison@cs.wustl.edu) (and he's darn proud of this ;-))
+ *
  */
 //=============================================================================
 
@@ -32,15 +30,21 @@
 class ACE_Export ACE_Date_Time
 {
 public:
-  // constructor with init values, no check for validy
+  /// Constructor initializes current time/date info.
+  ACE_Date_Time (void);
+
+  /// Constructor with init values, no check for validy
   /// Set/get portions of ACE_Date_Time, no check for validity.
-  ACE_Date_Time (long day = 0,
+  ACE_Date_Time (long day,
                  long month = 0,
                  long year = 0,
                  long hour = 0,
                  long minute = 0,
                  long second = 0,
                  long microsec = 0);
+
+  /// Update to the current time/date.
+  void update (void);
 
   /// Get day.
   long day (void) const;
