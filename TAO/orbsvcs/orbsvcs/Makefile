@@ -88,8 +88,20 @@ ifneq (,$(findstring AV,$(TAO_ORBSVCS)))
   IDL_SRCS += AVStreams Null_MediaCtrl sfp
   TAO_ORBSVCS_SRCS += \
         AV/AVStreams_i \
+	AV/FlowSpec_Entry\
+	AV/Flows_T \
         AV/Endpoint_Strategy \
         AV/Endpoint_Strategy_T\
+	AV/Transport\
+	AV/TCP\
+	AV/UDP\
+	AV/Policy\
+	AV/Protocol_Factory\
+	AV/MCast\
+	AV/source\
+	AV/media-timer\
+	AV/RTCP\
+	AV/RTP\
         AV/sfp
 endif # AV
 
