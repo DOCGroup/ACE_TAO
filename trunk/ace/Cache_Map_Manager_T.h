@@ -65,8 +65,8 @@ public:
   // are used by the strategy and is transparent to the user of this
   // class.
 
-  friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
-  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION,  CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
+  friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
 
   // = ACE-style iterator typedefs.
   typedef ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
@@ -82,25 +82,19 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Cache_Map_Manager (size_t size = ACE_DEFAULT_MAP_SIZE,
-                         ACE_Allocator *alloc = 0,
-                         CACHING_STRATEGY *caching_s = 0,
-                         int delete_caching_strategy = 1);
-  // Initialize a <Cache_Map_Manager> with <size> entries.
-  // By default the caching strategy is allocated and deallocated by
-  // the class but if needed it can be changed as per the users need.
-  // The <delete_on_destruction> flag simply tells the class whether
-  // the ownership is given to the class or not.
+  ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
+                         size_t size = ACE_DEFAULT_MAP_SIZE,
+                         ACE_Allocator *alloc = 0);
+  // Initialize a <Cache_Map_Manager> with <caching_strategy> and
+  // <size> entries.
 
   virtual ~ACE_Cache_Map_Manager (void);
   // Close down a <Cache_Map_Manager> and release dynamically allocated
   // resources.
 
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0,
-            CACHING_STRATEGY *caching_s = 0,
-            int delete_caching_strategy = 1);
-  // Initialise a cache with size <length> and set the caching_strategy.
+            ACE_Allocator *alloc = 0);
+  // Initialize a cache with size <length>.
 
   int close (void);
   // Close down a cache and release dynamically allocated resources.
@@ -195,12 +189,8 @@ protected:
   MAP map_;
   // The underlying map which needs to be cached.
 
-  CACHING_STRATEGY *caching_strategy_;
+  CACHING_STRATEGY &caching_strategy_;
   // The strategy to be followed for caching entries in the map.
-
-  int delete_caching_strategy_;
-  // This flag denotes whether the ownership lies in the hands of the
-  // class or not. Is yes, then it deletes the strategy.
 
 private:
 

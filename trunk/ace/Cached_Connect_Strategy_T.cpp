@@ -27,14 +27,16 @@ ACE_RCSID(ace, Cached_Connect_Strategy_T, "$Id$")
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::ACE_Cached_Connect_Strategy_Ex
-(ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
+(CACHING_STRATEGY &caching_s,
+ ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  ACE_Recycling_Strategy<SVC_HANDLER> *rec_s,
  MUTEX *lock,
  int delete_lock)
-  : CCSBASE (cre_s, con_s, rec_s, lock, delete_lock)
+  : CCSBASE (cre_s, con_s, rec_s, lock, delete_lock),
+    connection_cache_ (caching_s)
 {
-  if (this->open (cre_s, con_s, rec_s) == -1) 
+  if (this->open (cre_s, con_s, rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>\n")));
@@ -43,12 +45,6 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
-  delete this->svc_cleanup_strategy_;
-  this->svc_cleanup_strategy_ = 0;
-
-  delete this->caching_strategy_;
-  this->caching_strategy_ = 0;
-
   // Close down all cached service handlers.
   for (CONNECTION_CACHE_ITERATOR iter = this->connection_cache_.begin ();
        iter != this->connection_cache_.end ();
@@ -74,23 +70,12 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("Base initialisation failed\n")),
                       -1);
-  // Set up the cleanup strategy for the svc_handler and give it to
-  // the caching_strategy for use.
-  ACE_NEW_RETURN (this->svc_cleanup_strategy_,
-                  SVC_CLEANUP_STRATEGY, -1);
-  
-  ACE_NEW_RETURN (this->caching_strategy_,
-                  CACHING_STRATEGY (this->svc_cleanup_strategy_,
-                                    0),
-                  -1);
 
-  if (this->connection_cache_.open (ACE_DEFAULT_MAP_SIZE,
-                                    0,
-                                    this->caching_strategy_,
-                                    0) == -1)
+  if (this->caching_strategy ().open (&this->svc_cleanup_strategy_,
+                                      0) == -1)
     return -1;
 
-  return 0;  
+  return 0;
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
@@ -190,7 +175,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       // Create a new svc_handler
       if (this->make_svc_handler (sh) == -1)
         return -1;
-      
+
       // Connect using the svc_handler.
       if (this->cached_connect (sh,
                          remote_addr,
@@ -255,7 +240,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       // there is no way for the non-blocking connects to complete and
       // for the <Connector> to notify the cache of the completion of
       // connect().
-      
+
       if (errno == EWOULDBLOCK)
         errno = ENOTSUP;
       else if (errno == EMFILE)
@@ -265,7 +250,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
           // are done from the CONNECTION_CACHE. This frees the
           // descriptors which get used in the connect process and
           // hence the same method is called again!
-          if (this->purge_connections (this->caching_strategy_->purge_percent ()) == -1)
+          if (this->purge_connections (this->caching_strategy ().purge_percent ()) == -1)
             return -1;
 
           // Try connecting again.
@@ -287,9 +272,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
           return -1;
         }
     }
-  
+
   return 0;
- 
+
 }
 
 
@@ -414,14 +399,14 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_connections (double percentage)
 {
   // Set the percentage of entries to remove and then call purge on the cache.
-  this->caching_strategy_->purge_percent (percentage);
+  this->caching_strategy_ ().purge_percent (percentage);
   return this->connection_cache_.purge ();
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> CACHING_STRATEGY &
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::caching_strategy (void)
 {
-  return *this->caching_strategy_;
+  return this->connection_cache_.caching_strategy ();
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cached_Connect_Strategy_Ex)

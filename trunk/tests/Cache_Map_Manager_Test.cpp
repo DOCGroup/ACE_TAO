@@ -48,37 +48,37 @@ typedef ACE_Hash<KEY> HASH_KEY;
 typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 
 typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-	HASH_MAP_MANAGER;
+        HASH_MAP_MANAGER;
 
 typedef ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-	HASH_MAP_MANAGER_ITERATOR;
+        HASH_MAP_MANAGER_ITERATOR;
 
 typedef ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>
-	MAP_MANAGER;
+        MAP_MANAGER;
 
 typedef ACE_Map_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
-	MAP_MANAGER_ITERATOR;
+        MAP_MANAGER_ITERATOR;
 
 typedef ACE_Map_Reverse_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
-	MAP_MANAGER_REVERSE_ITERATOR;
+        MAP_MANAGER_REVERSE_ITERATOR;
 
 typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER_ITERATOR, ATTR>
-	HASH_MAP_CACHING_UTILITY;
+        HASH_MAP_CACHING_UTILITY;
 
 typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_MANAGER_ITERATOR, ATTR>
-	MAP_CACHING_UTILITY;
+        MAP_CACHING_UTILITY;
 
 typedef ACE_LRU_Caching_Strategy<KEY, CACHE_VALUE, HASH_MAP_MANAGER, ATTR, HASH_MAP_CACHING_UTILITY>
-	HASH_MAP_LRU;
+        HASH_MAP_LRU;
 
 typedef ACE_LRU_Caching_Strategy<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CACHING_UTILITY>
-	MAP_LRU;
+        MAP_LRU;
 
 typedef ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, HASH_MAP_LRU, ATTR>
-	HASH_MAP_CACHE;
+        HASH_MAP_CACHE;
 
 typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER_ITERATOR, MAP_MANAGER_REVERSE_ITERATOR, MAP_LRU, ATTR>
-	MAP_CACHE;
+        MAP_CACHE;
 
 static size_t iterations = ACE_MAX_ITERATIONS;
 static size_t no_of_lookups = iterations / 2;
@@ -98,16 +98,16 @@ run_iterator_cache (MAP_CACHE &cache)
     {
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("(%d|%d)"),
-		  (*iter).first (),
-		  (*iter).second ()));
+                  ASYS_TEXT ("(%d|%d)"),
+                  (*iter).first (),
+                  (*iter).second ()));
 
       ACE_ASSERT ((*iter).first () == (*iter).second ());
       ++counter;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\n")));
+              ASYS_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
   ACE_ASSERT (counter == iterations);
@@ -126,16 +126,16 @@ run_iterator_hash_cache (HASH_MAP_CACHE &cache)
     {
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("(%d|%d)"),
-		  (*iter).first (),
-		  (*iter).second ()));
+                  ASYS_TEXT ("(%d|%d)"),
+                  (*iter).first (),
+                  (*iter).second ()));
 
       ACE_ASSERT ((*iter).first () == (*iter).second ());
       ++counter;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\n")));
+              ASYS_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
   ACE_ASSERT (counter == iterations);
@@ -155,14 +155,14 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
 
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("(%d|%d)"),
-		  (*iter).first (),
-		  (*iter).second ()));
+                  ASYS_TEXT ("(%d|%d)"),
+                  (*iter).first (),
+                  (*iter).second ()));
       --counter;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\n")));
+              ASYS_TEXT ("\n")));
   ACE_ASSERT (counter == 0);
 }
 
@@ -180,14 +180,14 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
 
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("(%d|%d)"),
-		  (*iter).first (),
-		  (*iter).second ()));
+                  ASYS_TEXT ("(%d|%d)"),
+                  (*iter).first (),
+                  (*iter).second ()));
       --counter;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\n")));
+              ASYS_TEXT ("\n")));
   ACE_ASSERT (counter == 0);
 }
 
@@ -202,7 +202,7 @@ find_test_cache (MAP_CACHE &cache)
     {
       KEY key = i;
       if (randomize_lookups != 0)
-	key = ACE_OS::rand () % total_entries;
+        key = ACE_OS::rand () % total_entries;
 
       VALUE j;
       int result = cache.find (key, j);
@@ -211,9 +211,9 @@ find_test_cache (MAP_CACHE &cache)
       ACE_ASSERT (j == key);
 
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("%d  "),
-		  j));
-      
+                  ASYS_TEXT ("%d  "),
+                  j));
+
       ACE_UNUSED_ARG (result);
     }
 
@@ -231,18 +231,18 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
     {
       KEY key = i;
       if (randomize_lookups != 0)
-	key = ACE_OS::rand () % total_entries;
+        key = ACE_OS::rand () % total_entries;
 
       VALUE j;
       int result = cache.find (key, j);
-      
+
       ACE_ASSERT (result != -1);
       ACE_ASSERT (j == key);
 
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("%d  "),
-		  j));
-      
+                  ASYS_TEXT ("%d  "),
+                  j));
+
       ACE_UNUSED_ARG (result);
     }
 
@@ -300,7 +300,8 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
 static void
 functionality_test_cache (void)
 {
-  MAP_CACHE cache;
+  MAP_LRU lru;
+  MAP_CACHE cache (lru);
   KEY i = 0;
   VALUE j = 0;
 
@@ -315,7 +316,7 @@ functionality_test_cache (void)
       ACE_UNUSED_ARG (result);
 
       ACE_DEBUG ((LM_DEBUG, "keys[%d]=%d value=[%d]=%d\n",
-		  i, i, j, j));
+                  i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
     }
@@ -330,8 +331,8 @@ functionality_test_cache (void)
               cache.current_size ()));
   purge_test_cache (cache);
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
-	      cache.current_size ()));
+              ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
+              cache.current_size ()));
 
   run_iterator_cache (cache);
   run_reverse_iterator_cache (cache);
@@ -340,7 +341,8 @@ functionality_test_cache (void)
 static void
 functionality_test_hash_cache (void)
 {
-  HASH_MAP_CACHE cache;
+  HASH_MAP_LRU lru;
+  HASH_MAP_CACHE cache (lru);
   KEY i = 0;
   VALUE j = 0;
 
@@ -355,8 +357,8 @@ functionality_test_hash_cache (void)
       ACE_UNUSED_ARG (result);
 
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
-		  i, i, j, j));
+                  ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
+                  i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
     }
@@ -367,12 +369,12 @@ functionality_test_hash_cache (void)
   find_test_hash_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
-	      cache.current_size ()));
+              ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
+              cache.current_size ()));
   purge_test_hash_cache (cache);
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
-	      cache.current_size ()));
+              ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
+              cache.current_size ()));
 
   run_iterator_hash_cache (cache);
   run_reverse_iterator_hash_cache (cache);
@@ -389,28 +391,28 @@ parse_args (int argc, ASYS_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-	iterations = ACE_OS::atoi (get_opt.optarg);
-	break;
+        iterations = ACE_OS::atoi (get_opt.optarg);
+        break;
       case 'f':
-	no_of_lookups = ACE_OS::atoi (get_opt.optarg);
-	break;
+        no_of_lookups = ACE_OS::atoi (get_opt.optarg);
+        break;
       case 'r':
-	randomize_lookups = ACE_OS::atoi (get_opt.optarg);
-	break;
+        randomize_lookups = ACE_OS::atoi (get_opt.optarg);
+        break;
       case 'p':
-	purge_percent = ACE_OS::atoi (get_opt.optarg);
-	break;
+        purge_percent = ACE_OS::atoi (get_opt.optarg);
+        break;
       case '?':
       case 'h':
       default:
-	ACE_ERROR ((LM_ERROR,
-		    ASYS_TEXT ("usage: %s ")
-		    ASYS_TEXT ("[-r (randomize lookups)] ")
-		    ASYS_TEXT ("[-i (iterations)] ")
-		    ASYS_TEXT ("[-p (purge percent)] ")
-		    ASYS_TEXT ("[-f (number of lookups)] \n"),
-		    argv[0]));
-	return -1;
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("usage: %s ")
+                    ASYS_TEXT ("[-r (randomize lookups)] ")
+                    ASYS_TEXT ("[-i (iterations)] ")
+                    ASYS_TEXT ("[-p (purge percent)] ")
+                    ASYS_TEXT ("[-f (number of lookups)] \n"),
+                    argv[0]));
+        return -1;
       }
 
   return 0;

@@ -28,6 +28,135 @@
 #include "ace/Cleanup_Strategies_T.h"
 
 template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
+class ACE_Caching_Strategy
+{
+  // = TITLE
+  //
+  // = DESCRIPTION
+
+public:
+
+  virtual ~ACE_Caching_Strategy (void);
+  // Destructor.
+
+  virtual int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+                    int delete_cleanup_strategy = 1,
+                    CACHING_STRATEGY_UTILITY *utility_s = 0,
+                    int delete_caching_strategy_utility = 1) = 0;
+  // This method which does the actual initialisation.
+
+  virtual ATTRIBUTES attributes (void) = 0;
+  // Accessor method for the timer attributes.
+
+  // = Accessor methods for the percentage of entries to purge.
+  virtual double purge_percent (void) = 0;
+  virtual void purge_percent (double percentage) = 0;
+
+  // = Strategy related Operations
+
+  virtual int notify_bind (int result,
+                           const ATTRIBUTES &attr) = 0;
+  // This method acts as a notification about the CONTAINERs bind
+  // method call.
+
+  virtual int notify_find (int result,
+                           ATTRIBUTES &attr) = 0;
+  // This method acts as a notification about the CONTAINERs find
+  // method call
+
+  virtual int notify_unbind (int result,
+                             const ATTRIBUTES &attr) = 0;
+  // This method acts as a notification about the CONTAINERs unbind
+  // method call
+
+  virtual int notify_trybind (int result,
+                              ATTRIBUTES &attr) = 0;
+  // This method acts as a notification about the CONTAINERs trybind
+  // method call
+
+  virtual int notify_rebind (int result,
+                             const ATTRIBUTES &attr) = 0;
+  // This method acts as a notification about the CONTAINERs rebind
+  // method call
+
+  virtual int clear_cache (CONTAINER &container) = 0;
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
+};
+
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION>
+class ACE_Caching_Strategy_Adapter : public ACE_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>
+{
+  // = TITLE
+  //
+  // = DESCRIPTION
+
+public:
+
+  ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = 0,
+                                int delete_implementation = 0);
+  // Constructor.
+
+  ~ACE_Caching_Strategy_Adapter (void);
+  // Destructor.
+
+  int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+            int delete_cleanup_strategy = 1,
+            CACHING_STRATEGY_UTILITY *utility_s = 0,
+            int delete_caching_strategy_utility = 1);
+  // This method which does the actual initialisation.
+
+  ATTRIBUTES attributes (void);
+  // Accessor method for the timer attributes.
+
+  // = Accessor methods for the percentage of entries to purge.
+  double purge_percent (void);
+  void purge_percent (double percentage);
+
+  // = Strategy related Operations
+
+  int notify_bind (int result,
+                   const ATTRIBUTES &attr);
+  // This method acts as a notification about the CONTAINERs bind
+  // method call.
+
+  int notify_find (int result,
+                   ATTRIBUTES &attr);
+  // This method acts as a notification about the CONTAINERs find
+  // method call
+
+  int notify_unbind (int result,
+                     const ATTRIBUTES &attr);
+  // This method acts as a notification about the CONTAINERs unbind
+  // method call
+
+  int notify_trybind (int result,
+                      ATTRIBUTES &attr);
+  // This method acts as a notification about the CONTAINERs trybind
+  // method call
+
+  int notify_rebind (int result,
+                     const ATTRIBUTES &attr);
+  // This method acts as a notification about the CONTAINERs rebind
+  // method call
+
+  int clear_cache (CONTAINER &container);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
+
+  IMPLEMENTATION &implementation (void);
+  // Accessor to the implementation.
+
+private:
+
+  IMPLEMENTATION *implementation_;
+  // Implementation class.
+
+  int delete_implementation_;
+  // Do we need to delete the implementation?
+};
+
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_LRU_Caching_Strategy
 {
   // = TITLE
@@ -101,23 +230,23 @@ public:
 
   int notify_find (int result,
                    ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs find
+  // This method acts as a notification about the CONTAINERs find
   // method call
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs unbind
+  // This method acts as a notification about the CONTAINERs unbind
   // method call
 
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs trybind
+  // This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs rebind
+  // This method acts as a notification about the CONTAINERs rebind
   // method call
 
   int clear_cache (CONTAINER &container);
@@ -240,24 +369,24 @@ public:
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs unbind
+  // This method acts as a notification about the CONTAINERs unbind
   // method call
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs trybind
+  // This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs rebind
+  // This method acts as a notification about the CONTAINERs rebind
   // method call
 
 
   int clear_cache (CONTAINER &container);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
-  
+
   void dump (void) const;
   // Dumps the state of the object.
 
@@ -361,17 +490,17 @@ public:
 
   int notify_find (int result,
                    ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs find
+  // This method acts as a notification about the CONTAINERs find
   // method call
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs unbind
+  // This method acts as a notification about the CONTAINERs unbind
   // method call
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs trybind
+  // This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
@@ -381,7 +510,7 @@ public:
   int clear_cache (CONTAINER &container);
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
-  
+
   void dump (void) const;
   // Dumps the state of the object.
 
@@ -469,17 +598,17 @@ public:
 
   int notify_find (int result,
                    ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs find
+  // This method acts as a notification about the CONTAINERs find
   // method call
 
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs unbind
+  // This method acts as a notification about the CONTAINERs unbind
   // method call
 
   int notify_trybind (int result,
                       ATTRIBUTES &attr);
-  //This method acts as a notification about the CONTAINERs trybind
+  // This method acts as a notification about the CONTAINERs trybind
   // method call
 
   int notify_rebind (int result,
