@@ -118,22 +118,6 @@ int be_visitor_args_ami_handler_vardecl_cs::visit_enum (be_enum *node)
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << bt->name () << " " << arg->local_name () << ";" << be_nl
-          << bt->name () << "_forany _tao_forany_"
-          << arg->local_name () << " (" << be_idt << be_idt_nl
-          << arg->local_name () << be_uidt_nl
-          << ");\n" << be_uidt;
-      break;
-    }
-  return 0;
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      break;
-    case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
-      os->indent ();
       *os << bt->name () << " " << arg->local_name () << ";\n";
       break;
     }
