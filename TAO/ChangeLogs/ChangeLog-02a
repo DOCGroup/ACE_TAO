@@ -1,3 +1,8 @@
+Fri Jun  7 16:32:17 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method): 
+	  Modified RH calls for platforms without native exceptions. 
+
 Fri Jun  7 09:26:44 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 	* orbsvcs/orbsvcs/PortableGroup.bor (OBJFILES):
