@@ -2,6 +2,7 @@
 
 #include "BiDirGIOP.h"
 #include "BiDir_ORBInitializer.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(BiDir_GIOP, BiDirGIOP, "$Id$")
 
@@ -60,7 +61,7 @@ TAO_BiDirGIOP_Loader::parse_policy (TAO_ORB_Core *orb_core,
     {
       // Set the flag in the ORB_Core
       if (bidir_policy->value () == BiDirPolicy::BOTH)
-        orb_core_->bidir_giop_policy (1);
+        orb_core->bidir_giop_policy (1);
       return 1;
     }
 
