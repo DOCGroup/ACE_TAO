@@ -1,3 +1,8 @@
+Wed Jan  7 17:26:43 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* server/Pipeline.cpp: Put base class initialization of
+	  JAWS_Protocol_Filter ahead of data members.
+
 Fri Jan  2 16:28:00 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* clients/Caching/http_handler.cpp:
