@@ -72,8 +72,19 @@ namespace TAO
     void
     ThreadStrategyFactoryImpl::destroy (ThreadStrategy *strategy)
     {
-      // todo, cleanup the strategy. Problem is now that at this moment I
-      // just don't know the derived strategy we get here.
+      switch (strategy->type ())
+      {
+        case ::PortableServer::SINGLE_THREAD_MODEL :
+        {
+          delete strategy;
+
+          break;
+        }
+        case ::PortableServer::ORB_CTRL_MODEL :
+        {
+          // Noop
+          break;
+        }
     }
 
     ACE_STATIC_SVC_DEFINE (

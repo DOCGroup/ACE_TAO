@@ -39,6 +39,8 @@ namespace TAO
       virtual int enter ();
 
       virtual int exit ();
+
+      virtual ::PortableServer::ThreadPolicyValue type() const;
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategyORBControl)

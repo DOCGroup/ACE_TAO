@@ -43,6 +43,8 @@ namespace TAO
       virtual void strategy_init (TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
+
+      virtual ::PortableServer::ThreadPolicyValue type() const = 0;
     };
   }
 }

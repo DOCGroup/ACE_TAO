@@ -46,6 +46,7 @@ namespace TAO
 
       virtual int exit ();
 
+      virtual ::PortableServer::ThreadPolicyValue type() const;
     private:
       TAO_SYNCH_RECURSIVE_MUTEX lock_;
     };

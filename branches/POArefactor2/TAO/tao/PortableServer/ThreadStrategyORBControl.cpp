@@ -28,6 +28,12 @@ namespace TAO
       return 0;
     }
 
+    ::PortableServer::ThreadPolicyValue
+    ThreadStrategyORBControl::type() const
+    {
+      return ::PortableServer::ORB_CTRL_MODEL;
+    }
+
     ACE_FACTORY_DEFINE (TAO_PortableServer, ThreadStrategyORBControl)
 
     ACE_STATIC_SVC_DEFINE (

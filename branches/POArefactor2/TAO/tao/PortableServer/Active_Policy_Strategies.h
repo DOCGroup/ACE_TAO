@@ -38,6 +38,8 @@ namespace TAO
     class ImplicitActivationStrategy;
     class ServantRetentionStrategy;
 
+    class ThreadStrategyFactory;
+
     /**
      * This class stores the active policy strategies used for a certain POA.
      */
@@ -74,6 +76,8 @@ namespace TAO
       IdUniquenessStrategy *id_uniqueness_strategy_;
       ImplicitActivationStrategy *implicit_activation_strategy_;
       ServantRetentionStrategy *servant_retention_strategy_;
+
+      ThreadStrategyFactory *thread_strategy_factory_;
     };
   }
 }

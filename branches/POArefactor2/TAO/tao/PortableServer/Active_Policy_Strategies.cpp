@@ -47,7 +47,8 @@ namespace TAO
       lifespan_strategy_ (0),
       id_uniqueness_strategy_ (0),
       implicit_activation_strategy_ (0),
-      servant_retention_strategy_ (0)
+      servant_retention_strategy_ (0),
+      thread_strategy_factory_ (0)
     {
     }
 
@@ -56,19 +57,19 @@ namespace TAO
                                       TAO_Root_POA* poa
                                       ACE_ENV_ARG_DECL)
     {
-      ThreadStrategyFactory *thread_strategy_factory =
+      thread_strategy_factory_ =
         ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategyFactory");
 
-      if (thread_strategy_factory == 0)
+      if (thread_strategy_factory_ == 0)
         {
           ACE_Service_Config::process_directive (ACE_TEXT("dynamic ThreadStrategyFactory Service_Object *")
                                                  ACE_TEXT("TAO_PortableServer:_make_ThreadStrategyFactoryImpl()"));
-          thread_strategy_factory =
+          thread_strategy_factory_ =
             ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategyFactory");
         }
 
-      if (thread_strategy_factory != 0)
-        thread_strategy_ = thread_strategy_factory->create (policies.thread());
+      if (thread_strategy_factory_ != 0)
+        thread_strategy_ = thread_strategy_factory_->create (policies.thread());
 
       /**/
 
@@ -222,9 +223,11 @@ namespace TAO
         {
           lifespan_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
+
+          lifespan_strategy_ = 0;
         }
 
-      if (thread_strategy_ != 0)
+      if (request_processing_strategy_ != 0)
         {
           request_processing_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
@@ -246,6 +249,9 @@ namespace TAO
         {
           thread_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
+
+          thread_strategy_factory_->destroy (thread_strategy_);
+          thread_strategy_ = 0
         }
 
       if (servant_retention_strategy_ != 0)

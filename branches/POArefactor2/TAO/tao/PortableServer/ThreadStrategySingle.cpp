@@ -29,6 +29,12 @@ namespace TAO
       return lock_.release();
     }
 
+    ::PortableServer::ThreadPolicyValue
+    ThreadStrategySingle::type() const
+    {
+      return ::PortableServer::SINGLE_THREAD_MODEL;
+    }
+
     ACE_FACTORY_DEFINE (TAO_PortableServer, ThreadStrategySingle)
 
     ACE_STATIC_SVC_DEFINE (
