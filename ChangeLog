@@ -1,3 +1,10 @@
+Sat Jul 31 07:08:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Improved "wrong OS" error message so that it prints what it
+	  believes to be the OS type.
+
 Sat Jul 31 06:35:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* NEWS:

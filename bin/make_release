@@ -44,7 +44,7 @@ my $release_host = substr ($which_host, 0, 5);
 ## We are not going to use any Sun boxes for the release anymore..
 
 if (! ($release_host eq 'linux')){
-   die "$0: You are on the wrong OS, please move to linux box\n";
+   die "$0: You are on the wrong OS ($release_host). Please move to a linux box.\n";
 }
 
 my  $perl_path = '/usr/bin/perl';
