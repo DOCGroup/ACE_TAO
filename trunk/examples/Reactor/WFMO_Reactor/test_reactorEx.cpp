@@ -142,8 +142,8 @@ Peer_Handler::Peer_Handler (int argc, char *argv[])
   // This code sets up the message to notify us when a new message is
   // added to the queue.  Actually, the queue notifies ReactorEx which
   // then notifies us.
-  ACE_Message_Queue<Peer_Handler::SYNCH>* mq;
-  ACE_NEW (mq, ACE_Message_Queue<Peer_Handler::SYNCH>);
+  ACE_Message_Queue<ACE_MT_SYNCH>* mq;
+  ACE_NEW (mq, ACE_Message_Queue<ACE_MT_SYNCH>);
   mq->notification_strategy (&this->strategy_);
   this->msg_queue (mq);
 
