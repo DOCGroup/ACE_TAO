@@ -1,3 +1,15 @@
+Mon Oct 12 11:24:45 PDT 1998  James Hu  <jxh@entera.com>
+
+	* Asynch_IO.cpp: Minor changes to deal with FMR error.
+
+	* Message_Block.{cpp,i,h}: Changed rd_ptr_ and wr_ptr_ to be
+	  byte offsets from base ().  This allows one to resize a
+	  duplicate without trashing other Message_Blocks that may be
+	  referring to the same data block.
+
+	* Proactor.cpp: Made the message block 64 bytes bigger to make
+	  purify happier.
+
 Mon Oct 12 12:14:45 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Parse_Node.cpp (ACE_Stream_Node): In error cases, the strops
