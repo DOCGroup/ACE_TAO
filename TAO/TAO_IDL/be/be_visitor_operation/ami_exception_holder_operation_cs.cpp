@@ -210,14 +210,14 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   if (be_global->use_raw_throw ())
     {
       *os << "    throw CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_idt_nl;
-      *os << "                          CORBA::COMPLETED_MAYBE);" 
+      *os << "                          CORBA::COMPLETED_MAYBE);"
           << be_uidt << be_uidt_nl;
     }
   else
     {
-      *os << "    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," 
+      *os << "    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,"
           << be_idt_nl;
-      *os << "                               CORBA::COMPLETED_MAYBE));" 
+      *os << "                               CORBA::COMPLETED_MAYBE));"
           << be_uidt << be_uidt_nl;
     }
 
@@ -273,23 +273,23 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       if (be_global->use_raw_throw ())
         {
           *os << "throw CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," << be_nl;
-          *os << "                        CORBA::COMPLETED_YES);" 
+          *os << "                        CORBA::COMPLETED_YES);"
               << be_uidt_nl;
         }
       else
         {
-          *os << "ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," 
+          *os << "ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,"
               << be_nl;
-          *os << "                             CORBA::COMPLETED_YES));" 
+          *os << "                             CORBA::COMPLETED_YES));"
               << be_uidt_nl;
         }
 
-      *os << "exception->_tao_decode (_tao_in, ACE_TRY_ENV);"
-          << be_nl << be_nl;
+      *os << "exception->_tao_decode (_tao_in, ACE_TRY_ENV);" << be_nl
+          << "ACE_CHECK;\n" << be_nl;
 
-      *os << "// @@ There should be a better way to raise this exception!" 
+      *os << "// @@ There should be a better way to raise this exception!"
           << be_nl
-          << "//    This code works for both native and emulated exceptions," 
+          << "//    This code works for both native and emulated exceptions,"
           << be_nl
           << "//    but it is ugly." << be_nl
           << "ACE_TRY_ENV.exception (exception); // Can't use ACE_THROW here."
@@ -297,26 +297,26 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << "return;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
 
-          << "// If we couldn't find the right exception, report it as" 
+          << "// If we couldn't find the right exception, report it as"
           << be_nl
           << "// CORBA::UNKNOWN." << be_nl << be_nl;
 
       *os << "// @@ It would seem like if the remote exception is a" << be_nl
-          << "//    UserException we can assume that the request was" 
+          << "//    UserException we can assume that the request was"
           << be_nl
           << "//    completed." << be_nl;
 
       if (be_global->use_raw_throw ())
         {
           *os << "throw CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE," << be_nl;
-          *os << "                      CORBA::COMPLETED_YES);" 
+          *os << "                      CORBA::COMPLETED_YES);"
               << be_uidt_nl;
         }
       else
         {
-          *os << "ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE," 
+          *os << "ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,"
               << be_nl;
-          *os << "                           CORBA::COMPLETED_YES));" 
+          *os << "                           CORBA::COMPLETED_YES));"
               << be_uidt_nl;
         }
 
