@@ -1,3 +1,15 @@
+Mon Mar 30 13:13:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Typecode.cpp: 
+	  Fixed cast that dropped constness when only reinterpret_cast was
+	  needed; thanks to David Levine (levine@cs.wustl.edu) for
+	  detecting this.
+
+	* tao/Server_Request.cpp: 
+	  bytes_remaining was called in a debug message (not seen in
+	  Solaris); thanks to Nanbor Wang (nanbor@cs.wustl.edu) for
+	  reporting this.
+
 Mon Mar 30 12:28:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.i: only specialize ACE_Hash_Addr<ACE_INET_Addr>

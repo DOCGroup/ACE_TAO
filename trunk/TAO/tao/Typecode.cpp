@@ -111,7 +111,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 
       // @@ The typecode buffer contain the encapsulation byte order
       // in the first four bytes...
-      CORBA::Long* ptr = ACE_reinterpret_cast(CORBA::Long*,buffer);
+      const CORBA::Long* ptr =
+	ACE_reinterpret_cast(const CORBA::Long*,buffer);
       this->byte_order_ = *ptr;
 
       ACE_NEW (this->non_aligned_buffer_,
@@ -131,7 +132,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // We are a child. We do not allocate a new buffer, but share it
       // with our parent. We know that our parent's buffer was
       // properly aligned.
-      CORBA::Long* ptr = ACE_reinterpret_cast(CORBA::Long*,buffer);
+      const CORBA::Long* ptr =
+	ACE_reinterpret_cast(const CORBA::Long*,buffer);
       this->byte_order_ = *ptr;
 
       this->buffer_ = buffer + 4;
