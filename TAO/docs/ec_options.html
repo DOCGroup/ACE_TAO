@@ -10,7 +10,51 @@
     <h1>Real-time Event Channel Configuration</h1>
     </CENTER>
 
-    <H3>Overview</H3>
+    <H3>Configuring the Event Channel at Compilation Time</H3>
+
+    <P>TAO's Real-Time Event Channel can be configured at compilation
+      time to use a different payload than its default.  To do so
+      there are several options:
+    </P>
+
+    <UL>
+      <LI><P>To eliminate the <CODE>CORBA::Any</CODE> field in the
+	  event payload you should define the
+	  <CODE>TAO_LACKS_EVENT_CHANNEL_ANY</CODE>
+	  macro when invoking the IDL compiler.
+	  You can do as follows:
+<PRE>
+$ cd $TAO_ROOT/orbsvcs/orbsvcs
+$ make TAO_IDLFLAGS=-DTAO_LACKS_EVENT_CHANNEL_ANY
+</PRE>
+        </P>
+      </LI>
+      <LI><P>Similarly you can eliminate the octet sequence field in
+	  the event payload using:
+<PRE>
+$ cd $TAO_ROOT/orbsvcs/orbsvcs
+$ make TAO_IDLFLAGS=-DTAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE
+</PRE>
+        </P>
+      </LI>
+      <LI><P>Finally you can provide your own event payload, to do
+	  this you should Replace the contents of the
+	  <CODE>RtecDefaultEventData.idl</CODE>
+	  and define some IDL structure named
+	  <CODE>RtecEventData</CODE>.
+	  For example, you could define you own event type as follows:
+<PRE>
+// Replace RtecDefaultEventData.idl with this:
+
+struct RtecEventData
+{
+  sequence&lt;long&gt; my_event_payload;
+};
+</PRE>
+      </LI>
+    </UL>
+
+    <H3>Run-time Configuration</H3>
 
     <P>The new implementation of the real-time event channel uses a
       factory to build all the objects and strategies it requires.
@@ -436,7 +480,7 @@ static EC_Factory "-ECFiltering basic ....."
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Fri Jan 28 15:59:23 PST 2000
+Last modified: Tue Feb  1 13:50:47 PST 2000
 <!-- hhmts end -->
   </body>
 </html>

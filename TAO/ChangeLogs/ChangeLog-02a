@@ -1,3 +1,8 @@
+Tue Feb  1 13:51:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/ec_options.html:
+	  Documented the compile time options for the RTEC.
+
 Tue Feb  1 14:14:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_union_branch.h:
