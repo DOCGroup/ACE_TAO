@@ -74,7 +74,7 @@ int
 Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) opening Svc_Handler %d with handle %d\n",
-	      this, this->peer ().get_handle ()));
+              this, this->peer ().get_handle ()));
   // Enable non-blocking I/O.
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "enable"), -1);
@@ -117,47 +117,47 @@ Svc_Handler::recv_data (void)
       // Since we're in non-blocking mode we need to use <select> to
       // avoid busy waiting.
       if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
-			  handle_set,
-			  0, 0, 0) == -1)
-	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "select"));
+                          handle_set,
+                          0, 0, 0) == -1)
+        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "select"));
       else
-	{
-	  char c;
+        {
+          char c;
 
-	  while ((r_bytes = new_stream.recv (&c, 1)) > 0)
-	    {
-	      ACE_ASSERT (*t == c);
+          while ((r_bytes = new_stream.recv (&c, 1)) > 0)
+            {
+              ACE_ASSERT (*t == c);
 
-	      // We need to guard against cached connections, which
-	      // will send multiple sequences of letters from 'a' ->
-	      // 'z' through the same connection.
-	      if (*t == 'z')
-		t = ACE_ALPHABET;
-	      else
-		t++;
-	    }
+              // We need to guard against cached connections, which
+              // will send multiple sequences of letters from 'a' ->
+              // 'z' through the same connection.
+              if (*t == 'z')
+                t = ACE_ALPHABET;
+              else
+                t++;
+            }
 
-	  if (r_bytes == 0)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "(%P|%t) reached end of input, connection closed by client\n"));
+          if (r_bytes == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) reached end of input, connection closed by client\n"));
 
-	      // Close endpoint handle (but don't close <this> yet
-	      // since we're going to recycle it for the next
-	      // iteration).
-	      if (new_stream.close () == -1)
-		ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
-	      break;
-	    }
-	  else if (r_bytes == -1)
-	    {
-	      if (errno == EWOULDBLOCK)
-		ACE_DEBUG ((LM_DEBUG,
-			    "(%P|%t) no input available, going back to reading\n"));
-	      else
-		ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "recv_n"));
-	    }
-	}
+              // Close endpoint handle (but don't close <this> yet
+              // since we're going to recycle it for the next
+              // iteration).
+              if (new_stream.close () == -1)
+                ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+              break;
+            }
+          else if (r_bytes == -1)
+            {
+              if (errno == EWOULDBLOCK)
+                ACE_DEBUG ((LM_DEBUG,
+                            "(%P|%t) no input available, going back to reading\n"));
+              else
+                ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "recv_n"));
+            }
+        }
     }
 }
 
@@ -184,7 +184,7 @@ ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>::hash_i (const ACE_INET_Addr &addr) co
 
 int
 ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>::compare_i (const ACE_INET_Addr &a1,
-						      const ACE_INET_Addr &a2) const
+                                                      const ACE_INET_Addr &a2) const
 {
   return a1 != a2;
 }
@@ -201,7 +201,7 @@ typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mu
 
 static void
 timed_blocking_connect (CONNECTOR &con,
-			const ACE_INET_Addr &server_addr)
+                        const ACE_INET_Addr &server_addr)
 {
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
@@ -227,7 +227,7 @@ timed_blocking_connect (CONNECTOR &con,
 
 static void
 blocking_connect (CONNECTOR &con,
-		  const ACE_INET_Addr &server_addr)
+                  const ACE_INET_Addr &server_addr)
 {
   Svc_Handler *svc_handler;
   ACE_NEW (svc_handler, Svc_Handler);
@@ -255,7 +255,7 @@ typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> MAP_ENTRY;
 
 static void
 cached_connect (STRAT_CONNECTOR &con,
-		const ACE_INET_Addr &server_addr)
+                const ACE_INET_Addr &server_addr)
 {
   Svc_Handler *svc_handler = 0;
 
@@ -287,7 +287,7 @@ cached_connect (STRAT_CONNECTOR &con,
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
-struct Client_Info 
+struct Client_Info
   // = TITLE
   //   Information passed to the client so it can communicate with the
   //   server.
@@ -314,7 +314,7 @@ client_connections (void *arg)
 
   // Run the timed-blocking test.
   timed_blocking_connect (*info->connector_,
-			  *info->server_addr_);
+                          *info->server_addr_);
 
 #if defined (ACE_HAS_THREADS)
   // Wait for other threads to join us.
@@ -323,7 +323,7 @@ client_connections (void *arg)
 
   // Run the blocking test.
   blocking_connect (*info->connector_,
-		    *info->server_addr_);
+                    *info->server_addr_);
 
 #if defined (ACE_HAS_THREADS)
   // Wait for other threads to join us.
@@ -332,7 +332,7 @@ client_connections (void *arg)
 
   // Run the cached blocking test.
   cached_connect (*info->strat_connector_,
-		  *info->server_addr_);
+                  *info->server_addr_);
 
   return 0;
 }
@@ -344,7 +344,7 @@ client (void *arg)
 {
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
-			     ACE_DEFAULT_SERVER_HOST);
+                             ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
 
   NULL_CREATION_STRATEGY creation_strategy;
@@ -353,8 +353,8 @@ client (void *arg)
   CACHED_CONNECT_STRATEGY caching_connect_strategy;
 
   STRAT_CONNECTOR strat_connector (0,
-				   &creation_strategy,
-				   &caching_connect_strategy);
+                                   &creation_strategy,
+                                   &caching_connect_strategy);
   Client_Info info;
   info.server_addr_ = &server_addr;
   info.connector_ = &connector;
@@ -367,13 +367,13 @@ client (void *arg)
 
   ACE_Thread_Manager client_manager;
 
-  if (client_manager.spawn_n 
+  if (client_manager.spawn_n
       (n_threads,
        ACE_THR_FUNC (client_connections),
        (void *) &info,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
-  
+
   // Wait for the threads to exit.
   client_manager.wait ();
 
@@ -403,13 +403,13 @@ server (void *arg)
       int result = acceptor->accept (svc_handler, &cli_addr);
 
       if (result == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", 
-			   "accept failed, shutting down"),
-			  0);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
+                           "accept failed, shutting down"),
+                          0);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client %s connected from %d\n",
-		  cli_addr.get_host_name (),
-		  cli_addr.get_port_number ()));
+                  cli_addr.get_host_name (),
+                  cli_addr.get_port_number ()));
 
       svc_handler->recv_data ();
     }
@@ -428,11 +428,12 @@ handler (int signum)
   ACE_OS::exit (0);
 }
 
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
 // Spawn threads.
 
 static void
-spawn_processes (ACCEPTOR *acceptor, 
-		 ACE_INET_Addr *server_addr)
+spawn_processes (ACCEPTOR *acceptor,
+                 ACE_INET_Addr *server_addr)
 {
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
   const int max_servers = MAX_SERVERS;
@@ -449,25 +450,25 @@ spawn_processes (ACCEPTOR *acceptor,
     {
       pid_t pid = ACE_OS::fork ("child");
       switch (pid)
-	{
-	case -1:
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-	  ACE_OS::exit (-1);
-	  /* NOTREACHED */
-	case 0: 	    // In the child.
-	  {
-	    // Register a signal handler to close down the child.
-	    ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGTERM);
-	    ACE_UNUSED_ARG (sa);
+        {
+        case -1:
+          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+          ACE_OS::exit (-1);
+          /* NOTREACHED */
+        case 0:             // In the child.
+          {
+            // Register a signal handler to close down the child.
+            ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGTERM);
+            ACE_UNUSED_ARG (sa);
 
-	    server ((void *) acceptor);
-	    return;
-	    /* NOTREACHED */
-	  }
-	default:	  // In the parent.
-	  children[i] = pid;
-	  break;
-	}
+            server ((void *) acceptor);
+            return;
+            /* NOTREACHED */
+          }
+        default:          // In the parent.
+          children[i] = pid;
+          break;
+        }
     }
 
   client ((void *) server_addr);
@@ -486,12 +487,14 @@ spawn_processes (ACCEPTOR *acceptor,
     }
   while (child != -1);
 }
+#endif /* ! ACE_WIN32 ! VXWORKS */
 
+#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
 // Spawn threads and run the client and server.
 
 static void
 spawn_threads (ACCEPTOR *acceptor,
-	       ACE_INET_Addr *server_addr)
+               ACE_INET_Addr *server_addr)
 {
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
   // The OS allows multiple threads to block in accept().
@@ -519,6 +522,7 @@ spawn_threads (ACCEPTOR *acceptor,
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 }
+#endif /* (ACE_WIN32 || VXWORKS) && ACE_HAS_THREADS */
 
 int
 main (int, char *[])
@@ -536,15 +540,15 @@ main (int, char *[])
   else
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
-		  server_addr.get_port_number ()));
+                  server_addr.get_port_number ()));
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
       spawn_processes (&acceptor, &server_addr);
 #elif defined (ACE_HAS_THREADS)
-      spawn_thread (&acceptor, &server_addr);
+      spawn_threads (&acceptor, &server_addr);
 #else
       ACE_ERROR ((LM_ERROR,
-		  "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
+                  "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */
     }
 
