@@ -483,15 +483,10 @@ protected:
   ACE_DLList_Iterator<Peer_Info> peer_list_iterator_;
 };
 
-class TAO_ORBSVCS_Export TAO_AV_Dgram_Mcast_Flow_Handler
-  :public virtual ACE_Event_Handler,
-   public virtual ACE_SOCK_Dgram_Mcast
-{
-};
-
 // Forward declarations.
 class TAO_AV_TCP_Flow_Handler;
 class TAO_AV_UDP_Flow_Handler; 
+class TAO_AV_UDP_MCast_Flow_Handler;
 class TAO_SFP_Object;
 class TAO_SFP_Callback;
 
@@ -539,7 +534,7 @@ public:
   virtual int make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler);
   // call to make a new flow handler for a dgram flow.
 
-  virtual int make_dgram_mcast_flow_handler (TAO_AV_Dgram_Mcast_Flow_Handler *&handler);
+  virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
   // call to make a new flow handler for a mcast dgram flow.
   
   virtual int get_sfp_callback (const char *flowname,
@@ -729,7 +724,7 @@ protected:
 
   u_short mcast_port_;
   ACE_UINT32 mcast_addr_;
-  ACE_Hash_Map_Manager <TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler *,ACE_Null_Mutex> dgram_mcast_handler_map_;
+  ACE_Hash_Map_Manager <TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler *,ACE_Null_Mutex> dgram_mcast_handler_map_;
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_ptr peer_sep_;
