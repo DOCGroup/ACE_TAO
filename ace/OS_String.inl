@@ -373,7 +373,7 @@ ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
   return ACE_OS_String::strncasecmp_emulation (s, t, len);
 #elif defined(__BORLANDC__)
   return ::strnicmp (s, t, len);
-#elif defined defined (ACE_WIN32)
+#elif defined (ACE_WIN32)
   return ::_strnicmp (s, t, len);
 #else /* !ACE_LACKS_STRCASECMP && !__BORLANDC__ && !ACE_WIN32 */
   return ::strncasecmp (s, t, len);
