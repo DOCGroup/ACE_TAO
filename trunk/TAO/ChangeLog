@@ -1,3 +1,10 @@
+Thu Aug 14 01:46:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+          Added #include Null_Mutex.h needed when
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION is defined due to recent
+          subsetting.
+
 Wed Aug 13 19:56:39 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: 
