@@ -193,6 +193,8 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   //    and offset) separate from the writing state, i.e. those
   //    variables should only be set by the handle_input() method and
   //    its friends...
+  // @@ Carlos: I didnt quite understand this. What are the writing
+  //    states do we have now? (Alex).
   this->transport_->message_size (0);
   this->transport_->message_received (0);
 
