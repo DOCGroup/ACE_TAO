@@ -20,7 +20,7 @@ Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
     result = server_addr.set (logger_port, INADDR_ANY);
   else
     result = server_addr.set ("ace_logger", INADDR_ANY);
-  if (result != -1) 
+  if (result != -1)
     result = ACCEPTOR::open (server_addr);
   if (result == -1) reactor->end_reactor_event_loop ();
 }

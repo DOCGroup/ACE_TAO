@@ -25,7 +25,7 @@ Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
     result = server_addr.set (logger_port, INADDR_ANY);
   else
     result = server_addr.set ("ace_logger", INADDR_ANY);
-  if (result != -1) 
+  if (result != -1)
     result = ACCEPTOR::open (server_addr);
   if (result == -1) reactor->end_reactor_event_loop ();
 }
@@ -40,20 +40,20 @@ public:
   Quit_Handler (ACE_Reactor *r)
     : ACE_Event_Handler (r) {
     reactor ()->register_handler (this, ACE_STDIN);
-    SetConsoleMode (ACE_STDIN, ENABLE_LINE_INPUT 
-                               | ENABLE_ECHO_INPUT 
+    SetConsoleMode (ACE_STDIN, ENABLE_LINE_INPUT
+                               | ENABLE_ECHO_INPUT
                                | ENABLE_PROCESSED_INPUT);
   }
 
-  ~Quit_Handler () { 
+  ~Quit_Handler () {
     reactor ()->remove_handler (ACE_STDIN,
-                                ACE_Event_Handler::DONT_CALL); 
+                                ACE_Event_Handler::DONT_CALL);
   }
 
   virtual int handle_signal (int, siginfo_t *info, ucontext_t *) {
     CHAR user_input[BUFSIZ];
     DWORD count;
-    if (ReadFile (info->si_handle_, user_input, 
+    if (ReadFile (info->si_handle_, user_input,
                   BUFSIZ, &count, 0)) {
       user_input[count] = '\0';
       if (ACE_OS::strncmp (user_input, "quit", 4) == 0)
