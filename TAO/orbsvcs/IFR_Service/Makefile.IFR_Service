@@ -159,14 +159,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -178,8 +180,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -241,9 +241,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -269,6 +267,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -295,20 +295,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -323,6 +318,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -405,10 +402,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -416,36 +414,43 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IDLType_i.h Repository_i.h IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/ArrayDef_i.o .obj/ArrayDef_i.so .shobj/ArrayDef_i.o .shobj/ArrayDef_i.so: ArrayDef_i.cpp ArrayDef_i.h IDLType_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -457,8 +462,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -520,9 +523,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -548,6 +549,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -574,20 +577,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -602,6 +600,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -684,10 +684,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -695,19 +696,25 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  Repository_i.h Container_i.h IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -717,14 +724,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -736,8 +745,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -799,9 +806,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -827,6 +832,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -853,20 +860,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -881,6 +883,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -963,10 +967,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -974,20 +979,26 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  Repository_i.h IFR_macro.h IDLType_i.h ExceptionDef_i.h \
  Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -997,14 +1008,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1016,8 +1029,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -1079,9 +1090,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1107,6 +1116,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -1133,20 +1144,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1161,6 +1167,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1243,10 +1251,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -1254,14 +1263,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -1271,18 +1285,19 @@ realclean: clean
 
 .obj/ComponentRepository_i.o .obj/ComponentRepository_i.so .shobj/ComponentRepository_i.o .shobj/ComponentRepository_i.so: ComponentRepository_i.cpp \
  ComponentRepository_i.h Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1294,8 +1309,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -1357,9 +1370,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1385,6 +1396,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -1411,20 +1424,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1439,6 +1447,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1521,10 +1531,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -1532,14 +1543,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -1551,14 +1567,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1570,8 +1588,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -1633,9 +1649,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1661,6 +1675,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -1687,20 +1703,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1715,6 +1726,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1797,10 +1810,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -1808,19 +1822,25 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  Repository_i.h IFR_macro.h IDLType_i.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -1830,14 +1850,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1849,8 +1871,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -1912,9 +1932,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1940,6 +1958,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -1966,20 +1986,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1994,6 +2009,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2076,10 +2093,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -2087,14 +2105,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -2106,14 +2129,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2125,8 +2150,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -2188,9 +2211,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -2216,6 +2237,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -2242,20 +2265,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2270,6 +2288,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2352,10 +2372,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -2363,14 +2384,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -2384,6 +2410,7 @@ realclean: clean
  FactoryDef_i.h OperationDef_i.h FinderDef_i.h AttributeDef_i.h \
  ConstantDef_i.h ComponentDef_i.h InterfaceDef_i.h HomeDef_i.h \
  ValueDef_i.h ExceptionDef_i.h ModuleDef_i.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -2393,14 +2420,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2412,8 +2441,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -2475,9 +2502,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -2503,6 +2528,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -2529,20 +2556,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2557,6 +2579,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2639,10 +2663,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -2650,37 +2675,44 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IFR_macro.h IDLType_i.h InterfaceDef_i.h Contained_i.h \
  Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/EmitsDef_i.o .obj/EmitsDef_i.so .shobj/EmitsDef_i.o .shobj/EmitsDef_i.so: EmitsDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2692,8 +2724,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -2755,9 +2785,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -2783,6 +2811,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -2809,20 +2839,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2837,6 +2862,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2919,10 +2946,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -2930,14 +2958,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -2949,14 +2982,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2968,8 +3003,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -3031,9 +3064,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -3059,6 +3090,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -3085,20 +3118,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3113,6 +3141,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -3195,10 +3225,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -3206,33 +3237,40 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- IDLType_i.h Repository_i.h IFR_macro.h Servant_Factory.h
+ IDLType_i.h Repository_i.h IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h
 
 .obj/EventDef_i.o .obj/EventDef_i.so .shobj/EventDef_i.o .shobj/EventDef_i.so: EventDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3244,8 +3282,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -3307,9 +3343,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -3335,6 +3369,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -3361,20 +3397,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3389,6 +3420,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -3471,10 +3504,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -3482,14 +3516,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -3501,14 +3540,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3520,8 +3561,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -3583,9 +3622,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -3611,6 +3648,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -3637,20 +3676,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3665,6 +3699,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -3747,10 +3783,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -3758,19 +3795,25 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  Repository_i.h IFR_macro.h IDLType_i.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -3780,14 +3823,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3799,8 +3844,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -3862,9 +3905,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -3890,6 +3931,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -3916,20 +3959,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3944,6 +3982,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -4026,10 +4066,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -4037,14 +4078,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -4056,14 +4102,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4075,8 +4123,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -4138,9 +4184,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -4166,6 +4210,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -4192,20 +4238,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -4220,6 +4261,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -4302,10 +4345,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -4313,14 +4357,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -4328,18 +4377,19 @@ realclean: clean
  IFR_macro.h FinderDef_i.h OperationDef_i.h Contained_i.h
 
 .obj/FixedDef_i.o .obj/FixedDef_i.so .shobj/FixedDef_i.o .shobj/FixedDef_i.so: FixedDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4351,8 +4401,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -4414,9 +4462,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -4442,6 +4488,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -4468,20 +4516,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -4496,6 +4539,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -4578,10 +4623,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -4589,14 +4635,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -4604,18 +4655,19 @@ realclean: clean
  IFR_macro.h FixedDef_i.h IDLType_i.h
 
 .obj/HomeDef_i.o .obj/HomeDef_i.so .shobj/HomeDef_i.o .shobj/HomeDef_i.so: HomeDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4627,8 +4679,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -4690,9 +4740,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -4718,6 +4766,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -4744,20 +4794,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -4772,6 +4817,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -4854,10 +4901,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -4865,14 +4913,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -4883,14 +4936,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4902,8 +4957,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -4965,9 +5018,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -4993,6 +5044,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -5019,20 +5072,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -5047,6 +5095,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5129,10 +5179,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -5140,14 +5191,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -5162,7 +5218,9 @@ realclean: clean
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5177,8 +5235,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -5240,9 +5296,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -5265,6 +5319,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -5277,6 +5333,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -5293,13 +5351,6 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -5315,7 +5366,9 @@ realclean: clean
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5330,8 +5383,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -5393,9 +5444,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -5418,6 +5467,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -5430,6 +5481,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -5446,13 +5499,6 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -5465,9 +5511,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -5482,6 +5531,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5561,7 +5612,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -5569,14 +5619,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -5612,6 +5667,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
@@ -5640,14 +5696,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5659,8 +5717,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -5722,9 +5778,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -5750,6 +5804,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -5776,20 +5832,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -5804,6 +5855,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5886,10 +5939,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -5897,33 +5951,41 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IDLType_i.h Repository_i.h IFR_macro.h AttributeDef_i.h \
- OperationDef_i.h Servant_Factory.h
+ OperationDef_i.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h
 
 .obj/InterfaceS.o .obj/InterfaceS.so .shobj/InterfaceS.o .shobj/InterfaceS.so: InterfaceS.cpp InterfaceS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5935,8 +5997,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -5998,9 +6058,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -6026,6 +6084,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -6052,20 +6112,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6080,6 +6135,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -6162,10 +6219,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -6173,27 +6231,34 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i
 
 .obj/IRObject_i.o .obj/IRObject_i.so .shobj/IRObject_i.o .shobj/IRObject_i.so: IRObject_i.cpp IRObject_i.h InterfaceS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6205,8 +6270,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -6268,9 +6331,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -6296,6 +6357,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -6322,20 +6385,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6350,6 +6408,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -6432,10 +6492,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -6443,14 +6504,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -6462,14 +6528,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6481,8 +6549,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -6544,9 +6610,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -6572,6 +6636,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -6598,20 +6664,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6626,6 +6687,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -6708,10 +6771,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -6719,14 +6783,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -6738,14 +6807,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6757,8 +6828,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -6820,9 +6889,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -6848,6 +6915,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -6874,20 +6943,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6902,6 +6966,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -6984,10 +7050,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -6995,14 +7062,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -7014,14 +7086,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7033,8 +7107,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -7096,9 +7168,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -7124,6 +7194,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -7150,20 +7222,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7178,6 +7245,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -7260,10 +7329,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -7271,20 +7341,26 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  Repository_i.h IFR_macro.h IDLType_i.h ExceptionDef_i.h \
  Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -7351,14 +7427,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7370,8 +7448,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -7433,9 +7509,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -7461,6 +7535,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -7487,20 +7563,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7515,6 +7586,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -7597,10 +7670,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -7608,14 +7682,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -7627,14 +7706,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7646,8 +7727,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -7709,9 +7788,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -7737,6 +7814,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -7763,20 +7842,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7791,6 +7865,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -7873,10 +7949,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -7884,14 +7961,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -7903,14 +7985,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7922,8 +8006,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -7985,9 +8067,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -8013,6 +8093,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -8039,20 +8121,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8067,6 +8144,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -8149,10 +8228,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -8160,14 +8240,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -8179,14 +8264,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8198,8 +8285,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -8261,9 +8346,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -8289,6 +8372,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -8315,20 +8400,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8343,6 +8423,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -8425,10 +8507,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -8436,14 +8519,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -8455,14 +8543,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8474,8 +8564,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -8537,9 +8625,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -8565,6 +8651,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -8591,20 +8679,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8619,6 +8702,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -8701,10 +8786,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -8712,20 +8798,26 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IFR_macro.h IDLType_i.h ExceptionDef_i.h Contained_i.h Options.h \
  Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -8735,14 +8827,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8754,8 +8848,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -8817,9 +8909,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -8845,6 +8935,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -8871,20 +8963,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8899,6 +8986,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -8981,10 +9070,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -8992,19 +9082,25 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  Repository_i.h Container_i.h IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -9018,7 +9114,9 @@ realclean: clean
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -9033,8 +9131,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -9096,9 +9192,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -9121,6 +9215,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -9132,6 +9228,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Configuration.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -9181,19 +9279,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -9265,10 +9359,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -9276,15 +9371,20 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
- IFR_macro.h PrimitiveDef_i.h IDLType_i.h StringDef_i.h WstringDef_i.h \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i IFR_macro.h \
+ PrimitiveDef_i.h IDLType_i.h StringDef_i.h WstringDef_i.h \
  SequenceDef_i.h ArrayDef_i.h FixedDef_i.h EnumDef_i.h TypedefDef_i.h \
  Contained_i.h AliasDef_i.h NativeDef_i.h ValueBoxDef_i.h UnionDef_i.h \
  StructDef_i.h ConsumesDef_i.h EventDef_i.h PublishesDef_i.h \
@@ -9301,14 +9401,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9320,8 +9422,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -9383,9 +9483,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -9411,6 +9509,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -9437,20 +9537,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -9465,6 +9560,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -9547,10 +9644,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -9558,33 +9656,41 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- IFR_macro.h Servant_Factory.h
+ IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h
 
 .obj/StringDef_i.o .obj/StringDef_i.so .shobj/StringDef_i.o .shobj/StringDef_i.so: StringDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h InterfaceS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9596,8 +9702,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -9659,9 +9763,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -9687,6 +9789,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -9713,20 +9817,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -9741,6 +9840,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -9823,10 +9924,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -9834,14 +9936,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -9853,14 +9960,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9872,8 +9981,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -9935,9 +10042,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -9963,6 +10068,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -9989,20 +10096,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10017,6 +10119,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -10099,10 +10203,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -10110,19 +10215,25 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IDLType_i.h Repository_i.h IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -10132,14 +10243,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10151,8 +10264,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -10214,9 +10325,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -10242,6 +10351,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -10268,20 +10379,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10296,6 +10402,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -10378,10 +10486,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -10389,14 +10498,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -10418,14 +10532,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10437,8 +10553,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -10500,9 +10614,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -10528,6 +10640,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -10554,20 +10668,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10582,6 +10691,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -10664,10 +10775,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -10675,14 +10787,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -10694,14 +10811,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10713,8 +10832,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -10776,9 +10893,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -10804,6 +10919,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -10830,20 +10947,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10858,6 +10970,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -10940,10 +11054,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -10951,36 +11066,43 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IDLType_i.h Repository_i.h IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/UsesDef_i.o .obj/UsesDef_i.so .shobj/UsesDef_i.o .shobj/UsesDef_i.so: UsesDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10992,8 +11114,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -11055,9 +11175,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -11083,6 +11201,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -11109,20 +11229,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11137,6 +11252,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -11219,10 +11336,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -11230,14 +11348,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -11249,14 +11372,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11268,8 +11393,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -11331,9 +11454,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -11359,6 +11480,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -11385,20 +11508,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11413,6 +11531,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -11495,10 +11615,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -11506,36 +11627,43 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IDLType_i.h Repository_i.h IFR_macro.h Servant_Factory.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/ValueDef_i.o .obj/ValueDef_i.so .shobj/ValueDef_i.o .shobj/ValueDef_i.so: ValueDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
+ InterfaceS.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11547,8 +11675,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -11610,9 +11736,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -11638,6 +11762,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -11664,20 +11790,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11692,6 +11813,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -11774,10 +11897,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -11785,14 +11909,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -11804,14 +11933,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11823,8 +11954,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -11886,9 +12015,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -11914,6 +12041,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -11940,20 +12069,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11968,6 +12092,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -12050,10 +12176,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -12061,14 +12188,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
@@ -12080,14 +12212,16 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/POA_CORBA.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12099,8 +12233,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
@@ -12162,9 +12294,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -12190,6 +12320,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -12216,20 +12348,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12244,6 +12371,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -12326,10 +12455,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -12337,14 +12467,19 @@ realclean: clean
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Service_Callbacks.h \
+ $(TAO_ROOT)/tao/Service_Callbacks.i \
+ $(TAO_ROOT)/tao/Parser_Registry.h \
+ $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/NVList.h \
- $(TAO_ROOT)/tao/NVList.i \
- InterfaceS_T.h InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
+ $(TAO_ROOT)/tao/NVList.i InterfaceS_T.h \
+ InterfaceS_T.i InterfaceS_T.cpp InterfaceS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \

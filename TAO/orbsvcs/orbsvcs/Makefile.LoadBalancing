@@ -82,14 +82,20 @@ realclean: clean
 .obj/LoadBalancer_i.o .obj/LoadBalancer_i.so .shobj/LoadBalancer_i.o .shobj/LoadBalancer_i.so: LoadBalancing/LoadBalancer_i.cpp \
  LoadBalancing/LoadBalancer_i.h \
  $(ACE_ROOT)/ace/pre.h \
- LoadBalancingS.h \
- LoadBalancingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -101,14 +107,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -168,9 +168,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -191,12 +189,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -252,6 +254,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -351,8 +355,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- LoadBalancing/LoadBalancing_export.h \
- LoadBalancingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -361,10 +365,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- LoadBalancingS_T.h \
- LoadBalancingS_T.i \
- LoadBalancingS_T.cpp \
- LoadBalancingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  LoadBalancing/ReplicaProxy.h LoadBalancing/LoadBalancing_export.h \
  LoadBalancing/ReplicaProxy.i LoadBalancing/ReplicaLocator.h \
  LoadBalancing/LoadBalancing_Strategy.h LoadBalancing/LoadBalancer_i.i
@@ -372,14 +376,20 @@ realclean: clean
 .obj/LoadBalancing_Strategy.o .obj/LoadBalancing_Strategy.so .shobj/LoadBalancing_Strategy.o .shobj/LoadBalancing_Strategy.so: LoadBalancing/LoadBalancing_Strategy.cpp \
  LoadBalancing/LoadBalancing_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- LoadBalancingS.h \
- LoadBalancingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -391,14 +401,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -458,9 +462,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -481,12 +483,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -542,6 +548,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -641,8 +649,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- LoadBalancing/LoadBalancing_export.h \
- LoadBalancingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -651,24 +659,30 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- LoadBalancingS_T.h \
- LoadBalancingS_T.i \
- LoadBalancingS_T.cpp \
- LoadBalancingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h \
  LoadBalancing/LoadBalancing_Strategy.i
 
 .obj/ReplicaLocator.o .obj/ReplicaLocator.so .shobj/ReplicaLocator.o .shobj/ReplicaLocator.so: LoadBalancing/ReplicaLocator.cpp \
  LoadBalancing/ReplicaLocator.h \
  $(ACE_ROOT)/ace/pre.h \
- LoadBalancingS.h \
- LoadBalancingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -680,14 +694,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -747,9 +755,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -770,12 +776,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -831,6 +841,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -930,8 +942,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- LoadBalancing/LoadBalancing_export.h \
- LoadBalancingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -940,10 +952,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- LoadBalancingS_T.h \
- LoadBalancingS_T.i \
- LoadBalancingS_T.cpp \
- LoadBalancingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/LoadBalancer_i.h \
  LoadBalancing/ReplicaProxy.h LoadBalancing/ReplicaProxy.i \
  LoadBalancing/LoadBalancing_Strategy.h LoadBalancing/LoadBalancer_i.i
@@ -995,11 +1007,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- LoadBalancingS.h \
- LoadBalancingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1037,9 +1049,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1060,12 +1070,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -1121,6 +1135,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1220,8 +1236,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- LoadBalancing/LoadBalancing_export.h \
- LoadBalancingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1230,10 +1246,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- LoadBalancingS_T.h \
- LoadBalancingS_T.i \
- LoadBalancingS_T.cpp \
- LoadBalancingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/ReplicaProxy.i \
  LoadBalancing/LoadBalancer_i.h LoadBalancing/ReplicaLocator.h \
  LoadBalancing/LoadBalancing_Strategy.h LoadBalancing/LoadBalancer_i.i
@@ -1242,14 +1258,20 @@ realclean: clean
  LoadBalancing/Round_Robin_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  LoadBalancing/LoadBalancing_Strategy.h \
- LoadBalancingS.h \
- LoadBalancingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1261,14 +1283,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1328,9 +1344,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1351,12 +1365,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -1412,6 +1430,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1511,8 +1531,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- LoadBalancing/LoadBalancing_export.h \
- LoadBalancingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1521,10 +1541,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- LoadBalancingS_T.h \
- LoadBalancingS_T.i \
- LoadBalancingS_T.cpp \
- LoadBalancingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/ReplicaProxy.h \
  LoadBalancing/ReplicaProxy.i
 
@@ -1532,14 +1552,20 @@ realclean: clean
  LoadBalancing/Minimum_Dispersion.h \
  $(ACE_ROOT)/ace/pre.h \
  LoadBalancing/LoadBalancing_Strategy.h \
- LoadBalancingS.h \
- LoadBalancingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1551,14 +1577,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1618,9 +1638,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1641,12 +1659,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -1702,6 +1724,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1801,8 +1825,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- LoadBalancing/LoadBalancing_export.h \
- LoadBalancingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1811,21 +1835,27 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- LoadBalancingS_T.h \
- LoadBalancingS_T.i \
- LoadBalancingS_T.cpp \
- LoadBalancingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/ReplicaProxy.h \
  LoadBalancing/ReplicaProxy.i
 
 .obj/LoadBalancingS.o .obj/LoadBalancingS.so .shobj/LoadBalancingS.o .shobj/LoadBalancingS.so: LoadBalancingS.cpp LoadBalancingS.h \
  $(ACE_ROOT)/ace/pre.h LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1837,14 +1867,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1904,9 +1928,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1927,12 +1949,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -1988,6 +2014,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2126,11 +2154,17 @@ realclean: clean
 .obj/LoadBalancingC.o .obj/LoadBalancingC.so .shobj/LoadBalancingC.o .shobj/LoadBalancingC.so: LoadBalancingC.cpp LoadBalancingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2142,14 +2176,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2209,9 +2237,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -2232,12 +2258,16 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/Request_Info.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
@@ -2293,6 +2323,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
