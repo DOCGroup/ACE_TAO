@@ -1,3 +1,8 @@
+Tue Jun 08 14:39:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbafwd.h,Exception.cpp: added minor code support for
+          ENOENT, EBADF, EPERM, and EAFNOSUPPORT errno values.
+
 Tue Jun 08 14:15:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.3.24 released.
