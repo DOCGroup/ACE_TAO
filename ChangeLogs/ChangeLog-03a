@@ -37,6 +37,13 @@ Wed Aug 15 06:39:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Aug 14 23:57:42 2001  Steve Huston  <shuston@riverace.com>
 
+        * A set of changes to encapsulate passing handles to spawned
+          processes. Thanks very much to Eamonn Saunders
+          <Esaunders@softricity.com> for suggesting that this could
+          work and pointing out the Win32 details!
+
+        * THANKS: Added Eamonn Saunders to the Hall of Fame
+
         * ace/Handle_Set.h: Replace include ace/ACE.h with ace/OS.h. This
           class is part of the OS subset.
 
