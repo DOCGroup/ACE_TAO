@@ -1,3 +1,10 @@
+Wed Jan 22 17:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          Use ACE_IOV_MAX instead of IOV_MAX. IOV_MAX is defined as
+          MAX_INT-1 with Cygwn and this gives compiles errors because
+          an array as struct member of this size is too large.
+
 Wed Jan 22 16:34:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Makefile.RTCORBAEvent:
