@@ -51,6 +51,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MT_Client_Protocol_Priority Client"=.\MT_Client_Protocol_Priority\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_Client_Protocol_Priority Server"=.\MT_Client_Protocol_Priority\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Server_Declared Client"=.\Server_Declared\client.dsp - Package Owner=<4>
 
 Package=<5>
