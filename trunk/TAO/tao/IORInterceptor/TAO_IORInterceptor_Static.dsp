@@ -67,8 +67,8 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 MTL=midl.exe
 LINK32=link.exe -lib
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -93,6 +93,10 @@ SOURCE=.\IORInterceptor_Adapter_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_List.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORInterceptorC.cpp
 # ADD CPP /GR
 # End Source File
@@ -110,12 +114,20 @@ SOURCE=.\iorinterceptor_export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_List.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORInterceptorC.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\IORInterceptor_List.inl
+# End Source File
 # Begin Source File
 
 SOURCE=.\IORInterceptorC.i
