@@ -1,3 +1,10 @@
+Thu May 20 23:09:32 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	  Added error checks in the <create_factory> and
+	  <locate_naming_service> methods.
+
 Thu May 20 21:49:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * all run_test*pl scripts: moved comment line(s) from head
