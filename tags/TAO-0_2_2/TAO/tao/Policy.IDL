@@ -1,0 +1,15 @@
+// $Id$
+
+module CORBA
+{
+  typedef unsigned long PolicyType;
+
+  interface Policy
+    {
+      readonly attribute PolicyType policy_type;
+      Policy copy ();
+      void destroy ();
+    };
+
+  typedef sequence<Policy> PolicyList;
+};
