@@ -321,6 +321,8 @@ template class ACE_Hash_Map_Reverse_Iterator<TAO_ExtId, TAO_IntId, ACE_Null_Mute
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
+template class ACE_Hash<TAO_ExtId>;
+template class ACE_Equal_To<TAO_ExtId>;
 template class ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId>;
 template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >;
 template class ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context>;
@@ -336,6 +338,8 @@ template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId,
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash<TAO_ExtId>
+#pragma instantiate ACE_Equal_To<TAO_ExtId>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId>
 #pragma instantiate TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context>
