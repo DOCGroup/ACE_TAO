@@ -3,6 +3,7 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 
 ACE_RCSID(Thread_Pools, server, "$Id$")
 
