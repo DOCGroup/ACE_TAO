@@ -28,38 +28,12 @@ ACE_Token_Invariant_Manager::instance (void)
           ACE_NEW_RETURN (instance_, ACE_Token_Invariant_Manager, 0);
 
           // Register for destruction with ACE_Object_Manager.
-#if defined ACE_HAS_SIG_C_FUNC
-          ACE_Object_Manager::at_exit (instance_,
-                                       ACE_Token_Invariant_Manager_cleanup,
-                                       0);
-#else
-          ACE_Object_Manager::at_exit (instance_,
-                                       ACE_Token_Invariant_Manager::cleanup,
-                                       0);
-#endif /* ACE_HAS_SIG_C_FUNC */
+          ACE_Object_Manager::at_exit (instance_);
         }
     }
 
   return instance_;
 }
-
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void
-ACE_Token_Invariant_Manager_cleanup (void *instance, void *)
-{
-  ACE_TRACE ("ACE_Token_Invariant_Manager_cleanup");
-
-  delete (ACE_Token_Invariant_Manager *) instance;
-}
-#else
-void
-ACE_Token_Invariant_Manager::cleanup (void *instance, void *)
-{
-  ACE_TRACE ("ACE_Token_Invariant_Manager::cleanup");
-
-  delete (ACE_Token_Invariant_Manager *) instance;
-}
-#endif /* ACE_HAS_SIG_C_FUNC */
 
 ACE_Token_Invariant_Manager::ACE_Token_Invariant_Manager (void)
 {

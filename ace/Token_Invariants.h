@@ -104,7 +104,7 @@ private:
   // Number of owning readers.
 };
 
-class ACE_Export ACE_Token_Invariant_Manager
+class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup
   // = TITLE
   //     Token Invariants
   //
@@ -121,9 +121,6 @@ public:
 
   static ACE_Token_Invariant_Manager *instance (void);
   // Singleton access point.
-
-  static void cleanup (void *instance, void *);
-  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
 
   // = Polymorphic methods.  Just pass in the proxy and the method
   // figures out the type of the token.
@@ -164,7 +161,7 @@ public:
   ACE_Token_Invariant_Manager (void);
   // Prevent non-singleton construction.
 
-  ~ACE_Token_Invariant_Manager (void);
+  virtual ~ACE_Token_Invariant_Manager (void);
   // Destruction.
 
 protected:
