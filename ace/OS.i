@@ -4233,9 +4233,15 @@ ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
   this->PeakBandwidth = peak_bandwidth;
   this->Latency = latency;
   this->DelayVariation = delay_variation;
+#if defined(ACE_HAS_WINSOCK2_GQOS)
   this->ServiceType = service_type;
   this->MaxSduSize = max_sdu_size;
   this->MinimumPolicedSize = minimum_policed_size;
+#else
+  ACE_UNUSED_ARG (service_type);
+  ACE_UNUSED_ARG (max_sdu_size);
+  ACE_UNUSED_ARG (minimum_policed_size);
+#endif /* ACE_HAS_WINSOCK2_GQOS */
   ACE_UNUSED_ARG (ttl);
 #else
   ACE_UNUSED_ARG (token_rate);
@@ -4259,9 +4265,11 @@ ACE_Flow_Spec::ACE_Flow_Spec (void)
   this->PeakBandwidth = 0;
   this->Latency = 0;
   this->DelayVariation = 0;
+#if defined(ACE_HAS_WINSOCK2_GQOS)
   this->ServiceType = 0;
   this->MaxSduSize = 0;
   this->MinimumPolicedSize = 0;
+#endif /* ACE_HAS_WINSOCK2_GQOS */
 #else
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
@@ -5021,8 +5029,8 @@ ACE_INLINE int
 ACE_OS::recvfrom (ACE_HANDLE handle,
                   iovec *buffers,
                   int buffer_count,
-                  int *number_of_bytes_recvd,
-                  int flags,
+                  size_t &number_of_bytes_recvd,
+                  int &flags,
                   struct sockaddr *addr,
                   int *addrlen,
                   ACE_OVERLAPPED *overlapped,
@@ -5031,15 +5039,20 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
   ACE_TRACE ("ACE_OS::recvfrom");
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  return ::WSARecvFrom (handle,
-                        buffers,
-                        buffer_count,
-                        number_of_bytes_recvd,
-                        flags,
-                        addr,
-                        addrlen,
-                        overlapped,
-                        func);
+  DWORD bytes_recvd;
+  DWORD the_flags = flags;
+  int result = ::WSARecvFrom ((SOCKET) handle,
+                              (WSABUF*)buffers,
+                              buffer_count,
+                              &bytes_recvd,
+                              &the_flags,
+                              addr,
+                              addrlen,
+                              overlapped,
+                              func);
+  flags = the_flags;
+  number_of_bytes_recvd = ACE_static_cast(size_t,bytes_recvd);
+  return result;
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buffers);
@@ -5088,7 +5101,7 @@ ACE_INLINE int
 ACE_OS::sendto (ACE_HANDLE handle,
                 const iovec *buffers,
                 int buffer_count,
-                int *number_of_bytes_sent,
+                size_t &number_of_bytes_sent,
                 int flags,
                 const struct sockaddr *addr,
                 int addrlen,
@@ -5097,24 +5110,23 @@ ACE_OS::sendto (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_OS::sendto");
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  return ::WSASendTo (handle,
-                      buffers,
-                      buffer_count,
-                      number_of_bytes_sent,
-                      flags,
-                      addr,
-                      addrlen,
-                      overlapped,
-                      func);
+  DWORD bytes_sent;
+  int result = ::WSASendTo ((SOCKET) handle,
+                            (WSABUF*)buffers,
+                            buffer_count,
+                            &bytes_sent,
+                            flags,
+                            addr,
+                            addrlen,
+                            overlapped,
+                            func);
+  number_of_bytes_sent = ACE_static_cast(size_t, bytes_sent);
+  return result;
 #else
   ACE_UNUSED_ARG (overlapped);
   ACE_UNUSED_ARG (func);
-  int bytes_sent;
 
-  if (number_of_bytes_sent == 0)
-    number_of_bytes_sent = &bytes_sent;
-
-  *number_of_bytes_sent = 0;
+  number_of_bytes_sent = 0;
 
   int result = 0;
 
