@@ -107,9 +107,16 @@ ACE_Convert (const char *s, short &si)
 }
 
 inline void
-ACE_Convert (const char *s, unsigned short &us)
+ACE_Convert (const char *s, u_short &us)
 {
-  us = ACE_static_cast (unsigned short, ACE_OS::strtol (s, 0, 10));
+  us = ACE_static_cast (u_short, ACE_OS::strtol (s, 0, 10));
+}
+
+inline void
+ACE_Convert (const char *s, u_int &i)
+{
+  i = ACE_static_cast (u_int,
+                       ACE_OS::strtol (s, 0, 10));
 }
 
 inline void

@@ -55,12 +55,16 @@ public:
 #endif /* ACE_WIN32 */
   };
 
-// Default settings not part of public Iface
 protected:
-  enum {
+  // = Default settings not part of public Interface.
+  //
+  // @@ These sizes should be taken from the appropriate
+  // POSIX/system header files and/or defined dynamically.
+  enum 
+  {
     MAX_COMMAND_LINE_OPTIONS = 128,
-    ENVIRONMENT_BUFFER = 8192,
-    MAX_ENVIRONMENT_ARGS = 128
+    ENVIRONMENT_BUFFER = 16 * 1024, // 16K
+    MAX_ENVIRONMENT_ARGS = 512 //
   };
 
 public:
