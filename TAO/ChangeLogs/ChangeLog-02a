@@ -1,3 +1,16 @@
+Sun Mar 10 13:55:55 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	  Add new files to the MSVC project.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Control.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Peer_Base.h:
+	  Add missing export directives.
+
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.cpp:
+	  Fixed inline includes, only noticeable in non-inline builds.
+
 Sun Mar 10 08:33:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Muxed_GIOP_Versions/test_i.cpp: Fixed a unused variable
