@@ -1,3 +1,16 @@
+Fri Aug 17 16:56:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+
+          Added wr_ptr() accessor method to ACE_InputCDR, and added its
+          use to adjust(), align_read_ptr(), read_1(), skip_string() and
+          skip_bytes() instead of end().  Also added reset of good_bit_ 
+          to 0 upon failure in read_string() and read_wstring(). Thanks to
+          pphillip@opentext.com for reporting this bug, which was causing
+          excessive memory allocation is some cases.
+
 Fri Aug 17 13:31:45 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/run_test.pl:
