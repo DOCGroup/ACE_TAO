@@ -2,7 +2,8 @@ Sat Oct 10 18:40:56 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tests/test-6.exp (Usage): copied the output of gperf -h option
 	into test-6.exp. This test was failing because it didn't have 
-	the -b option previously.
+	the -b option previously. Thanks to David for reporting the failure
+	of tests.
 	
 	* src/Options.cpp : Changed the option case 'h' to include the
  	following line " -b/t Code for Linear Search".
