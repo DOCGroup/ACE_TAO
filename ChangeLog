@@ -1,3 +1,8 @@
+Fri Jul 27 12:18:49 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): Fixed compile error - missing "" around
+          's' for the %S case.
+
 Fri Jul 27 11:07:26 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS.h:
