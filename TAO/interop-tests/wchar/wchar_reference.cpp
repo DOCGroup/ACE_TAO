@@ -19,9 +19,9 @@
 //
 // ============================================================================
 #include "wchar_reference.h"
-#include <ace/Log_Msg.h>
+#include "ace/Log_Msg.h"
 
-#if (defined ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 
 ACE_OS::WChar
 wchar_reference::ref_wchar[NUM_KEYS] =
@@ -126,6 +126,65 @@ wchar_reference::match_except(short key, const ACE_OS::WChar *test)
     ACE_DEBUG ((LM_DEBUG,"match_except: expecting %W, got %W for key %d\n",
                 wchar_reference::ref_except[key],test,key));
   return ACE_OS::strcmp(wchar_reference::ref_except[key],test) == 0;
+}
+#else // ACE_HAS_WCHAR
+wchar_reference::wchar_reference(int v)
+  : verbose_ (v)
+{
+}
+
+void
+wchar_reference::set_verbose(int v)
+{
+  this->verbose_ = v;
+}
+
+ACE_OS::WChar
+wchar_reference::get_wchar (short )
+{
+  return 0;
+}
+
+const ACE_OS::WChar *
+wchar_reference::get_wstring (short )
+{
+  return 0;
+}
+
+ACE_OS::WChar *
+wchar_reference::get_warray (short )
+{
+  return 0;
+}
+
+void
+wchar_reference::assign_warray (short ,
+                                ACE_OS::WChar *)
+{
+}
+
+const ACE_OS::WChar *
+wchar_reference::get_except (short )
+{
+  return 0;
+}
+
+int
+wchar_reference::match_wchar (short , ACE_OS::WChar )
+{
+  return 0;
+}
+
+int
+wchar_reference::match_wstring (short , const ACE_OS::WChar *)
+{
+  return 0;
+}
+
+int
+wchar_reference::match_warray (short , const ACE_OS::WChar *)
+{
+  return 0;
 }
 
 #endif // ACE_HAS_WCHAR

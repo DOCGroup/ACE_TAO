@@ -1,3 +1,15 @@
+Sun Jun 13 07:56:20 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * interop-tests/wchar/client.cpp:
+        * interop-tests/wchar/interop_wchar_i.cpp:
+        * interop-tests/wchar/wchar_reference.cpp:
+        * interop-tests/wchar/wchar_reference.h:
+          Fixed the build in the non-wchar case so that the test builds
+          clean, even if the result is trivial.
+
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.h:
+          Another fuzz related fix.
+
 Sun Jun 14 11:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Operation_Table.cpp:

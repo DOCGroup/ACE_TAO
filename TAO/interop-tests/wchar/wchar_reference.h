@@ -21,9 +21,7 @@
 #ifndef WCHAR_REFERENCE_H
 #define WCHAR_REFERENCE_H
 
-#include <ace/OS.h>
-
-#if (defined ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#include "ace/OS.h"
 
 #define NUM_KEYS 1
 
@@ -45,13 +43,13 @@ class wchar_reference
   int match_except (short key, const ACE_OS::WChar *test);
 
  private:
+#if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   static ACE_OS::WChar ref_wchar[NUM_KEYS];
   static const ACE_OS::WChar *ref_wstring[NUM_KEYS];
   static ACE_OS::WChar ref_warray[NUM_KEYS][10];
   static const ACE_OS::WChar *ref_except[NUM_KEYS];
-
+#endif // ACE_HAS_WCHAR
   int verbose_;
 };
 
-#endif // ACE_HAS_WCHAR
 #endif // WCHAR_REFERENCE_H
