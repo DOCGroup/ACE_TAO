@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO/orbsvcs/ImplRepo_Service
-// 
+//
 // = FILENAME
 //    ImplRepo_i.h
 //
@@ -14,11 +14,11 @@
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #if !defined (IMPLREPO_I_H)
-#define	IMPLREPO_I_H
+#define IMPLREPO_I_H
 
 #include "ImplRepoS.h"
 #include "Repository.h"
@@ -40,7 +40,7 @@ class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
   //    Implementation Repository Adapter Activator
   //
   // = DESCRIPTION
-  //    Part of the Default Servant/DSI combination that forwards 
+  //    Part of the Default Servant/DSI combination that forwards
   //    arbitrary requests.  This allows for the setting up of child POAs
   //    with default servants.
 public:
@@ -57,7 +57,7 @@ private:
 class ImplRepo_i : public POA_Implementation_Repository
 {
   // = TITLE
-  //    Implementation Repository 
+  //    Implementation Repository
   //
   // = DESCRIPTION
   //    This provides the interface to communicate directly with the
@@ -76,14 +76,14 @@ public:
                                   const Implementation_Repository::INET_Addr &addr,
                                   Ping_Object_ptr ping,
                                   CORBA::Environment &_tao_environment);
-  
+
   // = Other methods
 
   int init (int argc, char **argv, CORBA::Environment& env);
   // Initialize the Server state - parsing arguments and waiting
 
   int run (CORBA::Environment& env);
-  // Run the orb 
+  // Run the orb
 
   void start (const char *server);
   // Starts the program registered as <server>
@@ -128,7 +128,7 @@ class IR_Simple_i: public POA_simple_object
   //    Simple Object Implementation
   //
   // = DESCRIPTION
-  //    Implementation of a simple object that has two methods, one that 
+  //    Implementation of a simple object that has two methods, one that
   //    returns the cube of a long, another that shuts down the server.
 public:
   //  = Constructor and Destructor
