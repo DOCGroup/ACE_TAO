@@ -31,14 +31,14 @@ MyFooServant::~MyFooServant (void)
 
 // Return the Default POA of this Servant
 PortableServer::POA_ptr
-MyFooServant::_default_POA (CORBA::Environment &env)
+MyFooServant::_default_POA (CORBA::Environment &/*env*/)
 {
-  return PortableServer::POA::_duplicate (this->poa_);
+  return PortableServer::POA::_duplicate (this->poa_.in());
 }
 
 // Return this->value
 CORBA::Long
-MyFooServant::doit (CORBA::Environment &env)
+MyFooServant::doit (CORBA::Environment &/*env*/)
 {
   return this->value_;
 }
