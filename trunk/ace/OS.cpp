@@ -4335,7 +4335,7 @@ ACE_OS::open (const wchar_t *filename,
     }
 
   ACE_HANDLE h = ::CreateFileW (filename, access,
-                                FILE_SHARE_READ | FILE_SHARE_WRITE,
+                                FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
                                 ACE_OS::default_win32_security_attributes (sa),
                                 creation,
                                 flags,
