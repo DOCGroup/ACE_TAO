@@ -131,6 +131,10 @@ public:
   virtual void                  dump(ostream &o);
 
 private:
+  // Helper function for fwd_redefinition_helper.
+  static idl_bool compare_names (AST_Interface *that,
+                                 AST_Interface *other);
+
   // Data
   AST_Interface                 **pd_inherits;  // Inherited interfaces
                                                 // This is an array of pointers
