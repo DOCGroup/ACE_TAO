@@ -55,9 +55,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -DSH_MEM  -I/project/doc/pkg/X11/include
 
-realclean: clean
-	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

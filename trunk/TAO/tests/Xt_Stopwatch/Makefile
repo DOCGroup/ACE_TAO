@@ -14,13 +14,15 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDLFILES = testC testS
+IDL_FILES = test
+IDL_SRC = testC.cpp testS.cpp
 BIN = client server
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i Stopwatch_display Control timer)
+SRC = $(addsuffix .cpp, $(BIN) test_i Stopwatch_display Control timer) \
+	$(IDL_SRC)
 
 CLIENT_OBJS = client.o Control.o testC.o
-SERVER_OBJS = server.o test_i.o Stopwatch_display.o timer.o $(addsuffix .o, $(IDLFILES))
+SERVER_OBJS = server.o test_i.o Stopwatch_display.o timer.o $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

@@ -15,7 +15,8 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-IDLFILES = QuoterC QuoterS
+IDL_FILES = Quoter
+IDL_SRC = QuoterC.cpp QuoterS.cpp
 BIN2 = client server
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
@@ -25,10 +26,10 @@ ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # CosEvent
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) Stock_Consumer Stock_i Stock_Factory_i)
+SRC = $(IDL_SRC) $(addsuffix .cpp, $(BIN) Stock_Consumer Stock_i Stock_Factory_i)
 
-CLIENT_OBJS = $(addsuffix .o, client Stock_Consumer $(IDLFILES))
-SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i $(IDLFILES))
+CLIENT_OBJS = $(addsuffix .o, client Stock_Consumer) $(IDL_SRC:.cpp=.o)
+SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i) $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS=-in
 

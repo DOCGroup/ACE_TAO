@@ -1,39 +1,50 @@
+Wed May  3 11:54:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+          It is now possible to generate all the IDL generated files using
+          the <idl_stubs> target.
+          For this to work the IDL files *must* be listed in the IDL_FILES
+          macro, I changed all the Makefiles to do so.
+          I also used IDL_SRC for the C.cpp and S.cpp files, this is just
+          for consistency and ease of use, not mandatory.
+          Updated all the dependencies.
+
 Wed May  3 13:03:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/diffs/InterceptorC.cpp.diff:
-	* tao/InterceptorC.cpp: Oops, the restored explicit template
-	  instantiation code needs to be disabled under minimumCORBA too.
+        * tao/diffs/InterceptorC.cpp.diff:
+        * tao/InterceptorC.cpp: Oops, the restored explicit template
+          instantiation code needs to be disabled under minimumCORBA too.
 
 Wed May  3 10:38:36 2000  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
-	  Fixed memory leaks. Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for providing
-	  the fixes.
+        * orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+          Fixed memory leaks. Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for providing
+          the fixes.
 
 Wed May  3 00:49:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Updated all the dependencies.
+        * Updated all the dependencies.
 
 Tue May  2 19:49:40 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service: Added Makefile support for Borland
-	  C++.  Thanks to Charles Frasch <cfrasch@spawar.navy.mil> and
- 	  Christopher Kohlhoff <chris@kohlhoff.com> for contributing
- 	  these.
+        * orbsvcs/ImplRepo_Service: Added Makefile support for Borland
+          C++.  Thanks to Charles Frasch <cfrasch@spawar.navy.mil> and
+          Christopher Kohlhoff <chris@kohlhoff.com> for contributing
+          these.
 
 Tue May  2 16:38:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: Re-enabled
-	  explicit template instantiation for TAO_Object_Manager, which is
-	  needed for sequences, in local interfaces.
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: Re-enabled
+          explicit template instantiation for TAO_Object_Manager, which is
+          needed for sequences, in local interfaces.
 
-	* tao/InterceptorC.cpp: Regenerated the file to solve the link
-	  error on SunCC 5.0.
+        * tao/InterceptorC.cpp: Regenerated the file to solve the link
+          error on SunCC 5.0.
 
 Tue May  2 12:05:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gatew<ay.cpp:
           Fixed nasty bug in the event channel gateways.  The local
           consumer proxy map was not recomputed correctly, because I was
           invoking Map_Manager::close() to reset the map.  This method
@@ -71,9 +82,9 @@ Tue May  2 10:24:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue May  2 11:39:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* docs/pluggable_protocols/index.html: Updated this document
-	  to point out that the CORBA spec. explicitly supports ESIOPs.
-  	  Thanks to Jim Melton <Jim.Melton@lmco.com> for motivating this.
+        * docs/pluggable_protocols/index.html: Updated this document
+          to point out that the CORBA spec. explicitly supports ESIOPs.
+          Thanks to Jim Melton <Jim.Melton@lmco.com> for motivating this.
 
 Mon May  1 21:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -709,8 +720,8 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Acceptor_Registry.cpp:
         * tao/Acceptor_Registry.h: Added a new method, get_acceptor (),
-	  that would return the right acceptor by taking a tag value. This
-	  is similar to the method in Connector_Registry.{h,cpp}.
+          that would return the right acceptor by taking a tag value. This
+          is similar to the method in Connector_Registry.{h,cpp}.
 
         * tao/Pluggable_Messaging_Utils.h:
         * tao/operation_details.h:
@@ -737,7 +748,7 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
           to extract ObjectKey from IOP::IOR and IOP::TaggedProfile.
 
         * tao/Pluggable.h: Added a virtual function, object_key (), that
-	  would extract an ObjectKey from an IOP::TaggedProfile.
+          would extract an ObjectKey from an IOP::TaggedProfile.
 
         * tao/IIOP_Acceptor.cpp:
         * tao/IIOP_Acceptor.h:
@@ -748,11 +759,11 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Profile.cpp:
         * tao/Profile.h: Added a virtual function, create_tagged_profile
-	  (),that would create a IOP::TaggedProfile info from the profile
-	  info that is being stored. This is necessary as different
-	  protocol implementations could encapsulate different types of
-	  info in its profile which is a part of the server exhibited
-	  IOR.
+          (),that would create a IOP::TaggedProfile info from the profile
+          info that is being stored. This is necessary as different
+          protocol implementations could encapsulate different types of
+          info in its profile which is a part of the server exhibited
+          IOR.
 
         * tao/IIOP_Profile.cpp:
         * tao/IIOP_Profile.h:
@@ -765,11 +776,11 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Stub.cpp:
         * tao/Stub.h:
         * tao/Stub.i: Added a method, addressing_mode (), to store and
-	  retrieve information about the GIOP 1.2 specific exception
-	  thrown. If we have received a LOC_NEEDS_ADDRESSING, we need to
-	  change the addressing mode and restart the request. This is
-	  something similar to LOCATION_FORWARD, but here we store only a
-	  flag to indicate what addressing mode to use so that subsequent
+          retrieve information about the GIOP 1.2 specific exception
+          thrown. If we have received a LOC_NEEDS_ADDRESSING, we need to
+          change the addressing mode and restart the request. This is
+          something similar to LOCATION_FORWARD, but here we store only a
+          flag to indicate what addressing mode to use so that subsequent
           invocations would use the right addressing mode.
 
         * tao/MProfile.h:

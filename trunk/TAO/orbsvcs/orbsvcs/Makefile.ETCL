@@ -32,18 +32,18 @@ override TAO_IDLFLAGS += \
         -Wb,pre_include=ace/pre.h \
         -Wb,post_include=ace/post.h
 
-IDL_SRCS +=
+IDL_FILES +=
 CPP_SRCS += \
         ETCL/ETCL_Constraint \
 	ETCL/ETCL_l \
 	ETCL/ETCL_y
 
-IDL_FILES = \
-        $(addsuffix S, $(IDL_SRCS)) \
-        $(addsuffix C, $(IDL_SRCS))
-FILES = $(IDL_FILES) $(CPP_SRCS)
+IDL_SRC = \
+        $(addsuffix S.cpp, $(IDL_FILES)) \
+        $(addsuffix C.cpp, $(IDL_FILES))
+FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
-LSRC  = $(addsuffix .cpp,$(FILES))
+LSRC  = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -63,12 +63,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 
 # Extra dependencies not caught by make depend.
 
-.PRECIOUS: $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
-
-idl_stubs: $(addsuffix .h, $(IDL_FILES))
+.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
 realclean: clean
-	-$(RM) $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 #----------------------------------------------------------------------------
 #       Dependencies
