@@ -76,11 +76,6 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
     thr_state_ (ACE_THR_IDLE)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
-
-  // We use the cleanup_hook_, so we have to be sure to initialize it.
-  this->cleanup_info_.object_ = 0;
-  this->cleanup_info_.cleanup_hook_ = 0;
-  this->cleanup_info_.param_ = 0;
 }
 
 // The following macro simplifies subsequence code.
@@ -1145,13 +1140,13 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
   }
   // Let go of the guard, giving other threads a chance to run.
 
-  // Yield (twice) for each thread that we had to wait on.  This
+  // Yield (four times) for each thread that we had to wait on.  This
   // should give each of those threads a chance to clean up.  The
   // problem arises because the threads that signalled zero_cond_ may
   // not have had a chance to run after that, and therefore may not
   // have finished cleaning themselves up.  This isn't a guaranteed
   // fix, of course, but that would be very complicated.
-  for (size_t i = 0; i < 2 * threads_waited_on; ++i)
+  for (size_t i = 0; i < 4 * threads_waited_on; ++i)
     ACE_OS::thr_yield ();
 #else
   ACE_UNUSED_ARG (timeout);
