@@ -110,10 +110,6 @@ SOURCE=.\param_testS_T.cpp
 
 SOURCE=.\server.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\tmplinst.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
