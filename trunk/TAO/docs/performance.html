@@ -7,9 +7,10 @@
   </head>
 
   <body>
-  <HR><P>
+  <hr><p>
     <h3>TAO Performance Tuning</h3>
 
+    <a name="overview"></a>
     <h3>Overview</h3>
 
     <p>
@@ -55,12 +56,35 @@
     </p>
 
     <p>
+      This document describes how to configure
+      <a href ="index.html">TAO</a> for optimum throughput or
+      scalability for a variety of applications.  However, the user
+      should bear in mind that often times trade-offs exist between
+      speed, size and scalability.  For example, it may not be
+      possible to configure both a highly scalable and exceedingly
+      fast ORB.  Specifically, it may boil down to being one or the
+      other, but not both.
+    </p>
+
+    <a name="throughput"></a>
+    <h2>Optimizing Throughput</h2>
+
+    <p>
+      "Throughput" refers to the number of events occurring per unit
+      time, where "events" can refer to ORB-mediated method
+      invocations, for example.  This section describes how to
+      optimize throughput on both the client side and the server
+      side.
+    </p>
+
+    <p>
       It is important to understand that enabling throughput
       optimizations for the client may not affect the server
       performance and vice versa.  In particular, the client and
       server ORBs may be designed by different ORB suppliers.
     </p>
 
+    <a name="client_throughput"></a>
     <h3>Optimizing Client Throughput</h3>
 
     <p>
@@ -132,7 +156,7 @@
 	      components are called ``connection handlers.''  To disable
 	      synchronization in the client connection handlers, simply
 	      add:
-	    <p>
+	    </p>
 
 	    <blockquote>
 	      <code>
@@ -172,6 +196,7 @@
 	      behaviour, add the following option to the
 	      <code>Client_Strategy_Factory</code> line of your
 	      <code>svc.conf</code> file:
+	    </p>
 
 	    <blockquote>
 	      <code>
@@ -185,13 +210,50 @@
       </li>
     </ul>
 
+    <a name="server_throughput"></a>
     <h3>Optimizing Server Throughput</h3>
 
     <p>
-      FILL IN THE BLANK
+      Throughput on the server side can be improved by configuring TAO
+      to use a <i>thread-per-connection</i> concurrency model.  With
+      this concurrency model, a single thread is assigned to service
+      each connection.  That same thread is used to dispatch the
+      request to the appropriate servant, meaning that thread context
+      switching is kept to minimum.  To enable this concurrency model
+      in TAO, add the following option to the
+      <code>
+	<a href="Options.html#DefaultServer">Server_Strategy_Factory</a>
+      </code>
+      entry in your <code>svc.conf</code> file:
     </p>
 
-    <P><HR><P>            
+    <blockquote>
+      <code>
+	<a href="Options.html#orb_concurrency">
+	  -ORBConcurrency</a> thread-per-connection
+      </code>
+    </blockquote>
+
+    <p>
+      While the <i>thread-per-connection</i> concurrency model may
+      improve throughput, it generally does not scale well due to
+      limitations of the platform the application is running.  In
+      particular, most operating systems cannot efficiently handle
+      more than <code>100</code> or <code>200</code> threads running
+      concurrently, meaning that.  Hence performance often degrades
+      sharply as the number of connections increases over those
+      numbers.
+    </p>
+
+    <p>
+      Other concurrency models are further discussed in the
+      <i><a href="#server_scalability">Optimizing Server
+	  Scalability</a></i> section below.
+    </p>
+
+    <p><hr><p>
+
+    <a name="scalability"></a>
     <h3>Optimizing Scalability</h3>
 
     <p>
@@ -204,23 +266,148 @@
       since it must often handle many requests from multiple clients.
     </p>
 
+    <a name="client_scalability"></a>
     <h3>Optimizing Client Scalability</h3>
 
     <p>
-      FILL IN THE BLANK
+      In order to optimize TAO for scalability on the client side,
+      connection multiplexing must be enabled.  Specifically, multiple
+      requests may be issued and pending over the same connection.
+      Sharing a connection in this manner reduces the amount of
+      resources required by the ORB, which in turn makes more
+      resources available to the application.  To enable this behavior
+      use the following <code>Client_Strategy_Factory</code> option:
     </p>
 
+    <blockquote>
+      <code>
+	<a href="Options.html#-ORBTransportMuxStrategy">
+	  -ORBTransportMuxStrategy</a> MUXED
+      </code>
+    </blockquote>
+
+    <p>
+      This is the default setting used by TAO.
+    </p>
+
+    <a name="server_scalability"></a>
     <h3>Optimizing Server Scalability</h3>
 
     <p>
-      FILL IN THE BLANK
+      Scalability on the server side depends greatly on the
+      <i>concurrency model</i> in use.  TAO supports two concurrency
+      models:
+    </p>
+
+    <ol>
+      <li>Reactive, and</li>
+      <li>Thread-per-connection</li>
+    </ol>
+
+    <p>
+      The thread-per-connection concurrency model is described above
+      in the
+      <i><a href="#server_throughput">Optimizing Server
+	  Throughput</a></i>
+      section.
+    </p>
+
+    <p>
+      A <i>reactive</i> concurrency model employs the Reactor design
+      pattern to demultiplex incoming CORBA requests.  The underlying
+      event demultiplexing mechanism is typically one of the
+      mechanisms provided by the operating system, such as the
+      <code>select(2)</code> system call.  To enable this concurrency
+      model, add the following option to the
+      <code>
+	<a href="Options.html#DefaultServer">Server_Strategy_Factory</a>
+      </code>
+      entry in your <code>svc.conf</code> file:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#orb_concurrency">
+	  -ORBConcurrency</a> reactive
+      </code>
+    </blockquote>
+
+    <p>
+      This is the default setting used by TAO.
+    </p>
+
+    <p>
+      The reactive concurrency model provides improved scalability on
+      the server side due to the fact that less resources are used,
+      which in turn allows a very large number of requests to be
+      handled by the server side ORB.  This concurrency model provides
+      much better scalability than the thread-per-connection model
+      described above.
+    </p>
+
+    <p>
+      Further scalability tuning can be achieved by choosing a Reactor
+      appropriate for your application.  For example, if your
+      application is single-threaded then a reactor optimized for
+      single-threaded use may be appropriate.  To select a
+      single-threaded <code>select(2)</code> based reactor, add the
+      following option to the
+      <code>
+	<a href="Options.html#AdvancedResourceFactory">Advanced_Resource_Factory</a>
+      </code>
+      entry in your <code>svc.conf</code> file:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#-ORBReactorType">
+	  -ORBReactorType</a> select_st
+      </code>
+    </blockquote>
+
+    <p>
+      If your application uses thread pools, then the thread pool
+      reactor may be a better choice.  To use it, add the following
+      option instead:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#-ORBReactorType">
+	  -ORBReactorType</a> tp_reactor
+      </code>
+    </blockquote>
+
+    <p>
+      This is TAO's default reactor.  See the
+      <code>
+	<a href="Options.html#-ORBReactorType">-ORBReactorType</a>
+      </code>
+      documentation for other reactor choices.
+    </p>
+
+    <p>
+      Note that may have to link the <code>TAO_Strategies</code>
+      library into your application in order to take advantage of the
+      <code>
+	<a href="Options.html#AdvancedResourceFactory">Advanced_Resource_Factory</a>
+      </code>
+      features, such as alternate reactor choices.
+    </p>
+
+    <p>
+      A third concurrency model, <i>un</i>supported by TAO, is
+      <i>thread-per-request</i>.  In this case, a single thread is
+      used to service each request as it arrives.  This concurrency
+      model generally provides neither scalability nor speed, which is
+      the reason why it is often not used in practice.
     </p>
 
     <hr><P>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Sun Dec 16 11:36:28 CST 2001
+Last modified: Sun Dec 16 09:52:12 Pacific Standard Time 2001
 <!-- hhmts end -->
   </body>
 </html>
