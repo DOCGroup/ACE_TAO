@@ -1,3 +1,29 @@
+Wed May 31 16:18:35 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in:
+
+	  Fixed the informational message that is displayed when the
+	  configuration integrity check fails so that the shell will no
+	  longer interpret the RCS ID as a variable.  This was done by
+	  removing the dollar '$' signs from the RCS ID by using the M4
+	  translit() built-in.
+
+	  (LIBS):
+
+	  Removed "-lrt" from the hardcoded list of libraries for OSF/1
+	  {3,4,5}.  The ACE_CHECK_ASYNCH_IO test should be able to detect
+	  this library.
+
+	  (AC_REVISION):
+
+	  Changed revision string to be the RCS ID.
+
+	  (AC_OUTPUT):
+
+	  Removed the commented out TAO output files from the list files
+	  the configure script should create.  The latest CVS Autoconf
+	  flagged them as problems when generating the configure script.
+
 Wed May 31 18:08:12 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* examples/QoS/QosEvent.h:
