@@ -54,8 +54,8 @@ public:
   // Returns the name of the variable being tracked.
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Env_Value (const ACE_Env_Value &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Env_Value &operator= (const ACE_Env_Value &))
+  ACE_UNIMPLEMENTED_FUNC(ACE_Env_Value(const ACE_Env_Value<T> &))
+  ACE_UNIMPLEMENTED_FUNC(ACE_Env_Value<T> operator=(const ACE_Env_Value<T> &))
   // Disallow copying and assignment.
 
   void fetch_value (void);
