@@ -24,7 +24,7 @@
 class TAO_Basic_StreamCtrl : public POA_AVStreams::Basic_StreamCtrl
 {
 public:
-  TAO_Basic_StreamCtrl (const char *obj_name = 0);
+  TAO_Basic_StreamCtrl (void);
 
   virtual void stop (const AVStreams::flowSpec &the_spec,  
                      CORBA::Environment &env);
@@ -60,7 +60,7 @@ public:
 class TAO_StreamCtrl : public POA_AVStreams::StreamCtrl
 {
 public:
-  TAO_StreamCtrl (const char *obj_name = 0);
+  TAO_StreamCtrl (void);
 
   virtual CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party, 
                                     AVStreams::MMDevice_ptr b_party, 
@@ -85,7 +85,7 @@ public:
 class TAO_StreamEndPoint : public POA_AVStreams::StreamEndPoint
 {
 public:
-  TAO_StreamEndPoint (const char *obj_name = 0);
+  TAO_StreamEndPoint (void);
 
   virtual void stop (const AVStreams::flowSpec &the_spec,  
                      CORBA::Environment &env);
@@ -135,7 +135,7 @@ public:
                                CORBA::Environment &env);
   
   virtual void set_key (const char *flow_name, 
-                        const AVStreams::key &the_key,  
+                        const char *the_key,  
                         CORBA::Environment &env);
     
   virtual void set_source_id (CORBA::Long source_id,  
@@ -148,7 +148,7 @@ public:
 class TAO_StreamEndPoint_A : public POA_AVStreams::StreamEndPoint_A
 {
 public:
-  TAO_StreamEndPoint_A (const char *obj_name = 0);
+  TAO_StreamEndPoint_A (void);
 
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos, 
                                        AVStreams::flowSpec &the_spec,  
@@ -170,7 +170,7 @@ public:
 class TAO_StreamEndPoint_B : public POA_AVStreams::StreamEndPoint_B
 {
 public:
-  TAO_StreamEndPoint_B (const char *obj_name = 0);
+  TAO_StreamEndPoint_B (void);
 
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos, 
                                        AVStreams::flowSpec &the_spec,  
@@ -183,7 +183,7 @@ public:
 class TAO_VDev : public POA_AVStreams::VDev
 {
 public:
-  TAO_VDev (const char *obj_name = 0);
+  TAO_VDev (void);
 
   virtual CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl, 
                                    AVStreams::VDev_ptr the_peer_dev, 
@@ -218,7 +218,7 @@ public:
 class TAO_MMDevice : public POA_AVStreams::MMDevice
 {
 public:
-  TAO_MMDevice (const char *obj_name = 0);
+  TAO_MMDevice (void);
 
   virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
                                                      AVStreams::VDev_out the_vdev, 
