@@ -12,15 +12,15 @@ optimize = 1
 debug = 1
 
 CC              = gcc
-CXX		= g++
-CFLAGS          += -Wall -Wpointer-arith -pipe
+CXX             = g++
+CFLAGS          += -W -Wall -Wpointer-arith -pipe
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 ifeq ($(VERSION),3)
-  LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
+  LDFLAGS       += -Wl,-rpath $(ACE_ROOT)/ace
 endif
 DLD             = $(CXX)
-LD		= $(CXX)
+LD              = $(CXX)
 LIBS            += -lstdc++
 OCFLAGS         += -O2
 PIC             = -fpic
