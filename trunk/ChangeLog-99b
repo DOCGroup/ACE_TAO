@@ -1,18 +1,24 @@
+Mon Jan 18 09:54:54 1999  David L. Levine  <levine@cs.wustl.ed
+        * examples/Log_Msg/test_ostream.cpp: don't try to create the
+          ofstream if ACE_LACKS_IOSTREAM_TOTALLY.  Also, removed
+          declarations of unused argc/argv arguments because some
+          g++ versions complain about them.
+
 Mon Jan 18 08:17:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_IO.cpp,
-	  ace/SOCK_Dgram.cpp: Added   
+        * ace/SOCK_IO.cpp,
+          ace/SOCK_Dgram.cpp: Added
 
-	  ACE_UNUSED_ARG (timeout);
-	  
-	  to the #else part of the recv (iovec *) methods.  Thanks to Mike
- 	  Goldman for reporting this.
+          ACE_UNUSED_ARG (timeout);
+
+          to the #else part of the recv (iovec *) methods.  Thanks to Mike
+          Goldman for reporting this.
 
 Mon Jan 18 01:13:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h: ACE_TRY_NEW_ENV also needs to define a new
-	  CORBA::Environment even with native exceptions.  Mark exception
-	  caught by ACE_CATCH as unused arg to avoid compilation warnings.
+        * ace/CORBA_macros.h: ACE_TRY_NEW_ENV also needs to define a new
+          CORBA::Environment even with native exceptions.  Mark exception
+          caught by ACE_CATCH as unused arg to avoid compilation warnings.
 
 Mon Jan 18 00:12:13 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -20,165 +26,165 @@ Mon Jan 18 00:12:13 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Jan 17 16:40:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Reactor_Exceptions_Test.cpp (main): Changed the LM_INFO
- 	  message to indicate that C++ exception support isn't ENABLED on
- 	  a platform, rather than saying that it's not supported at all...
+        * tests/Reactor_Exceptions_Test.cpp (main): Changed the LM_INFO
+          message to indicate that C++ exception support isn't ENABLED on
+          a platform, rather than saying that it's not supported at all...
 
 Sun Jan 17 15:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/SString.cpp (operator<<): The operator<< used to print out
-	  ACE_WString caused an infinite loop on platform without UNICODE
-	  defined because we didn't convert the wide string on these
-	  platform.  However, since an ACE_WString always contains a wide
-	  string, the conversion from wide string to char string should
-	  always be done here.  Thanks to Scott Snyder
-	  <snyder@d0sgif.fnal.gov> for noticing this bug.
+        * ace/SString.cpp (operator<<): The operator<< used to print out
+          ACE_WString caused an infinite loop on platform without UNICODE
+          defined because we didn't convert the wide string on these
+          platform.  However, since an ACE_WString always contains a wide
+          string, the conversion from wide string to char string should
+          always be done here.  Thanks to Scott Snyder
+          <snyder@d0sgif.fnal.gov> for noticing this bug.
 
-	  (operator<<): Changed the ACE_SString and ACE_CString version to
-	  check against the case when the internal <rep_> contains 0.
-	  The ACE_CString version was printing out the string one char a
-	  time.  Can't see any reason why this is done like this.  Changed
-	  to print out the underlying <rep_> directly.
+          (operator<<): Changed the ACE_SString and ACE_CString version to
+          check against the case when the internal <rep_> contains 0.
+          The ACE_CString version was printing out the string one char a
+          time.  Can't see any reason why this is done like this.  Changed
+          to print out the underlying <rep_> directly.
 
 Sun Jan 17 14:42:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/001/*:
-	* docs/tutorials/002/*:
-	* docs/tutorials/003/*:
-	* docs/tutorials/004/*:
-	* docs/tutorials/005/*:
-	Converted to the new (colorized) format used by T13 and beyond.
-	I will convert the remaining tutorials (6-12) as each is reviewed.
+        * docs/tutorials/001/*:
+        * docs/tutorials/002/*:
+        * docs/tutorials/003/*:
+        * docs/tutorials/004/*:
+        * docs/tutorials/005/*:
+        Converted to the new (colorized) format used by T13 and beyond.
+        I will convert the remaining tutorials (6-12) as each is reviewed.
 
-	* docs/tutorials/005/fix.Makefile:
-	* docs/tutorials/006/fix.Makefile:
-	* docs/tutorials/007/fix.Makefile: Replaced by ../fix.Makefile.
+        * docs/tutorials/005/fix.Makefile:
+        * docs/tutorials/006/fix.Makefile:
+        * docs/tutorials/007/fix.Makefile: Replaced by ../fix.Makefile.
 
-	* docs/tutorials/010/Makefile:
-	* docs/tutorials/011/Makefile:
-	* docs/tutorials/012/Makefile:
-	* docs/tutorials/013/Makefile:
-	* docs/tutorials/014/Makefile:
-	* docs/tutorials/016/Makefile:
-	* docs/tutorials/017/Makefile:
-	These all referenced ../007/fix.Makefile.  They now reference
-	../fix.Makefile instead.
+        * docs/tutorials/010/Makefile:
+        * docs/tutorials/011/Makefile:
+        * docs/tutorials/012/Makefile:
+        * docs/tutorials/013/Makefile:
+        * docs/tutorials/014/Makefile:
+        * docs/tutorials/016/Makefile:
+        * docs/tutorials/017/Makefile:
+        These all referenced ../007/fix.Makefile.  They now reference
+        ../fix.Makefile instead.
 
 Sun Jan 17 13:50:16 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/002/handler.h:
-	* docs/tutorials/002/handler.h:
-	* docs/tutorials/002/page03.html:
-	* docs/tutorials/003/client.cpp:
-	* docs/tutorials/003/page01.html:
-	* docs/tutorials/004/page01.html:
-	* docs/tutorials/005/client_handler.h:
-	* docs/tutorials/005/page02.html:
-	* docs/tutorials/005/page04.html:
-	* docs/tutorials/005/page05.html:
-	* docs/tutorials/005/server.cpp:
+        * docs/tutorials/002/handler.h:
+        * docs/tutorials/002/handler.h:
+        * docs/tutorials/002/page03.html:
+        * docs/tutorials/003/client.cpp:
+        * docs/tutorials/003/page01.html:
+        * docs/tutorials/004/page01.html:
+        * docs/tutorials/005/client_handler.h:
+        * docs/tutorials/005/page02.html:
+        * docs/tutorials/005/page04.html:
+        * docs/tutorials/005/page05.html:
+        * docs/tutorials/005/server.cpp:
 
-	  More improvements from Doug's class (and Ossama).  Each "page2"
-	  includes an abstract by Kirthika.
+          More improvements from Doug's class (and Ossama).  Each "page2"
+          includes an abstract by Kirthika.
 
-	  Reviewers to date:
-	  Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
-	  Kirthika Parameswaran <kirthika@cs.wustl.edu>
-	  Balachandran Natarajan <bala@cs.wustl.edu>
-	  Pradeep Gore <pradeep@cs.wustl.edu>
-	  Ossama Othman <othman@cs.wustl.edu>
+          Reviewers to date:
+          Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+          Kirthika Parameswaran <kirthika@cs.wustl.edu>
+          Balachandran Natarajan <bala@cs.wustl.edu>
+          Pradeep Gore <pradeep@cs.wustl.edu>
+          Ossama Othman <othman@cs.wustl.edu>
 
 Sat Jan 16 19:08:12 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/High_Res_Timer.cpp: Added #ifdef so high-res timers work
- 	  correctly on KCC.  Thanks to Scott Snyder
- 	  <snyder@d0sgif.fnal.gov> for contributing this.
+        * ace/High_Res_Timer.cpp: Added #ifdef so high-res timers work
+          correctly on KCC.  Thanks to Scott Snyder
+          <snyder@d0sgif.fnal.gov> for contributing this.
 
-	* tests/test_config.h: Updated randomize() so that it uses a
- 	  "fixed" seed, so that it will produce "reusable" random numbers.
+        * tests/test_config.h: Updated randomize() so that it uses a
+          "fixed" seed, so that it will produce "reusable" random numbers.
 
-	* include/makeinclude/platform_linux_kcc.GNU (LD): Added the -lm
- 	  flag.  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for
- 	  contributing this.
+        * include/makeinclude/platform_linux_kcc.GNU (LD): Added the -lm
+          flag.  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for
+          contributing this.
 
-	* tests/run_tests.sh: Added an
- 	  LD_LIBRARY_PATH=../netsvcs/lib:$LD_LIBRARY_PATH so that we can
- 	  use a relative name for the svc.conf files used in the
-	  Time_Service_Test and Tokens_Test.
+        * tests/run_tests.sh: Added an
+          LD_LIBRARY_PATH=../netsvcs/lib:$LD_LIBRARY_PATH so that we can
+          use a relative name for the svc.conf files used in the
+          Time_Service_Test and Tokens_Test.
 
-	* ace/config-irix6.x-common.h: Added support for long double for
- 	  KCC.  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for
- 	  contributing this.
+        * ace/config-irix6.x-common.h: Added support for long double for
+          KCC.  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for
+          contributing this.
 
-	* ace/config-irix6.x-kcc.h: Added KCC support.  Thanks to Scott
- 	  Snyder <snyder@d0sgif.fnal.gov> for contributing this.
+        * ace/config-irix6.x-kcc.h: Added KCC support.  Thanks to Scott
+          Snyder <snyder@d0sgif.fnal.gov> for contributing this.
 
-	* ace/config-osf1-4.0.h: Added KCC support.  Thanks to Scott
- 	  Snyder <snyder@d0sgif.fnal.gov> for contributing this.
+        * ace/config-osf1-4.0.h: Added KCC support.  Thanks to Scott
+          Snyder <snyder@d0sgif.fnal.gov> for contributing this.
 
-	* ace/IOStream.h: Fixed up the PUT_CODE and GET_CODE macros so
- 	  that they work with KCC.  Thanks to Scott Snyder
- 	  <snyder@d0sgif.fnal.gov> for contributing this.
+        * ace/IOStream.h: Fixed up the PUT_CODE and GET_CODE macros so
+          that they work with KCC.  Thanks to Scott Snyder
+          <snyder@d0sgif.fnal.gov> for contributing this.
 
-	* ace/Env_Value_T.h (ACE_Convert): Added a new ACE_Convert
- 	  constructor for u_int so that TAO compiles correctly with KCC.
-  	  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for contributing
- 	  this.
+        * ace/Env_Value_T.h (ACE_Convert): Added a new ACE_Convert
+          constructor for u_int so that TAO compiles correctly with KCC.
+          Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for contributing
+          this.
 
-	* include/makeinclude/platform_osf1_4.0_kcc.GNU: Added a new
- 	  platform config file for KCC.  Thanks to Scott Snyder
- 	  <snyder@d0sgif.fnal.gov> for contributing this.
+        * include/makeinclude/platform_osf1_4.0_kcc.GNU: Added a new
+          platform config file for KCC.  Thanks to Scott Snyder
+          <snyder@d0sgif.fnal.gov> for contributing this.
 
 Sat Jan 16 18:13:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Commented out adding
-	  ACE_NDEBUG to CCFLAGS to avoid defining it twice.  Most (if not
-	  all) platforms include CFLAGS into CCFLAGS.  So, if "make
-	  debug=0" no longer work on your platform, then, you may need to
-	  add "CCFLAGS += $(CFLAGS)" into your platform_xxx.GNU.
+        * include/makeinclude/wrapper_macros.GNU: Commented out adding
+          ACE_NDEBUG to CCFLAGS to avoid defining it twice.  Most (if not
+          all) platforms include CFLAGS into CCFLAGS.  So, if "make
+          debug=0" no longer work on your platform, then, you may need to
+          add "CCFLAGS += $(CFLAGS)" into your platform_xxx.GNU.
 
 Sat Jan 16 13:40:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Proactor.cpp (schedule_timer): Had to add an
- 	  ACE_SYNCH_RECURSIVE_THREAD_MUTEX in place of
- 	  ACE_Recursive_Thread_Mutex to avoid problems when threads=0.
+        * ace/Proactor.cpp (schedule_timer): Had to add an
+          ACE_SYNCH_RECURSIVE_THREAD_MUTEX in place of
+          ACE_Recursive_Thread_Mutex to avoid problems when threads=0.
 
-	* ace/OS.cpp (lwp_getparams): For some reason we had to
-	  add
+     * ace/OS.cpp (lwp_getparams): For some reason we had to
+          add
 
-	  # if defined (ACE_HAS_STHREADS) || (defined (sun) && (ACE_MT_SAFE != 0))
+          # if defined (ACE_HAS_STHREADS) || (defined (sun) && (ACE_MT_SAFE != 0))
 
-	  instead of
+          instead of
 
-	  # if defined (ACE_HAS_STHREADS) || defined (sun)
+          # if defined (ACE_HAS_STHREADS) || defined (sun)
 
-	  to avoid problems when threads=0.
+          to avoid problems when threads=0.
 
-	* ace/Asynch_IO.cpp: Replaced some ACE_Thread_Mutex decls with
- 	  ACE_SYNCH_MUTEX to avoid problems with threads=0.
+        * ace/Asynch_IO.cpp: Replaced some ACE_Thread_Mutex decls with
+          ACE_SYNCH_MUTEX to avoid problems with threads=0.
 
-	* ace/config-sunos5.6.h: If defined(_POSIX_C_SOURCE) &&
- 	  _POSIX_C_SOURCE >= 199506L) || defined (__EXTENSIONS__) then
- 	  #define ACE_HAS_SIGWAIT to avoid compilation errors.  Thanks to
- 	  Russ Noseworthy for reporting this.
+        * ace/config-sunos5.6.h: If defined(_POSIX_C_SOURCE) &&
+          _POSIX_C_SOURCE >= 199506L) || defined (__EXTENSIONS__) then
+          #define ACE_HAS_SIGWAIT to avoid compilation errors.  Thanks to
+          Russ Noseworthy for reporting this.
 
-	* ace/OS.i: Fixed the ACE_OS::readdir_r() so that it doesn't fail
- 	  if threads are disabled via "make threads=0".  Thanks to Russ
- 	  Noseworthy for reporting this.
+        * ace/OS.i: Fixed the ACE_OS::readdir_r() so that it doesn't fail
+          if threads are disabled via "make threads=0".  Thanks to Russ
+          Noseworthy for reporting this.
 
-	* ace/FILE_Connector.h (ACE_FILE_Connector): Added the O_CREAT
- 	  flag to the list of flags passed to connect().  This ensures
- 	  that the file is created if it doesn't already exist.  Thanks to
- 	  Pradeep Gore <pradeep@cs.wustl.edu> for reporting this.
+        * ace/FILE_Connector.h (ACE_FILE_Connector): Added the O_CREAT
+          flag to the list of flags passed to connect().  This ensures
+          that the file is created if it doesn't already exist.  Thanks to
+          Pradeep Gore <pradeep@cs.wustl.edu> for reporting this.
 
 Fri Jan 15 21:28:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Log_Msg (ACE_Log_Msg_Callback): Added an interface class
- 	  used for getting logging callbacks.  Users who are interested in
- 	  getting the logging messages directly, can subclass this
- 	  interface and override the log() method. They must then register
- 	  their subclass with the Log_Msg class and make sure that they
- 	  turn on the ACE_Log_Msg::MSG_CALLBACK flag.
+        * ace/Log_Msg (ACE_Log_Msg_Callback): Added an interface class
+          used for getting logging callbacks.  Users who are interested in
+          getting the logging messages directly, can subclass this
+          interface and override the log() method. They must then register
+          their subclass with the Log_Msg class and make sure that they
+          turn on the ACE_Log_Msg::MSG_CALLBACK flag.
 
           Your log() routine is called with an instance of
           ACE_Log_Record.  From this class, you can get the log
@@ -191,56 +197,56 @@ Fri Jan 15 21:28:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           the log() method) or have a separate callback object per
           Log_Msg object.
 
-	  Thanks to Chris Lahey <clahey@ix.netcom.com> for suggesting this
- 	  and send patches.
+          Thanks to Chris Lahey <clahey@ix.netcom.com> for suggesting this
+          and send patches.
 
-	* examples/Log_Msg/test_callback.cpp: Added new example for
- 	  Log_Msg. This program tests the Log_Msg abstraction wrt writing
- 	  to user defined callback objects.
+        * examples/Log_Msg/test_callback.cpp: Added new example for
+          Log_Msg. This program tests the Log_Msg abstraction wrt writing
+          to user defined callback objects.
 
 Fri Jan 15 21:10:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h: Made sure ACE_CORBA_HAS_EXCEPTIONS always
-	  gets set properly.  Added ACE_ADPOT_CORBA_ENV to reuse a
-	  existing CORBA::Environment variable.
+        * ace/CORBA_macros.h: Made sure ACE_CORBA_HAS_EXCEPTIONS always
+          gets set properly.  Added ACE_ADPOT_CORBA_ENV to reuse a
+          existing CORBA::Environment variable.
 
 Fri Jan 15 17:05:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Log_Record: Factored out the redundant formatting code.  The
- 	  new scheme also allows the end user to get to verbose formatted
- 	  string.  Thanks to Nanbor for helping out with this.
+        * ace/Log_Record: Factored out the redundant formatting code.  The
+          new scheme also allows the end user to get to verbose formatted
+          string.  Thanks to Nanbor for helping out with this.
 
 Fri Jan 15 17:15:18 EST 1999   James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/templates.html
-	  docs/tutorials/001/acceptor.h
-	  docs/tutorials/001/logger.h
-	  docs/tutorials/001/page01.html
-	  docs/tutorials/001/page02.html
-	  docs/tutorials/001/page03.html
-	  docs/tutorials/001/page04.html
-	  docs/tutorials/001/page05.html
-	  docs/tutorials/001/server.cpp
-	  docs/tutorials/003/page01.html
+          docs/tutorials/001/acceptor.h
+          docs/tutorials/001/logger.h
+          docs/tutorials/001/page01.html
+          docs/tutorials/001/page02.html
+          docs/tutorials/001/page03.html
+          docs/tutorials/001/page04.html
+          docs/tutorials/001/page05.html
+          docs/tutorials/001/server.cpp
+          docs/tutorials/003/page01.html
 
-	  Many changes from Ossama plus a new abstract (for T3) from
- 	  Kirthika.
+          Many changes from Ossama plus a new abstract (for T3) from
+          Kirthika.
 
 Fri Jan 15 14:40:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_IO,
-	  ace/SOCK_Dgram: Modified the recv(iovec *) and recvv(iovec *)
-	  methods so that they use select() to avoid spinning if no data
- 	  is available.  Thanks to Mike Goldman <whig@by.net> for this
- 	  fix.
+        * ace/SOCK_IO,
+          ace/SOCK_Dgram: Modified the recv(iovec *) and recvv(iovec *)
+          methods so that they use select() to avoid spinning if no data
+          is available.  Thanks to Mike Goldman <whig@by.net> for this
+          fix.
 
 Fri Jan 15 10:47:26 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Repository.cpp: If a service being removed from the
- 	  Service_Repository used the Service_Repository while being
- 	  removed it could access objects that had already been deleted.
-  	  Fix this by decrementing the current_size_ member in
- 	  "real-time".  Thanks to Eric Newton for reporting this.
+        * ace/Service_Repository.cpp: If a service being removed from the
+          Service_Repository used the Service_Repository while being
+          removed it could access objects that had already been deleted.
+          Fix this by decrementing the current_size_ member in
+          "real-time".  Thanks to Eric Newton for reporting this.
 
 Fri Jan 15 08:08:31 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -248,12 +254,12 @@ Fri Jan 15 08:08:31 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jan 15 07:20:46 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/OS.i: Fixed variable names in isatty () on NT
+        * ace/OS.i: Fixed variable names in isatty () on NT
 
 Fri Jan 15 03:45:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/exceptions.html: Rewrote the exception handling guildlines
-	  based on ACE's try macros.
+        * docs/exceptions.html: Rewrote the exception handling guildlines
+          based on ACE's try macros.
 
 Fri Jan 15 01:32:55 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -261,61 +267,61 @@ Fri Jan 15 01:32:55 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jan 15 00:03:32 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Log_Msg/test_ostream.cpp: Added new example for
- 	  Log_Msg. This program tests the Log_Msg abstraction wrt writing
- 	  to stderr and to a file.
+        * examples/Log_Msg/test_ostream.cpp: Added new example for
+          Log_Msg. This program tests the Log_Msg abstraction wrt writing
+          to stderr and to a file.
 
 Thu Jan 14 21:50:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h: Added a new set of try macros which help
-	  application developers write portable code that handles
-	  CORBA::Exception portably.  The macros will work with any ORB.
+        * ace/CORBA_macros.h: Added a new set of try macros which help
+          application developers write portable code that handles
+          CORBA::Exception portably.  The macros will work with any ORB.
 
-	  The total number of macros has reduces significantly and they
-	  should be much easier to use because the rules all follow the
-	  same style.
+          The total number of macros has reduces significantly and they
+          should be much easier to use because the rules all follow the
+          same style.
 
-	  The new try macros should be prefered over the original try
-	  macro in $TAO_ROOT/TAO/try_macros.h because those macros will
-	  soon be *DEPRICATED* once we finished convert TAO to use the new
-	  macros.
+          The new try macros should be prefered over the original try
+          macro in $TAO_ROOT/TAO/try_macros.h because those macros will
+          soon be *DEPRICATED* once we finished convert TAO to use the new
+          macros.
 
-	  Please see ACE_wrappers/docs/exceptions.html for guidelines and
-	  rules of using ACE's try macros.
+          Please see ACE_wrappers/docs/exceptions.html for guidelines and
+          rules of using ACE's try macros.
 
 Thu Jan 14 20:41:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS: Moved some code around to consolidate the getuid() and
- 	  isatty() functions.
+        * ace/OS: Moved some code around to consolidate the getuid() and
+          isatty() functions.
 
-	* ace/OS: Added support for the setuid() call.  Thanks to Susan
- 	  Liebeskind <susan.liebeskind@gtri.gatech.edu> for suggesting
- 	  this.
+        * ace/OS: Added support for the setuid() call.  Thanks to Susan
+          Liebeskind <susan.liebeskind@gtri.gatech.edu> for suggesting
+          this.
 
 Thu Jan 14 16:18:37 EST 1999  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/001/page02.html:
-	  docs/tutorials/001/page03.html:
+          docs/tutorials/001/page03.html:
 
-	  Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu>
- 	  abstract and analogy.  Thanks Kirthika!
+          Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu>
+          abstract and analogy.  Thanks Kirthika!
 
-	* docs/tutorials/001/Source.tgz:
-	  docs/tutorials/001/acceptor.h:
-	  docs/tutorials/001/logger.h:
-	  docs/tutorials/001/server.cpp:
-	  docs/tutorials/001/page[345].html:
+        * docs/tutorials/001/Source.tgz:
+          docs/tutorials/001/acceptor.h:
+          docs/tutorials/001/logger.h:
+          docs/tutorials/001/server.cpp:
+          docs/tutorials/001/page[345].html:
         * docs/tutorials/002/page0[23].html:
-	  docs/tutorials/002/handler.h:
+          docs/tutorials/002/handler.h:
 
-	  Added improvements from Kirthika, Pradeep and Yamuna
+          Added improvements from Kirthika, Pradeep and Yamuna
 
 Thu Jan 14 11:46:25 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Synch_T.h: Pointed out that we can only parameterize
-	  ACE_Condition<> with ACE_Thread_Mutex and ACE_Null_Mutex.
-	  Thanks to Knut-Havard Aksnes <knut@orion.no> for reporting
-	  this.
+        * ace/Synch_T.h: Pointed out that we can only parameterize
+          ACE_Condition<> with ACE_Thread_Mutex and ACE_Null_Mutex.
+          Thanks to Knut-Havard Aksnes <knut@orion.no> for reporting
+          this.
 
 Thu Jan 14 02:33:37 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -323,16 +329,16 @@ Thu Jan 14 02:33:37 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jan 14 00:07:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* docs/tutorials/014/stream.cpp: Added #include "ace/streams.h".
+        * docs/tutorials/014/stream.cpp: Added #include "ace/streams.h".
 
 Wed Jan 13 23:18:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
         * config-g++-common.h:
         * config-osf1-4.0.h:
         * config-psos-diab.h:
         * config-psos-tm.h: Revert my previous change.  Removed the
-	  ChangeLog entry about the change.
+          ChangeLog entry about the change.
 
 Wed Jan 13 22:30:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -641,12 +647,12 @@ Tue Jan 05 22:55:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Jan  5 18:48:47  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/templates.html: Fixed a number of problems here.
-  	  Thanks to Amos Shapira <Amos_Shapira@icomverse.com> for pointing
- 	  them out.
+          Thanks to Amos Shapira <Amos_Shapira@icomverse.com> for pointing
+          them out.
 
         * docs/tutorials/colorize: I pulled out the colorization code from
- 	  combine into this standalone script.  One of these days I'll fix
- 	  combine so that the code isn't duplicated...
+          combine into this standalone script.  One of these days I'll fix
+          combine so that the code isn't duplicated...
 
 Tue Jan  5 16:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
