@@ -266,7 +266,6 @@ TAO_UnionDef_i::members (const IR::UnionMemberSeq &members,
   TAO_Container_i::destroy (ACE_TRY_ENV);
   ACE_CHECK;
 
-  int index = 0;
   ACE_TString section_name;
   ACE_Configuration_Section_Key refs_key;
 
