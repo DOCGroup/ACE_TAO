@@ -1,3 +1,12 @@
+Mon Jun 26 11:03:00 2000 John Heitmann <jwh1@cs.wustl.edu>
+
+        * pace/pace/posix/pwd.inl
+        * pace/pace/posix/string.inl
+        * pace/pace/posix/grp.inl
+        * pace/pace/posix/dirent.inl
+
+          Added PACE_UNUSED_ARG where needed.
+
 Sat Jun 24 7:10 2000 <jwh1@cs.wustl.edu>
 
         * pace/pace/posix/unistd.inl
