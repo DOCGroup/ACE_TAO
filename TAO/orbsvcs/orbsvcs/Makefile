@@ -161,7 +161,7 @@ ifneq (,$(findstring  Trader, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosTrading
 endif
 ifneq (,$(findstring  Notify, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.CosNotification
+  MKLIST += Makefile.ETCL Makefile.CosNotification
 endif
 ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
   MKLIST += Makefile.DsLogAdmin
