@@ -166,7 +166,7 @@ ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry (void)
 // We need these template specializations since KEY is defined as a
 // char*, which doesn't have a hash() or equal() method defined on it.
 
-template <> long unsigned int
+/* template<> */ long unsigned int
 ACE_Filecache_Hash::hash (const char *const &ext_id)
 {
   return ACE::hash_pjw (ext_id);
