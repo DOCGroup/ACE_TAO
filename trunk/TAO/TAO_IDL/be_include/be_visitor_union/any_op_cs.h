@@ -51,6 +51,8 @@ public:
                              be_union *node) = 0;
   virtual int gen_extraction (TAO_OutStream* os,
                               be_union *node) = 0;
+  virtual int gen_const_extraction (TAO_OutStream *os,
+                                    be_union *node) = 0;
 
   // = The be_visitor methods.
   virtual int visit_union (be_union *node);
@@ -73,12 +75,14 @@ public:
   // constructor
 
   // = See be_visitor_union_any_op_cs
-  virtual int gen_insertion (TAO_OutStream* os,
+  virtual int gen_insertion (TAO_OutStream *os,
                              be_union *node);
-  virtual int gen_insertion_nocopy (TAO_OutStream* os,
+  virtual int gen_insertion_nocopy (TAO_OutStream *os,
                                     be_union *node);
-  virtual int gen_extraction (TAO_OutStream* os,
+  virtual int gen_extraction (TAO_OutStream *os,
                               be_union *node);
+  virtual int gen_const_extraction (TAO_OutStream *os,
+                            be_union *node);
 };
 
 class be_visitor_union_any_op_interpretive_cs : public be_visitor_union_any_op_cs
@@ -103,6 +107,8 @@ public:
                                     be_union *node);
   virtual int gen_extraction (TAO_OutStream* os,
                               be_union *node);
+  virtual int gen_const_extraction (TAO_OutStream *os,
+                            be_union *node);
 };
 
 #endif /* _BE_VISITOR_UNION_ANY_OP_CS_H_ */
