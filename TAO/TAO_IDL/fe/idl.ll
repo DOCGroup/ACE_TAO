@@ -573,14 +573,29 @@ idl_store_pragma (char *buf)
               delete [] trash;
             }
 
+          UTL_Scope *top_scope = idl_global->scopes ().top ();
+
           if (depth > 1)
             {
-              UTL_Scope *top_scope = idl_global->scopes ().top ();
-              top_scope->has_prefix (1);
+              top_scope->has_prefix (I_TRUE);
               ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
           idl_global->pragma_prefixes ().push (new_prefix);
+
+          if (idl_global->in_main_file ())
+            {
+              idl_global->root ()->prefix (new_prefix);
+              idl_global->root ()->set_imported (I_FALSE);
+              top_scope->has_prefix (I_TRUE);
+            }
+
+          ACE_CString ext_id;
+          ext_id.set (idl_global->filename ()->get_string (),
+                      0);
+          char *int_id = ACE::strnew (new_prefix);
+          (void) idl_global->file_prefixes ().rebind (ext_id, 
+                                                      int_id);
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
