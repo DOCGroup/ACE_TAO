@@ -37,12 +37,13 @@ use File::Basename;
 use FileHandle;
 use File::stat;
 
-$usage = "usage: $0 -? | [-d <directory mode>] [-v] [-nompc] <build name>\n";
+$usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] [-nompc] <build name>\n";
 $directory_mode = 0777;   #### Will be modified by umask, also.
 $verbose = 0;
 $mpc = 1;   #### When using mpc, we don't want links created for mpc-generated files.
 $update_all = 1;
 $source='.';
+$absolute = 0;
 
 ####
 #### Check that we're in an ACE "top level" directory.
@@ -155,6 +156,9 @@ while ($#ARGV >= 0  &&  $ARGV[0] =~ /^-/) {
       warn "$0:  must provide argument for -d option\n";
       die $usage;
     }
+  } elsif ($ARGV[0] eq '-a' && ! ($^O eq 'MSWin32')) {
+    $source = &cwd ();
+    $absolute = 1;
   } elsif ($ARGV[0] =~ /-[?hH]$/) {
     die "$usage";
   } elsif ($ARGV[0] eq '-nompc') {
@@ -305,11 +309,17 @@ foreach $file (@files) {
       }
     } else {
       unless (($^O ne 'MSWin32') && (-e "$build/$file")) {
-        $up = '../..';
-        while ($file =~ m%/%g) {
-          $up .= '/..';
+        if (!$absolute) { 
+          $up = '../..';
+          while ($file =~ m%/%g) {
+            $up .= '/..';
+          }
+          cab_link("$up/$file", "$build/$file", $build_re[$idx]);
+        } else {
+          $path = $source . '/' . $file;
+          cab_link("$path", "$build/$file", $build_re[$idx]);
         }
-        cab_link("$up/$file", "$build/$file", $build_re[$idx]);
+
       }
     }
   }
