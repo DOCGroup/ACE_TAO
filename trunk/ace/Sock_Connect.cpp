@@ -15,6 +15,10 @@ extern "C" {
 }
 #endif /* VXWORKS */
 
+#if defined (ACE_HAS_WINCE)
+#include <Iphlpapi.h>
+#endif  // ACE_HAS_WINCE
+
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_HAS_THREADS)
 #    include "ace/Synch.h"
@@ -178,7 +182,8 @@ enum ACE_WINDOWS_VERSION {
   ACE_WINDOWS_IS_WIN98,
   ACE_WINDOWS_IS_WINME,
   ACE_WINDOWS_IS_WINNT,
-  ACE_WINDOWS_IS_WIN2K
+  ACE_WINDOWS_IS_WIN2K,
+  ACE_WINDOWS_IS_WINCE
 };
 
 static ACE_WINDOWS_VERSION
@@ -207,6 +212,13 @@ get_windows_version()
             return ACE_WINDOWS_IS_WIN98;
           else if (vinfo.dwMinorVersion == 90)
             return ACE_WINDOWS_IS_WINME;
+        }
+    case VER_PLATFORM_WIN32_CE:
+        if (vinfo.dwMajorVersion >= 3) {
+            return ACE_WINDOWS_IS_WINCE;
+        }
+        else {
+            return ACE_WINDOWS_IS_UNKNOWN;
         }
       // If no match we fall throu.
     default:
@@ -615,6 +627,107 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
   return 0;
 
 #  else /* ACE_HAS_PHARLAP */
+
+#   if defined (ACE_HAS_WINCE)
+
+  // CE does not support Winsock2 (yet) and has many variations on registry setting.
+  // Thus, it is better to use GetAdapterInfo defined in iphlpapi.h, which is a
+  // standard library for CE.  iphlpapi.lib should come with the CE SDK and should
+  // be included in the machine.
+  // Note: This call is supported only in WinCE 3.0 or later.  Also, even though
+  //       "iphlpapi.dll" may not be found in the /Windows directory on some machines,
+  //       it will (must) support iphlpapi API's because it is part of the standard
+  //       library for WinCE.
+
+    IP_ADAPTER_INFO* adapterInfo = 0;
+    ULONG sz = 0;
+    DWORD result = ::GetAdaptersInfo(adapterInfo, &sz);
+
+    while (result != ERROR_SUCCESS)
+    {
+        switch (result)
+        {
+        case ERROR_BUFFER_OVERFLOW:  // MUST come here at the first run because sz = 0
+            adapterInfo = (PIP_ADAPTER_INFO)(new char[sz]);  // I know, I know, this is ugly.
+
+            result = ::GetAdaptersInfo(adapterInfo, &sz);
+            if (result == ERROR_SUCCESS) {
+                const char* invalid_IP = "0.0.0.0";
+
+                // find out how many interfaces are there
+                {
+                    IP_ADAPTER_INFO* tempAdapterInfo = adapterInfo;
+                    int n_interfaces = 0;
+                    while (tempAdapterInfo != 0) {
+                        IP_ADDR_STRING* addr = &tempAdapterInfo->IpAddressList;
+                        while (addr != 0) {
+                            if (ACE_OS::strcmp(addr->IpAddress.String, invalid_IP) != 0) {
+                                // skip invalid IP address
+                                ++n_interfaces;
+                            }
+                            addr = addr->Next;
+                        }
+                        tempAdapterInfo = tempAdapterInfo->Next;
+                    }
+                    if (n_interfaces == 0) {
+                        ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                            ACE_LIB_TEXT ("No adapter found.")),
+                            -1);
+                    }
+
+                    ACE_NEW_RETURN (addrs, ACE_INET_Addr[n_interfaces], -2);
+                }
+
+                // find out valid IP addresses and put them into the addr
+                while (adapterInfo != 0) {
+                    IP_ADDR_STRING* addr = &adapterInfo->IpAddressList;
+                    while (addr != 0) {
+                        if (ACE_OS::strcmp(addr->IpAddress.String, invalid_IP) != 0) {
+                            addrs[count++] = ACE_INET_Addr((u_short) 0, addr->IpAddress.String);
+                        }
+                        addr = addr->Next;
+                    }
+                    adapterInfo = adapterInfo->Next;
+                }
+            }
+            // if second GetAdaptersInfo call fails, let other cases take care of it
+            break;
+
+        case ERROR_NOT_SUPPORTED: // OS does not support this method
+            ACE_ERROR_RETURN ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("This version of WinCE does not support GetAdapterInfo.")),
+                -1);
+            break;
+
+        case ERROR_NO_DATA:  // no adapter installed
+            ACE_ERROR_RETURN ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("No network adapter installed.")),
+                -1);
+            break;
+
+        case ERROR_INVALID_PARAMETER:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("Invalid parameter.")),
+                -1);
+            break;
+
+        default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\nACE_Sock_Connect::get_ip_interfaces - ")
+                ACE_LIB_TEXT ("Adapter info access permission denied.")),
+                -1);
+            break;
+        }
+    }
+
+    delete [] adapterInfo;
+    return 0;
+
+#   endif  // ACE_HAS_WINCE
 
   //
   // No Winsock2.
