@@ -1,3 +1,12 @@
+Wed May 23 15:55:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/squareit/README
+	* examples/Simple/fullname/README:
+	* examples/Simple/invert_string/README:
+	* examples/Simple/palindrome/README: A simple set of examples that
+	  will be implemented by our summer interns. The README files
+	  specify what they are expected to do.
+
 Wed May 23 15:09:21 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * tao/iiop_endpoints.pidl:
