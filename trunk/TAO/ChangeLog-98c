@@ -1,3 +1,9 @@
+Fri Feb 27 19:55:09 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp (main): Added this
+	file which spawns the server and client and terminates them after
+	some time.
+
 Fri Feb 27 17:57:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/NestedUpcall/server.cpp: Started integrating the
