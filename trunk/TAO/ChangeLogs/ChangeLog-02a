@@ -1,3 +1,20 @@
+Wed Apr 18 17:06:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          Checking in changes of 
+
+          Wed Apr 18 15:24:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+          once again.
+
+        * TAO_IDL/ast/ast_exception.cpp (in_recursion):
+        * TAO_IDL/ast/ast_union.cpp (in_recursion):
+
+          Removed some bogus error messages. The corresponding one
+          for ast_structure.cpp has already been removed.
+
 Wed Apr 18 16:28:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
