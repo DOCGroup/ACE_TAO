@@ -67,7 +67,7 @@ TAO_Metrics_UpcallMonitorAdapter (
   // reference which is fine everywhere but here.
   if (cache_register)
     {
-	  if (cache.metrics_enabled())
+          if (cache.metrics_enabled())
          cache.register_upcall_adapter (this->handle_,
                                         entry_point,
                                         this->is_critical_);
@@ -157,10 +157,10 @@ push (const RtecEventComm::EventSet & data,
 
 #if 0
       if ( this->handle_ != TAO_Metrics_Utils::timeoutEvent ())
-	{
+        {
 #else /* 1 */
       if (1)
-	{
+        {
 #endif /* 0 */
         if (cache_.metrics_enabled())
         {
@@ -185,7 +185,7 @@ push (const RtecEventComm::EventSet & data,
 
 # endif /* METRICS_MONITOR_ERROR_OUTPUT_ENABLED */
         }
-	}
+        }
 # if defined (METRICS_USES_OP_CANCELLATION)
     }
   else
