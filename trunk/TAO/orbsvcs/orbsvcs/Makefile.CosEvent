@@ -82,7 +82,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/Event
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF
 
 .PRECIOUS: $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
