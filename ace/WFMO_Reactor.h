@@ -643,6 +643,9 @@ public:
   virtual int resume_handlers (void);
   // Resume all <handles>. 
 
+  virtual int reset_new_handle (void);
+  // If we need to reset handles returned from accept/connect.
+
   // Timer management.
 
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
