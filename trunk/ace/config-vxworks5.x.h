@@ -23,6 +23,9 @@
 # include "ace/config-g++-common.h"
 # undef ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// We have to explicitly instantiate static template members
+# define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
+
 # define ACE_LACKS_IOSTREAM_FX
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN ace_main
