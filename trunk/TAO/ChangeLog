@@ -1,6 +1,12 @@
-﻿Fri Dec 12 09:46:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Dec 12 08:37:04 2003  Chad Elliott  <elliott_c@ociweb.com>
 
-	* tests/RTScheduling/VoidData/VoidData.dsp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
+
+          Added #include of portablegroup_export.h.
+
+Fri Dec 12 09:46:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTScheduling/VoidData/VoidData.dsp:
           Added missing libpaths
 
 Fri Dec 12 09:32:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -10,49 +16,49 @@ Fri Dec 12 09:32:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec 11 23:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/OBV/Typed_Events/Typed_Events.mpc
-	* examples/POA/DSI/POA_DSI.mpc:
-	* examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
-	* examples/POA/On_Demand_Loading/POA_On_Demand_Loading.mpc:
-	* examples/POA/TIE/POA_TIE.mpc:
-	* tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
-	* tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
-	* tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
-	* orbsvcs/examples/ORT/ORT.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc
+        * examples/POA/DSI/POA_DSI.mpc:
+        * examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+        * examples/POA/On_Demand_Loading/POA_On_Demand_Loading.mpc:
+        * examples/POA/TIE/POA_TIE.mpc:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
+        * orbsvcs/examples/ORT/ORT.mpc:
 
-	  Do not compile the above tests when minimum_corba is disabled.
+          Do not compile the above tests when minimum_corba is disabled.
 
 Thu Dec 11 22:22:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/RTScheduling/VoidData/Makefile:
+        * tests/RTScheduling/VoidData/Makefile:
 
-	  Added IDL compiler options.
+          Added IDL compiler options.
 
-	* tests/RTScheduling/VoidData/test.idl:
+        * tests/RTScheduling/VoidData/test.idl:
 
-	  Cosmetic fix.
+          Cosmetic fix.
 
-	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
-	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
-	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
 
-	  Added RTScheduler_include.idl instead of the regular file.
+          Added RTScheduler_include.idl instead of the regular file.
 
 Thu Dec 11 17:04:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.cpp:
-	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
-	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
 
-	  Used the $TAO_ROOT/tao/Utils Servant_Var instead of the one in
-	  the local directory.
+          Used the $TAO_ROOT/tao/Utils Servant_Var instead of the one in
+          the local directory.
 
-	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Thu Dec 11 15:38:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -85,29 +91,29 @@ Thu Dec 11 14:03:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Dec 11 14:01:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
-	* examples/POA/DSI/POA_DSI.mpc:
-	* orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
-	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Filter.mpc:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.mpc:
-	* tao/DynamicInterface/DynamicInterface.mpc:
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * examples/POA/DSI/POA_DSI.mpc:
+        * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
+        * orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Filter.mpc:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
 
-	  Added avoids += minimum_corba.
+          Added avoids += minimum_corba.
 
 Thu Dec 11 19:30:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/RTScheduling/Makefile.bor:
-	  Don't install idl files
+        * tao/RTScheduling/Makefile.bor:
+          Don't install idl files
 
 Thu Dec 11 13:50:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
-	  (handle_input):
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+          (handle_input):
 
-	  Corrected the class name on handle_input definition.  That'll
-	  teach me to blindly use merge tools.
+          Corrected the class name on handle_input definition.  That'll
+          teach me to blindly use merge tools.
 
 Thu Dec 11 18:13:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -142,45 +148,45 @@ Thu Dec 11 18:13:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec 11 10:45:53 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
-	  (handle_input):
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+          (handle_input):
 
-	  Updated this to reflect the new APIs from the PMB changes.
-	  Thanks to Ossama Othman <ossama@dre.vanderbilt.edu> for pointing
-	  out my oversight.
+          Updated this to reflect the new APIs from the PMB changes.
+          Thanks to Ossama Othman <ossama@dre.vanderbilt.edu> for pointing
+          out my oversight.
 
 Thu Dec 11 07:49:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Wed Dec 10 09:23:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
-	* examples/POA/DSI/POA_DSI.mpc:
-	* examples/POA/Default_Servant/POA_Default_Servant.mpc:
-	* examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
-	* examples/POA/FindPOA/POA_FindPOA.mpc:
-	* examples/POA/Forwarding/POA_Forwarding.mpc:
-	* examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
-	* examples/POA/Loader/POA_Loader.mpc:
-	* examples/POA/NewPOA/POA_NewPOA.mpc:
-	* examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
-	* examples/POA/POA_BiDir/POA_BiDir.mpc:
-	* examples/POA/TIE/POA_TIE.mpc:
-	* orbsvcs/tests/Bug_1630_Regression/test.mpc:
-	* tests/AMI_Buffering/client.cpp:
-	* tests/Bug_1639_Regression/Makefile
-	* tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
-	* tests/POA/Identity/Identity.mpc
-	* tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
-	* tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Protocol_Priority.mpc:
-	* tests/RTCORBA/Policies/Policies.mpc:
-	* tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
-	* tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
-	* tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
-	* tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+        * examples/POA/DSI/POA_DSI.mpc:
+        * examples/POA/Default_Servant/POA_Default_Servant.mpc:
+        * examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+        * examples/POA/FindPOA/POA_FindPOA.mpc:
+        * examples/POA/Forwarding/POA_Forwarding.mpc:
+        * examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+        * examples/POA/Loader/POA_Loader.mpc:
+        * examples/POA/NewPOA/POA_NewPOA.mpc:
+        * examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+        * examples/POA/POA_BiDir/POA_BiDir.mpc:
+        * examples/POA/TIE/POA_TIE.mpc:
+        * orbsvcs/tests/Bug_1630_Regression/test.mpc:
+        * tests/AMI_Buffering/client.cpp:
+        * tests/Bug_1639_Regression/Makefile
+        * tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
+        * tests/POA/Identity/Identity.mpc
+        * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Protocol_Priority.mpc:
+        * tests/RTCORBA/Policies/Policies.mpc:
+        * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
 
 Wed Dec 10 16:58:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -190,74 +196,74 @@ Wed Dec 10 16:58:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Dec 10 16:39:25 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Synch_Invocation.cpp (handle_system_exception):
+        * tao/Synch_Invocation.cpp (handle_system_exception):
 
-	  Corrected repository IDs for non-fatal system exceptions being
-	  detected (TRANSIENT, OBJ_ADAPTER, NO_RESPONSE).  The
-	  "IDL:omg.org/CORBA/" prefix and ":1.0" suffix were missing, thus
-	  preventing code that should have been run in the presence of
-	  these exceptions from being run.
+          Corrected repository IDs for non-fatal system exceptions being
+          detected (TRANSIENT, OBJ_ADAPTER, NO_RESPONSE).  The
+          "IDL:omg.org/CORBA/" prefix and ":1.0" suffix were missing, thus
+          preventing code that should have been run in the presence of
+          these exceptions from being run.
 
-	  Attempt to try another profile in the non-fatal exception case.
-	  This fixes a problem where valid profiles were not retried when
-	  they should have been.
+          Attempt to try another profile in the non-fatal exception case.
+          This fixes a problem where valid profiles were not retried when
+          they should have been.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h
-	  (LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h
+          (LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF):
 
-	  New constant used in thundering herd fix described below.
+          New constant used in thundering herd fix described below.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
 
-	  Fixed problem where least loaded object group member was not
-	  always selected, thus reducing scalability.
+          Fixed problem where least loaded object group member was not
+          always selected, thus reducing scalability.
 
-	  If two locations have loads that differ by a "small" amount
-	  (i.e. LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF), choose one of them
-	  at random.  This helps alleviate a thundering herd phenomenon
-	  that could occur when an object group member becomes available
-	  for request handling.  Thanks to Carlos, Marina and Jody at ATD
-	  for coming up with this solution to this form of the thundering
-	  herd problem.
+          If two locations have loads that differ by a "small" amount
+          (i.e. LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF), choose one of them
+          at random.  This helps alleviate a thundering herd phenomenon
+          that could occur when an object group member becomes available
+          for request handling.  Thanks to Carlos, Marina and Jody at ATD
+          for coming up with this solution to this form of the thundering
+          herd problem.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
-	  (receive_request_service_contexts):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
+          (receive_request_service_contexts):
 
-	  Always allow LoadMonitor and LoadAlert operations to proceed
-	  regardless of the alert condition.  Addresses a problem where it
-	  was not possible to disable alert states and query loads from a
-	  LoadMonitor collocated with a server once a load alert was
-	  enabled.
+          Always allow LoadMonitor and LoadAlert operations to proceed
+          regardless of the alert condition.  Addresses a problem where it
+          was not possible to disable alert states and query loads from a
+          LoadMonitor collocated with a server once a load alert was
+          enabled.
 
-	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.h:
+        * orbsvcs/performance-tests/LoadBalancing/ORBInitializer.h:
 
-	  Improved documentation of some class members.
+          Improved documentation of some class members.
 
-	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/ORBInitializer.cpp:
 
-	  Cosmetic change.
+          Cosmetic change.
 
-	* orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp (loads):
+        * orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp (loads):
 
-	  If the elapsed-time is zero, set the load to zero to prevent a
-	  division-by-zero error.
+          If the elapsed-time is zero, set the load to zero to prevent a
+          division-by-zero error.
 
-	* orbsvcs/performance-tests/LoadBalancing/Roundtrip.cpp
-	  (test_method):
+        * orbsvcs/performance-tests/LoadBalancing/Roundtrip.cpp
+          (test_method):
 
-	  Commented out a bunch of code that should not be used when
-	  performing benchmarks.
+          Commented out a bunch of code that should not be used when
+          performing benchmarks.
 
 Wed Dec 10 13:58:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/default_client.cpp (parse_args): Corrected erroneous option
-	  name printed when -ORBConnectStrategy option parsing hits an
-	  error.
+        * tao/default_client.cpp (parse_args): Corrected erroneous option
+          name printed when -ORBConnectStrategy option parsing hits an
+          error.
 
-	* tao/IIOP_Transport.cpp (recv): Corrected method name printed in
-	  debug message.
+        * tao/IIOP_Transport.cpp (recv): Corrected method name printed in
+          debug message.
 
-	* tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.cpp:
         * tao/GIOP_Message_Base.h:
         * tao/GIOP_Message_Base.i:
         * tao/GIOP_Message_Generator_Parser_Impl.inl:
@@ -273,254 +279,254 @@ Wed Dec 10 13:58:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
         * tao/Transport.cpp:
         * tao/Transport.h:
         * tao/orbconf.h:
-	* tao/Strategies/DIOP_Transport.cpp
-	* tao/Strategies/SHMIOP_Transport.cpp
-	* tao/Strategies/SHMIOP_Transport.h
+        * tao/Strategies/DIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Transport.h
 
-	  Integrated aggregate fix to infamous Parse Magic Bytes (PMB)
- 	  problem.  The fix was originally developed in OCI's repository
- 	  and migrated here.  An overall description of the problem and
- 	  solution follow, and a detailed changelog that follows the
- 	  development of this solution follows this entry.
+          Integrated aggregate fix to infamous Parse Magic Bytes (PMB)
+          problem.  The fix was originally developed in OCI's repository
+          and migrated here.  An overall description of the problem and
+          solution follow, and a detailed changelog that follows the
+          development of this solution follows this entry.
 
-	  The old way of handling input naively assumed that a header would
-	  never be broken across multiple read()s from the socket.  Back in
-	  the old days, this assumption was okay, because TAO performed a
-	  recv_n() specifically for the header, and thus insured that it
-	  wouldn't get less than a full header.  However, when it was
-	  changed to use a single read, that no longer worked.
+          The old way of handling input naively assumed that a header would
+          never be broken across multiple read()s from the socket.  Back in
+          the old days, this assumption was okay, because TAO performed a
+          recv_n() specifically for the header, and thus insured that it
+          wouldn't get less than a full header.  However, when it was
+          changed to use a single read, that no longer worked.
 
-	  Further complicating matters was the incoming message queue, and
-	  the myriad of methods that manipulated elements on the message
-	  queue.
+          Further complicating matters was the incoming message queue, and
+          the myriad of methods that manipulated elements on the message
+          queue.
 
-	  The PMB changes rework things in the following ways:
+          The PMB changes rework things in the following ways:
 
-	  1. The incoming message queue now holds only completely-read
-	  GIOP messages awaiting processing.  Each GIOP message is held in
-	  a heap-allocated ACE_Message_Block.  When the message has been
-	  processed, the processing code is responsible for calling
-	  release on the queued message to return the memory to the heap.
+          1. The incoming message queue now holds only completely-read
+          GIOP messages awaiting processing.  Each GIOP message is held in
+          a heap-allocated ACE_Message_Block.  When the message has been
+          processed, the processing code is responsible for calling
+          release on the queued message to return the memory to the heap.
 
-	  2. Since GIOP, by definition, assumes an ordered byte stream,
-	  there can be only one partially read, i.e., uncompleted, message;
-	  this is now held explicitly in TAO_Transport::uncompleted_message_
-	  as a pointer to a heap-allocated ACE_Message_Block of the exact
-	  correct size for the GIOP message.
+          2. Since GIOP, by definition, assumes an ordered byte stream,
+          there can be only one partially read, i.e., uncompleted, message;
+          this is now held explicitly in TAO_Transport::uncompleted_message_
+          as a pointer to a heap-allocated ACE_Message_Block of the exact
+          correct size for the GIOP message.
 
-	  3. States for reading from the transport have been explicitly
-	  defined rather than implied from values of other data members.
+          3. States for reading from the transport have been explicitly
+          defined rather than implied from values of other data members.
 
-	  This change also correctly handles correct receipt of GIOP
-	  fragments:
+          This change also correctly handles correct receipt of GIOP
+          fragments:
 
-	  a. In the case of a GIOP 1.2 fragment, each fragment is a complete
-	  GIOP message.  It is, however, unable to be processed until all
-	  fragments have arrived.
+          a. In the case of a GIOP 1.2 fragment, each fragment is a complete
+          GIOP message.  It is, however, unable to be processed until all
+          fragments have arrived.
 
-	  b. Unlike a TCP segment, a GIOP fragment is not stateless; all
-	  GIOP 1.2 fragments for a specific request must be sent in-order.
-	  However, with transport multiplexing, other messages--including
-	  fragments for other requests--may interleave these fragments.
+          b. Unlike a TCP segment, a GIOP fragment is not stateless; all
+          GIOP 1.2 fragments for a specific request must be sent in-order.
+          However, with transport multiplexing, other messages--including
+          fragments for other requests--may interleave these fragments.
 
-	  c. By design, there is no way to know the total number of payload
-	  bytes across all GIOP fragments until the final fragment is
-	  received.
+          c. By design, there is no way to know the total number of payload
+          bytes across all GIOP fragments until the final fragment is
+          received.
 
 ----------------------------------------
 Thu Mar 20 12:34:24 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* all: First merge back to OCI.
+        * all: First merge back to OCI.
 
 Thu Mar 20 12:17:23 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/Strategies/DIOP_Transport.cpp (handle_input_i):
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
-	  (handle_input_i):
+        * tao/Strategies/DIOP_Transport.cpp (handle_input_i):
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+          (handle_input_i):
 
-	  Update to use new parsing and message processing methods
-	  consistent with PMB changes.
+          Update to use new parsing and message processing methods
+          consistent with PMB changes.
 
-	* tao/Transport.cpp (process_queue_head): Corrected a possible memory
-	  leak where, if process_parsed_messages returned with an error,
-	  the TAO_Queued_Data instance wouldn't be released.
+        * tao/Transport.cpp (process_queue_head): Corrected a possible memory
+          leak where, if process_parsed_messages returned with an error,
+          the TAO_Queued_Data instance wouldn't be released.
 
 Tue Mar 18 14:57:07 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* VERSION:
-	* ChangeLog:
-	* tao/tao.mpc:
-	* tao/Version.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/MCAST_Parser.cpp:
-	* tao/RTCORBA/Linear_Priority_Mapping.cpp:
-	* tao/RTCORBA/RT_ORBInitializer.cpp:
-	* tao/RTCORBA/RT_ORBInitializer.h:
-	* tao/RTCORBA/RT_ORB_Loader.cpp:
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * VERSION:
+        * ChangeLog:
+        * tao/tao.mpc:
+        * tao/Version.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/MCAST_Parser.cpp:
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
 
-	  Merged in changes from TAO 1.3.1.  The actual tag for the merge
-	  was pmb_branch_mainline_mergeout_1.  The command was
+          Merged in changes from TAO 1.3.1.  The actual tag for the merge
+          was pmb_branch_mainline_mergeout_1.  The command was
 
-	  $ cvs update -jpmb_branch_start -jpmb_branch_mainline_mergeout_1
+          $ cvs update -jpmb_branch_start -jpmb_branch_mainline_mergeout_1
 
-	  after manually determining which files needed updates.
+          after manually determining which files needed updates.
 
 Mon Mar 17 11:09:00 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/GIOP_Message_Base.cpp (check_for_valid_header): Optimized
-	  implementation.
+        * tao/GIOP_Message_Base.cpp (check_for_valid_header): Optimized
+          implementation.
 
-	* tao/GIOP_Message_Base.* (header_length): Moved to inline for
-	  optimization.
+        * tao/GIOP_Message_Base.* (header_length): Moved to inline for
+          optimization.
 
-	* tao/GIOP_Message_State.cpp (TAO_Debug_Msg_Emitter_Guard):
-	  Improved implementation so it didn't make copies of the message
-	  even when it was never going to output anything due to debug
-	  level being lower than the value that would cause debug output.
+        * tao/GIOP_Message_State.cpp (TAO_Debug_Msg_Emitter_Guard):
+          Improved implementation so it didn't make copies of the message
+          even when it was never going to output anything due to debug
+          level being lower than the value that would cause debug output.
 
-	* tao/GIOP_Message_State.cpp (take_values_from_message_block):
-	* tao/GIOP_Message_State.cpp (set_version_info_from_buffer):
-	* tao/GIOP_Message_State.cpp (set_byte_order_info_from_buffer):
-	* tao/GIOP_Message_State.cpp (set_payload_size_from_buffer):
+        * tao/GIOP_Message_State.cpp (take_values_from_message_block):
+        * tao/GIOP_Message_State.cpp (set_version_info_from_buffer):
+        * tao/GIOP_Message_State.cpp (set_byte_order_info_from_buffer):
+        * tao/GIOP_Message_State.cpp (set_payload_size_from_buffer):
 
-	  Removed use of TAO_Debug_Msg_Emitter_Guard.
+          Removed use of TAO_Debug_Msg_Emitter_Guard.
 
-	* tao/GIOP_Message_State.inl (set_payload_size_from_buffer):
+        * tao/GIOP_Message_State.inl (set_payload_size_from_buffer):
 
-	  Moved to inline file.
+          Moved to inline file.
 
-	* tao/Incoming_Message_Queue.h (TAO_Incoming_Message_Queue):
-	  Changed name of member 'queued_data_' to 'last_added_' to be
-	  more clear about what the pointer actually points to.
+        * tao/Incoming_Message_Queue.h (TAO_Incoming_Message_Queue):
+          Changed name of member 'queued_data_' to 'last_added_' to be
+          more clear about what the pointer actually points to.
 
-	  Added documentation that describes the structure of the linked
-	  list so that hopefully future maintainers don't have to go
-	  through the same learning curve I did.
+          Added documentation that describes the structure of the linked
+          list so that hopefully future maintainers don't have to go
+          through the same learning curve I did.
 
-	* tao/Incoming_Message_Queue.*: Updates to reflect last_added_
-	  member name change.
+        * tao/Incoming_Message_Queue.*: Updates to reflect last_added_
+          member name change.
 
-	* tao/Incoming_Message_Queue.cpp (dequeue_head): Add check to not
-	  allow dequeuing when size is zero, plus we now zero-out the
-	  last_added_ pointer after we've dequeued the last item in the
-	  list.
+        * tao/Incoming_Message_Queue.cpp (dequeue_head): Add check to not
+          allow dequeuing when size is zero, plus we now zero-out the
+          last_added_ pointer after we've dequeued the last item in the
+          list.
 
-	* tao/Incoming_Message_Queue.cpp (clone_mb_nocopy_size): Fix
-	  setting and copying of flags on the message and data blocks so
-	  that the DONT_DELETE flag specifically doesn't get copied.  This
-	  cured a HUGE memory leak that was causing substantial
-	  performance problems.
+        * tao/Incoming_Message_Queue.cpp (clone_mb_nocopy_size): Fix
+          setting and copying of flags on the message and data blocks so
+          that the DONT_DELETE flag specifically doesn't get copied.  This
+          cured a HUGE memory leak that was causing substantial
+          performance problems.
 
-	* tao/Incoming_Message_Queue.cpp (make_uncompleted_message):
-	* tao/Incoming_Message_Queue.cpp (make_completed_message):
+        * tao/Incoming_Message_Queue.cpp (make_uncompleted_message):
+        * tao/Incoming_Message_Queue.cpp (make_completed_message):
 
-	  Cache values used over and over again within these methods such
-	  as header and message block lengths
+          Cache values used over and over again within these methods such
+          as header and message block lengths
 
-	* tao/Transport.cpp (handle_input_i):
+        * tao/Transport.cpp (handle_input_i):
 
-	  Added flag noting that we enqueued a message.
+          Added flag noting that we enqueued a message.
 
-	  Changed how re-reading is performed; see entry for
-	  try_to_complete for information.
+          Changed how re-reading is performed; see entry for
+          try_to_complete for information.
 
-	  Used ACE_CDR::grow to grow the uncompleted_message message block
-	  once the payload size is known.  This insures that the growth
-	  happens with proper alignment constraints.
+          Used ACE_CDR::grow to grow the uncompleted_message message block
+          once the payload size is known.  This insures that the growth
+          happens with proper alignment constraints.
 
-	* tao/Transport.* (try_to_complete): Added this method which
-	  tries to complete whatever partial message is held in
-	  uncompleted_message_.  The difference between doing this and
-	  simply revisiting the top of handle_input_i is that this will
-	  only try to read enough to complete the message rather than also
-	  read another partial.
+        * tao/Transport.* (try_to_complete): Added this method which
+          tries to complete whatever partial message is held in
+          uncompleted_message_.  The difference between doing this and
+          simply revisiting the top of handle_input_i is that this will
+          only try to read enough to complete the message rather than also
+          read another partial.
 
-	* tao/Transport.cpp (process_queue_head): Added check to insure
-	  that we don't try to do any processing when there's nothing in
-	  the queue.  Also, removed old code leftover from when the
-	  incoming queue could have partial GIOP messages in it.  Finally,
-	  insured that the return value matched previous requirements.
+        * tao/Transport.cpp (process_queue_head): Added check to insure
+          that we don't try to do any processing when there's nothing in
+          the queue.  Also, removed old code leftover from when the
+          incoming queue could have partial GIOP messages in it.  Finally,
+          insured that the return value matched previous requirements.
 
 
 Thu Mar  6 15:27:14 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/Incoming_Message_Queue.cpp: Removed Shattering Encapsulation
-	  hack around ace/Message_Block.h inclusion to make this link
-	  properly on VC6.
+        * tao/Incoming_Message_Queue.cpp: Removed Shattering Encapsulation
+          hack around ace/Message_Block.h inclusion to make this link
+          properly on VC6.
 
-	* tao/GIOP_Message_State.cpp: Moved initialization of
-	  TAO_Debug_Msg_Emitter_Guard::MAGIC_LENGTH outside the class
-	  declaration.
+        * tao/GIOP_Message_State.cpp: Moved initialization of
+          TAO_Debug_Msg_Emitter_Guard::MAGIC_LENGTH outside the class
+          declaration.
 
 Wed Mar  5 13:08:37 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/GIOP_Message_Generator_Parser_Impl.inl (check_revision):
-	  Modified to only explicitly allow versions of GIOP that TAO
-	  supports, and no others.  Note that this change means that
-	  whenever a new version of GIOP gets added to TAO, this function
-	  must be updated, too.  Hopefully that won't happen so often that
-	  this becomes horribly burdensome.  Thanks to Chad Elliott and
-	  Paul Calabrese for ideas in getting this right.
+        * tao/GIOP_Message_Generator_Parser_Impl.inl (check_revision):
+          Modified to only explicitly allow versions of GIOP that TAO
+          supports, and no others.  Note that this change means that
+          whenever a new version of GIOP gets added to TAO, this function
+          must be updated, too.  Hopefully that won't happen so often that
+          this becomes horribly burdensome.  Thanks to Chad Elliott and
+          Paul Calabrese for ideas in getting this right.
 
-	* tao/Incoming_Message_Queue.* (make_uncompleted_message):
+        * tao/Incoming_Message_Queue.* (make_uncompleted_message):
 
-	  This now behaves similar to make_completed_message, i.e., it
-	  allocates the message block held in TAO_Queued_Data and advnaced
-	  the rd_ptr past the bytes it consumes.
+          This now behaves similar to make_completed_message, i.e., it
+          allocates the message block held in TAO_Queued_Data and advnaced
+          the rd_ptr past the bytes it consumes.
 
-	* tao/Incoming_Message_Queue.cpp: Eliminated hacks on
-	  ACE_Message_Block and replaced with functions
-	  clone_mb_nocopy_size() and copy_mb_span() that utilize ONLY the
-	  public API.  make_completed_message() and
-	  make_uncompleted_message() now use these.
+        * tao/Incoming_Message_Queue.cpp: Eliminated hacks on
+          ACE_Message_Block and replaced with functions
+          clone_mb_nocopy_size() and copy_mb_span() that utilize ONLY the
+          public API.  make_completed_message() and
+          make_uncompleted_message() now use these.
 
-	* tao/Transport.cpp (handle_input_i): Enlarged the buffer size and
-	  replaced the magic number for the maximum number of re-read
-	  attempts with the manifest constant
-	  TAO_MAX_TRANSPORT_REREAD_ATTEMPTS, now defined in orbconf.h.
+        * tao/Transport.cpp (handle_input_i): Enlarged the buffer size and
+          replaced the magic number for the maximum number of re-read
+          attempts with the manifest constant
+          TAO_MAX_TRANSPORT_REREAD_ATTEMPTS, now defined in orbconf.h.
 
-	  Changed uses of make_uncompleted_message() to be consistent with
-	  changes outlined above.
+          Changed uses of make_uncompleted_message() to be consistent with
+          changes outlined above.
 
-	  Corrected a bug where, upon re-reading after completely emptying
-	  the stack-allocated message block, I forgot to reset the
-	  rd_ptr/wr_ptr in the message block.
+          Corrected a bug where, upon re-reading after completely emptying
+          the stack-allocated message block, I forgot to reset the
+          rd_ptr/wr_ptr in the message block.
 
-	* tao/orbconf.h: Added new manifest constant
-	  TAO_MAX_TRANSPORT_REREAD_ATTEMPTS.  Documentation is in the file.
+        * tao/orbconf.h: Added new manifest constant
+          TAO_MAX_TRANSPORT_REREAD_ATTEMPTS.  Documentation is in the file.
 
 Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
 
-	  Eliminate parse_incoming_messages(), missing_data(),
-	  extract_next_message(), consolidate_node(),
-	  consolidate_fragments(), get_message_data(), make_queued_data().
+          Eliminate parse_incoming_messages(), missing_data(),
+          extract_next_message(), consolidate_node(),
+          consolidate_fragments(), get_message_data(), make_queued_data().
 
-	  Add new methods set_queued_data_from_message_header() and
-	  check_for_valid_header().
+          Add new methods set_queued_data_from_message_header() and
+          check_for_valid_header().
 
-	* TAO/tao/GIOP_Message_Base.h:
+        * TAO/tao/GIOP_Message_Base.h:
 
-	  Eliminate #if0 parse_incoming_messages(), missing_data(),
-	  extract_next_message(), consolidate_node(),
-	  consolidate_fragments(), get_message_data(), and
-	  make_queued_data() declarations.
+          Eliminate #if0 parse_incoming_messages(), missing_data(),
+          extract_next_message(), consolidate_node(),
+          consolidate_fragments(), get_message_data(), and
+          make_queued_data() declarations.
 
-	  Add declarations for set_queued_data_from_message_header() and
-	  check_for_valid_header().
+          Add declarations for set_queued_data_from_message_header() and
+          check_for_valid_header().
 
-	  Make message_type() static.
+          Make message_type() static.
 
-	* TAO/tao/GIOP_Message_Generator_Parser_Impl.inl:
+        * TAO/tao/GIOP_Message_Generator_Parser_Impl.inl:
 
-	  Reimplement check_revision() to be exact about which GIOP
-	  revisions are okay.  This is different from before where it
-	  loosely assumed that everything was valid unless it want higher
-	  than a particular range.
+          Reimplement check_revision() to be exact about which GIOP
+          revisions are okay.  This is different from before where it
+          loosely assumed that everything was valid unless it want higher
+          than a particular range.
 
-	* TAO/tao/GIOP_Message_Lite.cpp:
+        * TAO/tao/GIOP_Message_Lite.cpp:
 
           Remove parse_incoming_messages() thru consolidate_fragments();
           remove make_queued_data().
@@ -528,7 +534,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
           Add set_queued_data_from_message_header() and
           check_for_valid_header().
 
-	* TAO/tao/GIOP_Message_Lite.h:
+        * TAO/tao/GIOP_Message_Lite.h:
 
           Remove declarations for parse_incoming_messages() thru
           consolidate_fragments(); remove make_queued_data().
@@ -536,7 +542,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
           Add declarations for set_queued_data_from_message_header() and
           check_for_valid_header().
 
-	* TAO/tao/GIOP_Message_State.cpp:
+        * TAO/tao/GIOP_Message_State.cpp:
 
           Add TAO_Debug_Message_Emitter_Guard class within the compilation
           unit.
@@ -561,7 +567,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           Change argument type for read_ulong() to 'const char*'.
 
-	* TAO/tao/GIOP_Message_State.h:
+        * TAO/tao/GIOP_Message_State.h:
 
           Add default value for CTOR arguments so we don't have to pass
           them.
@@ -583,12 +589,12 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           #if0 base_ member variable.
 
-	* TAO/tao/GIOP_Message_State.inl:
+        * TAO/tao/GIOP_Message_State.inl:
 
           Add definitions for giop_version(), more_fragments(), and
           message_type().
 
-	* TAO/tao/Incoming_Message_Queue.cpp:
+        * TAO/tao/Incoming_Message_Queue.cpp:
 
           Add #include for ace/Message_Block.h, but shatter encapsulation
           and effectively extend its interface so that we can clone spans of
@@ -596,7 +602,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           Modify copy_tail() to use new TAO_Queued_Data member names.
 
-	* TAO/tao/Incoming_Message_Queue.cpp (class TAO_Queued_Data):
+        * TAO/tao/Incoming_Message_Queue.cpp (class TAO_Queued_Data):
 
           Update CTORs to initialize new this->current_state_ data member.
 
@@ -605,7 +611,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           Rename get_queued_data() to make_queued_data().
 
-	* TAO/tao/Incoming_Message_Queue.h:
+        * TAO/tao/Incoming_Message_Queue.h:
 
           Changed #include <Pluggable_Messaging_Utils.h> to #include
           <Pluggable_Messaging.h>
@@ -615,7 +621,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           #if0 get_node().
 
-	* TAO/tao/Incoming_Message_Queue.h (class TAO_Queued_Data):
+        * TAO/tao/Incoming_Message_Queue.h (class TAO_Queued_Data):
 
           Make CTORs protected so creation can only go through new factory
           methods, i.e., make_completed_message() and
@@ -634,7 +640,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           Documentation for this->byte_order_.
 
-	* TAO/tao/Incoming_Message_Queue.inl:
+        * TAO/tao/Incoming_Message_Queue.inl:
 
           Replace uses of this->missing_data_ with
           this->missing_data_bytes_.
@@ -643,14 +649,14 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           Add release() method.
 
-	* TAO/tao/Pluggable_Messaging.h:
+        * TAO/tao/Pluggable_Messaging.h:
 
           #if0 parse_incoming_messages() through consolidate_fragments().
 
           Add declarations for check_for_valid_header() and
           set_queued_data_from_message_header().
 
-	* TAO/tao/Transport.cpp:
+        * TAO/tao/Transport.cpp:
 
           Add #include <ace/Min_Max.h>
 
@@ -673,7 +679,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
           consolidate_message_queue(), consolidate_extra_messages(), and
           make_queued_data().
 
-	* TAO/tao/Transport.h:
+        * TAO/tao/Transport.h:
 
           #if0 declarations for parse_consolidate_messages(), parse_incoming_messages(),
           missing_data(), consolidate_message(), consolidate_fragments(),
@@ -682,31 +688,31 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           Add this->uncompleted_message_ data member.
 
-	* TAO/tao/Strategies/DIOP_Transport.cpp:
+        * TAO/tao/Strategies/DIOP_Transport.cpp:
 
           Change 1st arg of this->recv() in handle_input_i() to wr_ptr()
           from rd_ptr().
 
-	* TAO/tao/Strategies/SHMIOP_Transport.cpp:
+        * TAO/tao/Strategies/SHMIOP_Transport.cpp:
 
           #if0 consolidate_message().
 
-	* TAO/tao/Strategies/SHMIOP_Transport.h:
+        * TAO/tao/Strategies/SHMIOP_Transport.h:
 
           #if0 declaration for consolidate_message().
 
-	* TAO/tests/AMI/run_test.pl:
+        * TAO/tests/AMI/run_test.pl:
 
           Increase default number of iterations from 1 to 10000.  Earlier
           versions of the PMB changes succeeded just fine with low numbers
           of iterations, but began to fail miserably when the number of
           iterations climbed.
 
-	* TAO/tests/BiDirectional/run_test.pl:
+        * TAO/tests/BiDirectional/run_test.pl:
 
           Added level 10 debug.
 
-	* TAO/tests/InterOp-Naming/INS_test_client.cpp:
+        * TAO/tests/InterOp-Naming/INS_test_client.cpp:
 
           Changes that don't appear to be related in any way to PMB...
 
@@ -952,10 +958,10 @@ Mon Dec  8 19:33:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Synch_Invocation.cpp:
 
-	  Fixed a minor problem with reinvocation. We were not handling
-	  errors properly, more precisely the restart errors if they show
-	  up during wait_for_reply (). Thanks to Milan Cvetkovic for
-	  motivating this change.
+          Fixed a minor problem with reinvocation. We were not handling
+          errors properly, more precisely the restart errors if they show
+          up during wait_for_reply (). Thanks to Milan Cvetkovic for
+          motivating this change.
 
         * tao/Messaging/Asynch_Invocation.cpp:
 
