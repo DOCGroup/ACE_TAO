@@ -87,49 +87,13 @@ namespace CIAO_GLUE_BasicSP
   : home_ (::Components::CCMHome::_duplicate (home)),
   container_ (c),
   servant_ (sv),
-  // START new event code
-  ciao_proxy_out_avail_consumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_nil ()),
-  ciao_event_channel_ (RtecEventChannelAdmin::EventChannel::_nil ())
-  // END new event code
+  push_out_avail_cookie_ (0),
+  out_avail_service_cookie_ (0)
   {
-	  this->create_event_channel ();
   }
-
-  // START new event code
-  void BMClosedED_Context::create_event_channel (void)
-  {
-  	// Get a reference to the ORB.
-    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
-    if (CORBA::is_nil (orb.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil ORB\n"));
-
-    // Get a reference to the POA
-    CORBA::Object_var poa_object =
-      orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-
-    // Get a reference to the event channel
-    if (CORBA::is_nil (this->ciao_event_channel_.in ()))
-      {
-        TAO_EC_Event_Channel_Attributes attributes (root_poa.in (), root_poa.in ());
-        TAO_EC_Event_Channel * ec_servant;
-        ACE_NEW (ec_servant, TAO_EC_Event_Channel (attributes));
-        ec_servant->activate ();
-        this->ciao_event_channel_ = ec_servant->_this ();
-      }
-  }
-  // END new event code
 
   BMClosedED_Context::~BMClosedED_Context (void)
   {
-    // START new event code
-    this->ciao_event_channel_->destroy ();
-    // END new event code
   }
 
   // Operations from ::Components::CCMContext.
@@ -287,17 +251,11 @@ namespace CIAO_GLUE_BasicSP
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // START new event code
-    RtecEventComm::EventSet events (1);
-    events.length (1);
-    events[0].header.source = ACE_ES_EVENT_SOURCE_ANY + 3;
-    events[0].header.type = ACE_ES_EVENT_UNDEFINED + 3;
-    events[0].data.any_value <<= ev;
-    ciao_proxy_out_avail_consumer_->push (events ACE_ENV_ARG_PARAMETER);
+    this->container_->_ciao_push_event (ev,
+                                        this->push_out_avail_cookie_
+                                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    // END new event code
 
-    // START new event code
     /*
     ACE_Active_Map_Manager<::BasicSP::DataAvailableConsumer_var>::iterator end =
     this->ciao_publishes_out_avail_map_.end ();
@@ -320,7 +278,6 @@ namespace CIAO_GLUE_BasicSP
       ACE_CHECK;
     }
     */
-    // END new event code
   }
 
   ::Components::Cookie *
@@ -331,48 +288,34 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::ExceededConnectionLimit))
   {
-
-    // START new event code
-    // Get a reference to the ORB.
-    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
-
-    // Establish supplier's connection to event channel if not done yet
-    if (CORBA::is_nil (this->ciao_proxy_out_avail_consumer_.in ()))
+    if (this->out_avail_service_cookie_ == 0)
       {
-        RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-          this->ciao_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->out_avail_service_cookie_ =
+          this->container_->_ciao_specify_event_service (
+            "DataAvailable",
+            "out_avail",
+            "RTEC"
+            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
-        this->ciao_proxy_out_avail_consumer_ =
-          supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+
+    if (this->push_out_avail_cookie_ == 0)
+      {
+        this->push_out_avail_cookie_ =
+          this->container_->_ciao_connect_event_supplier (
+            this->out_avail_service_cookie_
+            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
+      }
 
-        // Create and register supplier servant
-        out_avail_Supplier_impl * supplier_servant;
-        ACE_NEW_RETURN (supplier_servant, out_avail_Supplier_impl (orb.in ()), 0);
-        RtecEventComm::PushSupplier_var supplier = supplier_servant->_this ();
+    return this->container_->_ciao_connect_event_consumer (
+      c,
+      this->out_avail_service_cookie_
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
-        // Set QoS properties and connect
-        ACE_SupplierQOS_Factory qos;
-        qos.insert (ACE_ES_EVENT_SOURCE_ANY + 3,
-                    ACE_ES_EVENT_UNDEFINED + 3,
-                    0,
-                    1);
-        this->ciao_proxy_out_avail_consumer_->connect_push_supplier (supplier.in (),
-                                                               qos.get_SupplierQOS ());
-      } // End if (ciao_proxy_out_avail_consumer_ is nil)
-
-    // Establish consumer's connection to event channel
-    if (CORBA::is_nil (c))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-    }
-
-    return this->subscribe_out_avail_consumer (c);
-
-    // END new event code
-
-    // START old event code
     /*
+
     if (CORBA::is_nil (c))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
@@ -389,47 +332,6 @@ namespace CIAO_GLUE_BasicSP
     ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
     return retv._retn ();
     */
-    // END old event code
-
-  }
-
-  ::Components::Cookie *
-  BMClosedED_Context::subscribe_out_avail_consumer (
-  ::BasicSP::DataAvailableConsumer_ptr c)
-  {
-
-    // Get a reference to the ORB.
-    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
-
-    ::BasicSP::DataAvailableConsumer_var sub = ::BasicSP::DataAvailableConsumer::_duplicate (c);
-
-    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-      this->ciao_event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-    RtecEventChannelAdmin::ProxyPushSupplier_var ciao_proxy_out_avail_supplier =
-      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-    
-    // Create and register consumer servant
-    out_avail_Consumer_impl * consumer_servant;
-    ACE_NEW_RETURN (consumer_servant, out_avail_Consumer_impl (orb.in (), sub.in ()), 0);
-    RtecEventComm::PushConsumer_var consumer = consumer_servant->_this ();
-
-    // Set QoS properties and connect
-    ACE_ConsumerQOS_Factory qos;
-    qos.start_disjunction_group (1);
-    qos.insert_type (ACE_ES_EVENT_UNDEFINED + 3,
-                     0);
-    ciao_proxy_out_avail_supplier->connect_push_consumer (consumer.in (),
-                                                        qos.get_ConsumerQOS ());
-
-    sub._retn ();
-
-    ::Components::Cookie * return_cookie;
-    ACE_NEW_RETURN (return_cookie,
-                    ::CIAO::Object_Reference_Cookie (consumer.in ()),
-                    0);
-    return return_cookie;
   }
 
   ::BasicSP::DataAvailableConsumer_ptr
@@ -440,35 +342,12 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::InvalidConnection))
   {
-    // START new event code
-    CORBA::Object_var obj = CORBA::Object::_nil ();
-    ::BasicSP::DataAvailableConsumer_var return_consumer;
 
-    if (ck == 0 || ::CIAO::Object_Reference_Cookie::extract (ck, obj.out ()) == -1)
-      {
-        ACE_THROW_RETURN (
-        ::Components::InvalidConnection (),
-        ::BasicSP::DataAvailableConsumer::_nil ());
-      }
-
-    RtecEventComm::PushConsumer_var push_consumer =
-      ::RtecEventComm::PushConsumer::_narrow (obj.in ());
-
-    if (CORBA::is_nil (push_consumer.in ()))
-      {
-        ACE_THROW_RETURN (
-        ::Components::InvalidConnection (),
-        ::BasicSP::DataAvailableConsumer::_nil ());
-      }
-
-    push_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->container_->_ciao_disconnect_event_consumer (ck ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    // @@ Bala, what should I return here?
     return ::BasicSP::DataAvailableConsumer::_nil ();
-    // END new event code
 
-    // START old event code
     /*
     ::BasicSP::DataAvailableConsumer_var retv;
     ACE_Active_Map_Manager_Key key;
@@ -489,7 +368,6 @@ namespace CIAO_GLUE_BasicSP
 
     return retv._retn ();
     */
-    // END old event code
   }
 
 
@@ -1423,72 +1301,6 @@ namespace CIAO_GLUE_BasicSP
   }
 
   // Supported operations.
-
-  // START new event code
-  out_avail_Supplier_impl::out_avail_Supplier_impl (void)
-  {
-  }
-
-  out_avail_Supplier_impl::out_avail_Supplier_impl (CORBA::ORB_ptr orb) :
-    orb_ (CORBA::ORB::_duplicate (orb))
-  {
-  }
-  
-  void out_avail_Supplier_impl::disconnect_push_supplier (void)
-  {
-    CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	  PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	  if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-    PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-    root_poa->deactivate_object (oid);
-  }
-
-  out_avail_Consumer_impl::out_avail_Consumer_impl (void)
-  {
-  }
-
-  out_avail_Consumer_impl::out_avail_Consumer_impl (CORBA::ORB_ptr orb,
-                                                ::BasicSP::DataAvailableConsumer_ptr out_avail_consumer) :
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    out_avail_consumer_ (::BasicSP::DataAvailableConsumer::_duplicate (out_avail_consumer))
-  {
-  }
-
-  void out_avail_Consumer_impl::push (const RtecEventComm::EventSet& events)
-  {
-    ACE_DEBUG ((LM_DEBUG, "CIAO_GLUE_BasicSP::out_avail_Consumer_impl::push\n"));
-    for (unsigned long i = 0; i < events.length (); i++)
-      {
-        ::BasicSP::DataAvailable * ev;
-        if (events[i].data.any_value >>= ev)
-          {
-            this->out_avail_consumer_->push_DataAvailable (ev
-                                             ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
-          }
-      }
-  }
-
-  void out_avail_Consumer_impl::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	  PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	  if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-    PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-    root_poa->deactivate_object (oid);
-  }
-  // END new event code
 
 
 }

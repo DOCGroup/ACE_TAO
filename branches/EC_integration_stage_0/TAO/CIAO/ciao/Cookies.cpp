@@ -62,3 +62,122 @@ CIAO::Map_Key_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
 {
   return &this->cookieValue ();
 }
+
+CIAO::ObjectId_Cookie::ObjectId_Cookie ()
+{
+
+}
+
+CIAO::ObjectId_Cookie::~ObjectId_Cookie ()
+{
+
+}
+
+CIAO::ObjectId_Cookie::ObjectId_Cookie (const PortableServer::ObjectId &oid)
+{
+  this->cookieValue ().length (oid.length ());
+  this->cookieValue (oid);
+}
+
+int
+CIAO::ObjectId_Cookie::insert (const PortableServer::ObjectId &oid)
+{
+  this->cookieValue ().length (oid.length ());
+  this->cookieValue (oid);
+  return 0;
+}
+
+int
+CIAO::ObjectId_Cookie::extract (::Components::Cookie *ck,
+                                PortableServer::ObjectId &oid)
+{
+  CIAO::Cookie *c = CIAO::Cookie::_downcast (ck);
+
+  if (c == 0)
+    return -1;
+
+  ::CORBA::OctetSeq *x = c->get_cookie ();
+
+  if (x == 0)
+    return -1;
+
+  oid = *x;
+
+  return 0;
+}
+
+
+CORBA::ValueBase *
+CIAO::ObjectId_Cookie_init::create_for_unmarshal (void)
+{
+  CORBA::ValueBase * return_value = 0;
+  ACE_NEW_RETURN (return_value,
+                  CIAO::ObjectId_Cookie,
+                  0);
+  return return_value;
+}
+
+::CORBA::OctetSeq *
+CIAO::ObjectId_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return &this->cookieValue ();
+}
+
+CIAO::EventServiceInfo_Cookie::EventServiceInfo_Cookie ()
+{
+
+}
+
+CIAO::EventServiceInfo_Cookie::~EventServiceInfo_Cookie ()
+{
+
+}
+
+CIAO::EventServiceInfo_Cookie::EventServiceInfo_Cookie (const CIAO::EventServiceInfo &info)
+{
+  this->cookieValue ().length (sizeof (info));
+  ACE_OS::memcpy (this->cookieValue ().get_buffer (0), (void *)&info, this->cookieValue ().length ());
+}
+
+int
+CIAO::EventServiceInfo_Cookie::insert (const CIAO::EventServiceInfo &info)
+{
+  this->cookieValue ().length (sizeof (info));
+  ACE_OS::memcpy (this->cookieValue ().get_buffer (0), (void *)&info, this->cookieValue ().length ());
+  return 0;
+}
+
+int
+CIAO::EventServiceInfo_Cookie::extract (::Components::Cookie *ck,
+                                        CIAO::EventServiceInfo &info)
+{
+  CIAO::Cookie *c = CIAO::Cookie::_downcast (ck);
+
+  if (c == 0)
+    return -1;
+
+  ::CORBA::OctetSeq *x = c->get_cookie ();
+
+  if (x == 0)
+    return -1;
+
+  info = *((CIAO::EventServiceInfo *) x->get_buffer ());
+  return 0;
+}
+
+
+CORBA::ValueBase *
+CIAO::EventServiceInfo_Cookie_init::create_for_unmarshal (void)
+{
+  CORBA::ValueBase * return_value = 0;
+  ACE_NEW_RETURN (return_value,
+                  CIAO::EventServiceInfo_Cookie,
+                  0);
+  return return_value;
+}
+
+::CORBA::OctetSeq *
+CIAO::EventServiceInfo_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return &this->cookieValue ();
+}

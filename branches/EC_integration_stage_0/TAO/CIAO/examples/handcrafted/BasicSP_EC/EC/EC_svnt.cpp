@@ -30,14 +30,12 @@ namespace CIAO_GLUE_BasicSP
   : home_ (::Components::CCMHome::_duplicate (home)),
   container_ (c),
   servant_ (sv),
-  // START new event code
-  ciao_proxy_timeout_consumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_nil ()),
-  ciao_event_channel_ (RtecEventChannelAdmin::EventChannel::_nil ())
+  push_timeout_cookie_ (0),
+  timeout_service_cookie_ (0)
   {
-    this->create_event_channel ();
   }
-  // END new event code
 
+  /*
   // START new event code
   void EC_Context::create_event_channel (void)
   {
@@ -68,12 +66,10 @@ namespace CIAO_GLUE_BasicSP
       }
   }
   // END new event code
+  */
 
   EC_Context::~EC_Context (void)
   {
-    // START new event code
-    this->ciao_event_channel_->destroy ();
-    // END new event code
   }
 
   // Operations from ::Components::CCMContext.
@@ -182,6 +178,12 @@ namespace CIAO_GLUE_BasicSP
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    this->container_->_ciao_push_event (ev,
+                                        this->push_timeout_cookie_
+                                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    
+    /*
     // START new event code
     RtecEventComm::EventSet events (1);
     events.length (1);
@@ -191,6 +193,7 @@ namespace CIAO_GLUE_BasicSP
     ciao_proxy_timeout_consumer_->push (events ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
     // END new event code
+    */
 
     // START old event code
     /*
@@ -226,6 +229,34 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::ExceededConnectionLimit))
   {
+
+    if (this->timeout_service_cookie_ == 0)
+      {
+        this->timeout_service_cookie_ =
+          this->container_->_ciao_specify_event_service (
+            "TimeOut",
+            "timeout",
+            "RTEC"
+            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
+    if (this->push_timeout_cookie_ == 0)
+      {
+        this->push_timeout_cookie_ =
+          this->container_->_ciao_connect_event_supplier (
+            this->timeout_service_cookie_
+            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
+    return this->container_->_ciao_connect_event_consumer (
+      c,
+      this->timeout_service_cookie_
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    /*
     // START new event code
     CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
 
@@ -265,6 +296,7 @@ namespace CIAO_GLUE_BasicSP
 
     return this->subscribe_timeout_consumer (c);
     // END new event code
+    */
 
     // START old event code
     /*
@@ -287,10 +319,14 @@ namespace CIAO_GLUE_BasicSP
     // END old event code
   }
 
-  ::Components::Cookie *
+  /*::Components::Cookie *
   EC_Context::subscribe_timeout_consumer (
   ::BasicSP::TimeOutConsumer_ptr c)
   {
+
+    return 0;
+
+    
     CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
 
     ::BasicSP::TimeOutConsumer_var sub =
@@ -323,7 +359,8 @@ namespace CIAO_GLUE_BasicSP
                     ::CIAO::Object_Reference_Cookie (consumer.in ()),
                     0);
     return return_cookie;
-  }
+    
+  }*/
 
   ::BasicSP::TimeOutConsumer_ptr
   EC_Context::unsubscribe_timeout (
@@ -333,6 +370,13 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::InvalidConnection))
   {
+
+    this->container_->_ciao_disconnect_event_consumer (ck ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    return ::BasicSP::TimeOutConsumer::_nil ();
+
+    /*
     // START new event code
     CORBA::Object_var obj = CORBA::Object::_nil ();
     ::BasicSP::TimeOutConsumer_var return_consumer;
@@ -357,9 +401,9 @@ namespace CIAO_GLUE_BasicSP
     push_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    // @@ Bala, what should I return here?
     return ::BasicSP::TimeOutConsumer::_nil ();
     // END new event code
+    */
 
     // START old event code
     /*
@@ -659,6 +703,7 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection,
   ::Components::ExceededConnectionLimit))
   {
+
     if (publisher_name == 0)
     {
       ACE_THROW_RETURN (::Components::InvalidName (), 0);
@@ -695,6 +740,7 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidName,
   ::Components::InvalidConnection))
   {
+
     if (publisher_name == 0)
     {
       ACE_THROW_RETURN (
@@ -1176,79 +1222,6 @@ namespace CIAO_GLUE_BasicSP
     }
   }
 
-  // Supported operations.
-
-  // START new event code
-  timeout_Supplier_impl::timeout_Supplier_impl (void)
-  {
-  }
-
-  timeout_Supplier_impl::timeout_Supplier_impl (CORBA::ORB_ptr orb) :
-    orb_ (CORBA::ORB::_duplicate (orb))
-  {
-  }
-
-  void timeout_Supplier_impl::disconnect_push_supplier (void)
-  {
-    CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-    PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-    root_poa->deactivate_object (oid);
-    this->_remove_ref ();
-  }
-
-  // @@ Bala, I don't see how this class can be moved to the consumer without making
-  // some changes to either the EventConsumerBase or Events interfaces to allow a remote
-  // call.
-  timeout_Consumer_impl::timeout_Consumer_impl (void)
-  {
-  }
-
-  timeout_Consumer_impl::timeout_Consumer_impl (CORBA::ORB_ptr orb,
-                                                ::BasicSP::TimeOutConsumer_ptr timeout_consumer) :
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    timeout_consumer_ (::BasicSP::TimeOutConsumer::_duplicate (timeout_consumer))
-  {
-  }
-
-  void timeout_Consumer_impl::push (const RtecEventComm::EventSet& events)
-  {
-    ACE_DEBUG ((LM_DEBUG, "CIAO_GLUE_BasicSP::timeout_Consumer_impl::push\n"));
-    for (unsigned long i = 0; i < events.length (); i++)
-      {
-        ::BasicSP::TimeOut * ev;
-        if (events[i].data.any_value >>= ev)
-          {
-            this->timeout_consumer_->push_TimeOut (ev
-                                             ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
-          }
-      }
-  }
-
-  void timeout_Consumer_impl::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-    PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-    root_poa->deactivate_object (oid);
-    this->_remove_ref ();
-  }
-  // END new event code
-
 }
 
 extern "C" EC_SVNT_Export ::PortableServer::Servant
@@ -1277,106 +1250,4 @@ ACE_ENV_ARG_DECL)
   ::CIAO_GLUE_BasicSP::ECHome_Servant (
   x.in (),
   c);
-}
-
-CIAO::Object_Reference_Cookie::Object_Reference_Cookie ()
-{
-
-}
-
-CIAO::Object_Reference_Cookie::~Object_Reference_Cookie ()
-{
-
-}
-
-CIAO::Object_Reference_Cookie::Object_Reference_Cookie (CORBA::Object_ptr obj)
-{
-  CORBA::ORB_var orb = obj->orb_core ()->orb ();
-
-  CORBA::Object_var poa_object =
-  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  PortableServer::POA_var poa =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  if (CORBA::is_nil (poa.in ()))
-    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-
-  PortableServer::ObjectId_var oid = poa->reference_to_id (obj);
-
-  // @@ Bala, is this line necessary?
-  this->cookieValue ().length (oid->length ());
-
-  this->cookieValue (oid.in ());
-}
-
-int
-CIAO::Object_Reference_Cookie::insert (CORBA::Object_ptr obj)
-{
-  CORBA::ORB_var orb = obj->orb_core ()->orb ();
-
-  CORBA::Object_var poa_object =
-  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  PortableServer::POA_var poa =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  if (CORBA::is_nil (poa.in ()))
-    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-
-  PortableServer::ObjectId_var oid = poa->reference_to_id (obj ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->cookieValue ().length (oid->length ());
-
-  this->cookieValue (oid.in ());
-
-  return 0;
-}
-
-int
-CIAO::Object_Reference_Cookie::extract (::Components::Cookie *ck,
-                                        CORBA::Object_ptr obj)
-{
-
-  // @@ Bala, this obviously doesn't work. How can I get a reference to the ORB here?
-  CORBA::ORB_var orb = obj->orb_core ()->orb ();
-
-  CORBA::Object_var poa_object =
-  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  PortableServer::POA_var poa =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  if (CORBA::is_nil (poa.in ()))
-    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-
-  CIAO::Cookie *c = CIAO::Cookie::_downcast (ck);
-
-  if (c == 0)
-    return -1;
-
-  PortableServer::ObjectId_var oid = c->get_cookie ();
-
-  obj = poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  return 0;
-}
-
-
-CORBA::ValueBase *
-CIAO::Object_Reference_Cookie_init::create_for_unmarshal (void)
-{
-  CORBA::ValueBase * return_value = 0;
-  ACE_NEW_RETURN (return_value,
-                  CIAO::Object_Reference_Cookie,
-                  0);
-  return return_value;
-}
-
-::CORBA::OctetSeq *
-CIAO::Object_Reference_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
-{
-  return &this->cookieValue ();
 }

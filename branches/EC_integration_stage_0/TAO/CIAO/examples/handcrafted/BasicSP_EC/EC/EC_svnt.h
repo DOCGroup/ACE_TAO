@@ -138,12 +138,14 @@ namespace CIAO_GLUE_BasicSP
     ::Components::InvalidConnection));
 
     // START new event code
+    /*
     ::Components::Cookie *
     subscribe_timeout_consumer (
     ::BasicSP::TimeOutConsumer_ptr c);
 
     void
     create_event_channel (void);
+    */
     // END new event code
 
     protected:
@@ -156,12 +158,14 @@ namespace CIAO_GLUE_BasicSP
 	  */
 	  // END old event code
 
+    /*
     // START new event code
     RtecEventChannelAdmin::ProxyPushConsumer_var
     ciao_proxy_timeout_consumer_;
 
     RtecEventChannelAdmin::EventChannel_var ciao_event_channel_;
     // END new event code
+    */
 
     ::Components::CCMHome_var
     home_;
@@ -174,6 +178,10 @@ namespace CIAO_GLUE_BasicSP
 
     ::BasicSP::EC_var
     component_;
+
+    ::Components::Cookie * push_timeout_cookie_;
+
+    ::Components::Cookie * timeout_service_cookie_;
   };
 
   class EC_SVNT_Export EC_Servant
@@ -553,81 +561,6 @@ namespace CIAO_GLUE_BasicSP
   ::Components::HomeExecutorBase_ptr p,
   CIAO::Session_Container *c
   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  // START new event code
-  class timeout_Supplier_impl :
-    public virtual POA_RtecEventComm::PushSupplier,
-    public virtual PortableServer::RefCountServantBase
-  {
-  public:
-
-    timeout_Supplier_impl (void);
-
-    timeout_Supplier_impl (CORBA::ORB_ptr orb);
-
-    virtual void disconnect_push_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-  private:
-    CORBA::ORB_var orb_;
-  };
-
-  class timeout_Consumer_impl :
-    public virtual POA_RtecEventComm::PushConsumer,
-    public virtual PortableServer::RefCountServantBase
-  {
-  public:
-
-    timeout_Consumer_impl (void);
-
-    timeout_Consumer_impl (CORBA::ORB_ptr orb,
-                           ::BasicSP::TimeOutConsumer_ptr timeout_consumer);
-
-    virtual void push (const RtecEventComm::EventSet& events);
-
-    virtual void disconnect_push_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-  private:
-    CORBA::ORB_var orb_;
-    ::BasicSP::TimeOutConsumer_var timeout_consumer_;
-  };
-  // END new event code
-
-}
-
-namespace CIAO
-{
-
-  class EC_SVNT_Export Object_Reference_Cookie
-    : public virtual OBV_CIAO::Cookie
-  {
-
-  public:
-    Object_Reference_Cookie ();
-
-    Object_Reference_Cookie (CORBA::Object_ptr obj);
-
-    virtual ::CORBA::OctetSeq * get_cookie (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-    ~Object_Reference_Cookie ();
-
-    int insert (CORBA::Object_ptr obj);
-
-    static int extract (::Components::Cookie *ck,
-                        CORBA::Object_ptr obj);
-  };
-
-  class Object_Reference_Cookie_init : public virtual ::Components::Cookie_init
-  {
-
-  public:
-    Object_Reference_Cookie_init (void);
-
-    virtual ~Object_Reference_Cookie_init (void);
-
-    virtual CORBA::ValueBase * create_for_unmarshal (void);
-  };
 
 }
 

@@ -20,7 +20,7 @@
 
 #ifndef CIAO_GLUE_SESSION_BMDEVICE_SVNT_H
 #define CIAO_GLUE_SESSION_BMDEVICE_SVNT_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "BMDeviceS.h"
 #include "BMDeviceEC.h"
@@ -29,15 +29,6 @@
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Active_Map_Manager_T.h"
-
-// START new event code
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "Event_Utilities.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "..\EC\EC_svnt.h" // For Cookie implementation
-// END new event code
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -170,30 +161,10 @@ namespace CIAO_GLUE_BasicSP
     ::CORBA::SystemException,
     ::Components::InvalidConnection));
 
-    // START new event code
-    ::Components::Cookie *
-    subscribe_data_available_consumer (
-    ::BasicSP::DataAvailableConsumer_ptr c);
-
-    void
-    create_event_channel (void);
-    // END new event code
-
     protected:
-    // START old event code
-    /*
     ACE_Active_Map_Manager<
     ::BasicSP::DataAvailableConsumer_var>
     ciao_publishes_data_available_map_;
-    */
-    // END old event code
-
-    // START new event code
-    RtecEventChannelAdmin::ProxyPushConsumer_var
-    ciao_proxy_data_available_consumer_;
-
-    RtecEventChannelAdmin::EventChannel_var ciao_event_channel_;
-    // END new event code
 
     ::Components::CCMHome_var
     home_;
@@ -206,6 +177,11 @@ namespace CIAO_GLUE_BasicSP
 
     ::BasicSP::BMDevice_var
     component_;
+
+    ::Components::Cookie * push_data_available_cookie_;
+
+    ::Components::Cookie * data_available_service_cookie_;
+
   };
 
   class BMDEVICE_SVNT_Export BMDevice_Servant
@@ -616,48 +592,8 @@ namespace CIAO_GLUE_BasicSP
   CIAO::Session_Container *c
   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  // START new event code
-  class data_available_Supplier_impl :
-    public virtual POA_RtecEventComm::PushSupplier,
-    public virtual PortableServer::RefCountServantBase
-  {
-  public:
-
-    data_available_Supplier_impl (void);
-
-    data_available_Supplier_impl (CORBA::ORB_ptr orb);
-
-    virtual void disconnect_push_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-  private:
-    CORBA::ORB_var orb_;
-  };
-
-  class data_available_Consumer_impl :
-    public virtual POA_RtecEventComm::PushConsumer,
-    public virtual PortableServer::RefCountServantBase
-  {
-  public:
-
-    data_available_Consumer_impl (void);
-
-    data_available_Consumer_impl (CORBA::ORB_ptr orb,
-                           ::BasicSP::DataAvailableConsumer_ptr data_available_consumer);
-
-    virtual void push (const RtecEventComm::EventSet& events);
-
-    virtual void disconnect_push_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-  private:
-    CORBA::ORB_var orb_;
-    ::BasicSP::DataAvailableConsumer_var data_available_consumer_;
-  };
-  // END new event code
-
 }
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_BMDEVICE_SVNT_H */
 

@@ -22,6 +22,8 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "CCM_ContainerC.h"
 #include "CCM_DeploymentC.h"
+#include "ace/Hash_Map_Manager.h"
+#include "CIAO_Events.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +31,12 @@
 
 namespace CIAO
 {
+
+  // Forward declarations
+  struct EventServiceInfo;
+  class RTEventServiceSupplier_impl;
+  class RTEventServiceConsumer_impl;
+
   /**
    * @class Container
    *
@@ -74,10 +82,85 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
+    // Events methods
+
+    virtual ::Components::Cookie * _ciao_specify_event_service (
+        const char * event_name,
+        const char * publisher_name,
+        const char * service_name
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual ::Components::Cookie * _ciao_connect_event_consumer (
+        ::Components::EventConsumerBase_ptr c,
+        ::Components::Cookie * ck
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual ::Components::Cookie * _ciao_connect_event_supplier (
+        ::Components::Cookie * ck
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual void _ciao_disconnect_event_consumer (
+      ::Components::Cookie *ck
+       ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Components::InvalidName,
+                       ::Components::InvalidConnection));
+
+    virtual void _ciao_disconnect_event_supplier (
+      ::Components::Cookie *ck
+       ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Components::InvalidName,
+                       ::Components::InvalidConnection));
+
+    virtual void _ciao_push_event (::Components::EventBase *ev,
+                                   ::Components::Cookie *ck
+                                   ACE_ENV_ARG_DECL)
+                                 ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected:
+
+    ::Components::Cookie * connect_rt_event_consumer (
+        ::Components::EventConsumerBase_ptr c,
+        ::CIAO::EventServiceInfo service_info
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    ::Components::Cookie * connect_rt_event_supplier (
+        ::CIAO::EventServiceInfo service_info
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    void CIAO::Container::create_rt_event_channel (void);
+
+    // Reference to the ORB
     CORBA::ORB_var orb_;
 
+    // Reference to the POA
     PortableServer::POA_var poa_;
+
+    // Reference to the Root POA
+    PortableServer::POA_var root_poa_;
+
+    /// Map of event types
+    ACE_Hash_Map_Manager<const char *, RtecEventComm::EventType, ACE_Null_Mutex>
+      ciao_event_types_map_;
+
+    /// Map of suppliers
+    ACE_Hash_Map_Manager<const char *, RtecEventComm::EventSourceID, ACE_Null_Mutex>
+      ciao_publishers_map_;
+
+    /// Reference to the RT event channel (only created if needed; nil otherwise)
+    RtecEventChannelAdmin::EventChannel_var ciao_rt_event_channel_;
+
   };
 
   class CIAO_SERVER_Export Session_Container : public Container
@@ -164,6 +247,7 @@ namespace CIAO
     (::Components::HomeExecutorBase_ptr p,
      ::CIAO::Session_Container *c
      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
 }
 
 #if defined (__ACE_INLINE__)
