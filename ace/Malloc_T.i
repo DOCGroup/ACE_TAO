@@ -53,8 +53,17 @@ template <class MALLOC> ACE_INLINE void *
 ACE_Allocator_Adapter<MALLOC>::calloc (size_t nbytes,
                                        char initial_value)
 {
-  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::malloc");
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::calloc");
   return this->allocator_.calloc (nbytes, initial_value);
+}
+
+template <class MALLOC> ACE_INLINE void *
+ACE_Allocator_Adapter<MALLOC>::calloc (size_t n_elem,
+                                       size_t elem_size,
+                                       char initial_value)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::calloc");
+  return this->allocator_.calloc (n_elem, elem_size, initial_value);
 }
 
 template <class MALLOC> ACE_INLINE MALLOC &
