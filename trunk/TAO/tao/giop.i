@@ -7,19 +7,20 @@ TAO_GIOP_RequestHeader::TAO_GIOP_RequestHeader (void)
 {}
 
 // Initialize the request header from <msg>, setting <env> for errors.
+
 ACE_INLINE CORBA::Boolean
 TAO_GIOP_RequestHeader::init (CDR &msg, CORBA::Environment &env)
 {
   CORBA::Boolean hdr_status;
 
-  // Tear out the service context ... we currently ignore it,
-  // but it should probably be passed to each ORB service as
-  // appropriate (e.g. transactions, security).
+  // Tear out the service context ... we currently ignore it, but it
+  // should probably be passed to each ORB service as appropriate
+  // (e.g. transactions, security).
   //
   // NOTE: As security support kicks in, this is a good place to
-  // verify a digital signature, if that is required in this
-  // security environment.  It may be required even when using
-  // IPSEC security infrastructure.
+  // verify a digital signature, if that is required in this security
+  // environment.  It may be required even when using IPSEC security
+  // infrastructure.
 
   hdr_status = msg.decode (&TC_ServiceContextList,
                            &this->service_info,
@@ -42,7 +43,6 @@ TAO_GIOP_RequestHeader::init (CDR &msg, CORBA::Environment &env)
                                          &this->requesting_principal,
                                          0,
                                          env);
-
   return hdr_status;
 }
 
@@ -74,7 +74,7 @@ TAO_GIOP_Invocation::get_value (CORBA::TypeCode_ptr tc,
                                 void *value,
                                 CORBA::Environment &env)
 {
-  (void) stream.decode (tc, value, 0, env);
+  (void) this->stream_.decode (tc, value, 0, env);
 }
 
 ACE_INLINE void 
@@ -82,5 +82,5 @@ TAO_GIOP_Invocation::put_param (CORBA::TypeCode_ptr tc,
                                 void *value, 
                                 CORBA::Environment &env)
 {
-  (void) stream.encode (tc, value, 0, env);
+  (void) this->stream.encode_ (tc, value, 0, env);
 }
