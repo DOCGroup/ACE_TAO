@@ -46,8 +46,8 @@ public:
   virtual int open (void *);
   // Perform the work of the SVC_HANDLER.
   
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Handle data from the client.
+  virtual int handle_one_client (ACE_HANDLE = ACE_INVALID_HANDLE);
+  // Handle one client connection.
 
   virtual int svc (void);
   // Thread method
