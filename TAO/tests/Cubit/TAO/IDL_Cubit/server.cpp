@@ -15,7 +15,10 @@ main (int argc, char *argv[])
   TAO_TRY
     {
       if (cubit_server.init (argc, argv, TAO_TRY_ENV) == -1)
-        return 1;
+        {
+          TAO_TRY_ENV.print_exception ("Initialization Exception");
+          return -1;
+        }
       else
         {
           cubit_server.run (TAO_TRY_ENV);

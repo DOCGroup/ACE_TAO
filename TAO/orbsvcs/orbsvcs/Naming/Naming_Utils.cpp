@@ -25,11 +25,11 @@
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
 
-  // Default constructor
+// Default constructor
 
-  TAO_Naming_Server::TAO_Naming_Server (void)
-    : ior_multicast_ (0),
-      naming_context_name_ (CORBA::string_dup ("NameService"))
+TAO_Naming_Server::TAO_Naming_Server (void)
+  : ior_multicast_ (0),
+    naming_context_name_ (CORBA::string_dup ("NameService"))
 {
 }
 
@@ -87,7 +87,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
           TAO_CHECK_ENV;
 	      
           this->naming_service_ior_ = str.in ();
-          this->naming_context_name_ = ""; // No name
+          this->naming_context_name_ = CORBA::string_dup (""); 
         }
       TAO_ENDTRY;
       
@@ -146,7 +146,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       // different from the default NameService context, if not,
       // instantiate a name service, and listen on multicast port.
 
-      if (ACE_OS::strcmp (this->naming_context_name_,
+      if (ACE_OS::strcmp (this->naming_context_name_.in (),
                           "NameService") == 0)
 	{
           // Get the naming context ptr to NameService.
@@ -256,7 +256,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 	  // to add code to walk the naming tree from root to the
 	  // context represented by this server.
 	  PortableServer::ObjectId_var id =
-	    PortableServer::string_to_ObjectId (this->naming_context_name_);
+	    PortableServer::string_to_ObjectId (this->naming_context_name_.in ());
 
 	  child_poa->activate_object_with_id (id.in (),
 					      &naming_context_impl_,
@@ -284,7 +284,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 	  // Bind our context into the default name server.
 	  CosNaming::Name ctx_name (1);
 	  ctx_name.length (1);
-	  ctx_name[0].id = CORBA::string_dup (naming_context_name_);
+	  ctx_name[0].id = CORBA::string_dup (naming_context_name_.in ());
 
 	  default_ctx->bind_context (ctx_name,
                                      naming_context_impl_._this (TAO_TRY_ENV),
