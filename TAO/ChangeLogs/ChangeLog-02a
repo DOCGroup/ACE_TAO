@@ -1,3 +1,14 @@
+Tue Aug 29 14:32:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Native_Exceptions/Makefile:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.CosConcurrency:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+	  Update dependencies.
+
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+	  Removed unused CORBA_Dyn_Any_var variable.
+
 Tue Aug 29 01:26:06 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Protocol/client.dsp
