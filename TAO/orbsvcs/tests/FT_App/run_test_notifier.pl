@@ -137,14 +137,14 @@ my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_
 my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
-my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
+my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n file://$notifier_ior -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior -q");
 
 my($CL);
 if (simulated) {
-  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_ior,$replica2_ior -c testscript");
+  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 }else{
   #todo figure out how to get iogr
-  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
+  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
 }
 
 print "TEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);

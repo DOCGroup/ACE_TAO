@@ -44,15 +44,26 @@ module FT
     FaultNotifier get_fault_notifier()
       raises (InterfaceNotFound);
 
-    /**
-    * Creates and returns a dummy IOGR for unit testing
-    */
-    ObjectGroup create_test_iogr ();
- 
+     /**
+     * Find a registry for factories that create fault tolerant replicas.
+     *
+     * TAO-specific method
+     *
+     * Factories in this registry will be used by the ReplicationManager's implementation
+     * of GenericFactory::create_object when infrastructure controlled membership is specified.
+     *
+     * The factory registry may also be used by applications that control their own
+     * membership but don't wish to address the issue of finding factories for replicas.
+     *
+     * @param selection_criteria to be used to choose among alternate registries (future enhancement.)
+     * @returns an implementation of FactoryRegistry
+     */
+    ::PortableGroup::FactoryRegistry get_factory_registry (in ::PortableGroup::Criteria selection_criteria);
+
     /**
     * TAO-specific shutdown operation.
     */
-    void oneway shutdown ();
+    oneway void shutdown ();
   };
 };
 

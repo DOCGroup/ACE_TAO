@@ -127,7 +127,6 @@ public:
   // Implementation
 private:
   int write_ior_file();
-  int read_ior_file(const char * fileName, CORBA::String_var & ior);
 
   ///////////////
   // Data Members
@@ -160,7 +159,7 @@ private:
   /**
    * A file from which the detecor's IOR should be read.
    */
-  const char * detector_ior_file_;
+  const char * detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
@@ -168,7 +167,7 @@ private:
    * A collection of files containing replica IORs
    */
   ACE_Vector < const char * > iorReplicaFiles_;
-  char * replica_ior_buffer_;
+
 
   ACE_Vector < FT::PullMonitorable_var > replicas_;
   /**

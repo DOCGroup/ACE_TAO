@@ -10,8 +10,7 @@
 
 StubFaultNotifier::StubFaultNotifier ()
   : ior_output_file_(0)
-  , detector_ior_file_(0)
-  , replica_ior_buffer_(0)
+  , detector_ior_(0)
   , ns_name_(0)
 {
 }
@@ -19,8 +18,6 @@ StubFaultNotifier::StubFaultNotifier ()
 
 StubFaultNotifier::~StubFaultNotifier ()
 {
-  delete [] this->replica_ior_buffer_;
-  this->replica_ior_buffer_ = 0;
 }
 
 
@@ -34,10 +31,6 @@ PortableServer::ObjectId StubFaultNotifier::objectId()const
   return this->object_id_.in();
 }
 
-
-
-
-
 int StubFaultNotifier::parse_args (int argc, char * argv[])
 {
   int optionError = 0;
@@ -49,54 +42,12 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
     {
       case 'r':
       {
-        if (this->replica_ior_buffer_ == 0)
-        {
-          const char * repNames = get_opts.opt_arg ();
-          size_t repNameLen = ACE_OS::strlen(repNames);
-
-          // make a working copy of the string
-          ACE_NEW_NORETURN(this->replica_ior_buffer_,
-            char[repNameLen + 1]);
-          if ( this->replica_ior_buffer_ != 0)
-          {
-            ACE_OS::memcpy(this->replica_ior_buffer_, repNames, repNameLen+1);
-
-            // tokenize the string on ','
-            // into iorReplicaFiles_
-            char * pos = this->replica_ior_buffer_;
-            while (pos != 0)
-            {
-              this->iorReplicaFiles_.push_back(pos);
-              // find a comma delimiter, and
-              // chop the string there.
-              pos = ACE_OS::strchr (pos, ',');
-              if (pos != 0)
-              {
-                *pos = '\0';
-                pos += 1;
-              }
-            }
-          }
-          else
-          {
-            ACE_ERROR ((LM_ERROR,
-              "Command line option error: -r can't allocate buffer.\n"
-              ));
-            optionError = -1;
-          }
-        }
-        else
-        {
-          ACE_ERROR ((LM_ERROR,
-            "Command line option error: -r specified more than once.\n"
-            ));
-          optionError = -1;
-        }
+        this->iorReplicaFiles_.push_back( get_opts.opt_arg ());
         break;
       }
       case 'd':
       {
-        this->detector_ior_file_ = get_opts.opt_arg ();
+        this->detector_ior_ = get_opts.opt_arg ();
         break;
       }
       case 'n':
@@ -121,14 +72,14 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
 
   if(! optionError)
   {
-    if (0 == this->replica_ior_buffer_)
+    if (iorReplicaFiles_.size() == 0)
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->detector_ior_file_)
+    if (0 == this->detector_ior_)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -141,7 +92,7 @@ int StubFaultNotifier::parse_args (int argc, char * argv[])
   {
     ACE_ERROR ((LM_ERROR,
       "usage:  %s"
-      " -r <replica.ior[,replica.ior]>"
+      " -r <replica.ior [-r <replica2.ior]...>"
       " -d <detector.ior>"
       " -o <this.ior>"
       " -n <nameService name>"
@@ -179,13 +130,7 @@ int StubFaultNotifier::fini ()
       this_name.length (1);
       this_name[0].id = CORBA::string_dup (this->ns_name_);
 
-      // find my identity as a corba object
-      CORBA::Object_var this_obj =
-        this->poa_->id_to_reference (object_id_.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      naming_context->rebind (this_name, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
+      naming_context->unbind (this_name
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -251,20 +196,12 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   //////////////////////////////////////////
   // resolve references to detector factory
-  CORBA::String_var factory_ior;
-  if (read_ior_file(this->detector_ior_file_, factory_ior))
+
+  CORBA::Object_var obj = this->orb_->string_to_object(detector_ior_);
+  this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
+  if (CORBA::is_nil(this->factory_))
   {
-    CORBA::Object_var obj = this->orb_->string_to_object(factory_ior);
-    this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj);
-    if (CORBA::is_nil(this->factory_))
-    {
-      std::cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_file_ << std::endl;
-      result = -1;
-    }
-  }
-  else
-  {
-    std::cerr << "Can't read " << this->detector_ior_file_ << std::endl;
+    std::cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << std::endl;
     result = -1;
   }
   if (result == 0)
@@ -275,78 +212,74 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
     for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
       const char * iorName = this->iorReplicaFiles_[nRep];
-      CORBA::String_var ior;
-      if (read_ior_file(iorName, ior))
+      CORBA::Object_var obj = this->orb_->string_to_object(iorName);
+      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj);
+      if (CORBA::is_nil(replica))
       {
-        CORBA::Object_var obj = this->orb_->string_to_object(ior);
-        FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj);
-        if (CORBA::is_nil(replica))
-        {
-          std::cerr << "Can't resolve Replica IOR " << iorName << std::endl;
-          result = -1;
-        }
-        else
-        {
-          this->replicas_.push_back(replica);
-
-          CORBA::String_var type_id = CORBA::string_dup("FaultDetector");
-
-          TAO_PG::Properties_Encoder encoder;
-
-          PortableGroup::Value value;
-          value <<= this_obj;
-          encoder.add(::FT::FT_NOTIFIER, value);
-
-          value <<= replica;
-          encoder.add(::FT::FT_MONITORABLE, value);
-
-          FT::FTDomainId domain_id = 0;
-          value <<= domain_id;
-          encoder.add(::FT::FT_DOMAIN_ID, value);
-
-          FT::Location object_location;
-          object_location.length(1);
-          object_location[0].id = CORBA::string_dup("Test location");
-          value <<= object_location;
-          encoder.add(::FT::FT_LOCATION, value);
-
-          FT::TypeId object_type = 0;
-          value <<= object_type;
-          encoder.add(::FT::FT_TYPE_ID, value);
-
-          FT::ObjectGroupId group_id = 0;
-          value <<= group_id;
-          encoder.add(::FT::FT_GROUP_ID, value);
-
-          // allocate and populate the criteria
-          FT::Criteria_var criteria;
-          ACE_NEW_NORETURN (criteria,
-            FT::Criteria);
-          if (criteria.ptr() == 0)
-          {
-            ACE_ERROR((LM_ERROR,
-              "Error cannot allocate criteria.\n"
-              ));
-              result = -1;
-          }
-          else
-          {
-            encoder.encode(criteria);
-            FT::GenericFactory::FactoryCreationId_var factory_creation_id;
-
-            this->factory_->create_object (
-              type_id.in(),
-              criteria.in(),
-              factory_creation_id
-              ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
-        }
+        std::cerr << "Can't resolve Replica IOR " << iorName << std::endl;
+        result = -1;
       }
       else
       {
-        std::cerr << "Can't read " << iorName << std::endl;
-        result = -1;
+        this->replicas_.push_back(replica);
+
+        CORBA::String_var type_id = CORBA::string_dup("FaultDetector");
+
+        TAO_PG::Properties_Encoder encoder;
+
+        PortableGroup::Value value;
+        //////////////////
+        // FaultDetectorFactory gets picky about FaultNotifier's object type.
+        // coddle it.
+        ::FT::FaultNotifier_var notifier = ::FT::FaultNotifier::_narrow(this_obj);
+        value <<= notifier;
+        encoder.add(::FT::FT_NOTIFIER, value);
+
+
+        value <<= replica;
+        encoder.add(::FT::FT_MONITORABLE, value);
+
+        FT::FTDomainId domain_id = 0;
+        value <<= domain_id;
+        encoder.add(::FT::FT_DOMAIN_ID, value);
+
+        FT::Location object_location;
+        object_location.length(1);
+        object_location[0].id = CORBA::string_dup("Test location");
+        value <<= object_location;
+        encoder.add(::FT::FT_LOCATION, value);
+
+        FT::TypeId object_type = 0;
+        value <<= object_type;
+        encoder.add(::FT::FT_TYPE_ID, value);
+
+        FT::ObjectGroupId group_id = 0;
+        value <<= group_id;
+        encoder.add(::FT::FT_GROUP_ID, value);
+
+        // allocate and populate the criteria
+        FT::Criteria_var criteria;
+        ACE_NEW_NORETURN (criteria,
+          FT::Criteria);
+        if (criteria.ptr() == 0)
+        {
+          ACE_ERROR((LM_ERROR,
+            "Error cannot allocate criteria.\n"
+            ));
+            result = -1;
+        }
+        else
+        {
+          encoder.encode(criteria);
+          FT::GenericFactory::FactoryCreationId_var factory_creation_id;
+
+          this->factory_->create_object (
+            type_id.in(),
+            criteria.in(),
+            factory_creation_id
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
       }
     }
 
@@ -390,30 +323,6 @@ int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  }
-  return result;
-}
-
-int StubFaultNotifier::read_ior_file(const char * fileName, CORBA::String_var & ior)
-{
-  int result = 0;
-  FILE *in = ACE_OS::fopen (fileName, "r");
-  ACE_OS::fseek(in, 0, SEEK_END);
-  size_t fileSize = ACE_OS::ftell(in);
-  ACE_OS::fseek(in, 0, SEEK_SET);
-  char * buffer;
-  ACE_NEW_NORETURN (buffer,
-    char[fileSize+1]);
-  if (buffer != 0)
-  {
-    if( fileSize == ACE_OS::fread(buffer, 1, fileSize, in))
-    {
-      buffer[fileSize] = '\0';
-      ior = CORBA::string_dup(buffer);
-      ACE_TRY_CHECK;
-      result = 1; // success
-    }
-    delete[] buffer;
   }
   return result;
 }

@@ -73,7 +73,7 @@ private:
   // Data Members
 private:
   /**
-   * The orb 
+   * The orb
    */
   CORBA::ORB_var orb_;
 
@@ -98,24 +98,23 @@ private:
   const char * readyFile_;
 
   /**
-   * A file from which the detecor's IOR should be read.
+   * The detecor's IOR  (-d option)
    */
-  const char * iorDetectorFile_;
+  const char * detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
   /**
-   * A file from which the notifier's IOR should be read.
+   * The notifier's IOR (-n option)
    */
-  const char * iorNotifierFile_;
+  const char * notifier_ior_;
 
   ::FT::FaultNotifier_var notifier_;
 
   /**
    * A collection of files containing replica IORs
    */
-  ACE_Vector < const char * > iorReplicaFiles_;
-  char * replicaIorBuffer_;
+  ACE_Vector < const char * > replicaIORs;
 
   ACE_Vector < FT::PullMonitorable_var > replicas_;
 

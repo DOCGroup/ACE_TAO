@@ -121,16 +121,16 @@ my($status) = 0;
 my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q");
 my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
-my($NOT) = new PerlACE::Process (".$build_directory/ft_notifier", "-o $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
+my($NOT) = new PerlACE::Process (".$build_directory/ft_notifier", "-o $notifier_ior -q -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior");
 my($CL);
 if (simulated) {
-  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_ior,$replica2_ior -c testscript");
+  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 }else{
   #todo figure out how to get iogr
-  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
+  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
 }
 
-print "TEST: starting replica1 ". $REP1->Executable . "\n" if ($verbose);
+print "TEST: starting replica1 ". $REP1->CommandLine . "\n" if ($verbose);
 $REP1->Spawn ();
 
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
@@ -140,7 +140,7 @@ if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting replica2" . $REP2->Executable . "\n" if ($verbose);
+print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
 $REP2->Spawn ();
 
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
@@ -151,7 +151,7 @@ if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting detector factory" . $DET->Executable . "\n" if ($verbose);
+print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbose);
 $DET->Spawn ();
 
 print "TEST: waiting for detector's IOR\n" if ($verbose);
@@ -163,7 +163,7 @@ if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting notifier" . $NOT->Executable . "\n" if ($verbose);
+print "\nTEST: starting notifier " . $NOT->CommandLine . "\n" if ($verbose);
 $NOT->Spawn ();
 
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
@@ -176,7 +176,7 @@ if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting client." . $CL->Executable . "\n" if ($verbose);
+print "\nTEST: starting client." . $CL->CommandLine . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
