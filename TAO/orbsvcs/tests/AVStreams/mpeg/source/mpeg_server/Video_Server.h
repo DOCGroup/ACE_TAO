@@ -58,13 +58,23 @@ int play_send (void);
 int fast_play_send (void);
 
 // %% comments
-class Video_Sig_Handler : public virtual ACE_Event_Handler
+class Video_Sig_Handler 
+  : public virtual ACE_Event_Handler
 {
 public:
   Video_Sig_Handler (void);
+
   virtual ACE_HANDLE get_handle (void) const;
-  virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask);
+
+  int register_handler (void);
+  // this will register this sig_handler
+  // with the reactor
+
+  virtual int shutdown (ACE_HANDLE, 
+                        ACE_Reactor_Mask);
+
   virtual int handle_input (ACE_HANDLE);
+
   virtual int handle_signal (ACE_HANDLE signum,
                              siginfo_t * = 0,
                              ucontext_t* = 0);
@@ -162,6 +172,11 @@ private:
 
   Video_Control_Handler* control_handler_;
   // Control Socket Event Handler
+
+  Video_Sig_Handler *sig_handler_;
+  // signal handler for SIGALRM to periodically send the video frames
+  // to the client
+
 
 };
 
