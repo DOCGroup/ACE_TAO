@@ -334,7 +334,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
   // object references.
   if (ctx || this->protocol_proxy_ == 0)
       ACE_THROW (CORBA::NO_IMPLEMENT ());
-  
+
   ACE_NEW_THROW_EX (request,
                     CORBA::Request (this,
                                     operation,
@@ -517,9 +517,8 @@ CORBA_Object::_set_policy_overrides (
 }
 
 CORBA::PolicyList *
-CORBA_Object::_get_policy_overrides (
-    const CORBA::PolicyTypeSeq & types,
-    CORBA::Environment &ACE_TRY_ENV)
+CORBA_Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types,
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy_overrides (types, ACE_TRY_ENV);
@@ -528,10 +527,14 @@ CORBA_Object::_get_policy_overrides (
 }
 
 CORBA::Boolean
-CORBA_Object::_validate_connection (
-    CORBA::PolicyList_out inconsistent_policies,
-    CORBA::Environment &ACE_TRY_ENV)
+CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
+  // If the object is collocated then use non_existent to see whether
+  // it's there.
+  if (this->is_collocated_)
+      return !(this->_non_existent (ACE_TRY_ENV));
+
   if (this->protocol_proxy_)
     return this->protocol_proxy_->validate_connection (inconsistent_policies,
                                                        ACE_TRY_ENV);
