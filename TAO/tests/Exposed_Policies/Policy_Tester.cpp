@@ -13,7 +13,7 @@
 #include "tao/RT_Policy_i.h"
 //#include "tao/PortableServer/POA.h"
 
-ACE_RCSID (tao, Policy_Tester, "$Id$");
+ACE_RCSID (tao, Policy_Tester, "$Id$")
 
 Policy_Tester::Policy_Tester (void)
   : rt_object_properties_ (0),

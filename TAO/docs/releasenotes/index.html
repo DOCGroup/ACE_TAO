@@ -29,7 +29,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#pp">Pluggable Protocols</a></li>
 
 <li>
-<a href="#rtcorba">Real-Time CORBA</a></li>
+<a href="RTCorba.html">Real-Time CORBA</a></li>
 
 <li>
 <a href="#poa">Portable Object Adapter (POA)</a></li>
@@ -134,7 +134,6 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 </TABLE>
 
-</ul>
 A complete list of all modifications to TAO is available in the <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/ChangeLog">ChangeLog</a>.
 <p>
 <hr>
@@ -777,134 +776,6 @@ and transport protocols for a given platform.</li>
 </ul>
 
 <p>
-<hr>
-
-<h3> <a NAME="rtcorba"></a>Real-Time CORBA </h3>
-
-<h4> Last Updated:  08/25/2000 </h4>
-
-Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
-Spivak</a> and <a href="mailto:irfan@cs.wustl.edu">Irfan
-Pyarali</a>
-<P>
-
-We are currently working on implementing RT CORBA 1.0 specification in
-TAO.  Our design is an extension of the <em>endpoint-per-priority</em>
-architecture mentioned in the <tt>Recently Completed Work</tt> section
-below.  In this design, codenamed <em>reactor-per-lane</em>, each
-threadpool lane owns a set of I/O resources, i.e., <tt>Reactor</tt>,
-<tt>Acceptor</tt>, and <tt>Connector_Registry.</tt> Each request is
-serviced by a single thread without context switches, i.e., the same
-thread performs I/O and runs the servant code.
-<P>
-
-Work in Progress:
-<ul>
-
-<li> Client Protocol Policy (expected ~ September 10) </li>
-<p>
-<li> Priority Banded Connections (expected ~ September 10) </li>
-<p>
-<li> TAO's RTCORBA Documentation web pages (expected ~ September 10) </li>
-<p>
-<li> POA Threadpools & SERVER_DECLARED Priority Model </li>
-</ul>
-
-Recently Completed Work:
-<ul>
-
-<li> CLIENT_PROPAGATED Priority Model  </li>
-<p>
-<li> Server Protocol Policy </li>
-<p>
-<li> RTORB, RTCurrent and ProrityMappingManger interfaces </li>
-<p>
-<li> Support for client-exposed policies </li>
-<p>
-<li> All RTCORBA, Policy and POA interfaces converted to local </li>
-<p>
-<li> Collocation-related  classes are restructured to support RTCORBA </li>
-<p>
-
-
-<li> Implemented Policy framework (defined in the Messaging
-specification, used in RT CORBA). </li>
-<p>
-<li> Added support for Real-time CORBA Priority and implemented two
-Priority Mappings: <tt>Linear</tt> and <tt>Direct</tt>. </li>
-<p>
-<li> Added support for end-to-end CORBA request priority preservation.
-This is achieved through <em>multiple listening endpoint</em> architecture,
-a.k.a. <em>endpoint-per-priority</em>, on the server and a Client Priority
-Policy on the client.  Following is a brief description of how this is
-implemented.
-<p>
-Server ORB uses multiple transport endpoints to accept
-connections from clients.  Each transport endpoint has a priority,
-which is the priority of the thread(s) servicing the endpoint as well
-as all connections it accepts.  When a server ORB creates an IOR for
-one of its objects, it embeds all of the server's listening endpoints
-along with their priorities into the object's IOR.  Then, a client ORB
-selects the priority that best matches client's need (as specified by
-the Client Priority Policy) from those offered by the server, and uses
-the corresponding transport endpoint specified by the server to obtain
-the desired level of service.
-<p>
-For more details and performance results for
-<em>endpoint-per-priority</em> architecture, see <a
-href="http://www.cs.wustl.edu/~marina/boeing.pdf">this paper.</a> See
-<tt>TAO/tao/TAO.pidl</tt> for Client Priority Policy interface
-definition, and <tt>TAO/tests/Endpoint_Per_Priority</tt> for
-example of using priority preservation in TAO. </li>
-<p>
-<li> Implemented reliable one-way requests, i.e., SyncScope Policy from
-the Messaging specification.  This is relevant to
-RT CORBA because of the following feature: setting SyncScope Policy to
-SYNC_NONE enables buffering of one-way requests in the client ORB.
-Request buffering can be used to optimize message throughput, possibly
-at the expense of latency.  ORB buffering behavior is controlled by
-the Buffering Constraint Policy, which is described next. </li>
-<p>
-<li> Added support for buffered one-way and asynchronous requests in
-the client ORB.  Buffering Constraint Policy gives users control over
-queueing and flushing of requests in the ORB.  A combination of the
-following conditions for initiating buffer flush can be specified
-using this policy:
-        <ul>
-          <li> Timeout value expires. </li>
-          <li> Max byte count is exceeded. </li>
-          <li> Explicit flush by the user. </li>
-          <li> Max message count is exceeded, or </li>
-          <li> ORB shutdown.</li>
-        </ul>
-<p>
-Also supported are out-of-band requests, i.e., requests that bypass
-buffers and are delivered to the server immediately.
-<p>
-Buffering Constraint Policy is a TAO-specific feature.  See
-<tt>TAO/tao/TAO.pidl</tt> for policy interface definition and
-<tt>TAO/examples/Buffered_Oneways</tt> and
-<tt>TAO/examples/Buffered_AMI</tt> directories for its use.  For
-motivation and performance of buffered one-ways see <a
-href="http://www.cs.wustl.edu/~marina/boeing.pdf">this paper.</a>
-</ul>
-
-Known issues:
-<ul>
-<li> Location forwarding does not work properly with
-<em>endpoint-per-priority</em> model.</li>
-</ul>
-
-Future work:
-<ul>
-<li> Provide server-side RT CORBA implementation using a
-<em>queue-per-lane</em> approach.  In this approach each threadpool
-lane owns a queue, while I/O resources are being shared among all the
-threadpool lanes of the same priority within the server.  Strategize TAO
-to use either <em>queue-per-lane</em> or <em>reactor-per-lane</em>
-implementation, and compare the two.
-</ul>
-
 <hr>
 
 
