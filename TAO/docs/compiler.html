@@ -268,6 +268,24 @@ put in the current directory from where&nbsp;<tao_idl>is called.&nbsp;</td>
 </td>
 </tr>
 
+<tr NAME="Cw">
+<td><tt>-Cw</tt></td>
+
+<td>Output a warning if two identifiers in the same scope differ in
+spelling only by case (default for now).</td>
+</tr>
+
+<tr NAME="Ce">
+<td><tt>-Ce</tt></td>
+
+<td>Output an error if two indentifiers in the same scope differ in 
+spelling only by case. Default output is warning (for now).</td>
+
+<td>Since there is at least one OMG IDL file (sfp.idl, part of the
+AVStreams specification) that is inconsistent with its own spelling
+rule, we have made a warning the default output until the issue 
+is resolved.</td>
+</tr>
 
 <tr NAME="Gc">
 <td><tt>-Gc</tt></td>
