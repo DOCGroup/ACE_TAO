@@ -1,3 +1,12 @@
+Wed Jul 18 16:40:56 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (program_name): Undid the following changes:
+
+	  ChangeLogTag:Tue Jul 10 11:32:26 2001  Tibor Kiss
+
+	  Tibor will be looking into this further since this change
+	  currently causes shutdown problems on Win2000.
+
 Wed Jul 18 15:59:03 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-tru64.h:
