@@ -67,3 +67,8 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

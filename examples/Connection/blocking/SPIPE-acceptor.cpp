@@ -175,3 +175,9 @@ IPC_Server::svc (void)
 }
 
 #endif /* SPIPE_ACCEPTOR_C */
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Concurrency_Strategy<Svc_Handler>;
+template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
