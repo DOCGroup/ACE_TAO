@@ -83,7 +83,7 @@ public:
   virtual int visit_union (be_union *node);
   // visit union type
 
-  void setenclosings (char *pre);
+  void setenclosings (const char *pre);
   const char *pre_op ();
   // print additional string before op (e.g. ACE_INLINE)
 
@@ -92,7 +92,7 @@ public:
 
   idl_bool in_obv_space_;
 private:
-  char *pre_op_;
+  const char *pre_op_;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FIELD_CS_H_ */
