@@ -484,8 +484,13 @@ endif
 <%endif%>
 <%if(exename)%>
 
+ifndef kylix
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+else
+$(BIN): $(addprefix $(VDIR), $(OBJS))
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
+endif
 <%endif%>
 
 realclean: clean <%compclean%>
