@@ -1,3 +1,14 @@
+Tue Sep 07 18:23:02 2004  Jules White  <jules@dre.vanderbilt.edu>
+				
+				* Config_Handlers/MDD_Handler.h
+				* Config_Handlers/MDD_Handler.cpp
+				* Config_Handlers/Req_Handler.h
+				* Config_Handlers/Req_Handler.cpp
+				
+				Created classes to handled mapping values from
+				XSC MonolithicDeploymentDescription and 
+				Requirement to the corresponding IDL types.
+				
 Thu Sep 02 15:01:21 2004  Jules White  <jules@dre.vanderbilt.edu>
                                                                                 
         * Config_Handlers/ANY_Handler.h:
