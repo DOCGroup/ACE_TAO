@@ -236,10 +236,10 @@ int be_visitor_args_request_info_ch::visit_interface (be_interface *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << this->type_name (node, "_ptr")<< " &";
+      *os << this->type_name (node, "_ptr");
       break;
     case AST_Argument::dir_INOUT: // inout
-      *os << this->type_name (node, "_ptr") << " &";
+      *os << this->type_name (node, "_ptr");
       break;
     case AST_Argument::dir_OUT:
       *os << this->type_name (node, "_out");
@@ -255,10 +255,10 @@ int be_visitor_args_request_info_ch::visit_interface_fwd (be_interface_fwd *node
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << this->type_name (node, "_ptr")<< " &";
+      *os << this->type_name (node, "_ptr");
       break;
     case AST_Argument::dir_INOUT: // inout
-      *os << this->type_name (node, "_ptr") << " &";
+      *os << this->type_name (node, "_ptr");
       break;
     case AST_Argument::dir_OUT:
       *os << this->type_name (node, "_out");
@@ -274,7 +274,7 @@ int be_visitor_args_request_info_ch::visit_native (be_native *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << this->type_name (node)<< " &";
+      *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";
@@ -311,10 +311,10 @@ int be_visitor_args_request_info_ch::visit_predefined_type (be_predefined_type *
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << this->type_name (node, "_ptr")<< " &";
+          *os << this->type_name (node, "_ptr");
           break;
         case AST_Argument::dir_INOUT:
-          *os << this->type_name (node, "_ptr") << " &";
+          *os << this->type_name (node, "_ptr");
           break;
         case AST_Argument::dir_OUT:
           *os << this->type_name (node, "_out");
@@ -326,7 +326,7 @@ int be_visitor_args_request_info_ch::visit_predefined_type (be_predefined_type *
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << this->type_name (node)<< " &";
+          *os << this->type_name (node) << " &";
           break;
         case AST_Argument::dir_INOUT:
           *os << this->type_name (node) << " &";
