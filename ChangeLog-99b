@@ -1,3 +1,10 @@
+Sun Jun  6 15:37:00 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* ace/Process.h (ACE_Process_Options): The parameter type of
+ 	  command_line() should be LPCTSTR argv[] *not* LPTSTR argv[].
+  	  This fix should be ok as a further extension to what Carlos did
+ 	  below.
+
 Sun Jun 06 20:33:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/SString.h:
