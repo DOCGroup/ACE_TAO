@@ -33,6 +33,9 @@ Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Message_Queue_Notification_Test.cpp (main): removed
           trailing ".cpp" from log file name.
 
+        * ace/config-sunx86-sunc++-4.x.h: removed because it wasn't being
+          maintained, because config-sunos5.{5,6}.h are supported on Solaris86.
+
 Tue Aug 25 05:23:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Message_Queue_Notifications_Test.dsp: Fixed something....
