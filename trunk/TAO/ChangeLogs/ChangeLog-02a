@@ -1,3 +1,16 @@
+Mon Jan 29 15:34:08 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+
+          Changed one instance in each file where
+          'stream->do_byte_swap ()' should have been
+          'stream.do_byte_swap ()'. Thanks to Paul Rubel
+          <prubel@bbn.com> for pointing out this error,
+          which is visible only when SWAP_ON_WRITE is
+          enabled.
+
 Mon Jan 29 15:25:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao.IFR_TypeCodes.cpp:
