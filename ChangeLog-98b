@@ -1,84 +1,89 @@
+Mon Jan 04 08:45:45 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/create_ace_build: changed symlink creation failure from
+          error (with termination) to warning create_ace_build.
+
 Mon Jan  4 03:15:57 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Mem_Map: If we're remapping an already-mapped file
-	  (i.e., the base_addr_ != 0) && the addr parameter IS 0 (i.e.,
- 	  the user isn't trying to respecify where to map this file), then
- 	  we'll try to map over top of the existing region, which implies 
-	  "MAP_FIXED".
+        * ace/Mem_Map: If we're remapping an already-mapped file
+          (i.e., the base_addr_ != 0) && the addr parameter IS 0 (i.e.,
+          the user isn't trying to respecify where to map this file), then
+          we'll try to map over top of the existing region, which implies
+          "MAP_FIXED".
 
 Sun Jan 03 23:21:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (initialize): Both initialize methods now
-	  remove the service object from the repository if its init()
-	  method failed.
+        * ace/Service_Config.cpp (initialize): Both initialize methods now
+          remove the service object from the repository if its init()
+          method failed.
 
 Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/ACE: Added a simple dirname() wrapper method.
+        * ace/ACE: Added a simple dirname() wrapper method.
 
-	* ace/SString: The set(const char *, size_t, int = 1) and
- 	  set(const char *, size_t) methods were inherently ambiguous.
-  	  I've fixed this by changing removing the default parameters.
-  	  Thanks to Irfan for suggesting this fix.
+        * ace/SString: The set(const char *, size_t, int = 1) and
+          set(const char *, size_t) methods were inherently ambiguous.
+          I've fixed this by changing removing the default parameters.
+          Thanks to Irfan for suggesting this fix.
 
-	* ace/Mem_Map.cpp: mmap() will fail if the length of the file
- 	  mapping is 0, which will be the case if we've just created the
- 	  file.  Therefore, don't even bother trying to mmap() in this
- 	  case and return a successful result.
+        * ace/Mem_Map.cpp: mmap() will fail if the length of the file
+          mapping is 0, which will be the case if we've just created the
+          file.  Therefore, don't even bother trying to mmap() in this
+          case and return a successful result.
 
-	* ace/FILE: Moved the get_remote_addr() and get_local_addr()
- 	  methods from the FILE_IO class to the FILE class since that's
- 	  more properly where they belong.  Also added a new remove()
- 	  method that unlinks the file.
+        * ace/FILE: Moved the get_remote_addr() and get_local_addr()
+          methods from the FILE_IO class to the FILE class since that's
+          more properly where they belong.  Also added a new remove()
+          method that unlinks the file.
 
-	* tests/Priority_Reactor_Test.cpp,
-	  tests/Conn_Test.cpp,
-	  tests/Notify_Performance_Test.cpp,
-	  Priority_Reactor_Test.cpp,
-	  Reactor_Performance_Test.cpp: Since the default is to skip argv0
- 	  there's no sense explicitly saying this in the constructor of
- 	  ACE_Get_Opt.
+        * tests/Priority_Reactor_Test.cpp,
+          tests/Conn_Test.cpp,
+          tests/Notify_Performance_Test.cpp,
+          Priority_Reactor_Test.cpp,
+          Reactor_Performance_Test.cpp: Since the default is to skip argv0
+          there's no sense explicitly saying this in the constructor of
+          ACE_Get_Opt.
 
-	* ace/FILE_Connector.h: Updated the comments to reflect recent
-	  changes.
+        * ace/FILE_Connector.h: Updated the comments to reflect recent
+          changes.
 
-	* ace/FILE.h: Added a new get_info() method that takes a reference
- 	  to an ACE_FILE_Info rather than a pointer.  This is a cleaner
- 	  API, IMHO.
+        * ace/FILE.h: Added a new get_info() method that takes a reference
+          to an ACE_FILE_Info rather than a pointer.  This is a cleaner
+          API, IMHO.
 
-	* ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
- 	  is ACE_Addr::sap_any, then connect will select a temporary
- 	  filename using the new feature of ACE_FILE_Addr described below.
+        * ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
+          is ACE_Addr::sap_any, then connect will select a temporary
+          filename using the new feature of ACE_FILE_Addr described below.
 
-	* ace/FILE_Addr.cpp (set): When the address is ACE_Addr::sap_any,
- 	  then we'll select a new temporary filename using the new
- 	  ACE_DEFAULT_TEMP_FILE macro and ACE_OS::mktemp().
+        * ace/FILE_Addr.cpp (set): When the address is ACE_Addr::sap_any,
+          then we'll select a new temporary filename using the new
+          ACE_DEFAULT_TEMP_FILE macro and ACE_OS::mktemp().
 
-	* ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
- 	  to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector
- 	  to create a temporary file when it's given an ACE_Addr::sap_any.
+        * ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
+          to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector
+          to create a temporary file when it's given an ACE_Addr::sap_any.
 
-	* ace/FILE_Addr.h: The <set> accessor should return an int to be
- 	  consistent.
+        * ace/FILE_Addr.h: The <set> accessor should return an int to be
+          consistent.
 
-	* ace/OS.h: Added a new ACE_sap_any_cast macro, which makes it
- 	  much easier to cast the ACE_Addr::sap_any to the right subclass.
+        * ace/OS.h: Added a new ACE_sap_any_cast macro, which makes it
+          much easier to cast the ACE_Addr::sap_any to the right subclass.
 
-	* tests/Reactor_Performance_Test.cpp,
-	  tests/Reactor_Exceptions_Test.cpp,
-	  tests/Process_Strategy_Test.cpp,
-	  tests/Priority_Reactor_Test.cpp,
-	  tests/IOStream_Test.cpp,
-	  tests/Conn_Test.cpp: Replaced all the C-style casts for
- 	  ACE_Addr::sap_any with the new ACE_sap_any_cast macro.
+        * tests/Reactor_Performance_Test.cpp,
+          tests/Reactor_Exceptions_Test.cpp,
+          tests/Process_Strategy_Test.cpp,
+          tests/Priority_Reactor_Test.cpp,
+          tests/IOStream_Test.cpp,
+          tests/Conn_Test.cpp: Replaced all the C-style casts for
+          ACE_Addr::sap_any with the new ACE_sap_any_cast macro.
 
 Sun Jan 03 21:48:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.cpp: Since this is a template file, I
- 	  removed it from the ace library build on NT.
+        * ace/Asynch_Acceptor.cpp: Since this is a template file, I
+          removed it from the ace library build on NT.
 
-	* ace/Asynch_Acceptor.cpp (open): Changed C-style cast to use the
- 	  new ACE_sap_any_cast macro from Dr. Schmidt.
+        * ace/Asynch_Acceptor.cpp (open): Changed C-style cast to use the
+          new ACE_sap_any_cast macro from Dr. Schmidt.
 
 Sun Jan 03 09:12:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
