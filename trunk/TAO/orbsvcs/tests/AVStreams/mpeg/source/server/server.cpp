@@ -23,10 +23,10 @@ Mpeg_Svc_Handler::open (void *)
                          "server"),
                         -1);
     case 0:
-      // i am the parent. i should go back and listen for more connections
+      // i am the child. i should go back and listen for more connections
       return 0;
     default:
-      // i am the child. i should handle this connection
+      // i am the parent. i should handle this connection
       this-> svc ();
     }
   
