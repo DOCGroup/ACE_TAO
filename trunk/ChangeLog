@@ -1,3 +1,13 @@
+Fri Dec 20 20:02:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * bin/make_release: When updating version files, also update
+          bin/MakeProjectCreator/config/aceversion.mpb and taoversion.mpb.
+          Added a new subroutine, generate_makefiles() that's called just
+          before create_kit. It generates the workspace and project files
+          for ACE_wrappers/ace and ACE_wrappers/tests. If any of these are
+          desired for TAO, someone knowledgeable on TAO should add to the
+          place in generate_makefiles() for the TAO stuff.
+
 Fri Dec 20 16:12:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.h:

@@ -318,6 +318,11 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
     }
   }
 
+  $status = &generate_makefiles ();
+  if ($status != 0) {
+    die "$0: failed to generate makefiles\n";
+  }
+
   $status = &create_kit ();
 
   if (! $status  &&  $install) {
@@ -526,6 +531,10 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "TAO version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
+      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+           "../bin/MakeProjectCreator/config/taoversion.mpb");
+      return 1 if $? >> 8;
+
       open (TAO_VERSION_H, "> tao/Version.h")  ||
         die "$0: unable to open tao/Version.h\n";
 
@@ -545,6 +554,9 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "ACE version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
+      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+           "bin/MakeProjectCreator/config/aceversion.mpb");
+      return 1 if $? >> 8;
 
       open (ACE_VERSION_H, "> ace/Version.h")  ||
         die "$0: unable to open ace/Version.h\n";
@@ -598,11 +610,12 @@ sub update_changelog () {
     || return 1;
 
   my $version_h = $kit =~ /^ace/  ?  'ace/Version.h'  :  'tao/Version.h';
+  my $version_mpb = $kit =~ /^ace/  ?  'bin/MakeProjectCreator/config/aceversion.mpb'  :  '../bin/MakeProjectCreator/config/taoversion.mpb';
 
   &ex ("$cvs commit -m'$version' " .
-       "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h  &&  " .
-       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
-       "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
+    "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&  " .
+    "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
+    "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
   return 1 if $? >> 8;
 
   0;
@@ -654,6 +667,35 @@ sub diff () {
 
   #### Ignore return value.  No promises on diffs.
   0;
+}
+
+
+########
+######## Generate Makefiles and workspace/project files.
+########
+sub generate_makefiles () {
+  if ($kit =~ /^ace/) {
+    # At this point, the only mwc/mpc files are in ace and tests. When more
+    # are available, this needs to be updated, maybe by cycling through
+    # all non-TAO directories looking for mwc (or mpc?) files.
+    if ("$exec_prefix") {
+      print "chdir ace\n";
+    } else {
+      chdir "ace"  ||  die "$0: unable to chdir ace\n";
+    }
+    &ex ("../bin/mwc.pl -type vc7 ace.mwc; ../bin/mwc.pl -type em3 ace.mwc");
+    if ("$exec_prefix") {
+      print "chdir ../tests\n";
+    } else {
+      chdir "../tests"  ||  die "$0: unable to chdir ../tests\n";
+    }
+    &ex ("../bin/mwc.pl -type vc7 tests.mwc; ../bin/mwc.pl -type em3 tests.mwc");
+  }
+  if ($kit =~ /^tao/) {
+    # A TAO-knowledgable person needs to decide what, if anything, is to be
+    # done here.
+    0;
+  }
 }
 
 
