@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 ace.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\bin\JAWS.dll" /libpath:"../../../ace"
+# ADD LINK32 ace.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\bin\JAWS.dll" /libpath:"../../../ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
@@ -82,7 +82,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\bin\JAWSd.dll" /pdbtype:sept /libpath:"../../../ace"
+# ADD LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\bin\JAWSd.dll" /pdbtype:sept /libpath:"../../../ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -273,107 +273,37 @@ SOURCE=.\Waiter.h
 # Begin Source File
 
 SOURCE=.\Assoc_Array.cpp
-
-!IF  "$(CFG)" == "JAWS Library - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cache_Hash_T.cpp
-
-!IF  "$(CFG)" == "JAWS Library - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cache_Heap_T.cpp
-
-!IF  "$(CFG)" == "JAWS Library - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cache_List_T.cpp
-
-!IF  "$(CFG)" == "JAWS Library - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cache_Manager_T.cpp
-
-!IF  "$(CFG)" == "JAWS Library - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Bucket_T.cpp
-
-!IF  "$(CFG)" == "JAWS Library - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Pipeline_Handler_T.cpp
-
-!IF  "$(CFG)" == "JAWS Library - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "JAWS Library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target
