@@ -3,6 +3,7 @@
 #include "FTRT_ClientORB_Interceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
+#include "../Utils/Safe_InputCDR.h"
 
 ACE_RCSID (ClientORB,
            FTRT_ClientORB_Interceptor,
@@ -112,8 +113,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
     ACE_reinterpret_cast (const char *,
     service_context->context_data.get_buffer ());
 
-  TAO_InputCDR cdr (buf,
-    service_context->context_data.length ());
+  Safe_InputCDR cdr (buf, service_context->context_data.length ());
 
 
   CORBA::Object_var obj;
