@@ -5,17 +5,33 @@
 #include "Locator_Options.h"
 
 int
-run_standalone (void)
+run_standalone (Options& opts)
 {
   ImR_Locator_i server;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int status = server.init (ACE_ENV_SINGLE_ARG_PARAMETER);
+      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (status != -1) 
-        return 0;
+      if (status == -1)
+        {
+          return 1;
+        }
+      else
+        {
+          // Run the server if it is initialized correctly.
+          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // End the server after its work is done.
+          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (status == -1)
+            return 1;
+        }
+      return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -56,22 +72,93 @@ run_service (void)
 #endif /* ACE_WIN32 */
 }
 
-#include <ace/streams.h>
+/**
+ * Executes the various commands that are useful for a NT service.  Right
+ * now these include 'install' and 'remove'.  Others, such as 'start' and
+ * 'stop' can be added, but the 'net' program in Windows already handles
+ * these commands.
+ */
+static int
+run_service_command (Options& opts)
+{
+  if (opts.service_command() == Options::SC_NONE) 
+    return 0;
+
+#if defined (ACE_WIN32)
+  SERVICE::instance()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
+
+  if (opts.service_command() == Options::SC_INSTALL)
+    {
+      const DWORD MAX_PATH_LENGTH = 4096;
+      char pathname[MAX_PATH_LENGTH]; 
+
+      DWORD length = ACE_TEXT_GetModuleFileName(NULL, pathname, MAX_PATH_LENGTH);
+      if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
+        {
+          ACE_ERROR ((LM_ERROR, "Error: Could not get module file name\n"));
+          return -1;
+        }
+
+      // Append the command used for running the implrepo as a service
+      ACE_OS::strcat (pathname, ACE_TEXT (" -s"));
+
+      int ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
+                                           SERVICE_ERROR_NORMAL,
+                                           pathname);
+      if (ret != -1) {
+        ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service installed.\n"));
+        opts.save_registry_options();
+      } else {
+        ACE_ERROR((LM_ERROR, "Error: Failed to install service. error:%d\n", errno));
+      }
+      if (ret == 0) 
+        return 1;
+    }
+  else if (opts.service_command() == Options::SC_REMOVE)
+    {
+      int ret = SERVICE::instance ()->remove ();
+      ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service removed.\n"));
+      if (ret == 0) 
+        return 1; // If successfull, then we don't want to continue.
+    }
+  else 
+  {
+    ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n", 
+      opts.service_command()));
+    return -1;
+  }
+
+  return -1;
+
+#else /* ACE_WIN32 */
+  ACE_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
+  return -1;
+#endif /* ACE_WIN32 */
+}
 
 int
 main (int argc, char *argv[])
 {
-  int result = OPTIONS::instance()->init(argc, argv);
+  Options opts;
 
+  int result = opts.init (argc, argv);
   if (result < 0)
-    return 1;  // Error parsing args
+    return 1;  // Error
   else if (result > 0)
     return 0;  // No error, but we should exit anyway.
 
-  if (OPTIONS::instance()->service())
-    return run_service();
+  result = run_service_command(opts);
+  if (result < 0)
+    return 1;  // Error
+  else if (result > 0)
+    return 0;  // No error, but we should exit anyway.
 
-  return run_standalone();
+  if (opts.service())
+  {
+    return run_service ();
+  }
+
+  return run_standalone (opts);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

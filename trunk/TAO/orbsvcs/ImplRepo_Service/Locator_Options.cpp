@@ -9,12 +9,9 @@
 //=============================================================================
 
 #include "Locator_Options.h"
-#include "Locator_NT_Service.h"
-#include "tao/Strategies/advanced_resource.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/ARGV.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Mutex.h"
 
 ACE_RCSID (ImplRepo_Service,
            Options,
@@ -28,25 +25,19 @@ static const ACE_TCHAR *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOIMRLocator\\Parameters");
 #endif /* ACE_WIN32 */
 
-/**
- * Default Constructor.  Assigns default values to all the member variables.
- */
+static const int DEFAULT_PING_INTERVAL = 10; // seconds
+
 Options::Options ()
-  : debug_ (1)
-  , multicast_ (false)
-  , service_ (false)
-  , service_command_(SC_NONE)
+: repo_mode_ (REPO_NONE)
+, debug_ (1)
+, multicast_ (false)
+, service_ (false)
+, ping_interval_(DEFAULT_PING_INTERVAL)
+, readonly_ (false)
+, service_command_(SC_NONE)
 {
 }
 
-/**
- * parse_args uses an ACE_Arg_Shifter to grab all the options that are
- * specific to the ImR.
- *
- * @retval  0 Success
- * @retval -1 Error parsing args
- * @retval  1 Success but we should exit.
- */
 int
 Options::parse_args (int &argc, char *argv[])
 {
@@ -67,12 +58,12 @@ Options::parse_args (int &argc, char *argv[])
             }
 
           if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("install")) == 0) 
+                                   ACE_TEXT ("install")) == 0)
           {
             this->service_command_ = SC_INSTALL;
           }
           else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("remove")) == 0) 
+                                   ACE_TEXT ("remove")) == 0)
           {
             this->service_command_ = SC_REMOVE;
           }
@@ -81,7 +72,7 @@ Options::parse_args (int &argc, char *argv[])
             ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
             this->print_usage ();
             return -1;
-          } 
+          }
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-d")) == 0)
@@ -129,6 +120,74 @@ Options::parse_args (int &argc, char *argv[])
           this->print_usage ();
           return 1;
         }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-l")) == 0)
+        {
+          this->readonly_ = true;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-p")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -p option needs a filename\n"));
+              this->print_usage ();
+              return -1;
+            }
+
+          this->persist_file_name_ = shifter.get_current ();
+          this->repo_mode_ = REPO_HEAP_FILE;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-r")) == 0)
+        {
+          this->repo_mode_ = REPO_REGISTRY;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-x")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
+              this->print_usage ();
+              return -1;
+            }
+
+          this->persist_file_name_ = shifter.get_current ();
+          this->repo_mode_ = REPO_XML_FILE;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-t")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -t option needs a value\n"));
+              this->print_usage ();
+              return -1;
+            }
+          this->startup_timeout_ =
+            ACE_Time_Value (ACE_OS::atoi (shifter.get_current ()));
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-v")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -v option needs a value\n"));
+              this->print_usage ();
+              return -1;
+            }
+          this->ping_interval_ =
+            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
+        }
       else
         {
           shifter.ignore_arg ();
@@ -141,163 +200,56 @@ Options::parse_args (int &argc, char *argv[])
   return 0;
 }
 
-/**
- * @retval  0 Success
- * @retval -1 Error parsing args
- * @retval  1 Success but we should exit.
- */
 int
 Options::init (int argc, char *argv[])
 {
+  // Make an initial pass through and grab the arguments that we recognize.
+  // This may also run the commands to install or remove the nt service.
   int result = this->parse_args (argc, argv);
-  if (result != 0) {
+  if (result != 0)
+  {
     return result;
   }
 
-  ACE_ARGV orb_args;   // Save the leftovers to a ACE_ARGV class
-  ACE_CString cmdline; // We'll save this in the registry when installing.
-  for (int i = 1; i < argc; ++i)
-    {
-      cmdline += ACE_CString(argv[i]) + ACE_CString(" ");
-      if (orb_args.add (argv[i]) == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Could not save argument"));
-          return -1;
-        }
-    }
+  for (int i = 0; i < argc; ++i)
+  {
+    this->cmdline_ += ACE_CString(argv[i]) + ACE_CString(" ");
+  }
+  return 0;
+}
 
-  result = run_service_command(cmdline);
-  
-  if (result != 0) 
-    return result;
-
-  char* argv_tmp = 0;
-
-  // Load from the registry. This may replace the args.
-  if (this->load_registry_options(argv_tmp, orb_args) != 0)
-    return -1;
-
-  ACE_Auto_Array_Ptr<char> argv_deleter(argv_tmp);
-
-  int orb_argc = orb_args.argc ();
-  // Now initialize the orb and pass it the leftover arguments
-  ACE_TRY_NEW_ENV
-    {
-      // First make sure the ImplRepo doesn't pick up an environment setting 
-      // that would make it try to register with itself.
-      char* use_IMR_env_var_value = ACE_OS::getenv ("TAO_USE_IMR");
-      if (use_IMR_env_var_value != 0)
-        {
-          ACE_OS::putenv ("TAO_USE_IMR=0");
-        }
-
-      this->orb_ = CORBA::ORB_init (orb_argc,
-                                    orb_args.argv (),
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception \n");
-      ACE_ERROR ((LM_ERROR, "Error: Cannot initialize ORB\n"));
-      return -1;
-    }
-  ACE_ENDTRY;
-
-  // Indicates successful parsing of command line.
+int
+Options::init_from_registry (void)
+{
+  this->load_registry_options();
   return 0;
 }
 
 
-/**
- * Just print out the usage message to STDERR
- */
 void
 Options::print_usage (void) const
 {
   ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
-              "ImR_Locator [-c cmd] [-d 0|1|2] [-m] [-o file] [-s]\n"
-              "\n"
+              "ImR_Locator [-c cmd] [-d 0|1|2] [-m] [-o file]\n"
+              " [-r|-p file|-x file] [-s] [-t secs] [-v secs]\n"
               "  -c command  Runs nt service commands ('install' or 'remove')\n"
               "  -d level    Sets the debug level (default 1)\n"
+              "  -l          Lock the database\n"
               "  -m          Turn on multicast\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
-              "  -s          Runs as a service (NT Only)\n")
-             );
+              "  -s          Runs as a service (NT Only)\n"
+              "  -p file     Use file for storing/loading settings\n"
+              "  -x file     Use XML file for storing/loading setting\n"
+              "  -r          Use the registry for storing/loading settings\n"
+              "  -t secs     Server startup timeout.(Default=0)\n"
+              "  -v secs     Server verification interval.(Default=10)\n"
+              ));
 }
 
-
-/**
- * Executes the various commands that are useful for a NT service.  Right
- * now these include 'install' and 'remove'.  Others, such as 'start' and
- * 'stop' can be added, but the 'net' program in Windows already handles
- * these commands.
- *
- * @todo Finish implementing Options::run_service_command
- * @todo Update to unicode
- */
 int
-Options::run_service_command (const ACE_CString& cmdline)
-{
-  if (this->service_command_ == SC_NONE) 
-    return 0;
-#if defined (ACE_WIN32)
-  SERVICE::instance ()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
-
-  if (this->service_command_ == SC_INSTALL)
-    {
-      char pathname[_MAX_PATH * 2 + 3];  // +3 for the ' -s' at the end
-
-      if (ACE_TEXT_GetModuleFileName(NULL, pathname, _MAX_PATH * 2) == 0)
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Could not get module file name.\n"));
-          return -1;
-        }
-
-      // Append the command used for running the implrepo as
-      ACE_OS::strcat (pathname, ACE_TEXT (" -s"));
-
-      int ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
-                                           SERVICE_ERROR_NORMAL,
-                                           pathname
-                                           );
-      if (ret != -1) {
-        if (debug() > 0) {
-          ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service installed.\n"));
-        }
-        this->save_registry_options(cmdline);
-      } else {
-        ACE_ERROR((LM_ERROR, "Error: Failed to install service.\n"));
-      }
-      if (ret == 0) 
-        return 1;
-    }
-  else if (this->service_command_ == SC_REMOVE)
-    {
-      int ret = SERVICE::instance ()->remove ();
-      if (debug() > 0) {
-        ACE_DEBUG ((LM_DEBUG, "ImR Locator: Service removed.\n"));
-      }
-      if (ret == 0) 
-        return 1; // If successfull, then we don't want to continue.
-    }
-
-  return -1;
-
-#else /* ACE_WIN32 */
-  ACE_UNUSED_ARG (cmdline);
-  ACE_ERROR ((LM_ERROR, "Service not supported on this platform"));
-
-  return -1;
-#endif /* ACE_WIN32 */
-}
-
-int 
-Options::save_registry_options(const ACE_CString& cmdline) 
+Options::save_registry_options()
 {
 #if defined (ACE_WIN32)
   HKEY key = 0;
@@ -315,66 +267,57 @@ Options::save_registry_options(const ACE_CString& cmdline)
   if (err != ERROR_SUCCESS) {
     return -1;
   }
-  err = ACE_TEXT_RegSetValueEx(key, "ORBInitOptions", 0, REG_SZ, 
-    (LPBYTE) cmdline.c_str(), cmdline.length() + 1);
+  err = ACE_TEXT_RegSetValueEx(key, "ORBInitOptions", 0, REG_SZ,
+    (LPBYTE) this->cmdline_.c_str(), this->cmdline_.length() + 1);
   ACE_ASSERT(err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx(key, "IORFile", 0, REG_SZ, 
+  err = ACE_TEXT_RegSetValueEx(key, "IORFile", 0, REG_SZ,
     (LPBYTE) ior_output_file_.c_str(), ior_output_file_.length() + 1);
   ACE_ASSERT(err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx(key, "DebugLevel", 0, REG_DWORD, 
+  err = ACE_TEXT_RegSetValueEx(key, "DebugLevel", 0, REG_DWORD,
     (LPBYTE) &debug_ , sizeof(debug_));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
-  DWORD tmp = multicast_ ? 1 : 0;
-  err = ACE_TEXT_RegSetValueEx(key, "Multicast", 0, REG_DWORD, 
+  err = ACE_TEXT_RegSetValueEx(key, "PersistFile", 0, REG_SZ,
+    (LPBYTE) this->persist_file_name_.c_str(), this->persist_file_name_.length() + 1);
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
+  DWORD tmp = this->ping_interval_.msec();
+  err = ACE_TEXT_RegSetValueEx(key, "PingInterval", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof(DWORD));
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
+  tmp = this->readonly_ ? 1 : 0;
+  err = ACE_TEXT_RegSetValueEx(key, "Lock", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof(DWORD));
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
+  tmp = this->repo_mode_;
+  err = ACE_TEXT_RegSetValueEx(key, "PersistType", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof(DWORD));
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
+  tmp = this->startup_timeout_.sec();
+  err = ACE_TEXT_RegSetValueEx(key, "Timeout", 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof(DWORD));
+  ACE_ASSERT(err == ERROR_SUCCESS);
+
+  tmp = multicast_ ? 1 : 0;
+  err = ACE_TEXT_RegSetValueEx(key, "Multicast", 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof(DWORD));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
   err = ::RegCloseKey(key);
   ACE_ASSERT(err == ERROR_SUCCESS);
-#else
-  ACE_UNUSED_ARG (cmdline);
 #endif
   return 0;
 }
 
-namespace {
-  // This both parses the cmdline by replacing spaces with \0's, and
-  // adds each command to the ACE_ARGV. 
-  void parse_command_line(char* cmdline, ACE_ARGV& argv) {
-    // This tokenizer will replace all spaces with end-of-string
-    // characters and will preserve text between "" and '' pairs.
-    ACE_Tokenizer parser (cmdline);
-    parser.delimiter_replace (' ', '\0');
-    parser.preserve_designators ('\"', '\"');
-    parser.preserve_designators ('\'', '\'');
-
-    for (char *p = parser.next (); p; p = parser.next ()) {
-      argv.add(p);
-    }
-  }
-}
-/**
- *  We will only load from the registry if we are a service.
- *  We load each parameter from individual string keys, and then
- *  we have to parse the cmdline property into the orb_options
- *  so that they can be passed to ORB_init()
- */
 int
-Options::load_registry_options (char*& cmdline, ACE_ARGV& argv)
+Options::load_registry_options ()
 {
 #if defined (ACE_WIN32)
-  if (! this->service())
-  {
-    if (this->debug () > 1)
-      ACE_DEBUG ((LM_DEBUG,
-      "Locator_Options::load_registry_options: Not running "
-      "as a service, will not load data from registry\n"));
-    return 0;
-  }
-
   HKEY key = 0;
   // Create or open the parameters key
   LONG err = ACE_TEXT_RegOpenKeyEx (SERVICE_REG_ROOT,
@@ -387,110 +330,152 @@ Options::load_registry_options (char*& cmdline, ACE_ARGV& argv)
     // If there aren't any saved parameters, then that's ok.
     return 0;
   }
-  ACE_TCHAR tmpstr[4096];
+  TCHAR tmpstr[4096];
   DWORD sz = sizeof(tmpstr);
   DWORD type = 0;
-  err = ACE_TEXT_RegQueryValueEx(key, "ORBInitOptions", 0, &type, 
+  err = ACE_TEXT_RegQueryValueEx(key, "ORBInitOptions", 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_SZ);
-    cmdline = new char[sz+1];
-    ACE_OS::strncpy(cmdline, tmpstr, sz);
-    parse_command_line(cmdline, argv);
+    tmpstr[sz - 1] = '\0';
+    this->cmdline_ = tmpstr;
   }
 
   sz = sizeof(tmpstr);
-  err = ACE_TEXT_RegQueryValueEx(key, "IORFile", 0, &type, 
+  err = ACE_TEXT_RegQueryValueEx(key, "IORFile", 0, &type,
     (LPBYTE) tmpstr, &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_SZ);
-    tmpstr[sz] = ACE_TCHAR('\0');
-    this->ior_output_file_ = ACE_CString(tmpstr);
+    tmpstr[sz - 1] = '\0';
+    this->ior_output_file_ = tmpstr;
   }
 
   sz = sizeof(debug_);
-  err = ACE_TEXT_RegQueryValueEx(key, "DebugLevel", 0, &type, 
-    (LPBYTE) &debug_ , &sz);
+  err = ACE_TEXT_RegQueryValueEx(key, "DebugLevel", 0, &type,
+    (LPBYTE) &this->debug_ , &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_DWORD);
   }
 
   DWORD tmp = 0;
-  err = ACE_TEXT_RegQueryValueEx(key, "Multicast", 0, &type, 
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx(key, "PingInterval", 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_DWORD);
+    ping_interval_.msec(tmp);
+  }
+
+  tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx(key, "Lock", 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_DWORD);
+    readonly_ = tmp != 0;
+  }
+
+  sz = sizeof(this->repo_mode_);
+  err = ACE_TEXT_RegQueryValueEx(key, "PersistType", 0, &type,
+    (LPBYTE) &this->repo_mode_, &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_DWORD);
+  }
+
+  tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx(key, "Timeout", 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_DWORD);
+    this->startup_timeout_.sec(tmp);
+  }
+
+  tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx(key, "Multicast", 0, &type,
     (LPBYTE) &tmp, &sz);
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_DWORD);
     this->multicast_ = tmp != 0;
   }
 
+  sz = sizeof(tmpstr);
+  err = ACE_TEXT_RegQueryValueEx(key, "PersistFile", 0, &type,
+    (LPBYTE) tmpstr, &sz);
+  if (err == ERROR_SUCCESS) {
+    ACE_ASSERT(type == REG_SZ);
+    tmpstr[sz - 1] = '\0';
+    this->persist_file_name_ = tmpstr;
+  }
+
   err = ::RegCloseKey(key);
   ACE_ASSERT(err == ERROR_SUCCESS);
-
+#endif
   return 0;
-#else /* ACE_WIN32 */
-  ACE_UNUSED_ARG (cmdline);
-  ACE_UNUSED_ARG (argv);
-  return 0;
-#endif /* ACE_WIN32 */
 }
 
-/**
- * Standalone Mode
- *
- * @retval false Run as standalone service
- * @retval true Run as a service (only on NT right now)
- */
 bool
 Options::service (void) const
 {
   return this->service_;
 }
 
-
-/**
- * Debug level for the IR.
- *
- * @retval 0 Quiet
- * @retval 1 Trace messages
- * @retval 2 Detailed messages
- */
 unsigned int
 Options::debug (void) const
 {
   return this->debug_;
 }
 
-
-/**
- * @return The file where the IOR will be stored.
- */
-ACE_CString
-Options::output_filename (void) const
+const ACE_CString&
+Options::ior_filename (void) const
 {
   return this->ior_output_file_;
 }
 
-/**
- * @return A pointer to the ORB.
- */
-CORBA::ORB_ptr
-Options::orb (void) const
-{
-  return CORBA::ORB::_duplicate (this->orb_.in ());
-}
-
-/**
- * @retval false Do not listen for multicast location requests.
- * @retval true Do Listen.
- */
 bool
 Options::multicast (void) const
 {
   return this->multicast_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <Options, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <Options, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+Options::SERVICE_COMMAND
+Options::service_command(void) const
+{
+  return this->service_command_;
+}
+
+const ACE_CString&
+Options::cmdline(void) const {
+  return this->cmdline_;
+}
+
+const ACE_CString&
+Options::persist_file_name(void) const {
+  return this->persist_file_name_;
+}
+
+ACE_Time_Value
+Options::startup_timeout (void) const
+{
+  return this->startup_timeout_;
+}
+
+ACE_Time_Value
+Options::ping_interval (void) const
+{
+  return this->ping_interval_;
+}
+
+Options::RepoMode
+Options::repository_mode (void) const
+{
+  return this->repo_mode_;
+}
+
+bool
+Options::readonly (void) const
+{
+  return this->readonly_;
+}
+
