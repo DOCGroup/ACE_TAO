@@ -1,3 +1,19 @@
+Wed May 24 10:01:26 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/ATM_Acceptor.{h,i,cpp}
+        * ace/ATM_Addr.{h,i,cpp}
+        * ace/ATM_Connector.{h,i,cpp}
+        * ace/ATM_Params.h
+        * ace/ATM_QoS.{h,i,cpp}
+        * ace/ATM_Stream.cpp:
+          Added support for ATM on Linux. Thanks to Pedro Brandao
+          <pbrandao@inescn.pt> for providing this.
+
+        * ace/TLI.{h,i,cpp}
+        * ace/TLI_Connector.{h,i,cpp}
+        * ace/TLI_Stream.{h,i,cpp}:
+          Changed hard-coded "inline" to "ACE_INLINE"
+
 Wed May 24 08:10:21 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/WFMO_Reactor.h: Wrapped the !WinSock2 defs in defined(ACE_WIN32)
