@@ -1897,7 +1897,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 
 # elif defined (VXWORKS)
   if (::semTake (*m, NO_WAIT) == ERROR)
-    if (errno == S_objLib_OBJ_TIMEOUT)
+    if (errno == S_objLib_OBJ_UNAVAILABLE)
       {
         // couldn't get the semaphore
         errno = EBUSY;
@@ -3537,7 +3537,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
    }
 #   elif defined (VXWORKS)
   if (::semTake (s->sema_, NO_WAIT) == ERROR)
-    if (errno == S_objLib_OBJ_TIMEOUT)
+    if (errno == S_objLib_OBJ_UNAVAILABLE)
       {
         // couldn't get the semaphore
         errno = EBUSY;
@@ -3842,10 +3842,12 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
               relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
   if (::semTake (s->sema_, ticks) == ERROR)
     {
-      if (errno == S_objLib_OBJ_TIMEOUT)
+      if (errno == S_objLib_OBJ_TIMEOUT) 
         // Convert the VxWorks errno to one that's common for to ACE
         // platforms.
         errno = ETIME;
+      else if (errno == S_objLib_OBJ_UNAVAILABLE)
+        errno = EBUSY;
       return -1;
     }
   else
