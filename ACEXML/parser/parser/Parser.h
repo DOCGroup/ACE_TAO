@@ -154,9 +154,9 @@ public:
    * whitespace after proper conversion.  Null if there's no
    * whitespace found.
    *
-   * @retval The first none-white space characters (which will be
+   * @return The first none-white space characters (which will be
    * consumed from the CharStream.)  If no whitespace is found, it
-   * will return 0.
+   * returns 0.
    *
    * @sa skip_whitespace_count
    */
@@ -172,7 +172,7 @@ public:
    *        skip_whitespace_count stores the first non-whitespace
    *        character it sees (character is not removed from the stream.)
    *
-   * @retval The number of whitespace characters consumed.
+   * @return The number of whitespace characters consumed.
    *
    * @sa skip_whitespace
    */
@@ -239,7 +239,7 @@ public:
    * character from the input CharStream, otherwise, read_name
    * will use this->get() to acquire the initial character.
    *
-   * @retval A pointer to the string in the obstack, 0 if it's not
+   * @return A pointer to the string in the obstack, 0 if it's not
    * a valid name.
    */
   ACEXML_Char *read_name (ACEXML_Char ch = 0);
@@ -289,7 +289,7 @@ public:
    * Parse an entity reference, i.e., "&amp;".  The first character
    * encountered should be the character following '&'.
    *
-   * @retval A pointer to the resolved const ACEXML_String if success
+   * @return A pointer to the resolved const ACEXML_String if success
    * (previously defined), 0 otherwise.
    */
   const ACEXML_String *parse_reference (void);
@@ -298,7 +298,8 @@ public:
    * Parse a CDATA section.  The first character should always be the first
    * '[' in CDATA definition.
    *
-   * @retval 0 on success, -1 otherwise.
+   * @retval 0 on success.
+   * @retval -1 if fail.
    */
   int parse_cdata (ACEXML_Env &xmlenv);
 
