@@ -10827,10 +10827,10 @@ ACE_OS::getuid (void)
 }
 
 ACE_INLINE int
-ACE_OS::isatty (ACE_HANDLE fd)
+ACE_OS::isatty (ACE_HANDLE handle)
 {
 # if defined (ACE_LACKS_ISATTY)
-  ACE_UNUSED_ARG (fd);
+  ACE_UNUSED_ARG (handle);
   return 0;
 # elif defined (ACE_WIN32)
 #  if !defined (ACE_HAS_WINCE)
@@ -10843,6 +10843,6 @@ ACE_OS::isatty (ACE_HANDLE fd)
 #  endif /* ACE_HAS_WINCE */
 # else 
   // ACE_TRACE ("ACE_OS::isatty");
-  ACE_OSCALL_RETURN (::isatty (fd), int, -1);
+  ACE_OSCALL_RETURN (::isatty (handle), int, -1);
 # endif /* defined (ACE_LACKS_ISATTY) */
 }
