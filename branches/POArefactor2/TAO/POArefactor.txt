@@ -1,3 +1,12 @@
+Wed Dec  8 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ThreadStrategy*.{h,cpp}:
+          Added a type method to retrieve the type of strategy (single or orb
+          control). This is then used in the destroy method, for orb control
+          we just do nothing, for single threaded we delete the unique
+          instance per poa. When Bala agrees with this setup, I have to update
+          the other strategies with the same structure.
+
 Wed Dec  8 12:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*Policy.{h,cpp}:
