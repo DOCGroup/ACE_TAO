@@ -16,9 +16,9 @@ project (NodeDaemon_stub): ciao_deployment_stub, ciao_server_dnc {
   }
 }
 
-project(Node_Daemon): ciao_deployment_svnt, ciao_deployment_stub, iortable, naming {
+project(Node_Daemon): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc, iortable, naming {
   after += NodeApplicationManager NodeDaemon_stub
-  libs += NodeApplicationManager NodeDaemon_stub TAO_IFR_Client CIAO_DnC_Server
+  libs += NodeDaemon_stub NodeApplicationManager TAO_IFR_Client
   exename = Node_Daemon
 
   IDL_Files {

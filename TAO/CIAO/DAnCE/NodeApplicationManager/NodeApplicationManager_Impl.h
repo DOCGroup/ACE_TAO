@@ -61,7 +61,7 @@ namespace CIAO
 
     //@@ Destroy the whole applicaton.
     virtual void destroyApplication (Deployment::Application_ptr
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                               Deployment::StopError));
 
@@ -98,11 +98,11 @@ namespace CIAO
                        Deployment::InvalidProperty));
 
     //@@ Note: This method doesn't do duplicate.
-    Deployment::NodeApplicationManager_ptr get_nadeapp_manager (void);
+    Deployment::NodeApplicationManager_ptr get_nodeapp_manager (void);
 
   protected:
     /// Destructor
-    virtual ~NodeApplicationManager_Impl (void);
+    virtual ~NodeApplicationManager_Impl (ACE_ENV_SINGLE_ARG_DECL);
 
     // Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
