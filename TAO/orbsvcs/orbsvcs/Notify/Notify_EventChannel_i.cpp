@@ -96,9 +96,11 @@ TAO_Notify_EventChannel_i::supplier_admin_destroyed (CosNotifyChannelAdmin::Admi
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannel_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
-  return CosNotifyChannelAdmin::EventChannel
-    ::_narrow (this->resource_manager_->
-               servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV));
+  CORBA::Object_var obj = this->resource_manager_->
+    servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
+
+  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
 }
 
 void
@@ -129,6 +131,9 @@ TAO_Notify_EventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
   this->resource_manager_->deactivate_object (this,
                                               this->my_POA_.in (),
                                               ACE_TRY_ENV);
+
+   delete this->event_manager_;
+   this->event_manager_ = 0;
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr

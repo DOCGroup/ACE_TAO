@@ -7,13 +7,13 @@ ACE_RCSID(Notify, Notify_FilterFactory_i, "$Id$")
 
 // Implementation skeleton constructor
 TAO_Notify_FilterFactory_i::TAO_Notify_FilterFactory_i (void)
-  {
-  }
+{
+}
 
 // Implementation skeleton destructor
 TAO_Notify_FilterFactory_i::~TAO_Notify_FilterFactory_i (void)
-  {
-  }
+{
+}
 
 CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_FilterFactory_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
@@ -46,7 +46,7 @@ TAO_Notify_FilterFactory_i::create_filter (
                     TAO_Notify_Filter_i,
                     CORBA::NO_MEMORY ());
 
-  return CosNotifyFilter::Filter::_duplicate (filter->get_ref (ACE_TRY_ENV));
+  return filter->get_ref (ACE_TRY_ENV);
 }
 
 CosNotifyFilter::MappingFilter_ptr

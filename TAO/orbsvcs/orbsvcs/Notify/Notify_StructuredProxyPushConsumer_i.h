@@ -85,7 +85,7 @@ protected:
   // Cleanup all resources used by this object.
 
   // = Data members
-  CosNotifyComm::StructuredPushSupplier_ptr push_supplier_;
+  CosNotifyComm::StructuredPushSupplier_var push_supplier_;
   // The supplier that we're connected to.
 
   typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>

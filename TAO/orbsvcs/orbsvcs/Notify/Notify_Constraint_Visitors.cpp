@@ -19,32 +19,12 @@ TAO_Notify_Constraint_Evaluator::
 visit_property (TAO_Property_Constraint* literal)
 {
   int return_value = -1;
-
-  const CORBA::Any *cvalue = 0;
+  CORBA::Any *cvalue = 0;
   ACE_CString name (literal->name ());
 
   if (this->property_lookup_.find (name, cvalue) == 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      CORBA::Any *value = 0;
-
-      ACE_TRY
-        {
-          ACE_NEW_THROW_EX (value,
-                            CORBA::Any,
-                            CORBA::NO_MEMORY ());
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          return -1;
-        }
-      ACE_ENDTRY;
-
-      *value = *cvalue;
-      // @@All this is so expensive, find a way to avoid this mem alloc.
-      this->queue_.enqueue_head (TAO_Literal_Constraint (value));
+      this->queue_.enqueue_head (TAO_Literal_Constraint (cvalue));
       return_value = 0;
     }
   return return_value;

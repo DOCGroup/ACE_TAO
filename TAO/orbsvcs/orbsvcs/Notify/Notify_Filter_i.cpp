@@ -14,6 +14,8 @@ TAO_Notify_Filter_i::TAO_Notify_Filter_i (void)
 // Implementation skeleton destructor
 TAO_Notify_Filter_i::~TAO_Notify_Filter_i (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+  this->remove_all_constraints (ACE_TRY_ENV);
 }
 
 CosNotifyFilter::Filter_ptr
