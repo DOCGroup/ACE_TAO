@@ -40,12 +40,47 @@ ACE_QtReactor::ACE_QtReactor (QApplication *qapp,
 
 ACE_QtReactor::~ACE_QtReactor (void)
 {
-  //no-op
+    // iterate over QSocketNotifiers for read and release them
+    MAP::ITERATOR iter = this->read_notifier_.begin ();
+    MAP::ITERATOR iterEnd = this->read_notifier_.end ();
+    while( iter != iterEnd )
+    {
+        MAP::ENTRY &entry ( *iter );
+        // QOBject destructor notifies qapplication (hopefully) on delete
+        delete entry.int_id_; 
+        ++iter;
+    }
+
+    // iterate over QSocketNotifiers for write and release them
+    this->write_notifier_.begin ();
+    this->write_notifier_.end ();
+    while( iter != iterEnd )
+    {
+        MAP::ENTRY &entry ( *iter );
+        // QOBject destructor notifies qapplication (hopefully) on delete
+        delete entry.int_id_;
+        ++iter;
+    }
+
+    // iterate over QSocketNotifiers for exceptions and release them
+    this->exception_notifier_.begin ();
+    this->exception_notifier_.end ();
+    while( iter != iterEnd )
+    {
+        MAP::ENTRY &entry ( *iter );
+        // QOBject destructor notifies qapplication (hopefully) on delete
+        delete entry.int_id_;
+        ++iter; 
+    }
+
+    // QOBject destructor notifies qapplication (hopefully) on delete
+    delete qtime_;
 }
 
 void 
 ACE_QtReactor::qapplication (QApplication *qapp)
 {
+  // reparent QSocketNotifiers and QTimer
   qapp_ = qapp ;
 }
 
@@ -271,96 +306,72 @@ ACE_QtReactor::bit_ops (ACE_HANDLE handle,
 void
 ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
 {
-  // We check for any unused handles.
-  MAP::ITERATOR iter = this->read_notifier_.end ();
-  QSocketNotifier *qsock_notifier = 0;
+    QSocketNotifier *qsock_notifier = 0;
 
-  // We check whether we have a data against the present
-  // handle. If so we need to unbind the data. 
-  if ((this->read_notifier_.find (handle, 
-                                  qsock_notifier) != -1))
+    // if there is already a read socket notifier for this handle, do nothing
+    // otherwise create read notifier
+    if ( ( this->read_notifier_.find (handle, 
+               qsock_notifier) == -1) )
     {
-      if (qsock_notifier != (*iter).int_id_)
-        {
-          this->read_notifier_.unbind (handle,
-                                       qsock_notifier);
-          delete qsock_notifier;
-        }
+        ACE_NEW (qsock_notifier,
+            QSocketNotifier (int(handle), QSocketNotifier::Read, this));
+        this->read_notifier_.bind (handle,
+            qsock_notifier);
+        QObject::connect (qsock_notifier, 
+            SIGNAL (activated (int)), 
+            this, 
+            SLOT (read_event (int))) ;
+        // disable; it will be enabled by the regular register_handler_i if
+        // necessary
+        qsock_notifier->setEnabled (0);      
     }
+
+    qsock_notifier = 0;
+
+
+    // We check whether we have a data against the present
+    // handle. If so we need to unbind the data. 
+    if ((this->write_notifier_.find (handle, 
+             qsock_notifier) == -1))
+    {      
+        ACE_NEW (qsock_notifier,
+            QSocketNotifier (int(handle), QSocketNotifier::Write, this));
       
-  ACE_NEW (qsock_notifier,
-                  QSocketNotifier (int(handle), QSocketNotifier::Read, this));
+        this->write_notifier_.bind (handle,
+            qsock_notifier);
       
-  this->read_notifier_.bind (handle,
-                             qsock_notifier);
-      
-  QObject::connect (qsock_notifier, 
-                    SIGNAL (activated (int)), 
-                    this, 
-                    SLOT (read_event (int))) ;
-  // disable; it will be enabled if necessary by register_handler_i
-  qsock_notifier->setEnabled (0);
+        QObject::connect (qsock_notifier, 
+            SIGNAL (activated (int)), 
+            this, 
+            SLOT (write_event (int)));
+        // disable; it will be enabled by the regular register_handler_i if
+        // necessary
+        qsock_notifier->setEnabled (0);
+    }
   
-
-  iter = this->write_notifier_.end ();
-
-  // We check whether we have a data against the present
-  // handle. If so we need to unbind the data. 
-  if ((this->write_notifier_.find (handle, 
-                                   qsock_notifier) != -1))
-    {
-      if (qsock_notifier != (*iter).int_id_)
-        {
-          this->write_notifier_.unbind (handle,
-                                        qsock_notifier);
-          delete qsock_notifier;
-        }
-    }
-      
-  ACE_NEW (qsock_notifier,
-                  QSocketNotifier (int(handle), QSocketNotifier::Write, this));
-      
-  this->write_notifier_.bind (handle,
-                              qsock_notifier);
-      
-  QObject::connect (qsock_notifier, 
-                    SIGNAL (activated (int)), 
-                    this, 
-                    SLOT (write_event (int)));
-  // disable; it will be enabled by the regular register_handler_i if
-  // necessary
-  qsock_notifier->setEnabled (0);
   
-  // We check for any unused handles.
-  iter = this->exception_notifier_.end ();
-  qsock_notifier = 0;
+    qsock_notifier = 0;
 
-  // We check whether we have a data against the present
-  // handle. If so we need to unbind the data. 
-  if ((this->exception_notifier_.find (handle, 
-                                       qsock_notifier) != -1))
+    // We check whether we have a data against the present
+    // handle. If so we need to unbind the data. 
+    if ((this->exception_notifier_.find (handle, 
+             qsock_notifier) == -1))
     {
-      if (qsock_notifier != (*iter).int_id_)
-        {
-          this->exception_notifier_.unbind (handle,
-                                            qsock_notifier);
-          delete qsock_notifier;
-        }
+      
+        ACE_NEW (qsock_notifier,
+            QSocketNotifier (int(handle), QSocketNotifier::Exception, this));
+      
+        this->exception_notifier_.bind (handle,
+            qsock_notifier);
+      
+        QObject::connect (qsock_notifier, 
+            SIGNAL (activated (int)), 
+            this, 
+            SLOT (exception_event (int))) ;
+        // disable; it will be enabled by the regular register_handler_i if
+        // necessary
+        qsock_notifier->setEnabled (0);
     }
-      
-  ACE_NEW (qsock_notifier,
-                  QSocketNotifier (int(handle), QSocketNotifier::Exception, this));
-      
-  this->exception_notifier_.bind (handle,
-                                  qsock_notifier);
-      
-  QObject::connect (qsock_notifier, 
-                    SIGNAL (activated (int)), 
-                    this, 
-                    SLOT (exception_event (int))) ;
-  // disable; it will be enabled by the regular register_handler_i if
-  // necessary
-  qsock_notifier->setEnabled (0);
 }
 
 void
@@ -369,7 +380,6 @@ ACE_QtReactor::destroy_notifiers_for_handle (ACE_HANDLE handle)
   QSocketNotifier *qsock_notifier = 0;
 
   // Looks for the handle in the maps and removes them. 
-  MAP::ITERATOR iter = this->read_notifier_.end ();
   
   if ((this->read_notifier_.find (handle, 
                                   qsock_notifier) != -1))
@@ -379,7 +389,6 @@ ACE_QtReactor::destroy_notifiers_for_handle (ACE_HANDLE handle)
       delete qsock_notifier;
     }
 
-  iter = this->write_notifier_.end ();
   if ((this->write_notifier_.find (handle, 
                                    qsock_notifier) != -1))
     {
@@ -388,7 +397,7 @@ ACE_QtReactor::destroy_notifiers_for_handle (ACE_HANDLE handle)
       delete qsock_notifier;
     }
 
-  iter = this->exception_notifier_.end ();
+
   if ((this->exception_notifier_.find (handle, 
                                        qsock_notifier) != -1))
     {
@@ -413,7 +422,9 @@ ACE_QtReactor::register_handler_i (ACE_HANDLE handle ,
                                                        mask )) 
       == -1)
     {
-      this->destroy_notifiers_for_handle (handle);
+        // destroy notifiers only when there is no handler for handle
+        if ( !ACE_Select_Reactor::find_handler( handle ) )
+            this->destroy_notifiers_for_handle (handle);
       return -1;
     }
 
@@ -436,7 +447,9 @@ int ACE_QtReactor::remove_handler_i (ACE_HANDLE handle ,
   ACE_TRACE ("ACE_QtReactor::remove_handler_i");
 
   int result = ACE_Select_Reactor::remove_handler_i (handle, mask);
-  this->destroy_notifiers_for_handle (handle);
+  // destroy notifiers only when there is no handler for handle
+  if ( !ACE_Select_Reactor::find_handler( handle ) )
+      this->destroy_notifiers_for_handle (handle);
   return result;
 }
 

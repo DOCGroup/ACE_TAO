@@ -41,6 +41,39 @@
  * the appearence of the Keywords like Q_OBJECT, private slots
  * etc. They are specific to Qt which uses these as a call back
  * methods implementation mechanism.
+ *
+ * \note Marek Brudka <mbrudka@elka.pw.edu.pl>: ACE_QtReactor was 
+ * quickly bugfixed to meet ACE 5.4.2 (6.0.0?) deadline. 
+ * While it passes QtReactor_Test now, there is a great
+ * room for improvements as the implementation is rather inefficient 
+ * and obfuscated
+ * To be more specific:
+ * - reset_timeout always creates and removes qtimer after each 
+ * timeout event! Obviously, for fast triggering timers this may 
+ * lead to excessive memory management. 
+ * - create/destroy_notifiers_for_handle may also be reworked to 
+ * establish more clean relations between handles and QSocketNotifiers.
+ * - there is qapplication() mutator, which sets new qapplication for 
+ * QtReactor. This mutator violates implicit assumption about the 
+ * relations between QTimer and QSocketNotifiers and QApplication for 
+ * this reactor, namely one may expect that after qapplication(), none 
+ * of QtReactor artifacts is bound to old qapplication. That's not true 
+ * now, as QTimer and QSocketNotifiers are not reparent to new 
+ * QApplication. As a result, the sequence:
+ * QApplication *old_qapp = new QApplication(..);
+ * QtReactor qreactor( old_qapp);
+ * // .. register handlers, schedule_timers etc
+ * QApplication *new_qapp = new QApplication(..);
+ * qreactor.qpplication( new_qapp );
+ * delete old_qapp;
+ * almost always leads to problems and memory violation, because 
+ * QSocketNotifiers are released by old_qapp. Therefore QtReactor 
+ * should not be reparent now by setting new qapplication.
+ * - the lifecycle of Qt objects in ACE contects is rather mysterious
+ * and should be made more explicit. 
+ * - valgrind reports a small memory leak in QtReactor_Test, though as for now 
+ * it is not clear if the leak is introduced by  QtReactor, or rather incorrect 
+ * memory management in QtReactor_Test.
  */
 class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
 {
