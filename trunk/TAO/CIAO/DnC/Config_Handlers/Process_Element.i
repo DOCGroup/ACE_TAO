@@ -20,11 +20,11 @@ DOMDocument* create_document (const char *url);
 template <typename DATA>
 class Process_Function {
 public:
-  virtual void call(DOMNodeIterator*, DATA&)=0;
+  virtual void call(DOMDocument*, DOMNodeIterator*, DATA&)=0;
 
-  void operator() (DOMNodeIterator* iter, DATA& data)
+  void operator() (DOMDocument* doc, DOMNodeIterator* iter, DATA& data)
   {
-    call(iter, data);
+    call(doc, iter, data);
   }
 };
 
@@ -48,8 +48,10 @@ public:
   {
   }
 
-  virtual void call(DOMNodeIterator* iter, DATA& data)
+  virtual void call(DOMDocument* doc, DOMNodeIterator* iter, DATA& data)
   {
+    obj_->set_doc (doc);
+    obj_->set_iter (iter);
     (obj_->*f_) (iter, data);
   }
 
@@ -78,8 +80,10 @@ public:
   {
   }
 
-  virtual void call(DOMNodeIterator* iter, DATA& data)
+  virtual void call(DOMDocument* doc, DOMNodeIterator* iter, DATA& data)
   {
+    obj_->set_iter(iter);
+    obj_->set_doc(doc);
     (obj_->*f_) (data);
   }
 
@@ -103,7 +107,7 @@ public:
   {
   }
 
-  virtual void call(DOMNodeIterator* iter, DATA& data)
+  virtual void call(DOMDocument*, DOMNodeIterator* iter, DATA& data)
   {
     (*f_) (iter, data);
   }
@@ -133,8 +137,10 @@ process_sequential_element (DOMNode* node,
       int length = named_node_map->getLength();
       // if there is no other attribute but 'version'
 
+      ACE_DEBUG ((LM_DEBUG, "i am inside seq element\n"));
+
       if (length == 1) // call directly the static process_ method
-        (*func) (iter, seq[i]);
+        (*func) (doc, iter, seq[i]);
       else             // Check the xmi::id & href attributes
         process_element_attributes(named_node_map, doc, iter, i, seq[i], func, id_map);
     }
@@ -177,11 +183,12 @@ process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 
   if (result == true)
     {
+  ACE_DEBUG ((LM_DEBUG, "i am inside seq remote \n"));
       OBJECT obj (doc, iter, false);
       
       Process_Member_Function_Remote<OBJECT, DATA>
         pf(obj, func);
-      process_sequential_element (node, doc, 0, seq, &pf, id_map);
+      process_sequential_element (node, doc, iter, seq, &pf, id_map);
     }
 
   return result;
@@ -282,7 +289,7 @@ process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
             pf(obj, func);
 
           if (length == 1)
-              pf(iter, elem);
+              pf(doc, iter, elem);
           else
               process_element_attributes(named_node_map, doc, iter, 0, elem, &pf, id_map);
         }
@@ -314,9 +321,9 @@ process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
             pf(&obj, func);
 
           if (length == 1)
-              pf(0, elem);
+              pf(doc, iter, elem);
           else
-              process_element_attributes(named_node_map, doc, 0, 0, elem, &pf, id_map);
+              process_element_attributes(named_node_map, doc, iter, 0, elem, &pf, id_map);
         }
     }
 

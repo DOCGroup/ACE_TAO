@@ -130,6 +130,9 @@ void CAD_Handler::process_instance (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
+      ACE_DEBUG ((LM_DEBUG, "node name is %s \n", XMLString::transcode
+(node_name)));
+
       if (false);
       else if
         (process_string (iter, node_name, "name", sid.name));
@@ -164,6 +167,7 @@ void CAD_Handler::process_instance (DOMNodeIterator* iter,
 void CAD_Handler::process_connection (DOMNodeIterator* iter,
                                       Deployment::AssemblyConnectionDescription& acd)
 {
+  ACE_DEBUG ((LM_DEBUG, " i am inside process_acd \n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
