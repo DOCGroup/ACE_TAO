@@ -24,7 +24,7 @@
 
 <!-- Configure the ECs -->
 <RemoteEventChannel name="Client" >
-  <IORFile>client.ior</IORFile>
+  <IORFile>Client.ior</IORFile>
 </RemoteEventChannel>
 
 <LocalEventChannel name="Middle" >
@@ -39,7 +39,7 @@
       <EventName>Subtask2 Trigger</EventName>
     </Subscriptions>
     <Dependants>
-      <SupplierName>Substack3 Notifier</SupplierName>
+      <SupplierName>Subtask3 Notifier</SupplierName>
     </Dependants>
   </Consumer>
 </LocalEventChannel>
