@@ -1,9 +1,16 @@
+Thu Jan 15 17:53:38 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html:
+
+	  Updated build instructions for Debian GNU/Linux and RedHat
+	  OS family.
+
 Thu Jan 15 14:39:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Config.rules:
 
 	  Fixed incorrect initialization of UTILITY_BUILD_RULES when
-	  UTILITY_ROOT is set. Thanks to Gary Duzan <gduzan@bbn.com> 
+	  UTILITY_ROOT is set. Thanks to Gary Duzan <gduzan@bbn.com>
 	  for reporting this.
 
 Thu Jan 15 14:30:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
