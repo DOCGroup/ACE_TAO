@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR___CI_
@@ -39,20 +39,11 @@ ImplementationRepository::Locator::Locator (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc),
+    the_TAO_Locator_Proxy_Broker_ (0)
+  
 {
   this->ImplementationRepository_Locator_setup_collocation (_tao_collocated);
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<ImplementationRepository::Locator>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
 }
 
 ACE_INLINE
@@ -60,14 +51,16 @@ ImplementationRepository::Locator::Locator (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc)
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+    the_TAO_Locator_Proxy_Broker_ (0)
+  
 {
 }
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,

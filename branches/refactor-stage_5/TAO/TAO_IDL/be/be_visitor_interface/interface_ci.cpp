@@ -51,6 +51,13 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
+  // Nothing to generate for a local interface except from it scope.
+  if (node->is_local ())
+    {
+      node->cli_inline_gen (I_TRUE);
+      return 0;
+    }
+
   // A forward declared interface may have set this flag.
   if (node->cli_inline_gen ())
     {

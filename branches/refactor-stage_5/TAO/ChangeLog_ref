@@ -1,3 +1,78 @@
+Tue Sep  2 20:39:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+
+  	  Added dependency of TAO_IORInterceptor on TAO_Valuetype.
+
+        * tao/IORInterceptor/IORInterceptor.dsp:
+
+	  Added link to TAO_Valuetype library.
+
+        * tao/PortableInterceptorC.h:
+        * tao/IORInterceptor/IORInterceptorC.h:
+
+	  Added template specialization declaration, with export
+	  macro, of 3 PortableInterceptor interfaces - ORBInitializer,
+	  IORInfo and PolicyFactory. While these are not forward
+	  declared (if they were the declaration would be generated),
+	  they are needed by TAO_PortableServer, and thus the
+	  need for the export macros.
+
+        * tao/PortableServer/Default_ORT.pidl:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/Default_ORTC.i:
+        * tao/PortableServer/ImR_Activator.pidl:
+        * tao/PortableServer/ImR_ActivatorS.h:
+        * tao/PortableServer/ImR_ActivatorS_T.h:
+        * tao/PortableServer/ImR_Locator.pidl
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImR_LocatorS.h:
+        * tao/PortableServer/ImR_LocatorS.i:
+        * tao/PortableServer/ImR_LocatorS_T.cpp:
+        * tao/PortableServer/ImR_LocatorS_T.h:
+        * tao/PortableServer/ImR_LocatorS_T.i:
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImplRepoS_T.cpp:
+        * tao/PortableServer/ImplRepoS_T.h:
+        * tao/PortableServer/ImplRepoS_T.i:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.i:
+        * tao/PortableServer/PolicyS_T.cpp:
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/PortableServer/PolicyS_T.i:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+
+	  Regenerated hand-crafted files in TAO_PortableServer.
+
+        * tao/PortableServer/ORB_Manager.cpp:
+
+          Cosmetic changes.
+        * TO_IDL/be/be_codegen.cpp:
+
+	  Changed generation of Object_T.h include in the 
+	  skeleton source file to be unconditional.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+	  Since local interfaces generate no inline code,
+	  added a check to return from this visitor immediately,
+	  avoiding the generation of empty #ifdef guards.
+
 Tue Sep  2 16:32:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
