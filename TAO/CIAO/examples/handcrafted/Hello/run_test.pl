@@ -17,8 +17,10 @@ unlink $daemon_ior;
 unlink $svr_ior;
 unlink $home_ior;
 
+$cs_exe = PerlACE::Process::Normalize_Executable_Name ("../../../tools/ComponentServer/ComponentServer");
+
 # CIAO Daemon command line arguments
-$daemon_args = "-o $daemon_ior -n ../../../tools/ComponentServer/ComponentServer";
+$daemon_args = "-o $daemon_ior -n $cs_exe";
 
 # CIAO Daemon Controller location:
 $controller = "../../../tools/Daemon/DaemonController";
