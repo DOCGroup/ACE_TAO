@@ -1,16 +1,23 @@
+Tue Sep  4 20:11:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast/ftp.dsp:
+	* orbsvcs/tests/AVStreams/Multicast/server.dsp: Added the
+	  strategies library  to the set of libraries that needs to be
+	  linked.
+
 Tue Sep  4 15:11:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
 	  Generated dependencies again. Also fixed a cut and paste error
 	  in IDL names. This created problems during 'make
-	  realclean'. This should fix compile errors in NoInline builds. 
+	  realclean'. This should fix compile errors in NoInline builds.
 
 Tue Sep  4 11:19:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/client.cpp: Changed the 'oflag' arguments for the
 	  file so that it works in our daily builds. We only pass the
 	  O_RDONLY value to the remote call. This should fix the exception
-	  problems seen in our daily builds. 
+	  problems seen in our daily builds.
 
 Tue Sep  4 11:06:55 2001  Chad Elliott <elliott_c@ociweb.com>
 
