@@ -9,6 +9,7 @@
 #include "Consumer.h"
 #include "Implicit_Deactivator.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(TAO_PERF_RTEC, Consumer, "$Id$")
 
