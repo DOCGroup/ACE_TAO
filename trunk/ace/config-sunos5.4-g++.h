@@ -11,6 +11,9 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+// Platform supports pread() and pwrite()
+#define ACE_HAS_P_READ_WRITE
+
 #define ACE_HAS_UNICODE
 
 #define ACE_HAS_TERM_IOCTLS

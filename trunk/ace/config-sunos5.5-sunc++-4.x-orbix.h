@@ -16,6 +16,9 @@
 // until we can trust exception handling with Sun C++, it's not enabled . . .
 // #define ACE_HAS_EXCEPTIONS
 
+// Platform supports pread() and pwrite()
+#define ACE_HAS_P_READ_WRITE
+
 // Platform contains the Orbix CORBA implementation.
 #define ACE_HAS_ORBIX
 

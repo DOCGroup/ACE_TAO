@@ -5,6 +5,10 @@
 // platforms using the SunC++ 3.0.x compiler.
 
 #if !defined (ACE_CONFIG_H)
+
+// Platform supports pread() and pwrite()
+#define ACE_HAS_P_READ_WRITE
+
 #define ACE_LACKS_POSIX_PROTO
 #define ACE_HAS_UNION_WAIT
 #define ACE_HAS_SPARCWORKS_401_SIGNALS
