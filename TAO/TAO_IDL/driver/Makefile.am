@@ -28,7 +28,8 @@ libdriver_a_SOURCES = \
 
 ## Additional C++ preprocessor flags to define for the TAO IDL compiler.
 AM_CPPFLAGS = \
-  -DTAO_IDL_PREPROCESSOR=\"$(CXX)\"
+  -DTAO_IDL_PREPROCESSOR=\"$(CXX)\" \
+  -DTAO_IDL_INCLUDE_DIR=\"$(pkgincludedir)\"
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.
