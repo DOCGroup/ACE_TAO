@@ -160,7 +160,9 @@ ORB_CORE_FILES = \
   CONV_FRAMEC \
   CONV_FRAMES \
   Tagged_Components \
-  GIOPC #Added for the extra data types defined within the GIOP1.2 spec.
+  GIOPC \
+  TAOC \
+  TAOS
 
 DYNAMIC_ANY_FILES =
 
@@ -190,9 +192,7 @@ ORB_CORE_FILES += \
   Context \
   Request \
   Services \
-  NVList \
-  TAOC \
-  TAOS
+  NVList
 
 DYNAMIC_ANY_FILES += \
   DynAnyC \
