@@ -1,3 +1,15 @@
+Fri May 21 16:34:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connect.cpp (handle_message): Changed the length of the INS
+	  lookup string from <TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE> to
+	  <request.object_key ().length ()>.  Since Vishal always tested
+	  with the "bank" string, he got lucky with this since
+	  <TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE> is 4 and strlen ("bank") is
+	  also 4.
+
+	  Thanks to Vyacheslav A. Batenin <slavikb@iname.com> for
+	  reporting this.
+
 Fri May 21 16:19:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/param_test/param_test.idl:
@@ -11,8 +23,8 @@ Fri May 21 16:19:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/tests/param_test/tests.h:
 	* TAO/tests/param_test/client.dsp:
 	  Added new test. The data type is a complex Any, suggested
-	  by a real-world use case submitted by 
-	  Frank Buschmann <Frank.Buschmann@mchp.siemens.de>. See 
+	  by a real-world use case submitted by
+	  Frank Buschmann <Frank.Buschmann@mchp.siemens.de>. See
 	  comment in complex_any.cpp above reset_parameters for
 	  the Any structure.
 
@@ -22,7 +34,7 @@ Fri May 21 16:19:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri May 21 12:27:16 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
 	* orbsvcs/orbsvcs/AV/sfp.cpp:
 	  Fixed g++ template errors and warnings. Thanks to David and Andy
 	  for reporting these errors.
@@ -114,7 +126,7 @@ Thu May 20 19:52:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	  <jrtaylor@george.lbl.gov>,gwtovrea@west.raytheon.com,
 	  Andy Gokhale<gokhale@cs.wustl.edu> and David
 	  Levine<levine@cs.wustl.edu> for reporting these errors.
-	
+
         * orbsvcs/orbsvcs/Makefile:
           Updated dependencies.
 
