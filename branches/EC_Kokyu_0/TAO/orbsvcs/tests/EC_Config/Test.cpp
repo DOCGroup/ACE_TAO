@@ -19,7 +19,7 @@ typedef ACE_Strong_Bound_Ptr<Test_Config_Set,ACE_Null_Mutex> TCFG_SET_SPTR;
 //NOTE: Read from a formatted file rather than hardcode the configuration. Check ACE_XML.
 
 int
-main (int argc, char** argv)
+main (int argc, char *argv[])
 {
   int retval = 0;
 
@@ -50,14 +50,18 @@ main (int argc, char** argv)
       ACEXML_TRY_CHECK;
 
       // TODO configure according to parsed XML
+      //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished parsing\n")));
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)
     {
-      ACE_UNUSED_ARG (ex);
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+      //ACE_UNUSED_ARG (ex);
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred: %s. Exiting...\n"),
+                  ex.message()));
       return 1;
     }
   ACEXML_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished successfully\n")));
 
 #if 0
   ConfigFactory::Default_Config_Factory fact;
