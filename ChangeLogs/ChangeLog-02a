@@ -14,6 +14,9 @@ Fri Dec 21 14:39:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 	* examples/IOStream/client/iostream_client.dsp:
 	* examples/IOStream/server/server.dsw:
 	* examples/IOStream/server/iostream_server.dsp:
+	* examples/Smart_Pointers/Smart_Pointers.dsw:
+	* examples/Smart_Pointers/gadget_test.dsp:
+	* examples/Smart_Pointers/widget_test.dsp:
 	  Add missing project files and workspaces.
 
 Fri Dec 21 16:22:39 2001  Steve Huston  <shuston@riverace.com>
