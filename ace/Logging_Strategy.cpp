@@ -230,6 +230,15 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
       if (ACE_BIT_ENABLED (this->flags_,
                            ACE_Log_Msg::OSTREAM))
         {
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+          FILE *output_file = 0;
+          if (wipeout_logfile_)
+            output_file = ACE_OS::fopen (this->filename_, "wt");
+          else
+            output_file = ACE_OS::fopen (this->filename_, "at");
+          if (output_file == 0)
+            return -1;
+#else
           ofstream *output_file = 0;
           // Create a new ofstream to direct output to the file.
           if (wipeout_logfile_)
@@ -241,7 +250,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                             ofstream (ACE_TEXT_ALWAYS_CHAR(this->filename_),
                                       ios::app | ios::out),
                             -1);
-
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
           // Set the <output_file> that'll be used by the rest of the
           // code.
           ACE_Log_Msg::instance ()->msg_ostream (output_file);
@@ -270,7 +279,13 @@ int
 ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                                       const void *)
 {
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+  if ((size_t) ACE_OS::fseek (ACE_LOG_MSG->msg_ostream (),
+                              0,
+                              SEEK_CUR) > this->max_size_)
+#else
   if ((size_t) ACE_LOG_MSG->msg_ostream ()->tellp () > this->max_size_)
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     {
       // Lock out any other logging.
       if (ACE_LOG_MSG->acquire ())
@@ -279,10 +294,13 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                           -1);
 
       // Close the current ostream.
-      ofstream *output_file =
-        (ofstream *) ACE_LOG_MSG->msg_ostream ();
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+      FILE *output_file = (FILE *) ACE_LOG_MSG->msg_ostream ();
+      ACE_OS::fclose (output_file);
+#else
+      ofstream *output_file = (ofstream *) ACE_LOG_MSG->msg_ostream ();
       output_file->close ();
-
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
       // Save current logfile to logfile.old
       if (ACE_OS::strlen (this->filename_) + 4 <= MAXPATHLEN)   // 4 for ".old"
         {
