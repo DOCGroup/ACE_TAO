@@ -90,7 +90,7 @@ LogMgr_i::list_logs_by_id (CORBA::Environment &ACE_TRY_ENV)
                    ))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-  // Later: We need to maintain a sorted list of logids to do this efficiently.
+  //@@ Later: We need to maintain a sorted list of logids to do this efficiently.
 }
 
 int
@@ -113,12 +113,12 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::B
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var>;
-template class ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, ACE_SYNCH_MUTEX>;
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

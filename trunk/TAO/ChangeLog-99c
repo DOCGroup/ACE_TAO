@@ -1,3 +1,7 @@
+Tue Dec  7 13:44:55 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp: Fixed some temlate instantiations
+
 Tue Dec  7 12:17:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/UIOP_Transport.cpp:
