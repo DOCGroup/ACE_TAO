@@ -239,7 +239,10 @@ template class ACE_Creation_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Scheduling_Strategy<ACE_TS_Server_Handler>;
 template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
+#if defined (ACE_HAS_TLI)
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+// #else the instantiation in is Client_Logging_Handler.cpp
+#endif /* ACE_HAS_TLI */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Accept_Strategy<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
@@ -248,6 +251,8 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<ACE_TS_Server_Handler>
 #pragma instantiate ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
+#if defined (ACE_HAS_TLI)
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+// #else the instantiation in is Client_Logging_Handler.cpp
+#endif /* ACE_HAS_TLI */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
