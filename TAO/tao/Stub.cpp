@@ -111,12 +111,21 @@ TAO_Stub::~TAO_Stub (void)
 {
   assert (this->refcount_ == 0);
 
-  if (forward_profiles_)
+  if (this->forward_profiles_)
     reset_profiles ();
 
-  if (this->profile_in_use_ != 0 && this->orb_->orb_core () != 0)
+  if (this->profile_in_use_ != 0)
     {
-      this->profile_in_use_->reset_hint ();
+      if (this->orb_->orb_core () != 0)
+        {
+          // The hint in the profile is a hint for a client connection
+          // handler.  If the ORB core doesn't exist, perhaps due to
+          // it being destroy()ed, then no connectors exist so do not
+          // reset the hint in case it points to non-existent
+          // connection handler.
+          this->profile_in_use_->reset_hint ();
+        }
+
       // decrease reference count on profile
       this->profile_in_use_->_decr_refcnt ();
       this->profile_in_use_ = 0;
@@ -156,7 +165,7 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
 
   // Since we have been forwarded, we must set profile_success_ to 0
   // since we are starting a new with a new set of profiles!
-  profile_success_ = 0;
+  this->profile_success_ = 0;
 }
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into

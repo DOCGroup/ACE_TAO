@@ -16,6 +16,7 @@
 # include "tao/UIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID(tao, UIOP_Connect, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)

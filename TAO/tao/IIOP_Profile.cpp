@@ -27,7 +27,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     version_ (version),
@@ -45,7 +45,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (port),
     version_ (version),
@@ -75,7 +75,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -89,7 +89,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -303,7 +303,7 @@ CORBA::Boolean
 TAO_IIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
 
-  if (other_profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
+  if (other_profile->tag () != TAO_TAG_IIOP_PROFILE)
     return 0;
 
   const TAO_IIOP_Profile *op =

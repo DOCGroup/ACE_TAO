@@ -121,7 +121,8 @@ public:
 
   // = The Messaging::SyncScopePolicy methods.
 
-  virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
+  virtual Messaging::SyncScope synchronization (void);
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 

@@ -1,5 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
+
 
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connect.h"
@@ -58,7 +58,7 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 {
   // Cannot deal with errors, and therefore they are ignored.
   this->send_buffered_messages ();
-  
+
   // Note that it also doesn't matter how much of the data was
   // actually sent.
   this->dequeue_all ();
@@ -317,7 +317,7 @@ TAO_IIOP_Client_Transport::register_handler (void)
 ssize_t
 TAO_IIOP_Transport::send (TAO_Stub *stub,
                           const ACE_Message_Block *message_block,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   if (stub == 0)
     {
@@ -337,10 +337,10 @@ TAO_IIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
-  
+
   return ACE::send_n (this->handle (),
                       message_block,
                       max_wait_time);
@@ -349,23 +349,26 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
 ssize_t
 TAO_IIOP_Transport::send (const u_char *buf,
                           size_t len,
-                          ACE_Time_Value *)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
 
-  return this->handler_->peer ().send_n (buf, len);
+  return this->handler_->peer ().send_n (buf,
+                                         len,
+                                         max_wait_time);
 }
 
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
 
+
   return this->handler_->peer ().recv_n (buf,
-                                        len,
-                                        max_wait_time);
+                                         len,
+                                         max_wait_time);
 }
 
 // Default action to be taken for send request.
