@@ -1,3 +1,9 @@
+Mon Mar 23 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance_tests/UDP/udp_test.cpp: made use of the Reactor
+          optional.  With this change, the performance is comparable
+          to the original C version.
+
 Mon Mar 23 11:38:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (MAXPATHLEN): Guard the MAXPATHLEN definition with
