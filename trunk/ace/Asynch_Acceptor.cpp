@@ -122,7 +122,7 @@ template <class HANDLER> void
 ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
 {  
 #if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
-  // If the asynchronous accept succeeds
+  // If the asynchronous accept succeeds.
   if (result.success ())
     {
       // In order to use accept handle with other Window Sockets 1.1
@@ -141,6 +141,9 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       // The Template method
       HANDLER *new_handler = this->make_handler ();
       
+      // Update the Proactor.
+      new_handler->proactor (this->proactor ());
+
       if (this->pass_addresses_)
 	{
 	  ACE_INET_Addr local_address, remote_address;
