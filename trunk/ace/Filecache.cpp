@@ -2,7 +2,7 @@
 
 #define ACE_BUILD_DLL
 
-#include "ace/Filecache_New2.h"
+#include "ace/Filecache.h"
 
 static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
 static const int W_MASK = S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH;
