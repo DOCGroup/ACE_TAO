@@ -20,7 +20,7 @@
 
 #ifndef CIAO_GLUE_SESSION_BMCLOSEDED_SVNT_H
 #define CIAO_GLUE_SESSION_BMCLOSEDED_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "BMClosedEDS.h"
 #include "BMClosedEDEC.h"
@@ -699,6 +699,6 @@ namespace CIAO_GLUE_BasicSP
 
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_BMCLOSEDED_SVNT_H */
 

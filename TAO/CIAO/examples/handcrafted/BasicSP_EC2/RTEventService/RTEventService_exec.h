@@ -31,6 +31,8 @@
 
 #include "CIAO_ValueC.h"
 
+#include <ORB_Core.h>
+
 namespace MyImpl
 {
   /**
