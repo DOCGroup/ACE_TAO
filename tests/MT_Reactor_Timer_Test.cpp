@@ -326,7 +326,7 @@ run_main (int, ACE_TCHAR *[])
   other_thread.setup ();
 
   other_thread.activate (THR_NEW_LWP | THR_JOINABLE);
-  status = ACE_Reactor::run_event_loop (time_limit);
+  status = ACE_Reactor::instance()->run_reactor_event_loop (time_limit);
   // Should have returned only because the time limit is up...
   ACE_ASSERT (status != -1);
   ACE_ASSERT (time_limit.sec () == 0);
