@@ -3,14 +3,14 @@
 
 #include "ace/Reactor.h"
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (ACE_Event_Handler *h)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::resume_handler");
   return this->resume_handler (h->get_handle ());
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (const ACE_Handle_Set &handles)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::resume_handler");
@@ -26,14 +26,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (const ACE_Handle
   return 0;
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (ACE_Event_Handler *h)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_handler");
   return this->suspend_handler (h->get_handle ());
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (const ACE_Handle_Set &handles)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_handler");
@@ -49,7 +49,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (const ACE_Handl
   return 0;
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler (int signum,
                                                                   ACE_Event_Handler *new_sh,
                                                                   ACE_Sig_Action *new_disp,
@@ -64,7 +64,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler (int signum,
 
 #if defined (ACE_WIN32)
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler (ACE_Event_Handler *event_handler,
                                                                   ACE_HANDLE event_handle)
 {
@@ -76,7 +76,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler (ACE_Event_Hand
 
 #endif /* ACE_WIN32 */
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler (ACE_HANDLE event_handle,
                                                                   ACE_HANDLE io_handle,
                                                                   ACE_Event_Handler *event_handler,
@@ -90,14 +90,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler (ACE_HANDLE eve
   ACE_NOTSUP_RETURN (-1);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler (int signum, ACE_Event_Handler **handler)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handler");
   return this->handler_i (signum, handler);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler (int signum,
                                                                 ACE_Sig_Action *new_disp,
                                                                 ACE_Sig_Action *old_disp,
@@ -107,7 +107,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler (int signum,
   return this->signal_handler_->remove_handler (signum, new_disp, old_disp, sigkey);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations (void)
 {
   // Since the Select_Reactor does not do any event associations, this
@@ -118,7 +118,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations (void)
 // = The remaining methods in this file must be called with locks
 // held.  Note the queue handles its own locking.
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler *handler,
                                                               int dont_call_handle_close)
 {
@@ -127,7 +127,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
     this->timer_queue_->cancel (handler, dont_call_handle_close);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
                                                               const void **arg,
                                                               int dont_call_handle_close)
@@ -140,7 +140,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
 
 // Performs operations on the "ready" bits.
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops (ACE_Event_Handler *handler,
                                                            ACE_Reactor_Mask mask,
                                                            int ops)
@@ -151,7 +151,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops (ACE_Event_Handler *ha
 
 // Performs operations on the "dispatch" masks.
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops (ACE_Event_Handler *handler,
                                                           ACE_Reactor_Mask mask,
                                                           int ops)
@@ -160,7 +160,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops (ACE_Event_Handler *han
   return this->mask_ops (handler->get_handle (), mask, ops);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_wakeup (ACE_Event_Handler *eh,
                                                                  ACE_Reactor_Mask mask)
 {
@@ -168,7 +168,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_wakeup (ACE_Event_Handl
   return this->mask_ops (eh->get_handle (), mask, ACE_Reactor::ADD_MASK);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_Event_Handler *eh,
                                                                ACE_Reactor_Mask mask)
 {
@@ -176,7 +176,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_Event_Handler
   return this->mask_ops (eh->get_handle (), mask, ACE_Reactor::CLR_MASK);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_wakeup (ACE_HANDLE handle,
                                                                  ACE_Reactor_Mask mask)
 {
@@ -184,7 +184,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_wakeup (ACE_HANDLE hand
   return this->mask_ops (handle, mask, ACE_Reactor::ADD_MASK);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_HANDLE handle,
                                                                ACE_Reactor_Mask mask)
 {
@@ -192,14 +192,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_HANDLE handle
   return this->mask_ops (handle, mask, ACE_Reactor::CLR_MASK);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE ACE_Lock &
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ ACE_Lock &
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::lock (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::lock");
   return this->lock_adapter_;
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE void
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ void
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wakeup_all_threads (void)
 {
   // Send a notification, but don't block if there's no one to receive
@@ -207,19 +207,19 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wakeup_all_threads (void)
   this->notify (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::alertable_handle_events (ACE_Time_Value *max_wait_time)
 {
   return this->handle_events (max_wait_time);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::alertable_handle_events (ACE_Time_Value &max_wait_time)
 {
   return this->handle_events (max_wait_time);
 }
 
-template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE size_t
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ size_t
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::size (void)
 {
   return this->handler_rep_.size ();
