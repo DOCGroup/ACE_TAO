@@ -1,3 +1,8 @@
+Mon Jun 14 14:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TTY_IO.cpp:
+          Added missing include
+
 Mon Jun 14 09:22:53 2004  Patrick Bennett  <patrick.bennett@inin.com>
 
         * ace/Dirent_Selector.cpp:
@@ -5,7 +10,6 @@ Mon Jun 14 09:22:53 2004  Patrick Bennett  <patrick.bennett@inin.com>
           Previously, the memory allocated by ACE_Dirent_Selector would be
           leaked upon clean destruction or exception unwind unless close()
           was explicitly called.
-
 
 Mon Jun 14 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
