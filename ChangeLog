@@ -1,3 +1,8 @@
+Thu May  9 14:35:24 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/XML_Svc_Conf.h: Changed to include ACE_export.h instead of
+	  config-all.h and added #pragma once macros.
+
 Thu May 09 12:12:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/apps/svcconf/Svcconf.h:
