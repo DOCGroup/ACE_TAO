@@ -1639,6 +1639,12 @@ enum ACE_Thread_State
 # define ACE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
+# define ACE_GUARD_THROW(MUTEX,OBJ,LOCK,EXCEPTION) \
+  ACE_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) TAO_THROW (EXCEPTION);
+# define ACE_GUARD_THROW_RETURN(MUTEX,OBJ,LOCK,EXCEPTION,RETURN) \
+  ACE_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) TAO_THROW_RETURN (EXCEPTION, RETURN);
 # define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
   ACE_Write_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) return;
@@ -5840,6 +5846,11 @@ private:
      do { try { POINTER = new CONSTRUCTOR; } \
         catch (bad_alloc) { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
      } while (0)
+# define ACE_NEW_TRY_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
+  do { try { POINTER = new CONSTRUCTOR; } \
+       catch (bad_alloc) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
+     } while (0)
+
 # else
 #   define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new CONSTRUCTOR; \
@@ -5857,6 +5868,10 @@ private:
      do { POINTER = new CONSTRUCTOR; \
         if (POINTER == 0)\
         { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
+     } while (0)
+#   define ACE_NEW_TRY_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
+     do { POINTER = new CONSTRUCTOR; \
+       if (POINTER == 0) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
      } while (0)
 # endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
