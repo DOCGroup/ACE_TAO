@@ -204,5 +204,12 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SOCKLEN_T
 #endif
 
+#if (__FreeBSD_version > 430000)
+# define _P1003_1B_VISIBLE
+# define ACE_HAS_AIO_CALLS
+# define SIGRTMIN 32
+# define SIGRTMAX (_SIG_MAXSIG - 1)
+#endif
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */
