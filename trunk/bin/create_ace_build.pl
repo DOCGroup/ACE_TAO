@@ -37,7 +37,7 @@ use File::Basename;
 use FileHandle;
 use File::stat;
 use File::Copy;
-
+use File::Path;
 
 $usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] [-nompc] <build name>\n";
 $directory_mode = 0777;   #### Will be modified by umask, also.
@@ -247,7 +247,7 @@ unless (-d "$starting_dir/build") {
 foreach $build (@builds) {
   unless (-d "$starting_dir/$build") {
     print "Creating $starting_dir/$build\n";
-    mkdir ("$starting_dir/$build", $directory_mode);
+    mkpath ("$starting_dir/$build", 0, $directory_mode);
   }
 }
 
@@ -347,7 +347,10 @@ foreach $file (@files) {
     } else {
       unless (($^O ne 'MSWin32') && (-e "$build/$file")) {
         if (!$absolute) { 
-          $up = '../..';
+          $up = '..';
+          while ($build =~ m%/%g) {
+            $up .= '/..';
+          }
           while ($file =~ m%/%g) {
             $up .= '/..';
           }
