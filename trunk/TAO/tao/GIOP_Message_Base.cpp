@@ -229,7 +229,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
   *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = bodylen;
 #else
-  if (!stream->do_byte_swap ())
+  if (!stream.do_byte_swap ())
     *ACE_reinterpret_cast (CORBA::ULong *,
                            buf + offset) = bodylen;
   else
