@@ -51,14 +51,10 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:997
 
 #include "IOPS_T.h"
-
-#if defined (__ACE_INLINE__)
-#include "IOPS.inl"
-#endif /* defined INLINE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
