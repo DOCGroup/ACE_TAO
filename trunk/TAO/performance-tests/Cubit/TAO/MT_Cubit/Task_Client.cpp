@@ -120,6 +120,7 @@ Task_State::Task_State (int argc, char **argv)
     {
       shutdown_ = 1;
       thread_count_ = 1;
+      datatype_ = CB_OCTET;
     }
   
   // allocate the array of character pointers.

@@ -16,9 +16,10 @@ CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o,
                      CORBA::Environment &)
 {
-  //ACE_ERROR (( LM_ERROR, "   {%t}\n"));
-  if (ts_->utilization_task_started_ == 0)
+  if (ts_->run_server_utilization_test_ == 1 && 
+      ts_->utilization_task_started_ == 0)
     ts_->barrier_->wait ();
+
   return (CORBA::Octet) (o * o * o);
 }
 
