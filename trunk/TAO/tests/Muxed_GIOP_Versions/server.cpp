@@ -226,7 +226,7 @@ Worker::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      ACE_Time_Value tv (120, 0);
+      ACE_Time_Value tv (140, 0);
       this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
