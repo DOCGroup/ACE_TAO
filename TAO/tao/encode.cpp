@@ -294,7 +294,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_encoding = 1;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
   CORBA::Long size, alignment, align_offset;
 
   void *start_addr = (void *)data;
@@ -382,7 +382,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
         case CORBA::tk_string:
         case CORBA::tk_wstring:
         case CORBA::tk_TypeCode:
-          retval = stream->encode (param, data, 0, ACE_TRY_ENV);
+          retval = stream->encode (param.in (), data, 0, ACE_TRY_ENV);
           break;
 
         case CORBA::tk_objref:
@@ -393,7 +393,7 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
               ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                     ACE_const_cast (void *, data));
             CORBA::Object_ptr ptr = field->_upcast ();
-            retval = stream->encode (param, &ptr, 0, ACE_TRY_ENV);
+            retval = stream->encode (param.in (), &ptr, 0, ACE_TRY_ENV);
           }
           break;
 
@@ -425,7 +425,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
 {
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
-  CORBA::TypeCode_ptr discrim_tc =
+  CORBA::TypeCode_var discrim_tc =
     tc->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
   // get the discriminator type
@@ -439,7 +439,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
   // encode the discriminator value
   const void *discrim_val = base_union->_discriminant ();
   CORBA::TypeCode::traverse_status retval =
-    stream->encode (discrim_tc, discrim_val, data2, ACE_TRY_ENV);
+    stream->encode (discrim_tc.in (), discrim_val, data2, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -520,7 +520,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
           {
             CORBA::ULong ul;
             TAO_InputCDR stream (member_label->_tao_get_cdr ());
-            (void)stream.decode (discrim_tc, &ul, 0, ACE_TRY_ENV);
+            (void)stream.decode (discrim_tc.in (), &ul, 0, ACE_TRY_ENV);
             ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
             if (ul == *(CORBA::ULong *) discrim_val)
               discrim_matched = 1;
@@ -563,7 +563,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
         }// end of switch
 
       // get the member typecode
-      CORBA::TypeCode_ptr member_tc =
+      CORBA::TypeCode_var member_tc =
         tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -586,11 +586,11 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                 ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                       member_val);
               CORBA::Object_ptr ptr = field->_upcast ();
-              return stream->encode (member_tc, &ptr, data2, ACE_TRY_ENV);
+              return stream->encode (member_tc.in (), &ptr, data2, ACE_TRY_ENV);
             }
           else
             {
-              return stream->encode (member_tc, member_val,
+              return stream->encode (member_tc.in (), member_val,
                                      data2, ACE_TRY_ENV);
             }
         }
@@ -1110,7 +1110,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
   CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
   CORBA::Long size, alignment;
 
   // first encode the RepositoryID which we can grab from the
@@ -1202,7 +1202,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
         case CORBA::tk_alias:
         case CORBA::tk_except:
         case CORBA::tk_wstring:
-          retval = stream->encode (param, data, 0, ACE_TRY_ENV);
+          retval = stream->encode (param.in (), data, 0, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
           break;
         default:
