@@ -118,7 +118,7 @@ int MyTask::svc (void)
   return 0;
 }
 
-int main (int,char**)
+int ACE_TMAIN (int,ACE_TCHAR**)
 {
   Kokyu::DSRT_ConfigInfo config_info;
 
