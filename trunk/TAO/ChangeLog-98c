@@ -1,21 +1,31 @@
+Fri Jul 17 11:47:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/IIOP_Object.cpp (do_static_call,put_params): on sparcs
+          with g++ prior to 2.8, e.g., 2.7.2.3, only; added an awful
+          hack to two-way va_arg processing.  The hack throws away
+          the first var arg.  Apparently, g++ 2.7.2.3 provides a bogus
+          arg to the first va_arg call by mistake.  This ugliness
+          works around that problem.  We haven't seen this elsewhere
+          with va_arg, or with later versions of g++.
+
 Fri Jul 17 11:02:29 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/POAC.h: unclosed comments.
+        * tao/POAC.h: unclosed comments.
 
-	* orbsvcs/tests/AVStreams/source/mpeg/server/Machine_Properties.{h,cpp}:
-	* orbsvcs/tests/AVStreams/source/mpeg/server/Video_Repository.{h,cpp}:
-	* orbsvcs/tests/AVStreams/source/mpeg/server/Property_Exporter.{h,cpp}:
-	* orbsvcs/tests/AVStreams/source/mpeg/server/augmented_server.{h,cpp}:
-	Updated these files in light of recent changes to the Trading Service.
+        * orbsvcs/tests/AVStreams/source/mpeg/server/Machine_Properties.{h,cpp}:
+        * orbsvcs/tests/AVStreams/source/mpeg/server/Video_Repository.{h,cpp}:
+        * orbsvcs/tests/AVStreams/source/mpeg/server/Property_Exporter.{h,cpp}:
+        * orbsvcs/tests/AVStreams/source/mpeg/server/augmented_server.{h,cpp}:
+        Updated these files in light of recent changes to the Trading Service.
 
 Fri Jul 17 09:46:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/POAC.h: Replaced #endif // ... with #endif /* ... */ since
-	  this is more portable...
-	  
-	* tao/POAC.h: Changed CORBA::Policy to ACE_CORBA_1 (Policy) to
- 	  work around friggin' bugs with MSVC++ 4.2.  Thanks to Ernesto
- 	  Guisado <eguisado@saincotrafico.com> for reporting this.
+        * tao/POAC.h: Replaced #endif // ... with #endif /* ... */ since
+          this is more portable...
+
+        * tao/POAC.h: Changed CORBA::Policy to ACE_CORBA_1 (Policy) to
+          work around friggin' bugs with MSVC++ 4.2.  Thanks to Ernesto
+          Guisado <eguisado@saincotrafico.com> for reporting this.
 
 Fri Jul 17 08:28:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
