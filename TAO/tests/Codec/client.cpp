@@ -122,11 +122,9 @@ main (int argc, char *argv[])
 
       if ((ACE_reinterpret_cast (ptrdiff_t, encoded_data->get_buffer ())
 	     % ACE_CDR::MAX_ALIGNMENT) == 0)
-	    ACE_DEBUG ((LM_WARNING,
-                        "\n"
-                        "WARNING: Data to be decoded is already aligned "
-                        "on MAX_ALIGNMENT.\n\n"));
-
+	    ACE_DEBUG ((LM_DEBUG,
+		        "\nData for decoding are already aligned"
+		        "on MAX_ALIGNMENT.\n\n"));
       // Extract the data from the octet sequence.
       decoded_data = codec->decode (encoded_data.in ()
                                     ACE_ENV_ARG_PARAMETER);
