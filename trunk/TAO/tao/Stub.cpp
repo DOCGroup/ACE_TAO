@@ -571,7 +571,6 @@ TAO_Stub::parse_policies (void)
     = this->base_profiles_.policy_list ();
 
   CORBA::ULong length = policy_list->length ();
-  CORBA::ULong index = 0;
   
   for (unsigned int i = 0; i < length; ++i)
     {

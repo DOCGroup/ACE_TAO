@@ -1,3 +1,9 @@
+Fri Sep 01 11:49:08 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Stub.cpp
+
+	  Fixed waring caused by an unused local variable.
+
 Fri Sep  1 08:32:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Leader_Followers/client.cpp:
