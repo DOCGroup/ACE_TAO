@@ -458,7 +458,18 @@ TAO_GIOP_Message_Acceptors::send_reply_exception (
     {
       // Write the exception
       // CORBA::TypeCode_ptr except_tc = x->_type ();
-
+      // @@ Bala: why don't we do something simple here, like:
+      //
+      // reply_params.reply_status =
+      //   TAO_GIOP_USER_EXCEPTION;
+      // if (CORBA::SystemException::_downcast (x) != 0)
+      //   reply_params.reply_status =
+      //     TAO_GIOP_SYSTEM_EXCEPTION;
+      // 
+      // Why the heck do we need to use a temporary and then use the
+      // convert_YADI_YADA() function!?! Are we trying to slow down
+      // the ORB for some particular reason?!
+      //
       CORBA::exception_type extype =
         CORBA::USER_EXCEPTION;
 
