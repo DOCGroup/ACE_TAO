@@ -1,3 +1,23 @@
+Wed Nov 13 14:30:44 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* Repeated ChangeLogTag: Tue Nov 12 12:37:18 2002  Pradeep Gore  <pradeep@oomworks.com>
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	  Updated.
+	* Repeated only the removal of files as per ChangeLogTag: Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Object.h:
+	* orbsvcs/orbsvcs/Notify/Object.cpp:
+	  Added missing call to update_qos_properties
+	* orbsvcs/orbsvcs/Notify/Proxy.h:
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h
+	  Changed signature of <qos_changed> method to accept
+	  QoSProperties.
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+ 	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+	  Rearranged code to avoid deadlock in <connect> methods.
+
 Wed Nov 13 10:41:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:

@@ -54,7 +54,7 @@ TAO_NS_SequencePushConsumer::release (void)
 }
 
 void
-TAO_NS_SequencePushConsumer::qos_changed (TAO_NS_QoSProperties& qos_properties)
+TAO_NS_SequencePushConsumer::qos_changed (const TAO_NS_QoSProperties& qos_properties)
 {
   const TAO_NS_Property_Long& maximum_batch_size = qos_properties.maximum_batch_size ();
 

@@ -105,7 +105,7 @@ protected:
   void shutdown_worker_task (void);
 
   /// Notification that can be overridden by subclasses to be informed that <qos_properties_> have been modified.
-  virtual void qos_changed (void);
+  virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
 
   ///= Protected data members.
 

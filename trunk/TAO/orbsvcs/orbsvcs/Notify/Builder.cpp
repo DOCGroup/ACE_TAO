@@ -165,13 +165,13 @@ TAO_NS_Builder::build_event_channel (TAO_NS_EventChannelFactory* ecf, const CosN
   ec->event_manager_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ec_ret._retn ());
 
-  ec->set_qos (initial_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec_ret._retn ());
-
   const CosNotification::QoSProperties &default_ec_qos =
     TAO_NS_PROPERTIES::instance ()->default_event_channel_qos_properties ();
 
   ec->set_qos (default_ec_qos ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (ec_ret._retn ());
+
+  ec->set_qos (initial_qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ec_ret._retn ());
 
   ec->set_admin (initial_admin ACE_ENV_ARG_PARAMETER);
@@ -229,7 +229,7 @@ TAO_NS_Builder::build_consumer_admin (TAO_NS_EventChannel* ec, CosNotifyChannelA
 
   // Pass EC QoS
   ec->qos_properties_.transfer (ca->qos_properties_);
-  ca->qos_changed ();
+  ca->qos_changed (ca->qos_properties_);
 
   ca_ret = CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ca_ret._retn ());
@@ -275,7 +275,7 @@ TAO_NS_Builder::build_supplier_admin (TAO_NS_EventChannel* ec, CosNotifyChannelA
 
   // Pass EC QoS
   ec->qos_properties_.transfer (sa->qos_properties_);
-  sa->qos_changed ();
+  sa->qos_changed (sa->qos_properties_);
 
   sa_ret = CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (sa_ret._retn ());
@@ -325,7 +325,7 @@ TAO_NS_Builder::build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosN
 
         // Pass SA QoS
         sa->qos_properties_.transfer (pc->qos_properties_);
-        pc->qos_changed ();
+        pc->qos_changed (pc->qos_properties_);
 
         proxy_ret = CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (proxy_ret._retn ());
@@ -360,7 +360,7 @@ TAO_NS_Builder::build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosN
 
         // Pass SA QoS
         sa->qos_properties_.transfer (pc->qos_properties_);
-        pc->qos_changed ();
+        pc->qos_changed (pc->qos_properties_);
 
         proxy_ret = CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (proxy_ret._retn ());
@@ -395,7 +395,7 @@ TAO_NS_Builder::build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosN
 
         // Pass SA QoS
         sa->qos_properties_.transfer (pc->qos_properties_);
-        pc->qos_changed ();
+        pc->qos_changed (pc->qos_properties_);
 
         proxy_ret = CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (proxy_ret._retn ());
@@ -454,7 +454,7 @@ TAO_NS_Builder::build_notification_push_supplier (TAO_NS_ConsumerAdmin* ca, CosN
 
         // Pass CA QoS
         ca->qos_properties_.transfer (ps->qos_properties_);
-        ps->qos_changed ();
+        ps->qos_changed (ps->qos_properties_);
 
         proxy_ret = CosNotifyChannelAdmin::ProxySupplier::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (proxy_ret._retn ());
@@ -491,7 +491,7 @@ TAO_NS_Builder::build_notification_push_supplier (TAO_NS_ConsumerAdmin* ca, CosN
 
         // Pass CA QoS
         ca->qos_properties_.transfer (ps->qos_properties_);
-        ps->qos_changed ();
+        ps->qos_changed (ps->qos_properties_);
 
         proxy_ret = CosNotifyChannelAdmin::ProxySupplier::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (proxy_ret._retn ());
@@ -528,7 +528,7 @@ TAO_NS_Builder::build_notification_push_supplier (TAO_NS_ConsumerAdmin* ca, CosN
 
         // Pass CA QoS
         ca->qos_properties_.transfer (ps->qos_properties_);
-        ps->qos_changed ();
+        ps->qos_changed (ps->qos_properties_);
 
         proxy_ret = CosNotifyChannelAdmin::ProxySupplier::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (proxy_ret._retn ());
@@ -579,7 +579,7 @@ TAO_NS_Builder::build_push_supplier (TAO_NS_ConsumerAdmin* ca ACE_ENV_ARG_DECL)
 
   // Pass CA QoS
   ca->qos_properties_.transfer (ps->qos_properties_);
-  ps->qos_changed ();
+  ps->qos_changed (ps->qos_properties_);
 
   proxy_ret = CosEventChannelAdmin::ProxyPushSupplier::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (proxy_ret._retn ());
@@ -621,7 +621,7 @@ TAO_NS_Builder::build_push_consumer (TAO_NS_SupplierAdmin* sa ACE_ENV_ARG_DECL)
 
   // Pass SA QoS
   sa->qos_properties_.transfer (pc->qos_properties_);
-  pc->qos_changed ();
+  pc->qos_changed (pc->qos_properties_);
 
   proxy_ret = CosEventChannelAdmin::ProxyPushConsumer::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (proxy_ret._retn ());

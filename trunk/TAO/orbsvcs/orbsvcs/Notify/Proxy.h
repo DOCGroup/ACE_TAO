@@ -74,7 +74,7 @@ public:
 
 
   /// Override, TAO_NS_Object::qos_changed
-  virtual void qos_changed (void);
+  virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
 
 protected:
   typedef TAO_NS_Object_T <TAO_NS_Proxy, TAO_NS_Admin> inherited;

@@ -93,11 +93,11 @@ TAO_NS_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TA
 }
 
 void
-TAO_NS_Proxy::qos_changed (void)
+TAO_NS_Proxy::qos_changed (const TAO_NS_QoSProperties& qos_properties)
 {
   //Inform Peers of qos changes.
   TAO_NS_Peer* peer = this->peer ();
 
   if (peer != 0)
-    peer->qos_changed (this->qos_properties_);
+    peer->qos_changed (qos_properties);
 }
