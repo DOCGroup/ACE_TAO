@@ -1,3 +1,27 @@
+Tue Sep 21 22:06:10 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.cpp (create_interface_tc,
+	               create_enum_tc,
+	               create_exception_tc):
+
+	  Added missing ACE_CHECK_RETURN macros after calls to
+	  ACE_NEW_THROW_EX.  Use CORBA::TypeCode_ptr::_nil() instead of
+	  zero.
+
+	* tao/ORB.cpp (get_service_information):
+
+	  CORBA::ORB::get_service_information is unimplemented.  It should 
+	  throw a NO_IMPLEMENT exception, not simply return 0.
+
+	* tao/ORB.cpp (create_list):
+
+	  Use ACE_NEW_THROW_EX instead of raw C++ new().
+
+	* tao/ORB.cpp (create_named_value):
+
+	  Changed ACE_NEW to ACE_NEW_THROW_EX since a CORBA::Environment
+	  variable is passed to this method.
+
 Tue Sep 21 20:23:07 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
