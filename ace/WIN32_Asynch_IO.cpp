@@ -1938,14 +1938,14 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
   int iovcnt = 0;
   for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
   {
     iov[iovcnt].iov_base  = msg->wr_ptr ();
     iov[iovcnt].iov_len   = msg->size ();
     ++iovcnt;
-    if (iovcnt >= IOV_MAX)
+    if (iovcnt >= ACE_IOV_MAX)
     {
       delete result;
       return -1;
@@ -2218,14 +2218,14 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
   int iovcnt = 0;
   for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
   {
     iov[iovcnt].iov_base  = msg->rd_ptr ();
     iov[iovcnt].iov_len   = msg->length ();
     ++iovcnt;
-    if (iovcnt >= IOV_MAX)
+    if (iovcnt >= ACE_IOV_MAX)
     {
       delete result;
       return -1;

@@ -530,7 +530,7 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto 
    * <message_block->size()> bytes will be read into each <message block> for
    * a total of <message_block->total_size()> bytes.  All <message_block>'s
    * <wr_ptr>'s will be updated to reflect the added bytes for each 
@@ -616,7 +616,7 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto 
    * <message_block->length()> bytes will be sent from each <message block>
    * for a total of <message_block->total_length()> bytes.  All
    * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent

@@ -1273,7 +1273,7 @@ ACE::recv_n (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
   int iovcnt = 0;
 
   while (message_block != 0)
@@ -1297,10 +1297,10 @@ ACE::recv_n (ACE_HANDLE handle,
               iovcnt++;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
-              // find IOV_MAX for platforms that do not define it rather
-              // than simply setting IOV_MAX to some arbitrary value such
+              // find ACE_IOV_MAX for platforms that do not define it rather
+              // than simply setting ACE_IOV_MAX to some arbitrary value such
               // as 16.
-              if (iovcnt == IOV_MAX)
+              if (iovcnt == ACE_IOV_MAX)
                 {
                   size_t current_transfer = 0;
 
@@ -1331,7 +1331,7 @@ ACE::recv_n (ACE_HANDLE handle,
     }
 
   // Check for remaining buffers to be sent.  This will happen when
-  // IOV_MAX is not a multiple of the number of message blocks.
+  // ACE_IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
       size_t current_transfer = 0;
@@ -2077,7 +2077,7 @@ ACE::send_n (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
   int iovcnt = 0;
 
   while (message_block != 0)
@@ -2101,10 +2101,10 @@ ACE::send_n (ACE_HANDLE handle,
               iovcnt++;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
-              // find IOV_MAX for platforms that do not define it rather
-              // than simply setting IOV_MAX to some arbitrary value such
+              // find ACE_IOV_MAX for platforms that do not define it rather
+              // than simply setting ACE_IOV_MAX to some arbitrary value such
               // as 16.
-              if (iovcnt == IOV_MAX)
+              if (iovcnt == ACE_IOV_MAX)
                 {
                   size_t current_transfer = 0;
 
@@ -2135,7 +2135,7 @@ ACE::send_n (ACE_HANDLE handle,
     }
 
   // Check for remaining buffers to be sent.  This will happen when
-  // IOV_MAX is not a multiple of the number of message blocks.
+  // ACE_IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
       size_t current_transfer = 0;
