@@ -58,6 +58,5 @@ TAO_ECG_CDR_Message_Receiver::shutdown (void)
       (*i).int_id_ = 0;
     }
 
-  TAO_ECG_Refcounted_Endpoint empty_endpoint;
-  this->ignore_from_ = empty_endpoint;
+  this->ignore_from_.reset ();
 }

@@ -52,6 +52,34 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
 }
 
 
+TAO_ECG_UDP_Out_Endpoint&
+TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
+{
+  if (this != &rhs)
+    {
+      this->request_id_generator_ = rhs.request_id_generator_;
+      this->dgram_ = rhs.dgram_;
+      this->port_number_ = rhs.port_number_;
+      this->if_count_ = rhs.if_count_;
+
+      delete [] this->ifs_;
+      this->ifs_ = 0;
+
+      if (this->if_count_ != 0)
+        {
+          ACE_NEW_RETURN (this->ifs_,
+                          ACE_INET_Addr [this->if_count_],
+                          *this);
+          for(size_t i = 0; i < this->if_count_; ++i)
+            {
+              this->ifs_[i] = rhs.ifs_[i];
+            }
+        }
+    }
+
+  return *this;
+}
+
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
