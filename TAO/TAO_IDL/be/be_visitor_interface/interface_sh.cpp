@@ -128,6 +128,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "static void _is_a_skel (CORBA::ServerRequest &req, " <<
     "void *obj, void *context, CORBA::Environment &_tao_enviroment);\n\n";
 
+  // add a skeleton for our _non_existent method
+  os->indent ();
+  *os << "static void _non_existent_skel (CORBA::ServerRequest &req, " <<
+    "void *obj, void *context, CORBA::Environment &_tao_enviroment);\n\n";
+
   // generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the call
   if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
