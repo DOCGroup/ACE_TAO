@@ -160,7 +160,8 @@
 // Platform supports threads.
 #define ACE_HAS_THREADS
 
-// Platform supports POSIX pthreads *and* Solaris threads!
+// Platform supports POSIX pthreads *and* Solaris threads!  If you
+// only want to use POSIX pthreads just comment out ACE_HAS_STHREADS.
 #define ACE_HAS_STHREADS
 #define ACE_HAS_PTHREADS
 // . . . but only supports SCHED_OTHER scheduling policy
