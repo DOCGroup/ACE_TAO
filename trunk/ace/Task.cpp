@@ -27,7 +27,8 @@ ACE_Task_Base::wait (void)
 {
   ACE_TRACE ("ACE_Task_Base::wait");
 
-  // If we don't have a thread manager, we probably were never activated
+  // If we don't have a thread manager, we probably were never
+  // activated.
   if (this->thr_mgr () != 0)
     return this->thr_mgr ()->wait_task (this);
   else
