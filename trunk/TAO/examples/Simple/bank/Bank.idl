@@ -48,7 +48,7 @@ module Bank
       // account.  Otherwise, the server will return back an object
       // reference to a previously created account.
 
-      void close (in Account account);
+      void close (in Account account_);
       // Close down the account and release its resources if it's the
       // last reference to the <account>.  Once this call is made it
       // is no longer valid to access the <account>.

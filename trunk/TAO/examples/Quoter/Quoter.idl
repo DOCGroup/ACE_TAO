@@ -126,7 +126,7 @@ module Stock
       string getPreferences ();
       // get the preferences, not implemented
 
-      void setCriteria (in Criteria criteria);
+      void setCriteria (in Criteria criteria_);
       // set the Criteria which is searched for keywords
     };
 };
