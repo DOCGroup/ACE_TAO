@@ -91,15 +91,15 @@ TAO_ORB_Parameters::cdr_memcpy_tradeoff (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::use_IIOP_lite_protocol (void) const
+TAO_ORB_Parameters::use_lite_protocol (void) const
 {
-  return this->use_IIOP_lite_protocol_;
+  return this->use_lite_protocol_;
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::use_IIOP_lite_protocol (int x)
+TAO_ORB_Parameters::use_lite_protocol (int x)
 {
-  this->use_IIOP_lite_protocol_ = x;
+  this->use_lite_protocol_ = x;
 }
 
 ACE_INLINE int

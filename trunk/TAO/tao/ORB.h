@@ -946,7 +946,6 @@ public:
   // ORB will not normally return OBJECT_NOT_EXIST unless the POA
   // reports that fault.
 
-  int preconnect (CORBA::String connections);
   // Establish connectsion to each of the comma-separated
   // <{host}>:<{port}> combinations specified in <connections>.
 

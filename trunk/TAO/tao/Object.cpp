@@ -242,7 +242,7 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
 TAO_ObjectKey *
 CORBA::Object::_key (CORBA::Environment &env)
 {
-  return this->_stubobj ()->key (env);
+  return this->_stubobj ()->profile_in_use ()->_key (env);
 }
 
 

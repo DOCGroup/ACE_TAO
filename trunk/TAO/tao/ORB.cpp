@@ -230,14 +230,19 @@ CORBA_ORB::open (void)
   TAO_ORB_Core *ocp = TAO_ORB_Core_instance ();
   TAO_Server_Strategy_Factory *f = ocp->server_factory ();
 
+  // @@ For now we simple assume an IIOP handler, in the future 
+  // @@ this has to be more general
+  TAO_IIOP_BASE_ACCEPTOR *iiop_acceptor =
+    ACE_dynamic_cast(TAO_IIOP_BASE_ACCEPTOR *, ocp->acceptor ()->acceptor ());
+
   // Initialize the endpoint ... or try!
 
-  if (ocp->acceptor ()->open (ocp->orb_params ()->addr (),
-                              ocp->reactor(),
-                              f->creation_strategy (),
-                              f->accept_strategy (),
-                              f->concurrency_strategy (),
-                              f->scheduling_strategy ()) == -1)
+  if (iiop_acceptor->open (ocp->orb_params ()->addr (),
+                           ocp->reactor(),
+                           f->creation_strategy (),
+                           f->accept_strategy (),
+                           f->concurrency_strategy (),
+                           f->scheduling_strategy ()) == -1)
     // Need to return an error somehow!!  Maybe set do_exit?
     return -1;
 
@@ -245,13 +250,13 @@ CORBA_ORB::open (void)
   // a 0 for a port number.  Once we open the acceptor, we can recheck
   // the address and get the accurate port number.
   ACE_INET_Addr new_address;
-  if (ocp->acceptor ()->acceptor ().get_local_addr (new_address) == -1)
+  if (iiop_acceptor->acceptor ().get_local_addr (new_address) == -1)
     return -1;
 
   // Reset the address
   ocp->orb_params ()->addr (new_address);
 
-  ocp->acceptor ()->acceptor ().enable (ACE_CLOEXEC);
+  iiop_acceptor->acceptor ().enable (ACE_CLOEXEC);
   ocp->add_to_collocation_table ();
 
   return 0;
@@ -576,6 +581,10 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
 }
 
 
+// @@ This will have to be sanitized of transport specific calls
+//    in order to support pluggable protocols!  But, it does use
+//    UDP and multicast.  Not all transport protocols may support 
+//    this, connectionless and multicast. fredk
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
                                  u_short port,
@@ -710,11 +719,12 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
     TAO_THROW_RETURN (CORBA_ORB::InvalidName (), CORBA_Object::_nil ());
 }
 
-int
-CORBA_ORB::preconnect (CORBA::String connections)
-{
-  return TAO_ORB_Core_instance ()->preconnect (connections);
-}
+// Now defined in IIOP_Connector and Connector_Registry
+// int
+// CORBA_ORB::preconnect (CORBA::String connections)
+// {
+//   return TAO_ORB_Core_instance ()->preconnect (connections);
+// }
 
 
 STUB_Object *
@@ -736,12 +746,14 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
     id = 0;
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+
+  // @@ Ugly, should not assume we are an IIOP Object!!
+  //    Will deal with this on the next iteration of pluggable protocols! fredk
   IIOP_Object *data = 0;
+  // @@ replace IIOP::Profile with something more appropriate!!
   data = new IIOP_Object (id,
-                          orb_core->orb_params ()->host (),
-                          orb_core->orb_params ()->addr ().get_port_number (),
-                          key,
-                          orb_core->orb_params ()->addr ());
+                          TAO_ORB_Core_instance ()->orb_params ()->addr (),
+                          key);
   if (data == 0)
     env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
@@ -939,6 +951,7 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &env)
 // ORB initialisation, per OMG document 94-9-46.
 //
 // XXX in addition to the "built in" Internet ORB, there will be ORBs
+// @@                                ^^^^^^^^ XXX
 // which are added separately, e.g. through a DLL listed in the
 // registry.  Registry will be used to assign orb names and to
 // establish which is the default.
