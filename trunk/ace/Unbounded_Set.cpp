@@ -293,7 +293,7 @@ ACE_Unbounded_Set<T>::iterator_add (void) const
 }
 
 template <class T> void
-ACE_Unbounded_Set<T>::iterator_leave (void) const
+ACE_Unbounded_Set<T>::iterator_leave (void)
 {
   ACE_ASSERT (number_of_iterators_ > 0);
   number_of_iterators_--;
@@ -464,7 +464,7 @@ ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator(const ACE_
   set_->iterator_add ();
 }
 
-template <class T> 
+template <class T>
 void ACE_Unbounded_Set_Const_Iterator<T>::operator=(const ACE_Unbounded_Set_Const_Iterator& o)
 {
   if (this == &o)
