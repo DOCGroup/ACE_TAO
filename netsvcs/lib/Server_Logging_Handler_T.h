@@ -70,7 +70,7 @@ protected:
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
-  Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString> receiver_;
+  Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_TString> receiver_;
   // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
   // in a optimized fashion.  The LOG_MESSAGE_RECEIVER class is often
   // a class with no instance data.

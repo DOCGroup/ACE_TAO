@@ -31,7 +31,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::AC
    // Initialize the CString to something that is not the empty string
    // to avoid problems when calling fast_rep()
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
-  : receiver_ (receiver, ACE_CString (" ", 1))
+  : receiver_ (receiver, ACE_TString (ACE_TEXT(" "), 1))
 #else
   : receiver_ (receiver),
     host_name_ (ACE_TString (ACE_TEXT (" "), 1))
