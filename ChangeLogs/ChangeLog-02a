@@ -1,3 +1,12 @@
+Thu May 30 08:53:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Codecs_Test.cpp:
+          Removed not needed ; after the ACE_RCSID. This will fix a warning in
+          the Tru64 build
+
+        * tests/Framework_Component_DLL.cpp:
+          Corrected playing of ;. This will fix a warning in the Tru64 build.
+
 Thu May 30 02:27:29 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
