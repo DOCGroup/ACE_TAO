@@ -2,6 +2,7 @@ configurations     = Release Debug "Static Release" "Static Debug"
 common_defines     = WIN32 _WINDOWS
 pdb                = 1
 pch_defines        = ACE_USING_PCH
+ssl_libs           = libeay32 ssleay32
 
 Release {
   type_is_dynamic  = 1

@@ -45,6 +45,7 @@ my(%validNames) = ('exename'         => 1,
                    'libs'            => 1,
                    'pch_header'      => 1,
                    'pch_source'      => 1,
+                   'ssl'             => 1,
                    'tao'             => 1,
                    'dllout'          => 1,
                    'libout'          => 1,
@@ -590,6 +591,21 @@ sub is_special_tag {
 }
 
 
+sub escape_regex_special {
+  my($self) = shift;
+  my($name) = shift;
+
+  $name =~ s/\\/\\\\/g;
+  $name =~ s/\$/\\\$/g;
+  $name =~ s/\[/\\\[/g;
+  $name =~ s/\]/\\\]/g;
+  $name =~ s/\(/\\\(/g;
+  $name =~ s/\)/\\\)/g;
+
+  return $name;
+}
+
+
 sub sift_files {
   my($self)  = shift;
   my($files) = shift;
@@ -631,8 +647,10 @@ sub sift_files {
 
   ## Now deal with the saved files
   if (defined $saved[0]) {
-    my($pjname) = $self->get_assignment('project_name');
-    foreach my $file (@saved) {
+    my($pjname) = $self->escape_regex_special(
+                           $self->get_assignment('project_name'));
+    foreach my $save (@saved) {
+      my($file) = $self->escape_regex_special($save);
       if ($pjname =~ /$file/ || $file =~ /$pjname/) {
         push(@$array, $file);
       }
@@ -733,7 +751,8 @@ sub generated_source_listed {
       foreach my $val (@$array) {
         foreach my $ext (@gen) {
           foreach my $i (@$idl) {
-            if ($val =~ /$i$ext$/) {
+            my($ifile) = $self->escape_regex_special($i);
+            if ($val =~ /$ifile$ext$/) {
               push(@found, $val);
             }
           }
