@@ -80,6 +80,13 @@ public:
     TAO_REACTOR_PER_PRIORITY
   };
 
+  // = Priority mapping types
+  enum
+  {
+    TAO_PRIORITY_MAPPING_LINEAR,
+    TAO_PRIORITY_MAPPING_DIRECT
+  };
+
   int cdr_allocator_source (void);
   // Modify and get the source for the CDR allocators
 
@@ -137,7 +144,11 @@ protected:
   // If <0> then we create reactors with signal handling disabled.
 
   int sched_policy_;
-  // The scheduling policy used for the priority mapping class
+  // The scheduling policy used to initialize the priority mapping
+  // strategy.
+
+  int priority_mapping_type_;
+  // The type of priority mapping class created by this factory.
 };
 
 #if defined (__ACE_INLINE__)

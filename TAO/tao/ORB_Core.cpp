@@ -1939,7 +1939,7 @@ TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
                   " Priority_Mapping::to_CORBA\n"));
       return -1;
     }
-  
+
   return 0;
 #endif /* TAO_HAS_RT_CORBA */
 }

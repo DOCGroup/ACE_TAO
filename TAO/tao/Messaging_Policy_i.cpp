@@ -1,14 +1,12 @@
 // $Id$
 
-#include "Messaging_Policy_i.h"
+#include "tao/Messaging_Policy_i.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
 #if ! defined (__ACE_INLINE__)
-#include "Messaging_Policy_i.i"
+#include "tao/Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
@@ -53,15 +51,10 @@ TAO_RelativeRoundtripTimeoutPolicy_i::create (
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  auto_ptr<TAO_RelativeRoundtripTimeoutPolicy_i> clone (tmp);
+  PortableServer::ServantBase_var clone (tmp);
 
-  CORBA::Policy_var result = clone->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = tmp->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  clone->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  clone.release ();
 
   return result._retn ();
 }
@@ -80,15 +73,10 @@ TAO_RelativeRoundtripTimeoutPolicy_i::copy (
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  auto_ptr<TAO_RelativeRoundtripTimeoutPolicy_i> clone (tmp);
+  PortableServer::ServantBase_var clone (tmp);
 
-  CORBA::Policy_var result = clone->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = tmp->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  clone->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  clone.release ();
 
   return result._retn ();
 }
@@ -115,13 +103,7 @@ TAO_RelativeRoundtripTimeoutPolicy_i::_default_POA (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr<TAO_RelativeRoundtripTimeoutPolicy_i>;
-template class ACE_Auto_Basic_Ptr<TAO_RelativeRoundtripTimeoutPolicy_i>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<TAO_RelativeRoundtripTimeoutPolicy_i>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_RelativeRoundtripTimeoutPolicy_i>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -6,10 +6,10 @@
 //   TAO
 //
 // = FILENAME
-//   Priority_Mapping.h
+//   Linear_Priority_Mapping.h
 //
 // = DESCRIPTION
-//   Declares the Priority_Mapping interface, as defined in the
+//   Declares the Linear_Priority_Mapping interface, as defined in the
 //   RT-CORBA spec.
 //
 // = AUTHOR
@@ -17,33 +17,36 @@
 //
 // ============================================================================
 
-#ifndef TAO_PRIORITY_MAPPING_H
-#define TAO_PRIORITY_MAPPING_H
+#ifndef TAO_LINEAR_PRIORITY_MAPPING_H
+#define TAO_LINEAR_PRIORITY_MAPPING_H
 
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_RT_CORBA)
 
-#include "tao/rtcorbafwd.h"
+#include "tao/Priority_Mapping.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Export TAO_Priority_Mapping
+class TAO_Export TAO_Linear_Priority_Mapping : public TAO_Priority_Mapping
 {
   //
   // = TITLE
-  //   The interface for priority mapping.
+  //   A simple implementation of the Priority_Mapping interface
   //
   // = DESCRIPTION
-  //   Check the RT-CORBA spec (orbos/99-02-12) secions 4.5.2
+  //   This implementation uses linear mapping between the range of
+  //   priorities for a given scheduling class (ACE_SCHED_OTHER,
+  //   ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
+  //   priorities (0...32767)
   //
 public:
-  TAO_Priority_Mapping (void);
+  TAO_Linear_Priority_Mapping (int policy = ACE_SCHED_OTHER);
   // Default constructor
 
-  virtual ~TAO_Priority_Mapping (void);
+  virtual ~TAO_Linear_Priority_Mapping (void);
   // The destructor
 
   virtual CORBA::Boolean
@@ -52,12 +55,20 @@ public:
   virtual CORBA::Boolean
       to_CORBA (RTCORBA::NativePriority native_priority,
                 RTCORBA::Priority &corba_priority);
+
+private:
+  int policy_;
+  // The scheduling policy
+
+  int min_;
+  int max_;
+  // The range
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Priority_Mapping.i"
+# include "tao/Linear_Priority_Mapping.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_RT_CORBA */
 
-#endif /* TAO_PRIORITY_MAPPING_H */
+#endif /* TAO_LINEAR_PRIORITY_MAPPING_H */
