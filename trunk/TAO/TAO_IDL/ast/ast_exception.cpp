@@ -89,6 +89,10 @@ AST_Exception::AST_Exception(UTL_ScopedName *n, UTL_StrList *p)
 {
 }
 
+AST_Exception::~AST_Exception (void)
+{
+}
+
 /*
  * Private operations
  */

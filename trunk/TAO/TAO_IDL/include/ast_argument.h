@@ -92,10 +92,13 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Argument();
-  AST_Argument(Direction direction, AST_Type *ft, UTL_ScopedName *n,
-               UTL_StrList *p);
-  virtual ~AST_Argument() {}
+  AST_Argument  ();
+  AST_Argument  (Direction direction, 
+                 AST_Type *ft, 
+                 UTL_ScopedName *n,
+                 UTL_StrList *p);
+
+  virtual ~AST_Argument (void);
 
   // Data Accessors
   Direction direction();

@@ -97,12 +97,13 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Operation();
-  AST_Operation(AST_Type *return_type,
-                Flags flags,
-                UTL_ScopedName *n,
-                UTL_StrList *p);
-  virtual ~AST_Operation() {}
+  AST_Operation ();
+  AST_Operation (AST_Type *return_type,
+                 Flags flags,
+                 UTL_ScopedName *n,
+                 UTL_StrList *p);
+
+  virtual ~AST_Operation (void);
 
   // Data Accessors
   AST_Type *return_type();

@@ -82,20 +82,26 @@ ACE_RCSID(ast, ast_sequence, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_Sequence::AST_Sequence()
-	    : pd_max_size(0),
-	      pd_base_type(NULL)
+AST_Sequence::AST_Sequence ()
+ : pd_max_size(0),
+	 pd_base_type(NULL)
 {
 }
 
-AST_Sequence::AST_Sequence(AST_Expression *ms, AST_Type *bt)
-	    : AST_Decl(AST_Decl::NT_sequence,
-		       new UTL_ScopedName(
-				      new Identifier("sequence",1,0,I_FALSE),
-				      NULL),
-		       NULL),
-	      pd_max_size(ms),
-	      pd_base_type(bt)
+AST_Sequence::AST_Sequence (AST_Expression *ms, 
+                            AST_Type *bt)
+ : AST_Decl(AST_Decl::NT_sequence,
+		        new UTL_ScopedName (
+				        new Identifier ("sequence", 1, 0, I_FALSE),
+				        NULL
+              ),
+		        NULL),
+	 pd_max_size(ms),
+	 pd_base_type(bt)
+{
+}
+
+AST_Sequence::~AST_Sequence (void)
 {
 }
 

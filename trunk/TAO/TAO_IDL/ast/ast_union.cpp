@@ -85,13 +85,15 @@ ACE_RCSID(ast, ast_union, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_Union::AST_Union()
+AST_Union::AST_Union ()
 {
 }
 
-AST_Union::AST_Union(AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
-	 : AST_Decl(AST_Decl::NT_union, n, p),
-	   UTL_Scope(AST_Decl::NT_union)
+AST_Union::AST_Union (AST_ConcreteType *dt, 
+                      UTL_ScopedName *n, 
+                      UTL_StrList *p)
+ : AST_Decl (AST_Decl::NT_union, n, p),
+	 UTL_Scope(AST_Decl::NT_union)
 {
   AST_PredefinedType *pdt;
 
@@ -153,6 +155,10 @@ AST_Union::AST_Union(AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
 
   if (pd_disc_type == NULL)
     idl_global->err()->error2(UTL_Error::EIDL_DISC_TYPE, this, dt);
+}
+
+AST_Union::~AST_Union (void)
+{
 }
 
 /*

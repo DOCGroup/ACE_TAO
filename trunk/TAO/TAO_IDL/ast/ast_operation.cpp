@@ -86,7 +86,7 @@ ACE_RCSID(ast, ast_operation, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_Operation::AST_Operation()
+AST_Operation::AST_Operation ()
   : pd_return_type(NULL),
     pd_flags(OP_noflags),
     pd_context(NULL),
@@ -94,8 +94,10 @@ AST_Operation::AST_Operation()
 {
 }
 
-AST_Operation::AST_Operation(AST_Type *rt, Flags fl, UTL_ScopedName *n,
-			   UTL_StrList *p)
+AST_Operation::AST_Operation (AST_Type *rt, 
+                              Flags fl, 
+                              UTL_ScopedName *n,
+			                        UTL_StrList *p)
   : AST_Decl(AST_Decl::NT_op, n, p),
     UTL_Scope(AST_Decl::NT_op),
     pd_return_type(rt),
@@ -117,6 +119,10 @@ AST_Operation::AST_Operation(AST_Type *rt, Flags fl, UTL_ScopedName *n,
         idl_global->err()->error1(UTL_Error::EIDL_NONVOID_ONEWAY, this);
     }
   }
+}
+
+AST_Operation::~AST_Operation (void)
+{
 }
 
 /*

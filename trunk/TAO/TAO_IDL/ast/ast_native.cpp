@@ -21,6 +21,10 @@ AST_Native::AST_Native(UTL_ScopedName *n,
 {
 }
 
+AST_Native::~AST_Native (void)
+{
+}
+
 /*
  * Dump this AST_Native node to the ostream o
  */

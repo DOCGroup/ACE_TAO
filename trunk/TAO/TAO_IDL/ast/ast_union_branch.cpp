@@ -81,16 +81,22 @@ ACE_RCSID(ast, ast_union_branch, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_UnionBranch::AST_UnionBranch()
-	       : pd_ll (NULL)
+AST_UnionBranch::AST_UnionBranch ()
+ : pd_ll (NULL)
 {
 }
 
-AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll, AST_Type *ft,
-				   UTL_ScopedName *n, UTL_StrList *p)
-		: AST_Field(AST_Decl::NT_union_branch, ft, n, p),
-		  AST_Decl(AST_Decl::NT_union_branch, n, p),
-		  pd_ll (ll)
+AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll, 
+                                  AST_Type *ft,
+				                          UTL_ScopedName *n, 
+                                  UTL_StrList *p)
+: AST_Field (AST_Decl::NT_union_branch, ft, n, p),
+	AST_Decl (AST_Decl::NT_union_branch, n, p),
+	pd_ll (ll)
+{
+}
+
+AST_UnionBranch::~AST_UnionBranch (void)
 {
 }
 

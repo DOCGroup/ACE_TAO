@@ -95,7 +95,7 @@ public:
                AST_Expression *ev, UTL_ScopedName *n, UTL_StrList *p);
   AST_Constant(AST_Expression::ExprType et, AST_Expression *ev,
                UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_Constant() {}
+  virtual ~AST_Constant (void);
 
   // Data Accessors
   AST_Expression *constant_value();

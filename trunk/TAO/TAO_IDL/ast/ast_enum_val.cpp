@@ -92,6 +92,10 @@ AST_EnumVal::AST_EnumVal(unsigned long v, UTL_ScopedName *n, UTL_StrList *p)
 {
 }
 
+AST_EnumVal::~AST_EnumVal (void)
+{
+}
+
 /*
  * Private operations
  */

@@ -21,10 +21,11 @@ public:
   AST_Native (void);
   // default constructor
 
-  AST_Native(UTL_ScopedName *n, UTL_StrList *p);
+  AST_Native (UTL_ScopedName *n, 
+              UTL_StrList *p);
   // constructor that initializes its scoped name
 
-  virtual ~AST_Native (void) {}
+  virtual ~AST_Native (void);
   // destructor
 
   // Narrowing

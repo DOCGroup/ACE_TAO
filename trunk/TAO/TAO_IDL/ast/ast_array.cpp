@@ -96,6 +96,10 @@ AST_Array::AST_Array(UTL_ScopedName *n, unsigned long nd, UTL_ExprList *ds)
   pd_dims = compute_dims(ds, nd);
 }
 
+AST_Array::~AST_Array (void)
+{
+}
+
 /*
  * Private operations
  */

@@ -82,9 +82,12 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_InterfaceFwd();
-  AST_InterfaceFwd (AST_Interface *dummy, UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_InterfaceFwd() {}
+  AST_InterfaceFwd ();
+  AST_InterfaceFwd (AST_Interface *dummy, 
+                    UTL_ScopedName *n, 
+                    UTL_StrList *p);
+
+  virtual ~AST_InterfaceFwd (void);
 
   // Data Accessors
   AST_Interface *full_definition();
