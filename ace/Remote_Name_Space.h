@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
 

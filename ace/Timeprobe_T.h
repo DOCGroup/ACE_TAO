@@ -23,7 +23,7 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Containers.h"
+#include "ace/Unbounded_Set.h"
 
 /**
  * @class ACE_Timeprobe

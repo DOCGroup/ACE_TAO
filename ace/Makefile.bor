@@ -233,6 +233,10 @@ INCLUDES = \
 	*.h *.i *.inl *_T.cpp \
 	Acceptor.cpp \
 	Asynch_Acceptor.cpp \
+	Array_Base.cpp \
+	Node.cpp \
+	Unbounded_Set.cpp \
+	Unbounded_Queue.cpp \
 	Auto_Ptr.cpp \
 	Connector.cpp \
 	CORBA_Ref.cpp \

@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch.h"
+#include "ace/Unbounded_Queue.h"
 #include "ace/Containers.h"
 #include "ace/Free_List.h"
 #include "ace/Singleton.h"
@@ -185,10 +186,10 @@ public:
 
   /// Current state of the thread.
   ACE_UINT32 state (void) const;
- 
+
   /// Return the pointer to an <ACE_Task_Base> or NULL if there's no
   /// <ACE_Task_Base> associated with this thread.;
-  ACE_Task_Base *task (void) const; 
+  ACE_Task_Base *task (void) const;
 
 protected:
   /// Reset this base thread descriptor.
