@@ -58,7 +58,7 @@ INTERPRETIVE_MARSHALING_FILES = \
   skip
 
 IDL_COMPILER_FILES = \
-  Managed_Types	\
+  Managed_Types \
   Union \
   Operation_Table
 
@@ -135,10 +135,10 @@ LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 ####
 #### Build customization.
@@ -188,22 +188,18 @@ endif # Dynamic_Any
 LSRC    = $(addsuffix .cpp,$(FILES))
 BUILD   += TAO_COMPONENTS
 
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets (and local hacks)
+#       Local targets (and local hacks)
 #----------------------------------------------------------------------------
-
-ifeq ($(shared_libs),)
-  override fakesvcconf = 1
-endif # ($(shared_libs),)
 
 ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
@@ -223,7 +219,7 @@ realclean:
 	@$(ACE_ROOT)/bin/ace_components --tao --remove
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
