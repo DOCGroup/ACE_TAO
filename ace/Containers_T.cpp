@@ -852,7 +852,8 @@ ACE_Double_Linked_List<T>::copy_nodes (const ACE_Double_Linked_List<T> &c)
 template <class T> void
 ACE_Double_Linked_List<T>::init_head (void)
 {
-  this->head_->next_ = this->head_->prev_ = this->head_;
+  this->head_->next_ = this->head_;
+  this->head_->prev_ = this->head_;
 }
 
 template <class T> int
