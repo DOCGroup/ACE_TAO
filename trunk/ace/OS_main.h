@@ -76,7 +76,7 @@ ace_main_i
 
 #     if defined (ACE_WIN32)
 #       define wmain \
-ace_os_wmain_i (int, ACE_TCHAR *[]);
+ace_os_wmain_i (int, ACE_TCHAR *[]); \
 int \
 ACE_WMAIN (int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., wmain */ \
 { \
