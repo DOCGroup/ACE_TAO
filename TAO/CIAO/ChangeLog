@@ -1,3 +1,13 @@
+Thu Jul  1 16:19:21 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/tests/Config_Handlers/handler_test.mpb:
+        * DAnCE/tests/scripts/BasicSP/basicNodeDaemon.pl:
+
+          Updated the files to include the right header files.
+
 Thu Jul  1 16:01:12 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DADAnCE/Deployment.xsd
