@@ -1,19 +1,26 @@
+Fri Sep 18 13:26:50 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/High_Res_Timer_Test.cpp (check): raised success
+          threshold from 10 to 25 percent.  Ossama saw just over
+          10 percent on an Linux box, not surprising.  Thanks to
+          him for reporting it.
+
 Fri Sep 18 01:53:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.40 released.
 
 Fri Sep 18 01:51:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE (open_temp_file): Changed the signature of this method
-	  to take a const char * rather than a char *.
+        * ace/ACE (open_temp_file): Changed the signature of this method
+          to take a const char * rather than a char *.
 
 Fri Sep 18 00:07:31 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/ACE.h (ACE):  
-	* ace/ACE.cpp (open_temp_file): Added this method to do open for
-	the temp files, so that they will get deleted when they are
-	closed. 
-	Thanks to Nanbor and Carlos. 
+        * ace/ACE.h (ACE):
+        * ace/ACE.cpp (open_temp_file): Added this method to do open for
+        the temp files, so that they will get deleted when they are
+        closed.
+        Thanks to Nanbor and Carlos.
 
 Thu Sep 17 23:01:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
