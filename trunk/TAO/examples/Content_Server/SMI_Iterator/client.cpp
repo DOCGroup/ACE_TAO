@@ -3,13 +3,28 @@
 
 // Ossama Othman <ossama@uci.edu>
 
+#include "ace/FILE_Connector.h"
+#include "ace/Process_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "Web_ServerC.h"
 
-// Prototype for function that maps filename to viewer.
+ACE_RCSID(SMI_Iterator, client, "$Id$")
+
+
+// Retrieve the data from the server
+int retrieve_data (const char *content_type,
+                   Web_Server::Content_Iterator_ptr contents,
+                   CORBA::Environment &ACE_TRY_ENV);
+
+
+// Map content type to viewer.
 int external_viewer (const char *content_type,
                      char *viewer,
                      size_t length);
+
+// Spawn an external viewer
+int spawn_viewer (const char *content_type,
+                  const char *filename);
 
 int
 main (int argc, char *argv[])
@@ -25,7 +40,7 @@ main (int argc, char *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Ossama's Mighty ORB",
+                                            "Mighty ORB",
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -38,12 +53,13 @@ main (int argc, char *argv[])
       // Narrow to a Naming Context
       CosNaming::NamingContext_var nc;
       nc = CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;      
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil reference to Name Service\n"),
+                             ACE_TEXT ("Nil reference to ")
+                             ACE_TEXT ("Name Service\n")), 
                             -1);
         }
 
@@ -62,154 +78,130 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object pointed to by:\n  %s\n"
-                             "is not an Iterator_Factory object.\n",
+                             ACE_TEXT ("Object pointed to by:\n ")
+                             ACE_TEXT ("%s\n")
+                             ACE_TEXT ("is not an Iterator_Factory ")
+                             ACE_TEXT ("object.\n"),
                              argv[1]),
                             -1);
         }
 
       // Get a Content_Iterator
+      const char *pathname = argv[1];
+      Web_Server::Content_Iterator_var contents;
+      Web_Server::Metadata_Type_var metadata;
+      factory->get_iterator (pathname,
+                             contents,
+                             metadata,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      // --------------------------------
-      {
-        // @@ To get around an obscure bug in TAO, make sure the octet
-        //    sequence is destroyed prior the ORB::destroy() call by
-        //    placing it inside its own scope.
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("File <%s> has the following ")
+                  ACE_TEXT ("characteristics:\n")
+                  ACE_TEXT ("  Modification Date: %s\n")
+                  ACE_TEXT ("  Content Type: %s\n"),
+                  argv[1],
+                  metadata->modification_date.in (),
+                  metadata->content_type.in ()));
 
-        // Get the file.
-        const char *pathname = argv[1];
-        Web_Server::Content_Iterator_var contents;
-        Web_Server::Metadata_Type_var metadata;
-        factory->get_iterator (pathname,
-                               contents,
-                               metadata,
-                               ACE_TRY_ENV);
-        ACE_TRY_CHECK;
+      int result = ::retrieve_data (metadata->content_type.in (),
+                                    contents.in (),
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-        ACE_DEBUG ((LM_INFO,
-                    "File <%s> has the following characteristics:\n"
-                    "  Modification Date: %s\n"
-                    "  Content Type: %s\n",
-                    argv[1],
-                    metadata->modification_date.in (),
-                    metadata->content_type.in ()));
+      if (result != 0)
+        return -1;
 
-        // Write the contents of the octet sequence to a file with the
-        // same name in the request.
-        char userid[17];
-        ACE_OS::cuserid (userid, 17);
-
-        ACE_Auto_String_Free tempname (ACE_OS::tempnam (0,
-                                                        userid));
-        ACE_HANDLE handle = ACE_OS::open (tempname.get (),
-                                          O_CREAT | O_TRUNC | O_WRONLY,
-                                          S_IRUSR | S_IWUSR);
-
-        if (handle == ACE_INVALID_HANDLE)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open file %s%p\n",
-                               tempname.get (),
-                               ""),
-                              -1);
-          }
-
-        Web_Server::Chunk_Type_var chunk;
-        CORBA::ULong offset = 0;
-        while (contents->next_chunk (offset, chunk, ACE_TRY_ENV))
-          {
-            // Write the received data to a file.
-            if (ACE_OS::write (handle,
-                               chunk->get_buffer (),
-                               chunk->length ()) == -1)
-              {
-                ACE_OS::close (handle);
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "%p\n",
-                                   "Unable to write retrieved data to file"),
-                                  -1);
-              }
-            else
-              offset += chunk->length ();
-          }
-        ACE_TRY_CHECK;
-
-        // Done with the Content_Iterator, so destroy it.
-        contents->destroy (ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-
-        // No longer need the data file to be open.
-        ACE_OS::close (handle);
-
-        ACE_DEBUG ((LM_INFO,
-                    "Wrote retrieved data to file <%s>\n",
-                    tempname.get ()));
-
-        char viewer[80];  // It is highly unlikey, a mime type will
-                          // ever be larger than 80 bytes.
-
-        if (external_viewer (metadata->content_type.in (),
-                             viewer,
-                             sizeof (viewer)) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Problem determining which external "
-                             "viewer to use.\n"),
-                            -1);
-
-        // Spawn an external viewer based on the content type returned
-        // in the metadata.
-        char *const viewer_argv[] =
-        { viewer, ACE_const_cast (char *const, tempname.get ()), 0 };
-
-
-        switch (ACE_OS::fork ())
-          {
-          case 0:
-            // Child
-            if (ACE_OS::execvp (viewer, viewer_argv) == -1)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "%p\n",
-                                 "Error during execv() call"),
-                                -1);
-            else
-              return 0;  // NOT REACHED
-          case -1:
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "Error during fork"),
-                              -1);
-          default:
-            // Parent
-            ACE_DEBUG ((LM_INFO,
-                        "Spawned viewer <%s>.\n",
-                        viewer));
-            break;
-          }
-      }
-      // --------------------------------
+      // Done with the Content_Iterator, so destroy it.
+      contents->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       orb->shutdown (0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      // orb->destroy (ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
     }
   ACE_CATCH (Web_Server::Error_Result, exc)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Caught Web Server exception with status %d\n",
+                         ACE_TEXT ("Caught Web Server exception ")
+                         ACE_TEXT ("with status %d\n"),
                          exc.status),
                         -1);
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught unexpected exception:");
+                           ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }
   ACE_ENDTRY;
 
+  // Wait for all children to exit.
+  ACE_Process_Manager::instance ()->wait ();
+
+  return 0;
+}
+
+
+int retrieve_data (const char *content_type,
+                   Web_Server::Content_Iterator_ptr iterator,
+                   CORBA::Environment &ACE_TRY_ENV)
+{
+  Web_Server::Content_Iterator_var contents =
+    Web_Server::Content_Iterator::_duplicate (iterator);
+
+  // Create a temporary file where the retrieved data will be stored.
+  ACE_FILE_Addr file_addr (ACE_sap_any_cast (const ACE_FILE_Addr &));
+  ACE_FILE_IO file_io;
+  ACE_FILE_Connector connector;
+
+  if (connector.connect (file_io,
+                         file_addr,
+                         0,
+                         ACE_Addr::sap_any,
+                         0,
+                         O_CREAT | O_TRUNC | O_WRONLY,
+                         S_IRUSR | S_IWUSR) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Could not open file %s"),
+                  file_addr.get_path_name ()));
+    }
+
+  // Retrieve and store chunks of data.
+  Web_Server::Chunk_Type_var chunk;
+  CORBA::ULong offset = 0;
+  while (contents->next_chunk (offset, chunk, ACE_TRY_ENV))
+    {
+      // Write the received data to a file.
+      if (file_io.send (chunk->get_buffer (),
+                        chunk->length ()) == -1)
+        {
+          (void) file_io.close ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("Unable to write retrieved ")
+                             ACE_TEXT ("data to file %s\n"),
+                             file_addr.get_path_name ()),
+                            -1);
+        }
+      else
+        offset += chunk->length ();
+    }
+  ACE_CHECK_RETURN (-1);
+
+  // Done writing to the file.
+  (void) file_io.close ();
+
+  // Now spawn a view to display the retrieved data.
+  if (::spawn_viewer (content_type,
+                      file_addr.get_path_name ()) != 0)
+    return -1;
 
   return 0;
 }
@@ -273,9 +265,58 @@ int external_viewer (const char *content_type,
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unsupported MIME type: <%s>\n",
+                       ACE_TEXT ("Unsupported MIME type: <%s>\n"),
                        content_type),
                       -1);
+
+  return 0;
+}
+
+int
+spawn_viewer (const char * content_type,
+              const char * filename)
+{
+  // It is highly unlikey, a mime type will ever be larger than 80
+  // bytes.
+  char viewer[80];
+
+  if (::external_viewer (content_type,
+                         viewer,
+                         sizeof (viewer)) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Problem determining which external ")
+                       ACE_TEXT ("viewer to use.\n")),
+                      -1);
+
+  // Set up the command line that will be used when spawning the
+  // external viewer.
+  ACE_Process_Options opts;
+  opts.command_line (ACE_TEXT ("%s %s"),
+                     viewer,
+                     filename);
+
+  pid_t result = ACE_Process_Manager::instance ()->spawn (opts);
+
+  switch (result)
+    {
+    case 0:
+      // Child
+      return 0;
+    case ACE_INVALID_PID:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Error during viewer spawn of ")
+                         ACE_TEXT ("\"%s\""),
+                         opts.command_line_buf ()),
+                        -1);
+    default:
+      // Parent
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("Spawned viewer <%s> with PID <%d>.\n"),
+                  viewer,
+                  result));
+      break;
+    }
 
   return 0;
 }
