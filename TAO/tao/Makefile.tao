@@ -157,6 +157,7 @@ ORB_CORE_FILES = \
   CurrentA \
   Exception \
   WrongTransactionC \
+  WrongTransactionA \
   Environment \
   Object \
   LocalObject \
@@ -269,6 +270,7 @@ ORB_CORE_FILES = \
   BoundsC \
   BoundsA \
   TAOC \
+  TAOA \
   Object_Loader \
   TAO_Singleton_Manager \
   DLL_ORB \

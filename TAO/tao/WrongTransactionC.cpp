@@ -26,15 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+// be/be_codegen.cpp:338
 
 
 #include "WrongTransactionC.h"
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-#include "tao/Any_Dual_Impl_T.h"
 #include "tao/Typecode.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -44,18 +41,17 @@
 #include "WrongTransactionC.i"
 #endif /* !defined INLINE */
 
-#include "ace/OS_NS_string.h"
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+
+// TAO_IDL - Generated from 
+// be/be_visitor_exception/exception_cs.cpp:63
 
 CORBA::WrongTransaction::WrongTransaction (void)
   : CORBA::UserException (
@@ -94,8 +90,7 @@ void CORBA::WrongTransaction::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::WrongTransaction *
 CORBA::WrongTransaction::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0",
-                       _tao_excp->_rep_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", _tao_excp->_rep_id ()))
     {
       return ACE_dynamic_cast (WrongTransaction *, _tao_excp);
     }
@@ -138,7 +133,7 @@ void CORBA::WrongTransaction::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -151,7 +146,7 @@ void CORBA::WrongTransaction::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -162,27 +157,27 @@ CORBA::TypeCode_ptr CORBA::WrongTransaction::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_WrongTransaction[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f5772),
-  ACE_NTOHL (0x6f6e6754),
-  ACE_NTOHL (0x72616e73),
-  ACE_NTOHL (0x61637469),
-  ACE_NTOHL (0x6f6e3a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f5772), 
+  ACE_NTOHL (0x6f6e6754), 
+  ACE_NTOHL (0x72616e73), 
+  ACE_NTOHL (0x61637469), 
+  ACE_NTOHL (0x6f6e3a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/WrongTransaction:1.0
     17,
-  ACE_NTOHL (0x57726f6e),
-  ACE_NTOHL (0x67547261),
-  ACE_NTOHL (0x6e736163),
-  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x57726f6e), 
+  ACE_NTOHL (0x67547261), 
+  ACE_NTOHL (0x6e736163), 
+  ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x0),  // name = WrongTransaction
   0, // member count
   };
@@ -202,107 +197,11 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
-    TAO_InputCDR & cdr
-  )
-{
-  CORBA::String_var id;
-
-  if ((cdr >> id.out ()) == 0)
-    {
-      return 0;
-    }
-
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return 0;
-    }
-  ACE_ENDTRY;
-
-  return 1;
-}
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::WrongTransaction &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::insert_copy (
-      _tao_any,
-      CORBA::WrongTransaction::_tao_any_destructor,
-      CORBA::_tc_WrongTransaction,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::WrongTransaction *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::insert (
-      _tao_any,
-      CORBA::WrongTransaction::_tao_any_destructor,
-      CORBA::_tc_WrongTransaction,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::WrongTransaction *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::WrongTransaction *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const CORBA::WrongTransaction *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::extract (
-        _tao_any,
-        CORBA::WrongTransaction::_tao_any_destructor,
-        CORBA::_tc_WrongTransaction,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::WrongTransaction
-      >;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::WrongTransaction \
-      >
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

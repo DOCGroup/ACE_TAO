@@ -25,33 +25,23 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:848
+
+#ifndef _TAO_IDL_ORIG_WRONGTRANSACTIONA_ANYOP_H_
+#define _TAO_IDL_ORIG_WRONGTRANSACTIONA_ANYOP_H_
+
+#include /**/ "ace/pre.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_ci.cpp:71
+// be/be_visitor_exception/any_op_ch.cpp:52
 
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA::WrongTransaction &_tao_aggregate
-  )
-{
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::WrongTransaction &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA::WrongTransaction*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WrongTransaction *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WrongTransaction *&);
 
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::WrongTransaction&
-  )
-{
-  return 1;
-}
+#include /**/ "ace/post.h"
+
+#endif /* ifndef */
 

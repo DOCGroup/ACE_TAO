@@ -146,12 +146,9 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class
-    TAO::Any_Dual_Impl_T<
-        Messaging::PolicyValue::_tao_seq_CORBA_Octet_
-      >;
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
     TAO::Any_Dual_Impl_T<
@@ -164,11 +161,6 @@ CORBA::Boolean operator>>= (
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Messaging::PolicyValue::_tao_seq_CORBA_Octet_ \
-      >
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \

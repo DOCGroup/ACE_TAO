@@ -1,3 +1,34 @@
+Tue Dec 23 20:35:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Buffering_Constraint_Policy.cpp:
+
+	  Added a new header.
+	
+	* tao/Messaging_PolicyValue.pidl:
+	* tao/Messaging_PolicyValueA.cpp:
+	* tao/Messaging_PolicyValueA.h:
+	* tao/Messaging_PolicyValueC.cpp:
+	* tao/Messaging_PolicyValueC.h:
+	* tao/Messaging_PolicyValueC.i:
+	* tao/TAOA.cpp:
+	* tao/TAOA.h:
+	* tao/TAOC.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.i:
+	* tao/WrongTransaction.pidl:
+	* tao/WrongTransactionA.cpp:
+	* tao/WrongTransactionA.h:
+	* tao/WrongTransactionC.cpp:
+	* tao/WrongTransactionC.h:
+	* tao/WrongTransactionC.i:
+
+	  Regenerated all these files. 
+	
+	* tao/Makefile.tao:
+	* tao/Makefile.bor:
+	* tao/tao.mpc: Added new files.
+	
+
 Tue Dec 23 20:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Bounds.pidl:
