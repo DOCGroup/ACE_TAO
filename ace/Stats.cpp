@@ -153,8 +153,7 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
               // works with the Diab compiler the way it is! //
 
               // Square using 64-bit arithmetic.
-              sum_of_squares += difference *
-                ACE_U64_TO_U32 (difference);
+              sum_of_squares += difference * ACE_U64_TO_U32 (difference);
               i.advance ();
 
               if (sum_of_squares < original_sum_of_squares)
@@ -441,14 +440,18 @@ void
 ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
                               ACE_UINT64 latency)
 {
-  this->samples_count_++;
+  ++this->samples_count_;
 
   if (this->samples_count_ == 1)
     {
       this->latency_min_ = latency;
       this->latency_max_ = latency;
       this->latency_sum_ = latency;
+#if defined ACE_LACKS_LONGLONG_T
+      this->latency_sum2_ = latency * ACE_U64_TO_U32 (latency);
+#else  /* ! ACE_LACKS_LONGLONG_T */
       this->latency_sum2_ = latency * latency;
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
       this->throughput_last_   = throughput;
 #if 0
@@ -470,7 +473,11 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
     this->latency_max_ = latency;
 
   this->latency_sum_  += latency;
+#if defined ACE_LACKS_LONGLONG_T
+  this->latency_sum2_ += latency * ACE_U64_TO_U32 (latency);
+#else  /* ! ACE_LACKS_LONGLONG_T */
   this->latency_sum2_ += latency * latency;
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
   this->throughput_last_ = throughput;
 
@@ -544,9 +551,20 @@ ACE_Throughput_Stats::dump_results (const char* msg,
       return;
     }
 
-  ACE_UINT64 latency_avg = this->latency_sum_ / this->samples_count_;
+  ACE_UINT64 latency_avg = this->latency_sum_ /
+#if defined ACE_LACKS_LONGLONG_T
+    ACE_U64_TO_U32 (this->samples_count_);
+#else  /* ! ACE_LACKS_LONGLONG_T */
+    this->samples_count_;
+#endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_UINT64 latency_dev =
+#if defined ACE_LACKS_LONGLONG_T
+    ACE_static_cast (ACE_U_LongLong,
+      this->latency_sum2_ / ACE_U64_TO_U32(this->samples_count_)) -
+    latency_avg * ACE_U64_TO_U32(latency_avg);
+#else  /* ! ACE_LACKS_LONGLONG_T */
     this->latency_sum2_ / this->samples_count_ - latency_avg * latency_avg;
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
   double l_min = ACE_CU64_TO_CU32 (this->latency_min_) / sf;
   double l_max = ACE_CU64_TO_CU32 (this->latency_max_) / sf;
@@ -558,7 +576,12 @@ ACE_Throughput_Stats::dump_results (const char* msg,
               msg, l_min, l_avg, l_max, l_dev));
 
   double seconds =
-    ACE_CU64_TO_CU32 (this->throughput_last_ / sf);
+#if defined ACE_LACKS_LONGLONG_T
+    this->throughput_last_ / sf;
+#else  /* ! ACE_LACKS_LONGLONG_T */
+    ACE_static_cast (double,
+                     ACE_UINT64_DBLCAST_ADAPTER(this->throughput_last_ / sf));
+#endif /* ! ACE_LACKS_LONGLONG_T */
   seconds /= 1000000.0;
   double t_avg = ACE_CU64_TO_CU32 (this->samples_count_) / seconds;
 
