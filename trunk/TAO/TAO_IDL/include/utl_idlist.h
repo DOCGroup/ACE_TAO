@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -87,7 +87,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-#include	"ace/stdcpp.h"
 #include	"idl_fwd.h"
 #include	"utl_list.h"
 #include	"utl_identifier.h"
@@ -103,23 +102,23 @@ class UTL_IdList : public UTL_List
 public:
   UTL_IdList (Identifier *car, UTL_IdList *cdr);
   // Constructor(s)
-  
+
   virtual ~UTL_IdList() {}
   // destructor
 
   // =AST Dumping
-  
+
   virtual void dump (ostream &o);
   // dump to ostream
 
   // Other operations
-  
+
   UTL_List *copy ();
   // Copy the list
-  
+
   Identifier *head ();
   // get element
-  
+
   Identifier  *last_component ();
   // Get last element in this list
 private:
@@ -138,7 +137,7 @@ class	UTL_IdListActiveIterator :
 public:
   UTL_IdListActiveIterator (UTL_IdList *s);
   // Constructor(s)
-  
+
   Identifier *item ();
   // retrieves the next item
 };
