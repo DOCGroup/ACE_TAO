@@ -36,7 +36,10 @@ main (int, char *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  // The explicit instantiation is necessary with g++ 2.91.66 with
+  // -frepo, because it misses it.
 template class ACE_Event_Handler_T<ACE_Test_Sig_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Event_Handler_T<ACE_Test_Sig_Handler>
