@@ -33,15 +33,12 @@ BUILD = $(VLIB) $(VBIN)
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-#### If ACE_COMPONENTS is set and doesn't contain Other, don't
+#### If the ACE library wasn't built with the Other component, don't
 #### try to build test_naming.
-ifdef ACE_COMPONENTS
-  ifeq (Other,$(findstring Other,$(ACE_COMPONENTS)))
-    BIN += test_naming
-  endif # Other
-else  # ! ACE_COMPONENTS
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
   BIN += test_naming
-endif # ! ACE_COMPONENTS
+endif # ! Other
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
