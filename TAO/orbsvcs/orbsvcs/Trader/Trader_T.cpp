@@ -18,7 +18,7 @@
 #if !defined (TAO_TRADER_C)
 #define TAO_TRADER_C
 
-#include "Trader.h"
+#include "Trader_T.h"
 #include "Lookup.h"
 #include "Register.h"
 #include "Link.h"
@@ -66,7 +66,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::TAO_Trader (Trader_Components compo
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader ()
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 {
   // Remove Trading Components from POA
   //

@@ -25,7 +25,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
   : trader_ (trader),
     policies_ (USE_PROXY_OFFERS + 1)
 {
-  for (int i = 0; i <= USE_PROXY_OFFERS; i++)
+  for (int i = 0; i <= REQUEST_ID; i++)
     this->policies_[i] = 0;
 
   for (int j = 0; j < policies.length (); j++)
@@ -52,10 +52,16 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
 	  index = MATCH_CARD;
 	  break;
 	case 'r':
-	  index = RETURN_CARD;
+	  if (pol_name[2] == 't')
+	    index = RETURN_CARD;
+	  else if (pol_name[2] == 'q')
+	    index = REQUEST_ID;
 	  break;
 	case 's':
-	  index = SEARCH_CARD;
+	  if (pol_name[1] == 't')
+	    index == STARTING_TRADER;
+	  else if (pol_name[1] == 'e')
+	    index = SEARCH_CARD;
 	  break;
 	case 'u':
 	  if (pol_name[4] == 'd')
@@ -159,8 +165,8 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
 			    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
-  CORBA::Boolean def_value = (CORBA::Boolean) 1,
-    return_value = (CORBA::Boolean) 1;
+  CORBA::Boolean def_value = CORBA::B_TRUE,
+    return_value = CORBA::B_TRUE;
   TAO_Support_Attributes_Impl& support_attrs =
     this->trader_.support_attributes ();
 
@@ -174,6 +180,9 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       break;
     case USE_PROXY_OFFERS:
       def_value = support_attrs.supports_proxy_offers ();
+      break;
+    case EXACT_TYPE_MATCH:
+      def_value = CORBA::B_FALSE;
       break;
     }
   
@@ -189,11 +198,13 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       else
 	value >>= to_boolean (return_value);
 
-      if (def_value == (CORBA::Boolean) 0)
-	return_value = (CORBA::Boolean) 0;
+      if (def_value == CORBA::B_FALSE)
+	return_value = CORBA::B_FALSE;
       else
 	this->limits_.insert (string (POLICY_NAMES[pol]));
     }
+  else
+    return_value = def_value;
 
   return return_value;
 }
