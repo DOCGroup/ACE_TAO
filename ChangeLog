@@ -1,3 +1,15 @@
+Mon Nov 10 20:15:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/SV_Message_Queue.i:
+          Added struct to msqid_ds* cast to try to get around compile
+          error on MacOSX.
+
+        * ace/Semaphore.cpp:
+          Added #include ACE.h.
+
+        * ace/config-macosx.h:
+          Added ACE_LACKS_POLL_H.
+
 Mon Nov 10 16:37:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Reactor/WFMO_Reactor/Removals.cpp:

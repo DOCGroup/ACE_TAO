@@ -7,7 +7,6 @@
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "global_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_component, 
@@ -131,21 +130,21 @@ AST_Component::destroy (void)
 void
 AST_Component::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "component ";
+  this->dump_i (o, "component ");
 
   this->local_name ()->dump (o);
 
-  o << " ";
+  this->dump_i (o, " ");
 
   if (this->pd_base_component != 0)
     {
-      o << ": ";
+      this->dump_i (o, ": ");
       this->pd_base_component->local_name ()->dump (o);
     }
 
   if (this->pd_n_inherits > 0)
     {
-      o << "supports ";
+      this->dump_i (o, "supports ");
 
       for (long i = 0; i < this->pd_n_inherits; ++i)
         {
@@ -153,17 +152,17 @@ AST_Component::dump (ACE_OSTREAM_TYPE &o)
 
           if (i < this->pd_n_inherits - 1)
             {
-              o << ", ";
+              this->dump_i (o, ", ");
             }
         }
     }
 
-  o << " {\n";
+  this->dump_i (o, " {\n");
 
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
 
-  o << "}";
+  this->dump_i (o, "}");
 }
 
 int

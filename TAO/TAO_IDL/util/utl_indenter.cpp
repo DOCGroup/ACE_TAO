@@ -70,6 +70,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "utl_indenter.h"
 
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
 ACE_RCSID (util,
            utl_indenter,
            "$Id$")

@@ -9,8 +9,6 @@ ACE_RCSID (TAO,
 #include "ClientRequestInfo_i.h"
 #include "Any.h"
 
-#include "ace/streams.h"
-
 # if !defined (__ACE_INLINE__)
 #   include "ClientRequestInfo.inl"
 # endif /* !__ACE_INLINE__ */
