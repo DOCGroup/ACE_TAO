@@ -108,7 +108,7 @@ public:
   /// Create a new TAO_ECG_UDP_Receiver object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
-  static TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> create (void);
+  static TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> create (CORBA::Boolean perform_crc = 0);
 
   ~TAO_ECG_UDP_Receiver (void);
 
@@ -185,7 +185,7 @@ protected:
 
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Receiver objects using the static create() method.
-  TAO_ECG_UDP_Receiver (void);
+  TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = 0);
 
 private:
 

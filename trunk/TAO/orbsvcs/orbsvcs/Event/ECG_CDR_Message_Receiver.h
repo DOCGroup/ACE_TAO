@@ -141,7 +141,7 @@ class TAO_RTEvent_Export TAO_ECG_CDR_Message_Receiver
 public:
   /// Initialization and termination methods.
   //@{
-  TAO_ECG_CDR_Message_Receiver (void);
+  TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
   ~TAO_ECG_CDR_Message_Receiver (void);
 
   /**
@@ -225,6 +225,9 @@ private:
   /// array when the range of requests represented there needs to be
   /// shifted.
   size_t min_purge_count_;
+
+  /// Flag to indicate whether CRC should be computed and checked.
+  CORBA::Boolean check_crc_;
 };
 
 // ****************************************************************
@@ -239,8 +242,10 @@ struct TAO_ECG_CDR_Message_Receiver::Mcast_Header
   CORBA::ULong fragment_offset;
   CORBA::ULong fragment_id;
   CORBA::ULong fragment_count;
-
-  int read (char * header, size_t bytes_received);
+  CORBA::ULong crc;
+  int read (char * header,
+            size_t bytes_received,
+            CORBA::Boolean checkcrc = 0);
 };
 
 // ****************************************************************
