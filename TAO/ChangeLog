@@ -1,3 +1,32 @@
+Tue May 18 10:15:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sunsoft.cpp:
+        
+          Changed the generation of boolean literals and case labels
+          to use 'true' and 'false'. With case labels, this output
+          will make it immediately obvious by inspection of source
+          code that we are dealing with a union having a boolean
+          discriminator, without having to check the header file or
+          the IDL file. The display of boolean literals (rhs of
+          boolean constants) was also change for consistency.
+          
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be_include/be_union.h:
+        
+          In the helper method to decide whether an empty default case
+          should be added to switch statements in generated code for
+          union copy constructor, assignment operators, CDR operators,
+          etc., changed one of the factors from the number of members
+          to the number of labels, since a union member may have
+          multiple case labels.
+          
+        * TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
+        
+          Changed a check for null path from 'pre_abspath', which is
+          allocated on the stack and is never null, to the return
+          value of the macro FULLPATH, which is what we want. Thanks
+          to Olli Savia <ops@iki.fi> for pointing this out.
+
 Tue May 18 09:37:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/mfc/server.cpp:

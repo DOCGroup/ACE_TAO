@@ -52,10 +52,16 @@ public:
   virtual void destroy (void);
   // Cleanup function.
 
-  // Visiting.
   virtual int accept (be_visitor *visitor);
-  
+  // Visiting.
+
   idl_bool gen_empty_default_label (void);
+  // Decides whether a default switch case label in the generated copy
+  // constructor, assignment operator, etc. is needed.
+  
+  unsigned long nlabels (void);
+  // Returns total number of labels, useful when the union has
+  // multiple case labels.
 
   // Narrowing.
   DEF_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type);
