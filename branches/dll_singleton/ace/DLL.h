@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_DLL_Handle;
+
 /**
  * @class ACE_DLL
  *
@@ -86,8 +88,9 @@ public:
   /// the <symbol_name> is returned.  Otherwise, returns 0.
   void *symbol (const ACE_TCHAR *symbol_name);
 
-  /// Returns a pointer to a string explaining why <symbol> or <open>
-  /// failed.
+  /// Returns a pointer to a string explaining that an error occured.  You
+  /// will need to consult the error log for the actual error string
+  /// returned by the OS.
   ACE_TCHAR *error (void) const;
 
   /**
@@ -96,18 +99,12 @@ public:
    * won't call <close> when it goes out of scope, even if
    * <close_on_destruction> is set.
    */
-  ACE_SHLIB_HANDLE get_handle (int become_owner = 0);
+  //ACE_SHLIB_HANDLE get_handle (int become_owner = 0);
 
   /// Set the handle for the DLL object. By default, the <close> operation on the
   /// object will be invoked before it is destroyed.
-  int set_handle (ACE_SHLIB_HANDLE handle, int close_on_destruction = 1);
+  //int set_handle (ACE_SHLIB_HANDLE handle, int close_on_destruction = 1);
 private:
-  /// Used internally to save the last error of a library operation so that 
-  /// multiple subsequent calls to error() can be made safely.
-  void save_last_error (void); 
-
-  /// This is a handle to the DLL.
-  ACE_SHLIB_HANDLE handle_;
 
   /// Open mode.
   int open_mode_;
@@ -121,17 +118,12 @@ private:
   /// automatically when the destructor runs.
   int close_on_destruction_;
 
-  /// This flag keeps track of whether the open method has ever been called on
-  /// any ACE_DLL object.  Used by error() to decide whether or not to call 
-  /// ACE_OS::dlerror().  On Linux, at least, calls to dlerror() prior to calling
-  /// dlopen() causes a seg-fault.
-  static sig_atomic_t open_called_;
+  ACE_DLL_Handle *dll_handle_;
 
-  /// This is the last error. 
-  ACE_TCHAR *last_error_;
+  /// Flag to record if the last operation had an error.
+  int error_;
 
   // = Disallow copying and assignment since we don't handle these.
-  //ACE_UNIMPLEMENTED_FUNC (ACE_DLL (const ACE_DLL &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL &))
 };
 

@@ -11,9 +11,6 @@
 
 ACE_RCSID(ace, Service_Object, "$Id$")
 
-#undef ACE_TRACE
-#define ACE_TRACE(X) ACE_TRACE_IMPL(X)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 

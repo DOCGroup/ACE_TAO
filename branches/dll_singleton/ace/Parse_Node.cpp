@@ -345,12 +345,14 @@ ACE_Location_Node::dll (void)
   return this->dll_; 
 }
 
+#if 0
 ACE_SHLIB_HANDLE
 ACE_Location_Node::handle (void)
 {
   ACE_TRACE ("ACE_Location_Node::handle");
   return this->dll_.get_handle (0);         // Caller does not own the handle
 }
+#endif /* 0 */
 
 const ACE_TCHAR *
 ACE_Location_Node::pathname (void) const

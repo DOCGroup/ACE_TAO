@@ -146,6 +146,9 @@ private:
   /// Initialize the repository.
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
+  /// Actually removes the dll components, must be called with locks held.
+  int remove_dll_components_i (const ACE_TCHAR *dll_name);
+
   /// Contains all the framework components.
   ACE_Framework_Component **component_vector_;
 
@@ -157,6 +160,12 @@ private:
 
   /// Pointer to a process-wide <ACE_Framework_Repository>.
   static ACE_Framework_Repository *repository_;
+
+  /// Flag set when repository is the process of shutting down.  This
+  /// is necessary to keep from self-deadlocking since some of
+  /// the components might make calls back to the repository to 
+  /// unload their components, e.g., ACE_DLL_Manager.
+  static sig_atomic_t shutting_down_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for the MT_SAFE Repository
