@@ -1,3 +1,12 @@
+Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (uname): Made it comform with Unicode.
+
+	* ace/OS.h (struct utsname): Changed the internal string type to
+ 	  TCHAR.
+
+	* ace/OS.i (gettimeofday): Added Windows CE implementation.
+
 Thu Jan 29 21:02:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5-g++.h: revert so that ACE_HAS_STRING_CLASS
