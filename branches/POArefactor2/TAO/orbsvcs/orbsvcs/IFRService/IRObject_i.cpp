@@ -7,6 +7,7 @@
 #include "IFR_Service_Utils.h"
 
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/TSS_Resources.h"
 
 
