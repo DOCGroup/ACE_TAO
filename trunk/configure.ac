@@ -3188,6 +3188,10 @@ ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
 
+ACE_CHECK_LACKS_FUNCS(getipnodebyaddr)
+
+ACE_CHECK_LACKS_FUNCS(getipnodebyname)
+
 ACE_CHECK_HAS_FUNCS(getifaddrs)
 
 ACE_CHECK_HAS_FUNCS(itoa)
