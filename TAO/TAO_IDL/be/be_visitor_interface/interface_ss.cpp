@@ -97,7 +97,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "int _TAO_collocation_POA_" << node->flatname ()
       << "_Stub_Factory_Initializer"
-      << " (void *dummy)" << be_nl
+      << " (long dummy)" << be_nl
       << "{" << be_idt_nl
       << "ACE_UNUSED_ARG (dummy);" << be_nl << be_nl
       << "_TAO_collocation_" << node->flatname ()
@@ -109,7 +109,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "int _TAO_collocation_POA_" << node->flatname ()
       << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
       << "_TAO_collocation_POA_" << node->flatname ()
-      << "_Stub_Factory_Initializer (ACE_reinterpret_cast (void*, _TAO_collocation_POA_"
+      << "_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_"
       << node->flatname () << "_Stub_Factory_Initializer));" << be_uidt_nl;
 
   os->incr_indent (0);
