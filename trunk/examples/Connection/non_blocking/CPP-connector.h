@@ -20,8 +20,7 @@ public:
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask);
-
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
 protected:
   // = These methods implement the State pattern.

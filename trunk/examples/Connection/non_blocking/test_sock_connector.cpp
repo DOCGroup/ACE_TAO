@@ -3,6 +3,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 #include "CPP-connector.h"
+#include "ace/Reactor.h"
+#include "ace/WFMO_Reactor.h"
 
 typedef Peer_Handler<ACE_SOCK_STREAM> PEER_HANDLER;
 typedef IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR> IPC_CLIENT;
@@ -12,6 +14,16 @@ typedef IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR> IPC_CLIENT;
 int
 main (int argc, char *argv[])
 {
+  // Since this test waits on the STDIN handle to become ready, we
+  // have to make sure that the WFMO_Reactor is used on Win32. This is
+  // necessary since select() on NT does not support waiting on STDIN.
+
+#if defined (ACE_WIN32)
+  ACE_WFMO_Reactor wfmo_reactor;
+  ACE_Reactor reactor (&wfmo_reactor);
+  ACE_Reactor::instance (&reactor);
+#endif /* ACE_WIN32 */
+  
   // Perform Service_Config initializations
   ACE_Service_Config daemon (argv[0]);
 
