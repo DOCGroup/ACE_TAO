@@ -89,7 +89,7 @@ ACE_Service_Repository::close_singleton (void)
 
 // Initialize the Repository to a clean slate.
 
-int 
+int
 ACE_Service_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Service_Repository::open");
@@ -136,7 +136,7 @@ ACE_Service_Repository::fini (void)
 
       for (this->current_size_--;
            this->current_size_ >= 0;
-           this->current_size_--
+           this->current_size_--)
         {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
@@ -196,7 +196,7 @@ ACE_Service_Repository::~ACE_Service_Repository (void)
 // found, but it is suspended and the caller wants to ignore suspended
 // services a -2 is returned.  Must be called with locks held.
 
-int 
+int
 ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
 				const ACE_Service_Type **srp,
 				int ignore_suspended)
@@ -208,12 +208,12 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
     if (ACE_OS::strcmp (name,
                         this->service_vector_[i]->name ()) == 0)
       break;
-  
+
   if (i < this->current_size_)
     {
       if (srp != 0)
 	*srp = this->service_vector_[i];
-      if (ignore_suspended 
+      if (ignore_suspended
           && this->service_vector_[i]->active () == 0)
 	return -2;
       return i;
@@ -222,7 +222,7 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
     return -1;
 }
 
-int 
+int
 ACE_Service_Repository::find (const ASYS_TCHAR name[],
 			      const ACE_Service_Type **srp,
 			      int ignore_suspended)
@@ -237,7 +237,7 @@ ACE_Service_Repository::find (const ASYS_TCHAR name[],
 // Insert the ACE_Service_Type SR into the repository.  Note that
 // services may be inserted either resumed or suspended.
 
-int 
+int
 ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 {
   ACE_TRACE ("ACE_Service_Repository::insert");
@@ -246,15 +246,15 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
   // Check to see if this is a duplicate.
   for (i = 0; i < this->current_size_; i++)
-    if (ACE_OS::strcmp (sr->name (), 
+    if (ACE_OS::strcmp (sr->name (),
                         this->service_vector_[i]->name ()) == 0)
       break;
 
   // Replacing an existing entry
-  if (i < this->current_size_) 
+  if (i < this->current_size_)
     {
       // Check for self-assignment...
-      if (sr == this->service_vector_[i]) 
+      if (sr == this->service_vector_[i])
 	return 0;
       ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
                                             this->service_vector_[i]);
@@ -263,7 +263,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
       return 0;
     }
   // Adding a new entry.
-  else if (i < this->total_size_) 
+  else if (i < this->total_size_)
     {
       this->service_vector_[i] = sr;
       this->current_size_++;
@@ -272,11 +272,11 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   else
     return -1;
 }
- 
-// Re-resume a service that was previously suspended. 
+
+// Re-resume a service that was previously suspended.
 
 int
-ACE_Service_Repository::resume (const ASYS_TCHAR name[], 
+ACE_Service_Repository::resume (const ASYS_TCHAR name[],
 				const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::resume");
@@ -295,7 +295,7 @@ ACE_Service_Repository::resume (const ASYS_TCHAR name[],
 // most circumstances by other portions of the ACE_Service_Repository.
 
 int
-ACE_Service_Repository::suspend (const ASYS_TCHAR name[], 
+ACE_Service_Repository::suspend (const ASYS_TCHAR name[],
 				 const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::suspend");
@@ -315,7 +315,7 @@ ACE_Service_Repository::suspend (const ASYS_TCHAR name[],
 // simply overwrite the entry being deleted with the final entry in
 // the array and decrement the <current_size> by 1.
 
-int 
+int
 ACE_Service_Repository::remove (const ASYS_TCHAR name[])
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
@@ -334,7 +334,7 @@ ACE_Service_Repository::remove (const ASYS_TCHAR name[])
       --this->current_size_;
 
       if (this->current_size_ >= 1)
-	this->service_vector_[i] 
+	this->service_vector_[i]
 	  = this->service_vector_[this->current_size_];
       return 0;
     }
@@ -352,7 +352,7 @@ ACE_Service_Repository_Iterator::dump (void) const
 // the beginning of the table, if necessary.  Note, you must not
 // perform destructive operations on elements during this iteration...
 
-ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator 
+ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
   (ACE_Service_Repository &sr,
    int ignr_suspended)
   : svc_rep_ (sr),
@@ -365,7 +365,7 @@ ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
 // Obtains a pointer to the next valid service in the table.  If there
 // are no more entries, returns 0, else 1.
 
-int 
+int
 ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::next");
@@ -378,7 +378,7 @@ ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
     return 0;
 }
 
-int 
+int
 ACE_Service_Repository_Iterator::done (void) const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::done");
