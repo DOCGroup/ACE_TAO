@@ -1,5 +1,4 @@
 Tue Mar 16 10:48:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
 	  
 	* ace/Logging_Strategy.cpp:
 
@@ -11,7 +10,6 @@ Tue Mar 16 10:48:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  #included OS_NS_string.h.
 
 	  Thanks to Oliver Kellog for providing the patches. 
-
 
 Tue Mar 16 09:40:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 
