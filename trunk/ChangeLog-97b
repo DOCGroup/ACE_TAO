@@ -54,6 +54,8 @@ Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
           -lpthread in LIBS.  Thanks to James Johnson <jcej@lads.com> for
           pointing this out.
 
+        * ACE-INSTALL.html: added info on bin/create_ace_build.
+
 Mon Oct 27 11:11:33 1997  Nanbor Wang  <nw1@CUECA>
 
         * netsvcs/servers/servers.dsp
