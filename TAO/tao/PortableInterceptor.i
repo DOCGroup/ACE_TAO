@@ -56,9 +56,9 @@ receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
        --i) 
     {
       // Pop the interceptor off of the flow stack before it is
-      // invoked.  This is necessary to prevent an interceptor that
-      // throws an exception from being invoked in the
-      // receive_exception() or receive_other() interception points.
+      // invoked.  This is necessary to prevent an interceptor already
+      // invoked in this "ending" interception point from being
+      // invoked in another "ending" interception point.
       --this->stack_size_;
 
       this->interceptors_[i]->receive_reply (ri
@@ -87,9 +87,9 @@ receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
        i >= 0 && i <= this->len_; --i)
     {
       // Pop the interceptor off of the flow stack before it is
-      // invoked.  This is necessary to prevent an interceptor that
-      // throws an exception from being invoked in the
-      // send_exception() or send_other() interception points.
+      // invoked.  This is necessary to prevent an interceptor already
+      // invoked in this "ending" interception point from being
+      // invoked in another "ending" interception point.
       --this->stack_size_; 
 
       this->interceptors_[i]->receive_exception (ri
@@ -165,9 +165,9 @@ send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
        --i)
     {
       // Pop the interceptor off of the flow stack before it is
-      // invoked.  This is necessary to prevent an interceptor that
-      // throws an exception from being invoked in the
-      // send_exception() or send_other() interception points.
+      // invoked.  This is necessary to prevent an interceptor already
+      // invoked in this "ending" interception point from being
+      // invoked in another "ending" interception point.
       --this->stack_size_;      
 
       this->interceptors_[i]->send_reply (ri
@@ -196,9 +196,9 @@ send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
        --i)
     {
       // Pop the interceptor off of the flow stack before it is
-      // invoked.  This is necessary to prevent an interceptor that
-      // throws an exception from being invoked in the
-      // send_exception() or send_other() interception points.
+      // invoked.  This is necessary to prevent an interceptor already
+      // invoked in this "ending" interception point from being
+      // invoked in another "ending" interception point.
       --this->stack_size_;  
 
       this->interceptors_[i]->send_exception (ri
