@@ -674,7 +674,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
     {
       // This will help us in keeping track of the last valid slot in the
       // handle arrays
-      int last_valid_slot = this->max_handlep1_ - 1;
+      size_t last_valid_slot = this->max_handlep1_ - 1;
 
       for (int i = last_valid_slot; i >= 0; i--)
         {
@@ -776,7 +776,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
   // Go through the <suspended_handle> array
   if (this->handles_to_be_deleted_ > 0 || this->handles_to_be_resumed_ > 0)
     {
-      int last_valid_slot = this->suspended_handles_ - 1;
+      size_t last_valid_slot = this->suspended_handles_ - 1;
       for (i = last_valid_slot; i >= 0; i--)
         {
           // This stuff is necessary here, since we should not make
@@ -1723,16 +1723,18 @@ ACE_WFMO_Reactor::wait_for_multiple_events (int timeout,
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
   // ReadFile and WriteFile operations.
+  DWORD handle_count = ACE_static_cast (DWORD,
+                                        this->handler_rep_.max_handlep1 ());
 #if defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
   // PharLap doesn't do async I/O and doesn't implement
   // WaitForMultipleObjectsEx, so use WaitForMultipleObjects.
   ACE_UNUSED_ARG (alertable);
-  return ::WaitForMultipleObjects (this->handler_rep_.max_handlep1 (),
+  return ::WaitForMultipleObjects (handle_count,
                                    this->handler_rep_.handles (),
                                    FALSE,
                                    timeout);
 #else
-  return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
+  return ::WaitForMultipleObjectsEx (handle_count,
                                      this->handler_rep_.handles (),
                                      FALSE,
                                      timeout,

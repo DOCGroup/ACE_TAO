@@ -442,7 +442,7 @@ protected:
   /// Returns the <ACE_Hash_Map_Entry> that corresponds to <ext_id>.
   int shared_find (const EXT_ID &ext_id,
                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
-                   u_long &loc);
+                   size_t &loc);
 
 private:
   /**

@@ -246,7 +246,11 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
 {
   if (x != 0)
-    return this->write_string (ACE_OS::strlen(x), x);
+    {
+      ACE_CDR::ULong len =
+        ACE_static_cast (ACE_CDR::ULong, ACE_OS_String::strlen (x));
+      return this->write_string (len, x);
+    }
   return this->write_string (0, 0);
 }
 
@@ -1064,7 +1068,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 {
   ACE_CDR::ULong len = 0;
   if (x.val_ != 0)
-    len = ACE_OS::strlen (x.val_);
+    len = ACE_static_cast (ACE_CDR::ULong, ACE_OS_String::strlen (x.val_));
   os.write_string (len, x.val_);
   return os.good_bit () && (len <= x.bound_);
 }

@@ -519,10 +519,10 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
 
       // We must copy the contents of <src> into the new buffer, but
       // respecting the alignment.
-      ptr_arith_t srcalign =
-        ptr_arith_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-      ptr_arith_t dstalign =
-        ptr_arith_t(dst->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+      ptrdiff_t srcalign =
+        ptrdiff_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+      ptrdiff_t dstalign =
+        ptrdiff_t(dst->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
       int offset = srcalign - dstalign;
       if (offset < 0)
         offset += ACE_CDR::MAX_ALIGNMENT;

@@ -144,10 +144,10 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
 
       // The new block must start with the same alignment as the
       // previous block finished.
-      ptr_arith_t tmpalign =
-        ptr_arith_t(tmp->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-      ptr_arith_t curalign =
-        ptr_arith_t(this->current_alignment_) % ACE_CDR::MAX_ALIGNMENT;
+      ptrdiff_t tmpalign =
+        ptrdiff_t(tmp->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+      ptrdiff_t curalign =
+        ptrdiff_t(this->current_alignment_) % ACE_CDR::MAX_ALIGNMENT;
       int offset = curalign - tmpalign;
       if (offset < 0)
         offset += ACE_CDR::MAX_ALIGNMENT;
@@ -226,7 +226,8 @@ ACE_OutputCDR::write_string (const ACE_CString &x)
 {
   // @@ Leave this method in here, not the `.i' file so that we don't
   //    have to unnecessarily pull in the `ace/SString.h' header.
-  return this->write_string (x.length(), x.c_str());
+  return this->write_string (ACE_static_cast (ACE_CDR::ULong, x.length()),
+                             x.c_str());
 }
 
 ACE_CDR::Boolean
@@ -292,7 +293,7 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           if (! this->write_array (i->rd_ptr (),
                                    ACE_CDR::OCTET_SIZE,
                                    ACE_CDR::OCTET_ALIGN,
-                                   length))
+                                   ACE_static_cast (ACE_CDR::ULong, length)))
             {
               return 0;
             }
@@ -305,7 +306,7 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           if (! this->write_array (i->rd_ptr (),
                                    ACE_CDR::OCTET_SIZE,
                                    ACE_CDR::OCTET_ALIGN,
-                                   length))
+                                   ACE_static_cast (ACE_CDR::ULong, length)))
             {
               return 0;
             }

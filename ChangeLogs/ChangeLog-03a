@@ -1,3 +1,76 @@
+Thu Jul 11 15:03:47 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_dll64.mak: TEMPORARILY added /wd4267 to disable the
+          conversion size_t to int warning.
+
+        * ace/Activation_Queue.{h i} (method_count): Change return type
+          from int to size_t.
+
+        * ace/Arg_Shifter.cpp (cur_arg_strncasecmp): Change flag_length var
+          to size_t to match string function signatures. If returning a
+          'remaining' length, cast back to int.
+
+        * ace/ARGV.cpp (ctor): Build string length using size_t, not int.
+
+        * ace/CDR_Base.cpp (ACE_CDR::consolidate): Use ptrdiff_t, not the
+          nonstandard ptr_arith_t.
+
+        * ace/CDR_Stream.cpp (grow_and_adjust): Use ptrdiff_t, notptr_arith_t.
+          (write_string): Cast ACE_SString:length result to ACE_CDR::ULong.
+          A number of other size_t<->ACE_CDR::ULong casts.
+
+        * ace/CDR_Stream.i (write_string, operator<<): Use a ACE_CDR::ULong
+          len, can't directly use the return from strlen(), a size_t.
+
+        * ace/Codecs.cpp: size_t conversions.
+
+        * ace/DEV_Addr.i (set): Cast strlen result to int for base_set.
+
+        * ace/DEV_IO.{i cpp} (send, recv): Cast iovec count from size_t to
+          int for call to ACE_OS level.
+
+        * ace/Hash_Map_Manager_T.{h, i, cpp} (shared_find): Change loc argument
+          from u_long to size_t. Better match for its use.
+
+        * ace/OS.h (ACE_align_binary, ACE_ptr_align_binary): Change from
+          using ptr_arith_t to the standard ptrdiff_t.
+
+        * ace/DLL_Manager.cpp:
+        * ace/Parse_Node.cpp: Avoid casting a void * to a long then back to a
+          function pointer.  Cast using proper calling signature.
+
+        * ace/Reactor_Impl.h (ACE_Reactor_Notify::notify):
+        * ace/Select_Reactor_Base.{h cpp} (ACE_Select_Reactor_Notify::notify):
+          Change return type from ssize_t to int to match advertised return
+          type from ACE_Reactor.
+
+        * ace/Select_Reactor_T.cpp (check_handles): Use an int select_width
+          to pass width to select() so it can be ignored on ACE_WIN64.
+
+        * ace/String_Base_Const.{h cpp}: Changed npos from int to ssize_t.
+
+        * ace/String_Base.{h i}: (operator[]) changed slot arg from int
+          to size_t. (strstr(), find(), rfind()) changed return type from
+          int to ssize_t; change pos arg from int to size_t.
+
+        * ace/Timer_Heap_T.{h cpp}: Change 'slot' arg from int to size_t.
+          Also changed timer_ids_ to use ssize_t rather than long to
+          avoid length mismatches between the max size and the timer
+          queue (a size_t) and the arrays.
+
+        * ace/WFMO_Reactor.h (ACE_WFMO_Reactor_Notify): Change return type
+          from ssize_to to int to match corresponding change in
+          ACE_Reactor_Notify, above. The implementation already was returning
+          int.
+
+        * ace/WFMO_Reactor.cpp (make_changes_in_current_infos,
+          make_changes_in_suspension_infos): Align use of size_t.
+          (wait_for_multiple_events)...........Should maybe make the
+          sizes in this class DWORD?????
+
+        * ace/WIN32_Proactor.cpp (close, handle_events): completion_key
+          needs to be a different on Win64 than on Win32.
+          
 Thu Jul 11 08:34:22 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:

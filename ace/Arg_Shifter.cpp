@@ -112,7 +112,7 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
   // Check for a current argument
   if (this->is_anything_left())
     {
-      unsigned int flag_length = ACE_OS_String::strlen (flag);
+      size_t flag_length = ACE_OS_String::strlen (flag);
 
       // Check for presence of the flag
       if (ACE_OS_String::strncasecmp(this->temp_[current_index_],
@@ -128,9 +128,10 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
 	  else
 	    {
 	      // matches, with more info to boot!
-	      return ACE_OS_String::strspn
-		(this->temp_[current_index_] + flag_length,
+              size_t remaining = ACE_OS_String::strspn
+                (this->temp_[current_index_] + flag_length,
 		 ACE_LIB_TEXT (" ")) + flag_length;
+              return ACE_static_cast (int, remaining);
 	    }
 	}
     }

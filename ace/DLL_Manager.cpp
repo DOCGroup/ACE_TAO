@@ -460,13 +460,10 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
             {
               // Declare the type of the symbol:
               typedef int (*dll_unload_policy)(void);
-
-              // Try to get the symbol, and have symbol() ignore errors.
-              void *foo = dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
-
-              // Cast the void* to long first.
-              long tmp = ACE_reinterpret_cast (long, foo);
-              dll_unload_policy the_policy = ACE_reinterpret_cast (dll_unload_policy, tmp);
+              dll_unload_policy the_policy = 0;
+              the_policy =
+                ACE_reinterpret_cast (dll_unload_policy,
+                                      dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1));
               if (the_policy != 0)
                 unload = ACE_BIT_DISABLED (the_policy (),
                                            ACE_DLL_UNLOAD_POLICY_LAZY);

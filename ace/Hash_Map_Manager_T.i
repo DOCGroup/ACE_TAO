@@ -177,7 +177,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find_
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry;
 
-  u_long dummy;
+  size_t dummy;
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return -1;
   else
@@ -192,7 +192,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find_
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry;
 
-  u_long dummy;
+  size_t dummy;
   return this->shared_find (ext_id, entry, dummy);
 }
 
@@ -224,7 +224,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::find_i (const EXT_ID &ext_id,
                                                                                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  u_long dummy;
+  size_t dummy;
   return this->shared_find (ext_id, entry, dummy);
 }
 
