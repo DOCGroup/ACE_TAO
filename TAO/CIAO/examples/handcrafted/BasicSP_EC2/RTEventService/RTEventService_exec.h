@@ -212,7 +212,7 @@ namespace CIAO
 
     int insert (CORBA::Object_ptr obj);
 
-    static int extract (::Components::Cookie *c,
+    static int extract (::Components::Cookie *ck,
                         CORBA::Object_ptr obj);
   };
 
