@@ -843,8 +843,8 @@ ACE_OS::gettimeofday (void)
   tv.tv_usec = tb.tb_low / 1000L;
 
 #else
-  int result;
 #if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k))
+  int result;
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
 #elif defined (VXWORKS)
   // Assumes that struct timespec is same size as struct timeval,
@@ -856,6 +856,7 @@ ACE_OS::gettimeofday (void)
   tv.tv_sec = ts.tv_sec;
   tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
 #else
+  int result;
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
 #endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 #endif /* ACE_WIN32 */
@@ -866,7 +867,11 @@ ACE_INLINE int
 ACE_OS::stat (const char *file, struct stat *stp)
 {
   // ACE_TRACE ("ACE_OS::stat");
+#if defined (VXWORKS)
+  ACE_OSCALL_RETURN (::stat ((char *) file, stp), int, -1);
+#else
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
+#endif /* VXWORKS */
 }
 
 ACE_INLINE time_t 
@@ -3539,6 +3544,7 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, &prio), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
+#else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
