@@ -47,7 +47,7 @@ class TAO_ClientRequestInfo_i;
  * This class forwards all method calls to the underlying
  * ClientRequestInfo implementation.
  * @par
- * An instance of this class is places in TSS, where as the underlying
+ * An instance of this class is placed in TSS, where as the underlying
  * implementation is instantiated on the stack during each CORBA
  * request.  During each request invocation, a pointer to the stack
  * instantiated implementation is placed in the instance of this
