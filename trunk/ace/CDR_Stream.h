@@ -49,6 +49,7 @@
 #define ACE_CDR_H
 
 #include "ace/Message_Block.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
