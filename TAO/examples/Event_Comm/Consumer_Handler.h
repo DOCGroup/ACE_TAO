@@ -14,7 +14,8 @@
 //    for use with the ACE ACE_Reactor.
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu)
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore
+//    (pradeep@cs.wustl.edu)
 //
 // ============================================================================
 
@@ -32,19 +33,20 @@ class Consumer_Handler
   //    The Consumer_Handler class.
   //
   // = DESCRIPTION
-  //     Starts up the ORB, registers the <Event_Comm::Consumer> servant with the orb
-  //      and gets a reference to a <Notifier> from the Naming Service.
-  //
-
+  //     Starts up the ORB, registers the <Event_Comm::Consumer>
+  //     servant with the orb and gets a reference to a <Notifier>
+  //     from the Naming Service.
 public:
   // = Initialization and termination methods.
   Consumer_Handler (void);
+  // Constructor.
+
  ~Consumer_Handler (void);
+  // Destructor
 
   int init (int argc, char *argv[]);
-  // Initializes the ORB,
-  // gets the Notifier reference from the Naming Service,
-  // and starts the servant for the Consumer object.
+  // Initializes the ORB, gets the Notifier reference from the Naming
+  // Service, and starts the servant for the Consumer object.
 
   int run (void);
   // runs the ORB.
@@ -63,7 +65,9 @@ public:
   // Close down the handler.
 
 private:
-  int get_notifier(void);
+  int get_notifier (void);
+  // gets the notifier reference from the naming service.
+  // returns 0 on success, -1 on error.
 
   Consumer_i receiver_i_;
   // The <Consumer> implementation.

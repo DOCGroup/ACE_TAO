@@ -25,9 +25,8 @@
 class Notifier_Server
 {
   // = TITLE
-  //    The Notifier Server that accepts connections from Consumers
-  //    and Suppliers.
-
+  //    The Notifier Server that handles CORBA operations from
+  //    Consumers and Suppliers.
 public:
   // = Initialization and termination methods.
   Notifier_Server (void);
@@ -45,7 +44,7 @@ public:
   int close (void);
   // Close the naming service.
 
-  ACE_Reactor* reactor(void);
+  ACE_Reactor *reactor(void);
   // Reactor accessor.
 
 private:

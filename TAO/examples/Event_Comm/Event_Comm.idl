@@ -66,15 +66,19 @@ module Event_Comm
 
     exception CannotSubscribe
     {
+      // = TITLE
+      //   This exception in thrown when a <subscribe> fails.
+
       string reason_;
     };
-    // This exception in thrown when a <subscribe> fails.
 
     exception CannotUnsubscribe
     {
+      // = TITLE
+      //   This exception in thrown when a <unsubscribe> fails.
+
       string reason_;
     };
-    // This exception in thrown when a <unsubscribe> fails.
 
     // = The following operations are intended for Suppliers.
 
