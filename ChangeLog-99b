@@ -1,5 +1,8 @@
 Mon Sep  6 08:45:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Reactor/WFMO_Reactor: Cleaned up some of the coding in
+ 	  the examples.
+
 	* ace/Profile_Timer.cpp: Reformatted the code a bit.
 
 	* examples/Threads/process_manager.cpp (main): Fixed some warnings
