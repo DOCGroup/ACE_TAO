@@ -1,0 +1,21 @@
+// -*- MPC -*-
+//
+// $Id$
+
+project(*Server): aceexe, htbp {
+  exename = server
+  libs += Test_Output
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): aceexe, htbp {
+  exename = client
+  libs += Test_Output
+
+  Source_Files {
+    client.cpp
+  }
+}
