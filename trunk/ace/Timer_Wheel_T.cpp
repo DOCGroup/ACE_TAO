@@ -10,6 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/High_Res_Timer.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Timer_Wheel_T, "$Id$")
 
