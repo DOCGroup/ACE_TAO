@@ -44,7 +44,7 @@ public:
     // the exported object.
   };
 
-  class Printer :
+  class TAO_TTest_Export Printer :
     public POA_TAO_Trader_Test::Printer
   {
   public:
@@ -57,7 +57,7 @@ public:
     // the exported object.
   };
 
-  class Plotter :
+  class TAO_TTest_Export Plotter :
     public POA_TAO_Trader_Test::Plotter
   {
   public:
@@ -69,7 +69,7 @@ public:
     // the exported object.
   };
 
-  class File_System :
+  class TAO_TTest_Export File_System :
     public POA_TAO_Trader_Test::File_System
   {
   public:
@@ -81,7 +81,7 @@ public:
     // the exported object.
   };
 
-  class PostScript_Printer :
+  class TAO_TTest_Export PostScript_Printer :
     public POA_TAO_Trader_Test::PostScript_Printer
   {
   public:
