@@ -30,14 +30,12 @@ USELIB("..\ace\aced.lib");
 
 typedef int DATA;
 
-typedef ACE_Unbounded_Set<DATA> UNBOUNDED_SET;
-typedef ACE_Unbounded_Set_Iterator<DATA> UNBOUNDED_SET_ITERATOR;
-typedef ACE_Array<DATA> ARRAY;
-typedef ACE_Array_Iterator<DATA> ARRAY_ITERATOR;
-
 int main (int, char *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Collection_Test"));
+
+  typedef ACE_Unbounded_Set<DATA> UNBOUNDED_SET;
+  typedef ACE_Unbounded_Set_Iterator<DATA> UNBOUNDED_SET_ITERATOR;
 
   {
     UNBOUNDED_SET unbounded_set;
@@ -66,6 +64,17 @@ int main (int, char *[])
           iterator.advance ();
         }
     }
+  }
+
+  typedef ACE_Array<DATA> ARRAY;
+  typedef ACE_Array_Iterator<DATA> ARRAY_ITERATOR;
+
+  {
+    ARRAY array;
+  }
+
+  {
+    ARRAY array (0);
   }
 
   {
@@ -117,15 +126,15 @@ int main (int, char *[])
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class UNBOUNDED_SET;
-template class UNBOUNDED_SET_ITERATOR;
+template class ACE_Unbounded_Set<DATA>;
+template class ACE_Unbounded_Set_Iterator<DATA>;
 template class ACE_Node<DATA>;
-template class ARRAY;
-template class ARRAY_ITERATOR;
+template class ACE_Array<DATA>;
+template class ACE_Array_Iterator<DATA>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate UNBOUNDED_SET
-#pragma instantiate UNBOUNDED_SET_ITERATOR
+#pragma instantiate ACE_Unbounded_Set<DATA>
+#pragma instantiate ACE_Unbounded_Set_Iterator<DATA>
 #pragma instantiate ACE_Node<DATA>
-#pragma instantiate ARRAY
-#pragma instantiate ARRAY_ITERATOR
+#pragma instantiate ACE_Array<DATA>
+#pragma instantiate ACE_Array_Iterator<DATA>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
