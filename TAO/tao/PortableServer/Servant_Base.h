@@ -47,20 +47,23 @@ public:
   // Destructor.
 
   virtual PortableServer::POA_ptr _default_POA (
-                                                ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
   // Returns the default POA for this servant.
 
-  virtual CORBA::Boolean _is_a (const char* logical_type_id
+  virtual CORBA::Boolean _is_a (const char *logical_type_id
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Local implementation of the CORBA::Object::_is_a method.
 
-  virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Boolean _non_existent (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
   // Default <_non_existent>: always returns false.
 
   virtual CORBA_InterfaceDef_ptr _get_interface (
-                                                 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
+  // Query the Interface Repository for the interface definition.
 
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
@@ -92,14 +95,12 @@ protected:
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *servant_upcall,
                                             void *derived_this
-                                            // CORBA::Environment &ACE_TRY_ENV);
                                             ACE_ENV_ARG_DECL);
 
   virtual void asynchronous_upcall_dispatch (TAO_ServerRequest &req,
                                              void *servant_upcall,
                                              void *derived_this
                                              ACE_ENV_ARG_DECL);
-  //CORBA::Environment &ACE_TRY_ENV);
 
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
