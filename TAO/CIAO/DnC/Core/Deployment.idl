@@ -310,11 +310,17 @@ module Deployment {
 
   typedef sequence < Application > Applications;
 
-  interface DomainApplicationManager :
-      ApplicationManager
+  interface DomainApplicationManager 
   {
-    Applications getApplications ();
     DeploymentPlan getPlan ();
+    void startLaunch (in Properties configProperty, in boolean start)
+      raises (ResourceNotAvailable, StartError, InvalidProperty);
+    void finishLaunch (in boolean start)
+      raises (StartError, InvalidConnection);
+    void start ()
+      raises (StartError);
+    void destroyApplication ()
+      raises (StopError);
   };
 
   typedef sequence < DomainApplicationManager > DomainApplicationManagers;
@@ -342,12 +348,6 @@ module Deployment {
       raises (StartError, PlanError);
     void destroyManager (in NodeApplicationManager appManager)
       raises (StopError);
-  };
-
-
-  interface DomainApplication :
-      Application
-  {
   };
 
   exception NameExists {
