@@ -8,7 +8,8 @@ TAO_SSLIOP_X509::_duplicate (X509 *cert)
   // OpenSSL provides no function to increase the reference count on
   // the X509 structure, so we do it manually.  (X509_dup() performs a
   // deep copy, not a shallow copy.)
-  CRYPTO_add (&(cert->references), 1, CRYPTO_LOCK_X509);
+  if (cert != 0)
+    CRYPTO_add (&(cert->references), 1, CRYPTO_LOCK_X509);
 
   return cert;
 }

@@ -22,14 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "SSLIOP_X509.h"
-
-#ifndef NO_RSA
-# include "SSLIOP_RSA.h"
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-// # include "SSLIOP_DSA.h"
-// #endif  /* !NO_DSA */
+#include "SSLIOP_EVP_PKEY.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 
@@ -111,17 +104,7 @@ class TAO_SSLIOP_Credentials
 public:
 
   /// Constructor
-  TAO_SSLIOP_Credentials (X509 *cert);
-
-#ifndef NO_RSA
-  /// Constructor
-  TAO_SSLIOP_Credentials (X509 *cert, RSA *rsa);
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-//   /// Constructor
-//   TAO_SSLIOP_Credentials (X509 *cert, DSA *dsa);
-// #endif  /* !NO_DSA */
+  TAO_SSLIOP_Credentials (X509 *cert, EVP_PKEY *evp);
 
   /// Return a duplicate (specifically a deep copy) of this credential
   /// object.
@@ -234,31 +217,15 @@ public:
   X509 *x509 (void);
   //@}
 
-#ifndef NO_RSA
-  //@{
-  /// Return a pointer to the underlying RSA key.
+  /// Return a pointer to the underlying private key.
   /**
-   * @return Non-zero value if RSA key is used.
+   * @return Non-zero value if private key is used.
    *
    * @note Caller owns the returned object.  Use a
-   *       TAO_SSLIOP_RSA_var.
+   *       TAO_SSLIOP_EVP_PKEY_var.
    */
-  RSA *rsa (void);
+  EVP_PKEY *evp (void);
   //@}
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-//   //@{
-//   /// Return a pointer to the underlying DSA key.
-//   /**
-//    * @return Non-zero value if DSA key is used.
-//    *
-//    * @note Caller owns the returned object.  Use a
-//    *       TAO_SSLIOP_DSA_var.
-//    */
-//   DSA *dsa (void);
-//   //@}
-// #endif  /* !NO_DSA */
 
   CORBA::Boolean operator== (const TAO_SSLIOP_Credentials &rhs);
 
@@ -337,13 +304,9 @@ protected:
   /// Credentials object.
   TAO_SSLIOP_X509_var x509_;
 
-#ifndef NO_RSA
-  TAO_SSLIOP_RSA_var rsa_;
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-//   TAO_SSLIOP_DSA_var dsa_;
-// #endif  /* !NO_DSA */
+  /// Reference to the private key associated with the X.509
+  /// certificate.
+  TAO_SSLIOP_EVP_PKEY_var evp_;
 
 };
 

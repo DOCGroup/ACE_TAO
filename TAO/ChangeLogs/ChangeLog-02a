@@ -1,3 +1,48 @@
+Mon Jan 21 04:35:14 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP.idl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+
+	  Removed all uses of the OpenSSL RSA data structure and related
+	  functions in favor of the OpenSSL EVP_PKEY data structure and
+	  functions.  The latter is more generic, and automatically
+	  handles multiple private key types.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+
+	  New TAO_SSLIOP_EVP_PKEY_var class that provides CORBA-style
+	  memory management of the OpenSSL "EVP_PKEY" key data structure.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+
+	  Removed these files.  They have been superseded by the EVP_PKEY
+	  files above.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.inl (_duplicate):
+
+	  Do not attempt to increase the reference count if the X509
+	  pointer is zero.  Fixes a segmentation fault.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/SSLIOP.bor:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Added new SSLIOP_EVP_PKEY.* files and removed the deprecated
+	  SSLIOP_RSA.* files.
+
 Mon Jan 21 02:12:34 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h
