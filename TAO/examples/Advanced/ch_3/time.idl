@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -11,21 +12,21 @@
 //   Source code used in TAO has been modified and adapted from the code
 //   provided in the book, "Advanced CORBA Programming with C++" by Michi
 //   Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
-//   MA.
+//   MA.  Used with permission of Addison-Wesley.
 //
 //   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
 //
 // ============================================================================
 
-
-
-struct TimeOfDay {
-    short   hour;       // 0 - 23
-    short   minute;     // 0 - 59
-    short   second;     // 0 - 59
+struct TimeOfDay 
+{
+  short hour;       // 0 - 23
+  short minute;     // 0 - 59
+  short second;     // 0 - 59
 };
 
-interface Time {
-    TimeOfDay   get_gmt();
+interface Time 
+{
+  TimeOfDay get_gmt ();
 };
 

@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-
-
 LDLIBS = -lTAO
 IDL_SRC	= timeC.cpp timeS.cpp
 IDL_HDR = timeC.h timeS.h

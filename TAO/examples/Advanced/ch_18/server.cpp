@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -8,17 +9,15 @@
 //    server.cpp
 //
 // = AUTHORS
-//   Source code used in TAO has been modified and adapted from the code
-//   provided in the book, "Advanced CORBA Programming with C++" by Michi
-//   Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
-//   MA.
+//   Source code used in TAO has been modified and adapted from the
+//   code provided in the book, "Advanced CORBA Programming with C++"
+//   by Michi Henning and Steve Vinoski. Copyright
+//   1999. Addison-Wesley, Reading, MA.  Used with permission of
+//   Addison-Wesley.
 //
 //   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
 //
 // ============================================================================
-
-
-
 
 #include "server.h"
 #include <algorithm>
