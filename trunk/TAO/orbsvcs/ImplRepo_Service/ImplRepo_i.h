@@ -139,6 +139,12 @@ private:
 
   char **argv_;
   // The command line arguments.
+
+  unsigned int debug_level_;
+  // Debug level for the IR.  
+  // 0 - Quiet
+  // 1 - Trace messages
+  // 2 - Detailed messages
 };
 
 class IR_Forwarder: public  PortableServer::DynamicImplementation

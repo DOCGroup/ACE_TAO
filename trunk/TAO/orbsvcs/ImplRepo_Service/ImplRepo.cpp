@@ -10,7 +10,8 @@ main (int argc, char *argv[])
 {
   ImplRepo_i server;
 
-  ACE_DEBUG ((LM_DEBUG, "\n\tImplementation Repository\n\n"));
+  ACE_DEBUG ((LM_DEBUG, "TAO Implementation Repository\n"));
+
   TAO_TRY
     {
       if (server.init (argc, argv, TAO_TRY_ENV) == -1)

@@ -9,10 +9,11 @@
 ACE_RCSID(ImplRepo_Service, ImplRepo_i, "$Id$")
 
 ImplRepo_i::ImplRepo_i (void)
-  : ior_output_file_ (0),
+  : forwarder_impl_ (0),
+    activator_ (0),
+    ior_output_file_ (0),
     server_key_ (0),
-    forwarder_impl_ (0),
-    activator_ (0)
+    debug_level_ (1)
 {
 }
 
@@ -23,35 +24,33 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                              CORBA::Environment &_env)
 {
   Implementation_Repository::INET_Addr *new_addr;
-  IIOP::Profile *new_profile = new IIOP::Profile;
   IIOP_Object *new_iiop_obj = 0;
 
-  if (TAO_debug_level > 0)
+  if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG, 
                 "Activating Object: %s\n",
                 this->orb_manager_.orb ()->object_to_string (obj)));
 
   TAO_TRY
-  {
-    // @@ Where to get the poa name from?
-    new_addr = this->activate_server (0, TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+    {
+      // @@ Where to get the poa name from?
+      new_addr = this->activate_server (0, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
-
-    *new_profile = iiop_obj->profile;
-    // @@ need to fix host also.
-    new_profile->port = new_addr->port_;
-    new_iiop_obj = new IIOP_Object (iiop_obj->type_id, *new_profile);
-
-/*    ACE_DEBUG ((LM_DEBUG, "The forward_to is <%s>\n", 
-                this->orb_var_->object_to_string (new_iiop_obj, TAO_TRY_ENV)));
-    TAO_CHECK_ENV;*/
-  }
+      IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
+    
+      IIOP::Profile *new_profile = new IIOP::Profile (iiop_obj->profile);
+    
+      new_profile->port = new_addr->port_;
+      delete [] new_profile->host;
+      new_profile->host = ACE::strnew (new_addr->host_);
+    
+      new_iiop_obj = new IIOP_Object (iiop_obj->type_id, *new_profile);
+    }
   TAO_CATCHANY
-  {
-    TAO_RETHROW_RETURN (0);
-  }
+    {
+      TAO_RETHROW_RETURN (0);
+    }
   TAO_ENDTRY;
 
   return new CORBA_Object (new_iiop_obj, obj->_servant ());
@@ -68,18 +67,18 @@ ImplRepo_i::activate_server (const char *server,
   address->port_ = 0;
   address->host_ = CORBA::string_dup ("");
 
-  if (TAO_debug_level > 0)
+  if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG, "Activating Server: %s\n", server));
 
   // Find out if it is already running
 
   if (this->repository_.get_ping_ior (server, ping_ior) != 0)
-  {
-    // If we had problems getting the ping_ior, probably meant that there
-    // is no <server> registered
-    ACE_ERROR ((LM_ERROR, "Error starting %s: Cannot find object\n", server));
-    TAO_THROW_RETURN (Implementation_Repository::Not_Found (), address);
-  }
+    {
+      // If we had problems getting the ping_ior, probably meant that there
+      // is no <server> registered
+      ACE_ERROR ((LM_ERROR, "Error: Cannot find ping IOR for server <%s>\n", server));
+      TAO_THROW_RETURN (Implementation_Repository::Not_Found (), address);
+    }
 
   // if length is 0, then none is running yet.
   if (strlen (ping_ior) != 0)
@@ -95,7 +94,7 @@ ImplRepo_i::activate_server (const char *server,
 
           if (CORBA::is_nil (ping_object.in ()))
             {
-              ACE_ERROR ((LM_ERROR, "Invalid Ping Object ior: <%s>\n", ping_ior));
+              ACE_ERROR ((LM_ERROR, "Error: Invalid Ping Object ior: <%s>\n", ping_ior));
               TAO_THROW_RETURN (Implementation_Repository::Not_Found (), address);
             }
     
@@ -103,11 +102,11 @@ ImplRepo_i::activate_server (const char *server,
           TAO_CHECK_ENV;
         }
       TAO_CATCHANY
-      {
-        start = 1;    
-      }
+        {
+          start = 1;    
+        }
       TAO_ENDTRY;
-  }
+    }
   else
     start = 1;
 
@@ -120,24 +119,30 @@ ImplRepo_i::activate_server (const char *server,
       int status = this->repository_.get_comm_line (server, cl);
 
       if (status == 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
+        {
+          if (this->debug_level_ >= 1)
+            ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
 
-        ACE_Process_Options proc_opts;
+          ACE_Process_Options proc_opts;
 
-        proc_opts.command_line (cl);
+          proc_opts.command_line (cl);
 
-        ACE_Process proc;
+          ACE_Process proc;
 
-        proc.spawn (proc_opts);
+          if (proc.spawn (proc_opts) == -1)
+            {
+              ACE_ERROR ((LM_ERROR, "Error: Cannot activate server <%s> using <%s>\n", server, cl));
+              delete [] cl;
+              TAO_THROW_RETURN (Implementation_Repository::Cannot_Activate (CORBA::string_dup ("N/A")), address);
+            }
 
-        delete [] cl;
-      }
+          delete [] cl;
+        }
       else
-      {
-        ACE_DEBUG ((LM_ERROR, "ERROR starting %s\n", server));
-        TAO_THROW_RETURN (Implementation_Repository::Cannot_Activate (), address);
-      }
+        {
+          ACE_ERROR ((LM_ERROR, "Error: Cannot find commandline for server <%s>\n", server));
+          TAO_THROW_RETURN (Implementation_Repository::Not_Found (), address);
+        }
     
       // @@ Here is where we need to wait for the response so we
       // can find out where (host/port) the server started
@@ -180,9 +185,9 @@ ImplRepo_i::register_server (const char *server,
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "register_server: Server %s Successfully Registered\n", server));
-      if (TAO_debug_level > 0)
-      {
+      if (this->debug_level_ >= 1)
+        ACE_DEBUG ((LM_DEBUG, "register_server: Server %s Successfully Registered\n", server));
+      if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
                               "Environment: %s\n"
@@ -190,8 +195,7 @@ ImplRepo_i::register_server (const char *server,
                               rec.comm_line,
                               rec.env,
                               rec.wdir));
-      }
-  }
+    }
 }
 
 
@@ -213,8 +217,9 @@ ImplRepo_i::reregister_server (const char *server,
 
   int status = this->repository_.update (server, rec);
 
-  ACE_DEBUG ((LM_DEBUG, "Server %s Successfully Registered\n", server));
-  if (TAO_debug_level > 0)
+  if (this->debug_level_ >= 1)
+    ACE_DEBUG ((LM_DEBUG, "Server %s Successfully Registered\n", server));
+  if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                           "Command Line: %s\n"
                           "Environment: %s\n"
@@ -229,15 +234,18 @@ ImplRepo_i::reregister_server (const char *server,
 
 void 
 ImplRepo_i::remove_server (const char *server,
-                           CORBA::Environment &env)
+                           CORBA::Environment &_env)
 {
   if (this->repository_.remove (server) == 0)
-  {
-    if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, "Successfully Removed Server\n"));
-  }
+    {
+      if (this->debug_level_ >= 1)
+        ACE_DEBUG ((LM_DEBUG, "Successfully Removed Server\n"));
+    }
   else
-    ACE_ERROR ((LM_ERROR, "Error: Trying to remove unknown server: %s\n", server));
+    {
+      ACE_ERROR ((LM_ERROR, "Error: Trying to remove unknown server <%s>\n", server));
+      TAO_THROW (Implementation_Repository::Not_Found ());
+    }
 }
 
 
@@ -251,19 +259,40 @@ ImplRepo_i::server_is_running (const char *server,
 {
   Implementation_Repository::INET_Addr *new_addr = new Implementation_Repository::INET_Addr;
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Server is running!\n"));
+  if (this->debug_level_ >= 1)
+    ACE_DEBUG ((LM_DEBUG, "Server <%s> is running\n", server));
 
   // Update the record in the repository
   Repository::Record rec;
-  this->repository_.resolve (server, rec);
+  if (this->repository_.resolve (server, rec) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: Unknown Server <%s>\n", server));
+      TAO_THROW_RETURN (Implementation_Repository::Not_Found (), new_addr);
+    }
+
+  // Delete the stuff that we will update
   delete [] rec.ping_ior;
+  delete [] rec.host;
+
   rec.host = ACE::strnew (addr.host_.in ());
   rec.port = addr.port_;
   rec.ping_ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ping, _env));
   this->repository_.update (server, rec);
 
-  if (TAO_debug_level > 0)
+  if (this->repository_.update (server, rec) == 0)
+    {
+      if (this->debug_level_ >= 1)
+        ACE_DEBUG ((LM_DEBUG, "Successful server_is_running () of <%s>\n", server));
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                 "Error: While updating Repository while server_is_running () %s\n",
+                 server));
+      // @@ Return here?
+    }
+
+  if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG, "The old host/port was: %Lu:%hu\n", rec.host, rec.port));
 
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->addr ();
@@ -272,7 +301,7 @@ ImplRepo_i::server_is_running (const char *server,
   new_addr->host_ = CORBA::string_dup (my_addr.get_host_name ());
   new_addr->port_ = my_addr.get_port_number ();
 
-  if (TAO_debug_level > 0)
+  if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG, "The new host/port is: %Lu:%hu\n", new_addr->host_, new_addr->port_));
 
   return new_addr;
@@ -296,22 +325,21 @@ ImplRepo_i::server_is_shutting_down (const char *server,
 
       if (this->repository_.update (server, rec) == 0)
         {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "Successfully shut down %s\n", server));
+          if (this->debug_level_ >= 1)
+            ACE_DEBUG ((LM_DEBUG, "Successful server_is_shutting_down () of <%s>\n", server));
         }
       else
         {
           ACE_ERROR ((LM_ERROR,
-                     "Error updating Repository while shutting down %s\n",
+                     "Error: While updating Repository while shutting down <%s>\n",
                      server));
         }
     }
   else
-  {
-    ACE_ERROR ((LM_ERROR, 
-                "Error shutting down %s: Does not exist in Repository\n",
-                server));
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Error: Unknown Server <%s>\n", server));
+      TAO_THROW (Implementation_Repository::Not_Found ());
+    }
 }
 
 
@@ -325,7 +353,7 @@ ImplRepo_i::read_ior (char *filename)
 
   if (f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
+                       "Error: Unable to open %s for writing: %p\n",
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (f_handle_);
@@ -333,7 +361,7 @@ ImplRepo_i::read_ior (char *filename)
 
   if (this->server_key_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
+                       "Error: Unable to allocate memory to read ior: %p\n"),
                       -1);
 
   ACE_OS::close (f_handle_);
@@ -345,20 +373,20 @@ ImplRepo_i::read_ior (char *filename)
 int
 ImplRepo_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "df:o:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "d:f:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        this->debug_level_ = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
+                             "Error: Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
       case 'f': // read the IOR from the file.
@@ -367,8 +395,8 @@ ImplRepo_i::parse_args (void)
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
+                           "Usage:  %s"
+                           " [-d] <debug_level>"
                            " [-f] <server_ior_file>"
                            " [-o] <ior_output_file>"
                            "\n",
@@ -384,72 +412,70 @@ int
 ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
 {
   TAO_TRY
-  {
-    // Call the init of <TAO_ORB_Manager> to initialize the ORB and
-    // create a child POA under the root POA.
-    if (this->orb_manager_.init_child_poa (argc, argv, "ir_poa", TAO_TRY_ENV) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
-    TAO_CHECK_ENV;
+    {
+      // Call the init of <TAO_ORB_Manager> to initialize the ORB and
+      // create a child POA under the root POA.
+      if (this->orb_manager_.init_child_poa (argc, argv, "ir_poa", TAO_TRY_ENV) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "Error: With %p\n", "init_child_poa"), -1);
+      TAO_CHECK_ENV;
 
-    this->argc_ = argc;
-    this->argv_ = argv;
+      this->argc_ = argc;
+      this->argv_ = argv;
 
-    int retval = this->parse_args ();
+      int retval = this->parse_args ();
 
-    if (retval != 0)
-      return retval;
+      if (retval != 0)
+        return retval;
 
-    ACE_NEW_RETURN (this->forwarder_impl_,
-                    IR_Forwarder (this->orb_manager_.orb (),
-                                  this->orb_manager_.child_poa (),
-                                  this),
-                    -1);
+      ACE_NEW_RETURN (this->forwarder_impl_,
+                      IR_Forwarder (this->orb_manager_.orb (),
+                                    this->orb_manager_.child_poa (),
+                                    this),
+                      -1);
 
-    CORBA::String_var str  =
-      this->orb_manager_.activate (this->forwarder_impl_);
-    if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, "The server IOR is: <%s>\n", str.in ()));
+      CORBA::String_var str  =
+        this->orb_manager_.activate (this->forwarder_impl_);
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "The server IOR is: <%s>\n", str.in ()));
 
-    if (this->ior_output_file_)
-      {
-        ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
-        ACE_OS::fclose (this->ior_output_file_);
-      }
+      if (this->ior_output_file_)
+        {
+          ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
+          ACE_OS::fclose (this->ior_output_file_);
+        }
 
-    CORBA::String_var ir_var  =
-      this->orb_manager_.activate_under_child_poa ("implrepo",
-                                                   this,
-                                                   TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      CORBA::String_var ir_var  =
+        this->orb_manager_.activate_under_child_poa ("implrepo",
+                                                     this,
+                                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, "The IR IOR is: <%s>\n", ir_var.in ()));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "The IR IOR is: <%s>\n", ir_var.in ()));
 
-    FILE *ir_file = ACE_OS::fopen ("implrepo.ior", "w");
-    ACE_OS::fprintf (ir_file, "%s", ir_var.in ());
-    ACE_OS::fclose (ir_file);
+      FILE *ir_file = ACE_OS::fopen ("implrepo.ior", "w");
+      ACE_OS::fprintf (ir_file, "%s", ir_var.in ());
+      ACE_OS::fclose (ir_file);
 
-    ACE_NEW_RETURN (this->activator_,
-                    IR_Adapter_Activator(this->forwarder_impl_),
-                    -1);
+      ACE_NEW_RETURN (this->activator_,
+                      IR_Adapter_Activator(this->forwarder_impl_),
+                      -1);
 
-    PortableServer::AdapterActivator_var activator =
-      this->activator_->_this (TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      PortableServer::AdapterActivator_var activator =
+        this->activator_->_this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-    // Register the TAO_Adapter_Activator reference to be the RootPOA's
-    // Adapter Activator.
+      // Register the TAO_Adapter_Activator reference to be the RootPOA's
+      // Adapter Activator.
 
-    this->orb_manager_.root_poa ()->the_activator (activator.in (), TAO_TRY_ENV);
-    TAO_CHECK_ENV;
-
-
-  }
+      this->orb_manager_.root_poa ()->the_activator (activator.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
   TAO_CATCHANY
-  {
-    TAO_TRY_ENV.print_exception ("Server_i::init");
-    TAO_RETHROW_RETURN (-1);
-  }
+    {
+      TAO_TRY_ENV.print_exception ("Server_i::init");
+      TAO_RETHROW_RETURN (-1);
+    }
   TAO_ENDTRY;
   return 0;
 }
@@ -458,7 +484,7 @@ int
 ImplRepo_i::run (CORBA::Environment& env)
 {
   if (this->orb_manager_.run (env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "IR_Server_i::run"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Error: In IR_Server_i::run"), -1);
   return 0;
 }
 
@@ -504,8 +530,6 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                        const char *name,
                                        CORBA_Environment &env)
 {
-  ACE_DEBUG ((LM_DEBUG, "Unknown Adapter called\n"));
-
   CORBA::PolicyList policies (4);
   policies.length (4);
 
@@ -566,33 +590,33 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       return -1;
     }
 
-    PortableServer::AdapterActivator_var activator = this->_this (env);
-    if (env.exception () != 0)
-      {
-        child->destroy (0, 0, env);
-        return 0;
-      }
+  PortableServer::AdapterActivator_var activator = this->_this (env);
+  if (env.exception () != 0)
+    {
+      child->destroy (0, 0, env);
+      return 0;
+    }
 
-    child->the_activator (activator.in (), env);
+  child->the_activator (activator.in (), env);
 
-    if (env.exception () != 0)
-      {
-        env.print_exception ("unknown_adapter, the_activator");
-        child->destroy (0, 0, env);
-        return 0;
-      }
+  if (env.exception () != 0)
+    {
+      env.print_exception ("unknown_adapter, the_activator");
+      child->destroy (0, 0, env);
+      return 0;
+    }
 
-    child->set_servant (this->servant_, env);
+  child->set_servant (this->servant_, env);
 
-    if (env.exception () != 0)
-      {
-        env.print_exception ("unknown_adapter, set_servant");
-        child->destroy (0, 0, env);
-        return 0;
-      }
+  if (env.exception () != 0)
+    {
+      env.print_exception ("unknown_adapter, set_servant");
+      child->destroy (0, 0, env);
+      return 0;
+    }
 
-    // Finally everything is fine
-    return 1;
+  // Finally everything is fine
+  return 1;
 }
 
 
@@ -639,27 +663,23 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   // Now convert the id into a string
   CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
   
-  ACE_DEBUG ((LM_DEBUG, "Object is: %s\n", key));
-
   PortableServer::POA_ptr poa = poa_current->get_POA (_env);
   if (_env.exception () != 0)
     return;
-
-  ACE_DEBUG ((LM_DEBUG, "POA is: %s\n", poa->the_name ()));
 
   // Now FORWARD!!!
 
   Implementation_Repository::INET_Addr *new_addr;
 
   TAO_TRY
-  {
-    new_addr = this->ir_impl_->activate_server (poa->the_name (), TAO_TRY_ENV);
-    TAO_CHECK_ENV;
-  }
+    {
+      new_addr = this->ir_impl_->activate_server (poa->the_name (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
   TAO_CATCHANY
-  {
-    TAO_RETHROW;
-  }
+    {
+      TAO_RETHROW;
+    }
   TAO_ENDTRY;
 
 
@@ -667,17 +687,19 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
     poa_current->object_key (), 0, _env);
 
   IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *, forward_object->_stubobj ());
-  // @@ Only same host for now
-  iiop_obj->profile.port = new_addr->port_;
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, 
-                "The forward_to is <%s>\n", 
-                this->orb_var_->object_to_string (forward_object, _env)));
+  iiop_obj->profile.port = new_addr->port_;
+  delete [] iiop_obj->profile.host;
+  iiop_obj->profile.host = ACE::strnew (new_addr->host_);
+
+//  if (TAO_debug_level > 0)
+//    ACE_DEBUG ((LM_DEBUG, 
+//                "The forward_to is <%s>\n", 
+//                this->orb_var_->object_to_string (forward_object, _env)));
 
   
   if (!CORBA::is_nil (forward_object))
     _env.exception (new PortableServer::ForwardRequest (forward_object));
   else
-    ACE_ERROR ((LM_ERROR, "Error:Forward_to reference is nil.\n"));
+    ACE_ERROR ((LM_ERROR, "Error: Forward_to reference is nil.\n"));
 }
