@@ -1,3 +1,8 @@
+Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Transport_Mux_Strategy.cpp: Fixed the explicit template
+	  instantiation problems.
+
 Fri Jul  2 16:28:08 1999 Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
 	  Another big step generating code for AMI. Done with sendc
