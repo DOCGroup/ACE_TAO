@@ -2,6 +2,8 @@
 
 #include "Task_Client.h"
 
+ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
+
 Task_State::Task_State (int argc, char **argv)
   : start_count_ (0),
     loop_count_ (5),

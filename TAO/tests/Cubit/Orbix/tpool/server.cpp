@@ -13,6 +13,8 @@
 #include "cubit_impl.h"		// server header file
 #include "tpool.h"
 
+ACE_RCSID(tpool, server, "$Id$")
+
 int 
 main (int argc, char** argv)
 {

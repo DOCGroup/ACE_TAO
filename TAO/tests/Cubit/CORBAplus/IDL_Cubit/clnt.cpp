@@ -22,6 +22,8 @@
 #include "ace/Profile_Timer.h"
 #include "clnt.h"
 
+ACE_RCSID(IDL_Cubit, clnt, "$Id$")
+
 int _debug_level = 1;
 
 // Constructor.

@@ -2,6 +2,8 @@
 
 #include "tao.h"
 
+ACE_RCSID(CodeGen, perf, "$Id$")
+
 void GenGPERFCode()
 {
   char command[500];

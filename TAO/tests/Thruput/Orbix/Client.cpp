@@ -2,6 +2,8 @@
 
 #include "ttcp_decl.h"
 
+ACE_RCSID(Orbix, Client, "$Id$")
+
 char Usage[] = "\
 Usage: client [-options] [ORBeline options] host \n\
 Common options:\n\

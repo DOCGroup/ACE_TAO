@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 
 // ============================================================================
@@ -20,6 +19,8 @@
 
 #include "tao/corba.h"
 #include "MT_Object_Impl.h"
+
+ACE_RCSID(MT_Client_Test, MT_Object_Impl, "$Id$")
 
 #define MAX_HOP_COUNT 20
 

@@ -2,6 +2,8 @@
 
 #include "tpool.h"
 
+ACE_RCSID(tpool, tpool, "$Id$")
+
 Thread_Pool::Thread_Pool (int n_threads)
   : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ())
 {

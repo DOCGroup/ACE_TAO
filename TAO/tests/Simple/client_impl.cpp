@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
+ACE_RCSID(Simple, client_impl, "$Id$")
+
 // Constructor.
 Client_Impl::Client_Impl (void)
   : server_key_ (ACE_OS::strdup ("key0")),

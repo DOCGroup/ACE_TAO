@@ -3,6 +3,8 @@
 #include "server_i.h"
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(IDL_Cubit, server, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

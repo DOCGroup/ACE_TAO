@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //===================================================================
 //  = LIBRARY
 //      TAO/tests/POA/Default_Servant/server
@@ -15,8 +15,9 @@
 //
 //====================================================================
 
-
 #include "Database_i.h"
+
+ACE_RCSID(DSI, server, "$Id$")
 
 int 
 main (int argc, char **argv)

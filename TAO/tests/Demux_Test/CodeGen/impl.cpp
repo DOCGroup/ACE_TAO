@@ -2,6 +2,8 @@
 
 #include "tao.h"
 
+ACE_RCSID(CodeGen, impl, "$Id$")
+
 // generate the implementation header
 long GenServantHeader(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
 {

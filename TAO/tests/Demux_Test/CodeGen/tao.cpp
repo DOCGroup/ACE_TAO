@@ -2,6 +2,8 @@
 
 #include "tao.h"
 
+ACE_RCSID(CodeGen, tao, "$Id$")
+
 int main (int argc, char *argv[])
 {
   // define the two arrays that will hold generated object keys and method

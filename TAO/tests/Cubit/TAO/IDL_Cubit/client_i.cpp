@@ -7,6 +7,8 @@
 
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(IDL_Cubit, client_i, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *Cubit_Client_Timeprobe_Description[] =

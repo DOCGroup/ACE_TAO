@@ -20,6 +20,8 @@
 #include "quantify.h"
 #endif /* NO_ACE_QUANTIFY */
 
+ACE_RCSID(MT_Cubit, server, "$Id$")
+
 // Global options used to configure various parameters.
 // static char hostname[BUFSIZ];
 // static char *ior_file = 0;

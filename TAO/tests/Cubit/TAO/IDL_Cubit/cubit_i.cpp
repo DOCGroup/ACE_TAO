@@ -19,6 +19,8 @@
 
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(IDL_Cubit, cubit_i, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *Cubit_i_Timeprobe_Description[] =

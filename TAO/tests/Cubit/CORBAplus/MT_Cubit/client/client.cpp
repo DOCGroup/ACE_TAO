@@ -16,6 +16,8 @@
 #include "cubit.h"
 #include "Task_Client.h"
 
+ACE_RCSID(client, client, "$Id$")
+
 //
 // Mainline
 //

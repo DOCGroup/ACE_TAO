@@ -13,6 +13,8 @@
 #include "ace/streams.h"
 #include "cubit_impl.h"		// server header file
 
+ACE_RCSID(base_server, server, "$Id$")
+
 int 
 main (int , char**)
 {

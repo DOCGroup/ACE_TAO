@@ -18,6 +18,8 @@
 
 #include "options.h"
 
+ACE_RCSID(Param_Test, options, "$Id$")
+
 // Constructor.p
 Options::Options (void)
   : ior_ (0),

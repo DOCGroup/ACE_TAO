@@ -2,6 +2,8 @@
 
 #include "ttcp_i.h"
 
+ACE_RCSID(Orbix, ttcp_i, "$Id$")
+
 /* callback routine that will change the size of the socket queue */
 static void
 SD_Ready (int io_descriptor)

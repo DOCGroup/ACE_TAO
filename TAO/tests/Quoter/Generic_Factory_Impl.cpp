@@ -18,6 +18,8 @@
 #include "Generic_Factory_Impl.h"
 #include "QuoterC.h"
 
+ACE_RCSID(Quoter, Generic_Factory_Impl, "$Id$")
+
 // Constructor
 Quoter_Generic_Factory_Impl::Quoter_Generic_Factory_Impl (void)
 {

@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //===================================================================
 //
 // = FILENAME
@@ -15,6 +15,8 @@
 //====================================================================
 
 #include "File_i.h"
+
+ACE_RCSID(Default_Servant, File_i, "$Id$")
 
 // IDL File::System constructor
 FileImpl::System::System (PortableServer::POA_ptr poa)
