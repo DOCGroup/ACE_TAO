@@ -165,6 +165,7 @@ protected:
 };
 #endif /* 0 */
 
+#if 0
 class TAO_Export TAO_MT_Client_Connection_Handler : public TAO_Client_Connection_Handler
 {
 public:
@@ -203,6 +204,7 @@ protected:
   TAO_ORB_Core* orb_core_;
   // The ORB core where we are executing a request.
 };
+#endif /* 0 */
 
 // ****************************************************************
 

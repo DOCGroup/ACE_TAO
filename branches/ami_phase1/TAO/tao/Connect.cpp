@@ -899,8 +899,8 @@ TAO_Client_Connection_Handler::send_request (TAO_ORB_Core *,
 int
 TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  // @@ Blocking or non-blocking???
-  return this->iiop_transport_->handle_client_input (1);
+  // Call the waiter to handle the input. 
+  return this->iiop_transport_->wait_strategy ()->handle_input ();
 }
 
 int
@@ -1182,6 +1182,7 @@ TAO_ST_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 
 // ****************************************************************
 
+#if 0
 TAO_MT_Client_Connection_Handler::TAO_MT_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_Client_Connection_Handler (t),
     calling_thread_ (ACE_OS::NULL_thread),
@@ -1470,6 +1471,7 @@ TAO_MT_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 {
   return reactor->resume_handler (this);
 }
+#endif /* 0 */
 
 // ****************************************************************
 

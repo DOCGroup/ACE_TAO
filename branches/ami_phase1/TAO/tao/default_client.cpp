@@ -237,7 +237,7 @@ int
 TAO_MT_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
 {
   if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_MT_Client_Connection_Handler (this->thr_mgr_), -1);
+    ACE_NEW_RETURN (sh, TAO_Client_Connection_Handler (this->thr_mgr_), -1);
 
   return 0;
 }

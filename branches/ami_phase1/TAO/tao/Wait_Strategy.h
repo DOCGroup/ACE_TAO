@@ -118,6 +118,29 @@ public:
 
   virtual int resume_handler (ACE_Reactor *reactor);
   // Resume the connection handler. 
+
+  virtual int send_request (TAO_ORB_Core* orb_core,
+                            TAO_OutputCDR &stream);
+  // Send the request in <stream>.
+
+protected:
+  ACE_SYNCH_CONDITION* cond_response_available (void);
+  // Return the cond_response_available, initializing it if necessary.
+  
+  ACE_thread_t calling_thread_;
+  // the thread ID of the thread we were running in.
+  
+  ACE_SYNCH_CONDITION* cond_response_available_;
+  // wait on reponse if the leader-follower model is active.
+  
+  int expecting_response_;
+  // State flag which, if non-zero, indicates that we were expecting
+  // respose. Otherwise, any input received is unexpected.
+  // @@ Do we need this anymore? (Alex).
+
+  int input_available_;
+  // Flag indicating whether or not input is available.  Only valid
+  // when <expecting_response_> is non-zero.
 };
 
 class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
