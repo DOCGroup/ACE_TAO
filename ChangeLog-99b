@@ -3,6 +3,8 @@ Mon Jun 28 21:53:06 1999  David L. Levine  <levine@cs.wustl.edu>
         * bin/libsize.pl: added support for liborbsvcs, and
           for shared libs (with -s option).
 
+        * bin/check_build_logs: fixed command-line argument processing.
+
 Mon Jun 28 17:30:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.i (recvv): We must not passed a null pointer to <flags>
