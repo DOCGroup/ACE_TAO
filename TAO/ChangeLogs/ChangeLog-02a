@@ -40,7 +40,6 @@ Sat Feb  9 23:27:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Removed superfluous constructor.  The above changes obviate it.
 
-	
 	* tests/Portable_Interceptors/PICurrent/ClientORBInitializer.h:
 	* tests/Portable_Interceptors/PICurrent/ClientORBInitializer.cpp:
 	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.h:
