@@ -69,6 +69,7 @@ public:
 
   virtual void test_method (CORBA::ULongLong stamp,
                             CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
     {
       // Get the currect time.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -99,6 +100,7 @@ public:
 
   virtual void test_method_excep (AMI_TestExceptionHolder *,
                                   CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
     {
       // Ignore exceptions...
     }

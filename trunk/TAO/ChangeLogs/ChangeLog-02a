@@ -1,3 +1,12 @@
+Thu Jun  8 09:01:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Latency/ami-latency-client.cpp:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+          Fixed missing throw specs.
+
+        * performance-tests/Latency/Makefile:
+          Update dependencies.
+
 Thu Jun 08 08:44:05 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/AMI/ami_test_i.cpp (yadda): removed extraneous ;
