@@ -9,6 +9,9 @@
 
 #define ACE_DGUX
 
+# define ACE_CONFIG_INCLUDE_GHS_COMMON
+# include "ace/config-ghs-common.h"
+
 // Static objects do not get initialized correctly, so this is needed.
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
@@ -53,9 +56,6 @@
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
-
-// Compiler/platform does not support the "long long" datatype.
-#define ACE_LACKS_LONGLONG_T
 
 // Green Hills doesn't give a preprocessor symbol for long double
 #define ACE_SIZEOF_LONG_DOUBLE 8
@@ -180,9 +180,7 @@
 // Platform doesn't correctly support signed char
 #define ACE_LACKS_SIGNED_CHAR
 
-// Platform doesn't have streambuf linebuffered()
 #define ACE_LACKS_ACE_IOSTREAM
-#define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 // Use the poll() event demultiplexor rather than select().
 //#define ACE_USE_POLL
@@ -195,7 +193,6 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
-#define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #define ACE_HAS_UCONTEXT_T

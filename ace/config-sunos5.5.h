@@ -84,15 +84,6 @@
 # endif /* !ACE_MT_SAFE */
 
 #elif defined (ghs)
-# if defined (__STANDARD_CXX)
-   // Green Hills 1.8.9, but not 1.8.8.
-#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
-# endif /* __STANDARD_CXX */
-
-# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
-# define ACE_LACKS_LINEBUFFERED_STREAMBUF
-# define ACE_LACKS_LONGLONG_T /* It really doesn't have it.  Boo. */
-# define ACE_LACKS_SIGNED_CHAR
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
@@ -103,6 +94,9 @@
 #     define _REENTRANT
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
+
+# define ACE_CONFIG_INCLUDE_GHS_COMMON
+# include "ace/config-ghs-common.h"
 
   // To avoid warning about inconsistent declaration between Sun's
   // stdlib.h and Green Hills' ctype.h.

@@ -23,9 +23,11 @@
 # undef ACE_HAS_ANSI_CASTS
 # define ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
 #elif defined (ghs)
+# define ACE_CONFIG_INCLUDE_GHS_COMMON
+# include "ace/config-ghs-common.h"
+
 # define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 # define ACE_HAS_TANDEM_SIGNALS
-# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_LACKS_ACE_IOSTREAM  /* MVME lacks signed and unsigned char */
 # define ACE_LACKS_FLOATING_POINT
