@@ -1,3 +1,13 @@
+Mon Nov  3 06:09:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+          Added #included needed on Windows due to recent
+          subsetting.
+
 Mon Nov  3 05:02:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_NS_netdb.cpp:
