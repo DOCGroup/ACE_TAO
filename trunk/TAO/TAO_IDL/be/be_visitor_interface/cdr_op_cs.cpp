@@ -60,10 +60,10 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   *os << "TAO_TRY" << be_nl
       << "{" << be_idt_nl;
   // resolve the nastiness created due to casting to void* and then to
-  // CORBA::Object_ptr 
+  // CORBA::Object_ptr
   *os << "CORBA::Object_ptr _tao_corba_obj = _tao_objref;" << be_nl;
   *os << "if (TAO_MARSHAL_OBJREF::instance ()->" << be_nl
-      << "        encode (0, &_tao_corba_obj, 0, &strm, TAO_TRY_ENV) == " 
+      << "        encode (0, &_tao_corba_obj, 0, &strm, TAO_TRY_ENV) == "
       << be_nl
       << "        CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_idt_nl
       << "return 1;" << be_uidt_nl
@@ -74,7 +74,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_uidt_nl;
+      << "TAO_ENDTRY;" << be_nl
+      << "return 0;" << be_uidt_nl;
   *os << "}\n\n";
 
   // set the substate as generating code for the input operator
@@ -93,7 +94,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
   *os << "TAO_CHECK_ENV;" << be_nl;
   *os << "// narrow to the right type" << be_nl;
-  *os << "_tao_objref = " << node->name () 
+  *os << "_tao_objref = " << node->name ()
       << "::_narrow (obj, TAO_TRY_ENV);" << be_nl;
   *os << "TAO_CHECK_ENV;" << be_nl;
   *os << "CORBA::release (obj);" << be_nl;
@@ -105,7 +106,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_uidt_nl;
+      << "TAO_ENDTRY;" << be_nl
+      << "return 0;" << be_uidt_nl;
   *os << "}\n\n";
 
   // set the substate as generating code for the types defined in our scope
@@ -122,4 +124,3 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   node->cli_stub_cdr_op_gen (1);
   return 0;
 }
-
