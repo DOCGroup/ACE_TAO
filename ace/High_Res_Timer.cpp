@@ -193,7 +193,7 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
              (u_long) ((avg_nsecs + 500) / 1000));
     }
   else
-    ACE_OS::sprintf (buf, " total %3lld.%06lu secs\n",
+    ACE_OS::sprintf (buf, " total %3lu.%06lu secs\n",
              total_secs, (extra_nsecs + 500) / 1000);
 
   ACE_OS::write (handle, str, strlen (str));
@@ -227,7 +227,7 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
              (u_long) ((avg_nsecs + 500) / 1000));
     }
   else
-    ACE_OS::sprintf (buf, " total %3lld.%06lu secs\n",
+    ACE_OS::sprintf (buf, " total %3lu.%06lu secs\n",
              total_secs, (extra_nsecs + 500) / 1000);
 
   ACE_OS::write (handle, str, strlen (str));
