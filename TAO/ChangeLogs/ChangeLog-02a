@@ -1,3 +1,16 @@
+Fri Apr 27 16:01:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Etherealization: Added new test to check for proper
+	  deactivation and etherealization of reference counted and non
+	  reference counted servants.  The following files were also
+	  modified:
+
+          - tests/TAO_Tests.dsw
+          - tests/POA/Makefile
+          - tests/POA/Makefile.bor
+          - tests/POA/README
+          - ACE_wrappers/bin/auto_run_tests.lst
+
 Fri Apr 27 11:58:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply): 

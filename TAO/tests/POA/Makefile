@@ -13,6 +13,7 @@
 DIRS  = POA_Destruction \
 	wait_for_completion \
 	Excessive_Object_Deactivations \
+	Etherealization \
 	Object_Reactivation \
 	Non_Servant_Upcalls \
 	Single_Threaded_POA \

@@ -48,3 +48,8 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 a servant can call itself or other servants in the
                 same POA while in an upcall.
 
+        . Etherealization
+
+                This program tests for deactivation and
+                etherealization of reference counted and non reference
+                counted servants.
