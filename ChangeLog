@@ -1,3 +1,10 @@
+Thu Jan 15 18:42:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/portablegroup.mpb:
+	  PortableGroup uses iormanip, so also projects using portablegroup
+	  need this. This fixes the compile problems in the BCB6 Static
+	  build.
+
 Thu Jan 15 18:33:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
