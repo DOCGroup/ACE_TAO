@@ -1,3 +1,11 @@
+Fri May 10 18:29:48 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-icc-common.h (ACE_HAS_ANSI_CASTS):
+        * include/makeinclude/platform_linux_icc.GNU:
+
+          Fixed the config file to ensure compilation with Intel C++
+          Compiler version 6.0.
+
 Fri May 10 18:16:50 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp (handle_output): Removed unnecessary debug

@@ -28,7 +28,7 @@ ifeq ($(threads),0)
 endif # threads
 
 PLATFORM_XT_CPPFLAGS=
-PLATFORM_XT_LIBS=-lXt  
+PLATFORM_XT_LIBS=-lXt
 LATFORM_XT_LDFLAGS=
 
 PLATFORM_FL_CPPFLAGS=
@@ -69,24 +69,24 @@ ifeq ($(threads),1)
 endif # threads
 
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
 LIBS    += -ldl
 
-ifeq ($(threads),1) 
+ifeq ($(threads),1)
   LIBS += -lpthread
   ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
     LIBS += -lrt
   endif
-endif 
+endif
 
 PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
 PLATFORM_QT_LIBS=-lqt
 PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
 
-OCFLAGS += -O2
+OCFLAGS += -O3 -axK
 PIC     = -KPIC
 AR      = ar
 ARFLAGS = rsuv
@@ -99,11 +99,9 @@ PRELIB  = @true
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
-ifeq ($(threads),1) 
+ifeq ($(threads),1)
     ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
     ifndef PRELIB
        PRELIB = @true
     endif # ! PRELIB
 endif
-
-
