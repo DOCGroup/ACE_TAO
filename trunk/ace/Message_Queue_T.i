@@ -138,12 +138,12 @@ ACE_Message_Queue<ACE_SYNCH_USE>::activate (void)
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int
-ACE_Message_Queue<ACE_SYNCH_USE>::deactivate (void)
+ACE_Message_Queue<ACE_SYNCH_USE>::deactivate (int pulse)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  return this->deactivate_i ();
+  return this->deactivate_i (pulse);
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int
@@ -277,11 +277,11 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::activate (void)
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
-ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate (void)
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate (int pulse)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate");
 
-  return this->queue_.deactivate ();
+  return this->queue_.deactivate (pulse);
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int

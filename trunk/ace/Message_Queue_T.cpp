@@ -557,7 +557,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm,
 // (assumes locks are held).
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (void)
+ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (int pulse)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i");
   int current_status =
@@ -569,7 +569,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (void)
   this->not_full_cond_.broadcast ();
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
-  this->deactivated_ = 1;
+  if (pulse == 0)
+    this->deactivated_ = 1;
   return current_status;
 }
 
