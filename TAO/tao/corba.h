@@ -124,6 +124,10 @@
 #include "tao/object.i"
 #include "tao/orbobj.i"
 #include "tao/marshal.i"
+#include "tao/poa.i"
+#include "tao/giop.i"
+#include "tao/iioporb.i"
+#include "tao/iiopobj.i"
 
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
@@ -133,15 +137,11 @@
 
 // the following *.i files are conditionally included here
 #if defined (__ACE_INLINE__)
-#include "tao/poa.i"
-#include "tao/giop.i"
 #include "tao/params.i"
 #include "tao/server_factory.i"
 #include "tao/default_client.i"
 #include "tao/default_server.i"
 #include "tao/connect.i"
-#include "tao/iioporb.i"
-#include "tao/iiopobj.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (__ACE_INLINE__)
