@@ -1,3 +1,10 @@
+Wed Nov 19 21:38:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Typecode.cpp:
+
+          Fixed typos in explicit template instantiations.
+
 Wed Nov 19 20:09:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Concurrency_Service/Makefile:

@@ -3828,17 +3828,21 @@ template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
                                         CORBA::TypeCode_out,
                                         TAO::Objref_Traits<CORBA::TypeCode> >;
 
-template TAO::Ret_Object_Argument_T<CORBA::TypeCode*,
-                                    TAO_Pseudo_Var_T<CORBA::TypeCode> >;
+template class TAO::Ret_Object_Argument_T<CORBA::TypeCode*,
+                                          TAO_Pseudo_Var_T<CORBA::TypeCode> >;
 
-template TAO::In_Object_Argument_T<CORBA::TypeCode*>;
+template class TAO::In_Object_Argument_T<CORBA::TypeCode*>;
 
-template TAO::Inout_Object_Argument_T<CORBA::TypeCode*,
-    TAO::Objref_Traits<CORBA::TypeCode> >;
+template class 
+  TAO::Inout_Object_Argument_T<CORBA::TypeCode*,
+                               TAO::Objref_Traits<CORBA::TypeCode> >;
 
-template TAO::Out_Object_Argument_T<CORBA::TypeCode*,
-    TAO_Pseudo_Out_T<CORBA::TypeCode,
-                     TAO_Pseudo_Var_T<CORBA::TypeCode> > >;
+template class 
+  TAO::Out_Object_Argument_T<
+      CORBA::TypeCode*,
+      TAO_Pseudo_Out_T<CORBA::TypeCode,
+                       TAO_Pseudo_Var_T<CORBA::TypeCode>
+    > >;
 
 #if 0
 template class TAO::SArg_Traits<CORBA::TypeCode>;
