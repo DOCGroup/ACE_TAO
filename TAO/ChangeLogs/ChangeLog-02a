@@ -1,3 +1,16 @@
+Wed Mar  1 17:47:19 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp:
+
+	  Cosmetic update.
+
+	* tao/POA.cpp (create_reference_i, create_reference_with_id_i):
+
+	  Corrected "optimal conversion" warnings from gcc 2.95.2 by
+	  using a temporary pointer variable in the ACE_NEW_THROW_EX
+	  expression, and then assigning that variable to the "_var"
+	  variable.
+
 Wed Mar  1 17:27:45 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Acceptor.h (hostname):
