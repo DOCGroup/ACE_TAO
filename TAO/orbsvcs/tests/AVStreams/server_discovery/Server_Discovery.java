@@ -25,8 +25,7 @@ public class Server_Discovery extends JFrame
 
   private JMenuBar menu_bar_;
   private JDesktopPane desktop_;
-  private Server_Discovery_Selection movies_selector_ =
-  new Server_Discovery_Selection (this);
+  private Server_Discovery_Selection movies_selector_=  new Server_Discovery_Selection (this);
   
   public Server_Discovery ()
     {
@@ -38,8 +37,7 @@ public class Server_Discovery extends JFrame
 
       // Ok, as grotesque as these anonymous classes are, they do have
       // their uses.
-      WindowAdapter window_adapter =
-        new WindowAdapter ()
+      WindowAdapter window_adapter = new WindowAdapter ()
         {
           public void windowClosing (WindowEvent e)
             {
@@ -109,8 +107,7 @@ public class Server_Discovery extends JFrame
       for (int i = 0; i < host_names.length; i++)
         {
           System.out.println ("Getting movies for server " + host_names[i]);
-          TAO_VR.Movie[] movies =
-            Server_Discovery_Util.get_movie_info (host_names[i]);
+          TAO_VR.Movie[] movies = Server_Discovery_Util.get_movie_info (host_names[i]);
 
           System.out.println ("Adding movies for server " + host_names[i]);
           for (int j = 0; j < movies.length; j++)
