@@ -341,23 +341,6 @@ TAO_GIOP_Message_Handler::more_messages (void)
     {
       size_t len = this->supp_buffer_.length ();
 
-      // @@ Once we start receing fragments, somthing like this would
-      // be needed. We will revisit this then.
-      /*      if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
-        {
-          this->current_buffer_.reset ();
-          if (len > (TAO_GIOP_MESSAGE_HEADER_LEN +
-                     TAO_GIOP_MESSAGE_FRAGMENT_HEADER))
-            {
-              this->current_buffer_.copy (
-                this->supp_buffer_.rd_ptr (),
-                TAO_GIOP_MESSAGE_HEADER_LEN +
-                TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
-
-              this->supp_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN +
-                                         TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
-            }
-            else*/
       if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
         {
           this->current_buffer_.copy (
@@ -409,9 +392,6 @@ TAO_GIOP_Message_Handler::get_message (void)
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
           this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
                                       this->message_state_.message_size);
-
-          char * buf =
-            this->current_buffer_.rd_ptr ();
 
           // The message will be dumped only if the debug level is
           // greater than 5 anyway.
