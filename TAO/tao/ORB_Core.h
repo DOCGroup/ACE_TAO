@@ -666,6 +666,10 @@ protected:
 # include "tao/ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (TAO_USES_STATIC_SERVICE)
+ACE_STATIC_SVC_DECLARE (TAO_Resource_Factory)
+#endif /* TAO_USE_STATIC_SERVICE */
+
 ACE_FACTORY_DECLARE (TAO, TAO_Resource_Factory)
 
 extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
