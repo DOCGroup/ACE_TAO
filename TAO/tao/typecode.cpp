@@ -19,14 +19,6 @@
 
 #include "tao/corba.h"
 
-// @@ This is a botch...
-// @@ Can you please explain why?
-size_t
-calc_key_union_attributes (CDR *stream,
-                           size_t &alignment,
-                           size_t &size_with_pad,
-                           CORBA::Environment &env);
-
 // Constructor for CONSTANT typecodes with empty parameter lists.
 // These are only created once, and those constants are shared.
 
@@ -1890,7 +1882,10 @@ CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
 
   stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
 
- (void) calc_key_union_attributes (&stream, overall_align, discrim_size, env);
+ (void) TAO_IIOP_Interpeter::calc_key_union_attributes (&stream,
+                                                        overall_align,
+                                                        discrim_size,
+                                                        env);
 
   if (env. exception () == 0)
     {
@@ -2236,4 +2231,252 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
   env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
   return 0;
+}
+
+// For each node in "data", visit it.  For singleton nodes that's all
+// but a NOP; for structs, unions, etc it's more interesting.  The
+// visit routine can descend, if it chooses.
+//
+// NOTE: this does no memory allocation or deallocation except through
+// use of the stack.  Or at least, it should do none -- if you find
+// that just traversing a data value allocates any memory, that's a
+// bug to fix!
+
+CORBA::TypeCode::traverse_status
+CORBA::TypeCode::traverse (const void *value1,
+                           const void *value2,
+                           CORBA::TypeCode::traverse_status (_FAR *visit)
+                           (CORBA::TypeCode_ptr tc,
+                            const void *value1,
+                            const void *value2,
+                            void *context,
+                            CORBA::Environment &env),
+                           void *context,
+                           CORBA::Environment &env)
+{
+  env.clear ();
+
+  // Quickly accomodate the bulk of cases, which are just (tail) calls
+  // to the visit() routine.  We take advantage of the fact that these
+  // are largely in a convenient numeric range to work around poor
+  // optimization of "switch" code in some compilers.  This
+  // improvement has in some cases been more than 5% faster
+  // (significant).
+  //
+  // NOTE: if for some reason the constants in the protocol spec
+  // (including Appendix A) change, this logic may need to be verified
+  // again.  Luckily, changing protocol constants is quite rare; they
+  // normally just get added to (at the end).
+  //
+  if (kind_ <= CORBA::tk_objref
+      || (CORBA::tk_longlong <= kind_ && kind_ <= CORBA::tk_wstring))
+    return visit (this, value1, value2, context, env);
+
+  // Handle the cases that aren't in convenient numeric ranges.
+
+  traverse_status retval;
+
+  switch (kind_)
+    {
+    case CORBA::tk_string:
+    case CORBA::tk_enum:
+      return visit (this, value1, value2, context, env);
+
+      // Typedefs just add a delay, while we skip the typedef ID
+      // and name ...
+
+    case CORBA::tk_alias:
+      {
+        CORBA::TypeCode_ptr tcp;
+        CORBA::Environment env2;
+
+        // XXX rework for efficiency, this doesn't need to allocate
+        // memory during the traversal!
+
+        tcp = typecode_param (2, env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
+
+        retval = tcp->traverse (value1, value2, visit, context, env);
+
+        tcp->Release ();
+      }
+    return retval;
+
+    // Exceptions in-memory are structures, except that there are data
+    // members "hidden" in front: vtable, typecode, refcount.  We skip
+    // them, and allow the traversal code to account for the internal
+    // padding before the other elements of the exception.
+    //
+    // NOTE: see header comment re treatment of these values as "real"
+    // C++ exceptions.  C++ RTTI data might need to be skipped.  Also,
+    // see the comments in unmarshaling code: hard to throw these
+    // values.
+    //
+    // Not enough of the exception runtime is public for binary
+    // standards to exist for C++ exceptions yet.  Compiler-specific
+    // code will need to handle examining, unmarshaling, and throwing
+    // of CORBA exceptions (in C++ environments) for some time.
+    case CORBA::tk_except:
+      value1 = sizeof (CORBA::Exception) + (char *) value1;
+      value2 = sizeof (CORBA::Exception) + (char *) value2;
+      // FALLTHROUGH
+
+    case CORBA::tk_struct:
+      // XXX for OLE Automation, we'll probably need BOTH exceptions
+      // and structs to inherit IUnknown, hence we'll need to be
+      // skipping the vtable pointer ...
+      {
+        // Create the sub-encapsulation stream that holds the
+        // parameters for the typecode.
+
+        CDR stream;
+
+        stream.setup_encapsulation (buffer_, (size_t) length_);
+
+        return struct_traverse (&stream, value1, value2,
+                                visit, context, env);
+      }
+
+    case CORBA::tk_union:
+      {
+        // visit the discriminant, then search the typecode for the
+        // relevant union member and then visit that member.
+        CDR stream;
+
+        stream.setup_encapsulation (buffer_, (size_t) length_);
+
+        return union_traverse (&stream, value1, value2,
+                               visit, context, env);
+      }
+
+      // Sequences are just arrays with bound determined at runtime,
+      // rather than compile time.  Multidimensional arrays are nested
+      // C-style: the leftmost dimension in the IDL definition is
+      // "outermost", etc.
+      {
+        CORBA::TypeCode_ptr tc2;
+        size_t size;
+        CORBA::ULong bounds;
+        CORBA::OctetSeq *seq;
+
+      case CORBA::tk_sequence:
+        // Find out how many elements there are, and adjust the data
+        // pointers to point to those elements rather than to the
+        // sequence itself.
+        seq = (CORBA::OctetSeq *)value1;
+
+        bounds = seq->length;
+        value1 = seq->buffer;
+
+        if (value2)
+          {
+            seq = (CORBA::OctetSeq *)value2;
+            value2 = seq->buffer;
+          }
+        goto shared_seq_array_code;
+
+      case CORBA::tk_array:
+        // Array bounds are in the typecode itself.
+        bounds = ulong_param (1, env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
+
+      shared_seq_array_code:
+        // Find element's type, and size ...
+        tc2 = typecode_param (0, env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
+
+        size = tc2->size (env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
+
+        // ... then visit the elements in order.
+        //
+        // NOTE: for last element, could turn visit() call into
+        // something subject to compiler's tail call optimization and
+        // thus save a stack frame
+        while (bounds--)
+          {
+            if (visit (tc2, value1, value2, context, env) == TRAVERSE_STOP)
+              return TRAVERSE_STOP;
+
+            value1 = size + (char *) value1;
+            value2 = size + (char *) value2;
+          }
+        CORBA::release (tc2);
+        env.clear ();
+      }
+      return TRAVERSE_CONTINUE;
+
+      // case ~0:                       // indirection, illegal at top level
+    default:                            // invalid/illegal
+      break;
+    } // end switch on typecode "kind"
+
+  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+  return TRAVERSE_STOP;
+}
+
+// Tell user the size of an instance of the data type described by
+// this typecode ... typically used to allocate memory.
+
+size_t
+CORBA::TypeCode::private_size (CORBA::Environment &env)
+{
+  if (kind_ >= CORBA::TC_KIND_COUNT)
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  env.clear ();
+
+  if (TAO_IIOP_Interpreter::table_[kind_].calc == 0)
+    {
+      private_state_->tc_size_known_ = CORBA::B_TRUE;
+      private_state_->tc_size_ = TAO_IIOP_Interpreter::table_[kind_].size;
+      return private_state_->tc_size_;
+    }
+
+  size_t alignment;
+  CDR stream;
+
+  stream.setup_encapsulation (buffer_, (size_t) length_);
+
+  private_state_->tc_size_known_ = CORBA::B_TRUE;
+  private_state_->tc_size_ = TAO_IIOP_Interpreter::table_[kind_].calc (&stream, alignment, env);
+  return private_state_->tc_size_;
+}
+
+// Tell user the alignment restriction for the data type described by
+// an instance of this data type.  Rarely used; provided for
+// completeness.
+
+size_t
+CORBA::TypeCode::private_alignment (CORBA::Environment &env)
+{
+  if (kind_ >= CORBA::TC_KIND_COUNT)
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  env.clear ();
+
+  if (TAO_IIOP_Interpreter::table_[kind_].calc == 0)
+    {
+        private_state_->tc_alignment_known_ = CORBA::B_TRUE;
+        private_state_->tc_alignment_ = TAO_IIOP_Interpreter::table_[kind_].alignment;
+        return private_state_->tc_alignment_;
+    }
+
+  size_t alignment;
+  CDR stream;
+
+  stream.setup_encapsulation (buffer_, (size_t) length_);
+
+  (void) TAO_IIOP_Interpreter::table_[kind_].calc (&stream, alignment, env);
+  private_state_->tc_alignment_known_ = CORBA::B_TRUE;
+  private_state_->tc_alignment_ = alignment;
+  return alignment;
 }
