@@ -19,6 +19,8 @@
 //    forwarded to it from gatewayd.  In this program, peerd
 //    "processes" events by writing them to stdout.
 
+#define ACE_BUILD_SVC_DLL
+
 #include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"
 #include "ace/Svc_Handler.h"
@@ -27,12 +29,13 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "Event.h"
+#include "Peer.h"
 
 static int verbose = 0;
 
 // Handle Peer events arriving as events. 
 
-class Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+class ACE_Svc_Export Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
   // = Initialization and termination methods.
@@ -171,9 +174,8 @@ Peer_Handler::xmit_stdin (void)
 
 	  // Take stdin out of the ACE_Reactor so we stop trying to
 	  // send events.
-	  if (ACE_Service_Config::reactor ()->remove_handler 
-	      (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n", "remove_handler"));
+	  ACE_Service_Config::reactor ()->remove_handler 
+	    (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 	  mb->release ();
 	  break;
 	case -1:
@@ -597,9 +599,8 @@ Peer_Handler::handle_close (ACE_HANDLE,
       // ACE_Event_Handler::DONT_CALL instructs the ACE_Reactor *not*
       // to call this->handle_close(), which would otherwise lead to
       // recursion!).
-      if (ACE_Service_Config::reactor ()->remove_handler 
-	  (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK) == -1)
-	ACE_ERROR ((LM_ERROR, "handle = ACE_STDIN: %p\n", "remove_handler"));
+      ACE_Service_Config::reactor ()->remove_handler 
+	(ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 
       // Deregister this handler with the ACE_Reactor.
       if (ACE_Service_Config::reactor ()->remove_handler 
@@ -616,7 +617,7 @@ Peer_Handler::handle_close (ACE_HANDLE,
 // A factory class that accept connections from gatewayd and
 // dynamically creates a new Peer object to do the dirty work.
 
-class Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
+class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:  
   // = Initialization and termination methods.
@@ -753,8 +754,14 @@ Peer_Acceptor::init (int argc, char *argv[])
 
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
+
+#if defined (ACE_WIN32)
+  if (ACE_Service_Config::reactor ()->register_handler (SIGINT, this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
+#else
   if (ACE_Service_Config::reactor ()->register_handler (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
+#endif
 
   // Call down to the Acceptor's open() method.
   if (this->inherited::open (this->addr_) == -1)
@@ -771,7 +778,6 @@ Peer_Acceptor::init (int argc, char *argv[])
 // svc.conf file to dynamically initialize the Peer_Acceptor.
 
 ACE_SVC_FACTORY_DEFINE (Peer_Acceptor)
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
