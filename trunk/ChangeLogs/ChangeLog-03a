@@ -1,3 +1,13 @@
+Wed Sep  4 20:08:54 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
+
+	* ace/Framework_Component.cpp (close):
+	  
+	  Delete each component explicitely instead of calling 
+	  close_singleton () to avoid a memory leak.  The dtor calls 
+	  close_singleton () anyway.  Thanks Vladimir Chovanec 
+	  <Vladimir CHOVANEC@asset.sk> for reporting the leak and 
+	  suggesting the fix.
+
 Tue Sep 03 22:59:27 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/XML_Common.dsp:
