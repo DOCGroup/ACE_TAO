@@ -111,6 +111,7 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -249,15 +250,14 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -274,12 +274,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -406,6 +410,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -544,15 +549,14 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -569,12 +573,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -697,6 +705,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -835,15 +844,14 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -860,12 +868,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -987,6 +999,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1125,15 +1138,14 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1150,12 +1162,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1278,6 +1294,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1416,15 +1433,14 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1441,12 +1457,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1568,6 +1588,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1706,15 +1727,14 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1731,12 +1751,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1857,6 +1881,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1883,7 +1908,9 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(ACE_ROOT)/ace/ATM_Addr.h \
+ $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1930,9 +1957,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(ACE_ROOT)/ace/ATM_Addr.h \
- $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
@@ -2071,12 +2095,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -2084,6 +2105,8 @@ AVSVC_COMPONENTS:
  CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2100,12 +2123,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2242,6 +2269,7 @@ AVSVC_COMPONENTS:
  AV/AV_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -2382,17 +2410,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2409,12 +2436,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2583,6 +2614,7 @@ AVSVC_COMPONENTS:
  AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -2609,7 +2641,9 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(ACE_ROOT)/ace/ATM_Addr.h \
+ $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2656,9 +2690,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(ACE_ROOT)/ace/ATM_Addr.h \
- $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
@@ -2797,12 +2828,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -2810,6 +2838,8 @@ AVSVC_COMPONENTS:
  CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2826,12 +2856,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2962,6 +2996,7 @@ AVSVC_COMPONENTS:
  AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -2988,7 +3023,9 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(ACE_ROOT)/ace/ATM_Addr.h \
+ $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3035,9 +3072,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(ACE_ROOT)/ace/ATM_Addr.h \
- $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
@@ -3176,12 +3210,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -3189,6 +3220,8 @@ AVSVC_COMPONENTS:
  CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3205,12 +3238,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -3340,6 +3377,7 @@ AVSVC_COMPONENTS:
  AV/Endpoint_Strategy.h AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -3366,7 +3404,9 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(ACE_ROOT)/ace/ATM_Addr.h \
+ $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3413,9 +3453,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(ACE_ROOT)/ace/ATM_Addr.h \
- $(ACE_ROOT)/ace/ATM_Addr.i \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
@@ -3554,12 +3591,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -3567,6 +3601,8 @@ AVSVC_COMPONENTS:
  CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3583,12 +3619,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -3717,6 +3757,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -3861,12 +3902,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -3883,7 +3921,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/ATM_Addr.h \
  $(ACE_ROOT)/ace/ATM_Addr.i \
@@ -3946,6 +3983,8 @@ AVSVC_COMPONENTS:
  CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3962,12 +4001,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -4101,6 +4144,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -4244,12 +4288,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -4258,6 +4299,8 @@ AVSVC_COMPONENTS:
  AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
  AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4274,12 +4317,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -4440,7 +4487,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  AV/Transport.i AV/FlowSpec_Entry.i AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/ATM_Addr.h \
  $(ACE_ROOT)/ace/ATM_Addr.i \
@@ -4480,6 +4526,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -4623,12 +4670,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -4637,6 +4681,8 @@ AVSVC_COMPONENTS:
  AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
  AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4653,12 +4699,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -4819,7 +4869,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  AV/Transport.i AV/FlowSpec_Entry.i AV/UDP.i AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/ATM_Addr.h \
  $(ACE_ROOT)/ace/ATM_Addr.i \
@@ -4861,6 +4910,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -5000,12 +5050,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -5014,6 +5061,8 @@ AVSVC_COMPONENTS:
  AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
  AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5030,12 +5079,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -5203,6 +5256,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -5342,12 +5396,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -5356,6 +5407,8 @@ AVSVC_COMPONENTS:
  AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
  AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5372,12 +5425,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -5544,6 +5601,7 @@ AVSVC_COMPONENTS:
  AV/AV_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -5684,17 +5742,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5711,12 +5768,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -5881,7 +5942,6 @@ AVSVC_COMPONENTS:
  AV/Transport.i AV/FlowSpec_Entry.i AV/Protocol_Factory.h AV/Policy.h \
  AV/Policy.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  AV/MCast.i AV/Nil.h AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/ATM_Addr.h \
@@ -5922,6 +5982,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -6062,12 +6123,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -6084,7 +6142,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/ATM_Addr.h \
  $(ACE_ROOT)/ace/ATM_Addr.i \
@@ -6151,6 +6208,8 @@ AVSVC_COMPONENTS:
  CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6167,12 +6226,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -6304,6 +6367,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -6321,6 +6385,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -6461,12 +6526,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -6483,7 +6545,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/ATM_Addr.h \
  $(ACE_ROOT)/ace/ATM_Addr.i \
@@ -6550,6 +6611,8 @@ AVSVC_COMPONENTS:
  CosPropertyServiceS.h \
  CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6566,12 +6629,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -6708,6 +6775,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -6847,12 +6915,9 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
@@ -6861,6 +6926,8 @@ AVSVC_COMPONENTS:
  AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
  AVStreamsC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6877,12 +6944,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -7043,7 +7114,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  AV/Transport.i AV/FlowSpec_Entry.i AV/MCast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  AV/MCast.i AV/RTCP.h AV/source.h AV/source.i AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/ATM_Addr.h \
@@ -7086,6 +7156,7 @@ AVSVC_COMPONENTS:
  AV/AV_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -7226,15 +7297,14 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -7251,12 +7321,16 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -7425,7 +7499,6 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  AV/Transport.i AV/FlowSpec_Entry.i AV/Protocol_Factory.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  AV/MCast.i AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/ATM_Addr.h \

@@ -1,11 +1,68 @@
+Wed Apr 26 14:06:28 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+          Include support for nil peers to the ProxyPushConsumer and
+          ProxyPullSupplier objects.  In other words, the application can
+          push events without having to implement the ProxyPushSupplier
+          interface or it can pull events without having to implement the
+          ProxyPullConsumer interface.  The disadvantage is that the
+          application will not receive any notifications if the event
+          channel terminates.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          The ProxyPushSuppliers and the ProxyPullConsumers should not
+          receive a nil object references as their peer.  If they do they
+          raise the CORBA::BAD_PARAM exception
+
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Random.h:
+        * orbsvcs/tests/CosEvent/Basic/Random.cpp:
+          A CosEvent version of the randomized test for the event
+          channel. Several threads perform random operations
+          concurrently. The operations include connecting suppliers and
+          consumers, disconnecting consumers or suppliers and pushing new
+          events.
+
+        * orbsvcs/tests/Event/Basic/Random.cpp:
+          To control the rate of the generated events we sleep before
+          sending each event.  This is better than sleeping after each
+          event is sent, because the latter approach does not work if an
+          exception is raised while pushing the event.
+
+        * tao/Makefile:
+        * orbsvcs/orbsvcs/Makefile.CosConcurrency:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.CosProperty:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Makefile.RTSched:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/orbsvcs/Makefile.av:
+          Update dependencies
+
 Wed Apr 26 15:34:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Interceptor.pidl: Renamed "corba.pidl" to "CORBA.pidl".
+        * tao/Interceptor.pidl: Renamed "corba.pidl" to "CORBA.pidl".
 
-	* tao/diffs/InterceptorC.h.diff:
-	* tao/Makefile (interceptor.target): Added an example on how to
-	  auto generate code for pidl files with only local interfaces in
-	  them.
+        * tao/diffs/InterceptorC.h.diff:
+        * tao/Makefile (interceptor.target): Added an example on how to
+          auto generate code for pidl files with only local interfaces in
+          them.
 
 Wed Apr 26 12:36:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 

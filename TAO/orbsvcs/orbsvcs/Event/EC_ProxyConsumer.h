@@ -172,6 +172,10 @@ private:
   RtecEventComm::PushSupplier_var supplier_;
   // The supplier....
 
+  int connected_;
+  // If the flag is not zero then we are connected, notice that the
+  // supplier can be nil.
+
   RtecEventChannelAdmin::SupplierQOS qos_;
   // The publication and QoS information...
 
@@ -207,7 +211,7 @@ public:
 
   int locked (void) const;
   // Returns 1 if the reference count successfully acquired
-  
+
   TAO_EC_Supplier_Filter *filter;
 
 private:

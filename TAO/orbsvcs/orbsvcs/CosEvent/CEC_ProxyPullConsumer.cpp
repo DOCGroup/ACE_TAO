@@ -267,6 +267,10 @@ TAO_CEC_ProxyPullConsumer::connect_pull_supplier (
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected))
 {
+  // Nil PullSuppliers are illegal
+  if (CORBA::is_nil (pull_supplier))
+    ACE_THROW (CORBA::BAD_PARAM ());
+
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,

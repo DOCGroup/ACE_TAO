@@ -137,6 +137,10 @@ private:
   CosEventComm::PullConsumer_var consumer_;
   // The consumer....
 
+  int connected_;
+  // If the flag is not zero then we are connected, notice that the
+  // consumer can be nil.
+
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
