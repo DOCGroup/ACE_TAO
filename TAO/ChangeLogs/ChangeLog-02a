@@ -1,3 +1,25 @@
+Wed Nov  1 08:14:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicInterface/Context.cpp:
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* tao/DynamicInterface/DII_Invocation.h:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+	* tao/DynamicInterface/Dynamic_Implementation.cpp:
+	* tao/DynamicInterface/Dynamic_Implementation.h:
+	* tao/DynamicInterface/ExceptionList.cpp:
+	* tao/DynamicInterface/ExceptionList.h:
+	* tao/DynamicInterface/Request.cpp:
+	* tao/DynamicInterface/Request.h:
+	* tao/DynamicInterface/Server_Request.cpp:
+	* tao/DynamicInterface/Server_Request.h:
+
+	  Replaced or added TAO_HAS_MINIMUM_CORBA guards around
+	  these files.
+
 Wed Nov  1 07:33:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/implrepo.dsp:
