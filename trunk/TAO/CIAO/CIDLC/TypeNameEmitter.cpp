@@ -23,135 +23,121 @@ ReturnTypeNameEmitter::ReturnTypeNameEmitter (ostream& os_)
 }
 
 void
-ReturnTypeNameEmitter::traverse (VoidDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Void&)
 {
   os << "void";
 }
 
 void
-ReturnTypeNameEmitter::traverse (BooleanDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Boolean&)
 {
   os << "::CORBA::Boolean";
 }
 
 void
-ReturnTypeNameEmitter::traverse (OctetDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Octet&)
 {
   os << "::CORBA::Octet";
 }
 
 void
-ReturnTypeNameEmitter::traverse (CharDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Char&)
 {
   os << "::CORBA::Char";
 }
 
 void
-ReturnTypeNameEmitter::traverse (WcharDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Wchar&)
 {
   os << "::CORBA::WChar";
 }
 
 void
-ReturnTypeNameEmitter::traverse (ShortDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Short&)
 {
   os << "::CORBA::Short";
 }
 
 void
-ReturnTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
+ReturnTypeNameEmitter::traverse (UnsignedShort&)
 {
   os << "::CORBA::UShort";
 }
 
 void
-ReturnTypeNameEmitter::traverse (LongDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Long&)
 {
   os << "::CORBA::Long";
 }
 
 void
-ReturnTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
+ReturnTypeNameEmitter::traverse (UnsignedLong&)
 {
   os << "::CORBA::ULong";
 }
 
 void
-ReturnTypeNameEmitter::traverse (LongLongDeclPtr const&)
+ReturnTypeNameEmitter::traverse (LongLong&)
 {
   os << "::CORBA::LongLong";
 }
 
 void
-ReturnTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
+ReturnTypeNameEmitter::traverse (UnsignedLongLong&)
 {
   os << "::CORBA::ULongLong";
 }
 
 void
-ReturnTypeNameEmitter::traverse (FloatDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Float&)
 {
   os << "::CORBA::Float";
 }
 
 void
-ReturnTypeNameEmitter::traverse (DoubleDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Double&)
 {
   os << "::CORBA::Double";
 }
 
 void
-ReturnTypeNameEmitter::traverse (StringDeclPtr const&)
+ReturnTypeNameEmitter::traverse (String&)
 {
   os << "char *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                 StringDeclPtr const&)
-{
-  os << "char *";
-}
-
-void
-ReturnTypeNameEmitter::traverse (WstringDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Wstring&)
 {
   os << "::CORBA::WChar *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                 WstringDeclPtr const&)
-{
-  os << "::CORBA::WChar *";
-}
-
-void
-ReturnTypeNameEmitter::traverse (ObjectDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Object&)
 {
   os << "::CORBA::Object_ptr";
 }
 
 void
-ReturnTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
+ReturnTypeNameEmitter::traverse (ValueBase&)
 {
   os << "::CORBA::ValueBase *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (AnyDeclPtr const&)
+ReturnTypeNameEmitter::traverse (Any&)
 {
   os << "::CORBA::Any *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (StructDeclPtr const& s)
+ReturnTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
   // This should always be in the context, since the SizeTypeCalculator
   // is executed before the servant code generators.
-  bool var_size = s->context ().get<bool> (STRS[VAR_SIZE]);
+  bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
   
-  os << s->name ();
+  os << s.scoped_name ();
   
   if (var_size)
   {
@@ -160,15 +146,33 @@ ReturnTypeNameEmitter::traverse (StructDeclPtr const& s)
 }
 
 void
-ReturnTypeNameEmitter::traverse (SequenceDeclPtr const& s)
+ReturnTypeNameEmitter::traverse (SemanticGraph::UnboundedSequence& s)
 {
-  os << s->name () << " *";
+  os << s.scoped_name () << " *";
 }
 
 void
-ReturnTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
+ReturnTypeNameEmitter::traverse (SemanticGraph::Interface& i)
 {
-  os << i->name () << "_ptr";
+  os << i.scoped_name () << "_ptr";
+}
+
+void
+ReturnTypeNameEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << v.scoped_name () << " *";
+}
+
+void
+ReturnTypeNameEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << e.scoped_name () << " *";
+}
+
+void
+ReturnTypeNameEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << c.scoped_name () << "_ptr";
 }
 
 // ===============================================================
@@ -179,137 +183,147 @@ INArgTypeNameEmitter::INArgTypeNameEmitter (ostream& os_)
 }
 
 void
-INArgTypeNameEmitter::traverse (BooleanDeclPtr const&)
+INArgTypeNameEmitter::traverse (Void&)
+{
+  // No-op, but the base class method is pure virtual.
+}
+
+void
+INArgTypeNameEmitter::traverse (Boolean&)
 {
   os << "::CORBA::Boolean";
 }
 
 void
-INArgTypeNameEmitter::traverse (OctetDeclPtr const&)
+INArgTypeNameEmitter::traverse (Octet&)
 {
   os << "::CORBA::Octet";
 }
 
 void
-INArgTypeNameEmitter::traverse (CharDeclPtr const&)
+INArgTypeNameEmitter::traverse (Char&)
 {
   os << "::CORBA::Char";
 }
 
 void
-INArgTypeNameEmitter::traverse (WcharDeclPtr const&)
+INArgTypeNameEmitter::traverse (Wchar&)
 {
   os << "::CORBA::WChar";
 }
 
 void
-INArgTypeNameEmitter::traverse (ShortDeclPtr const&)
+INArgTypeNameEmitter::traverse (Short&)
 {
   os << "::CORBA::Short";
 }
 
 void
-INArgTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
+INArgTypeNameEmitter::traverse (UnsignedShort&)
 {
   os << "::CORBA::UShort";
 }
 
 void
-INArgTypeNameEmitter::traverse (LongDeclPtr const&)
+INArgTypeNameEmitter::traverse (Long&)
 {
   os << "::CORBA::Long";
 }
 
 void
-INArgTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
+INArgTypeNameEmitter::traverse (UnsignedLong&)
 {
   os << "::CORBA::ULong";
 }
 
 void
-INArgTypeNameEmitter::traverse (LongLongDeclPtr const&)
+INArgTypeNameEmitter::traverse (LongLong&)
 {
   os << "::CORBA::LongLong";
 }
 
 void
-INArgTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
+INArgTypeNameEmitter::traverse (UnsignedLongLong&)
 {
   os << "::CORBA::ULongLong";
 }
 
 void
-INArgTypeNameEmitter::traverse (FloatDeclPtr const&)
+INArgTypeNameEmitter::traverse (Float&)
 {
   os << "::CORBA::Float";
 }
 
 void
-INArgTypeNameEmitter::traverse (DoubleDeclPtr const&)
+INArgTypeNameEmitter::traverse (Double&)
 {
   os << "::CORBA::Double";
 }
 
 void
-INArgTypeNameEmitter::traverse (StringDeclPtr const&)
+INArgTypeNameEmitter::traverse (String&)
 {
   os << "const char *";
 }
 
 void
-INArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                StringDeclPtr const&)
-{
-  os << "const char *";
-}
-
-void
-INArgTypeNameEmitter::traverse (WstringDeclPtr const&)
+INArgTypeNameEmitter::traverse (Wstring&)
 {
   os << "const ::CORBA::WChar *";
 }
 
 void
-INArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                WstringDeclPtr const&)
-{
-  os << "const ::CORBA::WChar *";
-}
-
-void
-INArgTypeNameEmitter::traverse (ObjectDeclPtr const&)
+INArgTypeNameEmitter::traverse (Object&)
 {
   os << "::CORBA::Object_ptr";
 }
 
 void
-INArgTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
+INArgTypeNameEmitter::traverse (ValueBase&)
 {
   os << "::CORBA::ValueBase *";
 }
 
 void
-INArgTypeNameEmitter::traverse (AnyDeclPtr const&)
+INArgTypeNameEmitter::traverse (Any&)
 {
   os << "const ::CORBA::Any &";
 }
 
 void
-INArgTypeNameEmitter::traverse (StructDeclPtr const& s)
+INArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
-  os << "const " << s->name () << " &";;
+  os << "const " << s.scoped_name () << " &";;
 }
 
 void
-INArgTypeNameEmitter::traverse (SequenceDeclPtr const& s)
+INArgTypeNameEmitter::traverse (SemanticGraph::UnboundedSequence& s)
 {
-  os << "const " << s->name () << " &";;
+  os << "const " << s.scoped_name () << " &";;
 }
 
 void
-INArgTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
+INArgTypeNameEmitter::traverse (SemanticGraph::Interface& i)
 {
-  os << i->name () << "_ptr";
+  os << i.scoped_name () << "_ptr";
+}
+
+void
+INArgTypeNameEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << v.scoped_name () << " *";
+}
+
+void
+INArgTypeNameEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << e.scoped_name () << " *";
+}
+
+void
+INArgTypeNameEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << c.scoped_name () << "_ptr";
 }
 
 // ===============================================================
@@ -320,137 +334,147 @@ INOUTArgTypeNameEmitter::INOUTArgTypeNameEmitter (ostream& os_)
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (BooleanDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Void&)
+{
+  // No-op, but the base class method is pure virtual.
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (Boolean&)
 {
   os << "::CORBA::Boolean &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (OctetDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Octet&)
 {
   os << "::CORBA::Octet &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (CharDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Char&)
 {
   os << "::CORBA::Char &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (WcharDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Wchar&)
 {
   os << "::CORBA::WChar &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (ShortDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Short&)
 {
   os << "::CORBA::Short &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (UnsignedShort&)
 {
   os << "::CORBA::UShort &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (LongDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Long&)
 {
   os << "::CORBA::Long &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (UnsignedLong&)
 {
   os << "::CORBA::ULong &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (LongLongDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (LongLong&)
 {
   os << "::CORBA::LongLong &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (UnsignedLongLong&)
 {
   os << "::CORBA::ULongLong &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (FloatDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Float&)
 {
   os << "::CORBA::Float &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (DoubleDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Double&)
 {
   os << "::CORBA::Double &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (StringDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (String&)
 {
   os << "char *&";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                   StringDeclPtr const&)
-{
-  os << "char *&";
-}
-
-void
-INOUTArgTypeNameEmitter::traverse (WstringDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Wstring&)
 {
   os << "::CORBA::WChar *&";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                   WstringDeclPtr const&)
-{
-  os << "::CORBA::WChar *&";
-}
-
-void
-INOUTArgTypeNameEmitter::traverse (ObjectDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Object&)
 {
   os << "::CORBA::Object_ptr &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (ValueBase&)
 {
   os << "::CORBA::ValueBase *&";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (AnyDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (Any&)
 {
   os << "::CORBA::Any &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (StructDeclPtr const& s)
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
-  os << s->name () << " &";
+  os << s.scoped_name () << " &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (SequenceDeclPtr const& s)
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::UnboundedSequence& s)
 {
-  os << s->name () << " &";
+  os << s.scoped_name () << " &";
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::Interface& i)
 {
-  os << i->name () << "_ptr &";
+  os << i.scoped_name () << "_ptr &";
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << v.scoped_name () << " *&";
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << e.scoped_name () << " *&";
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << c.scoped_name () << "_ptr &";
 }
 
 // =================================================================
@@ -461,136 +485,147 @@ OUTArgTypeNameEmitter::OUTArgTypeNameEmitter (ostream& os_)
 }
 
 void
-OUTArgTypeNameEmitter::traverse (BooleanDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Void&)
+{
+  // No-op, but the base class method is pure virtual.
+}
+
+void
+OUTArgTypeNameEmitter::traverse (Boolean&)
 {
   os << "::CORBA::Boolean_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (OctetDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Octet&)
 {
   os << "::CORBA::Octet_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (CharDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Char&)
 {
   os << "::CORBA::Char_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (WcharDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Wchar&)
 {
   os << "::CORBA::WChar_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (ShortDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Short&)
 {
   os << "::CORBA::Short_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (UnsignedShortDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (UnsignedShort&)
 {
   os << "::CORBA::UShort_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (LongDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Long&)
 {
   os << "::CORBA::Long_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (UnsignedLongDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (UnsignedLong&)
 {
   os << "::CORBA::ULong_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (LongLongDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (LongLong&)
 {
   os << "::CORBA::LongLong_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (UnsignedLongLongDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (UnsignedLongLong&)
 {
   os << "::CORBA::ULongLong_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (FloatDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Float&)
 {
   os << "::CORBA::Float_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (DoubleDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Double&)
 {
   os << "::CORBA::Double_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (StringDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (String&)
 {
   os << "::CORBA::String_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                 StringDeclPtr const&)
-{
-  os << "::CORBA::String_out";
-}
-
-void
-OUTArgTypeNameEmitter::traverse (WstringDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Wstring&)
 {
   os << "::CORBA::WString_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
-                                 WstringDeclPtr const&)
-{
-  os << "::CORBA::WString_out";
-}
-
-void
-OUTArgTypeNameEmitter::traverse (ObjectDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Object&)
 {
   os << "::CORBA::Object_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (ValueBaseDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (ValueBase&)
 {
   os << "::CORBA::ValueBase_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (AnyDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (Any&)
 {
   os << "::CORBA::Any_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (StructDeclPtr const& s)
+OUTArgTypeNameEmitter::traverse (SemanticGraph::Struct& s)
 {
-  os << s->name () << "_out";
+  os << s.scoped_name () << "_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (SequenceDeclPtr const& s)
+OUTArgTypeNameEmitter::traverse (SemanticGraph::UnboundedSequence& s)
 {
-  os << s->name () << "_out";
+  os << s.scoped_name () << "_out";
 }
 
 void
-OUTArgTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
+OUTArgTypeNameEmitter::traverse (SemanticGraph::Interface& i)
 {
-  os << i->name () << "_out";
+  os << i.scoped_name () << "_out";
 }
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << v.scoped_name () << "_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << e.scoped_name () << "_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << c.scoped_name () << "_out";
+}
+
 

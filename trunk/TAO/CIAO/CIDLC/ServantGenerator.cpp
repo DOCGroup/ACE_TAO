@@ -6,15 +6,13 @@
 #include "ServantHeaderGenerator.hpp"
 #include "ServantSourceGenerator.hpp"
 
-#include "Collectors.hpp"
-
 #include "CCF/CodeGenerationKit/Regex.hpp"
-#include "CCF/CodeGenerationKit/IndentationIDL.hpp"
+#include "CCF/CodeGenerationKit/IndentationCxx.hpp"
 #include "CCF/CodeGenerationKit/IndentationImplanter.hpp"
 
 using namespace CCF;
 using namespace CIDL;
-using namespace SyntaxTree;
+using namespace SemanticGraph;
 using namespace Traversal;
 
 namespace
@@ -54,36 +52,11 @@ options (CL::Description& d)
 }
 
 
-void ServantGenerator::generate (TranslationUnitPtr const& u)
+void ServantGenerator::generate (SemanticGraph::TranslationUnit& u,
+                                 fs::path const& file)
 {
-  Declarations declarations;
-
-
-  ProvidedInterfaceCollector provides (declarations);
-
-  ComponentCollector component (declarations);
-  component.add_scope_delegate (&provides);
-
-  HomeCollector home (declarations);
-
-  HomeExecutorCollector home_executor (declarations, &home, &component);
-
-  Traversal::Composition composition;
-  composition.add_scope_delegate (&home_executor);
-
-  Traversal::Scope scope;
-  scope.add_scope_delegate (&composition);
-  scope.add_scope_delegate (&scope);
-
-  Traversal::PrincipalTranslationRegion region (&scope);
-
-  Traversal::TranslationUnit collector;
-  collector.add_content_delegate (&region);
-
-  collector.dispatch (u);
-
   // Generate files
-  compute_export_macro (u->principal_translation_region ()->file_path ());
+  compute_export_macro (file);
 
   {
     fs::ofstream hdr_ofs;
@@ -92,13 +65,13 @@ void ServantGenerator::generate (TranslationUnitPtr const& u)
                                         "hdr-file-regex",
                                         hdr_ofs);
 
-    Indentation::Implanter<Indentation::IDL> header_guard (hdr_os);
+    Indentation::Implanter<Indentation::Cxx> header_guard (hdr_os);
 
 
     ServantHeaderEmitter hdr_emitter (hdr_os,
                                       cl_,
                                       export_macro_,
-                                      declarations);
+                                      file);
     hdr_emitter.generate (u);
   }
 
@@ -109,15 +82,14 @@ void ServantGenerator::generate (TranslationUnitPtr const& u)
                                         "src-file-regex",
                                         src_ofs);
 
-    Indentation::Implanter<Indentation::IDL> header_guard (src_os);
+    Indentation::Implanter<Indentation::Cxx> header_guard (src_os);
 
     ServantSourceEmitter src_emitter (src_os,
-                                      export_macro_,
                                       cl_,
-                                      declarations);
+                                      export_macro_,
+                                      file);
     src_emitter.generate (u);
   }
-
 }
 
 void

@@ -3,24 +3,23 @@
 // cvs-id    : $Id$
 
 #include "ServantHeaderGenerator.hpp"
-
-#include "Literals.hpp"
 #include "TypeNameEmitter.hpp"
+#include "Literals.hpp"
+
+#include <ostream>
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
-#include <cctype>
-#include <algorithm>
-#include <ostream>
+using std::endl;
+using std::string;
 
 using namespace StringLiterals;
-using namespace CCF;
-using namespace CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CIDL;
+using namespace CCF::CIDL::SemanticGraph;
 
 namespace
 {
-  // On some platforms toupper can be something else than a
+  // On some platforms toupper can be something other than a
   // function.
   int
   upcase (int c)
@@ -31,282 +30,309 @@ namespace
 
 namespace
 {
-  // Generates parts of the accessor operation for an attribute.
-  //
-  //
-  class GetAttributeEmitter : public HeaderEmitterBase,
-                              public Traversal::AttributeDecl
+  class Context
   {
   public:
-    GetAttributeEmitter (ostream& os_,
-                         ReturnTypeNameEmitter* return_type_name_emitter)
-      : HeaderEmitterBase (os_),
-        AttributeDecl (return_type_name_emitter)
+    Context (std::ostream& os,
+             string export_macro)
+        : os_ (os),
+          export_macro_ (export_macro)
     {
     }
-
-    virtual void
-    pre (AttributeDeclPtr const&)
-    {
-      os << "virtual ";
-    }
-
-    virtual void
-    post (AttributeDeclPtr const& a)
-    {
-      os << endl
-         << a->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-  };
-
-
-
-  // Generates parts of the mutator operation for an attribute.
-  //
-  //
-  class SetAttributeEmitter : public HeaderEmitterBase,
-                              public Traversal::AttributeDecl
+  
+  std::ostream& 
+  os ()
   {
-  public:
-    SetAttributeEmitter (ostream& os_,
-                         INArgTypeNameEmitter* param_type_name_emitter)
-      : HeaderEmitterBase (os_),
-        AttributeDecl (param_type_name_emitter)
-    {
-    }
-
-    virtual void
-    pre (AttributeDeclPtr const& a)
-    {
-      os << "virtual void " << endl
-         << a->name ().simple () << " (" << endl;
-    }
-
-    virtual void
-    post (AttributeDeclPtr const&)
-    {
-      os << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-  };
-
-  //
-  //
-  //
-  class OperationEmitter : public HeaderEmitterBase,
-                           public Traversal::UnconstrainedInterfaceDef,
-                           public Traversal::OperationParameter,
-                           public Traversal::Comma,
-                           public Traversal::OperationDecl
+    return os_;
+  }
+    
+  string 
+  export_macro ()
   {
-  public:
-    OperationEmitter (ostream& os_,
-                      ReturnTypeNameEmitter* return_type_name_emitter,
-                      INArgTypeNameEmitter* inarg_type_name_emitter_,
-                      OUTArgTypeNameEmitter* outarg_type_name_emitter_,
-                      INOUTArgTypeNameEmitter* inoutarg_type_name_emitter_)
-      : HeaderEmitterBase (os_),
-        OperationParameter (inarg_type_name_emitter_,
-                            outarg_type_name_emitter_,
-                            inoutarg_type_name_emitter_),
-        OperationDecl (return_type_name_emitter)
-    {
-    }
-
-    virtual void
-    pre (OperationDeclPtr const&)
-    {
-      os << "virtual ";
-    }
-
-    virtual void
-    name (OperationDeclPtr const& d)
-    {
-      os << endl << d->name ().simple () << " (";
-    }
-
-    virtual void
-    pre (OperationParameterPtr const&)
-    {
-      os << endl;
-    }
-
-    virtual void
-    post (OperationParameterPtr const& op)
-    {
-      os << " " << op->name ();
-    }
-
-    virtual void
-    traverse (CommaPtr const&)
-    {
-      os << ",";
-    }
-
-    virtual void
-    post (OperationDeclPtr const& d)
-    {
-      // @@@ (JP) Need to process exception list.
-      os << endl
-         << (d->begin () == d->end () ? STRS[ENV_SNGL_HDR] : STRS[ENV_HDR])
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-  };
-
-  // Generates the operation associated with a home factory declaration.
-  //
-  //
-  class FactoryEmitter : public HeaderEmitterBase,
-                         public Traversal::HomeFactoryDecl,
-                         public Traversal::OperationParameter,
-                         public Traversal::Comma
-  {
-  public:
-    FactoryEmitter (ostream& os_,
-                    INArgTypeNameEmitter* inarg_type_name_emitter_)
-      : HeaderEmitterBase (os_),
-        OperationParameter (inarg_type_name_emitter_,
-                            inarg_type_name_emitter_,
-                            inarg_type_name_emitter_)
-    {
-    }
-
-    virtual void
-    pre (HomeFactoryDeclPtr const&)
-    {
-      os << "virtual ";
-    }
-
-    virtual void
-    type (HomeFactoryDeclPtr const& f)
-    {
-      HomeDefPtr def (f->scope ()->dynamic_type<SyntaxTree::HomeDef> ());
-      os << def->manages ()->name () << "_ptr";
-    }
-
-    virtual void
-    name (HomeFactoryDeclPtr const& f)
-    {
-      os << endl
-         << f->name ().simple () << " (";
-    }
-
-    virtual void
-    pre (OperationParameterPtr const&)
-    {
-      os << endl;
-    }
-
-    virtual void
-    post (OperationParameterPtr const& op)
-    {
-      os << " " << op->name ();
-    }
-
-    virtual void
-    traverse (CommaPtr const&)
-    {
-      os << ",";
-    }
-
-    virtual void
-    post (HomeFactoryDeclPtr const& f)
-    {
-      // @@@ (JP) Need to process exception list.
-      os << (f->begin () == f->end () ? STRS[ENV_SNGL_HDR] : STRS[ENV_HDR])
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-  };
-
-
-  //
-  // Select only the facets that are present in a provides declaration.
-  //
-  class FacetSelector : public HeaderEmitterBase,
-                        public Traversal::UnconstrainedInterfaceDef
-  {
+    return export_macro_;
+  }
+    
   private:
-    Declarations const& declarations_;
-
-  public:
-    FacetSelector (ostream& os_, Declarations const& declarations)
-      : HeaderEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    void
-    traverse (UnconstrainedInterfaceDefPtr const& i)
-    {
-      if (declarations_.find (i))
-      {
-        Traversal::UnconstrainedInterfaceDef::traverse (i);
-      }
-    }
+    std::ostream& os_;
+    string export_macro_; 
   };
 
-
-  //
-  // FacetEmitter generates a facet servant class declaration.
-  //
-  class FacetEmitter : public HeaderEmitterBase,
-                       public Traversal::UnconstrainedInterfaceDef,
-                       public Traversal::AttributeDecl //@@ Will disappear
+  class EmitterBase
   {
-  private:
-    string export_macro_;
-
   public:
-    FacetEmitter (ostream& os_,
-                  string export_macro)
-      : HeaderEmitterBase (os_),
-        export_macro_ (export_macro)
+    EmitterBase (Context& c)
+      : ctx (c), 
+        os (ctx.os ())
     {
+    }
+
+  protected:
+    Context& ctx;
+    std::ostream& os;
+  };
+  
+  struct OperationEmitter : Traversal::Operation, EmitterBase
+  {
+    OperationEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+    
+    virtual void
+    pre (Type&)
+    {
+      os << "virtual ";
     }
 
     virtual void
-    pre (UnconstrainedInterfaceDefPtr const& i)
+    name (Type& o)
     {
-      // If we are at file scope, we create a namespace anyway.
-      if (i->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << STRS[GLUE_NS] << endl
-           << "{";
-      }
+      os << endl << o.name ();
+    }
 
-      // @@@ (JP) Need export macro and prefixable scoped name.
-      os << "class " << export_macro_ << " " << i->name ().simple ()
-         << "_Servant" << endl
-         << ": public virtual POA_" << i->name ().in_file_scope ()
-         << "," << endl
+    virtual void
+    receives_pre (Type&)
+    {
+      os << " (" << endl;
+    }
+
+    virtual void
+    receives_none (Type&)
+    {
+      os << " (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl;
+    }
+
+    virtual void
+    receives_post (Type&)
+    {
+      os << endl << STRS[ENV_HDR] << ")" << endl;
+    }
+
+    virtual void
+    raises_pre (Type&)
+    {
+      os << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl;
+    }
+
+    virtual void
+    raises_none (Type&)
+    {
+      os << STRS[EXCP_SNGL];
+    }
+
+    virtual void
+    raises_post (Type&)
+    {
+      os << "))";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";" << endl << endl;
+    }
+
+    virtual void
+    comma (Type&)
+    {
+      os << "," << endl;
+    }
+  };
+
+  // For generating parameter names.
+  template <typename T>
+  struct ParameterEmitter : T
+  {
+    ParameterEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+      
+    virtual void
+    name (typename T::Type& p)
+    {
+      os << " " << p.name ();
+    }
+      
+  private:
+    std::ostream& os;
+  };
+
+  // Generic scoped typename emitter used by various other emitters.
+  struct TypeNameEmitter : Traversal::Type
+  {
+    TypeNameEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << t.scoped_name ();
+    }
+    
+  private:
+    std::ostream& os;
+  };
+
+  // Generic local typename emitter used by various other emitters.
+  struct SimpleTypeNameEmitter : Traversal::Type
+  {
+    SimpleTypeNameEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << t.name ();
+    }
+    
+  private:
+    std::ostream& os;
+  };
+
+  // Generate name of type's enclosing scope.
+  struct EnclosingTypeNameEmitter : Traversal::Type
+  {
+    EnclosingTypeNameEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << t.scoped_name ().scope_name ();
+    }
+    
+  private:
+    std::ostream& os;
+  };
+
+  // Emits typename minus the leading double colon.
+  struct StrippedTypeNameEmitter : Traversal::Type
+  {
+    StrippedTypeNameEmitter (std::ostream& os_)
+      : os (os_)
+    {}
+    
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      ScopedName scoped (t.scoped_name ());
+      Name stripped (scoped.begin () + 1, scoped.end ());
+      os << stripped;
+    }
+    
+  private:
+    std::ostream& os;
+  };
+
+  struct FacetEmitter : Traversal::ProviderData,
+                        EmitterBase
+  {
+    FacetEmitter (Context& c)
+      : EmitterBase (c),
+        simple_type_name_emitter_ (c.os ()),
+        stripped_type_name_emitter_ (c.os ()),
+        enclosing_type_name_emitter_ (c.os ())
+    {
+      simple_belongs_.node_traverser (simple_type_name_emitter_);
+      stripped_belongs_.node_traverser (stripped_type_name_emitter_);
+      enclosing_belongs_.node_traverser (enclosing_type_name_emitter_);
+    }
+
+    virtual void
+    traverse (SemanticGraph::Provider& p)
+    {
+      // Open a namespace.
+      os << STRS[GLUE_NS] 
+         << regex::perl_s (p.scoped_name ().scope_name ().scope_name ().str (),
+                           "/::/_/")
+         << "{";
+          
+      os << "class " << ctx.export_macro () << " ";
+      
+      Traversal::ProviderData::belongs (p, simple_belongs_);
+          
+      os << "_Servant" << endl
+         << ": public virtual POA_";
+         
+      Traversal::ProviderData::belongs (p, stripped_belongs_);
+         
+      os << "," << endl
          << STRS[INH_RCSB]
          << endl
          << "{"
          << "public:" << endl;
 
-      os << i->name ().simple () << "_Servant (" << endl
-         << i->name ().scope () << "::CCM_" << i->name ().simple ()
-         << "_ptr executor," << endl
-         << "::Components::CCMContext_ptr ctx);" << endl << endl;
+      Traversal::ProviderData::belongs (p, simple_belongs_);
+          
+      os << "_Servant (" << endl;
+      
+      Traversal::ProviderData::belongs (p, enclosing_belongs_);
+          
+      os << "::CCM_";
+         
+      Traversal::ProviderData::belongs (p, simple_belongs_);
+          
+      os << "_ptr executor," << endl
+         << "::Components::CCMContext_ptr ctx);" << endl;
 
-      os << "virtual ~" << i->name ().simple () << "_Servant (void);"
-         << endl << endl;
-    }
+      os << "virtual ~";
+      
+      Traversal::ProviderData::belongs (p, simple_belongs_);
+          
+      os << "_Servant (void);" << endl;
+      
+      {
+        Traversal::Belongs belongs_;
+        Traversal::Interface interface_emitter;
+        belongs_.node_traverser (interface_emitter);
+        
+        Traversal::Defines defines;
+        Traversal::Inherits inherits;
+        interface_emitter.edge_traverser (defines);
+        interface_emitter.edge_traverser (inherits);
+        
+        OperationEmitter operation_emitter (ctx);
+        defines.node_traverser (operation_emitter);  
+        inherits.node_traverser (interface_emitter);
 
-    virtual void
-    traverse (AttributeDeclPtr const&)
-    {
-      // TODO
-    }
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        operation_emitter.edge_traverser (receives);
+        operation_emitter.edge_traverser (returns);
+        operation_emitter.edge_traverser (raises);
+        
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+       
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+        
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+        
+        INArgTypeNameEmitter in_arg_emitter (os);        
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);        
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
 
-    virtual void
-    post (UnconstrainedInterfaceDefPtr const& i)
-    {
+        belongs (p, belongs_);
+      }
+
       os << "// Get component implementation." << endl
          << "virtual CORBA::Object_ptr" << endl
          << "_get_component (" << endl
@@ -314,959 +340,1325 @@ namespace
          << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "protected:" << endl
-         << "// Facet executor." << endl
-         << i->name ().scope () << "::CCM_" << i->name ().simple ()
-         << "_var executor_;" << endl;
+         << "// Facet executor." << endl;
+         
+      Traversal::ProviderData::belongs (p, enclosing_belongs_);
+          
+      os << "::CCM_";
+         
+      Traversal::ProviderData::belongs (p, simple_belongs_);
+          
+      os << "_var executor_;" << endl;
 
-      os  << "// Context object." << endl
-          << "::Components::CCMContext_var ctx_;" << endl
-          << "};" << endl << endl;
+      os << "// Context object." << endl
+         << "::Components::CCMContext_var ctx_;" << endl
+         << "};" << endl << endl;
 
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (i->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "}" << endl;
-      }
-
-      os << endl;
-    }
-  };
-
-  //
-  // Generates public part of component context interface declaration.
-  //
-  class ContextPublicEmitter : public HeaderEmitterBase,
-                               public Traversal::ComponentDef,
-                               public Traversal::UsesDecl,
-                               public Traversal::PublishesDecl,
-                               public Traversal::EmitsDecl
-  {
-  private:
-    string export_macro_;
-    Declarations const& declarations_;
-
-  public:
-    ContextPublicEmitter (ostream& os_,
-                          string export_macro,
-                          Declarations const& declarations)
-      : HeaderEmitterBase (os_),
-        export_macro_ (export_macro),
-        declarations_ (declarations)
-    {
+      // Close the CIAO_GLUE namespace.
+      os << "}" << endl;
     }
     
-    virtual void
-    traverse (ComponentDefPtr const& c)
+  private:
+    SimpleTypeNameEmitter simple_type_name_emitter_;
+    StrippedTypeNameEmitter stripped_type_name_emitter_;
+    EnclosingTypeNameEmitter enclosing_type_name_emitter_;
+    Traversal::Belongs simple_belongs_;
+    Traversal::Belongs stripped_belongs_;
+    Traversal::Belongs enclosing_belongs_;
+  };
+
+  // Generates operations associated with attributes.
+  // @@@ (JP) Need to support exceptions.
+  struct AttributeEmitter : Traversal::ReadWriteAttribute,
+                            EmitterBase
+  {
+    AttributeEmitter (Context& c)
+      : EmitterBase (c),
+        write_type_name_emitter_ (c.os ()),
+        read_type_name_emitter_ (c.os ())
     {
-      if (declarations_.find (c))
-      {
-        Traversal::ComponentDef::traverse (c);
-      }
+      write_belongs_.node_traverser (write_type_name_emitter_);
+      read_belongs_.node_traverser (read_type_name_emitter_);
     }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
+    
+    virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
     {
-      // If we are at file scope, we create a namespace anyway.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << STRS[GLUE_NS] << endl
-           << "{";
-      }
+      os << "virtual ";
+      
+      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
+      
+      os << endl
+         << a.name () << " (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
-      os << "class " << export_macro_ << " " << c->name ().simple ()
-         << "_Context" << endl
-         << ": public virtual " << c->name ().scope () << "::CCM_"
-         << c->name ().simple () << "_Context,"
-         << endl
-         << "public virtual TAO_Local_RefCounted_Object"
-         << endl
-         << "{"
-         << "public:" << endl;
+      os << "virtual void" << endl
+         << a.name () << " (" << endl;
+      
+      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
+      
+      os << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+    }
+    
+  private:
+    INArgTypeNameEmitter write_type_name_emitter_;
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs write_belongs_;
+    Traversal::Belongs read_belongs_;
+  };
+  
+  // Generates operations associated with readonly attributes.
+  // @@@ (JP) Need to support exceptions.
+  struct ReadOnlyAttributeEmitter : Traversal::ReadAttribute,
+                                    EmitterBase
+  {
+    ReadOnlyAttributeEmitter (Context& c)
+      : EmitterBase (c),
+        read_type_name_emitter_ (c.os ())
+    {
+      read_belongs_.node_traverser (read_type_name_emitter_);
+    }
+    
+    virtual void traverse (SemanticGraph::ReadAttribute& a)
+    {
+      os << "virtual ";
+      
+      Traversal::ReadAttribute::belongs (a, read_belongs_);
+      
+      os << endl
+         << a.name () << " (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+    }
+    
+  private:
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs read_belongs_;
+  };
+  
+  struct ContextEmitter : Traversal::Component, EmitterBase
+  {
+    ContextEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+
+  // Nested classes used by this emitter.
+  private:
+    struct PortsEmitterPublic : Traversal::EmitterData,
+                                Traversal::UserData,
+                                Traversal::PublisherData,
+                                EmitterBase
+    {
+      PortsEmitterPublic (Context& c)
+        : EmitterBase (c), 
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Emitter& e)
+      {
+        os << "virtual void" << endl
+          << "push_" << e.name ()
+          << " (" << endl;
+          
+        Traversal::EmitterData::belongs (e, belongs_);
+          
+        os << "ev" << endl
+            << STRS[ENV_HDR] << ")" << endl
+            << STRS[EXCP_SNGL] << ";" << endl;  
+      }
+      
+      virtual void
+      traverse (SemanticGraph::User& u)
+      {
+        // @@@ (JP) Need to handle multiple connections.
+        os << "virtual ";
+          
+        Traversal::UserData::belongs (u, belongs_);
+        
+        os << endl
+            << "get_connection_" << u.name ()
+            << " (" << endl
+            << STRS[ENV_SNGL_HDR] << ")" << endl
+            << STRS[EXCP_SNGL] << ";" << endl;
+      }
+            
+      virtual void
+      traverse (SemanticGraph::Publisher& p)
+      {
+        os << "virtual void" << endl
+          << "push_" << p.name ()
+          << " (" << endl;
+          
+        Traversal::PublisherData::belongs (p, belongs_);
+          
+        os << "ev" << endl
+            << STRS[ENV_HDR] << ")" << endl
+            << STRS[EXCP_SNGL] << ";" << endl;
+      }
+      
+    private:
+      INArgTypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+          
+    struct PortsEmitterProtected : Traversal::EmitterData,
+                                   Traversal::UserData,
+                                   Traversal::PublisherData,
+                                   EmitterBase
+    {
+      PortsEmitterProtected (Context& c)
+        : EmitterBase (c), 
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Emitter& e)
+      {
+        os << "virtual void" << endl
+          << "connect_" << e.name () << " (" << endl;
+          
+        Traversal::EmitterData::belongs (e, belongs_);
+          
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "));" << endl << endl;
+
+        os << "virtual ";
+          
+        Traversal::EmitterData::belongs (e, belongs_);
+        
+        os << "Consumer_ptr" << endl
+           << "disconnect_" << e.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "));" << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::User& u)
+      {
+        // @@@ (JP) Need to handle multiple connections.
+        os << "virtual void" << endl
+           << "connect_" << u.name () << " (" << endl;
+
+        Traversal::UserData::belongs (u, belongs_);
+          
+        os << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
+
+        os << "virtual ";
+
+        Traversal::UserData::belongs (u, belongs_);
+        
+        os << endl
+           << "disconnect_" << u.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "));" << endl << endl;
+      }
+            
+      virtual void
+      traverse (SemanticGraph::Publisher& p)
+      {
+        os << "virtual " << STRS[COMP_CK] << " *" << endl
+           << "subscribe_" << p.name () << " (" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+
+        os  << "Consumer_ptr c" << endl
+            << STRS[ENV_HDR] << ")" << endl
+            << STRS[EXCP_START] << endl
+            << STRS[EXCP_SYS] << "," << endl
+            << STRS[EXCP_ECL] << "));" << endl << endl;
+
+        os << "virtual ";
+
+        Traversal::PublisherData::belongs (p, belongs_);
+        
+        os << "Consumer_ptr" << endl
+           << "unsubscribe_" << p.name () << " (" << endl
+           << STRS[COMP_CK] << " *ck" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+    
+    struct PortsEmitterMembers : Traversal::EmitterData,
+                                 Traversal::UserData,
+                                 Traversal::PublisherData,
+                                 EmitterBase
+    {
+      PortsEmitterMembers (Context& c)
+        : EmitterBase (c), 
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Emitter& e)
+      {
+        Traversal::EmitterData::belongs (e, belongs_);
+
+        os << "Consumer_var" << endl
+           << "ciao_emits_" << e.name () << "_consumer_;"
+           << endl << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::User& u)
+      {
+        // @@@ (JP) Need to handle multiple connections.
+        os << "// Simplex " << u.name () << " connection." << endl;
+        
+        Traversal::UserData::belongs (u, belongs_);
+            
+        os << "_var" << endl
+           << "ciao_uses_" << u.name () << "_;" << endl << endl;
+     }
+            
+      virtual void
+      traverse (SemanticGraph::Publisher& p)
+      {
+        os << "ACE_Active_Map_Manager<" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+        
+        os << "Consumer_var>" << endl
+           << "ciao_publishes_" << p.name () << "_map_;"
+           << endl << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+    
+  public:
+    virtual void
+    pre (Type& t)
+    {
+      // CIAO has facet classes outside the context and servant classes.
+      // We launch it here to generate the classes at the top of the file,
+      // like the original hand-crafted examples, for easier checking.
+      // This can be moved later to ServantEmitter::pre() or out on its own.
+      {
+        Traversal::Defines defines;
+        FacetEmitter facet_emitter (ctx);
+        defines.node_traverser (facet_emitter);
+        
+        names (t, defines);
+      }
+      
+      os << STRS[GLUE_NS] 
+          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+          << "{";
+          
+      os << "class " << ctx.export_macro () << " " << t.name ()
+          << "_Context" << endl
+          << ": public virtual " << t.scoped_name ().scope_name () << "::CCM_"
+          << t.name () << "_Context,"
+          << endl
+          << "public virtual TAO_Local_RefCounted_Object"
+          << endl
+          << "{"
+          << "public:" << endl;
 
       os << "// We will allow the servant glue code we generate to "
-         << "access our state." << endl
-         << "friend class " << c->name ().simple () << "_Servant;"
-         << endl;
+          << "access our state." << endl
+          << "friend class " << t.name () << "_Servant;"
+          << endl;
 
-      os << c->name ().simple () << "_Context (" << endl
-         << "::Components::CCMHome_ptr home," << endl
-         << "::CIAO::Session_Container *c," << endl
-         << c->name ().simple () << "_Servant *sv);" << endl;
+      os << t.name () << "_Context (" << endl
+          << "::Components::CCMHome_ptr home," << endl
+          << "::CIAO::Session_Container *c," << endl
+          << t.name () << "_Servant *sv);" << endl;
 
-      os << "virtual ~" << c->name ().simple () << "_Context (void);"
-         << endl;
+      os << "virtual ~" << t.name () << "_Context (void);"
+          << endl;
 
       os << "// Operations from ::Components::CCMContext." << endl << endl;
 
       os << "virtual ::Components::Principal_ptr" << endl
-         << "get_caller_principal (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+          << "get_caller_principal (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual ::Components::CCMHome_ptr" << endl
-         << "get_CCM_home (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl ;
+          << "get_CCM_home (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl ;
 
       os << "virtual CORBA::Boolean" << endl
-         << "get_rollback_only (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl;
+          << "get_rollback_only (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IS] << "));" << endl;
 
       os << "virtual ::Components::Transaction::UserTransaction_ptr" << endl
-         << "get_user_transaction (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl;
+          << "get_user_transaction (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IS] << "));" << endl;
 
       os << "virtual CORBA::Boolean" << endl
-         << "is_caller_in_role (" << endl
-         << "const char *role" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+          << "is_caller_in_role (" << endl
+          << "const char *role" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual void" << endl
-         << "set_rollback_only (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl;
+          << "set_rollback_only (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IS] << "));" << endl;
 
       os << "// Operations from ::Components::SessionContext interface."
-         << endl << endl;
+          << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
-         << "get_CCM_object (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IS] << "));" << endl;
+          << "get_CCM_object (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IS] << "));" << endl;
 
-      os << "// Operations for " << c->name ().simple () << " receptacles"
-         << " and event sources," << endl
-         << "// defined in " << c->name ().scope () << "::CCM_"
-         << c->name ().simple () << "_Context."
-         << endl << endl;
-    }
+      os << "// Operations for " << t.name () << " receptacles"
+          << " and event sources," << endl
+          << "// defined in " << t.scoped_name ().scope_name () << "::CCM_"
+          << t.name () << "_Context."
+          << endl << endl;
 
-    virtual void
-    traverse (UsesDeclPtr const& d)
-    {
-      // @@@ (JP) Need to handle multiple connections.
-      os << "virtual " << d->type ()->name () << "_ptr" << endl
-         << "get_connection_" << d->name ().simple ()
-         << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
-    }
-
-    virtual void
-    traverse (PublishesDeclPtr const& d)
-    {
-      os << "virtual void" << endl
-         << "push_" << d->name ().simple ()
-         << " (" << endl
-         << d->type ()->name () << " *ev" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-    virtual void
-    traverse (EmitsDeclPtr const& d)
-    {
-      os << "virtual void" << endl
-         << "push_" << d->name ().simple ()
-         << " (" << endl
-         << d->type ()->name () << " *ev" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-  };
-
-  //
-  // Generates protected methods of component context interface declaration.
-  //
-  class ContextProtectedMethodEmitter
-    : public HeaderEmitterBase,
-      public Traversal::ComponentDef,
-      public Traversal::UsesDecl,
-      public Traversal::PublishesDecl,
-      public Traversal::EmitsDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    ContextProtectedMethodEmitter (ostream& os_,
-                                   Declarations const& declarations)
-      : HeaderEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
-      {
-        Traversal::ComponentDef::traverse (c);
+      {  
+        Traversal::Defines defines;
+        PortsEmitterPublic ports_emitter (ctx);
+        defines.node_traverser (ports_emitter);
+          
+        names (t, defines);
       }
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
+      
       os << "protected:" << endl
          << "// Methods that manage this component's connections"
          << " and consumers." << endl << endl;
-    }
 
-    virtual void
-    traverse (UsesDeclPtr const& d)
-    {
-      // @@@ (JP) Need to handle multiple connections.
-      os << "virtual void" << endl
-         << "connect_" << d->name ().simple () << " (" << endl
-         << d->type ()->name () << "_ptr" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
+      {  
+        Traversal::Defines defines;
+        PortsEmitterProtected ports_emitter (ctx);
+        defines.node_traverser (ports_emitter);
+          
+        names (t, defines);
+      }
+      
+      os << "protected:" << endl;
 
-      os << "virtual " << d->type ()->name () << "_ptr" << endl
-         << "disconnect_" << d->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl << endl;
-    }
-
-    virtual void
-    traverse (EmitsDeclPtr const& d)
-    {
-      os << "virtual void" << endl
-         << "connect_" << d->name ().simple () << " (" << endl
-         << d->type ()->name () << "Consumer_ptr c" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "));" << endl << endl;
-
-      os << "virtual " << d->type ()->name () << "Consumer_ptr" << endl
-         << "disconnect_" << d->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl;
-    }
-
-    virtual void
-    traverse (PublishesDeclPtr const& p)
-    {
-      os << "virtual " << STRS[COMP_CK] << " *" << endl
-         << "subscribe_" << p->name ().simple () << " (" << endl
-         << p->type ()->name () << "Consumer_ptr c" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl << endl;
-
-      os << "virtual " << p->type ()->name () << "Consumer_ptr" << endl
-         << "unsubscribe_" << p->name ().simple () << " (" << endl
-         << STRS[COMP_CK] << " *ck" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
-    }
-  };
-
-  //
-  // Generates protected members of component context interface declaration.
-  //
-  class ContextProtectedMemberEmitter
-    : public HeaderEmitterBase,
-      public Traversal::ComponentDef,
-      public Traversal::UsesDecl,
-      public Traversal::PublishesDecl,
-      public Traversal::EmitsDecl
-  {
-  private:
-    Declarations const& declarations_;
-  public:
-    ContextProtectedMemberEmitter (ostream& os_,
-                                   Declarations const& declarations)
-      : HeaderEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
-      {
-        Traversal::ComponentDef::traverse (c);
+      {  
+        Traversal::Defines defines;
+        PortsEmitterMembers ports_emitter (ctx);
+        defines.node_traverser (ports_emitter);
+          
+        names (t, defines);
       }
     }
 
     virtual void
-    pre (ComponentDefPtr const& c)
+    post (Type& t)
     {
-      os << "protected:" << endl;
-    }
+      os << "::Components::CCMHome_var home_;" << endl << endl
+         << "::CIAO::Session_Container *container_;" << endl << endl
+         << t.name () << "_Servant *servant_;" << endl << endl
+         << t.scoped_name () << "_var component_;" << endl << endl;
 
-    virtual void
-    traverse (UsesDeclPtr const& d)
-    {
-      // @@@ (JP) Need to handle multiple connections.
-      os << "// Simplex " << d->name ().simple () << " connection." << endl
-         << d->type ()->name () << "_var" << endl
-         << "ciao_uses_" << d->name ().simple () << "_;" << endl << endl;
-    }
-
-    virtual void
-    traverse (EmitsDeclPtr const& d)
-    {
-      os << d->type ()->name () << "Consumer_var" << endl
-         << "ciao_emits_" << d->name ().simple () << "_consumer_;"
-         << endl << endl;
-    }
-
-    virtual void
-    traverse (PublishesDeclPtr const& p)
-    {
-      os << "ACE_Active_Map_Manager<" << endl
-         << p->type ()->name () << "Consumer_var>" << endl
-         << "ciao_publishes_" << p->name ().simple () << "_map_;"
-         << endl << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      os << "::Components::CCMHome_var" << endl
-         << "home_;" << endl << endl;
-
-      os << "::CIAO::Session_Container *" << endl
-         << "container_;" << endl << endl;
-
-      os << c->name ().simple () << "_Servant *" << endl
-         << "servant_;" << endl << endl;
-
-      os << c->name () << "_var" << endl
-         << "component_;" << endl << endl;
-
+      // Component context class closer.
       os << "};" << endl;
 
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "}" << endl;
-      }
-
-      os << endl;
+      // Namespace closer.
+      os << "}" << endl;
     }
   };
-
-
-
-  //
-  // Generates public part of component servant interface declaration.
-  //
-  class ServantPublicEmitter : public HeaderEmitterBase,
-                               public Traversal::ComponentDef,
-                               public Traversal::ProvidesDecl,
-                               public Traversal::UsesDecl,
-                               public Traversal::PublishesDecl,
-                               public Traversal::ConsumesDecl,
-                               public Traversal::EmitsDecl
+  
+  struct InterfaceEmitter : Traversal::UnconstrainedInterface,
+                            EmitterBase
   {
+    InterfaceEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+
+    bool
+    add (UnconstrainedInterface& i)
+    {
+      return interfaces_.insert (&i).second;
+    }
+
+    virtual void
+    traverse (UnconstrainedInterface& i)
+    {
+      if (add (i))
+      {
+        Traversal::UnconstrainedInterface::traverse (i);
+      }
+    }
+    
   private:
-    string export_macro_;
-    Declarations const& declarations_;
+    std::set<UnconstrainedInterface*> interfaces_;
+  };
 
-    OperationEmitter& operation_emitter_;
+  struct ServantEmitter : Traversal::Component, EmitterBase
+  {
+    ServantEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+    
+  // Nested classes used by this emitter.
+  private:
+    struct PortsEmitterPublic : Traversal::EmitterData,
+                                Traversal::UserData,
+                                Traversal::PublisherData,
+                                Traversal::ConsumerData,
+                                Traversal::ProviderData,
+                                EmitterBase
+    {
+      PortsEmitterPublic (Context& c)
+        : EmitterBase (c), 
+          type_name_emitter_ (c.os ()),
+          simple_type_name_emitter_ (c.os ()),
+          stripped_type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+        simple_belongs_.node_traverser (simple_type_name_emitter_);
+        stripped_belongs_.node_traverser (stripped_type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Provider& p)
+      {
+        os << "virtual ";
+        
+        Traversal::ProviderData::belongs (p, belongs_);
+            
+        os << "_ptr" << endl
+           << "provide_" << p.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::User& u)
+      {
+        // @@@ (JP) Need to handle multiple connections.
+        os << "virtual void" << endl
+           << "connect_" << u.name () << " (" << endl;
+          
+        Traversal::UserData::belongs (u, belongs_);
+            
+        os << "_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
 
+        os << "virtual ";
+        
+        Traversal::UserData::belongs (u, belongs_);
+            
+        os << "_ptr" << endl
+           << "disconnect_" << u.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "));" << endl << endl;
+
+        os << "virtual ";
+        
+        Traversal::UserData::belongs (u, belongs_);
+            
+        os << "_ptr" << endl
+           << "get_connection_" << u.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Consumer& c)
+      {
+        os << "// Servant class for the " << c.name ()
+           << " consumer." << endl
+           << "class " << ctx.export_macro () << " ";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+            
+        os << "Consumer_"
+           << c.name () << "_Servant" << endl
+           << ": public virtual POA_";
+           
+        Traversal::ConsumerData::belongs (c, stripped_belongs_);
+            
+        os << "Consumer," << endl
+           << STRS[INH_RCSB] << endl
+           << "{"
+           << "public:" << endl;
+
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+            
+        os << "Consumer_" << c.name () << "_Servant (" << endl
+           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name () << "_ptr executor,"
+           << endl
+           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name ()
+           << "_Context_ptr c);" << endl << endl;
+           
+        os << "virtual ~";
+
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+            
+        os << "Consumer_"
+           << c.name () << "_Servant (void);" << endl << endl;
+
+        // @@@ (JP) May need to generate this for the eventtype's ancestors
+        // as well (the spec is vague on this point). If so, we need the
+        // CIDL compiler to support valuetype/eventtype inheritance.
+        os << "virtual void" << endl
+           << "push_";
+           
+        Traversal::ConsumerData::belongs (c, simple_belongs_);
+            
+        os  << " (" << endl;
+              
+        Traversal::ConsumerData::belongs (c, belongs_);
+            
+        os << " *evt" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+           << "virtual void" << endl
+           << "push_event (::Components::EventBase *ev" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_BET] << "));" << endl << endl;
+
+        os << "// Get component implementation." << endl
+           << "virtual CORBA::Object_ptr" << endl
+           << "_get_component (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+        os << "protected:" << endl
+           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name ()
+           << "_var" << endl
+           << "executor_;" << endl << endl;
+
+        os << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
+           << c.scoped_name ().scope_name ().simple_name ()
+           << "_Context_var" << endl
+           << "ctx_;" << endl;
+
+        os << "};" << endl << endl;
+
+        os << "virtual ";
+        
+        Traversal::ConsumerData::belongs (c, belongs_);
+            
+        os << "Consumer_ptr" << endl
+           << "get_consumer_" << c.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Emitter& e)
+      {
+        os << "virtual void" << endl
+           << "connect_" << e.name () << " (" << endl;
+           
+        Traversal::EmitterData::belongs (e, belongs_);
+            
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_AC] << "));" << endl << endl;
+
+        os << "virtual ";
+         
+        Traversal::EmitterData::belongs (e, belongs_);
+            
+        os << "Consumer_ptr" << endl
+           << "disconnect_" << e.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_NC] << "));" << endl << endl;
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Publisher& p)
+      {
+        os << "virtual " << STRS[COMP_CK] << " *" << endl
+           << "subscribe_" << p.name () << " (" << endl;
+           
+        Traversal::PublisherData::belongs (p, belongs_);
+            
+        os << "Consumer_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "));" << endl << endl;
+
+        os << "virtual ";
+        
+        Traversal::PublisherData::belongs (p, belongs_);
+            
+        os << "Consumer_ptr" << endl
+           << "unsubscribe_" << p.name () << " (" << endl
+           << STRS[COMP_CK] << " *ck" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      SimpleTypeNameEmitter simple_type_name_emitter_;
+      StrippedTypeNameEmitter stripped_type_name_emitter_;
+      Traversal::Belongs belongs_;
+      Traversal::Belongs simple_belongs_;
+      Traversal::Belongs stripped_belongs_;
+    };
+    
+    struct PortsEmitterProtected : Traversal::ConsumerData,
+                                   Traversal::ProviderData,
+                                   EmitterBase
+    {
+      PortsEmitterProtected (Context& c)
+        : EmitterBase (c), 
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Provider& p)
+      {
+        Traversal::ProviderData::belongs (p, belongs_);
+            
+        os << "_var" << endl
+           << "provide_" << p.name () << "_;" << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::Consumer& c)
+      {
+        Traversal::ConsumerData::belongs (c, belongs_);
+            
+        os << "Consumer_var" << endl
+           << "consumes_" << c.name () << "_;" << endl;
+      }
+
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+    
   public:
-    ServantPublicEmitter (ostream& os_,
-                          string export_macro,
-                          Declarations const& declarations,
-                          OperationEmitter& operation_emitter)
-      : HeaderEmitterBase (os_),
-        export_macro_ (export_macro),
-        declarations_ (declarations),
-        operation_emitter_ (operation_emitter)
-    {
-    }
-
     virtual void
-    traverse (ComponentDefPtr const& c)
+    pre (Type& t)
     {
-      if (declarations_.find (c))
-      {
-        Traversal::ComponentDef::traverse (c);
-      }
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
-      // If we are at file scope, we create a namespace anyway.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << STRS[GLUE_NS] << endl
-           << "{";
-      }
-
-      // @@@ (JP) Need export macro and prefixable scoped name.
-      os << "class " << export_macro_ << " " << c->name ().simple ()
+      os << STRS[GLUE_NS] 
+          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+          << "{";
+          
+      ScopedName scoped (t.scoped_name ());
+      Name stripped (scoped.begin () + 1, scoped.end ());
+    
+      os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Servant" << endl
-         << ": public virtual POA_" << c->name ().in_file_scope ()
-         << "," << endl
+         << ": public virtual POA_" << stripped << "," << endl
          << STRS[INH_RCSB] << endl
          << "{"
          << "public:" << endl;
 
-      os << c->name ().simple () << "_Servant (" << endl
-         << c->name ().scope () << "::CCM_" << c->name ().simple ()
+      os << t.name () << "_Servant (" << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr executor," << endl
          << "::Components::CCMHome_ptr home," << endl
          << "::CIAO::Session_Container *c);" << endl << endl;
 
-      os << "virtual ~" << c->name ().simple () << "_Servant (void);"
+      os << "virtual ~" << t.name () << "_Servant (void);"
          << endl << endl;
-
-      // @@@ (JP) Must include ancestors' supported interfaces as well.
-      for (SyntaxTree::ComponentDef::Iterator i = c->supports_begin ();
-           i != c->supports_end ();
-           i++)
+         
+      os << "// Supported operations." << endl << endl;
+         
+      // Generate operations for all supported interfaces.   
       {
-        operation_emitter_.dispatch (i->resolve ());
+        Traversal::Supports supports_;
+        InterfaceEmitter interface_emitter (ctx);
+        supports_.node_traverser (interface_emitter);
+        
+        Traversal::Defines defines;
+        Traversal::Inherits inherits;
+        interface_emitter.edge_traverser (defines);
+        interface_emitter.edge_traverser (inherits);
+        
+        OperationEmitter operation_emitter (ctx);
+        defines.node_traverser (operation_emitter);  
+        inherits.node_traverser (interface_emitter);
+
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        operation_emitter.edge_traverser (receives);
+        operation_emitter.edge_traverser (returns);
+        operation_emitter.edge_traverser (raises);
+        
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+       
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+        
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+        
+        INArgTypeNameEmitter in_arg_emitter (os);        
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);        
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
+
+        supports (t, supports_);
       }
-    }
+      
+      os << "// Public port operations." << endl << endl;
+         
+      // Generate public operations for ports, and nested classes for
+      // event consumers.
+      {
+        Traversal::Defines defines;
+        PortsEmitterPublic ports_emitter (ctx);
+        defines.node_traverser (ports_emitter);
+        
+        names (t, defines);
+      }
+      
+      // Generate operations for component attributes.
+      os << "// Component attribute operations." << endl << endl;
+      
+      {
+        Traversal::Defines defines;
+        AttributeEmitter attribute_emitter (ctx);
+        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
+        
+        names (t, defines);
+      }
 
-    virtual void
-    traverse (ProvidesDeclPtr const& p)
-    {
-      os << "virtual " << p->type ()->name () << "_ptr" << endl
-         << "provide_" << p->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-    virtual void
-    traverse (UsesDeclPtr const& p)
-    {
-      // @@@ (JP) Need to handle multiple connections.
-      os << "virtual void" << endl
-         << "connect_" << p->name ().simple () << " (" << endl
-         << p->type ()->name () << "_ptr c" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
-
-      os << "virtual " << p->type ()->name () << "_ptr" << endl
-         << "disconnect_" << p->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl << endl;
-
-      os << "virtual " << p->type ()->name () << "_ptr" << endl
-         << "get_connection_" << p->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-    virtual void
-    traverse (ConsumesDeclPtr const& c)
-    {
-      // @@@ (JP) Need export macro.
-      os << "// Servant class for the " << c->name ().simple ()
-         << " consumer." << endl
-         << "class " << export_macro_ << " "
-         << c->type ()->name ().simple () << "Consumer_"
-         << c->name ().simple () << "_Servant" << endl
-         << ": public virtual POA_" << c->type ()->name ().in_file_scope ()
-         << "Consumer," << endl
-         << STRS[INH_RCSB]
-         << endl
-         << "{"
-         << "public:" << endl;
-
-      os << c->type ()->name ().simple () << "Consumer_" << c->name ().simple ()
-         << "_Servant (" << endl
-         << c->scope ()->name ().scope () << "::CCM_"
-         << c->scope ()->name ().simple () << "_ptr executor,"
-         << endl
-         << c->scope ()->name ().scope () << "::CCM_"
-         << c->scope ()->name ().simple ()
-         << "_Context_ptr c);" << endl << endl;
-
-      os << "virtual ~" << c->type ()->name ().simple () << "Consumer_"
-         << c->name ().simple () << "_Servant (void);" << endl << endl;
-
-      // @@@ (JP) May need to generate this for the eventtype's ancestors
-      // as well (the spec is vague on this point). If so, we need the
-      // CIDL compiler to support valuetype/eventtype inheritance.
-      os << "virtual void" << endl
-         << "push_" << c->type ()->name ().simple () << " (" << endl
-         << c->type ()->name () << " *evt" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
-         << "virtual void" << endl
-         << "push_event (::Components::EventBase *ev" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_BET] << "));" << endl << endl;
-
-      os << "// Get component implementation." << endl
-         << "virtual CORBA::Object_ptr" << endl
-         << "_get_component (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "protected:" << endl
-         << c->scope ()->name ().scope () << "::CCM_"
-         << c->scope ()->name ().simple ()
-         << "_var" << endl
-         << "executor_;" << endl << endl;
-
-      os << c->scope ()->name ().scope () << "::CCM_"
-         << c->scope ()->name ().simple ()
-         << "_Context_var" << endl
-         << "ctx_;" << endl;
-
-      os << "};" << endl << endl;
-
-      os << "virtual " << c->type ()->name () << "Consumer_ptr" << endl
-         << "get_consumer_" << c->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-    virtual void
-    traverse (EmitsDeclPtr const& e)
-    {
-      os << "virtual void" << endl
-         << "connect_" << e->name ().simple () << " (" << endl
-         << e->type ()->name () << "Consumer_ptr c" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_AC] << "));" << endl << endl;
-
-      os << "virtual " << e->type ()->name () << "Consumer_ptr" << endl
-         << "disconnect_" << e->name ().simple () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl << endl;
-    }
-
-    virtual void
-    traverse (PublishesDeclPtr const& p)
-    {
-      os << "virtual " << STRS[COMP_CK] << " *" << endl
-         << "subscribe_" << p->name ().simple () << " (" << endl
-         << p->type ()->name () << "Consumer_ptr c" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl << endl;
-
-      os << "virtual " << p->type ()->name () << "Consumer_ptr" << endl
-         << "unsubscribe_" << p->name ().simple () << " (" << endl
-         << STRS[COMP_CK] << " *ck" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
       os << "// Operations for Navigation interface." << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
-         << "provide_facet (" << endl
-         << "const char *name" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "provide_facet (" << endl
+          << "const char *name" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::FacetDescriptions *" << endl
-         << "get_all_facets (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_all_facets (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::FacetDescriptions *" << endl
-         << "get_named_facets (" << endl
-         << "const " << STRS[COMP_NAMES] << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "get_named_facets (" << endl
+          << "const " << STRS[COMP_NAMES] << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual CORBA::Boolean" << endl
-         << "same_component (" << endl
-         << "CORBA::Object_ptr object_ref" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "same_component (" << endl
+          << "CORBA::Object_ptr object_ref" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "// Operations for Receptacles interface." << endl << endl;
 
       os << "virtual " << STRS[COMP_CK] << " *" << endl
-         << "connect (" << endl
-         << "const char *name," << endl
-         << "CORBA::Object_ptr connection" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl << endl;
+          << "connect (" << endl
+          << "const char *name," << endl
+          << "CORBA::Object_ptr connection" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "," << endl
+          << STRS[EXCP_IC] << "," << endl
+          << STRS[EXCP_AC] << "," << endl
+          << STRS[EXCP_ECL] << "));" << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
-         << "disconnect (" << endl
-         << "const char *name," << endl
-         << STRS[COMP_CK] << " *ck" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_CR] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl << endl;
+          << "disconnect (" << endl
+          << "const char *name," << endl
+          << STRS[COMP_CK] << " *ck" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "," << endl
+          << STRS[EXCP_IC] << "," << endl
+          << STRS[EXCP_CR] << "," << endl
+          << STRS[EXCP_NC] << "));" << endl << endl;
 
       os << "virtual ::Components::ConnectionDescriptions *" << endl
-         << "get_connections (" << endl
-         << "const char *name" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "get_connections (" << endl
+          << "const char *name" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::ReceptacleDescriptions *" << endl
-         << "get_all_receptacles (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_all_receptacles (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::ReceptacleDescriptions *" << endl
-         << "get_named_receptacles (" << endl
-         << "const " << STRS[COMP_NAMES] << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "get_named_receptacles (" << endl
+          << "const " << STRS[COMP_NAMES] << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "// Operations for Events interface." << endl << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-         << "get_consumer (" << endl
-         << "const char *sink_name" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "get_consumer (" << endl
+          << "const char *sink_name" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual " << STRS[COMP_CK] << " *" << endl
-         << "subscribe (" << endl
-         << "const char *publisher_name," << endl
-         << STRS[COMP_ECB] << "_ptr subscriber" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl << endl;
+          << "subscribe (" << endl
+          << "const char *publisher_name," << endl
+          << STRS[COMP_ECB] << "_ptr subscriber" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "," << endl
+          << STRS[EXCP_IC] << "," << endl
+          << STRS[EXCP_ECL] << "));" << endl << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-         << "unsubscribe (" << endl
-         << "const char *publisher_name," << endl
-         << STRS[COMP_CK] << " *ck" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
+          << "unsubscribe (" << endl
+          << "const char *publisher_name," << endl
+          << STRS[COMP_CK] << " *ck" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "," << endl
+          << STRS[EXCP_IC] << "));" << endl << endl;
 
       os << "virtual void" << endl
-         << "connect_consumer (" << endl
-         << "const char *emitter_name," << endl
-         << STRS[COMP_ECB] << "_ptr consumer" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl << endl;
+          << "connect_consumer (" << endl
+          << "const char *emitter_name," << endl
+          << STRS[COMP_ECB] << "_ptr consumer" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "," << endl
+          << STRS[EXCP_AC] << "," << endl
+          << STRS[EXCP_IC] << "));" << endl << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-         << "disconnect_consumer (" << endl
-         << "const char *source_name" << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl << endl;
+          << "disconnect_consumer (" << endl
+          << "const char *source_name" << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "," << endl
+          << STRS[EXCP_NC] << "));" << endl << endl;
 
       os << "virtual ::Components::ConsumerDescriptions *" << endl
-         << "get_all_consumers (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_all_consumers (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::ConsumerDescriptions *" << endl
-         << "get_named_consumers (" << endl
-         << "const " << STRS[COMP_NAMES] << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "get_named_consumers (" << endl
+          << "const " << STRS[COMP_NAMES] << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::EmitterDescriptions *" << endl
-         << "get_all_emitters (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_all_emitters (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::EmitterDescriptions *" << endl
-         << "get_named_emitters(" << endl
-         << "const " << STRS[COMP_NAMES] << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "get_named_emitters(" << endl
+          << "const " << STRS[COMP_NAMES] << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "virtual ::Components::PublisherDescriptions *" << endl
-         << "get_all_publishers (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_all_publishers (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::PublisherDescriptions *" << endl
-         << "get_named_publishers(" << endl
-         << "const " << STRS[COMP_NAMES] << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "));" << endl << endl;
+          << "get_named_publishers(" << endl
+          << "const " << STRS[COMP_NAMES] << endl
+          << STRS[ENV_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_IN] << "));" << endl << endl;
 
       os << "// Operations for CCMObject interface." << endl << endl;
 
       os << "virtual CORBA::IRObject_ptr" << endl
-         << "get_component_def (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_component_def (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::CCMHome_ptr" << endl
-         << "get_ccm_home (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_ccm_home (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::Components::PrimaryKeyBase *" << endl
-         << "get_primary_key (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NKA] << "));" << endl << endl;
+          << "get_primary_key (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_NKA] << "));" << endl << endl;
 
       os << "virtual void" << endl
-         << "configuration_complete (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_ICF] << "));" << endl << endl;
+          << "configuration_complete (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_ICF] << "));" << endl << endl;
 
       os << "virtual void" << endl
-         << "remove (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_RF] << "));" << endl << endl;
+          << "remove (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_START] << endl
+          << STRS[EXCP_SYS] << "," << endl
+          << STRS[EXCP_RF] << "));" << endl << endl;
 
       os << "virtual ::Components::ComponentPortDescription *" << endl
-         << "get_all_ports(" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "get_all_ports(" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "// Get component implementation." << endl
-         << "virtual CORBA::Object_ptr" << endl
-         << "_get_component (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "virtual CORBA::Object_ptr" << endl
+          << "_get_component (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+        << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "// CIAO-specific operations." << endl << endl;
 
       os << "void" << endl
-         << "_ciao_activate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+          << "_ciao_activate (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "void" << endl
-         << "_ciao_passivate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-  };
+          << "_ciao_passivate (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
-  //
-  // Generates public part of component servant interface declaration.
-  //
-  class ServantProtectedEmitter : public HeaderEmitterBase,
-                                  public Traversal::ComponentDef,
-                                  public Traversal::ProvidesDecl,
-                                  public Traversal::ConsumesDecl
-  {
-  private:
-    Declarations const& declarations_;
-    
-  public:
-    ServantProtectedEmitter (ostream& os_,
-                             Declarations const& declarations)
-      : HeaderEmitterBase (os_),
-        declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
-      {
-        Traversal::ComponentDef::traverse (c);
-      }
-    }
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
       os << "protected:" << endl
-         << c->name ().scope () << "::CCM_" << c->name ().simple ()
-         << "_var" << endl
-         << "executor_;" << endl << endl;
+          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
+          << "_var" << endl
+          << "executor_;" << endl << endl;
 
-      os << c->name ().simple () << "_Context *" << endl
-         << "context_;" << endl << endl;
+      os << t.name () << "_Context *" << endl
+          << "context_;" << endl << endl;
 
       os << "::CIAO::Session_Container *" << endl
-         << "container_;" << endl;
+          << "container_;" << endl;
+          
+      // Generate protected operations for facets and event sinks.   
+      {
+        Traversal::Defines defines;
+        PortsEmitterProtected ports_emitter (ctx);
+        defines.node_traverser (ports_emitter);
+        
+        names (t, defines);
+      }
     }
-
+    
     virtual void
-    traverse (ProvidesDeclPtr const& p)
+    post (Type& t)
     {
-      os << p->type ()->name () << "_var" << endl
-         << "provide_" << p->name ().simple () << "_;" << endl;
-    }
-
-    virtual void
-    traverse (ConsumesDeclPtr const& c)
-    {
-      os << c->type ()->name () << "Consumer_var" << endl
-         << "consumes_" << c->name ().simple () << "_;" << endl;
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
+      // Component servant class closer.
       os << "};" << endl;
 
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (c->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "}" << endl;
-      }
-
-      os << endl;
+      // Namespace closer.
+      os << "}" << endl;
     }
   };
 
-
-  //
-  // Generates the component home servant interface.
-  //
-  class HomeEmitter : public HeaderEmitterBase,
-                      public Traversal::HomeDef,
-                      public Traversal::AttributeDecl //@@ Will disappear
+  struct HomeEmitter : Traversal::Home, EmitterBase
   {
+    HomeEmitter (Context& c)
+      : EmitterBase (c)
+    {}
+    
+  // Nested classes used by this emitter.
   private:
-    string export_macro_;
-    Declarations const& declarations_;
+    struct ManagesEmitter : Traversal::Component, EmitterBase
+    {
+      ManagesEmitter (Context& c)
+        : EmitterBase (c)
+      {}
+      
+      virtual void
+      traverse (Type& c)
+      {
+        os << c.scoped_name ();
+      }
+    };
+    
+    struct ManagesSimpleEmitter : Traversal::Component, EmitterBase
+    {
+      ManagesSimpleEmitter (Context& c)
+        : EmitterBase (c)
+      {}
+      
+      virtual void
+      traverse (Type& c)
+      {
+        os << c.name ();
+      }
+    };
+    
+    struct ManagesScopeEmitter : Traversal::Component, EmitterBase
+    {
+      ManagesScopeEmitter (Context& c)
+        : EmitterBase (c)
+      {}
+      
+      virtual void
+      traverse (Type& c)
+      {
+        os << c.scoped_name ().scope_name ();
+      }
+    };
+    
+    struct HomeOperationEmitter : Traversal::HomeFactory,
+                                  Traversal::Home,
+                                  OperationEmitter
+    {
+      HomeOperationEmitter (Context& c, SemanticGraph::Home& home)
+        : OperationEmitter (c),
+          home_ (home)
+      {}
+      
+      virtual void
+      pre (SemanticGraph::HomeFactory&)
+      {
+        os << "virtual ";
+      }
 
-    OperationEmitter& operation_emitter_;
+      virtual void
+      returns (SemanticGraph::HomeFactory& hf)
+      {
+        ReturnTypeNameEmitter manages_emitter (os);
+        Traversal::Manages manages_;
+        manages_.node_traverser (manages_emitter);
+        
+        manages (home_, manages_);
+        
+        os << endl;
+      }
 
+      virtual void
+      name (SemanticGraph::HomeFactory& hf)
+      {
+        os << hf.name ();
+      }
+
+      virtual void
+      receives_none (SemanticGraph::HomeFactory&)
+      {
+        os << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl;
+      }
+
+      virtual void
+      receives_pre (SemanticGraph::HomeFactory&)
+      {
+        os << " (" << endl;
+      }
+
+      virtual void
+      receives_post (SemanticGraph::HomeFactory&)
+      {
+        os << endl << STRS[ENV_HDR] << ")" << endl;
+      }
+
+      virtual void
+      raises_none (SemanticGraph::HomeFactory&)
+      {
+        os << STRS[EXCP_SNGL];
+      }
+
+      virtual void
+      raises_pre (SemanticGraph::HomeFactory&)
+      {
+        os << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl;
+      }
+
+      virtual void
+      raises_post (SemanticGraph::HomeFactory&)
+      {
+        os << "))";
+      }
+
+      virtual void
+      post (SemanticGraph::HomeFactory&)
+      {
+        os << ";" << endl << endl;
+      }
+
+      virtual void
+      comma (SemanticGraph::HomeFactory&)
+      {
+        os << "," << endl;
+      }
+      
+    private:
+      SemanticGraph::Home& home_;
+    };
+    
   public:
-    HomeEmitter (ostream& os_,
-                 string export_macro,
-                 Declarations const& declarations,
-                 OperationEmitter& operation_emitter)
-      : HeaderEmitterBase (os_),
-        export_macro_ (export_macro),
-        declarations_ (declarations),
-        operation_emitter_ (operation_emitter)
+    virtual void pre (Type& t)
     {
-    }
-
-    virtual void
-    traverse (HomeDefPtr const& h)
-    {
-      if (declarations_.find (h))
-      {
-        Traversal::HomeDef::traverse (h);
-      }
-    }
-
-    virtual void
-    pre (HomeDefPtr const& h)
-    {
-      // If we are at file scope, we create a namespace anyway.
-      if (h->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << STRS[GLUE_NS] << endl
-           << "{";
-      }
-
-      os << "class " << export_macro_ << " " << h->name ().simple ()
+      os << STRS[GLUE_NS] 
+          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+          << "{";
+          
+      ScopedName scoped (t.scoped_name ());
+      Name stripped (scoped.begin () + 1, scoped.end ());
+    
+      os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Servant" << endl
-         << ": public virtual POA_" << h->name ().in_file_scope ()
-         << "," << endl
+         << ": public virtual POA_" << stripped << "," << endl
          << STRS[INH_RCSB] << endl
          << "{"
          << "public:" << endl;
 
-      os << h->name ().simple () << "_Servant (" << endl
-         << h->name ().scope () << "::CCM_" << h->name ().simple ()
+      os << t.name () << "_Servant (" << endl
+         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
-         << "::CIAO::Session_Container *c);" << endl;
+         << "::CIAO::Session_Container *c);" << endl << endl;
 
-      os << "virtual ~" << h->name ().simple () << "_Servant (void);"
+      os << "virtual ~" << t.name () << "_Servant (void);"
          << endl << endl;
-
+         
+      // Generate home factory and other operations.
       os << "// Home factory and other operations." << endl << endl;
-    }
+      
+      {
+        Traversal::Defines defines;
+        HomeOperationEmitter home_operation_emitter (ctx, t);
+        defines.node_traverser (home_operation_emitter);  
 
-    virtual void
-    traverse (AttributeDeclPtr const& a)
-    {
-      // TODO
-    }
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        home_operation_emitter.edge_traverser (receives);
+        home_operation_emitter.edge_traverser (returns);
+        home_operation_emitter.edge_traverser (raises);
+        
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+       
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+        
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+        
+        INArgTypeNameEmitter in_arg_emitter (os);        
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);        
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
 
-    virtual void
-    post (HomeDefPtr const& h)
-    {
+        names (t, defines);
+      }
+      
+      // Generate operations for component attributes.
+      os << "// Attribute operations." << endl << endl;
+      
+      {
+        Traversal::Defines defines;
+        AttributeEmitter attribute_emitter (ctx);
+        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
+        
+        names (t, defines);
+      }
+
       // @@@ (JP) Need primary key support.
       os << "// Operations for keyless home interface." << endl << endl;
 
@@ -1275,28 +1667,38 @@ namespace
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << "::Components::CreateFailure));" << endl ;
+         << "::Components::CreateFailure));" << endl << endl ;
 
       os << "// Operations for implicit home interface." << endl << endl;
 
-      os << "virtual " << h->manages ()->name () << "_ptr" << endl
+      os << "virtual ";
+      
+      {
+        Traversal::Manages manages_;
+        ManagesEmitter manages_emitter (ctx);
+        manages_.node_traverser (manages_emitter);
+        
+        manages (t, manages_);
+      }
+      
+      os << "_ptr" << endl
          << "create (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
-         << "::Components::CreateFailure));" << endl;
+         << "::Components::CreateFailure));" << endl << endl;
 
       os << "// Operations for CCMHome interface." << endl << endl;
 
       os << "virtual ::CORBA::IRObject_ptr" << endl
          << "get_component_def (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual ::CORBA::IRObject_ptr" << endl
          << "get_home_def (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "virtual void" << endl
          << "remove_component (" << endl
@@ -1307,133 +1709,172 @@ namespace
          << STRS[EXCP_RF] << "));" << endl << endl;
 
       os << "// Supported operations." << endl << endl;
-
-      // @@@ (JP) Must include ancestors' supported interfaces as well.
-      for (SyntaxTree::HomeDef::Iterator i = h->supports_begin ();
-           i != h->supports_end ();
-           i++)
+         
+      // Generate operations for all supported interfaces.   
       {
-        operation_emitter_.dispatch (i->resolve ());
+        Traversal::Supports supports_;
+        InterfaceEmitter interface_emitter (ctx);
+        supports_.node_traverser (interface_emitter);
+        
+        Traversal::Defines defines;
+        Traversal::Inherits inherits;
+        interface_emitter.edge_traverser (defines);
+        interface_emitter.edge_traverser (inherits);
+        
+        OperationEmitter operation_emitter (ctx);
+        defines.node_traverser (operation_emitter);  
+        inherits.node_traverser (interface_emitter);
+
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        operation_emitter.edge_traverser (receives);
+        operation_emitter.edge_traverser (returns);
+        operation_emitter.edge_traverser (raises);
+        
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+       
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+        
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+        
+        INArgTypeNameEmitter in_arg_emitter (os);        
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);        
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
+
+        supports (t, supports_);
       }
 
       os << "protected:" << endl
          << "// CIAO-specific operations." << endl << endl;
 
-      os << h->manages ()->name () << "_ptr" << endl
-         << "_ciao_activate_component (" << endl
-         << h->manages ()->name ().scope () << "::CCM_"
-         << h->manages ()->name ().simple () << "_ptr exe" << endl
+      {
+        Traversal::Manages manages_;
+        ManagesEmitter manages_emitter (ctx);
+        manages_.node_traverser (manages_emitter);
+        
+        manages (t, manages_);
+      }
+      
+      os << "_ptr" << endl
+         << "_ciao_activate_component (" << endl;
+         
+      {
+        Traversal::Manages manages_;
+        ManagesScopeEmitter manages_emitter (ctx);
+        manages_.node_traverser (manages_emitter);
+        
+        manages (t, manages_);
+      }
+      
+      os << "::CCM_";
+      
+      {
+        Traversal::Manages manages_;
+        ManagesSimpleEmitter manages_emitter (ctx);
+        manages_.node_traverser (manages_emitter);
+        
+        manages (t, manages_);
+      }
+      
+      os << "_ptr exe" << endl
          << STRS[ENV_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "void" << endl
-         << "_ciao_passivate_component (" << endl
-         << h->manages ()->name () << "_ptr comp" << endl
+         << "_ciao_passivate_component (" << endl;
+         
+      {
+        Traversal::Manages manages_;
+        ManagesEmitter manages_emitter (ctx);
+        manages_.node_traverser (manages_emitter);
+        
+        manages (t, manages_);
+      }
+      
+      os << "_ptr comp" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
       os << "protected:" << endl;
 
-      os << h->name ().scope () << "::CCM_"
-         << h->name ().simple () << "_var" << endl
+      os << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var" << endl
          << "executor_;" << endl << endl;
 
       os << "::CIAO::Session_Container *" << endl
          << "container_;" << endl << endl;
 
       os << "ACE_Hash_Map_Manager_Ex<" << endl
-         << "PortableServer::ObjectId," << endl
-         << h->manages ()->name ().simple () << "_Servant *," << endl
+         << "PortableServer::ObjectId," << endl;
+         
+      {
+        Traversal::Manages manages_;
+        ManagesSimpleEmitter manages_emitter (ctx);
+        manages_.node_traverser (manages_emitter);
+        
+        manages (t, manages_);
+      }
+      
+      os << "_Servant *," << endl
          << "TAO_ObjectId_Hash," << endl
          << "ACE_Equal_To<PortableServer::ObjectId>," << endl
          << "ACE_SYNCH_MUTEX>" << endl
          << "component_map_;" << endl;
 
+      // Home servant class closer.
       os << "};" << endl << endl;
 
-      os << "extern \"C\" " << export_macro_ << " ::PortableServer::Servant"
+      os << "extern \"C\" " << ctx.export_macro () << " ::PortableServer::Servant"
          << endl
-         << "create" << h->name ().simple () << "_Servant (" << endl
+         << "create" << t.name () << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "CIAO::Session_Container *c" << endl
          << STRS[ENV_HDR] << ");" << endl;
-
-      // Close the CIAO_GLUE namespace, if we opened one.
-      if (h->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () != 0)
-      {
-        os << "}" << endl;
-      }
-
-      os << endl;
     }
-  };
-
-  //
-  // Generates needed namespaces for modules
-  //
-  class NamespaceEmitter : public HeaderEmitterBase,
-                           public Traversal::Module
-  {
-  private:
-    Declarations const& declarations_;
-
-  public:
-    NamespaceEmitter (ostream& os_, Declarations const& declarations)
-      : HeaderEmitterBase (os_),
-        declarations_ (declarations)
+    
+    virtual void post (Type& t)
     {
+      // Namespace closer.
+      os << "}" << endl;
     }
-
-    void
-    pre (ModulePtr const& m)
-    {
-      if (declarations_.contains_suborder (m->order ()))
-      {
-        os << STRS[GLUE_NS] << "_" << m->name ().simple () << endl
-           << "{";
-      }
-    }
-
-    void
-    post (ModulePtr const& m)
-    {
-      if (declarations_.contains_suborder (m->order ()))
-      {
-        os << "}" << endl << endl;
-      }
-    }
-  };
+  }; 
 }
 
-// ===========================================================
-
-HeaderEmitterBase::HeaderEmitterBase (ostream& os_)
-  : os (os_)
-{
-}
-
-ServantHeaderEmitter::ServantHeaderEmitter (ostream& os_,
+ServantHeaderEmitter::ServantHeaderEmitter (std::ostream& os_,
                                             CommandLine const& cl,
                                             string export_macro,
-                                            Declarations const& declarations)
-  : HeaderEmitterBase (os_),
+                                            fs::path const& file)
+  : os (os_),
     cl_ (cl),
     export_macro_ (export_macro),
-    declarations_ (declarations)
-{
-}
+    file_ (file)
+{}
 
 void
-ServantHeaderEmitter::pre (TranslationUnitPtr const& u)
+ServantHeaderEmitter::pre (TranslationUnit& u)
 {
   os << COPYRIGHT << endl << endl;
 
-  fs::path file_path = u->principal_translation_region ()->file_path ();
   string file_name ("");
 
-  if (!file_path.empty ())
+  if (!file_.empty ())
   {
-    file_name = file_path.leaf ();
+    file_name = file_.leaf ();
   }
 
   string uc_file_name = file_name;
@@ -1503,109 +1944,83 @@ ServantHeaderEmitter::pre (TranslationUnitPtr const& u)
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */" << endl << endl;
 }
 
-
 void
-ServantHeaderEmitter::generate (TranslationUnitPtr const& u)
+ServantHeaderEmitter::generate (TranslationUnit& u)
 {
-  // This method will use the ServantHeaderEmitter class itself
-  // as a entry point for the traversal of the tree
+  pre (u);
+  
+  Traversal::TranslationUnit unit;
+  
+  // Layer 1
+  //
+  Traversal::ContainsPrincipal contains_principal;
+  unit.edge_traverser (contains_principal);
 
-  ReturnTypeNameEmitter return_type_name (os);
-  INArgTypeNameEmitter inarg_type_name (os);
-  OUTArgTypeNameEmitter outarg_type_name (os);
-  INOUTArgTypeNameEmitter inoutarg_type_name (os);
+  //--
+  Traversal::TranslationRegion region;
+  contains_principal.node_traverser (region);
 
-  GetAttributeEmitter get_attribute_emitter (os, &return_type_name);
-  SetAttributeEmitter set_attribute_emitter (os, &inarg_type_name);
+  // Layer 2
+  //
+  Traversal::ContainsRoot contains_root;
+  Traversal::Includes includes;
+  
+  region.edge_traverser (includes);
+  region.edge_traverser (contains_root);
+  
+  //--
+  Traversal::Root root;  
+  includes.node_traverser (region);
+  contains_root.node_traverser (root);
 
-  OperationEmitter operation_emitter (os,
-                                      &return_type_name,
-                                      &inarg_type_name,
-                                      &outarg_type_name,
-                                      &inoutarg_type_name);
+  // Layer 3
+  //
+  Traversal::Defines defines;
+  root.edge_traverser (defines);
 
-  FactoryEmitter factory_emitter (os, &inarg_type_name);
-
-  FacetEmitter facet_emitter (os, export_macro_);
-  facet_emitter.add_scope_delegate (&operation_emitter);
-
-  FacetSelector facet_selector (os, declarations_);
-  facet_selector.add_delegate (&facet_emitter);
-
-
-  ContextPublicEmitter context_public_emitter (os, 
-                                               export_macro_, 
-                                               declarations_);
-
-  ContextProtectedMethodEmitter 
-    context_protected_method_emitter (os, declarations_);
-
-  ContextProtectedMemberEmitter 
-    context_protected_member_emitter (os, declarations_);
-
-  ServantPublicEmitter servant_public_emitter (os,
-                                               export_macro_,
-                                               declarations_,
-                                               operation_emitter);
-                                               
-  servant_public_emitter.add_scope_delegate (&get_attribute_emitter);
-  servant_public_emitter.add_scope_delegate (&set_attribute_emitter);
-
-  ServantProtectedEmitter servant_protected_emitter (os, declarations_);
-
-  // Discriminator for operation and factory
-  // This is needed to select always the most-derived type of traversal
-  // for any element of the scope of a Home
-  Traversal::Discriminator d;
-  d.add (&operation_emitter);
-  d.add (&factory_emitter);
-
-  HomeEmitter home_emitter (os, 
-                            export_macro_,
-                            declarations_,
-                            operation_emitter);
-                            
-  home_emitter.add_scope_delegate (&d);
-  home_emitter.add_scope_delegate (&get_attribute_emitter);
-  home_emitter.add_scope_delegate (&set_attribute_emitter);
-
-  Traversal::FileScope fs;
-  NamespaceEmitter m (os, declarations_);
-  fs.add_scope_delegate (&m);
-
-  fs.add_scope_delegate (&context_public_emitter);
-  m.add_scope_delegate (&context_public_emitter);
-  fs.add_scope_delegate (&context_protected_method_emitter);
-  m.add_scope_delegate (&context_protected_method_emitter);
-  fs.add_scope_delegate (&context_protected_member_emitter);
-  m.add_scope_delegate (&context_protected_member_emitter);
-  fs.add_scope_delegate (&servant_public_emitter);
-  m.add_scope_delegate (&servant_public_emitter);
-  fs.add_scope_delegate (&servant_protected_emitter);
-  m.add_scope_delegate (&servant_protected_emitter);
-
-
-  fs.add_scope_delegate (&home_emitter);
-  m.add_scope_delegate (&home_emitter);
-  fs.add_scope_delegate (&facet_selector);
-  m.add_scope_delegate (&facet_selector);
-
-  Traversal::TranslationRegion region (&fs);
-
-  add_content_delegate (&region);
-
-  // Start processing
-  dispatch (u);
+  //--
+  Traversal::Module module;
+  Traversal::Composition composition;
+  defines.node_traverser (module);
+  defines.node_traverser (composition);
+  
+  // Layer 4
+  //
+  Traversal::Defines composition_defines;
+  composition.edge_traverser (composition_defines);
+  
+  //--
+  Traversal::ComponentExecutor component_executor;
+  Traversal::HomeExecutor home_executor;
+  composition_defines.node_traverser (component_executor);
+  composition_defines.node_traverser (home_executor);
+  
+  // Layer 5
+  //
+  Traversal::Implements implements;
+  component_executor.edge_traverser (implements);
+  home_executor.edge_traverser (implements);
+  
+  //--
+  Context c (os, export_macro_);
+  ContextEmitter context_emitter (c);
+  ServantEmitter servant_emitter (c);
+  HomeEmitter home_emitter (c);
+  implements.node_traverser (context_emitter);
+  implements.node_traverser (servant_emitter);
+  implements.node_traverser (home_emitter);
+  
+  unit.traverse (u);  
+  
+  post (u);
 }
 
 void
-ServantHeaderEmitter::post (TranslationUnitPtr const& u)
+ServantHeaderEmitter::post (TranslationUnit& u)
 {
-  fs::path file_path = u->principal_translation_region ()->file_path ();
+  if (file_.empty ()) return;
 
-  if (file_path.empty ()) return;
-
-  string uc_file_name = file_path.leaf ();
+  string uc_file_name = file_.leaf ();
 
   std::transform (uc_file_name.begin (),
                   uc_file_name.end (),
@@ -1620,9 +2035,10 @@ ServantHeaderEmitter::post (TranslationUnitPtr const& u)
                   uc_file_suffix.begin (),
                   upcase);
 
-  string guard = "CIAO_GLUE_SESSION_"
-      + regex::perl_s (uc_file_name,
-                       "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
+  string guard = 
+    "CIAO_GLUE_SESSION_"
+    + regex::perl_s (uc_file_name,
+                     "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
 
   guard = regex::perl_s (guard, "/\\./_/");
 
@@ -1631,10 +2047,3 @@ ServantHeaderEmitter::post (TranslationUnitPtr const& u)
      << endl << endl;
 }
 
-
-/*
- * Local Variables:
- * mode: C++
- * c-basic-offset: 2
- * End:
- */

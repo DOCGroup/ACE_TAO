@@ -172,6 +172,9 @@
 					RelativePath=".\SemanticAction\HomeFactory.hpp">
 				</File>
 				<File
+					RelativePath=".\SemanticAction\HomeFinder.hpp">
+				</File>
+				<File
 					RelativePath=".\SemanticAction\Provides.hpp">
 				</File>
 				<File
@@ -207,6 +210,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\HomeFactory.cpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\HomeFinder.cpp">
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Include.cpp">
@@ -247,6 +253,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\HomeFactory.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\HomeFinder.hpp">
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Include.hpp">

@@ -1,3 +1,31 @@
+Mon Jan  5 01:44:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/CompilerElements/CompilerElements.vcproj:
+        * CCF/CCF/IDL2/IDL2.vcproj:
+        * CCF/CCF/IDL3/IDL3.vcproj:
+        
+          Added files recently checked in to projects.
+          
+        * CIDLC/CIDLC.vcproj:
+        * CIDLC/Collectors.hpp:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/DescriptorGenerator.hpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantGenerator.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.hpp:
+        * CIDLC/SizeTypeCalculator.cpp:
+        * CIDLC/SizeTypeCalculator.hpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        * CIDLC/cidlc.cpp:
+        
+          Overhauled the entire backend to integrate with the new
+          frontend traversal framework, and with recently supported
+          features.
+
 Sun Jan  4 17:48:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/Assembly_Deployer/Assembly_Impl.cpp:

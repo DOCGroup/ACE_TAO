@@ -8,7 +8,7 @@
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
 class ServantGenerator
@@ -20,7 +20,8 @@ public:
   options (CL::Description& d);
 
   void
-  generate (CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
+  generate (CCF::CIDL::SemanticGraph::TranslationUnit&,
+            fs::path const& file);
 
 private:
   void

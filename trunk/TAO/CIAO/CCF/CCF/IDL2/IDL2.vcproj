@@ -189,6 +189,9 @@
 					RelativePath=".\SemanticGraph\Name.cpp">
 				</File>
 				<File
+					RelativePath=".\SemanticGraph\Native.cpp">
+				</File>
+				<File
 					RelativePath=".\SemanticGraph\Operation.cpp">
 				</File>
 				<File
@@ -254,6 +257,9 @@
 				</File>
 				<File
 					RelativePath=".\SemanticGraph\Name.hpp">
+				</File>
+				<File
+					RelativePath=".\SemanticGraph\Native.hpp">
 				</File>
 				<File
 					RelativePath=".\SemanticGraph\Operation.hpp">
@@ -440,6 +446,21 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\Traversal\Native.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\Traversal\Operation.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
@@ -558,6 +579,9 @@
 					RelativePath=".\Traversal\Module.hpp">
 				</File>
 				<File
+					RelativePath=".\Traversal\Native.hpp">
+				</File>
+				<File
 					RelativePath=".\Traversal\Operation.hpp">
 				</File>
 				<File
@@ -653,6 +677,9 @@
 				</File>
 				<File
 					RelativePath=".\SemanticAction\TypeId.hpp">
+				</File>
+				<File
+					RelativePath=".\SemanticAction\ValueType.hpp">
 				</File>
 			</Filter>
 			<Filter
@@ -761,6 +788,21 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath=".\SemanticAction\Impl\Native.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+					</File>
+					<File
 						RelativePath=".\SemanticAction\Impl\Operation.cpp">
 						<FileConfiguration
 							Name="Debug|Win32">
@@ -796,6 +838,21 @@
 								ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 						</FileConfiguration>
 					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\ValueType.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Header Files"
@@ -828,6 +885,9 @@
 						RelativePath=".\SemanticAction\Impl\Module.hpp">
 					</File>
 					<File
+						RelativePath=".\SemanticAction\Impl\Native.hpp">
+					</File>
+					<File
 						RelativePath=".\SemanticAction\Impl\Operation.hpp">
 					</File>
 					<File
@@ -838,6 +898,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\TypeId.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\ValueType.hpp">
 					</File>
 				</Filter>
 			</Filter>

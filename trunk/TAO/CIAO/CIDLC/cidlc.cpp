@@ -21,15 +21,12 @@
 #include "CCF/CIDL/SemanticAction/Impl/Factory.hpp"
 
 #include "ExecutorMappingGenerator.hpp"
-/*
-
-@@ temporarily disabled
-
 #include "ServantGenerator.hpp"
+/*
 #include "RepositoryIdGenerator.hpp"
+*/
 #include "DescriptorGenerator.hpp"
 #include "SizeTypeCalculator.hpp"
-*/
 
 using std::cerr;
 using std::endl;
@@ -56,30 +53,20 @@ main (int argc, char* argv[])
     }
 
     ExecutorMappingGenerator lem_gen;
-
-    /*
-
-    @@ temporarily disabled
-
     ServantGenerator svnt_gen (cl);
+    /*
     RepositoryIdGenerator repid_gen;
+    */
     DescriptorGenerator desc_gen;
     SizeTypeCalculator sizetype_calc;
-    */
 
     if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
     {
       CL::Description d (argv[0]);
 
       lem_gen.options (d);
-
-      /*
-
-      @@ temporarily disabled
-
       svnt_gen.options (d);
       desc_gen.options (d);
-      */
 
       d.add_option (CL::OptionDescription (
                       "trace-semantic-actions",
@@ -157,6 +144,7 @@ main (int argc, char* argv[])
 
         std::cout << t;
       }
+      
       return 0;
     }
 
@@ -234,10 +222,6 @@ main (int argc, char* argv[])
       lem_gen.generate (cl, tu, file_path);
     }
 
-    /*
-
-    @@ temporarily disabled
-
     // Calculate the size type of everything in the AST.
     // This must be executed before the servant code generator.
     {
@@ -246,21 +230,21 @@ main (int argc, char* argv[])
 
     // Generate servant code.
     {
-      svnt_gen.generate (tu);
+      svnt_gen.generate (tu, file_path);
     }
+
+    /*
 
     // Compute repository IDs in a separate pass.
     {
       repid_gen.generate (tu);
     }
 
+    */
     // Generate descriptor code.
     {
       desc_gen.generate (cl, tu);
     }
-
-    */
-
   }
   catch (std::bad_cast const&)
   {
