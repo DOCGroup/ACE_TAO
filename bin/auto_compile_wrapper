@@ -51,6 +51,6 @@ ADMIN=PUT_YOUR_ADDRESS_HERE ; echo "You must edit this file" ; exit 0
 # /usr/sbin/mailx		IRIX
 # /bin/mail 			Linux
 
-exec /pkg/gnu/bin/perl $HOME/bin/auto_compile \
+exec /pkg/gnu/bin/perl $CHECKOUT/ACE_wrappers/bin/auto_compile \
     $CHECKOUT $BUILD $LOGDIR $ADMIN /usr/bin/mailx
 
