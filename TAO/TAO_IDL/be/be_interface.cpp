@@ -143,10 +143,6 @@ int be_interface::gen_client_header (void)
 
       ch = cg->client_header ();
 
-      // pass info
-      cg->outstream (ch);
-      cg->node (this);
-
       // == STEP 1:  generate the class name and class names we inherit ==
       ch->indent (); // start with whatever indentation level we are at
 
@@ -309,9 +305,6 @@ int be_interface::gen_client_stubs (void)
                                             // state
 
   cs = cg->client_stubs ();
-  //pass info
-  cg->node (this);
-  cg->outstream (cs);
 
   cs->indent (); // start with whatever indentation level we are at
 
@@ -348,7 +341,7 @@ int be_interface::gen_client_stubs (void)
     " // need this since _is_a grabbed an obj reference " << nl;
 #endif
   *cs << "if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) " <<
-    "!= NOERROR)\n";
+    "!= TAO_NOERROR)\n";
   cs->incr_indent ();
   *cs << "return " << this->name () << "::_nil ();\n";
   cs->decr_indent ();
@@ -384,7 +377,7 @@ int be_interface::gen_client_stubs (void)
   *cs << "if (!data) return " << this->name () << "::_nil ();" << nl;
   *cs << "// get the object_ptr using Query Interface" << nl;
   *cs <<
-    "if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != NOERROR)"
+    "if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)"
       << nl;
   *cs << "{" << nl;
   *cs << "\tenv.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));"
@@ -426,7 +419,7 @@ int be_interface::gen_client_stubs (void)
   *cs << "\treturn 1; // success using local knowledge\n";
   cs->decr_indent ();
   *cs << "else" << nl;
-  *cs << "\treturn CORBA::Object::_is_a (value, env); // remote call\n";
+  *cs << "\treturn ACE_CORBA_3 (Object, _is_a) (value, env); // remote call\n";
   cs->decr_indent ();
   *cs << "}\n\n";
 
@@ -472,9 +465,6 @@ int be_interface::gen_server_header (void)
                                           // state
 
   sh = cg->server_header ();
-  // pass info
-  cg->node (this);
-  cg->outstream (sh);
 
   // generate the skeleton class name
 
@@ -566,9 +556,6 @@ int be_interface::gen_server_skeletons (void)
                                           // state
 
   ss = cg->server_skeletons ();
-  // pass info
-  cg->node (this);
-  cg->outstream (ss);
 
   // generate the skeleton class name
 
@@ -902,7 +889,6 @@ be_interface::gen_var_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account
@@ -1141,7 +1127,6 @@ be_interface::gen_out_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account

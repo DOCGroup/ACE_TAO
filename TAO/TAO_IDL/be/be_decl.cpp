@@ -32,7 +32,7 @@ be_decl::be_decl (void)
     fullname_ (0),
     flatname_ (0),
     repoID_ (0),
-    size_type_ (be_decl::FIXED), // everybody is fixed size to start with
+    size_type_ (be_decl::SIZE_UNKNOWN),
     encap_len_ (-1)
 {
 }
@@ -48,7 +48,7 @@ be_decl::be_decl (AST_Decl::NodeType type, UTL_ScopedName *n, UTL_StrList
     srv_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
     fullname_ (0),
-    size_type_ (be_decl::FIXED), // everybody is fixed size to start with
+    size_type_ (be_decl::SIZE_UNKNOWN),
     encap_len_ (-1)
 {
 }
@@ -73,8 +73,10 @@ be_decl::tc_encap_len (void)
 
 // return our size type
 be_decl::SIZE_TYPE
-be_decl::size_type (void) const
+be_decl::size_type (void)
 {
+  if (this->size_type_ == be_decl::SIZE_UNKNOWN)
+    (void) this->compute_size_type ();
   return this->size_type_;
 }
 
@@ -82,25 +84,27 @@ be_decl::size_type (void) const
 void
 be_decl::size_type (be_decl::SIZE_TYPE st)
 {
-  if (st == be_decl::FIXED) // does not affect ancestors
-    return;
+  // precondition - you cannot set somebody's sizetype to unknown
+  ACE_ASSERT (st != be_decl::SIZE_UNKNOWN);
 
-  if (this->size_type_ == st) // already of that type.
-    return; // nothing to do
+  // st can be VARIABLE or FIXED
+  if (this->size_type_ == be_decl::SIZE_UNKNOWN) // not set yet
+    this->size_type_ = st; // set it
+  else if ((this->size_type_ == be_decl::FIXED) &&
+           (st == be_decl::VARIABLE))
+    // once we are VARIABLE, we cannot be FIXED. But if we were FIXED and then
+    // get overwritten to VARIABLE, it is fine. Such a situation occurs only
+    // when setting the sizes of structures and unions
+    this->size_type_ = st;
 
-  // precondition
-  ACE_ASSERT (st == be_decl::VARIABLE);
 
-  this->size_type_ = st;
-
+#if 0
   // if we are just a typedef, nothing else to do
   if (this->node_type () == AST_Decl::NT_typedef)
     return;
 
   // update our parent if it is of a specific type
-  if (!this->defined_in ()) // we are outermost
-    return; // nothing to do
-  else
+  if (this->is_nested ())
     {
       // get the scope we are defined in
       be_decl *d = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in
@@ -111,12 +115,13 @@ be_decl::size_type (be_decl::SIZE_TYPE st)
           // as ours.
         case AST_Decl::NT_struct:
         case AST_Decl::NT_union:
-          d->size_type (st); // call recursively to set the size type of
-          // our ancestors
+          d->size_type (st); // call recursively to set the size type of our
+                             // ancestors
         default:
           return; // we are done
         }
     } // end else
+#endif
 }
 
 // compute stringified fully scoped name
@@ -410,6 +415,13 @@ be_decl::name_encap_len (void)
   // the number of bytes to hold the string must be a multiple of 4 since this
   // will be represented as an array of longs
   return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
+}
+
+// compute the size type of the node in question
+int
+be_decl::compute_size_type (void)
+{
+  return 0;
 }
 
 // narrowing methods

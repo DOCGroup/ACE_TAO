@@ -1,3 +1,52 @@
+Wed Dec 10 13:15:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/{be_array, be_decl, be_field, be_module,
+	be_operation, be_predefined_type, be_structure, be_typedef}.h:
+	Added a protected function called "compute_size_type" which is
+	invoked if the size type of a data structure is not known in
+	advance. This happens for structs, unions, arrays, and typedefs
+	whose size type depends on their base types.
+
+	* TAO_IDL/be/{be_array, be_decl, be_field, be_module,
+	be_operation, be_predefined_type, be_structure, be_typedef}.cpp:
+	Implementation of the "compute_size_type".
+
+	* TAO_IDL/be/be_decl.cpp: Changed code that sets "size_type" so
+	that we first see if we are unknown in which case we set our size
+	type. However, once we are VARIABLE, no body can reset us to
+	fixed. Similarly, the overloaded size_type method that return the
+	size type first checks if our size is still unknown in which case
+	it calls for "compute_size_type". This is very essential for data
+	types defined in an imported (included) *.idl file. Thanks to Tom
+	Richards (tomr@mcmenterprise.com) for reporting the bug with
+	included file which resulted in this change.
+
+	* TAO_IDL/be/be_state_attribute.cpp: Included a case for
+	IN_PARAM_TYPE_CH for strings (had previously forgotten to do so).
+
+	* TAO_IDL/be/{be_state_structure, be_structure, be_field}.cpp:
+	Revamped so that we use the same switch based technique in
+	be_state_structure.cpp to generate code. For fields that are
+	sequences or structures or unions, we also generate their code.
+
+	* TAO_IDL/be/be_state_argument.cpp: Thanks to Tom Richards and
+	Carlos O'Ryan for noticing a bug when we use out sequences. There
+	used to be a seg fault in deep_free.cpp because a NUL pointer was
+	being owned by an Any and getting freed. In the server skeleton,
+	for out params we now generate code after the upcall is made so
+	that for out parameter value is inserted in the NVList that is
+	marshaled by the server.
+
+	* TAO_IDL/be/be_interface.cpp: In the generated call to _is_a, we
+	were calling CORBA::Object::_is_a if a remote call is
+	necessary. However, MSVC++ cannot handle a call of the form
+	CORBA::Object::_is_a. So we have to generate code that uses
+	ACE_CORBA_3 so as to be portable. Thanks to Nanbor Wang
+	(nw1@cs.wustl.edu).
+
+	* TAO/test/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the type of the
+	variable that was passed as the out parameter to cube_sequence.
+
 Wed Dec 10 01:02:36 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/iiopobj.cpp (set): Added a special case to IIOP Profile::set
@@ -7,7 +56,7 @@ Wed Dec 10 01:02:36 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Tue Dec  9 21:48:52 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
 	  The sequence test is not running right now, I'm commenting it
 	  out until we can make it work properly.
 
@@ -48,83 +97,83 @@ Tue Dec  9 11:55:50 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Mon Dec  8 13:11:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: 
+	* docs/releasenotes/index.html:
 	  Added more information on how the Event Channel and friends are
 	  going.
 
-	* orbsvcs/bin/Naming_Service/svc.conf: 
+	* orbsvcs/bin/Naming_Service/svc.conf:
 	  Removed some foreign ^M from the file.
 
-	* tao/Makefile: 
-	* tao/connect.cpp: 
-	* tao/giop.cpp: 
-	* tao/orbobj.cpp: 
-	* tao/Timeprobe.i: 
-	* tao/Timeprobe.h: 
-	* tao/Timeprobe.cpp: 
+	* tao/Makefile:
+	* tao/connect.cpp:
+	* tao/giop.cpp:
+	* tao/orbobj.cpp:
+	* tao/Timeprobe.i:
+	* tao/Timeprobe.h:
+	* tao/Timeprobe.cpp:
 	  Added a instrumentation class to measure time interval, also
 	  instrumented some code, as part of the ongoing effort to
 	  optimize the EC, unfortunately the problems are not in TAO ;-)
 	  The code is only instrumented if compiled using probe=1, no
 	  overhead is introduced in normal compiles.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h:
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h:
 	  Addded code to test sequences (as input and output parameters)
 	  they don't work (yet).
 
-	* orbsvcs/lib/Makefile: 
-	* orbsvcs/lib/Timeprobe.h: 
-	* orbsvcs/lib/Timeprobe.i: 
-	* orbsvcs/lib/Timeprobe.cpp: 
+	* orbsvcs/lib/Makefile:
+	* orbsvcs/lib/Timeprobe.h:
+	* orbsvcs/lib/Timeprobe.i:
+	* orbsvcs/lib/Timeprobe.cpp:
 	  The file was moved to $TAO_ROOT/tao.
 
-	* orbsvcs/lib/Scheduler_Factory.cpp: 
+	* orbsvcs/lib/Scheduler_Factory.cpp:
 	  Fixed default dump file, it was using stdout!
 
 Sat Dec 06 15:42:25 1997    <nw1@DINGO>
 
 	* tests/Cubit/TAO/IDL_Cubit/{server,client}.dsp: Updated link time
 	  library names.
-	  
-	* tao/any.cpp: 
-	* tao/any.h: 
-	* tao/corba.h: 
+
+	* tao/any.cpp:
+	* tao/any.h:
+	* tao/corba.h:
 	* tao/corbacom.h:
-	* tao/decode.cpp: 
-	* tao/encode.cpp: 
-	* tao/except.cpp: 
-	* tao/except.h: 
-	* tao/giop.cpp: 
-	* tao/iiopobj.cpp: 
-	* tao/iiopobj.h: 
-	* tao/iioporb.cpp: 
-	* tao/iioporb.h: 
-	* tao/nvlist.cpp: 
-	* tao/nvlist.h: 
-	* tao/object.cpp: 
-	* tao/object.h: 
-	* tao/object.i: 
-	* tao/orbobj.cpp: 
-	* tao/orbobj.h: 
-	* tao/orbobj.i: 
-	* tao/poa.cpp: 
-	* tao/poa.h: 
-	* tao/principa.cpp: 
-	* tao/principa.h: 	
-	* tao/request.cpp: 
-	* tao/request.h: 
-	* tao/stub.h: 
-	* tao/svrrqst.cpp: 
-	* tao/svrrqst.h: 
-	* tao/typecode.cpp: 
-	* tao/typecode.h: 
-	* tao/compat/initguid.h: 
+	* tao/decode.cpp:
+	* tao/encode.cpp:
+	* tao/except.cpp:
+	* tao/except.h:
+	* tao/giop.cpp:
+	* tao/iiopobj.cpp:
+	* tao/iiopobj.h:
+	* tao/iioporb.cpp:
+	* tao/iioporb.h:
+	* tao/nvlist.cpp:
+	* tao/nvlist.h:
+	* tao/object.cpp:
+	* tao/object.h:
+	* tao/object.i:
+	* tao/orbobj.cpp:
+	* tao/orbobj.h:
+	* tao/orbobj.i:
+	* tao/poa.cpp:
+	* tao/poa.h:
+	* tao/principa.cpp:
+	* tao/principa.h:
+	* tao/request.cpp:
+	* tao/request.h:
+	* tao/stub.h:
+	* tao/svrrqst.cpp:
+	* tao/svrrqst.h:
+	* tao/typecode.cpp:
+	* tao/typecode.h:
+	* tao/compat/initguid.h:
 	* tao/compat/objbase.h: Removed dependencies on Microsoft's DCOM
-	  files.  Below is a list of names that got changed.  
+	  files.  Below is a list of names that got changed.
 
 	    HRESULT -> TAO_HRESULT
 	    IID -> TAO_IID
@@ -147,7 +196,7 @@ Fri Dec  5 11:42:25 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	the following situation: machine has 3 interfaces (not including
  	loopback), and it is desired that clients and servers communicate
  	across only one interface.
-  	
+
 	When our IDL_Cubit example's factory created new Cubit instances,
  	the set() method would set the host name for that IIOP::Profile to
  	whatever ACE_INET_Addr::get_host_name() returned.  In this case,
@@ -167,9 +216,9 @@ Fri Dec  5 11:42:25 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Thu Dec  4 18:20:55 1997  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.dsp: Changed hard coded path for cl.exe to CPP_PATH 
+	* TAO_IDL/tao_idl.dsp: Changed hard coded path for cl.exe to CPP_PATH
           environment variable
-       
+
 Thu Dec  4 11:23:55 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/include/{idl,ast,utl_idlist, utl_identifier}.h: removed

@@ -107,8 +107,14 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
           {
             new_name->nconc (new UTL_ScopedName (new Identifier ("Any", 1, 0,
                                                                  I_FALSE), NULL));
-            // we are variable length type
-            this->size_type (be_decl::VARIABLE);
+          }
+          break;
+        case AST_PredefinedType::PT_pseudo:
+          {
+            new_name->nconc (new UTL_ScopedName (new Identifier
+                                                 (n->last_component
+                                                  ()->get_string (), 1, 0,
+                                                                 I_FALSE), NULL));
           }
           break;
         default:
@@ -233,6 +239,7 @@ be_predefined_type::compute_tc_name (void)
       }
     break;
     case AST_PredefinedType::PT_pseudo:
+      // @@@ XXXASG
       // TODO: This is a kind of hack, there are other things that are
       // pseudo objects, not only objref (aka CORBA::Object).
       {
@@ -406,6 +413,23 @@ be_predefined_type::gen_encapsulation (void)
 {
   // XXXASG - TODO what if it was of type Object? or one of the pseudo-objects
   return 0; // nothing to be done
+}
+
+// compute the size type of the node in question
+int
+be_predefined_type::compute_size_type (void)
+{
+  switch (this->pt ())
+    {
+    case AST_PredefinedType::PT_any:
+    case AST_PredefinedType::PT_pseudo:
+      // we are variable length type
+      this->size_type (be_decl::VARIABLE);
+      break;
+    default:
+      this->size_type (be_decl::FIXED);
+    }
+  return 0;
 }
 
 // Narrowing

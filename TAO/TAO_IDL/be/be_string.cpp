@@ -26,6 +26,7 @@
  */
 be_string::be_string (void)
 {
+  this->size_type (be_decl::VARIABLE); // always the case
 }
 
 be_string::be_string (AST_Expression *v)
@@ -35,19 +36,7 @@ be_string::be_string (AST_Expression *v)
                                 NULL),
              NULL)
 {
-  this->size_type (be_decl::VARIABLE); // we are always variable length
-}
-
-// overriden method
-void
-be_string::compute_tc_name (void)
-{
-  // start with the head as the CORBA namespace
-  this->tc_name_ = new UTL_ScopedName (new Identifier ("CORBA", 1, 0, I_FALSE),
-                                       NULL);
-
-  this->tc_name_->nconc (new UTL_ScopedName (new Identifier ("_tc_string", 1, 0,
-                                                             I_FALSE), NULL));
+  this->size_type (be_decl::VARIABLE); // always the case
 }
 
 be_string::be_string (AST_Expression *v, long wide)
@@ -64,6 +53,18 @@ be_string::be_string (AST_Expression *v, long wide)
               NULL)
 {
   this->size_type (be_decl::VARIABLE); // always the case
+}
+
+// overriden method
+void
+be_string::compute_tc_name (void)
+{
+  // start with the head as the CORBA namespace
+  this->tc_name_ = new UTL_ScopedName (new Identifier ("CORBA", 1, 0, I_FALSE),
+                                       NULL);
+
+  this->tc_name_->nconc (new UTL_ScopedName (new Identifier ("_tc_string", 1, 0,
+                                                             I_FALSE), NULL));
 }
 
 // Code generation

@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_constant.h
 //
@@ -13,9 +13,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_CONSTANT_H)
@@ -31,7 +31,7 @@ public:
 
   be_constant (void);
   // constructor
-  
+
   be_constant (AST_Expression::ExprType et,
                AST_Expression *v,
                UTL_ScopedName *n,
@@ -39,13 +39,13 @@ public:
   // constructor
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the constant 
+  // Generates the client-side header information for the constant
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the constant
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the constant 
+  // Generates the server-side header information for the constant
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the constant

@@ -159,7 +159,6 @@ be_union_branch::gen_encapsulation (void)
   long *arr;  // an array holding string names converted to array of longs
 
   cs = cg->client_stubs ();
-  cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at
 
   // emit the case label value

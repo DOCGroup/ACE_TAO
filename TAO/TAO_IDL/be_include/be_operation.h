@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_operation.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_OPERATION_H)
@@ -59,6 +59,10 @@ public:
   DEF_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_operation);
   DEF_NARROW_FROM_SCOPE (be_operation);
+
+protected:
+  int compute_size_type (void);
+  // compute the size type if it is unknown
 };
 
 #endif

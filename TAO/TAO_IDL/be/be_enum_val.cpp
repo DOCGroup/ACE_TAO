@@ -107,18 +107,11 @@ int
 be_enum_val::gen_encapsulation (void)
 {
   TAO_OutStream *cs; // output stream
-  TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  be_type *bt;  // our type node
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (bt);
-  ACE_UNUSED_ARG (nl);
-
   cs = cg->client_stubs ();
-  cg->node (this); // pass ourselves in case we are needed
   cs->indent (); // start from whatever indentation level we were at
 
   // generate name

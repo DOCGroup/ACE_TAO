@@ -79,8 +79,6 @@ be_array::gen_client_header (void)
       cg->push (TAO_CodeGen::TAO_ARRAY_DEFN_CH); // set current code gen state
 
       ch = cg->client_header (); // retrieve client hdr stream
-      cg->outstream (ch); // set client hdr as the current stream
-      cg->node (this);    // pass ourselves for type gen
 
       s = cg->make_state (); // get the state-based code generation object
 
@@ -207,9 +205,7 @@ be_array::gen_client_stubs (void)
       cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CS); // set current code gen state
 
       cs = cg->client_stubs ();
-      // pass info
-      cg->outstream (cs);
-      cg->node (this);
+
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -270,8 +266,6 @@ be_array::gen_client_inline (void)
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
       ci = cg->client_inline ();
-      cg->outstream (ci);
-      cg->node (this);
       cg->push (TAO_CodeGen::TAO_ARRAY_DEFN_CI);
       s = cg->make_state ();
 
@@ -538,7 +532,6 @@ be_array::gen_var_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the var implementation in the inline file
 
@@ -795,7 +788,6 @@ be_array::gen_out_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the out implementation in the inline file
 
@@ -1006,7 +998,6 @@ be_array::gen_forany_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the forany implementation in the inline file
   // Depending upon the data type, there are some differences which we account
@@ -1255,6 +1246,23 @@ be_array::tc_encap_len (void)
 
     }
   return this->encap_len_;
+}
+
+// compute the size type of the node in question
+int
+be_array::compute_size_type (void)
+{
+  be_type *type = be_type::narrow_from_decl (this->base_type ());
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_array::compute_size_type - "
+                         "bad base type\n"), -1);
+    }
+
+  // our size type is the same as our type
+  this->size_type (type->size_type ());
+  return 0;
 }
 
 // Narrowing
