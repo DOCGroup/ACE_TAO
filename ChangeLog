@@ -1,3 +1,11 @@
+Tue Nov 16 07:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/RB_Tree.cpp:
+          In ACE_RB_Tree_Iterator_Base constructor initialise entry local
+          variable with 0, so that when find_i doesn't find anything we don't
+          set the node_ to an unitialised value. Thanks to Andreas Koehler
+          <a dot koehler dot tux at gmx dot de> for reporting this.
+
 Sun Nov 14 10:12:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACEXML/apps/svcconf/Makefile.am:
