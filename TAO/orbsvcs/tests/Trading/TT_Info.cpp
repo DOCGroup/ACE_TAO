@@ -172,23 +172,21 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 	continue;
       else if (tc->equal (TAO_Trader_Test::_tc_StringSeq, env))
 	{
-	  TAO_Trader_Test::StringSeq* str_seq_ptr;
-	  (*value) >>= str_seq_ptr;
+	  TAO_Trader_Test::StringSeq* str_seq;
+	  (*value) >>= str_seq;
 
-	  TAO_Trader_Test::StringSeq_var str_seq (str_seq_ptr);
 	  for (int length = str_seq->length (), i = 0; i < length; i++)
-	    ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) str_seq[i]));
+	    ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) (*str_seq)[i]));
 
 	  ACE_DEBUG ((LM_DEBUG, "\n"));
 	}
       else if (tc->equal (TAO_Trader_Test::_tc_ULongSeq, env))
 	{
-	  TAO_Trader_Test::ULongSeq* ulong_seq_ptr;
-	  (*value) >>= ulong_seq_ptr;
+	  TAO_Trader_Test::ULongSeq* ulong_seq;
+	  (*value) >>= ulong_seq;
 
-	  TAO_Trader_Test::ULongSeq_var ulong_seq (ulong_seq_ptr);
 	  for (int length = ulong_seq->length (), i = 0; i < length; i++)
-	    ACE_DEBUG ((LM_DEBUG, "%d ", ulong_seq[i]));
+	    ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
 
 	  ACE_DEBUG ((LM_DEBUG, "\n"));
 	}

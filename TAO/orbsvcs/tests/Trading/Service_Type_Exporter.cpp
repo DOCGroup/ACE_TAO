@@ -251,6 +251,7 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& _env)
 	  TAO_CHECK_ENV;
 
 	  this->dump_typestruct (TT_Info::INTERFACE_NAMES[i], type_struct.in ());
+          ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
 	}
     }
   TAO_CATCHANY
@@ -280,6 +281,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& _env)
 	  TAO_CHECK_ENV;
 
 	  this->dump_typestruct (TT_Info::INTERFACE_NAMES[i], type_struct.in ());
+          ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
 	}
     }
   TAO_CATCHANY
