@@ -63,7 +63,7 @@ lex.CC_command.cpp:     CC_command.l CC_command.tab.h
 .PHONY: lex.CC_command.cpp.target
 
 lex.CC_command.cpp.target:
-		$(LEX) -t -I CC_command.l > /tmp/$(USER).CC_L1
+		$(LEX) -L -t -I CC_command.l > /tmp/$(USER).CC_L1
 		sed -e "s/unistd/stdio/g" \
 	        -e "s/\\$$\(Header[^$$]*\) \\$$/\\1/" \
 		-e "s/yy/ace_cc_yy/g" \
@@ -87,7 +87,7 @@ CC_command.tab.cpp CC_command.tab.h: CC_command.y
 .PHONY: CC_command.tab
 
 CC_command.tab: CC_command.y
-		$(YACC) -d CC_command.y
+		$(YACC) -d -l CC_command.y
 		sed -e "s/char \*getenv/char *ace_foo/g" \
 		    -e "s/= getenv/= ACE_OS::getenv/g" \
 		    -e "s/yynewerror://g" \

@@ -439,7 +439,6 @@ static char *ace_cc_yy_last_accepting_cpos;
 #define ACE_CC_YY_MORE_ADJ 0
 #define ACE_CC_YY_RESTORE_ACE_CC_YY_MORE_OFFSET
 char *ace_cc_yytext;
-#line 1 "CC_command.l"
 #define INITIAL 0
 /* $id$
  * ============================================================================
@@ -461,7 +460,6 @@ char *ace_cc_yytext;
 #define ACE_CC_YY_NO_UNPUT 1
 #define ACE_CC_YY_NO_INPUT 1
 #define ACE_CC_YY_ALWAYS_INTERACTIVE 1
-#line 20 "CC_command.l"
 #include "CC_command.h"
 #include "CC_command.tab.h"
 #include "ace/ACE.h"
@@ -621,7 +619,6 @@ ACE_CC_YY_DECL
 	register char *ace_cc_yy_cp, *ace_cc_yy_bp;
 	register int ace_cc_yy_act;
 
-#line 28 "CC_command.l"
 
 
 
@@ -711,132 +708,107 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 ACE_CC_YY_RULE_SETUP
-#line 30 "CC_command.l"
 return T_TERM;
 	/* ACE_CC_YY_BREAK */
 case 2:
 ACE_CC_YY_RULE_SETUP
-#line 31 "CC_command.l"
 return T_START_CMD;
 	/* ACE_CC_YY_BREAK */
 case 3:
 ACE_CC_YY_RULE_SETUP
-#line 32 "CC_command.l"
 return T_CREATE_CMD;
 	/* ACE_CC_YY_BREAK */
 case 4:
 ACE_CC_YY_RULE_SETUP
-#line 33 "CC_command.l"
 return T_LOCK_CMD;
 	/* ACE_CC_YY_BREAK */
 case 5:
 ACE_CC_YY_RULE_SETUP
-#line 34 "CC_command.l"
 return T_UNLOCK_CMD;
 	/* ACE_CC_YY_BREAK */
 case 6:
 ACE_CC_YY_RULE_SETUP
-#line 35 "CC_command.l"
 return T_TRYLOCK_CMD;
 	/* ACE_CC_YY_BREAK */
 case 7:
 ACE_CC_YY_RULE_SETUP
-#line 36 "CC_command.l"
 return T_CHANGEMODE_CMD;
 	/* ACE_CC_YY_BREAK */
 case 8:
 ACE_CC_YY_RULE_SETUP
-#line 37 "CC_command.l"
 return T_SLEEP_CMD;
 	/* ACE_CC_YY_BREAK */
 case 9:
 ACE_CC_YY_RULE_SETUP
-#line 38 "CC_command.l"
 return T_WAIT_CMD;
 	/* ACE_CC_YY_BREAK */
 case 10:
 ACE_CC_YY_RULE_SETUP
-#line 39 "CC_command.l"
 return T_PRINT_CMD;
 	/* ACE_CC_YY_BREAK */
 case 11:
 ACE_CC_YY_RULE_SETUP
-#line 40 "CC_command.l"
 return T_REPEAT_CMD;
 	/* ACE_CC_YY_BREAK */
 case 12:
 ACE_CC_YY_RULE_SETUP
-#line 41 "CC_command.l"
 return T_EXCEP_CMD;
 	/* ACE_CC_YY_BREAK */
 case 13:
 ACE_CC_YY_RULE_SETUP
-#line 42 "CC_command.l"
 return T_LOOKUP_CMD;
 	/* ACE_CC_YY_BREAK */
 case 14:
 ACE_CC_YY_RULE_SETUP
-#line 43 "CC_command.l"
 return T_READ;
 	/* ACE_CC_YY_BREAK */
 case 15:
 ACE_CC_YY_RULE_SETUP
-#line 44 "CC_command.l"
 return T_IREAD;
 	/* ACE_CC_YY_BREAK */
 case 16:
 ACE_CC_YY_RULE_SETUP
-#line 45 "CC_command.l"
 return T_UPGRADE;
 	/* ACE_CC_YY_BREAK */
 case 17:
 ACE_CC_YY_RULE_SETUP
-#line 46 "CC_command.l"
 return T_WRITE;
 	/* ACE_CC_YY_BREAK */
 case 18:
 ACE_CC_YY_RULE_SETUP
-#line 47 "CC_command.l"
 return T_IWRITE;
 	/* ACE_CC_YY_BREAK */
 case 19:
 ACE_CC_YY_RULE_SETUP
-#line 48 "CC_command.l"
 { ace_cc_yylval.id = ACE_OS::strdup(&ace_cc_yytext[1]);
 			 ace_cc_yylval.id[ace_cc_yyleng-2]='\0';
 			 return Q_STRING; }
 	/* ACE_CC_YY_BREAK */
 case 20:
 ACE_CC_YY_RULE_SETUP
-#line 51 "CC_command.l"
 { ace_cc_yylval.num = atoi(ace_cc_yytext); return T_NUM; }
 	/* ACE_CC_YY_BREAK */
 case 21:
 ACE_CC_YY_RULE_SETUP
-#line 52 "CC_command.l"
 { ace_cc_yylval.id = ACE_OS::strdup(ace_cc_yytext);
                            return T_IDENT; }
 	/* ACE_CC_YY_BREAK */
 case 22:
 ACE_CC_YY_RULE_SETUP
-#line 54 "CC_command.l"
 { }
 	ACE_CC_YY_BREAK
 case 23:
 ACE_CC_YY_RULE_SETUP
-#line 55 "CC_command.l"
 { }
 	ACE_CC_YY_BREAK
 case 24:
 ACE_CC_YY_RULE_SETUP
-#line 56 "CC_command.l"
 { line_no ++;
                            ACE_OS::strcpy(line_buf, ace_cc_yytext+1);
                            ace_cc_yyless(1); }
 	ACE_CC_YY_BREAK
 case 25:
 ACE_CC_YY_RULE_SETUP
-#line 59 "CC_command.l"
 ACE_CC_ECHO;
 	ACE_CC_YY_BREAK
 case ACE_CC_YY_STATE_EOF(INITIAL):
@@ -1733,4 +1705,3 @@ int main()
 	return 0;
 	}
 #endif
-#line 59 "CC_command.l"

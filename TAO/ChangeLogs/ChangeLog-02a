@@ -1,3 +1,37 @@
+Mon Nov 12 20:26:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * TAO_IDL/Makefile:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+
+          Final kill of all the #line directives. This change is very
+          similar to the changes made to Svc_Conf_l.cpp and Svc_Conf_y.cpp
+          under $ACE_ROOT/ace described in ChangeLog entry of "Sat Nov 10
+          22:13:54 2001 Krishnakumar B <kitty@cs.wustl.edu>"
+
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+          Removed the #line directives directly without changing the
+          Makefiles as there was neither a Makefile target nor any diff
+          files to apply.
+
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.h:
+        * orbsvcs/tests/Concurrency/Makefile:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp.diff:
+
+          Same changes as the first one.
+
+          There are still some warnings whenever a idl file is processed.
+          But there is nothing to be done there as it seems to be a bug in
+          the Sun CC preprocessor which according to the web-page is
+          fixed. Will have to wait and watch.
+
 Mon Nov 12 17:37:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_tc_common):
@@ -28,7 +62,7 @@ Mon Nov 12 12:15:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 	* tao/IIOP_Transport.cpp (get_listen_point): Removed some code
-	  that was there, more for historic reasons. 
+	  that was there, more for historic reasons.
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Added a
 	  debug statement.
@@ -48,14 +82,14 @@ Sun Nov 11 23:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 Sun Nov 11 14:15:23 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* docs/configurations.html: Fixed some documentation
-	  inconsistencies.  
+	  inconsistencies.
 
 Sun Nov 11 11:40:23 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* docs/Options.html: Fixed the documentation to be more helpful. 
+	* docs/Options.html: Fixed the documentation to be more helpful.
 
 Sun Nov 11 11:02:23 2001  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
 	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
 	* tests/Exposed_Policies/Policy_Verifier.cpp:
@@ -78,7 +112,7 @@ Sun Nov 11 11:02:23 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/tests/Notify/Basic/Simple.cpp:
 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp: 
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
           More const char * fixes.
 
 Sat Nov 10 23:13:37 2001  Ossama Othman  <ossama@uci.edu>
