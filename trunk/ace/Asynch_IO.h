@@ -19,7 +19,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu),
-//    Tim Harrison (harrison@cs.wustl.edu), and
+//    Tim Harrison (harrison@cs.wustl.edu) and
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
@@ -41,7 +41,7 @@ class ACE_INET_Addr;
 class ACE_Export ACE_Asynch_Result : protected ACE_OVERLAPPED
 {
   // = TITLE
-  //       An abstract class which adds information to the OVERLAPPED
+  //     An abstract class which adds information to the OVERLAPPED
   //     structure to make it more useful.
   //
   // = DESCRIPTION
@@ -143,6 +143,17 @@ public:
   // operations issued by other threads.
 
 protected:
+#if defined (ACE_HAS_AIO_CALLS)
+  int register_aio_with_proactor (aiocb *aiocb_ptr);
+  // This call is for POSIX <aio_> calls.  This method is used by
+  // <ACE_Asynch_Operation> to store some information with the
+  // Proactor after an <aio_> call is issued, so that the Proactor can
+  // retrive this information to do <aio_return> and <aio_error>.
+  // Passing a '0' ptr returns the status, indicating whether there
+  // are slots available or no. Passing a valid ptr stores the ptr
+  // with the Proactor.
+#endif /* ACE_HAS_AIO_CALLS */
+
   ACE_Asynch_Operation (void);
   // A no-op constructor.
 
@@ -765,7 +776,7 @@ public:
   // Virtual destruction.
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This method will be called when an asynchronous read completes on
+   // This method will be called when an asynchronous read completes on
   // a stream.
 
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
@@ -848,6 +859,72 @@ public:
   // Called by ACE_Asynch_Acceptor to pass the addresses of the new
   // connections.
 };
+
+#if defined (ACE_HAS_AIO_CALLS)
+class ACE_Export ACE_Asynch_Transmit_Handler : public ACE_Handler
+{
+  // = TITLE
+  //     Auxillary handler for doing <Asynch_Transmit_File> in
+  //     Unix. <ACE_Asynch_Transmit_File> internally uses this.
+  //
+  // = DESCRIPTION
+  //     This is a helper class for implementing
+  //     <ACE_Asynch_Transmit_File> in Unix systems.
+public:
+  ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result);
+  // Constructor.
+
+  virtual ~ACE_Asynch_Transmit_Handler (void);
+  // Destructor.
+
+  int transmit (void);
+  // Do the transmission. All the info to do the transmission is in
+  // the <result> member.
+protected:
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  // This is called when asynchronous writes from the socket complete.
+
+  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  // This is called when asynchronous reads from the file complete.
+private:
+  int initiate_read_file (void);
+  // Issue asynch read from  the file.
+
+  ACE_Asynch_Transmit_File::Result *result_;
+  // The asynch result pointer made from the initial transmit file
+  // request.
+
+  ACE_Asynch_Read_File rf_;
+  // To read from the file to be transmitted.
+
+  ACE_Asynch_Write_Stream ws_;
+  // Write stream to write the header, trailer and the data.
+
+  ACE_Message_Block *mb_;
+  // Message bloack used to do the txn.
+
+  enum ACT
+  {
+    HEADER_ACT  = 1,
+    DATA_ACT    = 2,
+    TRAILER_ACT = 3
+  };
+  ACT * header_act_;
+  ACT * data_act_;
+  ACT * trailer_act_;
+  // ACT to transmit header, data and trailer.
+
+  size_t file_offset_;
+  // Current offset of the file being transmitted.
+
+  size_t file_size_;
+  // Total size of the file.
+
+  size_t bytes_transferred_;
+  // Number of bytes transferred on the stream.
+};
+
+#endif /* ACE_HAS_AIO_CALLS */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Asynch_IO.i"
