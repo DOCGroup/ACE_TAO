@@ -28,8 +28,15 @@ namespace CCF
       }
 
     public:
-      virtual ~Token () throw () {}
+      virtual
+      ~Token () throw () {}
 
+      virtual void
+      print (std::ostream& o)
+      {
+        o << lexeme ();
+      }
+      
     public:
       std::string
       lexeme () const
@@ -59,7 +66,7 @@ namespace CCF
     inline std::ostream&
     operator<< (std::ostream& o, TokenPtr const& t)
     {
-      if (t != 0) o << t->lexeme ();
+      if (t != 0) t->print (o);
       return o;
     }
 
@@ -94,8 +101,6 @@ namespace CCF
     typedef
     ReferenceCounting::StrictPtr<Keyword>
     KeywordPtr;
-
-
 
     //
     //
@@ -132,7 +137,7 @@ namespace CCF
     typedef
     ReferenceCounting::StrictPtr<Identifier>
     IdentifierPtr;
-
+    
 
     //
     //
@@ -149,7 +154,7 @@ namespace CCF
     typedef
     ReferenceCounting::StrictPtr<SimpleIdentifier>
     SimpleIdentifierPtr;
-
+    
 
     //
     //
@@ -178,6 +183,13 @@ namespace CCF
           : Token (lexeme, line)
       {
       }
+
+      virtual void
+      print (std::ostream& o)
+      {
+        o << '\"' << lexeme () << '\"';
+      }      
+      
     };
 
     typedef

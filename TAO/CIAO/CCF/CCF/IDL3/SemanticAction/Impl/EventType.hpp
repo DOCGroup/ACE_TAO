@@ -30,7 +30,7 @@ namespace CCF
           EventType (bool trace, SyntaxTree::ScopePtr& scope)
               : ScopeBase<SyntaxTree::EventTypeDeclPtr> (scope),
                 trace_ (trace),
-                name_ ("")
+                name_ ("::") //@@ this is dirty
           {
           }
 
@@ -62,7 +62,7 @@ namespace CCF
             push (et);
             scope_ = et;
 
-            name_ = SimpleName (""); //indicate that we are done
+            name_ = SimpleName ("::"); //indicate that we are done
             inherits_.clear ();
           }
 

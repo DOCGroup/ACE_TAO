@@ -32,18 +32,20 @@ namespace CCF
 
           error_handler (context, dout),
 
-          ABSTRACT  ("abstract"),
-          ATTRIBUTE ("attribute"),
-          FACTORY   ("factory"),
-          IN        ("in"),
-          INCLUDE   ("include"),
-          INOUT     ("inout"),
-          INTERFACE ("interface"),
-          LOCAL     ("local"),
-          MODULE    ("module"),
-          OUT       ("out"),
-          SINCLUDE  ("sinclude"),
-          SUPPORTS  ("supports"),
+          ABSTRACT   ("abstract"),
+          ATTRIBUTE  ("attribute"),
+          FACTORY    ("factory"),
+          IN         ("in"),
+          INCLUDE    ("include"),
+          INOUT      ("inout"),
+          INTERFACE  ("interface"),
+          LOCAL      ("local"),
+          MODULE     ("module"),
+          OUT        ("out"),
+          SINCLUDE   ("sinclude"),
+          SUPPORTS   ("supports"),
+          TYPEID     ("typeid"),
+          TYPEPREFIX ("typeprefix"),
 
           COLON  (":"),
           COMMA  (","),
@@ -58,6 +60,21 @@ namespace CCF
           //
           act_include_begin (f.include (), &SemanticAction::Include::begin),
           act_include_end (f.include (), &SemanticAction::Include::end),
+
+          // TypeId
+          //
+          //
+          act_type_id_begin (f.type_id (), &SemanticAction::TypeId::begin),
+          act_type_id_end (f.type_id (), &SemanticAction::TypeId::end),
+
+          // TypePrefix
+          //
+          //
+          act_type_prefix_begin (f.type_prefix (),
+                                 &SemanticAction::TypePrefix::begin),
+
+          act_type_prefix_end (f.type_prefix (),
+                               &SemanticAction::TypePrefix::end),
 
           // Module
           //
@@ -148,6 +165,26 @@ namespace CCF
         | module_decl
         | unconstrained_interface_decl
         | extension
+        | type_id
+        | type_prefix
+        ;
+
+      type_id =
+           TYPEID
+        >> (
+               identifier
+            >> string_literal
+           )[act_type_id_begin]
+        >> SEMI[act_type_id_end]
+        ;
+
+      type_prefix =
+           TYPEPREFIX
+        >> (
+                identifier
+             >> string_literal
+           )[act_type_prefix_begin]
+        >> SEMI[act_type_prefix_end]
         ;
 
       abstract_type_decl =

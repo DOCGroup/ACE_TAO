@@ -1,3 +1,16 @@
+Thu Aug 28 12:30:10 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CFF/IDL2/SyntaxTree/Elements.*: Made SyntaxTree::Node
+	  capable of holding arbitrary context information (see
+	  SyntaxTree::Node::context ()). Plus some minor architectural
+	  changes.
+
+	* CCF/CFF/IDL2/SyntaxTree/TypeId.*
+	* CCF/CFF/IDL2/SemanticAction/TypeId.*
+	* CCF/CFF/IDL2/SemanticAction/Impl/TypeId.*
+	* CCF/CFF/IDL2/LexicalAnalyzer.*
+	* CCF/CFF/IDL2/Parser.*: Added support for typeid and typeprefix.
+
 Tue Aug 26 16:59:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/RTComponentServer/RTConfig_Manager.cpp:
@@ -5,7 +18,7 @@ Tue Aug 26 16:59:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tools/RTComponentServer/RTServer_Impl.cpp:
 	* tools/RTComponentServer/RTServer_Impl.h:
 	* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed compilation
-	  problem on Linux.  
+	  problem on Linux.
 
 Tue Aug 26 10:14:03 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
