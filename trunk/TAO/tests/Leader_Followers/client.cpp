@@ -26,7 +26,7 @@ ACE_RCSID(Leader_Followers, client, "$Id$")
   static const char *IOR = "file://ior";
 
 // Number of client threads.
-static int number_of_client_threads = 5;
+static int number_of_client_threads = 3;
 
 // Number of event loop threads.
 static int number_of_event_loop_threads = 1;

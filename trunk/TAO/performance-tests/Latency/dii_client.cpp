@@ -234,6 +234,7 @@ DII_Client::svc (void)
           for (j = 0; j != burst; ++j)
             {
               ACE_hrtime_t prep_base = ACE_OS::gethrtime ();
+              cout << "OK Amba 1 " <<endl;
               CORBA::Request_ptr req =
                 this->server_->_request ("test_method",
                                          ACE_TRY_ENV);
@@ -247,12 +248,14 @@ DII_Client::svc (void)
 
               this->req_array_[j] = req;
 
+              cout << "OK Amba " <<endl;
               req->send_deferred (ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
               this->request_prep_.sample (prep_now - this->base_,
                                           prep_now - prep_base);
             }
+
 
           this->sent_now_ = ACE_OS::gethrtime ();
 

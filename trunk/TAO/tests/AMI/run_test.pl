@@ -12,7 +12,7 @@ use Cwd;
 $cwd = getcwd();
 $client_conf="$DIR_SEPARATOR" . "muxed.conf";
 $client_process="simple_client";
-$debug_level='5';
+$debug_level='0';
 $threads='2';
 $iterations='1';
 
