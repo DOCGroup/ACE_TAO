@@ -2410,11 +2410,7 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 
 #endif /* end #if !defined */
 
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef _tao_seq_Octet _marshaled_exception_seq;
-  #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
-          virtual void marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &) = 0;    // set
+    virtual void marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &) = 0;    // set
     virtual const Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void) const = 0;     // get method (read only)
     virtual Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void) = 0;     // get method (read/write only)
 
@@ -2726,11 +2722,7 @@ TAO_NAMESPACE  OBV_Messaging
     virtual void byte_order (CORBA::Boolean);    // set
     virtual CORBA::Boolean byte_order (void) const;     // get method
 
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef _tao_seq_Octet _marshaled_exception_seq;
-  #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
-          virtual void marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &);    // set
+    virtual void marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &);    // set
     virtual const Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void) const;     // get method (read only)
     virtual Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void);     // get method (read/write only)
 
