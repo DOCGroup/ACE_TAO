@@ -1,3 +1,10 @@
+Thu Jan 15 16:50:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
+	  Removed avoids += minimum_corba from these files because it is now set
+	  in rtcorbacommon.
+
 Thu Jan 15 16:14:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/RTCosScheduling/testSched_export.h:
