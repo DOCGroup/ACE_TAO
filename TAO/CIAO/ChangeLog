@@ -2,7 +2,8 @@ Fri Oct 29 17:18:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIDLC/ServantSourceGenerator.cpp (namespace): 
 
-	  Fixed some weird VC6 issues reported by Theckla. 
+	  Fixed some weird VC6 issues reported by Theckla
+	  Louchios<theckla.louchiois@lmco.com>.
 
 Fri Oct 29 10:44:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
