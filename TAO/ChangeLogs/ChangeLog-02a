@@ -1,3 +1,25 @@
+Thu Aug 16 10:40:56 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.h (TAO_ORBInitInfo):
+
+	  The CodecFactory reference is now a "_var" since the
+	  CodecFactory is now reference counted.
+
+	* tao/ORBInitInfo.cpp (register_initial_reference,
+	  resolve_initial_references):
+
+	  Removed the restriction that prevented
+	  register_initial_reference() and resolve_initial_references()
+	  from being called in ORBInitializer::post_init() and
+	  ORBInitializer::pre_init(), respectively.  The Portable
+	  Interceptors FTF relaxed those restrictions.
+
+	  (codec_factory):
+
+	  Since the CodecFactory is now reference counted, create a new
+	  CodecFactory on the heap and cache it.  Fixes a seg fault
+	  reported by Greg J. Hall <Greg.Hall@Australia.Boeing.com>.
+
 Thu Aug 16 11:38:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory.dsp:
