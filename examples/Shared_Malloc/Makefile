@@ -17,11 +17,11 @@ FILES   = Malloc \
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
-SHOBJ	= $(addsuffix .so,$(FILES))
+#SHOBJ	= $(addsuffix .so,$(FILES))
 
-LDLIBS	= $(addprefix $(VSHDIR),$(SHOBJ))
+#LDLIBS	= $(addprefix $(VSHDIR),$(SHOBJ))
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
+#VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD   = $(VBIN)
 
