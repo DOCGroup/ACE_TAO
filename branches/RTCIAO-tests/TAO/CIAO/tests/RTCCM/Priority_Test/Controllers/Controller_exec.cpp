@@ -32,7 +32,7 @@ MyImpl::Controller_exec_i::start (CORBA::Long arg
   Priority_Test::Common_Ops_var device =
     this->context_->get_connection_worker (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  const int niterations = 100000;
+  const int niterations = 1000;
   const CORBA::Long work = arg;
   ACE_Sample_History history (niterations);
 
