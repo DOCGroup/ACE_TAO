@@ -38,9 +38,9 @@ namespace TAO
   namespace TypeCode
   {
     template<typename STRING_TYPE> class Case;
-    template<typename STRING_TYPE> class Enumerator;
-    template<typename STRING_TYPE> class Struct_Field;
-    template<typename STRING_TYPE> class Value_Field;
+    template<typename STRING_TYPE> struct Enumerator;
+    template<typename STRING_TYPE> struct Struct_Field;
+    template<typename STRING_TYPE> struct Value_Field;
   }
 }
 
