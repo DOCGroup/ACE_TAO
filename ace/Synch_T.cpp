@@ -199,11 +199,11 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 
       this->process_cond_ = 
         (ACE_cond_t *) ACE_OS::mmap (0,
-                                     sizeof (ACE_mutex_t),
-                                     PROT_RDWR,
-                                     MAP_SHARED,
-                                     fd,
-                                     0);
+                                      sizeof (ACE_cond_t),
+                                      PROT_RDWR,
+                                      MAP_SHARED,
+                                      fd,
+                                      0);
       ACE_OS::close (fd);
       if (this->process_cond_ == MAP_FAILED)
         return;
@@ -265,7 +265,7 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
     {
 #if defined (CHORUS)
       if (this->process_cond_ != 0)
-        return ACE_OS::cond_timewait (this->process_cond_,
+        return ACE_OS::cond_timedwait (this->process_cond_,
                                       &mutex_.lock_,
                                       (ACE_Time_Value *) abstime);
 #endif /* CHORUS */
