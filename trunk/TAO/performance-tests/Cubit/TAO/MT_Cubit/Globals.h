@@ -11,6 +11,10 @@
 // = FILENAME
 //    Globals.h
 //
+// = DESCRIPTION
+//    All the globally defined classes, functions, types, and #defines
+//    are centralized here.
+//
 // = AUTHOR
 //    Nagarajan Surendran <naga@cs.wustl.edu>
 //
@@ -125,9 +129,10 @@ public:
   virtual ACE_Sched_Priority get_high_priority (void);
   // Sets the priority of the high priority thread.
 
-  virtual ACE_Sched_Priority get_low_priority (u_int num_low_priority,
-                                               ACE_Sched_Priority prev_priority,
-                                               u_int use_multiple_priority);
+  virtual ACE_Sched_Priority get_low_priority 
+    (u_int num_low_priority,
+     ACE_Sched_Priority prev_priority,
+     u_int use_multiple_priority);
   // Sets the priority to be used for the low priority thread.
 
   u_int number_of_priorities (void);

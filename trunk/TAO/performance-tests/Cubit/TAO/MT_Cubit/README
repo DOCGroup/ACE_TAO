@@ -1,7 +1,17 @@
 // $Id$
 
-The MT-Cubit example
+THE MT_CUBIT EXAMPLE
 --------------------
+
+This directory contains the source code for the TAO "MT_Cubit"
+benchmark, which enables us to measure the real-time performance of
+TAO.  MT_Cubit measures the latency,jitter, determinism, CPU
+utilization, and degree of priority inversion incurred by TAO twoway
+operations invoked under different workloads and priorities.  For
+more information and empirical results, please see
+
+http://www.cs.wustl.edu/~schmidt/RT-perf.ps.gz
+http://www.cs.wustl.edu/~schmidt/RT-OS.ps.gz
 
 COMPILING
 ---------

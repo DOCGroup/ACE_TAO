@@ -57,7 +57,7 @@ public:
 
   int do_thread_per_rate_test (void);
   // Performs the test with 4 threads each sending requests at rates
-  // of 20,10,5 and 1Hz.
+  // of 20, 10, 5, and 1Hz.
 
   int start_servant (void);
   // Starts the client utilization thread.

@@ -10,7 +10,7 @@
 
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
 
-Task_State::Task_State (int argc, char **argv)
+Task_State::Task_State (int argc, char *argv[])
   : barrier_ (0), 
     key_ ("Cubit"),
     loop_count_ (1000),
@@ -47,11 +47,10 @@ Task_State::Task_State (int argc, char **argv)
 }
 
 int
-Task_State::parse_args (int argc,char **argv)
+Task_State::parse_args (int argc,char *argv[])
 {
   ACE_Get_Opt opts (argc, argv, "U:mu:sn:t:d:rxof:g:1cl");
   int c;
-  int datatype;
 
   while ((c = opts ()) != -1)
     switch (c) {
@@ -89,31 +88,33 @@ Task_State::parse_args (int argc,char **argv)
       thread_per_rate_ = 1;
       break;
     case 'd':
-      datatype = ACE_OS::atoi (opts.optarg);
-      switch (datatype)
-        {
-        case CB_OCTET:
-          ACE_DEBUG ((LM_DEBUG,
-                      "Testing Octets\n"));
-          datatype_ = CB_OCTET;
-          break;
-        case CB_LONG:
-          ACE_DEBUG ((LM_DEBUG,
-                      "Testing Longs\n"));
-          datatype_ = CB_LONG;
-          break;
-        case CB_STRUCT:
-          ACE_DEBUG ((LM_DEBUG,
-                      "Testing Structs\n"));
-          datatype_ = CB_STRUCT;
-          break;
-        case CB_SHORT:
-        default:
-          ACE_DEBUG ((LM_DEBUG,
-                      "Testing Shorts\n"));
-          datatype_ = CB_SHORT;
-          break;
-        }
+      {
+        int datatype = ACE_OS::atoi (opts.optarg);
+        switch (datatype)
+          {
+          case CB_OCTET:
+            ACE_DEBUG ((LM_DEBUG,
+                        "Testing Octets\n"));
+            datatype_ = CB_OCTET;
+            break;
+          case CB_LONG:
+            ACE_DEBUG ((LM_DEBUG,
+                        "Testing Longs\n"));
+            datatype_ = CB_LONG;
+            break;
+          case CB_STRUCT:
+            ACE_DEBUG ((LM_DEBUG,
+                        "Testing Structs\n"));
+            datatype_ = CB_STRUCT;
+            break;
+          case CB_SHORT:
+          default:
+            ACE_DEBUG ((LM_DEBUG,
+                        "Testing Shorts\n"));
+            datatype_ = CB_SHORT;
+            break;
+          }
+      }
       continue;
     case 'n':                   // loop count
       loop_count_ = (u_int) ACE_OS::atoi (opts.optarg);
@@ -152,7 +153,8 @@ Task_State::parse_args (int argc,char **argv)
 
   if (ior_file_ != 0)
     {
-      FILE *ior_file = ACE_OS::fopen (ior_file_, "r");
+      FILE *ior_file =
+        ACE_OS::fopen (ior_file_, "r");
 
       if (ior_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -185,6 +187,7 @@ Task_State::parse_args (int argc,char **argv)
   // wanting to begin at the same time the clients begin && the main
   // thread wants to know when clients will start running to get
   // accurate context switch numbers.
+
   if (thread_per_rate_ == 0)
     {
       if (use_utilization_test_ == 1)
@@ -241,7 +244,7 @@ Task_State::~Task_State (void)
 Client::Client (ACE_Thread_Manager *thread_manager,
                 Task_State *ts,
                 u_int id)
-  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thread_manager)),
+  : ACE_Task<ACE_MT_SYNCH> (thread_manager),
     cubit_impl_ (0),
     ts_ (ts),
     num_ (0),
@@ -331,9 +334,12 @@ Client::get_high_priority_jitter (void)
 
   JITTER_ARRAY_ITERATOR iterator =
     this->ts_->global_jitter_array_[0]->begin ();
+
   // latency in usecs.
   ACE_timer_t *latency = 0;
-  u_int i=0;
+
+  u_int i = 0;
+
   for (iterator.first ();
        i < number_of_samples && iterator.next (latency) == 1;
        i++,iterator.advance ())
@@ -344,6 +350,7 @@ Client::get_high_priority_jitter (void)
       // giving it to stats.
       stats.sample ((ACE_UINT32) (*latency *1000 *1000 + 0.5));
     }          
+
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
 
@@ -356,6 +363,7 @@ Client::get_high_priority_jitter (void)
 }
 
 // Returns the jitter in usecs.
+
 ACE_timer_t
 Client::get_low_priority_jitter (void)
 {
@@ -373,6 +381,7 @@ Client::get_low_priority_jitter (void)
 
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
+
   for (u_int j = 1;
        j < this->ts_->thread_count_;
        j++)
@@ -384,8 +393,11 @@ Client::get_low_priority_jitter (void)
 
       ACE_timer_t number_of_calls = 
         this->ts_->count_ [j] / this->ts_->granularity_;
+
       ACE_timer_t *latency = 0;
-      u_int i=0;
+
+      u_int i = 0;
+
       for (iterator.first ();
            i < number_of_calls && iterator.next (latency) == 1;
            iterator.advance ())
@@ -412,7 +424,8 @@ Client::get_jitter (u_int id)
 {
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_latency (id);
-  ACE_timer_t number_of_samples = this->ts_->count_[id]  / this->ts_->granularity_;
+  ACE_timer_t number_of_samples =
+    this->ts_->count_[id]  / this->ts_->granularity_;
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
@@ -427,8 +440,11 @@ Client::get_jitter (u_int id)
 
   ACE_timer_t number_of_calls =
     this->ts_->count_[id] / this->ts_->granularity_;
+
   ACE_timer_t *latency = 0;
+
   u_int i = 0;
+
   for (iterator.first ();
        i < number_of_calls && iterator.next (latency) == 1;
        i ++,iterator.advance ())
@@ -516,7 +532,7 @@ Client::init_orb (void)
   TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
-              "I'm thread %t\n"));
+                  "I'm thread %t\n"));
 
   // Add "-ORBobjrefstyle url" argument to the argv vector for the orb
   // to / use a URL style to represent the ior.
@@ -619,12 +635,10 @@ Client::get_cubit_from_naming (void)
           ACE_NEW_RETURN (buffer,
                           char[l],
                           -1);
-
           ACE_OS::sprintf (buffer,
                            "%s%02d",
                            (char *) this->ts_->key_,
                            this->id_);
-
           // Construct the key for the name service lookup.
           CosNaming::Name cubit_name (1);
           cubit_name.length (1);
@@ -632,7 +646,6 @@ Client::get_cubit_from_naming (void)
 
           objref = this->mt_cubit_context_->resolve (cubit_name,
                                                      TAO_TRY_ENV);
-
           if (TAO_TRY_ENV.exception () != 0
               || CORBA::is_nil (objref.in ()))
             {
@@ -739,7 +752,8 @@ Client::get_cubit (void)
                       "(%t) Binding succeeded\n"));
 
           CORBA::String_var str =
-            this->orb_->object_to_string (this->cubit_, TAO_TRY_ENV);
+            this->orb_->object_to_string (this->cubit_,
+                                          TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           ACE_DEBUG ((LM_DEBUG,
@@ -759,20 +773,24 @@ Client::get_cubit (void)
 int
 Client::svc (void)
 {
-  int result;
-  // initialize the ORB.
-  result = this->init_orb ();
+  // Initialize the ORB.
+  int result = this->init_orb ();
   if (result != 0)
     return result;
-  // find the frequency of CORBA requests based on thread id.
+
+  // Find the frequency of CORBA requests based on thread id.
   this->find_frequency ();
-  // get the cubit object either from naming service or from the ior file.
+
+  // Get the cubit object either from naming service or from the ior
+  // file.
   result = this->get_cubit ();
   if (result != 0)
     return result;
+
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Waiting for other threads to "
               "finish binding..\n"));
+
   // Wait for all the client threads to be initialized before going
   // any further.
   this->ts_->barrier_->wait ();
@@ -792,6 +810,7 @@ Client::svc (void)
     this->ts_->semaphore_->release (this->ts_->thread_count_ - 1);
   else
     this->ts_->semaphore_->release ();
+
   // shutdown the server if necessary.
   TAO_TRY
     {
@@ -805,9 +824,9 @@ Client::svc (void)
     }
   TAO_CATCHANY
     {
-     ACE_ERROR ((LM_ERROR,
-                      "Shutdown of the server failed!\n"));
-          TAO_TRY_ENV.print_exception ("shutdown() call failed.\n");
+      ACE_ERROR ((LM_ERROR,
+                  "Shutdown of the server failed!\n"));
+      TAO_TRY_ENV.print_exception ("shutdown() call failed.\n");
     }
   TAO_ENDTRY;
   // Delete dynamic memory
@@ -1053,10 +1072,12 @@ Client::print_stats (void)
         {
           // since latency is in usecs.
           ACE_timer_t calls_per_second =
-            (this->call_count_ * ACE_ONE_SECOND_IN_USECS) / this->latency_;
+            (this->call_count_ * ACE_ONE_SECOND_IN_USECS) 
+            / this->latency_;
 
           // Calculate average latency in usecs.
-          this->latency_ = this->latency_/this->call_count_;
+          this->latency_ =
+            this->latency_/this->call_count_;
 
           if (this->latency_ > 0)
             {
@@ -1107,14 +1128,11 @@ Client::calc_delta (ACE_timer_t real_time,
 int
 Client::do_test (void)
 {
-  u_int i;
-  int result;
   ACE_timer_t delta = 0;
   u_int low_priority_client_count = this->ts_->thread_count_ - 1;
   ACE_timer_t sleep_time = // usec
     (1 / this->frequency_) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_; 
-
-  for (i = 0;
+  for (u_int i = 0;
        // keep running for loop count, OR
        i < this->ts_->loop_count_ 
        // keep running if we are the highest priority thread and at
@@ -1141,12 +1159,12 @@ Client::do_test (void)
         }
       this->num_ = i;
       // make a request to the server object depending on the datatype.
-      result = this->make_request ();
+      int result = this->make_request ();
       if (result != 0)
         return 2;
 
       // Stop the timer.
-      if ((i % this->ts_->granularity_) == this->ts_->granularity_ - 1 
+      if (i % this->ts_->granularity_ == this->ts_->granularity_ - 1 
           && this->ts_->use_utilization_test_ == 0)
         {
           this->timer_->stop ();
@@ -1168,9 +1186,9 @@ Client::do_test (void)
             break;
         }
       else
-        // if We are the high priority client.
-        // if tryacquire() succeeded then a client must have done a
-        // release () on it, thus we decrement the client counter.
+        // If we are the high priority client.  If tryacquire()
+        // succeeded then a client must have done a release () on it,
+        // thus we decrement the client counter.
         if (id_ == 0 
             && this->ts_->thread_count_ > 1)
           {
@@ -1195,26 +1213,33 @@ Client::run_tests (void)
                   JITTER_ARRAY,
                   -1);
   // Time to wait for utilization tests to know when to stop.
-  ACE_Time_Value max_wait_time (this->ts_->util_time_, 0);
+  ACE_Time_Value max_wait_time (this->ts_->util_time_,
+                                0);
   ACE_Countdown_Time countdown (&max_wait_time);
   ACE_NEW_RETURN (this->timer_,
                   MT_Cubit_Timer (this->ts_->granularity_),
                   -1);
   if (this->ts_->use_utilization_test_ == 1)
     this->timer_->start ();
+
   // Make the calls in a loop.
-  if ((result = this->do_test ()) != 0)
+  result = this->do_test ();
+  if (result != 0)
     return result;
+
   if (id_ == 0)
     this->ts_->high_priority_loop_count_ =
       this->call_count_;
+
   if (this->ts_->use_utilization_test_ == 1)
     {
       this->timer_->stop ();
-      ACE_timer_t util_time = this->timer_->get_elapsed ();
+      ACE_timer_t util_time =
+        this->timer_->get_elapsed ();
       this->ts_->util_test_time_ = util_time;
     }
-  // print the latency results.
+
+  // Print the latency results.
   this->print_stats ();
   return 0;
 }
