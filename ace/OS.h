@@ -6948,9 +6948,13 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 # if defined (ACE_LITTLE_ENDIAN)
 #   define ACE_HTONL(X) ACE_SWAP_LONG (X)
 #   define ACE_NTOHL(X) ACE_SWAP_LONG (X)
+#   define ACE_IDL_NCTOHL(X) (X)
+#   define ACE_IDL_NSTOHL(X) (X)
 # else
 #   define ACE_HTONL(X) X
 #   define ACE_NTOHL(X) X
+#   define ACE_IDL_NCTOHL(X) (X << 24)
+#   define ACE_IDL_NSTOHL(X) ((X) << 16)
 # endif /* ACE_LITTLE_ENDIAN */
 
 # if defined (ACE_LITTLE_ENDIAN)
