@@ -29,6 +29,7 @@ class ACE_Export ACE_Synch_Options
   //     Values support the following behavior (TV == "timeout" 
   //     and UR == "use ACE_Reactor"):
   //
+  // = BEGIN<CODE>
   //          Parameters      | Description                   
   //                          |                             
   //          TV   |  UR      |                             
@@ -52,6 +53,7 @@ class ACE_Export ACE_Synch_Options
   //          0,0  | no       | poll; but do not initiate a
   //               |          | nonblocking transaction
   //               |          | (don't use ACE_Reactor)    
+  // = END<CODE>
 public:
   // = Options flags for controlling synchronization.  Note that these
   // flags can be bit-wise "or'd" together if both options are
