@@ -132,7 +132,7 @@ SOURCE=.\SSL_SOCK_Stream.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter "h;hpp;hxx;hm"
 # Begin Source File
 
 SOURCE=.\SSL_Accept_Handler.h
@@ -176,10 +176,10 @@ SOURCE=.\sslconf.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "i;inl"
 # Begin Source File
 
-SOURCE=.\SSL_Context.i
+SOURCE=.\SSL_Context.inl
 # End Source File
 # Begin Source File
 

@@ -150,6 +150,83 @@ public:
   int certificate (const char *file_name,
                    int type = SSL_FILETYPE_PEM);
 
+
+  /**
+   *  Load the location of the trusted certification authority
+   *  certificates.  Note that CA certificates are stored in PEM format
+   *  as a sequence of certificates in <ca_file> or as a set of
+   *  individual certificates in <ca_dir> (or both).
+   *
+   *  Note this method is called by set_mode() to load the default
+   *  environment settings for <ca_file> and <ca_dir>, if any. This
+   *  allows for automatic service configuration (and backward
+   *  compatibility with previous versions.
+   *
+   *  Note that the underlying SSL function will add valid file and
+   *  directory names to the load location lists maintained as part of
+   *  the SSL_CTX table.  (... It therefore dosn't make sense to keep a
+   *  copy of the file and path name of the most recently added
+   *  <ca_file> or <ca_path>.
+   *
+   *  @return 0 for success or -1 on error.
+   *
+   *  @see OpenSSL manual SSL_CTX_load_verify_locations(3) for a
+   *  detailed description of the CA file and directory requirements
+   *  and processing.
+  */
+  int load_trusted_ca(const char* ca_file = 0, const char* ca_dir = 0);
+
+  /**
+     Test whether any CA locations have been successfully loaded and
+     return the number of successful attempts.
+
+     @return  >0 This value indicates the number of successful CA load
+                 attempts .
+     @return  0  If all CA load attempts have failed.
+  */
+  int have_trusted_ca(void) const;
+
+
+  /**
+   *  @todo Complete this documentation where elipses(...) are used
+   *
+   *  @doc Use this method when certificate chain verification is
+   *  required.  The default server behaviour is SSL_VERIFY_NONE
+   *  i.e. client certicates are requested for verified. This method
+   *  can be used to configure server to request client certificates
+   *  and perform the certificate verification. If <strict> is set
+   *  true the client connection is rejected when certificate
+   *  verification fails.  Otherwise the session is accepted with a
+   *  warning, which is the default behaviour.  If <once> is set true
+   *  (default), certificates are requested only once per session.
+   *  The last parameter <depth> can be used to set the verification
+   *  depth.
+   *
+   *  Note for verification to work correctly there should be a valid
+   *  CA name list set using load_trusted_ca().
+   *
+   *  @see OpenSSL documentation of SSL_CTX_set_verify(3) for details of
+   *  the verification process.
+   *
+   *  @see OpenSSL documentation ... set_verify_depth(3) ...
+   *
+   *  Note that this method overrides the use of the
+   *  default_verify_mode() method.
+   */
+  void set_verify_peer (int strict = 0,
+                        int once = 1,
+                        int depth = 0);
+
+
+  /// TODO: a implementation that will lookup the CTX table for the list
+  /// of files and paths etc.
+  /// Query the location of trusted certification authority
+  /// certificates.
+  // const char* ca_file_name(void) const;
+  // const char* ca_dir_name(void) const;
+
+
+
   /**
    * Set and query the default verify mode for this context, it is
    * inherited by all the ACE_SSL objects created using the context.
@@ -223,6 +300,9 @@ private:
   /// The default verify mode.
   int default_verify_mode_;
 
+  /// count of successful CA load attempts
+  int have_ca_;
+
   /// Reference count of the number of times the ACE_SSL_Context was
   /// initialized.
   static int library_init_count_;
@@ -237,10 +317,11 @@ private:
 
   // @@ This should also be managed by a singleton.
 #endif
+
 };
 
 #if defined(__ACE_INLINE__)
-#include "SSL_Context.i"
+#include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
