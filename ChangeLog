@@ -1,3 +1,9 @@
+Mon Apr 23 07:08:09 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Based_Pointer_T.h: Updated the documentation to 
+	  explain how ACE_Based_Pointer<T> (NULL) behaves.  Thanks to Tom
+ 	  Moog <tmoog@polhode.com> for motivating this.
+
 Sun Apr 22 14:26:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:
