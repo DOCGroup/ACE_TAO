@@ -30,7 +30,7 @@ Task_State::Task_State (int argc, char **argv)
     run_server_utilization_test_ (0),
     util_time_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "Umu:sn:t:d:rxof:g:1c");
+  ACE_Get_Opt opts (argc, argv, "U:mu:sn:t:d:rxof:g:1c");
   int c;
   int datatype;
 
@@ -43,6 +43,7 @@ Task_State::Task_State (int argc, char **argv)
       break;
     case 'U':
       run_server_utilization_test_ = 1;
+      util_time_ = ACE_OS::atoi (opts.optarg);
       break;
     case 'm':
       use_multiple_priority_ = 1;
@@ -648,6 +649,7 @@ Client::run_tests (Cubit_ptr cb,
   double sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * ts_->granularity_; // usec
   double delta = 0;
 
+  // time to wait for utilization tests to know when to stop.
   ACE_Time_Value max_wait_time (ts_->util_time_, 0);
   ACE_Countdown_Time countdown (&max_wait_time);
 
@@ -671,22 +673,27 @@ Client::run_tests (Cubit_ptr cb,
 	 // lowest frequency thread.
 	 (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1)) ||
 	 // continous loop if we are running the utilization test
-	 (ts_->use_utilization_test_ == 1); 
+	 (ts_->use_utilization_test_ == 1) ||
+	 // continous loop if we are running the SERVER utilization test
+	 (ts_->run_server_utilization_test_ == 1); 
        i++)
     {
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
 
-      if ( (i % ts_->granularity_) == 0)
+      // start timing a call
+      if ( (i % ts_->granularity_) == 0 && 
+	   (ts_->use_utilization_test_ == 0) &&
+	   (ts_->run_server_utilization_test_ == 0)
+	   )
         {
-          if (ts_->use_utilization_test_ == 0 && ts_->run_server_utilization_test_ == 0)
-            {
-              ACE_Time_Value tv (0,
-                                 (u_long) ((sleep_time - delta) < 0
-                                           ? 0
-                                           : (sleep_time - delta)));
-	      ACE_OS::sleep (tv);
-            }
+	  // delay a sufficient amount of time to be able to enforce
+	  // the calling frequency (i.e., 20Hz, 10Hz, 5Hz, 1Hz).
+	  ACE_Time_Value tv (0,
+			     (u_long) ((sleep_time - delta) < 0
+				       ? 0
+				       : (sleep_time - delta)));
+	  ACE_OS::sleep (tv);
 
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
@@ -885,7 +892,11 @@ Client::run_tests (Cubit_ptr cb,
             }
         }
 
-      if ((i % ts_->granularity_) == (ts_->granularity_ - 1))
+      // stop the timer
+      if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) && 
+	   (ts_->use_utilization_test_ == 0) &&
+	   (ts_->run_server_utilization_test_ == 0)
+	   )
         {
 #if defined (CHORUS)
           pstopTime = pccTime1Get();
@@ -909,27 +920,47 @@ Client::run_tests (Cubit_ptr cb,
           my_jitter_array [i/ts_->granularity_] = real_time; // in units of microseconds.
           // update the latency array, correcting the index using the granularity
 #else /* ACE_LACKS_FLOATING_POINT */
+
           // Store the time in secs.
 
-// These comments are to temporarily fix what seems a bug in
-// the ACE_Long_Long class that is used to calc the elapsed
-// time.
-// I'll leave these here to debug it later.
- double tmp = (double)delta_t.sec ();
- double tmp2 = (double)delta_t.usec ();
- if (tmp > 100000) {tmp=0.0; tmp2 = 2000.0; fprintf(stderr, "tmp > 100000!, delta_t.usec ()=%f\n", (double)delta_t.usec ());}
- if (tmp2 < 100 && tmp == 0) {tmp=0.0; tmp2 = 2000.0; /*fprintf(stderr, "tmp2 < 100!, delta_t.usec ()=%d , delta_t.usec ()=%d\n", delta_t.sec (), delta_t.usec ());*/ }
+#if defined (VXWORKS)
+	  // @@ David, these comments are to temporarily fix what
+	  // seems a bug in the ACE_Long_Long class that is used to
+	  // calc the elapsed time.  It seems that subtraction of two
+	  // ACE_Long_Long are not done correctly when the least
+	  // significant value has wrapped around.  For example to
+	  // subtract these values: 00ff1001:00000001 minus
+	  // 00ff1000:ffffffff would give a huge number, instead of
+	  // giving 2.
 
- real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
- //          real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
-
+	  // This is only occuring in VxWorks.
+	  // I'll leave these here to debug it later.
+	  double tmp = (double)delta_t.sec ();
+	  double tmp2 = (double)delta_t.usec ();
+	  if (tmp > 100000) 
+	    { 
+	      tmp = 0.0; 
+	      tmp2 = 2000.0; 
+	      fprintf (stderr, "tmp > 100000!, delta_t.usec ()=%u\n", delta_t.usec ());
+	    }
+	  
+	  real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
+#else	  	  
+	  real_time = ((double) delta_t.sec () + 
+		       (double) delta_t.usec () / (double) ACE_ONE_SECOND_IN_USECS);
+#endif /* VXWORKS */  
+	  
           real_time /= ts_->granularity_;
-
+	  
           delta = ((0.4 * fabs (real_time * ACE_ONE_SECOND_IN_USECS)) + (0.6 * delta)); // pow(10,6)
           latency += (real_time * ts_->granularity_);
-	  my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS;
+	  my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS; 
 #endif /* !ACE_LACKS_FLOATING_POINT */
-        }
+        } // END OF IF   :
+          //       if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) && 
+          // 	   (ts_->use_utilization_test_ == 0) &&
+          // 	   (ts_->run_server_utilization_test_ == 0)
+          // 	   )
 
       if ( ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1) )
 	{
@@ -951,11 +982,15 @@ Client::run_tests (Cubit_ptr cb,
 	      }
 	  }
 	  
-      if (ts_->use_utilization_test_ == 1)
+      if (ts_->use_utilization_test_ == 1 || 
+	  ts_->run_server_utilization_test_ == 1)
 	{
 	  countdown.update ();
 	  if (max_wait_time == ACE_Time_Value::zero)
-	    break;
+	    {
+	      ts_->loop_count_ = call_count;
+	      break;
+	    }
 	}
 
     } /* end of for () */
@@ -963,7 +998,12 @@ Client::run_tests (Cubit_ptr cb,
   if (id_ == 0)
     ts_->high_priority_loop_count_ = call_count;
 
-  if (call_count > 0)
+  // perform latency stats onlt if we are not running the utilization
+  // tests.
+  if (call_count > 0 && 
+      (ts_->use_utilization_test_ == 0) &&
+      (ts_->run_server_utilization_test_ == 0)
+      )
     {
       if (error_count == 0)
         {

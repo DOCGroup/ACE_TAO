@@ -543,8 +543,8 @@ start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Ta
                                     0,
                                     priority) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n",
-                  "high_priority_task->activate"));
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+                  "\thigh_priority_task->activate failed"));
     }
 
   // Create an array to hold pointers to the low priority tasks.
@@ -580,7 +580,7 @@ start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Ta
 
       // Drop the priority, so that the priority of clients will increase
       // with increasing client number.
-      for (i = 0; i < number_of_low_priority_servants + 1; i++)
+      for (i = 0; i < number_of_low_priority_servants; i++)
         priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                         priority,
                                                         ACE_SCOPE_THREAD);
@@ -643,8 +643,8 @@ start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Ta
                                            0,
                                            priority) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
-                      "low_priority_task[i]->activate"));
+          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+                      "\tlow_priority_task[i]->activate"));
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -657,7 +657,8 @@ start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Ta
         {
           counter = (counter + 1) % grain;
           if ( (counter == 0) &&
-               //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
+               //Just so when we distribute the priorities among the
+               //threads, we make sure we don't go overboard.
                ((number_of_priorities * grain) > (number_of_low_priority_servants - (i - 1))) )
               {
                       // Get the next higher priority.
@@ -724,8 +725,8 @@ start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts)
 			   0,
 			   priority) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n",
-                  "util_task->activate"));
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+                  "\tutil_task->activate failed"));
     }
 
   return util_task;
@@ -784,7 +785,10 @@ main (int argc, char *argv[])
   Task_State ts ( _argc, _argv);
 
   if (run_utilization_test == 1)
-    ts.run_server_utilization_test_ = 1;
+    {
+      ts.run_server_utilization_test_ = 1;
+      ts.loop_count_ = 0;
+     }
 
   Util_Thread * util_task = 0;
 
@@ -873,11 +877,22 @@ main (int argc, char *argv[])
 			      
       total_latency_servants = total_latency - total_util_task_duration;
     
+      ACE_DEBUG ((LM_DEBUG, 
+		  "-------------------------- Stats -------------------------------\n"));
+
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) utilization task performed %g computations\n"
-		  "(%t) each computation had a duration of %f msecs\n"
-		  "(%t) elapsed time is %f msecs\n",
+		  "(%t) UTILIZATION task performed \t%u computations\n"
+		  "(%t) SERVANT task serviced \t\t%u CORBA calls\n"
+		  "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
 		  util_task->get_number_of_computations (),
+		  ts.loop_count_,
+		  util_task->get_number_of_computations () / ts.loop_count_,
+		  (util_task->get_number_of_computations () % ts.loop_count_) * 100 / ts.loop_count_
+		  ));
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%t) Each computation had a duration of %f msecs\n"
+		  "(%t) Total elapsed time of test is %f msecs\n",
 		  util_task_duration / 1000,
 		  total_latency / 1000));    
 

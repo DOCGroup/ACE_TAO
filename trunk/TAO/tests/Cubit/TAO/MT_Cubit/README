@@ -69,6 +69,10 @@ Options are case sensitive, e.g., "-U" has a different meaning than "-u".
 	Default Value: Disabled. To enable, specify "-U" on the
                        command line.
 
+[-r] turn on the thread-per-rate tests.  (Priority inversion tests)
+
+	Default Value: Disabled.
+
 The server will print the IOR of the servants, but it is not required
 by the client.
 
@@ -84,10 +88,10 @@ by the client.
          [-r]			// use thread-per-rate test.
          [-o]			// makes client use oneway calls instead
          [-x]			// makes a call to servant to shutdown
-         [-u]			// run the client utilization test
-         [-U]			// run the servant utilization test
+         [-u <seconds> ]	// run the client utilization test for <seconds> seconds
+         [-U <seconds> ]	// run the servant utilization test for <seconds> seconds
          [-1]			// use one to n test.
-         [-g]			// choose the granularity of timing calls
+         [-g <granularity>]	// choose the granularity of timing calls
          [-c]			// obtain number of context switches.
          [-s]			// makes client *NOT* use the name service
          [-m]			// use multiple priorities for the low priority client.
@@ -116,7 +120,7 @@ by the client.
 
 	Default Value: nil, which means not to write the iors to disk.
 
-[-r] turn on the thread-per-rate tests.
+[-r] turn on the thread-per-rate tests.  (Priority inversion tests)
 
 	Default Value: Disabled.
 

@@ -31,7 +31,7 @@ public:
   virtual int svc (void);
   // The thread entry point function.
 
-  double get_number_of_computations (void);
+  u_long get_number_of_computations (void);
   // Gets the number of computations the thread was able to perform.
 
   void computation (void);
@@ -44,7 +44,7 @@ private:
   int run_computations (void);
   // Run the computations.
 
-  double number_of_computations_;
+  u_long number_of_computations_;
   // This stores the number of computations performed
   // by the Util_Thread so far
 
