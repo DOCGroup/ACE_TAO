@@ -1,3 +1,8 @@
+Mon Feb 28 19:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/PluggableTopology/PlugTop.mpc:
+          Use exceptions as base project instead of requires exceptions
+
 Mon Feb 28 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueBase.{h,cpp}:
