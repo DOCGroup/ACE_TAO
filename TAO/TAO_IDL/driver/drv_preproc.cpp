@@ -276,7 +276,7 @@ DRV_pre_proc(char *myfile)
   DRV_cpp_putarg (0); // Null terminate the arglist.
   cpp_options.command_line (arglist);
   ACE_HANDLE fd = ACE_OS::open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-  if (fd < 0) {
+  if (fd == ACE_INVALID_HANDLE) {
     cerr << idl_global->prog_name()
 	 << GTDEVEL(": cannot open temp file ")
 	 << tmp_file << " for writing\n";
