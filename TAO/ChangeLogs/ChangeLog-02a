@@ -1,3 +1,17 @@
+Wed Oct 04 12:01:47 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* docs/releasenotes/index.html
+	* docs/releasenotes/RTCorba.html
+
+	Added documentation relative to RT-CORBA implementation, as well as the
+	development status, and updated the release notes to point to the new document.
+
+	* tests/Exposed_Policies/Policy_Tester.cpp:
+	* tests/Exposed_Policies/Policy_Verifier.cpp:
+	* tests/Exposed_Policies/server.cpp:
+
+	Removed ";" after the ACE_RCSID to avoid warning on certaion platform.
+
 Tue Oct  3 22:04:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
@@ -7,7 +21,7 @@ Tue Oct  3 22:04:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
 	* TAO_IDL/be_include/be_interface.h:
 
-	  Shouldn't have been included in 
+	  Shouldn't have been included in
 
 	  Tue Oct  3 19:20:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 

@@ -1,6 +1,6 @@
 #include "Policy_Verifier.h"
 
-ACE_RCSID (tao, Policy_Verifier, "$Id$");
+ACE_RCSID (tao, Policy_Verifier, "$Id$")
 
 
 Policy_Verifier::Policy_Verifier (void)
