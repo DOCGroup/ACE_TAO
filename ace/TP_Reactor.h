@@ -186,6 +186,7 @@ public:
 
   // = Reactor calls
   virtual void max_notify_iterations (int iter);
+  virtual int max_notify_iterations (void);
 
   // = Event loop drivers.
 

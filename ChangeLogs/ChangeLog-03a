@@ -1,3 +1,9 @@
+Sat Aug 25 09:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp:
+	* ace/TP_Reactor.h (ACE_TP_Reactor): Fixed  a warning in KCC
+	  builds.  
+
 Sat Aug 25 08:42:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Configuration_Import_Export.cpp: Fixed warnings with g++. I
