@@ -29,10 +29,14 @@ ACE_Process_Descriptor::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nproc_id_ = %d"), this->proc_id_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nproc_id_ = %d"), this->proc_id_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_Process_Descriptor::~ACE_Process_Descriptor (void)
+{
 }
 
 void
@@ -52,6 +56,8 @@ ACE_Process_Manager::dump (void) const
 }
 
 ACE_Process_Descriptor::ACE_Process_Descriptor (void)
+  : proc_id_ (-1),
+    grp_id_ (-1)
 {
   ACE_TRACE ("ACE_Process_Descriptor::ACE_Process_Descriptor");
 }
@@ -99,14 +105,14 @@ ACE_Process_Manager::resize (size_t size)
 {
   ACE_TRACE ("ACE_Process_Manager::resize");
 
-  ACE_Process_Descriptor *temp;
+  ACE_Process_Descriptor *temp = 0;
   
   ACE_NEW_RETURN (temp,
                   ACE_Process_Descriptor[size],
                   -1);
 
   for (size_t i = 0;
-       i < this->max_process_table_size_;
+       i < this->current_count_;
        i++)
     // Structure assignment.
     temp[i] = this->process_table_[i]; 
@@ -129,9 +135,9 @@ ACE_Process_Manager::open (size_t size)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->max_process_table_size_ < size)
-    this->resize (size);
-  return 0;
-
+    return this->resize (size);
+  else
+    return 0;
 }
 
 // Initialize the synchronization variables.
