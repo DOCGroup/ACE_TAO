@@ -69,7 +69,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
-      octet_seq->length (ACE_static_cast (CORBA::ULong, cdr.total_length ()));
+      octet_seq->length (static_cast<CORBA::ULong> (cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
 
       for (const ACE_Message_Block *i = cdr.begin ();
@@ -121,7 +121,7 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
   CORBA::Boolean byte_order;
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
-      cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+      cdr.reset_byte_order (static_cast<int> (byte_order));
 
       CORBA::Any * any = 0;
       ACE_NEW_THROW_EX (any,
@@ -210,7 +210,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
-      octet_seq->length (ACE_static_cast (CORBA::ULong, cdr.total_length ()));
+      octet_seq->length (static_cast<CORBA::ULong> (cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
 
       for (const ACE_Message_Block *i = cdr.begin ();
@@ -283,7 +283,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
-      cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+      cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // @@ (JP) The following code depends on the fact that
       //         TAO_InputCDR does not contain chained message blocks,

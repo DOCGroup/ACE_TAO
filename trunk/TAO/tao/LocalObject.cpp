@@ -47,9 +47,8 @@ CORBA::LocalObject::_hash (CORBA::ULong maximum
   // enough to hold an address to avoid compile-time warnings on some
   // 64-bit platforms.
 
-  CORBA::ULong hash =
-    ACE_static_cast (CORBA::ULong,
-                     ACE_reinterpret_cast (ptrdiff_t, this));
+  const CORBA::ULong hash =
+    static_cast<CORBA::ULong> (reinterpret_cast<ptrdiff_t> (this));
 
   return hash % maximum;
 }

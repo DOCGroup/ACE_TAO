@@ -24,7 +24,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id,
 
   // Make a *copy* of the CDR stream...
   size_t length = cdr.total_length ();
-  context.context_data.length (ACE_static_cast (CORBA::ULong, length));
+  context.context_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();
@@ -44,7 +44,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
 {
   // Make a *copy* of the CDR stream...
   size_t length = cdr.total_length ();
-  context.context_data.length (ACE_static_cast (CORBA::ULong, length));
+  context.context_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();

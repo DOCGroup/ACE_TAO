@@ -27,12 +27,11 @@ TAO_ORB_Table::TAO_ORB_Table (void)
 
 TAO_ORB_Table::~TAO_ORB_Table (void)
 {
-  for (Iterator i = this->begin ();
-       i != this->end ();
-       ++i)
+  const Iterator end = this->end ();
+  for (Iterator i = this->begin (); i != end; ++i)
     {
       // Deallocate the ORBid.
-      CORBA::string_free (ACE_const_cast (char *, (*i).ext_id_));
+      CORBA::string_free (const_cast<char *> ((*i).ext_id_));
 
       // Destroy the ORB_Core
       (void) (*i).int_id_->_decr_refcnt ();
@@ -123,7 +122,7 @@ TAO_ORB_Table::unbind (const char *orb_id)
       // Deallocate the external ID and obtain the ORB core pointer
       // before unbinding the entry since the entry is deallocated
       // during the call to unbind().
-      CORBA::string_free (ACE_const_cast (char *, entry->ext_id_));
+      CORBA::string_free (const_cast<char *> (entry->ext_id_));
       TAO_ORB_Core *orb_core = entry->int_id_;
 
       result = this->table_.unbind (entry);

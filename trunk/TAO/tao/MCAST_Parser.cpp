@@ -217,8 +217,8 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
 
           // The service name string.
           iovp[2].iov_base = (char *) service_name;
-          iovp[2].iov_len  = ACE_static_cast (u_long,
-                               ACE_OS::strlen (service_name) + 1);
+          iovp[2].iov_len  =
+            static_cast<u_long> (ACE_OS::strlen (service_name) + 1);
 
           // Send the multicast.
           result = dgram.send (iovp,

@@ -22,7 +22,7 @@ operator>> (TAO_InputCDR &strm, CORBA::ParameterMode &_tao_enumval)
 
   if (_tao_result == 1)
     {
-      _tao_enumval = ACE_static_cast (CORBA::ParameterMode, _tao_temp);
+      _tao_enumval = static_cast<CORBA::ParameterMode> (_tao_temp);
     }
 
   return _tao_result;

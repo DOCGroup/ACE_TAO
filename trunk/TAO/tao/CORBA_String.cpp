@@ -28,7 +28,7 @@ CORBA::string_dup (const char *str)
   size_t len = ACE_OS::strlen (str);
 
   // This allocates an extra byte for the '\0';
-  char * copy = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, len));
+  char * copy = CORBA::string_alloc (static_cast<CORBA::ULong> (len));
 
   // The memcpy() below assumes that the destination is a valid buffer.
   if (copy == 0)
@@ -297,7 +297,7 @@ operator>> (istream &is, CORBA::WString_var &wsv)
 
       // Unformatted input is used to work around overloaded
       // extraction operator (>>) ambiguities on some platforms.
-      is.read (ACE_reinterpret_cast (char *, &wc), sizeof (wc));
+      is.read (reinterpret_cast<char *> (&wc), sizeof (wc));
 
       wsv[i] = wc;
     }
@@ -336,7 +336,7 @@ operator>> (istream &is, CORBA::WString_out &wso)
 
       // Unformatted input is used to work around overloaded
       // extraction operator (>>) ambiguities on some platforms.
-      is.read (ACE_reinterpret_cast (char *, &wc), sizeof (wc));
+      is.read (reinterpret_cast<char *> (&wc), sizeof (wc));
 
       wso.ptr ()[i] = wc;
     }

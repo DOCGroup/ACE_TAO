@@ -71,7 +71,7 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
           // @@ We need to invoke a nonconst <endpoint> method on
           //    <profile>.  The content of profile/endpoint will not
           //    be modified.
-          TAO_Profile *pf = ACE_const_cast (TAO_Profile *, profile);
+          TAO_Profile *pf = const_cast<TAO_Profile *> (profile);
 
           // Check all endpoints for address equality.
           if ((*i)->tag () == pf->tag ())
@@ -467,8 +467,7 @@ TAO_Acceptor_Registry::extract_endpoint_options (ACE_CString &addrs,
   const int options_index =
     addrs.find (factory->options_delimiter ());
 
-  if (options_index == ACE_static_cast (int,
-                                        addrs.length () - 1))
+  if (options_index == static_cast<int> (addrs.length () - 1))
     {
       // Get rid of trailing option delimiter.
       addrs = addrs.substring (0, addrs.length () - 1);

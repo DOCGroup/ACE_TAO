@@ -85,14 +85,14 @@ TAO::Any_Impl::_tao_byte_order (void) const
 void
 TAO::Any_Impl::_tao_any_string_destructor (void *x)
 {
-  char *tmp = ACE_static_cast (char *, x);
+  char *tmp = static_cast<char *> (x);
   CORBA::string_free (tmp);
 }
 
 void
 TAO::Any_Impl::_tao_any_wstring_destructor (void *x)
 {
-  CORBA::WChar *tmp = ACE_static_cast (CORBA::WChar *, x);
+  CORBA::WChar *tmp = static_cast<CORBA::WChar *> (x);
   CORBA::wstring_free (tmp);
 }
 

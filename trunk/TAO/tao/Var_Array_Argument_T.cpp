@@ -65,10 +65,10 @@ TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
 
 // ==============================================================
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_out, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_out,
          typename S_forany,
          typename S_tag>
 CORBA::Boolean
@@ -84,10 +84,10 @@ TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany,S_tag>::demarshal (
   return cdr >> tmp;
 }
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_out, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_out,
          typename S_forany,
          typename S_tag>
 void
@@ -100,10 +100,10 @@ interceptor_param (Dynamic::Parameter & p)
 
 // ============================================================
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_forany, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_forany,
          typename S_tag>
 CORBA::Boolean
 TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::demarshal (
@@ -120,10 +120,10 @@ TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::demarshal (
   return cdr >> tmp;
 }
 
-template<typename S, 
-         typename S_slice, 
-         typename S_var, 
-         typename S_forany, 
+template<typename S,
+         typename S_slice,
+         typename S_var,
+         typename S_forany,
          typename S_tag>
 void
 TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::

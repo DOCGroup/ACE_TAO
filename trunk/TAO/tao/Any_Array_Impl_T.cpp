@@ -122,7 +122,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
       if (result == 1)
         {
           _tao_elem = reinterpret_cast <const T_slice*> (replacement->value_);
-          ACE_const_cast (CORBA::Any &, any).replace (replacement);
+          const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
           return 1;
         }
@@ -164,4 +164,3 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr
 }
 
 #endif /* TAO_ANY_ARRAY_IMPL_T_C */
-

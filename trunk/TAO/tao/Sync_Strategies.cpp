@@ -71,7 +71,7 @@ TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (
     TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in());
 
   TAO_Buffering_Constraint_Policy *buffering_constraint_policy =
-    ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
+    dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcp.in ());
 
   if (buffering_constraint_policy == 0)
     {

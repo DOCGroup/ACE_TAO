@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 //$Id$
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
@@ -167,7 +169,7 @@ ACE_INLINE
 TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (
     const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p
   )
-  : ptr_ (ACE_const_cast (THIS_OUT_TYPE &, p).ptr_)
+  : ptr_ (const_cast<THIS_OUT_TYPE &> (p).ptr_)
 {}
 
 template<typename T, typename T_var, typename T_slice, typename TAG>
@@ -177,7 +179,7 @@ TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator= (
     const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p
   )
 {
-  this->ptr_ = ACE_const_cast (THIS_OUT_TYPE &, p).ptr_;
+  this->ptr_ = const_cast<THIS_OUT_TYPE &> (p).ptr_;
   return *this;
 }
 
@@ -237,9 +239,9 @@ ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
     const TAO_Array_Forany_T<T,T_slice,TAG> & p
   )
+  : ptr_ (p.ptr_),
+    nocopy_ (p.nocopy_)
 {
-  this->ptr_ = p.ptr_;
-  this->nocopy_ = p.nocopy_;
 }
 
 template<typename T, typename T_slice, typename TAG>
@@ -289,10 +291,7 @@ const T_slice &
 TAO_Array_Forany_T<T,T_slice,TAG>::operator[] (CORBA::ULong index) const
 {
 #if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
-  return ACE_const_cast (
-      const T_slice &,
-      this->ptr_[index]
-   );
+  return const_cast<const T_slice &> (this->ptr_[index]);
 #else
   const T_slice & tmp = this->ptr_[index];
   return tmp;
@@ -314,8 +313,7 @@ TAO_Array_Forany_T<T,T_slice,TAG>::in (void) const
 {
   // @@@ (JP) This looks scary I know but it helps MSVC understand
   // things better when the array is multi-dimensional.
-  return ACE_const_cast (const T_slice *,
-                         this->ptr_);
+  return const_cast<const T_slice *> (this->ptr_);
 }
 
 template<typename T, typename T_slice, typename TAG>

@@ -170,7 +170,7 @@ CORBA::Any::type (CORBA::TypeCode_ptr tc
 void
 CORBA::Any::_tao_any_destructor (void *x)
 {
-  CORBA::Any *tmp = ACE_static_cast (CORBA::Any *, x);
+  CORBA::Any *tmp = static_cast<CORBA::Any *> (x);
   delete tmp;
 }
 

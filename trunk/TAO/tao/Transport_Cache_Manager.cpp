@@ -21,7 +21,7 @@ ACE_RCSID (tao,
 TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core)
   : percent_ (orb_core.resource_factory ()->purge_percentage ()),
     purging_strategy_ (orb_core.resource_factory ()->create_purging_strategy ()),
-    cache_map_ (ACE_static_cast (size_t, ACE::max_handles ())),
+    cache_map_ (static_cast<size_t> (ACE::max_handles ())),
     condition_ (0),
     cache_lock_ (0),
     muxed_number_ (orb_core.resource_factory ()->max_muxed_connections ()),
@@ -465,7 +465,7 @@ TAO_Transport_Cache_Manager::purge (void)
 
         int count = 0;
 
-        for(int i = 0; count < amount && i < sorted_size; i++)
+        for(int i = 0; count < amount && i < sorted_size; ++i)
           {
             if (this->is_entry_idle (sorted_set[i]))
               {
@@ -529,7 +529,7 @@ TAO_Transport_Cache_Manager::sort_set (DESCRIPTOR_SET& entries,
 {
 #if defined (ACE_LACKS_QSORT)
   // Use insertion sort if we don't have qsort
-  for(int i = 1; i < current_size; i++)
+  for(int i = 1; i < current_size; ++i)
     {
       if (entries[i]->int_id_.transport ()->purging_order () <
                     entries[i - 1]->int_id_.transport ()->purging_order ())
@@ -538,7 +538,7 @@ TAO_Transport_Cache_Manager::sort_set (DESCRIPTOR_SET& entries,
 
           for(int j = i; j > 0 &&
               entries[j - 1]->int_id_.transport ()->purging_order () >
-              entry->int_id_.transport ()->purging_order (); j--)
+              entry->int_id_.transport ()->purging_order (); --j)
             {
               HASH_MAP_ENTRY* holder = entries[j];
               entries[j] = entries[j - 1];
@@ -565,7 +565,7 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
   // Do we need to worry about cache purging?
   if (cache_maximum >= 0)
     {
-      current_size = ACE_static_cast (int, this->cache_map_.current_size ());
+      current_size = static_cast<int> (this->cache_map_.current_size ());
 
       if (TAO_debug_level > 0)
         {
@@ -581,7 +581,7 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
 
           HASH_MAP_ITER iter = this->cache_map_.begin ();
 
-          for (int i = 0; i < current_size; i++)
+          for (int i = 0; i < current_size; ++i)
             {
               sorted_set[i] = &(*iter);
               iter++;
