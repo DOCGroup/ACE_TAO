@@ -3249,7 +3249,7 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
                        )
 {
   // can't trace here. Trace uses TSS
-  // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
+  // ACE_OS_TRACE ("ACE_OS::thr_keycreate_native");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
 
@@ -3352,7 +3352,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 int
 ACE_OS::thr_keyfree_native (ACE_OS_thread_key_t key)
 {
-  ACE_OS_TRACE ("ACE_OS::thr_keyfree");
+  ACE_OS_TRACE ("ACE_OS::thr_keyfree_native");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_UNUSED_ARG (key);
@@ -3444,7 +3444,7 @@ ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
 int
 ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
 {
-  // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
+  // ACE_OS_TRACE ("ACE_OS::thr_setspecific_native");
 #   if defined (ACE_HAS_THREADS)
 #     if defined (ACE_HAS_PTHREADS)
 #       if defined (ACE_HAS_FSU_PTHREADS)
