@@ -1,3 +1,59 @@
+Sat Mar 19 12:48:44 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/ciao/CCM_Core.mpc:
+        * DAnCE/ciao/CIAO_Config.h:
+        * DAnCE/ciao/Container_Base.cpp:
+        * DAnCE/ciao/Container_Base.h:
+        * DAnCE/ciao/Container_Impl.cpp:
+        * DAnCE/ciao/Container_Impl.h:
+        * DAnCE/ciao/Container_Impl.inl:
+        * DAnCE/ciao/Context_Impl_T.cpp:
+        * DAnCE/ciao/Deployment.idl:
+        * DAnCE/ciao/Deployment_Core.idl:
+        * DAnCE/ciao/Dynamic_Component_Activator.cpp:
+        * DAnCE/ciao/Dynamic_Component_Activator.h:
+        * DAnCE/ciao/Dynamic_Component_Servant_Base.cpp:
+        * DAnCE/ciao/Dynamic_Component_Servant_Base.h:
+        * DAnCE/ciao/Dynamic_Component_Servant_T.cpp:
+        * DAnCE/ciao/Dynamic_Component_Servant_T.h:
+        * DAnCE/ciao/Home_Servant_Impl_Base.h:
+        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Home_Servant_Impl_T.h:
+        * DAnCE/ciao/NodeApplication_Impl.cpp:
+        * DAnCE/ciao/NodeApplication_Impl.h:
+        * DAnCE/ciao/NodeApplication_Impl.inl:
+        * DAnCE/ciao/Object_Set_T.cpp:
+        * DAnCE/ciao/Object_Set_T.h:
+        * DAnCE/ciao/Object_Set_T.inl:
+        * DAnCE/ciao/Port_Activator_T.cpp:
+        * DAnCE/ciao/Servant_Activator.cpp:
+        * DAnCE/ciao/Servant_Activator.h:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        * DAnCE/ciao/Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_T.h:
+        * DAnCE/ciao/SwapExec.idl:
+        * DAnCE/ciao/Swapping_Container.cpp:
+        * DAnCE/ciao/Swapping_Container.h:
+        * DAnCE/ciao/Swapping_Container.inl:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.h:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.h:
+        * DAnCE/ciao/UpgradeableContext.idl:
+        * DAnCE/ciao/Upgradeable_Context_Impl_T.cpp:
+        * DAnCE/ciao/Upgradeable_Context_Impl_T.h:
+
+          Added CIAO infrastructure changes to allow NodeApplications
+          to support multi container instantiation.
+
+          Added CIAO infrastructure changes to allow dynamic
+          swapping of component implementations.
+
+          Thanks to Gan Deng <dengg@dre.vanderbilt.edu> and
+          Bala Natarajan <bala@dre.vanderbilt.edu> for their
+          help in architecting and implementing these changes.
+
 Fri Mar 18 18:34:20 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/IDL2/Parser.cpp:

@@ -2,20 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    Home_Servant_Impl_T.h
+ *  @file    Swapping_Servant_Impl_T.h
  *
  *  $Id$
  *
  *  This file contains the declaration of a mixin base class for
  *  the generated home servant class.
  *
- *  @authors Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================
 
 
-#ifndef CIAO_HOME_SERVANT_IMPL_T_H
-#define CIAO_HOME_SERVANT_IMPL_T_H
+#ifndef CIAO_SWAPPING_SERVANT_HOME_IMPL_T_H
+#define CIAO_SWAPPING_SERVANT_HOME_IMPL_T_H
 
 #include /**/ "ace/pre.h"
 
@@ -27,13 +26,14 @@
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "Dynamic_Component_Servant_Base.h"
 
 namespace CIAO
 {
   class Session_Container;
 
   /**
-   * @class Home_Servant_Impl
+   * @class Swapping_Servant_Impl
    *
    * @brief Mixin base class for generated home servant.
    *
@@ -48,16 +48,17 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  class Home_Servant_Impl
+  class Swapping_Home_Servant_Impl
     : public virtual BASE_SKEL,
       public virtual Home_Servant_Impl_Base,
       public virtual PortableServer::RefCountServantBase
   {
   public:
-    Home_Servant_Impl (EXEC * exe,
-                       Session_Container * c);
+    Swapping_Home_Servant_Impl (EXEC * exe,
+                       Session_Container * c,
+                       const char* obj_id, const char* repo_id);
 
-    virtual ~Home_Servant_Impl (void);
+    virtual ~Swapping_Home_Servant_Impl (void);
 
     // Operations for CCMHome interface.
 
@@ -88,7 +89,7 @@ namespace CIAO
     // CIAO-specific operations.
 
     COMP *
-    _ciao_activate_component (COMP_EXEC *exe
+    _ciao_activate_component (::Components::EnterpriseComponent_ptr ec
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -100,24 +101,35 @@ namespace CIAO
   protected:
     EXEC_VAR executor_;
 
-    typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
-                            Components::CCMObject_ptr,
+    ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                            COMP_SVNT *,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX> OBJREF_MAP;
-    typedef OBJREF_MAP::iterator OBJ_ITERATOR;
-    OBJREF_MAP objref_map_;
+                            ACE_SYNCH_MUTEX>
+      component_map_;
+
+    typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                            Dynamic_Component_Servant_Base *,
+                            TAO_ObjectId_Hash,
+                            ACE_Equal_To<PortableServer::ObjectId>,
+                            ACE_SYNCH_MUTEX> DYNAMIC_SERVANT_MAP;
+
+    typedef DYNAMIC_SERVANT_MAP::iterator DYNAMIC_SERVANT_MAP_ITERATOR;
+    DYNAMIC_SERVANT_MAP dynamic_servant_map_;
+
+    const char* obj_id_;
+    const char* repo_id_;
   };
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Home_Servant_Impl_T.cpp"
+#include "Swapping_Servant_Home_Impl_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Home_Servant_Impl_T.cpp")
+#pragma implementation ("Swapping_Servant_Home_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_HOME_SERVANT_IMPL_T_H */
+#endif /* CIAO_SWAPPING_SERVANT_HOME_IMPL_T_H */

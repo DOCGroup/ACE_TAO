@@ -11,8 +11,12 @@ namespace CIAO
     ACE_ASSERT (0);
   }
 
-  Servant_Impl_Base::Servant_Impl_Base (Session_Container * c)
-    : container_ (c)
+  Servant_Impl_Base::Servant_Impl_Base (Components::CCMHome_ptr home,
+                                        Home_Servant_Impl_Base *home_servant,
+                                        Session_Container * c)
+    : home_ (Components::CCMHome::_duplicate (home)),
+      home_servant_ (home_servant),
+      container_ (c)
   {
   }
 
@@ -61,7 +65,43 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    // CIAO to-do
+    Components::SessionComponent_var temp = this->get_executor ();
+
+    Components::FacetDescriptions_var facets =
+      this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    const CORBA::ULong facet_len = facets->length ();
+    CORBA::ULong i = 0;
+    for (i = 0; i < facet_len; ++i)
+    {
+      PortableServer::ObjectId_var oid =
+        this->container_->the_facet_cons_POA ()->reference_to_id 
+              (facets[i]->facet_ref ()
+               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      CIAO::Servant_Activator *sa =
+        this->container_->ports_servant_activator ();
+      sa->update_port_activator (oid);
+
+      this->container_->deactivate_facet (oid);
+    }
+
+    temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+    CORBA::Object_var objref =
+      this->container_->get_objref (this);
+
+    Components::CCMObject_var ccmobjref =
+      Components::CCMObject::_narrow (objref.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+    PortableServer::ObjectId_var oid;
+
+    this->container_->uninstall_component ( ccmobjref.in (),
+                                            oid.out ()
+                                            ACE_ENV_ARG_PARAMETER);
+    this->home_servant_->update_component_map (oid);
   }
 
   ::Components::ConnectionDescriptions *
@@ -95,9 +135,11 @@ namespace CIAO
       this->get_all_receptacles (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
+    /*
     ::Components::ConsumerDescriptions_var consumer_desc =
       this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
+    */
 
     ::Components::EmitterDescriptions_var emitter_desc =
       this->get_all_emitters (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -109,7 +151,7 @@ namespace CIAO
 
     retv->facets (facets_desc.in ());
     retv->receptacles (receptacle_desc.in ());
-    retv->consumers (consumer_desc.in ());
+    // retv->consumers (consumer_desc.in ());
     retv->emitters (emitter_desc.in ());
     retv->publishers (publisher_desc.in ());
 
@@ -201,16 +243,18 @@ namespace CIAO
     return retval._retn ();
   }
 
+
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+
     ::Components::ConsumerDescriptions *tmp = 0;
-    ACE_NEW_RETURN (tmp,
-                    ::Components::ConsumerDescriptions,
-                    0);
+    ACE_NEW_THROW_EX (tmp,
+                      ::Components::ConsumerDescriptions (this->consumer_table_.current_size ()),
+                      CORBA::NO_MEMORY ());
 
     ::Components::ConsumerDescriptions_var retval = tmp;
 
@@ -221,12 +265,14 @@ namespace CIAO
          iter != this->consumer_table_.end ();
          ++iter, ++i)
       {
+        // ACE_DEBUG ((LM_DEBUG, "EXECUTING \n"));
         ConsumerTable::ENTRY & entry = *iter;
         retval[i] = entry.int_id_;
       }
 
     return retval._retn ();
   }
+
 
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::get_consumer (

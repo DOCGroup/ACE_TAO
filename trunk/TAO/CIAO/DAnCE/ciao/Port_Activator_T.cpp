@@ -1,4 +1,5 @@
 // $Id$
+
 #ifndef CIAO_PORT_ACTIVATOR_T_CPP
 #define CIAO_PORT_ACTIVATOR_T_CPP
 

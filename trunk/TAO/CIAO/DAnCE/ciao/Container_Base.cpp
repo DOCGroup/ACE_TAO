@@ -15,9 +15,21 @@ namespace CIAO
 {
 
 ////////////////////////////////////////////////////////////////
+
+  Container::Container (void)
+  {
+    ACE_ASSERT (0);
+  }
+
   Container::Container (CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o))
   {
+  }
+
+  Container::Container (CORBA::ORB_ptr o, Container_Impl *container_impl)
+    : orb_ (CORBA::ORB::_duplicate (o))
+  {
+    this->container_impl_ = container_impl;
   }
 
   Container::~Container ()
@@ -28,6 +40,12 @@ namespace CIAO
   Container::the_POA (void) const
   {
     return this->component_poa_.in ();
+  }
+
+  PortableServer::POA_ptr
+  Container::the_facet_cons_POA (void) const
+  {
+    return this->facet_cons_poa_.in ();
   }
 
   CORBA::ORB_ptr
@@ -41,10 +59,16 @@ namespace CIAO
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
   Session_Container::serial_number_ (0);
 
+  Session_Container::Session_Container (void)
+  {
+    ACE_ASSERT (0);
+  }
+
   Session_Container::Session_Container (CORBA::ORB_ptr o,
+                                        Container_Impl *container_impl,
                                         bool static_config_flag,
                                         const Static_Config_EntryPoints_Maps* maps)
-  : Container (o),
+  : Container (o, container_impl),
     number_ (0),
     static_config_flag_ (static_config_flag),
     static_entrypts_maps_ (maps),
@@ -93,7 +117,10 @@ namespace CIAO
                                 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
-    this->create_facet_consumer_POA (root_poa.in ()
+    ACE_CString port_poa_name (name);
+    port_poa_name += ":Port_POA";
+    this->create_facet_consumer_POA (port_poa_name.c_str (),
+                                     root_poa.in ()
                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
@@ -137,6 +164,7 @@ namespace CIAO
 
   void
   Session_Container::create_facet_consumer_POA (
+      const char *name,
       PortableServer::POA_ptr root
       ACE_ENV_ARG_DECL)
   {
@@ -164,7 +192,7 @@ namespace CIAO
     ACE_CHECK;
 
     this->facet_cons_poa_ =
-      root->create_POA ("facet_consumer_poa",
+      root->create_POA (name,
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
@@ -244,7 +272,6 @@ namespace CIAO
                      Deployment::ImplEntryPointNotFound,
                      Deployment::InstallationFailure))
   {
-
     HomeFactory hcreator = 0;
     ServantFactory screator = 0;
 
@@ -390,7 +417,6 @@ namespace CIAO
                                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-
     PortableServer::ObjectId_var id =
       this->component_poa_->reference_to_id (objref
                                              ACE_ENV_ARG_PARAMETER);
@@ -401,6 +427,39 @@ namespace CIAO
     ACE_CHECK;
 
     oid = id._retn ();
+  }
+
+  void
+  Session_Container::add_servant_map
+    (PortableServer::ObjectId &,
+     Dynamic_Component_Servant_Base*
+     ACE_ENV_ARG_DECL)
+  {
+    ACE_THROW(CORBA::NO_IMPLEMENT ());
+  }
+
+  void
+  Session_Container::deactivate_facet (PortableServer::ObjectId &oid
+                                       ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_THROW (CORBA::NO_IMPLEMENT ());
+  }
+
+  void
+  Session_Container::delete_servant_map
+    (PortableServer::ObjectId &
+     ACE_ENV_ARG_DECL)
+  {
+    ACE_THROW (CORBA::NO_IMPLEMENT ());
+  }
+
+  CORBA::Object_ptr
+  Session_Container::get_home_objref (PortableServer::Servant
+                                      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   }
 
   CORBA::Object_ptr
