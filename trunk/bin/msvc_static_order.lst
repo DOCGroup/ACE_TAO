@@ -36,6 +36,7 @@ TAO/orbsvcs/orbsvcs/CosProperty
 TAO/orbsvcs/orbsvcs/CosTrading
 TAO/orbsvcs/orbsvcs/CosTrading_Serv
 TAO/orbsvcs/orbsvcs/CosTrading_Skel
+TAO/orbsvcs/orbsvcs/HTIOP
 TAO/orbsvcs/orbsvcs/AV
 TAO/orbsvcs/orbsvcs/ETCL
 TAO/orbsvcs/orbsvcs/RTCosScheduling
