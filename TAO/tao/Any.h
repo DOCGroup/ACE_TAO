@@ -43,17 +43,6 @@ namespace CORBA
   class TAO_Export Any
   {
   public:
-
-// ********** TEMPORARY *********************
-    CORBA::TypeCode_ptr type_;
-    ACE_Message_Block *cdr_;
-    void _tao_encode (TAO_OutputCDR &cdr,
-                      TAO_ORB_Core *orb_core
-                      ACE_ENV_ARG_DECL) {}
-    void _tao_decode (TAO_InputCDR &cdr
-                      ACE_ENV_ARG_DECL) {}
-// ******************************************
-
     typedef Any_ptr _ptr_type;
     typedef Any_var _var_type;
 
@@ -62,12 +51,11 @@ namespace CORBA
 
     /// This signature is required by the C++ mapping, but allows
     /// obvious type safety dangers. TAO's implementation will
-    /// accept an ACE_Message_Block passed in as a void*. This is
-    /// also useful for interceptors, where an Any may need to be
-    /// created that contains a void type. In that case, we can
-    /// pass in a void* value of 0.
+    /// accept only 0 for the void*. This constructor is
+    /// used with interceptors, where an Any may need to be
+    /// created that contains a void type.
     Any (TypeCode_ptr,
-         void *value,
+         void *,
          Boolean release = 0);
 
     ~Any (void);
@@ -305,6 +293,10 @@ namespace TAO
     static void _tao_any_string_destructor (void *);
     static void _tao_any_wstring_destructor (void *);
 
+    // Used only by Unknown_IDL_Type.
+    virtual void _tao_decode (TAO_InputCDR &
+                              ACE_ENV_ARG_DECL_NOT_USED);
+
   protected:
     Any_Impl (_tao_destructor,
               CORBA::TypeCode_ptr);
@@ -336,6 +328,9 @@ namespace TAO
 
     virtual ACE_Message_Block *_tao_get_cdr (void) const;
     virtual int _tao_byte_order (void) const;
+
+    void _tao_decode (TAO_InputCDR &
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   private:
     ACE_Message_Block *cdr_;

@@ -28,11 +28,15 @@ CORBA::Any::Any (CORBA::TypeCode_ptr tc,
                  void *value,
                  CORBA::Boolean release)
 {
-  ACE_Message_Block *mb = ACE_reinterpret_cast (ACE_Message_Block *,
-                                                value);
+  if (value != 0)
+    {
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      return;
+    }
+
   ACE_NEW (this->impl_,
            TAO::Unknown_IDL_Type (tc,
-                                  mb,
+                                  0,
                                   tc->byte_order_,
                                   release));
 }
@@ -67,18 +71,11 @@ CORBA::Any::operator= (const CORBA::Any &rhs)
 }
 
 void
-CORBA::Any::replace (CORBA::TypeCode_ptr tc,
-                     void *value,
-                     CORBA::Boolean release)
+CORBA::Any::replace (CORBA::TypeCode_ptr,
+                     void *,
+                     CORBA::Boolean)
 {
-  ACE_Message_Block *mb = ACE_reinterpret_cast (ACE_Message_Block *,
-                                                value);
-  TAO::Unknown_IDL_Type *unk = 0;
-  ACE_NEW (unk,
-           TAO::Unknown_IDL_Type (tc,
-                                  mb,
-                                  release));
-  this->replace (unk);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void 
@@ -272,6 +269,12 @@ TAO::Any_Impl::_remove_ref (void)
     }
 }
 
+void 
+TAO::Any_Impl::_tao_decode (TAO_InputCDR &
+                            ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
 // =======================================================================
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
@@ -328,6 +331,17 @@ TAO::Unknown_IDL_Type::free_value (void)
     }
 
   ACE_Message_Block::release (this->cdr_);
+}
+
+void
+TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
+                                    ACE_ENV_ARG_DECL)
+{
+  ACE_Message_Block::release (this->cdr_);
+  ACE_NEW (this->cdr_,
+           ACE_Message_Block);
+  ACE_CDR::consolidate (this->cdr_,
+                        cdr.start ());
 }
 
 // ****************************************************************
@@ -402,52 +416,17 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
           return any_impl->demarshal_value (cdr);
         }
 
-      // @@ (JP) The following code depends on the fact that
-      //         TAO_InputCDR does not contain chained message blocks,
-      //         otherwise <begin> and <end> could be part of
-      //         different buffers!
-
-      // This will be the start of a new message block.
-      char *begin = cdr.rd_ptr ();
-
-      // Skip over the next aregument.
-      CORBA::TypeCode::traverse_status status =
-        TAO_Marshal_Object::perform_skip (tc,
-                                          &cdr
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        {
-          return 0;
-        }
-
-      // This will be the end of the new message block.
-      char *end = cdr.rd_ptr ();
-
-      // The ACE_CDR::mb_align() call can shift the rd_ptr by up to
-      // ACE_CDR::MAX_ALIGNMENT - 1 bytes. Similarly, the offset adjustment
-      // can move the rd_ptr by up to the same amount. We accommodate
-      // this by including 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional
-      // space in the message block.
-      size_t size = end - begin;
-
-      ACE_Message_Block mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
-
-      ACE_CDR::mb_align (&mb);
-      ptr_arith_t offset = ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
-      mb.rd_ptr (offset);
-      mb.wr_ptr (offset + size);
-      ACE_OS::memcpy (mb.rd_ptr (), begin, size);
-
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc,
-                                             &mb,
+                                             0,
                                              cdr.byte_order ()),
                       0);
 
       any.replace (impl);
+      impl->_tao_decode (cdr
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::Exception, ex)
     {

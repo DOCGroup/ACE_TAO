@@ -294,7 +294,10 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
                            int flag
                            ACE_ENV_ARG_DECL)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, 
+             ace_mon, 
+             this->refcount_lock_);
+
   if (this->incoming_ != 0)
     {
       if (this->max_ == 0)
@@ -319,23 +322,28 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
           CORBA::NamedValue_ptr nv = *item;
 
           if (ACE_BIT_DISABLED (nv->flags (), flag))
-            continue;
+            {
+              continue;
+            }
 
           if (TAO_debug_level > 3)
             {
               const char* arg = nv->name ();
+
               if (arg == 0)
-                arg = "(nil)";
+                {
+                  arg = "(nil)";
+                }
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("NVList::_tao_encode - parameter <%s>\n"),
                           arg));
             }
-          CORBA::TypeCode_var tc = nv->value ()->type ();
-          (void) TAO_Marshal_Object::perform_append (tc.in (),
+          CORBA::TypeCode_ptr tc = nv->value ()->_tao_get_typecode ();
+          (void) TAO_Marshal_Object::perform_append (tc,
                                                      this->incoming_,
                                                      &cdr
-                                                      ACE_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -358,12 +366,11 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
       CORBA::NamedValue_ptr nv = *item;
 
       if (ACE_BIT_DISABLED (nv->flags (), flag))
-        continue;
+        {
+          continue;
+        }
 
-      nv->value ()->_tao_encode (cdr,
-                                 orb_core
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      nv->value ()->impl ()->marshal_value (cdr);
     }
 }
 
@@ -373,7 +380,10 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
                            ACE_ENV_ARG_DECL)
 {
   if (TAO_debug_level > 3)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode\n")));
+    }
 
   // Then unmarshal each "in" and "inout" parameter.
   ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
@@ -390,16 +400,20 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
       //    a Server-side request, we could probably handle both
       //    cases with a flag, but there is no clear need for that.
       if (ACE_BIT_DISABLED (nv->flags (), flag))
-        continue;
+        {
+          continue;
+        }
 
       if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode - %s\n"),
-                    nv->name ()?nv->name ():"(no name given)" ));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode - %s\n"),
+                      nv->name ()? nv->name () : "(no name given)" ));
+        }
 
       CORBA::Any_ptr any = nv->value ();
-      any->_tao_decode (incoming
-                         ACE_ENV_ARG_PARAMETER);
+      any->impl ()->_tao_decode (incoming
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -407,10 +421,15 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
 ptr_arith_t
 CORBA_NVList::_tao_target_alignment (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, 
+                    ace_mon, 
+                    this->refcount_lock_,
                     ACE_CDR::MAX_ALIGNMENT);
+
   if (this->incoming_ == 0)
-    return ACE_CDR::MAX_ALIGNMENT;
+    {
+      return ACE_CDR::MAX_ALIGNMENT;
+    }
 
   const char* rd = this->incoming_->start ()->rd_ptr ();
   return ptr_arith_t(rd) % ACE_CDR::MAX_ALIGNMENT;
