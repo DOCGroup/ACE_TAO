@@ -1,3 +1,11 @@
+Sat Nov 18 09:58:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Basic_Types.h:
+        * ace/OS_Log_Msg_Attributes.h:
+        * ace/config-all.h:
+          Under LynxOS we must #include stdarg.h before stdio.h.
+          Thanks to David for letting us know about this.
+
 Fri Nov 17 14:24:42 2000 Darrell Brunsch <brunsch@uci.edu>
 
         * include/makeinclude/clean.bor:
