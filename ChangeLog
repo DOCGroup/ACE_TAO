@@ -2,7 +2,8 @@ Fri Feb 27 11:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
           When doing a release build with BCB5 also don't use -O2. Thanks
-          to Andreas Wagner <awagner@ls-wagner.de> for reporting this.
+          to Andreas Wagner <awagner@ls-wagner.de> for reporting this. This
+          fixes bug [1754].
 
 Fri Feb 27 09:02:07 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
