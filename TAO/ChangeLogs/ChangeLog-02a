@@ -1,3 +1,10 @@
+Fri Mar 02 11:57:03 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Connection_Handler.cpp (set_socket_option):
+
+	   Fixed mispelling in ACE_UNUSED_ARG, that was breaking
+	   QNX build.
+
 Fri Mar 02 09:32:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (~Server_Request_Interceptor, destroy):
@@ -81,7 +88,7 @@ Fri Mar  2 02:15:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 Fri Mar  2 01:32:32 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp (set_socket_option):
-	  Added ACE_UNUSED_ARG to avoid warning on those platform 
+	  Added ACE_UNUSED_ARG to avoid warning on those platform
 	  that lack SOCK_BUF_SIZE.
 
 Fri Mar  2 07:51:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
