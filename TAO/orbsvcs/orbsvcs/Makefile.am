@@ -2,17 +2,22 @@
 
 includedir = @includedir@/orbsvcs
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
+nobase_include_HEADERS =
+lib_LTLIBRARIES =
+CLEANFILES =
+BUILT_SOURCES =
+
 ## Makefile.CosNaming.am 
 
-BUILT_SOURCES = \
+BUILT_SOURCES += \
   CosNamingS_T.cpp \
   CosNamingC.inl \
   CosNamingS_T.inl \
@@ -20,7 +25,7 @@ BUILT_SOURCES = \
   CosNamingC.h \
   CosNamingS_T.h
 
-CLEANFILES = \
+CLEANFILES += \
   CosNamingS_T.cpp \
   CosNamingC.inl \
   CosNamingS_T.inl \
@@ -35,7 +40,7 @@ CosNaming-stamp: $(srcdir)/CosNaming.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h $(srcdir)/CosNaming.idl
 	@touch $@
 
-lib_LTLIBRARIES = libTAO_CosNaming.la
+lib_LTLIBRARIES += libTAO_CosNaming.la
 
 libTAO_CosNaming_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -57,10 +62,11 @@ libTAO_CosNaming_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_include_HEADERS = \
+nobase_include_HEADERS += \
   CosNamingC.h \
   CosNamingS_T.h \
   Naming/Naming_Client.h \
+  Naming/naming_export.h \
   CosNamingC.inl \
   CosNamingS_T.inl \
   CosNamingS_T.cpp \
@@ -553,6 +559,7 @@ libTAO_CosEvent_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  CosEvent/event_export.h \
   CosEventChannelAdminC.h \
   CosEventChannelAdminS_T.h \
   CosEventCommC.h \
@@ -729,14 +736,27 @@ libTAO_CosEvent_Skel_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  CosEvent/event_skel_export.h \
   CosEventChannelAdminS.h \
+  CosEventChannelAdminS_T.h \
   CosEventCommS.h \
+  CosEventCommS_T.h \
   CosTypedEventChannelAdminS.h \
+  CosTypedEventChannelAdminS_T.h \
   CosTypedEventCommS.h \
+  CosTypedEventCommS_T.h \
   CosEventChannelAdminS.inl \
+  CosEventChannelAdminS_T.inl \
   CosEventCommS.inl \
+  CosEventCommS_T.inl \
   CosTypedEventChannelAdminS.inl \
-  CosTypedEventCommS.inl
+  CosTypedEventChannelAdminS_T.inl \
+  CosTypedEventCommS.inl \
+  CosTypedEventCommS_T.inl \
+  CosEventChannelAdminS_T.cpp \
+  CosEventCommS_T.cpp \
+  CosTypedEventChannelAdminS_T.cpp \
+  CosTypedEventCommS_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -745,6 +765,7 @@ EXTRA_DIST += \
 
 ## Makefile.CosEvent_Serv.am 
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 CosEvent = \
@@ -858,6 +879,7 @@ nobase_include_HEADERS += \
   CosEvent/CEC_TypedSupplierAdmin.i
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
   CosEvent_Serv.rc
@@ -1083,6 +1105,7 @@ endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.PortableGroup.am 
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
@@ -1144,6 +1167,7 @@ miop-stamp: $(srcdir)/miop.idl
 	@touch $@
 
 PortableGroup = \
+  PortableGroup/MIOP.cpp \
   PortableGroup/PG_Default_Property_Validator.cpp \
   PortableGroup/PG_FactoryRegistry.cpp \
   PortableGroup/PG_Factory_Map.cpp \
@@ -1215,6 +1239,7 @@ libTAO_PortableGroup_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  PortableGroup/MIOP.h \
   PortableGroup/PG_Default_Property_Validator.h \
   PortableGroup/PG_FactoryRegistry.h \
   PortableGroup/PG_Factory_Map.h \
@@ -1279,12 +1304,14 @@ nobase_include_HEADERS += \
   miop.idl
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
   PortableGroup.rc
 
 ## Makefile.CosLoadBalancing.am 
 
+if BUILD_CORBA_MESSAGING
 if BUILD_AMI
 if !BUILD_MINIMUM_CORBA
 
@@ -1452,6 +1479,7 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_AMI
+endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
   CosLoadBalancing.rc
@@ -1483,12 +1511,18 @@ libTAO_CosNaming_Skel_la_LIBADD = \
 
 nobase_include_HEADERS += \
   CosNamingS.h \
-  CosNamingS.inl
+  CosNamingS_T.h \
+  Naming/naming_skel_export.h \
+  CosNamingS.inl \
+  CosNamingS_T.inl \
+  CosNamingS_T.cpp
 
 EXTRA_DIST += \
   CosNaming_Skel.rc
 
 ## Makefile.CosNaming_Serv.am 
+
+if BUILD_CORBA_MESSAGING
 
 Naming = \
   Naming/Entries.cpp \
@@ -1547,8 +1581,9 @@ nobase_include_HEADERS += \
   Naming/Storable_Naming_Context.h \
   Naming/Storable_Naming_Context_Activator.h \
   Naming/Transient_Naming_Context.h \
-  Naming/naming_export.h \
   Naming/Storable.inl
+
+endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
   CosNaming_Serv.rc
@@ -1736,6 +1771,7 @@ nobase_include_HEADERS += \
   Event_ForwarderC.h \
   Event_ForwarderS_T.h \
   Notify/Notify_Extensions.h \
+  Notify/notify_export.h \
   NotifyExtC.h \
   NotifyExtS_T.h \
   CosNotificationC.inl \
@@ -1840,17 +1876,36 @@ libTAO_CosNotification_Skel_la_LIBADD = \
 
 nobase_include_HEADERS += \
   CosNotificationS.h \
+  CosNotificationS_T.h \
   CosNotifyChannelAdminS.h \
+  CosNotifyChannelAdminS_T.h \
   CosNotifyCommS.h \
+  CosNotifyCommS_T.h \
   CosNotifyFilterS.h \
+  CosNotifyFilterS_T.h \
   Event_ForwarderS.h \
+  Event_ForwarderS_T.h \
+  Notify/notify_skel_export.h \
   NotifyExtS.h \
+  NotifyExtS_T.h \
   CosNotificationS.inl \
+  CosNotificationS_T.inl \
   CosNotifyChannelAdminS.inl \
+  CosNotifyChannelAdminS_T.inl \
   CosNotifyCommS.inl \
+  CosNotifyCommS_T.inl \
   CosNotifyFilterS.inl \
+  CosNotifyFilterS_T.inl \
   Event_ForwarderS.inl \
-  NotifyExtS.inl
+  Event_ForwarderS_T.inl \
+  NotifyExtS.inl \
+  NotifyExtS_T.inl \
+  CosNotificationS_T.cpp \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyCommS_T.cpp \
+  CosNotifyFilterS_T.cpp \
+  Event_ForwarderS_T.cpp \
+  NotifyExtS_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -2276,6 +2331,7 @@ nobase_include_HEADERS += \
   CosTradingReposC.h \
   CosTradingReposS_T.h \
   CosTradingS_T.h \
+  Trader/trading_export.h \
   CosTradingC.inl \
   CosTradingDynamicC.inl \
   CosTradingDynamicS_T.inl \
@@ -2321,11 +2377,21 @@ libTAO_CosTrading_Skel_la_LIBADD = \
 
 nobase_include_HEADERS += \
   CosTradingDynamicS.h \
+  CosTradingDynamicS_T.h \
   CosTradingReposS.h \
+  CosTradingReposS_T.h \
   CosTradingS.h \
+  CosTradingS_T.h \
+  Trader/trading_skel_export.h \
   CosTradingDynamicS.inl \
+  CosTradingDynamicS_T.inl \
   CosTradingReposS.inl \
-  CosTradingS.inl
+  CosTradingReposS_T.inl \
+  CosTradingS.inl \
+  CosTradingS_T.inl \
+  CosTradingDynamicS_T.cpp \
+  CosTradingReposS_T.cpp \
+  CosTradingS_T.cpp
 
 EXTRA_DIST += \
   CosTrading_Skel.rc
@@ -2468,6 +2534,7 @@ nobase_include_HEADERS += \
   DsLogAdminS_T.h \
   DsLogNotificationC.h \
   DsLogNotificationS_T.h \
+  Log/log_export.h \
   DsLogAdminC.inl \
   DsLogAdminS_T.inl \
   DsLogNotificationC.inl \
@@ -2534,6 +2601,7 @@ libTAO_DsEventLogAdmin_la_LIBADD = \
 nobase_include_HEADERS += \
   DsEventLogAdminC.h \
   DsEventLogAdminS_T.h \
+  Log/eventlog_export.h \
   DsEventLogAdminC.inl \
   DsEventLogAdminS_T.inl \
   DsEventLogAdminS_T.cpp \
@@ -2572,9 +2640,16 @@ libTAO_DsLogAdmin_Skel_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DsLogAdminS.h \
+  DsLogAdminS_T.h \
   DsLogNotificationS.h \
+  DsLogNotificationS_T.h \
+  Log/log_skel_export.h \
   DsLogAdminS.inl \
-  DsLogNotificationS.inl
+  DsLogAdminS_T.inl \
+  DsLogNotificationS.inl \
+  DsLogNotificationS_T.inl \
+  DsLogAdminS_T.cpp \
+  DsLogNotificationS_T.cpp
 
 ## Makefile.DsLogAdmin_Serv.am 
 
@@ -2663,12 +2738,17 @@ libTAO_DsEventLogAdmin_Skel_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DsEventLogAdminS.h \
-  DsEventLogAdminS.inl
+  DsEventLogAdminS_T.h \
+  Log/eventlog_skel_export.h \
+  DsEventLogAdminS.inl \
+  DsEventLogAdminS_T.inl \
+  DsEventLogAdminS_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.DsEventLogAdmin_Serv.am 
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 DsEventLogAdmin = \
@@ -2722,6 +2802,7 @@ nobase_include_HEADERS += \
   Log/EventLog_i.h
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.DsNotifyLogAdmin.am 
 
@@ -2779,6 +2860,7 @@ libTAO_DsNotifyLogAdmin_la_LIBADD = \
 nobase_include_HEADERS += \
   DsNotifyLogAdminC.h \
   DsNotifyLogAdminS_T.h \
+  Log/notifylog_export.h \
   DsNotifyLogAdminC.inl \
   DsNotifyLogAdminS_T.inl \
   DsNotifyLogAdminS_T.cpp \
@@ -2827,7 +2909,11 @@ libTAO_DsNotifyLogAdmin_Skel_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DsNotifyLogAdminS.h \
-  DsNotifyLogAdminS.inl
+  DsNotifyLogAdminS_T.h \
+  Log/notifylog_skel_export.h \
+  DsNotifyLogAdminS.inl \
+  DsNotifyLogAdminS_T.inl \
+  DsNotifyLogAdminS_T.cpp
 
 endif !BUILD_MINIMUM_CORBA
 
@@ -2888,6 +2974,8 @@ endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.FTRT_ClientORB.am 
 
+if BUILD_CORBA_MESSAGING
+
 FTRT_ClientORB = \
   FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.cpp \
   FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp \
@@ -2923,7 +3011,11 @@ nobase_include_HEADERS += \
   FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h \
   FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h
 
+endif BUILD_CORBA_MESSAGING
+
 ## Makefile.RTEvent.am 
+
+if BUILD_CORBA_MESSAGING
 
 BUILT_SOURCES += \
   RtecDefaultEventDataS_T.cpp \
@@ -3310,11 +3402,14 @@ nobase_include_HEADERS += \
   RtecEventComm.idl \
   RtecUDPAdmin.idl
 
+endif BUILD_CORBA_MESSAGING
+
 EXTRA_DIST += \
   RTEvent.rc
 
 ## Makefile.FtRtEvent.am 
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
@@ -3519,9 +3614,11 @@ nobase_include_HEADERS += \
   FtRtecEventComm.idl
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FTRT_EventChannel.am 
 
+if BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
@@ -3638,9 +3735,11 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_CORBA_MESSAGING
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FT_ClientORB.am 
 
+if BUILD_CORBA_MESSAGING
 if BUILD_ACE_UUID
 if !BUILD_MINIMUM_CORBA
 
@@ -3698,9 +3797,11 @@ nobase_include_HEADERS += \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_ACE_UUID
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FT_ServerORB.am 
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 FT_ServerORB = \
@@ -3748,10 +3849,12 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_ServerPolicy_i.inl
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.FaultTolerance.am 
 
 if BUILD_ACE_UUID
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES += \
@@ -3987,6 +4090,7 @@ nobase_include_HEADERS += \
   FT_ReplicationManager.idl
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
 
 EXTRA_DIST += \
@@ -4148,6 +4252,7 @@ EXTRA_DIST += \
 
 ## Makefile.RTCORBAEvent.am 
 
+if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 
 RTCORBAEvent = \
@@ -4190,6 +4295,7 @@ nobase_include_HEADERS += \
   Event/EC_RTCORBA_Factory.inl
 
 endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTCosScheduling.am 
 
@@ -4382,6 +4488,8 @@ EXTRA_DIST += \
 
 ## Makefile.RTOLDEvent.am 
 
+if BUILD_CORBA_MESSAGING
+
 RTOLDEvent = \
   Event/BCU.cpp \
   Event/Dispatching_Modules.cpp \
@@ -4444,10 +4552,14 @@ nobase_include_HEADERS += \
   Event/RT_Task.i \
   Event/Timer_Module.i
 
+endif BUILD_CORBA_MESSAGING
+
 EXTRA_DIST += \
   RTOldEvent.rc
 
 ## Makefile.RTEventLogAdmin.am 
+
+if BUILD_CORBA_MESSAGING
 
 BUILT_SOURCES += \
   RTEventLogAdminS_T.cpp \
@@ -4534,7 +4646,11 @@ nobase_include_HEADERS += \
   RTEventLogAdminS_T.cpp \
   RTEventLogAdmin.idl
 
+endif BUILD_CORBA_MESSAGING
+
 ## Makefile.RTKokyuEvent.am 
+
+if BUILD_CORBA_MESSAGING
 
 RTKokyuEvent = \
   Event/EC_Kokyu_Dispatching.cpp \
@@ -4585,7 +4701,11 @@ nobase_include_HEADERS += \
   Event/EC_Kokyu_Filter_Builder.i \
   Event/EC_Kokyu_Scheduling.i
 
+endif BUILD_CORBA_MESSAGING
+
 ## Makefile.RTSchedEvent.am 
+
+if BUILD_CORBA_MESSAGING
 
 RTSchedEvent = \
   Event/EC_Gateway_Sched.cpp \
@@ -4635,6 +4755,8 @@ nobase_include_HEADERS += \
   Event/EC_Sched_Factory.i \
   Event/EC_Sched_Filter.i \
   Event/EC_Sched_Filter_Builder.i
+
+endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
   RTSchedEvent.rc
@@ -5168,6 +5290,8 @@ EXTRA_DIST += \
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

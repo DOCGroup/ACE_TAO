@@ -1,3 +1,9 @@
+Fri Oct 15 10:36:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated.
+
 Fri Oct 15 10:53:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_be_visitor_arg_traits.cpp:
@@ -5,7 +11,7 @@ Fri Oct 15 10:53:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_tmplinst.cpp:
         * TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:
         * TAO_IDL/be_include/be_visitor_tmplinst/arg_tmplinst.h:
-             
+
           Added visit_home() method which delegates to the
           visit_interface() method. The TAO::Arg_Traits<>
           specialization was not getting done for home operations.
