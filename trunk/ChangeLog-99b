@@ -1,12 +1,19 @@
+Wed Feb 03 21:50:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-vxworks5.x.h: added ACE_HAS_BROKEN_ENUMS with
+          Green Hills, because it's needed with 1.8.9.  Thanks to
+          Jacob Jones <Jacob.J.Jones@notesmta.gd-is.com> for reporting
+          this.
+
 Wed Feb 03 14:57:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.h (ACE_At_Thread_Exit[_Func]): Added
-	  ACE_Export keywords.  Thanks to Terry Rosenbaum
-	  <Terry.Rosenbaum@Radiology.MSU.edu> for pointing this out.
+        * ace/Thread_Manager.h (ACE_At_Thread_Exit[_Func]): Added
+          ACE_Export keywords.  Thanks to Terry Rosenbaum
+          <Terry.Rosenbaum@Radiology.MSU.edu> for pointing this out.
 
-	* ace/Service_Config.{h,i,cpp}: Added one more argument to open
-	  methods that allows ignoring the default svc.conf file.  You can
-	  still open svc.conf files using the -f option.
+        * ace/Service_Config.{h,i,cpp}: Added one more argument to open
+          methods that allows ignoring the default svc.conf file.  You can
+          still open svc.conf files using the -f option.
 
 Wed Feb 03 10:12:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
