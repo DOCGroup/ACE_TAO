@@ -50,7 +50,7 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
     this->stack_[i] = s.stack_[i];
 }
 
-template<class T> void
+template<class T> ACE_Bounded_Stack<T> &
 ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::operator=");
@@ -66,6 +66,8 @@ ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
       for (size_t i = 0; i < this->top_; i++)
         this->stack_[i] = s.stack_[i];
     }
+
+  return *this;
 }
 
 template<class T>
@@ -103,7 +105,7 @@ ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE
     this->stack_[i] = s.stack_[i];
 }
 
-template<class T, size_t ACE_SIZE> void
+template<class T, size_t ACE_SIZE> ACE_Fixed_Stack<T, ACE_SIZE> &
 ACE_Fixed_Stack<T, ACE_SIZE>::operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::operator=");
@@ -114,6 +116,8 @@ ACE_Fixed_Stack<T, ACE_SIZE>::operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
       for (size_t i = 0; i < this->top_; i++)
         this->stack_[i] = s.stack_[i];
     }
+
+  return *this;
 }
 
 template<class T, size_t ACE_SIZE>
@@ -207,7 +211,7 @@ ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
   this->copy_all_nodes (s);
 }
 
-template<class T> void
+template<class T> ACE_Unbounded_Stack<T> &
 ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::operator=");
@@ -216,6 +220,8 @@ ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
       this->delete_all_nodes ();
       this->copy_all_nodes (s);
     }
+
+  return *this;
 }
 
 template<class T>
@@ -357,7 +363,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
   this->copy_nodes (us);
 }
 
-template <class T> void
+template <class T> ACE_Unbounded_Queue<T> &
 ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
 {
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
@@ -367,6 +373,8 @@ ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
+
+  return *this;
 }
 
 template <class T> ACE_Unbounded_Queue_Iterator<T>
@@ -752,7 +760,7 @@ ACE_Double_Linked_List<T>::ACE_Double_Linked_List (ACE_Double_Linked_List<T> &cx
   this->copy_nodes (cx);
 }
 
-template <class T> void
+template <class T> ACE_Double_Linked_List<T> &
 ACE_Double_Linked_List<T>::operator= (ACE_Double_Linked_List<T> &cx)
 {
   if (this != &cx)
@@ -760,6 +768,8 @@ ACE_Double_Linked_List<T>::operator= (ACE_Double_Linked_List<T> &cx)
       this->delete_nodes ();
       this->copy_nodes (cx);
     }
+
+  return *this;
 }
 
 template <class T>
@@ -995,7 +1005,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
     this->search_structure_[i] = fs.search_structure_[i];
 }
 
-template <class T, size_t ACE_SIZE> void
+template <class T, size_t ACE_SIZE> ACE_Fixed_Set<T, ACE_SIZE> &
 ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::operator=");
@@ -1007,6 +1017,8 @@ ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
       for (size_t i = 0; i < this->cur_size_; i++)
         this->search_structure_[i] = fs.search_structure_[i];
     }
+
+  return *this;
 }
 
 template <class T, size_t ACE_SIZE>
@@ -1205,7 +1217,7 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (const ACE_Bounded_Set<T> &bs)
     this->search_structure_[i] = bs.search_structure_[i];
 }
 
-template <class T> void
+template <class T> ACE_Bounded_Set<T> &
 ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::operator=");
@@ -1225,6 +1237,8 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
       for (size_t i = 0; i < this->cur_size_; i++)
         this->search_structure_[i] = bs.search_structure_[i];
     }
+
+  return *this;
 }
 
 template <class T>
@@ -1591,7 +1605,7 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
   this->copy_nodes (us);
 }
 
-template <class T> void
+template <class T> ACE_Unbounded_Set<T> &
 ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::operator=");
@@ -1601,6 +1615,8 @@ ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
+
+  return *this;
 }
 
 template <class T> int
@@ -1868,7 +1884,7 @@ ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet (void)
 }
 
 
-template <class T> void
+template <class T> ACE_Ordered_MultiSet<T> &
 ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet<T>::operator=");
@@ -1878,6 +1894,8 @@ ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
+
+  return *this;
 }
 
 

@@ -76,7 +76,7 @@ public:
   // <size_> == 0.
 
 #if defined (ACE_HAS_BIG_FD_SET)
-  void operator= (const ACE_Handle_Set &);
+  ACE_Handle_Set & operator= (const ACE_Handle_Set &);
   // Assignment operator optimizes for cases where <size_> == 0.
 #endif /* ACE_HAS_BIG_FD_SET */
 
