@@ -43,7 +43,7 @@ namespace TAO
     S_slice const * arg (void) const;
 
   private:
-    S_forany x_;
+    mutable S x_;
   };
 
   /**
@@ -66,7 +66,7 @@ namespace TAO
     S_slice * arg (void);
 
   private:
-    S_forany x_;
+    S x_;
   };
 
   /**
