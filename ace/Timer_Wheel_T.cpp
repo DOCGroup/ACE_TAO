@@ -160,7 +160,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::open_i (size_t prealloc, u_int spoke
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Wheel_T (void)
 {
-  ACE_TRACE ("ACE_Timer_spokes_T::~ACE_Timer_spokes_T");
+  ACE_TRACE ("ACE_Timer_Wheel_T::~ACE_Timer_Wheel_T");
   
   delete iterator_;
   
