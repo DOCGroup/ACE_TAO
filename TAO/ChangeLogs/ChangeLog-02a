@@ -1,3 +1,12 @@
+Thu Aug 30 15:25:13 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/DLL_ORB/client.cpp (main): 
+	* tests/DLL_ORB/server.cpp (main): 
+
+	  Reverted the change that pre-loaded the default resource factory
+	  before the ORB.  Chris Kohlhoff's slick fix for the Server
+	  Configurator obviates the need to this sort of pre-loading.
+
 Thu Aug 30 07:59:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAOACE.dsw:
