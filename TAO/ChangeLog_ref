@@ -1,3 +1,10 @@
+Mon Jul  7 14:39:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Argument.cpp:
+        * tao/Argument.h:
+
+          Added virtual destructor to argument base class.
+
 Mon Jul  7 14:00:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Var_Array_Argument_T.cpp:

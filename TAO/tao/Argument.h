@@ -45,6 +45,7 @@ namespace TAO
   class TAO_Export Argument
   {
   public:
+    virtual ~Argument (void);
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void interceptor_param (Dynamic::Parameter &);
