@@ -1,3 +1,9 @@
+Tue Apr  8 22:45:28 1997  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* java/src/SOCKStream.java (SOCKStream): Made two small changes to
+	  the two send(). Instead of doing a println, I now do a
+	  print. This was really a bug!
+
 Tue Apr 08 22:08:12 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU: removed
@@ -211,6 +217,10 @@ Sun Apr 06 20:01:57 1997  David L. Levine  <levine@cs.wustl.edu>
 	  reporting this.
 
 	* ace/Set.cpp(ACE_Set_Node ctor): commented out unused arg MS_SUCKS.
+
+Sat Apr  5 14:21:29 1997  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* java/: Changed package name from ACE to JACE across all directories.
 
 Sat Apr  5 13:12:37 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
