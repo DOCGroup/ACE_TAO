@@ -115,7 +115,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head (ACE_MESSAGE
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
                                      sizeof (*new_item),
-                                     DEFAULT_PRIORITY),
+                                     ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
                   -1);
 
   int result = this->queue_.enqueue_head (mb, timeout);
@@ -149,10 +149,32 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
                                      sizeof (*new_item),
-                                     DEFAULT_PRIORITY),
+                                     ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
                   -1);
 
   int result = this->queue_.enqueue_prio (mb, timeout);
+  if (result == -1)
+    // Zap the message.
+    mb->release ();
+
+  return result;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_deadline (ACE_MESSAGE_TYPE *new_item,
+                                                                         ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_deadline");
+
+  ACE_Message_Block *mb;
+
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block ((char *) new_item,
+                                     sizeof (*new_item),
+                                     ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY ),
+                  -1);
+
+  int result = this->queue_.enqueue_deadline (mb, timeout);
   if (result == -1)
     // Zap the message.
     mb->release ();
@@ -174,7 +196,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail (ACE_MESSAGE
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
                                      sizeof (*new_item),
-                                     DEFAULT_PRIORITY),
+                                     ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
                   -1);
 
   int result = this->queue_.enqueue_tail (mb, timeout);
@@ -202,6 +224,84 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE
   if (cur_count != -1)
     {
       first_item = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      // Delete the message block.
+      mb->release ();
+      return cur_count;
+    }
+  else
+    return -1;
+}
+
+// Remove the item with the lowest priority from the queue.  If timeout == 0
+// block indefinitely (or until an alert occurs).  Otherwise, block for upto
+// the amount of time specified by timeout.
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_prio (ACE_MESSAGE_TYPE *&dequeued,
+                                                                     ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_prio");
+  
+  ACE_Message_Block *mb;
+
+  int cur_count = this->queue_.dequeue_prio (mb, timeout);
+
+  // Dequeue the message.
+  if (cur_count != -1)
+    {
+      dequeued = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      // Delete the message block.
+      mb->release ();
+      return cur_count;
+    }
+  else
+    return -1;
+}
+
+// Remove an item from the end of the queue.  If timeout == 0 block
+// indefinitely (or until an alert occurs).  Otherwise, block for upto
+// the amount of time specified by timeout.
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_tail (ACE_MESSAGE_TYPE *&dequeued,
+                                                                     ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_tail");
+  
+  ACE_Message_Block *mb;
+
+  int cur_count = this->queue_.dequeue_tail (mb, timeout);
+
+  // Dequeue the message.
+  if (cur_count != -1)
+    {
+      dequeued = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      // Delete the message block.
+      mb->release ();
+      return cur_count;
+    }
+  else
+    return -1;
+}
+
+// Remove an item with the lowest deadline time.  If timeout == 0 block
+// indefinitely (or until an alert occurs).  Otherwise, block for upto
+// the amount of time specified by timeout.
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_deadline (ACE_MESSAGE_TYPE *&dequeued,
+                                                                         ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_deadline");
+  
+  ACE_Message_Block *mb;
+
+  int cur_count = this->queue_.dequeue_deadline (mb, timeout);
+
+  // Dequeue the message.
+  if (cur_count != -1)
+    {
+      dequeued = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
       // Delete the message block.
       mb->release ();
       return cur_count;
@@ -638,6 +738,71 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
     return this->cur_count_;
 }
 
+// Actually put the node at its proper position relative to its
+// deadline time.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline_i (ACE_Message_Block *new_item)
+{
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline_i");
+
+  if (new_item == 0)
+    return -1;
+
+  if (this->head_ == 0)
+    // Check for simple case of an empty queue, where all we need to
+    // do is insert <new_item> into the head.
+    return this->enqueue_head_i (new_item);
+  else
+    {
+      ACE_Message_Block *temp;
+
+      // Figure out where the new item goes relative to its priority.
+      // We start looking from the smallest deadline to the highest
+      // deadline.
+
+      for (temp = this->head_;
+           temp != 0;
+           temp = temp->next ())
+        if (new_item->msg_deadline_time () < temp->msg_deadline_time ())
+          // Break out when we've located an item that has
+          // greater or equal priority.
+          break;
+
+      if (temp == 0 || temp->next () == 0)
+        // Check for simple case of inserting at the tail of the queue,
+        // where all we need to do is insert <new_item> after the
+        // current tail.
+        return this->enqueue_tail_i (new_item);
+      else
+        {
+          // Insert the new message behind the message of
+          // lesser or equal deadline time.  This ensures that FIFO order is
+          // maintained when messages of the same priority are
+          // inserted consecutively.
+          new_item->prev (temp);
+          new_item->next (temp->next ());
+          temp->next ()->prev (new_item);
+          temp->next (new_item);
+        }
+    }
+
+  // Make sure to count all the bytes in a composite message!!!
+  this->cur_bytes_ += new_item->total_size ();
+  this->cur_length_ += new_item->total_length ();
+
+  this->cur_count_++;
+
+  if (this->signal_dequeue_waiters () == -1)
+    return -1;
+  else
+    return this->cur_count_;
+#else
+  return this->enqueue_tail_i (new_item);
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
+}
+
 // Actually get the first ACE_Message_Block (no locking, so must be
 // called with locks held).  This method assumes that the queue has at
 // least one item in it when it is called.
@@ -676,6 +841,197 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
     return -1;
   else
     return this->cur_count_;
+}
+
+// Actually get the ACE_Message_Block with the lowest priority (no locking,
+// so must be called with locks held).  This method assumes that the queue
+// has at least one item in it when it is called.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
+{
+  if (this->head_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("Attempting to dequeue from empty queue")),
+                      -1);
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i");
+
+  // Find the last message enqueued with the lowest priority
+  ACE_Message_Block* chosen = 0;
+  u_long priority = ULONG_MAX;
+  for (ACE_Message_Block *temp = this->tail_; temp != 0; temp = temp->prev ())
+    {
+      if (temp->msg_priority () < priority)
+        {
+          priority = temp->msg_priority ();
+          chosen = temp;
+        }
+    }
+
+  // If every message block is the same priority, pass back the first one
+  if (chosen == 0)
+    {
+      chosen = this->head_;
+    }
+
+  // Patch up the queue.  If we don't have a previous
+  // then we are at the head of the queue.
+  if (chosen->prev () == 0)
+    {
+      this->head_ = chosen->next ();
+    }
+  else
+    { 
+      chosen->prev ()->next (chosen->next ());
+    }
+
+  if (chosen->next () == 0)
+    {
+      this->tail_ = chosen->prev ();
+    }
+  else
+    {
+      chosen->next ()->prev (chosen->prev ());
+    }
+
+  // Pass back the chosen block
+  dequeued = chosen;
+
+  // Subtract off all of the bytes associated with this message.
+  this->cur_bytes_ -= dequeued->total_size ();
+  this->cur_length_ -= dequeued->total_length ();
+
+  this->cur_count_--;
+
+  if (this->cur_count_ == 0 && this->head_ == this->tail_)
+    this->head_ = this->tail_ = 0;                        
+
+  // Only signal enqueueing threads if we've fallen below the low
+  // water mark.
+  if (this->cur_bytes_ <= this->low_water_mark_
+      && this->signal_enqueue_waiters () == -1)
+    return -1;                                 
+  else
+    return this->cur_count_;
+}
+
+// Actually get the last ACE_Message_Block (no locking, so must be
+// called with locks held).  This method assumes that the queue has at
+// least one item in it when it is called.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i (ACE_Message_Block *&dequeued)
+{
+  if (this->head_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("Attempting to dequeue from empty queue")),
+                      -1);
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i");
+  dequeued = this->tail_;
+  if (this->tail_->prev () == 0)
+    {
+      this->head_ = 0;
+      this->tail_ = 0;
+    }
+  else
+    {
+      this->tail_->prev ()->next (0);
+      this->tail_ = this->tail_->prev ();
+    }
+
+  // Subtract off all of the bytes associated with this message.
+  this->cur_bytes_ -= dequeued->total_size ();
+  this->cur_length_ -= dequeued->total_length ();
+
+  this->cur_count_--;
+
+  if (this->cur_count_ == 0 && this->head_ == this->tail_)
+    this->head_ = this->tail_ = 0;
+
+  // Only signal enqueueing threads if we've fallen below the low
+  // water mark.
+  if (this->cur_bytes_ <= this->low_water_mark_
+      && this->signal_enqueue_waiters () == -1)
+    return -1;
+  else
+    return this->cur_count_;
+}
+
+// Actually get the ACE_Message_Block with the lowest deadline time
+// (no locking, so must be called with locks held).  This method assumes
+// that the queue has at least one item in it when it is called.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeued)
+{
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
+  if (this->head_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("Attempting to dequeue from empty queue")),
+                      -1);
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i");
+
+  // Find the last message enqueued with the lowest deadline time
+  ACE_Message_Block* chosen = 0;
+  ACE_Time_Value deadline = ACE_Time_Value::max_time;
+  for (ACE_Message_Block *temp = this->head_; temp != 0; temp = temp->next ())
+    {
+      if (temp->msg_deadline_time () < deadline)
+        {
+          deadline = temp->msg_deadline_time ();
+          chosen = temp;
+        }
+    }
+
+  // If every message block is the same deadline time,
+  // pass back the first one
+  if (chosen == 0)
+    {
+      chosen = this->head_;
+    }
+
+  // Patch up the queue.  If we don't have a previous
+  // then we are at the head of the queue.
+  if (chosen->prev () == 0)
+    {
+      this->head_ = chosen->next ();
+    }
+  else
+    { 
+      chosen->prev ()->next (chosen->next ());
+    }
+
+  if (chosen->next () == 0)
+    {
+      this->tail_ = chosen->prev ();
+    }
+  else
+    {
+      chosen->next ()->prev (chosen->prev ());
+    }
+
+  // Pass back the chosen block
+  dequeued = chosen;
+
+  // Subtract off all of the bytes associated with this message.
+  this->cur_bytes_ -= dequeued->total_size ();
+  this->cur_length_ -= dequeued->total_length ();
+
+  this->cur_count_--;
+
+  if (this->cur_count_ == 0 && this->head_ == this->tail_)
+    this->head_ = this->tail_ = 0;                        
+
+  // Only signal enqueueing threads if we've fallen below the low
+  // water mark.
+  if (this->cur_bytes_ <= this->low_water_mark_
+      && this->signal_enqueue_waiters () == -1)
+    return -1;                                 
+  else
+    return this->cur_count_;
+#else
+  return this->dequeue_head_i (dequeued);
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
 // Take a look at the first item without removing it.
@@ -855,6 +1211,35 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
   return queue_count;
 }
 
+// Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
+// accordance with its <msg_deadline_time>.  Returns
+// -1 on failure, else the number of items still on the queue.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
+                                                    ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline");
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+
+  if (this->deactivated_)
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
+
+  if (this->wait_not_full_cond (ace_mon, timeout) == -1)
+    return -1;
+
+  int queue_count = this->enqueue_deadline_i (new_item);
+
+  if (queue_count == -1)
+    return -1;
+
+  this->notify ();
+  return queue_count;
+}
+
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::enqueue (ACE_Message_Block *new_item,
                                            ACE_Time_Value *timeout)
@@ -912,6 +1297,75 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
     return -1;
 
   return this->dequeue_head_i (first_item);
+}
+
+// Remove item with the lowest priority from the queue.  If timeout == 0 block
+// indefinitely (or until an alert occurs).  Otherwise, block for upto
+// the amount of time specified by timeout.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio (ACE_Message_Block *&dequeued,
+                                                ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio");
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+
+  if (this->deactivated_)
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
+
+  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+    return -1;
+
+  return this->dequeue_prio_i (dequeued);
+}
+
+// Remove an item from the end of the queue.  If timeout == 0 block
+// indefinitely (or until an alert occurs).  Otherwise, block for upto
+// the amount of time specified by timeout.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail (ACE_Message_Block *&dequeued,
+                                                ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail");
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+
+  if (this->deactivated_)
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
+
+  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+    return -1;
+
+  return this->dequeue_tail_i (dequeued);
+}
+
+// Remove an item with the lowest deadline time.  If timeout == 0 block
+// indefinitely (or until an alert occurs).  Otherwise, block for upto
+// the amount of time specified by timeout.
+
+template <ACE_SYNCH_DECL> int
+ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline (ACE_Message_Block *&dequeued,
+                                                ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline");
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+
+  if (this->deactivated_)
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
+
+  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+    return -1;
+
+  return this->dequeue_deadline_i (dequeued);
 }
 
 template <ACE_SYNCH_DECL> int

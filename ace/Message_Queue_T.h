@@ -135,6 +135,20 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
+   * Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
+   * accordance with its <msg_deadline_time>.  FIFO
+   * order is maintained when messages of the same deadline time are
+   * inserted consecutively.  Note that <timeout> uses <{absolute}>
+   * time rather than <{relative}> time.  If the <timeout> elapses
+   * without receiving a message -1 is returned and <errno> is set to
+   * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
+   * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
+   * else the number of items still on the queue.
+   */
+  virtual int enqueue_deadline (ACE_Message_Block *new_item,
+                                ACE_Time_Value *timeout = 0);
+
+  /**
    * This is an alias for <enqueue_prio>.  It's only here for
    * backwards compatibility and will go away in a subsequent release.
    * Please use <enqueue_prio> instead.  Note that <timeout> uses
@@ -182,6 +196,42 @@ public:
    */
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
+
+  /**
+   * Dequeue and return the <ACE_Message_Block *> that has the lowest
+   * priority.  Note that <timeout> uses <{absolute}> time rather than
+   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
+   * the queue is deactivated -1 is returned and <errno> is set to
+   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
+   * of items still on the queue.
+   */
+  virtual int dequeue_prio (ACE_Message_Block *&first_item,
+                            ACE_Time_Value *timeout = 0);
+
+  /**
+   * Dequeue and return the <ACE_Message_Block *> at the tail of the
+   * queue.  Note that <timeout> uses <{absolute}> time rather than
+   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
+   * the queue is deactivated -1 is returned and <errno> is set to
+   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
+   * of items still on the queue.
+   */
+  virtual int dequeue_tail (ACE_Message_Block *&dequeued,
+                            ACE_Time_Value *timeout = 0);
+
+  /**
+   * Dequeue and return the <ACE_Message_Block *> with the lowest
+   * deadlien time.  Note that <timeout> uses <{absolute}> time rather than
+   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
+   * the queue is deactivated -1 is returned and <errno> is set to
+   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
+   * of items still on the queue.
+   */
+  virtual int dequeue_deadline (ACE_Message_Block *&dequeued,
+                                ACE_Time_Value *timeout = 0);
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.
@@ -306,6 +356,9 @@ protected:
   /// Enqueue an <ACE_Message_Block *> in accordance with its priority.
   virtual int enqueue_i (ACE_Message_Block *new_item);
 
+  /// Enqueue an <ACE_Message_Block *> in accordance with its deadline time.
+  virtual int enqueue_deadline_i (ACE_Message_Block *new_item);
+
   /// Enqueue an <ACE_Message_Block *> at the end of the queue.
   virtual int enqueue_tail_i (ACE_Message_Block *new_item);
 
@@ -315,6 +368,18 @@ protected:
   /// Dequeue and return the <ACE_Message_Block *> at the head of the
   /// queue.
   virtual int dequeue_head_i (ACE_Message_Block *&first_item);
+
+  /// Dequeue and return the <ACE_Message_Block *> with the lowest
+  /// priority.
+  virtual int dequeue_prio_i (ACE_Message_Block *&dequeued);
+
+  /// Dequeue and return the <ACE_Message_Block *> at the tail of the
+  /// queue.
+  virtual int dequeue_tail_i (ACE_Message_Block *&first_item);
+
+  /// Dequeue and return the <ACE_Message_Block *> with the lowest
+  /// deadline time.
+  virtual int dequeue_deadline_i (ACE_Message_Block *&first_item);
 
   // = Check the boundary conditions (assumes locks are held).
 
@@ -870,6 +935,20 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
+   * Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
+   * accordance with its <msg_deadline_time>.  FIFO
+   * order is maintained when messages of the same deadline time are
+   * inserted consecutively.  Note that <timeout> uses <{absolute}>
+   * time rather than <{relative}> time.  If the <timeout> elapses
+   * without receiving a message -1 is returned and <errno> is set to
+   * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
+   * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
+   * else the number of items still on the queue.
+   */
+  virtual int enqueue_deadline (ACE_MESSAGE_TYPE *new_item,
+                                ACE_Time_Value *timeout = 0);
+
+  /**
    * This is an alias for <enqueue_prio>.  It's only here for
    * backwards compatibility and will go away in a subsequent release.
    * Please use <enqueue_prio> instead.  Note that <timeout> uses
@@ -918,6 +997,42 @@ public:
    */
   virtual int dequeue_head (ACE_MESSAGE_TYPE *&first_item,
                             ACE_Time_Value *timeout = 0);
+
+  /**
+   * Dequeue and return the <ACE_Message_Block *> that has the lowest
+   * priority.  Note that <timeout> uses <{absolute}> time rather than
+   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
+   * the queue is deactivated -1 is returned and <errno> is set to
+   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
+   * of items still on the queue.
+   */
+  virtual int dequeue_prio (ACE_MESSAGE_TYPE *&dequeued,
+                            ACE_Time_Value *timeout = 0);
+
+  /**
+   * Dequeue and return the <ACE_Message_Block *> at the tail of the
+   * queue.  Note that <timeout> uses <{absolute}> time rather than
+   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
+   * the queue is deactivated -1 is returned and <errno> is set to
+   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
+   * of items still on the queue.
+   */
+  virtual int dequeue_tail (ACE_MESSAGE_TYPE *&dequeued,
+                            ACE_Time_Value *timeout = 0);
+
+  /**
+   * Dequeue and return the <ACE_Message_Block *> with the lowest
+   * deadline time.  Note that <timeout> uses <{absolute}> time rather than
+   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
+   * the queue is deactivated -1 is returned and <errno> is set to
+   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
+   * of items still on the queue.
+   */
+  virtual int dequeue_deadline (ACE_MESSAGE_TYPE *&dequeued,
+                                ACE_Time_Value *timeout = 0);
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.
