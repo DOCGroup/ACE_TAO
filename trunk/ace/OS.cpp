@@ -1292,7 +1292,49 @@ ACE_thread_key_t ACE_TSS_Emulation::total_keys_ = 0;
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX] = { 0 };
 
+void *
+ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
+{
+  if (tss_base () == 0)
+    {
+      if (ts_storage == 0)
+        {
+          // Allocate an array off the heap for this thread's TSS.
+          ACE_NEW_RETURN (tss_base (), (void *)[ACE_TSS_THREAD_KEYS_MAX], 0);
+        }
+      else
+        {
+          // Use the supplied array for this thread's TSS.
+          tss_base () = ts_storage;
+        }
+
+      // Zero the entire TSS array.  Do it manually instead of using
+      // memset, for optimum speed.
+      void **tss_base_p = tss_base ();
+      for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
+        *tss_base_p = 0;
+
+      return tss_base ();
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+void
+ACE_TSS_Emulation::tss_close (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
+{
+  if (ts_storage == 0)
+    {
+      // ts_storage had been dynamically allocated, so delete it.
+      delete [] tss_base ();
+      tss_base () = 0;
+    }
+}
+
 #if !defined (VXWORKS)
+// FOR TESTING ONLY!
 void **
 ACE_TSS_Emulation::tss_collection_ [ACE_TSS_THREADS_MAX] = { 0 };
 #endif /* VXWORKS */
