@@ -79,14 +79,16 @@ void CORBA::OctetSeq::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_FixedSeq_Var_T<
-      OctetSeq,
+      CORBA::OctetSeq,
       CORBA::Octet
     >;
 
+template class TAO_Seq_Var_Base_T<CORBA::OctetSeq, CORBA::Octet>;
+
 template class
   TAO_Seq_Out_T<
-      OctetSeq,
-      OctetSeq_var,
+      CORBA::OctetSeq,
+      CORBA::OctetSeq_var,
       CORBA::Octet
     >;
 
@@ -97,6 +99,7 @@ template class
       OctetSeq, \
       CORBA::Octet \
     >
+#pragma TAO_Seq_Var_Base_T<CORBA::OctetSeq, CORBA::Octet>
 
 # pragma instantiate \
   TAO_Seq_Out_T< \

@@ -138,7 +138,7 @@ template class
     >;
 
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       CORBA::PolicyList,
       CORBA::PolicyList_var,
       TAO_Object_Manager<
@@ -147,6 +147,17 @@ template class
           CORBA::tao_Policy_life
         >
     >;
+
+template class TAO_Seq_Var_Base_T<CORBA::PolicyList,
+                                  TAO_Object_Manager<CORBA::Policy,
+                                                     TAO_Objref_Var_T<CORBA::Policy,
+                                                                      CORBA::tao_Policy_life>,
+                                                     CORBA::tao_Policy_life> >;
+
+template class TAO_Unbounded_Object_Sequence<CORBA::Policy,
+                                             TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>,
+                                             CORBA::tao_Policy_life,
+                                             CORBA::tao_Policy_cast>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -160,6 +171,16 @@ template class
           > \
       >
 
+#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy,
+                                                  TAO_Objref_Var_T<CORBA::Policy, CORBA::tao_Policy_life>,
+                                                  CORBA::tao_Policy_life,
+                                                  CORBA::tao_Policy_cast>
+
+#pragms instantiate TAO_Seq_Var_Base_T<CORBA::PolicyList,
+                                       TAO_Object_Manager<CORBA::Policy,
+                                                          TAO_Objref_Var_T<CORBA::Policy,
+                                                                           CORBA::tao_Policy_life>,
+                                                          CORBA::tao_Policy_life> >
 # pragma instantiate \
     TAO_Seq_Out_T< \
         CORBA::PolicyList, \
@@ -278,31 +299,37 @@ template class
 
   template class
     TAO_FixedSeq_Var_T<
-        PolicyTypeSeq,
+        CORBA::PolicyTypeSeq,
         CORBA::PolicyType
       >;
 
   template class
     TAO_Seq_Out_T<
-        PolicyTypeSeq,
-        PolicyTypeSeq_var,
+        CORBA::PolicyTypeSeq,
+        CORBA::PolicyTypeSeq_var,
         CORBA::PolicyType
       >;
 
+template class TAO_Seq_Var_Base_T<CORBA::PolicyTypeSeq,
+                                  CORBA::PolicyType>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-  # pragma instantiate \
+# pragma instantiate \
     TAO_FixedSeq_Var_T< \
         PolicyTypeSeq, \
         CORBA::PolicyType \
       >
 
-  # pragma instantiate \
+# pragma instantiate \
     TAO_Seq_Out_T< \
         PolicyTypeSeq, \
         PolicyTypeSeq_var, \
         CORBA::PolicyType \
       >
+
+#pragms instantiate TAO_Seq_Var_Base_T<CORBA::PolicyTypeSeq,
+                                       CORBA::PolicyType>
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

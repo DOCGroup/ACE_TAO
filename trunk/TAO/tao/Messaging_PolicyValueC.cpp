@@ -165,26 +165,26 @@ void Messaging::PolicyValue::_tao_seq_Octet::_tao_any_destructor (void *_tao_voi
 
 template class
   TAO_Var_Var_T<
-      PolicyValue
+      Messaging::PolicyValue
     >;
 
 template class
   TAO_Out_T<
-      PolicyValue,
-      PolicyValue_var
+      Messaging::PolicyValue,
+      Messaging::PolicyValue_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      PolicyValue \
+      Messaging::PolicyValue \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      PolicyValue, \
-      PolicyValue_var \
+      Messaging::PolicyValue, \
+      Messaging::PolicyValue_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -234,14 +234,18 @@ void Messaging::PolicyValueSeq::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_VarSeq_Var_T<
-      PolicyValueSeq,
+      Messaging::PolicyValueSeq,
       Messaging::PolicyValue
     >;
 
+template class TAO_Unbounded_Sequence<Messaging::PolicyValue>;
+template class TAO_Var_Base_T<Messaging::PolicyValue>;
+template class TAO_Seq_Var_Base_T<Messaging::PolicyValueSeq,
+                                  Messaging::PolicyValue>;
 template class
   TAO_Seq_Out_T<
-      PolicyValueSeq,
-      PolicyValueSeq_var,
+      Messaging::PolicyValueSeq,
+      Messaging::PolicyValueSeq_var,
       Messaging::PolicyValue
     >;
 
@@ -249,14 +253,18 @@ template class
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
-      PolicyValueSeq, \
+      Messaging::PolicyValueSeq, \
       Messaging::PolicyValue \
     >
 
+#pragma instantiate TAO_Seq_Var_Base_T<Messaging::PolicyValueSeq,
+                                       Messaging::PolicyValue>
+#pragma instantiate TAO_Unbounded_Sequence<Messaging::PolicyValue>
+#pragma instantiate TAO_Var_Base_T<Messaging::PolicyValue>;
 # pragma instantiate \
   TAO_Seq_Out_T< \
-      PolicyValueSeq, \
-      PolicyValueSeq_var, \
+      Messaging::PolicyValueSeq, \
+      Messaging::PolicyValueSeq_var, \
       Messaging::PolicyValue \
     >
 
@@ -422,7 +430,7 @@ CORBA::Boolean operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<Messaging::PolicyValue>;
+template class TAO::Any_Dual_Impl_T<Messaging::PolicyValue>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO::Any_Dual_Impl_T<Messaging::PolicyValue>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -101,26 +101,32 @@ void IIOP::ListenPoint::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_Var_Var_T<
-      ListenPoint
+      IIOP::ListenPoint
     >;
+template class TAO_Var_Base_T<IIOP::ListenPoint>;
+template class TAO_Unbounded_Sequence<IIOP::ListenPoint>;
 
 template class
   TAO_Out_T<
-      ListenPoint,
-      ListenPoint_var
+      IIOP::ListenPoint,
+      IIOP::ListenPoint_var
     >;
 
+template class TAO_Seq_Var_Base_T<IIOP::ListenPointList, IIOP::ListenPoint>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      ListenPoint \
+      IIOP::ListenPoint \
     >
+#pragma instantiate TAO_Var_Base_T<IIOP::ListenPoint>
+#pragma instantiate TAO_Unbounded_Sequence<IIOP::ListenPoint>
+#pragma instantiate TAO_Seq_Var_Base_T<IIOP::ListenPointList, IIOP::ListenPoint>
 
 # pragma instantiate \
   TAO_Out_T< \
-      ListenPoint, \
-      ListenPoint_var \
+      IIOP::ListenPoint, \
+      IIOP::ListenPoint_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -170,14 +176,14 @@ void IIOP::ListenPointList::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_VarSeq_Var_T<
-      ListenPointList,
+      IIOP::ListenPointList,
       IIOP::ListenPoint
     >;
 
 template class
   TAO_Seq_Out_T<
-      ListenPointList,
-      ListenPointList_var,
+      IIOP::ListenPointList,
+      IIOP::ListenPointList_var,
       IIOP::ListenPoint
     >;
 
@@ -185,7 +191,7 @@ template class
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
-      ListenPointList, \
+      IIOP::ListenPointList, \
       IIOP::ListenPoint \
     >
 
@@ -394,26 +400,28 @@ void IIOP::BiDirIIOPServiceContext::_tao_any_destructor (void *_tao_void_pointer
 
 template class
   TAO_Var_Var_T<
-      BiDirIIOPServiceContext
+      IIOP::BiDirIIOPServiceContext
     >;
+template class TAO_Var_Base_T<IIOP::BiDirIIOPServiceContext>;
 
 template class
   TAO_Out_T<
-      BiDirIIOPServiceContext,
-      BiDirIIOPServiceContext_var
+      IIOP::BiDirIIOPServiceContext,
+      IIOP::BiDirIIOPServiceContext_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      BiDirIIOPServiceContext \
+      IIOP::BiDirIIOPServiceContext \
     >
+#pragms instantiate TAO_Var_Base_T<IIOP::BiDirIIOPServiceContext>
 
 # pragma instantiate \
   TAO_Out_T< \
-      BiDirIIOPServiceContext, \
-      BiDirIIOPServiceContext_var \
+      IIOP::BiDirIIOPServiceContext, \
+      IIOP::BiDirIIOPServiceContext_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

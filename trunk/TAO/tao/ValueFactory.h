@@ -34,7 +34,7 @@ namespace CORBA
 
   typedef TAO_Pseudo_Value_Var_T<ValueFactoryBase> ValueFactoryBase_var;
 
-  typedef TAO_Pseudo_Value_Out_T<ValueFactoryBase, ValueFactoryBase_var> 
+  typedef TAO_Pseudo_Value_Out_T<ValueFactoryBase, ValueFactoryBase_var>
     ValueFactoryBase_out;
 
   typedef ValueFactoryBase_var ValueFactory_var;
@@ -44,6 +44,8 @@ namespace CORBA
   public:
     ValueFactoryBase ();
     virtual ~ValueFactoryBase ();
+
+    static ValueFactoryBase * _nil (void);
 
     // non-virtual is non-standard
     void _add_ref (void);

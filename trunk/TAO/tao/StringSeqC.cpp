@@ -79,11 +79,13 @@ template class
     >;
 
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       CORBA::StringSeq,
       CORBA::StringSeq_var,
       TAO_SeqElem_String_Manager
     >;
+
+template class TAO_Seq_Var_Base_T<CORBA::StringSeq, TAO_SeqElem_String_Manager>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -100,6 +102,8 @@ template class
       TAO_SeqElem_String_Manager \
     >
 
+#pragma instantiate TAO_Seq_Var_Base_T<CORBA::StringSeq,
+                                       TAO_SeqElem_String_Manager>
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
@@ -190,12 +194,14 @@ template class
       TAO_SeqElem_WString_Manager
     >;
 
+template class TAO_Seq_Var_Base_T<CORBA::WStringSeq, TAO_SeqElem_WString_Manager>;
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       CORBA::WStringSeq,
       CORBA::WStringSeq_var,
       TAO_SeqElem_WString_Manager
     >;
+
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -204,7 +210,7 @@ template class
       CORBA::WStringSeq, \
       TAO_SeqElem_WString_Manager \
     >
-
+#pragma instantiate TAO_Seq_Var_Base_T<CORBA::WStringSeq, TAO_SeqElem_WString_Manager>
 # pragma instantiate \
   TAO_Seq_Out_T< \
       CORBA::WStringSeq, \

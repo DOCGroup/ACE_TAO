@@ -77,5 +77,6 @@ public:
                                       ACE_ENV_ARG_DECL) = 0;
 };
 
+
 #include "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_H */

@@ -520,14 +520,14 @@ void Messaging::PriorityRange::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_Fixed_Var_T<
-      PriorityRange
+      Messaging::PriorityRange
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Fixed_Var_T< \
-      PriorityRange \
+      Messaging::PriorityRange \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -2309,14 +2309,14 @@ void Messaging::RoutingTypeRange::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_Fixed_Var_T<
-      RoutingTypeRange
+      Messaging::RoutingTypeRange
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Fixed_Var_T< \
-      RoutingTypeRange \
+      Messaging::RoutingTypeRange \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -3081,7 +3081,7 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::RebindPolicy,Messaging::RebindPolicy_var>;
+  template class TAO_Object_Manager<Messaging::RebindPolicy,Messaging::RebindPolicy_var,Messaging::tao_RebindPolicy_life>;
   template class TAO::Any_Impl_T<Messaging::RebindPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO_Object_Manager<Messaging::RebindPolicy, Messaging::RebindPolicy_var>
@@ -3200,10 +3200,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::RequestPriorityPolicy,Messaging::RequestPriorityPolicy_var>;
+  template class TAO_Object_Manager<Messaging::RequestPriorityPolicy,Messaging::RequestPriorityPolicy_var,Messaging::tao_RequestPriorityPolicy_life>;
   template class TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::RequestPriorityPolicy, Messaging::RequestPriorityPolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::RequestPriorityPolicy, Messaging::RequestPriorityPolicy_var,Messaging::tao_RequestPriorityPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3254,10 +3254,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::ReplyPriorityPolicy,Messaging::ReplyPriorityPolicy_var>;
+  template class TAO_Object_Manager<Messaging::ReplyPriorityPolicy,Messaging::ReplyPriorityPolicy_var,Messaging::tao_ReplyPriorityPolicy_life>;
   template class TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::ReplyPriorityPolicy, Messaging::ReplyPriorityPolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::ReplyPriorityPolicy, Messaging::ReplyPriorityPolicy_var,Messaging::tao_ReplyPriorityPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3308,10 +3308,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::RequestStartTimePolicy,Messaging::RequestStartTimePolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>;
+// template class TAO_Object_Manager<Messaging::RequestStartTimePolicy,Messaging::RequestStartTimePolicy_var,Messaging::tao_ReplyStartTimePolicy_life>;
+template class TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::RequestStartTimePolicy, Messaging::RequestStartTimePolicy_var>
+// # pragma instantiate TAO_Object_Manager<Messaging::RequestStartTimePolicy, Messaging::RequestStartTimePolicy_var,Messaging::tao_ReplyStartTimePolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3362,10 +3362,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::RequestEndTimePolicy,Messaging::RequestEndTimePolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>;
+template class TAO_Object_Manager<Messaging::RequestEndTimePolicy,Messaging::RequestEndTimePolicy_var,Messaging::tao_RequestEndTimePolicy_life>;
+template class TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::RequestEndTimePolicy, Messaging::RequestEndTimePolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::RequestEndTimePolicy, Messaging::RequestEndTimePolicy_var,Messaging::tao_RequestEndTimePolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3416,10 +3416,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var>;
+template class TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var,Messaging::tao_ReplyStartTimePolicy_life>;
   template class TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::ReplyStartTimePolicy, Messaging::ReplyStartTimePolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::ReplyStartTimePolicy, Messaging::ReplyStartTimePolicy_var,Messaging::tao_ReplyStartTimePolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3470,10 +3470,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::ReplyEndTimePolicy,Messaging::ReplyEndTimePolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>;
+template class TAO_Object_Manager<Messaging::ReplyEndTimePolicy,Messaging::ReplyEndTimePolicy_var,Messaging::tao_ReplyEndTimePolicy_life>;
+template class TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::ReplyEndTimePolicy, Messaging::ReplyEndTimePolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::ReplyEndTimePolicy, Messaging::ReplyEndTimePolicy_var,Messaging::tao_ReplyEndTimePolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3524,10 +3524,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy,Messaging::RelativeRequestTimeoutPolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>;
+template class TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy,Messaging::RelativeRequestTimeoutPolicy_var,Messaging::tao_RelativeRequestTimeoutPolicy_life>;
+template class TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy, Messaging::RelativeRequestTimeoutPolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy, Messaging::RelativeRequestTimeoutPolicy_var,Messaging::tao_RelativeRequestTimeoutPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3643,10 +3643,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::RoutingPolicy,Messaging::RoutingPolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::RoutingPolicy>;
+template class TAO_Object_Manager<Messaging::RoutingPolicy,Messaging::RoutingPolicy_var,Messaging::tao_RoutingPolicy_life>;
+template class TAO::Any_Impl_T<Messaging::RoutingPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::RoutingPolicy, Messaging::RoutingPolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::RoutingPolicy, Messaging::RoutingPolicy_var,Messaging::tao_RoutingPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::RoutingPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3697,10 +3697,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::MaxHopsPolicy,Messaging::MaxHopsPolicy_var>;
+  template class TAO_Object_Manager<Messaging::MaxHopsPolicy,Messaging::MaxHopsPolicy_var,Messaging::tao_MaxHopsPolicy_life>;
   template class TAO::Any_Impl_T<Messaging::MaxHopsPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::MaxHopsPolicy, Messaging::MaxHopsPolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::MaxHopsPolicy, Messaging::MaxHopsPolicy_var,Messaging::tao_MaxHopsPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::MaxHopsPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3751,9 +3751,9 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::QueueOrderPolicy,Messaging::QueueOrderPolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::QueueOrderPolicy>;
+template class TAO_Object_Manager<Messaging::QueueOrderPolicy,Messaging::QueueOrderPolicy_var,Messaging::tao_QueueOrderPolicy_life>;
+template class TAO::Any_Impl_T<Messaging::QueueOrderPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::QueueOrderPolicy, Messaging::QueueOrderPolicy_var>
+# pragma instantiate TAO_Object_Manager<Messaging::QueueOrderPolicy, Messaging::QueueOrderPolicy_var,Messaging::tao_QueueOrderPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<Messaging::QueueOrderPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

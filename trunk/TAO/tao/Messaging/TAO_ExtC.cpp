@@ -319,9 +319,9 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<TAO::ConnectionTimeoutPolicy,TAO::ConnectionTimeoutPolicy_var>;
+//  template class TAO_Object_Manager<TAO::ConnectionTimeoutPolicy,TAO::ConnectionTimeoutPolicy_var>;
   template class TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<TAO::ConnectionTimeoutPolicy, TAO::ConnectionTimeoutPolicy_var>
+//# pragma instantiate TAO_Object_Manager<TAO::ConnectionTimeoutPolicy, TAO::ConnectionTimeoutPolicy_var>
 # pragma instantiate TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

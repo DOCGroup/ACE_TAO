@@ -179,14 +179,17 @@ TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> 
 
 template class
   TAO_FixedSeq_Var_T<
-      ObjectKey,
+      TAO::ObjectKey,
       CORBA::Octet
     >;
 
+template class TAO_Seq_Var_Base_T<TAO::ObjectKey,
+                                  CORBA::Octet>;
+
 template class
   TAO_Seq_Out_T<
-      ObjectKey,
-      ObjectKey_var,
+      TAO::ObjectKey,
+      TAO::ObjectKey_var,
       CORBA::Octet
     >;
 
@@ -194,16 +197,19 @@ template class
 
 # pragma instantiate \
   TAO_FixedSeq_Var_T< \
-      ObjectKey, \
+      TAO::ObjectKey, \
       CORBA::Octet \
     >
 
 # pragma instantiate \
   TAO_Seq_Out_T< \
-      ObjectKey, \
-      ObjectKey_var, \
+      TAO::ObjectKey, \
+      TAO::ObjectKey_var, \
       CORBA::Octet \
     >
+
+#pragma instantiate TAO_Seq_Var_Base_T<TAO::ObjectKey,
+                                       CORBA::Octet>;
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

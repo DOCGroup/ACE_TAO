@@ -38,6 +38,12 @@ CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
   return vt;  // every vt is a CORBA::ValueBase :-)
 }
 
+/*static*/ CORBA::ValueBase*
+CORBA::ValueBase::_nil (void)
+{
+  return 0;
+}
+
 void
 CORBA::ValueBase::_tao_any_destructor (void *x)
 {
@@ -361,4 +367,3 @@ operator>> (TAO_InputCDR &strm,
 # pragma instantiate TAO_Pseudo_Value_Out_T<CORBA::ValueBase, CORBA::ValueBase_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

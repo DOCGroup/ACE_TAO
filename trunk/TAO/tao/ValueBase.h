@@ -52,6 +52,8 @@ namespace CORBA
     typedef ValueBase* _ptr_type;
     typedef ValueBase_var _var_type;
 
+
+    static ValueBase *_nil (void);
     // reference counting
     /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
     virtual void _add_ref (void) = 0;

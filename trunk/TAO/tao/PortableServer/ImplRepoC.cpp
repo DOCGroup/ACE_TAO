@@ -1546,26 +1546,26 @@ void ImplementationRepository::EnvironmentVariable::_tao_any_destructor (void *_
 
 template class
   TAO_Var_Var_T<
-      EnvironmentVariable
+      ImplementationRepository::EnvironmentVariable
     >;
 
 template class
   TAO_Out_T<
-      EnvironmentVariable,
-      EnvironmentVariable_var
+      ImplementationRepository::EnvironmentVariable,
+      ImplementationRepository::EnvironmentVariable_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      EnvironmentVariable \
+      ImplementationRepository::EnvironmentVariable \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      EnvironmentVariable, \
-      EnvironmentVariable_var \
+      ImplementationRepository::EnvironmentVariable, \
+      ImplementationRepository::EnvironmentVariable_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -1657,14 +1657,14 @@ void ImplementationRepository::EnvironmentList::_tao_any_destructor (void *_tao_
 
 template class
   TAO_VarSeq_Var_T<
-      EnvironmentList,
+      ImplementationRepository::EnvironmentList,
       ImplementationRepository::EnvironmentVariable
     >;
 
 template class
   TAO_Seq_Out_T<
-      EnvironmentList,
-      EnvironmentList_var,
+      ImplementationRepository::EnvironmentList,
+      ImplementationRepository::EnvironmentList_var,
       ImplementationRepository::EnvironmentVariable
     >;
 
@@ -2018,13 +2018,13 @@ void ImplementationRepository::StartupOptions::_tao_any_destructor (void *_tao_v
 
 template class
   TAO_Var_Var_T<
-      StartupOptions
+      ImplementationRepository::StartupOptions
     >;
 
 template class
   TAO_Out_T<
-      StartupOptions,
-      StartupOptions_var
+      ImplementationRepository::StartupOptions,
+      ImplementationRepository::StartupOptions_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -2297,26 +2297,26 @@ void ImplementationRepository::ServerInformation::_tao_any_destructor (void *_ta
 
 template class
   TAO_Var_Var_T<
-      ServerInformation
+      ImplementationRepository::ServerInformation
     >;
 
 template class
   TAO_Out_T<
-      ServerInformation,
-      ServerInformation_var
+      ImplementationRepository::ServerInformation,
+      ImplementationRepository::ServerInformation_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      ServerInformation \
+      ImplementationRepository::ServerInformation \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      ServerInformation, \
-      ServerInformation_var \
+      ImplementationRepository::ServerInformation, \
+      ImplementationRepository::ServerInformation_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -2366,14 +2366,14 @@ void ImplementationRepository::ServerInformationList::_tao_any_destructor (void 
 
 template class
   TAO_VarSeq_Var_T<
-      ServerInformationList,
+      ImplementationRepository::ServerInformationList,
       ImplementationRepository::ServerInformation
     >;
 
 template class
   TAO_Seq_Out_T<
-      ServerInformationList,
-      ServerInformationList_var,
+      ImplementationRepository::ServerInformationList,
+      ImplementationRepository::ServerInformationList_var,
       ImplementationRepository::ServerInformation
     >;
 
@@ -7589,10 +7589,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>;
+  template class TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var, ImplementationRepository::tao_ServerObject_life>;
   template class TAO::Any_Impl_T<ImplementationRepository::ServerObject>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerObject, ImplementationRepository::ServerObject_var>
+# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerObject, ImplementationRepository::ServerObject_var,ImplementationRepository::tao_ServerObject_life>
 # pragma instantiate TAO::Any_Impl_T<ImplementationRepository::ServerObject>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -8198,10 +8198,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>;
+  template class TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var,ImplementationRepository::tao_Administration_life>;
   template class TAO::Any_Impl_T<ImplementationRepository::Administration>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<ImplementationRepository::Administration, ImplementationRepository::Administration_var>
+# pragma instantiate TAO_Object_Manager<ImplementationRepository::Administration, ImplementationRepository::Administration_var,ImplementationRepository::tao_Administration_life>
 # pragma instantiate TAO::Any_Impl_T<ImplementationRepository::Administration>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -8252,10 +8252,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>;
+  template class TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var,ImplementationRepository::tao_ServerInformationIterator_life>;
   template class TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerInformationIterator, ImplementationRepository::ServerInformationIterator_var>
+# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerInformationIterator, ImplementationRepository::ServerInformationIterator_var,ImplementationRepository::tao_ServerInformationIterator_life>
 # pragma instantiate TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

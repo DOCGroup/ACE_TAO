@@ -468,7 +468,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
         CORBA::Request_var
       >;
   template class
-    TAO_VarSeq_Var_T<
+    TAO_MngSeq_Var_T<
         CORBA::ORB::RequestSeq,
         TAO_Pseudo_Object_Manager<
             CORBA::Request,
@@ -476,7 +476,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
           >
       >;
   template class
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         CORBA::ORB::RequestSeq,
         CORBA::ORB::RequestSeq_var,
         TAO_Pseudo_Object_Manager<
