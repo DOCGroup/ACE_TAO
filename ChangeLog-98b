@@ -1,9 +1,15 @@
+Thu Jul 16 08:55:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Dynamic_Service.cpp (instance): removed const-ness
+          from local void * obj, because the function return value
+          isn't const.  Sun C++ caught this.
+
 Wed Jul 15 19:00:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Dynamic_Service.cpp (instance): Made the error reporting
-	  less verbose.  Thanks to Darrell for suggesting this.  In
-	  addition, changed the use of (SERVICE *) to
-	  ACE_reinterpret_cast().
+          less verbose.  Thanks to Darrell for suggesting this.  In
+          addition, changed the use of (SERVICE *) to
+          ACE_reinterpret_cast().
 
 Wed Jul 15 16:16:40 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
