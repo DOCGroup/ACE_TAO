@@ -876,11 +876,27 @@ card.  This is one method:<P>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
 For the most part, you should be able to follow the instructions above
 to build ACE and applications that use it.  Start with the
-<a href="#unix">Unix instructions</a> for Unix hosts, or
-<a href="#win32">Win32</a> instructions for Windows NT hosts,
-but substitute the appropriate VxWorks configuration file and
-platform_macros file.  Please see below for information on
+<a href="#unix">Unix instructions</a> above to build ACE and the
+applications that use it.  Please see below for mroe information on
 <a href="#VxWorks/NT">building ACE on NT hosts for VxWorks targets</a>.<P>
+
+A few notes on VxWorks builds (thanks to
+<a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>
+for these notes):<p>
+<UL>
+  <LI>VxWorks builds are done with a cross compiler - i.e. the compiles
+      are done on a workstation creating object modules which are
+      downloaded and loaded into the VxWorks target system.<p>
+  <LI>C++ object modules must be post-processed by a VxWorks
+      utility called ``munch''.  ACE includes a perl script called
+      <code>ace_ld</code> which is called from the Makefiles, replacing
+      the traditional <code>ld</code> step.  You must have Perl installed
+      to use <code>ace_ld</code>.
+
+  <LI>WindRiver provides GCC/G++ cross-compilers for the
+      supported target platforms.  The executables are named cc&lt;target&gt;
+      and g++&lt;target&gt;; for example, ccppc and g++cpp for PowerPC targets.
+</UL>
 
 You'll have to let ACE know the target type at compile time.
 There are several ways to do this; please see the
@@ -1004,8 +1020,47 @@ first executable that was loaded.<p>
 
 <h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
-<a href="http://people.qualcomm.com/cryan">Chris Ryan</a>.  It is
-under construction; please submit corrections or additions.<p>
+<a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
+and <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>.
+Please submit corrections, additions, or clarifications to the
+the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
+
+A few additional Windows Notes, from Paul von Behren:<p>
+<UL>
+  <LI>Cygnus has created a Win32 API which is compatible with a
+      ``generic'' Unix environment.  Using this library, they have ported a
+      large collection of GNU tools to WinNT/95 - including a port of
+      gcc/g++.  See <A href="http://www.cygnus.com/miscgni-win32/">
+      http://www.cygnus.com/miscgni-win32/</A>
+      WindRiver provides a subset of these tools - including make
+      and gcc cross-compilers.<p>
+  <LI>To set up the command-prompt build environemnt, run
+      <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
+      implicitly within the Tornado IDE.<p>
+  <LI>To run <code>ace_ld</code>, you still need perl installed -
+      see <A href="http://www.activestate.com/software/default.htm">
+      http://www.activestate.com/software/default.htm</A> for Windows
+      perl.<p>
+  <LI>There's a bug in the windows port of Make (or at least an
+      incompatability) related to ACE Make's directory-spanning
+      logic (<code>ACE_ROOT\include\makeinclude\rules.nested.GNU</code>
+      (the error message says something about "dir unexpected").<p>
+  <LI>But make does work in "leaf" directories (those with no
+      subdirectries).  You can make the <code>ACE_ROOT\ace directory</code>
+      creating the library libACE.a.  If perl is available, make also works
+      in the ACE_ROOT\tests directory (ignore the final error
+      attempting to run /bin/true).<p>
+  <LI>The Tornado IDE will use a standard Makefile for project
+      builds, but does not have a GUI interface for managing the
+      Makefile.  By default, it will use rules from Makefile in the current
+      directory and you can configure it to add certain Makefile
+      targets to the project.  If you have <code>ACE_ROOT</code> defined
+      before starting Tornado, you can specify an ACE Makefile as a Tornado
+      target and Tornado will then call make from the menu.<p>
+</UL>
+
+And Chris Ryan's instructions for building for VxWorks targets
+on Windows NT hosts:
 
 <ol>
   <li>Create UNIX-like environment in NT Command Prompt windows by
