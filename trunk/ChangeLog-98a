@@ -1,127 +1,133 @@
+Sun Nov 30 20:32:50 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_3.2.GNU: removed -ptr option
+          from CCFLAGS, so the default template repository will be used.
+          Thanks to Dani Flexer <danif@ivory-sw.com> for reporting this.
+
 Sun Nov 30 14:13:09 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
-	* netsvcs/servers/README: Clarified a bit more about how to
- 	  configure the client and server logging processes.  Thanks to
- 	  Neil Cohen for motivating this.
+        * netsvcs/servers/README: Clarified a bit more about how to
+          configure the client and server logging processes.  Thanks to
+          Neil Cohen for motivating this.
 
 Sun Nov 30 17:36:35 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* ace/Synch.cpp (ACE_File_Lock): Fixed order of parameters in the
- 	call to this->open() and too many arguments in call to
- 	ACE_File_Lock::open().
-	
+        * ace/Synch.cpp (ACE_File_Lock): Fixed order of parameters in the
+        call to this->open() and too many arguments in call to
+        ACE_File_Lock::open().
+
 Sun Nov 30 16:31:41 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/Synch.h: 
-	* ace/Synch.cpp: 
-	  ACE_File_Lock should create the file if it does not exist, to do
-	  so the constructor takes the <flags> parameter to ACE_OS::open()
-	  and defaults to O_CREAT|O_RDWR.
+        * ace/Synch.h:
+        * ace/Synch.cpp:
+          ACE_File_Lock should create the file if it does not exist, to do
+          so the constructor takes the <flags> parameter to ACE_OS::open()
+          and defaults to O_CREAT|O_RDWR.
 
 Sat Nov 29 21:31:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Proactor.cpp (~ACE_Proactor_Timer_Handler): Removed explicit
-	  call to thr_mgr_.close().
-	  (ACE_Proactor):  Be sure to ask Thread_Manager not to wait for
-	  the timer_handler_ thread.
+        * ace/Proactor.cpp (~ACE_Proactor_Timer_Handler): Removed explicit
+          call to thr_mgr_.close().
+          (ACE_Proactor):  Be sure to ask Thread_Manager not to wait for
+          the timer_handler_ thread.
 
-	* ace/Thread_Manager.cpp (close_singleton):  Only reset
-	  exit_on_wait status if we are responsible for deleting the
-	  global thread manager.
+        * ace/Thread_Manager.cpp (close_singleton):  Only reset
+          exit_on_wait status if we are responsible for deleting the
+          global thread manager.
 
 Sat Nov 29 15:15:04 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* ace/IPC_SAP.cpp:
-	  Removed warning for functions not returning a value on SGI, it
-	  seems that the flow changed and the last return was reached
-	  sometimes, hence the ACE_NOTREACHED macro is no longer needed.
+        * ace/IPC_SAP.cpp:
+          Removed warning for functions not returning a value on SGI, it
+          seems that the flow changed and the last return was reached
+          sometimes, hence the ACE_NOTREACHED macro is no longer needed.
 
 Sat Nov 29 13:12:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch: Conditionally inlined all the ACE_Process_Mutex
- 	  wrapper calls and moved them into the Synch.i file.  I'm not
- 	  sure why there weren't here before.
+        * ace/Synch: Conditionally inlined all the ACE_Process_Mutex
+          wrapper calls and moved them into the Synch.i file.  I'm not
+          sure why there weren't here before.
 
-	* ace/Synch: Reimplemented ACE_RW_Process_Mutex to use
- 	  ACE_File_Lock, which provides the proper readers/writer
- 	  semantics that had been lacking in the previous implementation.
+        * ace/Synch: Reimplemented ACE_RW_Process_Mutex to use
+          ACE_File_Lock, which provides the proper readers/writer
+          semantics that had been lacking in the previous implementation.
 
 Fri Nov 28 04:25:23 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace: Removed redundant trailing commas from
-	  ACE_UNIMPLEMENTED_FUNC.
+        * ace: Removed redundant trailing commas from
+          ACE_UNIMPLEMENTED_FUNC.
 
-	* ace/Thread_Manager.{h,i,cpp}: Delete declaration of
-	  remove_thr_self.  It is no longer in use.
-	  (wait_on_exit): Added this function to let users specify whether
-	  they want their Thread_Manager wait for spawned threads on exit
-	  or not.
-	  (wait): On Win32, handles should be closed if we decide to let
-	  the thread go wild.
-	  (remove_thr): Added another parameter to control whether
-	  remove_thr should close the handle or not.  It is only used on
-	  Win32.
-	  (close):  Removed the <automatic_wait> parameter for it has been
-	  incoporated as a member.
-	  (close_singleton): Reset <automatic_wait_> on Win32. We'll never
-	  need to wait for unfinished threads on NT.
-	  (ACE_Thread_Manager): Added initialization of member
-	  <automatic_wait_>.  It is default to 1 (wait on exit.)
+        * ace/Thread_Manager.{h,i,cpp}: Delete declaration of
+          remove_thr_self.  It is no longer in use.
+          (wait_on_exit): Added this function to let users specify whether
+          they want their Thread_Manager wait for spawned threads on exit
+          or not.
+          (wait): On Win32, handles should be closed if we decide to let
+          the thread go wild.
+          (remove_thr): Added another parameter to control whether
+          remove_thr should close the handle or not.  It is only used on
+          Win32.
+          (close):  Removed the <automatic_wait> parameter for it has been
+          incoporated as a member.
+          (close_singleton): Reset <automatic_wait_> on Win32. We'll never
+          need to wait for unfinished threads on NT.
+          (ACE_Thread_Manager): Added initialization of member
+          <automatic_wait_>.  It is default to 1 (wait on exit.)
 
-	* ace/Containers.h: Corrected erroneous comments.
+        * ace/Containers.h: Corrected erroneous comments.
 
 Wed Nov 26 10:33:22 1997    <irfan@TWOSTEP>
 
-	* ace/Log_Msg (msg): Changed the parameters from char * to const
- 	  char *.
+        * ace/Log_Msg (msg): Changed the parameters from char * to const
+          char *.
 
-	* ace: Added unimplemented copy constructors and assignment
- 	  operators to the following classes:
+        * ace: Added unimplemented copy constructors and assignment
+          operators to the following classes:
 
-	  ACE_Map_Manager
-	  ACE_Message_Block
-	  ACE_Data_Block
-	  ACE_Log_Msg
-	  ACE_Message_Queue
-	  ACE_Task
+          ACE_Map_Manager
+          ACE_Message_Block
+          ACE_Data_Block
+          ACE_Log_Msg
+          ACE_Message_Queue
+          ACE_Task
           ACE_Task_Base
 
-	  Added ACE_UNIMPLEMENTED_FUNC macros to these classes:
+          Added ACE_UNIMPLEMENTED_FUNC macros to these classes:
 
-	  ACE_Mem_Map
-	  ACE_Priority_Reactor
-	  ACE_Select_Reactor
-	  ACE_WFMO_Reactor
-	  ACE_XtReactor
-	  ACE_Reactor
-	  ACE_Read_Buffer
-	  ACE_CORBA_Handler
-	  ACE_TSS_TPQ_Entry
-	  ACE_Object_Manager
-	  ACE_File_Lock
-	  ACE_Semaphore
-	  ACE_RW_Mutex
-	  ACE_Mutex
-	  ACE_Null_Barrier
-	  ACE_Null_Condition
-	  ACE_Null_Mutex_Guard
-	  ACE_Event
-	  ACE_Thread_Mutex
-	  ACE_Thread_Mutex_Guard
-	  ACE_Condition_Thread_Mutex
-	  ACE_Recursive_Thread_Mutex
-	  ACE_Barrier
-	  ACE_Condition
+          ACE_Mem_Map
+          ACE_Priority_Reactor
+          ACE_Select_Reactor
+          ACE_WFMO_Reactor
+          ACE_XtReactor
+          ACE_Reactor
+          ACE_Read_Buffer
+          ACE_CORBA_Handler
+          ACE_TSS_TPQ_Entry
+          ACE_Object_Manager
+          ACE_File_Lock
+          ACE_Semaphore
+          ACE_RW_Mutex
+          ACE_Mutex
+          ACE_Null_Barrier
+          ACE_Null_Condition
+          ACE_Null_Mutex_Guard
+          ACE_Event
+          ACE_Thread_Mutex
+          ACE_Thread_Mutex_Guard
+          ACE_Condition_Thread_Mutex
+          ACE_Recursive_Thread_Mutex
+          ACE_Barrier
+          ACE_Condition
 
-	  Thanks to Stanley D Leeson <STANLEY.D.LEESON@cdev.com> for these
- 	  suggestions.
+          Thanks to Stanley D Leeson <STANLEY.D.LEESON@cdev.com> for these
+          suggestions.
 
 Sat Dec 20 14:57:30 1997    <nw1@CHA-CHA>
 
-	* All MSVC 5.0 project files: Removed unnecessary library
- 	  inclusions.  Most of them are not necessary. Thanks to
-	  Patrick J. McNerthney <pat@thememedia.com> for suggesting
-	  this.
+        * All MSVC 5.0 project files: Removed unnecessary library
+          inclusions.  Most of them are not necessary. Thanks to
+          Patrick J. McNerthney <pat@thememedia.com> for suggesting
+          this.
 
 Wed Nov 26 15:49:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -134,10 +140,10 @@ Wed Nov 26 15:49:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Nov 26 09:45:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* ace/OS.h (ACE_PROPER_SINGLETON_INSTANTIATION): Corrected
- 	  misspelling in the "! defined (MSC_VER)" branch.  I just happened
-	  to notice this, so I don't know if anybody ever tried it and it
- 	  failed.
+        * ace/OS.h (ACE_PROPER_SINGLETON_INSTANTIATION): Corrected
+          misspelling in the "! defined (MSC_VER)" branch.  I just happened
+          to notice this, so I don't know if anybody ever tried it and it
+          failed.
 
 Tue Nov 25 12:07:07 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -147,32 +153,32 @@ Tue Nov 25 12:07:07 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Nov 25 01:07:39 1997    <irfan@TWOSTEP>
 
-	* examples/Reactor/Proactor/test_multiple_loops.cpp (main): Made
- 	  sure that the Proactor was removed from reactor.
+        * examples/Reactor/Proactor/test_multiple_loops.cpp (main): Made
+          sure that the Proactor was removed from reactor.
 
-	* ace/WFMO_Reactor.cpp (remove_handler_i,
- 	  remove_suspended_handler_i): Make sure to preserve DONT_CALL
- 	  with normal event entries.
+        * ace/WFMO_Reactor.cpp (remove_handler_i,
+          remove_suspended_handler_i): Make sure to preserve DONT_CALL
+          with normal event entries.
 
-	* ace/Proactor.cpp:
+        * ace/Proactor.cpp:
 
-	- A flag used to indicate when we are shutting down.
+        - A flag used to indicate when we are shutting down.
 
-	- Made sure to signal the timer event when we are closing down.
+        - Made sure to signal the timer event when we are closing down.
 
-	- Thread Manager: don't bother to wait (since the thread may have
- 	  already gone). But make sure to close up the descriptor.  This
- 	  may not be necessary in the future when THR_DETACHED is
- 	  correctly implemented.
+        - Thread Manager: don't bother to wait (since the thread may have
+          already gone). But make sure to close up the descriptor.  This
+          may not be necessary in the future when THR_DETACHED is
+          correctly implemented.
 
-	* ace/Asynch_IO.h: Changed some code from protected to public.
-  	  Even though these functions are really protected, sometimes it
- 	  simplifies user code to be able to "fake" a result.  Users
- 	  should use these with care.
+        * ace/Asynch_IO.h: Changed some code from protected to public.
+          Even though these functions are really protected, sometimes it
+          simplifies user code to be able to "fake" a result.  Users
+          should use these with care.
 
-	* examples/Reactor/Proactor/test_proactor.cpp
- 	  (handle_write_stream): Added code for partial write to socket.
-  	  However it ever seems to do a short write ;-). Also made sure
- 	  that the initial data coming from the AcceptEx call is also
- 	  dumped to the file.  Thanks to Mark Rabotnikov
- 	  (mark@netmanage.co.il) for pointing this out.
+        * examples/Reactor/Proactor/test_proactor.cpp
+          (handle_write_stream): Added code for partial write to socket.
+          However it ever seems to do a short write ;-). Also made sure
+          that the initial data coming from the AcceptEx call is also
+          dumped to the file.  Thanks to Mark Rabotnikov
+          (mark@netmanage.co.il) for pointing this out.
