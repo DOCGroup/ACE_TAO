@@ -1,3 +1,13 @@
+Fri Nov 17 08:23:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+          Removed ior_corbaloc, it uses the Naming Service, and would take
+          me too long to fix it.
+
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+          Fixed warnings.
+
 Fri Nov 17 07:36:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/DSI_Gateway/run_test.pl:

@@ -418,7 +418,7 @@ Notify_Throughput::end_test (CORBA::Environment &ACE_TRY_ENV)
   dump_results ();
 
   ACE_DEBUG ((LM_DEBUG, "calling shutdown\n"));
-  this->orb_->shutdown ();
+  this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
 
