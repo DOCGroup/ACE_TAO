@@ -175,8 +175,8 @@ CORBA::TypeCode::concrete_base_type_i (ACE_ENV_SINGLE_ARG_DECL) const
 // ---------------------------------------------------------------
 
 bool
-TAO::operator<< (TAO_OutputCDR & cdr,
-                 CORBA::TypeCode_ptr tc)
+operator<< (TAO_OutputCDR & cdr,
+            CORBA::TypeCode_ptr tc)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -195,8 +195,8 @@ TAO::operator<< (TAO_OutputCDR & cdr,
 }
 
 bool
-TAO::operator>> (TAO_InputCDR & cdr,
-                 CORBA::TypeCode_ptr & tc)
+operator>> (TAO_InputCDR & cdr,
+            CORBA::TypeCode_ptr & tc)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
