@@ -1,5 +1,12 @@
 Thu Jun  8 15:10:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
+	* pace/tests/{Makefile,Posix_SP_Test.c}:
+          Added new test for POSIX_SINGLE_PROCESS unit of functionality
+          and updated Makefile for changes to the PACE library directory
+          structure.
+
+Thu Jun  8 15:10:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
 	* pace/pace/*.h:
 	* pace/pace/arpa/*.h:
 	* pace/pace/netinet/*.h:
