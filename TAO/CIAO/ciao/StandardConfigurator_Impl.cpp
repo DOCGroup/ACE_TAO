@@ -34,7 +34,7 @@ namespace CIAO
   void
   StandardConfigurator_Impl::configure (
     Components::CCMObject_ptr
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::WrongComponentType))
   {
