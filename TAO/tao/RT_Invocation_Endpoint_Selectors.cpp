@@ -112,7 +112,7 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
                   if (invocation->inconsistent_policies ().ptr ())
                     {
                       CORBA::Policy_var priority_model_policy = rt_stub->exposed_priority_model (ACE_TRY_ENV);
-                      ACE_CHECK_RETURN (0);
+                      ACE_CHECK;
 
                       invocation->inconsistent_policies ()->length (1);
                       invocation->inconsistent_policies ()[0u] =
