@@ -380,13 +380,17 @@ TAO_DIOP_Connection_Handler::handle_cleanup (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+// Instantiated in IIOP_Connection_Handler.cpp
+//template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+
 template class ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>;
 template class ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+// Instantiated in IIOP_Connection_Handler.cpp
+//#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+
 #pragma instantiate ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>
 #pragma instantiate ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>
 
