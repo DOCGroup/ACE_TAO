@@ -1,5 +1,5 @@
 // $Id$
-#include "new.h"
+
 #include "Options.h"
 #include "PMS_All.h"
 #include "PMS_Flo.h"
@@ -10,26 +10,37 @@
 int 
 SM_Server::demux (char *packet, int &packet_length)
 {
-  /* SUPPRESS 112 */
   switch (GET_PACKET_TYPE (packet))
     {
     case Options::PROTO_USR:
-      this->pm_server = new (PRIVATE_POOL) PMS_Usr;
+      ACE_NEW_RETURN (this->pm_server,
+                      PMS_Usr,
+                      -1);
       break;
     case Options::PROTO_ALL:
-      this->pm_server = new (PRIVATE_POOL) PMS_All;
+      ACE_NEW_RETURN (this->pm_server,
+                      PMS_All,
+                      -1);
       break;
     case Options::PROTO_FLO:
-      this->pm_server = new (PRIVATE_POOL) PMS_Flo;
+      ACE_NEW_RETURN (this->pm_server,
+                      PMS_Flo,
+                      -1);
       break;
     case Options::PROTO_RUSER:
-      this->pm_server = new (PRIVATE_POOL) PMS_Ruser;
+      ACE_NEW_RETURN (this->pm_server,
+                      PMS_Ruser,
+                      -1);
       break;
     default:
+      ACE_DEBUG ((LM_DEBUG, 
+                  "%s: bad protocol\n",
+                  Options::program_name));
       return -1;
     }
 
-  if (pm_server->decode (SKIP_PACKET_TYPE (packet), SUBTRACT_PACKET_TYPE (packet_length)) < 0)
+  if (pm_server->decode (SKIP_PACKET_TYPE (packet),
+                         SUBTRACT_PACKET_TYPE (packet_length)) < 0)
     return -1;
 
   if (pm_server->process () < 0)
@@ -39,21 +50,16 @@ SM_Server::demux (char *packet, int &packet_length)
 }
 
 int 
-SM_Server::mux (char *packet, int &packet_length)
+SM_Server::mux (char *packet,
+                int &packet_length)
 {
-  int status = pm_server->encode (packet, packet_length);
-
-  /* Hum... should this really go here? */
-  if (Options::get_opt (Options::STAND_ALONE_SERVER))
-    release_memory ();
-  return status;
+  return pm_server->encode (packet, packet_length);
 }
 
-#ifndef __OPTIMIZE__
 SM_Server::SM_Server (void)
-{}
+{
+}
 
 SM_Server::~SM_Server (void)
-{}
-#endif /* __OPTIMIZE__ */
-
+{
+}

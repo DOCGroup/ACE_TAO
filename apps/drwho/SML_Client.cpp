@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Options.h"
 #include "SML_Client.h"
 
@@ -26,10 +27,10 @@ SML_Client::send (void)
   return 1;
 }
 
-#ifndef __OPTIMIZE__
 SML_Client::SML_Client (void)
-{}
+{
+}
 
 SML_Client::~SML_Client (void)
-{}
-#endif /* __OPTIMIZE__ */
+{
+}

@@ -1,6 +1,6 @@
 // $Id$
+
 #include "BS_Server.h"
-#include "new.h"
 
 // This constructor takes a message of sorted login names and loads up
 // the symbol table on the server's side.  It assumes that the number
@@ -14,10 +14,11 @@ BS_Server::BS_Server (char *packet)
 
   this->count_ = atoi (packet);
   this->buffer_ = buf_ptr;
-  this->protocol_record_ =
-    new (PRIVATE_POOL) Protocol_Record[this->count_];
-  this->sorted_record_ =
-    new (PRIVATE_POOL) Protocol_Record *[this->count_];
+
+  ACE_NEW (this->protocol_record_,
+           Protocol_Record[this->count_]);
+  ACE_NEW (this->sorted_record_,
+           Protocol_Record *[this->count_]);
   
   for (int i = 0; i < this->count_; i++)
     {
@@ -83,7 +84,8 @@ BS_Server::insert (char *key_name, int max_len)
 	}
 
       // This line is very subtle... ;-)
-      if (!(cmp == 0 || ACE_OS::strncmp (key_name, buffer[--mid]->get_login (), max_len) == 0))
+      if (!(cmp == 0 
+            || ACE_OS::strncmp (key_name, buffer[--mid]->get_login (), max_len) == 0))
 	{
 	  result = 0;
 	  return 0;
@@ -103,9 +105,9 @@ BS_Server::insert (char *key_name, int max_len)
 Protocol_Record *
 BS_Server::get_next_entry (void)
 {
-  Protocol_Record *frp;
-
-  while ((frp = Binary_Search::get_next_entry ()) != 0)
+  for (Protocol_Record *frp = Binary_Search::get_next_entry ();
+       frp != 0;
+       frp = Binary_Search::get_next_entry ())
     if (frp->get_drwho_list () != 0)
       return frp;
 
