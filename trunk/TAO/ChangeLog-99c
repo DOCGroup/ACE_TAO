@@ -1,3 +1,41 @@
+Thu Jun 24 03:30:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+          Added template instantiation declarations.
+        
+        * orbsvcs/ImplRepo_Service/tao_ir.dsp:
+          Output file spelled wrong.
+
+        * orbsvcs/Time_Service/Server_i.cpp:
+          Now uses a more specific (and unique) POA name, so it will
+          work better with the IR.
+
+        * orbsvcs/Time_Service/Time_Service_Clerk.dsp:
+        * orbsvcs/Time_Service/Time_Service_Server.dsp:
+        * orbsvcs/Time_Service/IR_Helper.cpp: (REMOVED)
+        * orbsvcs/Time_Service/IR_Helper.h: (REMOVED)
+        * orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp: (REMOVED)
+        * orbsvcs/tests/ImplRepo/IR_Helper.h: (REMOVED)
+        * orbsvcs/orbsvcs/IR_Helper.cpp: (ADDED)
+        * orbsvcs/orbsvcs/IR_Helper.h: (ADDED)
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+        * orbsvcs/Time_Service/Makefile:
+        * orbsvcs/tests/ImplRepo/Makefile:
+          Moved IR_Helper to orbsvcs library for now.
+
+        * orbsvcs/tests/Time/implrepo.conf:
+          IR doesn't require this anymore.
+
+        * orbsvcs/tests/Time/run_test.pl:
+          Works with new IR.
+
 Wed Jun 23 23:36:22 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/Makefile: Removed Repository_Test.
