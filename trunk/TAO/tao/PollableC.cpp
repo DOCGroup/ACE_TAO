@@ -1204,7 +1204,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::PollableSet::UnknownPollabl
       );
 }
 
-void CORBA::PollableSet::UnknownPollable::_tao_any_destructor (void  *x)
+void CORBA::PollableSet::UnknownPollable::_tao_any_destructor (void *x)
 {
   CORBA::PollableSet::UnknownPollable *tmp = ACE_static_cast(CORBA::PollableSet::UnknownPollable*,x);
   delete tmp;
