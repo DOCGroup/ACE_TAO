@@ -1549,6 +1549,11 @@ typedef u_int ACE_thread_key_t;
 #include /**/ <sys/stat.h>
 
 #include "ace/stdcpp.h"
+
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+class ostream;
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
 #include /**/ <fcntl.h>
 
 // This must come after signal.h is #included.
