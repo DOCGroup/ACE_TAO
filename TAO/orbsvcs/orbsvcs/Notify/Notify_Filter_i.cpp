@@ -428,6 +428,17 @@ template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_N
 template class ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_MUTEX>;
 
+template class ID_Pool<CosNotifyFilter::ConstraintID>;
+
+//Suspicious.. I am just adding to keep CC5 happy
+template class ACE_Equal_To<CosNotifyFilter::ConstraintID>;
+//template class ID_Pool<int>;
+// May be I am wrong..
+
+//template class ID_Pool<CosNotifyFilter::ConstraintID>;
+
+template class ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
+template class ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*>
@@ -439,4 +450,9 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TA
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_MUTEX>
 
+#pragma instantiate ID_Pool<CosNotifyFilter::ConstraintID>
+//#pragma instantiate ID_Pool<CosNotifyFilter::ConstraintID>
+
+#pragma instantiate ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>
+#pragma instantiate ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

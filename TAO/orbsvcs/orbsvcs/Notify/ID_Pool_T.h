@@ -40,8 +40,4 @@ class ID_Pool
   ID_TYPE id_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ID_Pool_T.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ID_POOL_T_H */

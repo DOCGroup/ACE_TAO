@@ -62,7 +62,7 @@ TAO_Notify_EventChannel_i::MyFactory (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_EventChannel_i::default_consumer_admin (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_EventChannel_i::default_consumer_admin (CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException
                    ))
 {
@@ -81,7 +81,7 @@ CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_EventChannel_i::default_supp
 
 CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_EventChannel_i::default_filter_factory (
-                                                   CORBA::Environment &ACE_TRY_ENV
+                                                   CORBA::Environment & //ACE_TRY_ENV
                                                    )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -92,7 +92,7 @@ TAO_Notify_EventChannel_i::default_filter_factory (
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel_i::new_for_consumers
-(CosNotifyChannelAdmin::InterFilterGroupOperator op,
+(CosNotifyChannelAdmin::InterFilterGroupOperator /*op*/,
  CosNotifyChannelAdmin::AdminID_out id,
  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
@@ -132,7 +132,7 @@ TAO_Notify_EventChannel_i::new_for_consumers
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel_i::new_for_suppliers (
-CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                                              CosNotifyChannelAdmin::InterFilterGroupOperator /*op*/,
 CosNotifyChannelAdmin::AdminID_out id,
 CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
@@ -202,7 +202,7 @@ TAO_Notify_EventChannel_i::get_supplieradmin
 }
 
 CosNotifyChannelAdmin::AdminIDSeq * TAO_Notify_EventChannel_i::get_all_consumeradmins (
-                                                                                       CORBA::Environment &ACE_TRY_ENV
+                                                                                       CORBA::Environment & //ACE_TRY_ENV
                                                                                        )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -214,7 +214,7 @@ CosNotifyChannelAdmin::AdminIDSeq * TAO_Notify_EventChannel_i::get_all_consumera
 }
 
 CosNotifyChannelAdmin::AdminIDSeq * TAO_Notify_EventChannel_i::get_all_supplieradmins (
-                                                                                       CORBA::Environment &ACE_TRY_ENV
+                                                                                       CORBA::Environment & //ACE_TRY_ENV
                                                                                        )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -226,7 +226,7 @@ CosNotifyChannelAdmin::AdminIDSeq * TAO_Notify_EventChannel_i::get_all_suppliera
 }
 
 CosNotification::AdminProperties * TAO_Notify_EventChannel_i::get_admin (
-                                                                         CORBA::Environment &ACE_TRY_ENV
+                                                                         CORBA::Environment & //ACE_TRY_ENV
                                                                          )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -238,8 +238,8 @@ CosNotification::AdminProperties * TAO_Notify_EventChannel_i::get_admin (
 }
 
 void TAO_Notify_EventChannel_i::set_admin (
-                                           const CosNotification::AdminProperties & admin,
-                                           CORBA::Environment &ACE_TRY_ENV
+                                           const CosNotification::AdminProperties & /*admin*/,
+                                           CORBA::Environment & //ACE_TRY_ENV
                                            )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -251,7 +251,7 @@ void TAO_Notify_EventChannel_i::set_admin (
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr TAO_Notify_EventChannel_i::for_consumers (
-  CORBA::Environment &ACE_TRY_ENV
+                                                                                  CORBA::Environment & //ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -284,3 +284,50 @@ CosEventChannelAdmin::ConsumerAdmin_ptr TAO_Notify_EventChannel_i::for_consumers
   {
   //Add your implementation here
   }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Entry<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *>;
+template class ACE_Hash_Map_Manager<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+
+template class ACE_Hash_Map_Entry<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *>;
+template class ACE_Hash_Map_Manager<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>;
+
+template class ID_Pool<CosNotifyChannelAdmin::AdminID>;
+//template class ID_Pool<CosNotifyChannelAdmin::AdminID>;
+
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Entry<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *>
+#pragma instantiate ACE_Hash_Map_Manager<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_ConsumerAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+
+#pragma instantiate ACE_Hash_Map_Entry<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *>
+#pragma instantiate ACE_Hash_Map_Manager<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::AdminID, TAO_Notify_SupplierAdmin_i *,ACE_Hash<CosNotifyChannelAdmin::AdminID>, ACE_Equal_To<CosNotifyChannelAdmin::AdminID>,ACE_SYNCH_MUTEX>
+
+#pragma instantiate ID_Pool<CosNotifyChannelAdmin::AdminID> 
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
