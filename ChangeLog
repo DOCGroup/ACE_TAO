@@ -16,10 +16,10 @@ Wed Mar 17 21:00:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ace/Timer_Queue_Adapters.h (activate):
 
 	  The last argument <inherit_priority> is now set to true as
-	  default. This wil get the behavior that C++ NPV1 and NPV2
-	  prescribes. Thanks to Dr. Schmidt Abhijit Sachdev for motivating
-	  this. 
-	  
+ 	  default. This wil get the behavior that C++ NPV1 and NPV2
+ 	  prescribes. Thanks to Dr. Schmidt and Abhijit Sachdev for
+ 	  motivating this.
+    
 Wed Mar 17 17:55:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Proactor.cpp (ctor): Change the default proactor implementation
