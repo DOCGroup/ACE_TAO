@@ -576,7 +576,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
               == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
 	  if (flag)
 	    {
-	      TypeCode_ptr *tmp = new TypeCode_ptr;
+	      CORBA::TypeCode_ptr *tmp = new CORBA::TypeCode_ptr;
 	      *tmp = tc;
 	      ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
 	    }
