@@ -38,7 +38,7 @@ class ACE_Future_Set : public ACE_Future_Observer<T>
 public:
   // = Initialization and termination methods.
 
-  ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
+  ACE_Future_Set (ACE_DEFAULT_MESSAGE_QUEUE_TYPE *new_queue = 0);
   // Constructor.
 
   ~ACE_Future_Set (void);
@@ -92,7 +92,7 @@ private:
                                   FUTURE_HOLDER *,
                                   FUTURE_REP_HASH,
                                   FUTURE_REP_COMPARE,
-			          ACE_Null_Mutex> FUTURE_HASH_MAP;
+                                  ACE_Null_Mutex> FUTURE_HASH_MAP;
 
   FUTURE_HASH_MAP future_map_;
   // Map of ACE_Futures, subjects, which have not been written to by
