@@ -997,7 +997,7 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
      // First, determine if the port was supplied on the command line
      u_short port =
        this->orb_core_->orb_params ()->service_port (mcast_service_id);
-     
+
      if (port == 0)
        {
          // Look for the port among our environment variables.
@@ -1015,16 +1015,16 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
      const char prefix[] = "mcast://:";
 
      char port_char[256];
-     
+
      ACE_OS_String::itoa (port,
                           port_char,
                           10);
 
      CORBA::String_var port_ptr =
        CORBA::string_alloc (ACE_OS::strlen ((const char *) port_char));
-     
+
      port_ptr = (const char *) port_char;
-     
+
      CORBA::String_var def_init_ref =
        CORBA::string_alloc (sizeof (prefix) +
                             ACE_OS::strlen (port_ptr.in ()) +
@@ -1113,7 +1113,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   /// Set the timeout value.
   this->set_timeout (timeout);
-  
+
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     {
       result = this->resolve_service (NAMESERVICE
