@@ -11,8 +11,10 @@
 // tables.  The values are also part of the Common Data Representation,
 // and hence are part of IIOP and other ORB protocols.
 //
-#if !defined(ACE_ROA_TYPECODE_H)
-#  define ACE_ROA_TYPECODE_H
+#if !defined(TAO_TYPECODE_H)
+#  define TAO_TYPECODE_H
+
+#  include "ace/OS.h"
 
 enum CORBA_TCKind 
 {
@@ -92,7 +94,7 @@ CORBA_Boolean			CORBA_is_nil (CORBA_TypeCode_ptr obj);
 
 extern const IID		IID_CORBA_TypeCode;
 
-class _EXPCLASS CORBA_TypeCode : public IUnknown
+class ACE_Svc_Export CORBA_TypeCode : public IUnknown
 {
 public:
   //

@@ -30,7 +30,8 @@
 #if !defined (TAO_CDR_H)
 #define	TAO_CDR_H
 
-#include	<assert.h>
+#include <assert.h>
+#include "ace/OS.h"
 
 #if defined(__IIOP_BUILD)
 #  include "orb.h"
@@ -80,7 +81,7 @@
 #	define	MY_BYTE_SEX	1
 #endif
 
-struct _EXPCLASS CDR
+struct ACE_Svc_Export CDR
 // = TITLE
 // The core marshaling primitive: a memory buffer, into which all the
 // basic OMG-IDL datatypes can be placed ... or from which they can be

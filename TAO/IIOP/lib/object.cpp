@@ -10,6 +10,7 @@
 #include	<limits.h>
 #include	<string.h>
 #include	<orb.h>
+#include "object.h"
 
 #include	<stub.h>
 #include	"debug.h"

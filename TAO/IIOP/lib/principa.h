@@ -7,17 +7,19 @@
 // administration framework.  Identities are used to control acccess
 // (authorization) as well as in audit trails (accountability).
 //
-#if !defined(ACE_ROA_PRINCIPAL_H)
-#  define ACE_ROA_PRINCIPAL_H
+#if !defined(TAO_PRINCIPAL_H)
+#  define TAO_PRINCIPAL_H
 
-#  include <ace/Synch.h>
+#  include "ace/OS.h"
+
+#  include "ace/Synch.h"
 
 void				CORBA_release (CORBA_Principal_ptr principal);
 CORBA_Boolean			CORBA_is_nil (CORBA_Principal_ptr principal);
 
 extern const IID		IID_CORBA_Principal;
 
-class _EXPCLASS CORBA_Principal : public IUnknown
+class ACE_Svc_Export CORBA_Principal : public IUnknown
 {
 public:
   //

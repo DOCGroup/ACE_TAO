@@ -13,10 +13,12 @@
 // mode, and some ownership rules for "top level" memory.
 //
 
-#if !defined(ACE_ROA_NVLIST_H)
-#  define ACE_ROA_NVLIST_H
+#if !defined(TAO_NVLIST_H)
+#  define TAO_NVLIST_H
 
-class _EXPCLASS			CORBA_NamedValue;
+#  include "ace/OS.h"
+
+class ACE_Svc_Export			CORBA_NamedValue;
 
 void				CORBA_release (CORBA_NamedValue_ptr x);
 CORBA_Boolean			CORBA_is_nil (CORBA_NamedValue_ptr x);
@@ -30,7 +32,7 @@ enum {
     CORBA_OUT_LIST_MEMORY = 0x10
 };
 
-class _EXPCLASS CORBA_NamedValue
+class ACE_Svc_Export CORBA_NamedValue
 {
 public:
   const CORBA_String	_FAR name () { return (const CORBA_String) _name; }
@@ -75,14 +77,14 @@ private:
 // ServerRequest pseudo-object.  The ORB copies data to/from the IPC
 // messages (e.g. IIOP::Request, IIOP::Response) as appropriate.
 //
-class _EXPCLASS			CORBA_NVList;
+class ACE_Svc_Export		CORBA_NVList;
 
 void				CORBA_release (CORBA_NVList_ptr x);
 CORBA_Boolean                   CORBA_is_nil (CORBA_NVList_ptr x);
 
 extern "C" const IID 		IID_CORBA_NVList;
 
-class _EXPCLASS CORBA_NVList
+class ACE_Svc_Export CORBA_NVList
 {
 public:
   CORBA_ULong			count () const

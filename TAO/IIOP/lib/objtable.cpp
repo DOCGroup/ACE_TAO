@@ -31,7 +31,7 @@ TAO_Dynamic_Hash_ObjTable::find(const CORBA_OctetSeq &key, CORBA_Object_ptr &obj
 TAO_Linear_ObjTable::TAO_Linear_ObjTable(CORBA_ULong size)
   : next_(0),
     tablesize_(size),
-    tbl_(new TAO_Linear_ObjTable::Entry[size])
+    tbl_(new TAO_Linear_ObjTable_Entry[size])
 {
 }
 
@@ -80,14 +80,14 @@ TAO_Linear_ObjTable::find(const CORBA_OctetSeq &key,
   return -1;  // not found
 }
 
-TAO_Linear_Entry::TAO_Linear_Entry()
+TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry()
 {
   this->key.buffer = 0;
   this->key.length = this->key.maximum = 0;
   this->obj = 0;
 }
 
-TAO_Linear_Entry::~TAO_Linear_Entry()
+TAO_Linear_ObjTable_Entry::~TAO_Linear_ObjTable_Entry()
 {
   if (this->key.buffer)
     delete [] this->key.buffer;
@@ -99,7 +99,7 @@ TAO_Linear_Entry::~TAO_Linear_Entry()
 TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable(CORBA_ULong size)
   : next_(0),
     tablesize_(size),
-    tbl_(new TAO_Active_Demux_ObjTable::Entry[size])
+    tbl_(new TAO_Active_Demux_ObjTable_Entry[size])
 {
 }
 

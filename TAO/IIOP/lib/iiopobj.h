@@ -11,8 +11,10 @@
 // class when making calls.
 //
 
-#ifndef	_iiopobj_hh
-#define	_iiopobj_hh
+#if !defined(TAO_IIOPOBJ_H)
+#  define TAO_IIOPOBJ_H
+
+#  include "ace/OS.h"
 
 #  if !defined(ACE_HAS_THREADS)
 typedef ACE_Null_Mutex ACE_Thread_Mutex;
@@ -20,9 +22,13 @@ typedef ACE_Null_Mutex ACE_Thread_Mutex;
 
 typedef CORBA_SEQUENCE <CORBA_Octet> opaque;
 
-class _EXPCLASS IIOP
+class ACE_Svc_Export IIOP
 {			// namespace
 public:
+  //
+  // IIOP Protocol version is distinct from GIOP version.
+  //
+  enum { MY_MAJOR = 1, MY_MINOR = 0 };
 
   struct Version
   {
@@ -31,11 +37,6 @@ public:
 
     Version(CORBA_Octet maj = MY_MAJOR, CORBA_Octet min = MY_MINOR);
   };
-
-  //
-  // IIOP Protocol version is distinct from GIOP version.
-  //
-  enum { MY_MAJOR = 1, MY_MINOR = 0 };
 
   //
   // IOR support ... ProfileBody is encapsulated in an IIOP
@@ -71,7 +72,7 @@ public:
 //
 extern "C" const IID		IID_IIOP_Object;
 
-class _EXPCLASS IIOP_Object : public STUB_Object
+class ACE_Svc_Export IIOP_Object : public STUB_Object
 {
 public:
   //
@@ -121,7 +122,7 @@ public:
 
   IIOP_Object (char *repository_id);
   IIOP_Object (char* repository_id,
-               TAO_IIOP_ProfileBody profile);
+               IIOP::ProfileBody profile);
 
   //
   // COM stuff

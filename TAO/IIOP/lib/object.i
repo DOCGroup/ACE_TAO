@@ -127,7 +127,7 @@ ULONG
 __stdcall
 CORBA_Object::AddRef ()
 {
-  return parent->AddRef ();
+  return parent_->AddRef ();
 }
 
 ACE_INLINE
@@ -135,7 +135,7 @@ ULONG
 __stdcall
 CORBA_Object::Release ()
 {
-  return parent->Release ();
+  return parent_->Release ();
 }
 
 ACE_INLINE
@@ -144,5 +144,5 @@ __stdcall
 CORBA_Object::QueryInterface (REFIID riid,
                               void **ppv)
 {
-  return parent->QueryInterface (riid, ppv);
+  return parent_->QueryInterface (riid, ppv);
 }

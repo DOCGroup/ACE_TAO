@@ -7,20 +7,20 @@
 // GIOP 	data structures and support routines
 
 #if !defined (TAO_GIOP_H)
-#define TAO_GIOP_H
+#  define TAO_GIOP_H
 
-#include <ace/OS.h>
-#include <ace/SOCK_Stream.h>
-#if defined (__IIOP_BUILD)
-#  include	"orb.h"
-#  include	"stub.h"
-#else
-#  include	<corba/orb.h>
-#  include	<corba/stub.h>
-#endif
+#  include "ace/OS.h"
+#  include "ace/SOCK_Stream.h"
+#  if defined (__IIOP_BUILD)
+#    include "orb.h"
+#    include "stub.h"
+#  else
+#    include <corba/orb.h>
+#    include <corba/stub.h>
+#  endif
 
-#include	"connmgr.h"
-#include	"iiopobj.h"		// XXX -- not generic!
+#  include "connmgr.h"
+#  include "iiopobj.h"		// XXX -- not generic!
 
 
 // XXX this same typedef is used in other places, e.g. iiopobj.hh
