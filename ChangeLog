@@ -1,3 +1,11 @@
+Wed Oct 31 16:45:07 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h (llseek):
+
+	  Made ACE_OS::llseek() a static method, as it was originally
+	  intended to be.  Thanks to Doron Rajwan <doron@BANDWIZ.COM> for
+	  pointing out the problem.
+
 Tue Oct 30 22:53:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Svc_Conf_l.cpp:

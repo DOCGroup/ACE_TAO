@@ -6080,7 +6080,7 @@ public:
                       off_t offset,
                       int whence);
 #if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
-  ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
+  static ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
 #endif /* ACE_HAS_LLSEEK */
 
   // It used to be that the <perms> argument default was 0 on all
