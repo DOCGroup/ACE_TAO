@@ -1,5 +1,6 @@
 project : naming {
-  libs     += TAO_PortableGroup
-  after    += PortableGroup
-  requires += PortableGroup
+  libs      += TAO_PortableGroup
+  after     += PortableGroup
+  comps     += PortableGroup
+  tagchecks += PortableGroup
 }
