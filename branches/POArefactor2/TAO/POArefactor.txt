@@ -1,3 +1,9 @@
+Tue Nov 23 08:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,i}:
+          Removed cached_policies(), not needed anymore
+
+Tue Nov 23 08:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.h:
           Removed active_policy_strategies(), only the POA can use the
@@ -6,6 +12,14 @@
 
         * tao/PortableServer/Object_Adapter.cpp:
           Use validate_lifespan.
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+          Changed servant_to_id on the servant retention policy to
+          servant_to_user_id, added servant_to_id on the request processing
+          policy, call this from the POA, the servant_to_id will then call
+          servant_to_user_id again. This reduce the coupling.
 
 Mon Nov 22 16:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
