@@ -58,6 +58,8 @@
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/os_include/os_netdb.h"
 
 #if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
 # define ACE_NO_TSS_TOKENS 1
