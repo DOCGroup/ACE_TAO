@@ -731,5 +731,5 @@ CORBA_Any::dump (const CORBA::Any any_value)
        ACE_DEBUG ((LM_DEBUG, "String %s\n", str));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, "TCKind %d", type->kind_));
+    ACE_DEBUG ((LM_DEBUG, "TCKind %d\n", type->kind_));
 }
