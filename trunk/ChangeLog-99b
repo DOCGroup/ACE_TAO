@@ -1,3 +1,10 @@
+Tue Jan 26 10:55:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Active_Map_Manager.h: 
+	  The _T.h file has to be included *after* the inclusion of the .i
+	  file, otherwise the template may not see the inline functions;
+	  the problem only showed up on IRIX.
+
 Mon Jan 25 22:11:36 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ACE_wrappers/tests/CDR_Test.dsp:
