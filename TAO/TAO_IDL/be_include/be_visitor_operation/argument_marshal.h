@@ -63,4 +63,26 @@ private:
   LAST_ARG_PRINTED last_arg_printed_;
 };
 
+// ****************************************************************
+
+class be_visitor_compiled_args_decl : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_compiled_args_decl
+  //
+  // = DESCRIPTION
+  //   This is a visitor to generate variables declarations in the
+  //   compiled marshaling stubs.
+  //
+public:
+  be_visitor_compiled_args_decl (be_visitor_context *ctx);
+  // constructor
+
+  int visit_array (be_array *node);
+  int visit_typedef (be_typedef *node);
+  int visit_argument (be_argument *node);
+  int visit_operation (be_operation *node);
+};
+
 #endif /* _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_ */

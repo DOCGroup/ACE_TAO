@@ -30,7 +30,7 @@ ACE_RCSID(be_visitor_operation, argument_marshal, "$Id$")
 
 
 // ************************************************************
-// operation visitor to handle the passing of arguments to the CDR operators 
+// operation visitor to handle the passing of arguments to the CDR operators
 // ************************************************************
 
 be_compiled_visitor_operation_argument_marshal::
@@ -68,7 +68,7 @@ be_compiled_visitor_operation_argument_marshal::pre_process (be_decl *bd)
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE)
             *os << " &&\n";
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
@@ -80,13 +80,13 @@ be_compiled_visitor_operation_argument_marshal::pre_process (be_decl *bd)
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE)
             *os << " &&\n";
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE)
             *os << " &&\n";
         }
       break;
@@ -98,7 +98,7 @@ be_compiled_visitor_operation_argument_marshal::pre_process (be_decl *bd)
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_marshal::TAO_ARG_NONE)
             *os << " &&\n";
         }
       break;
@@ -129,12 +129,12 @@ be_compiled_visitor_operation_argument_marshal::post_process (be_decl *bd)
         case AST_Argument::dir_IN:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_marshal::TAO_ARG_IN; 
+            be_compiled_visitor_operation_argument_marshal::TAO_ARG_IN;
           break;
         case AST_Argument::dir_INOUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_marshal::TAO_ARG_INOUT; 
+            be_compiled_visitor_operation_argument_marshal::TAO_ARG_INOUT;
           break;
         case AST_Argument::dir_OUT:
           // these arguments don't get printed for the << operator on the stub
@@ -150,12 +150,12 @@ be_compiled_visitor_operation_argument_marshal::post_process (be_decl *bd)
         case AST_Argument::dir_INOUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_marshal::TAO_ARG_INOUT; 
+            be_compiled_visitor_operation_argument_marshal::TAO_ARG_INOUT;
           break;
         case AST_Argument::dir_OUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_marshal::TAO_ARG_OUT; 
+            be_compiled_visitor_operation_argument_marshal::TAO_ARG_OUT;
           break;
         }
       break;
@@ -170,3 +170,116 @@ be_compiled_visitor_operation_argument_marshal::post_process (be_decl *bd)
   return 0;
 }
 
+// ****************************************************************
+
+be_visitor_compiled_args_decl::be_visitor_compiled_args_decl (be_visitor_context *ctx)
+  :  be_visitor_scope (ctx)
+{
+}
+
+int
+be_visitor_compiled_args_decl::visit_operation (be_operation *node)
+{
+  return this->visit_scope (node);
+}
+
+int
+be_visitor_compiled_args_decl::visit_argument (be_argument *node)
+{
+  this->ctx_->node (node); // save the argument node
+
+  // retrieve the type of the argument
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
+  return bt->accept (this);
+}
+
+// visit array
+int
+be_visitor_compiled_args_decl::visit_array (be_array *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // retrieve the field node
+  be_argument *f = this->ctx_->be_node_as_argument ();
+  if (f == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_compiled_args_decl::"
+                         "visit_array - "
+                         "cannot retrieve argument node\n"
+                         ), -1);
+    }
+
+  // for anonymous arrays, the type name has a _ prepended. We compute
+  // the fullname with or without the underscore and use it later on.
+  char fname [NAMEBUFSIZE];  // to hold the full and
+
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()))
+    {
+      // for anonymous arrays ...
+      // we have to generate a name for us that has an underscope
+      // prepended to our local name. This needs to be inserted after
+      // the parents's name
+
+      if (node->is_nested ())
+        {
+          be_decl *parent =
+            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+                           node->local_name ()->get_string ());
+        }
+      else
+        {
+          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+        }
+    }
+  else
+    {
+      // typedefed node
+      ACE_OS::sprintf (fname, "%s", node->fullname ());
+    }
+
+  if (f->direction () != AST_Argument::dir_IN)
+    {
+      *os << fname << "_forany "
+          << "_tao_argument_" << f->local_name () << " ("
+          << be_idt << be_idt_nl;
+      *os << f->local_name ();
+      if (f->direction () == AST_Argument::dir_OUT)
+        {
+          // *os << ".ptr ()";
+        }
+#if 0
+      *os << "(ACE_const_cast (" << be_idt << be_idt_nl
+          << fname << "_slice*," << be_nl
+          << f->local_name () << be_uidt_nl
+          << ")" << be_uidt;
+#endif
+      *os << be_uidt_nl << ");" << be_uidt_nl;
+    }
+  return 0;
+}
+
+// visit typedef type
+int
+be_visitor_compiled_args_decl::visit_typedef (be_typedef *node)
+{
+  this->ctx_->alias (node);
+
+  // the node to be visited in the base primitve type that gets typedefed
+  be_type *bt = node->primitive_base_type ();
+  if (!bt || (bt->accept (this) == -1))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_compiled_args_decl::"
+                         "visit_typedef - "
+                         "Bad primitive type\n"
+                         ), -1);
+    }
+
+  this->ctx_->alias (0);
+  return 0;
+}
