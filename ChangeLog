@@ -1,3 +1,11 @@
+Thu Sep 30 22:20:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* m4/tls.m4 (ACE_CHECK_TLS):
+
+	  Fixed problem where leading forward slash was not included in
+	  the Kerberos include directory pathname.  Thanks to Steve Huston
+	  for reporting the problem.
+
 Thu Sep 30 19:30:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Makefile.am:
