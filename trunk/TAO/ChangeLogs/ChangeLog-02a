@@ -1,8 +1,14 @@
+Sat Jan 26 13:44:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/TODO.html:
+
+	  Updated Bugzilla URL.
+
 Sat Jan 26 20:10:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* tao/orbconf.h (TAO_ENV_ARG_DEFN): Removed.
 
-2002-01-26  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+Sat Jan 26 20:10:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* tests/ORT/ORT_test_IORInterceptor_ORBInitializer.cpp
 	  (ORT_test_IORInterceptor_ORBInitializer::post_init):
