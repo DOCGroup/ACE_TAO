@@ -1,5 +1,9 @@
 Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* Makefile: Added the tests directory to RELEASE_LIB_FILES since
+ 	  this is pretty important to determine whether ACE works.  Thanks
+ 	  to Chuck Gehr for this suggestion.
+
 	* tests/UNIXclerk.conf: Changed "merengue" to "localhost." 
 	  Thanks to Steve Coy for this suggestion.
 

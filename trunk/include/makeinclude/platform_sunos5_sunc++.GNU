@@ -18,7 +18,7 @@ debug = 1
 
 CC              = cc
 CXX             = CC
-CFLAGS          += -mt
+CFLAGS          += -mt +w
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
