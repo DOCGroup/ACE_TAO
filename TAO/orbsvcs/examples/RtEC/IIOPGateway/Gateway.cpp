@@ -36,8 +36,6 @@ Gateway::run (int argc, char* argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-//      TAO_EC_Gateway_IIOP* gateway = 0;
-
       // First parse our command line options
       if (this->parse_args(argc, argv) != 0)
       {
@@ -113,7 +111,8 @@ Gateway::run (int argc, char* argv[])
 
       TAO_EC_Gateway_IIOP gateway;
 
-      gateway.init(supplier_event_channel.in(), consumer_event_channel.in());
+      gateway.init(supplier_event_channel.in(), consumer_event_channel.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var gateway_oid =
          poa->activate_object(&gateway ACE_ENV_ARG_PARAMETER);
@@ -134,6 +133,13 @@ Gateway::run (int argc, char* argv[])
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
       orb->run ();
+
+      consumer_event_channel->remove_observer (local_ec_obs_handle
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (gateway_oid.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Destroy the POA
       poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
