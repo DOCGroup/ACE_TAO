@@ -177,18 +177,18 @@ namespace CORBA
     // friend class.
 
     Request (CORBA::Object_ptr obj,
-                   CORBA::ORB_ptr orb,
-                   const CORBA::Char *op,
-                   CORBA::NVList_ptr args,
-                   CORBA::NamedValue_ptr result,
-                   CORBA::Flags flags,
-                   CORBA::ExceptionList_ptr exceptions
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             CORBA::ORB_ptr orb,
+             const CORBA::Char *op,
+             CORBA::NVList_ptr args,
+             CORBA::NamedValue_ptr result,
+             CORBA::Flags flags,
+             CORBA::ExceptionList_ptr exceptions
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     Request (CORBA::Object_ptr obj,
-                   CORBA::ORB_ptr orb,
-                   const CORBA::Char *op
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             CORBA::ORB_ptr orb,
+             const CORBA::Char *op
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     ~Request (void);
 
