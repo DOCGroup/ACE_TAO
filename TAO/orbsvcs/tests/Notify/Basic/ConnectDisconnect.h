@@ -44,13 +44,13 @@ public: \
   CD_##X (ConnectDisconnect* cd, int id); \
 };
 
-CD_DECLARE_ENTITY(PushConsumer);
-CD_DECLARE_ENTITY(StructuredPushConsumer);
-CD_DECLARE_ENTITY(SequencePushConsumer);
+CD_DECLARE_ENTITY(PushConsumer)
+CD_DECLARE_ENTITY(StructuredPushConsumer)
+CD_DECLARE_ENTITY(SequencePushConsumer)
 
-CD_DECLARE_ENTITY(PushSupplier);
-CD_DECLARE_ENTITY(StructuredPushSupplier);
-CD_DECLARE_ENTITY(SequencePushSupplier);
+CD_DECLARE_ENTITY(PushSupplier)
+CD_DECLARE_ENTITY(StructuredPushSupplier)
+CD_DECLARE_ENTITY(SequencePushSupplier)
 
 /***************************************************************************/
 
