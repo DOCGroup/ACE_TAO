@@ -1,5 +1,6 @@
 Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+
 	* ACE_wrappers/ace/POSIX_Asynch_IO.cpp
 	* ACE_wrappers/ace/POSIX_Asynch_IO.h
 	* ACE_wrappers/ace/POSIX_Proactor.cpp
@@ -7,6 +8,14 @@ Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* ACE_wrappers/ace/Proactor.cpp
 	* ACE_wrappers/ace/Proactor.h
 	* ACE_wrappers/ace/Proactor_Impl.h
+
+ 	* ACE_wrappers/examples/Reactor/Proactor/Makefile
+ 	* ACE_wrappers/examples/Reactor/Proactor/README
+ 	* ACE_wrappers/examples/Reactor/Proactor/test_aiocb.cpp
+ 	* ACE_wrappers/examples/Reactor/Proactor/test_aiosig.cpp
+ 	* ACE_wrappers/examples/Reactor/Proactor/test_aiosig_ace.cpp
+ 	* ACE_wrappers/examples/Reactor/Proactor/test_proactor.cpp
+ 	* ACE_wrappers/examples/Reactor/Proactor/test_timeout.cpp
 
 	- Completed Multithreading of POSIX_SIG_Proactor.
 
