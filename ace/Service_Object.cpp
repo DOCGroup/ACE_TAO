@@ -42,8 +42,7 @@ ACE_Service_Type::~ACE_Service_Type (void)
 {
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
 
-  if (!fini_already_called_)
-    this->type_->fini ();
+  this->fini ();
 
   if (this->handle_ != 0)
     ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
@@ -58,8 +57,11 @@ ACE_Service_Type::~ACE_Service_Type (void)
 void
 ACE_Service_Type::fini (void)
 {
-  this->type_->fini ();
-  this->fini_already_called_ = 1;
+  if (!this->fini_already_called_)
+    {
+      this->type_->fini ();
+      this->fini_already_called_ = 1;
+    }
 }
 
 void
