@@ -48,6 +48,9 @@ public:
   virtual void task (JAWS_Pipeline_Handler *ph) = 0;
   virtual JAWS_Pipeline_Handler *task (void) = 0;
 
+  virtual void message_block (JAWS_Data_Block *mb) = 0;
+  virtual JAWS_Data_Block *message_block (void) = 0;
+
   virtual void accept_complete (ACE_HANDLE handle) = 0;
   // This method is called by the IO class when new passive connection has
   // been established.
@@ -168,11 +171,14 @@ protected:
   virtual int status (void);
   virtual JAWS_Pipeline_Handler *task (void);
 
+  virtual void message_block (JAWS_Data_Block *mb);
+  virtual JAWS_Data_Block *message_block (void);
+
 private:
   int status_;
   // The state of the handler.
 
-  ACE_Message_Block *mb_;
+  JAWS_Data_Block *mb_;
   // This maintains the state of the request.
 
   ACE_HANDLE handle_;

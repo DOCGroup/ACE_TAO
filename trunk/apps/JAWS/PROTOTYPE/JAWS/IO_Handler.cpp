@@ -139,6 +139,18 @@ JAWS_Synch_IO_Handler::task (void)
 }
 
 void
+JAWS_Synch_IO_Handler::message_block (JAWS_Data_Block *mb)
+{
+  this->mb_ = mb;
+}
+
+JAWS_Data_Block *
+JAWS_Synch_IO_Handler::message_block (void)
+{
+  return this->mb_;
+}
+
+void
 JAWS_Synch_IO_Handler::done (void)
 {
   this->factory ()->destroy_io_handler (this);
