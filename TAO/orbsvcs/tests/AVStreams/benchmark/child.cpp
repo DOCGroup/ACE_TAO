@@ -1,6 +1,7 @@
 // $Id$
 
 #include "child.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(benchmark, child, "$Id$")
 

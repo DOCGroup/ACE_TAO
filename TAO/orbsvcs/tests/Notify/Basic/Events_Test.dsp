@@ -96,6 +96,10 @@ SOURCE=.\Events_Test.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\Events_Test.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
