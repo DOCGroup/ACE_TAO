@@ -494,16 +494,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
     TAO::Any_Dual_Impl_T<
         IOP::TaggedProfile
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::IOR::_tao_seq_IOP_TaggedProfile_
       >;
 
   template class
@@ -533,11 +530,6 @@ CORBA::Boolean operator>>= (
 
   template class
     TAO::Any_Dual_Impl_T<
-        IOP::ServiceContext::_tao_seq_CORBA_Octet_
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
         IOP::ServiceContext
       >;
 
@@ -551,11 +543,6 @@ CORBA::Boolean operator>>= (
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
         IOP::TaggedProfile \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::IOR::_tao_seq_IOP_TaggedProfile_ \
       >
 
 # pragma instantiate \
@@ -581,11 +568,6 @@ CORBA::Boolean operator>>= (
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
         IOP::TaggedComponentSeq \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        IOP::ServiceContext::_tao_seq_CORBA_Octet_ \
       >
 
 # pragma instantiate \
