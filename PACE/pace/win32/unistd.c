@@ -21,7 +21,7 @@
 
 #if (PACE_HAS_POSIX_DI_UOF)
 int
-win32_close (PACE_HANDLE fildes)
+pace_win32_close (PACE_HANDLE fildes)
 {
   PACE_WIN32CALL_RETURN
     (PACE_ADAPT_RETVAL
@@ -31,7 +31,7 @@ win32_close (PACE_HANDLE fildes)
 
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_HANDLE
-win32_dup (PACE_HANDLE fildes)
+pace_win32_dup (PACE_HANDLE fildes)
 {
   PACE_HANDLE new_fd;
   if (DuplicateHandle(GetCurrentProcess (),
@@ -53,7 +53,7 @@ win32_dup (PACE_HANDLE fildes)
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-win32_ftruncate (PACE_HANDLE fildes, pace_off_t length)
+pace_win32_ftruncate (PACE_HANDLE fildes, pace_off_t length)
 {
   if (SetFilePointer (fildes, length, NULL, FILE_BEGIN) != (unsigned) -1)
     {
@@ -70,7 +70,7 @@ win32_ftruncate (PACE_HANDLE fildes, pace_off_t length)
 
 #if (PACE_HAS_POSIX_FM_UOF)
 pace_off_t
-win32_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
+pace_win32_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
 {
 # if SEEK_SET != FILE_BEGIN \
   || SEEK_CUR != FILE_CURRENT \
