@@ -58,7 +58,7 @@ ACE::ICMP_Socket::recv (void * buf,
                         int flags) const
 {
   ACE_TRACE ("ACE::ICMP_Socket::recv");
-  
+
   int addr_len = addr.get_size ();
   ssize_t status = ACE_OS::recvfrom (this->get_handle (),
                                      (char *) buf,
@@ -67,7 +67,7 @@ ACE::ICMP_Socket::recv (void * buf,
                                      (sockaddr *) addr.get_addr (),
                                      (int*) &addr_len);
   addr.set_size (addr_len);
-  
+
   return status;
 }
 
@@ -78,7 +78,7 @@ ACE::ICMP_Socket::recv (void * buf,
                         ACE_Time_Value const * timeout) const
 {
   ACE_TRACE ("ACE::ICMP_Socket::recv");
-  
+
   return ACE::recv (this->get_handle (),
                     buf,
                     n,
@@ -92,7 +92,7 @@ ACE::ICMP_Socket::open (ACE_Addr const & local,
                         int reuse_addr)
 {
   ACE_TRACE ("ACE::ICMP_Socket::recv");
-  
+
   if (! this->check_root_euid ())
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -114,7 +114,7 @@ ACE::ICMP_Socket::open (ACE_Addr const & local,
                         -1);
     }
   proto_number = proto->p_proto;
-  
+
   if (proto_number != IPPROTO_ICMP)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -123,7 +123,7 @@ ACE::ICMP_Socket::open (ACE_Addr const & local,
                          "currently supported."),
                         -1);
     }
-  
+
   if (ACE_SOCK::open (SOCK_RAW,
                       AF_INET,
                       protocol,
@@ -131,7 +131,7 @@ ACE::ICMP_Socket::open (ACE_Addr const & local,
     {
       return -1;
     }
-  
+
   return this->shared_open (local);
 }
 
@@ -139,7 +139,7 @@ int
 ACE::ICMP_Socket::shared_open (ACE_Addr const & local)
 {
   ACE_TRACE ("ACE::ICMP_Socket::shared_open");
-  
+
   int error = 0;
   if (local == ACE_Addr::sap_any)
     {
@@ -154,12 +154,12 @@ ACE::ICMP_Socket::shared_open (ACE_Addr const & local)
     {
       error = 1;
     }
-  
+
   if (error != 0)
     {
       this->close ();
     }
-  
+
   return error ? -1 : 0;
 }
 
@@ -176,18 +176,18 @@ ACE::ICMP_Socket::calculate_checksum (unsigned short * paddress,
       sum += *w++;
       nleft -= 2;
     }
-  
+
   if (nleft == 1)
     {
       *((unsigned char *) &answer) = *((unsigned char *) w);
       sum += answer;
     }
-  
+
   // add back carry outs from top 16 bits to low 16 bits
   sum = (sum >> 16) + (sum & 0xffff); // add hi 16 to low 16
   sum += (sum >> 16);                 // add carry
   answer = ~sum;                      // truncate to 16 bits
-  
+
   return (answer);
 }
 
@@ -195,11 +195,11 @@ int
 ACE::ICMP_Socket::check_root_euid (void)
 {
   int euid = 0;
-  
+
 #if ! defined (ACE_WIN32)
   euid = static_cast<int> (::geteuid ());
 #endif  /* #if ! defined (ACE_WIN32) */
-  
+
   return (euid == 0);
 }
 
