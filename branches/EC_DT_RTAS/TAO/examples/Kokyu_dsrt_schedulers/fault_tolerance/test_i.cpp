@@ -91,6 +91,8 @@ CPULoad::run(tv);
 	      "Request processing in thread %t done, "
 	      "prio = %d, load = %d, elapsed time = %umsec\n", 
 	      prio, exec_duration, elapsed_time.msec () ));
+  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
+
 /*      sched_param.importance = importance_;
       ORBSVCS_Time::Time_Value_to_TimeT (sched_param.deadline,
                                          ACE_OS::gettimeofday () +
@@ -123,7 +125,6 @@ CPULoad::run(tv);
   this->server_->test_method2(exec_duration,need_ft);
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
   this->current_->end_scheduling_segment (name); 
-  DSTRM_EVENT (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void
