@@ -86,11 +86,15 @@ Persistent_Client_i::run (const char *name,
             }
         }
                 
-      if (client.shutdown () == 1)
+      if (client.shutdown () == 1) {
         client->shutdown (ACE_TRY_ENV);
+	ACE_TRY_CHECK;
+      }
 
-      if (this->remove_ == 1)
+      if (this->remove_ == 1) {
         client->cleanup (ACE_TRY_ENV);
+	ACE_TRY_CHECK;
+      }
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {

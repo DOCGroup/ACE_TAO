@@ -17,7 +17,9 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
    ACE_TRY
     {
-      if (log_server.init (argc, argv, ACE_TRY_ENV) == -1)
+      int ret = log_server.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (ret == -1)
         return 1;
       else
         {
@@ -36,6 +38,7 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

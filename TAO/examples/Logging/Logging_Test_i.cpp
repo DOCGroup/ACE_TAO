@@ -31,14 +31,14 @@ Logger_Client::init (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nTrying to initialize orb\n"));
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
                               argv,
                               "internet",
                               ACE_TRY_ENV);
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nTrying to initialize orb\n"));
 
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0)
@@ -50,13 +50,17 @@ Logger_Client::init (int argc, char *argv[])
         return -1;
 
       // Initialize the naming service
-      if (this->init_naming_service (ACE_TRY_ENV) != 0)
+      int ret = this->init_naming_service (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize naming"
                            "services.\n"),
                           -1);
       // Create the logger instances
-      if (this->init_loggers (ACE_TRY_ENV) != 0)
+      ret = this->init_loggers (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize logger"
                            "instances.\n"),
@@ -68,6 +72,7 @@ Logger_Client::init (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 
