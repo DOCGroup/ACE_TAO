@@ -329,7 +329,7 @@ TAO_LB_LoadMinimum::analyze_loads (
   // the location where the load has to be shed.
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      ACE_TRY
+      ACE_TRY_EX (SECOND)
         {
           const PortableGroup::Location & loc = locations[i];
 
@@ -362,7 +362,7 @@ TAO_LB_LoadMinimum::analyze_loads (
             {
               load_manager->disable_alert (loc
                                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              ACE_TRY_CHECK_EX (SECOND);
             }
           else
             {
@@ -390,7 +390,7 @@ TAO_LB_LoadMinimum::analyze_loads (
               {
                 load_manager->disable_alert (loc
                                              ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                ACE_TRY_CHECK_EX (SECOND);
               }
               else if ((percent_diff > TAO_LB::LM_DEFAULT_DIFF_AVERAGE_CUTOFF)
                        && (percent_diff < 1))
@@ -402,7 +402,7 @@ TAO_LB_LoadMinimum::analyze_loads (
 */              
                 load_manager->enable_alert (loc
                                             ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                ACE_TRY_CHECK_EX (SECOND);
               }
             }
         }
