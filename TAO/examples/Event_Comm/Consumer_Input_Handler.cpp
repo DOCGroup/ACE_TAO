@@ -58,7 +58,8 @@ Consumer_Input_Handler::close (void)
         }
       ACE_CATCHANY
         {
-          ACE_TRY_ENV.print_exception ("Consumer_Input_Handler::handle_close\n");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Consumer_Input_Handler::handle_close\n");
         }
       ACE_ENDTRY;
     }
@@ -140,7 +141,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
 	}
       ACE_CATCHANY
         {
-          ACE_TRY_ENV.print_exception("Unexpected exception\n");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception\n");
         }
       ACE_ENDTRY;
     }
