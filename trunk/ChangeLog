@@ -1,35 +1,41 @@
+Mon Feb  9 07:00:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+
+          Added the custom generated files to the realclean target.
+
 Sun Feb  8 15:36:30 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* THANKS: Just added the 1,800th contributor to the THANKS file!!
+        * THANKS: Just added the 1,800th contributor to the THANKS file!!
 
 Sun Feb  8 15:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/bor.mpd:
-	  Also generate a realclean target for the IDL files so that IDL
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Also generate a realclean target for the IDL files so that IDL
           generated files are removed when running a realclean.
 
 Sun Feb  8 14:25:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/cbx.mpd:
-	  Added first version support of using the Cygwin compiler within
-	  the CBuilderX Development Environment
+        * bin/MakeProjectCreator/templates/cbx.mpd:
+          Added first version support of using the Cygwin compiler within
+          the CBuilderX Development Environment
 
 Sun Feb  8 14:02:53 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/cbx.mpd:
-	  Added MinGW support for in the CBuilderX IDE
+        * bin/MakeProjectCreator/templates/cbx.mpd:
+          Added MinGW support for in the CBuilderX IDE
 
 Sun Feb  8 13:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/cbx.mpd:
-	  Improved the CBuilderX template. Don't compile template files and
-	  disabled some warnings.
+        * bin/MakeProjectCreator/templates/cbx.mpd:
+          Improved the CBuilderX template. Don't compile template files and
+          disabled some warnings.
 
 Sat Feb  7 19:33:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* examples/RMCast/Send_File/Sender.cpp (ACE_TMAIN):
-	  Fixed a typo in the comments.  Thanks to Olli Savia <ops@iki.fi>
- 	  for the patch.
+        * examples/RMCast/Send_File/Sender.cpp (ACE_TMAIN):
+          Fixed a typo in the comments.  Thanks to Olli Savia <ops@iki.fi>
+          for the patch.
 
 Fri Feb  6 15:49:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -44,46 +50,46 @@ Fri Feb  6 15:49:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Feb  6 14:53:27 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/global.features:
 
-	  Added a new feature cidl into the global features.
-	  This feature is turned off by default, so no makefiles
-	  or project files will be gnerated for CCF and CIDLC.
+          Added a new feature cidl into the global features.
+          This feature is turned off by default, so no makefiles
+          or project files will be gnerated for CCF and CIDLC.
 
 Fri Feb  6 14:13:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Time_Value.inl (msec): Changed the return type of
+        * ace/Time_Value.inl (msec): Changed the return type of
           ACE_Time_Value::msec() from long to unsigned long to prevent
- 	  problems with wrap-arounds that yield negative numbers.  Thanks
- 	  to Matthew Gillen <gillen@ohio.edu> for this fix.
+          problems with wrap-arounds that yield negative numbers.  Thanks
+          to Matthew Gillen <gillen@ohio.edu> for this fix.
 
 Fri Feb  6 11:50:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/INET_Addr.cpp:
+        * ace/INET_Addr.cpp:
 
-	  Fixes a problem that this change "Thu Jan 15 08:02:23 2004
-	  Douglas C. Schmidt  <schmidt@cse.wustl.edu>" opened up and which
-	  Craig Rodrigues reported. This problem has been lying around for
-	  almost an year now. In the static method
-	  get_port_number_from_name (), if we get a portnumber 0
-	  (perfectly valid to send a 0) we missed to check for port
-	  0. This has now been fixed. Thanks to Craig for reporting this.
+          Fixes a problem that this change "Thu Jan 15 08:02:23 2004
+          Douglas C. Schmidt  <schmidt@cse.wustl.edu>" opened up and which
+          Craig Rodrigues reported. This problem has been lying around for
+          almost an year now. In the static method
+          get_port_number_from_name (), if we get a portnumber 0
+          (perfectly valid to send a 0) we missed to check for port
+          0. This has now been fixed. Thanks to Craig for reporting this.
 
 Fri Feb  6 09:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU (CPPFLAGS):
-	* include/makeinclude/platform_sunos5_g++.GNU (CPPFLAGS):
+        * include/makeinclude/platform_sunos5_sunc++.GNU (CPPFLAGS):
+        * include/makeinclude/platform_sunos5_g++.GNU (CPPFLAGS):
 
-	  Reverted the change "Fri Feb  6 09:31:30 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since it creates more
-	  problems.
+          Reverted the change "Fri Feb  6 09:31:30 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since it creates more
+          problems.
 
-	* ace/config-sunos5.5.h:
+        * ace/config-sunos5.5.h:
 
-	  Added ACE_LACKS_SWAB. This is a lie. There are signatures
-	  mismatch and adding compile time options that get the right
-	  signatures messes things up a lot. Someone needs to take a look
-	  at it fix the compile time options properly.
+          Added ACE_LACKS_SWAB. This is a lie. There are signatures
+          mismatch and adding compile time options that get the right
+          signatures messes things up a lot. Someone needs to take a look
+          at it fix the compile time options properly.
 
 Fri Feb  6 09:35:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -607,10 +613,10 @@ Wed Jan 28 06:46:55 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/ACE.h:
         * ace/config-cygwin32.h:
           Moved os_math.h include from config-cygwin32.h to ACE.h. When
- 	  ACE_NTRACE is set we got include problems. Cygwin defines log2
- 	  as macro and we have ACE::log2. The include of os_math.h is only
- 	  done for Cygwin.  Thanks to Yi Zuo <Yi.Zuo@alcatel-sbell.com.cn>
- 	  for reporting this.
+          ACE_NTRACE is set we got include problems. Cygwin defines log2
+          as macro and we have ACE::log2. The include of os_math.h is only
+          done for Cygwin.  Thanks to Yi Zuo <Yi.Zuo@alcatel-sbell.com.cn>
+          for reporting this.
 
 Tue Jan 27 20:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
