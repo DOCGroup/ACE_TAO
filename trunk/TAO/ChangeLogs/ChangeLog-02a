@@ -1,3 +1,13 @@
+Fri May 19 19:20:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/constants.idl:
+	  Removed the signed long constant I added earlier today.
+	  I got warnings from at least 3 compilers and an error
+	  from SunCC 4.2, just as the original bug report says.
+	  Even though 'long foo = -2147483648' is legal according
+	  to ANSI, hardly any platforms deal with it flawlessly.
+	  I don't believe it's an IDL compiler bug.
+
 Fri May 19 11:47:11 2000  Samir Shaikh  <SamirShaikh@bigfoot.com>
 
         * orbsvcs/orbsvcs/Trader/Trader.cpp (TAO_Import_Attributes_i):
