@@ -1,3 +1,14 @@
+Thu Mar 24 23:42:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Basic_Types.h:
+
+	  Fix typo in ACE_SIZEOF_LONG_LONG definition for systems with
+	  ACE_LACKS_LONG_LONG set.
+
+	  Set ACE_SIZEOF_LONG_LONG to 8 if we can't figure out what to set
+	  it to from ULLONG_MAX or ULONGLONG_MAX, which may not be present
+	  or may need special contortions to be defined.
+
 Thu Mar 24 12:27:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/README:

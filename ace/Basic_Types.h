@@ -144,7 +144,7 @@
 // The number of bytes in a long long.
 # if !defined (ACE_SIZEOF_LONG_LONG)
 #   if defined (ACE_LACKS_LONGLONG_T)
-#     define ACE_SIZEOF_LONG_LONG
+#     define ACE_SIZEOF_LONG_LONG 8
 #   elif defined (ULLONG_MAX)
 #     if ((ULLONG_MAX) == 4294967295ULL)
 #       define ACE_SIZEOF_LONG_LONG 4
@@ -158,8 +158,13 @@
 #       define ACE_SIZEOF_LONG_LONG 8
 #     endif
 #   endif
+#   // If we can't determine the size of long long, assume it is 8
+#   // instead of erroring out.  (Either ULLONG_MAX and ULONGLONG_MAX
+#   // may not be supported; or an extended C/C++ dialect may need to
+#   // be selected.  If this assumption is wrong, it can be addressed
+#   // in the platform-specific config header.
 #   if !defined (ACE_SIZEOF_LONG_LONG)
-#     error: unsupported long long size, must be updated for this platform!
+#     define ACE_SIZEOF_LONG_LONG 8
 #   endif
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
