@@ -103,6 +103,9 @@
   // stdlib.h and Green Hills' ctype.h.
 # include <stdlib.h>
 
+  // IOStream_Test never halts with Green Hills 1.8.9.
+# define ACE_LACKS_ACE_IOSTREAM
+
 #elif defined (__KCC) /* KAI compiler */
 
 # define ACE_HAS_ANSI_CASTS
