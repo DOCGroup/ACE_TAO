@@ -1,3 +1,13 @@
+Mon Sep 06 03:40:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp: Removed a
+	  redundant template instantiation for TAO_Bindings_Iterator<BLAH,
+	  BLAH,BLAH,<.....>,.<<......................................>>>.
+
+	* tao/ORB_Core.cpp (init): KCC 3.3e was complaining about <offset>
+	  was set but not being used.  Added ACE_UNUSED_ARG (offset) to
+	  quiet it down.
+
 Mon Sep 06 03:10:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV.dsp:
