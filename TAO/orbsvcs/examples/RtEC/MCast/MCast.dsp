@@ -8,12 +8,12 @@ CFG=EC_Example_MCast - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "EC_Example_MCast.mak".
+!MESSAGE NMAKE /f "MCast.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "EC_Example_MCast.mak" CFG="EC_Example_MCast - Win32 Debug"
+!MESSAGE NMAKE /f "MCast.mak" CFG="EC_Example_MCast - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -50,7 +50,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO.lib ace.lib TAO_CosNaming.lib TAO_RTEvent.lib TAO_RTSched.lib /nologo /subsystem:console /machine:I386 /out:"Release/Service.exe" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO.lib ace.lib TAO_CosNaming.lib TAO_RTEvent.lib TAO_RTSched.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "EC_Example_MCast - Win32 Debug"
 
@@ -74,7 +74,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_CosNamingd.lib TAO_RTEventd.lib TAO_RTSchedd.lib /nologo /subsystem:console /debug /machine:I386 /out:"Service.exe" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_CosNamingd.lib TAO_RTEventd.lib TAO_RTSchedd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ENDIF 
 
@@ -87,7 +87,39 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\Service.cpp
+SOURCE=.\AddrServer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Consumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MCast.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Supplier.cpp
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter ".h"
+# Begin Source File
+
+SOURCE=.\AddrServer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Consumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MCast.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Supplier.h
 # End Source File
 # End Group
 # End Target
