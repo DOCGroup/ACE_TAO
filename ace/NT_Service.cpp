@@ -74,11 +74,16 @@ ACE_NT_Service::open (void *args)
         }
     }
 
-  this->report_status (SERVICE_STOPPED, 0);
-
   return svc_return;
 
 }
+
+int
+ACE_NT_Service::fini (void)
+{
+  return this->report_status (SERVICE_STOPPED, 0);
+}
+
 
 void
 ACE_NT_Service::handle_control (DWORD control_code)
