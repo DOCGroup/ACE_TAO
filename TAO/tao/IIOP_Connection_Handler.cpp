@@ -247,16 +247,16 @@ TAO_IIOP_Connection_Handler::fetch_handle (void)
 int
 TAO_IIOP_Connection_Handler::resume_handler (void)
 {
-  return 1;
+  return TAO_RESUMES_CONNECTION_HANDLER;
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE h)
+TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
   TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    h);
+                                    this->fetch_handle ());
   return this->transport ()->handle_output ();
 }
 
@@ -321,14 +321,14 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
 {
   // Increase the reference count on the upcall that have passed us.
   this->pending_upcalls_++;
 
   TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    h);
+                                    this->fetch_handle ());
 
   int retval = this->transport ()->handle_input_i (resume_handle);
 
