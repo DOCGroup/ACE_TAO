@@ -22,6 +22,11 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || defined (VXWORKS) || defined (ACE_PSOS)
+// If platforms support semaphores with timed wait, then we use semaphores instead of c.v.
+# define ACE_TOKEN_USES_SEMAPHORE
+#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || VXWORKS || ACE_PSOS */
+
 class ACE_Export ACE_Token
 {
   // = TITLE
@@ -125,39 +130,68 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
+  enum ACE_Token_Op_Type
+  {
+    READ_TOKEN = 1,
+    WRITE_TOKEN
+  };
+
   // = The following structure implements a ACE_FIFO of waiter threads
   // that are asleep waiting to obtain the token.
 
-  struct ACE_Queue_Entry 
+  struct ACE_Token_Queue_Entry 
   {
-    ACE_Queue_Entry (ACE_Thread_Mutex &m, ACE_thread_t t_id);
+    ACE_Token_Queue_Entry (ACE_Thread_Mutex &m, ACE_thread_t t_id);
 
-    ACE_Queue_Entry *next_;
+    int wait (ACE_Time_Value *timeout, ACE_Thread_Mutex &lock);
+    // Entry blocks on the token.
+
+    int signal (void);
+    // Notify (unblock) the entry.
+
+    ACE_Token_Queue_Entry *next_;
     // Pointer to next waiter.
 
     ACE_thread_t thread_id_;
     // ACE_Thread id of this waiter.
 
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+    ACE_Semaphore cv_;
+    // ACE_Semaphore object used to wake up waiter when it can run again.
+#else
     ACE_Condition_Thread_Mutex cv_;
     // ACE_Condition object used to wake up waiter when it can run again.
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
 
     int runable_;
     // Ok to run.
   };
 
+  struct ACE_Token_Queue
+  {
+    ACE_Token_Queue (void);
+    
+    void remove_entry (ACE_Token_Queue_Entry *);
+    // Remove a waiter from the queue (used when a timeout occurs).
+
+    ACE_Token_Queue_Entry *head_;
+    // Head of the list of waiting threads.
+
+    ACE_Token_Queue_Entry *tail_;
+    // Tail of the list of waiting threads.
+  };
+
   int shared_acquire (void (*sleep_hook_func)(void *), 
 		      void *arg,
-		      ACE_Time_Value *timeout);
+		      ACE_Time_Value *timeout,
+                      ACE_Token_Op_Type op_type);
   // Implements the <acquire> and <tryacquire> methods above.
 
-  void remove_entry (ACE_Queue_Entry *);
-  // Remove a waiter from the queue (used when a timeout occurs).
+  ACE_Token_Queue writers_;
+  // A queue of writer threads.
 
-  ACE_Queue_Entry *head_;
-  // Head of the list of waiting threads.
-
-  ACE_Queue_Entry *tail_;
-  // Tail of the list of waiting threads.
+  ACE_Token_Queue readers_;
+  // A queue of reader threads.
 
   ACE_Thread_Mutex lock_;
   // ACE_Thread_Mutex used to lock internal data structures.
