@@ -6,7 +6,7 @@
 //     Foo_i.h
 //
 // = DESCRIPTION
-//     Defines Foo_i class for the Foo interface
+//     Defines implementation classes for the interfaces
 //
 // = AUTHOR
 //     Irfan Pyarali
@@ -18,11 +18,11 @@
 
 #include "FooS.h"
 
-class Simple_Foo_i
+class Tie_i
 {
 public:
   // constructor - takes a POA and a value parameter
-  Simple_Foo_i (CORBA::Long value);
+  Tie_i (CORBA::Long value);
 
   // Simple doit method
   virtual CORBA::Long doit (CORBA::Environment &env);
@@ -32,12 +32,12 @@ protected:
   CORBA::Long value_;
 };
 
-class Foo_i : public POA_Foo
+class A_i : public POA_A
 {
 public:
   // constructor - takes a POA and a value parameter
-  Foo_i (CORBA::Long value,
-         PortableServer::POA_ptr poa);
+  A_i (CORBA::Long value,
+       PortableServer::POA_ptr poa);
 
   // Simple doit method
   virtual CORBA::Long doit (CORBA::Environment &env);
@@ -57,12 +57,12 @@ class Outer_i
 {
 public:
 
-  class Foo_i : public POA_Outer::Foo
+  class B_i : public POA_Outer::B
   {
   public:
     // constructor - takes a POA and a value parameter
-    Foo_i (CORBA::Long value,
-           PortableServer::POA_ptr poa);
+    B_i (CORBA::Long value,
+         PortableServer::POA_ptr poa);
 
     // Simple doit method
     virtual CORBA::Long doit (CORBA::Environment &env);
@@ -82,12 +82,12 @@ public:
   {
   public:
 
-    class Foo_i : public POA_Outer::Inner::Foo
+    class C_i : public POA_Outer::Inner::C
     {
     public:
       // constructor - takes a POA and a value parameter
-      Foo_i (CORBA::Long value,
-             PortableServer::POA_ptr poa);
+      C_i (CORBA::Long value,
+           PortableServer::POA_ptr poa);
 
       // Simple doit method
       virtual CORBA::Long doit (CORBA::Environment &env);
