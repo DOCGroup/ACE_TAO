@@ -50,10 +50,6 @@
 
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 
-#if defined(sun) || defined(__osf__)
-extern "C" int gethostname(char* name, int len);
-#endif
-
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
 

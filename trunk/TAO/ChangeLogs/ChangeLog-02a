@@ -1,3 +1,19 @@
+Tue Mar 13 11:59:45 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.h:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+           Cleaned up use of strings, replacing with ACE_CString
+           where appropriate.
+           Changed to Doxygen style comments.
+
+        *  orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        *  orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+           Removed platform specific ifdef for gethostname, replaced
+           with ACE_OS::hostname()
+
 Tue Mar 13 06:48:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp: Tried to apply a fix that Chris
