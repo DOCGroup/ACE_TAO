@@ -1,3 +1,8 @@
+Mon Oct 20 14:58:00 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/UUID.cpp :
+          Fixed Cygwin compatibility problem
+
 Mon Oct 20 14:30:48 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.av: Made changes so that
@@ -5,7 +10,7 @@ Mon Oct 20 14:30:48 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Mon Oct 20 13:12:23 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.av: 
+	* orbsvcs/orbsvcs/Makefile.av:
 
 	Modified the Makefile to compile SCTP related files when sctp flag
 	is set both to openss7 and lksctp. Initially it was including the
