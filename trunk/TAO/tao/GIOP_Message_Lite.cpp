@@ -1,11 +1,12 @@
 //$Id$
 
 #include "tao/GIOP_Message_Lite.h"
-#include "debug.h"
+#include "tao/debug.h"
 #include "tao/TAOC.h"
 #include "tao/ORB_Core.h"
 #include "tao/POA.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/operation_details.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
