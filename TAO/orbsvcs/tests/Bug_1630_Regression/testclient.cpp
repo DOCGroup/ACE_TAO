@@ -120,7 +120,9 @@ int main( int argc, char* argv[] )
 
       ACE_DEBUG((LM_DEBUG, "About to call create_operation_list\n"));
 
-      orb->create_operation_list( operation.in(), opList.out() ACE_ENV_ARG_PARAMETER) ;
+      orb->create_operation_list(operation.in (), 
+		                 opList.out() 
+				 ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
 
       ACE_DEBUG((LM_DEBUG, "Call to create_operation_list succeeded\n"));

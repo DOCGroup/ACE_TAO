@@ -1,3 +1,12 @@
+Wed Dec 10 06:31:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Bug_1630_Regression/Makefile.Bug_1630_testclient:
+
+          Do not compile if minimum_corba is enabled.
+
+          BTW, this test and the Makefiles needs cleaning up. Will get to
+	  that soon.
+
 Wed Dec 10 06:12:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Client:
