@@ -13,6 +13,7 @@
 #include "ace/Hash_Map_Manager.h"
 
 #include "tao/ORB_Core.h"
+#include "orbsvcs/Time_Utilities.h" // ORBSVCS_Time
 
 #include "RtecSchedulerC.h"
 
@@ -448,24 +449,28 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
 
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
   // Register Consumer
-  /*
-  RtEventChannelAdmin::RtSchedEventChannel *ec =
-    static_cast<RtEventChannelAdmin::RtSchedEventChannel*> (arg);
-  */
   Kokyu_EC *ec = static_cast<Kokyu_EC*> (arg);
 
   // TODO: negotiate event types
+  RtEventChannelAdmin::Time max_exec;
   ECSupplier::EventTypeVector subtypes;
   Kokyu_EC::QoSVector::iterator subiter = subs.begin();
   for (; subiter != subs.end(); ++subiter)
     {
       Kokyu_EC::QoSVector::value_type qos = *subiter;
+
+      if (max_exec < qos.wc_time) // find maximum worst-case time
+        max_exec = qos.wc_time;
+
       subtypes.push_back(qos.type);
     }
 
+  ACE_Time_Value exec_time; // Consumer executes max worst-case time
+  ORBSVCS_Time::TimeT_to_Time_Value (exec_time,max_exec);
   ECConsumer *consumer;
   ACE_NEW_RETURN(consumer,
                  ECConsumer(subtypes),-1);
+  //consumer->setWorkTime(exec_time);
 
   // for each dependant, set up the dependency
   SupplierVector::iterator siter = dependants.begin();
@@ -568,14 +573,12 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
   */
   Kokyu_EC *ec = static_cast<Kokyu_EC*> (arg);
 
-  // TODO: negotiate event types
-  ECSupplier::EventType type = 100 * vs->id;
-
   ECSupplier::EventTypeVector pubtypes;
   Kokyu_EC::QoSVector::iterator pubiter = pubs.begin();
-  for (; pubiter != pubs.end(); ++pubiter,++type)
+  for (; pubiter != pubs.end(); ++pubiter)
     {
-      pubtypes.push_back(type);
+      Kokyu_EC::QoSVector::value_type schedinfo = *pubiter;
+      pubtypes.push_back(pubiter->type);
     }
 
   ECSupplier *supplier;
@@ -592,13 +595,18 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
       ACE_NEW_RETURN(timeout,
                      ECSupplier_Timeout_Handler(supplier),-1);
 
+      ACE_Time_Value phase;
+      ORBSVCS_Time::TimeT_to_Time_Value (phase,qos.phase);
+      ACE_Time_Value period;
+      ORBSVCS_Time::TimeT_to_Time_Value (period,qos.period);
+
       // if multiple timeouts, this won't reg supplier multiple times
       ec->add_supplier_with_timeout(supplier,
                                     vs->name.c_str(),
                                     pubtypes,
                                     timeout,
-                                    qos.phase,
-                                    qos.period,
+                                    phase,
+                                    period,
                                     RtecScheduler::LOW_CRITICALITY,
                                     RtecScheduler::LOW_IMPORTANCE
                                     ACE_ENV_ARG_PARAMETER
@@ -616,6 +624,7 @@ Configurator_SyntaxHandler::parsePublications (Publications* vs, void* arg)
   Kokyu_EC::QoSVector *pubs = static_cast<Kokyu_EC::QoSVector*> (arg);
   ACE_ASSERT(pubs);
 
+  // TODO: negotiate event types
   // parse Publications
   EventNameVector::iterator eniter = vs->eventnames.begin();
   for (; eniter != vs->eventnames.end(); eniter++)
@@ -628,6 +637,8 @@ Configurator_SyntaxHandler::parsePublications (Publications* vs, void* arg)
           error += (*eniter)->str;
           ACEXML_THROW (ACEXML_SAXException (error.c_str()));
         }
+      // else pubqos retrieved
+      pubs->push_back(pubqos);
     }
 
   return 0;
@@ -652,6 +663,7 @@ Configurator_SyntaxHandler::parseTriggers (Triggers* vs, void* arg)
           error += (*tniter)->str;
           ACEXML_THROW (ACEXML_SAXException (error.c_str()));
         }
+      // else trigqos retrieved
       trigs->push_back(trigqos);
     }
 

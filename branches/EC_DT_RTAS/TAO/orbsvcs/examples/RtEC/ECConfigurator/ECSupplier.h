@@ -47,7 +47,7 @@ class ECSupplier : public POA_RtecEventComm::PushSupplier
   //   and it is up to the driver program to use the right one.
   //
 public:
-  typedef RtecEventChannelAdmin::ProxyPushConsumer_var ConsumerProxy;
+  typedef RtecEventChannelAdmin::ProxyPushConsumer ConsumerProxy;
   typedef RtecEventComm::EventSourceID SourceID;
   typedef RtecEventComm::EventType EventType;
   typedef std::vector<EventType> EventTypeVector;
@@ -67,7 +67,7 @@ public:
 
   virtual void timeout_occured (ACE_ENV_SINGLE_ARG_DECL);
 
-  void set_consumer_proxy(ConsumerProxy consumer_proxies);
+  void set_consumer_proxy(ConsumerProxy::_ptr_type consumer_proxies);
 
   void rt_info(InfoHandle supplier_rt_info);
   InfoHandle rt_info(void);
@@ -82,7 +82,7 @@ protected:
   SourceID id_;
   EventTypeVector pub_types_;
 
-  ConsumerProxy consumer_proxy_;
+  ConsumerProxy::_var_type consumer_proxy_;
 
   InfoHandle rt_info_;
 
