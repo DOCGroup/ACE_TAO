@@ -188,7 +188,7 @@ private:
   TAO_ObjectKey object_key_;
 
   /// Our tagged profile
-  IOP::TaggedProfile tagged_profile_;
+  IOP::TaggedProfile *tagged_profile_;
 };
 
 #if defined (__ACE_INLINE__)
