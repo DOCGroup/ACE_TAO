@@ -142,12 +142,12 @@ dirent_count (const ACE_TCHAR *dir_path,
               int &file_count,
               int recursion_level)
 {
-  ACE_Dirent dir (dir_path);
   if (ACE_OS::chdir (dir_path) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "chdir: %p\n",
                        dir_path),
                       -1);
+  ACE_Dirent dir (ACE_TEST ("."));
 
   int entry_count = 0;
 
