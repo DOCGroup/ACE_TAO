@@ -131,8 +131,16 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_name = (char *) addr.get_addr ();
 #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   send_msg.msg_namelen = addr.get_size ();
-  send_msg.msg_accrights = 0;
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  send_msg.msg_control = 0;
+  send_msg.msg_controllen = 0;
+  send_msg.msg_flags = 0;	
+#else
+  send_msg.msg_accrights    = 0;
   send_msg.msg_accrightslen = 0;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
   return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
 }
 
@@ -156,8 +164,14 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   recv_msg.msg_name = (char *) addr.get_addr ();
 #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   recv_msg.msg_namelen = addr.get_size ();
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  recv_msg.msg_control = 0 ;
+  recv_msg.msg_controllen = 0 ;
+#else
   recv_msg.msg_accrights = 0;
   recv_msg.msg_accrightslen = 0;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   ssize_t status = ACE_OS::recvmsg (this->get_handle (), 
                                     &recv_msg, flags);

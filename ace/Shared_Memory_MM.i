@@ -3,6 +3,14 @@
 
 // Shared_Memory_MM.i
 
+// Return the name of file that is mapped (if any).
+
+ACE_INLINE const TCHAR *
+ACE_Shared_Memory_MM::filename (void) const;	
+{
+  return this->shared_memory_.filename ();
+}
+
 ACE_INLINE int 	       
 ACE_Shared_Memory_MM::open (ACE_HANDLE handle, 
 			    int length, 

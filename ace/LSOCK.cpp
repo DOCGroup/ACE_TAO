@@ -22,12 +22,16 @@ ACE_LSOCK::dump (void) const
 // This routine sends an open file descriptor to <this->handle_>.
 
 int
-ACE_LSOCK::send_handle (const ACE_HANDLE fd) const
+ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_LSOCK::send_handle");
   unsigned char a[2];
   iovec iov;
   msghdr send_msg;
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
+  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   a[0] = 0xab;
   a[1] = 0xcd; 
@@ -37,23 +41,38 @@ ACE_LSOCK::send_handle (const ACE_HANDLE fd) const
   send_msg.msg_iovlen = 1;
   send_msg.msg_name = 0;
   send_msg.msg_namelen = 0;
-  send_msg.msg_accrights = (char *) &fd;
-  send_msg.msg_accrightslen = sizeof fd;
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  cmsgptr->cmsg_level = SOL_SOCKET;
+  cmsgptr->cmsg_type = SCM_RIGHTS;
+  cmsgptr->cmsg_len = sizeof cmsgbuf;
+  send_msg.msg_control = cmsgbuf;
+  send_msg.msg_controllen = sizeof cmsgbuf;
+  *(ACE_HANDLE *) CMSG_DATA (cmsgptr) = handle;
+  send_msg.msg_flags = 0;
+#else
+  send_msg.msg_accrights = (char *) &handle;
+  send_msg.msg_accrightslen = sizeof handle;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   return ACE_OS::sendmsg (this->get_handle (), &send_msg, 0);
 }
 
-// This file receives an open file descriptor from THIS->SOK_FD.
+// This file receives an open file descriptor from <this->handle_>.
 // Note, this routine returns -1 if problems occur, 0 if we recv a
 // message that does not have file descriptor in it, and 1 otherwise.
 
 int
-ACE_LSOCK::recv_handle (ACE_HANDLE &fd, char *pbuf, int *len) const
+ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
 {
   ACE_TRACE ("ACE_LSOCK::recv_handle");
   unsigned char a[2];
   iovec iov;
   msghdr recv_msg;
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
+  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
    
   if (pbuf != 0 && len != 0)
     {
@@ -70,8 +89,13 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &fd, char *pbuf, int *len) const
   recv_msg.msg_iovlen = 1;
   recv_msg.msg_name = 0;
   recv_msg.msg_namelen = 0;
-  recv_msg.msg_accrights = (char *) &fd;
-  recv_msg.msg_accrightslen = sizeof fd;
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  recv_msg.msg_control = cmsgbuf;
+  recv_msg.msg_controllen = sizeof cmsgbuf;
+#else
+  recv_msg.msg_accrights = (char *) &handle;
+  recv_msg.msg_accrightslen = sizeof handle;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
    
 #if defined (ACE_HAS_STREAMS)
   ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (), &recv_msg, 0);
@@ -97,13 +121,24 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &fd, char *pbuf, int *len) const
 	  && ((unsigned char *) iov.iov_base)[0] == 0xab
 	  && ((unsigned char *) iov.iov_base)[1] == 0xcd)
 	{
-	  recv_msg.msg_accrights = (char *) &fd;
-	  recv_msg.msg_accrightslen = sizeof fd;
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+	  recv_msg.msg_control = cmsgbuf;
+	  recv_msg.msg_controllen = sizeof cmsgbuf;
+#else
+	  recv_msg.msg_accrights = (char *) &handle;
+	  recv_msg.msg_accrightslen = sizeof handle;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-	  if (ACE_OS::recvmsg (this->get_handle (), &recv_msg, 0) == ACE_INVALID_HANDLE)
+	  if (ACE_OS::recvmsg (this->get_handle (), 
+			       &recv_msg, 0) == ACE_INVALID_HANDLE)
 	    return ACE_INVALID_HANDLE;
 	  else
-	    return 1;
+	    {
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+	      handle = *(ACE_HANDLE *) CMSG_DATA (cmsgptr) ;
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+	      return 1;
+	    }
 	}
       else
 	{
