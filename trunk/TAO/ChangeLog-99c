@@ -1,3 +1,14 @@
+Tue Sep 21 16:56:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* utils/nslist/Makefile: The Makefile should depend on the Naming
+	  service, not on the Time service.  Thanks to Paul Calabrese
+ 	  <calabrese_p@ociweb.com> for reporting this.
+	
+	* utils/nslist/nslist.cpp (show_chunk): Added a patch that fixed a
+	  problem where names containing a non-blank value for the kind
+ 	  field were raising exceptions.  Thanks to Paul Calabrese
+ 	  <calabrese_p@ociweb.com> for reporting this and providing a fix.
+
 Tue Sep 21 16:38:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Request.cpp:
