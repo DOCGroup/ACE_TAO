@@ -21,7 +21,7 @@
 #include "Cached_Connect_Strategy_T.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID(HTTP_1.1_Client, Cached_Connect_Strategy_T, "$Id$")
+ACE_RCSID(Web_Crawler, Cached_Connect_Strategy_T, "$Id$")
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX>
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::ACE_Cached_Connect_Strategy_Ex
