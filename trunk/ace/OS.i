@@ -4170,29 +4170,37 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 {
   // ACE_TRACE ("ACE_OS::thr_getspecific");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
-  // Note, don't use "::" here since the following call is often a macro.
-  *data = pthread_getspecific (key);
-#elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
-  ::pthread_getspecific (key, data);
-#else /* ACE_HAS_FSU_PTHREADS */
-  // Is this really used anywhere?
-  *data = ::pthread_getspecific (key, data);
-#endif	/*  ACE_HAS_FSU_PTHREADS */
-  return 0;
-#elif defined (ACE_HAS_WTHREADS)
-  *data = ::TlsGetValue (key);
-  return 0;
-#elif defined (VXWORKS)
-  // VxWorks doesn't support thread specific storage, though it's probably
-  // doable without too much trouble . . .
-  ACE_UNUSED_ARG (key);
-  ACE_UNUSED_ARG (data);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_STHREADS */
+# if defined (ACE_HAS_TSS_EMULATION)
+    if (key - 1 >= ACE_TSS_Emulation::total_keys ())
+      {
+        errno = EINVAL;
+        data = 0;
+        return -1;
+      }
+    else
+      {
+#   if defined (VXWORKS)
+        *data = ACE_TSS_OBJECT (key);
+        return 0;
+#   endif /* VXWORKS */
+      }
+# elif defined (ACE_HAS_STHREADS)
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
+# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
+      // Note, don't use "::" here since the following call is often a macro.
+      *data = pthread_getspecific (key);
+#   elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
+      ::pthread_getspecific (key, data);
+#   else /* ACE_HAS_FSU_PTHREADS */
+      // Is this really used anywhere?
+      *data = ::pthread_getspecific (key, data);
+#   endif	/*  ACE_HAS_FSU_PTHREADS */
+      return 0;
+# elif defined (ACE_HAS_WTHREADS)
+    *data = ::TlsGetValue (key);
+    return 0;
+# endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);

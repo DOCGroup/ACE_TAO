@@ -1392,7 +1392,10 @@ typedef struct
 #  endif /* !ACE_HAS_POSIX_SEM */
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
-typedef int ACE_thread_key_t;
+// Key type: the ACE TSS emulation requires the key type be unsigned,
+// for efficiency.  (Current POSIX and Solaris TSS implementations also
+// use unsigned int, so the ACE TSS emulation is compatible with them.)
+typedef u_int ACE_thread_key_t;
 
 #elif defined (ACE_HAS_WTHREADS)
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
@@ -1539,7 +1542,7 @@ typedef int ACE_sema_t;
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
-typedef int ACE_thread_key_t;
+typedef u_int ACE_thread_key_t;
 #endif /* ACE_HAS_THREADS */
 
 #include /**/ <sys/types.h>
@@ -4045,6 +4048,86 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 				     int iovcnt,
 				     struct timespec *timeout);
 #endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
+
+# if defined (ACE_HAS_TSS_EMULATION)
+    // Allow config.h to set the default number of thread keys.
+#   if !defined (ACE_DEFAULT_THREAD_KEYS)
+#     define ACE_DEFAULT_THREAD_KEYS 64
+#   endif /* ! ACE_DEFAULT_THREAD_KEYS */
+
+  class ACE_TSS_Emulation
+    // = TITLE
+    //     Thread-specific storage emulation.
+    //
+    // = DESCRIPTION
+    //     This provides a thread-specific storage implementation.
+    //     It is intended for use on platforms that don't have a
+    //     native TSS, or have a TSS with limitations such as the
+    //     number of keys or lack of support for removing keys.
+  {
+  public:
+    typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
+
+    // NOTE:  the following interfaces are likely to change!!!!
+    //   For convenience until they stabilize, they are inlined here.
+
+    static ACE_thread_key_t total_keys () { return total_keys_; }
+    // Returns the total number of keys allocated so far.
+
+    static ACE_thread_key_t next_key ()
+      {
+        return total_keys_ < THREAD_KEYS_MAX
+                 ? ++total_keys_
+                 : ACE_OS::NULL_key;
+      }
+    // Returns the next available key, or (key_t) -1 if none are available.
+
+    static ACE_TSS_DESTRUCTOR tss_destructor (ACE_thread_key_t key)
+      {
+        return tss_destructor_ [key];
+      }
+    // Returns the exit hook associated with the key.  Does _not_ check
+    // for a valid key.
+
+    static void tss_destructor (ACE_thread_key_t key,
+                                ACE_TSS_DESTRUCTOR destructor)
+      {
+        tss_destructor_ [key] = destructor;
+        ACE_OS::fprintf (stderr, "set key: %u to destructor: 0x%p\n",
+                         key, destructor);
+      }
+    // Associates the TSS destructor with the key.  Does _not_ check
+    // for a valid key.
+
+  private:
+    enum { THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
+    // Maximum number of TSS keys allowed over the life of the program.
+
+    // Global TSS structures.
+    static ACE_thread_key_t total_keys_;
+    // Always contains the value of the next key to be allocated.
+
+    static ACE_TSS_DESTRUCTOR tss_destructor_ [THREAD_KEYS_MAX];
+    // Array of thread exit hooks (TSS destructors) that are called for each
+    // key (that has one) when the thread exits.
+
+#if ! defined (VXWORKS)
+    // Rely on native thread specific storage for the implementation,
+    // but just use one key.
+
+    static ACE_thread_key_t native_tss_key_;
+#endif /* ! VXWORKS */
+  };
+
+# if defined (VXWORKS)
+#   define ACE_TSS_OBJECT(KEY) (((void **) taskIdCurrent->spare4) [KEY - 1])
+# endif /* VXWORKS */
+#else   /* ! ACE_HAS_TSS_EMULATION */
+# if defined (TLS_MINIMUM_AVAILABLE)
+#   // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
+#   define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
+# endif /* TSL_MINIMUM_AVAILABLE */
+#endif /* ACE_HAS_TSS_EMULATION */
 
 // A useful abstraction for expressions involving operator new since
 // we can change memory allocation error handling policies (e.g.,
