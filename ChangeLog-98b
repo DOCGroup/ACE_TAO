@@ -1,3 +1,13 @@
+Wed Jul 22 15:51:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Synch-Benchmarks/Benchmark_Base.h
+	  (Benchmark_Method_Base): Passing the test item into pre_run_test
+	  so the thread can be setup correctly.  Duh!
+
+	* performance-tests/Synch-Benchmarks/Performance_Test.{h,cpp}
+	  (pre_run_test): Added code so that it iterates thru test items
+	  in svc.conf properly.  Duh**2!
+
 Wed Jul 22 15:48:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.24 released.
