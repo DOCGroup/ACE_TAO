@@ -1,3 +1,13 @@
+Tue Jan  4 11:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BooleanSeqS.h:
+        * tao/DoubleSeqS.h:
+          Regenerated with the latest version of the TAO_IDL compiler
+
+        * tao/Bounds.pidl:
+        * tao/CharSeq.pid:
+          Updated regeneration instructions
+
 Tue Jan  4 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ULongLongSeqC.{h,cpp,inl}:
