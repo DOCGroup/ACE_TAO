@@ -1639,10 +1639,10 @@ Messaging::ReplyHandler::setup_collocation (int collocated)
 {
   if (collocated)
     this->the_TAO_ReplyHandler_Proxy_Broker_ =
-      Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer (this);
+      ::Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer (this);
   else
     this->the_TAO_ReplyHandler_Proxy_Broker_ =
-      Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
+      ::Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
 }
 
 
