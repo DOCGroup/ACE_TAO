@@ -95,7 +95,6 @@ output_taskinfo (void)
 		      tInfo[j].name,
 		      tInfo[j].tcb,
 		      tInfo[j].pc);
-      buffer[0]=0;
     }
   
   ACE_OS::fclose (file_handle);
@@ -661,8 +660,8 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
 	      "10Hz client latency : %u usec, jitter: %u usec\n"
 	      "5Hz client latency : %u usec, jitter: %u usec\n"
 	      "1Hz client latency : %u usec, jitter: %u usec\n",
-	      CB_20Hz_client.get_latency (0), CB_20Hz_client.get_jitter (0)
-	      CB_10Hz_client.get_latency (1), CB_10Hz_client.get_jitter (1)
+	      CB_20Hz_client.get_latency (0), CB_20Hz_client.get_jitter (0),
+	      CB_10Hz_client.get_latency (1), CB_10Hz_client.get_jitter (1),
 	      CB_5Hz_client.get_latency (2),  CB_5Hz_client.get_jitter (2),
 	      CB_1Hz_client.get_latency (3),  CB_1Hz_client.get_jitter (3) ));
 #else
