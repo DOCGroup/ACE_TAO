@@ -104,24 +104,6 @@ public:
 
 protected:
 
-  /// Generate a request ID for an asynchronous invocation
-  /**
-   * The request ID must be unique across all outstanding requests.
-   * To avoid synchronization overhead, the address of the
-   * TAO_Asynch_Reply_Dispatcher object is used as the request ID.
-   * This guarantees that the request ID is unique.
-   * @par
-   * For 64-bit platforms, only the lower 32 bits are used.  Hopefully
-   * that will be enough to ensure uniqueness.
-   * @par
-   * This is basically the same trick used in
-   * TAO_GIOP_Invocation::generate_request_id().  However, no right
-   * shifting of 64 bit addresses is performed since the
-   * TAO_Asynch_Reply_Dispatcher object is not large enough to allow
-   * that trick.
-   */
-  virtual CORBA::ULong generate_request_id (void) const;
-
   /// Implementation of the invoke() methods, handles the basic
   /// send/reply code and the system exceptions.
   virtual int invoke_i (CORBA::Environment &ACE_TRY_ENV)

@@ -78,41 +78,6 @@ TAO_GIOP_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-CORBA::ULong
-TAO_GIOP_Twoway_Asynch_Invocation::generate_request_id (void) const
-{
-  // The request ID must be unique across all outstanding requests.
-  // To avoid synchronization overhead, the address of the
-  // TAO_Asynch_Reply_Dispatcher object is used as the request ID.
-  // This guarantees that the request ID is unique.
-  //
-  // For 64-bit platforms, only the lower 32 bits are used.  Hopefully
-  // that will be enough to ensure uniqueness.
-
-  // This is basically the same trick used in
-  // TAO_GIOP_Invocation::generate_request_id().  However, no right
-  // shifting of 64 bit addresses is performed since the
-  // TAO_Asynch_Reply_Dispatcher object is not large enough to allow
-  // that trick.
-
-  CORBA::ULong id = 0;
-
-  // 32 bit address
-  if (sizeof (this) == 4)
-    id =
-      ACE_reinterpret_cast (CORBA::ULong, this->rd_);
-
-  // 64 bit address -- use lower 32 bits
-  else if (sizeof (this) == 8)
-    id =
-      ACE_reinterpret_cast (CORBA::ULong, this->rd_) & 0xFFFFFFFFu;
-
-  else
-    id = this->transport_->tms ()->request_id ();  // Fallback
-
-  return id;
-}
-
 int
 TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
