@@ -203,11 +203,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name DLL_Test DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DLL_Test_Impl"=.\DLL_Test_Impl.dsp - Package Owner=<4>
+Project: "DLL_Test DLL"=.\DLL_Test_Impl.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1118,3 +1121,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
