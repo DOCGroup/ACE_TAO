@@ -1,0 +1,206 @@
+<HTML>
+<TITLE>Portable Interceptors</TITLE>
+<BODY>
+<CENTER><H1>Portable Interceptors</H1></CENTER>
+
+<h3><a name="toc">Table of Contents</a></h3>
+<ul>
+  <li><a href="#context">Context</a>
+  <li><a href="#implement">TAO's Implementation</a>
+  <li><a href="#api">APIs</a>
+  <li><a href="#status">Current Status</a>
+  <li><a href="#future">Future Works</a>
+  <li><a href="#ref">References</a>
+</ul>
+
+<h2><a name="context">Context</a></h2>
+
+<p>Interceptors allow you to interpose other CORBA services to the ORB
+and extend the ORB's functionalities.  They are most commonly used in,
+but not limited to, Security Service, Transaction Service.</p>
+
+<p>Although both CORBA 2.2 and 2.3 define an interceptor interface,
+the definitions are pretty much useless because it does not define how
+the interceptor should interact with an ORB.  Therefore, OMG is
+currently trying to define a "<a
+href="http://www.omg.org/techprocess/meetings/schedule/Portable_Interceptors_RFP.html">Portable
+Interceptor</a>" which will remedy the problems and allow application
+users to use interceptos from different venders with their ORBs.  </p>
+
+<h2><a name="implement">TAO's Implementation of "Portable
+Interceptors"</a></h2>
+
+<p>Because the "<a href="#ref">Portable Interceptor Spec</a>" is still
+in the initial submission stage, and there are several proposed
+standards which define very different interfaces and capabilities, our
+goal is to provide an minimum subset of functionalities proposed in
+the initial submissions.  This approach should allow TAO users to
+explore various use cases of interceptors while avoid adding something
+that will eventually be removed from the standard.</p>
+
+<p>As we will eventually modify TAO's interceptor interface in the
+future when it become available, you will have to revise your
+implementation also when that occurs. </p>
+
+<h2><a name="api">Interceptor APIs</a></h2>
+
+<pre>
+// -*- IDL -*- $Id$
+
+// This file contains the interface definitions for "Portable"
+// Interceptor support.
+
+// **********************************************************
+//   Notice that the Portable Interceptor specification
+//   is still under discussion in OMG and both the IDL
+//   and the implementation details in TAO will eventually
+//   change to conform with the PI spec in the future.
+// **********************************************************
+
+// Author (currently): Nanbor Wang <nanbor@cs.wustl.edu>
+
+#include <corba.pidl>
+#include <IOP.pidl>
+
+#pragma prefix "TAO"
+// The prefix should be changed to "omg.org" once the spec. gets
+// finallized.
+
+module PortableInterceptor
+{
+  interface Cookie
+    {
+      // Cookie's are used to pass information among interceptors
+      // within a invocation or an upcall.
+      string myname ();
+    };
+
+  typedef sequence<Cookie>  Cookies;
+  // Collections of Cookie's become Cookies'es.
+
+  interface Interceptor
+    {
+      // Base interface for Interceptors.
+      readonly attribute string name;
+    };
+
+  interface ServerRequestInterceptor : Interceptor
+    {
+      // Server side request interceptor definition.
+
+      void preinvoke (in unsigned long request_id,
+                      in boolean response_expected,
+                      in CORBA::Object objref,
+                      in string operation_name,
+                      inout IOP::ServiceContextList sc,
+                      inout NVList arguments,
+                      inout Cookies ck);
+      // Interception pointer before invoking the servant method.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all in and inout arguments
+      // of the operation.
+
+      void postinvoke (in unsigned long request_id,
+                       in boolean response_expected,
+                       in CORBA::Object objref,
+                       in string operation_name,
+                       inout IOP::ServiceContextList sc,
+                       inout NVList arguments,
+                       inout Cookies ck);
+      // Interception pointer after invoking the servant method.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all out, inout arguments
+      // and the return value of the operation.
+
+      void exception_occurred (in unsigned long request_id,
+                               in boolean response_expected,
+                               in CORBA::Object objref,
+                               in string operation_name,
+                               inout Cookies ck);
+      // Exception interception point.
+    };
+
+  interface ClientRequestInterceptor : Interceptor
+    {
+      // Client side interceptor.
+
+      void preinvoke (in unsigned long request_id,
+                      in boolean response_expected,
+                      in CORBA::Object objref,
+                      in string operation_name,
+                      inout IOP::ServiceContextList sc,
+                      inout NVList arguments,
+                      inout Cookies ck);
+      // Before remote invocation.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all in and inout arguments
+      // of the operation.
+
+      void postinvoke (in unsigned long request_id,
+                       in boolean response_expected,
+                       in CORBA::Object objref,
+                       in string operation_name,
+                       inout IOP::ServiceContextList sc,
+                       inout NVList arguments,
+                       inout Cookies ck);
+      // After returned from remote invocation.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all out, inout arguments
+      // and the return value of the operation.
+
+      void exception_occurred (in unsigned long request_id,
+                               in boolean response_expected,
+                               in CORBA::Object objref,
+                               in string operation_name,
+                               inout Cookies ck);
+      // Exception occurred.
+    };
+};
+
+#pragma prefix ""
+</pre>
+
+<h2><a name="status">Current Status</a></h2>
+<ul>
+  <li><p>Currently, TAO only support request-level
+      interceptor. </p></li>
+  <li>Users are allowed to register one interceptor with ORB Core thru
+      <tt>CORBA::ORB::_register_server_interceptor</tt> and
+      <tt>CORBA::ORB::_register_client_interceptor</tt>.  Both methods
+      returns the previous registered interceptor if one
+      exist. </p></li>
+  <li><p>The NVList argument that passes the argument list of
+      the operation is current empty, i.e., currently, you can not
+      access/modify the arguments of a method invocation.</p></li>
+</ul>
+
+<h2><a name="future">Future Works</a></h2>
+<ol>
+  <li><p>Obviously, added support for accessing the invocation
+      arguments.</p></li>
+  <li><p>Implement a better interceptor management interface in
+      ORB. </p></li>
+  <li><p>Review ways to support interceptors with <a
+      href="releasenotes/index.html#ami">AMI</a>.</p></li>
+</ol>
+
+<H3><a name="ref">References:</a></H3>
+<UL>
+  <LI><a href="ftp://ftp.omg.org/pub/docs/orbos/99-04-10.pdf">
+      <CODE>[EXP]</CODE> 99-04-10</a> by Expersoft Corp., GMD Fokus,
+      OIS, OOC (ORBacus)
+  <LI><a href="ftp://ftp.omg.org/pub/docs/orbos/99-04-04.pdf">
+      <CODE>[IBM]</CODE> 99-04-04</a> by IBM
+  <LI><a href="ftp://ftp.omg.org/pub/docs/orbos/99-04-05.pdf">
+      <CODE>[INP]</CODE> 99-04-05</a> by Inprise (Visibroker) and BEA
+  <LI><a href="ftp://ftp.omg.org/pub/docs/orbos/99-04-08.pdf">
+      <CODE>[HPI]</CODE> 99-04-08</a> by HP and IONA (Orbix)
+  <LI><a href="ftp://ftp.omg.org/pub/docs/orbos/99-04-07.pdf">
+      <CODE>[SUN]</CODE> 99-04-07</a> by Eternal System, Expersoft and
+      Sun
+</UL>
+</BODY>
