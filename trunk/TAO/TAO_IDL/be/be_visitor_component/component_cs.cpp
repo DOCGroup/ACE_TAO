@@ -60,6 +60,10 @@ be_visitor_component_cs::visit_component (be_component *node)
   *os << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Initialize the static narrrowing helper variable.
+  *os << "int " << node->full_name () << "::_tao_class_id = 0;"
+      << be_nl << be_nl;
+
   // Global functions to allow non-defined forward declared interfaces
   // access to some methods in the full definition.
   *os << node->full_name () << "_ptr" << be_nl
@@ -94,7 +98,7 @@ be_visitor_component_cs::visit_component (be_component *node)
   *os << node->full_name () << "_ptr" << be_nl
       << "tao_" << node->flat_name ()
       << "_narrow (" << be_idt << be_idt_nl
-      << "Components::CCMObject_ptr p" << be_nl
+      << "CORBA::Object_ptr p" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -239,7 +243,7 @@ be_visitor_component_cs::visit_component (be_component *node)
   // The _narrow method.
   *os << node->full_name () << "_ptr" << be_nl << node->full_name ()
       << "::_narrow (" << be_idt << be_idt_nl
-      << "Components::CCMObject_ptr obj" << be_nl
+      << "CORBA::Object_ptr obj" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -319,6 +323,74 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  // Generating _tao_QueryInterface method.
+  *os << "void *" << node->full_name ()
+      << "::_tao_QueryInterface (ptr_arith_t type)" << be_nl
+      << "{" << be_idt_nl
+      << "void *retv = 0;" << be_nl << be_nl
+      << "if ";
+
+  if (node->traverse_inheritance_graph (
+          be_interface::queryinterface_helper,
+          os
+        ) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "_tao_QueryInterface method codegen failed\n"),
+                        -1);
+    }
+
+  *os << "(type == ACE_reinterpret_cast ("
+      << be_idt << be_idt << be_idt << be_idt << be_idt << be_idt_nl
+      << " ptr_arith_t," << be_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << " &CORBA::AbstractBase";
+    }
+  else
+    {
+      *os << " &CORBA::Object";
+    }
+
+  *os << "::_tao_class_id)" << be_uidt_nl
+      << " )" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl
+      << "retv =" << be_idt_nl
+      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << "void *," << be_nl
+      << "ACE_static_cast (";
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr";
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr";
+    }
+
+  *os << ", this)" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
+
+  *os << "if (retv != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "this->_add_ref ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return retv;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "const char* " << node->full_name ()
+      << "::_interface_repository_id (void) const"
+      << be_nl
+      << "{" << be_idt_nl
+      << "return \"" << node->repoID ()
+      << "\";" << be_uidt_nl
+      << "}";
+
   // Generate code for the elements of the component.
   if (this->visit_scope (node) == -1)
     {
@@ -372,7 +444,7 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
   *os << node->full_name () << "_ptr "  << be_nl
       << node->full_name () << "::_unchecked_narrow ("
       << be_idt << be_idt_nl
-      << "Components::CCMObject_ptr obj" << be_nl
+      << "CORBA::Object_ptr obj" << be_nl
       << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
