@@ -67,19 +67,20 @@ namespace ACE_OS {
   long telldir (ACE_DIR *);
 
   // Win32 emulation functions
+  extern ACE_Export
   ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
 
-  extern ACE_Export 
+  extern ACE_Export
   int scandir_emulation (const ACE_TCHAR *dirname,
                          dirent **namelist[],
                          int (*selector)(const dirent *entry),
                          int (*comparator)(const dirent **f1,
                                            const dirent**f2));
 
-  extern ACE_Export 
+  extern ACE_Export
   void closedir_emulation (ACE_DIR *);
 
-  extern ACE_Export 
+  extern ACE_Export
   dirent *readdir_emulation (ACE_DIR *);
 
 } /* namespace ACE_OS */
