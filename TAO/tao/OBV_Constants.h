@@ -8,9 +8,7 @@
  *
  *  Constants related to valuetypes, but also used by type codes.
  *
- *  @author  Copyright 1995 by Sun Microsystems, Inc.
- *  @author  Chris Cleeland
- *  @author  Douglas C. Schmidt
+ *  @author  Jeff Parsons
  */
 //=============================================================================
 
