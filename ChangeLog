@@ -1,3 +1,13 @@
+Wed Feb  4 21:55:38 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * ace/config-lynxos.h:
+        * ace/os_include/os_stdlib.h:
+        * ace/os_include/os_unistd.h:
+          Moved the prototypes for getopt() and putenv() out of
+          config-lynxos.h and into the appropriate os_include header.
+          Added prototype of swab() to os_unistd.h.  Thanks to Olli Savia
+          <ops@iki.fi> for the patch.
+
 Wed Feb  4 14:21:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_client.mpb:
