@@ -302,8 +302,8 @@ be_union::gen_var_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << this->name () << " *p)" << nl;
+  *ci << fname << "::" << lname << " (" << this->local_name () 
+      << " *p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -350,8 +350,8 @@ be_union::gen_var_impl (char *,
   // assignment operator from a pointer
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (" << ACE_GLOBAL_COLONS 
-      << this->name () << " *p)" << nl;
+  *ci << fname << "::operator= (" << this->local_name () 
+      << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
@@ -653,8 +653,8 @@ be_union::gen_out_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << this->name () << " *&p)" << nl;
+  *ci << fname << "::" << lname << " (" << this->local_name () 
+      << " *&p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -665,8 +665,8 @@ be_union::gen_out_impl (char *,
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << this->name () << "_var &p) // constructor from _var" << nl;
+  *ci << fname << "::" << lname << " (" << this->local_name () 
+      << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -680,8 +680,7 @@ be_union::gen_out_impl (char *,
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const ::" << fname 
       << " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << ACE_GLOBAL_COLONS 
-      << fname << "&, p).ptr_)" << nl;
+  *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
   // assignment operator from _out &
@@ -691,8 +690,7 @@ be_union::gen_out_impl (char *,
       << " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (" << ACE_GLOBAL_COLONS 
-      << fname << "&, p).ptr_;" << nl;
+  *ci << "this->ptr_ = ACE_const_cast (" << lname << "&, p).ptr_;" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -702,8 +700,7 @@ be_union::gen_out_impl (char *,
   // assignment operator from pointer
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (" << ACE_GLOBAL_COLONS 
-      << this->name () << " *p)" << nl;
+  *ci << fname << "::operator= (" << this->local_name () << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = p;" << nl;

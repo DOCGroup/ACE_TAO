@@ -135,8 +135,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->incr_indent ();
       *os << "if (!ACE_OS::strcmp (\"" << node->repoID () 
           << "\", exc->_id ())) // same type" << be_nl;
-      *os << "  return ACE_dynamic_cast (::" << node->name () << "_ptr, exc);" 
-          << be_nl;
+      *os << "  return ACE_dynamic_cast (" << node->local_name () 
+          << "_ptr, exc);" << be_nl;
       *os << "else" << be_nl;
       *os << "  return 0;\n";
       os->decr_indent ();

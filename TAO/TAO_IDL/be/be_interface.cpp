@@ -544,17 +544,17 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   // default constr
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname <<
-    " (void) // default constructor" << nl;
-  *ci << "  " << ": ptr_ (" << ACE_GLOBAL_COLONS << interface_full_name 
+  *ci << fname << "::" << lname 
+      << " (void) // default constructor" << nl;
+  *ci << "  " << ": ptr_ (" << interface_local_name 
       << "::_nil ())" << nl;
   *ci << "{}\n\n";
 
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << interface_full_name << "_ptr p)" << nl;
+  *ci << fname << "::" << lname << " (" << interface_local_name 
+      << "_ptr p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -576,7 +576,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << "::" << interface_full_name 
       << "_var &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (" << ACE_GLOBAL_COLONS << interface_full_name 
+  *ci << "  : ptr_ (" << interface_local_name 
       << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
@@ -593,8 +593,8 @@ be_interface::gen_var_impl (char *interface_local_name,
   // assignment operator
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << ACE_GLOBAL_COLONS 
-      << interface_full_name << "_ptr p)" << nl;
+  *ci << fname << "::operator= (" << interface_local_name 
+      << "_ptr p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
@@ -813,8 +813,8 @@ be_interface::gen_out_impl (char *interface_local_name,
       // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " ("  << ACE_GLOBAL_COLONS 
-      << interface_full_name << "_ptr &p)" << nl;
+  *ci << fname << "::" << lname << " ("  << interface_local_name 
+      << "_ptr &p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -826,8 +826,8 @@ be_interface::gen_out_impl (char *interface_local_name,
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << interface_full_name << "_var &p) // constructor from _var" << nl;
+  *ci << fname << "::" << lname << " (" << interface_local_name 
+      << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -842,8 +842,8 @@ be_interface::gen_out_impl (char *interface_local_name,
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << "::" << interface_full_name 
       << "_out &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << ACE_GLOBAL_COLONS 
-      << interface_full_name << "_out &, p).ptr_)" << nl;
+  *ci << "  : ptr_ (ACE_const_cast (" << interface_local_name 
+      << "_out &, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
       // assignment operator from _out &
@@ -853,8 +853,8 @@ be_interface::gen_out_impl (char *interface_local_name,
       << "_out &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (" << ACE_GLOBAL_COLONS 
-      << interface_full_name << "_out&, p).ptr_;" << nl;
+  *ci << "this->ptr_ = ACE_const_cast (" << interface_local_name 
+      << "_out&, p).ptr_;" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -875,8 +875,8 @@ be_interface::gen_out_impl (char *interface_local_name,
       // assignment operator from _ptr
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << ACE_GLOBAL_COLONS 
-      << interface_full_name << "_ptr p)" << nl;
+  *ci << fname << "::operator= (" << interface_local_name 
+      << "_ptr p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = p;" << nl;
