@@ -273,7 +273,7 @@ template class ACE_Read_Guard<ACE_RW_Mutex>;
 template class ACE_Guard<ACE_RW_Mutex>;
 template class ACE_Concurrency_Strategy<Svc_Handler>;
 template class ACE_TSS<ACE_Dynamic>;
-template class ACE_Task<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-template class ACE_Module<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-template class ACE_Thru_Task<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
+template class ACE_Task<ACE_NULL_SYNCH>;
+template class ACE_Module<ACE_NULL_SYNCH>;
+template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
