@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_type.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -84,6 +84,43 @@ be_type::tc_name (void)
   return this->tc_name_;
 }
 
+// return the type name using the ACE_NESTING macro
+char *
+be_type::nested_type_name (be_decl *d)
+{
+  // some compilers do not like generating a fully scoped name for a type that
+  // was defined in the same enclosing scope in which it was defined. For such,
+  // we emit a macro defined in the ACE library.
+  //
+  // However, this is not straightforward. A type may have been defined in one
+  // of our ancestor scopes  in which case even that type will not have a fully
+  // scoped name
+
+  static char macro [TAO_CodeGen::MAXNAMELEN];
+  be_decl *bd = 0;  // enclosing scope
+
+  // d : This is the node in whose scope we are generating a declaration
+  // bd: This is the node in whose scope we i.e., the type were defined
+  //
+  // verify if
+  if (this->is_nested ()) // if we are nested
+    {
+      bd = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
+
+      ACE_OS::memset (macro, '\0', TAO_CodeGen::MAXNAMELEN);
+      ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
+      ACE_OS::strcat (macro, bd->fullname ());
+      ACE_OS::strcat (macro, ",");
+      ACE_OS::strcat (macro, this->local_name ()->get_string ());
+      return macro;
+    }
+  else
+    {
+      // not nested, return whatever
+      return this->fullname ();
+    }
+
+}
 
 // Narrowing
 IMPL_NARROW_METHODS2 (be_type, AST_Type, be_decl)

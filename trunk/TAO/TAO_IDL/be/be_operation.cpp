@@ -125,6 +125,16 @@ be_operation::gen_client_stubs (void)
 
   cs->indent (); // start with current indentation level
 
+  // retrieve the return type
+  bt = be_type::narrow_from_decl (this->return_type ());
+
+  // bt holds the return type. Declare a variable that will hold the return
+  // type. However, we must be careful if the return type is a void
+  if (bt->node_type () == AST_Decl::NT_pre_defined)
+    {
+      bpd = be_predefined_type::narrow_from_decl (bt);
+    }
+
   // generate the TAO_Param_Data table
   *cs << "static const TAO_Param_Data " << this->flatname () <<
     "_paramdata [] = " << nl;
@@ -132,7 +142,6 @@ be_operation::gen_client_stubs (void)
   cs->incr_indent ();
 
   // entry for the return type
-  bt = be_type::narrow_from_decl (this->return_type ());
   *cs << "{" << bt->tc_name () << ", PARAM_RETURN, 0}";
   paramtblsize++;
   // if we have any arguments, get each one of them
@@ -144,18 +153,18 @@ be_operation::gen_client_stubs (void)
       // instantiate a scope iterator.
 
       while (!(si->is_done ()))
-	{
-	  // get the next AST decl node
-	  d = si->item ();
-	  if (!d->imported ())
-	    {
+        {
+          // get the next AST decl node
+          d = si->item ();
+          if (!d->imported ())
+            {
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
                 {
                   bd = be_argument::narrow_from_decl (d);
                   bt = be_type::narrow_from_decl (bd->field_type ());
                   *cs << "," << nl; // put a comma and newline before the
-                                    // previous entry
+                  // previous entry
                   *cs << "{" << bt->tc_name ();
                   // based on the direction, output the appropriate constant.
                   switch (bd->direction ())
@@ -209,33 +218,9 @@ be_operation::gen_client_stubs (void)
 
   // now generate the actual stub
 
-  cg->push (TAO_CodeGen::TAO_OPERATION_CS); // we are now generating an operation
-                                         // definition
-  // first generate the return type
+  // retrieve the return type again because we have used bt to also retrieve
+  // the argument types
   bt = be_type::narrow_from_decl (this->return_type ());
-  s = cg->make_state ();
-  if (!s || !bt || (s->gen_code (bt, this) == -1))
-    {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_stubs\n"));
-      ACE_ERROR ((LM_ERROR, "return type generation failure\n"));
-      return -1;
-    }
-
-  // generate the operation name
-  *cs << " " << this->name () << " (";
-  // generate the arguments with the appropriate mapping
-  if (be_scope::gen_client_stubs () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n"));
-      ACE_ERROR ((LM_ERROR, "Argument generation failure\n"));
-      return -1;
-    }
-  // last argument
-  *cs << "CORBA::Environment &env)" << nl;
-  *cs << "{\n";
-  cs->incr_indent ();
-
-  ACE_ASSERT (cg->state () == TAO_CodeGen::TAO_OPERATION_CS);
 
   // bt holds the return type. Declare a variable that will hold the return
   // type. However, we must be careful if the return type is a void
@@ -244,13 +229,45 @@ be_operation::gen_client_stubs (void)
       bpd = be_predefined_type::narrow_from_decl (bt);
     }
 
-  if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
+  // first generate the return type
+  cs->indent ();
+  cg->push (TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS); // declare a return
+                                                        // type of the stub
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      // generate return type
-      if (s->gen_code (bt, this) == -1)
-        return -1;
-      *cs << " retval;" << nl;
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_stubs\n"));
+      ACE_ERROR ((LM_ERROR, "return type generation failure\n"));
+      return -1;
     }
+  cg->pop ();
+
+  // generate the operation name
+  *cs << " " << this->name () << " (";
+
+  // generate the arguments with the appropriate mapping
+  if (be_scope::gen_client_stubs () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_header\n"));
+      ACE_ERROR ((LM_ERROR, "Argument generation failure\n"));
+      return -1;
+    }
+
+  // last argument - is always CORBA::Environment
+  *cs << "CORBA::Environment &env)" << nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+
+  // declare a return type
+  cg->push (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS);
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) == -1))
+    {
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_stubs\n"));
+      ACE_ERROR ((LM_ERROR, "return type decl failure\n"));
+      return -1;
+    }
+  cg->pop ();
 
   // generate code that calls QueryInterface
   *cs << "STUB_Object *istub;\n\n";
@@ -262,16 +279,18 @@ be_operation::gen_client_stubs (void)
   *cs << "env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));" <<
     nl;
 
-  if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
+  // return the appropriate error value on exception
+  cg->push (TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS);
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      *cs << "return retval;\n";
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_stubs\n"));
+      ACE_ERROR ((LM_ERROR, "return val for exception failure\n"));
+      return -1;
     }
-  else
-    {
-      *cs << "return;\n"; // return type is void
-    }
+  cg->pop ();
 
-  cs->decr_indent ();
+  cs->decr_indent (0);
   *cs << "}" << nl;
   *cs << "this->Release (); // QueryInterface has bumped up our refcount" << nl;
   *cs << "istub->do_call (env, &" << this->flatname () << "_calldata";
@@ -280,6 +299,11 @@ be_operation::gen_client_stubs (void)
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
       *cs << ", &retval";
+    }
+  else
+    {
+      // pass a 0
+      *cs << ", 0";
     }
 
   // if we have any arguments, get each one of them
@@ -309,20 +333,19 @@ be_operation::gen_client_stubs (void)
     } // end of arg list
   *cs << ");" << nl;
 
-
-  if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
+  // return the retval
+  cg->push (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+  s = cg->make_state ();
+  if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      *cs << "return retval;\n";
+      ACE_ERROR ((LM_ERROR, "be_operation::gen_client_stubs\n"));
+      ACE_ERROR ((LM_ERROR, "return val return generation failure\n"));
+      return -1;
     }
-  else
-    {
-      // return type is void. So emit code that simply returns
-      *cs << "return;\n";
-    }
-
-  cs->decr_indent ();
-  *cs << "}\n\n";
   cg->pop ();
+
+  cs->decr_indent (0);
+  *cs << "}\n\n";
   return 0;
 }
 

@@ -203,7 +203,7 @@ be_union::gen_client_header (void)
       ch->decr_indent ();
       *ch << "private:\n";
       ch->incr_indent ();
-      *ch << bt->name () << " disc_;" << nl;
+      *ch << bt->type_name () << " disc_;" << nl;
 
       // the members are inside of a union
       *ch << "union" << nl;
