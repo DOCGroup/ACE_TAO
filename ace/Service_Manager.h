@@ -35,7 +35,12 @@ class ACE_Export ACE_Service_Manager : public ACE_Service_Object
   //     configured in an <ACE_Service_Repository>.
   //
   // = DESCRIPTION
-  //     This
+  //     This implementation is very simple.  It just handles each
+  //     client request one at a time.  Each request is associated
+  //     with a new connection, which is closed when the request is
+  //     processed.  In addition, you must be using the singleton
+  //     <ACE_Reactor::instance> in order to trigger reconfigurations.
+  //     This scheme can certainly be improved.
 public:
   // = Initialization and termination hooks.
   ACE_Service_Manager (void);
