@@ -1,68 +1,73 @@
+Sat Mar 13 23:33:14 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Object.cpp: removed trailing semicolons from instantiation
+          pragmas.
+
 Sat Mar 13 21:53:57 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Added the Inaccuracy measure to the time returned by a 
- 	Universal Time Object (UTO). The inaccuracy is a 64 bit number
-	broken into inacchi and inacclo as :
+        Added the Inaccuracy measure to the time returned by a
+        Universal Time Object (UTO). The inaccuracy is a 64 bit number
+        broken into inacchi and inacclo as :
 
-		Inaccuracy 64-bits
-	|------------------------------------|
-	|         | inacchi |   inacclo      |
-	|------------------------------------|
-	  16-bits   16-bits     32-bits
+                Inaccuracy 64-bits
+        |------------------------------------|
+        |         | inacchi |   inacclo      |
+        |------------------------------------|
+          16-bits   16-bits     32-bits
 
-	The current measure of inaccuracy is the skew in synchronization of
-	the clerk's time. It is the difference in the largest and smallest
-	times from servers that the clerk syncs its time with. The inaccuracy
-	is dynamically updated with every time synchronization cycle. 
-	
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Added the 
-	logic to calculate the inaccuracy from the times returned by servers.
+        The current measure of inaccuracy is the skew in synchronization of
+        the clerk's time. It is the difference in the largest and smallest
+        times from servers that the clerk syncs its time with. The inaccuracy
+        is dynamically updated with every time synchronization cycle.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp : 
-	Constructed the Inaccuracy within UTO from the hi,lo values in UTC
-	struct in uto_from_utc(). Filled the UTO with the current inaccuracy
-	estimate in universal_time (). Added the GET/SET methods for the 
-	inaccuracy.
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Added the
+        logic to calculate the inaccuracy from the times returned by servers.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h : 
-	Added a class variable for inaccuracy estimate and the declarations
-	for the GET/SET methods. These are used by the Timer_Helper class to 
-	set the inaccuracy.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp :
+        Constructed the Inaccuracy within UTO from the hi,lo values in UTC
+        struct in uto_from_utc(). Filled the UTO with the current inaccuracy
+        estimate in universal_time (). Added the GET/SET methods for the
+        inaccuracy.
 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp :
-	Changed the constructor to initialise the UTO inacchi and inacclo 
-	with properly extracted bits from the given inaccuracy. Rewrote the
-	GET method for inaccuracy to construct the inaccuracy from the UTC
-	struct hi,lo values. This was previously being returned as just the 
-	addition of hi and lo values.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h :
+        Added a class variable for inaccuracy estimate and the declarations
+        for the GET/SET methods. These are used by the Timer_Helper class to
+        set the inaccuracy.
 
-	* orbsvcs/tests/Time/Client_i.cpp : Changed the test to test for the 
-	newly added inaccuracy and timezone information in the UTO time.
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp :
+        Changed the constructor to initialise the UTO inacchi and inacclo
+        with properly extracted bits from the given inaccuracy. Rewrote the
+        GET method for inaccuracy to construct the inaccuracy from the UTC
+        struct hi,lo values. This was previously being returned as just the
+        addition of hi and lo values.
 
-	* orbsvcs/Time_Service/README : Updated to include this addition in 
-	the Time Service.
+        * orbsvcs/tests/Time/Client_i.cpp : Changed the test to test for the
+        newly added inaccuracy and timezone information in the UTO time.
 
-	Thanks to Brian Dance <Brian_Dance@UECCS.co.uk> for reporting this.
-	
+        * orbsvcs/Time_Service/README : Updated to include this addition in
+        the Time Service.
+
+        Thanks to Brian Dance <Brian_Dance@UECCS.co.uk> for reporting this.
+
 Sat Mar 13 11:58:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	  Removed unused variable, thanks to David Levine for reporting
-	  this.
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Removed unused variable, thanks to David Levine for reporting
+          this.
 
-	* TAO-INSTALL.html:
-	  Updated the notes on how to compile TAO.
+        * TAO-INSTALL.html:
+          Updated the notes on how to compile TAO.
 
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: 
-	  Added the new event channel files to the static library.
-	  Also removed some old files that are no longer used
-	  (Event/Task_Manager.cpp) thanks to Francois Bernier
-	  <fbernier@gel.ulaval.ca> for reporting this problem.
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added the new event channel files to the static library.
+          Also removed some old files that are no longer used
+          (Event/Task_Manager.cpp) thanks to Francois Bernier
+          <fbernier@gel.ulaval.ca> for reporting this problem.
 
 Sat Mar 13 11:57:27 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/ORB.cpp (ORB_init): Revised the multicast_query() stuff just
-	  a bit to make it easier to maintain.
+        * tao/ORB.cpp (ORB_init): Revised the multicast_query() stuff just
+          a bit to make it easier to maintain.
 
 Sat Mar 13 00:44:51 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -70,29 +75,29 @@ Sat Mar 13 00:44:51 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Mar 12 20:48:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/ImplRepo/IR_Helper.cpp: Fixed improper use of
- 	  TAO_RETHROW macros.
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp: Fixed improper use of
+          TAO_RETHROW macros.
 
-	* tao/Invocation.cpp: Fixed problem in location forwarding, the
- 	  test for errors while demarshaling the new object reference was
- 	  inverted.
+        * tao/Invocation.cpp: Fixed problem in location forwarding, the
+          test for errors while demarshaling the new object reference was
+          inverted.
 
 Fri Mar 12 19:51:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Fixed some
- 	  bugs with forwarding support in void functions without output
- 	  arguments.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Fixed some
+          bugs with forwarding support in void functions without output
+          arguments.
 
-	* tao/Object.cpp: 
-	  Fixed warning about unused variable.
+        * tao/Object.cpp:
+          Fixed warning about unused variable.
 
 Fri Mar 12 18:09:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: Removed warnings
- 	  in generated code.
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: Removed warnings
+          in generated code.
 
-	* TAO_IDL/be/be_helper.cpp: 
-	  Cosmetic changes.
+        * TAO_IDL/be/be_helper.cpp:
+          Cosmetic changes.
 
 Fri Mar 12 16:17:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -137,187 +142,187 @@ Fri Mar 12 16:17:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           Now uses ACE exception handling macros.
 
         * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
-          
+
           Added the -k option for IOR input.
 
 Fri Mar 12 14:11:28 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * ORB.h, ORB.cpp and orbconf.h: Fixed multicast problem.  Removed
- 	  dynamic memory allocation in multicast_query () and now pass a
- 	  pointer to a buffer allocated on the stack in
- 	  multicast_to_service ().  Also added a macro
- 	  TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS = 2.  This control the
- 	  number of attempts multicast)query () will make to get a
- 	  response.
+          dynamic memory allocation in multicast_query () and now pass a
+          pointer to a buffer allocated on the stack in
+          multicast_to_service ().  Also added a macro
+          TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS = 2.  This control the
+          number of attempts multicast)query () will make to get a
+          response.
 
           Also moved a call to multicast.close () to after to attempt
- 	  loop.  It seems when multicast.close () is called the reply
- 	  packet from the server is lost on solaris hosts.  By moving this
- 	  to after the recv the packets are now read on the first recv.
+          loop.  It seems when multicast.close () is called the reply
+          packet from the server is lost on solaris hosts.  By moving this
+          to after the recv the packets are now read on the first recv.
 
 Fri Mar 12 12:23:07 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
- 	  Retrieved the timezone information and set the time displacement
- 	  factor for the clerk's time.
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
+          Retrieved the timezone information and set the time displacement
+          factor for the clerk's time.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h : Added the
- 	   GET/SET methods for the time displacement factor.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h : Added the
+           GET/SET methods for the time displacement factor.
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp : Added
- 	  implementation for the above methods. Passed the time zone
- 	  information to the UTO created in universal_time ().
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp : Added
+          implementation for the above methods. Passed the time zone
+          information to the UTO created in universal_time ().
 
-	  The timer_helper uses the newly added timezone wrappers of
- 	  OS.h. These wrappers are yet to be tested on NT. Thanks to Brian
- 	  Dance <Brian_Dance@UECCS.co.uk> for reporting this.
-	
+          The timer_helper uses the newly added timezone wrappers of
+          OS.h. These wrappers are yet to be tested on NT. Thanks to Brian
+          Dance <Brian_Dance@UECCS.co.uk> for reporting this.
+
 Fri Mar 12 10:38:18 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/CDR_Interpreter.cpp:
+        * tao/CDR_Interpreter.cpp:
 
-	  setup_entry for objrect references required
- 	  TAO_Object_Field_T<CORBA_Object> as the first parameter instead
- 	  of CORBA_OBject_ptr for the accurate size computation. Thanks to
- 	  Alexey Gadzhiev <alg@null.ru> for reporting the bug and
- 	  supplying us with a test program and other information to help
- 	  us fix the bug.
+          setup_entry for objrect references required
+          TAO_Object_Field_T<CORBA_Object> as the first parameter instead
+          of CORBA_OBject_ptr for the accurate size computation. Thanks to
+          Alexey Gadzhiev <alg@null.ru> for reporting the bug and
+          supplying us with a test program and other information to help
+          us fix the bug.
 
-	* tao/{encode, decode, deep_free}.cpp:
+        * tao/{encode, decode, deep_free}.cpp:
 
-	  In encode/decode/deep_free for structures, for the case where we
- 	  are dealing with fields that are object references, we cast the
- 	  data to TAO_Object_Field_T<CORBA_Object>* instead of simply
- 	  TAO_Object_Field*. These changes were made during the bug fix
- 	  described aove. These fixes also removed the Array Bounds Read
-	  (ABR) error message produced by Purify.
+          In encode/decode/deep_free for structures, for the case where we
+          are dealing with fields that are object references, we cast the
+          data to TAO_Object_Field_T<CORBA_Object>* instead of simply
+          TAO_Object_Field*. These changes were made during the bug fix
+          described aove. These fixes also removed the Array Bounds Read
+          (ABR) error message produced by Purify.
 
 Fri Mar 12 00:35:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp Fixed the problem of client
- 	  not being able to resolve Naming Service ior through multicast
- 	  when client and server are run on different hosts.  Thanks to
- 	  Steve Totten for tracking down since when this was broken, and
- 	  to Carlos O'Ryan for providing hypotheses as to why.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp Fixed the problem of client
+          not being able to resolve Naming Service ior through multicast
+          when client and server are run on different hosts.  Thanks to
+          Steve Totten for tracking down since when this was broken, and
+          to Carlos O'Ryan for providing hypotheses as to why.
 
-	  Made the server wait a little bit before sending a reply to the
- 	  multicast as well as send a reply several times.  This 1) gives
- 	  client a chance to start listening for a reply, 2) provides a
- 	  better protection against packet loss.  (The problem was
- 	  occuring because the server sent a reply before the client had a
- 	  chance to start receiving.  This was happening due to the added
- 	  dynamic memory allocation in the client code in the interval
- 	  between multicast_send and reply_receive).
+          Made the server wait a little bit before sending a reply to the
+          multicast as well as send a reply several times.  This 1) gives
+          client a chance to start listening for a reply, 2) provides a
+          better protection against packet loss.  (The problem was
+          occuring because the server sent a reply before the client had a
+          chance to start receiving.  This was happening due to the added
+          dynamic memory allocation in the client code in the interval
+          between multicast_send and reply_receive).
 
-	  A more flexible policy-based solution should be added (as
- 	  opposed to hardcoding intervals and retries).  This will
- 	  probably be a part of Vishal's upcoming Interoperable Naming
- 	  Service changes.
+          A more flexible policy-based solution should be added (as
+          opposed to hardcoding intervals and retries).  This will
+          probably be a part of Vishal's upcoming Interoperable Naming
+          Service changes.
 
-	  Values encoded in the code now should work for most
- 	  platforms/networks.  However, they are not guaranteed to work
- 	  for all!  Part of the problem is that UDP is unreliable, so in
- 	  theory can be retransmitted 100 times and still not work.  Also,
- 	  specific network configurations (busy network, busy hosts, old
- 	  routers, etc.) may have special needs.  Again, this should be
- 	  better addressed once hardcoded values are replaced by flexible
- 	  policies.
+          Values encoded in the code now should work for most
+          platforms/networks.  However, they are not guaranteed to work
+          for all!  Part of the problem is that UDP is unreliable, so in
+          theory can be retransmitted 100 times and still not work.  Also,
+          specific network configurations (busy network, busy hosts, old
+          routers, etc.) may have special needs.  Again, this should be
+          better addressed once hardcoded values are replaced by flexible
+          policies.
 
 Thu Mar 11 22:49:35 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_query): INET_Addr::get_port_number ()
- 	  returns a port number converted to host byte order.  Made
- 	  changes to account for that.
+        * tao/ORB.cpp (multicast_query): INET_Addr::get_port_number ()
+          returns a port number converted to host byte order.  Made
+          changes to account for that.
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp: Made sure that upon the
- 	  receipt of the multicast packet, the reply was sent to the port
- 	  indicated in the array contained in the packet as opposed to the
- 	  port from which the packet came from.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp: Made sure that upon the
+          receipt of the multicast packet, the reply was sent to the port
+          indicated in the array contained in the packet as opposed to the
+          port from which the packet came from.
 
 Thu Mar 11 20:41:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp: There were some major
- 	  inconsistencies with byte order conversions.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp: There were some major
+          inconsistencies with byte order conversions.
 
-	* tao/ORB.cpp (multicast_query): Fixed some subtle bugs with
- 	  multicast.  First, we were sending a struct when we should have
- 	  been sending an array (due to portability issues with struct
- 	  padding).  Second, we weren't being consistent with ACE macros.
+        * tao/ORB.cpp (multicast_query): Fixed some subtle bugs with
+          multicast.  First, we were sending a struct when we should have
+          been sending an array (due to portability issues with struct
+          padding).  Second, we weren't being consistent with ACE macros.
 
-	* tao/ORB.cpp (multicast_query): There was a read of BUFSIZ where
- 	  there should have been a read of ACE_MAX_DGRAM_SIZE.  Thanks to
- 	  Marina for noticing this.
+        * tao/ORB.cpp (multicast_query): There was a read of BUFSIZ where
+          there should have been a read of ACE_MAX_DGRAM_SIZE.  Thanks to
+          Marina for noticing this.
 
 Thu Mar 11 20:46:04 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp
-	  In the CosNaming_Client::init () changed
-	      // Initialize ORB.
-      		is->orbmgr_.init (argc,
-        	                  argv,
-                	          TAO_TRY_ENV);
+        * orbsvcs/tests/Simple_Naming/client.cpp
+          In the CosNaming_Client::init () changed
+              // Initialize ORB.
+                is->orbmgr_.init (argc,
+                                  argv,
+                                  TAO_TRY_ENV);
           to
-	      // Initialize ORB.
-	      this->orbmgr_.init (this->argc_,
-        	                  this->argv_,
-                	          TAO_TRY_ENV);
+              // Initialize ORB.
+              this->orbmgr_.init (this->argc_,
+                                  this->argv_,
+                                  TAO_TRY_ENV);
 
-  	  to facilitate proper processing of the arguments.
+          to facilitate proper processing of the arguments.
 
 Thu Mar 11 19:55:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Object.cpp: Fixed template instantiations and some warnings.
+        * tao/Object.cpp: Fixed template instantiations and some warnings.
 
-	* tao/encode.cpp: Removed unused variable.
+        * tao/encode.cpp: Removed unused variable.
 
-	* tests/Param_Test/run_test.pl: Use IOR object references, they
- 	  are actually easier than URL-style.
+        * tests/Param_Test/run_test.pl: Use IOR object references, they
+          are actually easier than URL-style.
 
 Thu Mar 11 19:07:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h:
-	* tao/CDR.cpp:
-	* tao/Connect.cpp:
-	* tao/Exception.cpp:
-	* tao/IIOP_ORB.cpp:
-	* tao/IIOP_Profile.h:
-	* tao/IIOP_Profile.i:
-	* tao/IIOP_Profile.cpp:
-	* tao/MProfile.h:
-	* tao/MProfile.i:
-	* tao/Object.h:
-	* tao/Object.i:
-	* tao/Object.cpp:
-	* tao/Pluggable.h:
-	* tao/Server_Request.cpp:
-	* tao/Stub.h:
-	* tao/Stub.i:
-	* tao/decode.cpp:
-	* tao/encode.cpp:
-	  Implemented compiled marshaling and demarshaling of object
-	  references.
-	  Removed uses of do_static_call() from the
-	  CORBA::Object class in favor of compiled marshaling.
-	  Removed several uses of interpretive marshaling, we can use
-	  compiled marshaling now.
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+        * tao/Connect.cpp:
+        * tao/Exception.cpp:
+        * tao/IIOP_ORB.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/IIOP_Profile.cpp:
+        * tao/MProfile.h:
+        * tao/MProfile.i:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Object.cpp:
+        * tao/Pluggable.h:
+        * tao/Server_Request.cpp:
+        * tao/Stub.h:
+        * tao/Stub.i:
+        * tao/decode.cpp:
+        * tao/encode.cpp:
+          Implemented compiled marshaling and demarshaling of object
+          references.
+          Removed uses of do_static_call() from the
+          CORBA::Object class in favor of compiled marshaling.
+          Removed several uses of interpretive marshaling, we can use
+          compiled marshaling now.
 
-	* tests/Param_Test/run_test.pl:
-	  The client cleanly shutdowns the server now.
+        * tests/Param_Test/run_test.pl:
+          The client cleanly shutdowns the server now.
 
 Thu Mar 11 16:36:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	  Fixed code generation of _ptr_type and _var_type
-	  typedefs to include a guard against certain versions
-	  of g++.
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+          Fixed code generation of _ptr_type and _var_type
+          typedefs to include a guard against certain versions
+          of g++.
 
 Thu Mar 11 14:30:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	  Check for error in call to Repository::get_hostport
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+          Check for error in call to Repository::get_hostport
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
-	  Enabled test for unions and the RTI data structure.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+          Enabled test for unions and the RTI data structure.
 
 Thu Mar 11 13:59:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
