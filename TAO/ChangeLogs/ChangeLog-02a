@@ -1,107 +1,112 @@
+Tue May 16 08:49:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/EC_Throughput/Makefile:
+          Updated depedencies.
+
 Mon May 15 22:05:49 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
-	  Changed the Time Offset constant to 141427 days 
-	  (0x2D8539C80 secs) instead of 141426.97 days 
-	  (0x2D8539260 secs). I have put comments in the code on why
-	  this offset is required.
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+          Changed the Time Offset constant to 141427 days
+          (0x2D8539C80 secs) instead of 141426.97 days
+          (0x2D8539260 secs). I have put comments in the code on why
+          this offset is required.
 
 Mon May 15 20:03:11 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
-	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
-	  Put in the fix for "inheritance via dominance error"
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+          Put in the fix for "inheritance via dominance error"
 
 Mon May 15 15:40:46 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Connect.cpp (open):
-	* tao/SHMIOP_Connect.cpp (open):
+        * tao/IIOP_Connect.cpp (open):
+        * tao/SHMIOP_Connect.cpp (open):
 
-	  Moved the call to addr_to_string() inside the debug level
-	  conditional block.  The call is only used to stringify the
-	  address of the connected client or the server the client is
-	  connected to for debugging purposes.
+          Moved the call to addr_to_string() inside the debug level
+          conditional block.  The call is only used to stringify the
+          address of the connected client or the server the client is
+          connected to for debugging purposes.
 
-	* tao/UIOP_Connect.cpp (open, handle_close, handle_close_i):
+        * tao/UIOP_Connect.cpp (open, handle_close, handle_close_i):
 
-	  UNICODE related updates.  Wrap debugging messages within
-	  ACE_TEXT macro.
+          UNICODE related updates.  Wrap debugging messages within
+          ACE_TEXT macro.
 
 Mon May 15 14:43:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp
-	* tao/BoundsC.cpp
-	* tao/BoundsC.h
-	* tao/DynAnyC.cpp
-	* tao/DynAnyC.h
-	* tao/Environment.cpp
-	* tao/Exception.cpp
-	* tao/Exception.h
-	* tao/Exception.i
-	* tao/GIOP_Message_Acceptors.cpp
-	* tao/GIOP_Message_Lite.cpp
-	* tao/GIOP_Server_Request.cpp
-	* tao/IORC.cpp
-	* tao/IORC.h
-	* tao/ImplRepoC.cpp
-	* tao/ImplRepoC.h
-	* tao/InconsistentTypeCodeC.cpp
-	* tao/InconsistentTypeCodeC.h
-	* tao/ORB.cpp
-	* tao/ORB.h
-	* tao/POAC.cpp
-	* tao/POAC.h
-	* tao/PolicyC.cpp
-	* tao/PolicyC.h
-	* tao/PollableC.cpp
-	* tao/PollableC.h
-	* tao/Typecode.cpp
-	* tao/Typecode.h
-	* tao/WrongTransactionC.cpp
-	* tao/WrongTransactionC.h
-	  Added support for Exception::_downcast (). Changed _narrow () to
-	  _downcast () in all these files. Thanks to William Horn
-	<whorn1984@my-deja.com>
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp
+        * tao/BoundsC.cpp
+        * tao/BoundsC.h
+        * tao/DynAnyC.cpp
+        * tao/DynAnyC.h
+        * tao/Environment.cpp
+        * tao/Exception.cpp
+        * tao/Exception.h
+        * tao/Exception.i
+        * tao/GIOP_Message_Acceptors.cpp
+        * tao/GIOP_Message_Lite.cpp
+        * tao/GIOP_Server_Request.cpp
+        * tao/IORC.cpp
+        * tao/IORC.h
+        * tao/ImplRepoC.cpp
+        * tao/ImplRepoC.h
+        * tao/InconsistentTypeCodeC.cpp
+        * tao/InconsistentTypeCodeC.h
+        * tao/ORB.cpp
+        * tao/ORB.h
+        * tao/POAC.cpp
+        * tao/POAC.h
+        * tao/PolicyC.cpp
+        * tao/PolicyC.h
+        * tao/PollableC.cpp
+        * tao/PollableC.h
+        * tao/Typecode.cpp
+        * tao/Typecode.h
+        * tao/WrongTransactionC.cpp
+        * tao/WrongTransactionC.h
+          Added support for Exception::_downcast (). Changed _narrow () to
+          _downcast () in all these files. Thanks to William Horn
+        <whorn1984@my-deja.com>
 
 Mon May 15 16:26:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
-	  If an interface is forward declared, we now generate as
-	  much inline code as possible at that point, saving only
-	  the generation of members' inline code for the full
-	  definition. Since the be_interface_fwd node contains
-	  a reference to its full definition node, we can set the
-	  cli_inline_gen flag in that node as well, to avoid redundant
-	  code generation. Recent changes to generated _var code
-	  for interfaces have made all this necessary. Agressively
-	  inlining compilers like cxx now need to see the _var code
-	  sooner if the forward declared interface is used as an arg
-	  or a member before it is fully defined.
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+          If an interface is forward declared, we now generate as
+          much inline code as possible at that point, saving only
+          the generation of members' inline code for the full
+          definition. Since the be_interface_fwd node contains
+          a reference to its full definition node, we can set the
+          cli_inline_gen flag in that node as well, to avoid redundant
+          code generation. Recent changes to generated _var code
+          for interfaces have made all this necessary. Agressively
+          inlining compilers like cxx now need to see the _var code
+          sooner if the forward declared interface is used as an arg
+          or a member before it is fully defined.
 
 Mon May 15 14:20:38 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Object.cpp (operator>>):
+        * tao/Object.cpp (operator>>):
 
-	  Improved the "could not create all profiles" error message by
-	  stating that the problem could be related to address resolution
-	  failure (e.g. DNS).  Also added a comment discussing when the
-	  problem may occur.  Thanks to David for suggesting that the
-	  error describe the problem a bit more.  The previous message was
-	  an implementation detail that isn't generally useful to end
-	  users.
+          Improved the "could not create all profiles" error message by
+          stating that the problem could be related to address resolution
+          failure (e.g. DNS).  Also added a comment discussing when the
+          problem may occur.  Thanks to David for suggesting that the
+          error describe the problem a bit more.  The previous message was
+          an implementation detail that isn't generally useful to end
+          users.
 
-	  Note that this error message should no longer be displayed, at
-	  least not due to any address resolution problem since address
-	  resolution, in the case of IIOP, has been delayed until
-	  connection establishment is initiated.  In the case of an
-	  address resolution problem, a CORBA::TRANSIENT() exception
-	  should be thrown.
+          Note that this error message should no longer be displayed, at
+          least not due to any address resolution problem since address
+          resolution, in the case of IIOP, has been delayed until
+          connection establishment is initiated.  In the case of an
+          address resolution problem, a CORBA::TRANSIENT() exception
+          should be thrown.
 
 Mon May 15 14:55:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
-	  Filled in empty method bodies create_native_tc and
-	  create_value_box_tc.
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+          Filled in empty method bodies create_native_tc and
+          create_value_box_tc.
 
 Mon May 15 11:08:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
