@@ -246,12 +246,8 @@ Options::parse_args (int argc, char *argv[])
 	    ACE_SET_BITS (option_word_, BINARYSEARCH);
 	    break;
 	  }
-          // @@ Vishal, we can add option 'b' to enable binary search
-          // option in GPERF. We should add an enum value
-          // (BINARY_SEARCH) to use in the option_word. We shouldn't
-          // forget to update the help message to show this option.
-
-        // Generate strncmp rather than strcmp.
+          
+          // Generate strncmp rather than strcmp.
         case 'c':
           {
             ACE_SET_BITS (option_word_, COMP);

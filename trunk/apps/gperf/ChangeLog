@@ -1,3 +1,8 @@
+Sat Oct  3 10:11:15 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Options.cpp (parse_args): Changed the option for binary
+	search to '-B' 
+
 Fri Oct  2 21:38:54 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Added the -b option for the binary
