@@ -39,6 +39,8 @@ TAO_Notify_SupplierAdmin_i::init (CosNotifyChannelAdmin::AdminID myID,
                                   PortableServer::POA_ptr my_POA,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: please use the this-> style to access fields...
+
   my_POA_ = PortableServer::POA::_duplicate (my_POA);
 
   this->proxy_pushconsumer_POA_ = this->resource_manager_->
@@ -54,10 +56,17 @@ TAO_Notify_SupplierAdmin_i::init (CosNotifyChannelAdmin::AdminID myID,
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_SupplierAdmin_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: if you get a chance to quantify this stuff you will
+  // notice that this is a very expensive operation, you may want to
+  // cache the result if it is invoked very often...
+
   return CosNotifyChannelAdmin::SupplierAdmin
     ::_narrow (this->resource_manager_->
                servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV));
 }
+
+// @@ Pradeep: it is possible that you want methods like this
+// inlined...
 
 TAO_Notify_Event_Manager*
 TAO_Notify_SupplierAdmin_i::get_event_manager (void)
@@ -113,6 +122,8 @@ TAO_Notify_SupplierAdmin_i::MyOperator (CORBA::Environment &/*ACE_TRY_ENV*/)
                    CORBA::SystemException
                    ))
 {
+  // Pradeep: we don't use intercaps for field names, but '_' to
+  // separate words, and they are all lowercase....
   return myOperator_;
 }
 
@@ -122,6 +133,10 @@ TAO_Notify_SupplierAdmin_i::pull_consumers (CORBA::Environment& ACE_TRY_ENV)
                    CORBA::SystemException
                    ))
 {
+  // @@ Pradeep: there is no rush to implement pull, but look at the
+  // code in the new CosEC, we may need to start thinking about pull,
+  // and how can we reduce duplicated code for both pull and push
+  // models.
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
@@ -401,6 +416,8 @@ TAO_Notify_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &ACE_TRY_EN
                    CORBA::SystemException
                    ))
 {
+  // @@ Pradeep: you may want to group all the Pull methods together,
+  // it would be easier to identify them or read the code that way.
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     CosEventChannelAdmin::ProxyPullConsumer::_nil ());
 }

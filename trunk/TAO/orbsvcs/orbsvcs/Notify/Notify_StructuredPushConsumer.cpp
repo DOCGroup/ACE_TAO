@@ -1,6 +1,14 @@
 /* -*- C++ -*- $Id$ */
 #include "Notify_StructuredPushConsumer.h"
 
+
+// @@ Pradeep: in general i think that helper classes like this do
+// more harm than help, my experience is that they can hardly cover
+// but a few use cases, and increases confusion among users.
+// It is better to put classes like this in examples and tests, so
+// users can steal the code if they want to.  But then, i'm known to
+// be a minimimalistic bigot ;-) ;-)
+
 TAO_Notify_StructuredPushConsumer::TAO_Notify_StructuredPushConsumer (void)
 {
   // No-Op.
@@ -10,6 +18,9 @@ TAO_Notify_StructuredPushConsumer::~TAO_Notify_StructuredPushConsumer (void)
 {
 }
 
+// @@ Pradeep: do not assume that the user will activate the servant
+// using _this() and changing the default POA, there are many other
+// activation modes.
 void TAO_Notify_StructuredPushConsumer::init (PortableServer::POA_ptr poa, CORBA::Environment & /*ACE_TRY_ENV*/)
 {
   this->default_POA_ = PortableServer::POA::_duplicate (poa);

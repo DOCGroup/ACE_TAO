@@ -18,6 +18,8 @@
 #define TAO_NOTIFY_RESOURCE_MANAGER
 #include "ace/pre.h"
 
+// @@ Pradeep: do not forget the #pragma once.
+
 #include "Notify_ID_Pool_T.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "tao/POA.h"
@@ -35,6 +37,7 @@ class TAO_Notify_SequenceProxyPushConsumer_i;
 class TAO_Notify_ProxyPushConsumer_i;
 class TAO_Notify_Event_Manager;
 
+// @@ Pradeep: do not forget the TAO_****_Export
 class TAO_Notify_Resource_Manager
 {
   // = TITLE
@@ -43,7 +46,18 @@ class TAO_Notify_Resource_Manager
   // = DESCRIPTION
   //   This is class to control all the resources needed by all the other
   //   classes.
-  //   Later:The class is also a Service Object that will configure the
+  //
+  //   @@ Pradeep: this is a class a factory? Or is it a manager for
+  //   resource created by a factory?  The interfaces should be quite
+  //   different, and it is hard to turn a manager into a Service
+  //   Object (but factories are much easier).  If you check the
+  //   design of the RTEC and the new CosEC you will notice that the
+  //   Event_Channel class plays the manager role and the factory is a
+  //   separate entity.  Your idea of separating the manager from the
+  //   Event_Channel is probably the "Right Thing" but you should also
+  //   decouple the factory and manager roles.
+  //
+  //   Later: The class is also a Service Object that will configure the
   //   service on startup.
 
  public:
@@ -57,6 +71,8 @@ class TAO_Notify_Resource_Manager
   // = Factory method
   static TAO_Notify_Resource_Manager* create (PortableServer::POA_ptr default_POA, CORBA::Environment &ACE_TRY_ENV);
   // Factory method to create the Resource Factory Manager.
+  // @@ Pradeep: how is that possible?  I still have to know the class
+  // to create it, right?
   // This allows other specializations of the Resource Factory to be created
   // via a common interface.
 

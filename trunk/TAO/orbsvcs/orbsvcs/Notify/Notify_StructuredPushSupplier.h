@@ -43,10 +43,14 @@ class TAO_Notify_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyCo
   TAO_Notify_StructuredPushSupplier (void);
   // Constructor.
 
-  void init (PortableServer::POA_ptr poa, CORBA::Environment & /*ACE_TRY_ENV*/);
+  void init (PortableServer::POA_ptr poa,
+             CORBA::Environment & /*ACE_TRY_ENV*/);
   // Init
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV);
+  // @@ Pradeep: try to cleanup the code you cut & paste, it is was
+  // really hard to read.
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
+                CORBA::Environment &ACE_TRY_ENV);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
@@ -64,6 +68,7 @@ class TAO_Notify_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyCo
   // = ServantBase operations
   PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
+  // @@ Any reasons why this is public?
   CosNotifyChannelAdmin::ProxyID my_id_;
   // This supplier's id.
 

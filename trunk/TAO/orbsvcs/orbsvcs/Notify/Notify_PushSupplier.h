@@ -14,7 +14,7 @@
 
 class TAO_Notify_PushSupplier : public POA_CosNotifyComm::PushSupplier, public PortableServer::RefCountServantBase
 {
- public:
+public:
     // = Initialization and Termination code
   TAO_Notify_PushSupplier (void);
   // Constructor.

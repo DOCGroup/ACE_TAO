@@ -5,9 +5,12 @@
 #include "Notify_Event_Manager.h"
 #include "Notify_SupplierAdmin_i.h"
 
+// @@ Pradeep: be systematic about the RCSID
+
 TAO_Notify_StructuredProxyPushConsumer_i::TAO_Notify_StructuredProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin, TAO_Notify_Resource_Manager* resource_manager)
   : TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer> (supplieradmin, resource_manager)
 {
+  // @@ Pradeep: the comments...
   // No-Op.
 }
 

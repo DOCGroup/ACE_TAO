@@ -20,6 +20,9 @@
 #define TAO_NOTIFY_SUPPLIERADMIN_I_H
 #include "ace/pre.h"
 
+// @@ Pradeep: i believe that the #pragma once guideline is still in
+// effect.
+
 #include "Notify_ID_Pool_T.h"
 #include "Notify_QoSAdmin_i.h"
 #include "Notify_FilterAdmin_i.h"
@@ -46,7 +49,11 @@ class TAO_Notify_Export TAO_Notify_SupplierAdmin_i : public POA_CosNotifyChannel
   //
 
 public:
-  TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i* myChannel, TAO_Notify_Resource_Manager* resource_manager);
+  // @@ Pradeep: you may want to drop the _i suffix, it buys you
+  // nothing..
+
+  TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i* myChannel,
+                              TAO_Notify_Resource_Manager* resource_manager);
   // Constructor
   // <myChannel> is this objects parent.
 
@@ -59,10 +66,13 @@ public:
              CORBA::Environment &ACE_TRY_ENV);
   //Initialize the Supplier Admin.
 
+  // @@ Pradeep: could this method be const?  Try to use const
+  // operations when possible.
   TAO_Notify_FilterAdmin_i& get_filter_admin (void);
   // Get our filter admin.
 
-  void deactivate_proxy_pushconsumer (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV);
+  void deactivate_proxy_pushconsumer (PortableServer::Servant servant,
+                                      CORBA::Environment &ACE_TRY_ENV);
   // Deactivate servant from <proxy_pushconsumer_POA_>.
 
   void proxy_pushconsumer_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
@@ -82,12 +92,14 @@ public:
   TAO_Notify_Event_Manager* get_event_manager (void);
   // Accesor for the event manager.
 
-virtual CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  // @@ Pradeep: Don't forget to indent this stuff, at the very least
+  // it should not start in the first column!
+  virtual CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
+      CORBA::Environment &ACE_TRY_ENV
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
 
 virtual CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (
     CORBA::Environment &ACE_TRY_ENV
@@ -238,6 +250,10 @@ virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer (
 
 protected:
   // = Helper methods
+  // @@ Pradeep: you don't need to provide default values for
+  // private, protected or implementation methods.  In fact it is a
+  // good idea *not* to provide the default value.  That way you make
+  // sure that you are passing it around.
  void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Cleanup all resources used by this object.
 
@@ -270,12 +286,17 @@ protected:
   // The POA in which all our push consumers live.
   // We create and own this POA.
 
+  // @@ Pradeep: you may want to use a typedef for that template.
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
     CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushconsumer_ids_;
   // Id generator for proxy push consumers.
 
   CORBA::Boolean is_destroyed_;
   // Are we dead?
+  // @@ Pradeep: you may want to explain why such a flag is needed. I
+  // assume it is set when the a request to destroy the object
+  // arrives, but you must perform some cleanup, meanwhile any new
+  // requests are rejected, right?
 
   TAO_Notify_QoSAdmin_i qos_admin_;
   // Handle QoS admin methods.

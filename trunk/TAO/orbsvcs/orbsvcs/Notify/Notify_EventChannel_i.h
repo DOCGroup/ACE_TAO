@@ -165,7 +165,7 @@ virtual CosNotification::QoSProperties * get_qos (
     CORBA::SystemException
   ));
 
-virtual void set_qos (
+  virtual void set_qos (
     const CosNotification::QoSProperties & qos,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -174,7 +174,7 @@ virtual void set_qos (
     CosNotification::UnsupportedQoS
   ));
 
-virtual void validate_qos (
+  virtual void validate_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos,
     CORBA::Environment &ACE_TRY_ENV
@@ -184,14 +184,14 @@ virtual void validate_qos (
     CosNotification::UnsupportedQoS
   ));
 
-virtual CosNotification::AdminProperties * get_admin (
+  virtual CosNotification::AdminProperties * get_admin (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-virtual void set_admin (
+  virtual void set_admin (
     const CosNotification::AdminProperties & admin,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -200,30 +200,30 @@ virtual void set_admin (
     CosNotification::UnsupportedAdmin
   ));
 
-virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-virtual void destroy (
+  virtual void destroy (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
   ));
 
- protected:
-// = Helper Methods
- CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV);
+protected:
+  // = Helper Methods
+  CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV);
  // Create the default filter factory.
 
  void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
