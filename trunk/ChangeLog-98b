@@ -1,3 +1,27 @@
+Thu Jul 16 12:50:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.cpp (ldfind): Conventionallly, Win32 platforms
+	  distinguish debug version DLL from release version DLLs by
+ 	  suffixing debug version DLL names with 'd'.  (E.g., aced.dll
+	  v.s. ace.dll.)  This was causing some problem in managing the
+	  svc.conf files because we need to link the matching DLL with the
+	  executables regarding of how they get compiled.  
+
+	  I modified the ldfind so that when a debug version ACE is
+ 	  searching for a DLL file, it will first try to find the debug
+	  version of that DLL by suffixing the name with 'd'.  If it can't
+	  be found, it then search for the name specified.  The release
+	  version doesn't try to do this.  Now, we can only specify only
+	  the "normal" dll names in svc.conf files and ACE can pick up the
+	  right dll for you without changing svc.conf files.  However, you
+	  need to follow the Win32 DLL naming convention described above.
+	  
+	  I don't expect this feature to cause any backward compatibility
+ 	  problem.  However, if in the rare event, it does cause you
+ 	  problem, you can disable it by defining
+ 	  ACE_DISABLE_DEBUG_DLL_CHECK in your config.h file.  Notice that
+ 	  this change only affects Win32 platforms.
+
 Thu Jul 16 08:55:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Dynamic_Service.cpp (instance): removed const-ness
