@@ -1,3 +1,16 @@
+Wed Mar 23 11:19:32 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Swapping/Sender/Sender.mpc:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_1.cpp:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_1.h:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_1_export.h:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_2.cpp:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_2.h:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_2_export.h:
+
+          Added new export macros to fix compiler problems in Windows
+          builds.
+
 Wed Mar 23 11:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
