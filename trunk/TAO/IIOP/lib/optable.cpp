@@ -14,7 +14,7 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
 
 int 
 TAO_Dynamic_Hash_OpTable::bind (const CORBA_String &opname,
-                                TAO_Skeleton skel_ptr)
+                                const TAO_Skeleton skel_ptr)
 {
   ACE_CString key (opname);
   return this->hash_.bind (key, skel_ptr);
@@ -46,7 +46,7 @@ TAO_Linear_OpTable::~TAO_Linear_OpTable (void)
 // ******
 int 
 TAO_Linear_OpTable::bind (const CORBA_String &opname,
-                          TAO_Skeleton skel_ptr)
+                          const TAO_Skeleton skel_ptr)
 {
   CORBA_ULong i = this->next_;
 
@@ -106,7 +106,7 @@ TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
 // ****** we should really make sure that the same key doesn't exist ******
 int 
 TAO_Active_Demux_OpTable::bind (const CORBA_String &opname,
-				       TAO_Skeleton skel_ptr)
+				const TAO_Skeleton skel_ptr)
 {
   CORBA_ULong i = ACE_OS::atoi (opname);
 
