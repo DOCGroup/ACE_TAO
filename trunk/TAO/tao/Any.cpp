@@ -776,6 +776,21 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
     );
 }
 
+// ================================================================
+// Any_Impl_T template specializations.
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::Object>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+// ================================================================
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO::Any_Special_Impl_T<
