@@ -233,6 +233,7 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
       return -1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 int
@@ -362,6 +363,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
     }
 
   TAO_ENDTRY;
+  return 0;
 }
 
 int
@@ -431,6 +433,7 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
       return -1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 void
@@ -754,6 +757,7 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       return -1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 int
