@@ -458,8 +458,17 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          *os << "this->u_." << ub->local_name () << "_ = "
-              << bt->name () << "::_duplicate (val);" << be_uidt_nl;
+          if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
+            {
+              *os << "this->u_." << ub->local_name () << "_ = new "
+                  << "TAO_Object_Field_T<CORBA::Object> (CORBA::Object::_duplicate (val));"
+                  << be_uidt_nl;
+            }
+          else 
+            {
+              *os << "this->u_." << ub->local_name () << "_ = "
+                  << bt->name () << "::_duplicate (val);" << be_uidt_nl;
+            }
           break;
 
         case AST_PredefinedType::PT_any:
@@ -491,9 +500,18 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
           << "ACE_INLINE " << bt->name () << "_ptr" << be_nl;
       *os << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
-          << "{" << be_idt_nl
-          << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
-          << "}\n\n";
+          << "{" << be_idt_nl;
+      if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
+        {
+          *os << "return this->u_." << ub->local_name () 
+              << "_->ptr ();" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "return this->u_." << ub->local_name () 
+              << "_;" << be_uidt_nl;
+        }
+      *os << "}\n\n";
       break;
     case AST_PredefinedType::PT_any:
       // get method with read-only access
