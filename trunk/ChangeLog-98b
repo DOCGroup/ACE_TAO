@@ -1,5 +1,39 @@
 Fri Sep 18 22:50:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/Thread_Manager.{h,i,cpp}: Added a join method to reclaim
+	  OS/ACE resources that are used to managed thread object.  I
+	  encourage all ACE programmers to use ACE_Thread_Manager::join to
+	  wait for threads spawned by ACE_Thread_Manager.  It is more
+	  portable than ACE_Thread (most significantly, wrt resource
+	  management.)  
+	  (wait_grp,wait_task):  Improved and corrected the
+	  implementations.  These two methods now also clean up resources
+	  used by threads that has already terminated when the calls get
+	  invoked.  
+
+	  Changed the terminated_thr_queue_ to terminated_thr_list_ which
+ 	  is now a double-linked list.  This change allows us to
+ 	  gather/cleanup infomation of threads belong to same group/task
+ 	  in one pass.
+
+	  ACE_Thread_Manager::exit now tests the thread status to see if
+	  ACE_THR_JOINING is set or not.  If set, it means the thread is
+	  being joined by join/wait_grp/wait_task and avoid double
+	  removing the thread resources from OS.
+
+	* ace/OS.h (ACE_Thread_State): Added ACE_THR_JOINING to identify
+	  threads that are being joined by the Thread Manager.  
+
+	* ace/Container_T.{h,cpp} (ACE_Double_Linked_List): Added several
+	  dynamic_cast in several places so we can generate code for both
+	  base class and derived class.
+	  (ACE_Double_Linked_List_Iterator): Added a method
+	  "advance_and_delete" to allow removing double-linked list
+	  element while iterating thru the list.  The design is very
+	  intrusive and you should know what you are doing before using
+	  the method.  Notice that ACE_Double_Linked_List is _not_ a
+	  general purpose Container class.
+
 	* tests/run_tests.bat: Added DLList_Test.
 
 Fri Sep 18 18:06:19 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
