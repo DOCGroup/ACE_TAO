@@ -35,6 +35,8 @@ class TAO_Notify_EventType
   //   It is used by the Event Manager as a key to find subscription lists.
   //
  public:
+  friend class TAO_Notify_ConsumerAdmin_i;
+
   // = Initialization and termination
   TAO_Notify_EventType (void);
   TAO_Notify_EventType (const char* domain_name, const char* type_name);
