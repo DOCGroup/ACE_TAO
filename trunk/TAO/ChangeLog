@@ -1,3 +1,10 @@
+Thu Jun 24 13:44:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/AMH_Single_Threaded/run_test.pl:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/run_test.pl:
+          Corrected uselib path. Tests moved one directory level up, so
+          also a ../ must be removed from the uselib path
+
 Thu Jun 24 12:42:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_root/root.cpp:
