@@ -1851,6 +1851,8 @@ ACE_Select_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
     // <token_> lock correctly.
   }
 
+  this->state_changed_ = 1;
+
   return result;
 }
 
