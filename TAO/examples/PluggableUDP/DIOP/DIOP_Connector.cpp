@@ -30,6 +30,7 @@ template class ACE_Map_Entry<ACE_INET_Addr, TAO_DIOP_Connection_Handler *>;
 
 template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex < ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash < ACE_INET_Addr >, ACE_Equal_To < ACE_INET_Addr >, ACE_Null_Mutex >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -42,6 +43,8 @@ template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Ha
 
 #pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex < ACE_INET_Addr,TAO_DIOP_Connection_Handler *, ACE_Hash < ACE_INET_Addr >, ACE_Equal_To < ACE_INET_Addr >, ACE_Null_Mutex >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
