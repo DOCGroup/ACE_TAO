@@ -129,12 +129,6 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_PTHREADS)
-#define SUSPEND 0
-#else
-#define SUSPEND THR_SUSPENDED
-#endif
-
 int
 main (int argc, char* argv[])
 {
@@ -185,15 +179,15 @@ main (int argc, char* argv[])
   ACE_Thread_Manager *mgr = ACE_Service_Config::thr_mgr ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &collectionAR, THR_BOUND | SUSPEND) == -1)
+		 (void *) &collectionAR, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 1 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &collectionAW, THR_BOUND | SUSPEND) == -1)
+		 (void *) &collectionAW, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 2 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &collectionBR, THR_BOUND | SUSPEND) == -1)
+		 (void *) &collectionBR, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 3 failed"), -1);
 
 #if ! defined (ACE_HAS_PTHREADS)
