@@ -15,7 +15,8 @@ EC_Supplier::EC_Supplier (EC_Driver *driver,
      burst_size_ (0),
      payload_size_ (0),
      burst_pause_ (0),
-     shutdown_event_type_ (0)
+     shutdown_event_type_ (0),
+     is_active_ (0)
 {
 }
 
@@ -125,9 +126,9 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
   this->qos_ = qos;
   this->shutdown_event_type_ = shutdown_event_type;
 
-  RtecEventComm::PushSupplier_var objref =
-    this->_this (ACE_TRY_ENV);
+  RtecEventComm::PushSupplier_var objref = this->_this (ACE_TRY_ENV);
   ACE_CHECK;
+  this->is_active_ = 1;
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
                                                 qos,
@@ -146,6 +147,13 @@ EC_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
+}
+
+void
+EC_Supplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (!this->is_active_)
+    return;
 
   // Deactivate the servant
   PortableServer::POA_var poa =
@@ -156,6 +164,7 @@ EC_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
+  this->is_active_ = 0;
 }
 
 void
