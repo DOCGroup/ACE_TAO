@@ -1,3 +1,8 @@
+Fri May 29 11:02:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/orbconf.h: Removed an unnecessary OR condition for the
+	TAO_NAMESPACE macro.
+
 Fri May 29 09:15:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Added code to pass svcconf directives
@@ -6,7 +11,7 @@ Fri May 29 09:15:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Make sure that we dynamically
  	  string_dup() ALL the argv/argc arguments, not just some of them,
- 	  so that we can correctly clean stuff up when we're done.  
+ 	  so that we can correctly clean stuff up when we're done.
 
 Thu May 28 14:32:07 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
