@@ -128,7 +128,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const TAO_ObjectKey& object_key,
-				    const ACE_INET_Addr& addr)
+                                    const ACE_INET_Addr& addr)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (port),
@@ -393,7 +393,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
     {
       // ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
       // The version is optional so don't throw an exception.
- 
+
       string += 2;
       // Skip over the "//"
     }

@@ -119,9 +119,6 @@ public:
   virtual ACE_Lock *create_event_loop_lock (void);
   // Return a new lock for use in the ORB event loop.
 
-  virtual ACE_Lock *create_collocation_table_lock (void);
-  // Create the lock used by the global collocation table.
-
   virtual ACE_Lock *create_cached_connector_lock (void);
   // Create the lock to be used by the cached connector.
 

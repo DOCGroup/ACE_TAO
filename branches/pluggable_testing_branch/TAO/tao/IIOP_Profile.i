@@ -15,7 +15,7 @@ TAO_IIOP_Profile::object_key (TAO_ObjectKey& objkey)
 }
 
 ACE_INLINE TAO_ObjectKey *
-TAO_IIOP_Profile::_key (CORBA::Environment &)
+TAO_IIOP_Profile::_key (CORBA::Environment &) const
 {
   return new TAO_ObjectKey (this->object_key_);
 }

@@ -45,6 +45,30 @@ TAO_ORB_Core::root_poa (const char *adapter_name,
   return this->root_poa_;
 }
 
+ACE_INLINE void
+TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
+{
+  this->opt_for_collocation_ = opt;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::optimize_collocation_objects (void) const
+{
+  return this->opt_for_collocation_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::use_global_collocation (CORBA::Boolean opt)
+{
+  this->use_global_collocation_ = opt;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::use_global_collocation (void) const
+{
+  return this->use_global_collocation_;
+}
+
 ACE_INLINE
 TAO_ORB_Parameters *
 TAO_ORB_Core::orb_params(void)
@@ -98,20 +122,6 @@ TAO_ORB_Core::acceptor_registry (void)
 #undef TAO_OC_RETRIEVE
 #undef TAO_TRF
 
-ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::using_collocation (void)
-{
-  return this->opt_for_collocation_;
-}
-
-ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::using_collocation (CORBA::Boolean use_col)
-{
-  CORBA::Boolean retv = this->opt_for_collocation_;
-  this->opt_for_collocation_ = use_col;
-  return retv;
-}
-
 ACE_INLINE ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
@@ -136,3 +146,9 @@ TAO_ORB_Core::get_default_policy (
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 // ****************************************************************
+
+ACE_INLINE TAO_ORB_Table*
+TAO_ORB_Table::instance (void)
+{
+  return ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>::instance ();
+}

@@ -131,7 +131,7 @@ public:
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
 
-  TAO_ObjectKey *_key (CORBA::Environment &env);
+  TAO_ObjectKey *_key (CORBA::Environment &env) const;
   // Return a pointer to the Object Key.
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,

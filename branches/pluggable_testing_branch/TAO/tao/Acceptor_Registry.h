@@ -41,7 +41,7 @@ typedef ACE_Unbounded_Set<TAO_Acceptor*>
 // @@ Fred&Ossama: Even though ye typing fingers may ache the DOC
 //    group style (or lack of it) is to call this stuff
 //    TAO_AcceptorSetIterator (not Itor).
-//    You may want to define this typedef inside the Acceptor_Registry 
+//    You may want to define this typedef inside the Acceptor_Registry
 //    to avoid namespace pollution. This is specially true since you
 //    don't export the Iterator (or the set) in the class interface,
 //    and it is only used in the implementation.
@@ -89,6 +89,12 @@ public:
   // @@ Fred&Ossama: What is the relationship between the ORB_Core and
   //    the Acceptor_Registry? Is there just one per orb core? Should
   //    tbe acceptor registry know which ORB_Core it belongs to?
+
+
+  int is_collocated (const TAO_MProfile& mprofile);
+  // Check if there is at least one profile in <mprofile> that
+  // corresponds to a collocated object.
+
 private:
 
   TAO_AcceptorSet acceptors_;

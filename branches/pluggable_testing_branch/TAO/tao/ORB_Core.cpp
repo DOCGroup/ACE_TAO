@@ -33,13 +33,14 @@ CORBA::default_environment ()
 
 // ****************************************************************
 
-TAO_ORB_Core::TAO_ORB_Core (void)
+TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
   : thr_mgr_ (0),
     connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
     root_poa_ (0),
     orb_params_ (0),
+    orbid_ (ACE_OS::strdup (orbid?orbid:"")),
     resource_factory_ (0),
     resource_factory_from_service_config_ (0),
     // @@ This is not needed since the default resource factory, fredk
@@ -53,6 +54,7 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     // @@ This is not needed since the default server factory, fredk
     //    is staticaly added to the service configurator.
     opt_for_collocation_ (1),
+    use_global_collocation_ (1),
     preconnections_ (0)
 {
 }
@@ -66,16 +68,19 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   // Allocated in init()
   delete this->orb_params_;
+
+  ACE_OS::free (this->orbid_);
 }
 
 int
-TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table)
+TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref,
+                                TAO_IOR_LookupTable &table)
 {
   int index = 0;
   if ((index = init_ref.find ("=")) == ACE_CString::npos)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to parse -ORBInitRef parameter\n"),
-		      -1);
+                       "Unable to parse -ORBInitRef parameter\n"),
+                      -1);
 
   ACE_CString object_id = init_ref.substr (0,index);
   ACE_CString ior = init_ref.substr (index+1);
@@ -146,8 +151,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   TAO_IOR_LookupTable *ior_lookup_table;
 
   ACE_NEW_RETURN (ior_lookup_table,
-		  TAO_IOR_LookupTable,
-		  -1);
+                  TAO_IOR_LookupTable,
+                  -1);
 
   // List of comma separated prefixes from ORBDefaultInitRef.
   ACE_CString default_init_ref;
@@ -248,7 +253,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           //    iiop://myhost_ether:5050,myhost_atm:6060/
           //    fredk.
           // @@ Fred&Ossama: I think the option should just die or
-          //    simply have the same effect as an extra -ORBendpoint 
+          //    simply have the same effect as an extra -ORBendpoint
           //    i.e. simply add another endpoin to the list in
           //    orb_params().
 
@@ -381,6 +386,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+
       else if (ACE_OS::strcmp (current_arg, "-ORBcollocation") == 0)
         // Specify whether we want to optimize against collocation
         // objects.  Valid arguments are: "yes" and "no".  Default is
@@ -398,6 +404,29 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+
+      // @@ Ossama: could you add this option to the Options.html
+      //    file?  And could you also remove from the .html file the
+      //    stuff we took out of the default server strategy factory
+      //    and the default resource factory?
+      else if (ACE_OS::strcmp (current_arg, "-ORBglobalcollocation") == 0)
+        // Specify whether we want to use collocation across ORBs;
+        // i.e. all the ORBs in the same address space use collocated
+        // calls.
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char *opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "YES") == 0)
+                this->use_global_collocation_ = 1;
+              else if (ACE_OS::strcasecmp (opt, "NO") == 0)
+                this->use_global_collocation_ = 0;
+
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else if (ACE_OS::strcmp (current_arg, "-ORBpreconnect") == 0)
         {
           arg_shifter.consume_arg ();
@@ -470,21 +499,21 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             {
               init_ref = arg_shifter.get_current ();
               if (this->add_to_ior_table (init_ref,*ior_lookup_table) != 0)
-		ACE_ERROR_RETURN ((LM_ERROR,
-				   "Unable to add IOR to the Table\n"),
-				  -1);
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Unable to add IOR to the Table\n"),
+                                  -1);
               arg_shifter.consume_arg ();
             }
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBDefaultInitRef") == 0)
-	{
-	  arg_shifter.consume_arg ();
+        {
+          arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
               default_init_ref = arg_shifter.get_current ();
               arg_shifter.consume_arg ();
             }
-	}
+        }
       else
         arg_shifter.ignore_arg ();
     }
@@ -570,7 +599,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
   this->orb_->_use_omg_ior_format (use_ior);
-  this->orb_->_optimize_collocation_objects (this->opt_for_collocation_);
 
   // Set the <shutdown_lock_> for the ORB.
   this->orb_->shutdown_lock_ = ssf->create_event_loop_lock ();
@@ -733,6 +761,12 @@ TAO_ORB_Core::fini (void)
   //    is staticaly added to the service configurator, fredk
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
+
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                              *ACE_Static_Object_Lock::instance (), 0));
+    TAO_ORB_Table::instance ()->unbind (this->orbid_);
+  }
 
   delete this;
 
@@ -925,9 +959,6 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
   // Also grab the acceptor passively listening for connection
   // requests.
 
-  this->using_collocation (p->using_collocation ());
-  // Use the same collocation settings
-
   this->resource_factory_ = p->resource_factory ();
   this->client_factory_ = p->client_factory ();
   this->server_factory_ = p->server_factory ();
@@ -982,40 +1013,13 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
 }
 
 int
-TAO_ORB_Core::add_to_collocation_table (void)
+TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
-  if (this->using_collocation ())
-    {
-      TAO_GLOBAL_Collocation_Table *collocation_table = this->resource_factory ()->get_global_collocation_table ();
-      if (collocation_table != 0)
-        return collocation_table->bind (this->orb_params ()->addr (),
-                                        this->object_adapter ());
-    }
-  return 0;
-}
+  if (this->acceptor_registry_ == 0)
+    return 0;
 
-TAO_Object_Adapter *
-TAO_ORB_Core::get_collocated_object_adapter (const ACE_INET_Addr &addr)
-{
-  if (this->using_collocation ())
-    {
-      TAO_GLOBAL_Collocation_Table *collocation_table = this->resource_factory ()->get_global_collocation_table ();
-      if (collocation_table != 0)
-        {
-          TAO_Object_Adapter *object_adapter;
-          if (collocation_table->find (addr,
-                                       object_adapter) == 0)
-            return object_adapter;
-        }
-      else
-        {
-          if (addr == this->orb_params ()->addr ())
-            return this->object_adapter ();
-        }
-    }
-  return 0;
+  return this->acceptor_registry_->is_collocated (mprofile);
 }
-
 
 int
 TAO_ORB_Core::leader_available (void)
@@ -1277,6 +1281,47 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
 // ****************************************************************
 
+TAO_ORB_Table::TAO_ORB_Table (void)
+{
+}
+
+TAO_ORB_Table::~TAO_ORB_Table (void)
+{
+}
+
+TAO_ORB_Table::Iterator
+TAO_ORB_Table::begin (void)
+{
+  return this->table_.begin ();
+}
+
+TAO_ORB_Table::Iterator
+TAO_ORB_Table::end (void)
+{
+  return this->table_.end ();
+}
+
+int
+TAO_ORB_Table::bind (const char* orb_id,
+                     TAO_ORB_Core* orb_core)
+{
+  return this->table_.bind (orb_id, orb_core);
+}
+
+TAO_ORB_Core*
+TAO_ORB_Table::find (const char* orb_id)
+{
+  TAO_ORB_Core* found = 0;
+  this->table_.find (orb_id, found);
+  return found;
+}
+
+int
+TAO_ORB_Table::unbind (const char* orb_id)
+{
+  return this->table_.unbind (orb_id);
+}
+
 // ****************************************************************
 
 // This function exists because of Win32's proclivity for expanding
@@ -1304,17 +1349,19 @@ template class ACE_Env_Value<u_int>;
 template class ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
 
-template class ACE_Guard<TAO_Collocation_Table_Lock>;
-template class ACE_Read_Guard<TAO_Collocation_Table_Lock>;
-template class ACE_Write_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
-
-template class ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>;
 
 template class ACE_Node<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>;
 template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
+
+template class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
+template class ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>;
+template class ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
+template class ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
+template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -1324,16 +1371,18 @@ template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 #pragma instantiate ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
 
-#pragma instantiate ACE_Guard<TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Read_Guard<TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Write_Guard<TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
-
-#pragma instantiate ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
 
 #pragma instantiate ACE_Node<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>
+
+#pragma instantiate ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>
+#pragma instantiate ACE_Map_Manager<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

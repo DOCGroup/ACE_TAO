@@ -57,20 +57,6 @@ typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
 
 // ****************************************************************
 
-class TAO_Collocation_Table_Lock : public ACE_Adaptive_Lock
-{
-  // TITLE
-  //   This lock class determines the type underlying lock
-  //   when it gets constructed.
-public:
-  TAO_Collocation_Table_Lock (void);
-  ~TAO_Collocation_Table_Lock (void);
-};
-
-typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock> TAO_GLOBAL_Collocation_Table;
-
-// ****************************************************************
-
 typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_CREATION_STRATEGY;
 
@@ -78,7 +64,7 @@ typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
 
 // ****************************************************************
-class TAO_Export TAO_Protocol_Item 
+class TAO_Export TAO_Protocol_Item
 {
 public:
   TAO_Protocol_Item (const ACE_CString &name);
@@ -103,12 +89,12 @@ private:
   // pointer to factory object.
 };
 
-// typedefs for containers containing the list of loaded protocol 
+// typedefs for containers containing the list of loaded protocol
 // factories.
-typedef ACE_Unbounded_Set<TAO_Protocol_Item*> 
+typedef ACE_Unbounded_Set<TAO_Protocol_Item*>
         TAO_ProtocolFactorySet;
 
-typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*> 
+typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
         TAO_ProtocolFactorySetItor;
 
 // ****************************************************************
@@ -158,11 +144,6 @@ public:
   virtual TAO_Object_Adapter *object_adapter (void);
   // Return a object adapter to be utilized.
 
-  virtual TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
-  // Get the global collocation table.  Return the pointer to the
-  // global collocation table if we are using one, otherwise, return
-  // 0.
-
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   // Access the input CDR allocators.
@@ -177,7 +158,7 @@ public:
 
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
   // The protocol factory list is implemented in this class since
-  // a) it will be a global resource and 
+  // a) it will be a global resource and
   // b) it is initialized at start up and then not altered.
   // Returns a container holding the list of loaded protocols.
 

@@ -218,9 +218,9 @@ public:
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
 
-  virtual TAO_ObjectKey *_key (CORBA::Environment &env) = 0;
+  virtual TAO_ObjectKey *_key (CORBA::Environment &env) const = 0;
   // Obtain the object key, return 0 if the profile cannot be parsed.
-  // The memory is owned by this object (not given to the caller).
+  // The memory is owned by the caller!
 
   void forward_to (TAO_MProfile *mprofiles);
   // Keep a pointer to the forwarded profile
@@ -302,6 +302,9 @@ public:
 
   virtual ACE_Event_Handler *acceptor (void) = 0;
   // Return the ACE acceptor...
+
+  virtual int is_collocated (const TAO_Profile* profile) = 0;
+  // Return 1 if the <profile> has the same endpoint as the acceptor.
 
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.

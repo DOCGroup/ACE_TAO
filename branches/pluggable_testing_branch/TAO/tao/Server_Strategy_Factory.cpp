@@ -62,12 +62,6 @@ TAO_Server_Strategy_Factory::create_event_loop_lock (void)
 }
 
 ACE_Lock *
-TAO_Server_Strategy_Factory::create_collocation_table_lock (void)
-{
-  return 0;
-}
-
-ACE_Lock *
 TAO_Server_Strategy_Factory::create_cached_connector_lock (void)
 {
   return 0;

@@ -27,7 +27,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 
 // @@ Fred&Ossama: Maybe not for the current round of changes, but
 //    shouldn't the acceptor know which version to create?
-//    And isn't this the right place to setup the tagged components of 
+//    And isn't this the right place to setup the tagged components of
 //    a v1.[12] profile?
 
 // @@ Fred&Ossama: We need to check this interface: a single
@@ -45,6 +45,23 @@ TAO_IIOP_Acceptor::create_profile (TAO_ObjectKey &object_key)
     return 0;
 
   return new TAO_IIOP_Profile (new_address, object_key);
+}
+
+int
+TAO_IIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
+{
+  const TAO_IIOP_Profile *profile =
+    ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
+
+  // @@ We should probably cache this value, but then again some
+  //    acceptors have multiple addresses.
+  // @@ Fred: any ideas on how to optimize that?
+  ACE_INET_Addr address;
+  if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
+    return 0;
+
+  // @@ Osssama: can you verify that this operator does the right thing?
+  return profile->object_addr () == address;
 }
 
 ACE_Event_Handler *

@@ -76,9 +76,6 @@ public:
   // controlling the event loop (termination). Otherwise a
   // Recursive_Thread_Mutex or Thread_Mutex may be required.
 
-  virtual ACE_Lock *create_collocation_table_lock (void);
-  // Creates and returns the lock for the global collocation table.
-
   virtual ACE_Lock *create_cached_connector_lock (void);
   // Creates and returns the lock for the global collocation table.
 
@@ -121,9 +118,6 @@ protected:
 
   Lock_Type event_loop_lock_type_;
   // The type of lock to be returned by <create_event_loop_lock()>.
-
-  Lock_Type collocation_table_lock_type_;
-  // Type of lock used by the collocation table.
 
   Lock_Type cached_connector_lock_type_;
   // Type of lock used by the cached connector.

@@ -227,30 +227,30 @@ TAO_UIOP_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 
 #if !defined (TAO_NO_IOR_TABLE)
   if (ACE_OS::memcmp (object_key,
-		      &TAO_POA::objectkey_prefix[0],
-		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+                      &TAO_POA::objectkey_prefix[0],
+                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       ACE_CString object_id (ACE_reinterpret_cast (const char *, object_key),
-			     TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
-			     0,
-			     0);
+                             TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
+                             0,
+                             0);
 
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Simple Object key %s. Doing the Table Lookup ...\n",
-		    object_id.c_str ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "Simple Object key %s. Doing the Table Lookup ...\n",
+                    object_id.c_str ()));
 
       CORBA::Object_ptr object_reference;
 
       // Do the Table Lookup.
       int status =
-	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
-							 object_reference);
+        this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
+                                                         object_reference);
 
       // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
 
       if (CORBA::is_nil (object_reference) || status == -1)
-	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
+        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
 
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
@@ -325,11 +325,11 @@ TAO_UIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
 // #if !defined (TAO_NO_IOR_TABLE)
 //   if (ACE_OS::memcmp (tmp_key.get_buffer (),
-// 		      &TAO_POA::objectkey_prefix[0],
-// 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
+//                    &TAO_POA::objectkey_prefix[0],
+//                    TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) == 0)
 //     {
 //       ACE_DEBUG ((LM_DEBUG,
-// 		  "TAO Object Key Prefix found in the object key.\n"));
+//                "TAO Object Key Prefix found in the object key.\n"));
 
 
 //       // Do the Table Lookup. Raise a location forward exception or
@@ -1368,17 +1368,6 @@ template class ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>;
 
-template class ACE_Hash_Map_Manager<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Manager_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Entry<ACE_UNIX_Addr, TAO_Object_Adapter *>;
-template class ACE_Hash<ACE_UNIX_Addr>;
-template class ACE_Equal_To<ACE_UNIX_Addr>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
-
 template class ACE_Hash_Map_Entry<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *>;
 template class ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
 template class ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
@@ -1406,17 +1395,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_
 #pragma instantiate ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>
-
-#pragma instantiate ACE_Hash_Map_Manager<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_UNIX_Addr, TAO_Object_Adapter *>
-#pragma instantiate ACE_Hash<ACE_UNIX_Addr>
-#pragma instantiate ACE_Equal_To<ACE_UNIX_Addr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
 
 #pragma instantiate ACE_Hash_Map_Entry<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *>
 #pragma instantiate ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>

@@ -14,7 +14,6 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
     poa_lock_type_ (TAO_THREAD_LOCK),
     poa_mgr_lock_type_ (TAO_THREAD_LOCK),
     event_loop_lock_type_ (TAO_NULL_LOCK),
-    collocation_table_lock_type_ (TAO_THREAD_LOCK),
     cached_connector_lock_type_ (TAO_THREAD_LOCK),
     creation_strategy_ (0),
     concurrency_strategy_ (0)
@@ -85,29 +84,12 @@ TAO_Default_Server_Strategy_Factory::create_event_loop_lock (void)
 
   if (this->event_loop_lock_type_ == TAO_NULL_LOCK)
     ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-		    0);
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                    0);
   else
     ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX> (),
-		    0);
-
-  return the_lock;
-}
-
-ACE_Lock *
-TAO_Default_Server_Strategy_Factory::create_collocation_table_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-  if (this->collocation_table_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-		    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
-		    0);
+                    ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX> (),
+                    0);
 
   return the_lock;
 }
@@ -119,12 +101,12 @@ TAO_Default_Server_Strategy_Factory::create_cached_connector_lock (void)
 
   if (this->cached_connector_lock_type_ == TAO_NULL_LOCK)
     ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-		    0);
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                    0);
   else
     ACE_NEW_RETURN (the_lock,
-		    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
-		    0);
+                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                    0);
 
   return the_lock;
 }
@@ -340,19 +322,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->poa_mgr_lock_type_ = TAO_NULL_LOCK;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBcoltbllock") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name, "thread") == 0)
-              this->collocation_table_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name, "null") == 0)
-              this->collocation_table_lock_type_ = TAO_NULL_LOCK;
-          }
-      }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBconnectorlock") == 0)
       {
         curarg++;
@@ -393,8 +362,8 @@ TAO_Default_Server_Creation_Strategy::make_svc_handler (TAO_Server_Connection_Ha
       // TSS singleton.
       TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
       ACE_NEW_RETURN (sh,
-		      TAO_Server_Connection_Handler (orb_core),
-		      -1);
+                      TAO_Server_Connection_Handler (orb_core),
+                      -1);
     }
   return 0;
 }
@@ -410,9 +379,9 @@ template class ACE_Thread_Strategy<TAO_Server_Connection_Handler>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
-		       ASYS_TEXT ("Server_Strategy_Factory"),
+                       ASYS_TEXT ("Server_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
-		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)

@@ -859,10 +859,10 @@ TAO_SYSTEM_EXCEPTION_LIST
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
   static ORB_ptr ORB_init (int &argc,
-                           char *const *argv,
+                           char *argv[],
                            const char *orb_name = 0);
   static ORB_ptr ORB_init (int &argc,
-                           char *const *argv,
+                           char *argv[],
                            const char *orb_name,
                            CORBA_Environment &TAO_IN_ENV);
   // ORB initialisation
