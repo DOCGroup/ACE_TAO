@@ -20,6 +20,10 @@
 #ifndef AVSTREAMS_I_H
 #define AVSTREAMS_I_H
 
+#if !defined (TAO_AV_Export)
+#define TAO_AV_Export
+#endif /*TAO_AV_Export*/
+
 #include "ace/OS.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ATM_Addr.h"
@@ -46,7 +50,7 @@
 #include "orbsvcs/Trader/Trader.h"
 #endif /* TAO_ORBSVCS_HAS_Trader */
 
-#include "FlowSpec_Entry.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
 
 #if defined(sun) || defined(__osf__)
 extern "C" int gethostname(char* name, int len);
@@ -738,7 +742,8 @@ public:
                                 CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
-                     AVStreams::noSuchFlow));
+                     AVStreams::noSuchFlow,
+                     notSupported));
   // Used to remove a multicast leaf
 
   virtual ~TAO_StreamEndPoint_A (void);
@@ -963,7 +968,8 @@ public:
                             CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported,
-                     AVStreams::noSuchFlow));
+                     AVStreams::noSuchFlow,
+                     streamOpFailed));
   // Not supported in the light profile, raises notsupported
 
   virtual ~TAO_MMDevice (void);
