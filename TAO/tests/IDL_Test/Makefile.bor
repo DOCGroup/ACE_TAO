@@ -52,8 +52,7 @@ OBJFILES = \
 	$(OBJDIR)\unionS.obj \
 	$(OBJDIR)\nested_scopeC.obj \
 	$(OBJDIR)\nested_scopeS.obj \
-	$(OBJDIR)\main.obj \
-	$(OBJDIR)\namespace_check.obj
+	$(OBJDIR)\main.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
