@@ -1,3 +1,10 @@
+Thu Aug 26 11:22:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Abstract_Interface/Abstract_Interface.mpc:
+        
+          Changed dependencies in the client project, and added
+          explicit file lists to both projects.
+
 Thu Aug 26 10:38:49 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
