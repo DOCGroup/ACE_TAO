@@ -230,6 +230,16 @@ public abstract class Task implements Runnable, EventHandler
   }
 
   /**
+   * Insert a message into the queue, blocking forever if necessary.
+   *@param mb Message Block to insert
+   *@exception java.lang.InterruptedException Interrupted while accessing queue
+   */
+  protected int putq (MessageBlock mb) throws InterruptedException
+  {
+      return this.putq(mb, null);
+  }
+
+  /**
    * Insert message into the message queue.
    *@param mb Message Block to insert into the Message Queue
    *@param tv time to wait until (absolute time)
@@ -238,6 +248,17 @@ public abstract class Task implements Runnable, EventHandler
   protected int putq (MessageBlock mb, TimeValue tv) throws InterruptedException
     {
       return this.msgQueue_.enqueueTail (mb, tv);
+    }
+
+  /**
+   * Extract the first message from the queue, blocking forever if
+   * necessary.
+   *@return the first Message Block from the Message Queue.
+   *@exception InterrupteException Interrupted while accessing queue
+   */
+  protected MessageBlock getq() throws InterruptedException
+    {
+      return this.getq(null);
     }
 
   /**
