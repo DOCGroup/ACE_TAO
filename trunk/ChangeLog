@@ -1,3 +1,16 @@
+Mon Dec 20 14:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_TEMPNAM
+
+        * ace/OS_NS_stdlib.inl:
+          Simplified tempnam implementation and replaced several C-style
+          casts with their C++ version. Removed obsolete gets that was
+          commented out.
+
+        * ace/OS_NS_stdlib.h:
+          Changed some comments to doxygen style
+
 Mon Dec 20 13:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_arpa_inet.cpp:
