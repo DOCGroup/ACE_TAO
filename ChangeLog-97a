@@ -1,5 +1,8 @@
 Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/ace.mak: removed Thread_Priority and renamed Scheduling_Params
+	  to Sched_Param.
+
 	* tests/Priority_Task_Test.cpp,
 	  examples/Threads/{context_switch_time.cpp,Makefile}:
 	  adapted to new thread priority/ACE_Sched_Params.
