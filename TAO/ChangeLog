@@ -1,32 +1,30 @@
 Wed Jun 09 16:49:17 2004  Simon McQueen  <sm@prismtechnologies.com>
 
-   * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
-   * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
-   * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
-   * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
-   * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-   * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
-   * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
-   * orbsvcs/ImplRepo_Service/tao_imr_i.h:
-   * tao/PortableServer/ImplRepo.pidl:
-   * tao/PortableServer/ImplRepoC.cpp:
-   * tao/PortableServer/ImplRepoC.h:
-   * tao/PortableServer/ImplRepoC.i:
-   * tao/PortableServer/ImplRepoS.cpp:
-   * tao/PortableServer/ImplRepoS.h:
-   * tao/PortableServer/ImplRepoS.i:
-   * tao/PortableServer/ImR_LocatorC.cpp:
-   * tao/PortableServer/ImR_LocatorC.h:
-   * tao/PortableServer/ImR_LocatorC.i:
-   * tao/PortableServer/ImR_LocatorS.cpp:
-   * tao/PortableServer/ImR_LocatorS.h:
-   * tao/PortableServer/ImR_LocatorS.i:
+	* orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.h:
+	* tao/PortableServer/ImplRepo.pidl:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ImplRepoS.i:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImR_LocatorC.h:
+	* tao/PortableServer/ImR_LocatorC.i:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImR_LocatorS.h:
+	* tao/PortableServer/ImR_LocatorS.i:
 
-     Added command 'shutdown-repo' to tao_imr to permit the remote
-     orderly shutdown of the ImR and any Activators registered with
-     it.
-
-     This closes bug # 1335.
+	  Added command 'shutdown-repo' to tao_imr to permit the remote
+	  orderly shutdown of the ImR and any Activators registered with
+	  it.  This closes bug # 1335.
 
 Tue Jun  8 17:00:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
