@@ -1,5 +1,5 @@
 // $Id$
-
+// 
 // ============================================================================
 //
 // = LIBRARY
@@ -93,17 +93,30 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
   return (return_val);
 }
 
+// Constructor
+// Init the hash_table_ member variable.
+// alex : Is it correct to have this const hash Table size ????
 TAO_PropertySet::TAO_PropertySet (void)
+  : hash_table_ (HASH_TABLE_SIZE)
 {
+  ACE_DEBUG ( (LM_DEBUG, "Hash_Map_Manager created::  CurntSize : %d , TotalSize : %d \n", this->hash_table_.current_size (),
+               this->hash_table_.total_size ()) );
 }
 
 TAO_PropertySet::~TAO_PropertySet (void)
 {
-}
   
+}
+
+// Function to modify or add a property to the PropertySet  
+// alex: Just adds the name value to the set... Doesn't check for Typecode overwriting, duplicate names, void names etc, yet.
 void 
 TAO_PropertySet::define_property (const char *property_name, const CORBA::Any &property_value,  CORBA::Environment &env)
 {
+  EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
+  INT_ID int_id (property_value);
+  
+  this->hash_table_.bind (ext_id, int_id);
 }
 
 void 
@@ -111,12 +124,11 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
 {
 }
   
+// Returns the current number of properties associated with this PropertySet
 CORBA::ULong 
 TAO_PropertySet::get_number_of_properties ( CORBA::Environment &env)
 {
-  CORBA::ULong return_val;
-
-  return (return_val);
+  return (this->hash_table_.current_size ());
 }
 
 void 
@@ -126,12 +138,17 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
 {  
 }
 
+// Returns the value of a property in the PropertySet
 CORBA::Any * 
 TAO_PropertySet::get_property_value (const char *property_name,  CORBA::Environment &env)
 {
-  CORBA::Any *return_val;
-  
-  return (return_val);
+  EXT_ID ext_id ( (CosPropertyService::PropertyName )property_name);
+  INT_ID int_id;
+
+  if (this->hash_table_.find (ext_id, int_id) != 0) {
+    ACE_DEBUG ((LM_DEBUG, "Entry Not Found"));
+  }
+  return (&int_id.pvalue_);
 }
   
 CORBA::Boolean
@@ -150,9 +167,16 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many, CosPropertyService::
 {
 }
 
+// Deletes the specified property if it exists from a PropertySet
 void 
 TAO_PropertySet::delete_property (const char *property_name,  CORBA::Environment &env)
 {
+  EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
+  
+  // alex: Doing unbinding.. Not getting INT_ID back... Problem if dynamic allocation is done
+  if (this->hash_table_.unbind (ext_id) != 0) {
+    ACE_ERROR ( (LM_ERROR, "Unbind failed \n"));
+  }
 }
   
 void 
@@ -169,15 +193,20 @@ TAO_PropertySet::delete_all_properties ( CORBA::Environment &env)
 }  
 
 
+// Returns TRUE if the property is defined in the PropertySet
 CORBA::Boolean
 TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environment &env)
 {
-  CORBA::Boolean return_val;
-
-  return return_val;
+  EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
+ 
+  if (this->hash_table_.find (ext_id) == 0) {
+    return (CORBA::B_TRUE);
+  }    
+  else {
+    return (CORBA::B_FALSE); 
+  }
 }  
 
-}
 
 TAO_PropertySetDef::TAO_PropertySetDef (void)
 {
@@ -186,6 +215,7 @@ TAO_PropertySetDef::TAO_PropertySetDef (void)
 TAO_PropertySetDef::~TAO_PropertySetDef (void)
 {
 }
+
 void 
 TAO_PropertySetDef::get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types,  CORBA::Environment &env)
 {
@@ -297,13 +327,15 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many, CosPropertyService::Prope
                                 CORBA::Environment &env)
 {
   CORBA::Boolean return_val;
-
+  
+  ACE_UNUSED_ARG (return_val);
   return (return_val);
 }
 
 void
 TAO_PropertiesIterator::destroy ( CORBA::Environment &env)
 {
+
 }
 
 
