@@ -117,7 +117,11 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head (ACE_MESSAGE
                                      DEFUALT_PRIORITY),
                   -1);
 
-  return this->queue_.enqueue_head (mb, timeout);
+  int result = this->queue_.enqueue_head (mb, timeout);
+  if (result == -1)
+    // Zap the message.
+    mb->release ();
+  return result;
 }
 
 // Enqueue an <ACE_MESSAGE_TYPE *> into the <Message_Queue> in
@@ -147,7 +151,12 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE
                                      DEFUALT_PRIORITY ),
                   -1);
 
-  return this->queue_.enqueue_prio (mb, timeout);
+  int result = this->queue_.enqueue_prio (mb, timeout);
+  if (result == -1)
+    // Zap the message.
+    mb->release ();
+
+  return result;
 }
 
 // Block indefinitely waiting for an item to arrive,
@@ -167,7 +176,11 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail (ACE_MESSAGE
                                      DEFUALT_PRIORITY),
                   -1);
 
-  return this->queue_.enqueue_tail (mb, timeout);
+  int result = this->queue_.enqueue_tail (mb, timeout);
+  if (result == -1)
+    // Zap the message.
+    mb->release ();
+  return result;
 }
 
 // Remove an item from the front of the queue.  If timeout == 0 block

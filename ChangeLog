@@ -1,3 +1,10 @@
+Thu Mar 29 16:16:07 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Message_Queue_T.cpp: If any of the various ACE_Message_Queue_Ex
+	  enqueue*() methods fail then make sure to release the message
+ 	  blocks!  Thanks to Boris Kolpackov <bosk@ipmce.ru> for reporting
+ 	  this.
+
 Wed Mar 28 21:39:26 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/NT_Service.h:
