@@ -14,6 +14,7 @@
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
