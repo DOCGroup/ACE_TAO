@@ -108,6 +108,7 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "in handle_signal\n"));
+  ACE_UNUSED_ARG (signum);
 
   return (this->*action_) ();
 }
