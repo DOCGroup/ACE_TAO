@@ -15,11 +15,13 @@
 
 #include "ace/pre.h"
 
-#include "tao/Endpoint.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_Endpoint;
 
 /**
  * @class TAO_Transport_Descriptor_Interface
@@ -38,8 +40,6 @@
  * 2. is_equivalent ()
  * 3. hash ()
  */
-
-
 class TAO_Export TAO_Transport_Descriptor_Interface
 {
 public:

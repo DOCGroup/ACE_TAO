@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Leader_Follower.h
@@ -11,6 +13,7 @@
 
 #ifndef TAO_LEADER_FOLLOWER_H
 #define TAO_LEADER_FOLLOWER_H
+
 #include "ace/pre.h"
 
 #include "tao/LF_Follower.h"
@@ -24,6 +27,7 @@
 
 class TAO_LF_Event;
 class TAO_New_Leader_Generator;
+class TAO_Transport;
 
 class TAO_Export TAO_Leader_Follower
 {
@@ -270,4 +274,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* TAO_LEADER_FOLLOWER_H */

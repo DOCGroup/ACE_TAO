@@ -4,6 +4,8 @@
 
 #include "tao/Acceptor_Registry.h"
 #include "tao/Profile.h"
+#include "tao/Pluggable.h"
+#include "tao/Protocol_Factory.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/params.h"

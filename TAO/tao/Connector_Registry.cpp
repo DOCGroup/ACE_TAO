@@ -5,6 +5,8 @@
 #include "tao/Connector_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
+#include "tao/Pluggable.h"
+#include "tao/Protocol_Factory.h"
 #include "tao/Endpoint.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
