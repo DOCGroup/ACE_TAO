@@ -368,7 +368,7 @@ be_decl::compute_prefix ()
 	{
 	  idl_global->err ()->syntax_error
 	    (IDL_GlobalData::PS_PragmaPrefixSyntax);
-	  this->prefix_ = ACE_OS::strnew ("");
+	  this->prefix_ = ACE::strnew ("");
 	  return;
 	}
       int l = end - tmp;
@@ -381,15 +381,15 @@ be_decl::compute_prefix ()
   // Could not find it in the local scope, try to recurse to the top
   // scope...
   if (this->defined_in () == 0)
-    this->prefix_ = ACE_OS::strnew ("");
+    this->prefix_ = ACE::strnew ("");
   else
     {
       be_scope* scope = 
 	be_scope::narrow_from_scope (this->defined_in ());
       if (scope == 0)
-	this->prefix_ = ACE_OS::strnew ("");
+	this->prefix_ = ACE::strnew ("");
       else
-	this->prefix_ = ACE_OS::strnew (scope->decl()->prefix ());
+	this->prefix_ = ACE::strnew (scope->decl()->prefix ());
     }
 }
 

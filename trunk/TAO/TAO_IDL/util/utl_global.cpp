@@ -107,15 +107,15 @@ IDL_GlobalData::IDL_GlobalData()
       pd_idl_src_file (0),
       export_macro_ (0),
       export_include_ (0),
-      client_hdr_ending_ (ACE_OS::strnew ("C.h")),
-      client_stub_ending_ (ACE_OS::strnew ("C.cpp")),
-      client_inline_ending_ (ACE_OS::strnew ("C.i")),
-      server_hdr_ending_ (ACE_OS::strnew ("S.h")),
-      server_template_hdr_ending_ (ACE_OS::strnew ("S_T.h")),
-      server_skeleton_ending_ (ACE_OS::strnew ("S.cpp")),
-      server_template_skeleton_ending_ (ACE_OS::strnew ("S_T.cpp")),
-      server_inline_ending_ (ACE_OS::strnew ("S.i")),
-      server_template_inline_ending_ (ACE_OS::strnew ("S_T.i")),
+      client_hdr_ending_ (ACE::strnew ("C.h")),
+      client_stub_ending_ (ACE::strnew ("C.cpp")),
+      client_inline_ending_ (ACE::strnew ("C.i")),
+      server_hdr_ending_ (ACE::strnew ("S.h")),
+      server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
+      server_skeleton_ending_ (ACE::strnew ("S.cpp")),
+      server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
+      server_inline_ending_ (ACE::strnew ("S.i")),
+      server_template_inline_ending_ (ACE::strnew ("S_T.i")),
       perfect_hasher_ (0),
       output_dir_ (0)  
 {
@@ -804,7 +804,7 @@ void
 IDL_GlobalData::client_hdr_ending (const char* s)
 {
   delete this->client_hdr_ending_;
-  this->client_hdr_ending_ = ACE_OS::strnew (s);
+  this->client_hdr_ending_ = ACE::strnew (s);
 }
 
 // Get the client_hdr_ending.
@@ -818,7 +818,7 @@ void
 IDL_GlobalData::client_inline_ending  (const char* s)
 {
   delete this->client_inline_ending_;
-  this->client_inline_ending_ = ACE_OS::strnew (s);
+  this->client_inline_ending_ = ACE::strnew (s);
 }
 
 const char*
@@ -832,7 +832,7 @@ void
 IDL_GlobalData::client_stub_ending (const char* s)
 {
   delete this->client_stub_ending_;
-  this->client_stub_ending_ = ACE_OS::strnew (s);
+  this->client_stub_ending_ = ACE::strnew (s);
 }  
   
 const char*
@@ -845,7 +845,7 @@ void
 IDL_GlobalData::server_hdr_ending (const char* s)
 {
   delete this->server_hdr_ending_;
-  this->server_hdr_ending_ = ACE_OS::strnew (s);
+  this->server_hdr_ending_ = ACE::strnew (s);
 }
 
 const char* 
@@ -858,7 +858,7 @@ void
 IDL_GlobalData::server_template_hdr_ending (const char* s)
 {
   delete this->server_template_hdr_ending_;
-  this->server_template_hdr_ending_ = ACE_OS::strnew (s);
+  this->server_template_hdr_ending_ = ACE::strnew (s);
 }
   
 const char* 
@@ -871,7 +871,7 @@ void
 IDL_GlobalData::server_skeleton_ending (const char* s) 
 {
   delete this->server_skeleton_ending_;
-  this->server_skeleton_ending_ = ACE_OS::strnew (s);
+  this->server_skeleton_ending_ = ACE::strnew (s);
 }
   
 const char* 
@@ -884,7 +884,7 @@ void
 IDL_GlobalData::server_template_skeleton_ending (const char* s)
 {
   delete this->server_template_skeleton_ending_;
-  this->server_template_skeleton_ending_ = ACE_OS::strnew (s);
+  this->server_template_skeleton_ending_ = ACE::strnew (s);
 }
 
 const char*
@@ -897,7 +897,7 @@ void
 IDL_GlobalData::server_inline_ending (const char* s)
 {
   delete this->server_inline_ending_;
-  this->server_inline_ending_ = ACE_OS::strnew (s);
+  this->server_inline_ending_ = ACE::strnew (s);
 }
 
 const char*
@@ -910,7 +910,7 @@ void
 IDL_GlobalData::server_template_inline_ending (const char* s)
 {
   delete this->server_template_inline_ending_;
-  this->server_template_inline_ending_ = ACE_OS::strnew (s);
+  this->server_template_inline_ending_ = ACE::strnew (s);
 }
 
 const char*
@@ -923,7 +923,7 @@ void
 IDL_GlobalData::output_dir (const char* s)
 {
   delete this->output_dir_;
-  this->output_dir_ = ACE_OS::strnew (s);
+  this->output_dir_ = ACE::strnew (s);
 }
 
 const char*
@@ -936,7 +936,7 @@ void
 IDL_GlobalData::perfect_hasher (const char* s)
 {
   delete this->perfect_hasher_;
-  this->perfect_hasher_ = ACE_OS::strnew (s);
+  this->perfect_hasher_ = ACE::strnew (s);
 }
 
 const char*

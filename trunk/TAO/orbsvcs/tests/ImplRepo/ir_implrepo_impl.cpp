@@ -95,7 +95,7 @@ IR_iRepo_i::parse_args (void)
                              get_opts.optarg), -1);
         break;
       case 'f': // read the IOR from the file.
-        this->server_input_file_ = ACE_OS::strnew (get_opts.optarg);
+        this->server_input_file_ = ACE::strnew (get_opts.optarg);
         break;
       case '?':  // display help for use of the server.
       default:

@@ -128,3 +128,25 @@ ACE::debug (char c)
 {
   ACE::debug_ = c;
 }
+
+ACE_INLINE char *
+ACE::strnew (const char *s)
+{
+  // ACE_TRACE ("ACE::strnew");
+  char *t = new char [::strlen(s) + 1];
+  if (t == 0)
+    return 0;
+  else
+    return ACE_OS::strcpy (t, s);
+}
+
+ACE_INLINE wchar_t *
+ACE::strnew (const wchar_t *s)
+{
+  // ACE_TRACE ("ACE_OS::strnew");
+  wchar_t *t = new wchar_t[::wcslen (s) + 1];
+  if (t == 0)
+    return 0;
+  else
+    return ACE_OS::strcpy (t, s);
+}

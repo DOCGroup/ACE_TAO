@@ -2924,6 +2924,59 @@ ACE::get_ip_interfaces (size_t &count,
 #endif /* ACE_WIN32 */
 }
 
+char *
+ACE::strndup (const char *str, size_t n)
+{
+  const char *t = str;
+  size_t len;
+
+  // Figure out how long this string is (remember, it might not be
+  // NUL-terminated).
+
+  for (len = 0;
+       len < n && *t++ != '\0';
+       len++)
+    continue;
+
+  char *s;
+  ACE_ALLOCATOR_RETURN (s,
+                        (char *) ACE_OS::malloc (len + 1),
+                        0);
+  s[len] = '\0';
+  return ACE_OS::strncpy (s, str, len);
+}
+
+char *
+ACE::strnnew (const char *str, size_t n)
+{
+  const char *t = str;
+  size_t len;
+
+  // Figure out how long this string is (remember, it might not be
+  // NUL-terminated).
+
+  for (len = 0;
+       len < n && *t++ != '\0';
+       len++)
+    continue;
+
+  char *s;
+  ACE_NEW_RETURN (s,
+                  char[len + 1],
+                  0);
+  s[len] = '\0';
+  return ACE_OS::strncpy (s, str, len);
+}
+
+const char *
+ACE::strend (const char *s) 
+{ 
+  while (*s++ != '\0') 
+    continue;
+
+  return s;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__))
 template class ACE_Auto_Array_Ptr<struct ifreq>;
 template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;

@@ -1425,17 +1425,6 @@ ACE_OS::strdup (const char *s)
 #endif /* ACE_HAS_STRDUP_EMULATION */
 }
 
-ACE_INLINE char *
-ACE_OS::strnew (const char *s)
-{
-  // ACE_TRACE ("ACE_OS::strnew");
-  char *t = new char [::strlen(s) + 1];
-  if (t == 0)
-    return 0;
-  else
-    return ACE_OS::strcpy (t, s);
-}
-
 #if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
@@ -9532,17 +9521,6 @@ ACE_OS::strdup (const wchar_t *s)
 #   else
   return ::wcsdup (s);
 #   endif /* __BORLANDC__ */
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strnew (const wchar_t *s)
-{
-  // ACE_TRACE ("ACE_OS::strnew");
-  wchar_t *t = new wchar_t [::wcslen(s) + 1];
-  if (t == 0)
-    return 0;
-  else
-    return ACE_OS::strcpy (t, s);
 }
 
 ACE_INLINE int
