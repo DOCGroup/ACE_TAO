@@ -63,17 +63,11 @@ ACE_Sched_Params::priority_min (const Policy policy,
       // pcinfo.pc_clinfo)->ts_maxupri.  The minimum priority is just
       // the negative of that.
 
-      int priority = -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
-
-      // Don't return priority of 0, because that can't be used with
-      // ::pthread_attr_setschedparam on Solaris 2.5.1.
-      return priority == 0 ? 1 : 0;
+      return -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
     }
   else
     {
-      // Don't return priority of 0, because that can't be used with
-      // ::pthread_attr_setschedparam on Solaris 2.5.1.
-      return 1;
+      return 0;
     }
 #elif defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
