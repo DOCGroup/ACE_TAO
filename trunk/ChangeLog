@@ -1,3 +1,8 @@
+Tue Dec 14 19:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_cygwin32.GNU:
+          Added flags for fltk usage with cygwin
+
 Tue Dec 14 18:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
