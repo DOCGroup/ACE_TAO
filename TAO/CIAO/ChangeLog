@@ -4,7 +4,7 @@ Wed Aug  4 22:50:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* performance-tests/Protocols/Controller/Controller.mpc (perf):
 	* tools/XML_Helpers/XMLHelpers.mpc (Helper_Test):
 
-	  Fixes static build link-time errors due to missing libraries.
+	  Fixed static build link-time errors due to missing libraries.
 
 Wed Aug  4 22:31:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
