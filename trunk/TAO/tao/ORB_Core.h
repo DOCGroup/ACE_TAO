@@ -422,11 +422,16 @@ public:
   // Run the event loop
 
   void shutdown (CORBA::Boolean wait_for_completion,
-                 CORBA::Environment &ACE_TRY_ENV);
+                 CORBA::Environment &ACE_TRY_ENV =
+                     TAO_default_environment ());
   // End the event loop
 
   int has_shutdown (void);
   // Get the shutdown flag value
+
+  void destroy (CORBA::Environment &ACE_TRY_ENV =
+                    TAO_default_environment ());
+  // Shutdown the ORB and free resources
 
   int thread_per_connection_timeout (ACE_Time_Value &timeout) const;
   // Returns the <timeout> value used by the server threads to poll
@@ -473,7 +478,7 @@ protected:
   // pre-fetched TSS resources, this minimizes the number of calls to
   // them.
 
-  int open (void);
+  int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.

@@ -180,14 +180,28 @@ CORBA_ORB::~CORBA_ORB (void)
 void
 CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
                      CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_core ()->shutdown (wait_for_completion,
                                ACE_TRY_ENV);
 }
 
-int
-CORBA_ORB::perform_work (const ACE_Time_Value &tv)
+void
+CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->orb_core ()->destroy (ACE_TRY_ENV);
+}
+
+int
+CORBA_ORB::perform_work (const ACE_Time_Value &tv,
+                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // This method should not be called if the ORB has been shutdown.
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   ACE_Reactor *r = this->orb_core_->reactor ();
 
   // Set the owning thread of the Reactor to the one which we're
@@ -202,8 +216,13 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
 }
 
 CORBA::Boolean
-CORBA_ORB::work_pending (void)
+CORBA_ORB::work_pending (CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // This method should not be called if the ORB has been shutdown.
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   // For the moment, there's always work to do...
   return 1;
 #if 0
@@ -768,6 +787,10 @@ CORBA_ORB::resolve_initial_references (const char *name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &ACE_TRY_ENV)
 {
+  // This method should not be called if the ORB has been shutdown.
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
   if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_root_poa (ACE_TRY_ENV);
 
@@ -900,6 +923,20 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
   data->servant_orb (CORBA::ORB::_duplicate (this));
   return new_obj;
+}
+
+void
+CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (this->orb_core ()->has_shutdown ())
+    {
+      // As defined by the CORBA 2.3 specification, throw a
+      // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
+      // has shutdown by the time an ORB function is called.
+
+      ACE_THROW (CORBA::BAD_INV_ORDER (4, CORBA::COMPLETED_NO));
+    }
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -1252,6 +1289,10 @@ CORBA::String
 CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                              CORBA::Environment &ACE_TRY_ENV)
 {
+  // This method should not be called if the ORB has been shutdown.
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.
 
@@ -1316,6 +1357,16 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       if (obj->_stubobj () == 0)
         ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
+      // @@ According to Carlos, we shouldn't be using
+      //    profile_in_use(). Instead we should use the first profile
+      //    in the MProfile instead, for example.
+      //
+      //    For now, I'll just throw an exception since I was getting
+      //    segmentation faults.
+      //             -Ossama
+      if (obj->_stubobj ()->profile_in_use () == 0)
+        ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+
       return obj->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
     }
 }
@@ -1327,6 +1378,10 @@ CORBA::Object_ptr
 CORBA_ORB::string_to_object (const char *str,
                              CORBA::Environment &ACE_TRY_ENV)
 {
+  // This method should not be called if the ORB has been shutdown.
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)

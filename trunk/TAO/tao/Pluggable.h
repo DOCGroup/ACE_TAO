@@ -368,11 +368,12 @@ public:
   virtual int open (TAO_ORB_Core *orb_core,
                     int version_major,
                     int version_minor,
-                    ACE_CString &address,
-                    CORBA::Short corba_priority = 0) = 0;
-  // method to initialize acceptor for address.
+                    const char *address,
+                    const char *options = 0) = 0;
+  // Method to initialize acceptor for address.
 
-  virtual int open_default (TAO_ORB_Core *orb_core) = 0;
+  virtual int open_default (TAO_ORB_Core *orb_core,
+                            const char *options = 0) = 0;
   // Open an acceptor on the default endpoint for this protocol
 
   virtual int close (void) = 0;
@@ -389,7 +390,7 @@ public:
   // Return 1 if the <profile> has the same endpoint as the acceptor.
 
   virtual CORBA::ULong endpoint_count (void) = 0;
-  // returns the number of endpoints this acceptor is listening on.  This
+  // Returns the number of endpoints this acceptor is listening on.  This
   // is used for determining how many profiles will be generated
   // for this acceptor.
 

@@ -63,9 +63,10 @@ public:
   virtual int open (TAO_ORB_Core *orb_core,
                     int version_major,
                     int version_minor,
-                    ACE_CString &address,
-                    CORBA::Short corba_priority = 0);
-  virtual int open_default (TAO_ORB_Core *orb_core);
+                    const char *address,
+                    const char *options = 0);
+  virtual int open_default (TAO_ORB_Core *orb_core,
+                            const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
@@ -80,6 +81,9 @@ private:
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);
   // Set the rendezvous point and verify that it is
   // valid (e.g. wasn't truncated because it was too long).
+
+  int parse_options (const char *options);
+  // Parse protocol specific options.
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
@@ -101,6 +105,10 @@ private:
   // be unlinked on close.  This is really only used when an error
   // occurs.
 };
+
+#  if defined(__ACE_INLINE__)
+#    include "tao/UIOP_Acceptor.i"
+#  endif /* __ACE_INLINE__ */
 
 # endif /* TAO_HAS_UIOP */
 
