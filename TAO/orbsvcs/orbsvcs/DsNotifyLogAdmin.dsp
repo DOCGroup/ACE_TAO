@@ -106,6 +106,10 @@ SOURCE=.\Log\NotifyLog_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log\NotifyLogConsumer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\NotifyLogFactory_i.cpp
 # End Source File
 # Begin Source File
@@ -135,6 +139,10 @@ SOURCE=.\Log\notifylog_export.h
 # Begin Source File
 
 SOURCE=.\Log\NotifyLog_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\NotifyLogConsumer.h
 # End Source File
 # Begin Source File
 

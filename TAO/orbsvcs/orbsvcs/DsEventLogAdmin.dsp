@@ -106,6 +106,10 @@ SOURCE=.\Log\EventLog_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log\EventLogConsumer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\EventLogFactory_i.cpp
 # End Source File
 # Begin Source File
@@ -135,6 +139,10 @@ SOURCE=.\Log\eventlog_export.h
 # Begin Source File
 
 SOURCE=.\Log\EventLog_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\EventLogConsumer.h
 # End Source File
 # Begin Source File
 
