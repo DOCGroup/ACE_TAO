@@ -1,6 +1,7 @@
 // $Id$
 
-// Simple driver program for the server.
+// Simple driver program for the server.  This driver dynamically
+// links in all the services in the <svc.conf> file.
 
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
@@ -21,13 +22,18 @@ int
 Event_Handler::handle_input (ACE_HANDLE handle)
 {
   char buf[BUFSIZ];
-
   ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
 
   if (n == -1)
     return -1;
+  else if (n == 0)
+    ACE_ERROR_RETURN ((LM_DEBUG, 
+                       "shutting down on EOF\n"),
+                      -1);
   else if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
-    return -1;
+    ACE_ERROR_RETURN ((LM_DEBUG, 
+                       "%p\n", "write failed"),
+                       -1);
   else
     return 0;
 }
@@ -35,7 +41,9 @@ Event_Handler::handle_input (ACE_HANDLE handle)
 int 
 Event_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "closing Event_Handler\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "closing Event_Handler\n"));
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 
@@ -49,18 +57,24 @@ main (int argc, char *argv[])
   if (ACE_Event_Handler::register_stdin_handler (&handler,
 						 ACE_Reactor::instance (),
 						 ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "register_stdin_handler"));
 
   if (loggerd.open (argc, argv) == -1 && errno != ENOENT)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
-
+    ACE_ERROR ((LM_ERROR,
+                "%p\n%a",
+                "open",
+                1));
   else if (ACE_Reactor::instance ()->register_handler
     (SIGINT, &shutdown_handler) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n%a",
+                "register_handler",
+                1));
 
   // Perform logging service until we receive SIGINT.
 
   ACE_Reactor::run_event_loop ();
-
   return 0;
 }
