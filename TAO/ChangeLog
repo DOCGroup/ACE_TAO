@@ -1,3 +1,33 @@
+Sun Dec 28 16:19:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any_Basic_Impl_T.h:
+        * tao/Basic_Arguments.h:
+        * tao/Object_Proxy_Impl.h:
+        * tao/UB_String_Arguments.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.{h,cpp}:
+        * tao/Domain/DomainS.cpp:
+        * tao/DynamicAny/DynamicAnyC.{h,cpp}:
+        * tao/IFR_Client/IFR_BaseC.{h,cpp}:
+        * tao/IFR_Client/IFR_BasicC.{h,cpp}:
+        * tao/IFR_Client/IFR_ComponentsC.{h,cpp}:
+        * tao/IFR_Client/IFR_ExtendedC.{h,cpp}:
+        * tao/IORManipulation/IORC.{h,cpp}:
+        * tao/IORTable/IORTableC.{h,cpp}:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/RTCORBA/RTCORBAC.{h,cpp}:
+        * tao/RTPortableServer/RTPortableServerC.{h,cpp}:
+        * tao/RTScheduling/RTSchedulerC.{h,cpp}:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.{h,cpp}:
+          Removed not needed ; after c++ namespace closure.
+
+        * Strategized_Object_Proxy_Broker.{h,cpp}:
+          Removed these files from the repo, they are not used anymore.
+
 Sun Dec 28 09:55:44 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
