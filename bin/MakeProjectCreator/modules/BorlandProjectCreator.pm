@@ -39,7 +39,7 @@ sub fill_value {
   if (defined $names{$name}) {
     my(%dirnames) = ();
     foreach my $file ($self->get_component_list($names{$name}, 1)) {
-      my($dirname) = dirname($file);
+      my($dirname) = $self->mpc_dirname($file);
       if ($dirname eq '') {
         $dirname = '.';
       }

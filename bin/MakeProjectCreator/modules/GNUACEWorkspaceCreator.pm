@@ -154,7 +154,7 @@ sub write_comps {
       print $fh $crlf,
                 "\t\$(KEEP_GOING)\@";
       if (defined $dirprj{$project}) {
-        print $fh "cd ", dirname($project),
+        print $fh "cd ", $self->mpc_dirname($project),
                   " && \$(MAKE) -f ", basename($project), $crlf;
       }
       else {
@@ -174,7 +174,7 @@ sub write_comps {
   foreach my $project (@lprj) {
     print $fh "\t\$(KEEP_GOING)\@";
     if (defined $dirprj{$project}) {
-      print $fh "cd ", dirname($project),
+      print $fh "cd ", $self->mpc_dirname($project),
                 " && \$(MAKE) -f ", basename($project), " \$(\@)", $crlf;
     }
     else {
