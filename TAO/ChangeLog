@@ -1,3 +1,8 @@
+Fri Feb 14 08:35:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/RTCORBA/Activity/Activity.cpp: Fixed compile errors in
+	  builds where exceptions have turned off.
+
 Fri Feb 14 12:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/Makefile.bor:
