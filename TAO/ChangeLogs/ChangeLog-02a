@@ -1,3 +1,10 @@
+Thu Feb 15 11:47:53 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Stub.cpp (parse_policies):
+	  Removed extra parenthesis and changed index type to CORBA::ULong
+	  in the policy list. This should definitively fix the
+	  error/warning on any platform. Thanks to Jeff for the hint.
+
 Thu Feb 15 11:09:50 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp (key_to_stub_i):
