@@ -4,7 +4,7 @@ Wed Apr 17 14:25:47 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Changed DLL export include in comment from `TAO_Export.h' to
 	  `tao/corbafwd.h'.  The latter must regardless be included.  It
-	  also happens to pulls in the TAO_Export macro.  Reduces the size
+	  also happens to pull in the TAO_Export macro.  Reduces the size
 	  of the diff for the stub header.
 
 	* tao/Messaging_SyncScopeC.cpp:
