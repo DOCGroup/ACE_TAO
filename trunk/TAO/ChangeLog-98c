@@ -1,3 +1,11 @@
+Sun Dec 27 15:23:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp: Removed some
+	  extra template instantiations.  Thanks to Ben Eng
+	  <ben@jetpen.com> for reporting this.
+
 Sun Dec 27 14:33:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile,fe/y.tab.{h,cpp,cpp.diff}: commented out
@@ -8,13 +16,6 @@ Sun Dec 27 14:33:33 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Cubit/TAO/DII_Cubit/Makefile: added
           -ptr options for Sun CC, so that it uses the IDL_Cubit
           template repository.
-
-Sun Dec 27 12:34:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * orbsvcs/orbsvcs/Trader/Trader.cpp:
-        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp: Removed some
-          extra template instantiations.  Thanks to Ben Eng
-          <ben@jetpen.com> for reporting this.
 
 Sun Dec 27 09:27:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
