@@ -1,3 +1,10 @@
+Wed Oct  7 23:47:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+	* ace/Asynch_IO.cpp:
+	* ace/Proactor.cpp : Fixed the problem with doing multiple
+	Asynch_Accepts. Thanks to James Hu for reporting this
+	problem. Thanks very much Irfan!!!, for helping me a lot in fixing
+	this one. 
+
 Wed Oct 07 23:14:36 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.50 released.
