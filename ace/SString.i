@@ -35,6 +35,14 @@ ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc)
 {
 }
 
+ACE_INLINE ACE_NS_WString
+operator+ (const ACE_NS_WString &s, const ACE_NS_WString &t)
+{
+  ACE_NS_WString temp (s);
+  temp += t;
+  return temp;
+}
+
 ACE_INLINE
 ACE_SString::~ACE_SString (void)
 {
