@@ -1,3 +1,10 @@
+Thu Mar  3 12:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          In a minimum poa build we must set the implicit activation policy
+          to implicit for the root poa. This fixes the errors in the minimum
+          poa build
+
 Thu Mar  3 07:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
