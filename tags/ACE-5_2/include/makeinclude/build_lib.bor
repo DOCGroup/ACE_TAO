@@ -1,0 +1,66 @@
+#
+# Rules	for building a static library
+#
+# Inputs:
+# ~~~~~~~
+# NAME - undecorated name of target
+# CFLAGS - extra compiler flags	for building target
+# CPPDIR - list	of directories containing source files
+# OBJFILES - list of (non-system) object files
+# LIBFILES - list of (non-system) libraries
+# PASCAL - if defined means link dll against pascal run-time library
+# DEBUG	- if defined means building with debug information
+#
+
+!ifdef INSTALL_THIS_TARGET
+BINDIR = $(CORE_BINDIR)
+!endif
+
+!include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
+!include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
+!include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
+
+!ifdef NAME
+!ifndef TARGET
+TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).lib
+!endif
+!endif
+
+all: $(TARGET)
+	@echo Do nothing >NUL
+
+!ifdef TARGET
+$(TARGET): $(OBJFILES)
+	@$(MAKE_BINDIR)
+	-@del $(TARGET) 2>NUL
+	$(AR) $(LIB_LFLAGS) $(TARGET) @&&!
++ $(**: = &^
++ )
+!
+!endif
+
+!include <$(ACE_ROOT)\include\makeinclude\clean.bor>
+
+INSTALL_TYPES =	lib includes
+
+!include <$(ACE_ROOT)\include\makeinclude\install.bor>
+
+!ifdef CPPDIR
+.path.cpp = $(CPPDIR)
+!endif
+
+!ifdef CDIR
+.path.c	= $(CDIR)
+!endif
+
+.path.obj = $(OBJDIR)
+
+.cpp.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.c.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.autodepend
