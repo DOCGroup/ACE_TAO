@@ -759,7 +759,9 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
 int
 TAO_SFP::end_stream (void)
 {
-  ACE_TRY_NEW_ENV
+  int result;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       ACE_DEBUG ((LM_DEBUG,"SFP - ending the stream\n"));
       // send the EndofStream message.
@@ -776,9 +778,9 @@ TAO_SFP::end_stream (void)
                                      this->receiver_inet_addr_);
       if ((n==-1) || (n==0))
         ACE_ERROR_RETURN ((LM_ERROR,"Error sending endofstream message:%p",""),-1);
-      int result = this->reactor_->remove_handler (this,
+      result = this->reactor_->remove_handler (this,
                                                    ACE_Event_Handler::READ_MASK);
-      return result;
+
     }
   ACE_CATCHANY
     {
@@ -786,6 +788,8 @@ TAO_SFP::end_stream (void)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+  return result;
 }
                                   
 int
@@ -806,6 +810,7 @@ TAO_SFP::get_handle (void) const
 ACE_Message_Block *
 TAO_SFP::read_simple_frame (void)
 {
+  ACE_Message_Block *message_block = 0;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -821,7 +826,7 @@ TAO_SFP::read_simple_frame (void)
         return 0;
       int byte_order = frame_header.flags & 0x1;
       int message_len = frame_header.message_size;
-      ACE_Message_Block *message_block;
+
       ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (message_len),
                       0);
@@ -900,8 +905,6 @@ TAO_SFP::read_simple_frame (void)
 	      return 0;
             }
         }
-      else
-          return message_block;
     }
   ACE_CATCHANY
     {
@@ -910,6 +913,7 @@ TAO_SFP::read_simple_frame (void)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
+  return message_block;
 }
 
 int
@@ -969,7 +973,9 @@ TAO_SFP::read_frame_header (flowProtocol::frameHeader &frame_header)
 ACE_Message_Block *
 TAO_SFP::read_fragment (void)
 {
-  ACE_TRY_NEW_ENV
+  TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       flowProtocol::fragment fragment;
       ACE_INET_Addr sender;
@@ -1024,7 +1030,7 @@ TAO_SFP::read_fragment (void)
       ACE_DEBUG ((LM_DEBUG,"length of %dth fragment is: %d\n",
                   fragment.frag_number,
                   data->length ()));
-      TAO_SFP_Fragment_Table_Entry *fragment_entry;
+
       TAO_SFP_Fragment_Node *new_node;
       ACE_NEW_RETURN (new_node,
                       TAO_SFP_Fragment_Node,
@@ -1060,7 +1066,7 @@ TAO_SFP::read_fragment (void)
           // since fragment number starts from 0 to n-1 we add 1.
           fragment_entry->num_fragments_ = fragment.frag_number + 1;
         }
-      return check_all_fragments (fragment_entry);
+
     }
   ACE_CATCHANY
     {
@@ -1068,6 +1074,8 @@ TAO_SFP::read_fragment (void)
       return 0;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+  return check_all_fragments (fragment_entry);
 }
 
 ACE_Message_Block*
