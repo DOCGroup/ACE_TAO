@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
-$T = new PerlACE::Process ("Deactivation");
+$T = new PerlACE::Process ("POA_Destruction");
 
 $test = $T->SpawnWaitKill (60);
 

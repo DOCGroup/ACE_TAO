@@ -1,14 +1,14 @@
 
 #
-# Makefile for building the POA Deactivation test
+# Makefile for building the POA Object_Reactivation test
 #
 
-NAME = Deactivation
+NAME = Object_Reactivation
 
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\testS.obj \
-	$(OBJDIR)\Deactivation.obj
+	$(OBJDIR)\Object_Reactivation.obj
 
 IDLFILES = \
         $(IDLDIR)\test.idl

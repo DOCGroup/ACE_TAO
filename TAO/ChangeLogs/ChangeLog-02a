@@ -1,3 +1,43 @@
+Thu Mar 22 19:29:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/Active_Object_Map.i
+	  (find_servant_and_system_id_using_user_id): One version of this
+	  function was broken because it did not check the <deactivated_>
+	  and the <servant_> fields.  Thanks to Jody Hagins
+	  <jody@atdesk.com> for pointing this out.  This fixes
+	  [BUGID:834].  
+
+	* tests/POA/Excessive_Object_Deactivations: New test for
+	  regression checking excessive object deactivations in the POA.
+	  The test checks excessive deactivations in a POA with SYSTEM_ID
+	  and other POA with USER_ID.  The test also check for excessive
+	  deactivations during upcalls.
+
+	* tests/POA/Multiple_Deactivations: No longer needed with
+	  tests/POA/Excessive_Object_Deactivations in place.
+
+	* tao/PortableServer/POA.cpp (key_to_stub_i): 
+
+	  (Re)fixed compilation problems under Minimum CORBA
+	  configurations which got reverted when Bala backed out Carlos'
+	  changes.
+
+	* tao/ORB_Core.cpp (collocation_strategy): Small change for better
+	  code readability.  Thanks Ossama.
+
+	* tests/POA/Destruction was renamed to tests/POA/POA_Destruction.
+	
+	* tests/POA/Deactivation was renamed to tests/POA/Object_Reactivation.
+	
+	* Following files were also updated to accomodate new and renamed
+	  tests:
+
+	  - tests/TAO_Tests.dsw
+	  - tests/POA/Makefile
+	  - tests/POA/Makefile.bor
+	  - tests/POA/README
+	  - ACE_wrappers/bin/auto_run_tests.lst
+
 Thu Mar 22 20:08:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp: Backed out changes from "Thu Mar 22

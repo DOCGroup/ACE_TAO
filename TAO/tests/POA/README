@@ -8,16 +8,24 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 The example shows the identity between servants, ids,
                 and references.
 
-        . Destruction
+        . POA_Destruction
 
                 The program tests the destruction of a POA during an
                 upcall.
 
-        . Deactivation
+        . Object_Reactivation
 
                 This program tests the reactivation of a servant that
                 has been deactivated but not removed from the Active
                 Object Map yet.
+
+        . Excessive_Object_Deactivations
+
+                This program tests for excessive deactivations of a
+                servant.  The test checks excessive deactivations in a
+                POA with SYSTEM_ID and other POA with USER_ID.  The
+                test also check for excessive deactivations during
+                upcalls.
 
         . Non_Servant_Upcalls
 
