@@ -12,6 +12,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SString.h"
 #include "ace/Process.h"
+#include "ace/Object_Manager.h"
 
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
@@ -1838,6 +1839,39 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_NOTSUP_RETURN (-1);;			// no implementation
 #endif /* ACE_WIN32 */
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+// The ACE_Object_Manager_Destroyer class is placed in this file, rather
+// than Object_Manager.cpp, to be sure that the static Object_Manager gets
+// linked into applications that statically link libACE.a.
+class ACE_Object_Manager_Destroyer
+{
+public:
+  ACE_Object_Manager_Destroyer ();
+  ~ACE_Object_Manager_Destroyer ();
+};
+
+static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
+
+ACE_Object_Manager_Destroyer::ACE_Object_Manager_Destroyer ()
+{
+  // Ensure that the Object_Manager gets before any application threads
+  // have been spawned.  Because this will be call during construction
+  // of static objects, that should always be the case.
+  ACE_Object_Manager &object_manager = *ACE_Object_Manager::instance ();
+  if (&object_manager) /* null */;
+}
+
+ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer ()
+{
+  delete ACE_Object_Manager::instance_;
+  ACE_Object_Manager::instance_ = 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class auto_array_ptr<struct ifreq>;
