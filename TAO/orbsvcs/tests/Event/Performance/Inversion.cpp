@@ -6,7 +6,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/Sched_Params.h"
-#include "ace/Get_Opt.h"
+#include "ace/Arg_Shifter.h"
 
 ACE_RCSID(EC_Tests_Performance, Inversion, "$Id$")
 
@@ -20,18 +20,36 @@ main (int argc, char *argv [])
 // ****************************************************************
 
 EC_Inversion::EC_Inversion (void)
+  :  same_events_ (0)
 {
 }
 
 int
 EC_Inversion::parse_args (int &argc, char *argv [])
 {
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
+  while (arg_shifter.is_anything_left ())
+    {
+      char *arg = arg_shifter.get_current ();
+
+      if (ACE_OS::strcmp (arg, "-same_events") == 0)
+        {
+          arg_shifter.consume_arg ();
+          this->same_events_ = 1;
+        }
+
+      else
+        {
+          arg_shifter.ignore_arg ();
+        }
+    }
+
   int r = this->EC_Driver::parse_args (argc, argv);
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
                 "EC_Inversion (%P|%t) "
                 "adjusting number of consumers (2)\n"));
-  this->n_consumers_ = 2;
   return r;
 }
 
@@ -52,15 +70,22 @@ EC_Inversion::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
                                 ACE_ES_EVENT_UNDEFINED + 1,
                                 ACE_TRY_ENV);
 
-  ACE_ConsumerQOS_Factory qos1;
-  qos1.start_disjunction_group (2);
-  qos1.insert_type (ACE_ES_EVENT_UNDEFINED + 2, 0);
-  qos1.insert_type (ACE_ES_EVENT_UNDEFINED + 3, 0);
+  for (int i = 1; i < this->n_consumers_; ++i)
+    {
+      int base_event = ACE_ES_EVENT_UNDEFINED + 2;
+      if (this->same_events_)
+        base_event = ACE_ES_EVENT_UNDEFINED;
 
-  this->consumers_[1]->connect (consumer_admin.in (),
-                                qos1.get_ConsumerQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 3,
-                                ACE_TRY_ENV);
+      ACE_ConsumerQOS_Factory qos1;
+      qos1.start_disjunction_group (2);
+      qos1.insert_type (base_event    , 0);
+      qos1.insert_type (base_event + 1, 0);
+
+      this->consumers_[i]->connect (consumer_admin.in (),
+                                    qos1.get_ConsumerQOS (),
+                                    base_event + 1,
+                                    ACE_TRY_ENV);
+    }
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected consumer(s)\n"));
 }
@@ -83,13 +108,17 @@ EC_Inversion::connect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 
   for (int j = 1; j != this->n_suppliers_; ++j)
     {
+      int base_event = ACE_ES_EVENT_UNDEFINED + 2;
+      if (this->same_events_)
+        base_event = ACE_ES_EVENT_UNDEFINED;
+
       ACE_SupplierQOS_Factory qos1;
-      qos1.insert (1, ACE_ES_EVENT_UNDEFINED + 2, 0, 1);
-      qos1.insert (1, ACE_ES_EVENT_UNDEFINED + 3, 0, 1);
+      qos1.insert (1, base_event    , 0, 1);
+      qos1.insert (1, base_event + 1, 0, 1);
 
       this->suppliers_[j]->connect (supplier_admin.in (),
                                     qos1.get_SupplierQOS (),
-                                    ACE_ES_EVENT_UNDEFINED + 3,
+                                    base_event + 1,
                                     ACE_TRY_ENV);
     }
 
