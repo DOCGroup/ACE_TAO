@@ -176,7 +176,7 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
       
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
         {
-          ACE_DEBUG ((LM_DEBUG, "*** ------------------------------\n"));
+          ACE_DEBUG ((LM_DEBUG, "\n"));
           ACE_DEBUG ((LM_DEBUG, "*** Performing query for %s.\n", TT_Info::QUERIES[i][0]));
           ACE_DEBUG ((LM_DEBUG, "*** Query: %s\n", TT_Info::QUERIES[i][1]));
           ACE_DEBUG ((LM_DEBUG, "*** Preferences: %s\n", TT_Info::QUERIES[i][2]));
