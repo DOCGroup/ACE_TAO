@@ -1,3 +1,11 @@
+Wed Jul 12 11:41:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing.bor (OBJFILES):
+
+	  Removed `DSI_ForwardingProxy.obj' from the list of object
+	  files.  This corresponding source for this file no longer
+	  exists.  Thanks to Angelo for pointing this problem out.
+
 Wed Jul 12 12:02:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
