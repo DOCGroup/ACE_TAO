@@ -423,9 +423,6 @@ int parse_args (int argc, char *argv[])
 // Instantiate the templates used by the Reconfig scheduler above
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 template class auto_ptr<RtecScheduler::Config_Info>;
 template class auto_ptr<RtecScheduler::RT_Info>;
 template class auto_ptr<TAO_Reconfig_Scheduler_Entry>;
@@ -460,12 +457,9 @@ template class TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
 template class TAO_RSE_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 template class TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 template class TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
-#  endif /* __GNUC__ */
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 #pragma instantiate auto_ptr<RtecScheduler::Config_Info>
 #pragma instantiate auto_ptr<RtecScheduler::RT_Info>
 #pragma instantiate auto_ptr<TAO_Reconfig_Scheduler_Entry>
@@ -500,6 +494,5 @@ template class TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
 #pragma instantiate TAO_RSE_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #pragma instantiate TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>
-#  endif /* __GNUC__ */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
