@@ -2,11 +2,21 @@
 //
 // $Id$
 
+
 ACE_INLINE PortableInterceptor::SlotId
 TAO_PICurrent::slot_count (void) const
 {
   return this->slot_count_;
 }
+
+ACE_INLINE void
+TAO_PICurrent::initialize (TAO_ORB_Core * orb_core,
+                           PortableInterceptor::SlotId sc)
+{
+  this->orb_core_ = orb_core;
+  this->slot_count_ = sc;
+}
+
 
 ACE_INLINE void
 TAO_PICurrent::check_validity (const PortableInterceptor::SlotId &id
