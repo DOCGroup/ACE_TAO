@@ -8,6 +8,15 @@ Fri Sep 25 07:37:01 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_EventChannel::Observer_Entry, ACE_Null_Mutex template
           instantiations.
 
+        * IIOP/tests/Thruput_test/client.cpp,server.cpp,ttcp_decl.h,
+          ttcp_i.cpp: replaced USE_QUANTIFY with ACE_HAS_QUANTIFY.
+
+        * IIOP/tests/Thruput_test/client.cpp: replaced direct
+          #includes of iostream.h and fstream.h with ace/streams.h.
+
+        * IIOP/tests/Thruput_test/ttcp_i.cpp: replaced some
+          iostream printouts with ACE_DEBUGs.
+
 Thu Sep 24 21:45:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp (gperf_input_stream): don't
