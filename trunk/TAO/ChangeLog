@@ -1,3 +1,56 @@
+Wed Jan  5 11:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Builder.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/EventChannel.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Proxy_T.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/RT_Builder.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Refcountable.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.{h,cpp,inl}:
+          Removed inl file and updated h/cpp file.
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for changes above
+
 Wed Jan  5 11:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SchedConfig_Scheduler.{h,cpp,i}:

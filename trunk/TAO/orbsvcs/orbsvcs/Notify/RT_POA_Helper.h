@@ -56,9 +56,5 @@ public:
   void init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
 };
 
-#if defined (__ACE_INLINE__)
-#include "RT_POA_Helper.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_POA_Helper_H */

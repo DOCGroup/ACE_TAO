@@ -2,10 +2,6 @@
 
 #include "StructuredEvent.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "StructuredEvent.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredEvent, "$Id$")
 
 #include "../PropertySeq.h"

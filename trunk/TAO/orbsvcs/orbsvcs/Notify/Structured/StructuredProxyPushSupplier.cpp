@@ -2,10 +2,6 @@
 
 #include "StructuredProxyPushSupplier.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "StructuredProxyPushSupplier.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
 

@@ -2,10 +2,6 @@
 
 #include "SupplierAdmin.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "SupplierAdmin.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (RT_Notify,
            TAO_Notify_SupplierAdmin,
            "$Id$")

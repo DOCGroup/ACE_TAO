@@ -2,10 +2,6 @@
 
 #include "SequencePushSupplier.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "SequencePushSupplier.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify, TAO_Notify_SequencePushSupplier, "$Id$")
 
 #include "../Properties.h"

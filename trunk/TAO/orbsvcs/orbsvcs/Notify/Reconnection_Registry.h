@@ -92,9 +92,5 @@ namespace TAO_Notify
   };
 } // namespace TAO_Notify
 
-#if defined (__ACE_INLINE__)
-#include "Reconnection_Registry.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ <ace/post.h>
 #endif /* TAO_NOTIFY_RECONNECTION_REGISTRY_H */

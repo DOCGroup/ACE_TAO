@@ -2,10 +2,6 @@
 
 #include "Method_Request_Dispatch.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Method_Request_Dispatch.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 
 #include "tao/debug.h"
@@ -296,10 +292,3 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
   return request;
 }
 
-/*********************************************************************************************************/
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,11 +1,6 @@
 // $Id$
 
 #include "Method_Request_Event.h"
-
-#if ! defined (__ACE_INLINE__)
-#include "Method_Request_Event.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "Delivery_Request.h"
 
 ACE_RCSID (Notify, TAO_Notify_Method_Request_Event_Queueable, "$Id$")

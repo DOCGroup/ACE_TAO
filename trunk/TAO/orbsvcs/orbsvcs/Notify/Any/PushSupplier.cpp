@@ -2,10 +2,6 @@
 
 #include "PushSupplier.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "PushSupplier.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify, TAO_Notify_PushSupplier, "$Id$")
 #include "../Properties.h"
 

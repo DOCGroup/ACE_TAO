@@ -166,10 +166,6 @@ public:
     );
 };
 
-#if defined (__ACE_INLINE__)
-#include "Builder.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_BUILDER_H */

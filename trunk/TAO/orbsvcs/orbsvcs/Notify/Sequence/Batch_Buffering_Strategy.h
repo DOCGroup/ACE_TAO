@@ -52,9 +52,5 @@ protected:
   int dequeue_i (int max_deq_count, CosNotification::EventBatch& event_batch);
 };
 
-#if defined (__ACE_INLINE__)
-#include "Batch_Buffering_Strategy.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_BATCH_BUFFERING_STRATEGY_H */

@@ -2,10 +2,6 @@
 
 #include "Method_Request_Updates.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Method_Request_Updates.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Updates, "$Id$")
 
 #include "tao/debug.h"

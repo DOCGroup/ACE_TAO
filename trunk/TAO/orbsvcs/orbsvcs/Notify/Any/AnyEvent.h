@@ -113,10 +113,6 @@ protected:
   CORBA::Any any_copy_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "AnyEvent.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_ANYEVENT_H */

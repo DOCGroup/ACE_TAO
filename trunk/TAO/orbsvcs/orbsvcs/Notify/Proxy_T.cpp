@@ -5,10 +5,6 @@
 #ifndef TAO_Notify_PROXY_T_CPP
 #define TAO_Notify_PROXY_T_CPP
 
-#if ! defined (__ACE_INLINE__)
-#include "Proxy_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Proxy_T, "$Id$")
 
 template <class SERVANT_TYPE>

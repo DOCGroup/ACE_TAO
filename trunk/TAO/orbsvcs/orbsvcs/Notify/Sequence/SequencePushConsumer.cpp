@@ -2,10 +2,6 @@
 
 #include "SequencePushConsumer.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "SequencePushConsumer.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 
 #include "ace/Reactor.h"

@@ -1,10 +1,6 @@
 // $Id$
 #include "StructuredPushConsumer.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "StructuredPushConsumer.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
 
 #include "../Properties.h"

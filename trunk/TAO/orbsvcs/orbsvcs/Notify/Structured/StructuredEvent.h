@@ -106,9 +106,5 @@ protected:
   CosNotification::StructuredEvent notification_copy;
 };
 
-#if defined (__ACE_INLINE__)
-#include "StructuredEvent.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_STRUCTUREDEVENT_H */

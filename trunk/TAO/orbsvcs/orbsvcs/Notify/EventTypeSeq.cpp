@@ -1,11 +1,6 @@
 // $Id$
 
 #include "EventTypeSeq.h"
-
-#if ! defined (__ACE_INLINE__)
-#include "EventTypeSeq.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "Topology_Saver.h"
 
 #include "tao/debug.h"

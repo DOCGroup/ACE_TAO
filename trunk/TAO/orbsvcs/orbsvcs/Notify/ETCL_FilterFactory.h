@@ -88,10 +88,6 @@ protected:
 
 ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)
 
-#if defined (__ACE_INLINE__)
-#include "ETCL_FilterFactory.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_ETCL_FILTERFACTORY_H */
