@@ -476,8 +476,8 @@ public:
   ACE_cond_t waiting_important_writer_;
   // condition for the upgrading reader
 };
-//#   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
-//typedef pthread_rwlock_t ACE_rwlock_t;
+#   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+typedef pthread_rwlock_t ACE_rwlock_t;
 #   elif defined (ACE_HAS_STHREADS)
 #     include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
