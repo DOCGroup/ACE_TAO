@@ -507,7 +507,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::WChar *rhs_v, *lhs_v;
+        const CORBA::WChar *rhs_v, *lhs_v;
         CORBA::Boolean rstatus, lstatus;
 
         if (bound == 0)
