@@ -165,10 +165,10 @@ public:
   };
 
 
-  class TAO_PortableServer_Export _tao_thru_poa_collocated_CORBA_Policy   : public virtual ::CORBA_Policy
+  class TAO_PortableServer_Export _tao_thru_poa_collocated_Policy   : public virtual ::CORBA_Policy
   {
   public:
-    _tao_thru_poa_collocated_CORBA_Policy (
+    _tao_thru_poa_collocated_Policy (
                                            TAO_Stub *stub
                                            );
     virtual CORBA::Boolean _is_a(
