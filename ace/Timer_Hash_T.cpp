@@ -565,9 +565,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
       while (!this->table_[i]->is_empty () 
              && this->table_[i]->earliest_time () <= cur_time)
         {
-          expired = this->table_[i]->remove_first ();
-          --this->size_;
-          TYPE &type = expired->get_type ();
+          expired = this->table_[i]->get_first ();
+          TYPE type = expired->get_type ();
           const void *act = expired->get_act ();
           int reclaim = 1;
 
@@ -587,6 +586,13 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
               reclaim = 0;
             }
 
+          // Now remove the timer from the original table... if
+          // it's a simple, non-recurring timer, it's got to be
+          // removed anyway. If it was rescheduled, it's been
+          // scheduled into the correct table (regardless of whether
+          // it's the same one or not) already.
+          this->table_[i]->cancel (expired->get_timer_id ());
+
           Hash_Token *h = ACE_reinterpret_cast (Hash_Token *, 
                                                 ACE_const_cast (void *,
                                                                 act));
@@ -596,8 +602,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
                         cur_time);
           if (reclaim)
             {
-              // Free up the node and the token
-              this->free_node (expired);
+              --this->size_;
               delete h;
             }
           number_of_timers_expired++;
