@@ -1,3 +1,15 @@
+Mon Jun 17 16:02:36 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Nested_Upcall_Crash/Makefile:
+	  Disabled for builds without CORBA Messaging.
+
+	* tests/Nested_Upcall_Crash/Server_Peer.cpp:
+	* tests/Nested_Upcall_Crash/client.cpp:
+	* tests/Nested_Upcall_Crash/scavenger.cpp:
+	* tests/Nested_Upcall_Crash/server.cpp:
+	  Fixed compilation problems for builds without native C++
+	  exceptions.
+
 Mon Jun 17 12:43:07 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/IIOP_Endpoint.cpp:
