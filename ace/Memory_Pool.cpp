@@ -626,26 +626,26 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
       this->minimum_bytes_ = options->minimum_bytes_;
     }
 
-  if (backing_store_name) 
+  if (backing_store_name)
     {
       // Convert the string into a number that is used as the segment
       // key.
 
-      int result = ::sscanf (backing_store_name, 
+      int result = ::sscanf (backing_store_name,
                              "%d",
                              &this->base_shm_key_);
 
-      if (result == 0 || result == EOF) 
+      if (result == 0 || result == EOF)
         // The conversion to a number failed so hash with crc32
         // ACE::crc32 is also used in <SV_Semaphore_Simple>.
         this->base_shm_key_ = (key_t) ACE::crc32 (backing_store_name);
 
-      if (this->base_shm_key_ == IPC_PRIVATE) 
+      if (this->base_shm_key_ == IPC_PRIVATE)
         // Make sure that the segment can be shared between unrelated
         // processes.
         this->base_shm_key_ = ACE_DEFAULT_SHM_KEY;
-    } 
-  else 
+    }
+  else
     this->base_shm_key_ = ACE_DEFAULT_SHM_KEY;
 
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
