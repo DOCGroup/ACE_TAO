@@ -2,7 +2,11 @@
 
 #if TAO_HAS_SCIOP == 1
 
+#ifndef IPPROTO_SCTP
 #include "netinet/sctp.h"
+#else // !IPPROTO_SCTP
+#define SCTP_NODELAY 1
+#endif
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
