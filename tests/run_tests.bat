@@ -21,7 +21,6 @@ call run_tests Message_Queue_Notifications_Test
 call run_tests Message_Queue_Test
 call run_tests MM_Shared_Memory_Test
 call run_tests MT_SOCK_Test
-call run_tests Mutex_Test
 call run_tests Naming_Test
 call run_tests Notify_Performance_Test
 call run_tests Pipe_Test
@@ -47,6 +46,7 @@ call run_tests SString_Test
 call run_tests SV_Shared_Memory_Test
 call run_tests Task_Test
 call run_tests Thread_Manager_Test
+call run_tests Thread_Mutex_Test
 call run_tests Thread_Pool_Test
 call run_tests Timer_Queue_Test
 call run_tests Time_Service_Test
