@@ -86,8 +86,6 @@ main (int argc, char *argv[])
             }
           do_something_else();
         }
-      orb->shutdown(1);
-
     }
 
   ACE_CATCHANY

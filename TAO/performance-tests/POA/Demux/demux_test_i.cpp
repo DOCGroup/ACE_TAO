@@ -11,14 +11,13 @@ Demux_Test_i::Demux_Test_i (void)
 Demux_Test_i::~Demux_Test_i (void)
 {}
 
-void Demux_Test_i::M302 (CORBA::Environment &env)
+void Demux_Test_i::M302 (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-   ACE_UNUSED_ARG (env);
 }
 
-void Demux_Test_i::shutdown (CORBA::Environment &env)
+void Demux_Test_i::shutdown (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-   ACE_UNUSED_ARG (env);
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
-
