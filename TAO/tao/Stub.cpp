@@ -834,14 +834,14 @@ TAO_Stub::get_client_policy (
 POA_Messaging::RelativeRoundtripTimeoutPolicy*
 TAO_Stub::relative_roundtrip_timeout (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->refcount_lock_,
-                    0);
+  // No need to lock, the stub only changes its policies at
+  // construction time...
 
   POA_Messaging::RelativeRoundtripTimeoutPolicy* result = 0;
   if (this->policies_ != 0)
     result = this->policies_->relative_roundtrip_timeout ();
 
+  // No need to lock, the object is in TSS storage....
   if (result == 0)
     {
       TAO_Policy_Current &policy_current =
@@ -849,6 +849,9 @@ TAO_Stub::relative_roundtrip_timeout (void)
       result = policy_current.relative_roundtrip_timeout ();
     }
 
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
   if (result == 0)
     {
       TAO_Policy_Manager *policy_manager =
