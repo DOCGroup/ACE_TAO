@@ -1,3 +1,8 @@
+Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
+ 	  unused args.  Thanks to Marina for reporting this.
+
 Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-qnx-neutrino.h,
