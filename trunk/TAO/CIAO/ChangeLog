@@ -1,3 +1,10 @@
+Mon Feb  2 20:07:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/XML_Helpers/Makefile.XML_Helpers:
+	 
+	  Removed RTConfiguration_Stub.cpp and included
+	  RTConfigurationC.cpp for compilation.
+
 Mon Feb  2 20:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/XML_Helpers/RTConfiguration.idl:
