@@ -581,7 +581,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::activate_i (void)
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::flush (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::close");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::flush");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   // Free up the remaining messages on the queue.

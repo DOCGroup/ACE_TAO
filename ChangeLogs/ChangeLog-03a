@@ -1,3 +1,7 @@
+Sat Apr 27 18:10:37 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* ace/Message_Queue_T.cpp (flush): Fixed fuzz error.
+
 Sat Apr 27 17:13:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Svc_Handler.cpp: Added a closing '}' for the method
