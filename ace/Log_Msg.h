@@ -89,6 +89,9 @@
 
 #include "ace/Log_Record.h"
 
+// In case iostream.h is not #included before this header . . .
+class ostream;
+
 #define ACE_LOG_MSG ACE_Log_Msg::instance ()
 
 class ACE_Export ACE_Log_Msg 
