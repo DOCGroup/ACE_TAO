@@ -131,19 +131,19 @@ static EC_Factory "-ECFiltering basic ....."
           <TD>Select the filtering strategy used by the consumers.
             The <EM>null</EM> filtering strategy will build trivial
             filters for all consumers.
-            The <EM>basic</EM> filtering strategy supports 
+            The <EM>basic</EM> filtering strategy supports
             disjunction, conjunction, logical and, negation, bitmask,
-            and timeout filters based on the subscriptions passed by 
-            the consumer during the connect call. It only supports limited 
+            and timeout filters based on the subscriptions passed by
+            the consumer during the connect call. It only supports limited
             nesting of filter groups.
-            The <EM>prefix</EM> filtering strategy supports 
+            The <EM>prefix</EM> filtering strategy supports
             all filter types that the <EM>basic</EM> strategy does
-            and allows unlimited nesting of filter groups.  
-            When using the <EM>prefix</EM> strategy, the source field of the 
+            and allows unlimited nesting of filter groups.
+            When using the <EM>prefix</EM> strategy, the source field of the
             group filter must specify the number of children in the group.
             The <EM>priority</EM> filtering strategy supports the same
-            features as the <EM>basic</EM> filtering strategy, but it 
-            also collaborates with the scheduling service to build the 
+            features as the <EM>basic</EM> filtering strategy, but it
+            also collaborates with the scheduling service to build the
             dependency graph.
           </TD>
         </TR>
