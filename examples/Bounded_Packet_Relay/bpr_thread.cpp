@@ -23,10 +23,22 @@
 //
 // ============================================================================
 
+// The following #pragma is needed to disable a warning that occurs
+// in MSVC 6 due to the overly long debugging symbols generated for
+// the std::auto_ptr<Timer_Queue_Test_Driver<...> > template
+// instance used by some of the methods in this file.
+#ifdef _MSC_VER
+#  pragma warning(disable: 4786)  /* identifier was truncated to '255'
+                                     characters in the browser
+                                     information */
+#endif  /* _MSC_VER */
+
 #include "ace/Auto_Ptr.h"
 #include "Thread_Bounded_Packet_Relay.h"
 
-ACE_RCSID(Bounded_Packet_Relay, bpr_thread, "$Id$")
+ACE_RCSID (Bounded_Packet_Relay,
+           bpr_thread,
+           "$Id$")
 
 typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
 	THREAD_BOUNDED_PACKET_RELAY_DRIVER;
