@@ -52,7 +52,6 @@ extern char 	*optarg;	// missing on some platforms
 // also get a public constructor, and a way to provide the buffer.)
 //
 #define	DEFINE_SKEL3(name,truetype,truetypename) \
-    TEMPLATE_DECL(CORBA_ ## truetype); \
     static void \
     _test1_test_ ## name ( \
 	CORBA_ServerRequest	&req, \
@@ -143,11 +142,6 @@ Type cube (Type arg)
 }
 
 #define	OPERATION(n)	cube(n)
-#if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-#  define TEMPLATE_DECL(t) template t cube(t)
-#else
-#  define TEMPLATE_DECL(t)
-#endif
 
 DEFINE_SKEL3 (octet, Octet, Octet)
 
@@ -180,8 +174,6 @@ DEFINE_SKEL3 (longdouble, LongDouble, LongDouble)
 // parameters 
 //
 #define	OPERATION(x)	(!(x))
-#undef TEMPLATE_DECL
-#define TEMPLATE_DECL(t)
 DEFINE_SKEL3 (boolean, Boolean, Boolean)
 #undef	OPERATION
 

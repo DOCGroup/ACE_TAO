@@ -8,8 +8,9 @@
 // messages, responds to them.
 //
 
-#include	<stdio.h>
-#include	<string.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 #include <ace/Get_Opt.h>
 
 #if	unix
@@ -225,10 +226,20 @@ main (
   CORBA_String	key = (CORBA_String) "key0";
   ACE_INET_Addr svraddr;
   ROA_Parameters* params = ROA_Parameters::instance();
-  char		*oa_name = 0;
   char		*orb_name = "internet";
   int			idle = -1;
 
+#if defined (VXWORKS)
+
+  char          *oa_name = "mv2604d:1000";
+  int           dummy = 1;
+  debug_level = 1;
+
+  orb_ptr = CORBA_ORB_init (dummy, (char **)0, orb_name, env);
+
+#else
+
+  char		*oa_name = 0;
   //
   // Parse the command line, get options
   //
@@ -281,6 +292,9 @@ main (
     }
 
   orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
+
+#endif
+
   if (env.exception () != 0) {
     print_exception (env.exception (), "ORB init");
     return 1;
