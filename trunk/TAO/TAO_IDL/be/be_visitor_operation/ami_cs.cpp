@@ -682,16 +682,16 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << node->local_name ()
       << "\"," << be_nl
       << "istub->orb_core ()," << be_nl;
-  
+
   // Next argument is the reply handler skeleton for this method.
-  
+
   // Get the interface.
   be_decl *interface = be_interface::narrow_from_scope (node->defined_in ())->decl ();
 
   {
     char *full_name = 0;
-    
-    interface->compute_full_name ("AMI_", 
+
+    interface->compute_full_name ("AMI_",
                                   "_Handler",
                                   full_name);
 
@@ -705,7 +705,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       else
         *os << "_get_";
     }
-    
+
     *os << node->local_name () << "_skel," << be_nl;
 
     delete full_name;
@@ -713,9 +713,9 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
 
 
 
-  // Next argument is the ami handler passed in for this method. 
+  // Next argument is the ami handler passed in for this method.
   *os << "_tao_ami_handler" << be_uidt_nl
-    
+
       << ");" << be_uidt_nl;
 
   *os << "\n" << be_nl
@@ -724,11 +724,24 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
 
   *os << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
   // Check if there is an exception.
-  // Return type is void, so we know what to generate here. 
+  // Return type is void, so we know what to generate here.
   *os << "ACE_CHECK;";
-  
+
+  // Prepare the request header
+  *os << "_tao_call.prepare_header (";
+  switch (node->flags ())
+    {
+    case AST_Operation::OP_oneway:
+      *os << "0";
+      break;
+    default:
+      *os << "1";
+    }
+  *os << ", ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK;\n" << be_nl;
+
   // Now make sure that we have some in and inout
-  // parameters. Otherwise, there is nothing to be marshaled in. 
+  // parameters. Otherwise, there is nothing to be marshaled in.
   if (this->has_param_type (node, AST_Argument::dir_IN) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
@@ -780,7 +793,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
     {
       *os << "_tao_call.invoke (0, 0, ACE_TRY_ENV);";
     }
-  
+
   *os << be_uidt_nl;
 
   // Check if there is an exception.
@@ -816,6 +829,6 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       << be_uidt_nl << "}" << be_nl;
 
   // Return type is void and we are going to worry about OUT or INOUT
-  // parameters. Return from here. 
+  // parameters. Return from here.
   return 0;
 }
