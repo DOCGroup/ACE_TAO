@@ -348,9 +348,11 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_IRObject::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -371,9 +373,11 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_IRObject::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -398,9 +402,11 @@ IR::DefinitionKind POA_CORBA::_tao_thru_poa_collocated_IRObject::def_kind  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "def_kind",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -425,9 +431,11 @@ void POA_CORBA::_tao_thru_poa_collocated_IRObject::destroy  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "destroy",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1059,9 +1067,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Contained::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1082,9 +1092,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Contained::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1109,9 +1121,11 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::id  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "id",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1137,9 +1151,11 @@ void POA_IR::_tao_thru_poa_collocated_Contained::id  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "id",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1167,9 +1183,11 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::name  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "name",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1195,9 +1213,11 @@ void POA_IR::_tao_thru_poa_collocated_Contained::name  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "name",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1225,9 +1245,11 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::version  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "version",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1253,9 +1275,11 @@ void POA_IR::_tao_thru_poa_collocated_Contained::version  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "version",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1283,9 +1307,11 @@ IR::Container_ptr POA_IR::_tao_thru_poa_collocated_Contained::defined_in  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "defined_in",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1312,9 +1338,11 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::absolute_name  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "absolute_name",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1341,9 +1369,11 @@ IR::Repository_ptr POA_IR::_tao_thru_poa_collocated_Contained::containing_reposi
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "containing_repository",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1370,9 +1400,11 @@ IR::Contained::Description * POA_IR::_tao_thru_poa_collocated_Contained::describ
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "describe",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1400,9 +1432,11 @@ void POA_IR::_tao_thru_poa_collocated_Contained::move  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "move",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -2383,9 +2417,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Container::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2406,9 +2442,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Container::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2434,9 +2472,11 @@ IR::Contained_ptr POA_IR::_tao_thru_poa_collocated_Container::lookup  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "lookup",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2466,9 +2506,11 @@ IR::ContainedSeq * POA_IR::_tao_thru_poa_collocated_Container::contents  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "contents",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2501,9 +2543,11 @@ IR::ContainedSeq * POA_IR::_tao_thru_poa_collocated_Container::lookup_name  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "lookup_name",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2537,9 +2581,11 @@ IR::Container::DescriptionSeq * POA_IR::_tao_thru_poa_collocated_Container::desc
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "describe_contents",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2572,9 +2618,11 @@ IR::ModuleDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_module  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_module",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2609,9 +2657,11 @@ IR::ConstantDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_constant 
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_constant",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2647,9 +2697,11 @@ IR::StructDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_struct  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_struct",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2685,9 +2737,11 @@ IR::UnionDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_union  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_union",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2723,9 +2777,11 @@ IR::EnumDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_enum  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_enum",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2760,10 +2816,12 @@ IR::AliasDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_alias  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_alias",
-      ACE_TRY_ENV
+       forward_to.out (),
+     ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
   return ACE_reinterpret_cast (
@@ -2799,9 +2857,11 @@ IR::InterfaceDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_interfac
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_interface",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2844,9 +2904,11 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_value  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_value",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2887,9 +2949,11 @@ IR::ValueBoxDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_value_box
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_value_box",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2924,9 +2988,11 @@ IR::ExceptionDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_exceptio
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_exception",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -2960,9 +3026,11 @@ IR::NativeDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_native  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_native",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -3299,9 +3367,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_IDLType::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -3322,9 +3392,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_IDLType::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -3349,9 +3421,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_IDLType::type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -3982,9 +4056,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Repository::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4005,9 +4081,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Repository::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4033,9 +4111,11 @@ IR::Contained_ptr POA_IR::_tao_thru_poa_collocated_Repository::lookup_id  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "lookup_id",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4064,9 +4144,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_Repository::get_canonical_t
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "get_canonical_typecode",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4095,9 +4177,11 @@ IR::PrimitiveDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::get_primitive 
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "get_primitive",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4126,9 +4210,11 @@ IR::StringDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_string  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_string",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4157,9 +4243,11 @@ IR::WstringDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_wstring  
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_wstring",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4189,9 +4277,11 @@ IR::SequenceDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_sequence
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_sequence",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4222,9 +4312,11 @@ IR::ArrayDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_array  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_array",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4255,9 +4347,11 @@ IR::FixedDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_fixed  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_fixed",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4715,9 +4809,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentRepository::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4738,9 +4834,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentRepository::_non_existe
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4770,9 +4868,11 @@ IR::ComponentDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentRepository::creat
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_component",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -4810,9 +4910,11 @@ IR::HomeDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentRepository::create_hom
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_home",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5182,9 +5284,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ModuleDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5205,9 +5309,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ModuleDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5685,9 +5791,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConstantDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5708,9 +5816,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConstantDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5735,9 +5845,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ConstantDef::type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5764,9 +5876,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ConstantDef::type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5792,9 +5906,11 @@ void POA_IR::_tao_thru_poa_collocated_ConstantDef::type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -5822,9 +5938,11 @@ CORBA::Any * POA_IR::_tao_thru_poa_collocated_ConstantDef::value  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "value",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -5850,9 +5968,11 @@ void POA_IR::_tao_thru_poa_collocated_ConstantDef::value  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "value",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -6202,9 +6322,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_TypedefDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -6225,9 +6347,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_TypedefDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -6655,9 +6779,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StructDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -6678,9 +6804,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StructDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -6705,9 +6833,11 @@ IR::StructMemberSeq * POA_IR::_tao_thru_poa_collocated_StructDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -6733,9 +6863,11 @@ void POA_IR::_tao_thru_poa_collocated_StructDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -7249,9 +7381,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UnionDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7272,9 +7406,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UnionDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7299,9 +7435,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_UnionDef::discriminator_typ
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "discriminator_type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7328,9 +7466,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_UnionDef::discriminator_type_de
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "discriminator_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7356,9 +7496,11 @@ void POA_IR::_tao_thru_poa_collocated_UnionDef::discriminator_type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "discriminator_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -7386,9 +7528,11 @@ IR::UnionMemberSeq * POA_IR::_tao_thru_poa_collocated_UnionDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7414,9 +7558,11 @@ void POA_IR::_tao_thru_poa_collocated_UnionDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -7826,9 +7972,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EnumDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7849,9 +7997,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EnumDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7876,9 +8026,11 @@ IR::EnumMemberSeq * POA_IR::_tao_thru_poa_collocated_EnumDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -7904,9 +8056,11 @@ void POA_IR::_tao_thru_poa_collocated_EnumDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -8316,9 +8470,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AliasDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -8339,9 +8495,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AliasDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -8366,9 +8524,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_AliasDef::original_type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "original_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -8394,10 +8554,12 @@ void POA_IR::_tao_thru_poa_collocated_AliasDef::original_type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "original_type_def",
-      ACE_TRY_ENV
+      forward_to.out (),
+     ACE_TRY_ENV
     );
   ACE_CHECK;
   ACE_reinterpret_cast (
@@ -8751,9 +8913,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_NativeDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -8774,9 +8938,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_NativeDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -9114,9 +9280,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimitiveDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -9137,9 +9305,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimitiveDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -9164,9 +9334,11 @@ IR::PrimitiveKind POA_IR::_tao_thru_poa_collocated_PrimitiveDef::kind  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "kind",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -9553,9 +9725,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StringDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -9576,9 +9750,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StringDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -9603,9 +9779,11 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_StringDef::bound  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "bound",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -9631,9 +9809,11 @@ void POA_IR::_tao_thru_poa_collocated_StringDef::bound  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "bound",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -10021,9 +10201,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_WstringDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -10044,9 +10226,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_WstringDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -10071,9 +10255,11 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_WstringDef::bound  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "bound",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -10099,9 +10285,11 @@ void POA_IR::_tao_thru_poa_collocated_WstringDef::bound  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "bound",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -10544,9 +10732,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FixedDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -10567,9 +10757,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FixedDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -10594,9 +10786,11 @@ CORBA::UShort POA_IR::_tao_thru_poa_collocated_FixedDef::digits  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "digits",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -10622,10 +10816,12 @@ void POA_IR::_tao_thru_poa_collocated_FixedDef::digits  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "digits",
-      ACE_TRY_ENV
+       forward_to.out (),
+     ACE_TRY_ENV
     );
   ACE_CHECK;
   ACE_reinterpret_cast (
@@ -10652,9 +10848,11 @@ CORBA::Short POA_IR::_tao_thru_poa_collocated_FixedDef::scale  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "scale",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -10680,9 +10878,11 @@ void POA_IR::_tao_thru_poa_collocated_FixedDef::scale  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "scale",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -11152,9 +11352,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_SequenceDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -11175,9 +11377,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_SequenceDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -11202,9 +11406,11 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_SequenceDef::bound  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "bound",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -11230,9 +11436,11 @@ void POA_IR::_tao_thru_poa_collocated_SequenceDef::bound  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "bound",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -11260,10 +11468,12 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_SequenceDef::element_type  
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "element_type",
-      ACE_TRY_ENV
+       forward_to.out (),
+     ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
   return ACE_reinterpret_cast (
@@ -11289,9 +11499,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_SequenceDef::element_type_def  
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "element_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -11317,9 +11529,11 @@ void POA_IR::_tao_thru_poa_collocated_SequenceDef::element_type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "element_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -11789,9 +12003,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ArrayDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -11812,9 +12028,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ArrayDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -11839,9 +12057,11 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_ArrayDef::length  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
-  servant_upcall.prepare_for_upcall (
+   CORBA::Object_var forward_to;
+ servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "length",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -11867,9 +12087,11 @@ void POA_IR::_tao_thru_poa_collocated_ArrayDef::length  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "length",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -11897,9 +12119,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ArrayDef::element_type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "element_type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -11926,9 +12150,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ArrayDef::element_type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "element_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -11954,9 +12180,11 @@ void POA_IR::_tao_thru_poa_collocated_ArrayDef::element_type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "element_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -12403,9 +12631,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ExceptionDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -12426,9 +12656,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ExceptionDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -12453,9 +12685,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ExceptionDef::type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -12482,9 +12716,11 @@ IR::StructMemberSeq * POA_IR::_tao_thru_poa_collocated_ExceptionDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -12510,9 +12746,11 @@ void POA_IR::_tao_thru_poa_collocated_ExceptionDef::members  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "members",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -12994,9 +13232,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AttributeDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13017,9 +13257,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AttributeDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13044,9 +13286,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_AttributeDef::type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13073,9 +13317,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_AttributeDef::type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13101,9 +13347,11 @@ void POA_IR::_tao_thru_poa_collocated_AttributeDef::type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -13131,9 +13379,11 @@ IR::AttributeMode POA_IR::_tao_thru_poa_collocated_AttributeDef::mode  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "mode",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -13159,9 +13409,11 @@ void POA_IR::_tao_thru_poa_collocated_AttributeDef::mode  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "mode",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -13856,9 +14108,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_OperationDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13879,9 +14133,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_OperationDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13906,9 +14162,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_OperationDef::result  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "result",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13935,9 +14193,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_OperationDef::result_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "result_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -13963,9 +14223,11 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::result_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "result_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -13993,9 +14255,11 @@ IR::ParDescriptionSeq * POA_IR::_tao_thru_poa_collocated_OperationDef::params  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "params",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -14021,9 +14285,11 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::params  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "params",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -14051,9 +14317,11 @@ IR::OperationMode POA_IR::_tao_thru_poa_collocated_OperationDef::mode  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "mode",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -14079,9 +14347,11 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::mode  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "mode",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -14109,9 +14379,11 @@ IR::ContextIdSeq * POA_IR::_tao_thru_poa_collocated_OperationDef::contexts  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "contexts",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -14137,9 +14409,11 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::contexts  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "contexts",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -14167,9 +14441,11 @@ IR::ExceptionDefSeq * POA_IR::_tao_thru_poa_collocated_OperationDef::exceptions 
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "exceptions",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -14195,9 +14471,11 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::exceptions  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "exceptions",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -14875,9 +15153,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -14898,9 +15178,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -14925,9 +15207,11 @@ IR::InterfaceDefSeq * POA_IR::_tao_thru_poa_collocated_InterfaceDef::base_interf
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "base_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -14953,9 +15237,11 @@ void POA_IR::_tao_thru_poa_collocated_InterfaceDef::base_interfaces  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "base_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -14983,9 +15269,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_abstract  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_abstract",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -15011,9 +15299,11 @@ void POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_abstract  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_abstract",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -15041,9 +15331,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_local  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_local",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -15069,9 +15361,11 @@ void POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_local  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_local",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -15100,9 +15394,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_a  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -15137,9 +15433,11 @@ IR::AttributeDef_ptr POA_IR::_tao_thru_poa_collocated_InterfaceDef::create_attri
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_attribute",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -15181,9 +15479,11 @@ IR::OperationDef_ptr POA_IR::_tao_thru_poa_collocated_InterfaceDef::create_opera
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_operation",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -15671,9 +15971,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueMemberDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -15694,9 +15996,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueMemberDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -15721,9 +16025,11 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ValueMemberDef::type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -15750,9 +16056,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ValueMemberDef::type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -15778,9 +16086,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueMemberDef::type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -15808,9 +16118,11 @@ CORBA::Visibility POA_IR::_tao_thru_poa_collocated_ValueMemberDef::access  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "access",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -15836,9 +16148,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueMemberDef::access  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "access",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -16784,9 +17098,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -16807,9 +17123,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -16834,9 +17152,11 @@ IR::InterfaceDefSeq * POA_IR::_tao_thru_poa_collocated_ValueDef::supported_inter
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "supported_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -16862,9 +17182,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::supported_interfaces  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "supported_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -16892,9 +17214,11 @@ IR::InitializerSeq * POA_IR::_tao_thru_poa_collocated_ValueDef::initializers  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "initializers",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -16920,9 +17244,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::initializers  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "initializers",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -16950,9 +17276,11 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::base_value  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "base_value",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -16978,9 +17306,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::base_value  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "base_value",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -17008,9 +17338,11 @@ IR::ValueDefSeq * POA_IR::_tao_thru_poa_collocated_ValueDef::abstract_base_value
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "abstract_base_values",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -17036,9 +17368,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::abstract_base_values  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "abstract_base_values",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -17066,9 +17400,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_abstract  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_abstract",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -17094,9 +17430,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::is_abstract  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_abstract",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -17124,9 +17462,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_custom  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_custom",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -17152,9 +17492,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::is_custom  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_custom",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -17182,9 +17524,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_truncatable  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_truncatable",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -17210,9 +17554,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::is_truncatable  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_truncatable",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -17241,9 +17587,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_a  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -17276,9 +17624,11 @@ IR::ValueMemberDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::create_value_m
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_value_member",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -17317,9 +17667,11 @@ IR::AttributeDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::create_attribute
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_attribute",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -17361,9 +17713,11 @@ IR::OperationDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::create_operation
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_operation",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -17383,10 +17737,7 @@ IR::OperationDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::create_operation
       contexts,
       ACE_TRY_ENV
     );
-
 }
-
-
 
 class TAO_IR_ValueBoxDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -17780,10 +18131,12 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueBoxDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
-      ACE_TRY_ENV
+       forward_to.out (),
+     ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
   return ACE_reinterpret_cast (
@@ -17803,9 +18156,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueBoxDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -17830,9 +18185,11 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ValueBoxDef::original_type_def 
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "original_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -17858,9 +18215,11 @@ void POA_IR::_tao_thru_poa_collocated_ValueBoxDef::original_type_def  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "original_type_def",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -18231,9 +18590,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ProvidesDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -18254,9 +18615,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ProvidesDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -18281,9 +18644,11 @@ IR::InterfaceDef_ptr POA_IR::_tao_thru_poa_collocated_ProvidesDef::interface_typ
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "interface_type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -18680,9 +19045,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UsesDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -18703,9 +19070,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UsesDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -18730,9 +19099,11 @@ IR::InterfaceDef_ptr POA_IR::_tao_thru_poa_collocated_UsesDef::interface_type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "interface_type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -18759,9 +19130,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UsesDef::is_multiple  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_multiple",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -19165,9 +19538,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EventDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -19188,9 +19563,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EventDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -19216,9 +19593,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EventDef::is_a  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -19246,9 +19625,11 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_EventDef::event  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "event",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -19598,9 +19979,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EmitsDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -19621,9 +20004,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EmitsDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -19971,9 +20356,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PublishesDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -19994,9 +20381,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PublishesDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -20344,9 +20733,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConsumesDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -20367,9 +20758,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConsumesDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21215,9 +21608,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21238,9 +21633,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21265,9 +21662,11 @@ IR::InterfaceDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::supported_i
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "supported_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21293,9 +21692,11 @@ void POA_IR::_tao_thru_poa_collocated_ComponentDef::supported_interfaces  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "supported_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -21323,9 +21724,11 @@ IR::ComponentDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::base_compone
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "base_component",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21352,9 +21755,11 @@ IR::ProvidesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::provides_int
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "provides_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21381,9 +21786,11 @@ IR::UsesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::uses_interfaces 
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "uses_interfaces",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21410,9 +21817,11 @@ IR::EmitsDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::emits_events  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "emits_events",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21439,9 +21848,11 @@ IR::PublishesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::publishes_e
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "publishes_events",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21468,9 +21879,11 @@ IR::ConsumesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::consumes_eve
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "consumes_events",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21497,9 +21910,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentDef::is_basic  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_basic",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -21530,9 +21945,11 @@ IR::ProvidesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_provid
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_provides",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21568,9 +21985,11 @@ IR::UsesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_uses  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_uses",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21606,9 +22025,11 @@ IR::EmitsDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_emits  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_emits",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21643,9 +22064,11 @@ IR::PublishesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_publi
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_publishes",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -21680,9 +22103,11 @@ IR::ConsumesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_consum
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_consumes",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -22090,9 +22515,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -22113,9 +22540,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -22141,9 +22570,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::is_a  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -22171,9 +22602,11 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::primary_key  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "primary_key",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -22581,9 +23014,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FactoryDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -22604,9 +23039,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FactoryDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23012,9 +23449,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FinderDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23035,9 +23474,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FinderDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23718,9 +24159,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_HomeDef::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23741,9 +24184,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_HomeDef::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23768,9 +24213,11 @@ IR::HomeDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::base_home  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "base_home",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23797,9 +24244,11 @@ IR::ComponentDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::managed_component
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "managed_component",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23826,9 +24275,11 @@ IR::PrimaryKeyDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::primary_key  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "primary_key",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23855,9 +24306,11 @@ IR::FactoryDefSeq * POA_IR::_tao_thru_poa_collocated_HomeDef::factories  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "factories",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23884,9 +24337,11 @@ IR::FinderDefSeq * POA_IR::_tao_thru_poa_collocated_HomeDef::finders  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "finders",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23913,9 +24368,11 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_HomeDef::is_basic  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "is_basic",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -23946,9 +24403,11 @@ IR::PrimaryKeyDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::create_primary_k
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_primary_key",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -23984,9 +24443,11 @@ IR::FactoryDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::create_factory  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_factory",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -24023,9 +24484,11 @@ IR::FinderDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::create_finder  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_finder",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);

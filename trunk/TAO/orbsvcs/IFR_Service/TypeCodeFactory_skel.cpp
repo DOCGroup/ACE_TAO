@@ -1024,9 +1024,11 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1047,9 +1049,11 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::_non_existen
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1077,9 +1081,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_struct_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1113,9 +1119,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_union_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1149,9 +1157,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_enum_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1184,9 +1194,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_alias_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1219,9 +1231,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_exception_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1253,9 +1267,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_interface_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1285,9 +1301,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_string_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1316,9 +1334,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_wstring_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1348,9 +1368,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_fixed_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1381,9 +1403,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_sequence_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1414,9 +1438,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_array_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1450,9 +1476,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_value_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1487,9 +1515,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_value_box_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1521,9 +1551,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_native_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1553,9 +1585,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_recursive_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1585,9 +1619,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_abstract_interface_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1618,9 +1654,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_component_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1651,9 +1689,11 @@ CORBA::TypeCode_ptr POA_CORBA::_tao_thru_poa_collocated_TypeCodeFactory::create_
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "create_home_tc",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
