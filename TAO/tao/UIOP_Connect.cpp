@@ -2,7 +2,7 @@
 
 #include "tao/UIOP_Connect.h"
 
-#if !defined(ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Transport.h"
 #include "tao/GIOP.h"
@@ -380,4 +380,4 @@ TAO_UIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif /* TAO_HAS_UIOP */

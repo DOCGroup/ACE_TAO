@@ -54,10 +54,10 @@ TAO_Internal::open_services (int &argc,
         insert (&ace_svc_desc_TAO_Default_Server_Strategy_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_IIOP_Protocol_Factory);
-#if !defined(ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
-#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif /* TAO_HAS_UIOP */
       // add descriptor to list of static objects.
 
       int result = 0;

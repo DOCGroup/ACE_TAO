@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Profile.h"
 
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
@@ -390,4 +390,4 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   return 1;
 }
 
-#endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif  /* TAO_HAS_UIOP */

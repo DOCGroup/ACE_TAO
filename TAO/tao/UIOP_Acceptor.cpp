@@ -20,7 +20,7 @@
 
 #include "tao/UIOP_Acceptor.h"
 
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -279,4 +279,4 @@ template class TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
-#endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif  /* TAO_HAS_UIOP */

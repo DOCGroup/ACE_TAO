@@ -29,7 +29,7 @@
 
 #include "tao/GIOP.h"
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+# if defined (TAO_HAS_UIOP)
 
 // Forward decls.
 class TAO_UIOP_Handler_Base;
@@ -211,6 +211,6 @@ public:
   // non-blocking reads, fragment reassembly, etc.
 };
 
-# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+# endif  /* TAO_HAS_UIOP */
 
 #endif  /* TAO_UIOP_TRANSPORT_H */
