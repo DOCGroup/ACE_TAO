@@ -1,3 +1,9 @@
+Thu Apr 15 06:25:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Log/Notify/Log_Notify.mpc:
+          Fixed incorrect file in supplier project. Thanks to Rob Boyer
+          <rboyer@euphonix.com> for reporting this.
+
 Wed Apr 14 23:07:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Abstract_Servant_Base.h:
