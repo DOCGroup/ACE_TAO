@@ -1,3 +1,9 @@
+Tue Dec 22 01:01:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_T.cpp (extract): Changed to use
+	  any's >>= operator to extract a sequence.  No need to extract
+	  yourself.
+
 Mon Dec 21 21:42:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp
