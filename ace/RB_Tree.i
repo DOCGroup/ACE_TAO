@@ -28,7 +28,8 @@ RB_Tree_Node<KEY, T>::color (RB_Tree_Node_Color c)
 }
   // set color of the node
 
-template <class KEY, class T> ACE_INLINE RB_Tree_Node_Color 
+template <class KEY, class T>
+ACE_INLINE RB_Tree_Node<KEY, T>::RB_Tree_Node_Color
 RB_Tree_Node<KEY, T>::color ()
 {
   return color_;
@@ -98,21 +99,21 @@ RB_Tree<KEY, T>::clear ()
 
 
 
-template <class KEY, class T> ACE_INLINE KEY * 
+template <class KEY, class T> ACE_INLINE KEY *
 RB_Tree_Iterator<KEY, T>::key ()
 {
   return node_ ? (&(node_->key ())) : 0;
 }
   // accessor for key of node under iterator (if any)
 
-template <class KEY, class T> ACE_INLINE T * 
+template <class KEY, class T> ACE_INLINE T *
 RB_Tree_Iterator<KEY, T>::item ()
 {
   return node_ ? (&(node_->item ())) : 0;
 }
   // accessor for item of node under iterator (if any)
 
-template <class KEY, class T> ACE_INLINE int 
+template <class KEY, class T> ACE_INLINE int
 RB_Tree_Iterator<KEY, T>::first ()
 {
   node_ = tree_.RB_tree_minimum (tree_.root_);
@@ -128,7 +129,7 @@ RB_Tree_Iterator<KEY, T>::last ()
 }
   // move to the last item in the tree
 
-template <class KEY, class T> ACE_INLINE int 
+template <class KEY, class T> ACE_INLINE int
 RB_Tree_Iterator<KEY, T>::next ()
 {
   node_ = tree_.RB_tree_successor (node_);
@@ -137,7 +138,7 @@ RB_Tree_Iterator<KEY, T>::next ()
   // move to the next item in the tree
   // returns 1 if there is a next item, 0 otherwise
 
-template <class KEY, class T> ACE_INLINE int 
+template <class KEY, class T> ACE_INLINE int
 RB_Tree_Iterator<KEY, T>::previous ()
 {
   node_ = tree_.RB_tree_predecessor (node_);
@@ -146,10 +147,8 @@ RB_Tree_Iterator<KEY, T>::previous ()
   // move to the previous item in the tree
   // returns 1 if there is a previous item, 0 otherwise
 
-template <class KEY, class T> ACE_INLINE int 
+template <class KEY, class T> ACE_INLINE int
 RB_Tree_Iterator<KEY, T>::is_done ()
 {
   return node_ ? 0 : 1;
 }
-
-
