@@ -1,3 +1,16 @@
+Fri May  9 00:20:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-win32-msvc.h:
+          Added following ACE_LACKS macros: INTTYPES_H, STROPTS_H,
+          SYS_IOCTL_H, SYS_IPC_H, and SYS_SEM_H.
+ 
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+          Added #include "ace/os_include/sys/sem.h".
+
+        * ace/SPIPE_Stream.h:
+          Added #include "ace/os_include/stropts.h".
+
 Thu May  8 23:24:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
@@ -53,7 +66,7 @@ Thu May  7 02:04:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           below.		  
 
         * ace/config-cygwin32.h:
-          Added following ACE_LACKS macros:  STDINT_H, INTTYPES8H,
+          Added following ACE_LACKS macros:  STDINT_H, INTTYPES_H,
           STROPTS_H, and UCONTEXT_H.
 
 		* ace/config-win32-msvc.h:

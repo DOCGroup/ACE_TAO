@@ -22,6 +22,7 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/ACE.h"
+#include "ace/os_include/stropts.h"
 
 /**
  * @class ACE_SPIPE_Stream
