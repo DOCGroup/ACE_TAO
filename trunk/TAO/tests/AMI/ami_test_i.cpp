@@ -45,14 +45,12 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
               in_l,
               in_str));
 
-#ifdef TAO_HAS_AMI_EXCEPTIONS
   if (in_l == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Throwing Exception: DidNotWork\n"));
       ACE_TRY_THROW (A::DidNotWork());
     }
-#endif
 
   return 931234;
 }
