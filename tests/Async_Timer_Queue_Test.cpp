@@ -45,12 +45,60 @@ Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 // Create a helpful typedef.
-typedef ACE_Async_Timer_Queue_Adapter<ACE_Timer_List> ASYNC_TIMER_LIST;
-typedef ACE_Timer_List_Iterator TIMER_LIST_ITERATOR;
+class Async_Timer_Queue : public ACE_Async_Timer_Queue_Adapter<ACE_Timer_List>
+  // = TITLE
+  //     Asynchronous Timer Queue Singleton, instantiated by an <ACE_Timer_List>.
+{
+public:
+  static Async_Timer_Queue *instance (void);
+  // Singleton access point.
 
-// Static instance, instantiated by an <ACE_Timer_List>.
+  void dump (void);
+  // Dump the contents of the queue.
 
-ASYNC_TIMER_LIST timer_queue;
+private:
+  Async_Timer_Queue (void);
+  // Private constructor enforces the Singleton.
+
+  static Async_Timer_Queue *instance_;
+  // Pointer to the timer queue.
+};
+
+// Initialize the Singleton pointer.
+Async_Timer_Queue *Async_Timer_Queue::instance_ = 0;
+
+// Implement the Singleton logic.
+Async_Timer_Queue *
+Async_Timer_Queue::instance (void)
+{
+  if (Async_Timer_Queue::instance_ == 0)
+    {
+      // Initialize with all signals enabled.
+      ACE_Sig_Set ss (1);
+
+      // Don't block out SIGQUIT.
+      ss.sig_del (SIGQUIT);
+
+      ACE_NEW_RETURN (Async_Timer_Queue::instance_,
+		      ACE_Async_Timer_Queue_Adapter<ACE_Timer_List> (&ss),
+		      0);
+    }
+  return Async_Timer_Queue::instance_;
+}
+
+// Dump the contents of the queue.
+void
+Async_Timer_Queue::dump (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
+
+  for (ACE_Timer_List_Iterator iter (Async_Timer_Queue::instance ()->timer_queue ());
+       iter.item () != 0;
+       iter.next ())
+    iter.item ()->dump ();
+
+  ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
+}
 
 // Command-line API.
 
@@ -71,8 +119,8 @@ parse_commands (char *buf)
 	ACE_Event_Handler *eh;
 	ACE_NEW_RETURN (eh, Timer_Handler, -1);
 
-	long tid = timer_queue.schedule (eh, 0,
-					 ACE_OS::gettimeofday () + tv);
+	long tid = Async_Timer_Queue::instance ()->schedule 
+	  (eh, 0, ACE_OS::gettimeofday () + tv);
 
 	if (tid == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
@@ -84,9 +132,11 @@ parse_commands (char *buf)
       {
 	const void *act;
 
-	if (timer_queue.cancel (value, &act) == -1)
+	if (Async_Timer_Queue::instance ()->cancel (value, &act) == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cancel_timer"), -1);
 
+	// In this case, the act will be 0, but it might be a real
+	// pointer.
 	delete (ACE_Event_Handler *) act;
 
 	ACE_DEBUG ((LM_DEBUG, "canceling %d\n", value));
@@ -99,7 +149,7 @@ parse_commands (char *buf)
 }
 
 static void 
-handler (int signum)
+signal_handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "handling signal %S\n", signum));
 
@@ -108,15 +158,7 @@ handler (int signum)
     /* NOTREACHED */
     case SIGINT:
       {
-	ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
-
-	for (TIMER_LIST_ITERATOR iter (timer_queue.timer_queue ());
-	     iter.item () != 0;
-	     iter.next ())
-	  iter.item ()->dump ();
-
-	ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
-
+        Async_Timer_Queue:;instance ()->dump ();
 	break;
 	/* NOTREACHED */
       }
@@ -131,7 +173,8 @@ static void
 register_signal_handlers (void)
 {
   // Register SIGQUIT (never blocked).
-  ACE_Sig_Action sigquit ((ACE_SignalHandler) handler, SIGQUIT);
+  ACE_Sig_Action sigquit ((ACE_SignalHandler) signal_handler,
+			  SIGQUIT);
   ACE_UNUSED_ARG (sigquit);
 
   // Don't let the SIGALRM interrupt the SIGINT handler!

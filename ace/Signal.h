@@ -34,8 +34,17 @@ class ACE_Export ACE_Sig_Set
 {
 public:
   // = Initialization and termination methods.
-  ACE_Sig_Set (sigset_t *);
+  ACE_Sig_Set (sigset_t *sigset);
+  // Initialize <sigset_> with <sigset>.  If <sigset> == 0 then fill
+  // the set.
+
+  ACE_Sig_Set (ACE_Sig_Set *sigset);
+  // Initialize <sigset_> with <sigset>.  If <sigset> == 0 then fill
+  // the set.
+
   ACE_Sig_Set (int fill = 0);
+  // If <fill> == 0 then initialize the <sigset_> empty, else full.
+
   ~ACE_Sig_Set (void);
 
   int empty_set (void);
@@ -141,9 +150,12 @@ class ACE_Export ACE_Sig_Guard
   //     Note that a "0" for mask causes all signals to be held.
 {
 public:
-  // = Set/remove mask.
+  // = Initialization and termination methods.
   ACE_Sig_Guard (ACE_Sig_Set *mask = 0);
+  // Block out signals in <mask>.  Default is to block all signals!
+
   ~ACE_Sig_Guard (void);
+  // Restore blocked signals.
 
   void dump (void) const;
   // Dump the state of an object.

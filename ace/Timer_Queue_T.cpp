@@ -290,8 +290,8 @@ template <class TQ> int
 ACE_Async_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 					   const void **act)
 {
-  // Block all signals.
-  ACE_Sig_Guard sg;
+  // Block designated signals.
+  ACE_Sig_Guard sg (&this->mask_);
   ACE_UNUSED_ARG (sg);
 
   return this->timer_queue_.cancel (timer_id, act);
@@ -299,15 +299,15 @@ ACE_Async_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 
 template <class TQ> long 
 ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
-				 const void *act, 
-				 const ACE_Time_Value &delay,
-				 const ACE_Time_Value &interval)
+					     const void *act, 
+					     const ACE_Time_Value &delay,
+					     const ACE_Time_Value &interval)
 {
   ACE_UNUSED_ARG (act);
   ACE_UNUSED_ARG (interval);
 
-  // Block all signals.
-  ACE_Sig_Guard sg;
+  // Block designated signals.
+  ACE_Sig_Guard sg (&this->mask_);
   ACE_UNUSED_ARG (sg);
 
   long tid = this->timer_queue_.schedule (eh, 0, delay);
@@ -327,23 +327,25 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
   if (tv < ACE_Time_Value::zero)
     tv = ACE_Time_Value (0, 1);
 
+  // @@ This code should be clever enough to avoid updating the
+  // ualarm() if we haven't actually changed the earliest time.
   // Schedule a new timer.
   ACE_OS::ualarm (tv);
   return 0;
 }
 
 template <class TQ>
-ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (void)
+ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *mask)
+  // If <mask> == 0, block *all* signals when the SIGARLM handler is
+  // running, else just block those in the mask.
+  : mask_ (mask)
 {
   // The following code is necessary to selectively "block" all
   // signals when SIGALRM is running.  Also, we always restart system
   // calls that are interrupted by the signals.
 
-  // Block *all* signals when the SIGARLM handler is running!
-  ACE_Sig_Set ss (1); 
-
   ACE_Sig_Action sa ((ACE_SignalHandler) 0,
-		     ss,
+		     this->mask_,
 		     SA_RESTART);
 
   if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
@@ -376,6 +378,8 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
 		      expired_timers));
 
 	// Only schedule a new timer if there is one in the list.
+	// @@ This code should also become smarter to avoid
+	// unnecessary calls to ualarm().
 	if (this->timer_queue_.is_empty () == 0)
 	  ACE_OS::ualarm (this->timer_queue_.earliest_time () 
 			  - ACE_OS::gettimeofday ());
