@@ -34,7 +34,7 @@ Mon Sep 28 16:06:05 1998  David L. Levine  <levine@cs.wustl.edu>
           memcpy of the TSS key with TSS emulation.)
 
           TSS emulation is enabled by default in the ACE configurations
-          for VxWorks and LynxOS.
+          for VxWorks, pSOS, and LynxOS.
 
           Many thanks to Arturo Montes <mitosys@colomsat.net.co> for
           expanding TSS emulation to platform that have native TSS.
