@@ -39,7 +39,7 @@
 
 class TAO_EC_Filter;
 
-class TAO_EC_Filter_Builder
+class TAO_ORBSVCS_Export TAO_EC_Filter_Builder
 {
   // = TITLE
   //   Abstract base class for the filter builders.
@@ -60,7 +60,7 @@ public:
 
 // ****************************************************************
 
-class TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_ORBSVCS_Export TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   A simple implementation of the filter builder.

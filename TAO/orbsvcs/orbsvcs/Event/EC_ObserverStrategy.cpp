@@ -73,6 +73,8 @@ TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*,
 
 TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy (void)
 {
+  delete this->lock_;
+  this->lock_ = 0;
 }
 
 RtecEventChannelAdmin::Observer_Handle
@@ -172,7 +174,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
          ++i)
       {
         TAO_EC_ProxyPushSupplier* supplier = *i;
- 
+
         const RtecEventChannelAdmin::ConsumerQOS& sub =
           supplier->subscriptions ();
         if (sub.is_gateway)

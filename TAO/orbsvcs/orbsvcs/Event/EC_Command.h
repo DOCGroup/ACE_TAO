@@ -43,7 +43,7 @@ class TAO_EC_Connected_Command : public ACE_Command_Base
   //   EC_Connected_Command
   //
   // = DESCRIPTION
-  //   Implements a Command object that invokes the connected_i() method 
+  //   Implements a Command object that invokes the connected_i() method
   //   on the target, passing an argument of type Object.
   //
   // = MEMORY MANAGMENT
@@ -64,7 +64,7 @@ public:
   // constructor...
 
   virtual int execute (void *arg);
-  // The callback method, if the argument is not nil it is interpreted 
+  // The callback method, if the argument is not nil it is interpreted
   // as a CORBA::Environment.
 
 private:
@@ -105,7 +105,7 @@ public:
   // constructor...
 
   virtual int execute (void *arg);
-  // The callback method, if the argument is not nil it is interpreted 
+  // The callback method, if the argument is not nil it is interpreted
   // as a CORBA::Environment.
 
 private:

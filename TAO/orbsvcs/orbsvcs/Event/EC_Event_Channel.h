@@ -35,7 +35,7 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "EC_Factory.h"
 
-class TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
+class TAO_ORBSVCS_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
 {
   // = TITLE
   //   The RtecEventChannelAdmin::EventChannel implementation.

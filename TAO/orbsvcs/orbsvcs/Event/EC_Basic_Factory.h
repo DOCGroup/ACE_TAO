@@ -37,7 +37,7 @@
 
 class TAO_EC_SupplierFiltering;
 
-class TAO_EC_Basic_Factory : public TAO_EC_Factory
+class TAO_ORBSVCS_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
   // = TITLE
   //   The factory for a simple event channel.

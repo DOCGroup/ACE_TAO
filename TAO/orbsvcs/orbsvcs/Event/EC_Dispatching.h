@@ -42,7 +42,7 @@
 class TAO_EC_QOS_Info;
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_EC_Dispatching
+class TAO_ORBSVCS_Export TAO_EC_Dispatching
 {
   // = TITLE
   //   Abstract base class for the dispatching strategies.
