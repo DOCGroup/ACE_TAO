@@ -2,6 +2,7 @@
 
 #include "Smart_Proxy_Impl.h"
 #include "ace/Service_Object.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Smart_Test_Factory
   : public virtual TAO_Test_Default_Proxy_Factory,

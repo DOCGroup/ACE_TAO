@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Task.h"
+#include "ace/svc_export.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "tao/default_resource.h"
 #include "Time_Date_i.h"
