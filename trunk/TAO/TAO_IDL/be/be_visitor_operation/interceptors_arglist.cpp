@@ -61,7 +61,6 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
   // generate the CORBA::Environment parameter for the alternative mapping
   if (!be_global->exception_support ())
     {      
-      os->indent ();
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
@@ -74,19 +73,16 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
           {
-            os->indent (); 
             // if the operation node has parameters, then we need to insert a comma
-            *os << ","<<be_nl;
-            os->indent ();
+            *os << "," << be_nl;
             *os << "ACE_TRY_ENV";
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
           {
-            os->indent ();
             // if the operation node has parameters, then we need to insert a comma
-            *os << ","<<be_nl;
+            *os << "," << be_nl;
            // last argument - is always CORBA::Environment
             *os << "CORBA::Environment &";
             break;
@@ -97,14 +93,13 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
               // if the operation node has parameters, then we need to insert a comma
               //if (node->argument_count () > 0)
               // @@ Do it for all cases i.e arg count > = 0
-              *os << ","<<be_nl;
+              *os << "," << be_nl;
 
-              os->indent ();
               // last argument - is always CORBA::Environment
               *os << "CORBA::Environment &ACE_TRY_ENV";
               *os << " = " << be_idt_nl
                   << "TAO_default_environment ()"
-                  << be_uidt_nl ;//<< ");\n\n";
+                  << be_uidt << be_uidt_nl;
               break;
             }
         default:
@@ -113,12 +108,11 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
                                "(%N:%l) be_visitor_interceptors_arglist::"
                                "visit_operation - "
                                "Bad context\n"),
-                          -1);
-          }
-            
-        }
-      
+                              -1);
+          }            
+        }      
     }
+
   return 0;
 }
 
@@ -134,14 +128,13 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
                          "(%N:%l) "
                          "be_compiled_visitor_operation_argument_invoke"
                          "::post_process - "
-                                   "Bad argument node\n"),
+                         "Bad argument node\n"),
                         -1);
     }
   
   if (arg->direction () == AST_Argument::dir_OUT)
     return 0;
       
-  os->indent ();
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
@@ -153,19 +146,14 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
       {
-        // if we are not the last node in the list of arguments, generate a comma
+        // If we are not the last node in the list of arguments, generate a comma
         // else decide if we are generating code to support true exceptions - in
-        // which case there will not be any CORBA::Environment parameter
-        //        if (!this->last_node (bd))
-        // {
-            os->indent ();
-            *os << ",";
-            // }
+        // which case there will not be any CORBA::Environment parameter.
+        *os << "," << be_nl;
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
-      //    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
       break;
     default:
@@ -178,6 +166,7 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
       }
 
     }
+
   return 0;
 }
 
@@ -244,9 +233,6 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST);
       break;
-      //    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT:
-      //ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_RESULT);
-      // break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH);
       break;
@@ -260,7 +246,6 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
-      //      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS);
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
       break;
 
@@ -274,7 +259,7 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       }
     }
 
-  // grab a visitor
+  // Grab a visitor.
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
@@ -319,8 +304,6 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
   os->indent ();
   switch (this->ctx_->state ())
     {
-      //    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT:
-      // break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:

@@ -56,7 +56,6 @@ int be_visitor_args_upcall_ss::visit_argument (be_argument *node)
 
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
-
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,7 +74,6 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
 
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -111,7 +109,6 @@ int be_visitor_args_upcall_ss::visit_enum (be_enum *)
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
 
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -128,7 +125,6 @@ int be_visitor_args_upcall_ss::visit_interface (be_interface *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -146,7 +142,6 @@ int be_visitor_args_upcall_ss::visit_interface (be_interface *)
         *os << arg->local_name () << ".inout ()";
       break;
     case AST_Argument::dir_OUT:
-      //      *os << arg->local_name ();
       if (this->ctx_->state ()
           == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
         *os << arg->local_name ();
@@ -162,7 +157,6 @@ int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -180,7 +174,6 @@ int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *)
         *os << arg->local_name () << ".inout ()";
       break;
     case AST_Argument::dir_OUT:
-      //      *os << arg->local_name ();
       if (this->ctx_->state ()
           == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
         *os << arg->local_name ();
@@ -198,7 +191,6 @@ int be_visitor_args_upcall_ss::visit_valuetype (be_valuetype *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -216,7 +208,6 @@ int be_visitor_args_upcall_ss::visit_valuetype (be_valuetype *)
         *os << arg->local_name () << ".inout ()";
       break;
     case AST_Argument::dir_OUT:
-      //      *os << arg->local_name ();
       if (this->ctx_->state ()
           == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
         *os << arg->local_name ();
@@ -232,7 +223,6 @@ int be_visitor_args_upcall_ss::visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -250,7 +240,6 @@ int be_visitor_args_upcall_ss::visit_valuetype_fwd (be_valuetype_fwd *)
         *os << arg->local_name () << ".inout ()";
       break;
     case AST_Argument::dir_OUT:
-      //      *os << arg->local_name ();
       if (this->ctx_->state ()
           == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
         *os << arg->local_name ();
@@ -269,7 +258,6 @@ int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
     {
@@ -307,7 +295,6 @@ int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
             *os << arg->local_name () << ".inout ()";
           break;
         case AST_Argument::dir_OUT:
-          //          *os << arg->local_name ();
           if (this->ctx_->state ()
               == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
             *os << arg->local_name ();
@@ -336,7 +323,6 @@ int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -359,7 +345,6 @@ int be_visitor_args_upcall_ss::visit_string (be_string *)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -392,7 +377,6 @@ int be_visitor_args_upcall_ss::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -418,7 +402,6 @@ int be_visitor_args_upcall_ss::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:

@@ -350,11 +350,15 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << "istub->orb_core ()" << be_uidt_nl
       << ");\n";
 
-  // fish out the interceptor from the ORB
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
-      << "TAO_ClientRequestInterceptor_Adapter" << be_idt_nl
-      << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));\n"
-      << be_uidt;
+  // Fish out the interceptor from the ORB.
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_uidt_nl;
+  *os << "TAO_ClientRequestInterceptor_Adapter _tao_vfr (" 
+      << be_idt << be_idt_nl
+      << "istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV)"
+      << be_uidt_nl
+      << ");" << be_uidt_nl;
+  os->decr_indent ();
+
   if (this->gen_check_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -364,26 +368,21 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                         -1);
 
     }
-  os->indent ();
+
+  *os << be_nl;
 
   // Obtain the scope.
-
-  os->indent ();
+  os->incr_indent ();
   if (node->is_nested ())
     {
       be_decl *parent =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
-      // But since we are at the interface level our parents full_name
-      // will include the interface name which we dont want and so we
-      // get our parent's parent's full name.
-      //    be_interface *parent_interface = be_interface::narrow_from_decl (parent);
-      // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
-      // Generate the scope::operation name.
-      //  *os << parents_parent->full_name () << "::";
+
       *os << parent->full_name () << "::";
     }
 
-  *os << "TAO_ClientRequest_Info_"<< node->flat_name ();
+  *os << "TAO_ClientRequest_Info_" << node->flat_name ();
+
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context and add a "_get"/"_set" to the flat
@@ -392,36 +391,31 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   if (this->ctx_->attribute ())
     {
       bt = be_type::narrow_from_decl (node->return_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "(%N:%l) be_visitor_interceptors_ch::"
                              "visit_operation - "
                              "Bad return type\n"),
                             -1);
         }
 
-      // grab the right visitor to generate the return type if its not
+      // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
-        *os <<"_get";
+        *os << "_get";
       else
-        *os <<"_set";
+        *os << "_set";
     }
 
-  *os<< "  ri (" << this->compute_operation_name (node) << ",\n"
+  *os << " ri (" << be_idt << be_idt_nl
+      << this->compute_operation_name (node) << "," << be_nl
       << "_tao_call.service_info ()," << be_nl
       << "this";
 
-  // This necesary becos: (a) a comma is needed if there are arguments
-  // (b) not needed if exceptions enabled since thats done already (c)
-  // not needed if there are no args and exceptions is disabled.
-
-  //  os->indent ();
-  //if (node->argument_count () > 0)
-  //*os << ",\n";
-
-  // Generate the formal argument fields which are passed to the RequestInfo object
+  // Generate the formal argument fields which are passed 
+  // to the RequestInfo object.
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -435,8 +429,12 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                          "codegen for arglist failed\n"),
                         -1);
     }
+
   delete visitor;
-  *os << ");\n";
+
+  *os << be_uidt_nl << ");" << be_uidt_nl;
+
+  os->decr_indent ();
 
   if (this->gen_check_exception (bt) == -1)
     {
@@ -447,23 +445,23 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                         -1);
 
     }
-  os->decr_indent ();
+
+  *os << be_nl;
+  os->incr_indent ();
 
   *os << "ACE_TRY" << be_idt_nl
       << "{\n"
-      << "#endif /* TAO_HAS_INTERCEPTORS */\n";
+      << "#endif /* TAO_HAS_INTERCEPTORS */" << be_idt_nl << be_nl;
 
-  *os << be_nl
-      << "for (;;)" << be_nl
+  *os << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
   if (node->flags () != AST_Operation::OP_oneway)
      {
-       *os << be_nl;
-       *os << "_tao_call.reset_reply_received();\n";
+       *os << "_tao_call.reset_reply_received();" << be_nl;
      }
 
-  *os << "_tao_call.start (ACE_TRY_ENV);\n";
+  *os << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -480,11 +478,13 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
    // Get the request_id field for the Request Info. In TAO, request id's
     // change with differnet profiles so this seems to be the appropriate
     // place to populate the Request Info with it.
-      << "ri.request_id (_tao_call.request_id ()); "<< be_nl
-      << " _tao_vfr.send_request ("<< be_idt << be_idt_nl
-      << "&ri,"<< be_nl
+      << "ri.request_id (_tao_call.request_id ()); " << be_nl
+      << " _tao_vfr.send_request (" << be_idt << be_idt_nl
+      << "&ri," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl << ");\n" << be_uidt;
+      << ")" << be_uidt << be_uidt_nl 
+      << ");" << be_uidt_nl;
+
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -495,8 +495,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
     }
 
-  // Prepare the request header
-  os->indent ();
+  // Prepare the request header.
   *os << "CORBA::Short _tao_response_flag = ";
 
   switch (node->flags ())
@@ -510,10 +509,11 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
   *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV"
-      << be_uidt_nl << ");" << be_uidt << "\n";
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag)," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl 
+      << ");" << be_uidt_nl;
 
-  // check if there is an exception
+  // Check if there is an exception.
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -524,9 +524,8 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
     }
 
-
-  // now make sure that we have some in and inout parameters. Otherwise, there
-  // is nothing to be marshaled in
+  // Now make sure that we have some in and inout parameters. Otherwise, there
+  // is nothing to be marshaled in.
   if (this->has_param_type (node, AST_Argument::dir_IN) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
@@ -535,7 +534,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
           << be_nl
           << "if (!(\n" << be_idt << be_idt << be_idt;
 
-      // marshal each in and inout argument
+      // Marshal each in and inout argument.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
@@ -552,9 +551,11 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       *os << be_uidt << be_uidt_nl
           << "))" << be_uidt_nl;
 
-      // if marshaling fails, raise exception
-      if (this->gen_raise_interceptor_exception (bt, "CORBA::MARSHAL",
-                                                 "") == -1)
+      // If marshaling fails, raise exception.
+      if (this->gen_raise_interceptor_exception (bt, 
+                                                 "CORBA::MARSHAL",
+                                                 "") 
+            == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_cs::"
@@ -562,13 +563,14 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                              "codegen for return var failed\n"),
                             -1);
         }
+
+      *os << be_idt_nl;
     }
 
-  *os << be_nl
-      << "int _invoke_status =" << be_idt_nl;
+  *os << "int _invoke_status =" << be_idt_nl;
   if (node->flags () == AST_Operation::OP_oneway)
     {
-      // oneway operation
+      // Oneway operation.
       *os << "_tao_call.invoke (ACE_TRY_ENV);";
     }
   else
@@ -587,7 +589,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
     }
 
   *os << be_uidt_nl;
-  // check if there is an exception
+  // Check if there is an exception.
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -614,11 +616,10 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                         -1);
     }
 
-  *os << be_uidt_nl
-      << "}" << be_nl;
+  *os << "}" << be_nl;
 
-  // if we reach here, we are ready to proceed.
-  // the code below this is for 2way operations only
+  // If we reach here, we are ready to proceed.
+  // the code below this is for twoway operations only.
 
   if (!this->void_return_type (bt) ||
       this->has_param_type (node, AST_Argument::dir_INOUT) ||
@@ -717,7 +718,8 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
         }
 
       *os << be_uidt << be_uidt << be_nl
-          << "))" << be_uidt_nl;
+          << "))" << be_nl
+          << "{" << be_idt_nl;
       // if marshaling fails, raise exception
       if (this->gen_raise_interceptor_exception
           (bt, "CORBA::MARSHAL",
@@ -729,14 +731,15 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                              "codegen for return var failed\n"),
                             -1);
         }
-      *os << be_uidt;
+
+      *os << "}" << be_uidt_nl;
     }
 
 
   // Populate the Request Info with result if any of the invocation
   if (!this->void_return_type (bt))
     {
-      // Heres what we are going to do to have a uniform way of getting the
+      // Here's what we are going to do to have a uniform way of getting the
       // return value updated for the Request Info:
       // declare a operation_retval type object and assign the
       // _tao_safe_retval._retn () to it.
@@ -747,7 +750,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       // And finally the _retn () is returned from the operation w.o
       // causing any problems.
 
-      *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl;
+      *os << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl;
       // Generate the return type mapping (same as in the header file)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
@@ -777,22 +780,6 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
               << " ri.result (_tao_retval_info);" << be_uidt_nl
               << ");" << be_uidt_nl;
         }
-
-      // get the return val
-      /*      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_PRE_INVOKE_CS);
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-              delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_compiled_visitor_operation_cs::"
-                                 "gen_marshal_and_invoke - "
-                                 "codegen for return var failed\n"),
-                                -1);
-                                }*/
-      //      *os <<");" << be_nl;
     }
 
   // Oneway operations dont have receive reply since once the request
@@ -801,10 +788,12 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   {
     // Invoke postinvoke interceptor
     *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl;
-    *os << "_tao_vfr.receive_reply (" << be_idt_nl
-        << "&ri,"
-        << be_nl << "ACE_TRY_ENV" << be_uidt_nl
-        << ")" << be_uidt << be_uidt_nl << ");\n";
+    *os << "_tao_vfr.receive_reply (" << be_idt << be_idt_nl
+        << "&ri," << be_nl 
+        << "ACE_TRY_ENV" << be_uidt_nl
+        << ")" << be_uidt << be_uidt_nl 
+        << ");" << be_uidt_nl;
+
     if (this->gen_check_interceptor_exception (bt) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -816,14 +805,14 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
       }
   } // End of if its not a oneway operation
-  os->indent ();
-  *os << "break;" << be_nl << be_uidt_nl << "}\n";
+  *os << "break;" << be_uidt_nl 
+      << "}\n\n";
 
   // Generate exception occurred interceptor code
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
-        << be_uidt_nl << "}" << be_uidt_nl
-        << "ACE_CATCHANY" << be_idt_nl
-        << "{" << be_idt_nl;
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)"  << be_uidt_nl 
+      << "}" << be_uidt_nl
+      << "ACE_CATCHANY" << be_idt_nl
+      << "{" << be_idt_nl;
 
   // Update the exception field of teh request info.
   *os << "ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl;
@@ -905,32 +894,36 @@ be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
   if (this->void_return_type (bt))
     {
       if (be_global->use_raw_throw ())
-        *os << "throw ";
+        {
+          *os << "throw " << excep << "(" << completion_status << ");";
+        }
       else
-        *os << "TAO_INTERCEPTOR_THROW (";
-
-      *os << excep << "("
-          << completion_status << ")";
-
-      if (be_global->use_raw_throw ())
-        *os << ";";
-      else
-        *os << ");";
+        {
+          *os << "TAO_INTERCEPTOR_THROW (" << be_idt << be_idt_nl
+              << excep << " (" << completion_status 
+              << ")" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl;
+        }
     }
   else
     {
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << excep
-              << " (" << completion_status << "), 0);\n";
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
+              << excep << " (" << completion_status << ")," << be_nl
+              <<  "0" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl;
         }
       else
         {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << excep
-              << " (" << completion_status << "), _tao_retval);\n";
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
+              << excep << " (" << completion_status << ")," << be_nl
+              <<  "_tao_retval" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl;
         }
     }
+
   return 0;
 }
 
@@ -966,22 +959,21 @@ be_visitor_operation_cs::gen_check_interceptor_exception (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent ();
-  // check if there is an exception
+  // Check if there is an exception.
   if (this->void_return_type (bt))
     {
-      *os << "TAO_INTERCEPTOR_CHECK;\n";
+      *os << "TAO_INTERCEPTOR_CHECK;" << be_nl;
     }
   else
     {
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "TAO_INTERCEPTOR_CHECK_RETURN (0);\n";
+          *os << "TAO_INTERCEPTOR_CHECK_RETURN (0);" << be_nl;
         }
       else
         {
-          *os << "TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);\n";
+          *os << "TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);" << be_nl;
         }
     }
 

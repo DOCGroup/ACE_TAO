@@ -54,47 +54,31 @@ int be_visitor_interface_interceptors_ch::visit_interface (be_interface *node)
   // that only legal syntactic elements appear in our scope.
 
   os->indent ();
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
-      // generate code for the interface definition by traversing thru the
-      // elements of its scope. We depend on the front-end to have made sure
-      // that only legal syntactic elements appear in our scope.
+  // Generate code for the interface definition by traversing thru the
+  // elements of its scope. We depend on the front-end to have made sure
+  // that only legal syntactic elements appear in our scope.
 
-  os->indent (); // start with the current indentation level
-  *os << "// Generation of interceptors related RequestInfo classes per operation."<<be_nl
-      << "// This needed to be able to store the arguments, exceptiosn, constexts"<<be_nl
-      << "// and build the lists dynamically on demand so that unnecessary time overhead"<<be_nl
-      << "// of building these lists when they arent used is avoided." << be_nl;
+  *os << "// Generation of interceptors related RequestInfo"
+      << " classes per operation." << be_nl
+      << "// This needed to be able to store the arguments, "
+      << "exceptiosn, constexts" << be_nl
+      << "// and build the lists dynamically on demand so that "
+      << "unnecessary time overhead" << be_nl
+      << "// of building these lists when they arent used is "
+      << "avoided." << be_nl;
 
-      os->indent ();
-
-      if (this->visit_scope (node) == -1)
-        {
-
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_interface_ch::"
-                           "visit_interface - "
-                           "codegen for scope failed\n"), -1);
-        }
-      /*
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor *visitor = 0;
-  // Interceptor related classes.
-  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
+  if (this->visit_scope (node) == -1)
     {
-      delete visitor;
+
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ch::"
+                         "(%N:%l) be_visitor_interface_ch::"
                          "visit_interface - "
-                         "codegen for interceptor classes failed\n"),
-                                -1);
+                         "codegen for scope failed\n"), -1);
     }
-  delete visitor;
-      */
+
   *os  << "#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   return 0;
-
 }

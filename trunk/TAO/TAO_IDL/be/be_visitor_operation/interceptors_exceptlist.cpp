@@ -68,13 +68,10 @@ int
 be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node)
 {
   TAO_OutStream *os; // output stream
-  //  be_type *bt;       // type node
 
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node for future use
 
-  // Start with the current indentation level.
-  os->indent ();
   // Generate the exception data array.
   *os << "static TAO_Exception_Data " << "_tao_" << node->flat_name ()
       << "_exceptiondata [] = " << be_nl;

@@ -101,7 +101,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
   delete visitor;
 
   *os << " " << intf->full_coll_name (be_interface::THRU_POA) << "::";
-  *os << node->local_name () << " ";
+  *os << node->local_name ();
 
   // STEP 4: generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -217,23 +217,25 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
       *os << "return;";
     }
 
-  *os << be_uidt_nl
-      << "}\n\n";
+  *os << "}\n\n";
 
   return 0;
 }
 
-int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (be_visitor_context &ctx,
-                                                    be_operation *node)
+int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (
+    be_visitor_context &ctx,
+    be_operation *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "->" << node->local_name () << " ("
-      << be_idt << be_idt << "\n";
+      << be_idt << be_idt << be_idt_nl;
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
@@ -244,9 +246,10 @@ int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (be_visitor_context 
                         -1);
     }
 
-  // end the upcall
+  // End the upcall
   *os << be_uidt_nl
-      << ");\n" << be_uidt;
+      << ");\n";
+
   return 0;
 }
 

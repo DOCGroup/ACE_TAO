@@ -165,3 +165,4 @@ be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper (be_interfac
 
   return 0;
 }
+
