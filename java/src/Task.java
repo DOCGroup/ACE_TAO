@@ -201,6 +201,24 @@ public abstract class Task implements Runnable, EventHandler
 	return 0;
     }
 
+  /**
+   * Set the Task flags
+   *@param flags Task Flags
+   */
+  public synchronized void flags (long flags)
+  {
+    this.flags_ = flags;
+  }
+
+  /**
+   * Get the Task flags
+   *@return Task Flags
+   */
+  public synchronized long flags ()
+  {
+    return this.flags_;
+  }
+
   // = Message queue manipulation methods.
 
   /**
