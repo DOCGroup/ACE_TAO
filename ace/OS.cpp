@@ -3718,6 +3718,9 @@ ACE_OS::socket_fini (void)
 }
 
 # if defined (ACE_LACKS_SYS_NERR)
+#   if !defined (ERRMAX)
+#     define ERRMAX 151
+#   endif /* ! ERRMAX */
 int sys_nerr = ERRMAX + 1;
 # endif /* ACE_LACKS_SYS_NERR */
 
