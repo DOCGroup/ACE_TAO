@@ -326,7 +326,7 @@ static int get_port_number_from_name (const char port_name[],
 
 #if defined (VXWORKS) || defined (CHORUS) || defined (ACE_LACKS_GETSERVBYNAME)
   port_number = -1;
-  ACE_UNUSED_ARG (host_name);
+  ACE_UNUSED_ARG (port_name);
   ACE_UNUSED_ARG (protocol);
 #else
   port_number = 0;
