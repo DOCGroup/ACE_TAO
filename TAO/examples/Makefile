@@ -2,7 +2,7 @@
 #
 #	$Id$
 #
-#	Makefile for the TAO tests
+#	Makefile for the TAO examples
 #
 #----------------------------------------------------------------------------
 
@@ -10,12 +10,9 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = CDR \
-        DynAny_Test \
-	OctetSeq \
-	Param_Test \
-	NestedUpcall \
-	Multiple_Inheritance \
+DIRS  = POA \
+	Quoter \
+	Simple
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
