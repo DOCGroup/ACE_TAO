@@ -1,3 +1,10 @@
+Wed Sep 10 13:26:14 MST 2003 Trevor Fields <fields_t@ociweb.com>
+
+        * bin/performance_stats.sh:
+
+          Changed the path to mogrify. It uses /usr/bin/X11/bin path if it is
+          not present in the /usr/local/bin
+
 Wed Sep 10 11:48:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
@@ -59,6 +66,12 @@ Wed Sep 10 08:04:25 2003  Chad Elliott  <elliott_c@ociweb.com>
           avoid files (both generated source and object) being overwritten
           by multiple instances of make.  This only has an effect on the
           GNUACE workspaces.
+
+Tue Sep  9 15:04:51 MST 2003 Trevor Fields <fields_t@ociweb.com>
+
+        * examples/Web_Crawler/Mem_Map_Stream.h:
+
+          Changed '#define once' back to '#pragma once'
 
 Tue Sep  9 08:56:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 

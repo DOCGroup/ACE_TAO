@@ -168,11 +168,16 @@ _EOF_
 
 /bin/cp CORBA.png All.png $DEST/images/
 
+MOGRIFY=/usr/local/bin/mogrify
+if [ ! -x "$MOGRIFY" ]; then
+  MOGRIFY=/usr/X11R6/bin/mogrify
+fi
+
 (
   cd $DEST/images
   /bin/cp *.png thumbnails
   for i in *.png; do
-    /usr/local/bin/mogrify -geometry '25%' thumbnails/$i
+    $MOGRIFY -geometry '25%' thumbnails/$i
   done
 )
 
