@@ -31,6 +31,7 @@ NAMES = \
 	Enum_Interfaces_Test \
 	Env_Value_Test \
 	FlReactor_Test \
+        Framework_Component_Test \
 	Future_Set_Test \
 	Future_Test \
         Get_Opt_Test \

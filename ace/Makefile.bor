@@ -65,6 +65,7 @@ OBJFILES = \
 	$(OBJDIR)\FILE_Connector.obj \
 	$(OBJDIR)\FILE_IO.obj \
 	$(OBJDIR)\Filecache.obj \
+        $(OBJDIR)\Framework_Component.obj \
 	$(OBJDIR)\Functor.obj \
 	$(OBJDIR)\Get_Opt.obj \
 	$(OBJDIR)\Handle_Set.obj \
