@@ -1,3 +1,10 @@
+Thu Jan 17 10:30:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
+
+	  Create and register the SecurityManager object with the ORB's
+	  resolve_initial_references() mechanism.
+
 Thu Jan 17 10:17:18 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
