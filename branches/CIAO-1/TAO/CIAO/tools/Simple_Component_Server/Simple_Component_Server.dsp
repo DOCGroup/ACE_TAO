@@ -7,19 +7,19 @@
 CFG=Simple_Component_Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Simple_Component_Server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Simple_Component_Server.mak" CFG="Simple_Component_Server - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Simple_Component_Server - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Simple_Component_Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -50,7 +50,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib CIAO_Container.lib CIAO_Client.lib CIAO_Server.lib TAO_PortableServer.lib TAO_Security.lib /nologo /subsystem:console /machine:I386 /out:"..\..\..\..\bin\Release\Simple_Component_Server.exe" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib CIAO_Container.lib CIAO_Client.lib CIAO_Server.lib TAO_PortableServer.lib TAO_Security.lib /nologo /subsystem:console /machine:I386 /out:"Release\Simple_Component_Server.exe" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "Simple_Component_Server - Win32 Debug"
 
@@ -74,9 +74,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Containerd.lib CIAO_Clientd.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_Securityd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\..\..\bin\Simple_Component_Server.exe" /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Containerd.lib CIAO_Clientd.lib CIAO_Serverd.lib TAO_PortableServerd.lib TAO_Securityd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IFR_Client" /libpath:"..\..\ciao" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 

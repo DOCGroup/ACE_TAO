@@ -29,7 +29,7 @@ $NS = new PerlACE::Process ("../../../../orbsvcs/Naming_Service/Naming_Service",
                             "$ns_args");
 
 # Component Server process definition
-$CS = new PerlACE::Process ("../../../../../bin/Simple_Component_Server",
+$CS = new PerlACE::Process ("../../../tools/Simple_Component_Server/Simple_Component_Server",
                             "$cs_args");
 
 # Client process definition

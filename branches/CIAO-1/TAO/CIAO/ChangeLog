@@ -1,9 +1,28 @@
+Sat Dec 21 15:09:55 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Simple_Component_Server/Simple_Component_Server.dsp:
+	* examples/handcrafted/Hello/run_test.pl: Changed to generate
+	  Simple_Component_Server executable in the project directory.
+
+	* examples/handcrafted/Hello/hello.mpc:
+	* ciao/CCM_Core.mpc:
+	* tools/Simple_Component_Server/Simple_Component_Server.mpc:
+	  Created MPC specifications.
+
+	The followings should go to the ChangeLog under $(ACE_ROOT)
+
+	* bin/MakeProjectCreator/configs/ciao_client.mpc:
+	* bin/MakeProjectCreator/configs/ciao_component.mpc:
+	* bin/MakeProjectCreator/configs/ciao_server.mpc: Created MPC
+	  templates for CIAO client, component implmentation, and server
+	  tools.
+
 Fri Dec 20 23:09:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Makefile.server: Added HomeRegistrar.idl and
 	  HomeRegistrar_i to the makefile.
 
-	* tools/Simple_Component_Server/Makefile: Added a new makefile.  
+	* tools/Simple_Component_Server/Makefile: Added a new makefile.
 
 Fri Dec 20 20:32:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -13,7 +32,7 @@ Fri Dec 20 20:32:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ciao/Makefile.client:
 	* ciao/Makefile.container:
 	* ciao/Makefile.server: Fixed compilation erros and Makefiles on
-	  Linux. 
+	  Linux.
 
 Thu Dec 19 20:44:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
