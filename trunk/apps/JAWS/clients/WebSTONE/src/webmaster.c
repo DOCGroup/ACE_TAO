@@ -79,6 +79,8 @@ THREAD FILE *debugfile = stderr;
 struct hostent  *master_phe;   /* IP addresses for webmaster */
 struct timeval sumedh_start, sumedh_end;
 
+void HostEntCpy(struct hostent *dest, struct hostent *src);
+
 static void
 usage(const char *progname)
 {
@@ -548,6 +550,8 @@ char *commandline;
       strcat(webclient_path, "/webclient");
       
     } else
+#else
+    temp = temp;
 #endif /* WIN32 */
       webclient_path = PROGPATH;
 
@@ -1401,6 +1405,7 @@ main(const int argc, char *argv[])
 }
 
 /* Added by Rajesh Shah 5/18/96 */
+void
 HostEntCpy(struct hostent *dest, struct hostent *src)
 {
 	
