@@ -176,7 +176,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBPOAMapSize")) == 0)
       {
-	++curarg;
+        ++curarg;
         if (curarg < argc)
           this->active_object_map_creation_parameters_.poa_map_size_ =
             ACE_OS::strtoul (argv[curarg],
