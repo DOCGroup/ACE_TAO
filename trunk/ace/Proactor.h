@@ -559,6 +559,10 @@ private:
   ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
+#if defined (__ACE_INLINE__)
+#include "ace/Proactor.i"
+#endif /* __ACE_INLINE__ */
+
 #else /* NOT WIN32 or POSIX with AIO features. */
 class ACE_Export ACE_Proactor
 {
@@ -591,9 +595,6 @@ public:
   static sig_atomic_t event_loop_done (void);
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
-#endif /* __ACE_INLINE__ */
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
 
 #include "ace/post.h"
