@@ -1,3 +1,13 @@
+Thu Nov 11 14:33:00 2004  Gary Maxey    <gary.maxey@hp.com>
+
+	* tao/Connector_Registry.cpp
+
+	  Fixed problem in create_profile() when there is an
+	  unknown profile.  The cdr.orb_core() value may be zero
+	  in this case.  This zero value is passed to the 
+	  TAO_Unknown_Profile constructor where it eventually leads
+	  to a memory fault.
+	
 Thu Nov 11 14:55:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:

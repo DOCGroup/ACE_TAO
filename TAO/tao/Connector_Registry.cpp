@@ -187,10 +187,25 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
                       tag));
         }
 
+      TAO_ORB_Core *orb_core = cdr.orb_core ();
+      if (orb_core == 0)
+        {
+          orb_core = TAO_ORB_Core_instance ();
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_WARNING,
+                          ACE_LIB_TEXT ("TAO (%P|%t) - TAO_Connector_Registry"
+                                        "::create_profile: ")
+                          ACE_LIB_TEXT ("WARNING: extracting object from ")
+                          ACE_LIB_TEXT ("default ORB_Core\n")));
+            }
+        }
+
+
       TAO_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
                       TAO_Unknown_Profile (tag,
-                                           cdr.orb_core ()),
+                                           orb_core),
                       0);
       if (pfile->decode (cdr) == -1)
         {
