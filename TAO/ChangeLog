@@ -1,3 +1,34 @@
+Wed Apr 30 12:52:50 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * examples/Simple/time/client_static.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+        * orbsvcs/orbsvcs/CosEvent_Static.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+        * orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/CosProperty_Static.dsp:
+        * orbsvcs/orbsvcs/CosTime_Static.dsp:
+        * orbsvcs/orbsvcs/CosTrading_Static.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+        * orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * orbsvcs/orbsvcs/Security_Static.dsp:
+        * orbsvcs/orbsvcs/SSLIOP_Static.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
+        * tao/IFR_Client/TAO_IFR_Client_Static.dsp:
+        * tao/IORManipulation/TAO_IORManip_Static.dsp:
+        * tao/Messaging/TAO_Messaging_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+        * tao/RTCORBA/TAO_RTCORBA_Static.dsp:
+        * tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Static.dsp:
+
+          Fixed some build errors and warnings.
+
 Wed Apr 30 11:30:18 2003  Edward Scott  <eas@prismtechnologies.com>
 
 	* examples/POA/Generic_Servant/Makefile.generic_servant: 

@@ -554,6 +554,7 @@ SOURCE=.\CosEvent\CEC_SupplierControl.cpp
 # Begin Source File
 
 SOURCE=.\CosEventChannelAdminC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -562,6 +563,7 @@ SOURCE=.\CosEventChannelAdminS.cpp
 # Begin Source File
 
 SOURCE=.\CosEventCommC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

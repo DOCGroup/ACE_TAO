@@ -102,6 +102,7 @@ SOURCE=.\Time_Client_i.cpp
 # Begin Source File
 
 SOURCE=.\TimeC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -253,6 +253,7 @@ SOURCE=.\Concurrency\Concurrency_Utils.cpp
 # Begin Source File
 
 SOURCE=.\CosConcurrencyControlC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
