@@ -1946,6 +1946,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       TAO_OutputCDR out (end - begin + 2 * ACE_CDR::MAX_ALIGNMENT,
                          ACE_CDR_BYTE_ORDER,
                          ACE_Allocator::instance (),
+                         ACE_Allocator::instance (),
                          ACE_Allocator::instance ());
 
       CORBA::TypeCode_ptr label_tc;

@@ -205,6 +205,7 @@ private:
   /// Implementations of GIOP that we have
   ACE_Allocator *cdr_buffer_alloc_;
   ACE_Allocator *cdr_dblock_alloc_;
+  ACE_Allocator *cdr_msgblock_alloc_;
 
   /// A buffer that we will use to initialise the CDR stream
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];

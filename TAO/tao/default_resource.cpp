@@ -710,6 +710,17 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
   return allocator;
 }
 
+ACE_Allocator *
+TAO_Default_Resource_Factory::input_cdr_msgblock_allocator (void)
+{
+  ACE_Allocator *allocator = 0;
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
+
+  return allocator;
+}
+
 int
 TAO_Default_Resource_Factory::input_cdr_allocator_type_locked (void)
 {
@@ -726,6 +737,14 @@ TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 
 ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
+{
+  ACE_Allocator *allocator = 0;
+  ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
+  return allocator;
+}
+
+ACE_Allocator*
+TAO_Default_Resource_Factory::output_cdr_msgblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
   ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);

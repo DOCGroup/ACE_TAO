@@ -76,6 +76,7 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
                               ACE_Allocator *data_block_allocator,
+                              ACE_Allocator* message_block_allocator,
                               size_t memcpy_tradeoff,
                               ACE_Char_Codeset_Translator *char_translator,
                               ACE_WChar_Codeset_Translator *wchar_translator)
@@ -83,6 +84,7 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                     byte_order,
                     buffer_allocator,
                     data_block_allocator,
+                    message_block_allocator,
                     memcpy_tradeoff)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
@@ -95,6 +97,7 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
                               ACE_Allocator *data_block_allocator,
+                              ACE_Allocator* message_block_allocator,
                               size_t memcpy_tradeoff,
                               ACE_Char_Codeset_Translator *char_translator,
                               ACE_WChar_Codeset_Translator *wchar_translator)
@@ -103,6 +106,7 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                     byte_order,
                     buffer_allocator,
                     data_block_allocator,
+                    message_block_allocator,
                     memcpy_tradeoff)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
@@ -129,16 +133,21 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
 TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
                             ACE_Allocator* buffer_allocator,
                             ACE_Allocator* data_block_allocator,
+                            ACE_Allocator* message_block_allocator,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (rhs,
-        buffer_allocator
-          ? buffer_allocator
-          : (orb_core ? orb_core->output_cdr_buffer_allocator () : 0),
-        data_block_allocator
-          ? data_block_allocator
-          : (orb_core ? orb_core->output_cdr_dblock_allocator () :
-             0)),
-    orb_core_ (orb_core)
+                  buffer_allocator
+                  ? buffer_allocator
+                  : (orb_core ? orb_core->output_cdr_buffer_allocator () : 0),
+                  data_block_allocator
+                  ? data_block_allocator
+                  : (orb_core ? orb_core->output_cdr_dblock_allocator () :
+                     0),
+                  message_block_allocator
+                  ? message_block_allocator
+                  : (orb_core ?
+                     orb_core->output_cdr_msgblock_allocator () : 0)),
+  orb_core_ (orb_core)
 {
   this->init_translators ();
 }
