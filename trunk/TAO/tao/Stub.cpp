@@ -623,7 +623,7 @@ STUB_Object::do_dynamic_call (const char *opname,
                               CORBA::Boolean is_roundtrip,
                               CORBA::NVList_ptr args,
                               CORBA::NamedValue_ptr result,
-                              CORBA::Flags flags,
+                              CORBA::Flags,
                               CORBA::ExceptionList &exceptions,
                               CORBA::Environment &env)
 {
@@ -837,18 +837,17 @@ STUB_Object::put_params (TAO_GIOP_Invocation &call,
       if (value->flags () == CORBA::ARG_IN
           || value->flags () == CORBA::ARG_INOUT)
         {
-          // if the Any owns the data, then we already have a CDR encoded
-          // data
+          // If the Any owns the data, then we have allocated space.
           if (value->value ()->any_owns_data_)
+            {
+              call.put_param (value->value ()->type_,
+                              value->value ()->value_, env);
+            }
+          else
             {
               TAO_OutputCDR &cdr = call.out_stream ();
               TAO_InputCDR in (value->value ()->cdr_);
               cdr.append (value->value ()->type_, &in, env);
-            }
-          else
-            {
-              call.put_param (value->value ()->type_,
-                              value->value ()->value_, env);
             }
           if (env.exception ())
             {

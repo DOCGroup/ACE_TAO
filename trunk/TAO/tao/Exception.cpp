@@ -605,7 +605,7 @@ CORBA_ExceptionList::item (CORBA::ULong index,
     }
 }
 void
-CORBA_ExceptionList::remove (CORBA::ULong index, CORBA::Environment &env)
+CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &env)
 {
   // unimplemented
   env.clear ();

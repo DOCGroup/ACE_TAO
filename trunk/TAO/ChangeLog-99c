@@ -1,3 +1,16 @@
+Fri Feb 12 15:04:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/DynanyC.cpp:
+        * tao/Exception.cpp:
+        * tao/Object.cpp:
+        * tao/POA.cpp:
+        * tao/Server_Request.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/Stub.cpp:
+        * tao/Connect.cpp:
+        * tao/Active_object_Map.cpp:
+          Fixed some new g++ unused arg warnings.
+
 Fri Feb 12 12:55:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/Simple_util.cpp:

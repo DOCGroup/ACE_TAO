@@ -162,7 +162,7 @@ CORBA_Object::_is_collocated (void) const
 }
 
 CORBA::ImplementationDef_ptr
-CORBA_Object::_get_implementation (CORBA::Environment &env)
+CORBA_Object::_get_implementation (CORBA::Environment &)
 {
   return 0;
 }

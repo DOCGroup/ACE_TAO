@@ -174,7 +174,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
                                         char* operation,
                                         TAO_OutputCDR &output,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Environment &env)
+                                        CORBA::Environment &)
   : operation_ (operation),
     incoming_ (0),
     outgoing_ (&output),
@@ -549,16 +549,16 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
       if (this->retval_)
         {
           CORBA::TypeCode_var tc = this->retval_->type ();
-	  void* value = ACE_const_cast(void*,this->retval_->value ());
-	  if (this->retval_->any_owns_data ())
+	        void* value = ACE_const_cast(void*,this->retval_->value ());
+	        if (this->retval_->any_owns_data ())
             {
               TAO_InputCDR cdr ((ACE_Message_Block *)value);
               (void) this->outgoing_->append (tc.in (), &cdr, env);
             }
           else
-	    {
-	      (void) this->outgoing_->encode (tc.in (), value, 0, env);
-	    }
+	          {
+	            (void) this->outgoing_->encode (tc.in (), value, 0, env);
+	          }
         }
 
       // ... Followed by "inout" and "out" parameters, left to right
@@ -581,7 +581,9 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
                   (void) this->outgoing_->append (tc.in (), &cdr, env);
                 }
               else
-                (void) this->outgoing_->encode (tc.in (), value, 0, env);
+                {
+                  (void) this->outgoing_->encode (tc.in (), value, 0, env);
+                }
             }
         }
     }

@@ -1047,7 +1047,7 @@ CORBA_DynStruct::get_members (CORBA::Environment &)
 
 void
 CORBA_DynStruct::set_members (const NameValuePairSeq &,
-                              CORBA::Environment& env)
+                              CORBA::Environment &)
 {
 }
 

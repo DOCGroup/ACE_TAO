@@ -2559,6 +2559,7 @@ TAO_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 
 #else /* POA_NAME_IN_POA_GENERATED_ID */
 
+  ACE_UNUSED_ARG id;
   return 1;
 
 #endif /* POA_NAME_IN_POA_GENERATED_ID */
