@@ -1,3 +1,10 @@
+Wed Jul 21 15:21:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Env_Value_Test.cpp (main): use the single-process
+          version if ACE_LACKS_FORK, in addition to if
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER.  Thanks to
+          Riaz Syed <syed@Lynx.COM> for reporting this.
+
 Wed Jul 21 11:48:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
