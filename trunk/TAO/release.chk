@@ -33,7 +33,7 @@ Legend:
         [x1    ] DII nested_struct
         [x0    ] DII struct_seq
         [x0    ] DII objref
-   
+
         [11    ] SII short
         [11    ] SII ubstring
         [10    ] SII fixed_struct
@@ -42,16 +42,16 @@ Legend:
         [11    ] SII nested_struct
         [00    ] SII struct_seq
         [00    ] SII objref
-[110   ] MT_Cubit compiles
-        [10    ] runs for Octet
-        [10    ] runs for Short
-        [10    ] runs for Long
-        [10    ] runs for Struct
+[111   ] MT_Cubit compiles
+        [100   ] runs for Octet
+        [100   ] runs for Short
+        [100   ] runs for Long
+        [100   ] runs for Struct
 [110   ] orbsvcs compiles
         [10    ] Event_Latency runs
 	[0x    ] Simple_Naming runs
 	[xx    ] Logger runs
-	
+
 NOTES
 * Solaris/CC
 * NT
@@ -61,12 +61,16 @@ NOTES
 * Solaris/g++
 ** Warnings during tao_idl compilation.
 ** orbsvcs fails with missing stuff in ACE_Map_Manager.
-** MT_Cubit doesn't compile template instantiation source.
+** MT_Cubit gets relocation error on startup:
+   ld.so.1: ./svr: fatal: relocation error: symbol not found:
+   ACE_Task_Base::activate(long, int, int, long, int, ACE_Task_Base *,
+   unsigned int *): referenced in ./svr
+
 * IRIX
 * Linux/g++
 * Other (Linux/egcs, Solaris/egcs, etc.)
 
-  
+
 
 # eval:(overwrite-mode nil)
 # Local Variables:
