@@ -29,6 +29,20 @@ apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
+TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
+TAO/orbsvcs/Scheduling_Service/Scheduling_Service.dsw, Scheduling_Service:
+TAO/orbsvcs/Event_Service/Event_Service.dsw, Event_Service:
+TAO/orbsvcs/Dump_Schedule/Dump_Schedule.dsw, Dump_Schedule:
+TAO/orbsvcs/Concurrency_Service/Concurrency_Service.dsw, Concurrency_Service:
+TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.dsw, LifeCycle_Service:
+TAO/orbsvcs/Trading_Service/Trading_Service.dsw, Trading_Service:
+TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Server:
+TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Clerk:
+TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service.dsw, ImplRepo_Service:
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Server:
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Client:
+TAO/tests/Param_Test/Param_Test.dsw, Param_Test Server:
+TAO/tests/Param_Test/Param_Test.dsw, Param_Test Client:
 tests/tests.dsw, ALL:
 EOD
                      "$Win32_Lists[1]" => <<EOD , # Release
@@ -37,6 +51,20 @@ apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
+TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
+TAO/orbsvcs/Scheduling_Service/Scheduling_Service.dsw, Scheduling_Service:
+TAO/orbsvcs/Event_Service/Event_Service.dsw, Event_Service:
+TAO/orbsvcs/Dump_Schedule/Dump_Schedule.dsw, Dump_Schedule:
+TAO/orbsvcs/Concurrency_Service/Concurrency_Service.dsw, Concurrency_Service:
+TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.dsw, LifeCycle_Service:
+TAO/orbsvcs/Trading_Service/Trading_Service.dsw, Trading_Service:
+TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Server:
+TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Clerk:
+TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service.dsw, ImplRepo_Service:
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Server:
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Client:
+TAO/tests/Param_Test/Param_Test.dsw, Param_Test Server:
+TAO/tests/Param_Test/Param_Test.dsw, Param_Test Client:
 EOD
                      "$Win32_Lists[2]" => <<EOD , # Unicode Debug
 ace/ace.dsw, ACE dynamic library:
@@ -52,6 +80,7 @@ apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
+TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
 tests/tests.dsw, ALL:
 EOD
                      "$Alpha_Lists[1]" => <<EOD , # Release
@@ -60,6 +89,7 @@ apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
+TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
 EOD
                      "$Alpha_Lists[2]" => <<EOD , # Unicode Debug
 ace/ace.dsw, ACE dynamic library:
