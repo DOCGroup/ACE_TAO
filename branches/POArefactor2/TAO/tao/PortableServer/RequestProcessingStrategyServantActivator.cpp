@@ -12,10 +12,10 @@
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
-#include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
@@ -28,8 +28,7 @@ namespace TAO
   namespace Portable_Server
   {
     Servant_Activator_Request_Processing_Strategy::Servant_Activator_Request_Processing_Strategy (void) :
-      poa_ (0),
-      servant_retention_strategy_ (0)
+      poa_ (0)
     {
     }
 
@@ -38,12 +37,9 @@ namespace TAO
     }
 
     void
-    Servant_Activator_Request_Processing_Strategy::strategy_init(
-      TAO_POA *poa,
-      ServantRetentionStrategy* servant_retention_strategy)
+    Servant_Activator_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
     {
       poa_ = poa;
-      servant_retention_strategy_ = servant_retention_strategy;
     }
 
     PortableServer::ServantManager_ptr
@@ -160,7 +156,7 @@ namespace TAO
       if (!error && !wait_occurred_restart_call)
         {
           int result =
-            this->servant_retention_strategy_->
+            this->poa_->
               rebind_using_user_id_and_system_id (servant,
                                                   poa_current_impl.object_id (),
                                                   system_id,
@@ -212,7 +208,7 @@ namespace TAO
       ACE_ENV_ARG_DECL)
     {
       CORBA::Boolean remaining_activations =
-        this->servant_retention_strategy_->servant_has_remaining_activations (servant);
+        this->poa_->servant_has_remaining_activations (servant);
 
       // A recursive thread lock without using a recursive
       // thread lock.  Non_Servant_Upcall has a magic

@@ -49,10 +49,7 @@ namespace TAO
 
       virtual ~Servant_Locator_Request_Processing_Strategy (void);
 
-      virtual
-      void strategy_init(
-        TAO_POA *poa,
-        ServantRetentionStrategy* servant_retention_strategy);
+      virtual void strategy_init(TAO_POA *poa);
 
       PortableServer::ServantManager_ptr
       get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)

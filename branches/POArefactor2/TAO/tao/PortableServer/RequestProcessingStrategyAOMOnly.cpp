@@ -31,12 +31,9 @@ namespace TAO
     }
 
     void
-    AOM_Only_Request_Processing_Strategy::strategy_init(
-      TAO_POA *poa,
-      ServantRetentionStrategy* strategy)
+    AOM_Only_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
     {
       ACE_UNUSED_ARG (poa);
-      ACE_UNUSED_ARG (strategy);
     }
 
     PortableServer::ServantManager_ptr

@@ -1,3 +1,18 @@
+Mon Nov 15 18:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrateg*.{h,cpp}:
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Added servant_has_remaining_activations and
+          rebind_using_user_id_and_system_id to the POA and use these in the
+          servant activator request processing strategy instead of calling the
+          servant retention strategy directly. Because of this, the request
+          processing strategy doesn't need the servant retention strategy
+          directly anymore, so removed the srs from the strategy_init call.
+
+        * tao/PortableServer/ServantRetentionStrategy.h:
+          Cosmetic changes
+
 Mon Nov 15 16:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*.h:

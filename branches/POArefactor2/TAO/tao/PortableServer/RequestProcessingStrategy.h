@@ -56,57 +56,43 @@ namespace TAO
     public:
       virtual ~RequestProcessingStrategy (void);
 
-      virtual
-      void strategy_init(
-        TAO_POA *poa,
-        ServantRetentionStrategy* strategy) = 0;
+      virtual void strategy_init(TAO_POA *poa) = 0;
 
-      virtual
-      PortableServer::ServantManager_ptr
-      get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
+      virtual PortableServer::ServantManager_ptr get_servant_manager (
+        ACE_ENV_SINGLE_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongPolicy)) = 0;
+
+      virtual void set_servant_manager (
+        PortableServer::ServantManager_ptr imgr
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongPolicy)) = 0;
+
+      virtual PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual
-      void
-      set_servant_manager (PortableServer::ServantManager_ptr imgr
-                           ACE_ENV_ARG_DECL)
+      virtual void set_servant (PortableServer::Servant servant ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual
-      PortableServer::Servant
-      get_servant (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
+      virtual TAO_SERVANT_LOCATION locate_servant (
+        const PortableServer::ObjectId &system_id,
+        PortableServer::Servant &servant) = 0;
 
-      virtual
-      void
-      set_servant (PortableServer::Servant servant
-                   ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
-
-      virtual
-      TAO_SERVANT_LOCATION
-      locate_servant (const PortableServer::ObjectId &system_id,
-                      PortableServer::Servant &servant) = 0;
-
-      virtual
-      PortableServer::Servant
-      locate_servant (const char *operation,
+      virtual PortableServer::Servant locate_servant (const char *operation,
                       const PortableServer::ObjectId &system_id,
                       TAO::Portable_Server::Servant_Upcall &servant_upcall,
                       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                       int &wait_occurred_restart_call
                       ACE_ENV_ARG_DECL) = 0;
 
-      virtual
-      void
-      cleanup_servant (const PortableServer::ObjectId& object_id,
-                       PortableServer::Servant servant,
-                       CORBA::Boolean cleanup_in_progress
-                       ACE_ENV_ARG_DECL)= 0;
+      virtual void cleanup_servant (
+        const PortableServer::ObjectId& object_id,
+        PortableServer::Servant servant,
+        CORBA::Boolean cleanup_in_progress
+        ACE_ENV_ARG_DECL)= 0;
 
     };
   }

@@ -2619,6 +2619,27 @@ TAO_POA::is_servant_activation_allowed (PortableServer::Servant servant,
     is_servant_activation_allowed (servant, wait_occurred_restart_call);
 }
 
+int
+TAO_POA::rebind_using_user_id_and_system_id (
+  PortableServer::Servant servant,
+  const PortableServer::ObjectId &user_id,
+  const PortableServer::ObjectId &system_id,
+  TAO::Portable_Server::Servant_Upcall &servant_upcall)
+{
+  return this->active_policy_strategies_.servant_retention_strategy ()->
+    rebind_using_user_id_and_system_id (servant,
+                                        user_id,
+                                        system_id,
+                                        servant_upcall);
+}
+
+CORBA::Boolean
+TAO_POA::servant_has_remaining_activations (PortableServer::Servant servant)
+{
+  return this->active_policy_strategies_.servant_retention_strategy ()->
+    servant_has_remaining_activations (servant);
+}
+
 void
 TAO_POA::set_servant (PortableServer::Servant servant
                       ACE_ENV_ARG_DECL)

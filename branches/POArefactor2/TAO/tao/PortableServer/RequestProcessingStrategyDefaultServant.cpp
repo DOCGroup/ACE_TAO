@@ -36,11 +36,8 @@ namespace TAO
     }
 
     void
-    Default_Servant_Request_Processing_Strategy::strategy_init(
-      TAO_POA *poa,
-      ServantRetentionStrategy* servant_retention_strategy)
+    Default_Servant_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
     {
-      ACE_UNUSED_ARG (servant_retention_strategy);
       poa_ = poa;
     }
 

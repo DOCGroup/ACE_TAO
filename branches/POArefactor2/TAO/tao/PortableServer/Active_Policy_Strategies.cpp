@@ -176,7 +176,7 @@ namespace TAO
         lifespan_strategy_->strategy_init (poa);
 
       if (thread_strategy_ != 0)
-        request_processing_strategy_->strategy_init (poa, servant_retention_strategy_);
+        request_processing_strategy_->strategy_init (poa);
 
       if (id_uniqueness_strategy_ != 0)
         id_uniqueness_strategy_->strategy_init (servant_retention_strategy_);

@@ -468,6 +468,15 @@ public:
     PortableServer::Servant servant,
     int &wait_occurred_restart_call);
 
+  int rebind_using_user_id_and_system_id (
+    PortableServer::Servant servant,
+    const PortableServer::ObjectId &user_id,
+    const PortableServer::ObjectId &system_id,
+    TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
+  CORBA::Boolean servant_has_remaining_activations (
+    PortableServer::Servant servant);
+
 protected:
 
   /// Template method for creating new POA's of this type.
