@@ -1,3 +1,9 @@
+Tue Oct 28 21:15:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* build/SunOS5.5/TAO/tests/IDL_Cubit/clnt.cpp (main): Fixed the
+ 	code so that if you give incorrect parameters the program exits
+ 	cleanly, rather than segfaulting.
+
 Tue Oct 28 20:49:28 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tao/giop.cpp (start): NT Access Violation error, AGAIN! Added
