@@ -1,3 +1,12 @@
+Sun Sep 23 14:13:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Modified parse_line_and_file() to make it more robust
+          when parsing #<line number>. Thanks to Carlos for
+          tracking down the solution.
+
 Sat Sep 22 11:47:48 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.cpp (policies):
