@@ -171,20 +171,19 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
 
   return ACE_LOG_MSG->open ("Logging_Strategy",
                             ACE_LOG_MSG->flags (),
-                            ACE_DEFAULT_LOGGER_KEY);
-  // ACE_TEXT_CHAR_TO_TCHAR (ACE_DEFAULT_LOGGER_KEY));
+                            ACE_TEXT_CHAR_TO_TCHAR (ACE_DEFAULT_LOGGER_KEY));
 }
 
 int
-ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &tv,
-                                      const void *arg)
+ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
+                                      const void *)
 {
   if ((size_t) ACE_LOG_MSG->msg_ostream ()->tellp () > this->max_size_)
     {
       // Lock out any other logging.
       if (ACE_LOG_MSG->acquire ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("Cannot acquire lock!\n")),
+                           ACE_TEXT ("Cannot acquire lock!\n")),
                           -1);
 
       // Close the current ostream.
@@ -211,7 +210,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &tv,
         }
       else
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("Backup file name too long; backup logfile not saved.\n")));
+                    ACE_TEXT ("Backup file name too long; backup logfile not saved.\n")));
 
       // Open a new log file by the same name
       output_file->open (this->filename_, ios::out);

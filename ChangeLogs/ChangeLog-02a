@@ -1,3 +1,17 @@
+Wed Jun 14 10:24:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Logging_Strategy.cpp (handle_timeout): Removed a
+	  couple of non-referenced parameters.  Thanks to David and Yamuna
+ 	  for reporting this.
+
+Wed Jun 14 07:43:27 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp: Added ACE_TEXT macros
+	  to the appropriate places in this file.
+
+	* netsvcs/lib/Logging_Strategy.cpp: Removed the legacy
+	  ASYS_TEXT and replaced them with ACE_TEXT.
+
 Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * */Makefile:
