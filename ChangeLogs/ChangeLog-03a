@@ -1,3 +1,9 @@
+Sat Dec 14 08:56:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp (timeout): Commented out the change below
+	  until we figure out how to break the dependencies on the
+ 	  Reactor.  Thanks to Bala for reporting this.
+
 Fri Dec 13 16:05:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp (timeout): Optimize Steve's patch below
