@@ -1,5 +1,3 @@
-// $Id$
-
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/Containers.h"
@@ -8,7 +6,9 @@
 #include "ace/Auto_Ptr.h"
 #include "Name_Handler.h"
 
-ACE_RCSID(lib, Name_Handler, "$Id$")
+ACE_RCSID(lib,
+          Name_Handler,
+          "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>;
@@ -378,9 +378,9 @@ ACE_Name_Handler::shared_bind (int rebind)
 {
   ACE_TRACE ("ACE_Name_Handler::shared_bind");
   ACE_NS_WString a_name (this->name_request_.name (),
-                         this->name_request_.name_len () / sizeof (ACE_USHORT16));
+                         this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
   ACE_NS_WString a_value (this->name_request_.value (),
-                          this->name_request_.value_len () / sizeof (ACE_USHORT16));
+                          this->name_request_.value_len () / sizeof (ACE_WCHAR_T));
   int result;
   if (rebind == 0)
     {
@@ -418,7 +418,7 @@ ACE_Name_Handler::resolve (void)
   ACE_DEBUG ((LM_DEBUG, "request for RESOLVE \n"));
 #endif /* 0 */
   ACE_NS_WString a_name (this->name_request_.name (),
-                         this->name_request_.name_len () / sizeof (ACE_USHORT16));
+                         this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   // The following will deliver our reply back to client we
   // pre-suppose success (indicated by type RESOLVE).
@@ -427,12 +427,12 @@ ACE_Name_Handler::resolve (void)
   char *atype;
   if (NAMING_CONTEXT::instance ()->resolve (a_name, avalue, atype) == 0)
     {
-      ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> avalue_urep (avalue.ushort_rep ());
+      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> avalue_urep (avalue.rep ());
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
                             0,
                             0,
                             avalue_urep.get (),
-                            avalue.length () * sizeof (ACE_USHORT16),
+                            avalue.length () * sizeof (ACE_WCHAR_T),
                             atype, ACE_OS::strlen (atype));
       delete[] atype;
       return this->send_request (nrq);
@@ -451,7 +451,7 @@ ACE_Name_Handler::unbind (void)
   ACE_DEBUG ((LM_DEBUG, "request for UNBIND \n"));
 #endif /* 0 */
   ACE_NS_WString a_name (this->name_request_.name (),
-                         this->name_request_.name_len () / sizeof (ACE_USHORT16));
+                         this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   if (NAMING_CONTEXT::instance ()->unbind (a_name) == 0)
     return this->send_reply (0);
@@ -463,10 +463,10 @@ ACE_Name_Request
 ACE_Name_Handler::name_request (ACE_NS_WString *one_name)
 {
   ACE_TRACE ("ACE_Name_Handler::name_request");
-  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> one_name_urep (one_name->ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> one_name_urep (one_name->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
                            one_name_urep.get (),
-                           one_name->length () * sizeof (ACE_USHORT16),
+                           one_name->length () * sizeof (ACE_WCHAR_T),
                            0, 0,
                            0, 0);
 }
@@ -475,11 +475,11 @@ ACE_Name_Request
 ACE_Name_Handler::value_request (ACE_NS_WString *one_value)
 {
   ACE_TRACE ("ACE_Name_Handler::value_request");
-  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> one_value_urep (one_value->ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> one_value_urep (one_value->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
                            0, 0,
                            one_value_urep.get (),
-                           one_value->length () * sizeof (ACE_USHORT16),
+                           one_value->length () * sizeof (ACE_WCHAR_T),
                            0, 0);
 }
 
@@ -501,7 +501,7 @@ ACE_Name_Handler::lists (void)
 
   ACE_PWSTRING_SET set;
   ACE_NS_WString pattern (this->name_request_.name (),
-                          this->name_request_.name_len () / sizeof (ACE_USHORT16));
+                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   // Get the index into the list table
   int index = ACE_LIST_MAP (this->name_request_.msg_type (),
@@ -551,7 +551,7 @@ ACE_Name_Handler::lists_entries (void)
   ACE_TRACE ("ACE_Name_Handler::lists_entries");
   ACE_BINDING_SET set;
   ACE_NS_WString pattern (this->name_request_.name (),
-                          this->name_request_.name_len () / sizeof (ACE_USHORT16));
+                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   int result = -1;
 
@@ -601,15 +601,15 @@ ACE_Name_Handler::lists_entries (void)
            set_iterator.next (one_entry) !=0;
            set_iterator.advance())
         {
-           ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>
-             name_urep (one_entry->name_.ushort_rep ());
-           ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>
-             value_urep (one_entry->value_.ushort_rep ());
+           ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T>
+             name_urep (one_entry->name_.rep ());
+           ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T>
+             value_urep (one_entry->value_.rep ());
            ACE_Name_Request mynrq (this->name_request_.msg_type (),
                                   name_urep.get (),
-                                  one_entry->name_.length () * sizeof (ACE_USHORT16),
+                                  one_entry->name_.length () * sizeof (ACE_WCHAR_T),
                                   value_urep.get (),
-                                  one_entry->value_.length () * sizeof (ACE_USHORT16),
+                                  one_entry->value_.length () * sizeof (ACE_WCHAR_T),
                                   one_entry->type_,
                                   ACE_OS::strlen (one_entry->type_));
 

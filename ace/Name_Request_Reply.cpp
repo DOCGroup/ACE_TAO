@@ -1,9 +1,12 @@
-// $Id$
-
 #include "ace/Name_Request_Reply.h"
 #include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
 
-ACE_RCSID(ace, Name_Request_Reply, "$Id$")
+
+ACE_RCSID (ace,
+           Name_Request_Reply,
+           "$Id$")
+
 
 // Default "do nothing" constructor.
 
@@ -14,14 +17,15 @@ ACE_Name_Request::ACE_Name_Request (void)
 
 // Create a ACE_Name_Request message.
 
-ACE_Name_Request::ACE_Name_Request (ACE_INT32 t, // Type of request.
-                                    const ACE_USHORT16 name[], // Name
-                                    const ACE_UINT32 name_length, // size in bytes
-                                    const ACE_USHORT16 value[], //
-                                    const ACE_UINT32 value_length, // size in bytes
-                                    const char type[], //
-                                    const ACE_UINT32 type_length, // size in bytes
-                                    ACE_Time_Value *timeout) // Max time waiting for request.
+ACE_Name_Request::ACE_Name_Request (
+  ACE_INT32 t, // Type of request.
+  const ACE_WCHAR_T name[], // Name
+  const ACE_UINT32 name_length, // size in bytes
+  const ACE_WCHAR_T value[], //
+  const ACE_UINT32 value_length, // size in bytes
+  const char type[], //
+  const ACE_UINT32 type_length, // size in bytes
+  ACE_Time_Value *timeout) // Max time waiting for request.
 {
   ACE_TRACE ("ACE_Name_Request::ACE_Name_Request");
   this->msg_type (t);
@@ -46,8 +50,8 @@ ACE_Name_Request::ACE_Name_Request (ACE_INT32 t, // Type of request.
 
   // Set up pointers and copy name value and type into request.
   this->name_ = this->transfer_.data_;
-  this->value_  = &this->name_[name_length / sizeof (ACE_USHORT16) ];
-  this->type_  = (char *)(&this->value_[value_length / sizeof (ACE_USHORT16)]); //
+  this->value_  = &this->name_[name_length / sizeof (ACE_WCHAR_T) ];
+  this->type_  = (char *)(&this->value_[value_length / sizeof (ACE_WCHAR_T)]); //
 
   (void) ACE_OS::memcpy (this->name_,
                          name,
@@ -193,7 +197,7 @@ ACE_Name_Request::timeout (const ACE_Time_Value timeout)
 
 // = Set/get the name
 
-const ACE_USHORT16 *
+const ACE_WCHAR_T *
 ACE_Name_Request::name (void) const
 {
   ACE_TRACE ("ACE_Name_Request::name");
@@ -201,7 +205,7 @@ ACE_Name_Request::name (void) const
 }
 
 void
-ACE_Name_Request::name (const ACE_USHORT16 *t)
+ACE_Name_Request::name (const ACE_WCHAR_T *t)
 {
   ACE_TRACE ("ACE_Name_Request::name");
   (void) ACE_OS::memcpy (this->name_,
@@ -211,7 +215,7 @@ ACE_Name_Request::name (const ACE_USHORT16 *t)
 
 // = Set/get the value
 
-const ACE_USHORT16 *
+const ACE_WCHAR_T *
 ACE_Name_Request::value (void) const
 {
   ACE_TRACE ("ACE_Name_Request::value");
@@ -219,7 +223,7 @@ ACE_Name_Request::value (void) const
 }
 
 void
-ACE_Name_Request::value (const ACE_USHORT16 *c)
+ACE_Name_Request::value (const ACE_WCHAR_T *c)
 {
   ACE_TRACE ("ACE_Name_Request::value");
 
@@ -259,7 +263,7 @@ ACE_Name_Request::encode (void *&buf)
 
   size_t nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
-    / sizeof (ACE_USHORT16);
+    / sizeof (ACE_WCHAR_T);
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
@@ -297,15 +301,15 @@ ACE_Name_Request::decode (void)
 
   size_t nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
-    / sizeof (ACE_USHORT16);
+    / sizeof (ACE_WCHAR_T);
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
       ntohs (this->transfer_.data_[i]);
 
   this->name_ = this->transfer_.data_;
-  this->value_ = &this->name_[this->transfer_.name_len_ / sizeof (ACE_USHORT16)];
-  this->type_ = (char *)(&this->value_[this->transfer_.value_len_ / sizeof (ACE_USHORT16)]);
+  this->value_ = &this->name_[this->transfer_.name_len_ / sizeof (ACE_WCHAR_T)];
+  this->type_ = (char *)(&this->value_[this->transfer_.value_len_ / sizeof (ACE_WCHAR_T)]);
   this->type_[this->transfer_.type_len_] = '\0';
 
   // Decode the variable-sized portion.
