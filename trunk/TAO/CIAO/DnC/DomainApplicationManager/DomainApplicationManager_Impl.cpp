@@ -76,6 +76,9 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     }
   ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "DomainApplicationManager_Impl::init\t\n");
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -121,6 +124,7 @@ get_plan_info (void)
   return 1;
 }
 
+
 bool
 CIAO::DomainApplicationManager_Impl::
 check_validity (void)
@@ -144,12 +148,6 @@ check_validity (void)
   return true;
 }
 
-Deployment::Applications *
-getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return 0;
-}
 
 int
 CIAO::DomainApplicationManager_Impl::
@@ -314,7 +312,30 @@ finishLaunch (::CORBA::Boolean start
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
 {
-  //@@
+  ACE_TRY
+    {
+      // Invoke finishLaunch() operation on each cached NodeApplication object.
+      for (size_t i = 0; i < this->node_application_vec_.size (); i++)
+        {
+          ::Deployment::NodeApplication_var my_na =
+            this->node_application_vec_[i].node_application_;
+
+          ::Deployment::Connections_var my_connections =
+            this->node_application_vec_[i].connections_;
+
+          my_na->finishLaunch (my_connections, start);
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "DomainApplicationManager_Impl::finishLaunch\t\n");
+      ACE_RE_THROW;
+      return;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK_RETURN (0);
 }
 
 
@@ -324,7 +345,30 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
 {
-  // @@
+  ACE_TRY
+    {
+      // Invoke start() operation on each cached NodeApplication object.
+      for (size_t i = 0; i < this->node_application_vec_.size (); i++)
+        {
+          ::Deployment::NodeApplication_var my_na =
+            this->node_application_vec_[i].node_application_;
+
+          ::Deployment::Connections_var my_connections =
+            this->node_application_vec_[i].connections_;
+
+          my_na->finishLaunch (my_connections);
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "DomainApplicationManager_Impl::start\t\n");
+      ACE_RE_THROW;
+      return;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK_RETURN (0);
 }
 
 void
@@ -333,19 +377,31 @@ destroyApplication ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
-  //ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_TRY
+    {
+      // Invoke destroyApplication() operation on each cached 
+      // NodeApplicationManager object.
+      for (size_t i = 0; i < this->node_application_vec_.size (); i++)
+        {
+          ::Deployment::NodeApplication_var my_na =
+            this->node_application_vec_[i].node_application_;
 
-  //if (this->cs_set_.object_in_set (app) == 0)
-  //  ACE_THROW (Deployment::StopError ());
+          ::Deployment::Connections_var my_connections =
+            this->node_application_vec_[i].connections_;
 
-  //app->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-  //ACE_CHECK;
+          my_na->finishLaunch (my_connections);
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "DomainApplicationManager_Impl::destroyApplication\t\n");
+      ACE_RE_THROW;
+      return;
+    }
+  ACE_ENDTRY;
 
-  // Should we remove the server still even if the previous call failed.
-
-  //if (this->cs_set_.remove (app) == -1)
-  //  ACE_THROW (Deployment::StopError ());
-  //return;
+  ACE_CHECK_RETURN (0);
 }
 
 
@@ -363,13 +419,4 @@ getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
   // Transfer ownership
   return plan._retn ();
-}
-
-Deployment::Applications *
-CIAO::DomainApplicationManager_Impl::
-getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return 0;
-
 }
