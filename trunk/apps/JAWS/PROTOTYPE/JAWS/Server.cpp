@@ -108,8 +108,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
   policy->concurrency ()->put (db);
 
-  while (ACE_OS::thr_join (0, NULL) != -1)
-    ;
+  policy->concurrency ()->thr_mgr ()->wait ();
 
   db->release ();
 
