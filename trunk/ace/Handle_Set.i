@@ -13,7 +13,7 @@ ACE_Handle_Set::~ACE_Handle_Set (void)
 }
 #endif /* ACE_HAS_WINCE */
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Handle_Set::reset (void)
 {
   ACE_TRACE ("ACE_Handle_Set::reset");
@@ -55,7 +55,7 @@ ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
 
 // Returns the number of the large bit.
 
-ACE_INLINE ACE_HANDLE  
+ACE_INLINE ACE_HANDLE
 ACE_Handle_Set::max_set (void) const
 {
   ACE_TRACE ("ACE_Handle_Set::max_set");
@@ -70,7 +70,7 @@ ACE_Handle_Set::is_set (ACE_HANDLE handle) const
   ACE_TRACE ("ACE_Handle_Set::is_set");
 #if defined (ACE_HAS_BIG_FD_SET)
   return FD_ISSET (handle,
-                   &this->mask_) 
+                   &this->mask_)
     && this->size_ > 0;
 #else
   return FD_ISSET (handle,
@@ -80,7 +80,7 @@ ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 
 // Enables the handle.
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Handle_Set::set_bit");
@@ -93,25 +93,25 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
 #else /* ACE_WIN32 */
 #if defined (ACE_HAS_BIG_FD_SET)
       if (this->size_ == 0)
-	FD_ZERO (&this->mask_);
+        FD_ZERO (&this->mask_);
 
       if (handle < this->min_handle_)
         this->min_handle_ = handle;
 #endif /* ACE_HAS_BIG_FD_SET */
-      
+
       FD_SET (handle,
               &this->mask_);
       this->size_++;
-      
+
       if (handle > this->max_handle_)
-	this->max_handle_ = handle;      
+        this->max_handle_ = handle;
 #endif /* ACE_WIN32 */
     }
 }
 
 // Disables the handle.
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Handle_Set::clr_bit");
@@ -121,17 +121,17 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
       FD_CLR ((ACE_SOCKET) handle,
               &this->mask_);
       this->size_--;
-      
+
 #if !defined (ACE_WIN32)
       if (handle == this->max_handle_)
-	this->set_max (this->max_handle_);
+        this->set_max (this->max_handle_);
 #endif /* !ACE_WIN32 */
     }
 }
 
 // Returns a count of the number of enabled bits.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Handle_Set::num_set (void) const
 {
   ACE_TRACE ("ACE_Handle_Set::num_set");
@@ -146,6 +146,19 @@ ACE_Handle_Set::num_set (void) const
 
 ACE_INLINE
 ACE_Handle_Set::operator fd_set *()
+{
+  ACE_TRACE ("ACE_Handle_Set::operator ACE_FD_SET_TYPE *");
+
+  if (this->size_ > 0)
+    return (fd_set *) &this->mask_;
+  else
+    return (fd_set *) NULL;
+}
+
+// Returns a pointer to the underlying fd_set.
+
+ACE_INLINE fd_set *
+ACE_Handle_Set::fdset (void)
 {
   ACE_TRACE ("ACE_Handle_Set::operator ACE_FD_SET_TYPE *");
 

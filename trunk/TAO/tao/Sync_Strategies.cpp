@@ -19,7 +19,7 @@ ssize_t
 TAO_Transport_Sync_Strategy::send (TAO_Transport &transport,
                                    TAO_Stub &,
                                    const ACE_Message_Block *message_block,
-                                   ACE_Time_Value *max_wait_time)
+                                   const ACE_Time_Value *max_wait_time)
 {
   // Immediate delegation to the transport.
   return transport.send (message_block,
@@ -32,7 +32,7 @@ ssize_t
 TAO_None_Sync_Strategy::send (TAO_Transport &transport,
                               TAO_Stub &stub,
                               const ACE_Message_Block *message_block,
-                              ACE_Time_Value *max_wait_time)
+                              const ACE_Time_Value *max_wait_time)
 {
   ssize_t result = 0;
 
@@ -61,129 +61,12 @@ TAO_None_Sync_Strategy::send (TAO_Transport &transport,
                                            stub,
                                            buffering_queue))
     {
-      // Copy the timeout value since we don't want to change it.  The
-      // caller will change appropriately.
-      ACE_Time_Value timeout_value;
-      ACE_Time_Value *timeout = 0;
-      if (max_wait_time)
-        {
-          timeout_value = *max_wait_time;
-          timeout = &timeout_value;
-        }
-
-      ACE_Countdown_Time countdown (timeout);
-
-      // Flush all queued messages.
-      while (!buffering_queue.is_empty ())
-        {
-          // Get the first message from the queue.
-          ACE_Message_Block *queued_message = 0;
-          result = buffering_queue.peek_dequeue_head (queued_message);
-
-          // @@ What to do here on failures?
-          ACE_ASSERT (result != -1);
-
-          // Actual network send.
-          result = transport.send (queued_message,
-                                   timeout);
-
-          // Socket closed.
-          if (result == 0)
-            {
-              this->dequeue_all (buffering_queue);
-              return -1;
-            }
-
-          // Cannot send.
-          if (result == -1)
-            {
-              // Timeout.
-              if (errno == ETIME)
-                {
-                  // Since we queue up the message, this is not an
-                  // error.  We can try next time around.
-                  return 0;
-                }
-              // Non-timeout error.
-              else
-                {
-                  this->dequeue_all (buffering_queue);
-                  return -1;
-                }
-            }
-
-          ssize_t total_length = queued_message->total_length ();
-
-          // If successful in sending the complete queued message.
-          if (result == total_length)
-            {
-              this->dequeue_head (buffering_queue);
-              countdown.update ();
-            }
-
-          // Partial send (re-adjust pointers without dequeuing the
-          // message). This is not an error.  We can try next time
-          // around.
-          else
-            {
-              this->reset_queued_message (buffering_queue,
-                                          queued_message,
-                                          result);
-              return 0;
-            }
-        }
+      return transport.send_buffered_messages (max_wait_time);
     }
 
-  // I am hoping this return value is meaningful.
+  // Hoping that this return value is meaningful or at least
+  // acceptable.
   return message_block->total_length ();
-}
-
-void
-TAO_None_Sync_Strategy::dequeue_head (TAO_Transport_Buffering_Queue &buffering_queue)
-{
-  ACE_Message_Block *message_block = 0;
-
-  // Remove from the head of the queue.
-  int result = buffering_queue.dequeue_head (message_block);
-
-  // @@ What to do here on failures?
-  ACE_ASSERT (result != -1);
-  ACE_UNUSED_ARG (result);
-
-  // Release the memory.
-  message_block->release ();
-}
-
-void
-TAO_None_Sync_Strategy::dequeue_all (TAO_Transport_Buffering_Queue &buffering_queue)
-{
-  // Flush all queued messages.
-  while (!buffering_queue.is_empty ())
-    this->dequeue_head (buffering_queue);
-}
-
-void
-TAO_None_Sync_Strategy::reset_queued_message (TAO_Transport_Buffering_Queue &buffering_queue,
-                                              ACE_Message_Block *message_block,
-                                              size_t bytes_delivered)
-{
-  for (ACE_Message_Block *i = message_block;
-       i != 0 && bytes_delivered != 0;
-       i = i->cont ())
-    {
-      if (i->length () > bytes_delivered)
-        {
-          i->rd_ptr (bytes_delivered);
-          bytes_delivered = 0;
-        }
-      else
-        {
-          bytes_delivered -= i->length ();
-          i->rd_ptr (i->length ());
-        }
-    }
-
-  buffering_queue.message_length (buffering_queue.message_length () - bytes_delivered);
 }
 
 int

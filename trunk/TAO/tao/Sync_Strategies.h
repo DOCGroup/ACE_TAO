@@ -37,7 +37,7 @@ public:
   virtual ssize_t send (TAO_Transport &transport,
                         TAO_Stub &stub,
                         const ACE_Message_Block *message_block,
-                        ACE_Time_Value *max_wait_time) = 0;
+                        const ACE_Time_Value *max_wait_time) = 0;
 };
 
 class TAO_Export TAO_Transport_Sync_Strategy : public TAO_Sync_Strategy
@@ -46,7 +46,7 @@ public:
   ssize_t send (TAO_Transport &transport,
                 TAO_Stub &stub,
                 const ACE_Message_Block *message_block,
-                ACE_Time_Value *max_wait_time);
+                const ACE_Time_Value *max_wait_time);
 };
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
@@ -57,7 +57,7 @@ public:
   ssize_t send (TAO_Transport &transport,
                 TAO_Stub &stub,
                 const ACE_Message_Block *message_block,
-                ACE_Time_Value *max_wait_time);
+                const ACE_Time_Value *max_wait_time);
 
   virtual int buffering_constraints_reached (TAO_Transport &transport,
                                              TAO_Stub &stub,
@@ -67,14 +67,6 @@ public:
                     const TAO::BufferingConstraint &buffering_constraint);
 
   ACE_Time_Value time_conversion (const TimeBase::TimeT &time);
-
-  void dequeue_head (TAO_Transport_Buffering_Queue &buffering_queue);
-
-  void dequeue_all (TAO_Transport_Buffering_Queue &buffering_queue);
-
-  void reset_queued_message (TAO_Transport_Buffering_Queue &buffering_queue,
-                             ACE_Message_Block *message_block,
-                             size_t bytes_delivered);
 };
 
 class TAO_Export TAO_Flush_Sync_Strategy : public TAO_None_Sync_Strategy

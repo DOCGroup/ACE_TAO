@@ -126,6 +126,19 @@ public:
   // returned with <errno == ETIME>.  If it succeeds the number of
   // bytes received is returned.
 
+  ssize_t send (const void *buf,
+                size_t n,
+                ACE_Addr &addr,
+                int flags,
+                const ACE_Time_Value *timeout) const;
+  // Wait up to <timeout> amount of time to receive a datagram into
+  // <buf>.  The <ACE_Time_Value> indicates how long to blocking
+  // trying to receive.  If <timeout> == 0, the caller will block
+  // until action is possible, else will wait until the relative time
+  // specified in *<timeout> elapses).  If <send> times out a -1 is
+  // returned with <errno == ETIME>.  If it succeeds the number of
+  // bytes received is returned.
+
   ssize_t send (const iovec buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
