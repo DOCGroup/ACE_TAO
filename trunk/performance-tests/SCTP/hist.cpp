@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <float.h>
 #include <string.h>
-#include <math.h>
+#include "ace/os_include/os_math.h"
 #include "hist.h"
 
 hist_t *head_hist, *tail_hist;
@@ -301,4 +301,3 @@ double histfloor(double x) {
 #endif
 
 }
-
