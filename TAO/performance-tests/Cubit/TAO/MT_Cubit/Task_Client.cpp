@@ -273,7 +273,6 @@ Client::Client (ACE_Thread_Manager *thread_manager,
     my_jitter_array_ (0),
     timer_ (0),
     frequency_ (0),
-    orb_ (0),
     latency_ (0),
     argc_ (argc),
     argv_ (argv)
@@ -553,14 +552,11 @@ Client::find_frequency (void)
         }
 }
 
-int
-Client::init_orb (void)
+CORBA::ORB_ptr
+Client::init_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "I'm thread %t\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "I'm thread %t\n"));
 
 
   // Convert the argv vector into a string.
@@ -582,11 +578,13 @@ Client::init_orb (void)
   int argc = tmp_args2.argc ();
   char **argv = tmp_args2.argv ();
 
-  this->orb_ = CORBA::ORB_init (argc,
-                         argv,
-                         "internet",
-                         ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  char orbid[64];
+  ACE_OS::sprintf (orbid, "orb:%d", this->id_);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                        argv,
+                                        orbid,
+                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   if (this->id_ == 0)
     {
@@ -596,12 +594,14 @@ Client::init_orb (void)
       int result = this->ts_->parse_args (argc,
                                           argv);
       if (result != 0)
-        return -1;
+        return CORBA::ORB::_nil ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t)Arguments parsed successfully\n"));
 
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_, 1);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon,
+                        this->ts_->ready_mtx_,
+                        CORBA::ORB::_nil ());
       this->ts_->ready_ = 1;
       this->ts_->ready_cnd_.broadcast ();
       ready_mon.release ();
@@ -609,129 +609,109 @@ Client::init_orb (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) ORB_init success\n"));
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client::Orb_init ()");
-      return -1;
-    }
-  ACE_ENDTRY;
-  return 0;
+  return orb._retn ();
 }
 
 int
-Client::get_cubit (void)
+Client::get_cubit (CORBA::ORB_ptr orb, CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Object_var objref (0);
+  char *my_ior =
+    this->ts_->use_utilization_test_ == 1
+    ? this->ts_->one_ior_
+    : this->ts_->iors_[this->id_];
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      char *my_ior =
-        this->ts_->use_utilization_test_ == 1
-        ? this->ts_->one_ior_
-        : this->ts_->iors_[this->id_];
+  // If we are running the "1 to n" test make sure all low
+  // priority clients use only 1 low priority servant.
+  if (this->id_ > 0
+      && this->ts_->one_to_n_test_ == 1)
+    my_ior = this->ts_->iors_[1];
 
-      // If we are running the "1 to n" test make sure all low
-      // priority clients use only 1 low priority servant.
-      if (this->id_ > 0
-          && this->ts_->one_to_n_test_ == 1)
-        my_ior = this->ts_->iors_[1];
+  if (my_ior == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Must specify valid ior filename with -f option\n"),
+                      -1);
 
-      if (my_ior == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Must specify valid ior filename with -f option\n"),
-                          -1);
+  CORBA::Object_var objref =
+    orb->string_to_object (my_ior,
+                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-      objref = this->orb_->string_to_object (my_ior,
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  if (CORBA::is_nil (objref.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%t) string_to_object Failed!\n"),
+                      -1);
 
-      if (CORBA::is_nil (objref.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%t) string_to_object Failed!\n"),
-                          -1);
+  // Narrow the CORBA::Object reference to the stub object,
+  // checking the type along the way using _is_a.
+  this->cubit_ = Cubit::_narrow (objref.in (),
+                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-      // Narrow the CORBA::Object reference to the stub object,
-      // checking the type along the way using _is_a.
-      this->cubit_ = Cubit::_narrow (objref.in (),
-                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  if (CORBA::is_nil (this->cubit_))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Create cubit failed\n"),
+                      -1);
 
-      if (CORBA::is_nil (this->cubit_))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Create cubit failed\n"),
-                          1);
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Binding succeeded\n"));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Binding succeeded\n"));
+  CORBA::String_var str =
+    orb->object_to_string (this->cubit_,
+                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+      
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) CUBIT OBJECT connected to <%s>\n",
+              str.in ()));
 
-      CORBA::String_var str =
-        this->orb_->object_to_string (this->cubit_,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) CUBIT OBJECT connected to <%s>\n",
-                  str.in ()));
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client::get_cubit");
-      return -1;
-    }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 Client::svc (void)
 {
-  // Initialize the ORB.
-  int result = this->init_orb ();
-  if (result != 0)
-    return result;
-
-  // Find the frequency of CORBA requests based on thread id.
-  this->find_frequency ();
-
-  // Get the cubit object from the file.
-  result = this->get_cubit ();
-  if (result != 0)
-    return result;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) Waiting for other threads to "
-              "finish binding..\n"));
-
-  // Wait for all the client threads to be initialized before going
-  // any further.
-  this->ts_->barrier_->wait ();
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t; %D) Everyone's done, here I go!!\n"));
-  if (this->ts_->oneway_ == 1)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) **** USING ONEWAY CALLS ****\n"));
-
-  // Perform the tests.
-  result = this->run_tests ();
-  if (result != 0)
-    {
-      ACE_ERROR ((LM_ERROR, "(%t) Error occurred in run_test ()\n"));
-      return result;
-    }
-
-  // release the semaphore
-  if (this->ts_->thread_per_rate_ == 1
-      && this->id_ == this->ts_->thread_count_ - 1)
-    this->ts_->semaphore_->release (this->ts_->thread_count_ - 1);
-  else
-    this->ts_->semaphore_->release ();
-
-  // shutdown the server if necessary.
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      // Initialize the ORB.
+      CORBA::ORB_var orb = this->init_orb (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Find the frequency of CORBA requests based on thread id.
+      this->find_frequency ();
+
+      // Get the cubit object from the file.
+      int r = this->get_cubit (orb.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (r != 0)
+        return r;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) Waiting for other threads to "
+                  "finish binding..\n"));
+
+      // Wait for all the client threads to be initialized before going
+      // any further.
+      this->ts_->barrier_->wait ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t; %D) Everyone's done, here I go!!\n"));
+      if (this->ts_->oneway_ == 1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) **** USING ONEWAY CALLS ****\n"));
+
+      // Perform the tests.
+      int result = this->run_tests ();
+      if (result != 0)
+        return result;
+
+      // release the semaphore
+      if (this->ts_->thread_per_rate_ == 1
+          && this->id_ == this->ts_->thread_count_ - 1)
+        this->ts_->semaphore_->release (this->ts_->thread_count_ - 1);
+      else
+        this->ts_->semaphore_->release ();
+
+      // shutdown the server if necessary.
       if (this->ts_->shutdown_)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -739,17 +719,15 @@ Client::svc (void)
           this->cubit_->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      CORBA::release (this->cubit_);
+      this->cubit_ = 0;
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR,
-                  "Shutdown of the server failed!\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "shutdown() call failed.\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Task_Client::svc()");
     }
   ACE_ENDTRY;
-
-  // Delete dynamic memory
-  CORBA::release (this->cubit_);
 
   // To avoid a memPartFree on VxWorks.  It will leak memory, though.
   int status = 0;
