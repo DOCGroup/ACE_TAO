@@ -167,7 +167,7 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
   int location;
   char *phile_path;
 
-  phile_path = (char *)ACE_OS::malloc(strlen(path));
+  phile_path = (char *)ACE_OS::malloc (strlen (path+1));
   if (phile_path == 0)
     {
       ACE_OS::printf ("malloc in make_dir failed: [%X]\n",
