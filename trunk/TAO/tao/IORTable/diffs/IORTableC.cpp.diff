@@ -1,5 +1,5 @@
---- orig/IORTableC.cpp	Wed Apr 18 22:30:43 2001
-+++ IORTableC.cpp	Wed Apr 18 22:29:14 2001
+--- orig/IORTableC.cpp	Wed Apr 25 00:32:42 2001
++++ IORTableC.cpp	Wed Apr 25 00:24:15 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -22,7 +22,12 @@
  #if defined (__BORLANDC__)
  #pragma option -w-rvl -w-rch -w-ccc -w-aus
  #endif /* __BORLANDC__ */
-@@ -91,11 +84,6 @@
+@@ -87,28 +80,18 @@
+ }
+ 
+ void IORTable::AlreadyBound::_tao_encode (
+-    TAO_OutputCDR &cdr,
++    TAO_OutputCDR &,
      CORBA::Environment &ACE_TRY_ENV
    ) const
  {
@@ -34,7 +39,9 @@
    ACE_THROW (CORBA::MARSHAL ());
  }
  
-@@ -104,11 +92,6 @@
+ void IORTable::AlreadyBound::_tao_decode (
+-    TAO_InputCDR &cdr,
++    TAO_InputCDR &,
      CORBA::Environment &ACE_TRY_ENV
    )
  {
@@ -46,7 +53,12 @@
    ACE_THROW (CORBA::MARSHAL ());
  }
  
-@@ -175,11 +158,6 @@
+@@ -171,28 +154,18 @@
+ }
+ 
+ void IORTable::NotFound::_tao_encode (
+-    TAO_OutputCDR &cdr,
++    TAO_OutputCDR &,
      CORBA::Environment &ACE_TRY_ENV
    ) const
  {
@@ -58,7 +70,9 @@
    ACE_THROW (CORBA::MARSHAL ());
  }
  
-@@ -188,11 +166,6 @@
+ void IORTable::NotFound::_tao_decode (
+-    TAO_InputCDR &cdr,
++    TAO_InputCDR &,
      CORBA::Environment &ACE_TRY_ENV
    )
  {
@@ -70,3 +84,103 @@
    ACE_THROW (CORBA::MARSHAL ());
  }
  
+@@ -204,49 +177,6 @@
+   return retval;
+ }
+ 
+-IORTable::Table_ptr
+-tao_IORTable_Table_duplicate (
+-    IORTable::Table_ptr p
+-  )
+-{
+-  return IORTable::Table::_duplicate (p);
+-}
+-
+-void
+-tao_IORTable_Table_release (
+-    IORTable::Table_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-IORTable::Table_ptr
+-tao_IORTable_Table_nil (
+-    void
+-  )
+-{
+-  return IORTable::Table::_nil ();
+-}
+-
+-IORTable::Table_ptr
+-tao_IORTable_Table_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return IORTable::Table::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_IORTable_Table_upcast (
+-    void *src
+-  )
+-{
+-  IORTable::Table **tmp =
+-    ACE_static_cast (IORTable::Table **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class IORTable::Table_var
+ // *************************************************************
+@@ -496,49 +426,6 @@
+ const char* IORTable::Table::_interface_repository_id (void) const
+ {
+   return "IDL:IORTable/Table:1.0";
+-}
+-
+-IORTable::Locator_ptr
+-tao_IORTable_Locator_duplicate (
+-    IORTable::Locator_ptr p
+-  )
+-{
+-  return IORTable::Locator::_duplicate (p);
+-}
+-
+-void
+-tao_IORTable_Locator_release (
+-    IORTable::Locator_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-IORTable::Locator_ptr
+-tao_IORTable_Locator_nil (
+-    void
+-  )
+-{
+-  return IORTable::Locator::_nil ();
+-}
+-
+-IORTable::Locator_ptr
+-tao_IORTable_Locator_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return IORTable::Locator::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_IORTable_Locator_upcast (
+-    void *src
+-  )
+-{
+-  IORTable::Locator **tmp =
+-    ACE_static_cast (IORTable::Locator **, src);
+-  return *tmp;
+ }
+ 
+ // *************************************************************

@@ -1,5 +1,5 @@
---- orig/TAOC.cpp	Tue Apr 17 23:12:54 2001
-+++ TAOC.cpp	Tue Apr 17 23:12:44 2001
+--- orig/TAOC.cpp	Wed Apr 25 00:17:55 2001
++++ TAOC.cpp	Tue Apr 24 13:44:43 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -33,15 +33,56 @@
  static const CORBA::Long _oc_TAO_PrioritySelectionMode[] =
  {
    TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -171,6 +164,7 @@
+@@ -171,48 +164,6 @@
  TAO_NAMESPACE_BEGIN (TAO)
  TAO_NAMESPACE_DEFINE (const CORBA::ULong, CLIENT_PRIORITY_POLICY_TYPE, 1413545984U)
  TAO_NAMESPACE_END
-+
+-TAO::ClientPriorityPolicy_ptr
+-tao_TAO_ClientPriorityPolicy_duplicate (
+-    TAO::ClientPriorityPolicy_ptr p
+-  )
+-{
+-  return TAO::ClientPriorityPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_TAO_ClientPriorityPolicy_release (
+-    TAO::ClientPriorityPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-TAO::ClientPriorityPolicy_ptr
+-tao_TAO_ClientPriorityPolicy_nil (
+-    void
+-  )
+-{
+-  return TAO::ClientPriorityPolicy::_nil ();
+-}
+-
+-TAO::ClientPriorityPolicy_ptr
+-tao_TAO_ClientPriorityPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return TAO::ClientPriorityPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_TAO_ClientPriorityPolicy_upcast (
+-    void *src
+-  )
+-{
+-  TAO::ClientPriorityPolicy **tmp =
+-    ACE_static_cast (TAO::ClientPriorityPolicy **, src);
+-  return *tmp;
+-}
+ 
  // *************************************************************
  // Operations for class TAO::ClientPriorityPolicy_var
- // *************************************************************
-@@ -293,7 +287,6 @@
+@@ -336,7 +287,6 @@
      ACE_static_cast (ClientPriorityPolicy **, src);
    return *tmp;
  }
@@ -49,7 +90,7 @@
  // *************************************************************
  // Inline operations for class TAO::ClientPriorityPolicy_out
  // *************************************************************
-@@ -406,11 +399,11 @@
+@@ -449,11 +399,11 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -63,7 +104,7 @@
      retv = ACE_reinterpret_cast
        (
          void *,
-@@ -434,6 +427,10 @@
+@@ -477,6 +427,10 @@
    return "IDL:TAO/ClientPriorityPolicy:1.0";
  }
  
@@ -74,15 +115,56 @@
  static const CORBA::Long _oc_TAO_BufferingConstraintMode[] =
  {
    TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -592,6 +589,7 @@
+@@ -635,48 +589,6 @@
  TAO_NAMESPACE_BEGIN (TAO)
  TAO_NAMESPACE_DEFINE (const CORBA::ULong, BUFFERING_CONSTRAINT_POLICY_TYPE, 1413545985U)
  TAO_NAMESPACE_END
-+
+-TAO::BufferingConstraintPolicy_ptr
+-tao_TAO_BufferingConstraintPolicy_duplicate (
+-    TAO::BufferingConstraintPolicy_ptr p
+-  )
+-{
+-  return TAO::BufferingConstraintPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_TAO_BufferingConstraintPolicy_release (
+-    TAO::BufferingConstraintPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-TAO::BufferingConstraintPolicy_ptr
+-tao_TAO_BufferingConstraintPolicy_nil (
+-    void
+-  )
+-{
+-  return TAO::BufferingConstraintPolicy::_nil ();
+-}
+-
+-TAO::BufferingConstraintPolicy_ptr
+-tao_TAO_BufferingConstraintPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return TAO::BufferingConstraintPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_TAO_BufferingConstraintPolicy_upcast (
+-    void *src
+-  )
+-{
+-  TAO::BufferingConstraintPolicy **tmp =
+-    ACE_static_cast (TAO::BufferingConstraintPolicy **, src);
+-  return *tmp;
+-}
+ 
  // *************************************************************
  // Operations for class TAO::BufferingConstraintPolicy_var
- // *************************************************************
-@@ -714,7 +712,6 @@
+@@ -800,7 +712,6 @@
      ACE_static_cast (BufferingConstraintPolicy **, src);
    return *tmp;
  }
@@ -90,7 +172,7 @@
  // *************************************************************
  // Inline operations for class TAO::BufferingConstraintPolicy_out
  // *************************************************************
-@@ -827,11 +824,11 @@
+@@ -913,11 +824,11 @@
    void *retv = 0;
    if (type == ACE_reinterpret_cast
      (ptr_arith_t,
@@ -104,7 +186,7 @@
      retv = ACE_reinterpret_cast
        (
          void *,
-@@ -855,6 +852,8 @@
+@@ -941,6 +852,8 @@
    return "IDL:TAO/BufferingConstraintPolicy:1.0";
  }
  
@@ -113,7 +195,7 @@
  static const CORBA::Long _oc_TAO_SyncScope[] =
  {
    TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -910,6 +909,9 @@
+@@ -996,6 +909,9 @@
  TAO_NAMESPACE_BEGIN (TAO)
  TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_DELAYED_BUFFERING, -2)
  TAO_NAMESPACE_END
@@ -123,7 +205,7 @@
  void operator<<= (CORBA::Any &_tao_any, const TAO::PrioritySpecification &_tao_elem) // copying
  {
    TAO_OutputCDR stream;
-@@ -946,12 +948,14 @@
+@@ -1032,12 +948,14 @@
    ACE_TRY_NEW_ENV
    {
      CORBA::TypeCode_var type = _tao_any.type ();
@@ -141,7 +223,7 @@
      
      if (_tao_any.any_owns_data ())
      {
-@@ -993,12 +997,9 @@
+@@ -1079,12 +997,9 @@
    return 0;
  }
  
@@ -157,7 +239,7 @@
  
  void operator<<= (CORBA::Any &_tao_any, const TAO::BufferingConstraint &_tao_elem) // copying
  {
-@@ -1036,12 +1037,14 @@
+@@ -1122,12 +1037,14 @@
    ACE_TRY_NEW_ENV
    {
      CORBA::TypeCode_var type = _tao_any.type ();
@@ -175,7 +257,7 @@
      
      if (_tao_any.any_owns_data ())
      {
-@@ -1083,10 +1086,4 @@
+@@ -1169,10 +1086,4 @@
    return 0;
  }
  

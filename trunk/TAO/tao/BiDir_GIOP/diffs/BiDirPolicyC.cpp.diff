@@ -1,5 +1,5 @@
---- orig/BiDirPolicyC.cpp	Thu Apr 19 00:03:17 2001
-+++ BiDirPolicyC.cpp	Wed Apr 18 23:59:31 2001
+--- orig/BiDirPolicyC.cpp	Wed Apr 25 00:30:48 2001
++++ BiDirPolicyC.cpp	Tue Apr 24 13:44:43 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -25,3 +25,53 @@
  
  #if defined (__BORLANDC__)
  #pragma option -w-rvl -w-rch -w-ccc -w-aus
+@@ -89,49 +83,6 @@
+ TAO_NAMESPACE_BEGIN (BiDirPolicy)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, BIDIRECTIONAL_POLICY_TYPE, 37U)
+ TAO_NAMESPACE_END
+-BiDirPolicy::BidirectionalPolicy_ptr
+-tao_BiDirPolicy_BidirectionalPolicy_duplicate (
+-    BiDirPolicy::BidirectionalPolicy_ptr p
+-  )
+-{
+-  return BiDirPolicy::BidirectionalPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_BiDirPolicy_BidirectionalPolicy_release (
+-    BiDirPolicy::BidirectionalPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-BiDirPolicy::BidirectionalPolicy_ptr
+-tao_BiDirPolicy_BidirectionalPolicy_nil (
+-    void
+-  )
+-{
+-  return BiDirPolicy::BidirectionalPolicy::_nil ();
+-}
+-
+-BiDirPolicy::BidirectionalPolicy_ptr
+-tao_BiDirPolicy_BidirectionalPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return BiDirPolicy::BidirectionalPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_BiDirPolicy_BidirectionalPolicy_upcast (
+-    void *src
+-  )
+-{
+-  BiDirPolicy::BidirectionalPolicy **tmp =
+-    ACE_static_cast (BiDirPolicy::BidirectionalPolicy **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class BiDirPolicy::BidirectionalPolicy_var
+ // *************************************************************

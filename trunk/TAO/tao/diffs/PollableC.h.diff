@@ -1,5 +1,5 @@
---- orig/PollableC.h	Mon Apr 16 22:13:53 2001
-+++ PollableC.h	Tue Apr 17 01:35:37 2001
+--- orig/PollableC.h	Tue Apr 24 23:49:07 2001
++++ PollableC.h	Tue Apr 24 16:43:49 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -36,24 +36,6 @@
  
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
-@@ -71,7 +76,7 @@
- {
- public:
-   CORBA_PollableSet_var (void); // default constructor
--  CORBA_PollableSet_var (CORBA_PollableSet_ptr p) : ptr_ (p) {} 
-+  CORBA_PollableSet_var (CORBA_PollableSet_ptr);
-   CORBA_PollableSet_var (const CORBA_PollableSet_var &); // copy constructor
-   ~CORBA_PollableSet_var (void); // destructor
-   
-@@ -147,7 +152,7 @@
- {
- public:
-   CORBA_Pollable_var (void); // default constructor
--  CORBA_Pollable_var (CORBA_Pollable_ptr p) : ptr_ (p) {} 
-+  CORBA_Pollable_var (CORBA_Pollable_ptr);
-   CORBA_Pollable_var (const CORBA_Pollable_var &); // copy constructor
-   ~CORBA_Pollable_var (void); // destructor
-   
 @@ -257,7 +262,7 @@
    virtual const char* _interface_repository_id (void) const;
  
@@ -63,15 +45,6 @@
    
    virtual ~CORBA_Pollable (void);
  private:
-@@ -285,7 +290,7 @@
- {
- public:
-   CORBA_DIIPollable_var (void); // default constructor
--  CORBA_DIIPollable_var (CORBA_DIIPollable_ptr p) : ptr_ (p) {} 
-+  CORBA_DIIPollable_var (CORBA_DIIPollable_ptr);
-   CORBA_DIIPollable_var (const CORBA_DIIPollable_var &); // copy constructor
-   ~CORBA_DIIPollable_var (void); // destructor
-   
 @@ -378,7 +383,7 @@
    virtual const char* _interface_repository_id (void) const;
  

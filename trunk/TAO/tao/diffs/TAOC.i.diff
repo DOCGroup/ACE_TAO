@@ -1,5 +1,5 @@
---- orig/TAOC.i	Tue Apr 17 00:03:03 2001
-+++ TAOC.i	Tue Apr 17 00:13:28 2001
+--- orig/TAOC.i	Wed Apr 25 00:17:55 2001
++++ TAOC.i	Tue Apr 24 13:44:43 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -33,7 +33,7 @@
                deep_copy = this->ptr_;
                this->ptr_ = tmp;
                delete deep_copy;
-@@ -164,7 +166,6 @@
+@@ -164,13 +166,84 @@
    return this->ptr_;
  }
  
@@ -41,7 +41,49 @@
  #if !defined (_TAO_CLIENTPRIORITYPOLICY___CI_)
  #define _TAO_CLIENTPRIORITYPOLICY___CI_
  
-@@ -214,6 +215,35 @@
++ACE_INLINE TAO::ClientPriorityPolicy_ptr
++tao_TAO_ClientPriorityPolicy_duplicate (
++    TAO::ClientPriorityPolicy_ptr p
++  )
++{
++  return TAO::ClientPriorityPolicy::_duplicate (p);
++}
++
++ACE_INLINE void
++tao_TAO_ClientPriorityPolicy_release (
++    TAO::ClientPriorityPolicy_ptr p
++  )
++{
++  CORBA::release (p);
++}
++
++ACE_INLINE TAO::ClientPriorityPolicy_ptr
++tao_TAO_ClientPriorityPolicy_nil (
++    void
++  )
++{
++  return TAO::ClientPriorityPolicy::_nil ();
++}
++
++ACE_INLINE TAO::ClientPriorityPolicy_ptr
++tao_TAO_ClientPriorityPolicy_narrow (
++    CORBA::Object *p,
++    CORBA::Environment &ACE_TRY_ENV
++  )
++{
++  return TAO::ClientPriorityPolicy::_narrow (p, ACE_TRY_ENV);
++}
++
++ACE_INLINE CORBA::Object *
++tao_TAO_ClientPriorityPolicy_upcast (
++    void *src
++  )
++{
++  TAO::ClientPriorityPolicy **tmp =
++    ACE_static_cast (TAO::ClientPriorityPolicy **, src);
++  return *tmp;
++}
++
  
  #endif /* end #if !defined */
  
@@ -77,7 +119,7 @@
  // *************************************************************
  // Inline operations for class TAO::BufferingConstraint_var
  // *************************************************************
-@@ -270,12 +300,12 @@
+@@ -227,12 +300,12 @@
          }
        else
          {
@@ -93,7 +135,7 @@
                deep_copy = this->ptr_;
                this->ptr_ = tmp;
                delete deep_copy;
-@@ -359,7 +389,6 @@
+@@ -316,39 +389,55 @@
    return this->ptr_;
  }
  
@@ -101,40 +143,76 @@
  #if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___CI_)
  #define _TAO_BUFFERINGCONSTRAINTPOLICY___CI_
  
-@@ -409,32 +438,6 @@
- 
- #endif /* end #if !defined */
- 
+-
+-#endif /* end #if !defined */
+-
 -ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::PrioritySpecification &_tao_aggregate)
 -{
 -  if (
 -    (strm << _tao_aggregate.mode) &&
 -    (strm << _tao_aggregate.min_priority) &&
 -    (strm << _tao_aggregate.max_priority)
--  )
++ACE_INLINE TAO::BufferingConstraintPolicy_ptr
++tao_TAO_BufferingConstraintPolicy_duplicate (
++    TAO::BufferingConstraintPolicy_ptr p
+   )
 -    return 1;
 -  else
 -    return 0;
--  
--}
--
++{
++  return TAO::BufferingConstraintPolicy::_duplicate (p);
++}
+   
++ACE_INLINE void
++tao_TAO_BufferingConstraintPolicy_release (
++    TAO::BufferingConstraintPolicy_ptr p
++  )
++{
++  CORBA::release (p);
+ }
+ 
 -ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::PrioritySpecification &_tao_aggregate)
--{
++ACE_INLINE TAO::BufferingConstraintPolicy_ptr
++tao_TAO_BufferingConstraintPolicy_nil (
++    void
++  )
+ {
 -  if (
 -    (strm >> _tao_aggregate.mode) &&
 -    (strm >> _tao_aggregate.min_priority) &&
 -    (strm >> _tao_aggregate.max_priority)
--  )
++  return TAO::BufferingConstraintPolicy::_nil ();
++}
++
++ACE_INLINE TAO::BufferingConstraintPolicy_ptr
++tao_TAO_BufferingConstraintPolicy_narrow (
++    CORBA::Object *p,
++    CORBA::Environment &ACE_TRY_ENV
+   )
 -    return 1;
 -  else
 -    return 0;
--  
--}
--
++{
++  return TAO::BufferingConstraintPolicy::_narrow (p, ACE_TRY_ENV);
++}
+   
++ACE_INLINE CORBA::Object *
++tao_TAO_BufferingConstraintPolicy_upcast (
++    void *src
++  )
++{
++  TAO::BufferingConstraintPolicy **tmp =
++    ACE_static_cast (TAO::BufferingConstraintPolicy **, src);
++  return *tmp;
+ }
+ 
++
++#endif /* end #if !defined */
++
  ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::BufferingConstraint &_tao_aggregate)
  {
    if (
-@@ -463,3 +466,4 @@
+@@ -377,3 +466,4 @@
    
  }
  
