@@ -10,11 +10,11 @@
 //
 // = DESCRIPTION
 //      This is a simple test to illustrate the priority mechanism of
-//      ACE Tasks.  The test requires no options, but the -d option enables
-//      LM_DEBUG output.
+//      ACE Tasks.  The test requires no options, but the -d option
+//      enables LM_DEBUG output.
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,19 +22,19 @@
 #include "ace/Sched_Params.h"
 #include "test_config.h"
 
-#if defined (ACE_HAS_THREADS)
-
 static char *usage = "usage: %s [-d]\n";
 
+#if defined (ACE_HAS_THREADS)
+
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
-// = TITLE
-//   A simple Task that runs itself a different priorities.
-//
-// = DESCRIPTION
-//   This task uses the void* argument on open to run the svc() method
-//   at a different priority. The point is execise the thread priority
-//   features of ACE.
 {
+  // = TITLE
+  //   A simple Task that runs itself a different priorities.
+  //
+  // = DESCRIPTION
+  //   This task uses the void* argument on open to run the svc() method
+  //   at a different priority. The point is execise the thread priority
+  //   features of ACE.
 public:
   Priority_Task (void);
   // The constructor
@@ -69,7 +69,7 @@ Priority_Task::open (void *arg)
   long flags = THR_NEW_LWP;
 
   // To get FIFO scheduling with PTHREADS.
-  flags |= THR_SCHED_FIFO;
+  ACE_SET_BITS (flags, THR_SCHED_FIFO);
 
   // Become an active object.
   if (this->activate (flags, 1, 0, this->priority_) == -1)
@@ -101,7 +101,6 @@ Priority_Task::open (void *arg)
                     this->priority_,
                     -1));
     }
-
   return 0;
 }
 
@@ -136,23 +135,17 @@ main (int argc, char *argv[])
   ACE_START_TEST ("Priority_Task_Test");
 
   if (argc <= 1)
-    {
-      // Disable LM_DEBUG messages.
-      ACE_Log_Msg::instance ()->priority_mask (
-        ACE_Log_Msg::instance ()->priority_mask () & ~ LM_DEBUG);
-    }
+    // Disable LM_DEBUG messages.
+    ACE_Log_Msg::instance ()->priority_mask 
+      (ACE_Log_Msg::instance ()->priority_mask () & ~ LM_DEBUG);
   else if (argc == 2)
     {
-      if (strcmp (argv[1], "-d"))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, usage, argv [0]), -1);
-        }
+      if (ACE_OS::strcmp (argv[1], "-d") != 0)
+        ACE_ERROR_RETURN ((LM_ERROR, usage, argv [0]), -1);
       // else -d option: don't disable LM_DEBUG messages
     }
   else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, usage, argv [0]), -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, usage, argv [0]), -1);
 
   int status = 0;
 

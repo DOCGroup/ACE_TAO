@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -17,20 +18,18 @@
 // 
 // ============================================================================
 
-#ifndef __MT_REACTOR_TIMER_TEST_H
+#if !defined (__MT_REACTOR_TIMER_TEST_H)
 #define __MT_REACTOR_TIMER_TEST_H
 
 #include "ace/Reactor.h"
 #include "ace/Task.h"
 
-#define TIMER_SLOTS 10
-
-class Time_Handler : public ACE_Task<ACE_MT_SYNCH>
+class Time_Handler : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Time_Handler();
+  Time_Handler (void);
 
-  void   setup(void);
+  void setup (void);
 
   virtual int svc (void);
   // Run by a daemon thread to handle deferred processing.
@@ -39,10 +38,14 @@ public:
                               const void *arg);
 
 private:
-  long		timer_id[TIMER_SLOTS];
-  int		step;
-  ACE_Reactor	my_reactor;
+  enum 
+  {
+    TIMER_SLOTS = 10
+  };
 
+  long timer_id_[TIMER_SLOTS];
+  int step_;
+  ACE_Reactor my_reactor_;
 };
 
 #endif /* __MT_REACTOR_TIMER_TEST_H */
