@@ -1,3 +1,9 @@
+Mon Mar  4 19:59:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Process_Strategy_Test.h: Added #include "ace/Strategies_T.h"
+          so Visual Age C++ can find ACE_Process_Strategy when instantiating
+          templates.
+
 Mon Mar  4 19:52:27 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Message_Queue_Test_Ex.h (new file):
