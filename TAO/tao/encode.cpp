@@ -1320,7 +1320,7 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       if (env.exception () == 0)
         {
           // get the actual length of the string
-          CORBA::ULong len = ACE_WString::wstrlen ((CORBA::WChar *) str);
+          CORBA::ULong len = ACE_OS::wslen ((CORBA::WChar *) str);
 
           // if it is an unbounded string or if the length is less than the
           // bounds for an unbounded string

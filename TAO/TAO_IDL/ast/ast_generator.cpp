@@ -391,9 +391,7 @@ AST_Generator::create_string(AST_Expression *ms)
 AST_String      *
 AST_Generator::create_wstring(AST_Expression *ms)
 {
-  typedef ACE_UINT16 WChar;
-
-  return new AST_String(ms, sizeof(WChar));
+  return new AST_String(ms, sizeof(ACE_OS::WChar));
 }
 
 /*

@@ -447,11 +447,10 @@ public:
     void operator= (const String_var &);
   };
 
-  // 94-9-32 Appendix A defines 16-bit UNICODE characters as "WChar",
-  // and null-terminated strings of them as "WString".  These are IDL
-  // extensions, not yet standard.
+  // WChar is an IDL extension, not yet standard.  We use 32 bits
+  // because that's what many platforms use for their native wchar_t.
 
-  typedef ACE_UINT16 WChar;
+  typedef ACE_OS::WChar WChar;
   typedef WChar *WString;
 
   typedef WChar &WChar_out;
