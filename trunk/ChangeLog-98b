@@ -1,3 +1,9 @@
+Thu May 21 23:04:37 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Stats.cpp: Defined ACE_BUILD_DLL at the beginning. 
+	  Win32 needs to define ULONGLONG literals as 999ui64.
+	  This is the only place that uses i64 literals.
+
 Thu May 21 21:55:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.7 released.
