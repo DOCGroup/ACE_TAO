@@ -124,7 +124,8 @@ CIAO_HelloWorld_Servant::CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr exe,
 
       if (! CORBA::is_nil (temp.in ()))
         {
-          temp->set_session_context (this->context_.in ());
+          temp->set_session_context (this->context_.in ()
+                                     ACE_ENV_ARG_PARAMETER);
         }
     }
   ACE_CATCHANY
@@ -137,6 +138,22 @@ CIAO_HelloWorld_Servant::CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr exe,
 
 CIAO_HelloWorld_Servant::~CIAO_HelloWorld_Servant (void)
 {
+  ACE_TRY_NEW_ENV;
+  {
+    Components::SessionComponent_var temp =
+      Components::SessionComponent::_narrow (this->executor_.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    if (! CORBA::is_nil (temp.in ()))
+      temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
 }
 
 // Operations for supported interfaces.
@@ -505,21 +522,28 @@ CIAO_HelloWorld_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
-HelloWorld_ptr
-CIAO_HelloWorld_Servant::_ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+void
+CIAO_HelloWorld_Servant::_ciao_activate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Object_var obj
-    = this->container_->install_servant (this
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  HelloWorld_var ho = HelloWorld::_narrow (obj
+  Components::SessionComponent_var temp =
+    Components::SessionComponent::_narrow (this->executor_.in ()
                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
-  return ho._retn ();
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
+void
+CIAO_HelloWorld_Servant::_ciao_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+{
+  Components::SessionComponent_var temp =
+    Components::SessionComponent::_narrow (this->executor_.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -548,6 +572,69 @@ CIAO_HelloHome_Servant::create_component (ACE_ENV_SINGLE_ARG_DECL)
   return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+HelloWorld_ptr
+CIAO_HelloHome_Servant::_ciao_activate_component (CCM_HelloWorld_ptr exe
+                                                  ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::Object_var hobj= this->container_->get_objref (this
+                                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  ::Components::CCMHome_var home = ::Components::CCMHome::_narrow (hobj.in ()
+                                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CIAO_HelloWorld_Servant *svt = new CIAO_HelloWorld_Servant (exe,
+                                                              home.in (),
+                                                              this->container_);
+  PortableServer::ServantBase_var safe (svt);
+  PortableServer::ObjectId_var oid;
+
+  CORBA::Object_var objref
+    = this->container_->install_component (svt,
+                                           oid.out ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  svt->_ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  HelloWorld_var ho = HelloWorld::_narrow (objref.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (this->component_map_.bind (oid.in (), svt) == 0)
+    {
+      // @@ what should happen if bind fail?
+      safe._retn ();
+    }
+  return ho._retn ();
+}
+
+void
+CIAO_HelloHome_Servant::_ciao_deactivate_component (HelloWorld_ptr comp
+                                                    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var oid;
+
+  this->container_->uninstall_component (comp,
+                                         oid.out ()
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CIAO_HelloWorld_Servant *servant = 0;
+  if (this->component_map_.unbind (oid.in (), servant) == 0)
+    {
+      PortableServer::ServantBase_var safe (servant);
+      servant->_ciao_deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  // What happen if unbind failed?
+
+}
+
 // Operations for Implicit Home interface
 ::HelloWorld_ptr
 CIAO_HelloHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
@@ -565,18 +652,8 @@ CIAO_HelloHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Object_var hobj= this->container_->get_objref (this
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  ::Components::CCMHome_var home = ::Components::CCMHome::_narrow (hobj.in ()
-                                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  CIAO_HelloWorld_Servant *svt = new CIAO_HelloWorld_Servant (hw.in (),
-                                                              home.in (),
-                                                              this->container_);
-  return svt->_ciao_activate_component (ACE_ENV_ARG_PARAMETER);
+  return this->_ciao_activate_component (hw.in ()
+                                         ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations for CCMHome interface
@@ -602,11 +679,22 @@ CIAO_HelloHome_Servant::remove_component (Components::CCMObject_ptr comp
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  HelloWorld_var hw = HelloWorld::_narrow (comp
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (hw.in ()))
+    ACE_THROW (CORBA::INTERNAL ()); // What is the right exception to throw here?
+
+  hw->remove (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   // Removing the object reference?  get the servant from the POA with
   // the objref, and call remove() on the component, deactivate the
   // component, and then remove-ref the servant?
-  this->container_->uninstall (comp
-                               ACE_ENV_ARG_PARAMETER);
+
+  this->_ciao_deactivate_component (hw.in ()
+                                    ACE_ENV_ARG_PARAMETER);
 }
 
 

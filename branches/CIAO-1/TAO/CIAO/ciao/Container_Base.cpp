@@ -87,7 +87,7 @@ CIAO::Session_Container::init (const char *name
    return 0;
 }
 
-CORBA::Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CIAO::Session_Container::install_servant (PortableServer::Servant p
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -102,8 +102,26 @@ CIAO::Session_Container::install_servant (PortableServer::Servant p
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  p->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return objref._retn ();
+}
+
+CORBA::Object_ptr
+CIAO::Session_Container::install_component (PortableServer::Servant p,
+                                            PortableServer::ObjectId_out oid
+                                            ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var id
+    = this->poa_->activate_object (p
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+
+  CORBA::Object_var objref
+    = this->poa_->id_to_reference (id
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  oid = id._retn ();
 
   return objref._retn ();
 }
@@ -158,6 +176,8 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
   if (home_servant == 0)
     ACE_THROW_RETURN (Components::Deployment::InstallationFailure (), 0);
 
+  PortableServer::ServantBase_var safe (home_servant);
+
   CORBA::Object_var objref = this->install_servant (home_servant
                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -205,4 +225,22 @@ CIAO::Session_Container::uninstall (PortableServer::Servant svt
 
   this->poa_->deactivate_object (oid
                                  ACE_ENV_ARG_PARAMETER);
+}
+
+void
+CIAO::Session_Container::uninstall_component (CORBA::Object_ptr objref,
+                                              PortableServer::ObjectId_out oid
+                                              ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var id
+    = this->poa_->reference_to_id (objref
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->poa_->deactivate_object (id
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  oid = id._retn ();
 }

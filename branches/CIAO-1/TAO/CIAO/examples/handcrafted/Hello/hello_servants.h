@@ -25,6 +25,8 @@
 #include "helloEC.h"
 #include "ciao/Container_Base.h"
 #include "tao/LocalObject.h"
+#include "tao/PortableServer/Key_Adapters.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 class CIAO_HelloWorld_Servant;
 
@@ -230,9 +232,8 @@ public:
 
   // CIAO specific operations.
 
-  // Activate the object in the container_
-  HelloWorld_ptr _ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void _ciao_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void _ciao_deactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
   // My Executor.
@@ -281,12 +282,28 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure));
 
+  // Activate the object in the container_
+  HelloWorld_ptr _ciao_activate_component (CCM_HelloWorld_ptr exe
+                                           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void _ciao_deactivate_component (HelloWorld_ptr comp
+                                   ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 protected:
   // My Executor.
   CCM_HelloHome_var executor_;
 
   // My Container
   CIAO::Session_Container *container_;
+
+  // Components this home manages.
+  ACE_Hash_Map_Manager_Ex <PortableServer::ObjectId,
+                           CIAO_HelloWorld_Servant*,
+                           TAO_ObjectId_Hash,
+                           ACE_Equal_To<PortableServer::ObjectId>,
+                           ACE_SYNCH_MUTEX> component_map_;
 };
 
 extern "C" HELLO_SERVANT_Export ::PortableServer::Servant
