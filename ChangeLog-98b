@@ -3,6 +3,12 @@ Tue Aug 11 22:47:49 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/TP_Reactor.cpp (dispatch_io_set): added
           ACE_UNUSED_ARG (ready_mask).
 
+        * tests/test_config.h: added
+          ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> template
+          instantiation.  This shouldn't be done in a header, and
+          I wouldn't be surprised if it breaks somewhere.  But, we
+          don't have any other need for a .cpp file to link into all tests.
+
 Tue Aug 11 17:30:32 1998  Steve Huston  <shuston@riverace.com>
 
         * tests/test_config.h: Fixed ACE_Test_Output to get torn down clean
