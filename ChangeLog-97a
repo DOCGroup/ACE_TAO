@@ -1,5 +1,9 @@
 Wed Apr 30 17:47:11 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.cpp: Made mktime() thread-safe.  If any platforms support
+ 	  multi-thread safe versions of mktime() please let me know so we
+ 	  can set the ACE_HAS_MT_SAFE_MKTIME macro for that config file.
+
 	* ace/OS.i: Added a new special case for getpwnam_r() on AIX.
   	  Thanks to Chris Lahey for reporting this.
 
@@ -21,8 +25,8 @@ Wed Apr 30 14:17:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	  order.
 
 	* netsvcs/lib/Server_Logging_Handler.cpp: protect against multiple
-	  inclusion.  Thanks to Kevin Martindale <kevin_martindale@stortek.com>
-	  for reporting this problem.
+ 	  inclusion.  Thanks to Kevin Martindale
+ 	  <kevin_martindale@stortek.com> for reporting this problem.
 
 Wed Apr 30 08:42:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

@@ -2405,4 +2405,16 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
+time_t
+ACE_OS::mktime (struct tm *t)
+{
+  // ACE_TRACE ("ACE_OS::asctime");
+#if defined (ACE_HAS_MT_SAFE_MKTIME)
+  ACE_OSCALL_RETURN (::mktime (t), time_t, -1);
+#else
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, (time_t) -1);
+  ACE_OSCALL_RETURN (::mktime (t), time_t, -1);
+#endif /* ACE_HAS_MT_SAFE_MKTIME */
+}
+
 
