@@ -73,7 +73,6 @@ static int usr1_flag = 0;
 static int rtplay = 1;
 static int cmdSocket = -1;
 
-static int writeSocket = -1;
 static int CTRpid = -1, VBpid = -1, VDpid = -1, UIpid = -1;
 static int ABpid = -1;
 static int videoSocket = -1;
@@ -83,7 +82,7 @@ static int cmdBytes = 0;
 static char *cmdBuffer = NULL;
 static char *vh, *vf, *ah, *af;
 static int cmdAcks = 0;
-static int speedPtr = 0;
+/*
 static struct
 {
   int frameId;
@@ -93,9 +92,10 @@ static struct
   int framesDropped;
 } speedHistory[SPEEDHIST_SIZE];
 
+*/
 /* following are for live video */
 static unsigned startTime;  /* used to record start time for live playback,
-			     also used to record FF/FB/PLAY round trip time */
+                             also used to record FF/FB/PLAY round trip time */
 static unsigned startVSA; /* VS advance at the begining of playback of live video */
 static int displayedFrames;
 
@@ -104,22 +104,22 @@ static int displayedFrames;
 
 static int fbstate = 0;   /* state value of frame-rate feedback */
 static double maxfr = 0;  /* frame-rate limit during playback, in fps. This is deduced
-			   from frameRateLimit, a constant during a playback, even if
-			   play speed changes */
+                           from frameRateLimit, a constant during a playback, even if
+                           play speed changes */
 static int minupf = 0;    /* minimum usec/frame, equals to 1000000/maxfr */
 static double maxrate = 0; /* current max frame rate, in percent of maxfr, after taken
-			      playspeed into consideration. If play speed > maxfr,
-			      then this value would be 1.0. Otherwise it would be
-			      playspeed/maxfr */
+                              playspeed into consideration. If play speed > maxfr,
+                              then this value would be 1.0. Otherwise it would be
+                              playspeed/maxfr */
 static double frate = 0;  /* current server frame rate, in percentage of maxrate */
 static double adjstep = 0; /* step of frame-rate adjustment. In percentage value.
-			      This is basically
-			      maxrate/#frames-in-feedback-frame-sequence */
+                              This is basically
+                              maxrate/#frames-in-feedback-frame-sequence */
 static int fb_startup = 0; /* Indicate the first feedback action. The first feedback
-			      action is to set the server fps directly according to
-			      actully measured display frame-rate. All following
-			      feedback action would then adjust server fps linearly
-			      adjstep each time */
+                              action is to set the server fps directly according to
+                              actully measured display frame-rate. All following
+                              feedback action would then adjust server fps linearly
+                              adjstep each time */
 
 AudioBuffer *abuffer;
 VideoBuffer *vbuffer;
@@ -198,14 +198,14 @@ static void SocketRead(int s, char *buf, int size)
     if (val == -1)
     {
       fprintf(stderr, "CTR error read %sSocket, ret=%d(size=%d)",
-	      s == videoSocket ? "video" : "audio", size-remain, size);
+              s == videoSocket ? "video" : "audio", size-remain, size);
       ACE_OS::perror ("");
       ACE_OS::exit (1);
     }
     if (val == 0)
     {
       fprintf(stderr, "CTR error read %sSocket, EOF met, ret=%d(size=%d).\n",
-	      s == videoSocket ? "video" : "audio", size-remain, size);
+              s == videoSocket ? "video" : "audio", size-remain, size);
       ACE_OS::exit (1);
     }
     ptr += val;
@@ -213,7 +213,7 @@ static void SocketRead(int s, char *buf, int size)
     if (remain < 0)
     {
       fprintf(stderr, "CTR error read %sSocket, read too much, ret=%d(size=%d).\n",
-	      s == videoSocket ? "video" : "audio", size-remain, size);
+              s == videoSocket ? "video" : "audio", size-remain, size);
       ACE_OS::exit (1);
     }
     if (remain == 0)
@@ -243,11 +243,13 @@ static void SocketRead(int s, char *buf, int size)
     } \
   }
 
+/*
 static void start_timer(void);
 static void stop_timer(void);
 static void timer_speed(void);
 static void wait_display(void);
 static void stop_playing();
+*/
 
 static void set_speed(void)
 {
@@ -271,18 +273,18 @@ static void set_speed(void)
     }
     if (val < s) {
       if (shared->config.verbose) {
-	if (val < s * 1.0 / 2.0) {
-	  val = (int)s;
-	  fprintf(stderr, "CTR warning: speed too low, set to %d scale val.\n", val);
-	}
-	else {
-	  fprintf(stderr, "CTR warning: audio signal period %3.2f > 1 sec.\n",
-		  1.0 * (float)s / (float) val);
-	  fprintf(stderr, "    lower framesPerAudioPlay or increase speed.\n");
-	}
+        if (val < s * 1.0 / 2.0) {
+          val = (int)s;
+          fprintf(stderr, "CTR warning: speed too low, set to %d scale val.\n", val);
+        }
+        else {
+          fprintf(stderr, "CTR warning: audio signal period %3.2f > 1 sec.\n",
+                  1.0 * (float)s / (float) val);
+          fprintf(stderr, "    lower framesPerAudioPlay or increase speed.\n");
+        }
       }
       else {
-	val = (int)s;
+        val = (int)s;
       }
     }
   }
@@ -348,7 +350,7 @@ static int needAudioSkip = 0;
 static int bufferedSamples;
 static int nextASSample, startSample;
 static unsigned int nextAFtime;
-static int forward, forwardDelta;
+static int forward;
 static int audioForward, framesPerAudioPlay;
 static int AudioBufSize;
 static char * rawBuf = NULL, * workBuf = NULL, * convBuf = NULL;
@@ -663,7 +665,7 @@ static void wait_display(void)
   usr1_flag = 0;
 }
 
-static void usr1_handler(int sig)
+static void usr1_handler(int /* sig */)
 {
   FrameBlock *buf;
   unsigned char tmp;
@@ -764,14 +766,13 @@ static void compute_sendPattern(void)
   }
 }
 
-
+/*
 static void on_exit_routine(void)
 {
   //  ACE_DEBUG ((LM_DEBUG,
   //          "(%P|%t) %s:%d\n",
   //          __FILE__,
   //          __LINE__));
-  unsigned char tmp = CmdCLOSE;
 
   if (getpid() != CTRpid) return;
 
@@ -800,6 +801,7 @@ static void on_exit_routine(void)
   }
   ComCloseClient();
 }
+*/
 
 int CTRmain(int argc,
             char **argv)
@@ -807,7 +809,6 @@ int CTRmain(int argc,
   int sv[2];
   extern void set_exit_routine_tag(int tag);
 
-  FILE * fp = NULL;   /* file pointer for experiment plan */
 
   set_exit_routine_tag(0);
 
@@ -974,7 +975,7 @@ int CTRmain(int argc,
                          "(%P|%t) register_handler for command_handler failed\n"),
                         -1);
 
-      int result = command_handler.run ();
+  command_handler.run ();
       if (ABpid == 0)
         {
           ACE_DEBUG ((LM_DEBUG,"(%d) Restarting the ACE_Reactor::instance ()\n",ACE_OS::getpid ()));
