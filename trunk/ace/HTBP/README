@@ -80,3 +80,107 @@ $ACE_ROOT/tests/HTBP.               These are the test drivers, which
 $TAO_ROOT/orbsvcs/orbsvcs/HTIOP     This is a TAO pluggable protocol
                                     based on HTBP.
 $TAO_ROOT/orbsvcs/tests/HTIOP       The tests for HTIOP.
+
+
+BACKGROUND INFORMATION
+
+HT Addresses
+
+The class HT_Addr is a subclass of ACE_INET_Addr class. The interface
+for the HT_Addr is a common interface to be used with the inside and
+outside peers. The inside peer is identified by a HTID while the
+outside peer is identified with an ip address.  Constructors are
+provided to initialize the inside and outside peers in addition to the
+default and copy constructors.  addr_to_string and string_to_addr
+methods from the base class are overridden to help convert the HT_Addr
+to a string and vice versa. Finally, the class provides accessor
+methods for the default local address and the default proxy addresses.
+
+The local address is the address of the inside peer and is obtained
+using the singleton HTID_Requestor class. The HTID_Requestor class
+sends a request to the web server that is running at the htid_url to
+get the HTID unique to each inside peer.
+
+The proxy address is of ACE_INET_Addr type as it is no different to a
+regular server. It is obtained using the singleton HT_Environment
+class. The HT_Environment class helps read the HT configuration file
+and provides acccessors to the proxy address, port and the htid url.
+
+The code below illustrates the initialization of a local or inside,
+remote or outside and the proxy addresses using the classes
+aforementioned.
+
+ HT_Addr local(HTID_REQUESTOR::instance()->get_HTID());
+
+    char hostname [1000];
+    if (ACE_OS::hostname (hostname,
+		      1000) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Could not get the host name\n"));
+      return -1;
+    }
+
+    HT_Addr remote (8088, hostname);
+
+    char proxy_address [1000];
+    HT_ENVIRONMENT::instance ()->get_proxy_address (proxy_address);
+
+    unsigned int proxy_port;
+    HT_ENVIRONMENT::instance ()->get_proxy_port (proxy_port);
+
+    ACE_INET_Addr proxy(port, proxy_address);
+
+
+HT Streams
+
+The class HT_Stream is a sibling of the ACE_SOCK_IO class. It is used
+to send and receive messages between two peers identified by their HT
+addresses.  It is made a sibling of the ACE_SOCK_IO class rather than
+a decendant. This is due to the requirement in the HTBP protocol to
+wrap all messages with an HTTP request or reply wrapper, and to send
+application data in only one direction on one stream.
+
+HT Sessions
+
+A session is an entity that combines two HT_Streams that connect
+directly to a proxy to manage communication with a remote peer. The
+session may persist longer than either stream, assuming that the proxy
+is libel to close a connection at any time. This means that the
+session needs to be able to reconnect to the remote peer. This also
+means that the session needs to be aware of its location.  If it is
+outside the proxy and looses a stream, nothing can really be done. If
+it is inside, then the next time a stream is required, then it must
+reconnect before returning the stream. The session does not queue
+outbound messages. It will be the responsibility of the application or
+a higher level protocol wrapper.
+
+Each session is identified by a special type,
+HT_Session_Id_t. HT_Session_Id_t is a class with three members, the
+local address, the peer address and an id of type ACE_UINT32. A
+session map, ....
+
+Besides the default constructor and copy constructors, two other
+constructors are provided to initialize a session and are shown below.
+
+
+  /// Constructor (sets the underlying session id with <sid>).
+  HT_Session (const HT_Addr& peer,
+	    const HT_Addr& local = HT_Addr::default_local(),
+	    ACE_UINT32 sid = 0,
+              ACE_INET_Addr *proxy = 0,
+              int take_proxy = 0);
+
+  HT_Session (const HT_Session_Id_t &id,
+              ACE_INET_Addr *proxy = 0,
+              int take_proxy = 0);
+
+
+
+If a session id (sid) is not provided by the user, it is generated
+using the static method HT_Session::next_session_id().
+
+The following code illustrates the usage of HT_Stream and HT_Session
+classes.
+
+HT_Filters
+<TBD>
