@@ -2860,10 +2860,10 @@ ACE_OS::mmap (void *addr,
   char name [128];
   sprintf (name, "%d", file_handle);
 
-  // Assumes that this was called by ACE_Mem_Map, so &file_mapping != 0.
-  // Otherwise, we don't support the incomplete LynxOS mmap implementation.
-  // We do support it by creating a hidden shared memory object, and using
-  // that for the mapping.
+  // Assumes that this was called by ACE_Mem_Map, so &file_mapping !=
+  // 0.  Otherwise, we don't support the incomplete LynxOS mmap
+  // implementation.  We do support it by creating a hidden shared
+  // memory object, and using that for the mapping.
   int shm_handle;
   if (! file_mapping)
     file_mapping = &shm_handle;
