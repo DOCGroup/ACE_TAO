@@ -161,6 +161,54 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
+      << "TAO::Array_Traits<" << node->name () << ", " 
+      << node->name () << "_slice>::tao_free ("
+      << be_idt << be_idt_nl
+      << fname << "_slice * _tao_slice" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << fname << "_free (_tao_slice);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl
+      << fname << "_slice *" << be_nl
+      << "TAO::Array_Traits<" << node->name () << ", " 
+      << node->name () << "_slice>::tao_dup ("
+      << be_idt << be_idt_nl
+      << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << fname << "_dup (_tao_slice);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl
+      << "void" << be_nl
+      << "TAO::Array_Traits<" << node->name () << ", " 
+      << node->name () << "_slice>::tao_copy ("
+      << be_idt << be_idt_nl
+      << fname << "_slice * _tao_to," << be_nl
+      << "const " << fname << "_slice * _tao_from" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << fname << "_copy (_tao_to, _tao_from);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl
+      << fname << "_slice *" << be_nl
+      << "TAO::Array_Traits<" << node->name () << ", " 
+      << node->name () << "_slice>::tao_alloc (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return " << fname << "_alloc ();" << be_uidt_nl
+      << "}";
+
+// ===================================================
+
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl
+      << "void" << be_nl
       << node->fwd_helper_name () << "_life::tao_free ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_slice" << be_uidt_nl

@@ -83,7 +83,7 @@ ACE_INLINE
 T *&
 TAO_Valuetype_Manager<T,T_var,T_life>::out (void)
 {
-  T_life::tao_remove_ref (*this->ptr_);
+  TAO::Value_Traits<T>::tao_remove_ref (*this->ptr_);
   *this->ptr_ = 0;
   return *this->ptr_;
 }

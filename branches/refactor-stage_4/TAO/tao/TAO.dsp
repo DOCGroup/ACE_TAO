@@ -184,6 +184,10 @@ SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Argument.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
@@ -197,6 +201,10 @@ SOURCE=.\Asynch_Reply_Dispatcher_Base.cpp
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Arguments.cpp
 # End Source File
 # Begin Source File
 
@@ -868,6 +876,10 @@ SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_Arguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.cpp
 # ADD CPP /GR
 # End Source File
@@ -983,6 +995,10 @@ SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Arguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -1060,6 +1076,14 @@ SOURCE=.\arg_shifter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Arg_Traits_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Argument.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Array_VarOut_T.h
 # End Source File
 # Begin Source File
@@ -1077,6 +1101,18 @@ SOURCE=.\Asynch_Reply_Dispatcher_Base.h
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -1293,6 +1329,14 @@ SOURCE=.\Fault_Tolerance_Service.h
 # Begin Source File
 
 SOURCE=.\FILE_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -1544,6 +1588,10 @@ SOURCE=.\object.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Argument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
@@ -1748,10 +1796,6 @@ SOURCE=.\SArgument.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SArgument_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Seq_Out_T.h
 # End Source File
 # Begin Source File
@@ -1789,6 +1833,14 @@ SOURCE=.\ServicesC.h
 # Begin Source File
 
 SOURCE=.\singletons.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Arguments.h
 # End Source File
 # Begin Source File
 
@@ -1912,7 +1964,23 @@ SOURCE=.\TypeCodeFactory_Adapter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Arguments.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -2599,7 +2667,32 @@ SOURCE=.\Array_VarOut_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Codeset_Translator_Factory_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2625,6 +2718,26 @@ SOURCE=.\Seq_Var_T.cpp
 # Begin Source File
 
 SOURCE=.\Sequence_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

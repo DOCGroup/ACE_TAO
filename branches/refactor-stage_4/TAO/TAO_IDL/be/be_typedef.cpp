@@ -58,6 +58,27 @@ be_typedef::be_typedef (AST_Type *bt,
 {
 }
 
+void
+be_typedef::seq_elem_tmplinst (idl_bool val)
+{
+  this->be_type::seq_elem_tmplinst (val);
+  this->primitive_base_type ()->seq_elem_tmplinst (val);
+}
+
+void
+be_typedef::seen_in_sequence (idl_bool val)
+{
+  this->be_type::seen_in_sequence (val);
+  this->primitive_base_type ()->seen_in_sequence (val);
+}
+
+void
+be_typedef::seen_in_operation (idl_bool val)
+{
+  this->be_type::seen_in_operation (val);
+  this->primitive_base_type ()->seen_in_operation (val);
+}
+
 // Given a typedef node, traverse the chain of base types until they are no
 // more typedefs, and return that most primitive base type.
 be_type *

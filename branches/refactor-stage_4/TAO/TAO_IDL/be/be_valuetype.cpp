@@ -246,7 +246,7 @@ be_valuetype::gen_helper_inline (char*,
       << this->full_name () << " *);"
       <<  be_uidt_nl
       << "}" << be_nl
-      << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl 
+      << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl
       << "#endif /*__ACE_INLINE__*/";
 
   return 0;
@@ -303,7 +303,7 @@ be_valuetype:: gen_var_out_seq_decls (void)
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
-                       "odds_n_ends");
+                       "var_out");
 
   const char *lname = this->local_name ();
 
@@ -320,14 +320,14 @@ be_valuetype:: gen_var_out_seq_decls (void)
       << "TAO_Value_Out_T<" << be_idt << be_idt_nl
       << lname << "," << be_nl
       << "tao_" << lname << "_life" << be_uidt_nl
-      << ">" << be_uidt_nl 
+      << ">" << be_uidt_nl
       << lname << "_out;" << be_uidt;
 
   *os << be_nl << be_nl
-      << "struct " << be_global->stub_export_macro () 
+      << "struct " << be_global->stub_export_macro ()
       << " tao_" << lname << "_life" << be_nl
       << "{" << be_idt_nl
-      << "static void tao_add_ref (" 
+      << "static void tao_add_ref ("
       << lname << " *);" << be_nl
       << "static void tao_remove_ref (" << lname << " *);" << be_uidt_nl
       << "};";

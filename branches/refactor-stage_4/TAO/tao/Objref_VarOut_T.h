@@ -24,13 +24,31 @@
 
 #include "ace/CORBA_macros.h"
 
+namespace TAO
+{
+  /**
+   * struct Objref_Traits
+   *
+   * @brief Specialized for each interface in generated code.
+   *
+   */
+  template<typename T>
+  struct Objref_Traits
+  {
+    static T * tao_duplicate (T *);
+    static void tao_release (T *);
+    static T * tao_nil (void);
+    static CORBA::Boolean tao_marshal (T *,
+                                       TAO_OutputCDR &);
+  };
+};
+
 /**
  * @class TAO_Objref_Var_T
  *
  * @brief Parametrized implementation of _var class for object references.
  *
  */
-
 template <typename T, typename T_life>
 class TAO_Objref_Var_T : private TAO_Base_var
 {
