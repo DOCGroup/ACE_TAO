@@ -661,13 +661,6 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 }
 
 // ============================================================================
-// PACE macros
-// ============================================================================
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-# define ACE_HAS_POSIX_SEM
-#endif /* ACE_HAS_PACE */
-
-// ============================================================================
 // Macros for controlling the lifetimes of dlls loaded by ACE_DLL--including
 // all dlls loaded via the ACE Service Config framework.
 //
