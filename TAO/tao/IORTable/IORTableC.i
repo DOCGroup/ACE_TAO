@@ -44,7 +44,7 @@
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IORTable::AlreadyBound &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;
@@ -58,7 +58,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,IORTable::AlreadyBound&)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IORTable::NotFound &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;

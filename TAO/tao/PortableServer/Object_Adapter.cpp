@@ -1681,8 +1681,12 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 template class auto_ptr<TAO_Object_Adapter::Hint_Strategy>;
 template class auto_ptr<TAO_Object_Adapter::transient_poa_map>;
 
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
 template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 template class ACE_Noop_Key_Generator<key>;
 
@@ -1759,8 +1763,12 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 #pragma instantiate auto_ptr<TAO_Object_Adapter::Hint_Strategy>
 #pragma instantiate auto_ptr<TAO_Object_Adapter::transient_poa_map>
 
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 #pragma instantiate ACE_Noop_Key_Generator<key>
 

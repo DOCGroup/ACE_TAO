@@ -4983,7 +4983,10 @@ const char* ImplementationRepository::Administration::_interface_repository_id (
 
 // Default constructor.
 ImplementationRepository::Administration::AlreadyRegistered::AlreadyRegistered (void)
-  : CORBA_UserException ("IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0")
+  : CORBA_UserException (
+        "IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0",
+        "AlreadyRegistered"
+      )
 {
 }
 
@@ -4994,7 +4997,10 @@ ImplementationRepository::Administration::AlreadyRegistered::~AlreadyRegistered 
 
 // Copy constructor.
 ImplementationRepository::Administration::AlreadyRegistered::AlreadyRegistered (const ::ImplementationRepository::Administration::AlreadyRegistered &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5015,7 +5021,7 @@ void ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destr
 ImplementationRepository::Administration::AlreadyRegistered *
 ImplementationRepository::Administration::AlreadyRegistered::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (AlreadyRegistered *, exc);
     }
@@ -5125,7 +5131,10 @@ CORBA::TypeCode_ptr ImplementationRepository::Administration::AlreadyRegistered:
 
 // Default constructor.
 ImplementationRepository::Administration::CannotActivate::CannotActivate (void)
-  : CORBA_UserException ("IDL:ImplementationRepository/Administration/CannotActivate:1.0")
+  : CORBA_UserException (
+        "IDL:ImplementationRepository/Administration/CannotActivate:1.0",
+        "CannotActivate"
+      )
 {
 }
 
@@ -5136,7 +5145,10 @@ ImplementationRepository::Administration::CannotActivate::~CannotActivate (void)
 
 // Copy constructor.
 ImplementationRepository::Administration::CannotActivate::CannotActivate (const ::ImplementationRepository::Administration::CannotActivate &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
   this->reason = CORBA::string_dup (_tao_excp.reason.in ());
 }
@@ -5159,7 +5171,7 @@ void ImplementationRepository::Administration::CannotActivate::_tao_any_destruct
 ImplementationRepository::Administration::CannotActivate *
 ImplementationRepository::Administration::CannotActivate::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/CannotActivate:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/CannotActivate:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (CannotActivate *, exc);
     }
@@ -5222,7 +5234,10 @@ void ImplementationRepository::Administration::CannotActivate::_tao_decode (
 ImplementationRepository::Administration::CannotActivate::CannotActivate (
     const char * _tao_reason
   )
-  : CORBA_UserException ("IDL:ImplementationRepository/Administration/CannotActivate:1.0")
+  : CORBA_UserException (
+        "IDL:ImplementationRepository/Administration/CannotActivate:1.0",
+        "CannotActivate"
+      )
 {
   this->reason = CORBA::string_dup (_tao_reason);
 }
@@ -5280,7 +5295,10 @@ CORBA::TypeCode_ptr ImplementationRepository::Administration::CannotActivate::_t
 
 // Default constructor.
 ImplementationRepository::Administration::NotFound::NotFound (void)
-  : CORBA_UserException ("IDL:ImplementationRepository/Administration/NotFound:1.0")
+  : CORBA_UserException (
+        "IDL:ImplementationRepository/Administration/NotFound:1.0",
+        "NotFound"
+      )
 {
 }
 
@@ -5291,7 +5309,10 @@ ImplementationRepository::Administration::NotFound::~NotFound (void)
 
 // Copy constructor.
 ImplementationRepository::Administration::NotFound::NotFound (const ::ImplementationRepository::Administration::NotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -5312,7 +5333,7 @@ void ImplementationRepository::Administration::NotFound::_tao_any_destructor (vo
 ImplementationRepository::Administration::NotFound *
 ImplementationRepository::Administration::NotFound::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/NotFound:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/NotFound:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (NotFound *, exc);
     }

@@ -952,12 +952,16 @@ template class auto_ptr<TAO_Id_Hint_Strategy>;
 template class auto_ptr<TAO_Active_Object_Map::servant_map>;
 template class auto_ptr<TAO_Active_Object_Map::user_id_map>;
 
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
 template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_Id_Hint_Strategy>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::servant_map>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 // Common typedefs.
 typedef PortableServer::ObjectId id;
@@ -1055,12 +1059,16 @@ template class ACE_Map_Entry<servant, value>;
 #pragma instantiate auto_ptr<TAO_Active_Object_Map::servant_map>
 #pragma instantiate auto_ptr<TAO_Active_Object_Map::user_id_map>
 
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Hint_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::servant_map>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Strategy>
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Strategy>
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Strategy>
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Hint_Strategy>
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::servant_map>
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
 // Common typedefs.
 typedef PortableServer::ObjectId id;
