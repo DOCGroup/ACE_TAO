@@ -1,3 +1,15 @@
+Mon Nov  6 15:29:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_interface.cpp:
+
+	  Modified redefine() method to check for self-concatenation
+	  before concatenating pragma lists. Changes made to interface
+	  redefinition code (seeing full definition after a forward
+	  declaration, for example) have introduced a case where
+	  self-concatenation can happen. In this case, the 
+	  concatenation should just be skipped. Thanks to Ossama's
+	  SecurityLevel2.idl file for bringing this case to light.
+
 Mon Nov  6 15:10:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Updated the documentation
