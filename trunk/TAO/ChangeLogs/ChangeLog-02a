@@ -1,3 +1,10 @@
+Sat Mar 30 14:49:13 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RTPortableServer/RT_Policy_Validator.cpp:
+
+	  Include "tao/Pluggable.h" to pull in TAO_Acceptor class
+	  declaration.
+
 Sat Mar 30 14:43:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
