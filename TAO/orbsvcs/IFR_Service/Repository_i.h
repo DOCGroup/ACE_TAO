@@ -34,6 +34,7 @@
 #endif /* _MSC_VER */
 
 #include "IFR_macro.h"
+#include "TCF_Loader.h"
 
 class IFR_Servant_Factory;
 
