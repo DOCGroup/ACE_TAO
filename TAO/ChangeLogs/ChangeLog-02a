@@ -1,3 +1,11 @@
+Tue Oct 31 09:09:17 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IOR_Parser.h: SystemException was being used without being
+	  defined (it was only forward declared).  Included Exception.h
+	  to fix this.  Thanks to J. Russell Noseworthy
+	  <rnosewor@objectsciences.com> for reporting this problem and
+	  providing the fix. This closes bug 708.
+
 Mon Oct 30 21:37:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/Makefile:
