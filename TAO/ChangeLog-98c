@@ -31,6 +31,9 @@ Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
           separate code for VxWorks.  And the hrtimer on WIN32 is flakely
           on multiple-CPU machines.
 
+        * tao/IIOP_ORB.cpp: added ACE_Unbounded_Set_Iterator template
+          instantiation.
+
 Fri Mar 27 09:50:52 1998  Steve Huston  <shuston@riverace.com>
 
 	* TAO_IDL/driver/drv_preproc.cpp: Use explicit char * operator on
