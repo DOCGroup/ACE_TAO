@@ -83,8 +83,8 @@ size_t MULTIPLY_FACTOR = 10;
 typedef double (*Profiler)(size_t);
 static int do_exec_after_fork = 0;
 
-static void *
-empty (void*)                   // do nothing thread function
+/// do nothing thread function
+extern "C" void *empty (void*)
 {
   return 0;
 }
