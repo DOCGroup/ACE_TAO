@@ -32,7 +32,7 @@ the Data_Block.
   allow us the use of that space.</i>
  */
 Data_Block::Data_Block( Unit_Of_Work * _data )
-   : inherited(0,ACE_Message_Block::MB_DATA,0,0,new Lock(),0,0)
+   : ACE_Data_Block(0,ACE_Message_Block::MB_DATA,0,0,new Lock(),0,0)
     ,data_(_data)
 {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Data_Block ctor for 0x%x\n", (void *) this, (void*)data_));
@@ -105,7 +105,7 @@ int Data_Block::Lock::release(void)
   Create an baseclass unit of work when we instantiate a hangup message.
 */
 Message_Block::Message_Block( void )
-    : inherited( new Data_Block( new Unit_Of_Work() ) )
+    : ACE_Message_Block( new Data_Block( new Unit_Of_Work() ) )
 {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Message_Block ctor for shutdown\n", (void *) this ));
     this->msg_type( MB_HANGUP );
@@ -116,7 +116,7 @@ Message_Block::Message_Block( void )
   with that data.
 */
 Message_Block::Message_Block( Unit_Of_Work * _data )
-    : inherited( new Data_Block(_data) )
+    : ACE_Message_Block( new Data_Block(_data) )
 {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Message_Block ctor for 0x%x\n", (void *) this, (void*)_data));
 }

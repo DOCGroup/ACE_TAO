@@ -7,7 +7,7 @@
 /* The expected constructor...
  */
 Crypt::Crypt( int _thr_count )
-        : inherited(_thr_count)
+        : Protocol_Task(_thr_count)
 {
 }
 

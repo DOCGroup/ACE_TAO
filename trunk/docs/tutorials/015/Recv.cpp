@@ -8,7 +8,7 @@
    initializations.
 */
 Recv::Recv( ACE_SOCK_Stream & _peer )
-        : inherited(0), peer_(_peer), error_(0)
+        : Protocol_Task(0), peer_(_peer), error_(0)
 {
      // Create the tickler that get() will use to trigger recv()
      // through the baseclass.  Since we're single-threaded this is
