@@ -1,4 +1,9 @@
-Fri Jul 23 13:04:15 1999  Steve Huston  <shuston@riverace.com>
+Fri Jul 23 14:16:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (ACE_OS::read): (only non-Win32), if call fails and
+          errno is EAGAIN, change it to EWOULDBLOCK. Improve portability for
+          platforms where EAGAIN and EWOULDBLOCK are different values and
+          both used, like HP-UX.
 
         * ace/Malloc_T.cpp (ACE_Malloc<> ctor): Added missing newline in error
           message.
