@@ -6,6 +6,7 @@
 #include "tao/Any_Impl_T.h"
 #include "tao/Marshal.h"
 #include "tao/CDR.h"
+#include "tao/Environment.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 

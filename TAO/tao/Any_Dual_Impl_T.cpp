@@ -7,7 +7,7 @@
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Environment.h"
-
+#include "tao/CDR.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 
