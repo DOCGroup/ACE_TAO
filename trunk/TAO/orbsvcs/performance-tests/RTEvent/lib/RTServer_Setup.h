@@ -8,7 +8,7 @@
 
 #ifndef TAO_PERF_RTEC_RTSERVER_SETUP_H
 #define TAO_PERF_RTEC_RTSERVER_SETUP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RTClient_Setup.h"
 #include "RTPOA_Setup.h"
@@ -46,5 +46,5 @@ private:
 #include "RTServer_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PERF_RTEC_RTSERVER_SETUP_H */

@@ -17,7 +17,7 @@
 
 #ifndef TAO_SCIOP_CONNECTOR_H
 #define TAO_SCIOP_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
 
@@ -126,5 +126,5 @@ private:
 #endif /* TAO_HAS_SCIOP == 1 */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_SCIOP_CONNECTOR_H */

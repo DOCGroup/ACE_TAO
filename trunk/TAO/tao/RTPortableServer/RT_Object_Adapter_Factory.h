@@ -16,7 +16,7 @@
 
 #ifndef TAO_RT_OBJECT_ADAPTER_FACTORY_H
 #define TAO_RT_OBJECT_ADAPTER_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtportableserver_export.h"
 
@@ -45,5 +45,5 @@ ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Object_Adapter_Factory)
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_OBJECT_ADAPTER_FACTORY_H */

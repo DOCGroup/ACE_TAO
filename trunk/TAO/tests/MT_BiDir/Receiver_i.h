@@ -4,7 +4,7 @@
 
 #ifndef MT_BIDIR_RECEIVER_I_H
 #define MT_BIDIR_RECEIVER_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ReceiverS.h"
 
@@ -45,5 +45,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* MUXING_RECEIVER_H */

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_RT_Test_FILTERFACTORY_H
 #define TAO_Notify_Tests_RT_Test_FILTERFACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rt_test_filter_export.h"
 
@@ -80,5 +80,5 @@ protected:
 
 ACE_FACTORY_DECLARE (TAO_RT_Test_Filter, TAO_Notify_Tests_RT_Test_FilterFactory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_RT_Test_FILTERFACTORY_H */

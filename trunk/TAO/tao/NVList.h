@@ -15,7 +15,7 @@
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -283,5 +283,5 @@ namespace CORBA
 # include "tao/NVList.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NVLIST_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_PG_GENERIC_FACTORY_H
 #define TAO_PG_GENERIC_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -240,6 +240,6 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_GENERIC_FACTORY_H */

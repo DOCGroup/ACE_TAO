@@ -4,7 +4,7 @@
 
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -35,5 +35,5 @@ private:
   ACE_UINT32 gsf_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ROUNDTRIP_H */

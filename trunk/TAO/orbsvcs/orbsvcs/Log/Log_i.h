@@ -18,7 +18,7 @@
 #ifndef TAO_TLS_LOG_I_H
 #define TAO_TLS_LOG_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Log/LogRecordStore.h"
 
@@ -416,6 +416,6 @@ protected:
   TAO_LogNotification* notifier_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_TLS_LOG_I_H */

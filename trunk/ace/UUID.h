@@ -13,7 +13,7 @@
 #ifndef ACE_UUID_H
 #define ACE_UUID_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/OS.h"
 #include "ace/SString.h"
 #include "ace/Singleton.h"
@@ -218,7 +218,7 @@ typedef ACE_Singleton <ACE_UUID_Generator, ACE_SYNCH_MUTEX> ACE_UUID_GENERATOR;
 #include "ace/UUID.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif // ACE_UUID_H
 
 

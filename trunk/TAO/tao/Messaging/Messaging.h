@@ -14,7 +14,7 @@
 
 #ifndef TAO_MESSAGING_H
 #define TAO_MESSAGING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 
 #include "messaging_export.h"
@@ -102,5 +102,5 @@ namespace TAO_Messaging_Helper
 
 #endif /* TAO_HAS_AMI_CALLBACK */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_MESSAGING_H */

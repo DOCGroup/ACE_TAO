@@ -13,7 +13,7 @@
 
 #ifndef TAO_EXCLUSIVE_TMS_H
 #define TAO_EXCLUSIVE_TMS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport_Mux_Strategy.h"
 
@@ -89,5 +89,5 @@ protected:
   // able to iterate on a use case - Bala.
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* EXCLUSIVE_TMS_H */

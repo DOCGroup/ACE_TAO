@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_ORB_OBJECTS_H
 #define TAO_Notify_ORB_OBJECTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corba.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -52,5 +52,5 @@ public:
   CosNaming::NamingContextExt_var naming_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_ORB_OBJECTS_H */

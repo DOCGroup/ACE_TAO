@@ -4,7 +4,7 @@
 
 #ifndef BIG_ONEWAYS_SESSION_TASK_H
 #define BIG_ONEWAYS_SESSION_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 
@@ -29,5 +29,5 @@ private:
   Session *session_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* BIG_ONEWAYS_SESSION_TASK_H */

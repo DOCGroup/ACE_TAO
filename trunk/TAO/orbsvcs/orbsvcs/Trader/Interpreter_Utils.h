@@ -13,7 +13,7 @@
 #ifndef TAO_INTERPRETER_UTILS_H
 #define TAO_INTERPRETER_UTILS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "tao/corba.h"
@@ -72,6 +72,6 @@ public:
   // is <code>.
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_INTERPRETER_UTILS_H */

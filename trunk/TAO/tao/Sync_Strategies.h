@@ -16,7 +16,7 @@
 
 #ifndef TAO_SYNC_STRATEGIES_H
 #define TAO_SYNC_STRATEGIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -140,5 +140,5 @@ public:
 # include "tao/Sync_Strategies.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SYNC_STRATEGIES_H */

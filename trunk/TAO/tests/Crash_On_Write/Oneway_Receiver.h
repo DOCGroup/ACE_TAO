@@ -4,7 +4,7 @@
 
 #ifndef ONEWAY_RECEIVER_H
 #define ONEWAY_RECEIVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -33,5 +33,5 @@ public:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ONEWAY_RECEIVER_H */

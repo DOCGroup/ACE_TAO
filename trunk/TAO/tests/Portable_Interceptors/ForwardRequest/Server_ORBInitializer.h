@@ -16,7 +16,7 @@
 #ifndef TAO_SERVER_ORB_INITIALIZER_H
 #define TAO_SERVER_ORB_INITIALIZER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -76,6 +76,6 @@ private:
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_SERVER_ORB_INITIALIZER_H */

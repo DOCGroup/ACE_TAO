@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_APPLICATION_STARTER_H
 #define TAO_Notify_Tests_APPLICATION_STARTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -34,5 +34,5 @@ public:
   virtual void shutdown (void) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_APPLICATION_STARTER_H */

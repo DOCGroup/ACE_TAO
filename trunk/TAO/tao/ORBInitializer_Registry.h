@@ -13,7 +13,7 @@
 #ifndef TAO_ORB_INITIALIZER_REGISTRY_H
 #define TAO_ORB_INITIALIZER_REGISTRY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -93,6 +93,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ORB_INITIALIZER_REGISTRY_H */

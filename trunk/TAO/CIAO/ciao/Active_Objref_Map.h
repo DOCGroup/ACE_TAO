@@ -14,7 +14,7 @@
 
 #ifndef CIAO_ACTIVE_OBJREF_MAP_H
 #define CIAO_ACTIVE_OBJREF_MAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Active_Map_manager_T.h"
 #include "ciao/CIAO_Container_Export.h"
@@ -31,5 +31,5 @@ namespace CIAO
   CIAO_CONTAINER_SINGLETON_DECLARATION (ACE_Active_Map_Manager<CORBA::Object_var>);
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_ACTIVE_OBJREF_MAP_H */

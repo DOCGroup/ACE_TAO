@@ -16,7 +16,7 @@
 
 #ifndef CIAO_CONTAINER_IMPL_H
 #define CIAO_CONTAINER_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -157,5 +157,5 @@ protected:
 # include "Container_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_CONTAINER_IMPL_H */

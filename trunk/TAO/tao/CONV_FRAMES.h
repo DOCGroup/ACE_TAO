@@ -16,7 +16,7 @@
 
 #ifndef TAO_CONV_FRAMES_H
 #define TAO_CONV_FRAMES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/CONV_FRAMEC.h"
 
@@ -47,5 +47,5 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CONV_FRAMES_H */

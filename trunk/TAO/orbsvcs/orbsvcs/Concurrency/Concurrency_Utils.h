@@ -19,7 +19,7 @@
 
 #ifndef _CONCURRENCY_SERVER_H
 #define _CONCURRENCY_SERVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
@@ -68,5 +68,5 @@ private:
   PortableServer::POA_var poa_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* _CONCURRENCY_SERVER_H */

@@ -17,7 +17,7 @@
 
 #ifndef CIAO_GLUE_SESSION_[idl-basename]_SVNT_H
 #define CIAO_GLUE_SESSION_[idl-basename]_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "[idl-name]S.h"        // Source in the skeletons for component
                                 // client-view equivalent interfaces
@@ -733,5 +733,5 @@ create[home name]_Servant (::Components::HomeExecutorBase_ptr p,
 #endif /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_[idl-basename]_SVNT_H */

@@ -17,7 +17,7 @@
 #ifndef TAO_CLIENT_REQUEST_INFO_I_H
 #define TAO_CLIENT_REQUEST_INFO_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -266,6 +266,6 @@ protected:
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CLIENT_REQUEST_INFO_I_H */

@@ -11,7 +11,7 @@
 
 #ifndef TAO_FACTORIES_DEFINE_H
 #define TAO_FACTORIES_DEFINE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Command_Factory_T.h"
 
@@ -34,5 +34,5 @@ ACE_FACTORY_DEFINE (export, command##_Factory) \
 \
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_FACTORIES_DEFINE_H */

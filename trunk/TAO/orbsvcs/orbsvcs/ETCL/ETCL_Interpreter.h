@@ -14,7 +14,7 @@
 
 #ifndef TAO_ETCL_INTERPRETER_H
 #define TAO_ETCL_INTERPRETER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "etcl_export.h"
 
@@ -102,5 +102,5 @@ typedef union
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ETCL_INTERPRETER_H */

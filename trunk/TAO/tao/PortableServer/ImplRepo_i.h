@@ -11,7 +11,7 @@
 #ifndef TAO_IMPLREPO_I_H
 #define TAO_IMPLREPO_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -60,6 +60,6 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_IMPLREPO_I_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
 #define TAO_TRANSPORT_MUX_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
 
@@ -88,5 +88,5 @@ protected:
   ACE_Lock *lock_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TRANSPORT_MUX_STRATEGY_H */

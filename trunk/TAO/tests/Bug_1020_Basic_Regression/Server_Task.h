@@ -8,7 +8,7 @@
  */
 #ifndef BUG_1020_SERVER_TASK_H
 #define BUG_1020_SERVER_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestC.h"
 #include "ace/Task.h"
@@ -36,5 +36,5 @@ private:
   size_t sz_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* BUG_1020_SERVER_TASK_H*/

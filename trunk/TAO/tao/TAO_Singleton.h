@@ -17,7 +17,7 @@
 #ifndef TAO_SINGLETON_H
 #define TAO_SINGLETON_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -129,6 +129,6 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SINGLETON_H */

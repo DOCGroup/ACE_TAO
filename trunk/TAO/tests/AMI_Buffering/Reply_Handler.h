@@ -4,7 +4,7 @@
 
 #ifndef REPLY_HANDLER_H
 #define REPLY_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -48,5 +48,5 @@ public:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* REPLY_HANDLER_H */

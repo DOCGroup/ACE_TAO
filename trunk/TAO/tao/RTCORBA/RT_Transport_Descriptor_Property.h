@@ -11,7 +11,7 @@
 
 #ifndef TAO_RT_TRANSPORT_DESCRIPTOR_PROPERTY_H
 #define TAO_RT_TRANSPORT_DESCRIPTOR_PROPERTY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
 
@@ -133,5 +133,5 @@ protected:
 #include "RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_TRANSPORT_DESCRIPTOR_PROPERTY_H */

@@ -15,7 +15,7 @@
 
 #ifndef TAO_PERSIST_STORE_H
 #define TAO_PERSIST_STORE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 
@@ -117,5 +117,5 @@ class TAO_Log_Export TAO_PersistStore
   ACE_Mutex write_lock_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_PERSIST_STORE_H*/

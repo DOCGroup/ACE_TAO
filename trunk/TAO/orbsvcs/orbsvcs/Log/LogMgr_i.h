@@ -16,7 +16,7 @@
 
 #ifndef TAO_TLS_LOGMGR_I_H
 #define TAO_TLS_LOGMGR_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 
@@ -89,5 +89,5 @@ protected:
   /// A list of the current log ids.
   DsLogAdmin::LogIdList logid_list_;
 };
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TLS_LOGMGR_I_H */

@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_IMR_LOCATORS_H_
 #define _TAO_IDL_ORIG_IMR_LOCATORS_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ImplRepoS.h"
 #include "ImR_LocatorC.h"
 
@@ -629,5 +629,5 @@ TAO_NAMESPACE_CLOSE // module ImplementationRepository
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_PROTOCOLS_HOOKS_H
 #define TAO_PROTOCOLS_HOOKS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 #include "Policy_ForwardC.h"
@@ -124,5 +124,5 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PROTOCOLS_HOOKS_H */

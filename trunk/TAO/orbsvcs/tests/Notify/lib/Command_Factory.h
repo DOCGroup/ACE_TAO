@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_COMMAND_FACTORY_H
 #define TAO_Notify_Tests_COMMAND_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -40,5 +40,5 @@ public:
   virtual TAO_Notify_Tests_Command* create (void) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_COMMAND_FACTORY_H */

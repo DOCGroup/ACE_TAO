@@ -17,7 +17,7 @@
 #ifndef TAO_REMOTE_OBJECT_PROXY_IMPL_H_
 #define TAO_REMOTE_OBJECT_PROXY_IMPL_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -57,6 +57,6 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_REMOTE_OBJECT_PROXY_IMPL */

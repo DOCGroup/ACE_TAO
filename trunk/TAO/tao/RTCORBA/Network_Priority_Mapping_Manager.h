@@ -12,7 +12,7 @@
 
 #ifndef TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H
 #define TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 #include "rtcorba_export.h"
@@ -163,6 +163,6 @@ private:
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H */
 

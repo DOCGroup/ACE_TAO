@@ -16,7 +16,7 @@
 
 #ifndef TAO_UTO_H
 #define TAO_UTO_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
 #include "time_export.h"
@@ -111,5 +111,5 @@ private:
   TimeBase::UtcT attr_utc_time_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_UTO_H */

@@ -16,7 +16,7 @@
 #ifndef TAO_CLIENT_REQUEST_INFO_H
 #define TAO_CLIENT_REQUEST_INFO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -283,6 +283,6 @@ private:
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CLIENT_REQUEST_INFO_H */

@@ -17,7 +17,7 @@
 #ifndef TAO_ACCEPTOR_REGISTRY_H
 #define TAO_ACCEPTOR_REGISTRY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -141,6 +141,6 @@ private:
 #include "tao/Acceptor_Registry.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ACCEPTOR_REGISTRY_H */

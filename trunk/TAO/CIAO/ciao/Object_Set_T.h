@@ -11,7 +11,7 @@
 
 #ifndef CIAO_OBJECT_SET_T_H
 #define CIAO_OBJECT_SET_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -123,5 +123,5 @@ namespace CIAO
 #pragma implementation ("Object_Set_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_OBJECT_SET_T_H */

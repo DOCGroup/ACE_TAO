@@ -13,7 +13,7 @@
 
 #ifndef TAO_VALUEFACTORY_MAP_H
 #define TAO_VALUEFACTORY_MAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/TAO_Singleton.h"
@@ -86,6 +86,6 @@ TAO_VALUETYPE_SINGLETON_DECLARE (TAO_Singleton,
 # include "ValueFactory_Map.inl"
 #endif /* __ACE_INLINE__) */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_VALUEFACTORY_MAP_H */

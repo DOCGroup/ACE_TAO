@@ -13,7 +13,7 @@
 #ifndef TEST_SERVER_MODULE_H
 #define TEST_SERVER_MODULE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Test_Server_Module_Export.h"
 
@@ -66,6 +66,6 @@ private:
 
 ACE_FACTORY_DECLARE (Test_Server_Module, Test_Server_Module)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TEST_SERVER_MODULE_H */

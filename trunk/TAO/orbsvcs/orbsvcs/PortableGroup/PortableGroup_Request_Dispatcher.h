@@ -15,7 +15,7 @@
 
 #ifndef TAO_PORTABLEGROUP_REQUEST_DISPATCHER_H
 #define TAO_PORTABLEGROUP_REQUEST_DISPATCHER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Request_Dispatcher.h"
 #include "portablegroup_export.h"
@@ -59,5 +59,5 @@ private:
   TAO_PortableGroup_Acceptor_Registry acceptor_registry_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PORTABLEGROUP_REQUEST_DISPATCHER_H */

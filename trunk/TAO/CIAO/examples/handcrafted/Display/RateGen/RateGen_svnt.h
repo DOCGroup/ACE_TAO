@@ -14,7 +14,7 @@
 
 #ifndef CIAO_GLUE_SESSION_RATEGEN_SVNT_H
 #define CIAO_GLUE_SESSION_RATEGEN_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RateGenS.h"        // Source in the skeletons for component
                                 // client-view equivalent interfaces
@@ -396,5 +396,5 @@ createRateGenHome_Servant (::Components::HomeExecutorBase_ptr p,
 #endif /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_RATEGEN_SVNT_H */

@@ -11,7 +11,7 @@
 
 #ifndef TAO_RT_TRANSPORT_DESCRIPTOR_H
 #define TAO_RT_TRANSPORT_DESCRIPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
 
@@ -70,5 +70,5 @@ private:
 #include "RT_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_TRANSPORT_DESCRIPTOR_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_PG_CONF_H
 #define TAO_PG_CONF_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -55,6 +55,6 @@ const PortableGroup::MinimumNumberMembersValue TAO_PG_MINIMUM_NUMBER_MEMBERS =
   TAO_PG_INITIAL_NUMBER_MEMBERS;
 #endif  /* TAO_PG_MINIMUM_NUMBER_MEMBERS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_CONF_H */

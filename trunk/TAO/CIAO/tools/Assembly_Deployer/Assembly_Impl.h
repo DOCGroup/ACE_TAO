@@ -17,7 +17,7 @@
 
 #ifndef CIAO_ASSEMBLY_IMPL_H
 #define CIAO_ASSEMBLY_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -197,5 +197,5 @@ namespace CIAO
 # include "Assembly_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_ASSEMBLY_IMPL_H */

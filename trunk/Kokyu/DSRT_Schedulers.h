@@ -12,7 +12,7 @@
 
 #ifndef DSRT_SCHEDULERS_H
 #define DSRT_SCHEDULERS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/OS.h"
 
 #include "Kokyu.h"
@@ -68,5 +68,5 @@ ACE_FACTORY_DECLARE (Kokyu, MIF_Scheduler_Impl)
 //#include "DSRT_Schedulers.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DSRT_SCHEDULERS_H */

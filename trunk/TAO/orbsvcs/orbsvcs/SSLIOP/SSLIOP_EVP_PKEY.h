@@ -13,7 +13,7 @@
 #ifndef TAO_SSLIOP_EVP_PKEY_H
 #define TAO_SSLIOP_EVP_PKEY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -109,6 +109,6 @@ private:
 #include "SSLIOP_EVP_PKEY.inl"
 #endif  /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_EVP_PKEY_H */

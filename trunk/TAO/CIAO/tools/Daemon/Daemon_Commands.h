@@ -11,7 +11,7 @@
 
 #ifndef CIAO_DAEMON_COMMANDS_H
 #define CIAO_DAEMON_COMMANDS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "controller_i.h"
 
@@ -159,5 +159,5 @@ namespace CIAO
 # include "Daemon_Commands.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_DAEMON_COMMAND_H */

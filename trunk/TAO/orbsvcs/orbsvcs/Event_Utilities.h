@@ -13,7 +13,7 @@
 
 #ifndef ACE_EVENT_UTILITIES_H
 #define ACE_EVENT_UTILITIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -245,5 +245,5 @@ private:
 #include "orbsvcs/Event_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_EVENT_UTILITIES_H */

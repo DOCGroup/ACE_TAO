@@ -26,7 +26,7 @@
 #ifndef _TAO_IDL_IMR_ACTIVATORS_H_
 #define _TAO_IDL_IMR_ACTIVATORS_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ImR_ActivatorC.h"
 
 
@@ -69,5 +69,5 @@
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

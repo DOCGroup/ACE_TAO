@@ -17,7 +17,7 @@
 #ifndef TAO_SCIOP_ENDPOINT_H
 #define TAO_SCIOP_ENDPOINT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Endpoint.h"
 
@@ -137,5 +137,5 @@ private:
 
 #endif /* TAO_HAS_SCIOP == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_SCIOP_PROFILE_H */

@@ -12,7 +12,7 @@
 
 #ifndef DEFAULT_DISPATCHER_IMPL_H
 #define DEFAULT_DISPATCHER_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -70,5 +70,5 @@ namespace Kokyu
 #include "Default_Dispatcher_Impl.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DEFAULT_DISPATCHER_IMPL_H */

@@ -10,7 +10,7 @@
 
 #ifndef TAO_AV_DEFAULT_RESOURCE_FACTORY_H
 #define TAO_AV_DEFAULT_RESOURCE_FCATORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AVStreams_i.h"
 
@@ -45,5 +45,5 @@ public:
   
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_DEFAULT_RESOURCE_FACTORY_H */

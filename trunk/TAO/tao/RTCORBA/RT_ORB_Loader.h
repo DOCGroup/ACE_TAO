@@ -15,7 +15,7 @@
 
 #ifndef TAO_RT_ORB_LOADER_H
 #define TAO_RT_ORB_LOADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
 
@@ -51,5 +51,5 @@ ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_ORB_Loader)
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_ORB_LOADER_H */

@@ -21,7 +21,7 @@
 
 #ifndef TAO_UIOP_ACCEPTOR_H
 #define TAO_UIOP_ACCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport_Acceptor.h"
 
@@ -143,5 +143,5 @@ private:
 
 # endif /* TAO_HAS_UIOP == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_UIOP_ACCEPTOR_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_XT_RESOURCE_H
 #define TAO_XT_RESOURCE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/default_resource.h"
 
@@ -64,5 +64,5 @@ ACE_FACTORY_DECLARE (TAO, TAO_XT_Resource_Factory)
 
 #endif /* ACE_HAS_XT */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_CLIENT_H */

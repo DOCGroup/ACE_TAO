@@ -7,7 +7,7 @@
  */
 #ifndef TAO_PERF_RTEC_ORB_SHUTDOWN_H
 #define TAO_PERF_RTEC_ORB_SHUTDOWN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtec_perf_export.h"
 #include "tao/ORB.h"
@@ -28,5 +28,5 @@ public:
 #include "ORB_Shutdown.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PERF_RTEC_ORB_SHUTDOWN_H */

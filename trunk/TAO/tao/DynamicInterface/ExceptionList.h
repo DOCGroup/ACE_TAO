@@ -21,7 +21,7 @@
 
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "dynamicinterface_export.h"
 
@@ -122,6 +122,6 @@ namespace CORBA
 # include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CORBA_EXCEPTIONLIST_H */

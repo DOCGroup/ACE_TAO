@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_CURRENTC_H_
 #define _TAO_IDL_ORIG_CURRENTC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -188,5 +188,5 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Current_ptr &)
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

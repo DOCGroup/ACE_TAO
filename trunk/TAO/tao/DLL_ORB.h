@@ -17,7 +17,7 @@
 #ifndef TAO_DLL_ORB_H
 #define TAO_DLL_ORB_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 
@@ -83,6 +83,6 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_ORB)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_ORB)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_DLL_ORB_H */

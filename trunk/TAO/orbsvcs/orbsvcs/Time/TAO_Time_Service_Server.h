@@ -16,7 +16,7 @@
 
 #ifndef TAO_TIME_SERVICE_SERVER_H
 #define TAO_TIME_SERVICE_SERVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
 #include "time_export.h"
@@ -79,5 +79,5 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TIME_SERVICE_SERVER_H */

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_ACTIVATION_MANAGER_H
 #define TAO_Notify_Tests_ACTIVATION_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -132,5 +132,5 @@ protected:
   TAO_SYNCH_CONDITION started_condition_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_ACTIVATION_MANAGER_H */

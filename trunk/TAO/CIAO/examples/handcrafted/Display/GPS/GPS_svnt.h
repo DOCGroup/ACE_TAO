@@ -19,7 +19,7 @@
 
 #ifndef CIAO_GLUE_SESSION_GPS_SVNT_H
 #define CIAO_GLUE_SESSION_GPS_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "GPSS.h"        // Source in the skeletons for component
                                 // client-view equivalent interfaces
@@ -478,5 +478,5 @@ namespace CIAO_GLUE_HUDisplay
 #endif /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_GPS_SVNT_H */

@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "Messaging.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -234,5 +234,5 @@ TAO_NAMESPACE_CLOSE // module Messaging
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

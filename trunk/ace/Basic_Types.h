@@ -44,7 +44,7 @@
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
 
-# include "ace/pre.h"
+# include /**/ "ace/pre.h"
 
 # include "ace/config-all.h"
 
@@ -632,5 +632,5 @@ typedef ptrdiff_t ptr_arith_t;
 #   include "ace/Basic_Types.i"
 # endif /* __ACE_INLINE__ */
 
-# include "ace/post.h"
+# include /**/ "ace/post.h"
 #endif /* ACE_BASIC_TYPES_H */

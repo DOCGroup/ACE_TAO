@@ -14,7 +14,7 @@
 
 #ifndef TAO_ACCEPTOR_FILTER_H
 #define TAO_ACCEPTOR_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -72,5 +72,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ACCEPTOR_FILTER_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_SERVER_STRATEGY_FACTORY_H
 #define TAO_SERVER_STRATEGY_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -128,5 +128,5 @@ protected:
   Active_Object_Map_Creation_Parameters active_object_map_creation_parameters_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SERVER_STRATEGY_FACTORY_H */

@@ -406,9 +406,17 @@ sub check_for_pre_and_post ()
                 }
                 if ($disable == 0) {
                     if (/^\s*#\s*include\s*\"ace\/pre\.h\"/) {
+                        print_error ("pre.h  missing \"/**/\" in $file");
                         ++$pre;
                     }
-                    if (/^\s*#\s*include\s*\"ace\/post\.h\"/) {
+                    if (/^\s*#\s*include\s*\s*\"ace\/post\.h\"/) {
+                        print_error ("post.h missing \"/**/\" in $file");
+                        ++$post;
+                    }
+                    if (/^\s*#\s*include\s*/**/\s*\"ace\/pre\.h\"/) {
+                        ++$pre;
+                    }
+                    if (/^\s*#\s*include\s*/**/\s*\"ace\/post\.h\"/) {
                         ++$post;
                     }
                 }

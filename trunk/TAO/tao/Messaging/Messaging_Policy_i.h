@@ -12,7 +12,7 @@
 
 #ifndef TAO_MESSAGING_POLICY_I_H
 #define TAO_MESSAGING_POLICY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 #include "tao/Messaging/Messaging.h"
@@ -161,5 +161,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_MESSAGING_POLICY_I_H */

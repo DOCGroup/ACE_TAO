@@ -14,7 +14,7 @@
 #ifndef TAO_PG_LOCATION_MAP_H
 #define TAO_PG_LOCATION_MAP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -45,6 +45,6 @@ typedef ACE_Hash_Map_Manager_Ex<
   TAO_PG_Location_Equal_To,
   ACE_Null_Mutex> TAO_PG_Location_Map;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_LOCATION_MAP_H */

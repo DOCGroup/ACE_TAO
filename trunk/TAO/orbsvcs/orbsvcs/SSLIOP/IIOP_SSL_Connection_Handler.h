@@ -14,7 +14,7 @@
 #ifndef TAO_IIOP_SSL_CONNECTION_HANDLER_H
 #define TAO_IIOP_SSL_CONNECTION_HANDLER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -115,6 +115,6 @@ private:
 #endif /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_IIOP_SSL_CONNECTION_HANDLER_H */

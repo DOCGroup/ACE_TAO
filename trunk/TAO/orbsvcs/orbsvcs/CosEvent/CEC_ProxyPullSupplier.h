@@ -12,7 +12,7 @@
 
 #ifndef TAO_CEC_PROXYPULLSUPPLIER_H
 #define TAO_CEC_PROXYPULLSUPPLIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 
@@ -156,5 +156,5 @@ private:
 #include "CEC_ProxyPullSupplier.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CEC_PROXYPULLSUPPLIER_H */

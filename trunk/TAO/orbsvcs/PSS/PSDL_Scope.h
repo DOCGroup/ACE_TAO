@@ -23,7 +23,7 @@
 #ifndef TAO_PSDL_SCOPE_H
 #define TAO_PSDL_SCOPE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -287,6 +287,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_SCOPE_H */

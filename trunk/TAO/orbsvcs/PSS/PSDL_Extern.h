@@ -20,7 +20,7 @@
 
 #ifndef TAO_PSDL_EXTERN_H
 #define TAO_PSDL_EXTERN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "psdl_export.h"
 
@@ -46,5 +46,5 @@ public:
   TAO_PSDL_Node *TAO_PSDL_Extern_yyval (void);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PSDL_EXTERN_H */

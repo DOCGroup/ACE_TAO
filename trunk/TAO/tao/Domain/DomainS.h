@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_DOMAINS_H_
 #define _TAO_IDL_ORIG_DOMAINS_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "domain_export.h"
 #include "tao/PortableServer/PolicyS.h"
 #include "tao/DomainC.h"
@@ -508,5 +508,5 @@ TAO_NAMESPACE_CLOSE // module CORBA
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

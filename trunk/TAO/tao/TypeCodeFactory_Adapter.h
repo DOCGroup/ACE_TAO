@@ -13,7 +13,7 @@
 
 #ifndef TAO_TYPECODEFACTORY_ADAPTER_H
 #define TAO_TYPECODEFACTORY_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Exception.h"
 
@@ -172,5 +172,5 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TYPECODEFACTORY_ADAPTER_H */

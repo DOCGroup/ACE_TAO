@@ -41,7 +41,7 @@
 
 #ifndef TAO_CDR_H
 #define TAO_CDR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -326,5 +326,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
                                       CORBA::ParameterMode &);
 #endif /* __ACE_INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CDR_H */

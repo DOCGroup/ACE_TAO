@@ -14,7 +14,7 @@
 #ifndef TAO_DEFAULT_POLICY_VALIDATOR_H_
 #define TAO_DEFAULT_POLICY_VALIDATOR_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "portableserver_export.h"
 
 
@@ -57,5 +57,5 @@ protected:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_POLICY_VALIDATOR_H_ */

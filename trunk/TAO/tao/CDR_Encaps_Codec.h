@@ -13,7 +13,7 @@
 #ifndef TAO_CDR_ENCAPS_CODEC_H
 #define TAO_CDR_ENCAPS_CODEC_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -136,6 +136,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_CDR_ENCAPS_CODEC_H */

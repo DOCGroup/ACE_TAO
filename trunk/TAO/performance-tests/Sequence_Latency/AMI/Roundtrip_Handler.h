@@ -4,7 +4,7 @@
 
 #ifndef ROUNDTRIP_HANDLER_H
 #define ROUNDTRIP_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 #include "ace/Basic_Stats.h"
@@ -100,5 +100,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ROUNDTRIP_H */

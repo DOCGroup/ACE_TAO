@@ -10,7 +10,7 @@
 //=============================================================================
 #ifndef TAO_UTILS_RIR_NARROW_H
 #define TAO_UTILS_RIR_NARROW_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/ORB.h"
 
@@ -62,5 +62,5 @@ namespace TAO
 # include "RIR_Narrow.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_UTILS_RIR_NARROW_H*/

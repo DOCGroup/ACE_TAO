@@ -13,7 +13,7 @@
 
 #ifndef CIAO_SIMPLE_SERVER_I_H
 #define CIAO_SIMPLE_SERVER_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Simple_ServerS.h"
 
@@ -66,5 +66,5 @@ namespace CIAO
   };
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_SIMPLE_SERVER_H */

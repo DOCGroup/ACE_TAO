@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_FACTORY_H
 #define TAO_Notify_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -118,5 +118,5 @@ public:
   virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_FACTORY_H */

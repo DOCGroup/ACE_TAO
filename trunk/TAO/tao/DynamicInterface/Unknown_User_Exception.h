@@ -18,7 +18,7 @@
 #ifndef TAO_UNKNOWN_USER_EXCEPTION_H
 #define TAO_UNKNOWN_USER_EXCEPTION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "dynamicinterface_export.h"
 
@@ -100,6 +100,6 @@ namespace CORBA
 } // End CORBA namespace.
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_UNKNOWN_USER_EXCEPTION_H */

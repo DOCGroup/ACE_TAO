@@ -12,7 +12,7 @@
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_H
 #define TAO_STORABLE_NAMING_CONTEXT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Hash_Naming_Context.h"
 #include "ace/Hash_Map_Manager.h"
@@ -386,5 +386,5 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_STORABLE_NAMING_CONTEXT_H */

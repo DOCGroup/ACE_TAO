@@ -12,7 +12,7 @@
 
 #ifndef TAO_FT_POLICY_I_H
 #define TAO_FT_POLICY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
@@ -213,5 +213,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_FT_POLICY_I_H */

@@ -19,7 +19,7 @@
 
 #ifndef SERVER_I_H
 #define SERVER_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ServerS.h"
 
@@ -35,6 +35,6 @@ class Server_i : public virtual POA_Simple_Server::Server
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* SERVER_I_H */
 

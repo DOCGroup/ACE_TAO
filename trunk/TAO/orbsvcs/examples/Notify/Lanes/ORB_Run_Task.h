@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_ORB_RUN_TASK_H
 #define TAO_Notify_ORB_RUN_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "ace/Task.h"
@@ -40,5 +40,5 @@ private:
   TAO_Notify_ORB_Objects orb_objects_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_ORB_RUN_TASK_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_SERVICES_ACTIVATE_H
 #define TAO_SERVICES_ACTIVATE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -58,5 +58,5 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_SERVICES_ACTIVATE_H*/

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_SUPPLIER_H
 #define TAO_Notify_SUPPLIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -114,5 +114,5 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_SUPPLIER_H */

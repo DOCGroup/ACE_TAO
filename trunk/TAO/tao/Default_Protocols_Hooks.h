@@ -14,7 +14,7 @@
 #ifndef TAO_DEFAULT_PROTOCOLS_HOOKS_H
 #define TAO_DEFAULT_PROTOCOLS_HOOKS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Protocols_Hooks.h"
 
@@ -110,5 +110,5 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Protocols_Hooks)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_PROTOCOLS_HOOKS_H */

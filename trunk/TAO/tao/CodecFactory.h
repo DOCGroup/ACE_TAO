@@ -13,7 +13,7 @@
 #ifndef TAO_CODEC_FACTORY_H
 #define TAO_CODEC_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -80,6 +80,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_CODEC_FACTORY_H */

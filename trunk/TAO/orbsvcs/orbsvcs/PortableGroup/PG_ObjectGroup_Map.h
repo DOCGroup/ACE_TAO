@@ -14,7 +14,7 @@
 #ifndef TAO_PG_OBJECTGROUP_MAP_H
 #define TAO_PG_OBJECTGROUP_MAP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -76,6 +76,6 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Null_Mutex> TAO_PG_ObjectGroup_Map;
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_OBJECTGROUP_MAP_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_LB_LOAD_ALERT_H
 #define TAO_LB_LOAD_ALERT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosLoadBalancingS.h"
 
@@ -81,6 +81,6 @@ private:
 # include "LB_LoadAlert.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_LOAD_ALERT_H */

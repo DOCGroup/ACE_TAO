@@ -9,7 +9,7 @@
 
 #ifndef Server_Timer__h_
 #define Server_Timer__h_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestC.h"
 #include "ace/Event_Handler.h"
@@ -35,5 +35,5 @@ private:
   Test::Echo_var echo_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* Server_Timer__h_ */

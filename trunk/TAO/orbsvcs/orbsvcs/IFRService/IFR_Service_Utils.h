@@ -21,7 +21,7 @@
 
 #ifndef TAO_IFR_SERVICE_UTILS_H
 #define TAO_IFR_SERVICE_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB.h"
@@ -232,5 +232,5 @@ public:
   /// all over the place now that it's here.
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_IFR_SERVICE_UTILS_H */

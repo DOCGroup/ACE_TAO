@@ -19,11 +19,11 @@
 
 #ifndef TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
 #define TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "StructuredPushSupplier.h"
 
 typedef TAO_Notify_Tests_StructuredPushSupplier TAO_Notify_StructuredPushSupplier;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H */

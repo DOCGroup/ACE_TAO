@@ -19,7 +19,7 @@
 #ifndef TAO_LOG_CONSTRAINT_VISITORS_H
 #define TAO_LOG_CONSTRAINT_VISITORS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -118,5 +118,5 @@ private:
   DsLogAdmin::LogRecord &rec_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_LOG_CONSTRAINT_VISITORS_H */

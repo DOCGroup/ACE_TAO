@@ -19,7 +19,7 @@
 #ifndef CIAO_CIAOFWD_H
 #define CIAO_CIAOFWD_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "CIAO_Export.h"
 #include "tao/corba.h"
 
@@ -29,5 +29,5 @@ namespace Components
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_CIAOFWD_H */

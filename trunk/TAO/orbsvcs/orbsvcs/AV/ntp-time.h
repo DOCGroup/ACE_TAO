@@ -36,7 +36,7 @@
  */
 #ifndef TAO_AV_NTP_TIME_H
 #define TAO_AV_NTP_TIME_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 #include "RTCP.h"
@@ -94,5 +94,5 @@ ACE_INLINE timeval unixtime()
   ACE_Time_Value tv = ACE_OS::gettimeofday();
         return ((timeval) tv);
 }
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_NTP_TIME_H */

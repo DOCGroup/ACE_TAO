@@ -10,7 +10,7 @@
 
 #ifndef CIAO_COMMON_H
 #define CIAO_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -27,5 +27,5 @@
         if (prev_factory) prev_factory->_remove_ref (); \
         factory->_remove_ref ();      }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_COMMON_H */

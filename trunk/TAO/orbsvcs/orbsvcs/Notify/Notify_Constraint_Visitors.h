@@ -15,7 +15,7 @@
 #ifndef NOTIFY_CONSTRAINT_VISITORS_H
 #define NOTIFY_CONSTRAINT_VISITORS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -143,5 +143,5 @@ protected:
   CORBA::String_var current_name_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* NOTIFY_CONSTRAINT_VISITORS_H */

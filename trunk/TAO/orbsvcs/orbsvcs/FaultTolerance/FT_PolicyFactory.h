@@ -14,7 +14,7 @@
 #ifndef TAO_FT_POLICY_FACTORY_H
 #define TAO_FT_POLICY_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -56,6 +56,6 @@ public:
 #endif /* _MSC_VER */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_FT_POLICY_FACTORY_H */

@@ -36,7 +36,7 @@
 #error "You should not include DynamicAnyC.h directly, use DynamicAny.h"
 #endif /* !TAO_DYNAMICANY_SAFE_INCLUDE */
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -2525,6 +2525,6 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 
