@@ -1713,6 +1713,10 @@ TAO_CodeGen::gen_skel_src_includes (void)
 
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
+  
+  // For Static_Allocator_Base
+  this->gen_standard_include (this->server_skeletons_,
+                              "ace/Malloc_Allocator.h");
   // To get ACE_UNUSED_ARGS
   this->gen_standard_include (this->server_skeletons_,
                               "ace/config-all.h");

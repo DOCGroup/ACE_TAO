@@ -75,7 +75,7 @@ be_visitor_arg_traits::visit_root (be_root *node)
     }
 
   *os << be_uidt_nl
-      << "}";
+      << "}" << be_nl;
 
   return 0;
 }
