@@ -1,3 +1,9 @@
+Wed Oct 13 10:50:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.sh: use uname -s without checking to
+          see if /bin/uname, etc., exist.  Redirect stderr to
+          the sysname string.  It works.
+
 Wed Oct 13 10:39:50 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: ensure that ACE_THR_PRI_FIFO_DEF and
