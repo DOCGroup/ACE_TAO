@@ -1104,7 +1104,20 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
   if (this->recycler ())
     this->recycler ()->mark_as_closed (this->recycling_act ());
 
-  this->shutdown ();
+  // Deregister this handler with the ACE_Reactor.
+  if (this->reactor ())
+    {
+      ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK |
+        ACE_Event_Handler::DONT_CALL;
+
+      // Make sure there are no timers.
+      this->reactor ()->cancel_timer (this);
+
+      // Remove self from reactor.
+      this->reactor ()->remove_handler (this, mask);
+    }
+
+  this->peer ().close ();
 
   return 0;
 }
