@@ -379,7 +379,6 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
 
     for (i = 0; i < protocol_prefixes_size ; ++i) 
     {
-      const char * p = protocol_prefixes[i];
       if (ACE_OS::strncmp (end_point,
                          protocol_prefixes[i],
                          colon_slot) == 0)
