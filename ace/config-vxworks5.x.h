@@ -14,7 +14,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 // Compiler-specific configuration.
-
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 # undef ACE_HAS_TEMPLATE_SPECIALIZATION
@@ -122,6 +121,7 @@
 #define ACE_LACKS_SYS_NERR
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_TIMESPEC_T
+#define ACE_LACKS_TRUNCATE
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UTSNAME_T
