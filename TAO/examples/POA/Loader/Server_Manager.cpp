@@ -18,7 +18,7 @@ Server_i::~Server_i(void)
 // This method parses the input.
 
 int
-Server_i::parse_args (int argc, 
+Server_i::parse_args (int argc,
                       char **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "f:");
@@ -69,7 +69,7 @@ Server_i::write_iors_to_file (const char *first_ior,
                                        "w");
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2,
                                        "w");
-  if (output_file_1 == 0 
+  if (output_file_1 == 0
       || output_file_2 == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open output files for writing IORs: %s, %s\n",
@@ -116,7 +116,7 @@ Server_i::init (int argc, char **argv)
       orb_ = CORBA::ORB_init (argc,
                               argv,
                               0,
-                              ACE_TRY_ENV); 
+                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
@@ -129,21 +129,21 @@ Server_i::init (int argc, char **argv)
 
       // Narrow the Object reference to a POA reference
       root_poa_ = PortableServer::POA::_narrow (obj.in (),
-                                                ACE_TRY_ENV);  
+                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       // Get the POAManager of RootPOA
       poa_manager_ = root_poa_->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    
+
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i:init_poa ()");
       return 1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
@@ -161,40 +161,40 @@ Server_i::create_poa (const char *name,
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
-    {  
+    {
       policies_.length (4);
-      
+
       // ID Assignment Policy.
       policies_[0] =
-        root_poa_->create_id_assignment_policy 
+        root_poa_->create_id_assignment_policy
         (PortableServer::USER_ID,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Lifespan Policy.
       policies_[1] =
-        root_poa_->create_lifespan_policy 
+        root_poa_->create_lifespan_policy
         (PortableServer::PERSISTENT,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       // Request Processing Policy.
       policies_[2] =
-        root_poa_->create_request_processing_policy 
+        root_poa_->create_request_processing_policy
         (PortableServer::USE_SERVANT_MANAGER,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Servant Retention Policy.
       if (servant_retention_policy == 1)
       policies_[3] =
-        root_poa_->create_servant_retention_policy 
+        root_poa_->create_servant_retention_policy
         (PortableServer::RETAIN,
          ACE_TRY_ENV);
-      
+
       if (servant_retention_policy == 0)
       policies_[3] =
-        root_poa_->create_servant_retention_policy 
+        root_poa_->create_servant_retention_policy
         (PortableServer::NON_RETAIN,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -208,23 +208,24 @@ Server_i::create_poa (const char *name,
                                       policies_,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Destroy the policy objects as they have been passed to
       // create_POA and no longer needed.
       for (CORBA::ULong i = 0;
-           i < policies_.length () && ACE_TRY_ENV.exception () == 0;
+           i < policies_.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies_[i];
           policy->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:create_poa ()");
       return 0;
     }
-  ACE_ENDTRY;  
+  ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
 
   return my_poa;
@@ -236,11 +237,11 @@ int
 Server_i::create_activator (PortableServer::POA_var first_poa)
 {
   // CORBA::Environment TAO_TRY_ENV;
-   
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
-    { 
+    {
       // An Servant Activator object is created which will activate
       // the servant on demand.
       ACE_NEW_RETURN (servant_activator_impl_,
@@ -249,33 +250,33 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
                                           "supply_servant",
                                           "destroy_servant"),
                       0);
-      
+
       PortableServer::ServantActivator_var servant_activator =
         servant_activator_impl_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
- 
+
       // Set ServantActivator_i object as the servant_manager of
       // firstPOA.
       first_poa->set_servant_manager (servant_activator.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       // Create a reference with user created ID in firstPOA which
-      // uses the MyFooServantActivator. 
+      // uses the MyFooServantActivator.
       PortableServer::ObjectId_var first_foo_oid =
         PortableServer::string_to_ObjectId ("firstFoo");
-                                                      
+
       first_foo_ = first_poa->create_reference_with_id (first_foo_oid.in (),
                                                         "IDL:Foo:1.0",
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:create_activator ()");
       return 1;
     }
-  ACE_ENDTRY;  
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -289,8 +290,8 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
-    { 
-      // An Servant Locator object is created which will activate 
+    {
+      // An Servant Locator object is created which will activate
       // the servant on demand.
       ACE_NEW_RETURN (servant_locator_impl_,
                       ServantLocator_i (orb_.in (),
@@ -298,7 +299,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
                                         "supply_servant",
                                         "destroy_servant"),
                       0);
-      
+
       PortableServer::ServantLocator_var servant_locator =
         servant_locator_impl_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -309,39 +310,39 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       second_poa->set_servant_manager (servant_locator.in (),
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-        
+
       // Try to create a reference with user created ID in second_poa
-      // which uses MyFooServantLocator. 
+      // which uses MyFooServantLocator.
       PortableServer::ObjectId_var second_foo_oid =
         PortableServer::string_to_ObjectId ("secondFoo");
 
-      second_foo_ = 
+      second_foo_ =
         second_poa->create_reference_with_id (second_foo_oid.in (),
                                               "IDL:Foo:1.0",
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:create_locator ()");
       return 1;
     }
-  ACE_ENDTRY;   
+  ACE_ENDTRY;
 
   return 0;
 }
 
 // The execution process of the server.
 
-int 
-Server_i::run (void) 
+int
+Server_i::run (void)
 {
   // CORBA::Environment TAO_TRY_ENV;
-   
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
-    { 
+    {
       // Invoke object_to_string on the references created in firstPOA
       // and secondPOA.
 
@@ -349,19 +350,19 @@ Server_i::run (void)
         orb_->object_to_string (first_foo_.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
- 
+
       CORBA::String_var second_foo_ior =
         orb_->object_to_string (second_foo_.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
- 
+
       // Print the ior's of first_foo and second_foo.
 
       ACE_DEBUG ((LM_DEBUG,"%s\n%s\n",
                   first_foo_ior.in (),
                   second_foo_ior.in ()));
 
-      int write_result = 
+      int write_result =
         this->write_iors_to_file (first_foo_ior.in (),
                                   second_foo_ior.in ());
       if (write_result != 0)
@@ -370,29 +371,28 @@ Server_i::run (void)
       // Set the poa_manager state to active, ready to process
       // requests.
       poa_manager_->activate (ACE_TRY_ENV);
-     
+
       ACE_TRY_CHECK;
-  
+
       // Run the ORB.
       if (orb_->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "CORBA::ORB::run"),
                           -1);
-       
+
       // Destroy the root_poa_ and also first_poa and second_poa.
       root_poa_->destroy (1,
                           1,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:run ()");
       return 1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
-

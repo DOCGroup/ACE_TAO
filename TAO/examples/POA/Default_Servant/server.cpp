@@ -116,15 +116,13 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0;
-           i < policies.length () && ACE_TRY_ENV.exception () == 0;
+           i < policies.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy (ACE_TRY_ENV);
-          ACE_TRY_CHECK;  
+          ACE_TRY_CHECK;
         }
-      
-
 
       // Create a File System Implementation object in first_poa
       FileImpl::System file_system_impl (first_poa.in ());

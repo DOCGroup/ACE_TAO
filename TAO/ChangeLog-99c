@@ -1,3 +1,17 @@
+Fri Jun 25 11:45:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
+	  Fixed function pointer casting problem.
+
+	* examples/POA/DSI/server.cpp
+	* examples/POA/Default_Servant/server.cpp
+	* examples/POA/Loader/Server_Manager.cpp
+	* examples/POA/NewPOA/NewPOA.cpp
+	* examples/POA/On_Demand_Activation/server.cpp
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp
+
+	  Fixed simple exception handling related problems.
+
 Fri Jun 25 10:01:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
