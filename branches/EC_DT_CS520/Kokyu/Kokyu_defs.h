@@ -181,10 +181,26 @@ namespace Kokyu
     DSRT_ConfigInfo ();
   };
 
+
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  class Dispatcher_Task; //forward declaration
+
+  class Dispatch_Deferrer_Attributes
+  {
+  public:
+    Dispatcher_Task* task_;
+    
+    Dispatch_Deferrer_Attributes();
+  };
+#endif //KOKYU_HAS_RELEASE_GUARD
+
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>
 ACE_INLINE int operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
+
+//to satisfy ACE_Map_Manager<QoSDescriptor>
+ACE_INLINE int operator == (const Kokyu::QoSDescriptor& lhs, const Kokyu::QoSDescriptor& rhs);
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_defs.i"

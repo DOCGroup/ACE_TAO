@@ -3,6 +3,7 @@ project(Kokyu) : acelib {
   dynamicflags = KOKYU_BUILD_DLL
 
   Source_Files {
+    Dispatch_Deferrer.cpp
     Dispatcher_Impl.cpp 
     Kokyu.cpp 
     Default_Dispatcher_Impl.cpp 
