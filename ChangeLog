@@ -1,3 +1,10 @@
+Tue Jun 22 13:54:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-macosx-panther.h:
+	* ace/config-macosx.h:
+	  Changed to define only ACE_HAS_TIMEZONE_GETTIMEOFDAY.
+	  ACE_HAS_VOIDPTR_GETTIMEOFDAY had also been defined.
+
 Tue Jun 22 12:33:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_macros.h (ACE_SOCKCALL_RETURN):
