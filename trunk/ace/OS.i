@@ -7851,6 +7851,10 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 #endif /* ACE_WIN32 */
 }
 
+#if defined (ghs) && defined (ACE_HAS_PENTIUM)
+  extern "C" ACE_hrtime_t ACE_gethrtime ();
+#endif /* ghs && ACE_HAS_PENTIUM */
+
 ACE_INLINE ACE_hrtime_t
 ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 {
@@ -7866,7 +7870,38 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return tb.tb_high * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
+#elif defined (ghs) && defined (ACE_HAS_PENTIUM)
+  ACE_UNUSED_ARG (op);
+  // Use .obj/gethrtime.o, which was compiled with g++.
+  return ACE_gethrtime ();
+#elif defined (__GNUG__) && defined (ACE_HAS_PENTIUM)
+  ACE_UNUSED_ARG (op);
 
+#if defined (ACE_LACKS_LONGLONG_T)
+  double now;
+#else  /* ! ACE_LACKS_LONGLONG_T */
+  ACE_hrtime_t now;
+#endif /* ! ACE_LACKS_LONGLONG_T */
+
+  // See comments about the RDTSC Pentium instruction for the ACE_WIN32
+  // version of ACE_OS::gethrtime (), below.
+  //
+  // Read the high-res tick counter directly into memory variable "now".
+  // The A constraint signifies a 64-bit int.
+  asm volatile ("rdtsc" : "=A" (now) : : "memory");
+
+#if defined (ACE_LACKS_LONGLONG_T)
+  unsigned int least, most;
+  ACE_OS::memcpy (&least, &now, sizeof (unsigned int));
+  ACE_OS::memcpy (&most, &now + sizeof (unsigned int), sizeof (unsigned int));
+
+  ACE_hrtime_t ret (least, most);
+  return ret;
+#else  /* ! ACE_LACKS_LONGLONG_T */
+  return now;
+#endif /* ! ACE_LACKS_LONGLONG_T */
+
+// #elif defined (linux)
 // NOTE: the following don't seem to work on Linux.  Use ::gettimeofday
 //       instead.
 // #elif defined (__GNUG__) && defined (ACE_HAS_PENTIUM)
