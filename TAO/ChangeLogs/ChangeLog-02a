@@ -1,3 +1,50 @@
+Tue Nov  7 11:50:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceC.h:
+	* tao/InterfaceC.i:
+
+	  TypeCodeFactory generated code moved from these files 
+	  to new files TypeCodeFactoryC.*.
+
+	* tao/PortableServer/POA_CORBA.h:
+
+	  TypeCodeFactory generated code removed from this file.
+
+	* tao/Interface.pidl:
+
+	  Interface TypeCodeFactory modified to be local.
+
+	* orbsvcs/IFR_Service/TypeCodeFactoryC.h:
+	* orbsvcs/IFR_Service/TypeCodeFactoryC.inl:
+	* orbsvcs/IFR_Service/TypeCodeFactoryC.cpp:
+
+	  New files containing code removed from InterfaceC.*.
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+
+	  Removed from project and Makefiles.
+
+	* orbsvcs/IFR_Service/Repository_i.h:
+	* orbsvcs/IFR_Service/TCF_Loader.h:
+	* orbsvcs/IFR_Service/TCF_Loader.cpp:
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.bor:
+
+	  Other files modified to make TypeCodeFactory a local
+	  interface. The motivation for this change was a bug
+	  report by Mateu Batle <mbatle@iname.com> and one by
+	  Jean-Christophe Dubois <jcd@one.com> that the 
+	  TypeCodeFactory was blocking indefinitely upon startup.
+	  It turned out that there was an attempt to acquire the same
+	  lock twice, but the real solution seemed to be to make
+	  TypeCodeFactory, like DynamicAnyFactory, a local interface,
+	  which sidesteps the lock problem, and at the same time reduces
+	  TypeCodeFactory's size.
+
 Tue Nov  7 08:57:16 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/SHMIOP_Connector.cpp (close): Fixed a warning in KCC 3.4
