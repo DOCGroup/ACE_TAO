@@ -1,3 +1,9 @@
+Tue Feb 19 08:58:34 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_State.cpp:
+          Removed a space in the ACE_DEBUG macro for getting the byte order
+          info.
+
 Mon Feb 18 19:38:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
