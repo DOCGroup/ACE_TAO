@@ -96,7 +96,7 @@ int be_visitor_args_arglist::visit_enum (be_enum *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node);
+      *os << this->type_name (node);
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";

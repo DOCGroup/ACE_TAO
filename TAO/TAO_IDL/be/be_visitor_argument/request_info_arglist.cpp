@@ -179,7 +179,7 @@ int be_visitor_args_request_info_arglist::visit_enum (be_enum *node)
           }
         else
           {
-            *os << "const " << this->type_name (node);
+            *os << this->type_name (node);
           }
 
         break;
