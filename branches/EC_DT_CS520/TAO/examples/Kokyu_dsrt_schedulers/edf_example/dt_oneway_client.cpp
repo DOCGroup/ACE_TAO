@@ -442,11 +442,16 @@ Worker::svc (void)
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):one way call done\n"));
  
   rand = mrand48()/10000;
-  if(enable_rand) 
+  if(enable_rand)
+  { 
     usleep(period*1000000+rand);
+    ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", period*1000000+rand));
+  }
   else
+  {
     sleep(period);
-  ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", period*1000000+rand));
+    ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", period*1000000));
+  }
   }
   if (enable_dynamic_scheduling)
     {
