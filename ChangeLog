@@ -1,3 +1,10 @@
+Mon Aug 18 15:22:02 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * bin/tao_other_tests.lst:
+
+          Changed the TAO/orbsvcs/tests/ImplRepo test from SANDBOX to
+          !MINIMUM to broaden platform coverage of the IMR testing.
+
 Sun Aug 17 16:35:01 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/RB_Tree.i (dump_i):
