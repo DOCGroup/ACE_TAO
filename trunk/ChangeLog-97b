@@ -1,3 +1,13 @@
+Wed Oct 15 01:48:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Containers.{h,i,cpp}: 
+	* ace/Thread_Manager.{h,i,cpp}:  Start modifying these files.
+	  Will work on them for a day or two.  You guys shouldn't worry
+	  about these changes affecting anything because I surround my
+	  changes with #ifdef (NANBOR_EXP_CHANGES) my changes  #else
+	  original codes #endif.  More details change log will be added
+	  once I get them all working.
+
 Tue Oct 14 23:54:21 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.18, released Tue Oct 14 23:54:21 1997.
