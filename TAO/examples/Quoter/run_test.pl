@@ -238,12 +238,24 @@ client ();
 
 if ($leave)
 {
-  $GF->Kill (); $GF->TimedWait (1);
-  $FF->Kill (); $FF->TimedWait (1);
-  $SV->Kill (); $SV->TimedWait (1);
-  $LC->Kill (); $LC->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-}
+  $GF->Terminate ();
+  $FF->Terminate ();
+  $SV->Terminate ();
+  $LC->Terminate ();
+  $NS->Terminate ();
+  if ($GF->TimedWait (5) == -1 ||
+      $FF->TimedWait (5) == -1 ||
+      $SV->TimedWait (5) == -1 ||
+      $LC->TimedWait (5) == -1 ||
+      $NS->TimedWait (5) == -1){
+    print STDERR "ERROR: couldn't terminate services nicely\n";
+    $status = 1;
+    $GF->Kill (); $GF->TimedWait (1);
+    $FF->Kill (); $FF->TimedWait (1);
+    $SV->Kill (); $SV->TimedWait (1);
+    $LC->Kill (); $LC->TimedWait (1);
+    $NS->Kill (); $NS->TimedWait (1);
+  }
 
 
 unlink $nsiorfile;

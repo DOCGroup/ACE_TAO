@@ -124,9 +124,15 @@ sub run_test
     }
 
     # Now that the client has finished, kill off the servers
-
-    $SRV1->Kill (); $SRV1->TimedWait (1);
-    $SRV2->Kill (); $SRV2->TimedWait (1);
+    $SRV1->Terminate ();
+    $SRV2->Terminate ();
+    if ($SRV1->TimedWait (5) == -1 ||
+        $SRV2->TimedWait (5) == -1) {
+      print STDERR "ERROR: couldn't terminate the servers nicely\n";
+      $SRV1->Kill (); $SRV1->TimedWait (1);
+      $SRV2->Kill (); $SRV2->TimedWait (1);
+      $status = 1;
+    }
 
     if ($server3args ne "")
     {
