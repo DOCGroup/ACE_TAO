@@ -1755,37 +1755,37 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         // Program is shutting down, no chance to wait on threads.
         // Therefore, we'll just remove threads from the list.
         this->remove_thr_all ();
-    // Release the guard, giving other threads a chance to run.
-  }
 
 #if !defined (VXWORKS)
-  // @@ VxWorks doesn't support thr_join (yet.)  We are working
-  //on our implementation.   Chorus'es thr_join seems broken.
-  ACE_Thread_Descriptor_Base *item;
+    // @@ VxWorks doesn't support thr_join (yet.)  We are working
+    //on our implementation.   Chorus'es thr_join seems broken.
+    ACE_Thread_Descriptor_Base *item;
 
 #if defined (CHORUS)
-  if (ACE_Object_Manager::shutting_down () != 1)
-    {
+    if (ACE_Object_Manager::shutting_down () != 1)
+      {
 #endif /* CHORUS */
-      while ((item = this->terminated_thr_list_.delete_head ()) != 0)
-        {
-          if (ACE_BIT_DISABLED (item->flags_, THR_DETACHED | THR_DAEMON)
-              || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
-            // Detached handles shouldn't reached here.
+        while ((item = this->terminated_thr_list_.delete_head ()) != 0)
+          {
+            if (ACE_BIT_DISABLED (item->flags_, THR_DETACHED | THR_DAEMON)
+                || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
+              // Detached handles shouldn't reached here.
               ACE_Thread::join (item->thr_handle_);
 
 # if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-          // Must explicitly detach threads.  Threads without
-          // THR_DETACHED were detached in ACE_OS::thr_create ().
-          ::pthread_detach (&item->thr_handle_);
+            // Must explicitly detach threads.  Threads without
+            // THR_DETACHED were detached in ACE_OS::thr_create ().
+            ::pthread_detach (&item->thr_handle_);
 # endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
-          delete item;
-        }
+            delete item;
+          }
 #if defined (CHORUS)
-    }
+      }
 #endif /* CHORUS */
 
 #endif /* ! VXWORKS */
+    // Release the guard, giving other threads a chance to run.
+  }
 #else
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (abandon_detached_threads);
