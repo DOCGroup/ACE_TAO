@@ -575,9 +575,16 @@ public:
   // Declare the dynamic allocation hooks.
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  ACE_Mutex *lock_;
+  ACE_Mutex lock_;
 #else
-  ACE_SV_Semaphore_Complex *lock_;
+  TCHAR name_[ACE_UNIQUE_NAME_LEN];
+  // If the user does not provide a name we generate a unique name in
+  // this buffer.
+
+  LPCTSTR unique_name (void);
+  // Create and return the unique name.
+
+  ACE_SV_Semaphore_Complex lock_;
   // We need this to get the right semantics...
 #endif /* ACE_WIN32 */
 };
