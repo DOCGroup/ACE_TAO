@@ -36,17 +36,19 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_ServantBase::TAO_ServantBase (void)
-  :  optable_ (0)
+  : optable_ (0)
 {
 }
 
-TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &)
+TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
+  : optable_ (rhs.optable_)
 {
 }
 
 TAO_ServantBase &
-TAO_ServantBase::operator= (const TAO_ServantBase &)
+TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 {
+  this->optable_ = rhs.optable_;
   return *this;
 }
 
@@ -58,6 +60,16 @@ PortableServer::POA_ptr
 TAO_ServantBase::_default_POA (CORBA::Environment &env)
 {
   return TAO_ORB_Core_instance ()->root_poa_reference (env);
+}
+
+void
+TAO_ServantBase::_add_ref (CORBA::Environment &env)
+{
+}
+
+void
+TAO_ServantBase::_remove_ref (CORBA::Environment &env)
+{
 }
 
 CORBA::Boolean
