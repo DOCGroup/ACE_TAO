@@ -4,21 +4,21 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/CosPropertyService
+//    TAO/orbsvcs/tests/Property
 //
 // = FILENAME
 //    client.h
 //
 // = DESCRIPTION
-//    Test client for the CosPropertyService.
+//    Test client for the Property Service.
 //
 // = AUTHORS
 //   Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 
-#if !defined (COSPROPERTYSERVICE_CLIENT_H)
-#define COSPROPERTYSERVICE_CLIENT_H
+#if !defined (PROPERTY_CLIENT_H)
+#define PROPERTY_CLIENT_H
 
 #include "ace/Synch.h"
 #include "ace/Task.h"
@@ -92,6 +92,9 @@ protected:
   TAO_ORB_Manager manager_;
   // The ORB manager, handles ORB initialization etc.
 
+  TAO_Naming_Client my_name_client_;
+  // The Naming Client handles Naming Service work
+  
   CosPropertyService::PropertySetDef_var propsetdef_;
   // To test propertySetDef interface.
 };
