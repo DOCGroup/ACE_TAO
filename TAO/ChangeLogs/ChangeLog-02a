@@ -813,7 +813,7 @@ Wed Aug 1 8:02:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Strategies/UIOP_Connection_Handler.h:
         * tao/Strategies/UIOP_Connection_Handler.cpp:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Appled the
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Applied the
           same changes to the above mentioned protocols.
 
 Tue Jul 31 12:53:06 2001  Carlos O'Ryan  <coryan@uci.edu>
@@ -878,7 +878,7 @@ Tue Jul 31 06:58:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Connection_Handler.cpp:
         * tao/Connection_Handler.h:
-        * tao/ Connection_Handler.inl: Added a lock to the class. Also
+        * tao/Connection_Handler.inl: Added a lock to the class. Also
           added three methods, incr_pending_upcalls (),
           decr_pending_upcalls () and pending_upcalls (). The first two
           does the manipulation of the pending_upcalls_ variable after
@@ -1573,8 +1573,10 @@ Wed Jul 18 19:22:48 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           client thread was made leader thread multiple times in nested
           upcall situations.  Changing the code to increment
           <client_leader_thread_> in set_client_leader_thread() and
-          decrement in reset_client_leader_thread() gave us an accurate
-          count of how many times the client was made the leader.
+          decrement in reset_client_leader_thread() gave us an accurate 
+          count of how many times the client was made the leader. Thanks
+	  to Christian von Mueffling <cvm@aiss.de> and Alex Lehner
+	  <lehner@aiss.de> for reporting this.  
 
         * tao/Asynch_Reply_Dispatcher.cpp: Removed unnecessary include
           file "Leader_Followers.h".
