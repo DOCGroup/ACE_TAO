@@ -1,7 +1,8 @@
-Wed Dec  3 08:45:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Dec  3 08:49:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Dynamic/client.cpp:
         * tests/Portable_Interceptors/Dynamic/server.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
           Fixed compile errors when TAO_HAS_INTERCEPTORS has been set to 0
 
 Wed Dec  3 08:33:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
