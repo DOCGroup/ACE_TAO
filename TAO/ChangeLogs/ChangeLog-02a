@@ -1,3 +1,20 @@
+Thu Feb 24 09:29:19 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+
+	  Fixed seg fault that was occurring due to attempt to print a
+	  NULL string (zero pointer).  Print "<NULL>" if the pointer to
+	  the current argument is zero.  The seg fault occurred when
+	  providing a command such as the following:
+
+	     ./server -ORBDebugLevel 6 -ORBDottedDecimalAddress
+
+	  The "-ORBDottedDecimalAddress" option is missing its argument.
+
+	* tao/POA.cpp (imr_notify_startup):
+
+	  Corrected spelling of "Notifing."
+
 Thu Feb 24 01:32:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object.cpp (_non_existent): The collocated servant also
