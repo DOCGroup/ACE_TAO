@@ -23,6 +23,7 @@ call run_tests MM_Shared_Memory_Test
 call run_tests MT_SOCK_Test
 call run_tests Mutex_Test
 call run_tests Naming_Test
+call run_tests Notify_Performance_Test
 call run_tests Pipe_Test
 call run_tests Priority_Buffer_Test
 call run_tests Priority_Reactor_Test
@@ -32,6 +33,7 @@ call run_tests Process_Strategy_Test
 call run_tests Reactors_Test
 call run_tests Reactor_Exceptions_Test
 call run_tests Reactor_Notify_Test
+call run_tests Reactor_Performance_Test
 call run_tests Reactor_Timer_Test
 call run_tests Reader_Writer_Test
 call run_tests Recursive_Mutex_Test
