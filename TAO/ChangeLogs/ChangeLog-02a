@@ -1,6 +1,34 @@
+Mon Jun 19 16:59:35 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/AMI_Observer/Callback.cpp:
+	* examples/Content_Server/AMI_Observer/Callback.h:
+	* examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+	* examples/Content_Server/AMI_Observer/Push_Web_Server.idl:
+	* examples/Content_Server/AMI_Observer/client.cpp:
+	* examples/Content_Server/AMI_Observer/server.cpp:
+
+	  Cleaned up trailing whitespace.
+
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+
+	  Added method to explicitly deactivate the client side AMI Reply
+	  Handler once the metadata has been received from the server.
+	  This fixes a bug where deactivation wasn't occuring.
+
+	* examples/Content_Server/AMI_Observer/README:
+
+	  Added instructions that explain how to run the example, and
+	  provided some sample output.
+
 Mon Jun 19 18:38:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Content_Server/AMI_Iterator: Made some minor formatting changes.
+	* examples/Content_Server/AMI_Iterator: Made some minor formatting
+	  changes.
 
 Mon Jun 19 15:56:18 2000  Ossama Othman  <ossama@uci.edu>
 
