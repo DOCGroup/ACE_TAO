@@ -7,7 +7,9 @@ Wed Mar  3 03:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Removed all the naming service stuff from DII_Cubit_Test.
 	  Made a note in the README file that the IDL server no
 	  longer uses it either. Also removed the orbsvcs library
-	  load from the makefile since we no longer need it.
+	  load from the makefile since we no longer need it. And 
+	  removed client.h from the VC project file and the link to
+	  orbsvcsd.lib from same.
 
 Tue Mar  2 17:36:29 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
