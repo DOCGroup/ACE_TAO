@@ -1939,6 +1939,6 @@ template class TAO_Unbounded_Sequence<TAO_PropertySetDef*>;
 #pragma instantiate ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-#pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySet*>;
-#pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySetDef*>;
+#pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySet*>
+#pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySetDef*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
