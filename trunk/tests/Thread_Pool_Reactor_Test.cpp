@@ -129,7 +129,7 @@ int
 Acceptor_Handler::handle_input (ACE_HANDLE fd)
 {
   ASYS_TCHAR buffer[BUFSIZ];
-  int result = this->peer ().recv (buffer, BUFSIZ * sizeof (ASYS_TCHAR);
+  int result = this->peer ().recv (buffer, BUFSIZ * sizeof (ASYS_TCHAR));
 
   if (result > 0)
     {
@@ -209,7 +209,7 @@ cli_worker (void *)
 
       for (size_t j = 0; j < cli_req_no; j++)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("(%t) conn_worker stream handle = %x\n"),
                       stream.get_handle ()));
           stream.send_n (buf,
