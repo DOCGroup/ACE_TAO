@@ -42,8 +42,9 @@ IDL_SRCS= \
 	LifeCycleService \
 	CosTrading \
 	AVStreams \
-	Null_MediaCtrl\
-	sfp
+	Null_MediaCtrl
+
+#### See below for sfp.
 
 IDL_FILES = \
 	$(addsuffix S, $(IDL_SRCS)) \
@@ -134,6 +135,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
+
+ifeq (-xildoff,$(findstring -xildoff,$(LDFLAGS)))
+        # Only build sfp with Sun CC, for now.
+	IDL_SRCS += sfp
+endif # Sun CC
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
