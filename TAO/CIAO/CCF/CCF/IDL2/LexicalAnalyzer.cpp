@@ -396,6 +396,27 @@ namespace CCF
           {
             return TokenPtr (new Keyword (*i, line));
           }
+
+          // This part is tricky. If it's after 6pm then come back
+          // in the morning. In essence I want the same name
+          // ('string' and 'wstring') to be recognized as a keyword
+          // in one case and as an identifier in the other. When
+          // we see 'string' followed by '<' we want it to be a
+          // keyword. If it's just all by itself then we want to treat
+          // it as an identifier (since it is a complete construct
+          // by itself). So here we are going to check for that.
+          //
+
+          if (lexeme == "string" || lexeme == "wstring")
+          {
+            Char c = skip_space (get ());
+            ret (c);
+
+            if (c == '<')
+            {
+              return TokenPtr (new Keyword (lexeme, line));
+            }
+          }
         }
 
         // Check if it is a reserved identifier.

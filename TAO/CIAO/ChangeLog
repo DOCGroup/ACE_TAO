@@ -1,3 +1,22 @@
+Thu Mar 11 16:30:45 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+
+	  Added support for bounded string and wstring.
+	
+	* CCF/Documentation/TODO:
+
+	  Reflected new achievement.
+	
+	* CIDLC/cidlc.cpp:
+
+	  Cosmetic changes.
+
 2004-03-11  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
 
 	* ciao/Container_Base.cpp: Removed an ACE_DEBUG statement which
@@ -5,8 +24,8 @@
 
 Wed Mar 10 14:59:19 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/static_ciao_toc.html: 
-	* docs/static_ciao_contents.html: 
+	* docs/static_ciao_toc.html:
+	* docs/static_ciao_contents.html:
 	* docs/static_ciao_index.html: Updated documentation. Renamed
 	  static_ciao.html to static_ciao_contents.html.
 
@@ -14,18 +33,18 @@ Wed Mar 10 12:36:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Added code generator instantiations to handle multiple nested
           modules.
-          
+
         * CIDLC/cidlc.cpp:
-        
+
           Fixed typo in usage message.
 
 Tue Mar  9 23:18:22 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Assembly_Parser.cpp: 
-	  
+	* tools/static_configurator/Static_Assembly_Parser.cpp:
+
 	  Made a minor fix to eliminate unnecessary command line option
 	  processing.
 
@@ -33,14 +52,14 @@ Tue Mar  9 23:18:22 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Tue Mar  9 22:48:10 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/static_ciao.html: 
-	* docs/imgs/ciao-static1.jpg: 
-	* docs/imgs/ciao-static2.jpg: 
-	* docs/imgs/ciao-dynamic1.jpg: 
-	* docs/imgs/ciao-dynamic2.jpg: 
+	* docs/static_ciao.html:
+	* docs/imgs/ciao-static1.jpg:
+	* docs/imgs/ciao-static2.jpg:
+	* docs/imgs/ciao-dynamic1.jpg:
+	* docs/imgs/ciao-dynamic2.jpg:
 	* docs/imgs/ciao-static-vs-dynamic.jpg: Added documentation for
 	  CIAO static configuration.
-	
+
 Mon Mar  8 14:57:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
