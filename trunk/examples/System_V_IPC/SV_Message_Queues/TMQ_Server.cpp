@@ -7,14 +7,14 @@
 #include "ace/streams.h"
 
 // Must be global for signal Message...
-static ACE_Typed_SV_Message_Queue<Message_Data> msgque
+static ACE_Typed_SV_Message_Queue<Message_Data> ace_sv_message_queue
   (SRV_KEY, ACE_Typed_SV_Message_Queue<Message_Data>::ACE_CREATE);
 
 extern "C" void
 handler (int)
 {
-  if (msgque.remove () < 0)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "msgque.recv", 1));
+  if (ace_sv_message_queue.remove () < 0)
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "ace_sv_message_queue.recv", 1));
   ACE_OS::exit (0);
 }
 
@@ -32,24 +32,24 @@ main (int, char *[])
 
   for (;;)
     {
-      if (msgque.recv (recv_msg) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "msgque.recv"), 1);
+      if (ace_sv_message_queue.recv (recv_msg) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.recv"), 1);
 
       Message_Data &recv_msg_data = recv_msg.data ();
 
       cout << "a msg of length "
-	   << recv_msg_data.length ()
-	   << " sent from client "
-	   << recv_msg_data.pid ()
-	   << " (user "
-	   << recv_msg_data.user () << "): "
-	   << recv_msg_data.text () << "\n";
+           << recv_msg_data.length ()
+           << " sent from client "
+           << recv_msg_data.pid ()
+           << " (user "
+           << recv_msg_data.user () << "): "
+           << recv_msg_data.text () << "\n";
       cout.flush ();
 
       send_msg.type (recv_msg_data.pid ());
 
-      if (msgque.send (send_msg) < 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "msgque.send"), 1);
+      if (ace_sv_message_queue.send (send_msg) < 0)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.send"), 1);
     }
 
   /* NOTREACHED */
@@ -63,4 +63,3 @@ template class ACE_Typed_SV_Message<Message_Data>;
 #pragma instantiate ACE_Typed_SV_Message_Queue<Message_Data>
 #pragma instantiate ACE_Typed_SV_Message<Message_Data>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
