@@ -1,3 +1,10 @@
+Tue Aug 27 17:00:20 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Signal.cpp: Fixed the ACE_Sig_Action constructors so that
+	  it doesn't break out of the loop just because a signal handler
+ 	  failed.  Thanks to Marcel Loose <loose@astron.nl> for reporting
+ 	  this.
+
 Tue Aug 27 19:03:05 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added $TAO_ROOT/tests/ORB_shutdown test
