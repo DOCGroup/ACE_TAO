@@ -4,7 +4,7 @@
 #include "ace/streams.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
-#include "Logging_Strategy.h"
+#include "ace/Logging_Strategy.h"
 
 ACE_RCSID(lib, Logging_Strategy, "$Id$")
 

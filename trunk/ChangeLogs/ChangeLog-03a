@@ -1,3 +1,9 @@
+Tue Jul 25 16:42:02 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* ace/Logging_Strategy.cpp:
+	  Changed #include "Logging_Strategy.h" to
+	          #include "ace/Logging_Strategy.h"
+
 Tue Jul 25 16:12:31 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* ace/Log_Msg.h:
