@@ -91,7 +91,7 @@ Test_Exception::dii_req_invoke (CORBA::Request *req,
     {
       ACE_PRINT_EXCEPTION (ex, "Test_Exception::run_sii_test - "
                            " unexpected exception\n");
-      ACE_TRY_THROW (Param_Test::BadBoy);
+      ACE_TRY_THROW (Param_Test::BadBoy ());
     }
   ACE_ENDTRY;
   ACE_CHECK;
