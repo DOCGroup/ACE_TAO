@@ -491,7 +491,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     return;
 
   // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
+  TAO_POA::check_for_valid_wait_for_completions (this->orb_core (),
+                                                 wait_for_completion,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -1064,21 +1065,37 @@ TAO_POA::wait_for_completions (CORBA::Boolean wait_for_completion,
 
 /* static */
 void
-TAO_POA::check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completion,
+TAO_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
+                                               CORBA::Boolean wait_for_completion,
                                                CORBA::Environment &ACE_TRY_ENV)
 {
   if (wait_for_completion)
     {
       TAO_POA_Current_Impl *poa_current_impl =
-        ACE_static_cast(TAO_POA_Current_Impl *,
-                        TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+        ACE_static_cast (TAO_POA_Current_Impl *,
+                         TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
-      // This thread cannot currently be in an upcall.
-      if (poa_current_impl != 0)
+      while (1)
         {
-          // CORBA 2.3 specifies which minor code corresponds to this
-          // particular problem.
-          ACE_THROW (CORBA::BAD_INV_ORDER (3, CORBA::COMPLETED_NO));
+          // If wait_for_completion is TRUE and the current thread is
+          // in an invocation context dispatched from some POA
+          // belonging to the same ORB as this POA, the BAD_INV_ORDER
+          // system exception with standard minor code 3 is raised and
+          // POA destruction does not occur.
+          if (poa_current_impl != 0)
+            {
+              if (&orb_core == &poa_current_impl->orb_core ())
+                {
+                  // CORBA 2.3 specifies which minor code corresponds
+                  // to this particular problem.
+                  ACE_THROW (CORBA::BAD_INV_ORDER (3, CORBA::COMPLETED_NO));
+                }
+            }
+          else
+            break;
+
+          poa_current_impl =
+            poa_current_impl->previous_current_impl_;
         }
     }
 }

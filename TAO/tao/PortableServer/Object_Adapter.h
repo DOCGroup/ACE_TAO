@@ -192,8 +192,8 @@ protected:
   CORBA::Short priority_;
   // The priority for the current upcall.
 
-  // PPOA: TAO_POA_Current_Impl *previous_current_impl_;
-  void *previous_current_impl_;
+  TAO_POA_Current_Impl *previous_current_impl_;
+  // void *previous_current_impl_;
   // Current previous from <this>.
 
   int setup_done_;
@@ -268,6 +268,9 @@ public:
 
   TAO_POA *root_poa (void) const;
   // Access the root poa.
+
+  TAO_ORB_Core &orb_core (void) const;
+  // Access to ORB Core.
 
   void wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV);
 

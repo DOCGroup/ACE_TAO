@@ -1,3 +1,23 @@
+Wed Sep 13 02:11:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp
+	  (check_for_valid_wait_for_completions): Update this function
+	  such that if wait_for_completion is TRUE and the current thread
+	  is in an invocation context dispatched from some POA belonging
+	  to the same ORB as this POA, the BAD_INV_ORDER system exception
+	  with standard minor code 3 is raised.
+
+	* tao/PortableServer/POAManager.cpp (discard_requests_i): 
+	* tao/PortableServer/POAManager.cpp (deactivate_i): 
+	* tao/PortableServer/POAManager.cpp (hold_requests_i): 
+	* tao/PortableServer/Object_Adapter.cpp (check_close): 
+
+	  Updated to check for the correct ORB for <wait_for_completions>.
+
+	* tao/PortableServer/Object_Adapter.h (TAO_POA_Current_Impl):
+	  Changed the type of <previous_current_impl_> to be
+	  TAO_POA_Current_Impl. Also added orb_core() accessor.
+
 Tue Sep 12 21:29:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_module,.cpp:

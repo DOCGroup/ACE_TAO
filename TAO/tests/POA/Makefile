@@ -11,6 +11,7 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Destruction \
+	wait_for_completion \
 	Deactivation \
 	Non_Servant_Upcalls \
 	Identity
