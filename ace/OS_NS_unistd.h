@@ -74,6 +74,9 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_CHDIR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  int rmdir (const ACE_TCHAR * path);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int close (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
