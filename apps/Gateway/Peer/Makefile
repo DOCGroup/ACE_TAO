@@ -15,15 +15,11 @@ SHLIB	= libPeer.$(SOEXT)
 FILES	= Options \
 	  Peer
 
-LSRC	= $(addsuffix .cpp,$(FILES)) 
-LOBJ	= $(addsuffix .o,$(FILES))
-SHOBJ	= $(addsuffix .so,$(FILES))
-
+LSRC	= $(addsuffix .cpp,$(FILES))
 LDLIBS	= -lPeer
- 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VSHLIB) $(SHLIBA) $(VBIN)
+BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
