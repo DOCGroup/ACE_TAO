@@ -1,3 +1,9 @@
+Sat Aug 03 18:50:11 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/PSS/PSDL.dsp:
+	* orbsvcs/PSS/PSDL_Datastore.dsp: Fixed the path to
+	  TAO_Svc_Utils.lib in the release configuration.
+
 Sat Aug  3 18:20:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/PSS/Client.dsp:
