@@ -319,7 +319,6 @@ int
 ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 {
   ACE_TRACE ("ACE_Thread_Manager::thr_self");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_Thread_Descriptor *desc =
     this->thread_desc_self ();
@@ -1470,36 +1469,6 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   delete [] copy_table;
 
   return result;
-}
-
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-int
-ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit* at)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
-
-  return this->thread_desc_self ()->at_exit (at);
-}
-
-int
-ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit& at)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
-
-  return this->thread_desc_self ()->at_exit (at);
-}
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-
-int
-ACE_Thread_Manager::at_exit (void *object,
-                             ACE_CLEANUP_FUNC cleanup_hook,
-                             void *param)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
-
-  return this->thread_desc_self ()->at_exit (object,
-                                             cleanup_hook,
-                                             param);
 }
 
 // Must be called when thread goes out of scope to clean up its table
