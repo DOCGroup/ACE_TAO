@@ -1,6 +1,22 @@
+Tue Jun 17 13:44:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Added a new custom definition keyword 'pch_option' to allow the
+          custom build command to possibly generate code that is compatible
+          with precompiled headers.
+
 Tue Jun 17 14:42:25 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
-        * performance-tests/SCTP/Options_Manager.cpp: 
+        * performance-tests/SCTP/Options_Manager.cpp:
 
           Change was necessary for build on RH 9.0 to work properly.
           Change consisted of moving the definition of IPPROTO_SCTP

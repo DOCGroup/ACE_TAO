@@ -203,6 +203,10 @@ inputext            This is a comma separated list of input file extensions
 output_option       If the command takes an option to specify a single file
                     output name, then set it here.  Otherwise, this should be
                     omitted.
+pch_option          This option must take a file name argument and would be
+                    passed to the command only when there is a pch header
+                    file.  This gives command the option to generate cpp
+                    files with precompiled header includes.
 pre_extension       If the command produces multiple files of the same
                     extension, this comma separated list can be used to
                     specify them.  For example, tao_idl creates two types of
