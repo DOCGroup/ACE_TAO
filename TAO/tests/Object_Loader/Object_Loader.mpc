@@ -1,4 +1,4 @@
-project(*Test): taolib_with_idl, portableserver {
+project(*Test): taolib_with_idl, portableserver, minimum_corba {
   sharedname   = Test_DLL
   dynamicflags = OLT_BUILD_DLL
 

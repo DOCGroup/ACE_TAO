@@ -2,6 +2,7 @@
 //        removing the includes += lines below, and updating
 //        the source code instead.
 project(*server): namingexe, lifecycle {
+  avoids   += minimum_corba
   idlflags += -I../../orbsvcs/orbsvcs
   includes += ../../orbsvcs/orbsvcs
   Source_Files {
@@ -11,6 +12,7 @@ project(*server): namingexe, lifecycle {
 }
 
 project(*client): namingexe, lifecycle {
+  avoids   += minimum_corba
   idlflags += -I../../orbsvcs/orbsvcs
   includes += ../../orbsvcs/orbsvcs
   Source_Files {
@@ -19,6 +21,7 @@ project(*client): namingexe, lifecycle {
 }
 
 project(*Factory Finder): namingexe, lifecycle {
+  avoids   += minimum_corba
   idlflags += -I../../orbsvcs/orbsvcs
   includes += ../../orbsvcs/orbsvcs
   Source_Files {
@@ -28,6 +31,7 @@ project(*Factory Finder): namingexe, lifecycle {
 }
 
 project(*Generic Factory): namingexe, lifecycle {
+  avoids   += minimum_corba
   idlflags += -I../../orbsvcs/orbsvcs
   includes += ../../orbsvcs/orbsvcs
   Source_Files {

@@ -1,4 +1,5 @@
 project(IFR_Service) : orbsvcsexe, core, ifrservice, typecodefactory, svc_utils, ifr_client, iortable, portableserver {
+  avoids   += minimum_corba
   exename  = IFR_Service
   Source_Files {
     IFR_Server.cpp
@@ -8,6 +9,7 @@ project(IFR_Service) : orbsvcsexe, core, ifrservice, typecodefactory, svc_utils,
 
 
 project(TAO_IFR_BE) : taolib, core, ifr_client {
+  avoids      += minimum_corba
   after       += TAO_IDL_FE
   sharedname   = TAO_IFR_BE
   libs        += TAO_IDL_FE
@@ -29,6 +31,7 @@ project(TAO_IFR_BE) : taolib, core, ifr_client {
 
 
 project(TAO_IFR_EXE) : taoexe, core, ifr_client {
+  avoids         += minimum_corba
   after          += TAO_IFR_BE TAO_IDL_FE
   exename         = tao_ifr
   idlpreprocessor = 1

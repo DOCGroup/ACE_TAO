@@ -1,4 +1,4 @@
-project : taolib, core, rtcorba, portableserver {
+project : taolib, core, rtcorba, portableserver, corba_messaging {
   sharedname   = TAO_RTPortableServer
   dynamicflags = TAO_RTPORTABLESERVER_BUILD_DLL
   include_dir  = tao/RTPortableServer

@@ -1,3 +1,4 @@
 project : orbsvcsexe, core, lifecycle, naming, trading {
+  avoids  += minimum_corba
   exename  = LifeCycle_Service
 }

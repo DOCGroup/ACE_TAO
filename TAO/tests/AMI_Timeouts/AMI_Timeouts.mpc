@@ -1,6 +1,7 @@
 project(*Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
+  requires += ami
 
   Source_Files {
     timeout_i.cpp
@@ -13,6 +14,7 @@ project(*Client): messaging, taoserver {
   exename   = client
   idlflags -= -Sc
   idlflags += -GC
+  requires += ami
 
   Source_Files {
     timeout_i.cpp
