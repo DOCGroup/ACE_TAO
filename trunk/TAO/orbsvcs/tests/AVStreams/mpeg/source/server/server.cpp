@@ -634,7 +634,7 @@ AV_Server::~AV_Server (void)
 int
 main (int argc, char **argv)
 {
-  AV_Server vcr_server 
+  AV_Server vcr_server; 
 
   TAO_TRY
     {
