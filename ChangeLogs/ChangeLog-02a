@@ -1,5 +1,9 @@
 Tue Jun 26 16:22:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/TLI_*, OS_TLI.*: Added a number of fixes for TLI so that it'll
+	  compile properly on Win32 platforms.  Thanks to Andreas Geisler
+ 	  <andreas.geisler@erls.siemens.de> for reporting this.
+
 	* ace/Proactor.h: Added a static reset_event_loop() to the ACE_Proactor
 	  class.  Thanks to Rich Newman <RNewman@directv.com> for
  	  reporting this.
