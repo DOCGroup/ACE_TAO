@@ -79,7 +79,7 @@ public:
   /// Set the IP multicast address and port.
   void object_addr (const ACE_INET_Addr &addr);
 
-  /// Return a pointer to the stringified host address (not including the 
+  /// Return a pointer to the stringified host address (not including the
   /// port).  This class retains ownership of the address memory.
   const char *get_host_addr (void) const;
 
@@ -118,7 +118,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/UIPMC_Endpoint.i"
+# include "UIPMC_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

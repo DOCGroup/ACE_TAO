@@ -4,11 +4,11 @@
 ACE_INLINE
 TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
+    discriminator_ (0),
     object_key_ (),
     profile_ (),
     profile_index_ (0),
-    type_id_ (),
-    discriminator_ (0)
+    type_id_ ()
 {
 
 }
@@ -57,7 +57,7 @@ TAO_Tagged_Profile::type_id (void) const
 }
 
 ACE_INLINE CORBA::Short
-TAO_Tagged_Profile::discriminator (void) const 
+TAO_Tagged_Profile::discriminator (void) const
 {
   return this->discriminator_;
 }

@@ -316,7 +316,7 @@ public:
   CORBA::OctetSeq *id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#if (TAO_HAS_MIOP == 1)
+  // Methods added by the MIOP specification.
   virtual PortableServer::ObjectId * create_id_for_reference (
       CORBA::Object_ptr the_ref
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
@@ -356,7 +356,8 @@ public:
       PortableServer::NotAGroupObject
     ));
 
-#endif /* TAO_HAS_MIOP == 1 */
+  // End methods added by MIOP.
+
 
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies (void);

@@ -701,11 +701,9 @@ public:
   /// Resolve the RT Current flyweight for this ORB.
   CORBA::Object_ptr resolve_rt_current (TAO_ENV_SINGLE_ARG_DECL);
 
-#if (TAO_HAS_MIOP == 1)
   /// Set/Get the current PortableGroup POA hooks.
   TAO_POA_PortableGroup_Hooks *portable_group_poa_hooks (void) const;
   void portable_group_poa_hooks(TAO_POA_PortableGroup_Hooks *poa_hooks);
-#endif /* TAO_HAS_MIOP == 1 */
 
   /// List all the service known by the ORB
   CORBA_ORB_ObjectIdList_ptr list_initial_references (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
@@ -1011,11 +1009,9 @@ protected:
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
   CORBA::Object_var root_poa_;
 
-#if (TAO_HAS_MIOP == 1)
   // Hold a pointer for the POA if it needs to use any of the Portable 
   // group hooks.
   TAO_POA_PortableGroup_Hooks *portable_group_poa_hooks_;
-#endif /* TAO_HAS_MIOP == 1 */
 
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;

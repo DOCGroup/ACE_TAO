@@ -9,10 +9,10 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     are_policies_parsed_ (0),
     stub_ (0),
     policy_list_ (0),
+    addressing_mode_ (0),
     tag_ (tag),
     orb_core_ (orb_core),
     forward_to_ (0),
-    addressing_mode_ (0),
     refcount_ (1)
 {
 }

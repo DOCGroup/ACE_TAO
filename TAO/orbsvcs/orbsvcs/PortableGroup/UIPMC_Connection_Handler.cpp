@@ -29,8 +29,8 @@ ACE_RCSID(tao, UIPMC_Connect, "$Id$")
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    uipmc_properties_ (0),
-    using_mcast_ (0)
+    using_mcast_ (0),
+    uipmc_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -45,9 +45,9 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_co
                                                             void *arg)
   : TAO_UIPMC_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
+    using_mcast_ (0),
     uipmc_properties_ (ACE_static_cast
-                     (TAO_UIPMC_Properties *, arg)),
-    using_mcast_ (0)
+                       (TAO_UIPMC_Properties *, arg))
 {
   TAO_UIPMC_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
@@ -234,7 +234,7 @@ TAO_UIPMC_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  long upcalls = 
+  long upcalls =
     this->decr_pending_upcalls ();
 
   ACE_ASSERT (upcalls >= 0);
@@ -301,8 +301,8 @@ TAO_UIPMC_Connection_Handler::add_transport_to_cache (void)
 {
   ACE_INET_Addr addr;
 
-  // This function is called by the acceptor to add this 
-  // transport to the transport cache.  This is really 
+  // This function is called by the acceptor to add this
+  // transport to the transport cache.  This is really
   // important for proper shutdown.  The address used
   // is irrelevent, since UIPMC is connectionless.
 
@@ -320,7 +320,7 @@ TAO_UIPMC_Connection_Handler::add_transport_to_cache (void)
 
 
 int
-TAO_UIPMC_Connection_Handler::handle_input (ACE_HANDLE h)
+TAO_UIPMC_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Increase the reference count on the upcall that have passed us.
   this->incr_pending_upcalls ();

@@ -64,7 +64,7 @@ TAO_POA_Hooks::find_group_component (const CORBA::Object_ptr the_ref,
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
   slot = 0;
-  while (profile = profiles.get_profile (slot))
+  while ((profile = profiles.get_profile (slot)))
     {
       if (this->find_group_component_in_profile (profile, group) == 0)
         return 0;
@@ -124,12 +124,12 @@ TAO_POA_Hooks::create_group_acceptors (CORBA::Object_ptr the_ref,
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
   slot = 0;
-  while (profile = profiles.get_profile (slot))
+  while ((profile = profiles.get_profile (slot)))
     {
       if (profile->supports_multicast ())
         {
-          acceptor_registry.open (profile, 
-                                  orb_core 
+          acceptor_registry.open (profile,
+                                  orb_core
                                   TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
           ++num;
@@ -145,8 +145,8 @@ TAO_POA_Hooks::create_group_acceptors (CORBA::Object_ptr the_ref,
 
 PortableServer::IDs *
 TAO_POA_Hooks::reference_to_ids (
-    TAO_POA &the_poa,
-    CORBA::Object_ptr the_ref
+  TAO_POA &/*the_poa*/,
+  CORBA::Object_ptr /*the_ref*/
     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -157,7 +157,7 @@ TAO_POA_Hooks::reference_to_ids (
   return 0;
 }
 
-void 
+void
 TAO_POA_Hooks::associate_group_with_ref (
       TAO_POA &the_poa,
       CORBA::Object_ptr group_ref,
@@ -206,7 +206,7 @@ TAO_POA_Hooks::associate_group_with_ref (
 
 }
 
-void 
+void
 TAO_POA_Hooks::associate_reference_with_id (
       TAO_POA &the_poa,
       CORBA::Object_ptr ref,
@@ -233,11 +233,11 @@ TAO_POA_Hooks::associate_reference_with_id (
   ACE_CHECK;
 }
 
-void 
+void
 TAO_POA_Hooks::disassociate_reference_with_id (
-      TAO_POA &the_poa,
-      CORBA::Object_ptr ref,
-      const PortableServer::ObjectId & oid
+      TAO_POA &/*the_poa*/,
+      CORBA::Object_ptr /*ref*/,
+      const PortableServer::ObjectId & /*oid*/
       TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -245,5 +245,3 @@ TAO_POA_Hooks::disassociate_reference_with_id (
     ))
 {
 }
-
-

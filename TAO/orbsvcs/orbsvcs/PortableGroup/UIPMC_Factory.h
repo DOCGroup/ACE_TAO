@@ -14,6 +14,8 @@
 #define TAO_UIPMC_FACTORY_H
 #include "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
