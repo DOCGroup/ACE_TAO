@@ -173,7 +173,7 @@ setup_buffering_constraints (CORBA::ORB_ptr orb
 
   // Setup the sync scope policy, i.e., the ORB will buffer oneways.
   Messaging::SyncScope sync =
-    eager_buffering ? Messaging::SYNC_EAGER_BUFFERING : Messaging::SYNC_DELAYED_BUFFERING;
+    eager_buffering ? TAO::SYNC_EAGER_BUFFERING : TAO::SYNC_DELAYED_BUFFERING;
 
   // Setup the sync scope any.
   CORBA::Any sync_any;
