@@ -68,7 +68,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_EventDef =
+    ::CORBA::TypeCode_ptr const _tc_EventDef =
       &_tc_TAO_tc_CORBA_ComponentIR_EventDef;
   }
 }
@@ -109,7 +109,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_Container =
+    ::CORBA::TypeCode_ptr const _tc_Container =
       &_tc_TAO_tc_CORBA_ComponentIR_Container;
   }
 }
@@ -150,7 +150,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_ModuleDef =
+    ::CORBA::TypeCode_ptr const _tc_ModuleDef =
       &_tc_TAO_tc_CORBA_ComponentIR_ModuleDef;
   }
 }
@@ -192,7 +192,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_Repository =
+    ::CORBA::TypeCode_ptr const _tc_Repository =
       &_tc_TAO_tc_CORBA_ComponentIR_Repository;
   }
 }
@@ -234,7 +234,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_ProvidesDef =
+    ::CORBA::TypeCode_ptr const _tc_ProvidesDef =
       &_tc_TAO_tc_CORBA_ComponentIR_ProvidesDef;
   }
 }
@@ -401,7 +401,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_ProvidesDescription =
+    ::CORBA::TypeCode_ptr const _tc_ProvidesDescription =
       &_tc_TAO_tc_CORBA_ComponentIR_ProvidesDescription;
   }
 }
@@ -441,7 +441,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_UsesDef =
+    ::CORBA::TypeCode_ptr const _tc_UsesDef =
       &_tc_TAO_tc_CORBA_ComponentIR_UsesDef;
   }
 }
@@ -612,7 +612,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_UsesDescription =
+    ::CORBA::TypeCode_ptr const _tc_UsesDescription =
       &_tc_TAO_tc_CORBA_ComponentIR_UsesDescription;
   }
 }
@@ -655,7 +655,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_EventPortDef =
+    ::CORBA::TypeCode_ptr const _tc_EventPortDef =
       &_tc_TAO_tc_CORBA_ComponentIR_EventPortDef;
   }
 }
@@ -821,7 +821,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_EventPortDescription =
+    ::CORBA::TypeCode_ptr const _tc_EventPortDescription =
       &_tc_TAO_tc_CORBA_ComponentIR_EventPortDescription;
   }
 }
@@ -862,7 +862,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_EmitsDef =
+    ::CORBA::TypeCode_ptr const _tc_EmitsDef =
       &_tc_TAO_tc_CORBA_ComponentIR_EmitsDef;
   }
 }
@@ -905,7 +905,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_PublishesDef =
+    ::CORBA::TypeCode_ptr const _tc_PublishesDef =
       &_tc_TAO_tc_CORBA_ComponentIR_PublishesDef;
   }
 }
@@ -947,7 +947,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_ConsumesDef =
+    ::CORBA::TypeCode_ptr const _tc_ConsumesDef =
       &_tc_TAO_tc_CORBA_ComponentIR_ConsumesDef;
   }
 }
@@ -990,7 +990,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_ComponentDef =
+    ::CORBA::TypeCode_ptr const _tc_ComponentDef =
       &_tc_TAO_tc_CORBA_ComponentIR_ComponentDef;
   }
 }
@@ -1189,7 +1189,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_ProvidesDescriptionSeq =
+    ::CORBA::TypeCode_ptr const _tc_ProvidesDescriptionSeq =
       &_tc_TAO_tc_CORBA_ComponentIR_ProvidesDescriptionSeq;
   }
 }
@@ -1390,7 +1390,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_UsesDescriptionSeq =
+    ::CORBA::TypeCode_ptr const _tc_UsesDescriptionSeq =
       &_tc_TAO_tc_CORBA_ComponentIR_UsesDescriptionSeq;
   }
 }
@@ -1588,7 +1588,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_EventPortDescriptionSeq =
+    ::CORBA::TypeCode_ptr const _tc_EventPortDescriptionSeq =
       &_tc_TAO_tc_CORBA_ComponentIR_EventPortDescriptionSeq;
   }
 }
@@ -3226,7 +3226,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_ComponentDescription =
+    ::CORBA::TypeCode_ptr const _tc_ComponentDescription =
       &_tc_TAO_tc_CORBA_ComponentIR_ComponentDescription;
   }
 }
@@ -3268,7 +3268,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_FactoryDef =
+    ::CORBA::TypeCode_ptr const _tc_FactoryDef =
       &_tc_TAO_tc_CORBA_ComponentIR_FactoryDef;
   }
 }
@@ -3309,7 +3309,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_FinderDef =
+    ::CORBA::TypeCode_ptr const _tc_FinderDef =
       &_tc_TAO_tc_CORBA_ComponentIR_FinderDef;
   }
 }
@@ -3349,7 +3349,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_HomeDef =
+    ::CORBA::TypeCode_ptr const _tc_HomeDef =
       &_tc_TAO_tc_CORBA_ComponentIR_HomeDef;
   }
 }
@@ -5939,7 +5939,7 @@ namespace CORBA
 {
   namespace ComponentIR
   {
-    ::CORBA::TypeCode_ptr _tc_HomeDescription =
+    ::CORBA::TypeCode_ptr const _tc_HomeDescription =
       &_tc_TAO_tc_CORBA_ComponentIR_HomeDescription;
   }
 }

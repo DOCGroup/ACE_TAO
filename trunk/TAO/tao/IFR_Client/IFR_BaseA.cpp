@@ -67,7 +67,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ScopedName (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ScopedName =
+  ::CORBA::TypeCode_ptr const _tc_ScopedName =
     &_tc_TAO_tc_CORBA_ScopedName;
 }
 
@@ -259,7 +259,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DefinitionKind (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_DefinitionKind =
+  ::CORBA::TypeCode_ptr const _tc_DefinitionKind =
     &_tc_TAO_tc_CORBA_DefinitionKind;
 }
 
@@ -294,7 +294,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_IRObject (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_IRObject =
+  ::CORBA::TypeCode_ptr const _tc_IRObject =
     &_tc_TAO_tc_CORBA_IRObject;
 }
 
@@ -332,7 +332,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_VersionSpec (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_VersionSpec =
+  ::CORBA::TypeCode_ptr const _tc_VersionSpec =
     &_tc_TAO_tc_CORBA_VersionSpec;
 }
 
@@ -551,7 +551,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Contained_Description (
     0
   );
 
-::CORBA::TypeCode_ptr CORBA::Contained::_tc_Description =
+::CORBA::TypeCode_ptr const CORBA::Contained::_tc_Description =
   &_tc_TAO_tc_CORBA_Contained_Description;
 
 // TAO_IDL - Generated from
@@ -585,7 +585,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Contained (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Contained =
+  ::CORBA::TypeCode_ptr const _tc_Contained =
     &_tc_TAO_tc_CORBA_Contained;
 }
 
@@ -647,7 +647,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_InterfaceDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_InterfaceDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_InterfaceDefSeq =
     &_tc_TAO_tc_CORBA_InterfaceDefSeq;
 }
 
@@ -705,7 +705,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ValueDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ValueDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_ValueDefSeq =
     &_tc_TAO_tc_CORBA_ValueDefSeq;
 }
 
@@ -775,7 +775,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_AbstractInterfaceDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_AbstractInterfaceDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_AbstractInterfaceDefSeq =
     &_tc_TAO_tc_CORBA_AbstractInterfaceDefSeq;
 }
 
@@ -842,7 +842,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_LocalInterfaceDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_LocalInterfaceDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_LocalInterfaceDefSeq =
     &_tc_TAO_tc_CORBA_LocalInterfaceDefSeq;
 }
 
@@ -907,7 +907,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtInterfaceDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExtInterfaceDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_ExtInterfaceDefSeq =
     &_tc_TAO_tc_CORBA_ExtInterfaceDefSeq;
 }
 
@@ -968,7 +968,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtValueDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExtValueDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_ExtValueDefSeq =
     &_tc_TAO_tc_CORBA_ExtValueDefSeq;
 }
 
@@ -1041,7 +1041,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtAbstractInterfaceDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExtAbstractInterfaceDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_ExtAbstractInterfaceDefSeq =
     &_tc_TAO_tc_CORBA_ExtAbstractInterfaceDefSeq;
 }
 
@@ -1111,7 +1111,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtLocalInterfaceDefSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExtLocalInterfaceDefSeq =
+  ::CORBA::TypeCode_ptr const _tc_ExtLocalInterfaceDefSeq =
     &_tc_TAO_tc_CORBA_ExtLocalInterfaceDefSeq;
 }
 
@@ -1170,7 +1170,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ContainedSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ContainedSeq =
+  ::CORBA::TypeCode_ptr const _tc_ContainedSeq =
     &_tc_TAO_tc_CORBA_ContainedSeq;
 }
 
@@ -1256,7 +1256,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_StructMember (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_StructMember =
+  ::CORBA::TypeCode_ptr const _tc_StructMember =
     &_tc_TAO_tc_CORBA_StructMember;
 }
 
@@ -1367,7 +1367,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_StructMemberSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_StructMemberSeq =
+  ::CORBA::TypeCode_ptr const _tc_StructMemberSeq =
     &_tc_TAO_tc_CORBA_StructMemberSeq;
 }
 
@@ -1523,7 +1523,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Initializer (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Initializer =
+  ::CORBA::TypeCode_ptr const _tc_Initializer =
     &_tc_TAO_tc_CORBA_Initializer;
 }
 
@@ -1704,7 +1704,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_InitializerSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_InitializerSeq =
+  ::CORBA::TypeCode_ptr const _tc_InitializerSeq =
     &_tc_TAO_tc_CORBA_InitializerSeq;
 }
 
@@ -1845,7 +1845,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExceptionDescription (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExceptionDescription =
+  ::CORBA::TypeCode_ptr const _tc_ExceptionDescription =
     &_tc_TAO_tc_CORBA_ExceptionDescription;
 }
 
@@ -2012,7 +2012,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExcDescriptionSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExcDescriptionSeq =
+  ::CORBA::TypeCode_ptr const _tc_ExcDescriptionSeq =
     &_tc_TAO_tc_CORBA_ExcDescriptionSeq;
 }
 
@@ -2323,7 +2323,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtInitializer (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExtInitializer =
+  ::CORBA::TypeCode_ptr const _tc_ExtInitializer =
     &_tc_TAO_tc_CORBA_ExtInitializer;
 }
 
@@ -2660,7 +2660,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ExtInitializerSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ExtInitializerSeq =
+  ::CORBA::TypeCode_ptr const _tc_ExtInitializerSeq =
     &_tc_TAO_tc_CORBA_ExtInitializerSeq;
 }
 
@@ -2750,7 +2750,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionMember (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_UnionMember =
+  ::CORBA::TypeCode_ptr const _tc_UnionMember =
     &_tc_TAO_tc_CORBA_UnionMember;
 }
 
@@ -2865,7 +2865,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_UnionMemberSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_UnionMemberSeq =
+  ::CORBA::TypeCode_ptr const _tc_UnionMemberSeq =
     &_tc_TAO_tc_CORBA_UnionMemberSeq;
 }
 
@@ -2927,7 +2927,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_EnumMemberSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_EnumMemberSeq =
+  ::CORBA::TypeCode_ptr const _tc_EnumMemberSeq =
     &_tc_TAO_tc_CORBA_EnumMemberSeq;
 }
 
@@ -3169,7 +3169,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Container_Description (
     0
   );
 
-::CORBA::TypeCode_ptr CORBA::Container::_tc_Description =
+::CORBA::TypeCode_ptr const CORBA::Container::_tc_Description =
   &_tc_TAO_tc_CORBA_Container_Description;
 
 // TAO_IDL - Generated from
@@ -3437,7 +3437,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Container_DescriptionSeq (
     0
   );
 
-::CORBA::TypeCode_ptr CORBA::Container::_tc_DescriptionSeq =
+::CORBA::TypeCode_ptr const CORBA::Container::_tc_DescriptionSeq =
   &_tc_TAO_tc_CORBA_Container_DescriptionSeq;
 
 // TAO_IDL - Generated from
@@ -3471,7 +3471,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Container (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Container =
+  ::CORBA::TypeCode_ptr const _tc_Container =
     &_tc_TAO_tc_CORBA_Container;
 }
 
@@ -3505,7 +3505,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_IDLType (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_IDLType =
+  ::CORBA::TypeCode_ptr const _tc_IDLType =
     &_tc_TAO_tc_CORBA_IDLType;
 }
 
@@ -3541,7 +3541,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_TypedefDef (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_TypedefDef =
+  ::CORBA::TypeCode_ptr const _tc_TypedefDef =
     &_tc_TAO_tc_CORBA_TypedefDef;
 }
 
@@ -3679,7 +3679,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_TypeDescription (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_TypeDescription =
+  ::CORBA::TypeCode_ptr const _tc_TypeDescription =
     &_tc_TAO_tc_CORBA_TypeDescription;
 }
 
