@@ -291,6 +291,39 @@ also receives other options that are specific to it. <P>
         C++Builder or MSVC++.</td>
   </tr>
 
+  <tr><a name="obv_opt_accessor">
+    <td></td>
+
+    <td><tt>obv_opt_accessor</tt></td>
+
+    <td>The IDL compiler will generate code to optimize access to base class data
+        for valuetypes.</td>
+  </tr>
+
+  <tr><a name="pre_include">
+    <td></td>
+
+    <td><tt>pre_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of the each header file, before any other include statements. For
+        example, ace/pre.h, which pushes compiler options for the Borland C++
+        Builder and MSVC++ compilers, is included in this manner in all
+        IDL-generated files in the TAO libraries and CORBA services.</td>
+  </tr>
+
+  <tr><a name="post_include">
+    <td></td>
+
+    <td><tt>post_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        bottom of the each header file. For example, ace/post.h, which pops 
+        compiler options for the Borland C++ Builder and MSVC++ compilers, is 
+        included in this manner in all IDL-generated files in the TAO libraries 
+        and CORBA services.</td>
+  </tr>
+
   <tr><a name="E">
     <td><tt>-E</tt></td>
 
