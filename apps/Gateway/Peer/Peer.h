@@ -100,7 +100,7 @@ protected:
   // Send an Peer event to gatewayd, using <nonblk_put>.
 
   virtual int nonblk_put (ACE_Message_Block *mb);
-  // Perform a non-blocking put(), which tries to send an event to the
+  // Perform a non-blocking <put>, which tries to send an event to the
   // gatewayd, but only if it isn't flow controlled.
 
   // = Event/state/action handlers.
@@ -138,11 +138,8 @@ class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_
   //     gatewayd.
 public:
   // = Initialization and termination methods.
-  Peer_Acceptor (void);
-  // Initialization the <Peer_Acceptor>.
-
   int open (void);
-  // Initialize the <Peer_Acceptor>.
+  //  the <Peer_Acceptor>.
   
   int close (void);
   // Terminate the <Peer_Acceptor>.
@@ -155,7 +152,7 @@ private:
   // Pointer to <Peer_Handler> allocated just once.
 
   ACE_INET_Addr addr_;
-  // Our addr.
+  // Our acceptor addr.
 
   typedef ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR> inherited;
 };
@@ -167,15 +164,16 @@ class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOC
   //     create a new <Peer_Handler> object to communicate with the
   //     gatewayd.
 public:
-  // = Initialization and termination methods.
-  Peer_Connector (void);
-  // Initialization the <Peer_Connector>.
+  // = Initialization method.
+  int open (void);
+  // Initialize the <Peer_Connector>.
 
 private:
-  Peer_Handler peer_handler_;
+  Peer_Handler *peer_handler_;
   // <Peer_Handler> that is connected to the client.
 
-  typedef ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR> inherited;
+  ACE_INET_Addr addr_;
+  // Our connector addr.
 };
 
 class ACE_Svc_Export Peer_Factory : public ACE_Service_Object

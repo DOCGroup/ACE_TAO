@@ -30,8 +30,8 @@ main (int argc, char *argv[])
 
 	  ACE_Reactor::run_event_loop ();
 
-	  // Destructor of ACE_Service_Object_Ptrs automagically call
-	  // fini().
+	  // Destructor of <ACE_Service_Object_Ptr> automagically call
+	  // <fini>.
 	}
     }
   else // Use dynamic linking.

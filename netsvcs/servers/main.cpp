@@ -17,9 +17,7 @@ main (int argc, char *argv[])
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
-#if !defined (ACE_WIN32)
   sig_set.sig_add (SIGQUIT);
-#endif /* ACE_WIN32 */  
 
   // Register ourselves to receive signals so we can shut down
   // gracefully.
