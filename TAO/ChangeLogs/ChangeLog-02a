@@ -1,3 +1,14 @@
+Sat Mar 10 16:08:46 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+	  Add the new test to the recursive build
+
+        * tests/Server_Leaks/Makefile:
+	  Fix the Makefile
+
+	* examples/Simple/echo/Echo_i.cpp:
+	  Fixed stupid typo.
+
 Sat Mar 10 15:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Content_Server/SMI_Iterator/Makefile:
