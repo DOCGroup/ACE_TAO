@@ -91,7 +91,7 @@ of user-defined mappings.) Config file should contain the following options:</li
 <p><tt>static RT_ORB_Loader "-ORBPriorityMapping
 <i>mapping_type</i> -ORBSchedPolicy
 <i>sched_policy</i>"</tt>
-<p>where valid values for <i>mapping_type</i> are <tt>linear</tt> and <tt>direct,</tt>
+<p>where valid values for <i>mapping_type</i> are <tt>continuous</tt>, <tt>linear</tt> and <tt>direct,</tt>
 and<i> </i>valid values for <i>sched_policy</i> are <tt>SCHED_OTHER</tt>,
 <tt>SCHED_FIFO</tt>
 and <tt>SCHED_RR</tt>.
@@ -112,10 +112,13 @@ below demonstrate how to perform each of these tasks.</li>
 <br><tt>TAO::PriorityMappingManager::_narrow (object.in ());</tt>
 <p>Overriding priority mapping/policy in effect with another ORB-defined
 mapping/policy combination:
+<br><tt>#include "tao/RTCORBA/Continuous_Priority_Mapping.h"</tt>
 <br><tt>#include "tao/RTCORBA/Linear_Priority_Mapping.h"</tt>
 <br><tt>#include "tao/RTCORBA/Direct_Priority_Mapping.h"</tt>
 <br><tt>...</tt>
 <p><tt>RTCORBA::PriorityMapping *pm =</tt>
+<br><tt>new TAO_Continuous_Priority_Mapping (policy);</tt>
+<br>or
 <br><tt>new TAO_Linear_Priority_Mapping (policy);</tt>
 <br>or
 <br><tt>new TAO_Direct_Priority_Mapping (policy);</tt>

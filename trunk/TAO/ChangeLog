@@ -1,3 +1,13 @@
+Sun May 11 10:37:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Checked in updates that sat in my workspace for a long time.
+
+	* orbsvcs/ImplRepo_Service/README.txt: The ORBInitRef for ImplRepo
+	  should refer to ImplRepoService, not ImplRepo_Service.
+
+	* docs/rtcorba/features.html: Added contineous priority mapping,
+	  which went amiss in the document.
+
 Sun May 11 09:28:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/LoadBalancer/Makefile.LoadManager:
@@ -19,7 +29,7 @@ Sun May 11 09:28:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/tests/Sched_Conf/Makefile:
 	* orbsvcs/tests/Simple_Naming/Makefile:
 	* orbsvcs/tests/Time/Makefile: Another set fixes to get static
-	  builds linking fine. 
+	  builds linking fine.
 
 Sun May 11 09:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -61,7 +71,7 @@ Sat May 10 15:21:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/Scheduling_Service/Makefile:
 	* orbsvcs/Time_Service/Makefile:
 	* orbsvcs/tests/Notify/lib/Makefile: A set fixes to get static
-	  builds linking fine. 
+	  builds linking fine.
 
 Sat May 10 12:24:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -70,12 +80,12 @@ Sat May 10 12:24:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sat May 10 10:15:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/*/Makefile*: More updates. 
+	* examples/*/Makefile*: More updates.
 
 Sat May 10 10:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/POA/*/Makefile*: Updated dependencies. This has been a
-	  problem in our daily builds for almost a week now. 
+	  problem in our daily builds for almost a week now.
 
 Fri May  9 16:43:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -87,7 +97,7 @@ Fri May  9 16:43:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  class. Decerement the refcount of the profile, if one exists
 	  in the destructor. Thanks to Bertin Colpron
 	  <BColpron@interstarinc.com> for providing this patch and Thomas
-	  Wiegert <wiegert@schlund.de> for reporting the problem. 
+	  Wiegert <wiegert@schlund.de> for reporting the problem.
 
 	  The above checkin is just a workaorund for a more serious
 	  problem with profile managements especially during location
