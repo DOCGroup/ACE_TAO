@@ -1,5 +1,10 @@
 Mon Nov  5 06:51:16 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp (copy_in_follow_option): 
+	  Added casts to the ternary operators to work around bugs with
+ 	  HP/UX 11.  Thanks to Steve Osselton
+ 	  <steve@prismtechnologies.com> for reporting this.
+
 	* utils/IOR-parser/ior-handler.{h,cpp}: Changed struct IOR to
 	  IOR_Manager to avoid clashes with macros named IOR on HP/UX.
   	  Thanks to Steve Osselton <steve@prismtechnologies.com> for

@@ -1,3 +1,10 @@
+Tue Nov  6 14:39:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/SString.i (find),
+	* ace/Local_Name_Space_T.cpp (resolve_i): Fixed "off-by-one"
+	  bugs with ACE_OS::strscpy().  Thanks to Alain Decamps
+ 	  <Alain.Decamps@PIDPA.be> for contributing this.
+
 Tue Nov  6 13:25:40 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tests/Collection_Test.cpp: Committed an old change that uses an
