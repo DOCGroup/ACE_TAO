@@ -1,3 +1,41 @@
+Sun Feb  6 20:44:26 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace-config.1.in:
+
+	  Updated e-mail address of author (me).
+
+	* configure.in:
+
+	  Updated e-mail address of configure script maintainer (me again).
+
+	  (PURE_CACHE_DIR):
+
+	  Fixed syntax of shell script variables.  This fixes a problem
+	  that occurred on FreeBSD.
+
+	  (LIBS):
+
+	  Removed manual addition of some thread related libraries.  They
+	  are now in the auto-detection list in threads.m4.
+
+	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+	  Improved support for HP aCC, and corrections.  Set WERROR to
+	  "+We67" to cause use of "#pragma once" to be an error instead of
+	  a warning.
+
+	* m4/features.m4 (ACE_CHECK_ASYNCH_IO): 
+
+	  Reduce timeout value in test program from INT_MAX to 5 seconds.
+
+	* m4/threads.m4 (ACE_CHECK_THREADS):
+
+	  Add "-xnolib" to CXXFLAGS when testing thread flag support using
+	  Sun C++.  Sun C++ links a thread function stub library in the
+	  single-threaded case.  The stubs are no-ops but they exist,
+	  nonetheless.  This causes the link tests used to determine if a
+	  thread flag is needed to incorrectly pass.
+
 Sun Feb  6 14:52:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am (libACE_Demux_la_SOURCES):
