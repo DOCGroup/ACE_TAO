@@ -1369,26 +1369,23 @@ ACE_Thread_Adapter::invoke (void)
   // If dropped off end, call destructors for thread-specific storage.
   ACE_TSS_Cleanup::instance ()->exit (status);
 
-  // Exit the thread.
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-  // allow CWinThread-destructor to be invoked from AfxEndThread
+  // Exit the thread.
+  // Allow CWinThread-destructor to be invoked from AfxEndThread.
   // _endthreadex will be called from AfxEndThread so don't exit the
   // thread now if we are running an MFC thread.
   CWinThread *pThread = ::AfxGetThread ();
   if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-#endif /* ACE_HAS_MFC */
+# endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
     {
-#if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
       ::_endthreadex ((DWORD) status);
-#else
-# if defined (ACE_HAS_TSS_EMULATION)
+# else /* ! ACE_WIN32 */
+#   if defined (ACE_HAS_TSS_EMULATION)
       // Delete the thread's TSS.
       ACE_TSS_Emulation::tss_deallocate ();
-# endif /* ACE_HAS_TSS_EMULATION */
-
-      status = 0;
-      ACE_OS::thr_exit (status);
-#endif /* ACE_WIN32 */
+#   endif /* ACE_HAS_TSS_EMULATION */
+# endif /* ! ACE_WIN32 */
     }
 
   return status;
@@ -2025,8 +2022,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (stacksize == 0) stacksize = 20000;
 
   ACE_hthread_t tid = ::taskSpawn (0, priority,
-				   (int) flags, (int) stacksize, func,
-				   (int)args, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
+				   (int) flags,
+                                   (int) stacksize,
+                                   ACE_THREAD_FUNCTION,
+				   (int) ACE_THREAD_ARGUMENT,
+                                   0, 0, 0, 0, 0, 0, 0, 0, 0);
 
   if (tid == ERROR)
     return -1;
