@@ -23,7 +23,7 @@
 
 Point of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
 
-<p>Last Update: June 11, 2001 </p>
+<p>Last Update: April 26, 2002 </p>
 </center>
 
 
@@ -189,9 +189,22 @@ in orbsvcs/tests/InterfaceRepo/Application_Test has been modified to use _get_in
 <li> The executable tao_ifr now handles -ORB options and multiple IDL files in
 the command line. The option<br><br>
 
+<b>
 -ORBInitRef InterfaceRepository=file://[filename]<br><br>
+</b>
 
 can now be used instead of relying on IP multicast to resolve the IFR service.</li><p>
+
+<li> The executable tao_ifr now works with the <a href="../INS.html">Interoperable
+Naming Service</a>.<br><br>
+
+<b>
+IFR_Service -ORBEndpoint iiop://[hostname]:[port] <br><br>
+
+tao_ifr -ORBInitRef InterfaceRepository=corbaloc:iiop:[hostname]:[port]/InterfaceRepository [idl file] <br><br>
+</b>
+
+</li>
 
 <li> A command line option -Si has been added to tao_ifr which suppresses processing of included IDL files. The default is to process them. </li><p>
 
