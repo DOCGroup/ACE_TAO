@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\.." /I "..\..\..\.." /I "..\..\..\..\.." /D EC_Test_HAS_DLL=1 /D "TAO_RTEC_PERF_BUILD_DLL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\.." /I "..\..\..\.." /I "..\..\..\..\.." /D EC_Test_HAS_DLL=1 /D "TAO_RTEC_PERF_BUILD_DLL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
