@@ -1,3 +1,12 @@
+Thu Apr 22 22:18:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/CCM_Component.idl:
+        
+          Added 'typeprefix Components "omg.org";' inside the
+          Components module. All openings of an IDL module must
+          have the same prefix, and the openings of the Components
+          module in other IDL file have this prefix.
+
 Thu Apr 22 21:32:39 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DnC/Deployment.idl:
