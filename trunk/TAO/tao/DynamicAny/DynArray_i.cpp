@@ -26,7 +26,8 @@ TAO_DynArray_i::init_common (void)
   this->has_components_ = 1;
   this->destroyed_ = 0;
   this->current_position_ = 0;
-  this->component_count_ = this->da_members_.size ();
+  this->component_count_ = ACE_static_cast (CORBA::ULong,
+                                            this->da_members_.size ());
 }
 
 void
@@ -235,7 +236,8 @@ TAO_DynArray_i::get_elements (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA::ULong length = this->da_members_.size ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                         this->da_members_.size ());
 
   DynamicAny::AnySeq *elements = 0;
   ACE_NEW_THROW_EX (elements,
@@ -364,7 +366,8 @@ TAO_DynArray_i::set_elements_as_dyn_any (
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 
-  CORBA::ULong length = this->da_members_.size ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                         this->da_members_.size ());
 
   if (values.length () != length)
     {
@@ -437,7 +440,8 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
       TAO_InputCDR cdr (mb,
                         any._tao_byte_order ());
 
-      CORBA::ULong length = this->da_members_.size ();
+      CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                             this->da_members_.size ());
       CORBA::ULong arg_length = this->get_tc_length (tc.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -500,9 +504,9 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_OutputCDR out_cdr;
   CORBA::Any_var field_any;
-  CORBA::ULong length = this->da_members_.size ();
+  size_t length = this->da_members_.size ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (size_t i = 0; i < length; ++i)
     {
       // Recursive step.
       field_any = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);

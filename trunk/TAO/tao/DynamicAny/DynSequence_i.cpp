@@ -26,7 +26,8 @@ TAO_DynSequence_i::init_common (void)
   this->has_components_ = 1;
   this->destroyed_ = 0;
   this->current_position_ = -1;
-  this->component_count_ = this->da_members_.size ();
+  this->component_count_ = ACE_static_cast (CORBA::ULong,
+                                            this->da_members_.size ());
 }
 
 void
@@ -305,7 +306,8 @@ TAO_DynSequence_i::get_elements (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA::ULong length = this->da_members_.size ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                         this->da_members_.size ());
 
   DynamicAny::AnySeq *elements;
   ACE_NEW_THROW_EX (elements,

@@ -520,10 +520,10 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
         }
     }
 
-  size_t size = kind_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
   retval->length (size);
 
-  for (size_t j = 0; j < size; ++j)
+  for (CORBA::ULong j = 0; j < size; ++j)
     {
       CORBA::DefinitionKind next_kind;
       kind_queue.dequeue_head (next_kind);
@@ -588,7 +588,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
                                exclude_inherited
                                ACE_ENV_ARG_PARAMETER);
 
-  size_t size = kind_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
 
   CORBA::ContainedSeq *holder;
   ACE_NEW_THROW_EX (holder,
@@ -599,7 +599,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
   CORBA::ContainedSeq_var retval = holder;
   retval->length (size);
 
-  for (size_t i = 0; i < size; ++i)
+  for (CORBA::ULong i = 0; i < size; ++i)
     {
       CORBA::DefinitionKind next_kind;
       kind_queue.dequeue_head (next_kind);

@@ -998,13 +998,15 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
                           10);
 
      CORBA::String_var port_ptr =
-       CORBA::string_alloc (ACE_OS::strlen ((const char *) port_char));
+       CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
+                              ACE_OS::strlen ((const char *) port_char)));
 
      port_ptr = (const char *) port_char;
 
      CORBA::String_var def_init_ref =
        CORBA::string_alloc (sizeof (prefix) +
-                            ACE_OS::strlen (port_ptr.in ()) +
+                            ACE_static_cast (CORBA::ULong,
+                              ACE_OS::strlen (port_ptr.in ())) +
                             2);
 
       ACE_OS::strcpy (def_init_ref.inout (), prefix);
@@ -1656,7 +1658,9 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
       char *cp;
       ACE_ALLOCATOR_RETURN (cp,
                             CORBA::string_alloc (sizeof ior_prefix
-                                                 + 2 * total_len),
+                                                 + 2 *
+                                                 ACE_static_cast (CORBA::ULong,
+                                                                  total_len)),
                             0);
 
       CORBA::String_var string = cp;

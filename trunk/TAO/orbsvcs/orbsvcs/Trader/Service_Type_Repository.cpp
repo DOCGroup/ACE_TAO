@@ -194,7 +194,8 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong i = 0;
-  CORBA::ULong length = this->type_map_.current_size ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                         this->type_map_.current_size ());
   CosTrading::ServiceTypeName *types =
     CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq::allocbuf (length);
 
@@ -399,7 +400,8 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
 
   // Count the total number of properties.
   CORBA::ULong num_props = 0;
-  CORBA::ULong num_types = service_type_queue.size ();
+  CORBA::ULong num_types = ACE_static_cast (CORBA::ULong,
+                                            service_type_queue.size ());
 
   TAO_String_Queue::ITERATOR iterator (service_type_queue);
 

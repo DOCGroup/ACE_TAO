@@ -122,7 +122,7 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
 void event_debug (const char* p,
                   const RtecEventComm::Event& event)
 {
-  int l = ACE_OS::strlen (p);
+  size_t l = ACE_OS::strlen (p);
   ACE_DEBUG ((LM_DEBUG,
               "%*.*s - event.source: %d (0x%x)\n"
               "%*.*s   event.type: %d (0x%x)\n",

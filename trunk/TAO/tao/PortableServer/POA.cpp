@@ -869,13 +869,14 @@ TAO_POA::the_children_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POAList_var children;
-
+  CORBA::ULong child_current = ACE_static_cast (CORBA::ULong,
+                                                this->children_.current_size ());
   ACE_NEW_THROW_EX (children,
-                    PortableServer::POAList (this->children_.current_size ()),
+                    PortableServer::POAList (child_current),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  children->length (this->children_.current_size ());
+  children->length (child_current);
 
   CORBA::ULong index = 0;
   for (CHILDREN::iterator iterator = this->children_.begin ();
@@ -2983,7 +2984,9 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
   else if (is_system_id)
     {
       // System ids have fixed size.
-      poa_name_size = key.length () - starting_at - TAO_Active_Object_Map::system_id_size ();
+      poa_name_size = ACE_static_cast (CORBA::ULong,
+                                       key.length () - starting_at -
+                                       TAO_Active_Object_Map::system_id_size ());
     }
   else
     {
@@ -3189,8 +3192,8 @@ TAO_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 void
 TAO_POA::set_folded_name (void)
 {
-  CORBA::ULong length = 0;
-  CORBA::ULong parent_length = 0;
+  size_t length = 0;
+  size_t parent_length = 0;
 
   if (this->parent_ != 0)
     {
@@ -3201,7 +3204,7 @@ TAO_POA::set_folded_name (void)
   length += this->name_.length ();
   length += TAO_POA::name_separator_length ();
 
-  this->folded_name_.length (length);
+  this->folded_name_.length (ACE_static_cast (CORBA::ULong, length));
   CORBA::Octet *folded_name_buffer = this->folded_name_.get_buffer ();
 
   if (this->parent_ != 0)
@@ -3226,7 +3229,8 @@ TAO_POA::string_to_ObjectId (const char *string)
   // We DO NOT include the zero terminator, as this is simply an
   // artifact of the way strings are stored in C.
   //
-  CORBA::ULong buffer_size = ACE_OS::strlen (string);
+  CORBA::ULong buffer_size = ACE_static_cast (CORBA::ULong,
+                                              ACE_OS::strlen (string));
 
   // Create the buffer for the Id
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
@@ -3278,7 +3282,7 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *string)
   //
   CORBA::ULong string_length = ACE_OS::wslen (string);
 
-  size_t buffer_size = string_length * sizeof (CORBA::WChar);
+  CORBA::ULong buffer_size = string_length * sizeof (CORBA::WChar);
 
   // Create the buffer for the Id
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
@@ -3761,7 +3765,7 @@ TAO_POA::create_stub_object (const TAO::ObjectKey &object_key,
   // profiles than there are endpoints.  In some cases, there can be
   // less profiles than endpoints.
   int result =
-    mprofile.set (profile_count);
+    mprofile.set (ACE_static_cast (CORBA::ULong, profile_count));
   if (result == -1)
     error = 1;
 

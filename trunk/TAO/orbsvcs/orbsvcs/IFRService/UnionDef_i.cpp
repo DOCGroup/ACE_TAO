@@ -242,7 +242,7 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size_t size = key_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, key_queue.size ());
 
   CORBA::UnionMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,
@@ -258,7 +258,7 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var obj;
   TAO_IDLType_i *impl = 0;
 
-  for (size_t k = 0; k < size; ++k)
+  for (CORBA::ULong k = 0; k < size; ++k)
     {
       key_queue.dequeue_head (next_key);
 

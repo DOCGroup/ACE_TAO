@@ -129,7 +129,7 @@ public:
   int remove_offer (CosTrading::Offer*& offer);
 
   /// Return the number of offers remaining in the ordering.
-  int num_offers (void);
+  size_t num_offers (void);
 
   struct Preference_Info
   {

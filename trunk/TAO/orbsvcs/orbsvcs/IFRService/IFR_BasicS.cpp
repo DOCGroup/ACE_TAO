@@ -1580,7 +1580,7 @@ CORBA__TAO_Repository_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_Repository_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_Repository_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_Repository_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_Repository_Proxy_Broker_Factory_function;
@@ -1589,7 +1589,7 @@ CORBA__TAO_Repository_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_Repository_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_Repository_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_Repository_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_Repository_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_Repository_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -3600,7 +3600,7 @@ CORBA__TAO_ModuleDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_ModuleDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ModuleDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ModuleDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ModuleDef_Proxy_Broker_Factory_function;
@@ -3609,7 +3609,7 @@ CORBA__TAO_ModuleDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ModuleDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ModuleDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ModuleDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ModuleDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ModuleDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -4860,7 +4860,7 @@ CORBA__TAO_ConstantDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_ConstantDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ConstantDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ConstantDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ConstantDef_Proxy_Broker_Factory_function;
@@ -4869,7 +4869,7 @@ CORBA__TAO_ConstantDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ConstantDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ConstantDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ConstantDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ConstantDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ConstantDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -6546,7 +6546,7 @@ CORBA__TAO_StructDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_StructDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_StructDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_StructDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_StructDef_Proxy_Broker_Factory_function;
@@ -6555,7 +6555,7 @@ CORBA__TAO_StructDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_StructDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_StructDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_StructDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_StructDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_StructDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -8189,7 +8189,7 @@ CORBA__TAO_UnionDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_UnionDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_UnionDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_UnionDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_UnionDef_Proxy_Broker_Factory_function;
@@ -8198,7 +8198,7 @@ CORBA__TAO_UnionDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_UnionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_UnionDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_UnionDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_UnionDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_UnionDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -9888,7 +9888,7 @@ CORBA__TAO_EnumDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_EnumDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_EnumDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_EnumDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_EnumDef_Proxy_Broker_Factory_function;
@@ -9897,7 +9897,7 @@ CORBA__TAO_EnumDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_EnumDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_EnumDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_EnumDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_EnumDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_EnumDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -11070,7 +11070,7 @@ CORBA__TAO_AliasDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_AliasDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_AliasDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_AliasDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_AliasDef_Proxy_Broker_Factory_function;
@@ -11079,7 +11079,7 @@ CORBA__TAO_AliasDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_AliasDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_AliasDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_AliasDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_AliasDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_AliasDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -11967,7 +11967,7 @@ CORBA__TAO_NativeDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_NativeDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_NativeDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_NativeDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_NativeDef_Proxy_Broker_Factory_function;
@@ -11976,7 +11976,7 @@ CORBA__TAO_NativeDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_NativeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_NativeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_NativeDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_NativeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_NativeDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -12639,7 +12639,7 @@ CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_function;
@@ -12648,7 +12648,7 @@ CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_PrimitiveDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -13616,7 +13616,7 @@ CORBA__TAO_StringDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_StringDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_StringDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_StringDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_StringDef_Proxy_Broker_Factory_function;
@@ -13625,7 +13625,7 @@ CORBA__TAO_StringDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_StringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_StringDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_StringDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_StringDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_StringDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -14763,7 +14763,7 @@ CORBA__TAO_WstringDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_WstringDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_WstringDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_WstringDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_WstringDef_Proxy_Broker_Factory_function;
@@ -14772,7 +14772,7 @@ CORBA__TAO_WstringDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_WstringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_WstringDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_WstringDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_WstringDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_WstringDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -16338,7 +16338,7 @@ CORBA__TAO_SequenceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_SequenceDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_SequenceDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_SequenceDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_SequenceDef_Proxy_Broker_Factory_function;
@@ -16347,7 +16347,7 @@ CORBA__TAO_SequenceDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_SequenceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_SequenceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_SequenceDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_SequenceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_SequenceDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -18419,7 +18419,7 @@ CORBA__TAO_ArrayDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_ArrayDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ArrayDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ArrayDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ArrayDef_Proxy_Broker_Factory_function;
@@ -18428,7 +18428,7 @@ CORBA__TAO_ArrayDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ArrayDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ArrayDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ArrayDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ArrayDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ArrayDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -20246,7 +20246,7 @@ CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_function;
@@ -20255,7 +20255,7 @@ CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ExceptionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -22012,7 +22012,7 @@ CORBA__TAO_AttributeDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_AttributeDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_AttributeDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_AttributeDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_AttributeDef_Proxy_Broker_Factory_function;
@@ -22021,7 +22021,7 @@ CORBA__TAO_AttributeDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_AttributeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_AttributeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_AttributeDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_AttributeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_AttributeDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -24109,7 +24109,7 @@ CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_function;
@@ -24118,7 +24118,7 @@ CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ExtAttributeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -27121,7 +27121,7 @@ CORBA__TAO_OperationDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_OperationDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_OperationDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_OperationDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_OperationDef_Proxy_Broker_Factory_function;
@@ -27130,7 +27130,7 @@ CORBA__TAO_OperationDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_OperationDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_OperationDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_OperationDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_OperationDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_OperationDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -30517,7 +30517,7 @@ CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function;
@@ -30526,7 +30526,7 @@ CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_InterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -32522,7 +32522,7 @@ CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_function (CORBA::Object_p
 }
 
 int
-CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_function;
@@ -32531,7 +32531,7 @@ CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -33462,7 +33462,7 @@ CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 }
 
 int
-CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_function;
@@ -33471,7 +33471,7 @@ CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -34070,7 +34070,7 @@ CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr
 }
 
 int
-CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_function;
@@ -34079,7 +34079,7 @@ CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -34669,7 +34669,7 @@ CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_
 }
 
 int
-CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_function;
@@ -34678,7 +34678,7 @@ CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -35288,7 +35288,7 @@ CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr ob
 }
 
 int
-CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_function;
@@ -35297,7 +35297,7 @@ CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -35887,7 +35887,7 @@ CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr
 }
 
 int
-CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer (size_t)
 {
   CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_function_pointer =
     CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_function;
@@ -35896,7 +35896,7 @@ CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer));
+  CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////

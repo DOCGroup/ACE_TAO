@@ -222,8 +222,8 @@ TAO_FT_IOGR_Property::set_primary (
   cdr << ACE_OutputCDR::from_boolean (val);
 
   // Get the length of the CDR stream
-  CORBA::ULong length =
-    cdr.total_length ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                         cdr.total_length ());
 
   // Set the length
   tagged_components.component_data.length (length);
@@ -271,8 +271,8 @@ TAO_FT_IOGR_Property::encode_properties (
     cdr << this->ft_group_tagged_component_.object_group_ref_version;
 
   // Get the length of the CDR stream
-  CORBA::ULong length =
-    cdr.total_length ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                         cdr.total_length ());
 
   // Set the length
   tagged_components.component_data.length (length);

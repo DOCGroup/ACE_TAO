@@ -445,7 +445,7 @@ TAO_Naming_Context::to_url (const char * addr,
                    CosNaming::NamingContext::InvalidName))
 {
   /// Compute how many characters will be required for the URL
-  CORBA::ULong no_char =
+  size_t no_char =
     TAO_Naming_Context::to_url_validate_and_compute_size (addr, sn
                                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -458,7 +458,8 @@ TAO_Naming_Context::to_url (const char * addr,
 
   // Allocate dynamic memory
   //
-  char *str_url = CORBA::string_alloc (no_char + sizeof (prefix));
+  char *str_url = CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
+                                                no_char + sizeof (prefix)));
 
   // Copy 'prefix' to the return parameter.
   char *dest = ACE_OS::strcpy (str_url , prefix);

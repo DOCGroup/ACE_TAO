@@ -3668,9 +3668,10 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
     case CORBA::tk_except:
     case CORBA::tk_value:
       {
-        if (!cdr.write_ulong (x->length_)
+        CORBA::ULong xlen = ACE_static_cast (CORBA::ULong, x->length_);
+        if (!cdr.write_ulong (xlen)
             || !cdr.write_octet_array ((CORBA::Octet*)x->buffer_,
-                                       x->length_))
+                                       xlen))
           {
             return 0;
           }

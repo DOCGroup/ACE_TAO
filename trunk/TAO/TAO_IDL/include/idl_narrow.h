@@ -99,7 +99,7 @@ extern char *type_id_to_string(long);
 
 #define DEF_NARROW_METHODS0(TYPE)\
 static  int     type_id(); \
-virtual void    *narrow(long type_const)
+virtual void    *narrow(size_t type_const)
 
 
 #define IMPL_NARROW_METHODS0(TYPE)\
@@ -109,9 +109,9 @@ TYPE::type_id()\
   return 0;\
 }\
 void    * \
-TYPE::narrow(long type_const) {\
+TYPE::narrow(size_t type_const) {\
   void  *rval = NULL; \
-  long temp = (long) &TYPE::type_id; \
+  size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
   return rval; \
@@ -119,7 +119,7 @@ TYPE::narrow(long type_const) {\
 
 #define DEF_NARROW_METHODS1(TYPE,PARENT) \
 static  int     type_id(); \
-virtual void    *narrow(long type_const)
+virtual void    *narrow(size_t type_const)
 
 
 #define IMPL_NARROW_METHODS1(TYPE,PARENT) \
@@ -129,9 +129,9 @@ TYPE::type_id() \
    return 0;\
 }\
 void    * \
-TYPE::narrow(long type_const) {\
+TYPE::narrow(size_t type_const) {\
   void  *rval = NULL; \
-  long temp = (long) &TYPE::type_id; \
+  size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
@@ -141,7 +141,7 @@ TYPE::narrow(long type_const) {\
 
 #define DEF_NARROW_METHODS2(TYPE,PARENT1,PARENT2) \
 static  int     type_id(); \
-virtual void    *narrow(long type_const)
+virtual void    *narrow(size_t type_const)
 
 
 #define IMPL_NARROW_METHODS2(TYPE,PARENT1,PARENT2) \
@@ -151,9 +151,9 @@ TYPE::type_id() \
    return 0;\
 }\
 void    * \
-TYPE::narrow(long type_const) { \
+TYPE::narrow(size_t type_const) { \
   void *rval = NULL; \
-  long temp = (long) &TYPE::type_id; \
+  size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
@@ -165,7 +165,7 @@ TYPE::narrow(long type_const) { \
 
 #define DEF_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3) \
 static  int     type_id(); \
-virtual void    *narrow(long type_const)
+virtual void    *narrow(size_t type_const)
 
 
 #define IMPL_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3) \
@@ -175,9 +175,9 @@ TYPE::type_id() \
    return 0;\
 }\
 void    * \
-TYPE::narrow(long type_const) {\
+TYPE::narrow(size_t type_const) {\
   void *rval = NULL; \
-  long temp = (long) &TYPE::type_id; \
+  size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
@@ -191,7 +191,7 @@ TYPE::narrow(long type_const) {\
 
 #define DEF_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4) \
 static  int     type_id(); \
-virtual void    *narrow(long type_const)
+virtual void    *narrow(size_t type_const)
 
 
 #define IMPL_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4) \
@@ -201,9 +201,9 @@ TYPE::type_id() \
    return 0;\
 }\
 void    * \
-TYPE::narrow(long type_const) {\
+TYPE::narrow(size_t type_const) {\
   void *rval = NULL; \
-  long temp = (long) &TYPE::type_id; \
+  size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
@@ -219,7 +219,7 @@ TYPE::narrow(long type_const) {\
 
 #define DEF_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5) \
 static  int     type_id(); \
-virtual void    *narrow(long type_const)
+virtual void    *narrow(size_t type_const)
 
 
 #define IMPL_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5) \
@@ -229,9 +229,9 @@ TYPE::type_id() \
    return 0;\
 }\
 void    * \
-TYPE::narrow(long type_const) {\
+TYPE::narrow(size_t type_const) {\
   void *rval = NULL; \
-  long temp = (long) &TYPE::type_id; \
+  size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
@@ -254,7 +254,7 @@ static  TYPE *narrow_from_decl(AST_Decl *t)
 #define IMPL_NARROW_FROM_DECL(TYPE)\
 TYPE * \
 TYPE::narrow_from_decl(AST_Decl *t) { \
-   return (TYPE *)t->narrow((long)&TYPE::type_id);\
+   return (TYPE *)t->narrow((size_t)&TYPE::type_id);\
 }
 
 #define DEF_NARROW_FROM_SCOPE(TYPE)\
@@ -264,7 +264,7 @@ static  TYPE *narrow_from_scope(UTL_Scope *t)
 #define IMPL_NARROW_FROM_SCOPE(TYPE)\
 TYPE * \
 TYPE::narrow_from_scope(UTL_Scope *t) { \
-    return (TYPE *)t->narrow((long)&TYPE::type_id);\
+    return (TYPE *)t->narrow((size_t)&TYPE::type_id);\
 }
 
 #endif  // _IDL_NARROW_IDL_NARROW_HH

@@ -212,7 +212,7 @@ TAO_InterfaceDef_i::base_interfaces_i (ACE_ENV_SINGLE_ARG_DECL)
   this->base_interfaces_recursive (kind_queue,
                                    path_queue);
 
-  size_t size = kind_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
 
   CORBA::InterfaceDefSeq *seq = 0;
   ACE_NEW_THROW_EX (seq,
@@ -485,7 +485,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size_t size = key_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, key_queue.size ());
   fifd->operations.length (size);
 
   for (i = 0; i < size; ++i)
@@ -536,7 +536,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size = key_queue.size ();
+  size = ACE_static_cast (CORBA::ULong, key_queue.size ());
   fifd->attributes.length (size);
 
   for (i = 0; i < size; ++i)

@@ -607,7 +607,7 @@ TAO_AV_UDP_QoS_Transport::send (const ACE_Message_Block *mblk,
       if (i->length () > 0)
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = i->length ();
+          iov[iovcnt].iov_len  = ACE_static_cast (u_long, i->length ());
           iovcnt++;
 
           // The buffer is full make a OS call.  @@ TODO this should

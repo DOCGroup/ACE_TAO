@@ -263,7 +263,7 @@ TAO_IIOP_Profile::endpoint (void)
   return &this->endpoint_;
 }
 
-size_t
+CORBA::ULong
 TAO_IIOP_Profile::endpoint_count (void)
 {
   return this->count_;
@@ -285,21 +285,21 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->object_key_);
 
-  u_int buflen = (8 /* "corbaloc" */ +
-                  1 /* colon separator */ +
-                  ACE_OS::strlen (::prefix_) +
-                  1 /* colon separator */ +
-                  1 /* major version */ +
-                  1 /* decimal point */ +
-                  1 /* minor version */ +
-                  1 /* `@' character */ +
-                  ACE_OS::strlen (this->endpoint_.host ()) +
-                  1 /* colon separator */ +
-                  5 /* port number */ +
-                  1 /* object key separator */ +
-                  ACE_OS::strlen (key.in ()));
+  size_t buflen = (8 /* "corbaloc" */ +
+                   1 /* colon separator */ +
+                   ACE_OS::strlen (::prefix_) +
+                   1 /* colon separator */ +
+                   1 /* major version */ +
+                   1 /* decimal point */ +
+                   1 /* minor version */ +
+                   1 /* `@' character */ +
+                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   1 /* colon separator */ +
+                   5 /* port number */ +
+                   1 /* object key separator */ +
+                   ACE_OS::strlen (key.in ()));
 
-  char * buf = CORBA::string_alloc (buflen);
+  char * buf = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, buflen));
 
   static const char digits [] = "0123456789";
 
@@ -359,7 +359,7 @@ TAO_IIOP_Profile::encode_endpoints (void)
   endpoints.length (this->count_);
 
   const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
-  for (size_t i = 0;
+  for (CORBA::ULong i = 0;
        i < this->count_;
        ++i)
     {

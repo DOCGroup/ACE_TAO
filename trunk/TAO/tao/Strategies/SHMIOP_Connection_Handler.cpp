@@ -104,7 +104,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
     }
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   // Not needed, anyway
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
@@ -133,7 +133,7 @@ TAO_SHMIOP_Connection_Handler::activate (long flags,
                  THR_BOUND));
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   return TAO_SHMIOP_SVC_HANDLER::activate (flags,
                                          n_threads,

@@ -486,7 +486,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
   this->parser_names_ =
     new char *[this->parser_names_count_];
 
-  size_t index = 0;
+  CORBA::ULong index = 0;
 
   this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
   index++;

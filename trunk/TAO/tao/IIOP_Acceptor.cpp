@@ -77,7 +77,7 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 
   delete [] this->addrs_;
 
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     CORBA::string_free (this->hosts_[i]);
 
   delete [] this->hosts_;
@@ -118,7 +118,7 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
     return -1;
 
   // Create a profile for each acceptor endpoint.
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
       TAO_IIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
@@ -159,7 +159,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
-  size_t index = 0;
+  CORBA::ULong index = 0;
   TAO_Profile *pfile = 0;
   TAO_IIOP_Profile *iiop_profile = 0;
 
@@ -238,7 +238,7 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == 0)
     return 0;
 
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
       // compare the port and host name.  Please do *NOT* optimize
       // this code by comparing the IP address instead.  That would
@@ -543,7 +543,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
   u_short port = address.get_port_number ();
-  for (size_t j = 0; j < this->endpoint_count_; ++j)
+  for (CORBA::ULong j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
   (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
@@ -553,7 +553,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 
   if (TAO_debug_level > 5)
     {
-      for (size_t i = 0; i < this->endpoint_count_; ++i)
+      for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
@@ -691,9 +691,9 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->endpoint_count_ = if_cnt;
+    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt);
   else
-    this->endpoint_count_ = if_cnt - lo_cnt;
+    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt - lo_cnt);
 
   ACE_NEW_RETURN (this->addrs_,
                   ACE_INET_Addr[this->endpoint_count_],
@@ -857,7 +857,8 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = len - begin;  // Handle last endpoint differently
+        end = ACE_static_cast (CORBA::ULong, len)
+                           - begin;  // Handle last endpoint differently
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -296,7 +296,7 @@ TAO_Connection_Handler::handle_input_eh (
   // Grab the transport id now and use the cached value for printing
   // since the  transport could dissappear by the time the thread
   // returns.
-  int t_id =
+  size_t t_id =
     this->transport ()->id ();
 
 
@@ -388,7 +388,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
       return 0;
     }
 
-  int id = -1;
+  size_t id = 0;
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 

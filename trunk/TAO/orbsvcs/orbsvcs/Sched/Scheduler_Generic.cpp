@@ -177,9 +177,9 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
           if (output_level () >= 5)
             {
               ACE_OS::printf ("registered task \"%s\" with RT_Info starting "
-                              "at %lX\n",
+                              "at %p\n",
                               (const char*)rt_info[0]->entry_point,
-                              (long)rt_info[0]);
+                              rt_info[0]);
             }
         }
         break;
@@ -231,7 +231,7 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *>
   status_t status = ACE_Scheduler::SUCCEEDED;
 
   // store number of tasks, based on registrations
-  tasks (task_entries_.size ());
+  tasks (ACE_static_cast (u_int, task_entries_.size ()));
 
   if (output_level () > 0)
     {

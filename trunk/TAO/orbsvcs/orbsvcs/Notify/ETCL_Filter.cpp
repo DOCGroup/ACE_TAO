@@ -272,7 +272,8 @@ TAO_NS_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
                       CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  size_t current_size = this->constraint_expr_list_.current_size ();
+  CORBA::ULong current_size = ACE_static_cast (CORBA::ULong,
+                                this->constraint_expr_list_.current_size ());
 
   // Create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq *infoseq_ptr;

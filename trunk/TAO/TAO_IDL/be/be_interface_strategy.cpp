@@ -131,9 +131,9 @@ be_interface_strategy::compute_coll_names (int type,
   // prefix and the local name and the (optional) "::"
   const char *collocated = collocated_names[type];
 
-  int name_len = ACE_OS::strlen (collocated)
-                 + ACE_OS::strlen (poa)
-                 + 1;
+  size_t name_len = ACE_OS::strlen (collocated)
+                    + ACE_OS::strlen (poa)
+                    + 1;
 
   if (prefix)
     {
@@ -211,9 +211,9 @@ be_interface_strategy::compute_coll_names (int type,
 
   // Compute the local name for the collocated class.
   char *local_name = this->node_->AST_Interface::local_name ()->get_string ();
-  int local_len = ACE_OS::strlen (collocated)
-                  + ACE_OS::strlen (local_name)
-                  + 1;
+  size_t local_len = ACE_OS::strlen (collocated)
+                     + ACE_OS::strlen (local_name)
+                     + 1;
   if (prefix)
     {
       local_len += ACE_OS::strlen (prefix);
@@ -257,7 +257,7 @@ be_interface_strategy::compute_names (const char *name,
       return;
     }
 
-  int name_length = ACE_OS::strlen (name) +
+  size_t name_length = ACE_OS::strlen (name) +
     ACE_OS::strlen (prefix) +
     ACE_OS::strlen (suffix);
 
@@ -268,7 +268,7 @@ be_interface_strategy::compute_names (const char *name,
   ACE_OS::strcpy (new_name, name);
 
   const char *interface_name = 0;
-  int i = ACE_OS::strlen (name);
+  size_t i = ACE_OS::strlen (name);
 
   for (;i >= 1; i--)
     {
@@ -663,7 +663,7 @@ be_interface_default_strategy::full_name (void)
 {
   if (this->full_name_ == 0)
     {
-      int len = ACE_OS::strlen (node_->be_decl::full_name ());
+      size_t len = ACE_OS::strlen (node_->be_decl::full_name ());
 
       ACE_NEW_RETURN (this->full_name_,
                       char[len + 1],
@@ -681,7 +681,7 @@ be_interface_default_strategy::local_name (void)
 {
   if (!this->local_name_)
     {
-      int len = 
+      size_t len = 
         ACE_OS::strlen (node_->AST_Interface::local_name ()->get_string ());
 
       ACE_NEW_RETURN (this->local_name_,
@@ -700,7 +700,7 @@ be_interface_default_strategy::flat_name (void)
 {
   if (!this->flat_name_)
     {
-      int len = ACE_OS::strlen (node_->be_decl::flat_name ());
+      size_t len = ACE_OS::strlen (node_->be_decl::flat_name ());
 
       ACE_NEW_RETURN (this->flat_name_,
                       char[len + 1],
@@ -718,7 +718,7 @@ be_interface_default_strategy::repoID (void)
 {
   if (this->repoID_ == 0)
     {
-      int len = ACE_OS::strlen (node_->be_decl::repoID ());
+      size_t len = ACE_OS::strlen (node_->be_decl::repoID ());
 
       ACE_NEW_RETURN (this->repoID_,
                       char[len + 1],
@@ -774,7 +774,7 @@ be_interface_default_strategy::create_with_prefix_suffix (
   )
 {
   char *cat_string = 0;
-  unsigned int length =
+  size_t length =
     ACE_OS::strlen (str) +
     ACE_OS::strlen (prefix) +
     ACE_OS::strlen (suffix) +
@@ -821,8 +821,8 @@ be_interface_default_strategy::client_scope (void)
   const char *full_name = this->full_name ();
   const char *name = this->local_name ();
 
-  int offset = ACE_OS::strlen (name);
-  int length = ACE_OS::strlen (full_name) - offset;
+  size_t offset = ACE_OS::strlen (name);
+  size_t length = ACE_OS::strlen (full_name) - offset;
   ACE_NEW_RETURN (this->client_scope_,
                   char[length + 1],
                   0);
@@ -843,8 +843,8 @@ be_interface_default_strategy::flat_client_scope (void)
   const char *full_name = this->flat_name ();
   const char *name = this->local_name ();
 
-  int offset = ACE_OS::strlen (name);
-  int length = ACE_OS::strlen (full_name) - offset;
+  size_t offset = ACE_OS::strlen (name);
+  size_t length = ACE_OS::strlen (full_name) - offset;
   ACE_NEW_RETURN (this->flat_client_scope_,
                   char[length + 1],
                   0);
@@ -869,8 +869,8 @@ be_interface_default_strategy::server_scope (void)
 
   const char *name = this->node_->local_coll_name (be_interface::DIRECT);
 
-  int offset = ACE_OS::strlen (name);
-  int length = ACE_OS::strlen (full_name) - offset;
+  size_t offset = ACE_OS::strlen (name);
+  size_t length = ACE_OS::strlen (full_name) - offset;
   ACE_NEW_RETURN (this->server_scope_,
                   char[length + 1],
                   0);
@@ -892,8 +892,8 @@ be_interface_default_strategy::flat_server_scope (void)
   const char *full_name = this->flat_name ();
   const char *name = this->local_name ();
 
-  int offset = ACE_OS::strlen (name);
-  int length = ACE_OS::strlen (full_name) - offset;
+  size_t offset = ACE_OS::strlen (name);
+  size_t length = ACE_OS::strlen (full_name) - offset;
   ACE_NEW_RETURN (this->flat_client_scope_,
                   char[length + 1],
                   0);
@@ -916,7 +916,7 @@ be_interface_default_strategy::full_base_proxy_impl_name (void)
 
   const char *scope = this->client_scope ();
   const char *base_name = this->base_proxy_impl_name ();
-  int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   ACE_NEW_RETURN (this->full_base_proxy_impl_name_,
                   char[length + 1],
                   0);
@@ -957,7 +957,7 @@ be_interface_default_strategy::full_remote_proxy_impl_name (void)
 
   const char *scope = this->client_scope ();
   const char *base_name = this->remote_proxy_impl_name ();
-  int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   ACE_NEW_RETURN (this->full_remote_proxy_impl_name_,
                   char[length + 1],
                   0);
@@ -995,7 +995,7 @@ be_interface_default_strategy::full_thru_poa_proxy_impl_name (void)
 
   const char *scope = this->server_scope ();
   const char *base_name = this->thru_poa_proxy_impl_name ();
-  int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   ACE_NEW_RETURN (this->full_thruPOA_proxy_impl_name_,
                   char[length + 1],
                   0);
@@ -1036,7 +1036,7 @@ be_interface_default_strategy::full_direct_proxy_impl_name (void)
   const char *scope = this->server_scope ();
   const char *base_name = this->direct_proxy_impl_name ();
 
-  int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   ACE_NEW_RETURN (this->full_direct_proxy_impl_name_,
                   char[length + 1],
                   0);
@@ -1075,7 +1075,7 @@ be_interface_default_strategy::full_base_proxy_broker_name (void)
 
   const char *scope = this->client_scope ();
   const char *base_name = this->base_proxy_broker_name ();
-  int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   ACE_NEW_RETURN (this->full_base_proxy_broker_name_,
                   char[length + 1],
                   0);
@@ -1114,7 +1114,7 @@ be_interface_default_strategy::full_remote_proxy_broker_name (void)
 
   const char *scope = this->client_scope ();
   const char *base_name = this->remote_proxy_broker_name ();
-  int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   ACE_NEW_RETURN (this->full_remote_proxy_broker_name_,
                   char[length + 1],
                   0);
@@ -1153,7 +1153,7 @@ be_interface_default_strategy::full_strategized_proxy_broker_name (void)
 
   const char *scope = this->server_scope ();
   const char *base_name = this->strategized_proxy_broker_name ();
-  int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   ACE_NEW_RETURN (this->full_strategized_proxy_broker_name_,
                   char[length + 1],
                   0);

@@ -253,7 +253,7 @@ ACE_RT_Task::open_task (const char* name)
   if (tempname == 0)
     {
       ACE_OS::sprintf (tempbuffer,
-                       "unnamed task %lx", (long) this);
+                       "unnamed task %p", this);
       tempname = tempbuffer;
     }
 
@@ -346,7 +346,7 @@ ACE_RT_Task::synch_threads (size_t threads)
           // First try real-time scheduling with specified priority.
           long flags = THR_BOUND | THR_SCHED_FIFO;
           if (this->activate (flags,
-                              threads - this->thr_count (),
+                              (int)(threads - this->thr_count ()),
                               1, // Force it to spawn more threads
                               thread_priority) == -1)
             {
@@ -354,7 +354,7 @@ ACE_RT_Task::synch_threads (size_t threads)
               // the requested priority.
               flags = THR_BOUND;
               if (this->activate (flags,
-                                  threads - this->thr_count (),
+                                  (int)(threads - this->thr_count ()),
                                   1, // Force it to spawn more threads
                                   thread_priority) == -1)
                 {
@@ -385,7 +385,7 @@ ACE_RT_Task::synch_threads (size_t threads)
                   flags = THR_BOUND;
 
                   if (this->activate (flags,
-                                      threads - this->thr_count (),
+                                      (int)(threads - this->thr_count ()),
                                       1, // Force it to spawn more threads
                                       fallback_priority) == -1)
                     {
@@ -412,9 +412,9 @@ ACE_RT_Task::synch_threads (size_t threads)
     {
       // kill_threads has to be off the stack in case the last thread
       // deletes this RT_Task.
-      int kill_threads = this->thr_count () - threads;
+      size_t kill_threads = this->thr_count () - threads;
 
-      for (int x = kill_threads ; x > 0; x--)
+      for (size_t x = 0; x < kill_threads; ++x)
         {
           // Create a new shutdown command with a task pointer of 0.
           ACE_RT_Task_Shutdown *te = new ACE_RT_Task_Shutdown (0);

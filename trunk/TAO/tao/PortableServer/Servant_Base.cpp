@@ -202,7 +202,8 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
     }
 
   // Fetch the skeleton for this operation
-  if (this->_find (opname, skel, req.operation_length()) == -1)
+  if (this->_find (opname, skel,
+         ACE_static_cast (unsigned int, req.operation_length())) == -1)
     {
       ACE_THROW (CORBA::BAD_OPERATION ());
     }
@@ -287,7 +288,8 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
     }
 
   // Fetch the skeleton for this operation
-  if (this->_find (opname, skel, req.operation_length()) == -1)
+  if (this->_find (opname, skel,
+         ACE_static_cast (unsigned int, req.operation_length())) == -1)
     {
       ACE_THROW (CORBA::BAD_OPERATION ());
     }

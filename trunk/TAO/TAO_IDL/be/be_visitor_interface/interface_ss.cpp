@@ -614,7 +614,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
       *os << "int" << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (long)" << be_nl
+          << "_Factory_Initializer (size_t)" << be_nl
           << "{" << be_idt_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
@@ -634,7 +634,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (ACE_reinterpret_cast (long, "
+          << "_Factory_Initializer (ACE_reinterpret_cast (size_t, "
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_Initializer));"

@@ -341,7 +341,8 @@ TAO_AV_RTP_Object::handle_input (void)
   // Get payload that has been converted to host byte order
   char *data_ptr;
   ACE_UINT16 length;
-  RTP_Packet rtp_packet(this->frame_.rd_ptr (), this->frame_.length ());
+  RTP_Packet rtp_packet(this->frame_.rd_ptr (),
+                        ACE_static_cast (int,  this->frame_.length ()));
 
   rtp_packet.get_frame_info (&frame_info);
   rtp_packet.get_payload(&data_ptr, length);
@@ -396,7 +397,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                   csrc_count,                   // csrc count
                                   csrc_list,                    // csrc list
                                   frame->rd_ptr (),             // data
-                                  frame->length ()),            // data size
+                                  (ACE_UINT16)frame->length ()),// data size
                                   -1);
 
       frame_info->sequence_num ++;
@@ -452,7 +453,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                   csrc_count,                   // csrc count
                                   csrc_list,                    // csrc list
                                   frame->rd_ptr (),             // data
-                                  frame->length ()),            // data size
+                                  (ACE_UINT16)frame->length ()),// data size
                                   -1);
 
       this->sequence_num_ ++;

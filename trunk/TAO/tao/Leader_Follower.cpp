@@ -188,7 +188,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // with debugging level on we are on a sticky wicket. Hopefully none
   // of our users should run TAO with debugging enabled like they did
   // in PathFinder
-  int t_id = 0;
+  size_t t_id = 0;
 
   if (TAO_debug_level)
     t_id = transport->id ();

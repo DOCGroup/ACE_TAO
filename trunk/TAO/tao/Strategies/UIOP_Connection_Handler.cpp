@@ -88,7 +88,7 @@ TAO_UIOP_Connection_Handler::open (void*)
                 addr.get_path_name (), this->peer ().get_handle ()));
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
@@ -116,7 +116,7 @@ TAO_UIOP_Connection_Handler::activate (long flags,
                  THR_BOUND));
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   return TAO_UIOP_SVC_HANDLER::activate (flags,
                                          n_threads,

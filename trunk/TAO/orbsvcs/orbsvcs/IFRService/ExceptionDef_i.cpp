@@ -224,7 +224,7 @@ TAO_ExceptionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size_t size = kind_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
 
   CORBA::StructMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,
@@ -243,7 +243,7 @@ TAO_ExceptionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_Configuration_Section_Key member_key;
   TAO_IDLType_i *impl = 0;
 
-  for (size_t k = 0; k < size; ++k)
+  for (CORBA::ULong k = 0; k < size; ++k)
     {
       name_queue.dequeue_head (name);
       retval[k].name = name.c_str ();

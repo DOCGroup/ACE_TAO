@@ -180,7 +180,7 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
       if (current_iov_len <= max_length)
         {
           // Return the full data portion.
-          block.iov_len = current_iov_len;
+          block.iov_len = ACE_static_cast (u_long, current_iov_len);
           block.iov_base = this->iov_[this->iov_index_].iov_base;
 
           // Go to the next block.
@@ -192,7 +192,7 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
         {
           // Let the caller use the first part of this
           // message block.
-          block.iov_len = max_length;
+          block.iov_len = ACE_static_cast (u_long, max_length);
           block.iov_base = this->iov_[this->iov_index_].iov_base;
 
           // Break up the block.
@@ -212,7 +212,7 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
       if (this->iov_len_left_ <= max_length)
         {
           // Return everything that's left in the block.
-          block.iov_len = this->iov_len_left_;
+          block.iov_len = ACE_static_cast (u_long, this->iov_len_left_);
           block.iov_base = this->iov_ptr_;
 
           // Go to the next block.
@@ -226,7 +226,7 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
       else
         {
           // Split a little more off the block.
-          block.iov_len = this->iov_len_left_;
+          block.iov_len = ACE_static_cast (u_long, this->iov_len_left_);
           block.iov_base = this->iov_ptr_;
 
           this->iov_len_left_ -= max_length;
@@ -383,8 +383,9 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
   miop_hdr.write_ulong (num_fragments);
 
   // UniqueId
-  this->write_unique_id (miop_hdr, ACE_reinterpret_cast (unsigned long,
-                                                         iov));
+  ptr_arith_t unique_id = ACE_reinterpret_cast (ptr_arith_t, iov);
+  this->write_unique_id (miop_hdr,
+                         ACE_static_cast (unsigned long, unique_id));
 
   // Send the buffers.
   current_fragment = &fragments[0];

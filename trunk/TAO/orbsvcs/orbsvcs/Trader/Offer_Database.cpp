@@ -299,12 +299,13 @@ TAO_Offer_Database<LOCK_TYPE>::
 generate_offer_id (const char *service_type_name, CORBA::ULong id)
 {
   // holds final id string.
-  int total_size = 16 + ACE_OS::strlen (service_type_name);
+  size_t total_size = 16 + ACE_OS::strlen (service_type_name);
 
   // hold portions of id string.
-  CosTrading::OfferId offer_id = CORBA::string_alloc (total_size);
+  CosTrading::OfferId offer_id =
+     CORBA::string_alloc (ACE_static_cast (CORBA::ULong, total_size));
   char* return_value = 0;
-  ACE_OS::sprintf (offer_id, "%016u%s", (CORBA::ULong) id, service_type_name);
+  ACE_OS::sprintf (offer_id, "%016u%s", id, service_type_name);
 
   return_value = CORBA::string_dup (offer_id);
   delete [] offer_id;

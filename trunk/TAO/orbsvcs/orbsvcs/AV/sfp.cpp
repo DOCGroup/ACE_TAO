@@ -64,7 +64,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  frame_header_len = output_cdr.total_length ();
+  frame_header_len = ACE_static_cast (u_int, output_cdr.total_length ());
   // fill in the default fragment message fields.
   fragment.magic_number [0] = 'F';
   fragment.magic_number [1] = 'R';
@@ -77,7 +77,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  fragment_len = output_cdr.total_length ();
+  fragment_len = ACE_static_cast (u_int, output_cdr.total_length ());
   // fill in the default Start message fields.
   start.magic_number [0] = '=';
   start.magic_number [1] = 'S';
@@ -93,7 +93,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  start_len = output_cdr.total_length ();
+  start_len = ACE_static_cast (u_int, output_cdr.total_length ());
   // fill in the default StartReply message fields.
   start_reply.magic_number [0] = '=';
   start_reply.magic_number [1] = 'S';
@@ -107,7 +107,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       return;
     }
 
-  start_reply_len = output_cdr.total_length ();
+  start_reply_len = ACE_static_cast (u_int, output_cdr.total_length ());
 
   // fill in the default Credit message fields.
   credit.magic_number [0] = '=';
@@ -121,7 +121,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
       ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
       return;
     }
-  credit_len = output_cdr.total_length ();
+  credit_len = ACE_static_cast (u_int, output_cdr.total_length ());
 }
 
 int
@@ -283,7 +283,8 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
       ACE_NEW_RETURN (new_node,
                       TAO_SFP_Fragment_Node,
                       0);
-      new_node->fragment_info_.frag_sz = data->length ();
+      new_node->fragment_info_.frag_sz = ACE_static_cast (CORBA::ULong,
+                                                          data->length ());
       new_node->fragment_info_.frag_number = 0;
       if (state.frame_.source_ids.length () > 0)
         new_node->fragment_info_.source_id = state.frame_.source_ids [0];
@@ -595,11 +596,12 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
                             TAO_OutputCDR &stream,
                             ACE_Message_Block *mb)
 {
-  size_t total_len = stream.total_length ();
+  CORBA::ULong total_len = ACE_static_cast (CORBA::ULong,
+                                            stream.total_length ());
   if (mb != 0)
     {
       for (ACE_Message_Block *temp = mb;temp != 0;temp = temp->cont ())
-        total_len += temp->length ();
+        total_len += ACE_static_cast (CORBA::ULong, temp->length ());
 
       char *buf = (char *) stream.buffer ();
       size_t offset = TAO_SFP_MESSAGE_SIZE_OFFSET;
@@ -880,11 +882,11 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
    if (this->current_credit_ != 0)
     {
       // if we have enough credit then we send.
-      int total_length = 0;
+      size_t total_length = 0;
       for (ACE_Message_Block *temp = frame;temp != 0;temp = temp->cont ())
         total_length += temp->length ();
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"total_length of frame=%d\n",total_length));
-      if (ACE_static_cast (u_int, total_length) < (TAO_SFP_MAX_PACKET_SIZE -TAO_SFP_Base::frame_header_len))
+      if (total_length < (TAO_SFP_MAX_PACKET_SIZE -TAO_SFP_Base::frame_header_len))
         {
           if (frame_info != 0)
             {
@@ -946,7 +948,8 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
                 return 0;
             }
           size_t last_len,current_len;
-          int message_len = out_stream.total_length ();
+          int message_len = ACE_static_cast (int,
+                                             out_stream.total_length ());
           ACE_Message_Block *mb = frame;
           ACE_Message_Block *fragment_mb =
             this->get_fragment (mb,
@@ -1047,7 +1050,7 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
                               size_t &last_mb_current_len)
 {
   ACE_Message_Block *fragment_mb = 0,*temp_mb = 0;
-  int prev_len,last_len = 0;
+  size_t prev_len,last_len = 0;
   size_t current_len = 0;
   size_t message_len = initial_len;
   while (mb != 0)

@@ -309,7 +309,8 @@ TAO_Codeset_Manager::init_codeset_factories_i (TAO_CodesetFactorySet& factset,
   TAO_CodesetFactorySetItor iter = factset.begin ();
 
   CONV_FRAME::CodeSetId ncs = cs_comp.native_code_set;
-  cs_comp.conversion_code_sets.length(factset.size());
+  cs_comp.conversion_code_sets.length(ACE_static_cast (CORBA::ULong,
+                                                       factset.size()));
   CORBA::ULong index;
 
   for (index=0; iter != end; iter++)

@@ -364,7 +364,8 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
               }
           }
 
-        AVStreams::flowSpec new_flowspec (flow_spec_set.size ());
+        AVStreams::flowSpec new_flowspec (ACE_static_cast (CORBA::ULong,
+                                                   flow_spec_set.size ()));
         int i=0;
         TAO_AV_FlowSpecSetItor connect_end = address_flow_set.end ();
         TAO_AV_FlowSpecSetItor connect = address_flow_set.begin ();

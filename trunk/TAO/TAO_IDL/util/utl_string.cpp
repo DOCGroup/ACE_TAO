@@ -134,7 +134,7 @@ UTL_String::~UTL_String (void)
 void
 UTL_String::canonicalize (void)
 {
-  for (unsigned long i = 0; i < this->len; ++i)
+  for (size_t i = 0; i < this->len; ++i)
     {
       if (isalpha (this->p_str[i]))
         {
