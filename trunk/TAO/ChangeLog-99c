@@ -1,8 +1,7 @@
 Fri Apr 30 11:58:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Request.{h,cpp} (operator[]): Changed the return type from
-	  "const CORBA::Request_ptr" to "const CORBA::Request*".  They are
-	  very different.
+	  "const CORBA::Request_ptr" to "const CORBA::Request*".
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect): Reordered the code
 	  to avoid putting compiler specific code here.
