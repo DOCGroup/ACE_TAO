@@ -1,3 +1,11 @@
+Tue Jan  6 15:20:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/object.h: 
+	* tao/object.cpp: 
+	  Removed obsolete methods, they were there to support upcalls on
+	  the server side, but now this is done on
+	  PortableServer::ServantBase.
+
 Tue Jan  6 14:46:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/poa.h: 
