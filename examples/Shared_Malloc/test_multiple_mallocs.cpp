@@ -59,9 +59,9 @@ main (int, char *[])
       data = shmem_response->malloc (ACE_OS::strlen (RESPONSE_STRING) + 1);
       ACE_OS::strcpy ((char *) data, RESPONSE_STRING);
       shmem_response->bind ("foo", data);
-    }
 
-  ACE_OS::printf ("Run again to see results and release resources.\n");
+      ACE_OS::printf ("Run again to see results and release resources.\n");
+    }
 
   return 0;
 }
