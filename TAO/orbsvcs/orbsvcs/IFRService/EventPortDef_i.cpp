@@ -11,8 +11,8 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
-  : TAO_Contained_i (repo),
-    TAO_IRObject_i (repo)
+  : TAO_IRObject_i (repo),
+    TAO_Contained_i (repo)   
 {
 }
 

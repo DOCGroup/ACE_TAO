@@ -11,9 +11,9 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
-  : TAO_AttributeDef_i (repo),
+  : TAO_IRObject_i (repo),
     TAO_Contained_i (repo),
-    TAO_IRObject_i (repo)
+    TAO_AttributeDef_i (repo)
 {
 }
 
