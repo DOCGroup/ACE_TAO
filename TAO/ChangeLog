@@ -1,3 +1,22 @@
+Thu Jan 15 15:50:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/include/ast_type.h:
+        
+          Since char, octet and boolean are usually ambiguous types
+          in the ORB, specializing an Arg_Traits<> class for an
+          argument that is a typedef of one of these types requires
+          that we strip the typedef to find the correct parameter
+          with which to specialize Arg_Traits<>. This fix introduces
+          that behavior. Thanks to Simon Dutkowski 
+          <dutkowski@fokus.fraunhofer.de> for reporting the bug.
+          
+        * tests/IDL_Test/interface.idl:
+        
+          Added an example to the IDL that reproduces the condition described
+          above.
+
 Thu Jan 15 15:42:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
@@ -8,7 +27,8 @@ Thu Jan 15 15:42:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           Andrew Metcalfe <Andrew.Metcalfe@ccur.com> for reporting
           the bug.
           
-        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/full.idl:
+        * tests/IDL_Test/fwd.idl:
         
           Added example to test the construct that cause the bug
           described above.
