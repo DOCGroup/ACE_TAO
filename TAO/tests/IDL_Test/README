@@ -39,3 +39,8 @@ The generated code from reopened_modules.idl is not included in the
 Makefile per se. Platforms without namespaces cannot handle
 reopened modules, so reopened_modulesC.cpp and reopened_modulesS.cpp
 have been conditionally included in a file called namespace_check.cpp.
+On platforms without namespaces, the IDL compiler will output a 
+warning that the generated code may not compile, each time a module
+is reopened in the .idl file. If seen when building this test, the
+warning can safely be ignored. It can also be ignored if you are
+cross-compiling onto a platform that has namespaces.
