@@ -80,6 +80,7 @@ CIAO::ComponentServer_Task::svc ()
 
 
       Components::Deployment::ServerActivator_var activator;
+      Components::ConfigValues_var config;
 
       if (this->options_.use_callback_)
         {
@@ -92,13 +93,17 @@ CIAO::ComponentServer_Task::svc ()
                                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          Components::ConfigValues_out config_out (config.out ());
+
           activator
-              = act_callback->register_component_server (comserv_obj.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
+            = act_callback->register_component_server (comserv_obj.in (),
+                                                       config_out
+                                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       comserv_servant->set_objref (activator.in (),
+                                   config.in (),
                                    comserv_obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
