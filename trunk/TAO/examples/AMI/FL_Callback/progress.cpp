@@ -75,14 +75,14 @@ main (int argc, char *argv[])
       int w = 320;
       int h = 30 * n_peers + 20;
       Fl_Window window(w, h);
-      
+
       Progress_Window sw (n_peers, n_iterations,
                           10,
                           10,
                           window.w () - 20,
                           window.h () - 20);
       window.resizable (&sw);
-      
+
       window.end ();
 
       char* targv[] = { argv[0] };
@@ -91,7 +91,9 @@ main (int argc, char *argv[])
       sw.show ();
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),

@@ -270,7 +270,8 @@ Client::svc (void)
 
       // Obtain PolicyCurrent.
       CORBA::Object_var policy_current_object =
-        orb_->resolve_initial_references ("PolicyCurrent");
+        orb_->resolve_initial_references ("PolicyCurrent", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (policy_current_object.in (),
