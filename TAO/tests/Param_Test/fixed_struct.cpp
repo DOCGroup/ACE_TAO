@@ -87,11 +87,25 @@ int
 Test_Fixed_Struct::run_sii_test (Param_Test_ptr objref,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  this->ret_ = objref->test_fixed_struct (this->in_,
-                                          this->inout_,
-                                          this->out_,
-                                          ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  ACE_TRY
+    {
+      this->ret_ = objref->test_fixed_struct (this->in_,
+                                              this->inout_,
+                                              this->out_,
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_Fixed_Struct::run_sii_test\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 int
