@@ -1,3 +1,22 @@
+Thu Sep 24 16:28:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/config-win32-common.h: ACE_HAS_TEMPLATE_TYPEDEFS was defined
+ 	  for VC4.1 and VC4.2.  Template typedefs in Strategies_T.cpp
+ 	  broke the VC4.2 compiler.  Therefore, ACE_HAS_TEMPLATE_TYPEDEFS
+ 	  was deprecated for VC4.1 and VC4.2. I also checked VC5.0 and it
+ 	  didn't work.  Therefore, for the time being, none of the VC
+ 	  compilers support ACE_HAS_TEMPLATE_TYPEDEFS.  I didn't try
+ 	  VC6.0.
+
+	* ace/Strategies_T.cpp (check_hint_i ): Changed the signature so
+ 	  that it is identical to find_or_create_svc_handler_i().  For
+ 	  some strange freakin reason, the VC4.2 could not gork
+ 	  check_hint_i() but was able to gork
+ 	  find_or_create_svc_handler_i.
+
+	* ace/ACE_Library.mdp: Added Select_Reactor_Base.cpp and
+ 	  Container.cpp to make ACE build with VC4.2.
+
 Thu Sep 24 13:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/README

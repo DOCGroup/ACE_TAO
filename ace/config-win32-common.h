@@ -192,11 +192,6 @@ typedef unsigned __int64 ACE_UINT64;
         #pragma warning(disable:4231)
         // Disable warning of using Microsoft Extension.
 
-        // It seems that this works with MSVC 4.[1,2]
-        #if (1010 <= _MSC_VER) && (_MSC_VER <= 1020)
-                #define ACE_HAS_TEMPLATE_TYPEDEFS
-        #endif
-
         // MSVC 4.0 or greater
         #if (_MSC_VER >= 1000)
                 // Compiler/Platform supports the "using" keyword.

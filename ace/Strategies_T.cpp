@@ -459,13 +459,26 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::open
   return 0;
 }
 
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> void
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hint_i 
   (SVC_HANDLER *&sh,
+   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+   ACE_Time_Value *timeout,
+   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+   int reuse_addr,
+   int flags,
+   int perms,
    ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
    int &found)
 {
+  ACE_UNUSED_ARG (remote_addr);
+  ACE_UNUSED_ARG (timeout);
+  ACE_UNUSED_ARG (local_addr);
+  ACE_UNUSED_ARG (reuse_addr);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (perms);
+
   found = 0;
 
   // Get the recycling act for the svc_handler 
@@ -514,6 +527,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
 
   if (found)
     entry = possible_entry;
+
+  return 0;
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
@@ -616,8 +631,21 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
     // Check if the user passed a hint svc_handler
     if (sh != 0)
-      this->check_hint_i (sh, search_addr, entry, found);
-
+      {
+        int result = this->check_hint_i (sh, 
+                                         remote_addr,
+                                         timeout,
+                                         local_addr,
+                                         reuse_addr,
+                                         flags,
+                                         perms,
+                                         search_addr, 
+                                         entry, 
+                                         found);
+        if (result != 0)
+          return result;
+      }
+    
     // If not found
     if (!found)
       {

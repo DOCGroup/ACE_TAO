@@ -887,10 +887,16 @@ protected:
   // Cleanup hint.
 
   // = Helpers
-  void check_hint_i (SVC_HANDLER *&sh,
-                     ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
-                     int &found);
+  int check_hint_i (SVC_HANDLER *&sh,
+                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                    ACE_Time_Value *timeout,
+                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                    int reuse_addr,
+                    int flags,
+                    int perms,
+                    ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
+                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
+                    int &found);
 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
