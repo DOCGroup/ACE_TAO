@@ -30,7 +30,7 @@
 
 ACE_RCSID(QOS_Decorator, QOS_Decorator, "$Id$")
   
-class ACE_QoS_Decorator_Base : public ACE_Event_Handler
+class ACE_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
 {
   // = TITLE
   //     This class is the Decorator Pattern Base class for decorating
@@ -71,7 +71,7 @@ private:
 
 };
 
-class ACE_QoS_Event_Handler : public ACE_Event_Handler 
+class ACE_Export ACE_QoS_Event_Handler : public ACE_Event_Handler 
 {
   // = TITLE
   //     This Handler is registered with the Reactor for QoS events.
@@ -113,7 +113,7 @@ private:
 
 };
 
-class ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
+class ACE_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
 {
   // = TITLE
   //     Concrete QoS Decorator.
