@@ -89,7 +89,6 @@
 
 // Collocation
 #include "be_visitor_operation/proxy_impl_xh.cpp"
-#include "be_visitor_operation/thru_poa_proxy_impl_ss.cpp"
 #include "be_visitor_operation/direct_proxy_impl_ss.cpp"
 
 // AMH

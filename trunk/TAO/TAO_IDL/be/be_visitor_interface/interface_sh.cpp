@@ -93,19 +93,13 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
       << "_ptr;" << be_nl << be_nl;
 
-  // Forward class declarations.
-//   if (be_global->gen_thru_poa_collocation ())
-//     {
-//       *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
-//     }
 
   if (be_global->gen_direct_collocation ())
     {
       *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
     }
 
-  if (be_global->gen_thru_poa_collocation ()
-      || be_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     {
       *os << "class " << node->strategized_proxy_broker_name ()
           << ";" << be_nl;
@@ -257,8 +251,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   be_visitor_context ctx (*this->ctx_);
 
-  if (be_global->gen_thru_poa_collocation ()
-      || be_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     {
       ctx = *this->ctx_;
       // Generate strategized proxy broker.
@@ -280,21 +273,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   ctx = *this->ctx_;
 
   // Generate the collocated class.
-//   if (be_global->gen_thru_poa_collocation ())
-//     {
-//       ctx = *this->ctx_;
-//       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH);
-//       be_visitor_interface_thru_poa_proxy_impl_sh itppi_visitor (&ctx);
-
-//       if (node->accept (&itppi_visitor) == -1)
-//         {
-//           ACE_ERROR_RETURN ((LM_ERROR,
-//                              "be_visitor_interface_sh::"
-//                              "visit_interface - "
-//                              "codegen for thru_poa_collocated class failed\n"),
-//                             -1);
-//         }
-//     }
 
   ctx = *this->ctx_;
 

@@ -528,11 +528,9 @@ be_interface_default_strategy::be_interface_default_strategy (
                            strategy_kind),
     base_proxy_impl_name_ (0),
     remote_proxy_impl_name_ (0),
-    thruPOA_proxy_impl_name_ (0),
     direct_proxy_impl_name_ (0),
     full_base_proxy_impl_name_ (0),
     full_remote_proxy_impl_name_ (0),
-    full_thruPOA_proxy_impl_name_ (0),
     full_direct_proxy_impl_name_ (0),
     base_proxy_broker_ (0),
     remote_proxy_broker_ (0),
@@ -561,12 +559,6 @@ be_interface_default_strategy::~be_interface_default_strategy (void)
       this->remote_proxy_impl_name_ = 0;
     }
 
-  if (this->thruPOA_proxy_impl_name_ != 0)
-    {
-      delete [] this->thruPOA_proxy_impl_name_;
-      this->thruPOA_proxy_impl_name_ = 0;
-    }
-
   if (this->direct_proxy_impl_name_ != 0)
     {
       delete [] this->direct_proxy_impl_name_;
@@ -583,12 +575,6 @@ be_interface_default_strategy::~be_interface_default_strategy (void)
     {
       delete [] this->full_remote_proxy_impl_name_;
       this->full_remote_proxy_impl_name_ = 0;
-    }
-
-  if (this->full_thruPOA_proxy_impl_name_ != 0)
-    {
-      delete [] this->full_thruPOA_proxy_impl_name_;
-      this->full_thruPOA_proxy_impl_name_ = 0;
     }
 
   if (this->full_direct_proxy_impl_name_ != 0)
@@ -967,45 +953,6 @@ be_interface_default_strategy::full_remote_proxy_impl_name (void)
 
   return this->full_remote_proxy_impl_name_;
 }
-
-const char *
-be_interface_default_strategy::thru_poa_proxy_impl_name (void)
-{
-  if (this->thruPOA_proxy_impl_name_ != 0)
-    {
-      return this->thruPOA_proxy_impl_name_;
-    }
-
-  this->thruPOA_proxy_impl_name_ =
-    this->create_with_prefix_suffix (this->tag_table_[GC_PREFIX],
-                                     this->node_->local_name (),
-                                     this->suffix_table_[PROXY_IMPL],
-                                     this->tag_table_[THRU_POA]);
-
-  return this->thruPOA_proxy_impl_name_;
-}
-
-const char *
-be_interface_default_strategy::full_thru_poa_proxy_impl_name (void)
-{
-  if (this->full_thruPOA_proxy_impl_name_ != 0)
-    {
-      return this->full_thruPOA_proxy_impl_name_;
-    }
-
-  const char *scope = this->server_scope ();
-  const char *base_name = this->thru_poa_proxy_impl_name ();
-  size_t length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-  ACE_NEW_RETURN (this->full_thruPOA_proxy_impl_name_,
-                  char[length + 1],
-                  0);
-
-  ACE_OS::strcpy (this->full_thruPOA_proxy_impl_name_, scope);
-  ACE_OS::strcat (this->full_thruPOA_proxy_impl_name_, base_name);
-
-  return this->full_thruPOA_proxy_impl_name_;
-}
-
 
 const char *
 be_interface_default_strategy::direct_proxy_impl_name (void)

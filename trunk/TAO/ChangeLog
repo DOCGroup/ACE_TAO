@@ -1,3 +1,56 @@
+Tue Mar  8 22:08:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/thru_poa_proxy_impl_sh.h:
+	* TAO_IDL/be_include/be_visitor_interface/thru_poa_proxy_impl_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
+
+	  Removed these vesitigial files.
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_strategy.cpp:
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
+	* TAO_IDL/be/be_visitor_component/component_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_strategy.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_interface/smart_proxy_ch.h:
+	* TAO_IDL/be_include/be_visitor_interface/smart_proxy_cs.h:
+	* TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+
+	  Cleaned up remaining thru-POA related code that is no longer
+	  necessary or is unused.
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  Only generate a strategized proxy broker for the direct
+	  collocation case.  A strategized proxy broker isn't needed for
+	  the thru-POA collocated case.  Reduces skeleton footprint by
+	  approximately 2.5Kb per interface.
+
+	  Generate a dummy collocation proxy broker factory function in
+	  the thru-POA collocation case that returns a dummy
+	  TAO::Collocation_Proxy_Broker pointer (i.e. "0xdead").  The
+	  collocation code in TAO's ORB_Core still detects collocation
+	  availability by checking for a non-zero pointer.  That value
+	  will not be used for the thru-POA case.  A valid collocation
+	  proxy broker factory function is still generated for the direct
+	  collocation case.
+
 Tue Mar  8 17:22:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:

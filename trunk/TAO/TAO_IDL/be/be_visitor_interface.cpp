@@ -74,8 +74,6 @@
 #include "be_visitor_interface/strategized_proxy_broker_ss.cpp"
 
 // Proxy Impls
-#include "be_visitor_interface/thru_poa_proxy_impl_sh.cpp"
-#include "be_visitor_interface/thru_poa_proxy_impl_ss.cpp"
 #include "be_visitor_interface/direct_proxy_impl_sh.cpp"
 #include "be_visitor_interface/direct_proxy_impl_ss.cpp"
 

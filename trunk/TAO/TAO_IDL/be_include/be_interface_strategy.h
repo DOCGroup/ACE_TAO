@@ -79,13 +79,6 @@ public:
   // retrieve the fully qualified name of the remote
   // proxy implementation.
 
-  virtual const char *thru_poa_proxy_impl_name (void) = 0;
-  // retrieve the name of the ThruPOA  proxy implementation.
-
-  virtual const char *full_thru_poa_proxy_impl_name (void) = 0;
-  // retrieve the fully qualified name of the ThruPOA  proxy
-  // implementation.
-
   virtual const char *direct_proxy_impl_name (void) =0;
   // retrieve the name of the Directx  proxy implementation.
 
@@ -243,13 +236,6 @@ public:
   // retrieve the fully qualified name of the remote
   // proxy implementation.
 
-  virtual const char *thru_poa_proxy_impl_name (void);
-  // retrieve the name of the ThruPOA  proxy implementation.
-
-  virtual const char *full_thru_poa_proxy_impl_name (void);
-  // retrieve the fully qualified name of the ThruPOA  proxy
-  // implementation.
-
   virtual const char *direct_proxy_impl_name (void);
   // retrieve the name of the Directx  proxy implementation.
 
@@ -334,12 +320,10 @@ protected:
   // Proxy Implementation names.
   char *base_proxy_impl_name_;
   char *remote_proxy_impl_name_;
-  char *thruPOA_proxy_impl_name_;
   char *direct_proxy_impl_name_;
 
   char *full_base_proxy_impl_name_;
   char *full_remote_proxy_impl_name_;
-  char *full_thruPOA_proxy_impl_name_;
   char *full_direct_proxy_impl_name_;
 
   // Proxy Broker Names.
