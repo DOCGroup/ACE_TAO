@@ -153,8 +153,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Request_Handler: end handle input (0x%x)\n"),
-                fd));
+                ACE_TEXT ("(%t) Request_Handler: 0x%x peer closed (0x%x)\n"),
+                this, fd));
   return -1;
 }
 
@@ -167,7 +167,8 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
-               ACE_TEXT ("(%t) Expected %d messages; got %d\n"),
+               ACE_TEXT ("(%t) Handler 0x%x: Expected %d messages; got %d\n"),
+               this,
                cli_req_no,
                this->nr_msgs_rcvd_));
   this->destroy ();
