@@ -1,3 +1,30 @@
+Mon Jul 21 20:55:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+        * TAO_IDL/be/be_visitor_module/module_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+	  - Replaced use of 'TAO_NAMESPACE' in generated code with
+	    'namespace', along with related macros.
+
+	  - Modified stub-side generated code to match Bala's
+	    latest hand-crafted changes to support collocation.
+
 Mon Jul 21 13:11:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO.dsp:

@@ -82,7 +82,7 @@ int be_visitor_root::visit_root (be_root *node)
 
           *os << be_nl << be_nl
               << "extern " << be_global->stub_export_macro () << be_nl
-              << i->full_base_proxy_broker_name () << " *" << be_nl
+              << "TAO::Collocation_Proxy_Broker *" << be_nl
               << "(*" << i->flat_client_enclosing_scope ()
               << i->base_proxy_broker_name ()
               << "_Factory_function_pointer) ("
@@ -138,7 +138,7 @@ int be_visitor_root::visit_root (be_root *node)
               << be_nl
               << "// interfaces that inherit from both CORBA::Object" << be_nl
               << "// and CORBA::AbstractBase." << be_nl << be_nl
-              << "TAO_NAMESPACE CORBA" << be_nl
+              << "namespace CORBA" << be_nl
               << "{" << be_idt;
         }
 
@@ -156,8 +156,7 @@ int be_visitor_root::visit_root (be_root *node)
       if (size > 0)
         {
           *os << be_uidt_nl
-              << "}" << be_nl
-              << "TAO_NAMESPACE_CLOSE";
+              << "}";
         }
     }
 

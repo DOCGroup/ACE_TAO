@@ -381,45 +381,70 @@ be_visitor_operation::gen_stub_operation_body (
     be_type *return_type
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor_context ctx;
-  const char *target = "_collocated_tao_target_";
+  be_interface *intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
 
-  if (node->defined_in ()->is_abstract ())
+  if (!intf)
     {
-      target = "this";
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+                         "visit_operation - "
+                         "bad interface scope\n"),
+                        -1);
     }
 
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_visitor_context ctx;
+
   *os << be_nl << "{" << be_idt_nl;
+
+  if (node->has_native ()) // native exists => no stub
+    {
+      if (this->gen_raise_exception (return_type,
+                                     "CORBA::MARSHAL",
+                                     "") == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_cs::"
+              "visit_operation - "
+              "codegen for native exception failed\n"
+            ),
+            -1
+          );
+        }
+
+      *os << be_uidt_nl << "}";
+
+      return 0;
+    }
+
+  if (!node->is_abstract ())
+    {
+      // If the object is lazily evaluated the proxy brker might well
+      // be null.  Initialize it now.
+      *os << "if (!this->is_evaluated ())" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);"
+          << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
+          << be_idt_nl
+          << "{" << be_idt_nl
+          << intf->flat_name () << "_setup_collocation (" 
+          << be_idt << be_idt_nl
+          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
+          << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+    }
 
   const char *env = this->gen_environment_var ();
 
   if (ACE_OS::strcmp ("", env) != 0)
     {
       *os << env << be_nl;
-    }
-
-  // Generate the actual code for the stub. However, if any of the argument
-  // types is "native", we flag a MARSHAL exception.
-  // last argument - is always ACE_ENV_ARG_PARAMETER
-  if (!node->has_native ())
-    {
-      // native type does not exist.
-
-      // Generate any "pre" stub information such as tables or declarations
-      // This is a template method and the actual work will be done by the
-      // derived class
-      if (this->gen_pre_stub_info (node) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "gen_pre_stub_info failed\n"
-            ),
-            -1
-          );
-        }
     }
 
   // Declare return type helper class.
@@ -485,12 +510,12 @@ be_visitor_operation::gen_stub_operation_body (
 
   *os << be_nl << be_nl
       << "TAO::Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
-      << "_collocated_tao_target_," << be_nl
+      << "this," << be_nl
       << "_tao_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
       << "\"" << node->local_name () << "\"," << be_nl
-      << ACE_OS::strlen (node->local_name ()->get_string ()) << be_nl
-      << "0";
+      << ACE_OS::strlen (node->local_name ()->get_string ()) << "," << be_nl
+      << "this->the" << intf->base_proxy_broker_name () << "_";
 
   if (node->flags () == AST_Operation::OP_oneway)
     {
@@ -536,106 +561,11 @@ be_visitor_operation::gen_stub_operation_body (
       *os << "ACE_CHECK_RETURN (_tao_retval.excp ());";
     }
 
-  // Temporary hack until we finish code generation refactoring.
-  *os << "\n\n#if 0" << be_nl << be_nl;
-
-  if (node->has_native ()) // native exists => no stub
+  if (!this->void_return_type (return_type))
     {
-      if (this->gen_raise_exception (return_type,
-                                     "CORBA::MARSHAL",
-                                     "") == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for return var failed\n"
-            ),
-            -1
-          );
-        }
+      *os << be_nl << be_nl
+          << "return _tao_retval.retn ();";
     }
-  else
-    {
-      // Generate code that retrieves the underlying stub object and then
-      // invokes do_static_call on it.
-      *os << "TAO_Stub *istub = " << target << "->_stubobj ();"
-          << be_nl << be_nl
-          << "if (istub == 0)" << be_idt_nl
-          << "{" << be_idt_nl;
-
-      // If the stub object was bad, then we raise a system exception.
-      if (this->gen_raise_exception (return_type, "CORBA::INTERNAL", "") == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for checking exception failed\n"
-            ),
-            -1
-          );
-        }
-
-      *os << be_uidt_nl << "}" << be_uidt_nl;
-
-      // Do any pre marshal and invoke processing with return type. This
-      // includes allocating memory, initialization.
-      ctx = *this->ctx_;
-      be_visitor_operation_rettype_pre_invoke_cs rpi_visitor (&ctx);
-
-      if (return_type->accept (&rpi_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for retval pre invoke failed\n"
-            ),
-            -1
-          );
-        }
-
-      // Do any pre marshal and invoke stuff with arguments.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_PRE_INVOKE_CS);
-      be_visitor_operation_argument api_visitor (&ctx);
-
-      if (node->accept (&api_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for argument pre invoke failed\n"
-            ),
-            -1
-          );
-        }
-
-      // Generate the code for marshaling in the parameters and transmitting
-      // them.
-      if (this->gen_marshal_and_invoke (node, return_type) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-              "visit_operation - "
-              "codegen for marshal and invoke failed\n"
-            ),
-            -1
-          );
-        }
-
-      // Temporary hack until we finish refactoring the code generation.
-      *os << "\n\n#endif /* 0 */";
-
-      if (!this->void_return_type (return_type))
-        {
-          *os << be_nl << be_nl
-              << "return _tao_retval.retn ();";
-        }
-    } // end of if (!native)
 
   *os << be_uidt_nl << "}";
 

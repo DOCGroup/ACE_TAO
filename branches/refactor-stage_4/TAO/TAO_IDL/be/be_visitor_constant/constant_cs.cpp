@@ -94,8 +94,8 @@ be_visitor_constant_cs::gen_nested_namespace_begin (be_module *node)
       if (ACE_OS::strcmp (item_name, "") != 0)
         {
           // leave the outermost root scope.
-          *os << "TAO_NAMESPACE_BEGIN (" << item_name
-              << ")" << be_nl;
+          *os << "namespace " << item_name << be_nl
+              << "{" << be_nl;
         }
     }
 
@@ -114,7 +114,7 @@ be_visitor_constant_cs::gen_nested_namespace_end (be_module *node)
       if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
           // leave the outermost root scope.
-          *os << "TAO_NAMESPACE_END" << be_nl;
+          *os << "}" << be_nl;
         }
     }
 

@@ -271,6 +271,7 @@ public:
   {
     dsf (void);
 
+    ACE_UINT64 interface_seen_;
     ACE_UINT64 valuetype_seen_;
     ACE_UINT64 abstract_iface_seen_;
     ACE_UINT64 iface_seq_seen_;
