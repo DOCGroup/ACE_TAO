@@ -390,7 +390,27 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   //    implementation.  *sigh*
   //
   // Generate code for the _interface skeleton.
+
 //   {
+//     *os << "void " << full_skel_name
+// 	<< "::_interface_skel (" << be_idt << be_idt_nl
+// 	<< "TAO_ServerRequest & server_request, " << be_nl
+// 	<< "void * /* servant_upcall */," << be_nl
+// 	<< "void * servant" << be_nl
+// 	<< "ACE_ENV_ARG_DECL" << be_uidt_nl
+// 	<< ")" << be_uidt_nl;
+//     *os << "{" << be_idt_nl;
+//     *os << "TAO_IFR_Client_Adapter * const adapter =" << be_idt_nl
+// 	<< "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
+// 	<< be_idt << be_idt_nl
+// 	<< "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
+// 	<< ");" << be_uidt_nl << be_uidt_nl;
+//     *os << "if (adapter == 0)" << be_idt_nl
+// 	<< "{" << be_idt_nl
+// 	<< "ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1," << be_nl
+// 	<< "                              CORBA::COMPLETED_NO));" << be_uidt_nl
+// 	<< "}" << be_uidt_nl << be_nl;
+
 //     Identifier rt_name (ACE_OS::strdup (" CORBA::InterfaceDef"));
 //     UTL_ScopedName rt_scoped_name (&rt_name, 0);
 
@@ -409,6 +429,132 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 //     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
 //     upcall_command_visitor.visit (&get_interface, full_skel_name);
+
+//     // Generate exception list.
+//     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
+//     exception_list.visit_operation (&get_interface);
+
+//     be_visitor_operation_ss op_visitor (this->ctx_);
+
+//     *os << "TAO::SArg_Traits< ";
+
+//     op_visitor.gen_arg_template_param_name (&get_interface,
+//                                             &rt,
+//                                             os);
+
+//     *os << ">::ret_val retval;";
+
+//     op_visitor.gen_skel_body_arglist (&get_interface,
+//                                       os);
+
+//     *os << be_nl << be_nl
+//         << "TAO::Argument * const args[] =" << be_idt_nl
+//         << "{" << be_idt_nl
+//         << "&retval"
+//         << be_uidt_nl
+//         << "};" << be_uidt_nl << be_nl;
+
+//     *os << "static size_t const nargs = 1;" << be_nl << be_nl;
+
+//     // Get the right object implementation.
+//     *os << full_skel_name << " * const impl =" << be_idt_nl
+//         << "static_cast<" << be_idt_nl
+//         << full_skel_name << " *> (servant);" << be_uidt
+//         << be_uidt_nl;
+
+//     // Upcall_Command instantiation.
+//     *os << be_nl
+//         << "Upcall_Command command (" << be_idt_nl
+//         << "impl";
+
+//     if (!get_interface.void_return_type ()
+//         || get_interface.argument_count () > 0)
+//       {
+//         // server_request.operation_details () will be non-zero in the
+//         // thru-POA collocation case.  Use them if available.
+//         *os << "," << be_nl;
+
+//         if (be_global->gen_thru_poa_collocation ())
+//           *os << "server_request.operation_details ()," << be_nl;
+
+//         *os << "args";
+//       }
+
+//     *os << ");" << be_uidt_nl << be_nl;
+
+//     *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
+//         << "upcall_wrapper.upcall (server_request" << be_nl
+//         << "                       , args" << be_nl
+//         << "                       , nargs" << be_nl
+//         << "                       , command" << be_nl
+//         << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+//         << "                       , servant_upcall" << be_nl
+//         << "                       , exceptions" << be_nl
+//         << "                       , nexceptions"
+//         << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
+//         << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
+//         << "ACE_CHECK;" << be_nl;
+
+//     *os << ", TAO::SArg_Traits< ";
+//     op_visitor.gen_arg_template_param_name (&get_interface,
+// 					    &rt,
+// 					    os);
+//     *os << ">::ret_arg_type ret_arg =" << be_idt_nl;
+
+//     if (be_global->gen_thru_poa_collocation ())
+//       {
+// 	*os << "TAO::Portable_Server::get_ret_arg< ";
+
+// 	op_visitor.gen_arg_template_param_name (&get_interface,
+// 						&rt,
+// 						os);
+
+// 	// ------
+// 	// Because of MSVC++ 6's lack of template typedef support,
+// 	// explicitly specify the return value type for the argument
+// 	// selection function template.
+// 	/**
+// 	 * @todo Remove this code once we drop support for MSVC++ 6,
+// 	 *       and update tao/PortableServer/get_arg.h"
+// 	 *       accordingly.
+// 	 */
+// 	*os << ", TAO::SArg_Traits< ";
+// 	op_visitor.gen_arg_template_param_name (&get_interface,
+// 						&rt,
+// 						os);
+// 	*os << ">::ret_arg_type";
+// 	// ------
+
+// 	*os << "> (" << be_idt_nl
+// 	    << "server_request.operation_details ()," << be_nl
+// 	    << "args);" << be_uidt;
+//       }
+//     else
+//       {
+// 	*os << "retval.arg ()";
+//       }
+ 
+//     *os << be_uidt_nl;
+
+//     *os << "TAO_OutputCDR & out = *server_request.outgoing ();"
+// 	<< be_nl << be_nl
+// 	<< "CORBA::Boolean const result =" << be_idt_nl
+// 	<< "adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
+// 	<< "out," << be_nl
+// 	<< "ret_arg" << be_uidt_nl
+// 	<< ");" << be_uidt << be_uidt_nl << be_nl
+// 	<< "adapter->dispose (ret_arg);" << be_nl << be_nl;
+
+//     *os << "if (result == 0)" << be_idt_nl
+// 	<< "{" << be_idt_nl
+// 	<< "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+// 	<< "}" << be_uidt;
+
+//     this->generate_send_reply (os);
+
+//     *os << be_uidt_nl
+//         << "}" << be_nl << be_nl;
+
 //   }
 
   *os << be_nl << be_nl
