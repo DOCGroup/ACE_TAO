@@ -59,8 +59,7 @@ public:
   virtual void push_loads (const PortableGroup::Location & the_location,
                            const CosLoadBalancing::LoadList & loads
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::StrategyNotAdaptive));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a load monitor with the load balancer.
   virtual void register_load_monitor (
