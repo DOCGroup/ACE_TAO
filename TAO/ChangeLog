@@ -1,3 +1,10 @@
+Tue Sep 30 09:51:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp (test_i): 
+	* tao/RTScheduling/RTSchedulerC.h: 
+	  
+	  Fixed fuzz errors.
+
 Tue Sep 30 09:15:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Fixed a

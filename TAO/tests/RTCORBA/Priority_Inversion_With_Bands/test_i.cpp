@@ -20,14 +20,28 @@ test_i::test_i (CORBA::ORB_ptr orb,
     current_iteration_ (0),
     total_iterations_ (0)
 {
-  CORBA::Object_var object =
-    this->orb_->resolve_initial_references ("RTCurrent");
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-  this->rt_current_ =
-    RTCORBA::Current::_narrow (object.in ());
+  ACE_TRY
+    {
 
-  this->work_iterations_in_one_sec_ =
-    this->estimate_iterations ();
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("RTCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->rt_current_ =
+        RTCORBA::Current::_narrow (object.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+
+      this->work_iterations_in_one_sec_ =
+        this->estimate_iterations ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
 }
 
 void
