@@ -1,3 +1,9 @@
+Sun Nov 11 23:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tests/Date_Time_Test.cpp: Remove argv variable from
+	    main() to eliminate unused variable compiler warning.
+	* tests/Arg_Shifter_Test.cpp: Same.
+
 Sun Nov 11 10:00:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.h (ACE_SSL_SOCK_Stream):
