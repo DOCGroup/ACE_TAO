@@ -1,3 +1,9 @@
+Mon Jun 23 09:42:08 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Timer_Queue_Test.cpp: added testing for cancellation 
+	  during expire (when of handle_timeout() in an event handler 
+	  returning -1).
+
 Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Makefile: build shared library before static library.
