@@ -44,6 +44,51 @@ TAO_Leader_Follower::get_next_follower (void)
   return cond;
 }
 
+int
+TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time)
+{
+  ACE_Countdown_Time countdown (max_wait_time);
+
+  while (this->client_thread_is_leader_)
+    {
+      ACE_SYNCH_CONDITION *condition_variable =
+        this->orb_core_->leader_follower_condition_variable ();
+
+      if (this->add_follower (condition_variable) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot add to condition variable collection\n"),
+                            -1);
+        }
+
+      if (max_wait_time == 0)
+        {
+          if (condition_variable->wait () == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Condition variable wait failed\n"),
+                                -1);
+            }
+        }
+      else
+        {
+          countdown.update ();
+          ACE_Time_Value tv = ACE_OS::gettimeofday ();
+          tv += *max_wait_time;
+          if (condition_variable->wait (&tv) == -1)
+            {
+              if (errno != ETIME)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Condition variable wait failed\n"),
+                                  -1);
+              return -1;
+            }
+        }
+    }
+
+  return 0;
+}
+
 ACE_Reactor *
 TAO_Leader_Follower::reactor (void)
 {
