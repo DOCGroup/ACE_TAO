@@ -28,6 +28,8 @@ my(@statekeys) = ('global', 'include', 'template', 'ti',
                   'addproj', 'progress', 'toplevel', 'baseprojs',
                  );
 
+my(%all_written) = ();
+
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -393,6 +395,14 @@ sub transform_file_name {
 }
 
 
+sub file_written {
+  my($self) = shift;
+  my($file) = shift;
+  my($full) = $self->getcwd() . '/' . $file;
+  return (defined $all_written{$full});
+}
+
+
 sub add_file_written {
   my($self) = shift;
   my($file) = shift;
@@ -405,6 +415,9 @@ sub add_file_written {
     }
   }
   push(@{$self->{'files_written'}}, $file);
+
+  my($full) = $self->getcwd() . '/' . $file;
+  $all_written{$full} = 1;
 }
 
 

@@ -37,6 +37,9 @@ my(%validNames) = ('cmdline'  => 1,
 my(%allprinfo)   = ();
 my(%allprojects) = ();
 
+## Global previous workspace names
+my(%previous_workspace_name) = ();
+
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -72,6 +75,12 @@ sub new {
   $self->{'cacheok'}        = 1;
   $self->{'exclude'}        = {};
   $self->{'wctype'}         = $self->extractType("$self");
+  $self->{'modified_count'} = 0;
+
+  ## Add a hash reference for our workspace type
+  if (!defined $previous_workspace_name{$self->{'wctype'}}) {
+    $previous_workspace_name{$self->{'wctype'}} = {};
+  }
 
   return $self;
 }
@@ -118,6 +127,8 @@ sub parse_line {
             $status = 0;
           }
 
+          $self->{'current_workspace_name'} = undef;
+          $self->{'modified_count'} = 0;
           $self->{'workspace_name'} = undef;
           $self->{'projects'}       = [];
           $self->{'project_info'}   = {};
@@ -837,17 +848,28 @@ sub sort_files {
 
 
 sub get_modified_workspace_name {
-  my($self) = shift;
-  my($name) = shift;
-  my($ext)  = shift;
+  my($self)   = shift;
+  my($name)   = shift;
+  my($ext)    = shift;
+  my($pwd)    = $self->getcwd();
+  my($type)   = $self->{'wctype'};
+  my($wsname) = $self->get_workspace_name();
 
-  if (!defined $self->{'previous_workspace_name'}) {
-    $self->{'previous_workspace_name'} = $self->get_workspace_name();
+  if (!defined $previous_workspace_name{$type}->{$pwd}) {
+    $previous_workspace_name{$type}->{$pwd} = $wsname;
   }
-  elsif ($self->{'previous_workspace_name'} ne $self->get_workspace_name()) {
-    $self->{'previous_workspace_name'} = $self->get_workspace_name();
+  else {
+    my($prefix) = ($name eq $wsname ? $name : "$name.$wsname");
+    $previous_workspace_name{$type}->{$pwd} = $wsname;
+    while($self->file_written("$prefix" .
+                              ($self->{'modified_count'} > 0 ?
+                                   ".$self->{'modified_count'}" : '') .
+                              "$ext")) {
+      ++$self->{'modified_count'};
+    }
     $self->{'current_workspace_name'} =
-                          "$name.$self->{'previous_workspace_name'}$ext";
+               "$prefix" . ($self->{'modified_count'} > 0 ?
+                                ".$self->{'modified_count'}" : '') . "$ext";
   }
 
   return (defined $self->{'current_workspace_name'} ?
