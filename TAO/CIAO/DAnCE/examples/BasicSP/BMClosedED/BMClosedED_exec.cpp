@@ -4,9 +4,6 @@
 #include "BMClosedED_exec.h"
 #include "ace/SString.h"
 
-#include "ace/OS_NS_string.h"
-
-
 #define DISPLACEMENT 256
 
 /// Default constructor.
@@ -126,7 +123,7 @@ MyImpl::BMClosedED_exec_i::ciao_preactivate (
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

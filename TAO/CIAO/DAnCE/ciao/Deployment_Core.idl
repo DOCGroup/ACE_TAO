@@ -63,7 +63,7 @@ module Deployment
   typedef sequence < Connection > Connections;
 
   //=======================================
-  struct ImplementationInfo
+  struct ComponentImplementationInfo
   {
     string component_instance_name;
     string executor_dll;
@@ -72,10 +72,19 @@ module Deployment
     string servant_entrypt;
     Properties component_config;
     //  Properties home_config;      //ignored for now.
-    //  Properties container_config  //igore for now
   };
 
-  typedef sequence < ImplementationInfo > ImplementationInfos;
+  typedef sequence <ComponentImplementationInfo> ComponentImplementationInfos;
+
+  // ContainerImplementationInfo contains a list of components to be installed and
+  // policy configuration for the container which hosts these components
+  struct ContainerImplementationInfo
+  {
+    ComponentImplementationInfos impl_infos;
+    Properties container_config;
+  };
+
+  typedef sequence <ContainerImplementationInfo> NodeImplementationInfo;
 
   //==================================
   interface Application
@@ -94,7 +103,7 @@ module Deployment
 
   typedef sequence < Component_Info > ComponentInfos;
 
-  // @@ (OO) Tao, you're altering an OMG defined interface below.  In
+  // @@ (OO) You're altering an OMG defined interface below.  In
   //         order to avoid confusion, it is probably better to create
   //         another NodeApplication interface in the CIAO namespace
   //         that inherits from Deployment::NodeApplication.  You'd
@@ -105,27 +114,44 @@ module Deployment
   //         typeprefix within your altered NodeApplication interface
   //         to prevent interoperability issues.
 
-  // This NodeApplication contains the semantic from both Container and
-  // the new DnC NodeApplication  --Tao
-  interface NodeApplication : Application
+  interface NodeApplication; // Forward decl.
+  typedef sequence<NodeApplication> NodeApplications;
+
+  interface Container
   {
     readonly attribute ::Deployment::Properties properties;
 
-    /*@@ This operation is added for the NodeApplicationManager to
-     *   initialize the NodeApplication after creating it.  The
-     *   properties are those for the Container and they will be
-     *   implemented upon request from our users.   --Tao
-     *
-     *   Seems Kitty is opposing the idea of sending anys around. But
-     *   what really stroke me down was that OMG is working out
-     *   another property&configuration specification so all the
-     *   properties we set/used might have to be thrown away in the
-     *   future.....I am totally speachless and confused...and
-     *   frustrated.
-     *
-     *   But any way seems I can forget about the configuration
-     *   now. --Tao
-     */
+    /// Get the NodeApplication which created us
+    NodeApplication get_node_application ();
+
+    /// Initialize the container with properties.
+    long init (in ::Deployment::Properties properties);
+
+    //@@ The properties will contain
+    //1 component instance name as the key.
+    //2 dll/so name of the exec
+    //3 entry point of the exec
+    //4 dll/so name of the svnt
+    //5 entry point of the svnt
+    //6 Poosible other configuration for container/home/component
+
+    /// Install all homes and components    
+    Deployment::ComponentInfos install (in ContainerImplementationInfo container_impl_info)
+        raises (UnknownImplId,
+                ImplEntryPointNotFound,
+                InstallationFailure,
+                ::Components::InvalidConfiguration);
+
+    /// Remove all homes and components
+    void remove ()
+      raises (::Components::RemoveFailure);
+  };
+
+  typedef sequence<Container> Containers;
+
+  interface NodeApplication : Application
+  {
+    readonly attribute ::Deployment::Properties properties;
 
     // @@ Initialize the nodeapplication, so it will know what
     //    components it will create and home many of them are
@@ -135,48 +161,30 @@ module Deployment
 
     // @@ This operation will be called by NodeApplicationManager
     //    client to really start to create homes and components.
-    ComponentInfos install (in ImplementationInfos impl_infos)
+    ComponentInfos install (in NodeImplementationInfo node_impl_info)
       raises (UnknownImplId,
               ImplEntryPointNotFound,
               InstallationFailure,
-              ::Components::InvalidConfiguration);
-
+              ::Components::InvalidConfiguration,
+              ::Components::RemoveFailure);
 
     //@@ We know that Dployment::NodeApplicationManager will be returned,
     //   however to avoid the size of the shared object of CIAO_Server.
     //   we return an Object.
-       Object get_node_application_manager ();
+    Object get_node_application_manager ();
 
-    //@@ The properties will contain
-    //1 component instance name as the key.
-    //2 dll/so name of the exec
-    //3 entry point of the exec
-    //4 dll/so name of the svnt
-    //5 entry point of the svnt
-    //6 Poosible other configuration for container/home/component
-    //Note:: We have to decide later how container/home/component could be configured.
-    //       These properties could be passed in here or at higher level
-    //       according to the plan(@ NodeApplicationManager/NodeApplication?)
-    //
-    //The reason that I want to expose these operation in IDL (can be called remotely)
-    //is   1. for easy testing.
-    //     2. Might comes in handy in the future.
-    //                                                   --Tao
-    ::Components::CCMHome install_home (in ImplementationInfo impl_info)
-        raises (UnknownImplId,
-                ImplEntryPointNotFound,
-                InstallationFailure,
-                ::Components::InvalidConfiguration);
+    Container create_container (in ::Deployment::Properties properties)
+      raises (::Components::CreateFailure,
+              ::Components::InvalidConfiguration);
 
-    void remove_home (in string comp_ins_name)
+    void remove_container (in Container cref)
       raises (::Components::RemoveFailure);
 
-    ::Components::CCMHomes get_homes ();
+    Containers get_containers ();
 
-    void remove ()
-      raises (::Components::RemoveFailure);
-
-
+    // Remove all containers, components and component homes.
+    // Shuts down the ORB of the NodeApplication to terminate the process.
+    oneway void remove ();
   };
 
 };

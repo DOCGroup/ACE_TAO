@@ -228,7 +228,7 @@ namespace CIAO
     CORBA::Object_ptr generate_reference (const char *obj_id,
                                           const char *repo_id,
                                           Container::OA_Type t
-                                          ACE_ENV_ARG_DECL);
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Return the servant activator factory that activates the
     /// servants for facets and consumers.
@@ -244,11 +244,12 @@ namespace CIAO
     void create_component_POA (const char *name,
                                const CORBA::PolicyList *p,
                                PortableServer::POA_ptr root
-                               ACE_ENV_ARG_DECL);
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Create POA for the facets and consumers alone.
-    void create_facet_consumer_POA (PortableServer::POA_ptr root
-                                    ACE_ENV_ARG_DECL);
+    void create_facet_consumer_POA (const char *name,
+                                    PortableServer::POA_ptr root
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   protected:
     long number_;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:ComponentInterfaceDescription
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
@@ -30,5 +30,16 @@
     <specificType>IDL:BasicSP/ReadData:1.0</specificType>
     <kind>SimplexReceptacle</kind>
   </port>
+
+  <port> 
+    <name>gather_data</name> 
+    <exclusiveProvider>false</exclusiveProvider> 
+    <exclusiveUser>false</exclusiveUser> 
+    <optional>false</optional> 
+    <provider>false</provider> 
+    <supportedType>IDL:BasicSP/ReadData:1.0</supportedType> 
+    <specificType>IDL:BasicSP/ReadData:1.0</specificType> 
+    <kind>MultiplexReceptacle</kind> 
+   </port> 
 
 </Deployment:ComponentInterfaceDescription>
