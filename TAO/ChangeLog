@@ -1,3 +1,9 @@
+Mon Jun  9 14:38:44 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* performance-tests/Sequence_Latency/Single_Threaded/client.cpp:
+	  Fixed compile errors on Win32. Thanks to Bala for helping me
+	  out. 
+
 Mon Jun  9 13:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
