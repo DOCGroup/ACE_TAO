@@ -1,15 +1,30 @@
-// $Id$
-
+/* -*- C++ -*- */
+//=============================================================================
+/**
+ *  @file    FT_TestReplica_i.h
+ *
+ *  $Id$
+ *
+ *  This file declares an implementation of CORBA interface TestReplica.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+//
 #ifndef FT_TESTREPLICA_I_H_
 #define FT_TESTREPLICA_I_H_
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "FT_TestReplicaS.h"
-//#include "tao/PortableServer/ORB_Manager.h"
 
+/**
+ * Implement the TestReplica IDL interface.
+ *
+ * Persistent storage simulated by storing the counter
+ * in Persistent.dat.
+ */
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
@@ -19,7 +34,9 @@ public:
   /**
    * parse command line arguments.
    * remove any that are recognized, adjusting argc accordingly.
-   * @return 0 if ok, -1 if error
+   * @param argc classic C argc
+   * @param argv classic C argv
+   * @return 0 if ok, otherwise process exit code.
    */
   virtual int parse_args (int argc, char *argv[]);
 
@@ -90,15 +107,38 @@ private:
   /////////////////
   // implementation
 private:
+  /**
+   * Load the persistent data.
+   * returns the data loaded.
+   */
   long load();
+  /**
+   * Store the persistent data.
+   * @param the data to be stored.
+   */
   void store(long value);
 
   ///////////////
   // data members
 private:
+  /**
+   * a bane code for when we should die.
+   */
   FT_TEST::TestReplica::Bane death_pending_;
+
+  /**
+   * our ORB.
+   */
   CORBA::ORB_var orb_;
+
+  /**
+   * verbosity level, settable by client.
+   */
   int verbose_;
+
+  /**
+   * a replica number to distinguish between multiple replicas in trace messages.
+   */
   int identity_;
 };
 

@@ -11,7 +11,7 @@
 #ifndef _PORTABLEGROUP_IDL_
 #define _PORTABLEGROUP_IDL_
 
-#include <CosNaming.idl>
+#include <orbsvcs/CosNaming.idl>
 #include <tao/IOP.pidl>
 #include <tao/GIOP.pidl>
 #include <orb.idl>

@@ -1,5 +1,16 @@
-// $Id$
-// FT_TestReplica.idl
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_TestReplica.idl
+ *
+ *  $Id$
+ *
+ *  This file defines an interface used to test Fault Tolerant CORBA.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+// 
 #ifndef FT_TESTREPLICA_IDL
 #define FT_TESTREPLICA_IDL
 
@@ -21,6 +32,7 @@ module FT_TEST
      * @param value is the number to be set.
      */
     void set(in long value);
+
     /**
      * add delta to the counter.
      * @param delta is the number to be added: (delta may be positive, negative or zero).
@@ -37,29 +49,30 @@ module FT_TEST
 
     /**
      * enumerate the points at which
-     * the test replica might be induced to die.
+     * the test replica might be convinced to die.
      */
     enum Bane
     {
-      NOT_YET,
-      RIGHT_NOW,
-      WHILE_IDLE,
-      DURING_GET,
-      BEFORE_SET,
-      AFTER_SET,
-      BEFORE_INCREMENT,
-      AFTER_INCREMENT,
-      DURING_ATTRIBUTE_GET,
-      BEFORE_ATTRIBUTE_SET,
-      AFTER_ATTRIBUTE_SET,
+      NOT_YET,              // normal state, also used to revoke a previous request
+      RIGHT_NOW,            // fault immediately during the die() call
+      WHILE_IDLE,           // fault while not processing a request
+                        // FT_TestReplica interface:
+      BEFORE_STATE_CHANGE,  // after receiving request
+      BEFORE_REPLICATION,   // after state change
+      BEFORE_REPLY,         // after state replication
+                        // FT::PullMonitorable interface:
+      DURING_IS_ALIVE,
+      DENY_IS_ALIVE,
+                        // FT::Updatable interface:
       DURING_GET_UPDATE,
       BEFORE_SET_UPDATE,
       AFTER_SET_UPDATE,
+                        // FT::Checkpointable interface:
       DURING_GET_STATE,
       BEFORE_SET_STATE,
       AFTER_SET_STATE,
-      DURING_IS_ALIVE,
-      DENY_IS_ALIVE
+                        // Reserved
+      CLEAN_EXIT            // reserved for use by shutdown
     };
 
 
@@ -78,7 +91,7 @@ module FT_TEST
     /**
      * provide direct access to the counter.
      * Suports the same functionality as set and get.
-     * Encapsulization??? this is a test, remember.
+     * Can you say "Encapsulization???" this is a test, remember.
      */
     attribute long counter;
   };

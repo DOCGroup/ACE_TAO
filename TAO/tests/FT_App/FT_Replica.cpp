@@ -1,5 +1,18 @@
-// $Id$
-//FT_Replica.cpp
+/* -*- C++ -*- */
+//=============================================================================
+/**
+ *  @file    FT_Replica.cpp
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant CORBA.
+ *  Implement the FT_TEST::Replica IDL interface.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+
+#include "ace/pre.h"
 
 #include "FT_TestReplica_i.h"
 #include "ace/Get_Opt.h"
@@ -9,7 +22,7 @@
 namespace {
 
   const char *ior_output_file = 0;
-  const char * nsName = "FT_TEST";
+  const char * nsName = 0;
   int identity = 0;
 
 
@@ -67,7 +80,6 @@ int main (int argc, char * argv[] )
 
     ACE_TRY_NEW_ENV
     {
-
       // Create an object that manages all the
       // details of being a server.
       TAO_ORB_Manager orbManager;
@@ -87,35 +99,41 @@ int main (int argc, char * argv[] )
             ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (-1);
 
-
-        CORBA::Object_var naming_obj =
-          orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        if (CORBA::is_nil(naming_obj.in ())){
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Unable to find the Naming Service\n"),
-                            1);
-        }
-
-        CosNaming::NamingContext_var naming_context =
-          CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        CosNaming::Name replica_name (1);
-        replica_name.length (1);
-        replica_name[0].id = CORBA::string_dup (nsName);
-
-        FT_TEST::TestReplica_var replicaVar = ftReplica._this();
-        // Register the replica with the Naming Context....
-        naming_context->rebind (replica_name, replicaVar
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
         if (ior_output_file != 0)
         {
           result = write_IOR(ior_output_file, ftReplicaIOR);
         }
+        else if (nsName == 0)
+        {
+          nsName = "FT_TEST";
+        }
+        if (nsName != 0)
+        {
+          CORBA::Object_var naming_obj =
+            orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil(naming_obj.in ())){
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               " (%P|%t) Unable to find the Naming Service\n"),
+                              1);
+          }
+
+          CosNaming::NamingContext_var naming_context =
+            CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          CosNaming::Name replica_name (1);
+          replica_name.length (1);
+          replica_name[0].id = CORBA::string_dup (nsName);
+
+          FT_TEST::TestReplica_var replicaVar = ftReplica._this();
+          // Register the replica with the Naming Context....
+          naming_context->rebind (replica_name, replicaVar
+                                  ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
         if (result == 0)
         {
           std::cout << "FT Replica" << identity << ": Ready. ";

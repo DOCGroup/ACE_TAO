@@ -64,6 +64,7 @@ FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
     // before this object disappears
     shutdown_i ();
   }
+  self_unregister ();
   threadManager_.close ();
 }
 
@@ -145,6 +146,21 @@ const char * FT_FaultDetectorFactory_i::identity () const
   return identity_.c_str();
 }
 
+int FT_FaultDetectorFactory_i::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (ior_output_file_ != 0)
+  {
+    ACE_OS::unlink (ior_output_file_);
+    ior_output_file_ = 0;
+  }
+  if (nsName_ != 0)
+  {
+    naming_context_->unbind (this_name_
+                            ACE_ENV_ARG_PARAMETER);
+    nsName_ = 0;
+  }
+  return 0;
+}
 
 int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager
   ACE_ENV_ARG_DECL)
@@ -170,7 +186,7 @@ int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager
     nsName_ = "FT_FaultDetectorFactory";
   }
 
-  if(nsName_ != 0)
+  if (nsName_ != 0)
   {
     identity_ = "name:";
     identity_ += nsName_;
@@ -185,15 +201,14 @@ int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager
                         1);
     }
 
-    CosNaming::NamingContext_var naming_context =
+    naming_context_ =
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    CosNaming::Name this_name (1);
-    this_name.length (1);
-    this_name[0].id = CORBA::string_dup (nsName_);
+    this_name_.length (1);
+    this_name_[0].id = CORBA::string_dup (nsName_);
 
-    naming_context->rebind (this_name, _this()
+    naming_context_->rebind (this_name_, _this()
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }

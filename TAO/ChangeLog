@@ -1,597 +1,823 @@
+Thu Aug  7 16:39:14 2003  Dale Wilson  <wilson_d@ociweb.com>
+        ***Move oci_haft change log entries from $ACE_ROOT/ChangeLog to here 
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        Make dependancy on NameService optional.
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          fix include so PortableGroup can be included from outside orbsvcs directory.
+
+        * tests/FT_App/FT_Client.cpp:
+        * tests/FT_App/FT_Replica.cpp:
+        * tests/FT_App/FT_TestReplica.idl:
+        * tests/FT_App/FT_TestReplica_i.h:
+        * tests/FT_App/FT_TestReplica_i.cpp:
+        * tests/FT_App/run_test_notifier.pl:
+        * tests/FT_App/testscript:
+        Make fault points generic rather than method specific.
+        Add "before replication" fault point.
+
+        These changes were made in the oci_haft branch.
+
 Wed Aug 06 14:40:00 2003  Curt Hibbs <hibbs_c@ociweb.com>
 
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h
-	* orbsvcs/orbsvcs/FT_CORBA.idl
-	* orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h
+        * orbsvcs/orbsvcs/FT_CORBA.idl
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl
+
+          Completed the conditional use of PortableGroups in FT_CORBA.idl
+          that was begun by Dale Wilson. The typedef trick used by Dale
+          to allow PortableGroup symbols to be used in the FT namespace
+          does not work for exceptions, so I also had to modify the
+          existing code to use "PortableGroup::" scoping on exceptions.
+
+        These changes were made in the oci_haft branch.
+
+Thu Jul 31 14:36:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * tests/FT_App/FT_TestReplica.idl:
+        * tests/FT_App/FT_TestReplica_i.h:
+          Housekeeping.
 	
-	  Completed the conditional use of PortableGroups in FT_CORBA.idl
-	  that was begun by Dale Wilson. The typedef trick used by Dale
-	  to allow PortableGroup symbols to be used in the FT namespace
-	  does not work for exceptions, so I also had to modify the
-	  existing code to use "PortableGroup::" scoping on exceptions.
+        * orbsvcs/orbsvcs/FT_Detector.idl:
+	  Renamed to be:
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
+
+        These changes were made in the oci_haft branch.
+
+Wed Jul 30 14:59:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        Milestone: FaultDetector passes unit test (run_test_notifier.pl)
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+
+        * tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * tests/FT_App/FT_App.mpc:
+        * tests/FT_App/FT_Client.cpp:
+        * tests/FT_App/FT_Replica.cpp:
+        * tests/FT_App/FT_TestReplica.idl:
+        * tests/FT_App/FT_TestReplica_i.h:
+        * tests/FT_App/FT_TestReplica_i.cpp:
+        * tests/FT_App/StubFaultNotifier.h:
+        * tests/FT_App/StubFaultNotifier.cpp:
+        * tests/FT_App/run_test_basic.pl:
+        * tests/FT_App/run_test_notifier.pl:
+        * tests/FT_App/testscript:
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+          Formerly named PG_Property_Set_Helper*
+
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          Rename and move to orbsvcs/orbsvcs/PG_Properties*
+
+        * tests/FT_App/run_test.pl:
+          Rename to run_test_basic.pl
+
+        These changes were made in the oci_haft branch.
+
+Wed Jul 30 12:55:25 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * bin/MakeProjectCreator/config/fault_tolerance.mpb:
+          new file for configurations that use fault_tolerance.
+
+        These changes were made in the oci_haft branch.
+
+Mon Jul 28 16:20:29 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+
+        * orbsvcs/Fault_Detector/Detector_i.h:
+        * orbsvcs/Fault_Detector/Detector_i.cpp:
+        * orbsvcs/Fault_Detector/FT_DetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_DetectorFactory_i.cpp:
+          Renamed these files to...
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          ...respectively
+
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
+        * orbsvcs/orbsvcs/FT_Notifier.idl:
+        * orbsvcs/orbsvcs/FT_Replica.idl:
+          Modified IDL to use PortableGroup definitions in FT.
+
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          Use PortableGroup definitions.
+
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+          Build renamed files.
+
+        * tests/FT_App/FT_App.mpc:
+        * tests/FT_App/FT_Client.cpp:
+        * tests/FT_App/FT_Replica.cpp:
+        * tests/FT_App/FT_TestReplica.idl:
+        * tests/FT_App/FT_TestReplica_i.h:
+        * tests/FT_App/FT_TestReplica_i.cpp:
+          Continue work on unit test for FaultDetector.
+
+        These changes were made in the oci_haft branch.
+
+Wed Jul 23 17:23:33 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Fault_Detector/Detector_i.h:
+        * orbsvcs/Fault_Detector/Detector_i.cpp:
+        * orbsvcs/Fault_Detector/FT_DetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_DetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          FaultDetector is code-complete.  No tests available, yet.
+
+        * orbsvcs/Fault_Detector/Fault_Detector.h:
+        * orbsvcs/Fault_Detector/Fault_Detector.cpp:
+
+          Removed these files.
+
+        These changes were made in the oci_haft branch.
+
+Tue Jul 22 14:47:14 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Fault_Detector/Detector_i.h:
+        * orbsvcs/Fault_Detector/Detector_i.cpp:
+        * orbsvcs/Fault_Detector/FT_DetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_DetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector.h:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          First pass at Fault Detector.  Compiles OK.  Does NOT work yet.
+
+        These changes were made in the oci_haft branch.
+
+Wed Jul 16 17:53:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * examples/Simple/Simple_util.h:
+        * examples/Simple/Simple_util.cpp:
+          Add "reconnect*" methods to allow switching to a different
+          servant on-the-fly.  This is used in the client-simulated
+          Fault Tolerance test.
+
+        * tests/FT_App/FT_Client.cpp:
+        * tests/FT_App/FT_Replica.cpp:
+        * tests/FT_App/FT_TestReplica.idl:
+        * tests/FT_App/FT_TestReplica_i.h:
+        * tests/FT_App/FT_TestReplica_i.cpp:
+        * tests/FT_App/README:
+        * tests/FT_App/run_test.pl:
+        * tests/FT_App/testscript:
+          Add client-simulated fault tolerance to allow FT_App
+          to pass the unit test.  When FT CORBA is working we should
+          be able to disable client simulated FT (via command line),
+          and it should still pass.
+
+        These changes were made in the oci_haft branch.
+
+Wed Jul 16 09:51:12 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * tests/FT_App/.cvsignore:
+        * tests/FT_App/FT_App.mpc:
+        * tests/FT_App/FT_Client.cpp:
+        * tests/FT_App/FT_Replica.cpp:
+        * tests/FT_App/FT_TestReplica.idl:
+        * tests/FT_App/FT_TestReplica_i.h:
+        * tests/FT_App/FT_TestReplica_i.cpp:
+        * tests/FT_App/README:
+        * tests/FT_App/run_test.pl:
+        * tests/FT_App/testscript:
+        New directory, new files.
+
+        This is the first pass of FT_App, an application to test
+        Fault Tolerant CORBA.
+
+        FT_Replica is a server that manages a persistent long counter.
+
+        FT_Client is a script-driven client for FT_Replica.  It
+        uses CORBA calls to change the value of the counter and to
+        request that the replica "fault" at various stages of the
+        process.
+
+        FT_Client can also exercise the updatable and checkpointable
+        interfaces in FT_Replica.
+
+        The README file explains this in greater detail.
+
+        These changes were made in the oci_haft branch.
+
+Tue Jul 15 12:33:04 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
+        * orbsvcs/orbsvcs/FT_Detector.idl:
+        * orbsvcs/orbsvcs/FT_Notifier.idl:
+        * orbsvcs/orbsvcs/FT_Replica.idl:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+          Separating the OMG FT.idl into managable pieces.
+
+        These changes were made in the oci_haft branch.
 
 Wed Jul  9 22:31:54 2003  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
-	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint): Valgrind
-	  found that the local variable `tos' was not initialized in all
-	  possible paths of control flow. 
+        * tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint): Valgrind
+          found that the local variable `tos' was not initialized in all
+          possible paths of control flow.
 
 Tue Jul 08 15:24:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* docs/releasenotes/index.html:
-	* docs/releasenotes/notify.html:
+        * docs/releasenotes/index.html:
+        * docs/releasenotes/notify.html:
 
-	  Updated information in the Notification Service section.
+          Updated information in the Notification Service section.
 
-	* orbvsvcs/Notify_Service/Notify_Service.cpp:
-	  
-	  Deprecated the "-Notify_TPReactor" option and updated it with
-	  the "-ORBRunThreads".
+        * orbvsvcs/Notify_Service/Notify_Service.cpp:
 
-	* orbvsvcs/Notify_Service/README:
-	* orbvsvcs/CosEvent_Service/README:
+          Deprecated the "-Notify_TPReactor" option and updated it with
+          the "-ORBRunThreads".
 
-	  Updated the READMEs with a note explaining how to use the Naming
-	  Service with the "-m 1" option or the -ORBInitRef option while
-	  starting these services. Thanks to Tram Nguyen <ttnguye@sandia.gov>
-	  for reporting this issue.
-	
+        * orbvsvcs/Notify_Service/README:
+        * orbvsvcs/CosEvent_Service/README:
+
+          Updated the READMEs with a note explaining how to use the Naming
+          Service with the "-m 1" option or the -ORBInitRef option while
+          starting these services. Thanks to Tram Nguyen <ttnguye@sandia.gov>
+          for reporting this issue.
+
 Mon Jul 07 23:18:24 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Strategies\UIOP_Connector.cpp (make_connection): 
+        * tao\Strategies\UIOP_Connector.cpp (make_connection):
 
-	  Changed is_finalized() to is_closed().
+          Changed is_finalized() to is_closed().
 
 Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* The following changes utilize the new memory management mechanisms
-	  of Event Handlers.  Previously, both the connection handlers and
-	  the transports had their own reference counting mechanism and
-	  independent lifetimes.  The reference counting was inadequate
-	  since it was not originated at the Reactor and the independent
-	  lifetimes unnecessarily completed protocol specific transport
-	  code.  
+        * The following changes utilize the new memory management mechanisms
+          of Event Handlers.  Previously, both the connection handlers and
+          the transports had their own reference counting mechanism and
+          independent lifetimes.  The reference counting was inadequate
+          since it was not originated at the Reactor and the independent
+          lifetimes unnecessarily completed protocol specific transport
+          code.
 
-	  These changes couple the lifetime of the connection handler with
-	  that of the transport and utilizes the reference count in the
-	  base ACE_Event_Handler class.  This allowed us to remove several
-	  hacks throughout TAO code which were designed to prevent (or
-	  delay) crashes.  Several extra checks and unnecessary locks were
-	  also removed.
+          These changes couple the lifetime of the connection handler with
+          that of the transport and utilizes the reference count in the
+          base ACE_Event_Handler class.  This allowed us to remove several
+          hacks throughout TAO code which were designed to prevent (or
+          delay) crashes.  Several extra checks and unnecessary locks were
+          also removed.
 
-	  All of the following protocols were updated:
+          All of the following protocols were updated:
 
-	  - DIOP
-	  - IIOP
-	  - SCIOP
-	  - SHMIOP
-	  - SSLIOP
-	  - UIOP
-	  - UIPMC
+          - DIOP
+          - IIOP
+          - SCIOP
+          - SHMIOP
+          - SSLIOP
+          - UIOP
+          - UIPMC
 
-	Fri Jun 20 19:45:07 2003  Irfan Pyarali  <irfan@oomworks.com>
+        Fri Jun 20 19:45:07 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Connection_Handler: 
+        * tao\Connection_Handler:
 
-	  - Removed the incr_refcount() and decr_refcount() methods and
-	  the related <reference_count_> and <refcount_lock_> members.
-	  Also removed any explicit reference counting since now the
-	  Reactor framework will handle this correctly.
+          - Removed the incr_refcount() and decr_refcount() methods and
+          the related <reference_count_> and <refcount_lock_> members.
+          Also removed any explicit reference counting since now the
+          Reactor framework will handle this correctly.
 
-	  - Removed all asserts for a valid <transport_> since now the
-	  lifetime of the handler and the transport are the same.
+          - Removed all asserts for a valid <transport_> since now the
+          lifetime of the handler and the transport are the same.
 
-	  - Removed connection_close_wait() since this state is no longer
-	  needed.
+          - Removed connection_close_wait() since this state is no longer
+          needed.
 
-	  - handle_close_eh() is no longer required since we no longer
-	  rely on the Reactor calling handle_close().
+          - handle_close_eh() is no longer required since we no longer
+          rely on the Reactor calling handle_close().
 
-	  - Moved the call to release_os_resources() from decr_refcount()
-	  to the destructor.
+          - Moved the call to release_os_resources() from decr_refcount()
+          to the destructor.
 
-	  - Mega-simplified transport() method since the transport will
-	  only be set once.
+          - Mega-simplified transport() method since the transport will
+          only be set once.
 
-	  - Call to Transport::send_connection_closed_notifications() was
-	  moved to Connection_Handler::close_connection_eh() to ensure it
-	  gets called in all cases when the handler is closed.
+          - Call to Transport::send_connection_closed_notifications() was
+          moved to Connection_Handler::close_connection_eh() to ensure it
+          gets called in all cases when the handler is closed.
 
-	  - close_connection_eh() was also super-simplified.  Now it
-	  simply purges the handler from the connection cache and removes
-	  the handler from the Reactor.
+          - close_connection_eh() was also super-simplified.  Now it
+          simply purges the handler from the connection cache and removes
+          the handler from the Reactor.
 
-	  - Made the destructor public since this class is no longer
-	  (directly) reference counted.
+          - Made the destructor public since this class is no longer
+          (directly) reference counted.
 
-	  - is_finalized() was renamed to is_closed().
+          - is_finalized() was renamed to is_closed().
 
-	  - is_open() and is_connecting() were added to check the status
-	  of the connection handler.
+          - is_open() and is_connecting() were added to check the status
+          of the connection handler.
 
-	* tao\IIOP_Connection_Handler: 
+        * tao\IIOP_Connection_Handler:
 
-	  - Added close() method that will be called by the Acceptor or
-	  Connector when connection establishment fails.
+          - Added close() method that will be called by the Acceptor or
+          Connector when connection establishment fails.
 
-	  - No need to reference count the transport.  Handlers and
-	  transports now have the same lifespan.  Transport in created in
-	  the constructor and deleted in the destructor.
-	
-	  - handle_input() and handle_output() intercept any errors from
-	  handle_input_eh() and handle_output_eh() respectively and call
-	  close_connection().  We no longer rely on handle_close().
+          - No need to reference count the transport.  Handlers and
+          transports now have the same lifespan.  Transport in created in
+          the constructor and deleted in the destructor.
 
-	  - Assert that handle_close() no longer gets called.
+          - handle_input() and handle_output() intercept any errors from
+          handle_input_eh() and handle_output_eh() respectively and call
+          close_connection().  We no longer rely on handle_close().
+
+          - Assert that handle_close() no longer gets called.
 
           - Added handle_timeout(). We don't use this upcall for I/O.
-	  This is only used by the Connector to indicate that the
-	  connection timedout.  Therefore, we should call close().
+          This is only used by the Connector to indicate that the
+          connection timedout.  Therefore, we should call close().
 
-	  - The unused constructor should assert(0).
+          - The unused constructor should assert(0).
 
-	* tao\Transport: 
+        * tao\Transport:
 
-	  - The Transport class no longer needs to inherit from
-	  TAO_Synch_Refcountable.  The reference counting is provided by
-	  the Event_Handler class.
-	
-	  - Replaced the _duplicate() and release() methods with
-	  add_reference() and remove_reference() methods.  This matches
-	  the signature of the reference counting methods on the base
-	  Event_Handler class.
+          - The Transport class no longer needs to inherit from
+          TAO_Synch_Refcountable.  The reference counting is provided by
+          the Event_Handler class.
 
-	  - Changed provide_handler() to simply provide the related
-	  connection handler.
+          - Replaced the _duplicate() and release() methods with
+          add_reference() and remove_reference() methods.  This matches
+          the signature of the reference counting methods on the base
+          Event_Handler class.
 
-	  - register_handler() was made virtual and register_handler_i()
-	  was removed since there was no locking required.  Same was done
-	  for recv() and send().
+          - Changed provide_handler() to simply provide the related
+          connection handler.
 
-	  - Removed:
+          - register_handler() was made virtual and register_handler_i()
+          was removed since there was no locking required.  Same was done
+          for recv() and send().
 
-	  	close_connection_shared()
-		close_connection_no_purge()
-		close_connection_i(),
-		connection_handler_closing()
-		check_event_handler_i()
-		invalidate_event_handler_i()
+          - Removed:
 
-	  since they were no longer needed.
+                close_connection_shared()
+                close_connection_no_purge()
+                close_connection_i(),
+                connection_handler_closing()
+                check_event_handler_i()
+                invalidate_event_handler_i()
 
-	  - Renamed handle_input_i() to handle_input().
+          since they were no longer needed.
 
-	  - Made send_connection_closed_notifications() public.
+          - Renamed handle_input_i() to handle_input().
 
-	  - No need for:
+          - Made send_connection_closed_notifications() public.
 
-	        send_message_block_chain()
-		send_message_shared()
-		schedule_output_i()
-		drain_queue_helper()
-		handle_timeout()
-		check_buffering_constraints_i()
-		notify_reactor()
+          - No need for:
 
-	  to call check_event_handler_i() since the handler is always
-	  valid.
+                send_message_block_chain()
+                send_message_shared()
+                schedule_output_i()
+                drain_queue_helper()
+                handle_timeout()
+                check_buffering_constraints_i()
+                notify_reactor()
 
-	  - No need for to call send_connection_closed_notifications() in
-	  case of errors since it will get called when the handler is
-	  closed.
+          to call check_event_handler_i() since the handler is always
+          valid.
 
-	  - No need for process_parsed_messages() to do any explicit
-	  reference counting since now the Reactor framework will handle
-	  this correctly.
+          - No need for to call send_connection_closed_notifications() in
+          case of errors since it will get called when the handler is
+          closed.
+
+          - No need for process_parsed_messages() to do any explicit
+          reference counting since now the Reactor framework will handle
+          this correctly.
 
           - No need for notify_reactor() to create a Notify_Handler.  The
-	  Reactor framework already does the proper reference counting for
-	  notifications.	
+          Reactor framework already does the proper reference counting for
+          notifications.
 
-	* tao\IIOP_Transport: 
+        * tao\IIOP_Transport:
 
-	  - invalidate_event_handler_i() no longer needed.  
+          - invalidate_event_handler_i() no longer needed.
 
-	  - Override send() and recv() instead of send_i() and recv_i().
+          - Override send() and recv() instead of send_i() and recv_i().
 
-	  - No need for reference counting the connection handler since
-	  the lifespan of the connection handler is tied to the lifespan
-	  of the transport.
+          - No need for reference counting the connection handler since
+          the lifespan of the connection handler is tied to the lifespan
+          of the transport.
 
-	  - register_handler_i() no longer needed.
+          - register_handler_i() no longer needed.
 
-	  - No need for:
+          - No need for:
 
-		send_request()
-		send_message_shared()
-		tear_listen_point_list()
-		get_listen_point()
+                send_request()
+                send_message_shared()
+                tear_listen_point_list()
+                get_listen_point()
 
-	  to call check_event_handler_i() since the handler is always
-	  valid.
+          to call check_event_handler_i() since the handler is always
+          valid.
 
-	* tao\Acceptor_Impl.cpp (activate_svc_handler): 
+        * tao\Acceptor_Impl.cpp (activate_svc_handler):
 
-	  Made several changes to this method.  Now the sequence is:
+          Made several changes to this method.  Now the sequence is:
 
-	  - At the start of the method, the service handler has been
-	  created and the new connection has been accepted.  #REFCOUNT# is
-	  one at this point.
+          - At the start of the method, the service handler has been
+          created and the new connection has been accepted.  #REFCOUNT# is
+          one at this point.
 
-	  - Cache handler: If successful, #REFCOUNT# is two at this
-	  point.  If failure, call close on handler.
+          - Cache handler: If successful, #REFCOUNT# is two at this
+          point.  If failure, call close on handler.
 
-	  - Activate/register handler: If successful, #REFCOUNT# is three
-	  at this point. We can let go of our reference.  If failure,
-	  remove handler from cache and call close on handler.
+          - Activate/register handler: If successful, #REFCOUNT# is three
+          at this point. We can let go of our reference.  If failure,
+          remove handler from cache and call close on handler.
 
-	  - Success completion of method: #REFCOUNT# is two at this point.
+          - Success completion of method: #REFCOUNT# is two at this point.
 
-	* tao\IIOP_Connector.cpp (make_connection): 
+        * tao\IIOP_Connector.cpp (make_connection):
 
-	  Made several changes to this method.  Now the sequence is:
+          Made several changes to this method.  Now the sequence is:
 
-	  - The connect() method creates the service handler and bumps the
-	  #REFCOUNT# up one extra.  There are three possibilities from
-	  calling connect(): (a) connection succeeds immediately - in this
-	  case, the #REFCOUNT# on the handler is two; (b) connection
-	  completion is pending - in this case, the #REFCOUNT# on the
-	  handler is also two; (c) connection fails immediately - in this
-	  case, the #REFCOUNT# on the handler is one since close() gets
-	  called on the handler.
+          - The connect() method creates the service handler and bumps the
+          #REFCOUNT# up one extra.  There are three possibilities from
+          calling connect(): (a) connection succeeds immediately - in this
+          case, the #REFCOUNT# on the handler is two; (b) connection
+          completion is pending - in this case, the #REFCOUNT# on the
+          handler is also two; (c) connection fails immediately - in this
+          case, the #REFCOUNT# on the handler is one since close() gets
+          called on the handler.
 
           - The extra reference count in
-	  TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
-	  the case when connection completion is pending and we are going
-	  to wait on a variable in the handler to change, signifying
-	  success or failure.  Note, that this increment cannot be done
-	  once the connect() returns since this might be too late if
-	  another thread picks up the completion and potentially deletes
-	  the handler before we get a chance to increment the reference
-	  count.
+          TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
+          the case when connection completion is pending and we are going
+          to wait on a variable in the handler to change, signifying
+          success or failure.  Note, that this increment cannot be done
+          once the connect() returns since this might be too late if
+          another thread picks up the completion and potentially deletes
+          the handler before we get a chance to increment the reference
+          count.
 
-	  - If there is no immediate result, wait for completion. No need
-	  to specify timeout to wait() since the correct timeout was
-	  passed to the Connector. The Connector will close the handler in
-	  the case of timeouts, so the event will complete (either success
-	  or failure) within timeout.
+          - If there is no immediate result, wait for completion. No need
+          to specify timeout to wait() since the correct timeout was
+          passed to the Connector. The Connector will close the handler in
+          the case of timeouts, so the event will complete (either success
+          or failure) within timeout.
 
-	  - When the wait completes, check if the handler has been closed.
+          - When the wait completes, check if the handler has been closed.
           Irrespective of success or failure, remove the #REFCOUNT#
           added for waiting.
 
           - There are three possibilities when wait() returns: (a)
-	  connection succeeded; (b) connection failed; (c) wait() failed
-	  because of some other error.  It is easy to deal with (a) and
-	  (b).  (c) is tricky since the connection is still pending and
-	  may get completed by some other thread.  The following deals
-	  with (c).
+          connection succeeded; (b) connection failed; (c) wait() failed
+          because of some other error.  It is easy to deal with (a) and
+          (b).  (c) is tricky since the connection is still pending and
+          may get completed by some other thread.  The following deals
+          with (c).
 
           * In case of failure and close() has not be called, first
-	  cancel from connector.  Then double check to make sure the
-	  handler has not been closed yet.  This double check is required
-	  to ensure that the connection handler was not closed yet by some
-	  other thread since it was still registered with the connector.
-	  Once connector.cancel() has been processed, we are assured that
-	  the connector will no longer open/close this handler.
+          cancel from connector.  Then double check to make sure the
+          handler has not been closed yet.  This double check is required
+          to ensure that the connection handler was not closed yet by some
+          other thread since it was still registered with the connector.
+          Once connector.cancel() has been processed, we are assured that
+          the connector will no longer open/close this handler.
 
-	  * If closed, there is nothing to do.
+          * If closed, there is nothing to do.
 
-	  * If the handler has been opened, some other thread was able to
-	  open the handler even though wait failed for this thread. Reset
-	  <result> to zero.
+          * If the handler has been opened, some other thread was able to
+          open the handler even though wait failed for this thread. Reset
+          <result> to zero.
 
-	  * If the handler is still connecting, forcefully close() the
-	  handler.
+          * If the handler is still connecting, forcefully close() the
+          handler.
 
-	  - If the connection has be successfully connected, add the
-	  handler to connection cache.
+          - If the connection has be successfully connected, add the
+          handler to connection cache.
 
-	  - Failure in adding to cache, close the handler.
+          - Failure in adding to cache, close the handler.
 
-	  - If the wait strategy wants us to be registered with the reactor
-   	  then we do so. If registeration is required and it succeeds,
-   	  #REFCOUNT# becomes two.
+          - If the wait strategy wants us to be registered with the reactor
+          then we do so. If registeration is required and it succeeds,
+          #REFCOUNT# becomes two.
 
-	  - In case of reactor registration failures, purge from the
-	  connection cache and close the handler.
+          - In case of reactor registration failures, purge from the
+          connection cache and close the handler.
 
-	  - In case of success, handover the transport pointer to the
-	  Invocation class.
+          - In case of success, handover the transport pointer to the
+          Invocation class.
 
-	* tao\Connector_Impl.cpp (make_svc_handler): 
+        * tao\Connector_Impl.cpp (make_svc_handler):
 
-	  We add to the #REFCOUNT# since the Connector needs this. See
-	  Connector::make_connection() for details.
+          We add to the #REFCOUNT# since the Connector needs this. See
+          Connector::make_connection() for details.
 
-	* tao\Transport_Cache_Manager (close): 
+        * tao\Transport_Cache_Manager (close):
 
-	  Previously, close() was returning a handle set and a set of
-	  event handlers.  This was changed such the only a set of
-	  connection handlers is returned since the previous parameters
-	  are no longer necessary.
+          Previously, close() was returning a handle set and a set of
+          event handlers.  This was changed such the only a set of
+          connection handlers is returned since the previous parameters
+          are no longer necessary.
 
-	  Also in purge(), there is no need to actually purge the handler
-	  since they will be purged when the handlers close.  This also
-	  removes the need for Transport::close_connection_no_purge().
-	  Transport_Cache_Manager no longer needs to be friends with the
-	  Transport.
+          Also in purge(), there is no need to actually purge the handler
+          since they will be purged when the handlers close.  This also
+          removes the need for Transport::close_connection_no_purge().
+          Transport_Cache_Manager no longer needs to be friends with the
+          Transport.
 
-	* tao\Thread_Lane_Resources.cpp (finalize): 
+        * tao\Thread_Lane_Resources.cpp (finalize):
 
-	  We now close the transport cache and return the handlers that
-	  were still registered.  The cache will decrease the #REFCOUNT#
-	  on the handler when it removes the handler from cache.  However,
-	  #REFCOUNT# is increased when the handler is placed in the
-	  handler set. Then we go through the handler set, closing the
-	  connections and removing the references. Finally the connection
-	  is closed.  There is also a potential removal from the Reactor.
-	  Finally, the #REFCOUNT# related to the handler set decreases.
+          We now close the transport cache and return the handlers that
+          were still registered.  The cache will decrease the #REFCOUNT#
+          on the handler when it removes the handler from cache.  However,
+          #REFCOUNT# is increased when the handler is placed in the
+          handler set. Then we go through the handler set, closing the
+          connections and removing the references. Finally the connection
+          is closed.  There is also a potential removal from the Reactor.
+          Finally, the #REFCOUNT# related to the handler set decreases.
 
-	* tao\Notify_Handler:
+        * tao\Notify_Handler:
 
-	  These files are no longer required since the Reactor framework
-	  does the correct reference counting for notifications.
+          These files are no longer required since the Reactor framework
+          does the correct reference counting for notifications.
 
-	* tao\LF_CH_Event:
-	* tao\LF_Event:
+        * tao\LF_CH_Event:
+        * tao\LF_Event:
 
-	  Removed the LFS_CONNECTION_CLOSE_WAIT state since it is no
-	  longer needed.
+          Removed the LFS_CONNECTION_CLOSE_WAIT state since it is no
+          longer needed.
 
-	* tao\Connect_Strategy: 
+        * tao\Connect_Strategy:
 
-	  Removed Connect_Strategy::post_failed_connect() since
-	  *_Connector::make_connection() now does the right thing.
+          Removed Connect_Strategy::post_failed_connect() since
+          *_Connector::make_connection() now does the right thing.
 
-	* tao\Asynch_Reply_Dispatcher_Base.cpp: 
-	* tao\Asynch_Reply_Dispatcher_Base.i: 
-	* tao\Cache_Entries.cpp:
-	* tao\Invocation.cpp:
-	* tao\Transport.cpp:
-	* tao\Notify_Handler.cpp:
-	* tao\Thread_Per_Connection_Handler.cpp:
-	* tao\PortableServer\AMH_Response_Handler.cpp:
+        * tao\Asynch_Reply_Dispatcher_Base.cpp:
+        * tao\Asynch_Reply_Dispatcher_Base.i:
+        * tao\Cache_Entries.cpp:
+        * tao\Invocation.cpp:
+        * tao\Transport.cpp:
+        * tao\Notify_Handler.cpp:
+        * tao\Thread_Per_Connection_Handler.cpp:
+        * tao\PortableServer\AMH_Response_Handler.cpp:
 
-	  Replace calls to Transport::_duplicate() and
-	  Transport::release() with new Transport::add_handler() and
-	  Transport::remove_handler() methods respectively.
+          Replace calls to Transport::_duplicate() and
+          Transport::release() with new Transport::add_handler() and
+          Transport::remove_handler() methods respectively.
 
-	* tests\TAO_Tests.dsw:
+        * tests\TAO_Tests.dsw:
 
-	  Added several missing tests:
-		
-	  - AMH_Exceptions_Test
-	  - AMH_Oneway_Test 
-	  - Abstract Interface
-	  - Bug_1361_Regression
-	  - Bug_1482_Regression
-	  - Collocation_Test
-	  - Connect_Strategy_Test
-	  - Connection_Timeout
-	  - File_IO
-	  - MProfile_Connection_Timeout
-	  - MT_BiDir
-	  - Manipulation
-	  - Muxed_GIOP_Versions
-	  - Nested_Upcall_Crash
-	  - No_Server_MT_Connect_Test
-	  - ORB_shutdown
-	  - Objref_Sequence_Test
-	  - Oneway_Buffering
-	  - Stack_Recursion
-	  - Strategies 
-	  - Two_Objects 
+          Added several missing tests:
 
-	* tao\Makefile.bor:
-	* tao\Makefile.tao:
-	* tao\TAO.dsp:
-	* tao\TAO_Static.dsp:
-	* tao\tao.mpc:
+          - AMH_Exceptions_Test
+          - AMH_Oneway_Test
+          - Abstract Interface
+          - Bug_1361_Regression
+          - Bug_1482_Regression
+          - Collocation_Test
+          - Connect_Strategy_Test
+          - Connection_Timeout
+          - File_IO
+          - MProfile_Connection_Timeout
+          - MT_BiDir
+          - Manipulation
+          - Muxed_GIOP_Versions
+          - Nested_Upcall_Crash
+          - No_Server_MT_Connect_Test
+          - ORB_shutdown
+          - Objref_Sequence_Test
+          - Oneway_Buffering
+          - Stack_Recursion
+          - Strategies
+          - Two_Objects
 
-	  Removed Notify_Handler* from project/makefiles.
+        * tao\Makefile.bor:
+        * tao\Makefile.tao:
+        * tao\TAO.dsp:
+        * tao\TAO_Static.dsp:
+        * tao\tao.mpc:
 
-	* tests\Connection_Timeout\client.dsp:
-	* tests\MProfile_Connection_Timeout\client.dsp:
-	* tests\MProfile_Connection_Timeout\server.dsp:
-	* tests\MT_BiDir\client.dsp:
-	* tests\MT_BiDir\server.dsp:
-	* tests\ORB_shutdown\server.dsp:
+          Removed Notify_Handler* from project/makefiles.
 
-	  Fixed the above project files.
+        * tests\Connection_Timeout\client.dsp:
+        * tests\MProfile_Connection_Timeout\client.dsp:
+        * tests\MProfile_Connection_Timeout\server.dsp:
+        * tests\MT_BiDir\client.dsp:
+        * tests\MT_BiDir\server.dsp:
+        * tests\ORB_shutdown\server.dsp:
 
-	* tests\Bug_1361_Regression\Bug_1361_Regression.dsw:
-	* tests\Bug_1361_Regression\client.dsp:
-	* tests\Bug_1361_Regression\server.dsp:
-	* tests\Bug_1361_Regression\shutdown.dsp:
+          Fixed the above project files.
 
-	  New project files.
+        * tests\Bug_1361_Regression\Bug_1361_Regression.dsw:
+        * tests\Bug_1361_Regression\client.dsp:
+        * tests\Bug_1361_Regression\server.dsp:
+        * tests\Bug_1361_Regression\shutdown.dsp:
 
-	Tue Jun 24 21:46:13 2003  Irfan Pyarali  <irfan@oomworks.com>
+          New project files.
 
-	* tao\Strategies\DIOP_Connection_Handler:
-	* tao\Strategies\SCIOP_Connection_Handler:
-	* tao\Strategies\SHMIOP_Connection_Handler:
-	* tao\Strategies\UIOP_Connection_Handler:
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connection_Handler:
-	
-	  - Constructor: Removed code to release the transport.  Lifetimes
-	  of transports and connection handlers are now coupled.
+        Tue Jun 24 21:46:13 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	  - Destructor: Delete the transport.
+        * tao\Strategies\DIOP_Connection_Handler:
+        * tao\Strategies\SCIOP_Connection_Handler:
+        * tao\Strategies\SHMIOP_Connection_Handler:
+        * tao\Strategies\UIOP_Connection_Handler:
+        * orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connection_Handler:
 
-	  - handle_input(), handle_output(): Intercept any errors from
-	  handle_input_eh() and handle_output_eh() respectively and call
-	  close_connection(). We no longer rely on handle_close().
+          - Constructor: Removed code to release the transport.  Lifetimes
+          of transports and connection handlers are now coupled.
 
-	  - handle_close(): Assert that this method no longer gets called.
+          - Destructor: Delete the transport.
+
+          - handle_input(), handle_output(): Intercept any errors from
+          handle_input_eh() and handle_output_eh() respectively and call
+          close_connection(). We no longer rely on handle_close().
+
+          - handle_close(): Assert that this method no longer gets called.
 
           - handle_timeout(): Added this method. We don't use this upcall
-	  for I/O.  This is only used by the Connector to indicate that
-	  the connection timedout.  Therefore, we should call close().
+          for I/O.  This is only used by the Connector to indicate that
+          the connection timedout.  Therefore, we should call close().
 
-	  - close(): Added this method that will be called by the Acceptor
-	  or Connector when connection establishment fails.
+          - close(): Added this method that will be called by the Acceptor
+          or Connector when connection establishment fails.
 
-	  - The unused constructor should assert(0).
+          - The unused constructor should assert(0).
 
-	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connection_Handler:
+        * orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connection_Handler:
 
-	  - Constructor: Replaced the code to release the transport with
-	  explicit deletion.  Lifetimes of transports and connection
-	  handlers are now coupled.
+          - Constructor: Replaced the code to release the transport with
+          explicit deletion.  Lifetimes of transports and connection
+          handlers are now coupled.
 
-	  - The unused constructor should assert(0).
+          - The unused constructor should assert(0).
 
-	* tao\Strategies\DIOP_Transport: 
-	* tao\Strategies\SCIOP_Transport: 
-	* tao\Strategies\SHMIOP_Transport:
-	* tao\Strategies\UIOP_Transport:
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
-	
-	  - Constructor: No need to manage reference count on the
-	  connection handler.  Lifetimes of transports and connection
-	  handlers are now coupled.
+        * tao\Strategies\DIOP_Transport:
+        * tao\Strategies\SCIOP_Transport:
+        * tao\Strategies\SHMIOP_Transport:
+        * tao\Strategies\UIOP_Transport:
+        * orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
 
-	  - Destructor: Removed the assert for the connection handler.
+          - Constructor: No need to manage reference count on the
+          connection handler.  Lifetimes of transports and connection
+          handlers are now coupled.
 
-	  - send(), recv(): send_i() and recv_i() were renamed send() and
-	  recv() respectively since locks are no longer required while
-	  sending or receiving.
+          - Destructor: Removed the assert for the connection handler.
 
-	  - handle_input(): handle_input_i() was renamed to
-	  handle_input().
+          - send(), recv(): send_i() and recv_i() were renamed send() and
+          recv() respectively since locks are no longer required while
+          sending or receiving.
 
-	  - register_handler(): No longer required since the base class
-	  does the right thing.
+          - handle_input(): handle_input_i() was renamed to
+          handle_input().
 
-	  - invalidate_event_handler_i(): This is no longer required.
+          - register_handler(): No longer required since the base class
+          does the right thing.
 
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
+          - invalidate_event_handler_i(): This is no longer required.
 
-	  No need for acquiring <handler_lock_> and calling
-	  check_event_handler_i() in tear_listen_point_list() and
-	  get_listen_point() since <connection_handler_> is now always
-	  valid for the lifetime of the transport.
+        * orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
 
-	* tao\Strategies\DIOP_Transport: 
+          No need for acquiring <handler_lock_> and calling
+          check_event_handler_i() in tear_listen_point_list() and
+          get_listen_point() since <connection_handler_> is now always
+          valid for the lifetime of the transport.
 
-	  - Removed commented out code. 
+        * tao\Strategies\DIOP_Transport:
 
-	  - Renamed register_handler_i() to register_handler(). 
+          - Removed commented out code.
 
-	* tao\Strategies\SCIOP_Transport: 
+          - Renamed register_handler_i() to register_handler().
 
-	  - send_request(), get_listen_point(), tear_listen_point_list():
-	  Removed guard and check for valid connection handler.
+        * tao\Strategies\SCIOP_Transport:
 
-	  - send_message_shared(): Removed check for valid connection
-	  handler.
+          - send_request(), get_listen_point(), tear_listen_point_list():
+          Removed guard and check for valid connection handler.
 
-	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Transport:
+          - send_message_shared(): Removed check for valid connection
+          handler.
 
-	  Rename handle_input_i() to handle_input().
+        * orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Transport:
 
-	* tao\Strategies\SCIOP_Connector.cpp (make_connection): 
-	* tao\Strategies\UIOP_Connector.cpp (make_connection): 
-	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connector.cpp (make_connection):
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connector.cpp (ssliop_connect):
-	
-	  Made this method similar to IIOP_Connector::make_connection().
+          Rename handle_input_i() to handle_input().
 
-	* tao\Strategies\SHMIOP_Connector.cpp (make_connection): 
+        * tao\Strategies\SCIOP_Connector.cpp (make_connection):
+        * tao\Strategies\UIOP_Connector.cpp (make_connection):
+        * orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connector.cpp (make_connection):
+        * orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connector.cpp (ssliop_connect):
 
-	  Made this method similar to IIOP_Connector::make_connection()
-	  except that the connects are always blocking.
+          Made this method similar to IIOP_Connector::make_connection().
 
-	* tao\Strategies\DIOP_Connector.cpp (make_connection):  
+        * tao\Strategies\SHMIOP_Connector.cpp (make_connection):
 
-	  - Replaced decr_refcount() with remove_reference() and
-	  duplicate() with add_reference() respectively.
+          Made this method similar to IIOP_Connector::make_connection()
+          except that the connects are always blocking.
 
-	Wed Jun 25 15:56:14 2003  Irfan Pyarali  <irfan@oomworks.com>
+        * tao\Strategies\DIOP_Connector.cpp (make_connection):
 
-	* tao\Strategies\DIOP_Acceptor:
+          - Replaced decr_refcount() with remove_reference() and
+          duplicate() with add_reference() respectively.
 
-	  Revised the management of the connection handler.  Replaced the
-	  call to handle_close() with call to remove_reference().
+        Wed Jun 25 15:56:14 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	Thu Jun 26 19:34:26 2003  Irfan Pyarali  <irfan@oomworks.com>
+        * tao\Strategies\DIOP_Acceptor:
 
-	* tao\Strategies\DIOP_Acceptor.cpp (close): 
+          Revised the management of the connection handler.  Replaced the
+          call to handle_close() with call to remove_reference().
 
-	  Added DONT_CALL mask to the remove_handler() call so that
-	  handle_close() is not called anymore.
+        Thu Jun 26 19:34:26 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	Mon Jun 30 20:46:22 2003  Irfan Pyarali  <irfan@oomworks.com>
+        * tao\Strategies\DIOP_Acceptor.cpp (close):
 
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connection_Handler: 
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connector.cpp:
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport:
+          Added DONT_CALL mask to the remove_handler() call so that
+          handle_close() is not called anymore.
 
-	  DIOP and UIPMC are very similar.  Therefore, similar changes
-	  were made.
+        Mon Jun 30 20:46:22 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Connection_Failure: 
+        * orbsvcs\orbsvcs\PortableGroup\UIPMC_Connection_Handler:
+        * orbsvcs\orbsvcs\PortableGroup\UIPMC_Connector.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport:
 
-	  New test added that checks connection failures by connecting to
-	  a non-existent object.  
+          DIOP and UIPMC are very similar.  Therefore, similar changes
+          were made.
 
-	  The following files were added:
+        * tests\Connection_Failure:
 
-	  - tests\Connection_Failure\Connection_Failure.dsw
-	  - tests\Connection_Failure\Connection_Failure.mpc
-	  - tests\Connection_Failure\Makefile
-	  - tests\Connection_Failure\Makefile.bor
-	  - tests\Connection_Failure\README
-	  - tests\Connection_Failure\client.bor
-	  - tests\Connection_Failure\client.cpp
-	  - tests\Connection_Failure\client.dsp
-	  - tests\Connection_Failure\run_test.pl
-	  - tests\Connection_Failure\test.idl
+          New test added that checks connection failures by connecting to
+          a non-existent object.
 
-	  and the following were modified:
+          The following files were added:
 
-	  - tests\Makefile
-	  - tests\Makefile.bor
-	  - tests\TAO_Tests.dsw
-	  - tests\README
-	  - $ACE_ROOT\bin\tao_orb_tests.lst
+          - tests\Connection_Failure\Connection_Failure.dsw
+          - tests\Connection_Failure\Connection_Failure.mpc
+          - tests\Connection_Failure\Makefile
+          - tests\Connection_Failure\Makefile.bor
+          - tests\Connection_Failure\README
+          - tests\Connection_Failure\client.bor
+          - tests\Connection_Failure\client.cpp
+          - tests\Connection_Failure\client.dsp
+          - tests\Connection_Failure\run_test.pl
+          - tests\Connection_Failure\test.idl
 
-	Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
+          and the following were modified:
 
-	* TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
-	* TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
-	* TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-	* TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* TAO/tao/IIOP_Connector.cpp:
-	* TAO/tao/Strategies/DIOP_Connector.cpp:
-	* TAO/tao/Strategies/SHMIOP_Connector.cpp:
-	* TAO/tao/Strategies/UIOP_Connector.cpp:
+          - tests\Makefile
+          - tests\Makefile.bor
+          - tests\TAO_Tests.dsw
+          - tests\README
+          - $ACE_ROOT\bin\tao_orb_tests.lst
 
-	  Fixed Connector related template instantiations.
+        Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	Thu May 22 14:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
 
-	* Merged Reactor_RefCount branch with the main truck since all ACE
-	  level changes are now complete.  New branch is
-	  Reactor_RefCount_1.
+          Fixed Connector related template instantiations.
 
-	Tue May 27 19:59:25 2003  Irfan Pyarali  <irfan@oomworks.com>
+        Thu May 22 14:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* Merged Reactor_RefCount_1 branch with the main truck to avail
-	  new changes by Bala to the TAO connection handlers.  New branch
-	  is Reactor_RefCount_2.
+        * Merged Reactor_RefCount branch with the main truck since all ACE
+          level changes are now complete.  New branch is
+          Reactor_RefCount_1.
+
+        Tue May 27 19:59:25 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+        * Merged Reactor_RefCount_1 branch with the main truck to avail
+          new changes by Bala to the TAO connection handlers.  New branch
+          is Reactor_RefCount_2.
 
 Mon Jul 07 07:46:00 2003  Justin Michel  <michel_j@ociweb.com>
-	
-	* examples/RTCORBA/Activity/Activity.cpp
-	* examples/RTCORBA/Activity/Activity.mpc
-	* examples/RTCORBA/Activity/main.cpp
+
+        * examples/RTCORBA/Activity/Activity.cpp
+        * examples/RTCORBA/Activity/Activity.mpc
+        * examples/RTCORBA/Activity/main.cpp
 
           Reverted my changes to Activity from July 3. I thought
-        of a new way to write the mpc that's compatible with the 
+        of a new way to write the mpc that's compatible with the
         existing Makefile.
 
 Mon Jul 07 07:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -616,45 +842,45 @@ Mon Jul 07 06:06:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jul 06 17:40:19 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/lib:
-	* orbsvcs/tests/Notify/RT_lib:
+        * orbsvcs/tests/Notify/lib:
+        * orbsvcs/tests/Notify/RT_lib:
 
-	  Changed all instances of "TAO_NS_" with "TAO_Notify_Tests_" because of
-	  conflicting namespace with the Notify orbsvcs library classes.
-	  This was causing some programs to crash on Win2k.
+          Changed all instances of "TAO_NS_" with "TAO_Notify_Tests_" because of
+          conflicting namespace with the Notify orbsvcs library classes.
+          This was causing some programs to crash on Win2k.
 
-	* orbsvcs/orbsvcs/Notify:
-	* orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
 
-	  Changed all instances of "TAO_NS_" with "TAO_Notify_" as "NS" is
-	  easily confused with the Naming Service.
+          Changed all instances of "TAO_NS_" with "TAO_Notify_" as "NS" is
+          easily confused with the Naming Service.
 
-	* orbsvcs/examples/Notify/Lanes/Supplier.h:
-	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
-	* orbsvcs/examples/Notify/Lanes/Consumer.h:
-	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.h:
+        * orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer.h:
+        * orbsvcs/examples/Notify/Lanes/Consumer.cpp:
 
-	  Appended "Lanes" word to the Supplier and Consumer class
-	  declarations to avoid namespace conflict with the Notify library.
+          Appended "Lanes" word to the Supplier and Consumer class
+          declarations to avoid namespace conflict with the Notify library.
 
-	* orbsvcs/tests/Notify/Lanes/supplier.conf:
-	* orbsvcs/tests/Notify/Lanes/consumer.conf:
-	* orbsvcs/tests/Notify/Lanes/notify.conf:
+        * orbsvcs/tests/Notify/Lanes/supplier.conf:
+        * orbsvcs/tests/Notify/Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/Lanes/notify.conf:
 
-	  Commented out directive to use SCHED_FIFO. Using the default
-	  SCHED_OTHER will enable the test to run on solaris and windows
-	  without being root.
+          Commented out directive to use SCHED_FIFO. Using the default
+          SCHED_OTHER will enable the test to run on solaris and windows
+          without being root.
 
-	* orbsvcs/tests/Notify/lib/Driver.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
 
-	  Added a check in the <init> method for available priority
-	  levels and exit gracefully if only 1 level is available.
-	  Thanks to Irfan for code borrowed from his RTCORBA tests.
+          Added a check in the <init> method for available priority
+          levels and exit gracefully if only 1 level is available.
+          Thanks to Irfan for code borrowed from his RTCORBA tests.
 
-	* orbsvcs/examples/Notify/Filter/run_test.pl:
-	* orbsvcs/examples/Notify/Subscribe/run_test.pl:
+        * orbsvcs/examples/Notify/Filter/run_test.pl:
+        * orbsvcs/examples/Notify/Subscribe/run_test.pl:
 
-	  Added for convenience.
+          Added for convenience.
 
 Sun Jul 6 19:31:01 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
@@ -743,9 +969,9 @@ Sat Jul 5 06:55:12 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
 Fri Jul 4 17:05:39 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Makefile.bor:
+        * tao/RTScheduling/Makefile.bor:
 
-	  Added Makefile to build with Borland compiler.
+          Added Makefile to build with Borland compiler.
 
 Fri Jul  4 12:27:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -772,40 +998,40 @@ Fri Jul  4 08:07:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul  3 17:44:43 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* examples/RTCORBA/Activity/Makefile: Added 'main' to the FILES so
-	  that we'd have a main().  This should get rid of the compile
-	  errors seen on various platforms where crt1.o can't find a
-	  reference to main().
+        * examples/RTCORBA/Activity/Makefile: Added 'main' to the FILES so
+          that we'd have a main().  This should get rid of the compile
+          errors seen on various platforms where crt1.o can't find a
+          reference to main().
 
 Thu Jul  3 11:48:40 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/tests/Redundant_Naming/client.cpp: Initialized ns[12]ref
-	  variables to zero.  Although the code looked like the variables
-	  probably would be assigned prior to use, this de-warns on picky
-	  platforms/compilers like GCC 3.2.
+        * orbsvcs/tests/Redundant_Naming/client.cpp: Initialized ns[12]ref
+          variables to zero.  Although the code looked like the variables
+          probably would be assigned prior to use, this de-warns on picky
+          platforms/compilers like GCC 3.2.
 
-	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
 
-	  Modified operator<< and operator>> to use
-	  ACE_SIZE_T_FORMAT_SPECIFIER macro rather than an explicit %d.
-	  This should rid us of warnings such as "warning: int format,
-	  different type arg (arg 3)"
+          Modified operator<< and operator>> to use
+          ACE_SIZE_T_FORMAT_SPECIFIER macro rather than an explicit %d.
+          This should rid us of warnings such as "warning: int format,
+          different type arg (arg 3)"
 
-	* tao/Transport.cpp (dump_iov): Made same modification as above
-	  for the same reasons.
+        * tao/Transport.cpp (dump_iov): Made same modification as above
+          for the same reasons.
 
 Thu Jul  3 11:22:47 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
 
-	  Used proper ACE_ENV_ARG_* macros in function declarations and
-	  function bodies.  This should get rid of compilation errors on
-	  no-exception builds that manifested themselves as
-	  "`_ACE_CORBA_Environment_variable' undeclared" errors.
+          Used proper ACE_ENV_ARG_* macros in function declarations and
+          function bodies.  This should get rid of compilation errors on
+          no-exception builds that manifested themselves as
+          "`_ACE_CORBA_Environment_variable' undeclared" errors.
 
-	  Also used .in() to explicitly select a conversion on a _var so
-	  get rid of warnings regarding which conversion the G++ compiler
-	  was going to choose.
+          Also used .in() to explicitly select a conversion on a _var so
+          get rid of warnings regarding which conversion the G++ compiler
+          was going to choose.
 
 Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -826,28 +1052,28 @@ Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 3 14:50:08 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Makefile
+        * tao/RTScheduling/Makefile
 
-	  Added rules to make the RTScheduler library with cygwin/mingw
-	  compilers. Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
-	  providing the patch. This should fix the internal compile errors
-	  on cygwin/mingw builds.
+          Added rules to make the RTScheduler library with cygwin/mingw
+          compilers. Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          providing the patch. This should fix the internal compile errors
+          on cygwin/mingw builds.
 
 Thu Jul 03 13:20:16 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/lib/Makefile.bor:
+        * orbsvcs/tests/Notify/lib/Makefile.bor:
 
-	  Added TAO_DYNAMICANY to the EXTERNAL_LIBS to fix Borland static
-	  build problems.
+          Added TAO_DYNAMICANY to the EXTERNAL_LIBS to fix Borland static
+          build problems.
 
-	* orbsvcs/tests/Notify/lib/Makefile:
-	* orbsvcs/tests/Notify/RT_lib/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/RT_lib/Makefile:
 
-	  Added BUILD_DLL option to CPPFLAGS. These are needed
-	  for the cygwin/mingw compiler to export the symbols from the DLL.
+          Added BUILD_DLL option to CPPFLAGS. These are needed
+          for the cygwin/mingw compiler to export the symbols from the DLL.
 
-	  Many thanks to Johnny Willemsen  <jwillemsen@remedy.nl> for all
-	  of the above.
+          Many thanks to Johnny Willemsen  <jwillemsen@remedy.nl> for all
+          of the above.
 
 Thu Jul 03 17:03:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -864,11 +1090,11 @@ Thu Jul 03 16:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 03 11:47:44 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/examples/Notify/Lanes/Makefile:
+        * orbsvcs/examples/Notify/Lanes/Makefile:
 
-	  Added missing linkage to CosNotification.
-	  Thanks to Michael Rice <MichaelARice@knology.net> for reporting
-	  this.
+          Added missing linkage to CosNotification.
+          Thanks to Michael Rice <MichaelARice@knology.net> for reporting
+          this.
 
 Thu Jul  3 02:34:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -886,75 +1112,75 @@ Thu Jul  3 02:34:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Jul 02 22:10:59 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.h:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.h:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.h:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.h:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.h:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
 
-	  Fixed the build warnings of derived class method "hides virtual
-	  function" in the base class, on SunCC and BCB compiler.
-	  All the <connect> methods in the derived classes have been
-	  changed to <_connect> and all calls to these methods have also
-	  been renamed.
+          Fixed the build warnings of derived class method "hides virtual
+          function" in the base class, on SunCC and BCB compiler.
+          All the <connect> methods in the derived classes have been
+          changed to <_connect> and all calls to these methods have also
+          been renamed.
 
-	* orbsvcs/examples/Notify/Consumer_Client.cpp:
- 	* orbsvcs/examples/Notify/Consumer_Client.h:
-	* orbsvcs/examples/Notify/Supplier_Client.cpp:
-	* orbsvcs/examples/Notify/Supplier_Client.h:
+        * orbsvcs/examples/Notify/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Consumer_Client.h:
+        * orbsvcs/examples/Notify/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Supplier_Client.h:
 
-	  For the same reason as above, the <init> method has been
-	  renamed to <initialize>.
+          For the same reason as above, the <init> method has been
+          renamed to <initialize>.
 
-	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
 
-	  Initialized the member pointer <barrier_> in the constructor.
-	  The pointer is "delete"ed in the destructor. If it is left
-	  uninitialized, we will get an exception when the
-	  Activation_Manager is destroyed without calling the
-	  <activate_suppliers> method (where <barrier_> is initialized).
+          Initialized the member pointer <barrier_> in the constructor.
+          The pointer is "delete"ed in the destructor. If it is left
+          uninitialized, we will get an exception when the
+          Activation_Manager is destroyed without calling the
+          <activate_suppliers> method (where <barrier_> is initialized).
 
-	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
+        * orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
 
-	  Corrected a comment on line 141.
+          Corrected a comment on line 141.
 
-	* orbsvcs/tests/Notify/lib/Driver.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
 
-	  Added a wait for the <worker_> thread manager before exit.
-	  This is required to make sure we do not exit the main thread
-	  before the spawned threads in the <worker_> task have finished.
+          Added a wait for the <worker_> thread manager before exit.
+          This is required to make sure we do not exit the main thread
+          before the spawned threads in the <worker_> task have finished.
 
-	* orbsvcs/examples/Notify/Lanes.dsp:
- 	  This file was checked in by mistake. It is not required so I
-	  have removed it.
+        * orbsvcs/examples/Notify/Lanes.dsp:
+          This file was checked in by mistake. It is not required so I
+          have removed it.
 
 Thu Jul  3 00:59:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1010,85 +1236,85 @@ Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jul 2 15:37:36 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/TAO_RTScheduler.dsp:
+        * tao/RTScheduling/TAO_RTScheduler.dsp:
 
-	  Added the /GR option to TAO_RTScheduler.dsp to fix warnings due
-	  to run time type identifcation problem.
+          Added the /GR option to TAO_RTScheduler.dsp to fix warnings due
+          to run time type identifcation problem.
 
 Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Distributable_Thread.cpp:
-	* tao/RTScheduling/Request_Interceptor.cpp:
-	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Distributable_Thread.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Current.cpp:
 
-	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
-	  Template and RH73 GCC32 NoInterceptorsNoExceptions builds. Used
-	  ACE_ENV_ARG_DECL_NOT_USED instead of ACE_ENV_ARG_DECL in
-	  methods, in the corresponding .cpp files, that did not use the
-	  env argument, to fix unused parameter errors and warnings.
+          Fixed compile errors and warnings in Red Hat 7.1 Explicit
+          Template and RH73 GCC32 NoInterceptorsNoExceptions builds. Used
+          ACE_ENV_ARG_DECL_NOT_USED instead of ACE_ENV_ARG_DECL in
+          methods, in the corresponding .cpp files, that did not use the
+          env argument, to fix unused parameter errors and warnings.
 
 Tue Jul 1 00:27:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Current.cpp:
 
-	  Fixed compile errors in Debian SingleThreaded and RH73 GCC32
-	  NoInterceptorsNoExceptions. The error was caused due to the
-	  missing env argument parameter in the
-	  TAO_RTScheduler_Current::lookup (...) method. This prevented the
-	  RTScheduler Initializer from creating an instance of the current
-	  object.
+          Fixed compile errors in Debian SingleThreaded and RH73 GCC32
+          NoInterceptorsNoExceptions. The error was caused due to the
+          missing env argument parameter in the
+          TAO_RTScheduler_Current::lookup (...) method. This prevented the
+          RTScheduler Initializer from creating an instance of the current
+          object.
 
 Mon Jun 30 16:31:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Request_Interceptor.h:
-	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Request_Interceptor.h:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Current.cpp:
 
-	  Fixed compile errors and warnings in Debian SingleThreaded build
-	  caused by the usage of ACE_Thread_Mutex. This was replaced with
-	  TAO_SYNCH_MUTEX.
+          Fixed compile errors and warnings in Debian SingleThreaded build
+          caused by the usage of ACE_Thread_Mutex. This was replaced with
+          TAO_SYNCH_MUTEX.
 
 Mon Jun 30 16:02:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Distributable_Thread.h:
-	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/Current.cpp:
-	* tao/RTScheduling/Request_Interceptor.cpp:
-	* tao/RTScheduling/Request_Interceptor.h:
-	* tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/Distributable_Thread.h:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/RTScheduling/Request_Interceptor.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
 
-	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
-	  Template build caused by missing return statements in functions
-	  returning non-void. Also moved the creation of an instance of
-	  TAO_RT_Current from TAO_RTSceduler_Current constructor to a
-	  method init.
+          Fixed compile errors and warnings in Red Hat 7.1 Explicit
+          Template build caused by missing return statements in functions
+          returning non-void. Also moved the creation of an instance of
+          TAO_RT_Current from TAO_RTSceduler_Current constructor to a
+          method init.
 
 Mon Jun 30 12:19:22 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp
 
-	  Tried to modify the code to get rid of the compiling warning messages for the
-	  build named "RH71_Explicit_Templates".
+          Tried to modify the code to get rid of the compiling warning messages for the
+          build named "RH71_Explicit_Templates".
 
 Mon Jun 30 11:44:34 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/AMH/Single_Threaded/Roundtrip.cpp
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/Roundtrip.cpp
 
-	  Fixed the code to get rid of the gcc compiling warning about unused
-	  parameters in function definitions.
+          Fixed the code to get rid of the gcc compiling warning about unused
+          parameters in function definitions.
 
 Mon Jun 30 11:52:22 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
-	* orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
-	* orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
-	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
-	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
-	* orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
+        * orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
 
-	  Removed references to .inl files.
+          Removed references to .inl files.
 
 Mon Jun 30 09:33:31 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -1098,125 +1324,125 @@ Mon Jun 30 09:33:31 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 Sun Jun 29 02:09:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
 
-	  Added explicit template instantiation for hash map of endpoint
-	  addresses. This should fix the compile problem on sun solaris.
+          Added explicit template instantiation for hash map of endpoint
+          addresses. This should fix the compile problem on sun solaris.
 
 Sun Jun 29 00:26:56 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/corbafwd.h:
-	* tao/Exeception.h:
-	* tao/Exeception.cpp:
+        * tao/corbafwd.h:
+        * tao/Exeception.h:
+        * tao/Exeception.cpp:
 
-	  Added THREAD_CANCELLED to CORBA system exception. The exception
-	  is thrown when a Distributable Thread is cancelled. This should
-	  fix compile problems.
+          Added THREAD_CANCELLED to CORBA system exception. The exception
+          is thrown when a Distributable Thread is cancelled. This should
+          fix compile problems.
 
-	* TAOACE.dsw:
-	* tao/TAO.dsw:
-	* tao/RTScheduling/TAO_RTScheduler.dsp:
-	* tao/RTScheduling/TAO_RTScheduler.rc:
+        * TAOACE.dsw:
+        * tao/TAO.dsw:
+        * tao/RTScheduling/TAO_RTScheduler.dsp:
+        * tao/RTScheduling/TAO_RTScheduler.rc:
 
-	  Added project and workspace files to build RTScheduler library on
-	  windows.
+          Added project and workspace files to build RTScheduler library on
+          windows.
 
 Fri Jun 27 12:12:09 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
 
-	  Finally fixed the explicit instantiation for activate<>.  As it
-	  turns out, the problem is that the build on which this was
-	  failing had exceptions turned off, which required the
-	  ACE_ENV_ARG_DECL at the end of the arg list.  Other explicit
-	  instantiation builds didn't trip the problem because they had
-	  exceptions turned on.
+          Finally fixed the explicit instantiation for activate<>.  As it
+          turns out, the problem is that the build on which this was
+          failing had exceptions turned off, which required the
+          ACE_ENV_ARG_DECL at the end of the arg list.  Other explicit
+          instantiation builds didn't trip the problem because they had
+          exceptions turned on.
 
 Thu Jun 26 22:34:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	The following checkins correspond to the implementation of Dynamic
-	Scheduling in TAO. This implementation is based on OMG's
-	RTCORBA 2.0 specification.
+        The following checkins correspond to the implementation of Dynamic
+        Scheduling in TAO. This implementation is based on OMG's
+        RTCORBA 2.0 specification.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
 
-	  Added member variables rtscheduler_current_impl_ and
-	  rtscheduler_previous_current_impl_ to TSS to store the
-	  thread specific implementation of RTScheduling::Current.
+          Added member variables rtscheduler_current_impl_ and
+          rtscheduler_previous_current_impl_ to TSS to store the
+          thread specific implementation of RTScheduling::Current.
 
-	* tao/RTScheduling/RTScheduler.pidl:
-	* tao/RTScheduling/RTSchedulerC.cpp:
-	* tao/RTScheduling/RTSchedulerC.h:
-	* tao/RTScheduling/RTSchedulerC.i:
+        * tao/RTScheduling/RTScheduler.pidl:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tao/RTScheduling/RTSchedulerC.h:
+        * tao/RTScheduling/RTSchedulerC.i:
 
-	  The psuedo IDL file and corresponding stubs/skeletons defining
-	  the various interfaces constituting the dynamic scheduling
-	  framework as defined by the RTCORBA 2.0 specification.
+          The psuedo IDL file and corresponding stubs/skeletons defining
+          the various interfaces constituting the dynamic scheduling
+          framework as defined by the RTCORBA 2.0 specification.
 
-	* tao/RTScheduling/Current.cpp:
-	* tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Current.h:
 
-	  Contains implementation of the RTScheduling::Current
-	  interface. The operations of the Current interface facilitate
-	  creation, termination and updation of scheduling segments and
-	  Distributable Threads (DTs).
+          Contains implementation of the RTScheduling::Current
+          interface. The operations of the Current interface facilitate
+          creation, termination and updation of scheduling segments and
+          Distributable Threads (DTs).
 
-	* tao/RTScheduling/Distributable_Thread.cpp:
-	* tao/RTScheduling/Distributable_Thread.h:
+        * tao/RTScheduling/Distributable_Thread.cpp:
+        * tao/RTScheduling/Distributable_Thread.h:
 
-	  Implements the RTScheduling::DistributableThread interface. This
-	  interface is used to cancel the corresponding DT.
+          Implements the RTScheduling::DistributableThread interface. This
+          interface is used to cancel the corresponding DT.
 
-	* tao/RTScheduling/Request_Interceptor.cpp:
-	* tao/RTScheduling/Request_Interceptor.h:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/RTScheduling/Request_Interceptor.h:
 
-	  Provide interception points when sending/receiving requests so
-	  the ORB can interact with the scheduler. This helps the
-	  scheduler make scheduling decisions at these scheduling points
-	  where the DTs are entering or leaving the host.
+          Provide interception points when sending/receiving requests so
+          the ORB can interact with the scheduler. This helps the
+          scheduler make scheduling decisions at these scheduling points
+          where the DTs are entering or leaving the host.
 
-	* tao/RTScheduling/RTScheduler_Manager.cpp:
-	* tao/RTScheduling/RTScheduler_Manager.h:
-	* tao/RTScheduling/RTScheduler_Manager.i:
+        * tao/RTScheduling/RTScheduler_Manager.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.h:
+        * tao/RTScheduling/RTScheduler_Manager.i:
 
-	  Manages addition/removal of schedulers implementing specific
-	  scheduling disciplines. The scheduler manager facilitates
-	  changing schedulers at run-time.
+          Manages addition/removal of schedulers implementing specific
+          scheduling disciplines. The scheduler manager facilitates
+          changing schedulers at run-time.
 
-	* tao/RTScheduling/RTScheduler_Initializer.cpp:
-	* tao/RTScheduling/RTScheduler_Initializer.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Initializer.h:
 
-	  Registers the "RTScheduler_Current" and "RTScheduler_Manager" in
-	  the object table when the ORB is initialized. They can be
-	  queried with the corresponding names using
-	  resolve_initial_references. It also registers the Client and
-	  Server interceptors defined in Request_Interceptor.{h,cpp}.
+          Registers the "RTScheduler_Current" and "RTScheduler_Manager" in
+          the object table when the ORB is initialized. They can be
+          queried with the corresponding names using
+          resolve_initial_references. It also registers the Client and
+          Server interceptors defined in Request_Interceptor.{h,cpp}.
 
-	* tao/RTScheduling/RTScheduler_Loader.cpp:
-	* tao/RTScheduling/RTScheduler_Loader.h:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.h:
 
-	  Registers the orb initializer, RTScheduler_Initializer.
+          Registers the orb initializer, RTScheduler_Initializer.
 
-	* tao/RTScheduling/RTScheduler.cpp:
-	* tao/RTScheduling/RTScheduler.h:
+        * tao/RTScheduling/RTScheduler.cpp:
+        * tao/RTScheduling/RTScheduler.h:
 
-	  Bootstraps the dynamic scheduling framework by loading in the
-	  RTScheduler_Loader. The header file 'MUST' be included in the
-	  application that wants to use the RTScheduler library.
+          Bootstraps the dynamic scheduling framework by loading in the
+          RTScheduler_Loader. The header file 'MUST' be included in the
+          application that wants to use the RTScheduler library.
 
-	* tao/RTScheduling/ThreadAction.h
+        * tao/RTScheduling/ThreadAction.h
 
-	  Defines the RTScheduling::Thread_Action interface that is used
-	  as an entry point when spawning new DTs.
+          Defines the RTScheduling::Thread_Action interface that is used
+          as an entry point when spawning new DTs.
 
-	* tao/RTScheduling/Makefile
-	* tao/Makefile.dirs
+        * tao/RTScheduling/Makefile
+        * tao/Makefile.dirs
 
-	  Corresponding Makefiles to compile RTScheduler library.
+          Corresponding Makefiles to compile RTScheduler library.
 
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
@@ -1234,9 +1460,9 @@ Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Thu Jun 26 16:08:03 2003  George Edwards <g.edwards@vanderbilt.edu>
 
-        * TAO/tests/OBV/Supports/Supports_Test_impl.cpp:
-        * TAO/tests/OBV/Supports/Supports_Test_impl.h:
-        * TAO/tests/OBV/Supports/Client/client.cpp:
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+        * tests/OBV/Supports/Supports_Test_impl.h:
+        * tests/OBV/Supports/Client/client.cpp:
 
         Enhanced valuetype test by including more complex valuetypes and
         adding more parameter passing scenarios.
@@ -1245,21 +1471,21 @@ Thu Jun 26 14:30:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Objref_VarOut_T.h:
 
-	  Added 'typedef T _obj_type;' to the _var class for interfaces. This
-	  allows access to T's static methods and typedefs from template code
-	  using the corresponding _var.
+          Added 'typedef T _obj_type;' to the _var class for interfaces. This
+          allows access to T's static methods and typedefs from template code
+          using the corresponding _var.
 
 Thu Jun 26 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_sh.cpp (visit_interface):
 
-	  To the generation of the typedefs added in
+          To the generation of the typedefs added in
 
-	  Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+          Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-	  added a global "::" prefix to the scoped name. This eliminates
-	  confusion when a module name reappears at a more deeply nested
-	  level.
+          added a global "::" prefix to the scoped name. This eliminates
+          confusion when a module name reappears at a more deeply nested
+          level.
 
 Thu Jun 26 17:35:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1298,27 +1524,27 @@ Wed Jun 25 17:54:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jun 25 17:06:18 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
-	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/README:
-	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
-	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/README:
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
 
-	  Replaced misspelling word "colocated" with correctly spelled
-	  "collocated" throughout these files.  I did not change actual
-	  file or directory names due to potential problems with CVS.
+          Replaced misspelling word "colocated" with correctly spelled
+          "collocated" throughout these files.  I did not change actual
+          file or directory names due to potential problems with CVS.
 
-	  The COLOCATED option in TAO_NS_EventChannel_Command::init is
-	  grandfathered in at the moment, but it also prints out a
-	  warning that you're using a deprecated misspelled option.
+          The COLOCATED option in TAO_NS_EventChannel_Command::init is
+          grandfathered in at the moment, but it also prints out a
+          warning that you're using a deprecated misspelled option.
 
 Wed Jun 25 17:02:03 2003  George Edwards <g.edwards@vanderbilt.edu>
 
-        * TAO/tests/OBV/Supports/Client.dsp
+        * tests/OBV/Supports/Client.dsp
         * TAO/tests/OBV/Supports/Makefile
         * TAO/tests/OBV/Supports/Makefile.bor
         * TAO/tests/OBV/Supports/README
@@ -1337,21 +1563,21 @@ Wed Jun 25 17:02:03 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
-	* tao/IORInterceptor/IORInterceptor.mpc:
-	* tao/ObjRefTemplate/ObjRefTemplate.mpc:
-	* tao/PortableServer/PortableServer.mpc:
-	* tao/RTCORBA/Multi_Priority_Mapping.h:
-	* tao/Valuetype/Valuetype.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/RTCORBA/Multi_Priority_Mapping.h:
+        * tao/Valuetype/Valuetype.mpc:
 
-	  Fixes for various mpc generation problems.
-	  Incorrect export macro used in the rtcorba header.
+          Fixes for various mpc generation problems.
+          Incorrect export macro used in the rtcorba header.
 
 Wed Jun 25 16:05:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Changed incorrect
-	  path to TAO Strategies library in the release build.  Thanks to
-	  Bruce MacDonald <brucemac@netcomuk.co.uk> for submitting the bug
-	  report and the fix.
+        * orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Changed incorrect
+          path to TAO Strategies library in the release build.  Thanks to
+          Bruce MacDonald <brucemac@netcomuk.co.uk> for submitting the bug
+          report and the fix.
 
 Wed Jun 25 16:00:02 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -1373,33 +1599,33 @@ Wed Jun 25 13:52:13 2003  Gan Deng  <gan.deng@vanderbilt.edu>
         * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp
         * performance-tests/Sequence_Latency/Thread_Pool/client.cpp
 
-	  Fixed the bugs in the code.
-	  Those buys caused errors when dealing with non-native C++ exception handling
+          Fixed the bugs in the code.
+          Those buys caused errors when dealing with non-native C++ exception handling
           mechanism.
 
 Wed June 25 14:46:19 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.h:
-	  Added load_ep () method to read an address file (if available)
-	  to get the sender and receiver endpoints for each flow that is
-	  set up. The address file has entries in the format:
-	  Flowname/Sender_Host:Port/Reciever_Host:Port. If the address
-	  file or endpoints are not specified then the connection manager
-	  uses INADDR_ANY for the endpoints.
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.h:
+          Added load_ep () method to read an address file (if available)
+          to get the sender and receiver endpoints for each flow that is
+          set up. The address file has entries in the format:
+          Flowname/Sender_Host:Port/Reciever_Host:Port. If the address
+          file or endpoints are not specified then the connection manager
+          uses INADDR_ANY for the endpoints.
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.h:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.h:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
-	  Added additional parameter -a <address_file> to the command line
-	  arguments to specify the endpoint address file from which to
-	  load the flow endpoint addresses. Also, made a call to the
-	  Connection_Manager::load_ep () method that reads the address
-	  file and stores the endpoint addresses for each speficied flow
-	  in a hash map.
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.h:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.h:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+          Added additional parameter -a <address_file> to the command line
+          arguments to specify the endpoint address file from which to
+          load the flow endpoint addresses. Also, made a call to the
+          Connection_Manager::load_ep () method that reads the address
+          file and stores the endpoint addresses for each speficied flow
+          in a hash map.
 
 Wed Jun 25 12:38:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1763,10 +1989,10 @@ Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jun 25 09:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO_Static.dsp:
-	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
-	  files into the project. Thanks to Tommy Andreasen
-	  <Tommy.Andreasen@Radiometer.dk> for providing the patches.
+        * tao/TAO_Static.dsp:
+        * tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
+          files into the project. Thanks to Tommy Andreasen
+          <Tommy.Andreasen@Radiometer.dk> for providing the patches.
 
 Tue Jun 25 11:26:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1786,27 +2012,27 @@ Tue Jun 24 18:40:08 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/Basic/run_test.pl:
           Added build option for RT Notification.
 
-	* orbsvcs/tests/Notify/Basic/notify.rt.conf:
-	  Configuration file for RT Notification.
+        * orbsvcs/tests/Notify/Basic/notify.rt.conf:
+          Configuration file for RT Notification.
 
 Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
-	  set for B endpoint when initializing forward flows. If set use
-	  that address to create acceptors. This case happens when no
-	  address is specified for the A endpoint.
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
+          set for B endpoint when initializing forward flows. If set use
+          that address to create acceptors. This case happens when no
+          address is specified for the A endpoint.
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
-	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
-	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
-	  The additional Receiver_Address field allows the user to specify
-	  the receiver address that will be used to receive the
-	  data. This addition helps to solve the problem arising on a
-	  multi-homed host where the acceptor was by default accepting on
-	  all interfaces. This was not acceptable in some cases. Hence,
-	  by specifying the sender and receiver addresses explicitly only
-	  the required interfaces on a multi-homed host are used.
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
+          "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
+          "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
+          The additional Receiver_Address field allows the user to specify
+          the receiver address that will be used to receive the
+          data. This addition helps to solve the problem arising on a
+          multi-homed host where the acceptor was by default accepting on
+          all interfaces. This was not acceptable in some cases. Hence,
+          by specifying the sender and receiver addresses explicitly only
+          the required interfaces on a multi-homed host are used.
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
         * orbsvcs/orbsvcs/AV/UDP.cpp:Made changes to create sockets on the
@@ -1870,7 +2096,7 @@ Tue Jun 24 11:34:53 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/examples/Notify/Lanes/Lanes.mpc:
         * orbsvcs/examples/Notify/Lanes/Makefile:
 
-	  Configuration files, run script and project files.
+          Configuration files, run script and project files.
 
         * orbsvcs/examples/Notify/Lanes/README:
 

@@ -107,25 +107,24 @@ void FTClientMain::commandUsage(ostream & out)
     << "    U     set_update" << std::endl
     << "  Simulate failure:" << std::endl
     << "    dN    die on condition:" << std::endl
-    << "      " << FT_TEST::TestReplica::NOT_YET << " don't die" << std::endl
-    << "      " << FT_TEST::TestReplica::RIGHT_NOW << " immediately" << std::endl
-    << "      " << FT_TEST::TestReplica::WHILE_IDLE << " while idle" << std::endl
-    << "      " << FT_TEST::TestReplica::DURING_GET << " during next get" << std::endl
-    << "      " << FT_TEST::TestReplica::BEFORE_SET << " before next set" << std::endl
-    << "      " << FT_TEST::TestReplica::AFTER_SET << " after next set" << std::endl
-    << "      " << FT_TEST::TestReplica::BEFORE_INCREMENT << " before next increment "<< std::endl
-    << "      " << FT_TEST::TestReplica::AFTER_INCREMENT << " after next increment "<< std::endl
-    << "      " << FT_TEST::TestReplica::DURING_ATTRIBUTE_GET << " during next attribute get" << std::endl
-    << "      " << FT_TEST::TestReplica::BEFORE_ATTRIBUTE_SET << " before next attribute set" << std::endl
-    << "      " << FT_TEST::TestReplica::AFTER_ATTRIBUTE_SET << " after next attribute set" << std::endl
-    << "      " << FT_TEST::TestReplica::DURING_GET_UPDATE << " during get update" << std::endl
-    << "      " << FT_TEST::TestReplica::BEFORE_SET_UPDATE << " before set update" << std::endl
-    << "      " << FT_TEST::TestReplica::AFTER_SET_UPDATE << " after set update" << std::endl
-    << "      " << FT_TEST::TestReplica::DURING_GET_STATE << " during get state" << std::endl
-    << "      " << FT_TEST::TestReplica::BEFORE_SET_STATE << " before set state" << std::endl
-    << "      " << FT_TEST::TestReplica::AFTER_SET_STATE << " after set state" << std::endl
-    << "      " << FT_TEST::TestReplica::DURING_IS_ALIVE << " during is alive" << std::endl
-    << "      " << FT_TEST::TestReplica::DENY_IS_ALIVE << " is_alive returns false" << std::endl
+    << "        d" << FT_TEST::TestReplica::NOT_YET << " don't die" << std::endl
+    << "        d" << FT_TEST::TestReplica::RIGHT_NOW << " immediately" << std::endl
+    << "        d" << FT_TEST::TestReplica::WHILE_IDLE << " while idle" << std::endl
+    << "      (FT_TestReplica interface)" << std::endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_STATE_CHANGE << " before state change" << std::endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_REPLICATION << " after state change, before replication" << std::endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_REPLY << " after replication, before reply "<< std::endl
+    << "      (Monitorable interface)" << std::endl
+    << "        d" << FT_TEST::TestReplica::DURING_IS_ALIVE << " during is alive" << std::endl
+    << "        d" << FT_TEST::TestReplica::DENY_IS_ALIVE << " is_alive returns false" << std::endl
+    << "      (Updatable interface)" << std::endl
+    << "        d" << FT_TEST::TestReplica::DURING_GET_UPDATE << " during get update" << std::endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_SET_UPDATE << " before set update" << std::endl
+    << "        d" << FT_TEST::TestReplica::AFTER_SET_UPDATE << " after set update" << std::endl
+    << "      (Checkpointable interface)" << std::endl
+    << "        d" << FT_TEST::TestReplica::DURING_GET_STATE << " during get state" << std::endl
+    << "        d" << FT_TEST::TestReplica::BEFORE_SET_STATE << " before set state" << std::endl
+    << "        d" << FT_TEST::TestReplica::AFTER_SET_STATE << " after set state" << std::endl
     << " Logistics commands:" << std::endl
     << "   #    ignore this line (comment)." << std::endl
     << "   v    set verbosity:" << std::endl
@@ -537,7 +536,10 @@ int FTClientMain::run ()
   {
     std::cout << "FT Client: Initial counter " << counter << std::endl;
   }
-  std::cout << "FT Client: Commands(=N,cN,>N,+N,-N,<,dN,!,s,S,u,U,vN,q,?)" << std::endl;
+  if (ACE_OS::isatty(stdin))
+  {
+    std::cout << "FT Client: Commands(? for help):" << std::endl;
+  }
 
   int more = 1;
   while (more && result == 0 &&  ! commandIn_->eof())

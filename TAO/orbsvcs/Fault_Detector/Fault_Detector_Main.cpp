@@ -17,6 +17,7 @@
 #include "ace/pre.h"
 #include "FT_FaultDetectorFactory_i.h"
 
+#include "ace/Argv_Type_Converter.h"
 #include "tao/PortableServer/ORB_Manager.h"
 
 #ifdef PG_PS_UNIT_TEST
@@ -24,12 +25,18 @@
 # include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
 #endif //  PG_PS_UNIT_TEST
 
-int main (int argc, char * argv[] )
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  // Copy command line parameter.
+  // and hide it's unicodeness.
+  ACE_Argv_Type_Converter command_line(argc, argv);
+
+  char ** asciiArgv = command_line.get_ASCII_argv();
+
   // create an instance of the factory and give it the first
   // chance at the arguments.
   FT_FaultDetectorFactory_i factory;
-  int result = factory.parse_args (argc, argv);
+  int result = factory.parse_args (argc, asciiArgv);
   if (result == 0)
   {
     ACE_TRY_NEW_ENV
@@ -39,7 +46,7 @@ int main (int argc, char * argv[] )
       // details of being a server.  It, too, gets to see the command line.
       TAO_ORB_Manager orbManager;
 
-      result = orbManager.init (argc, argv
+      result = orbManager.init (argc, asciiArgv
           ACE_ENV_ARG_PARAMETER);
       if(result == 0)
       {
@@ -54,7 +61,8 @@ int main (int argc, char * argv[] )
             ));
         }
 #endif
-
+        //////////////////////////////////
+        // let the factory register itself
         result = factory.self_register(orbManager);
         if (result == 0)
         {
@@ -62,6 +70,7 @@ int main (int argc, char * argv[] )
             "%n\n%T: FaultDetectorFactory Ready %s\n", factory.identity()
             ));
 
+          //////////////////////////////////
           // Run the main event loop for the ORB.
           result = orbManager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           if (result == -1)
@@ -78,7 +87,7 @@ int main (int argc, char * argv[] )
         else
         {
           ACE_ERROR ((LM_ERROR,
-            "%n\n%T: Write IOR failed: %p\n"
+            "%n\n%T: FaultDetectorFactory registration failed: %p\n"
             ));
           result = -1;
         }
@@ -86,7 +95,7 @@ int main (int argc, char * argv[] )
       else
       {
         ACE_ERROR ((LM_ERROR,
-          "%n\n%T: orb manager init failed\n"
+          "%n\n%T: ORB manager init failed\n"
         ));
         result = -1;
       }
