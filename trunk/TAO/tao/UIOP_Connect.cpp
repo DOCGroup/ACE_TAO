@@ -102,7 +102,7 @@ TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
   delete this->acceptor_factory_;
 
   // If the socket has not already been closed.
-  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+  if (this->get_handle () != ACE_INVALID_HANDLE)
     {
       // Cannot deal with errors, and therefore they are ignored.
       this->transport_.send_buffered_messages ();
@@ -337,7 +337,7 @@ TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 {
   // If the socket has not already been closed.
-  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+  if (this->get_handle () != ACE_INVALID_HANDLE)
     {
       // Cannot deal with errors, and therefore they are ignored.
       this->transport_.send_buffered_messages ();
