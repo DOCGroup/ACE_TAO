@@ -1,3 +1,9 @@
+Mon Dec  1 17:18:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/Explicit_Activation/Alt_Resources/Alt_Resource.mpc:
+          Set correct dynamicflags and added gnu verbatim so that this
+          example is not build with GNU because it uses the WFMO Reactor
+
 Mon Dec  1 10:26:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
