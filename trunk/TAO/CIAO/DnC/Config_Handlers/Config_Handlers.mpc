@@ -50,6 +50,7 @@ project (Config_Handlers) : taolib {
     SPE_Handler.cpp
     SPK_Handler.cpp
     SPR_Handler.cpp
+    DnC_Dump.cpp
     Utils.cpp
   }
 }
