@@ -26,7 +26,7 @@ process_string (DOMNodeIterator* iter,
 
 /*
  *  Processes string sequences
- *  Returns true if the node is the string node with name 'node_name'  
+ *  Returns true if the node is the string node with name 'node_name'
  *
  *  node: The possible string node
  *  iter: Iterator traversing the document
