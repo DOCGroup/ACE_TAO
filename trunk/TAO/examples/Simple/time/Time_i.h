@@ -36,10 +36,6 @@ public:
   Time_i (void);
   // Constructor
 
-  Time_i (Time_i &);
-  // Copy Constructor added because g++ generates a
-  // bad one if not defined
-
   ~Time_i (void);
   // Destructor
 
