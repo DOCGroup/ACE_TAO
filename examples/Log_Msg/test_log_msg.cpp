@@ -141,10 +141,12 @@ main (int argc, char *argv[])
                                 sizeof array);
 
       // Disable the LM_DEBUG and LM_INFO messages.
-      u_long priority_mask = ACE_LOG_MSG->priority_mask ();
+      u_long priority_mask =
+        ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
       ACE_CLR_BITS (priority_mask,
                     LM_DEBUG | LM_INFO);
-      ACE_LOG_MSG->priority_mask (priority_mask);
+      ACE_LOG_MSG->priority_mask (priority_mask,
+                                  ACE_Log_Msg::PROCESS);
 
       ACE_DEBUG ((LM_INFO,
                   "This LM_INFO message should not print!\n"));
