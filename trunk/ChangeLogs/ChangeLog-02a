@@ -1,9 +1,16 @@
+Thu Nov  2 11:57:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile:
+        * tests/Makefile:
+        * examples/Makefile:
+          Enable the RMCast library, tests and examples by default.
+
 Wed Nov  1 17:24:59 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* tests/RMCast/Makefile.bor:
-	  Added Makefile, thanks to Christopher Kohlhoff
-	  <chris@kohlhoff.com> and Johnny.Willemsen <Johnny.Willemsen@meco.nl>
-	  for contributing.
+        * tests/RMCast/Makefile.bor:
+          Added Makefile, thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> and Johnny.Willemsen <Johnny.Willemsen@meco.nl>
+          for contributing.
 
 Wed Nov  1 14:11:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
