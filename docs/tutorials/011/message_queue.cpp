@@ -6,9 +6,11 @@
 #include "block.h"
 #include "data.h"
 
-statuc int 
+
+static int 
 run_test (int iterations,
           int threads)
+
 {
   Task task (threads);
 
