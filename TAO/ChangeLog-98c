@@ -1,3 +1,22 @@
+Thu Mar 19 18:20:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * $TAO_ROOT/orbsvcs/tests/Simulator/README: New notes about this release
+
+        * $TAO_ROOT/orbsvcs/tests/Simulator/NavWeap.idl: New, simpler Weapons struct
+	  because of a Visibroker for Java 3.2 bug.
+          
+        * $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier: Using the new
+  	  Weapons struct.  
+
+	* $TAO_ROOT/orbsvcs/tests/Simulator/Sim_Display/NS_Resolve.java: Complying
+	  with the new Name Service lookup protocol (4 bytes instead of 2)
+
+        * $TAO_ROOT/orbsvcs/tests/Simulator/Sim_Display/Display_Weapons.java:
+          Using the new Weapons struct. 
+
+        * $TAO_ROOT/orbsvcs/tests/Simulator/Sim_Display/Display_Push_Consumer.java:
+	  Complying with the naming conventions for the skeleton code of VB 3.2.
+
 Thu Mar 19 10:51:22 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Updated entry for the property service.
