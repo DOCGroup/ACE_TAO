@@ -1,0 +1,15 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "Dynamic_Priority_Test"
+	{
+	   source type (cpp) "Dynamic_Priority_Test.cpp"
+	   source platformLinkLibs
+	}
+    }
