@@ -54,15 +54,13 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ho
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::handle_logging_record (void)
 {
-  ssize_t len;
+  ACE_INT32 len;
 
   // Perform two recv's to emulate record-oriented semantics.  Note
-  // that this code is not entirely portable since it relies on the
-  // fact that sizeof (ssize_t) is the same on both the sender and
-  // receiver side.  To correctly handle this is painful, and we leave
-  // it as an exercise for the reader ;-).
+  // that this code is portable as long as ACE_UNIT32 is always 32
+  // bits on both the sender and receiver side.
 
-  ssize_t n = this->peer ().recv (&len, sizeof len);
+  ssize_t n = this->peer ().recv ((void *) &len, sizeof len);
 
   switch (n)
     {
@@ -74,7 +72,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
       ACE_ERROR_RETURN ((LM_ERROR, "closing log daemon at host %s\n",
 			this->host_name ()), -1);
       /* NOTREACHED */
-    case sizeof (ssize_t):
+    case sizeof (ACE_INT32):
       {
 	ACE_Log_Record lp;
 	
@@ -93,11 +91,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 	lp.decode ();
 
 	if (lp.length () == n)
-  {
-    receiver().log_record(this->host_name (), lp);
-    // Send the log record to the log message receiver for
-    // processing.
-  }
+          {
+            receiver().log_record(this->host_name (), lp);
+            // Send the log record to the log message receiver for
+            // processing.
+          }
 	else
 	  ACE_ERROR ((LM_ERROR, "error, lp.length = %d, n = %d\n",
 		     lp.length (), n));

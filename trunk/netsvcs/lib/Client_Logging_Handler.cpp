@@ -112,7 +112,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   long length;
 
   // We need to use the ol' two-read trick here since TCP sockets
-  // don't support framing natively.
+  // don't support framing natively.  Note that the first call is just
+  // a "peek" -- we don't actually remove the data until the second
+  // call.
 
   switch (ACE_OS::recv (handle,
 			(char *) &length,
@@ -192,7 +194,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
   else
     {
       long len = log_record.length ();
-      long encoded_len = htonl (len);
+      ACE_INT32 encoded_len = htonl (len);
 
       log_record.encode ();
 
