@@ -1,3 +1,16 @@
+Wed Sep  8 04:54:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+
+	  Define TAO_*_BUILD_DLL macro for stub and skeleton libraries
+	  so that symbols will be exported for Windows builds.  I hope
+	  this will be enough so that separate #defines aren't needed
+	  for each library.  Thanks to Johnny Willemsen for help with
+	  this problem.
+
 Tue Sep  7 21:48:40 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Utils/Server_Main.cpp:
