@@ -151,7 +151,7 @@ $(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR)%.creation_stamp
 	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
   ifneq (,$(COMPILE.rc))
-$(VSHDIR)%.rc.$(OBJEXT): %.rc $(VSHDIR).%creation_stamp
+$(VSHDIR)%.rc.$(OBJEXT): %.rc $(VSHDIR)%.creation_stamp
 	$(COMPILE.rc) $< $@
   endif # COMPILE.rc
 
