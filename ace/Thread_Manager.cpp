@@ -249,7 +249,7 @@ ACE_Thread_Manager::close (int automatic_wait)
 
   // Clean up the thread descriptor list.  Theoretically, there shouldn't
   // be any leftover thread at this point.
-#if 1
+#if 0
   // @@ Perhaps we should automatically join our threads when we exit?
   if (automatic_wait)
     this->wait (0, 1);
