@@ -1,3 +1,8 @@
+Mon Oct  1 15:19:11 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/C++NPv1/README: Added a section that illustrates the
+	  mapping of chapters onto files in the directory.
+
 Mon Oct  1 12:58:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp (handle_socket_events): A fix for the problem 
