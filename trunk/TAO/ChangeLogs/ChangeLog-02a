@@ -1,3 +1,19 @@
+Tue Mar 19 10:18:42 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
+	  Add missing export directives.
+
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	  Add mising files to the project.
+
+	* TAOACE.dsw:
+	  Add missing dependency.
+
+	* orbsvcs/performance-tests/RTEvent/RTEvent.dsw:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.dsp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.dsp:
+	  Add new project files.
+
 Mon Mar 18 17:43:49 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Messaging/diffs/Messaging.diff:

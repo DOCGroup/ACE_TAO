@@ -98,6 +98,10 @@ SOURCE=.\Client_Group.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_Options.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Pair.cpp
 # End Source File
 # Begin Source File
@@ -215,6 +219,10 @@ SOURCE=.\Auto_Disconnect.h
 # Begin Source File
 
 SOURCE=.\Client_Group.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Client_Options.h
 # End Source File
 # Begin Source File
 
