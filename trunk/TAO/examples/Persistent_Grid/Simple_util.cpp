@@ -1,4 +1,5 @@
 //$Id$
+
 #ifndef SIMPLE_UTIL_C
 #define SIMPLE_UTIL_C
 # include "Simple_util.h"
@@ -96,7 +97,7 @@ Server<Servant>::init (const char *servant_name,
   // Stash our ORB pointer for later reference.
   this->servant_.orb (orb.in ());
 
-  // Stash the memory pool name for reference 
+  // Stash the memory pool name for reference
   this->servant_.pool_name (mem_pool_name_);
 
   // Activate the servant in its own child POA.
@@ -136,12 +137,13 @@ Server<Servant>::init (const char *servant_name,
   return 0;
 }
 
-template <class Servant>int
+template <class Servant> int
 Server<Servant>::run (CORBA::Environment &ACE_TRY_ENV)
 {
     // Run the main event loop for the ORB.
   int ret = this->orb_manager_.run (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
@@ -153,7 +155,7 @@ Server<Servant>::run (CORBA::Environment &ACE_TRY_ENV)
 
 
 /////////////////////////////////////////////////////////////////
-//      Client code Starts here 
+//      Client code Starts here
 ////////////////////////////////////////////////////////////////
 
 // Constructor.

@@ -1,13 +1,38 @@
+Mon Apr  2 20:19:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/interceptors_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/interceptors_ss.h:
+          Moved all the interceptor helper classes to the .cpp file.  This
+          will speed up compilation just a tiny little bit, but more
+          importantly, it will allow us to regenerate PolicyC.cpp without
+          any cycles in the #include hierarchy.
+
+        * tao/PortableServer/MessagingS.h:
+        * tao/diffs/MessagingS.h.diff:
+          Fixed another '#pragma pop', but this one was only a problem on
+          Borland with messaging disabled!  If Jeff hadn't spot this
+          visually we would have never caugh the problem.
+
+        * examples/Persistent_Grid/Simple_util.cpp:
+        * examples/Persistent_Grid/server.cpp:
+        * examples/Simple/chat/server.cpp:
+        * performance-tests/Pluggable/PP_Test_Client.cpp:
+          Fixed minor compilation problems.
+
 Mon Apr  2 22:13:16 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* examples/Log/test/BasicLog_Test.cpp:
-	* examples/Notify/Subscribe/Subscribe.cpp:
-	* orbsvcs/Notify/Notify_EventChannel_i.cpp:
-	* orbsvcs/Notify/Notify_Event_Map.cpp:
-	* orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
-	* orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	* orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
-	  more fuzz fixes.
+        * examples/Log/test/BasicLog_Test.cpp:
+        * examples/Notify/Subscribe/Subscribe.cpp:
+        * orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/Notify/Notify_Event_Map.cpp:
+        * orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+        * orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
+          more fuzz fixes.
 
 
 Mon Apr  2 21:32:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
