@@ -341,6 +341,12 @@ CORBA_ORB::_optimize_collocation_objects (void)
   return this->optimize_collocation_objects_;
 }
 
+ACE_INLINE TAO_ORB_Core *
+CORBA_ORB::orb_core (void) const
+{
+  return this->orb_core_;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_ORB_var
 // *************************************************************

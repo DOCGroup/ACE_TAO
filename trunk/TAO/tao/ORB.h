@@ -333,7 +333,7 @@ public:
 
   // ORB_Core has special privileges
   friend class TAO_ORB_Core;
-  friend TAO_Export TAO_ORB_Core* TAO_ORB_Core_instance (void);
+  friend TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
   class TAO_Export InvalidName : public CORBA_UserException
   {
@@ -632,6 +632,9 @@ public:
   CORBA::Boolean _optimize_collocation_objects (void);
   // Get collocation optimization status.
 
+  TAO_ORB_Core *orb_core (void) const;
+  // Get the ORB core.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_ORB_ptr _ptr_type;
   typedef CORBA_ORB_var _var_type;
@@ -640,7 +643,7 @@ public:
 
 protected:
   // We must be created via the <ORB_init> call.
-  CORBA_ORB (TAO_ORB_Core* orb_core);
+  CORBA_ORB (TAO_ORB_Core *orb_core);
   virtual ~CORBA_ORB (void);
 
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &TAO_IN_ENV);
@@ -747,7 +750,7 @@ private:
   TAO_Leader_Follower_Info  leader_follower_info_;
   // Information about the leader follower model
 
-  TAO_ORB_Core* orb_core_;
+  TAO_ORB_Core *orb_core_;
   // The ORB_Core that created us....
 
 #ifdef TAO_HAS_VALUETYPE

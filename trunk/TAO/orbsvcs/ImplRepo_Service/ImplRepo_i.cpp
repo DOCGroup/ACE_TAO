@@ -657,51 +657,32 @@ void
 IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
                       CORBA::Environment &ACE_TRY_ENV)
 {
-  // Get the POA Current object reference
-  CORBA::Object_var obj = this->orb_var_->resolve_initial_references ("POACurrent");
-
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current *poa_current = orb_core->poa_current ();
-
-  if (ACE_TRY_ENV.exception () != 0)
-    {
-      ACE_TRY_ENV.print_exception ("PortableServer::Current::_narrow");
-      return;
-    }
+  TAO_ORB_Core *orb_core = this->orb_var_->orb_core ();
+  TAO_POA_Current_Impl *poa_current_impl = orb_core->poa_current ().implementation ();
 
   // The servant determines the key associated with the database entry
   // represented by self
-  PortableServer::ObjectId_var oid = poa_current->get_object_id (ACE_TRY_ENV);
-  if (ACE_TRY_ENV.exception () != 0)
-    return;
+  PortableServer::ObjectId_var oid = poa_current_impl->get_object_id (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Now convert the id into a string
   CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
 
-  PortableServer::POA_ptr poa = poa_current->get_POA (ACE_TRY_ENV);
-  if (ACE_TRY_ENV.exception () != 0)
-    return;
+  PortableServer::POA_ptr poa = poa_current_impl->get_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Now FORWARD!!!
 
   Implementation_Repository::INET_Addr *new_addr = 0;
-
-  ACE_TRY
-    {
-      new_addr = this->ir_impl_->activate_server (poa->the_name (),
-                                                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
+  new_addr = this->ir_impl_->activate_server (poa->the_name (),
+                                              ACE_TRY_ENV);
+  ACE_CHECK;
 
   CORBA_Object_ptr forward_object =
-    this->orb_var_->key_to_object (poa_current->object_key (),
+    this->orb_var_->key_to_object (poa_current_impl->object_key (),
                                    0,
                                    ACE_TRY_ENV);
+  ACE_CHECK;
 
   TAO_Stub *stub_obj = ACE_dynamic_cast (TAO_Stub *,
                                          forward_object->_stubobj ());
@@ -713,13 +694,8 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
   iiop_pfile->port (new_addr->port_);
   iiop_pfile->host (new_addr->host_);
 
-//  if (TAO_debug_level > 0)
-//    ACE_DEBUG ((LM_DEBUG,
-//                "The forward_to is <%s>\n",
-//                this->orb_var_->object_to_string (forward_object, ACE_TRY_ENV)));
-
   if (!CORBA::is_nil (forward_object))
-    ACE_TRY_ENV.exception (new PortableServer::ForwardRequest (forward_object));
+    ACE_THROW (PortableServer::ForwardRequest (forward_object));
   else
     ACE_ERROR ((LM_ERROR,
                 "Error: Forward_to reference is nil.\n"));

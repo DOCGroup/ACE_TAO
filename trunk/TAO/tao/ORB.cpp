@@ -108,7 +108,7 @@ CORBA_ORB::InvalidName::_is_a (const char* interface_id) const
           || CORBA_UserException::_is_a (interface_id));
 }
 
-CORBA_ORB::CORBA_ORB (TAO_ORB_Core* orb_core)
+CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
   : refcount_ (1),
     open_called_ (0),
     shutdown_lock_ (0),
