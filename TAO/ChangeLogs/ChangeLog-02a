@@ -1,3 +1,14 @@
+Thu Apr 27 12:29:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  Changed generation of a node's full name to 
+	  generation of the local name in a few spots. At
+	  most places inside a function body, the local name
+	  is sufficient and also avoids compiler confusion
+	  when nested scoped names are repeated after skipping,
+	  for example foo::bar::foo.
+
 Thu Apr 27 11:48:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_module/module.cpp:
