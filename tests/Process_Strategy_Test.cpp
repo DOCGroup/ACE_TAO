@@ -200,7 +200,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("Temporary path too long\n")),
                       -1);
 
-  ACE_OS::strcat (this->filename_, ACE_TEXT ("process_strategy_test_temp"));
+  ACE_OS_String::strcat (this->filename_, ACE_TEXT ("process_strategy_test_temp"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

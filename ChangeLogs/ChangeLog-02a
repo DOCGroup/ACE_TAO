@@ -1,3 +1,35 @@
+Sat Mar 10 07:05:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests: Added Logging_Strategy_Test.cpp.  Thanks to Orlando
+ 	  Ribeiro <oribeiro@inescporto.pt> for contributing this.
+
+	* tests/Makefile (BIN): Added Logging_Strategy_Test.
+
+	* tests/run_test.lst: Added Log_Msg_Test and
+ 	  the new Logging_Strategy_Test.
+
+	* tests/Log_Msg_Test.cpp: Added ACE_TEXT macros to all the ACE_DEBUG and
+	  ACE_ERROR calls.
+
+	* ace/Service_Manager.{h,cpp}: Refactored the request processing
+ 	  code so that it's in a single place.  Also, added support to
+ 	  enable remote reconfiguration.  Thanks to Mike Curtis
+ 	  <mccurry@my-deja.com> for contributing this.
+
+	* ace/Logging_Strategy.cpp (parse_args): Fixed a mistaken
+	  re-initialization of the thread_priority_mask_ and the
+ 	  process_priority_mask_.  Thanks to Martin Krumpolec
+ 	  <krumpo@pobox.sk> for reporting this.
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i): Fixed this code so that
+	  it doesn't fail if run on a directory that doesn't support locks
+ 	  (like some NFS mounts).  Thanks to scott snyder
+ 	  <snyder@fnal.gov> for reporting this.
+
+	* tests/SOCK_Connector_Test.cpp: Split up a loop so that the test
+	  doesn't hang on RedHat Linux 7.0.  Thanks to Michael Searles
+ 	  <msearles@base16.com> for this fix.
+
 Fri Mar  9 22:39:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Svc_Conf.h:

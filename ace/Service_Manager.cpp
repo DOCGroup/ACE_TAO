@@ -223,6 +223,31 @@ ACE_Service_Manager::reconfigure_services (void)
                                       sizeof ("done\n"));
 }
 
+// isolate the request-processing code
+void
+ACE_Service_Manager::process_request (ACE_TCHAR *request)
+{
+  ACE_TRACE("ACE_Service_Manager::process_request");
+  char *p;
+ 
+  // Kill trailing newlines.
+  for (p = request;
+       (*p != '\0') && (*p != '\r') && (*p != '\n');
+       p++)
+    continue;
+ 
+  *p = '\0';
+
+  if (ACE_OS::strcmp (request, "help") == 0)
+    this->list_services ();
+  else if (ACE_OS::strcmp (request, "reconfigure") == 0)
+    this->reconfigure_services ();
+  else
+    ACE_Service_Config::process_directive (request);
+
+  // Additional management services may be handled here...
+}
+
 // Accept new connection from client and carry out the service they
 // request.
 
@@ -288,27 +313,13 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     default:
       {
-        char *p;
-
-        // Kill trailing newlines.
-        for (p = request;
-             (*p != '\0') && (*p != '\r') && (*p != '\n');
-             p++)
-          continue;
-
-        *p = '\0';
-
         ACE_Event_Handler *old_signal_handler = 0;
         ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                     this,
                                                     0,
                                                     &old_signal_handler);
-        if (ACE_OS::strcmp (request, "help") == 0)
-          this->list_services ();
-        else if (ACE_OS::strcmp (request, "reconfigure") == 0)
-          this->reconfigure_services ();
 
-        // Additional management services may be handled here...
+        this->process_request (request);
 
         // Restore existing SIGPIPE handler
         ACE_Reactor::instance ()->register_handler (SIGPIPE,

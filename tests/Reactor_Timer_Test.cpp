@@ -240,7 +240,8 @@ main (int argc, ACE_TCHAR *[])
 
   if (argc > 1)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running with high-res timer queue\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Running with high-res timer queue\n")));
       ACE_Reactor *r = ACE_Reactor::instance ();
       (void) ACE_High_Res_Timer::global_scale_factor ();
       r->timer_queue ()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);

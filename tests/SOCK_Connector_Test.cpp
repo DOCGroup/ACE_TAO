@@ -1,6 +1,6 @@
 // $Id$
 
-// ============================================================================
+// ==========================================================================
 //
 // = LIBRARY
 //    tests
@@ -15,7 +15,7 @@
 // = AUTHOR
 //    Steve Huston <shuston@riverace.com>
 //
-// ============================================================================
+// ==========================================================================
 
 #include "test_config.h"
 #include "ace/OS.h"
@@ -23,27 +23,38 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 
-ACE_RCSID(tests, SOCK_Connector_Test, "$Id$")
+ACE_RCSID(tests, SOCK_Connector_Test, "SOCK_Connector_Test.cpp,v 4.34 2000/04/23 21:29:17 brunsch Exp")
+
+// Host candidate list
+struct Host_Candidate
+{
+  ACE_TCHAR host_name[MAXHOSTNAMELEN];
+};
+
+const int MAX_CANDIDATES = 50;
+Host_Candidate candidate[MAX_CANDIDATES];
 
 #if !defined (ACE_LACKS_GETHOSTENT)
-// Determine if a host exists, is reachable, and is up.
-// Attempt a blocking connection to it; if it succeeds,
-// then the host exists, is reachable, and is up.
+// Determine if a host exists, is reachable, and is up.  Attempt a
+// blocking connection to it; if it succeeds, then the host exists, is
+// reachable, and is up.
+
 static u_int
 host_is_up (ACE_TCHAR hostname[])
 {
   ACE_SOCK_Connector con;
   ACE_SOCK_Stream sock;
 
-  // The ACE_INET_Addr construction causes gethostbyname_r
-  // to be called, so we need to copy the hostname.
+  // The ACE_INET_Addr construction causes gethostbyname_r to be
+  // called, so we need to copy the hostname.
   ACE_TCHAR test_host[MAXHOSTNAMELEN];
   ACE_OS::strcpy (test_host, hostname);
 
   ACE_INET_Addr another_host ((u_short) 7, test_host);
   ACE_Time_Value timeout_value (5);
-  const int status = con.connect (sock, another_host, &timeout_value);
-
+  const int status = con.connect (sock,
+                                  another_host,
+                                  &timeout_value);
   sock.close ();
   return status == 0  ?  1  :  0;
 }
@@ -80,14 +91,20 @@ find_another_host (ACE_TCHAR other_host[])
 
       // @@ We really need to add wrappers for these hostent methods.
 
-      // AIX 4.3 has problems with DNS usage when sethostent(1) is called -
-      // further DNS lookups don't work at all.
+      // AIX 4.3 has problems with DNS usage when sethostent(1) is
+      // called - further DNS lookups don't work at all.
 #if defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS == 3)
       sethostent (0);
 #else
       sethostent (1);
-#endif
+#endif /* (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS == 3) */
 
+      int candidate_count = 0;
+
+      // Accumulate candidates first.  There is some interaction on
+      // Linux systems between <gethostent> and <gethostbyname_r>
+      // (called by ACE_INET_Addr in host_is_up) This otherwise causes
+      // an infinite loop on Linux --mas 03-08-2001
       while ((h = gethostent ()) != NULL)
         {
           if (ACE_OS::strcmp (h->h_name, ACE_DEFAULT_SERVER_HOST) == 0)
@@ -97,15 +114,24 @@ find_another_host (ACE_TCHAR other_host[])
             continue;
 
           // If not me.
-          if (ACE_OS::strcmp (h->h_name, other_host) != 0 &&
-              ACE_OS::strcmp (h->h_name, un.nodename) != 0 )
+          if (ACE_OS::strcmp (h->h_name, other_host) != 0
+              && ACE_OS::strcmp (h->h_name, un.nodename) != 0)
             {
-              if (host_is_up (h->h_name))
-                {
-                  ACE_OS::strcpy (other_host, h->h_name);
-                  break;
-                }
-             }
+               ACE_OS::strcpy (candidate[candidate_count].host_name,
+                               h->h_name);
+               if (candidate_count++ >= MAX_CANDIDATES)
+                 break;
+            }
+        }
+
+      // Now try to connect to candidates
+      for (int i = 0; i < candidate_count; i++)
+        {
+          if (host_is_up (candidate[i].host_name))
+            {
+               ACE_OS::strcpy (other_host, candidate[i].host_name);
+               break;
+            }
         }
 
       endhostent ();
@@ -114,9 +140,7 @@ find_another_host (ACE_TCHAR other_host[])
       ACE_OS::strcpy (cached_other_host, other_host);
     }
   else
-    {
-      ACE_OS::strcpy (other_host, cached_other_host);
-    }
+    ACE_OS::strcpy (other_host, cached_other_host);
 }
 
 static int
@@ -130,11 +154,16 @@ fail_no_listener_nonblocking (void)
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing to host \"%s\"\n"), test_host));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing to host \"%s\"\n"),
+              test_host));
+
   if (nobody_home.set ((u_short) 42000, test_host) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Host lookup for %s %p\n"),
-                  test_host, ACE_TEXT ("failed")));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Host lookup for %s %p\n"),
+                  test_host,
+                  ACE_TEXT ("failed")));
       return -1;
     }
 
@@ -160,7 +189,8 @@ fail_no_listener_nonblocking (void)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"),
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%p\n"),
                       ACE_TEXT ("Proper fail")));
           status = 0;
         }
@@ -182,11 +212,12 @@ fail_no_listener_nonblocking (void)
 
 
 // This test tries to hit a port that's listening.  Echo (7) is pretty
-// popular.  Just in case, though, it won't report a failure if it gets
-// "refused" (no listener) since the real fixed bug this is testing is
-// a returned error of EWOULDBLOCK when the connect really did work.
-// That was a side-affect of how ACE::handle_timed_complete does checks
-// on some systems.
+// popular.  Just in case, though, it won't report a failure if it
+// gets "refused" (no listener) since the real fixed bug this is
+// testing is a returned error of EWOULDBLOCK when the connect really
+// did work.  That was a side-affect of how
+// <ACE::handle_timed_complete> does checks on some systems.
+
 static int
 succeed_nonblocking (void)
 {
@@ -198,11 +229,15 @@ succeed_nonblocking (void)
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing to host \"%s\"\n"), test_host));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing to host \"%s\"\n"),
+              test_host));
   if (echo_server.set ((u_short) 7, test_host) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Host lookup for %s %p\n"),
-                  test_host, ACE_TEXT ("failed")));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Host lookup for %s %p\n"),
+                  test_host,
+                  ACE_TEXT ("failed")));
       return -1;
     }
   status = con.connect (sock, echo_server, &nonblock);
@@ -226,7 +261,8 @@ succeed_nonblocking (void)
           if (errno == ECONNREFUSED || errno == ENOTCONN)
             status = 0;
 
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%p\n"),
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("%p\n"),
                       ACE_TEXT("connect:complete")));
         }
       else
@@ -239,7 +275,6 @@ succeed_nonblocking (void)
 
   return status;
 }
-
 
 int
 main (int, ACE_TCHAR *[])
@@ -257,3 +292,6 @@ main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
+
+
+
