@@ -346,20 +346,20 @@
 // ============================================================================
 
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
+
+// Since new() throws exceptions, we need a way to avoid passing
+// exceptions past the call to new because ACE counts on having a 0
+// return value for a failed allocation. Some compilers offer the
+// new (nothrow) version, which does exactly what we want. Others
+// do not. For those that do not, this sets up what exception is thrown,
+// and then below we'll do a try/catch around the new to catch it and
+// return a 0 pointer instead.
+
 #  if defined (__HP_aCC)
       // I know this works for HP aC++... if <stdexcept> is used, it
       // introduces other stuff that breaks things, like <memory>, which
       // screws up auto_ptr.
 #    include /**/ <new>
-#    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new(nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-   } while (0)
-#    define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new(nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
-   } while (0)
-
     // _HP_aCC was first defined at aC++ 03.13 on HP-UX 11. Prior to that
     // (03.10 and before) a failed new threw bad_alloc. After that (03.13
     // and above) the exception thrown is dependent on the below settings.
@@ -378,9 +378,7 @@
 #      define ACE_bad_alloc bad_alloc
 #    endif /* HPUX_VERS < 1100 */
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-
-#  else
-#    if (__SUNPRO_CC)
+#  elif defined (__SUNPRO_CC)
 #      if (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && __SUNPRO_CC_COMPAT == 4))
 #        include /**/ <exception.h>
          // Note: we catch ::xalloc rather than just xalloc because of
@@ -392,10 +390,27 @@
 #        define ACE_bad_alloc std::bad_alloc
 #        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #      endif /* __SUNPRO_CC < 0x500 */
-#    else
-#      define ACE_bad_alloc bad_alloc
-#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#    endif /* __SUNPRO_CC */
+#  elif defined (__BORLANDC__)
+#    include /**/ <new>
+#    define ACE_bad_alloc std::bad_alloc
+#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#  else
+#    include /**/ <new>
+#    define ACE_bad_alloc bad_alloc
+#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#  endif /* __HP_aCC */
+
+#  if defined (ACE_HAS_NEW_NOTHROW)
+#    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new(nothrow) CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+#    define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { POINTER = new(nothrow) CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
+
+#  else
 
 #    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { try { POINTER = new CONSTRUCTOR; } \
@@ -406,8 +421,8 @@
    do { try { POINTER = new CONSTRUCTOR; } \
         catch (ACE_bad_alloc) { errno = ENOMEM; return; } \
    } while (0)
+#  endif /* ACE_HAS_NEW_NOTHROW */
 
-#  endif /* __HP_aCC */
 #else /* ACE_NEW_THROWS_EXCEPTIONS */
 
 # define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
