@@ -74,9 +74,9 @@ ACE_Parse_Node::link (ACE_Parse_Node *n)
 
 ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops, 
 				  const ACE_Parse_Node *str_mods)
-  : node_ (str_ops), 
-    mods_ (str_mods), 
-    ACE_Parse_Node (str_ops->name ())
+  : ACE_Parse_Node (str_ops->name ()),
+    node_ (str_ops), 
+    mods_ (str_mods) 
 {
   ACE_TRACE ("ACE_Stream_Node::ACE_Stream_Node");
 }
@@ -198,8 +198,8 @@ ACE_Remove_Node::apply (void)
 
 ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Record *sr,
 				    char *parms)
-  : record_ (sr), 
-    ACE_Static_Node (sr->name (), parms)
+  : ACE_Static_Node (sr->name (), parms),
+    record_ (sr)
 {
   ACE_TRACE ("ACE_Dynamic_Node::ACE_Dynamic_Node");
 }
@@ -518,9 +518,9 @@ ACE_Dummy_Node::dump (void) const
 
 ACE_Dummy_Node::ACE_Dummy_Node (const ACE_Static_Node *static_node, 
 				const ACE_Parse_Node *str_mods)
-  : node_ (static_node), 
-    mods_ (str_mods), 
-    ACE_Parse_Node (static_node->name ())
+  : ACE_Parse_Node (static_node->name ()),
+    node_ (static_node), 
+    mods_ (str_mods)
 {
   ACE_TRACE ("ACE_Dummy_Node::ACE_Dummy_Node");
 }
