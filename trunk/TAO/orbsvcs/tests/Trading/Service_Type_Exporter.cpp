@@ -106,19 +106,19 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& ACE_TRY_ENV
 
   ACE_DEBUG ((LM_DEBUG, "Exporting service types with each of the linked"
               " traders.\n"));
-  for (int i = link_name_seq->length () - 1; i >= 0; i--)
+  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; i--)
     {
       CosTradingRepos::ServiceTypeRepository_ptr str = 0;
       ACE_TRY
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
-                      ACE_static_cast (const char*, link_name_seq[iu])));
+                      ACE_static_cast (const char*, link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[iu], ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
-                      ACE_static_cast (const char*, link_name_seq[iu])));
+                      ACE_static_cast (const char*, link_name_seq[i])));
 
           CosTrading::TypeRepository_var remote_repos = 
             link_info->target->type_repos (ACE_TRY_ENV);

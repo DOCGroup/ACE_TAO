@@ -331,8 +331,8 @@ Trading_Service::shutdown (void)
 
           ACE_DEBUG ((LM_DEBUG,
                       "*** Unlinking from federated traders.\n"));
-          for (int i = link_name_seq->length () - 1;
-               i >= 0;
+          for (CORBA::ULong i = link_name_seq->length () - 1;
+               i > 0;
                i--)
             {
               ACE_DEBUG ((LM_DEBUG,
