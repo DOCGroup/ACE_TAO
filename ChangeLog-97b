@@ -1,5 +1,14 @@
 Thu Sep 04 08:48:13 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* include/makeinclude/wrapper_macros.GNU: added shared_libs_only
+	  and static_libs_only build options.  Only static_libs_only
+	  has been tested successfully.
+	
+	* include/makeinclude/rules.lib.GNU: added INSTALL support for
+	  shared_libs_only and static_libs_only.
+
+	* include/makeinclude/platform_vxworks*.GNU: use static_libs_only.
+
 	* ace/OS.cpp: moved tss_open ()/tss_close () calls from invoke ()
 	  to ace_thread_adapter.
 
