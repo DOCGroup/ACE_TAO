@@ -1,5 +1,8 @@
 // $Id$
 
+// This test tries to install a set of components in 2 different containers, which
+// is hosted in the same NodeApplication.
+
 #include "Deployment_CoreC.h"
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
@@ -7,9 +10,11 @@
 #include <sstream>
 #include <vector>
 #include <stdlib.h>
+#include "assert.h"
 
 const char *ior = "file://test.ior";
 int comp_number = 4;
+int count = 0;
 
 int parse_args (int argc, char *argv[])
 {
@@ -49,6 +54,9 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
       CORBA::ULong comp_num (comp_number);
       ACE_DEBUG ((LM_DEBUG, "CompNum: %d\n",comp_num));
 
@@ -56,42 +64,39 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       CIAO::Client_init (orb.in ());
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Deployment::NodeApplication_var comserv =
+      Deployment::NodeApplication_var node_app =
         Deployment::NodeApplication::_narrow (tmp.in ()
                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (comserv.in ()))
+      if (CORBA::is_nil (node_app.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil ServerActivator reference <%s>\n", ior),
+                             "Nil nodeapplication reference <%s>\n", ior),
                             1);
         }
 
-      // This is what we will send out, containing all the instance info the
-      // container needs
-      Deployment::ImplementationInfos infos;
-      infos.length (CORBA::ULong (comp_num));
+      // This is what we will send out of the ContainerImplmentationInfo for the
+      // first container
 
-      // This is what we will get back, a sequence of compoent object refs.
-      Deployment::ComponentInfos_var comp_info;
+      Deployment::ContainerImplementationInfo container_info_1;
+      CORBA::ULong length_1 = comp_num/2;
+      container_info_1.impl_infos.length (CORBA::ULong (length_1));
 
       CORBA::ULong i;
-      for (i = 0; i < comp_num; ++i)
+      for (i = 0; i < length_1; ++i)
         {
-          Deployment::ImplementationInfo info;
+          Deployment::ComponentImplementationInfo info;
 
           std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << i;
+          tmp << "NodeAppTest_RoundTrip:" << count;
+          count = count + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
@@ -105,31 +110,84 @@ main (int argc, char *argv[])
             CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
 
           //Now add the info into the infos
-          infos[i] = info;
+          container_info_1.impl_infos[i] = info;
         }
 
       // For debug purpose.
-      for (i = 0; i < comp_num; ++i)
+      for (i = 0; i < comp_num/2; ++i)
         {
-          Deployment::ImplementationInfo info;
-
           std::stringstream tmp;
           tmp << "NodeAppTest_RoundTrip:" << i;
 
           // Add the names and entry points of each of the DLLs
           ACE_DEBUG ((LM_DEBUG,
             "The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
-            infos[i].component_instance_name.in (),
-            infos[i].executor_dll.in (),
-            infos[i].executor_entrypt.in (),
-            infos[i].servant_dll.in (),
-            infos[i].servant_entrypt.in () ));
+            container_info_1.impl_infos[i].component_instance_name.in (),
+            container_info_1.impl_infos[i].executor_dll.in (),
+            container_info_1.impl_infos[i].executor_entrypt.in (),
+            container_info_1.impl_infos[i].servant_dll.in (),
+            container_info_1.impl_infos[i].servant_entrypt.in () ));
         }
+
+      // This is what we will send out of the ContainerImplmentationInfo for the
+      // first container
+
+      Deployment::ContainerImplementationInfo container_info_2;
+      CORBA::ULong length_2 = comp_num - comp_num/2;
+      container_info_2.impl_infos.length (CORBA::ULong (length_2));
+
+      for (i = 0; i < length_2; ++i)
+        {
+          Deployment::ComponentImplementationInfo info;
+
+          std::stringstream tmp;
+          tmp << "NodeAppTest_RoundTrip:" << count;
+          count = count + 1;
+
+          // Add the names and entry points of each of the DLLs
+          info.component_instance_name =
+            CORBA::string_dup (tmp.str ().c_str ());
+          info.executor_dll = CORBA::string_dup ("NodeAppTest_RoundTrip_exec");
+          info.executor_entrypt =
+            CORBA::string_dup ("createRoundTripHome_Impl");
+          info.servant_dll =
+            CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
+          info.servant_entrypt =
+            CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
+
+          //Now add the info into the infos
+          container_info_2.impl_infos[i] = info;
+        }
+
+      // For debug purpose.
+      for (i = 0; i < length_2; ++i)
+        {
+          std::stringstream tmp;
+          tmp << "NodeAppTest_RoundTrip:" << i;
+
+          // Add the names and entry points of each of the DLLs
+          ACE_DEBUG ((LM_DEBUG,
+            "The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+            container_info_2.impl_infos[i].component_instance_name.in (),
+            container_info_2.impl_infos[i].executor_dll.in (),
+            container_info_2.impl_infos[i].executor_entrypt.in (),
+            container_info_2.impl_infos[i].servant_dll.in (),
+            container_info_2.impl_infos[i].servant_entrypt.in () ));
+        }
+
+      // container_info.container_config is not set for now
 
       ACE_DEBUG ((LM_DEBUG, "Try installing Homes and Components\n"));
 
-      // Install the NodeApplication Test components
-      comp_info = comserv->install (infos);
+      // Create a NodeImplementationInfo sequence
+      Deployment::NodeImplementationInfo node_info;
+      node_info.length (2);
+      node_info[0] = container_info_1;
+      node_info[1] = container_info_2;
+
+      // Install test component and its home on NodeApplication
+      Deployment::ComponentInfos_var comp_info =
+        node_app->install (node_info ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // store the component refs
@@ -151,7 +209,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Installation finished successfully.\n"));
 
       // Before we can start we have to start.
-      comserv->start ();
+      node_app->start ();
       ACE_CHECK_RETURN (1);
 
       // Invoke Operation on the components
@@ -181,10 +239,10 @@ main (int argc, char *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "Try removing everything\n"));
-      comserv->remove ();
+      node_app->remove ();
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Homes removed successfully\n"));
+      ACE_DEBUG ((LM_DEBUG, "Homes and components removed successfully\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
