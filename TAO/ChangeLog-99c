@@ -1,3 +1,22 @@
+Wed Aug 25 16:20:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence.cpp:
+	* tao/Sequence_T.cpp:
+
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+	  Sequence copy constructors now check for a null rhs buffer. If a 
+	  sequence was instantiated, and (perhaps implicitly) passed to a 
+	  copy constructor without its length being set (deprecated but 
+	  possible) or its length set to 0 (definitely possible), setting 
+	  the length of the new sequence would result in a crash. Thanks to 
+	  Lothar Werzinger <werzinger.lothar@krones.de> for sending in
+	  the example that led to this discovery.
+
 Wed Aug 25 16:17:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* examples/POA/Default_Servant/File_i.cpp (open):
