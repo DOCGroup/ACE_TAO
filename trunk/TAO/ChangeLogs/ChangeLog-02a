@@ -1,3 +1,8 @@
+Tue Jul  2 16:12:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile.bor (OBJFILES): Added the new file, Notify_Handler
+	  to the list of object files.
+
 Tue Jul  2 15:46:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	This checkin is to prevent a problem that occurs unders ceratin
