@@ -1,3 +1,9 @@
+Mon Dec 15 15:36:07 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (exit,wait): Changed these two functions
+	  more for Chorus.  Thanks again to Wei Chian
+	  <chiang@tele.nokia.fi> for providing the patch.
+
 Mon Dec 15 06:42:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Log_Msg.cpp (instance): on non-threaded platforms, only
