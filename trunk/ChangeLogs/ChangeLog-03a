@@ -1,8 +1,16 @@
+Tue Aug 08 10:35:04 2000  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/config-sunos5.8.h: added.  We have compiled successfully
+          with it on Solaris 8.0 using both gcc 2.95.2 and Sun 5.0 compilers.
+          It simply includes the 5.7 config.h file.  I have noted that there
+          are some possible efficiencies which autoconfig finds, but this
+          works.
+
 Mon Aug  7 21:05:35 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/QOS/server.dsp:
-	* examples/QOS/client.dsp: Made changes to add the relative path
-	  for aced.lib. 
+        * examples/QOS/server.dsp:
+        * examples/QOS/client.dsp: Made changes to add the relative path
+          for aced.lib.
 
 Mon Aug 07 07:31:23 2000  Peter Fischer <fischer@softec.de>
 
