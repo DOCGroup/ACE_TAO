@@ -1,3 +1,10 @@
+Fri Aug 21 15:50:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* etc/ACE-porting.html: Updated some discussion on selecting
+ 	  versions of STL that work with ACE and TAO.  Thanks to Bob
+ 	  Laferriere <robert.laferriere@gemed.med.ge.com> for reporting
+ 	  this.
+
 Fri Aug 21 14:49:31 1998  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_hpux_gcc.GNU: Changed the default
