@@ -1,3 +1,12 @@
+Thu Mar  8 21:10:39 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IOPC.cpp (operator>>=):
+ 	* tao/MessagingC.cpp (operator>>=):
+	* tao/PortableInterceptorC.cpp (operator>>=):
+
+	  Fixed code so that ACE_TRY_CHECK is correctly called immediately
+	  after a call that uses ACE_TRY_ENV is made.
+
 Thu Mar  8 20:44:23 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Any.h:

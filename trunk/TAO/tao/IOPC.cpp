@@ -98,30 +98,30 @@ void IOP::TaggedProfile::_tao_any_destructor (void *x)
 IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (void)
 {}
 IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::TaggedProfile::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
@@ -142,7 +142,7 @@ static const CORBA::Long _oc_IOP_IOR[] =
   4, ACE_NTOHL (0x494f5200),  // name = IOR
   2, // member count
   8, ACE_NTOHL (0x74797065), ACE_NTOHL (0x5f696400),  // name = type_id
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   9, ACE_NTOHL (0x70726f66), ACE_NTOHL (0x696c6573), ACE_NTOHL (0x0),  // name = profiles
   CORBA::tk_sequence, // typecode kind
@@ -188,7 +188,7 @@ void IOP::IOR::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CS_
 
@@ -197,43 +197,43 @@ void IOP::IOR::_tao_any_destructor (void *x)
   {
     IOP::TaggedProfile* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       IOP::TaggedProfile *old = ACE_reinterpret_cast (IOP::TaggedProfile *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     IOP::TaggedProfile *tmp = ACE_reinterpret_cast (IOP::TaggedProfile *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::~_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CS_)
 #define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CS_
@@ -245,30 +245,30 @@ void IOP::IOR::_tao_any_destructor (void *x)
 IOP::IOR::_tao_seq_TaggedProfile::_tao_seq_TaggedProfile (void)
 {}
 IOP::IOR::_tao_seq_TaggedProfile::_tao_seq_TaggedProfile (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedProfile>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::IOR::_tao_seq_TaggedProfile::_tao_seq_TaggedProfile (CORBA::ULong max, CORBA::ULong length, IOP::TaggedProfile *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedProfile>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::IOR::_tao_seq_TaggedProfile::_tao_seq_TaggedProfile (const _tao_seq_TaggedProfile &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedProfile>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::IOR::_tao_seq_TaggedProfile::~_tao_seq_TaggedProfile (void) // dtor
@@ -341,30 +341,30 @@ void IOP::TaggedComponent::_tao_any_destructor (void *x)
 IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (void)
 {}
 IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::TaggedComponent::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
@@ -380,7 +380,7 @@ void IOP::TaggedComponent::_tao_seq_Octet::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CS_
 
@@ -389,43 +389,43 @@ void IOP::TaggedComponent::_tao_seq_Octet::_tao_any_destructor (void *x)
   {
     IOP::TaggedComponent* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       IOP::TaggedComponent *old = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::~_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_MULTIPLECOMPONENTPROFILE_CS_)
 #define _IOP_MULTIPLECOMPONENTPROFILE_CS_
@@ -437,30 +437,30 @@ void IOP::TaggedComponent::_tao_seq_Octet::_tao_any_destructor (void *x)
 IOP::MultipleComponentProfile::MultipleComponentProfile (void)
 {}
 IOP::MultipleComponentProfile::MultipleComponentProfile (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::MultipleComponentProfile::MultipleComponentProfile (CORBA::ULong max, CORBA::ULong length, IOP::TaggedComponent *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::MultipleComponentProfile::MultipleComponentProfile (const MultipleComponentProfile &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::MultipleComponentProfile::~MultipleComponentProfile (void) // dtor
@@ -516,7 +516,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_MultipleComponentProfile, &_tc_TA
 TAO_NAMESPACE_END
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CS_
 
@@ -525,43 +525,43 @@ TAO_NAMESPACE_END
   {
     IOP::TaggedComponent* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       IOP::TaggedComponent *old = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::~_TAO_Unbounded_Sequence_IOP_TaggedComponentList (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_TAGGEDCOMPONENTLIST_CS_)
 #define _IOP_TAGGEDCOMPONENTLIST_CS_
@@ -573,30 +573,30 @@ TAO_NAMESPACE_END
 IOP::TaggedComponentList::TaggedComponentList (void)
 {}
 IOP::TaggedComponentList::TaggedComponentList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::TaggedComponentList::TaggedComponentList (CORBA::ULong max, CORBA::ULong length, IOP::TaggedComponent *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::TaggedComponentList::TaggedComponentList (const TaggedComponentList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::TaggedComponentList::~TaggedComponentList (void) // dtor
@@ -652,7 +652,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TaggedComponentList, &_tc_TAO_tc_
 TAO_NAMESPACE_END
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CS_
 
@@ -661,43 +661,43 @@ TAO_NAMESPACE_END
   {
     IOP::TaggedComponent* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       IOP::TaggedComponent *old = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::~_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_TAGGEDCOMPONENTSEQ_CS_)
 #define _IOP_TAGGEDCOMPONENTSEQ_CS_
@@ -709,30 +709,30 @@ TAO_NAMESPACE_END
 IOP::TaggedComponentSeq::TaggedComponentSeq (void)
 {}
 IOP::TaggedComponentSeq::TaggedComponentSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::TaggedComponentSeq::TaggedComponentSeq (CORBA::ULong max, CORBA::ULong length, IOP::TaggedComponent *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::TaggedComponentSeq::TaggedComponentSeq (const TaggedComponentSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::TaggedComponentSeq::~TaggedComponentSeq (void) // dtor
@@ -885,30 +885,30 @@ void IOP::ServiceContext::_tao_any_destructor (void *x)
 IOP::ServiceContext::_tao_seq_Octet::_tao_seq_Octet (void)
 {}
 IOP::ServiceContext::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::ServiceContext::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::ServiceContext::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::ServiceContext::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
@@ -924,7 +924,7 @@ void IOP::ServiceContext::_tao_seq_Octet::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CS_
 
@@ -933,43 +933,43 @@ void IOP::ServiceContext::_tao_seq_Octet::_tao_any_destructor (void *x)
   {
     IOP::ServiceContext* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       IOP::ServiceContext *old = ACE_reinterpret_cast (IOP::ServiceContext *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     IOP::ServiceContext *tmp = ACE_reinterpret_cast (IOP::ServiceContext *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::~_TAO_Unbounded_Sequence_IOP_ServiceContextList (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_SERVICECONTEXTLIST_CS_)
 #define _IOP_SERVICECONTEXTLIST_CS_
@@ -981,30 +981,30 @@ void IOP::ServiceContext::_tao_seq_Octet::_tao_any_destructor (void *x)
 IOP::ServiceContextList::ServiceContextList (void)
 {}
 IOP::ServiceContextList::ServiceContextList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_ServiceContextList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::ServiceContext>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IOP::ServiceContextList::ServiceContextList (CORBA::ULong max, CORBA::ULong length, IOP::ServiceContext *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_ServiceContextList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::ServiceContext>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IOP::ServiceContextList::ServiceContextList (const ServiceContextList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IOP_ServiceContextList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::ServiceContext>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IOP::ServiceContextList::~ServiceContextList (void) // dtor
@@ -1180,7 +1180,7 @@ void *IOP::Codec::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1503,7 +1503,7 @@ void *IOP::CodecFactory::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1618,11 +1618,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedProfile
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedProfile, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_TaggedProfile, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1699,11 +1703,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::IOR *&_tao_el
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_IOR, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_IOR, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1780,11 +1788,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedCompone
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedComponent, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_TaggedComponent, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1869,11 +1881,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::MultipleCompo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_MultipleComponentProfile, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_MultipleComponentProfile, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1958,11 +1974,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedCompone
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedComponentList, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result=
+      type->equivalent (IOP::_tc_TaggedComponentList, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2047,11 +2067,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::TaggedCompone
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_TaggedComponentSeq, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_TaggedComponentSeq, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2128,11 +2152,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContex
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_ServiceContext, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_ServiceContext, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2217,11 +2245,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::ServiceContex
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_ServiceContextList, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_ServiceContextList, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2305,11 +2337,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IOP::Encoding *&_t
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IOP::_tc_Encoding, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IOP::_tc_Encoding, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2369,20 +2405,20 @@ CORBA::Boolean operator<< (
   if (strm << _tao_sequence.length ())
   {
     // encode all elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::TaggedProfile::_tao_seq_Octet *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -2399,14 +2435,14 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
       oseq->replace (_tao_seq_len, strm.start ());
       oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -2415,10 +2451,10 @@ CORBA::Boolean operator>> (
     }
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -2459,7 +2495,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -2486,20 +2522,20 @@ CORBA::Boolean operator<< (
   if (strm << _tao_sequence.length ())
   {
     // encode all elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::TaggedComponent::_tao_seq_Octet *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -2516,14 +2552,14 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
       oseq->replace (_tao_seq_len, strm.start ());
       oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -2532,10 +2568,10 @@ CORBA::Boolean operator>> (
     }
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -2572,7 +2608,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -2614,7 +2650,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -2656,7 +2692,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -2681,20 +2717,20 @@ CORBA::Boolean operator<< (
   if (strm << _tao_sequence.length ())
   {
     // encode all elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::ServiceContext::_tao_seq_Octet *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -2711,14 +2747,14 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
       oseq->replace (_tao_seq_len, strm.start ());
       oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -2727,10 +2763,10 @@ CORBA::Boolean operator>> (
     }
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -2767,7 +2803,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -2779,4 +2815,3 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
-
