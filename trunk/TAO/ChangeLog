@@ -1,3 +1,12 @@
+Mon Nov 10 11:03:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynCommon.cpp (insert_reference):
+
+          Added code to cover CDR insertion of a nil object reference
+          (an empty string for the type hint, and a 0 for number of
+          profiles). Thanks to Harvinder Sawhney 
+          <harvinder_sawhney@agilent.com> for reporting the problem.
+
 Mon Nov 10 16:59:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Buffered_AMI/server.cpp:
@@ -115,7 +124,7 @@ Sun Nov  9 19:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableInterceptorC.cpp:
 	* tao/PortableInterceptorC.i:
 
-	  Regenretad the code to keep the Any operators away. We will
+	  Regenerated the code to keep the Any operators away. We will
 	  update the diffss and such if we are damn sure that this is
 	  going to give us wins.
 
