@@ -1,3 +1,8 @@
+Wed May  7 16:41:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentServer_Impl.cpp (remove_container): Fixed warnings
+	  with g++ builds.
+
 Wed May  7 16:36:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/CCM_Core.mpc: Added missing libraries that were essential

@@ -132,7 +132,7 @@ CIAO::ComponentServer_Impl::remove_container (Components::Deployment::Container_
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (oid
+  this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
