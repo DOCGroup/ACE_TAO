@@ -22,7 +22,7 @@ const int TIMEOUT_MILLISECONDS = 50;
 const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
 
 /// Check that no more than 10% of the messages are not sent.
-const double PROGRESS_TOLERANCE = 0.9;
+const double LIVENESS_TOLERANCE = 0.9;
 
 /// Factor in GIOP overhead in the buffer size test
 const double GIOP_OVERHEAD = 0.9;
@@ -85,6 +85,7 @@ run_message_count (CORBA::ORB_ptr orb,
                    Test::Oneway_Buffering_ptr oneway_buffering,
                    Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
                    CORBA::Environment &ACE_TRY_ENV);
+
 int
 run_timeout (CORBA::ORB_ptr orb,
              Test::Oneway_Buffering_ptr oneway_buffering,
@@ -296,11 +297,12 @@ configure_policies (CORBA::ORB_ptr orb,
 }
 
 int
-run_progress_test (Test::Oneway_Buffering_ptr oneway_buffering,
+run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
                    Test::Oneway_Buffering_ptr flusher,
                    Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
                    CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG, ".... checking for liveness\n"));
   int test_failed = 0;
 
   // Get back in sync with the server...
@@ -313,14 +315,14 @@ run_progress_test (Test::Oneway_Buffering_ptr oneway_buffering,
     oneway_buffering_admin->request_count (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  int progress_test_iterations = int(send_count);
+  int liveness_test_iterations = int(send_count);
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  for (int i = 0; i != progress_test_iterations; ++i)
+  for (int i = 0; i != liveness_test_iterations; ++i)
     {
       oneway_buffering->receive_data (payload, ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
@@ -334,7 +336,7 @@ run_progress_test (Test::Oneway_Buffering_ptr oneway_buffering,
       // expect it to fall too far behind, i.e. at least 90% of the
       // messages should be delivered....
       CORBA::ULong expected =
-        CORBA::ULong (PROGRESS_TOLERANCE * send_count);
+        CORBA::ULong (LIVENESS_TOLERANCE * send_count);
 
       if (receive_count < expected)
         {
@@ -439,14 +441,14 @@ run_message_count (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (oneway_buffering,
+  int liveness_test_failed =
+    run_liveness_test (oneway_buffering,
                        flusher.in (),
                        oneway_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
 
   return test_failed;
@@ -542,14 +544,14 @@ run_timeout (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (oneway_buffering,
+  int liveness_test_failed =
+    run_liveness_test (oneway_buffering,
                        flusher.in (),
                        oneway_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
 
 
@@ -652,14 +654,14 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (oneway_buffering,
+  int liveness_test_failed =
+    run_liveness_test (oneway_buffering,
                        flusher.in (),
                        oneway_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
 
 
@@ -760,14 +762,14 @@ run_buffer_size (CORBA::ORB_ptr orb,
         }
     }
 
-  int progress_test_failed =
-    run_progress_test (oneway_buffering,
+  int liveness_test_failed =
+    run_liveness_test (oneway_buffering,
                        flusher.in (),
                        oneway_buffering_admin,
                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (progress_test_failed)
+  if (liveness_test_failed)
     test_failed = 1;
 
   return test_failed;
