@@ -1,0 +1,17 @@
+project(Muxing Server): server {
+  Source_Files {
+    Receiver.cpp
+    Server_Task.cpp
+    server.cpp
+  }
+}
+
+project(Muxing Client): server {
+  exename = client
+
+  Source_Files {
+    Client_Task.cpp
+    client.cpp
+  }
+}
+

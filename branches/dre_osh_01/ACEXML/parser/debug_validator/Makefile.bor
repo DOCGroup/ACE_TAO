@@ -1,0 +1,22 @@
+# Makefile for building the debug_validator
+
+NAME = ACEXML_Debug_DTD_Manager
+
+OBJFILES = \
+        $(OBJDIR)\Debug_Attributes_Builder.obj \
+        $(OBJDIR)\Debug_DTD_Manager.obj \
+        $(OBJDIR)\Debug_Element_Builder.obj \
+        $(OBJDIR)\Element_Tree.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(ACE_XML_CFLAGS) \
+        -DACEXML_DEBUG_DTD_MANAGER_BUILD_DLL
+
+CPPDIR = .;..
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(ACE_XML_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

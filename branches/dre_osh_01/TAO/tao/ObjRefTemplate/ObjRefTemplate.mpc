@@ -1,0 +1,7 @@
+project : valuetype_only, taolib, core {
+  sharedname  = TAO_ObjRefTemplate
+  libs       += TAO_Valuetype TAO
+  dllflags    = TAO_ORT_BUILD_DLL
+  libout      = ..
+  include_dir = tao/ObjRefTemplate
+}

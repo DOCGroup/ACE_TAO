@@ -1,0 +1,3 @@
+project(RedGreen): notifytest {
+  exename = RedGreen_Test
+}

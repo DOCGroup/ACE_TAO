@@ -1,0 +1,38 @@
+# Makefile for building the XML library
+
+NAME = ACEXML
+
+OBJFILES = \
+        $(OBJDIR)\Attributes_Def_Builder.obj \
+        $(OBJDIR)\AttributesImpl.obj \
+        $(OBJDIR)\CharStream.obj \
+        $(OBJDIR)\DefaultHandler.obj \
+        $(OBJDIR)\DTD_Manager.obj \
+        $(OBJDIR)\Element_Def_Builder.obj \
+        $(OBJDIR)\Env.obj \
+        $(OBJDIR)\Encoding.obj \
+        $(OBJDIR)\Exception.obj \
+        $(OBJDIR)\FileCharStream.obj \
+        $(OBJDIR)\InputSource.obj \
+        $(OBJDIR)\LocatorImpl.obj \
+        $(OBJDIR)\NamespaceSupport.obj \
+        $(OBJDIR)\SAXExceptions.obj \
+        $(OBJDIR)\StrCharStream.obj \
+        $(OBJDIR)\Transcode.obj \
+        $(OBJDIR)\Validator.obj \
+        $(OBJDIR)\XMLFilterImpl.obj \
+        $(OBJDIR)\Mem_Map_Stream.obj \
+        $(OBJDIR)\HttpCharStream.obj \
+        $(OBJDIR)\URL_Addr.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(ACE_XML_CFLAGS) \
+        -DACEXML_BUILD_DLL
+
+CPPDIR = .;..
+
+LIBFILES = \
+        $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

@@ -1,0 +1,33 @@
+#
+# Makefile for building the ImplRepo_Service executable
+#
+
+!ifndef MINIMUM_CORBA
+NAME = ImplRepo_Service
+!else
+!undef NAME
+!endif
+
+OBJFILES = \
+	$(OBJDIR)\Adapter_Activator.obj \
+	$(OBJDIR)\Forwarder.obj \
+	$(OBJDIR)\ImR_Locator.obj \
+	$(OBJDIR)\ImR_Locator_i.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_IORTABLE_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_IORTABLE_LIB) \
+	$(TAO_SVC_UTILS_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>

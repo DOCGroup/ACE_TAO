@@ -1,0 +1,3 @@
+project (Simple_Component_Server) : ciao_server {
+  exename = Simple_Component_Server
+}

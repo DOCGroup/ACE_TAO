@@ -1,0 +1,30 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "Cache_Map_Manager_Test"
+	{
+	   source type (cpp) "Cache_Map_Manager_Test.cpp"
+	   if ($__IBMCPP__ >= 500) {
+	     option macros(global) {
+	       source type (hpp) "test_config.h"
+	     }
+	     source type (cpp) "test_config.h"
+	     source type (cpp) "../ace/Singleton.cpp"
+             source type (cpp) "../ace/Cache_Map_Manager_T.cpp"
+             source type (cpp) "../ace/Map_Manager.cpp"
+             source type (cpp) "../ace/Caching_Strategies_T.cpp"
+             source type (cpp) "../ace/Caching_Utility_T.cpp"
+             source type (cpp) "../ace/Hash_Cache_Map_Manager_T.cpp"
+             source type (cpp) "../ace/Hash_Map_Manager_T.cpp"
+             source type (cpp) "../ace/Pair_T.cpp"
+             source type (cpp) "../ace/Functor_T.cpp"
+	   }
+	   source type (lib) platformLinkLibs
+	}
+    }
