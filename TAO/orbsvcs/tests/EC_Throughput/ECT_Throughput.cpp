@@ -209,6 +209,7 @@ ECT_Throughput::run (int argc, char* argv[])
         }
       else
         {
+#if 0
           ec_factory = 
             auto_ptr<TAO_EC_Factory>(new TAO_EC_Null_Factory (root_poa.in ()));
           
@@ -219,6 +220,11 @@ ECT_Throughput::run (int argc, char* argv[])
 
           ec_impl =
             auto_ptr<POA_RtecEventChannelAdmin::EventChannel> (ec);
+#else
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "The new event channel is not supported "
+                             "please recompile\n"), 1);
+#endif /* 0 */
         }
 
       RtecEventChannelAdmin::EventChannel_var channel =
