@@ -1,3 +1,20 @@
+Mon Oct 18 15:45:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (event_wait): The following changes are incorrect and
+	  have been reverted:
+
+	  http://ace.cs.wustl.edu/cvsweb/ace-cvs.cgi/ACE_wrappers/ace/OS.i?r1=4.796&r2=4.797.
+
+	  Remember that <is_signaled_> is only turned on to remember
+	  state, i.e., when <waiting_threads_> == 0.  In the case when
+	  there are waiters, i.e., <waiting_threads_> != 0, <is_signaled_>
+	  is not turned on, and therefore breaks the wait function since
+
+	      while (event->is_signaled_ == 0)
+
+	  never becomes false.  We need a better way to protect against to
+	  guard against spurious wakeups.
+
 Mon Oct 18 13:42:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Added extra parentheses to avoid operator precedence
