@@ -134,6 +134,22 @@ HTTP_Helper::HTTP_date (void)
   return HTTP_Helper::date_string_;
 }
 
+const char *
+HTTP_Helper::HTTP_date (char *s)
+{
+  time_t tloc;
+  struct tm tms;
+  char * date_string = s;
+
+  if (ACE_OS::time (&tloc) != (time_t) -1
+      && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
+    ACE_OS::strftime (date_string, 40, "%a, %d %b %Y %T GMT", &tms);
+  else
+    date_string = 0;
+
+  return date_string;
+}
+
 int
 HTTP_Helper::HTTP_month (const char *month)
 {

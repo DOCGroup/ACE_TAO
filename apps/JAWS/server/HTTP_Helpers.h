@@ -30,6 +30,7 @@ public:
 
   // Create today's date
   static const char *HTTP_date (void);
+  static const char *HTTP_date (char *s);
 
   static int HTTP_month (const char *month);
   static const char *HTTP_month (int month);
