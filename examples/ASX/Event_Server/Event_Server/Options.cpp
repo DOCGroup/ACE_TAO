@@ -1,6 +1,6 @@
-#include "ace/Get_Opt.h"
 // $Id$
 
+#include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "ace/Thread.h"
 #include "ace/Log_Msg.h"
@@ -97,7 +97,7 @@ Options::parse_args (int argc, char *argv[])
   ACE_Get_Opt get_opt (argc, argv, "c:bdH:i:L:l:M:ns:t:T:v");
   int c;
 
-  while ((c = get_opt ()) != -1)
+  while ((c = get_opt ()) != EOF)
     switch (c)
       {
       case 'b':

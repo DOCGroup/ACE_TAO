@@ -1,17 +1,12 @@
-// client.C (written by Tim Harrison)
 // $Id$
 
-// This program reads in messages from stdin and sends them
-// to a Log_Wrapper.
+// This program reads in messages from stdin and sends them to a
+// Log_Wrapper.
 
 #include "ace/Log_Msg.h"
 #include "Log_Wrapper.h"
 
 const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
-
-// this is hardware specific.
-// use netstat(1M) to find whether your interface
-// is le0 or ie0
 
 const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
@@ -24,8 +19,6 @@ static int iterations = 0;
 static void
 parse_args (int argc, char *argv[])
 {
-  extern char *optarg;
-  extern int  optind;
   int c;
 
   ACE_LOG_MSG->open (argv[0]);
@@ -63,10 +56,12 @@ main (int argc, char **argv)
   if (log.open (UDP_PORT, MCAST_ADDR) == -1)
     ACE_OS::perror ("connect failed"), ACE_OS::exit (1);
 
-  char *buf = new char[::max_message_size];
+  char *buf;
+  
+  ACE_NEW_RETURN (buf, char[::max_message_size], -1);
 
-  // if -i has been specified, send max_message_size messages
-  // iterations number of times
+  // If -i has been specified, send max_message_size messages
+  // iterations number of times.
   if (iterations)
     {
       ACE_OS::memset (buf,1,::max_message_size);
