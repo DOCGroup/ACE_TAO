@@ -211,13 +211,9 @@ CORBA::Boolean POA_Messaging::_tao_collocated_SyncScopePolicy::_is_a (
                                 );
 }
 
-Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (
-                                                                                       CORBA::Environment &ACE_TRY_ENV
-                                                                                       )
+Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->servant_->synchronization (
-                                          ACE_TRY_ENV
-                                          );
+  return this->servant_->synchronization (ACE_TRY_ENV);
 }
 
 Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (void)
@@ -1007,13 +1003,14 @@ CORBA::Boolean POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::_is_
                                 );
 }
 
-TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::relative_expiry  (
-                                                                                               CORBA::Environment &ACE_TRY_ENV
-                                                                                               )
+TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::relative_expiry  (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->servant_->relative_expiry (
-                                          ACE_TRY_ENV
-                                          );
+  return this->servant_->relative_expiry (ACE_TRY_ENV);
+}
+
+TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::relative_expiry  (void)
+{
+  return this->servant_->relative_expiry ();
 }
 
 
@@ -1122,13 +1119,14 @@ CORBA::Boolean POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::_i
                                 );
 }
 
-TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::relative_expiry  (
-                                                                                                 CORBA::Environment &ACE_TRY_ENV
-                                                                                                 )
+TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::relative_expiry  (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->servant_->relative_expiry (
-                                          ACE_TRY_ENV
-                                          );
+  return this->servant_->relative_expiry (ACE_TRY_ENV);
+}
+
+TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::relative_expiry  (void)
+{
+  return this->servant_->relative_expiry ();
 }
 
 

@@ -576,7 +576,7 @@ public:
     PortableServer::Servant servant (void) const;
     // Servant accessor.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     PortableServer::ServantLocator::Cookie locator_cookie (void) const;
     // Get the Servant Locator's cookie
@@ -590,7 +590,7 @@ public:
     void operation (const char *);
     // Set the operation name.
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     void active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry);
     // Set the <active_object_map_entry>.
@@ -631,7 +631,7 @@ public:
 
     TAO_POA_Current_Impl current_context_;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     PortableServer::ServantLocator::Cookie cookie_;
     // Servant Locator's cookie
@@ -639,7 +639,7 @@ public:
     const char *operation_;
     // Operation name for this current.
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
     // Pointer to the entry in the TAO_Active_Object_Map corresponding

@@ -106,7 +106,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     priority_mapping_ (0),
 #if (TAO_HAS_CORBA_MESSAGING == 1)
     none_sync_strategy_ (0),
-    flush_sync_strategy_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
@@ -124,9 +123,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
   ACE_NEW (this->none_sync_strategy_,
            TAO_None_Sync_Strategy);
-
-  ACE_NEW (this->flush_sync_strategy_,
-           TAO_Flush_Sync_Strategy);
 
   ACE_NEW (this->policy_manager_,
            TAO_Policy_Manager);
@@ -154,7 +150,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   delete this->none_sync_strategy_;
-  delete this->flush_sync_strategy_;
 
   delete this->policy_manager_;
   delete this->default_policies_;
@@ -2101,6 +2096,36 @@ TAO_ORB_Core::implrepo_service (void)
   return CORBA::Object::_duplicate (this->implrepo_service_);
 }
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
+TAO_RelativeRoundtripTimeoutPolicy *
+TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
+{
+  TAO_RelativeRoundtripTimeoutPolicy *result = 0;
+
+  // No need to lock, the object is in TSS storage....
+  TAO_Policy_Current &policy_current =
+    this->policy_current ();
+  result = policy_current.relative_roundtrip_timeout ();
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->relative_roundtrip_timeout ();
+    }
+
+  if (result == 0)
+    result = this->default_relative_roundtrip_timeout ();
+
+  return result;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // ****************************************************************
 

@@ -239,32 +239,17 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // So the invocation Object should handle policy decisions.
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  TAO_RelativeRoundtripTimeoutPolicy_i *timeout =
+  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
     this->stub_->relative_roundtrip_timeout ();
 
   // If max_wait_time is not zero then this is not the first attempt
   // to send the request, the timeout value includes *all* those
   // attempts.
   if (this->max_wait_time_ == 0
-      && timeout != 0)
+      && timeout_policy != 0)
     {
-      TimeBase::TimeT t =
-        timeout->relative_expiry (ACE_TRY_ENV);
-      ACE_CHECK;
-      TimeBase::TimeT seconds = t / 10000000u;
-      TimeBase::TimeT microseconds = (t % 10000000u) / 10;
-      this->max_wait_time_value_.set (ACE_U64_TO_U32(seconds),
-                                      ACE_U64_TO_U32(microseconds));
+      timeout_policy->set_time_value (this->max_wait_time_value_);
       this->max_wait_time_ = &this->max_wait_time_value_;
-
-      if (TAO_debug_level > 0)
-        {
-          CORBA::ULong msecs =
-            ACE_static_cast(CORBA::ULong, microseconds / 1000);
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
-                      msecs));
-        }
     }
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -957,8 +942,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT
-      || this->sync_scope_ == TAO::SYNC_NONE
-      || this->sync_scope_ == TAO::SYNC_FLUSH)
+      || this->sync_scope_ == TAO::SYNC_NONE)
     {
       return TAO_GIOP_Invocation::invoke (0,
                                           ACE_TRY_ENV);

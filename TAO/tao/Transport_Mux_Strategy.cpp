@@ -89,6 +89,10 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
       return 0;
     }
 
+  // The transport is available for reuse again since we have received
+  // our reply.
+  this->transport_->idle ();
+
   TAO_Reply_Dispatcher *rd = this->rd_;
   this->request_id_ = 0xdeadbeef; // @@ What is a good value???
   this->rd_ = 0;

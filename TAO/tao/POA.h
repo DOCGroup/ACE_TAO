@@ -45,6 +45,9 @@
 // POA Manager
 #include "tao/POAManager.h"
 
+//
+// ImplRepo related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 // Implementation Repository
 #  include "tao/ImplRepoC.h"
@@ -61,7 +64,7 @@
 
 class TAO_POA;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 class TAO_Export TAO_Thread_Policy : public virtual PortableServer::RefCountServantBase,
                                      public virtual POA_PortableServer::ThreadPolicy
@@ -86,7 +89,7 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 class TAO_Export TAO_Lifespan_Policy : public virtual PortableServer::RefCountServantBase,
                                        public virtual POA_PortableServer::LifespanPolicy
@@ -157,7 +160,7 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 class TAO_Export TAO_Implicit_Activation_Policy : public virtual PortableServer::RefCountServantBase,
                                                   public virtual POA_PortableServer::ImplicitActivationPolicy
@@ -228,7 +231,7 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 class TAO_Export TAO_POA_Policies
 {
@@ -236,12 +239,12 @@ public:
 
   TAO_POA_Policies (void);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ThreadPolicyValue thread (void) const;
   void thread (PortableServer::ThreadPolicyValue value);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicyValue lifespan (void) const;
   void lifespan (PortableServer::LifespanPolicyValue value);
@@ -368,12 +371,12 @@ public:
                 CORBA::Boolean wait_for_completion,
                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ThreadPolicy_ptr create_thread_policy (PortableServer::ThreadPolicyValue value,
                                                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicy_ptr create_lifespan_policy (PortableServer::LifespanPolicyValue value,
                                                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -384,7 +387,7 @@ public:
   PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
                                                                       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
                                                                                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -395,7 +398,7 @@ public:
   PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
                                                                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   char * the_name (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -403,7 +406,7 @@ public:
 
   PortableServer::POAManager_ptr the_POAManager (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::AdapterActivator_ptr the_activator (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -420,7 +423,7 @@ public:
   void set_servant (PortableServer::Servant servant,
                     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant,
                                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -456,6 +459,9 @@ public:
   CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
                                      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
+//
+// Forwarding related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void forward_object (const PortableServer::ObjectId &oid,
@@ -535,7 +541,7 @@ protected:
                   CORBA::Boolean wait_for_completion,
                   CORBA_Environment &ACE_TRY_ENV);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ServantManager_ptr get_servant_manager_i (CORBA_Environment &ACE_TRY_ENV);
 
@@ -546,6 +552,13 @@ protected:
 
   void set_servant_i (PortableServer::Servant servant,
                       CORBA_Environment &ACE_TRY_ENV);
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+//
+// ImplRepo related.
+//
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void imr_notify_startup (CORBA_Environment &ACE_TRY_ENV);
   // ImplRepo helper method, notify the ImplRepo on startup
@@ -614,6 +627,9 @@ protected:
   CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
                                        CORBA_Environment &ACE_TRY_ENV);
 
+//
+// Forwarding related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void forward_object_i (const PortableServer::ObjectId &oid,
@@ -715,7 +731,7 @@ protected:
 
   int delete_active_object_map_;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::AdapterActivator_var adapter_activator_;
 
@@ -724,6 +740,10 @@ protected:
   PortableServer::ServantLocator_var servant_locator_;
 
   PortableServer::ServantBase_var default_servant_;
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   ServerObject_i *server_object_;
   // Implementation Repository Server Object
@@ -765,7 +785,7 @@ protected:
   CORBA::ULong waiting_servant_deactivation_;
 };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActivator
 {
@@ -783,7 +803,7 @@ protected:
   // POA Manager
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

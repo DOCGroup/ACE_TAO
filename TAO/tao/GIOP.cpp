@@ -1526,8 +1526,6 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList& svc_ctx,
     {
       case 0:
       case 1:
-      // This one corresponds to the TAO extension SYNC_FLUSH.
-      case 4:
         // No response required.
         out_stream << CORBA::Any::from_octet (0);
         break;

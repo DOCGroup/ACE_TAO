@@ -867,10 +867,10 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   return result._retn ();
 }
 
-TAO_RelativeRoundtripTimeoutPolicy_i *
+TAO_RelativeRoundtripTimeoutPolicy *
 TAO_Stub::relative_roundtrip_timeout (void)
 {
-  TAO_RelativeRoundtripTimeoutPolicy_i *result = 0;
+  TAO_RelativeRoundtripTimeoutPolicy *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -1155,9 +1155,6 @@ TAO_Stub::sync_strategy (void)
 
       if (scope == Messaging::SYNC_NONE)
         return this->orb_core_->none_sync_strategy ();
-
-      if (scope == Messaging::SYNC_FLUSH)
-        return this->orb_core_->flush_sync_strategy ();
     }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

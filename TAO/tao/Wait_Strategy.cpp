@@ -446,6 +446,18 @@ TAO_Exclusive_Wait_On_Leader_Follower::handle_input (void)
   // error, but we should do more....
   // @@ Alex: this could be a CloseConnection message or something
   //    similar, has to be handled...
+
+  //
+  // The following check is conflicting with the ability to buffer
+  // asynchronous calls.  If we mark the asynchronous call as a twoway
+  // call, then buffering cannot take place.  If we mark it as a
+  // oneway call, then the following check fails.  For now I have
+  // selected to disable the check.  The long term fix is to separate
+  // out the two concerns (a) can the call be buffered and (b) are we
+  // expecting a response.
+  //
+
+  /*
   if (!this->expecting_response_)
     {
       if (TAO_debug_level > 0)
@@ -455,6 +467,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::handle_input (void)
                     this->transport_));
       return -1;
     }
+  */
 
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);

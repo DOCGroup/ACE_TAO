@@ -42,7 +42,7 @@ public:
 
   void activate (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   void hold_requests (CORBA::Boolean wait_for_completion,
                       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -54,7 +54,7 @@ public:
                    CORBA::Boolean wait_for_completion,
                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -70,7 +70,7 @@ protected:
                      CORBA::Boolean wait_for_completion,
                      CORBA_Environment &ACE_TRY_ENV);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   void hold_requests_i (CORBA::Boolean wait_for_completion,
                         CORBA_Environment &ACE_TRY_ENV);
@@ -78,7 +78,7 @@ protected:
   void discard_requests_i (CORBA::Boolean wait_for_completion,
                            CORBA_Environment &ACE_TRY_ENV);
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::POAManager::State get_state_i ();
 

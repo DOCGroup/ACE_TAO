@@ -87,8 +87,6 @@ print_params (void)
         one_way_style = "SYNC_WITH_TRANSPORT";
       else if (sync_scope == Messaging::SYNC_WITH_SERVER)
         one_way_style = "SYNC_WITH_SERVER";
-      else if (sync_scope == Messaging::SYNC_WITH_SERVER)
-        one_way_style = "SYNC_WITH_SERVER";
       else if (sync_scope == Messaging::SYNC_WITH_TARGET)
         one_way_style = "SYNC_WITH_TARGET";
 
@@ -483,6 +481,8 @@ main (int argc, char *argv[])
               TAO::BufferingConstraint buffering_constraint;
               buffering_constraint.mode = TAO::BUFFER_MESSAGE_COUNT;
               buffering_constraint.message_count = buffering_queue_size;
+              buffering_constraint.message_bytes = 0;
+              buffering_constraint.timeout = 0;
 
               // Set up the buffering constraint any.
               CORBA::Any buffering_constraint_any;

@@ -60,7 +60,8 @@ endif # ami_callback
 ifeq ($(corba_messaging),1)
 
 # Requires CORBA Messaging
-  DIRS += Timeout
+  DIRS += Timeout \
+          Timed_Buffered_Oneways
 
 endif # corba_messaging
 

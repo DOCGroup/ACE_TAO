@@ -1671,9 +1671,9 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
   switch (type)
     {
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
-      return TAO_RelativeRoundtripTimeoutPolicy_i::create (root_poa.in (),
-                                                           val,
-                                                           ACE_TRY_ENV);
+      return TAO_RelativeRoundtripTimeoutPolicy::create (root_poa.in (),
+                                                         val,
+                                                         ACE_TRY_ENV);
 
     case TAO_CLIENT_PRIORITY_POLICY_TYPE:
       return TAO_Client_Priority_Policy::create (root_poa.in (),
