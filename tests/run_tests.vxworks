@@ -153,6 +153,10 @@ ld < Priority_Buffer_Test
 write 2, "Priority_Buffer_Test ", 21
 ace_main; unld "Priority_Buffer_Test"
 
+ld < Dynamic_Priority_Test
+write 2, "Dynamic_Priority_Test ", 22
+ace_main; unld "Dynamic_Priority_Test"
+
 ld < Recursive_Mutex_Test
 write 2, "Recursive_Mutex_Test ", 21
 ace_main; unld "Recursive_Mutex_Test"
