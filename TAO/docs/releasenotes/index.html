@@ -519,8 +519,7 @@ Future work:
 <HR WIDTH="100%">
 <H3>
 <A NAME="av"></A>CORBA Audio/Video Control Service</H3>
-Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh Mungee</A>
-and <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
+Point of contact: <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
 
 <P>This is an implementation of the OMG spec addressing the <A HREF="http://www.cs.wustl.edu/~sumedh/research/corbaav.pdf">Control
 and Management of Audio/Video Streams</A>.
@@ -530,26 +529,7 @@ profile. An MPEG-1 application which streams mpeg-1 video and mpeg-1 audio
 separately has been developed using the service. This application currently
 works only for Unix platforms.
 
-<P>Current Status:
-<UL>
-<LI>
-Implemented the handshake mechanism between the consumer and supplier of
-the stream.</LI>
-
-<LI>
-Implemented a simple version of the stream controller (StreamCtrl).</LI>
-
-<LI>
-Implemented the VDev and StreamEndPoint base class functionality.</LI>
-
-<LI>
-Implemented the MMDevice interface, which is a factory for StreamEndPoint
-and VDev objects.</LI>
-
-<LI>
-Implemented a mpeg-1 streaming audio/video application using the a/v service.</LI>
-</UL>
-Work in progress:
+<P>Work in progress:
 <UL>
 <LI>
 Implementing the SFP protocol</LI>
@@ -571,11 +551,6 @@ client is enough to test the application.
 
 <P>The various tests in the tests/POA test the different features of the
 Portable Object Adapter interface like Explicit Activation, On Demand Activation,etc..
-
-<P>Future work:
-
-<P>Developing a one-buttoned test for all the different TAO tests similar
-to the ACE-one buttoned test.
 
 <P>MT_Cubit:
 
