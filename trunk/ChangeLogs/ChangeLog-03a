@@ -1,3 +1,10 @@
+Thu May 30 08:04:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        * ace/Asynch_IO.h:
+        * ace/Bound_Ptr.h:
+          Changed <p> in comment to \<p\> because the <p> is a commend
+          that is recognized by doxygen.
+
 Thu May 30 07:46:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl
 
         * ace/Makefile.bor:
