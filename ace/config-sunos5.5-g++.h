@@ -15,6 +15,9 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+// sched_get_priority_min () not implemented on Solaris 2.5.x
+#define ACE_THR_PRI_FIFO_DEF 30
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
