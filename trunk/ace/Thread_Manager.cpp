@@ -46,14 +46,14 @@ ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
 {
 }
 
-int 
+int
 ACE_Thread_Descriptor::operator==(const ACE_Thread_Descriptor &rhs) const
 {
   return ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_) == 0
     && ACE_OS::thr_equal (this->thr_id_, rhs.thr_id_) == 0;
 }
 
-int 
+int
 ACE_Thread_Descriptor::operator!=(const ACE_Thread_Descriptor &rhs) const
 {
   return !(*this == rhs);
@@ -245,20 +245,17 @@ int
 ACE_Thread_Manager::close (int automatic_wait)
 {
   ACE_TRACE ("ACE_Thread_Manager::close");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  // Clean up the thread descriptor list.  Theoretically, there shouldn't
-  // be any leftover thread at this point.
-#if 0
-  // @@ Perhaps we should automatically join our threads when we exit?
+  // Clean up the thread descriptor list.
   if (automatic_wait)
     this->wait (0, 1);
   else
-#else
-    ACE_UNUSED_ARG (automatic_wait);
-#endif /* 0 */
-  while (this->thr_list_.is_empty () == 0)
-    delete this->thr_list_.delete_head ();
+    {
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+      while (this->thr_list_.is_empty () == 0)
+        delete this->thr_list_.delete_head ();
+    }
 
   return 0;
 }
@@ -1300,7 +1297,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 	      this->remove_thr (td);
 	  }
       }
-	
+
     while (this->thr_list_.size () > 0)
       if (this->zero_cond_.wait (timeout) == -1)
         return -1;
