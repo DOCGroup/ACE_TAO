@@ -23,7 +23,8 @@ Fri Sep 28 12:14:29 2001  Ossama Othman  <ossama@uci.edu>
 	  ACE_OS::set_errno_to_last_error() to make sure errno is updated
 	  appropriately since OpenSSL does not do that.  Fixes some
 	  "misbehaving" Reactor interactions.  Thanks to Andrew Finnell
-	  <Andrew.Finnell@esecurityinc.com> for suggesting these fixes.
+	  <Andrew.Finnell@esecurityinc.com> for tracking down the problem
+	  and suggesting these fixes.
 
 Fri Sep 28 09:37:28 2001  Ossama Othman  <ossama@uci.edu>
 
