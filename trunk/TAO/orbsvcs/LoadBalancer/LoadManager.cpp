@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //   0 = RoundRobin
       //   1 = Random
       //   2 = LeastLoaded
-      int default_strategy = 0;
+      int default_strategy = 1;
 
       // Check the non-ORB arguments.
       ::parse_args (argc,
@@ -139,16 +139,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       props[0].nam[0].id =
         CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy");
 
+      CosLoadBalancing::StrategyInfo strategy_info;
+
       switch (default_strategy)
         {
         case 0:
-          props[0].val <<= "RoundRobin";
+          strategy_info.name = CORBA::string_dup ("RoundRobin");
           break;
         case 1:
-          props[0].val <<= "Random";
+          strategy_info.name = CORBA::string_dup ("Random");
           break;
         case 2:
-          props[0].val <<= "LeastLoaded";
+          strategy_info.name = CORBA::string_dup ("LeastLoaded");
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,6 +158,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             ACE_TEXT ("       Unknown built-in strategy.\n")),
                             -1);
         }
+
+      props[0].val <<= strategy_info;
 
       lm->set_default_properties (props
                                   ACE_ENV_ARG_PARAMETER);
@@ -180,6 +184,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
+//   ACE_CATCH (PortableGroup::InvalidProperty, ex)
+//     {
+//       ACE_DEBUG ((LM_DEBUG, "Property ----> %s\n", ex.nam[0].id.in ()));
+//     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,

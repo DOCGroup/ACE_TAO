@@ -30,6 +30,13 @@ TAO_LB_Push_Handler::handle_timeout (
         this->monitor_->loads (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+//       ACE_DEBUG ((LM_DEBUG,
+//                   "PUSHING LOAD:\n"
+//                   "  id:    %u\n"
+//                   "  value: %f\n",
+//                   loads[0].id,
+//                   loads[0].value));
+
       this->manager_->push_loads (this->location_,
                                   loads.in ()
                                   ACE_ENV_ARG_PARAMETER);
