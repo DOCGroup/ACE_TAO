@@ -6,6 +6,6 @@ project (asnmp_example_walk) : aceexe {
   libs  += asnmp
   includes += $(ACE_ROOT)/ASNMP
   source_files {
-    walk
+    walk.cpp
   }
 }
