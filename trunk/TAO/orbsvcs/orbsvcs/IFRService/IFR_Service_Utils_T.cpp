@@ -180,7 +180,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
                                 holder);
       desc_seq[i].version = holder.c_str ();
 
-      config->get_string_value (key,
+      config->get_string_value (desc_key,
                                 "base_type",
                                 holder);
       TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_base_type (desc_seq,
@@ -189,7 +189,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
 
       TAO_Port_Desc_Seq_Utils<T_desc_seq>::get_is_multiple (desc_seq,
                                                             config,
-                                                            key,
+                                                            desc_key,
                                                             i);
     }
 }
@@ -247,10 +247,24 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                           sub_section
                                           ACE_ENV_ARG_PARAMETER);
 
+  const char *tmp = 
+    TAO_IFR_Service_Utils::reference_to_path (port_base_type);
+
+  ACE_Configuration_Section_Key base_type_key;
+  repo->config ()->expand_path (repo->root_key (),
+                                tmp,
+                                base_type_key,
+                                0);
+
+  ACE_TString holder;
+  repo->config ()->get_string_value (base_type_key,
+                                     "id",
+                                     holder);
+
   repo->config ()->set_string_value (
                        new_key,
                        "base_type",
-                       port_base_type->_interface_repository_id ()
+                       holder
                      );
 
   TAO_Port_Utils<T>::set_is_multiple (is_multiple,

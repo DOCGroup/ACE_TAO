@@ -1,3 +1,31 @@
+Thu Jul 31 18:00:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
+
+	  More debugging of IFR IDL3 support.
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
+
+	  Extended test so that it now covers component attributes,
+	  inheritance, supported interfaces, facets and receptacles.
+
+        * tao/Typecode.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
+
+	  Fixed bug in demarshaling of IDL3-related type codes.
+	  Also fixed similar bugs in interpretive (de)marshaling,
+	  where the interpreter skips over or appends portions
+	  of the CDR stream.
+
 Thu Jul 31 12:26:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tests/RTScheduling/RTScheduling_tests.dsw: 

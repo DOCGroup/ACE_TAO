@@ -8,6 +8,76 @@ ACE_RCSID (Application_Test,
            ifr_dii_client, 
            "$Id$")
 
+// All the magic quantities are here at the top.
+
+const char *COMPONENT_ID = "IDL:mod/test_component:1.0";
+const char *COMPONENT_SCOPED_NAME = "::mod::test_component";
+const char *COMP_BASE_ID = "IDL:help/c_base:1.0";
+
+const CORBA::ULong ATTRS_LEN = 1;
+
+const char *ATTR_LOCAL_NAMES[] = 
+  {
+    "c_attr1"
+  };
+
+const CORBA::TCKind ATTR_TC_KINDS[] =
+  {
+    CORBA::tk_long
+  };
+
+const CORBA::ULong GET_EXCEP_LEN[] =
+  {
+    1
+  };
+
+const CORBA::ULong PUT_EXCEP_LEN[] =
+  {
+    2
+  };
+
+const CORBA::ULong COMP_SUPPORTED_LEN = 2;
+
+const char *SUPPORTED_IDS[] = 
+  {
+    "IDL:help/c_supp1:1.0",
+    "IDL:help/c_supp2:1.0"
+  };
+
+const CORBA::ULong PROVIDES_LEN = 1;
+const CORBA::ULong USES_LEN = 2;
+const CORBA::ULong EMITS_LEN = 1;
+const CORBA::ULong PUBLISHES_LEN = 1;
+const CORBA::ULong CONSUMES_LEN = 1;
+
+const char *PROVIDES_NAMES[] =
+  {
+    "test_provides1"
+  };
+
+const char *PROVIDES_TYPE_IDS[] =
+  {
+    "IDL:help/c_provides1:1.0"
+  };
+
+const char *USES_NAMES[] =
+  {
+    "test_uses1",
+    "test_uses2"
+  };
+
+const char *USES_TYPE_IDS[] =
+  {
+    "IDL:help/c_uses1:1.0",
+    "IDL:help/c_uses2:1.0"
+  };
+
+const CORBA::Boolean USES_MULTIPLE_FLAGS[] =
+  {
+    0,
+    1
+  };
+
 IDL3_Client::IDL3_Client (void)
   : debug_ (0)
 {
@@ -104,7 +174,7 @@ int
 IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Contained_var result =
-    this->repo_->lookup_id ("IDL:mod/test_component:1.0"
+    this->repo_->lookup_id (COMPONENT_ID
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -136,7 +206,7 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  if (ACE_OS::strcmp (tmp, "::mod::test_component") != 0)
+  if (ACE_OS::strcmp (tmp, COMPONENT_SCOPED_NAME) != 0)
     {
       if (this->debug_)
         {
@@ -172,7 +242,7 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
   tmp = comp_tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (tmp == 0 || ACE_OS::strcmp (tmp, "IDL:mod/test_component:1.0") != 0)
+  if (tmp == 0 || ACE_OS::strcmp (tmp, COMPONENT_ID) != 0)
     {
       if (this->debug_)
         {
@@ -200,8 +270,8 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
       return -1;
     }
 
-  int status = this->component_attr_test (desc
-                                          ACE_ENV_ARG_PARAMETER);
+  int status = this->component_attribute_test (desc
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -211,6 +281,15 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
 
   status = this->component_inheritance_test (comp_def
                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->component_port_test (comp_def
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -240,62 +319,85 @@ IDL3_Client::eventtype_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-IDL3_Client::component_attr_test (
+IDL3_Client::component_attribute_test (
     CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &desc
     ACE_ENV_ARG_DECL
   )
 {
-  const char *tmp = desc->attributes[0].name.in ();
-
-  if (tmp == 0 || ACE_OS::strcmp (tmp, "c_attr") != 0)
+  if (desc->attributes.length () != ATTRS_LEN)
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "component_test: bad attribute name\n"));
+                      "component_attribute_test: wrong number of attrs\n"));
         }
 
       return -1;
     }
 
-  CORBA::TCKind kind = 
-    desc->attributes[0].type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  const char *tmp = 0;
 
-  if (kind != CORBA::tk_long)
+  for (CORBA::ULong i = 0; i < ATTRS_LEN; ++i)
     {
-      if (this->debug_)
+      tmp = desc->attributes[i].name.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "component_test: "
-                      "bad attribute type code kind\n"));
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "component_attribute_test: "
+                          "wrong local name for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
         }
 
-      return -1;
-    }
+      CORBA::TCKind kind = 
+        desc->attributes[i].type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
 
-  if (desc->attributes[0].get_exceptions.length () != 1)
-    {
-      if (this->debug_)
+      if (kind != ATTR_TC_KINDS[i])
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "component_test: "
-                      "wrong number of attribute get-exceptions\n"));
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "component_attribute_test: "
+                          "wrong TCKind for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
         }
 
-      return -1;
-    }
-
-  if (desc->attributes[0].put_exceptions.length () != 2)
-    {
-      if (this->debug_)
+      if (desc->attributes[i].get_exceptions.length () != GET_EXCEP_LEN[i])
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "component_test: "
-                      "wrong number of attribute put-exceptions\n"));
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "component_attribute_test: "
+                          "wrong number of get-exceptions"
+                          " for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
         }
 
-      return -1;
+      if (desc->attributes[i].put_exceptions.length () != PUT_EXCEP_LEN[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "component_attribute_test: "
+                          "wrong number of put-exceptions"
+                          " for attribute #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
     }
 
   return 0;
@@ -313,33 +415,37 @@ IDL3_Client::component_inheritance_test (
 
   CORBA::ULong length = supported->length ();
 
-  if (length != 2)
+  if (length != COMP_SUPPORTED_LEN)
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "component_test: "
+                      "component_inheritance_test: "
                       "wrong number of supported interfaces\n"));
         }
 
       return -1;
     }
 
-  CORBA::String_var str = supported[1U].in()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  const char *tmp = str.in ();
-
-  if (tmp == 0 || ACE_OS::strcmp (tmp, "IDL:help/c_supp2:1.0") != 0)
+  CORBA::String_var str;
+  
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
-      if (this->debug_)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "component_test: "
-                      "bad id on supported interface\n"));
-        }
+      str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
 
-      return -1;
+      if (str.in () == 0 || ACE_OS::strcmp (str.in (), SUPPORTED_IDS[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "component_inheritance_test: "
+                          "bad id on supported interface #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
     }
 
   CORBA::ComponentIR::ComponentDef_var comp_base =
@@ -351,7 +457,7 @@ IDL3_Client::component_inheritance_test (
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "component_test: "
+                      "component_inheritance_test: "
                       "base component is null\n"));
         }
 
@@ -361,14 +467,12 @@ IDL3_Client::component_inheritance_test (
   str = comp_base->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  tmp = str.in ();
-
-  if (tmp == 0 || ACE_OS::strcmp (tmp, "IDL:help/c_base:1.0") != 0)
+  if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMP_BASE_ID) != 0)
     {
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "component_test: "
+                      "component_inheritance_test: "
                       "bad id on base component\n"));
         }
 
@@ -378,3 +482,209 @@ IDL3_Client::component_inheritance_test (
   return 0;
 }
 
+int
+IDL3_Client::component_port_test (
+    CORBA::ComponentIR::ComponentDef_var &comp_def
+    ACE_ENV_ARG_DECL
+  )
+{
+  CORBA::Contained::Description_var desc =
+    comp_def->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::ComponentIR::ComponentDescription *cd = 0;
+
+  if ((desc->value >>= cd) == 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_port_test: "
+                      "Any extraction of component description failed\n"));
+        }
+
+      return -1;
+    }
+
+  int status = this->provides_test (cd->provided_interfaces
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->uses_test (cd->used_interfaces
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->event_port_test (cd->emits_events,
+                                  EMITS_LEN
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->event_port_test (cd->publishes_events,
+                                  PUBLISHES_LEN
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->event_port_test (cd->consumes_events,
+                                  CONSUMES_LEN
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &pds
+                            ACE_ENV_ARG_DECL)
+{
+  if (pds.length () != PROVIDES_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "provides_test: "
+                      "wrong number of provides interfaces\n"));
+        }
+
+      return -1;
+    }
+
+  const char *tmp = 0;
+
+  for (CORBA::ULong i = 0; i < PROVIDES_LEN; ++i)
+    {
+      tmp = pds[i].name.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, PROVIDES_NAMES[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "provides_test: "
+                          "wrong local name for provides #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      tmp = pds[i].interface_type.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, PROVIDES_TYPE_IDS[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "provides_test: "
+                          "wrong base interface type id for provides #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq &uds
+                        ACE_ENV_ARG_DECL)
+{
+  if (uds.length () != USES_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "uses_test: "
+                      "wrong number of uses interfaces\n"));
+        }
+
+      return -1;
+    }
+
+  const char *tmp = 0;
+  CORBA::Boolean mult = 0;
+
+  for (CORBA::ULong i = 0; i < USES_LEN; ++i)
+    {
+      tmp = uds[i].name.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, USES_NAMES[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "uses_test: "
+                          "wrong local name for uses #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      tmp = uds[i].interface_type.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, USES_TYPE_IDS[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "uses_test: "
+                          "wrong base interface type id for uses #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      mult = uds[i].is_multiple;
+
+      if (mult != USES_MULTIPLE_FLAGS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "uses_test: "
+                          "wrong is_multiple value for uses #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
+                              CORBA::ULong seq_length
+                              ACE_ENV_ARG_DECL)
+{
+  return 0;
+}

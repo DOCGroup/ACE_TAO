@@ -556,7 +556,19 @@ TAO_IFR_Service_Utils::valid_container (
       }
       break;
     case CORBA::dk_Component:
-      error_flag = 1;
+      switch (contained_kind)
+      {
+        case CORBA::dk_Provides:
+        case CORBA::dk_Uses:
+        case CORBA::dk_Emits:
+        case CORBA::dk_Publishes:
+        case CORBA::dk_Consumes:
+        case CORBA::dk_Attribute:
+          break;
+        default:
+          error_flag = 1;
+          break;
+      }
       break;
     default:
       break;

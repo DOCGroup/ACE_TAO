@@ -213,6 +213,13 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
             case CORBA::tk_alias:
             case CORBA::tk_except:
             case CORBA::tk_value:
+            case CORBA::tk_value_box:
+            case CORBA::tk_native:
+            case CORBA::tk_abstract_interface:
+            case CORBA::tk_local_interface:
+            case CORBA::tk_component:
+            case CORBA::tk_home:
+            case CORBA::tk_event:
               {
                 // write the encapsulation i.e., octet sequence
                 retval =
