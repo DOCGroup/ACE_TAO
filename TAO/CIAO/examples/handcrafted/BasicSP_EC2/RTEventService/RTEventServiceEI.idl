@@ -17,13 +17,10 @@ module BasicSP
 {
   /**
    * @interface RTEventService_Exec
-   *
-   * The actual RTEventService executor inherits from both CCM_RTEventService
-   * and session_component interfaces as a monolithic implementation.
    */
   local interface RTEventService_Exec :
     CCM_RTEventService,
-    CCM_RTEventChannel,
+    RtecEventChannelAdmin::CCM_EventChannel,
     Components::SessionComponent
   {
   };

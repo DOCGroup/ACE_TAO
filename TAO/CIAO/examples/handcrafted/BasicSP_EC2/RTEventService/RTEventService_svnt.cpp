@@ -21,52 +21,79 @@
 #include "RTEventService_svnt.h"
 #include "Cookies.h"
 
-namespace CIAO_GLUE_BasicSP
+namespace CIAO_GLUE_RtecEventChannelAdmin
 {
-  RTEventChannel_Servant::RTEventChannel_Servant (
-  ::BasicSP::CCM_RTEventChannel_ptr executor,
+  EventChannel_Servant::EventChannel_Servant (
+  ::RtecEventChannelAdmin::CCM_EventChannel_ptr executor,
   ::Components::CCMContext_ptr c)
-  : executor_ (::BasicSP::CCM_RTEventChannel::_duplicate (executor)),
+  : executor_ (::RtecEventChannelAdmin::CCM_EventChannel::_duplicate (executor)),
   ctx_ (::Components::CCMContext::_duplicate (c))
   {
   }
 
-  RTEventChannel_Servant::~RTEventChannel_Servant (void)
+  EventChannel_Servant::~EventChannel_Servant (void)
   {
   }
 
-  void
-  RTEventChannel_Servant::connect_consumer (
-  const char * event_type,
-  const char * sink_name,
-  const char * consumer_oid
-  ACE_ENV_ARG_DECL)
+  ::RtecEventChannelAdmin::ConsumerAdmin_ptr
+  EventChannel_Servant::for_consumers (
+  ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->executor_->connect_consumer (
-    event_type,
-    sink_name,
-    consumer_oid
+    return this->executor_->for_consumers (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+
+  ::RtecEventChannelAdmin::SupplierAdmin_ptr
+  EventChannel_Servant::for_suppliers (
+  ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return this->executor_->for_suppliers (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+
+  void
+  EventChannel_Servant::destroy (
+  ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    this->executor_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+
+  RtecEventChannelAdmin::Observer_Handle
+  EventChannel_Servant::append_observer (
+  RtecEventChannelAdmin::Observer_ptr gw
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+  CORBA::SystemException,
+  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+  RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER
+  ))
+  {
+    return this->executor_->append_observer (
+    gw
     ACE_ENV_ARG_PARAMETER);
   }
 
   void
-  RTEventChannel_Servant::connect_supplier (
-  const char * event_type,
-  const char * source_name,
-  const char * supplier_oid
+  EventChannel_Servant::remove_observer (
+  RtecEventChannelAdmin::Observer_Handle gw
   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((
+  CORBA::SystemException,
+  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+  RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER
+  ))
   {
-    this->executor_->connect_supplier (
-    event_type,
-    source_name,
-    supplier_oid
+    this->executor_->remove_observer (
+    gw
     ACE_ENV_ARG_PARAMETER);
   }
 
   CORBA::Object_ptr
-  RTEventChannel_Servant::_get_component (
+  EventChannel_Servant::_get_component (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -269,26 +296,26 @@ namespace CIAO_GLUE_BasicSP
     this->context_->_remove_ref ();
   }
 
-  ::BasicSP::RTEventChannel_ptr
+  ::RtecEventChannelAdmin::EventChannel_ptr
   RTEventService_Servant::provide_rt_event_channel (
   ACE_ENV_SINGLE_ARG_PARAMETER)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (::CORBA::is_nil (this->provide_rt_event_channel_.in ()))
     {
-      ::BasicSP::CCM_RTEventChannel_var fexe =
+      ::RtecEventChannelAdmin::CCM_EventChannel_var fexe =
       this->executor_->get_rt_event_channel (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::RTEventChannel::_nil ());
+      ACE_CHECK_RETURN (::RtecEventChannelAdmin::EventChannel::_nil ());
 
       if (::CORBA::is_nil (fexe.in ()))
       {
         ACE_THROW_RETURN (
         ::CORBA::INTERNAL (),
-        ::BasicSP::RTEventChannel::_nil ());
+        ::RtecEventChannelAdmin::EventChannel::_nil ());
       }
 
-      RTEventChannel_Servant *svt =
-      new RTEventChannel_Servant (
+      CIAO_GLUE_RtecEventChannelAdmin::EventChannel_Servant *svt =
+      new CIAO_GLUE_RtecEventChannelAdmin::EventChannel_Servant (
       fexe.in (),
       this->context_);
       PortableServer::ServantBase_var safe_servant (svt);
@@ -297,18 +324,18 @@ namespace CIAO_GLUE_BasicSP
       this->container_->install_servant (
       svt
       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::RTEventChannel::_nil ());
+      ACE_CHECK_RETURN (::RtecEventChannelAdmin::EventChannel::_nil ());
 
-      ::BasicSP::RTEventChannel_var fo =
-      ::BasicSP::RTEventChannel::_narrow (
+      ::RtecEventChannelAdmin::EventChannel_var fo =
+      ::RtecEventChannelAdmin::EventChannel::_narrow (
       obj.in ()
       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::RTEventChannel::_nil ());
+      ACE_CHECK_RETURN (::RtecEventChannelAdmin::EventChannel::_nil ());
 
       this->provide_rt_event_channel_ = fo;
     }
 
-    return ::BasicSP::RTEventChannel::_duplicate (this->provide_rt_event_channel_.in ());
+    return ::RtecEventChannelAdmin::EventChannel::_duplicate (this->provide_rt_event_channel_.in ());
   }
 
   // Operations for Navigation interface.
@@ -458,20 +485,6 @@ namespace CIAO_GLUE_BasicSP
   }
 
   // Operations for Events interface.
-
-  // NEW
-  void
-  RTEventService_Servant::connect_publisher (
-  RtecEventChannelAdmin::ProxyPushConsumer * proxy_consumer
-  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::InvalidName))
-  {
-    ACE_THROW (
-    ::Components::InvalidName ());
-  }
-  // END NEW
 
   ::Components::EventConsumerBase_ptr
   RTEventService_Servant::get_consumer (

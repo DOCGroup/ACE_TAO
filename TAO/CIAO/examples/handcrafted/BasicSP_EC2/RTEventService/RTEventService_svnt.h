@@ -34,34 +34,53 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace CIAO_GLUE_BasicSP
+namespace CIAO_GLUE_RtecEventChannelAdmin
 {
-  class RTEVENTSERVICE_SVNT_Export RTEventChannel_Servant
-  : public virtual POA_BasicSP::RTEventChannel,
+  class RTEVENTSERVICE_SVNT_Export EventChannel_Servant
+  : public virtual POA_RtecEventChannelAdmin::EventChannel,
   public virtual PortableServer::RefCountServantBase
   {
     public:
-    RTEventChannel_Servant (
-    ::BasicSP::CCM_RTEventChannel_ptr executor,
+    EventChannel_Servant (
+    ::RtecEventChannelAdmin::CCM_EventChannel_ptr executor,
     ::Components::CCMContext_ptr ctx);
 
-    virtual ~RTEventChannel_Servant (void);
+    virtual ~EventChannel_Servant (void);
 
-    virtual void
-    connect_consumer (
-    const char * event_type,
-    const char * sink_name,
-    const char * consumer_oid
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual ::RtecEventChannelAdmin::ConsumerAdmin_ptr
+    for_consumers (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual ::RtecEventChannelAdmin::SupplierAdmin_ptr
+    for_suppliers (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    connect_supplier (
-    const char * event_type,
-    const char * source_name,
-    const char * supplier_oid
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    destroy (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual RtecEventChannelAdmin::Observer_Handle
+    append_observer (
+    RtecEventChannelAdmin::Observer_ptr gw
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER
+      ));
+
+    virtual void
+    remove_observer (
+    RtecEventChannelAdmin::Observer_Handle gw
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER
+      ));
 
     // Get component implementation.
     virtual CORBA::Object_ptr
@@ -71,7 +90,7 @@ namespace CIAO_GLUE_BasicSP
 
     protected:
     // Facet executor.
-    ::BasicSP::CCM_RTEventChannel_var executor_;
+    ::RtecEventChannelAdmin::CCM_EventChannel_var executor_;
 
     // Context object.
     ::Components::CCMContext_var ctx_;
@@ -176,7 +195,7 @@ namespace CIAO_GLUE_BasicSP
 
     virtual ~RTEventService_Servant (void);
 
-    virtual ::BasicSP::RTEventChannel_ptr
+    virtual ::RtecEventChannelAdmin::EventChannel_ptr
     provide_rt_event_channel (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -258,16 +277,6 @@ namespace CIAO_GLUE_BasicSP
     ::Components::InvalidName));
 
     // Operations for Events interface.
-
-    // NEW
-    virtual void
-    connect_publisher (
-    RtecEventChannelAdmin::ProxyPushConsumer * proxy_consumer
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName));
-    // END NEW
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (
@@ -423,7 +432,7 @@ namespace CIAO_GLUE_BasicSP
     ::CIAO::Session_Container *
     container_;
 
-    ::BasicSP::RTEventChannel_var
+    ::RtecEventChannelAdmin::EventChannel_var
     provide_rt_event_channel_;
 
   };

@@ -9,7 +9,7 @@ module BasicSP
       uses      ReadData datain;
       publishes DataAvailable out_avail;
       consumes  DataAvailable in_avail;
-      uses RTEventChannel event_channel;
+      uses RtecEventChannelAdmin::EventChannel event_channel;
     };
 
   home BMClosedEDHome manages BMClosedED

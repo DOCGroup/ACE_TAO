@@ -28,12 +28,12 @@
 #include "ciao/Container_Base.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/Key_Adapters.h"
-#include "ace/Active_Map_Manager_T.h"
+// #include "ace/Active_Map_Manager_T.h"
 
-//NEW
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "Event_Utilities.h"
-// END NEW
+// START new event code
+#include "../RTEventService/RTEventService_exec.h"
+#include "tao/ORB_Core.h"
+// END new event code
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -147,7 +147,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::BasicSP::RTEventChannel_ptr
+    virtual ::RtecEventChannelAdmin::EventChannel_ptr
     get_connection_event_channel (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -173,43 +173,46 @@ namespace CIAO_GLUE_BasicSP
 
     virtual void
     connect_event_channel (
-    ::BasicSP::RTEventChannel_ptr
+    ::RtecEventChannelAdmin::EventChannel_ptr
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::AlreadyConnected,
     ::Components::InvalidConnection));
 
-    virtual ::BasicSP::RTEventChannel_ptr
+    virtual ::RtecEventChannelAdmin::EventChannel_ptr
     disconnect_event_channel (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::NoConnection));
 
-    // NEW
+    // START new event code
+    ::Components::Cookie *
+    connect_event_consumer (
+    ::BasicSP::DataAvailableConsumer_ptr c);
+
     void
-    connect_proxy_consumer (
-    RtecEventChannelAdmin::ProxyPushConsumer * proxy_consumer);
-    // END NEW
+    connect_event_supplier ();
+    // END new
 
     protected:
 
-    // NEW
+    // START new event code
     RtecEventChannelAdmin::ProxyPushConsumer_var
-    ciao_proxy_consumer_;
-    // END NEW
+    ciao_proxy_data_available_consumer_;
+    // END new
 
-    // OLD
-    /* 
+    // START old event code
+    /*
     ACE_Active_Map_Manager<
     ::BasicSP::DataAvailableConsumer_var>
     ciao_publishes_data_available_map_;
     */
-    // END OLD
+    // END old
 
     // Simplex event_channel connection.
-    ::BasicSP::RTEventChannel_var
+    ::RtecEventChannelAdmin::EventChannel_var
     ciao_uses_event_channel_;
 
     ::Components::CCMHome_var
@@ -305,19 +308,19 @@ namespace CIAO_GLUE_BasicSP
 
     virtual void
     connect_event_channel (
-    ::BasicSP::RTEventChannel_ptr c
+    ::RtecEventChannelAdmin::EventChannel_ptr c
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::AlreadyConnected,
     ::Components::InvalidConnection));
 
-    virtual ::BasicSP::RTEventChannel_ptr
+    virtual ::RtecEventChannelAdmin::EventChannel_ptr
     disconnect_event_channel (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::BasicSP::RTEventChannel_ptr
+    virtual ::RtecEventChannelAdmin::EventChannel_ptr
     get_connection_event_channel (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -399,16 +402,6 @@ namespace CIAO_GLUE_BasicSP
     ::Components::InvalidName));
 
     // Operations for Events interface.
-
-    // NEW
-    virtual void
-    connect_publisher (
-    RtecEventChannelAdmin::ProxyPushConsumer * proxy_consumer
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::InvalidName));
-    // END NEW
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (

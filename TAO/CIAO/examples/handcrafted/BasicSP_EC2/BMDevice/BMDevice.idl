@@ -20,7 +20,7 @@ module BasicSP
       provides ReadData data_read;
       publishes DataAvailable data_available;
       consumes TimeOut timeout;
-      uses RTEventChannel event_channel;
+      uses RtecEventChannelAdmin::EventChannel event_channel;
     };
 
   home BMDeviceHome manages BMDevice

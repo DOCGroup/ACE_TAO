@@ -24,7 +24,7 @@ module BasicSP
   component EC supports trigger
     {
       publishes TimeOut timeout;
-      uses RTEventChannel event_channel;
+      uses RtecEventChannelAdmin::EventChannel event_channel;
 
       /// The attribute can be configured via the home or the
       /// component property file.
