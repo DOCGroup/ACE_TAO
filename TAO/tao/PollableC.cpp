@@ -18,6 +18,9 @@
 // ================================================================
 
 #include "tao/PollableC.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+
 #include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
@@ -1104,3 +1107,5 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */

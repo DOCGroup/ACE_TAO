@@ -1,3 +1,13 @@
+Thu Jul  8 22:55:59 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+	 
+	  Thanks to Michael Kircher and Carlos, we have put together most
+	  of the TAO_IDL code and  tao code for the AMI call back
+	  implementation. This commit is the result of the merging process
+	  between the "ami_phase3" branch and the current branch. 
+  
+  	  Most of the support for the AMI Callback is added. But all the
+	  AMI specific code is commented out using "TAO_HAS
+
 Thu Jul  8 21:50:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/CDR/run_test.pl:
@@ -4300,6 +4310,343 @@ Sun Jun 20 14:39:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * orbsvcs/CosEvent_Service/CosEvent_Service.cpp (startup): Make sure to
           use .in() to work around broken G++ compilers...  Thanks to
           Jean-Marc Strauss <jms97@club-internet.fr> for reporting this.
+
+Wed Jul  7 18:13:40 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Invocation.cpp: Removed the loop around the wait_for_reply. 
+
+	* TAO/TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: Fixed CC5
+	  warnings.  
+  
+	* TAO/tao/Invocation.cpp
+	* TAO/tao/Invocation.i
+	* TAO/tao/Reply_Dispatcher.cpp
+	* TAO/tao/Reply_Dispatcher.h: Integrated the CDR changes done in
+	  ACE_CDR. Stealing the CDR content is coded here now.
+  
+	* TAO/tests/AMI/orb_creation.cpp: Fixed CC5 warnings. 
+
+Wed Jul  7 10:55:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* Asynch_Invocation.cpp
+	* Asynch_Invocation.h
+	* MessagingC.h
+	* PollableC.cpp
+	* PollableC.h
+	* PollableS.cpp
+	* PollableS.h
+	* Reply_Dispatcher.cpp
+	* Reply_Dispatcher.h: Guarded the AMI specific classes etc with
+	  TAO_HAS_CORBA_MESSAGING && TAO_POLLER.
+
+Tue Jul  6 22:10:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/PollableS.cpp:
+	  Replaced three ACE_BASE_CLASS macros with ACE_CORBA_1 macros to
+	  get VC to compile it.  
+
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp:
+          Added the files Pollable{C,S}.{h,cpp} and Asynch_Invocation.{h,cpp}.
+
+	* TAO_IDL/be_include/be_decl.h
+	* TAO_IDL/be/be_decl.cpp
+  	* TAO_IDL/be_include/be_interface.h
+  	* TAO_IDL/be/be_interface.cpp:
+  	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+  	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp
+  	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+  	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp:
+	  Added code to generate ami_handler_ names. The generated names
+	  are held in the corresponding classes, which is then also
+	  responsible for deleting it.
+
+  	* TAO_IDL/be/be_visitor_operation/ami_handler_argument_marshal.cpp
+  	* TAO_IDL/be_include/be_visitor_operation/ami_handler_argument_marshal.h
+  	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp
+  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_upcall_cs.h
+  	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp
+  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_vardecl_cs.h
+  	* TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp
+  	* TAO_IDL/be_include/be_visitor_argument/ami_handler_compiled_marshal_cs.h:
+          Added these files for code generation of the AMI Handler
+	  skeleton. 
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+  	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+  	* TAO_IDL/be_include/be_visitor_operation/ami_handler_skeleton_cs.h
+  	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+          Made changes to generate skeleton code for the AMI handler.
+
+  	* TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_cs.h
+	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_cs.cpp:
+	  Added these files for code generation of the AMI handler
+	  servant. 
+
+  	* TAO_IDL/be/be_codegen.h
+	* TAO_IDL/be/be_visitor_factory.cpp
+  	* TAO_IDL/be/be_visitor_interface.cpp
+  	* TAO_IDL/be_include/be_visitor_interface.h
+  	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+    	  Made changes to generate servant code for the AMI handler. 
+
+Tue Jul  6 09:55:42 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Invocation.cpp
+	* tao/Wait_Strategy.cpp:Commented out the call to
+	  <sending_request> in Invocation class.  
+  
+	* client.muxed.conf: Added this file. This enables MT wait
+	  strategy and MUXED TMS. 
+  
+	* tests/AMI/client.cpp: Addes sendc method.
+  	
+  	
+  
+	* tests/AMI/Makefile
+	* tests/AMI/run_test.pl
+	* tests/AMI/simple-client.conf
+	* tests/AMI/simple-client.cpp
+	* tests/AMI/test-handC.cpp
+	* tests/AMI/test_i.cpp
+	* tests/AMI/test_i.h
+	* tests/AMI/test_i.i:  
+	  Cosmetic changes to print usefull debug messages with thread id
+	  etc.         	  
+
+	* tao/Transport_Mux_Strategy.cpp
+	* tao/Transport_Mux_Strategy.h
+	  Changes to these files again for making it MT safe. Added
+	  SYNCH_MUTEX to the Hash Table. and protected the
+	  request_id_generator with a lock.		
+    
+
+	* tao/GIOP.cpp
+	* tao/IIOP_Transport.cpp
+	* tao/Invocation.cpp
+	* tao/Invocation.i
+	* tao/Pluggable.cpp
+	* tao/Pluggable.h
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/Transport_Mux_Strategy.cpp
+	* tao/Transport_Mux_Strategy.h
+	* tao/Wait_Strategy.cpp
+  	  
+    	  Ooooh!!!. Got the Muxed TMS to work. I havent taken care of the
+	  MT case yet. Need to make the Hash Table with SYNCH
+	  MUTEX. Things should be ok then.
+  
+Sun Jul  4 13:00:38 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu> 
+
+	* Transport_Mux_Strategy.cpp
+	* Transport_Mux_Strategy.h
+	* default_client.cpp: Implemented Muxed TMS. But have nt got to
+	  working yet. It is just there not burting anything.  
+
+	* tao/Asynch_Invocation.cpp
+	* tao/Asynch_Invocation.h
+	* tao/Asynch_Invocation.i
+	* tao/Client_Strategy_Factory.cpp
+	* tao/Client_Strategy_Factory.h
+	* tao/Invocation.cpp
+	* tao/Invocation.h
+	* tao/Invocation.i
+	* tao/Pluggable.cpp
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/Transport_Mux_Strategy.cpp
+	* tao/Transport_Mux_Strategy.h
+	* tao/default_client.cpp
+	* tao/default_client.h
+
+	  Moved the message state from <Invocation> classes to the
+	  Transport Mux Strategy. This makes it  to have the behavior of
+	  Transport object acccesing the messaging state uniform, across
+	  Muxed and Exclusive TMS. I have not done Muxed TMS yet. 
+  
+Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* TAO_IDL/be/be_visitor_factory.cpp
+	* TAO_IDL/be_include/be_codegen.h
+	* tao/Asynch_Invocation.cpp
+	* tao/Asynch_Invocation.h
+	* tao/Asynch_Invocation.i
+	* tao/Invocation.cpp
+	* tao/Invocation.h
+  
+  	  Moved the transport_->idle () to the derived class'
+	  constructors.  
+  
+	* tests/AMI/test.idl
+	  
+  	  Just commented out the other methods. Left only get_number. 
+    	  
+	* Makefile
+	* client.tss.conf
+        * server.dsp
+	* test_i.cpp
+	* README
+	* orb_creation.cpp
+	* simple-client.conf
+	* test_i.h
+	* client.conf
+	* orb_creation.dsp
+	* simple-client.cpp
+	* test_i.i
+	* client.cpp
+	* run_test.pl*
+	* simple_client.dsp
+	* update.log
+	* client.dsp
+	* server.conf
+	* test-handC.cpp
+  	
+  	  Files for the simple test. But you actually need server and
+	  simple-client test files right now.
+  
+
+	* tests/AMI/simple-client.cpp: Removed the iteration part from the
+	  test. Let us keep it really simple.
+
+	* TAO_IDL/be/be_visitor_factory.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+	  Changes for generating Reply Handler skeletons. 	  
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
+	  Added this file. This file generates the demarshalling skeletons
+	  for the Reply Handler and then calls the Reply Handler's call
+	  back hook methods. This file is not fully done yet. But this
+	  visitor is not used for the time being.
+
+	* tao/Transport_Mux_Strategy.cpp: Fixed the explicit template
+	  instantiation problems.
+
+Fri Jul  2 16:28:08 1999 Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	  Another big step generating code for AMI. Done with sendc
+	  methods and Reply Handler call back methods. Both header files
+	  and cpp files contents. 
+  	 
+  	  TO-DO: Reply Handler skeletons. Reply Handler servants. 
+  
+	* tao/Asynch_Invocation.h
+	* tao/Asynch_Invocation.i
+	* tao/Makefile
+	* tao/MessagingC.h
+	* tao/MessagingS.cpp
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+  
+	* TAO_IDL/Makefile
+	* TAO_IDL/ast/ast_decl.cpp
+	* TAO_IDL/be/be_codegen.cpp
+	* TAO_IDL/be/be_decl.cpp
+	* TAO_IDL/be/be_interface.cpp
+	* TAO_IDL/be/be_type.cpp
+	* TAO_IDL/be/be_visitor_argument.cpp
+	* TAO_IDL/be/be_visitor_factory.cpp
+	* TAO_IDL/be/be_visitor_interface.cpp
+	* TAO_IDL/be/be_visitor_operation.cpp
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/interface.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/argument.cpp
+	* TAO_IDL/be/be_visitor_operation/argument_invoke.cpp
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+	* TAO_IDL/be_include/be_codegen.h
+	* TAO_IDL/be_include/be_decl.h
+	* TAO_IDL/be_include/be_interface.h
+	* TAO_IDL/be_include/be_type.h
+	* TAO_IDL/be_include/be_visitor_argument.h
+	* TAO_IDL/be_include/be_visitor_interface.h
+	* TAO_IDL/be_include/be_visitor_operation.h
+	* TAO_IDL/include/ast_decl.h
+  
+  	  Added the following files for the changes mentioned above.
+  
+	* TAO_IDL/be/be_visitor_rettype.cpp
+	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_result_arg.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp
+	* TAO_IDL/be_include/be_visitor_argument/ami_handler_result_arg.h
+	* TAO_IDL/be_include/be_visitor_interface/collocated_ami_handler_ch.h
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_ch.h
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_cs.h
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_cs.h
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_result_arg.h
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation.h
+
+Wed Jun 23 23:19:34 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	   Added Asynch Invocation class. It makes invocations without 
+	   waiting for the reply. Implemented a portion of Asynch Reply
+	   Dispatcher and Muxed TMS. Not complete yet. 
+  
+  	 * tao/IIOP_Transport.cpp:
+	 * tao/Invocation.cpp:
+	 * tao/Invocation.p:
+	 * tao/Makefilp:
+	 * tao/Reply_Dispatcher.cpp:
+	 * tao/Reply_Dispatcher.p:
+	 * tao/Transport_Mux_Strategy.cpp:
+	 * tao/Transport_Mux_Strategy.p:
+  	
+  	Added the following files. 
+  
+	 * tao/Asynch_Invocation.cpp:
+	 * tao/Asynch_Invocation.h:
+	 * tao/Asynch_Invocation.i:
+  	
+Tue Jun 22 11:59:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+  	One more big step on generating AMI call back code. If I get rid
+	of the references to the ReplyHandler from the generated files,
+	I could get things to compile.
+  
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_arglist.h:
+  
+  	Changes for the above.
+  
+  	* TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_cs.h:
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_ch.h:
+  
+  	Added these files.
 
 Sun Jun 20 07:40:02 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 

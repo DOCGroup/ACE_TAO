@@ -115,14 +115,14 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   // last argument - is always CORBA::Environment
   *os << "{" << be_idt_nl;
 
-  // deal with differences between IDL mapping for trus C++ exceptions and
+  // Deal with differences between IDL mapping for true C++ exceptions and
   // alternate mapping. Since our code uses the ACE_TRY_ENV variable in a
   // number of places, for the true exception case, we will have to explicitly
   // declare the ACE_TRY_ENV variable.
   *os << this->gen_environment_var () << "\n";
 
-  // generate any pre stub info if and only if none of our parameters is of the
-  // native type
+  // Generate any pre stub info if and only if none of our parameters is of the
+  // native type.
   if (!node->has_native ())
     {
       // native type does not exist.
@@ -140,7 +140,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
     }
 
-  // Declare a return type
+  // Declare return type.
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS);
   visitor = tao_cg->make_visitor (&ctx);

@@ -60,16 +60,17 @@ int be_visitor_args_compiled_marshal_cs::visit_argument (be_argument *node)
 
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
+  os->indent ();
+
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          os->indent ();
           *os << "(_tao_out << ";
           break;
-        case AST_Argument::dir_OUT:
+       case AST_Argument::dir_OUT:
           break;
         }
     }
@@ -81,7 +82,6 @@ int be_visitor_args_compiled_marshal_cs::visit_argument (be_argument *node)
           break;
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
-          os->indent ();
           *os << "(_tao_in >> ";
           break;
         }
@@ -158,7 +158,7 @@ int be_visitor_args_compiled_marshal_cs::visit_array (be_array *node)
         case AST_Argument::dir_INOUT:
           *os << node->name () << "_forany ("
               << arg->local_name () << ")";
-          break;
+      break;
         case AST_Argument::dir_OUT:
           break;
         }
@@ -676,15 +676,15 @@ int be_visitor_args_compiled_marshal_cs::visit_structure (be_structure *node)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-        case AST_Argument::dir_INOUT:
-          *os << arg->local_name ();
-          break;
-        case AST_Argument::dir_OUT:
-          break;
-        }
+        switch (this->direction ())
+          {
+          case AST_Argument::dir_IN:
+          case AST_Argument::dir_INOUT:
+            *os << arg->local_name ();
+            break;
+          case AST_Argument::dir_OUT:
+            break;
+          }
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {

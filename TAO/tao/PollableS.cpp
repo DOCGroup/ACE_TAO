@@ -18,6 +18,9 @@
 // ================================================================
 
 #include "tao/PollableS.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+
 #include "tao/Operation_Table.h"
 #include "tao/Server_Request.h"
 
@@ -271,7 +274,7 @@ POA_CORBA::_tao_collocated_Pollable::_tao_collocated_Pollable (
     POA_CORBA::Pollable_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,Pollable) (),
+  : ACE_CORBA_1 (Pollable) (),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
@@ -516,7 +519,7 @@ POA_CORBA::_tao_collocated_DIIPollable::_tao_collocated_DIIPollable (
     POA_CORBA::DIIPollable_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,DIIPollable) (),
+  : ACE_CORBA_1 (DIIPollable) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Pollable) (servant, stub),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
@@ -863,7 +866,7 @@ POA_CORBA::_tao_collocated_PollableSet::_tao_collocated_PollableSet (
     POA_CORBA::PollableSet_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,PollableSet) (),
+  : ACE_CORBA_1 (PollableSet) (),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
@@ -944,3 +947,4 @@ POA_CORBA::PollableSet::_this (CORBA_Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (0);
   return new POA_CORBA::_tao_collocated_PollableSet (this, stub);
 }
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */

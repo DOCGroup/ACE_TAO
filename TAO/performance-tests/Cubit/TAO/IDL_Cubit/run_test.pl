@@ -98,7 +98,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
 $CL = Process::Create ($exepref . "client".$EXE_EXT,
                        " $clflags $clnsflags -x");
 
-$client = $CL->TimedWait (60);
+$client = $CL->TimedWait (120);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);

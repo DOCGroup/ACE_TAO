@@ -1728,7 +1728,7 @@ void* POA_Messaging::Poller::_downcast (
   return 0;
 }
 
-void POA_Messaging::Poller::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::Poller::_dispatch (CORBA::ServerRequest &req, void * context, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   const char *opname = req.operation (); // retrieve operation name

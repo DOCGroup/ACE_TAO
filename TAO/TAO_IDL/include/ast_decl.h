@@ -148,10 +148,19 @@ public:
   void set_line(long l);
   UTL_String *file_name();
   void set_file_name(UTL_String *s);
+
   UTL_ScopedName *name();
+
+  UTL_ScopedName *compute_name (const char *prefix, const char *suffix);
+  // Variation of the <name>. Computes scoped name string, applying
+  // prefix and suffix to the local name component. 
+
   void set_name(UTL_ScopedName *n);
   
   Identifier *local_name ();
+
+  Identifier *compute_local_name (const char *prefix, const char *sufix);
+  // Apply prefix and suffix to the local name and return.
 
   //
   // If there is _cxx_ in the beginning, we will remove that and keep

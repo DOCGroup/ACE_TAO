@@ -368,7 +368,6 @@ int be_visitor_args_vardecl_ss::visit_string (be_string *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:

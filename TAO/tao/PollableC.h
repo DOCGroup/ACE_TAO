@@ -21,6 +21,9 @@
 #define TAO_IDL_POLLABLEC_H
 
 #include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+
 #include "tao/Object.h"
 #include "tao/Exception.h"
 #include "tao/CDR.h"
@@ -433,5 +436,7 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_PollableSet::Unknown
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 
 #endif /* TAO_IDL_POLLABLEC_H */
