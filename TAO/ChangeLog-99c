@@ -1,3 +1,10 @@
+Sun May 02 14:47:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: removed
+          ACE_Reverse_Lock<ACE_Lock> and ACE_Guard<ACE_Reverse_Lock<ACE_Lock> >
+          explicit template instantiations because they're in
+          tao/Object_Adapter.cpp.
+
 Sun May 02 14:32:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.i (Time_Value_to_TimeT):
