@@ -23,6 +23,7 @@ BIN     = auto_event \
 	  task_two \
 	  task_three \
 	  task_four \
+	  task_five \
 	  thread_manager \
 	  thread_pool \
 	  thread_specific \
