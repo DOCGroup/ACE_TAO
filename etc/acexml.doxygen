@@ -70,7 +70,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/xml
+HTML_OUTPUT           = html/acexml
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
