@@ -1,3 +1,23 @@
+Wed Jul 28 11:51:45 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/README:
+
+	  Added documentation for the newly added -b client option.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+
+	  Added zero-copy optimization for octet sequence test.  Thanks to 
+	  Carlos for adding this optimization.
+
+	  Added ability to specify a different octet sequence length when
+	  running the small_octet_seq test by using the newly added '-b'
+	  option.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/benchmark.sh:
+	* performance-tests/Cubit/TAO/IDL_Cubit/benchmark_sequence.sh:
+
+	  Scripts useful for running IDL_Cubit benchmarks.
+	
 Wed Jul 28 10:46:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
