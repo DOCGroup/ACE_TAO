@@ -42,7 +42,7 @@ namespace PortableInterceptor
   /// table.
   TAO_Export void register_orb_initializer (
       ORBInitializer_ptr init
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 }
 

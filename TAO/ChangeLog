@@ -1,3 +1,19 @@
+Tue Jun 22 19:51:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/orbconf.h:	
+
+	  Removed some of the TAO_ENV* macros. They were supposed to be
+	  deprecated from time immemorial and it was finally time to bid
+	  adieu. 
+	
+	* tao/Any_Unknown_IDL_Type.cpp:
+	* tao/ORBInitializer_Registry.h:
+	* tao/ORB_Core.cpp:
+	* tao/PortableServer/Object_Adapter.cpp:
+
+	  Strange, our code had a bunch of TAO_ENV* in the cpp
+	  files. Changed them to the ACE_ENV* equivalents. 
+
 Tue Jun 22 11:45:07 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:

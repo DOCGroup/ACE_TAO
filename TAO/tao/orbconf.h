@@ -218,26 +218,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_HAS_EXCEPTIONS */
 
-//-------- begin deprecated -----------------------------------------------
-// The TAO_ENV_ macros have been renamed to ACE_ENV_
-// and have been moved to $ACE_ROOT/ace/CORBA_macros.h.
-// Please only use the latter.
-// The macros below are deprecated and may be removed soon.
-#define TAO_ENV_EMIT_CODE(X)                  ACE_ENV_EMIT_CODE(X)
-#define TAO_ENV_EMIT_CODE2(X,Y)               ACE_ENV_EMIT_CODE2(X,Y)
-#define TAO_ENV_ARG_DECL                      ACE_ENV_ARG_DECL
-#define TAO_ENV_ARG_DECL_WITH_DEFAULTS        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-#define TAO_ENV_ARG_DECL_NOT_USED             ACE_ENV_ARG_DECL_NOT_USED
-#define TAO_ENV_SINGLE_ARG_DECL               ACE_ENV_SINGLE_ARG_DECL
-#define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-#define TAO_ENV_SINGLE_ARG_DECL_NOT_USED      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-#define TAO_ENV_ARG_PARAMETER                 ACE_ENV_ARG_PARAMETER
-#define TAO_ENV_SINGLE_ARG_PARAMETER          ACE_ENV_SINGLE_ARG_PARAMETER
-#define TAO_ENV_ARG_NOT_USED                  ACE_ENV_ARG_NOT_USED
-#define TAO_ENV_RAISE(ex)                     ACE_ENV_RAISE(ex)
-#define TAO_ENV_DECLARE_NEW_ENV               ACE_DECLARE_NEW_CORBA_ENV
-//-------- end deprecated -------------------------------------------------
-
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
 

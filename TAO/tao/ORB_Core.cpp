@@ -1672,7 +1672,7 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
         {
           // Get the ith profile
           profile = mprofile.get_profile (i);
-          profile->policies (policy_list TAO_ENV_ARG_PARAMETER);
+          profile->policies (policy_list ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
     }

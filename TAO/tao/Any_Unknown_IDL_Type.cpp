@@ -207,7 +207,7 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
   ACE_TRY_NEW_ENV
     {
       CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
@@ -215,10 +215,10 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -249,7 +249,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
   ACE_TRY_NEW_ENV
     {
       CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
@@ -257,10 +257,10 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -303,7 +303,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
   ACE_TRY_NEW_ENV
     {
       CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
@@ -311,10 +311,10 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
 
       while (kind == CORBA::tk_alias)
         {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
