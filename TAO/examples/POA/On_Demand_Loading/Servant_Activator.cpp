@@ -9,7 +9,7 @@
 //     Servant_Activator.cpp
 //
 // = DESCRIPTION
-//     Implementation of Dir_Service_Activator , which is used by a
+//     Implementation of Dir_Service_Activator, which is used by a
 //     POA with a RETAIN policy.
 //
 // = AUTHOR
@@ -29,36 +29,39 @@ Dir_Service_Activator::Dir_Service_Activator (CORBA::ORB_ptr orb)
 {
 }
 
-// This method associates an seravnt with the ObjectID.
+// This method associates an servant with the ObjectID.
 
 PortableServer::Servant
 Dir_Service_Activator::incarnate (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr poa,
                                   CORBA::Environment &env)
 {
+  
   // Convert ObjectId to String.
-
+  
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
   // Activate and return the servant else exception.
   
   PortableServer::Servant servant = this->activate_servant (s.in (),
                                                             poa);
-
   if (servant != 0)
-      return servant;
+    return servant;
   else
     {
+
+      TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), env, 0);
+      //*done*
       // @@ Kirthika, can you please make this work for both
       // native and non-native C++ exceptions?  Please see
       // Nanbor if you have any questions.
-      CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
+      // CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
+      //env.exception (exception);
+      //return 0;
     }
 }
 
-// This is the method is invoked when the object is deactivated or the
+// This is the method invoked when the object is deactivated or the
 // entire POA is is deactivated or destroyed.
 
 void
@@ -75,7 +78,7 @@ Dir_Service_Activator::etherealize (const PortableServer::ObjectId &oid,
   ACE_UNUSED_ARG (env);
 
   // If there are no remaining activations i.e ObjectIds associated
-  // with Dir_Service object deactivate it.
+  // with Dir_Service object, deactivate it.
 
   if (remaining_activations == 0)
     deactivate_servant (servant);
@@ -89,13 +92,19 @@ PortableServer::Servant
 Dir_Service_Activator::activate_servant (const char *str, 
                                          PortableServer::POA_ptr poa)
 {
-  // The string format is function@dll which needs to be parsed.
+  // The string format is dllname:factory_method which needs to be parsed.
   parse_string (str);
 
-  // Now that the library name is available we open the library.  @@
+  // Now that the library name is available we open the library.  
+
+  // *done*@@
   // Kirthika, make SURE to check return values from function calls
   // like this and return failure results correctly...
-  dll_.open (dllname_);
+  int retval = dll_.open (dllname_);
+  if (retval != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p", dll_.error ()),
+                      0);
 
   // The next step is to obtain the symbol for the function that will
   // create the servant object and return it to us.
@@ -110,11 +119,11 @@ Dir_Service_Activator::activate_servant (const char *str,
                       0);
    
   // Now create and return the servant.
-  return this->servant_creator (this->orb_.in (), poa);
+  return servant_creator (this->orb_.in (), poa);
 }
 
 // This method removes the servant and the dll object associated with
-// it with performed the opening and symbol obtaining operations.
+// it after it has performed the opening and symbol obtaining operations.
  
 void 
 Dir_Service_Activator::deactivate_servant (PortableServer::Servant servant)
@@ -130,7 +139,7 @@ void
 Dir_Service_Activator::parse_string (const char *s)
 {
   // The format of the object library:factory_method.  This string is
-  // parsed to obatin the library name and the function name which
+  // parsed to obtain the library name and the function name which
   // will create trhe servant and return it to us.
 
   char str[BUFSIZ],func[BUFSIZ], libname [BUFSIZ];
@@ -138,19 +147,21 @@ Dir_Service_Activator::parse_string (const char *s)
 
   at[0]= ':';
   at[1]= '\0';
+  
+  //*done*
   // @@ Kirthika, please use the ACE_OS::str*() functions
   // consistently.
-  strcpy (func, "");
+  ACE_OS::strcpy (func, "");
+
   // As strtok () puts a NULL in the position after it gives back a
   // token, we make two copies of the input string.
-  strcpy (str, s);
+  ACE_OS::strcpy (str, s);
 
-  // @@ Kirthika, this comment is out of date.
-  // The strtok() method returns the string until '@' i.e. the
+  // The strtok() method returns the string until ':' i.e. the
   // function name.
   ACE_OS::strcpy (libname, ACE_OS::strtok (str, at));
    
-  // Get to ':' and make the libname point to the next location in the
+  // Get to ':' and make func point to the next location in the
   // string.
   ACE_OS::strcpy (func, ACE_OS::strchr (s,':') + 1);
   
