@@ -269,7 +269,7 @@ be_union::gen_var_impl (char *, char *)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
-  *ci << "  this->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
+  *ci << "  ACE_NEW (this->ptr_, " << this->name () << " (*p.ptr_));" << nl;
   *ci << "else" << nl;
   *ci << "  this->ptr_ = 0;\n";
   ci->decr_indent ();
@@ -309,7 +309,7 @@ be_union::gen_var_impl (char *, char *)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
-  *ci << "this->ptr_ = new " << this->name () << " (*p.ptr_);\n";
+  *ci << "ACE_NEW_RETURN (this->ptr_, " << this->name () << " (*p.ptr_), *this);\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";

@@ -524,17 +524,17 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          *os << "this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-              << " = "
+          *os << "this->" << bu->field_pd_prefix() << ub->local_name () 
+              << bu->field_pd_postfix() << " = "
               << bt->name () << "::_duplicate (val);" << be_uidt_nl;
           break;
 
         case AST_PredefinedType::PT_any:
-          *os << "this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-              << " = new "
-              << bt->name () << " (val);" << be_uidt_nl;
+          *os << "ACE_NEW (" << be_idt << be_idt_nl
+              << "this->" << bu->field_pd_prefix() << ub->local_name ()
+              << bu->field_pd_postfix() << "," << be_nl
+              << bt->name () << " (val)" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl;
           break;
 
         case AST_PredefinedType::PT_void:
@@ -542,8 +542,8 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
         default:
           *os << "// set the value" << be_nl
-              << "this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+              << "this->" << bu->field_pd_prefix () << ub->local_name () 
+              << bu->field_pd_postfix ()
               << " = val;" << be_uidt_nl;
         }
   *os << "}" << be_nl;
@@ -671,10 +671,17 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
 
-      *os << "this->"
-      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-          << " = new "
-          << bt->name () << " (val);" << be_uidt_nl;
+  *os << "ACE_NEW (" << be_idt << be_idt_nl
+      << "this->" << bu->field_pd_prefix() << ub->local_name ()
+      << bu->field_pd_postfix() << "," << be_nl
+      << bt->name () << " (val)" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
+
+// This was replaced by the above output statement, but this doesn't work
+//      *os << "this->"
+//      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+//          << " = new "
+//          << bt->name () << " (val);" << be_uidt_nl;
 
   *os << "}" << be_nl;
 
@@ -912,12 +919,21 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   if (0) // %! (bt->size_type () == be_type::VARIABLE)
     { cerr <<"!t VARIABLE struct in field_cs\n";
       *os << "delete this->"
-     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+          << bu->field_pd_prefix() << ub->local_name () 
+          << bu->field_pd_postfix()
           << ";" << be_nl;
-      *os << "this->"
-     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-          << " = new "
-          << bt->name () << " (val);" << be_uidt_nl;
+
+      *os << "ACE_NEW (" << be_idt << be_idt_nl
+          << "this->" << bu->field_pd_prefix() << ub->local_name ()
+          << bu->field_pd_postfix() << "," << be_nl
+          << bt->name () << " (val)" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+
+// This was replaced by the above output statement, but this doesn't work
+//      *os << "this->"
+//     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+//          << " = new "
+//          << bt->name () << " (val);" << be_uidt_nl;
     }
   else
     {
@@ -1050,10 +1066,17 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
 
-      *os << "this->"
-     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-          << "_var = new " << bt->name ()
-          << " (val);" << be_nl;
+  *os << "ACE_NEW (" << be_idt << be_idt_nl
+      << "this->" << bu->field_pd_prefix() << ub->local_name ()
+      << bu->field_pd_postfix() << "_var," << be_nl
+      << bt->name () << " (val)" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
+
+// This was replaced by the above output statement, but this doesn't work
+//      *os << "this->"
+//     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+//          << "_var = new " << bt->name ()
+//          << " (val);" << be_uidt_nl;
 
   *os << "}" << be_nl;
 

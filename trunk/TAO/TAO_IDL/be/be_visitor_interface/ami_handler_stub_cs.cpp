@@ -130,16 +130,18 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
       << "stub->_incr_refcnt ();" << be_nl;
 
   *os << "if (obj->_is_collocated () && _TAO_collocation_" << node->flat_name ()
-      << "_Stub_Factory_function_pointer != 0)" << be_idt_nl
+      << "_Stub_Factory_function_pointer != 0)" << be_nl
       << "{" << be_idt_nl
       << node->local_name () << "_ptr retv = _TAO_collocation_"
       << node->flat_name ()
       << "_Stub_Factory_function_pointer (obj);" << be_nl
       << "if (retv != 0)" << be_idt_nl
       << "return retv;" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl;
+      << "}" << be_nl;
 
-  *os << "return new " << full_name << "(stub);" << be_uidt_nl
+  *os << full_name << "_ptr retval = 0;" << be_nl
+      << "ACE_NEW_RETURN (retval, " << full_name << " (stub), 0);" << be_nl
+      << "return retval;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // The _duplicate method

@@ -227,8 +227,8 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
     " &p) // copy constructor" << be_nl;
   *os << "{\n";
   os->incr_indent ();
-  *os << "if (p.ptr_)" << be_nl;
-  *os << "  this->ptr_ = new " << node->name () << "(*p.ptr_);" << be_nl;
+  *os << "if (p.ptr_)" << be_idt_nl;
+  *os << "ACE_NEW (this->ptr_, " << node->name () << " (*p.ptr_));" << be_uidt_nl;
   *os << "else" << be_nl;
   *os << "  this->ptr_ = 0;\n";
   os->decr_indent ();
@@ -268,7 +268,8 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "{\n";
   os->incr_indent ();
   *os << "delete this->ptr_;" << be_nl;
-  *os << "this->ptr_ = new " << node->name () << " (*p.ptr_);\n";
+  *os << "ACE_NEW_RETURN (this->ptr_, " 
+      << node->name () << " (*p.ptr_), *this);\n";
   os->decr_indent ();
   *os << "}" << be_nl;
   *os << "return *this;\n";

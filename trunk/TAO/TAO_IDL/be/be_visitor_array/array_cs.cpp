@@ -116,7 +116,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << fname << "_slice *" << be_nl;
   *os << fname << "_alloc (void)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return new ";
+  *os << fname << "_slice *retval = 0;" << be_nl;
+  *os << "ACE_NEW_RETURN (retval, ";
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -135,7 +136,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << ";" << be_uidt_nl;
+  *os << ", 0);" << be_nl;
+  *os << "return retval;" << be_uidt_nl;
   *os << "}\n\n";
 
   // free method
