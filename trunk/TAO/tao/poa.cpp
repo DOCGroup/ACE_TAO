@@ -289,6 +289,9 @@ void CORBA_POA::dispatch (CORBA::OctetSeq &key,
                       "Cannot find operation <%s> in object\n",
                       opname));
         }
+#else
+      ACE_UNUSED_ARG (opname);
+      ACE_UNUSED_ARG (skel);
 #endif
       obj->dispatch (req, context, env);
     }
