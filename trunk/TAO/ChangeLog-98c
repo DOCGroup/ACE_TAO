@@ -1,3 +1,25 @@
+Fri Oct  3 09:29:05 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
+
+	* tests/multiCubit/svr.cpp: Changed the key naming scheme back to
+ 	not be unique throughout the process.  Process-unique code is
+ 	still there, but conditionally compiled mutually-exclusive to the
+ 	other scheme.
+
+	* tao/server_factory.*: The object_lookup_strategy method is gone
+ 	and is replaced by the create_object_table factor method.  See
+ 	more information below.
+
+	* tao/default_server.*: The server factory no longer holds on to a
+ 	single pointer for the object lookup strategy.  In previous
+ 	incarnations of TAO, this didn't cause problems, but the advent of
+ 	ORB-per-thread highlighted the inherent badness in this
+ 	implementation choice.  Gone is the object_lookup_strategy method,
+ 	and in comes the create_object_table factory method, which creates
+ 	and returns (and doesn't hold onto) an object table in accordance
+ 	with parameters such as size and search algorithm.
+
+	* tao/roa.cpp: Changed to use the create_object_table method.
+
 Thu Oct  2 13:48:31 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
 	* tests/multiCubit/svr.cpp: Modified the key generation scheme to
