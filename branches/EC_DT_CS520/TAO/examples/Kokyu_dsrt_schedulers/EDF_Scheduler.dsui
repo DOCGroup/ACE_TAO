@@ -1,4 +1,7 @@
 # EDF_SCHED (EDF_Scheduler.cpp)
+DSTRM_EVENT	EDF_SCHED	4	END_SCHED_SEGMENT_END	30	"End scheduling segment end"	print_string
+DSTRM_EVENT	EDF_SCHED	4	BEGIN_NESTED_SCHED_SEGMENT_END	29	"Begin nested scheduling segment end"	print_string
+DSTRM_EVENT	EDF_SCHED	4	CREATE_SCHED_PARAM_END	28	"Create scheduling segment end"	print_string
 DSTRM_EVENT	EDF_SCHED	4	CONSTRUCTOR	27	"Dispatcher created in constructor"	print_string
 DSTRM_EVENT	EDF_SCHED	4	RECEIVE_OTHER	26	"Enter receive_other"	print_string
 DSTRM_EVENT	EDF_SCHED	4	RECEIVE_EXCEPTION	25	"Enter receive_exception"	print_string
@@ -24,7 +27,7 @@ DSTRM_EVENT     EDF_SCHED       4       CALL_KOKYU_DISPATCH_UPDATE_SCHEDULE     
 DSTRM_EVENT     EDF_SCHED       4       ENTER_CLIENT_SCHED_TIME        5       "Point which records the entering scheduler time on the client side"    print_string
 DSTRM_EVENT	EDF_SCHED	4	DISPATCHER_SHUTDOWN	4	"Kokyu DSRT Dispatcher shutdown"	print_string
 DSTRM_EVENT	EDF_SCHED	4	CREATE_SCHED_PARAM	3	"Create Scheduling parameter"	print_string
-DSTRM_EVENT	EDF_SCHED	4	BEGIN_SCHED_SEGMENT_START	2	"Start Schedule segment"	print_string
-DSTRM_EVENT	EDF_SCHED	4	BEGIN_SCHED_SEGMENT_END	1	"End Schedule segment"		print_string
+DSTRM_EVENT	EDF_SCHED	4	BEGIN_NEW_SCHED_SEGMENT_START	2	"Start new Schedule segment"	print_string
+DSTRM_EVENT	EDF_SCHED	4	BEGIN_NEW_SCHED_SEGMENT_END	1	"End new Schedule segment"		print_string
 DSTRM_EVENT	EDF_SCHED	4	KOKYU_SCHED_START	0	"Start Kokyu Schedule call"	print_string
 
