@@ -2632,7 +2632,6 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // does all of its acquires and releases correctly.
   state.lock_count_ = m->LockCount;
   state.recursion_count_ = m->RecursionCount;
-  state.owning_thread_ = m->OwningThread;
   m->LockCount = 0;
   m->RecursionCount = 1;
 #    endif /* ACE_WIN32 */
@@ -2708,9 +2707,6 @@ ACE_OS::recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
 #    if defined (ACE_WIN32)
   m->LockCount = state.lock_count_;
   m->RecursionCount = state.recursion_count_;
-#      if !defined (ACE_NDEBUG)
-  ACE_ASSERT (state.owning_thread_ == m->OwningThread);
-#      endif /* !ACE_NDEBUG */
   return;
 #    endif /* ACE_WIN32 */
 #  else
