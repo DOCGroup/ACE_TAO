@@ -81,7 +81,7 @@ Cubit_Client::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
-                           " [-k cubit obj ref key]"
+                           " [-k cubit-obj-ref-key]"
                            " [-h hostname]"
                            " [-p port]"
                            " [-x]"
