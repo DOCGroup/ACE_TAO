@@ -1553,7 +1553,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
   if (ACE_OS::ioctl (handle, SIOCGIFNUM, (caddr_t) &how_many) == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "ACE::get_ip_interfaces:ioctl - SIOCGIFNUM failed"), -1);
    return 0;
-#elif defined (__unix__)
+#elif defined (__unix)
 // BSD compatible OS: HP UX, AIX, SunOS 4.x perform some ioctls to
 // retrieve ifconf list of ifreq structs no SIOCGIFNUM on SunOS 4.x,
 // so use guess and scan algorithm
@@ -1618,7 +1618,7 @@ ACE::get_handle (void)
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined(__SVR4)
   handle = ACE_OS::open ("/dev/ip", O_RDONLY);
-#elif defined(__unix__)
+#elif defined(__unix)
 // BSD compatible OS: HP UX, AIX, SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 #endif /* __SVR4 */
@@ -1817,7 +1817,7 @@ ACE::get_ip_interfaces (size_t &count,
 	}
     }
   return 0;
-#elif defined(__unix__)
+#elif defined(__unix)
   //  COMMON (SVR4 and BSD) UNIX CODE
 
   ACE_TRACE ("ACE::get_ip_interfaces");
