@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_OS_THREAD_ADAPTER_H
 #define ACE_OS_THREAD_ADAPTER_H
 #include "ace/pre.h"
