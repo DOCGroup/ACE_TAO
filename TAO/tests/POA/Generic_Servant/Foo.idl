@@ -10,5 +10,7 @@
 
 interface Foo
 {
-  long doit();
+  long doit ();
+
+  oneway void simply_doit ();
 };
