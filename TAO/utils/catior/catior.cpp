@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 #include <tao/corba.h>
 #include <tao/debug.h>
 #include <tao/Typecode.h>
@@ -28,23 +29,23 @@ catiiop (CORBA::String string,
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
-  
+
   if (!string || !*string)
     return 0;
-  
+
   // Type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
-    
+
   // Remove the "N.N//" prefix, and verify the version's one that we
   // accept
 
   CORBA::Short  iiop_version_major, iiop_version_minor;
-  if (isdigit (string [0]) 
-      && isdigit (string [2]) 
+  if (isdigit (string [0])
+      && isdigit (string [2])
       && string [1] == '.'
-      && string [3] == '/' 
+      && string [3] == '/'
       && string [4] == '/')
     {
       iiop_version_major = (char) (string [0] - '0');
@@ -66,7 +67,7 @@ catiiop (CORBA::String string,
   // Pull off the "hostname:port/" part of the objref Get host and
   // port.
   CORBA::UShort port_number;
-  CORBA::String hostname;  
+  CORBA::String hostname;
   char *cp = ACE_OS::strchr (string, ':');
 
   if (cp == 0)
@@ -74,26 +75,26 @@ catiiop (CORBA::String string,
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       return 0;
     }
-  
+
   hostname = CORBA::string_alloc (1 + cp - string);
 
   for (cp = hostname;
        *string != ':';
        *cp++ = *string++)
     continue;
-  
+
   *cp = 0;
   string++;
-  
+
   cp = ACE_OS::strchr ((char *) string, '/');
-  
+
   if (cp == 0)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       CORBA::string_free (hostname);
       return 0;
     }
-  
+
   port_number = (short) ACE_OS::atoi ((char *) string);
   string = ++cp;
 
@@ -103,8 +104,8 @@ catiiop (CORBA::String string,
   ACE_DEBUG ((LM_DEBUG,
               "Port Number:\t%d\n",
               port_number));
-  CORBA::string_free (hostname); 
-		
+  CORBA::string_free (hostname);
+
   // Parse the object key.
   // dump the object key to stdout
   //  TAO_POA::decode_string_to_sequence (data->profile.object_key,
@@ -175,7 +176,7 @@ catior (CORBA::String str,
   // object reference.
   CORBA::String type_hint;
 
-  continue_decoding = stream.decode (CORBA::_tc_string, 
+  continue_decoding = stream.decode (CORBA::_tc_string,
                                      &type_hint,
                                      0,
                                      env);
@@ -343,7 +344,7 @@ catior (CORBA::String str,
 
         short counter = -1;
 
-	u_int i = 0;
+        u_int i = 0;
 
         for (; i < objKeyLength; i++)
           {
@@ -407,7 +408,7 @@ catpoop (CORBA::String string,
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       return 0;
     }
-  
+
   // Read the hostname.
   CORBA::String hostname = CORBA::string_alloc (1 + cp - string);
 
@@ -415,7 +416,7 @@ catpoop (CORBA::String string,
        *string != ':';
        *cp++ = *string++)
     continue;
-  
+
   *cp = 0;
   string++;
 
@@ -433,7 +434,7 @@ catpoop (CORBA::String string,
        *string != ':';
        *cp++ = *string++)
     continue;
-  
+
   *cp = 0;
   string++;
 
@@ -452,7 +453,7 @@ catpoop (CORBA::String string,
        *string != ':';
        *cp++ = *string++)
     continue;
-  
+
   *cp = 0;
   string++;
 
@@ -470,7 +471,7 @@ catpoop (CORBA::String string,
        *string != ':';
        *cp++ = *string++)
     continue;
-  
+
   *cp = 0;
   string++;
 
@@ -488,7 +489,7 @@ catpoop (CORBA::String string,
        *string != ':';
        *cp++ = *string++)
     continue;
-  
+
   *cp = 0;
   string++;
 
