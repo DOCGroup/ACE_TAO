@@ -3611,6 +3611,9 @@ public:
   static long strtol (const char *s,
 		      char **ptr,
 		      int base);
+  static unsigned long strtoul(const char *s,
+                               char **ptr,
+                               int base);
 
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
