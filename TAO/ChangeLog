@@ -1,6 +1,7 @@
 Wed Mar 12 10:02:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corba.h:
+	* tao/ORB_Core.cpp:
 
 	  Corrected typo.  "ObjectIdListC.h" instead of "ObjectIDListC.h"
 
