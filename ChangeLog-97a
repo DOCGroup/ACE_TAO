@@ -10,6 +10,10 @@ Tue Mar 18 21:53:03 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Tue Mar 18 13:20:59 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+        * ace/ace.mdp: Reverted the change for DllMain as the entry point
+ 	  to ace.dll.  This is causing problems in multi-threaded
+	  applications. 
+
 	* netsvcs/lib/Client_Logging_Handler.cpp: Added a check in fini()
  	  to make sure we have a valid handler.  If the connect attempt
  	  failed, this->handler_ will be set to 0.
