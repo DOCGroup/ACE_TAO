@@ -1,3 +1,7 @@
+Sun Nov 14 20:20:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Configuration.h: Improved the ACE-ification of this file.
+
 Sun Nov 14 18:13:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ACE-configuration.txt:
