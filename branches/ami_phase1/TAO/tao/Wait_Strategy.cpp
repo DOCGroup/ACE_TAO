@@ -299,9 +299,7 @@ TAO_Wait_On_Leader_Follower::wait (void)
   return 0;
 }
 
-// Handle the input.
-// I am returning -1 on error, 1 on fully read message, 0 on
-// paritially complete read.
+// Handle the input. Return -1 on error, 0 on success.
 int
 TAO_Wait_On_Leader_Follower::handle_input (void)
 {
