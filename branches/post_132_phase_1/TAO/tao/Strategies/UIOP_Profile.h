@@ -29,7 +29,6 @@
 
 #include "strategies_export.h"
 #include "tao/Profile.h"
-#include "tao/Object_KeyC.h"
 #include "UIOP_Connection_Handler.h"
 #include "UIOP_Endpoint.h"
 
@@ -173,9 +172,6 @@ private:
 
   /// Number of endpoints in the list headed by <endpoint_>.
   size_t count_;
-
-  /// Object_key associated with this profile.
-  TAO_ObjectKey object_key_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -13,16 +13,16 @@
 #ifndef TAO_PROFILE_H
 #define TAO_PROFILE_H
 #include "ace/pre.h"
-
-#include "corbafwd.h"
+#include "tao/Tagged_Components.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Tagged_Components.h"
-#include "PolicyC.h"
-#include "GIOP_Message_Version.h"
+// @@ This include needs to go after Ossama's checkin
+#include "tao/PolicyC.h"
+#include "tao/GIOP_Message_Version.h"
+#include "tao/Object_KeyC.h"
 
 class TAO_MProfile;
 class TAO_Stub;
@@ -199,8 +199,18 @@ public:
 
 protected:
 
+  /// To be used by inherited classes
+  TAO_Profile (CORBA::ULong tag,
+               TAO_ORB_Core *orb_core,
+               const TAO_ObjectKey &key,
+               const TAO_GIOP_Message_Version &version);
+
   /// Creates an encapsulation of the ProfileBody struct in the <cdr>
   virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
+
+  /// Helper method that encodes the endpoints for RTCORBA as
+  /// tagged_components.
+  void set_tagged_components (TAO_OutputCDR &cdr);
 
 private:
 
@@ -252,8 +262,10 @@ protected:
   /// Our tagged profile
   IOP::TaggedProfile *tagged_profile_;
 
-private:
+  /// object_key associated with this profile.
+  TAO_ObjectKey object_key_;
 
+private:
   /// IOP protocol tag.
   CORBA::ULong tag_;
 

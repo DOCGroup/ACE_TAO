@@ -27,8 +27,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Object_KeyC.h"
 #include "DIOP_Endpoint.h"
 
 #include "ace/Synch.h"
@@ -182,12 +180,6 @@ protected:
 
   /// Number of endpoints in the list headed by <endpoint_>.
   size_t count_;
-
-private:
-
-  /// Object_key associated with this profile.
-  TAO_ObjectKey object_key_;
-
 };
 
 #if defined (__ACE_INLINE__)

@@ -36,11 +36,13 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UDP_PROFILE, orb_core, version),
+  : TAO_Profile (TAO_TAG_UDP_PROFILE,
+                 orb_core,
+                 object_key,
+                 version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    count_ (1),
-    object_key_ (object_key)
+    count_ (1)
 {
 }
 
@@ -50,10 +52,12 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UDP_PROFILE, orb_core, version),
+  : TAO_Profile (TAO_TAG_UDP_PROFILE,
+                 orb_core,
+                 object_key,
+                 version),
     endpoint_ (host, port, addr),
-    count_ (1),
-    object_key_ (object_key)
+    count_ (1)
 {
 }
 
@@ -62,8 +66,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (TAO_ORB_Core *orb_core)
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    count_ (1),
-    object_key_ ()
+    count_ (1)
 {
 }
 
