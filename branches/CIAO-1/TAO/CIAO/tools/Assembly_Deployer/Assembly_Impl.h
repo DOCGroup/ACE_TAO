@@ -25,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Active_Map_Manager_T.h"
 #include "CCM_DeploymentS.h"
 
 namespace CIAO
@@ -45,7 +46,8 @@ namespace CIAO
   {
   public:
     /// Constructor
-    AssemblyFactory_Impl (CORBA::ORB_ptr o);
+    AssemblyFactory_Impl (CORBA::ORB_ptr o,
+                          PortableServer::POA_ptr p);
 
     /// Destructor
     virtual ~AssemblyFactory_Impl (void);
@@ -59,8 +61,8 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Components::Deployment::Assembly defined attributes/operations.
-    virtual ::Components::Cookie * create (const char * assembly_loc
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Components::Cookie * create_assembly (const char * assembly_loc
+                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::Deployment::InvalidLocation,
                        Components::CreateFailure));
@@ -84,7 +86,7 @@ namespace CIAO
     PortableServer::POA_var poa_;
 
     /// Keep a list of managed Assembly objects.
-    CIAO::Active_Objref_Map assembly_map_;
+    ACE_Active_Map_Manager<::Components::Deployment::Assembly_var> assembly_map_;
   };
 
   /**
@@ -103,7 +105,8 @@ namespace CIAO
   {
   public:
     /// Constructor
-    Assembly_Impl (CORBA::ORB_ptr o);
+    Assembly_Impl (CORBA::ORB_ptr o,
+                   PortableServer::POA_ptr p);
 
     /// Destructor
     virtual ~Assembly_Impl (void);
@@ -135,6 +138,15 @@ namespace CIAO
 
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
+
+    /// Current State
+    ::Components::Deployment::AssemblyState state_;
+
+    /// <Debug> My instance number.
+    CORBA::ULong serial_number_;
+
+    /// <Debug> instance counter.
+    static CORBA::ULong assembly_count_;
   };
 }
 

@@ -1,0 +1,3 @@
+This directory contains some simple test programs to verify correct
+operations of CIAO interal modules.  We will most likely remove the
+whole subdirectory in the future.

@@ -1,3 +1,68 @@
+Sun Feb 09 20:39:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html: Added more todo items as we go along. :)
+
+	* ciao/Component_Base.idl:
+	* ciao/CCM_Deployment.idl: Changed the create method in
+	  ::Components::Deployment::AssemblyFactory to create_assembly per
+	  CCM RTF 1.1.
+
+	* ciao/Assembly_Impl.cpp:
+	* ciao/Assembly_Impl.h:
+	* ciao/Assembly_Impl.inl: CCM RTF 1.1 changes.  Also added other
+	  test code in the file and explained how to create an Assembly
+	  object.
+
+	* ciao/CIAO_Client.dsp:
+	* ciao/CIAO_Server.dsp:
+	* ciao/CIAO_Value.idl: Added a CIAO internal cookie valuetype so
+	  we can downcast the incoming ::Components::Cookie back to CIAO's
+	  internal implementation type CIAO::Cookie easily.  The original
+	  "brute force cast" didn't work and CIAO::Cookie also provides a
+	  way to fish out the internal octetseq we need internally.
+
+	* ciao/Cookies.cpp:
+	* ciao/Cookies.h:
+	* ciao/Cookies.inl: Changed to inherit the internal cookie
+	  implementation from OBV_CIAO::Cookie instead of
+	  OBV_Components::Cookie.  Also changed the extract method to be
+	  static.
+
+	* ciao/Client_init.cpp: Added a new valuefactory to create
+	  ::Components::Cookie valuetype when receiving CIAO::Cookie from
+	  the server.  This should really be handled by supporting
+	  truncatable valuetype in TAO.
+
+	* docs/templates/CIAO_Glue_Session_Template.inl: Applied some of
+	  the bug fixes from using Active Map and Cookie.  These template
+	  files need to be reviewed further.
+
+	* tests/temp/README:
+	* tests/temp/assembly/README:
+	* tests/temp/assembly/assembly.dsw:
+	* tests/temp/assembly/client.cpp:
+	* tests/temp/assembly/client.dsp:
+	* tests/temp/assembly/control.idl:
+	* tests/temp/assembly/control.mpc:
+	* tests/temp/assembly/run_test.pl:
+	* tests/temp/assembly/server.cpp:
+	* tests/temp/assembly/server.dsp: Added this test to make sure the
+	  demonstrate how to use AssemblyFactory and Assembly interface,
+	  and the Assembly's are being managed properly.  More
+	  importantly, I used this test to make sure the internal
+	  implementation for Cookie and Active_Object_Map are working
+	  correctly.
+
+	* tools/XML_Helpers/Svcconf.dsp:
+	* tools/XML_Helpers/Svcconf.dsw:
+	* tools/XML_Helpers/Svcconf_Handler.cpp:
+	* tools/XML_Helpers/Svcconf_Handler.h:
+	* tools/XML_Helpers/Svcconf_Handler.i:
+	* tools/XML_Helpers/main.cpp:
+	* tools/XML_Helpers/svc.conf.xml: Added an example to demonstrate
+	  how to write a subclass of Cascadable_DocHandler and how to use
+	  the Skip_DocHandler.  Just so I won't forget how to use them.
+
 Sat Feb 08 20:45:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/*: WiP intermediate checkins.

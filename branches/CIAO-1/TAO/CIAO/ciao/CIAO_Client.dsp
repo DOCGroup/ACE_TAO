@@ -104,6 +104,10 @@ SOURCE=.\CCM_EventC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CIAO_ValueC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_init.cpp
 # End Source File
 # End Group
@@ -125,6 +129,10 @@ SOURCE=.\CCM_EventC.h
 # Begin Source File
 
 SOURCE=.\CIAO_CLIENT_Export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_ValueC.h
 # End Source File
 # Begin Source File
 
@@ -337,10 +345,65 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_Value.idl
+
+!IF  "$(CFG)" == "CIAO_Client - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Value.idl
+InputName=CIAO_Value
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,stub_export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	del $(InputName)S.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CIAO_Client - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Value.idl
+InputName=CIAO_Value
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,stub_export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,post_include="ace/post.h" $(InputName).idl \
+	del $(InputName)S.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\CIAO_ValueC.i
+# End Source File
 # End Group
 # End Target
 # End Project
