@@ -445,7 +445,7 @@ TAO_SSLIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 
 int
 TAO_SSLIOP_Client_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                                    ACE_Time_Value *)
+                                                      ACE_Time_Value *)
 {
   ACE_NOTSUP_RETURN (-1);
 }
