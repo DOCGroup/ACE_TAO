@@ -8,6 +8,9 @@ use lib "../../../../bin";
 
 require ACEutils;
 
+#event count
+$ev_count = 2;
+
 # setup CosEC params such that..
 # cos event service name = "cosec1"
 # for ConsumerQOS: EventID = 21, SourceID = 6
@@ -42,13 +45,13 @@ sub cosec_multiple_test1
 
     sleep 10;
 
-    #start 1 consumer that uses CosEC1 to receive 2 events
-    $CONS = Process::Create ($EXEPREFIX."consumer".$Process::EXE_EXT,"-n cosec1 -c 2");
+    #start 1 consumer that uses CosEC1 to receive events
+    $CONS = Process::Create ($EXEPREFIX."consumer".$Process::EXE_EXT,"-n cosec1 -c $ev_count");
 
     sleep 10;
 
-    #start 1 supplier  that uses CosEC2 to send 2 events
-    $SUPP = Process::Create ($EXEPREFIX."supplier".$Process::EXE_EXT,"-n cosec2 -c 2");
+    #start 1 supplier  that uses CosEC2 to send events
+    $SUPP = Process::Create ($EXEPREFIX."supplier".$Process::EXE_EXT,"-n cosec2 -c $ev_count");
 
     sleep 10;
 
@@ -59,6 +62,24 @@ sub cosec_multiple_test1
     #wait for the consumer to finish
     $CONS->Wait ();
 
+    #----------
+ #start 1 consumer that uses CosEC1 to receive events
+    $CONS2 = Process::Create ($EXEPREFIX."consumer".$Process::EXE_EXT,"-n cosec2 -c $ev_count");
+
+    sleep 10;
+
+    #start 1 supplier  that uses CosEC2 to send events
+    $SUPP2 = Process::Create ($EXEPREFIX."supplier".$Process::EXE_EXT,"-n cosec1 -c $ev_count");
+
+    sleep 10;
+
+    #wait for the supplier to finish
+    $SUPP2->Wait ();
+
+
+    #wait for the consumer to finish
+    $CONS2->Wait ();
+    #----------
     # cleanup..
     $SV1->Kill ();
     $SV2->Kill ();
@@ -69,6 +90,26 @@ sub cosec_multiple_test1
     $SV2->Wait ();
     $SV3->Wait ();
     $SV4->Wait ();
+}
+
+# Parse the arguments
+
+for ($i = 0; $i <= $#ARGV; $i++)
+{
+  SWITCH:
+  {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
+    {
+        print "usage: run_test.pl -e event_count -h help\n";
+        exit;
+    }
+    if ($ARGV[$i] eq "-e")
+    {
+        $ev_count = $ARGV[$i + 1];
+        $i++;
+        last SWITCH;
+    }
+}
 }
 
 cosec_multiple_test1 ();
