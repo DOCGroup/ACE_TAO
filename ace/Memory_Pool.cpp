@@ -400,12 +400,12 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 int
 ACE_MMAP_Memory_Pool::seh_selector (void *ep)
 {
-  int ecode = ((LPEXCEPTION_POINTERS) ep)->ExceptionRecord->ExceptionCode;
+  int ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
 
   if (ecode == EXCEPTION_ACCESS_VIOLATION)
     {
       void * fault_addr = (void *)
-        ((LPEXCEPTION_POINTERS) ep)->ExceptionRecord->ExceptionInformation[1];
+        ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionInformation[1];
 
       if (this->remap (fault_addr) == 0)
         return 1;

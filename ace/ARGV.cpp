@@ -308,7 +308,7 @@ ACE_ARGV::create_buf_from_queue (void)
       // Copy the argument into buf_
       ACE_OS::memcpy ((void *) ptr,
                       (const void *) (*arg),
-                      len);
+                      len * sizeof (ACE_TCHAR));
       // Move the pointer down.
       ptr += len;
 

@@ -254,7 +254,7 @@ ACE_YYSTYPE ace_yyvs[ACE_YYSTACKSIZE];
 // messages.
 
 void
-ace_yyerror (const char *s)
+ace_yyerror (const ACE_TCHAR *s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (s);
@@ -621,7 +621,7 @@ ace_yyloop:
     goto ace_yynewerror;
 #endif
 
-    ace_yyerror("syntax error");
+    ace_yyerror(ACE_TEXT ("syntax error"));
 #ifdef lint
     goto ace_yyerrlab;
 #endif
@@ -1033,7 +1033,7 @@ to state %d\n", *ace_yyssp, ace_yystate);
     *++ace_yyvsp = ace_yyval;
     goto ace_yyloop;
 ace_yyoverflow:
-    ace_yyerror("yacc stack overflow");
+    ace_yyerror(ACE_TEXT ("yacc stack overflow"));
 ace_yyabort:
     return (1);
 ace_yyaccept:

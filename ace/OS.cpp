@@ -898,7 +898,15 @@ ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
+FILE *
+ACE_OS::fopen (const ACE_TCHAR *filename,
+               const ACE_TCHAR *mode)
+{
+  return ::_wfopen (filename, mode);
+}
+
+#elif defined (ACE_WIN32) 
 FILE *
 ACE_OS::fopen (const ACE_TCHAR *filename,
                const ACE_TCHAR *mode)
@@ -931,7 +939,7 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
     }
   return NULL;
 }
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
 
 // The following *printf functions aren't inline because
 // they use varargs.
@@ -969,8 +977,6 @@ ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 # endif /* ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
-
-#if !defined (ACE_HAS_WINCE)
 
 int
 ACE_OS::printf (const char *format, ...)
@@ -1040,15 +1046,6 @@ ACE_OS::gets (char *str, int n)
 
   return (c == EOF) ? 0 : str;
 }
-
-#else  /* ACE_HAS_WINCE */
-int
-fprintf (FILE *fp, char *format, const char *msg)
-{
-  ACE_DEBUG ((LM_DEBUG, format, msg));
-  return 0;
-}
-#endif /* ! ACE_HAS_WINCE */
 
 int
 ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
@@ -5060,9 +5057,11 @@ ACE_OS::open (const ACE_TCHAR *filename,
     }
 
   DWORD shared_mode = FILE_SHARE_READ | FILE_SHARE_WRITE;
+#if !defined (ACE_HAS_WINCE)  // CE doesn't have FILE_SHARE_DELETE
   if (ACE_OS::get_win32_versioninfo().dwPlatformId ==
       VER_PLATFORM_WIN32_NT)
     shared_mode |= FILE_SHARE_DELETE;
+#endif /* ACE_HAS_WINCE */
 
   ACE_HANDLE h = ACE_TEXT_CreateFile (filename, access,
                                       shared_mode,
