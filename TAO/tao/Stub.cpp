@@ -26,6 +26,12 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+# include "tao/RT_Policy_i.h"
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"
 #endif /* ! __ACE_INLINE__ */
@@ -36,6 +42,17 @@ TAO_Stub::TAO_Stub (char *repository_id,
                     const TAO_MProfile &profiles,
                     TAO_ORB_Core* orb_core)
   : type_id (repository_id),
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+    priority_model_policy_ (0),
+    is_priority_model_policy_parsed_ (0),
+    priority_banded_connection_policy_ (0),
+    is_priority_banded_policy_parsed_ (0),
+    client_protocol_policy_ (0),
+    is_client_protocol_policy_parsed_ (0),
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
     base_profiles_ ((CORBA::ULong) 0),
     forward_profiles_ (0),
     profile_in_use_ (0),
@@ -510,6 +527,145 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+CORBA::Policy *
+TAO_Stub::parse_policy (CORBA::PolicyType ptype)
+{
+  CORBA::Policy *policy = 0;
+
+  CORBA::PolicyList *policy_list 
+    = this->base_profiles_.policy_list ();
+  
+  CORBA::ULong length = policy_list->length ();
+  CORBA::ULong index = 0;
+  while (index < length 
+         && 
+         ((*policy_list)[index]->policy_type () != ptype ))
+    {
+      ++index;
+    }
+  if (index < length)
+    {
+      policy = (*policy_list)[index].in ();
+    }
+  return policy;
+}
+
+TAO_PriorityModelPolicy *
+TAO_Stub::exposed_priority_model (void)
+{
+  if (this->is_priority_model_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->priority_model_policy_))
+        this-> priority_model_policy_->_add_ref ();
+
+    return this->priority_model_policy_;
+    }
+
+  // The policy list has not been parsed
+  // yet.
+
+  this->is_priority_model_policy_parsed_ = 1;
+  
+  CORBA::Policy *policy = 
+    this->parse_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
+
+  if (!CORBA::is_nil (policy))
+    {
+      RTCORBA::PriorityModelPolicy *pm_policy = 0;
+
+      pm_policy =
+        RTCORBA::PriorityModelPolicy::_narrow (policy);
+      
+      if (!CORBA::is_nil (pm_policy))
+        {
+          this->priority_model_policy_ = 
+            ACE_static_cast (TAO_PriorityModelPolicy *, 
+                             pm_policy);
+         
+          this->priority_model_policy_->_add_ref ();
+        }
+    }
+  
+  return this->priority_model_policy_;
+}
+
+TAO_PriorityBandedConnectionPolicy *
+TAO_Stub::exposed_priority_banded_connection (void)
+{
+  if (this->is_priority_banded_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->priority_banded_connection_policy_))
+        this->priority_banded_connection_policy_->_add_ref ();
+      
+      return this->priority_banded_connection_policy_;
+    }
+
+  this->is_priority_banded_policy_parsed_ = 1;
+
+  CORBA::Policy *policy = 
+    this->parse_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE);
+  
+  if (!CORBA::is_nil (policy))
+    {
+      RTCORBA::PriorityBandedConnectionPolicy *pbc_policy = 0;
+      
+      pbc_policy= 
+        RTCORBA::PriorityBandedConnectionPolicy::_narrow (pbc_policy);
+      
+      if (!CORBA::is_nil (pbc_policy))
+        {
+          this->priority_banded_connection_policy_ = 
+            ACE_static_cast (TAO_PriorityBandedConnectionPolicy *, 
+                             pbc_policy);
+          
+          this->priority_banded_connection_policy_->_add_ref ();
+        }
+    }
+
+  return this->priority_banded_connection_policy_;
+}
+
+TAO_ClientProtocolPolicy *
+TAO_Stub::exposed_client_protocol (void)
+{
+  if (this->is_client_protocol_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->client_protocol_policy_))
+        this->client_protocol_policy_->_add_ref ();
+      
+      return this->client_protocol_policy_;
+    }
+
+  this->is_client_protocol_policy_parsed_ = 1;
+
+  CORBA::Policy *policy = 
+    this->parse_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE);
+  
+  if (!CORBA::is_nil (policy))
+    {
+      RTCORBA::ClientProtocolPolicy *cp_policy = 0;
+      
+      cp_policy =
+        RTCORBA::ClientProtocolPolicy::_narrow (cp_policy);
+      
+      if (!CORBA::is_nil (cp_policy))
+        {
+          this->client_protocol_policy_ = 
+            ACE_static_cast (TAO_ClientProtocolPolicy *, 
+                             cp_policy);
+          
+          this->client_protocol_policy_->_add_ref ();
+        }
+    }
+
+  return this->client_protocol_policy_;
+}
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 
 // ****************************************************************
 
