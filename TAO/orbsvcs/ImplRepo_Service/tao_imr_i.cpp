@@ -1082,6 +1082,13 @@ TAO_IMR_Op_Update::run (void)
                                              server_information->startup
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Now that we've reregistered the server, update the server
+      // information before we display it.
+      this->imr_locator_->find (this->server_name_.c_str (),
+                                server_information ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       this->display_server_information (server_information.in ());
     }
   ACE_CATCH (ImplementationRepository::NotFound, ex)
