@@ -7444,70 +7444,70 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 }
 
 ACE_INLINE int
-ACE_OS::sigwait (sigset_t *set, int *sig)
+ACE_OS::sigwait (sigset_t *sset, int *sig)
 {
   ACE_OS_TRACE ("ACE_OS::sigwait");
   int local_sig;
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  errno = ::pace_sigwait (set, sig);
+  errno = ::pace_sigwait (sset, sig);
   return errno == 0  ?  *sig  :  -1;
 #elif defined (ACE_HAS_THREADS)
 # if (defined (__FreeBSD__) && (__FreeBSD__ < 3)) || defined (CHORUS) || defined (ACE_PSOS) || defined (__MACOSX__)
-    ACE_UNUSED_ARG (set);
+    ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
 # elif (defined (ACE_HAS_STHREADS) && !defined (_POSIX_PTHREAD_SEMANTICS))
-    *sig = ::sigwait (set);
+    *sig = ::sigwait (sset);
     return *sig;
 # elif defined (ACE_HAS_PTHREADS)
   // LynxOS and Digital UNIX have their own hoops to jump through.
 #   if defined (__Lynx__)
     // Second arg is a void **, which we don't need (the selected
     // signal number is returned).
-    *sig = ::sigwait (set, 0);
+    *sig = ::sigwait (sset, 0);
     return *sig;
 #   elif defined (DIGITAL_UNIX)  &&  defined (__DECCXX_VER)
       // DEC cxx (but not g++) needs this direct call to its internal
       // sigwait ().  This allows us to #undef sigwait, so that we can
       // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait
       // if sigwait is _not_ #undef'ed.
-      errno = ::_Psigwait (set, sig);
+      errno = ::_Psigwait (sset, sig);
       return errno == 0  ?  *sig  :  -1;
 #   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 #     if (defined (ACE_HAS_PTHREADS_DRAFT4) || (defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)) || (defined (_UNICOS) && _UNICOS == 9)
 #       if defined (HPUX_10)
-        *sig = cma_sigwait (set);
+        *sig = cma_sigwait (sset);
 #       else
-        *sig = ::sigwait (set);
+        *sig = ::sigwait (sset);
 #       endif  /* HPUX_10 */
         return *sig;
 #     elif defined(ACE_HAS_FSU_PTHREADS)
-        return ::sigwait (set, sig);
+        return ::sigwait (sset, sig);
 #     else   /* this is draft 7 or std */
-        errno = ::sigwait (set, sig);
+        errno = ::sigwait (sset, sig);
         return errno == 0  ?  *sig  :  -1;
 #     endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 #   endif /* ! __Lynx__ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 # elif defined (ACE_HAS_WTHREADS)
-    ACE_UNUSED_ARG (set);
+    ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
 # elif defined (VXWORKS)
     // Second arg is a struct siginfo *, which we don't need (the
     // selected signal number is returned).  Third arg is timeout:  0
     // means forever.
-    *sig = ::sigtimedwait (set, 0, 0);
+    *sig = ::sigtimedwait (sset, 0, 0);
     return *sig;
 # endif /* __FreeBSD__ */
 #else
-    ACE_UNUSED_ARG (set);
+    ACE_UNUSED_ARG (sset);
     ACE_UNUSED_ARG (sig);
     ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE int
-ACE_OS::sigtimedwait (const sigset_t *set,
+ACE_OS::sigtimedwait (const sigset_t *sset,
                       siginfo_t *info,
                       const ACE_Time_Value *timeout)
 {
@@ -7516,13 +7516,13 @@ ACE_OS::sigtimedwait (const sigset_t *set,
   timespec ts;
   timespec *tsp;
   if (timeout !=0)
-  {
-    ts = *timeout;
-    tsp = &ts;
-  }
+    {
+      ts = *timeout;
+      tsp = &ts;
+    }
   else
     tsp = 0;
-  ACE_OSCALL_RETURN (::pace_sigtimedwait (set, info, tsp),
+  ACE_OSCALL_RETURN (::pace_sigtimedwait (sset, info, tsp),
                      int, -1);
 #elif defined (ACE_HAS_SIGTIMEDWAIT)
   timespec_t ts;
@@ -7536,10 +7536,10 @@ ACE_OS::sigtimedwait (const sigset_t *set,
   else
     tsp = 0;
 
-  ACE_OSCALL_RETURN (::sigtimedwait (set, info, tsp),
+  ACE_OSCALL_RETURN (::sigtimedwait (sset, info, tsp),
                      int, -1);
 #else
-    ACE_UNUSED_ARG (set);
+    ACE_UNUSED_ARG (sset);
     ACE_UNUSED_ARG (info);
     ACE_UNUSED_ARG (timeout);
     ACE_NOTSUP_RETURN (-1);
