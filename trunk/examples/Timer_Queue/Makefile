@@ -24,7 +24,7 @@ LSRC  	= Async_Timer_Queue_Test.cpp \
 
 LDLIBS 	= -lTQTD
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
+LIBS   += $(ACELIB)
 
 BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
