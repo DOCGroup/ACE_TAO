@@ -969,12 +969,13 @@ private:
 #   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
 # endif /* ACE_DEFAULT_BASE_ADDR */
 
+
 // This fudge factor can be overriden for timers that need it, such as on
 // Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
 // header.
-# if !defined (ACE_TIMER_SKEW)
-#   define ACE_TIMER_SKEW 0
-# endif /* ACE_TIMER_SKEW */
+#if !defined (ACE_TIMER_SKEW)
+#  define ACE_TIMER_SKEW 0
+#endif /* ACE_TIMER_SKEW */
 
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)

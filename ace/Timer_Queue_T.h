@@ -288,17 +288,50 @@ public:
 
   /**
    * Get the dispatch information for a timer whose value is <= <cur_time>.
-   * This does not account for <timer_skew>. Returns 1 if there is a
-   * node whose value <= <cur_time> else returns a 0.
+   * This does not account for <timer_skew>. Returns 1 if
+   * there is a node whose value <= <cur_time> else returns a 0.
+   *
    */
   int dispatch_info (const ACE_Time_Value &current_time,
                      ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
   /**
    * Run the <functor> for all timers whose values are <=
-   * <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
-   * the number of timers canceled.
+   * <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.
+   *
+   * Depending on the resolution of the underlying OS the system calls
+   * like select()/poll() might return at time different than that is
+   * specified in the timeout. Suppose the OS guarantees a resolution of t ms.
+   * The timeline will look like
+   *
+   *             A                   B
+   *             |                   |
+   *             V                   V
+   *  |-------------|-------------|-------------|-------------|
+   *  t             t             t             t             t
+   *
+   *
+   * If you specify a timeout value of A, then the timeout will not occur
+   * at A but at the next interval of the timer, which is later than
+   * that is expected. Similarly, if your timeout value is equal to B,
+   * then the timeout will occur at interval after B. Now depending upon the
+   * resolution of your timeouts and the accuracy of the timeouts
+   * needed for your application, you should set the value of
+   * <timer_skew>. In the above case, if you want the timeout A to fire
+   * no later than A, then you should specify your <timer_skew> to be
+   * A % t.
+   *
+   * The timeout value should be specified via the macro ACE_TIMER_SKEW
+   * in your config.h file. The default value is zero.
+   *
+   * Things get interesting if the t before the timeout value B is zero
+   * i.e your timeout is less than the interval. In that case, you are
+   * almost sure of not getting the desired timeout behaviour. Maybe you
+   * should look for a better OS :-)
+   *
+   *  Returns the number of timers canceled.
    */
+
   /* virtual */ int expire (void);
 
   /**

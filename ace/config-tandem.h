@@ -226,10 +226,6 @@
 //Automatically restart OS system
 // calls when EINTR occurs
 
-// 10 millisecond fudge factor to account for Solaris timers...
-//#if !defined (ACE_TIMER_SKEW)
-//#define ACE_TIMER_SKEW 1000 * 10
-//#endif /* ACE_TIMER_SKEW */
 
 // Platform supports the getrusage() system call.
 //#define ACE_HAS_GETRUSAGE
