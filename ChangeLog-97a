@@ -1,4 +1,7 @@
-Mon May 19 16:04:32 1997  David L. Levine  <levine@cs.wustl.edu>
+Tue May 20 08:41:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Threads/tss2.cpp: added #include of ace/Thread.h
+	  because Sun C++ 4.1 needs it.
 
 	* bin/create_ace_build: changed startup line for compatibility
 	  with bash.  This startup line lets the script run without
