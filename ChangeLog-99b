@@ -1,3 +1,9 @@
+Mon Jun 21 09:58:42 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/QoS.{h,cpp}: Removed these files from ACE since they have a
+          lot of problems. Will add back later when they compile and are
+          tested.
+
 Mon Jun 21 08:40:14 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/Connection/misc/Connection_Handler.cpp (handle_input):
