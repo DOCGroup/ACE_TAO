@@ -52,7 +52,7 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   switch (this->mode_) {
   case FAULT_TOLERANT:
     {
-      ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) mode: FAULT_TOLERANT\n"));
+      ACE_DEBUG((LM_DEBUG,"Fault Tolerant Mode\n"));
       eventA[0].header.type   = this->ft_type_;
       eventB[0].header.type   = this->ft_type2_;
       //ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) setting header FT types: A = %d, B = %d\n",eventA[0].header.type,eventB[0].header.type));
@@ -61,7 +61,7 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
     }
   default: //NORMAL
     {
-      ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) mode: NORMAL\n"));
+      ACE_DEBUG((LM_DEBUG,"Normal Mode\n"));
       eventA[0].header.type   = this->norm_type_;
       eventB[0].header.type   = this->norm_type2_;
       //ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) setting header types: A = %d, B = %d\n",eventA[0].header.type,eventB[0].header.type));

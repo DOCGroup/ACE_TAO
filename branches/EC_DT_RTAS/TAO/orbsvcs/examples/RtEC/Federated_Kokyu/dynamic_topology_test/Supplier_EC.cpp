@@ -243,7 +243,7 @@ public:
 
     Mode_Handler *mode_handler;
     ACE_NEW(mode_handler,
-            Mode_Handler(0)); //mode switch immediately
+            Mode_Handler(-1)); //mode switch immediately
     Supplier *supplier_impl1_1;
     Timeout_Consumer *timeout_consumer_impl1_1;
     ACE_NEW(supplier_impl1_1,
@@ -365,6 +365,8 @@ int parse_args (int argc, char *argv[]);
 int
 main (int argc, char* argv[])
 {
+  srand(42);
+
   //TAO_EC_Default_Factory::init_svcs ();
   TAO_EC_Kokyu_Factory::init_svcs ();
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
