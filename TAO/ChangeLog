@@ -1,3 +1,13 @@
+Sat May 31 23:57:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Typecode.cpp:
+
+		  Replaced all instances of skip_short() (for ValueModifer and member
+		  visibility in valuetypes and eventtypes) with skip_ulong(). Although
+		  these quantities are defined by CORBA to be 2 bytes, all values
+		  inserted into a type code are padded to 4-byte boundaries, including
+		  strings, This differs from the padding of CDR streams in general.
+
 Sat May 31 10:39:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/configurations.html: Added a example for an optimized
