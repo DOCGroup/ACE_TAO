@@ -79,7 +79,6 @@ void *ACE_Object_Manager::preallocated_array[
     preallocated_array[ID] = 0;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
-
 ACE_Object_Manager::ACE_Object_Manager (void)
   : shutting_down_(0)
   // , lock_ is initialized in the function body.
@@ -145,23 +144,18 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // some object tries to register, it won't be.
   shutting_down_ = 1;
   ACE_Trace::stop_tracing ();
+
   while (registered_objects_ &&
          registered_objects_->dequeue_head (info) != -1)
-    {
-      if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
-        {
-          // The object is an ACE_Cleanup.
-          ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
-        }
-      else
-        {
-          (*info.cleanup_hook_) (info.object_, info.param_);
-        }
-    }
+    if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
+      // The object is an ACE_Cleanup.
+      ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
+    else
+      (*info.cleanup_hook_) (info.object_, info.param_);
 
   // This call closes and deletes all ACE library services and
-  // singletons.  This closes the ACE_Thread_Manager, which cleans
-  // up all running threads.
+  // singletons.  This closes the ACE_Thread_Manager, which cleans up
+  // all running threads.
   ACE_Service_Config::close ();
 
   // Close the main thread's TSS, including its Log_Msg instance.
