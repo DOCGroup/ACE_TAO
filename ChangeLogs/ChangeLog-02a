@@ -1,3 +1,9 @@
+Sun Sep 10 15:43:23 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Acceptor.h: Made the suspend() and resume() methods
+	  public.  Thanks to Guy Rosen <grosen@bigfoot.com>
+	  for suggesting this.
+
 Fri Sep  8 16:50:52 2000  Carlos O'Ryan  <coryan@ace.cs.wustl.edu>
 
         * ace/OS.h:
