@@ -846,7 +846,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
       if (j < argc - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = ACE_static_cast(CORBA::ULong, len);
+        end = static_cast<CORBA::ULong> (len);
 
       if (end == begin)
         {
@@ -892,7 +892,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
       size_t len = argv[i]->length();
       int slot = argv[i]->find ("=");
 
-      if (slot == ACE_static_cast (int, len - 1)
+      if (slot == static_cast <int> (len - 1)
           || slot == ACE_CString::npos)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
@@ -918,7 +918,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
         }
       else if (name == "portspan")
         {
-          int range = ACE_static_cast (int, ACE_OS::atoi (value.c_str ()));
+          int range = static_cast <int> (ACE_OS::atoi (value.c_str ()));
           // @@ What's the lower bound on the range?  zero, or one?
           if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -928,7 +928,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
                                value.c_str (), ACE_MAX_DEFAULT_PORT),
                               -1);
 
-          this->port_span_ = ACE_static_cast (u_short, range);
+          this->port_span_ = static_cast <u_short> (range);
         }
       else if (name == "hostname_in_ior")
         {
