@@ -1,3 +1,21 @@
+Tue Sep 21 20:13:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Added checks for getipnodebyaddr() and getipnodebyname() which
+	  set ACE_LACKS_GETIPNODEBYADDR and ACE_LACKS_GETIPNODEBYNAME.
+
+	* ace/OS_NS_netdb.inl:
+
+	  Changed __GNUC__'s in conditionals to ACE_LACKS_GETIPNODEBYADDR
+	  or ACE_LACKS_GETIPNODEBYNAME.
+
+	* ace/config-linux-common.h:
+	* ace/config-netbsd.h:
+
+	  Added #define for ACE_LACKS_GETIPNODEBYADDR and
+	  ACE_LACKS_GETIPNODEBYNAME.
+
 Tue Sep 21 17:50:27 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Naming/naming.mpc: Correct the exename for Nodelocal.

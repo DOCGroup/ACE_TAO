@@ -335,9 +335,12 @@
 
 #define ACE_SIZEOF_WCHAR 4
 
-#include /**/ "ace/post.h"
+#define ACE_LACKS_GETIPNODEBYADDR
+#define ACE_LACKS_GETIPNODEBYNAME
 
 // Enables use of POSIX termios struct
 #define ACE_USES_NEW_TERMIOS
+
+#include /**/ "ace/post.h"
 
 #endif /* ACE_LINUX_COMMON_H */
