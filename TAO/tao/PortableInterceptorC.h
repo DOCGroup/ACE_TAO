@@ -99,29 +99,29 @@ namespace PortableInterceptor
 
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState HOLDING = 0;
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState ACTIVE = 1;
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState DISCARDING = 2;
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState INACTIVE = 3;
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState NON_EXISTENT = 4;
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
@@ -2003,14 +2003,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::Interceptor>
   {
-    static PortableInterceptor::Interceptor_ptr tao_duplicate (
+    static PortableInterceptor::Interceptor_ptr duplicate (
         PortableInterceptor::Interceptor_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::Interceptor_ptr
       );
-    static PortableInterceptor::Interceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::Interceptor_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::Interceptor_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2024,14 +2024,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::Current>
   {
-    static PortableInterceptor::Current_ptr tao_duplicate (
+    static PortableInterceptor::Current_ptr duplicate (
         PortableInterceptor::Current_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::Current_ptr
       );
-    static PortableInterceptor::Current_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::Current_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::Current_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2045,14 +2045,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::RequestInfo>
   {
-    static PortableInterceptor::RequestInfo_ptr tao_duplicate (
+    static PortableInterceptor::RequestInfo_ptr duplicate (
         PortableInterceptor::RequestInfo_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::RequestInfo_ptr
       );
-    static PortableInterceptor::RequestInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::RequestInfo_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::RequestInfo_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2066,14 +2066,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ClientRequestInfo>
   {
-    static PortableInterceptor::ClientRequestInfo_ptr tao_duplicate (
+    static PortableInterceptor::ClientRequestInfo_ptr duplicate (
         PortableInterceptor::ClientRequestInfo_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::ClientRequestInfo_ptr
       );
-    static PortableInterceptor::ClientRequestInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::ClientRequestInfo_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::ClientRequestInfo_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2087,14 +2087,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ServerRequestInfo>
   {
-    static PortableInterceptor::ServerRequestInfo_ptr tao_duplicate (
+    static PortableInterceptor::ServerRequestInfo_ptr duplicate (
         PortableInterceptor::ServerRequestInfo_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::ServerRequestInfo_ptr
       );
-    static PortableInterceptor::ServerRequestInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::ServerRequestInfo_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::ServerRequestInfo_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2108,14 +2108,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ClientRequestInterceptor>
   {
-    static PortableInterceptor::ClientRequestInterceptor_ptr tao_duplicate (
+    static PortableInterceptor::ClientRequestInterceptor_ptr duplicate (
         PortableInterceptor::ClientRequestInterceptor_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::ClientRequestInterceptor_ptr
       );
-    static PortableInterceptor::ClientRequestInterceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::ClientRequestInterceptor_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::ClientRequestInterceptor_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2129,14 +2129,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ServerRequestInterceptor>
   {
-    static PortableInterceptor::ServerRequestInterceptor_ptr tao_duplicate (
+    static PortableInterceptor::ServerRequestInterceptor_ptr duplicate (
         PortableInterceptor::ServerRequestInterceptor_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::ServerRequestInterceptor_ptr
       );
-    static PortableInterceptor::ServerRequestInterceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::ServerRequestInterceptor_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::ServerRequestInterceptor_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2150,14 +2150,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::PolicyFactory>
   {
-    static PortableInterceptor::PolicyFactory_ptr tao_duplicate (
+    static PortableInterceptor::PolicyFactory_ptr duplicate (
         PortableInterceptor::PolicyFactory_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::PolicyFactory_ptr
       );
-    static PortableInterceptor::PolicyFactory_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::PolicyFactory_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::PolicyFactory_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2171,14 +2171,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ORBInitInfo>
   {
-    static PortableInterceptor::ORBInitInfo_ptr tao_duplicate (
+    static PortableInterceptor::ORBInitInfo_ptr duplicate (
         PortableInterceptor::ORBInitInfo_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::ORBInitInfo_ptr
       );
-    static PortableInterceptor::ORBInitInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::ORBInitInfo_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::ORBInitInfo_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2192,14 +2192,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ORBInitializer>
   {
-    static PortableInterceptor::ORBInitializer_ptr tao_duplicate (
+    static PortableInterceptor::ORBInitializer_ptr duplicate (
         PortableInterceptor::ORBInitializer_ptr
       );
-    static void tao_release (
+    static void release (
         PortableInterceptor::ORBInitializer_ptr
       );
-    static PortableInterceptor::ORBInitializer_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableInterceptor::ORBInitializer_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableInterceptor::ORBInitializer_ptr p,
         TAO_OutputCDR & cdr
       );

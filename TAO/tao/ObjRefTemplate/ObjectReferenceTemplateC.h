@@ -82,22 +82,22 @@
 
 namespace PortableInterceptor
 {
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:527
-  
-  
+
+
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__VAR_OUT_CH_
-  
+
   class ObjectReferenceFactory;
   typedef
     TAO_Value_Var_T<
         ObjectReferenceFactory
       >
     ObjectReferenceFactory_var;
-  
+
   typedef
     TAO_Value_Out_T<
         ObjectReferenceFactory
@@ -105,78 +105,78 @@ namespace PortableInterceptor
     ObjectReferenceFactory_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY_CH_
-  
+
   class TAO_ORT_Export ObjectReferenceFactory
     : public virtual CORBA::ValueBase
   {
   public:
     typedef ObjectReferenceFactory_var _var_type;
-    
+
     static ObjectReferenceFactory* _downcast (CORBA::ValueBase *);
-    
+
     // (TAO extensions or internals)
     static CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &,
         ObjectReferenceFactory *&
       );
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
-    
+
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:402
-    
+
   public:
     virtual CORBA::Object_ptr make_object (
         const char *, const ::PortableInterceptor::ObjectId & ACE_ENV_ARG_DECL_WITH_DEFAULTS
       ) = 0;
-    
+
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:250
-  
+
   protected:
     ObjectReferenceFactory (void);
-    
+
     virtual ~ObjectReferenceFactory (void);
-    
-    
+
+
   private:
     ObjectReferenceFactory (const ObjectReferenceFactory &);
     void operator= (const ObjectReferenceFactory &);
-    
+
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceFactory;
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:527
-  
-  
+
+
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE__VAR_OUT_CH_
-  
+
   class ObjectReferenceTemplate;
   typedef
     TAO_Value_Var_T<
         ObjectReferenceTemplate
       >
     ObjectReferenceTemplate_var;
-  
+
   typedef
     TAO_Value_Out_T<
         ObjectReferenceTemplate
@@ -184,87 +184,87 @@ namespace PortableInterceptor
     ObjectReferenceTemplate_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_
-  
+
   class TAO_ORT_Export ObjectReferenceTemplate
     : public virtual ObjectReferenceFactory
   {
   public:
     typedef ObjectReferenceTemplate_var _var_type;
-    
+
     static ObjectReferenceTemplate* _downcast (CORBA::ValueBase *);
-    
+
     // (TAO extensions or internals)
     static CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &,
         ObjectReferenceTemplate *&
       );
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
-    
+
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:402
-    
+
   public:
     virtual char * server_id (
          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       ) = 0;
-    
+
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:402
-    
+
   public:
     virtual char * orb_id (
          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       ) = 0;
-    
+
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:402
-    
+
   public:
     virtual ::PortableInterceptor::AdapterName * adapter_name (
          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       ) = 0;
-    
+
     // TAO_IDL - Generated from
     // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:250
-  
+
   protected:
     ObjectReferenceTemplate (void);
-    
+
     virtual ~ObjectReferenceTemplate (void);
-    
-    
+
+
   private:
     ObjectReferenceTemplate (const ObjectReferenceTemplate &);
     void operator= (const ObjectReferenceTemplate &);
-    
+
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_
-  
+
   class ObjectReferenceTemplateSeq;
-  
+
   typedef
     TAO_MngSeq_Var_T<
         ObjectReferenceTemplateSeq,
@@ -274,7 +274,7 @@ namespace PortableInterceptor
           >
       >
     ObjectReferenceTemplateSeq_var;
-  
+
   typedef
     TAO_MngSeq_Out_T<
         ObjectReferenceTemplateSeq,
@@ -285,7 +285,7 @@ namespace PortableInterceptor
           >
       >
     ObjectReferenceTemplateSeq_out;
-  
+
   class TAO_ORT_Export ObjectReferenceTemplateSeq
     : public
         TAO_Unbounded_Valuetype_Sequence<
@@ -299,22 +299,22 @@ namespace PortableInterceptor
     ObjectReferenceTemplateSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        ObjectReferenceTemplate ** buffer, 
+        ObjectReferenceTemplate ** buffer,
         CORBA::Boolean release = 0
       );
     ObjectReferenceTemplateSeq (const ObjectReferenceTemplateSeq &);
     ~ObjectReferenceTemplateSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ObjectReferenceTemplateSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplateSeq;
 
 // TAO_IDL - Generated from
@@ -338,26 +338,26 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_ORT_Export Value_Traits<PortableInterceptor::ObjectReferenceFactory>
   {
-    static void tao_add_ref (PortableInterceptor::ObjectReferenceFactory *);
-    static void tao_remove_ref (PortableInterceptor::ObjectReferenceFactory *);
-    static void tao_release (PortableInterceptor::ObjectReferenceFactory *);
+    static void add_ref (PortableInterceptor::ObjectReferenceFactory *);
+    static void remove_ref (PortableInterceptor::ObjectReferenceFactory *);
+    static void release (PortableInterceptor::ObjectReferenceFactory *);
   };
 
 #endif /* end #if !defined */
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_ORT_Export Value_Traits<PortableInterceptor::ObjectReferenceTemplate>
   {
-    static void tao_add_ref (PortableInterceptor::ObjectReferenceTemplate *);
-    static void tao_remove_ref (PortableInterceptor::ObjectReferenceTemplate *);
-    static void tao_release (PortableInterceptor::ObjectReferenceTemplate *);
+    static void add_ref (PortableInterceptor::ObjectReferenceTemplate *);
+    static void remove_ref (PortableInterceptor::ObjectReferenceTemplate *);
+    static void release (PortableInterceptor::ObjectReferenceTemplate *);
   };
 
 #endif /* end #if !defined */
@@ -450,4 +450,3 @@ TAO_ORT_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

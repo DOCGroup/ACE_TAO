@@ -31,11 +31,11 @@ namespace TAO
   template<typename T, typename T_slice, typename TAG>
   struct Array_Traits
   {
-    static T_slice * tao_alloc (void);
-    static void tao_free (T_slice * _tao_slice);
-    static T_slice * tao_dup (const T_slice * _tao_slice);
-    static void tao_copy (T_slice * _tao_to,
-                          const T_slice * _tao_from);
+    static T_slice * alloc (void);
+    static void free (T_slice * _tao_slice);
+    static T_slice * dup (const T_slice * _tao_slice);
+    static void copy (T_slice * _tao_to,
+                      const T_slice * _tao_from);
   };
 }
 

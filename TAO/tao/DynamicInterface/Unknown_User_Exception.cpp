@@ -5,8 +5,11 @@
 #include "tao/Any.h"
 #include "tao/Environment.h"
 #include "tao/TC_Constants_Forward.h"
+#include "tao/SystemException.h"
+
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+
 
 ACE_RCSID (DynamicInterface,
            Unknown_User_Exception,

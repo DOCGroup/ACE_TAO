@@ -30,6 +30,7 @@
 
 
 #include "IOP_CodecC.h"
+#include "tao/SystemException.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -57,7 +58,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::Codec_ptr
-TAO::Objref_Traits<IOP::Codec>::tao_duplicate (
+TAO::Objref_Traits<IOP::Codec>::duplicate (
     IOP::Codec_ptr p
   )
 {
@@ -66,7 +67,7 @@ TAO::Objref_Traits<IOP::Codec>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<IOP::Codec>::tao_release (
+TAO::Objref_Traits<IOP::Codec>::release (
     IOP::Codec_ptr p
   )
 {
@@ -75,14 +76,14 @@ TAO::Objref_Traits<IOP::Codec>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::Codec_ptr
-TAO::Objref_Traits<IOP::Codec>::tao_nil (void)
+TAO::Objref_Traits<IOP::Codec>::nil (void)
 {
   return IOP::Codec::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<IOP::Codec>::tao_marshal (
+TAO::Objref_Traits<IOP::Codec>::marshal (
     IOP::Codec_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -661,7 +662,7 @@ IOP::Encoding::_tao_any_destructor (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::CodecFactory_ptr
-TAO::Objref_Traits<IOP::CodecFactory>::tao_duplicate (
+TAO::Objref_Traits<IOP::CodecFactory>::duplicate (
     IOP::CodecFactory_ptr p
   )
 {
@@ -670,7 +671,7 @@ TAO::Objref_Traits<IOP::CodecFactory>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<IOP::CodecFactory>::tao_release (
+TAO::Objref_Traits<IOP::CodecFactory>::release (
     IOP::CodecFactory_ptr p
   )
 {
@@ -679,14 +680,14 @@ TAO::Objref_Traits<IOP::CodecFactory>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::CodecFactory_ptr
-TAO::Objref_Traits<IOP::CodecFactory>::tao_nil (void)
+TAO::Objref_Traits<IOP::CodecFactory>::nil (void)
 {
   return IOP::CodecFactory::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<IOP::CodecFactory>::tao_marshal (
+TAO::Objref_Traits<IOP::CodecFactory>::marshal (
     IOP::CodecFactory_ptr p,
     TAO_OutputCDR & cdr
   )

@@ -277,14 +277,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<TAO_ORBInitInfo>
   {
-    static TAO_ORBInitInfo_ptr tao_duplicate (
+    static TAO_ORBInitInfo_ptr duplicate (
         TAO_ORBInitInfo_ptr
       );
-    static void tao_release (
+    static void release (
         TAO_ORBInitInfo_ptr
       );
-    static TAO_ORBInitInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static TAO_ORBInitInfo_ptr nil (void);
+    static CORBA::Boolean marshal (
         TAO_ORBInitInfo_ptr p,
         TAO_OutputCDR & cdr
       );

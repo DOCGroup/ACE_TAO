@@ -502,14 +502,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::PollableSet>
   {
-    static CORBA::PollableSet_ptr tao_duplicate (
+    static CORBA::PollableSet_ptr duplicate (
         CORBA::PollableSet_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::PollableSet_ptr
       );
-    static CORBA::PollableSet_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::PollableSet_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::PollableSet_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -523,14 +523,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::Pollable>
   {
-    static CORBA::Pollable_ptr tao_duplicate (
+    static CORBA::Pollable_ptr duplicate (
         CORBA::Pollable_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::Pollable_ptr
       );
-    static CORBA::Pollable_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::Pollable_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::Pollable_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -544,14 +544,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::DIIPollable>
   {
-    static CORBA::DIIPollable_ptr tao_duplicate (
+    static CORBA::DIIPollable_ptr duplicate (
         CORBA::DIIPollable_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::DIIPollable_ptr
       );
-    static CORBA::DIIPollable_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::DIIPollable_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::DIIPollable_ptr p,
         TAO_OutputCDR & cdr
       );

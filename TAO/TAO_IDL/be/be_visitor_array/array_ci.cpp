@@ -195,7 +195,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "," << be_nl
       << fname << "_slice," << be_nl
       << fname << "_tag" << be_uidt_nl
-      << ">::tao_free ("<< be_idt_nl
+      << ">::free ("<< be_idt_nl
       << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -210,7 +210,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "," << be_nl
       << fname << "_slice," << be_nl
       << fname << "_tag" << be_uidt_nl
-      << ">::tao_dup (" << be_idt_nl
+      << ">::dup (" << be_idt_nl
       << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -225,7 +225,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "," << be_nl
       << fname << "_slice," << be_nl
       << fname << "_tag" << be_uidt_nl
-      << ">::tao_copy (" << be_idt_nl
+      << ">::copy (" << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
       << "const " << fname << "_slice * _tao_from" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -241,7 +241,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "," << be_nl
       << fname << "_slice," << be_nl
       << fname << "_tag" << be_uidt_nl
-      << ">::tao_alloc (void)" << be_uidt_nl
+      << ">::alloc (void)" << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl
       << "}";

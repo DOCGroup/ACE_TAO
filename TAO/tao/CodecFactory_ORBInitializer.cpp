@@ -5,6 +5,7 @@
 #include "CodecFactory_ORBInitializer.h"
 #include "CodecFactory.h"
 #include "ORBInitInfo.h"
+#include "SystemException.h"
 #include "ORB_Constants.h"
 
 ACE_RCSID (TAO_CodecFactory,
@@ -29,7 +30,7 @@ TAO_CodecFactory_ORBInitializer::pre_init (
                     TAO_CodecFactory (orb_core),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;

@@ -31,6 +31,7 @@
 
 #include "IORTableC.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -50,7 +51,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::AlreadyBound::AlreadyBound (void)
@@ -126,7 +127,7 @@ void IORTable::AlreadyBound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -139,13 +140,13 @@ void IORTable::AlreadyBound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::NotFound::NotFound (void)
@@ -221,7 +222,7 @@ void IORTable::NotFound::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -234,7 +235,7 @@ void IORTable::NotFound::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -247,7 +248,7 @@ void IORTable::NotFound::_tao_decode (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IORTable::Table_ptr
-TAO::Objref_Traits<IORTable::Table>::tao_duplicate (
+TAO::Objref_Traits<IORTable::Table>::duplicate (
     IORTable::Table_ptr p
   )
 {
@@ -256,7 +257,7 @@ TAO::Objref_Traits<IORTable::Table>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<IORTable::Table>::tao_release (
+TAO::Objref_Traits<IORTable::Table>::release (
     IORTable::Table_ptr p
   )
 {
@@ -265,14 +266,14 @@ TAO::Objref_Traits<IORTable::Table>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IORTable::Table_ptr
-TAO::Objref_Traits<IORTable::Table>::tao_nil (void)
+TAO::Objref_Traits<IORTable::Table>::nil (void)
 {
   return IORTable::Table::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<IORTable::Table>::tao_marshal (
+TAO::Objref_Traits<IORTable::Table>::marshal (
     IORTable::Table_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -281,7 +282,7 @@ TAO::Objref_Traits<IORTable::Table>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*IORTable__TAO_Table_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -302,10 +303,10 @@ IORTable::Table::_narrow (
     {
       return Table::_nil ();
     }
-  
+
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-  
+
   return Table::_duplicate (proxy);
 }
 
@@ -319,10 +320,10 @@ IORTable::Table::_unchecked_narrow (
     {
       return Table::_nil ();
     }
-  
+
   Table_ptr proxy =
     dynamic_cast<Table_ptr> (_tao_objref);
-  
+
   return Table::_duplicate (proxy);
 }
 
@@ -333,7 +334,7 @@ IORTable::Table::_duplicate (Table_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -384,7 +385,7 @@ IORTable::Table::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IORTable::Locator_ptr
-TAO::Objref_Traits<IORTable::Locator>::tao_duplicate (
+TAO::Objref_Traits<IORTable::Locator>::duplicate (
     IORTable::Locator_ptr p
   )
 {
@@ -393,7 +394,7 @@ TAO::Objref_Traits<IORTable::Locator>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<IORTable::Locator>::tao_release (
+TAO::Objref_Traits<IORTable::Locator>::release (
     IORTable::Locator_ptr p
   )
 {
@@ -402,14 +403,14 @@ TAO::Objref_Traits<IORTable::Locator>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IORTable::Locator_ptr
-TAO::Objref_Traits<IORTable::Locator>::tao_nil (void)
+TAO::Objref_Traits<IORTable::Locator>::nil (void)
 {
   return IORTable::Locator::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<IORTable::Locator>::tao_marshal (
+TAO::Objref_Traits<IORTable::Locator>::marshal (
     IORTable::Locator_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -418,7 +419,7 @@ TAO::Objref_Traits<IORTable::Locator>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*IORTable__TAO_Locator_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -439,10 +440,10 @@ IORTable::Locator::_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-  
+
   return Locator::_duplicate (proxy);
 }
 
@@ -456,10 +457,10 @@ IORTable::Locator::_unchecked_narrow (
     {
       return Locator::_nil ();
     }
-  
+
   Locator_ptr proxy =
     dynamic_cast<Locator_ptr> (_tao_objref);
-  
+
   return Locator::_duplicate (proxy);
 }
 
@@ -470,7 +471,7 @@ IORTable::Locator::_duplicate (Locator_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -582,7 +583,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         IORTable::Locator
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         IORTable::Locator
@@ -597,7 +598,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         IORTable::Table
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         IORTable::Table
@@ -614,7 +615,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         IORTable::Locator
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         IORTable::Locator
@@ -629,11 +630,10 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         IORTable::Table
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         IORTable::Table
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

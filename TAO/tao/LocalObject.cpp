@@ -8,7 +8,7 @@
 # include "LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
 
-#include "Exception.h"
+#include "SystemException.h"
 #include "debug.h"
 #include "ORB_Constants.h"
 

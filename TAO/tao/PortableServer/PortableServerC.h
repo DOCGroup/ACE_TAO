@@ -3206,14 +3206,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::POA>
   {
-    static PortableServer::POA_ptr tao_duplicate (
+    static PortableServer::POA_ptr duplicate (
         PortableServer::POA_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::POA_ptr
       );
-    static PortableServer::POA_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::POA_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::POA_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3229,14 +3229,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ThreadPolicy>
   {
-    static PortableServer::ThreadPolicy_ptr tao_duplicate (
+    static PortableServer::ThreadPolicy_ptr duplicate (
         PortableServer::ThreadPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::ThreadPolicy_ptr
       );
-    static PortableServer::ThreadPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::ThreadPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::ThreadPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3252,14 +3252,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::LifespanPolicy>
   {
-    static PortableServer::LifespanPolicy_ptr tao_duplicate (
+    static PortableServer::LifespanPolicy_ptr duplicate (
         PortableServer::LifespanPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::LifespanPolicy_ptr
       );
-    static PortableServer::LifespanPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::LifespanPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::LifespanPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3273,14 +3273,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::IdUniquenessPolicy>
   {
-    static PortableServer::IdUniquenessPolicy_ptr tao_duplicate (
+    static PortableServer::IdUniquenessPolicy_ptr duplicate (
         PortableServer::IdUniquenessPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::IdUniquenessPolicy_ptr
       );
-    static PortableServer::IdUniquenessPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::IdUniquenessPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::IdUniquenessPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3294,14 +3294,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::IdAssignmentPolicy>
   {
-    static PortableServer::IdAssignmentPolicy_ptr tao_duplicate (
+    static PortableServer::IdAssignmentPolicy_ptr duplicate (
         PortableServer::IdAssignmentPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::IdAssignmentPolicy_ptr
       );
-    static PortableServer::IdAssignmentPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::IdAssignmentPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::IdAssignmentPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3317,14 +3317,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ImplicitActivationPolicy>
   {
-    static PortableServer::ImplicitActivationPolicy_ptr tao_duplicate (
+    static PortableServer::ImplicitActivationPolicy_ptr duplicate (
         PortableServer::ImplicitActivationPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::ImplicitActivationPolicy_ptr
       );
-    static PortableServer::ImplicitActivationPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::ImplicitActivationPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::ImplicitActivationPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3338,14 +3338,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantRetentionPolicy>
   {
-    static PortableServer::ServantRetentionPolicy_ptr tao_duplicate (
+    static PortableServer::ServantRetentionPolicy_ptr duplicate (
         PortableServer::ServantRetentionPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::ServantRetentionPolicy_ptr
       );
-    static PortableServer::ServantRetentionPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::ServantRetentionPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::ServantRetentionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3359,14 +3359,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::RequestProcessingPolicy>
   {
-    static PortableServer::RequestProcessingPolicy_ptr tao_duplicate (
+    static PortableServer::RequestProcessingPolicy_ptr duplicate (
         PortableServer::RequestProcessingPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::RequestProcessingPolicy_ptr
       );
-    static PortableServer::RequestProcessingPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::RequestProcessingPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::RequestProcessingPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3382,14 +3382,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::POAManager>
   {
-    static PortableServer::POAManager_ptr tao_duplicate (
+    static PortableServer::POAManager_ptr duplicate (
         PortableServer::POAManager_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::POAManager_ptr
       );
-    static PortableServer::POAManager_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::POAManager_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::POAManager_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3405,14 +3405,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::AdapterActivator>
   {
-    static PortableServer::AdapterActivator_ptr tao_duplicate (
+    static PortableServer::AdapterActivator_ptr duplicate (
         PortableServer::AdapterActivator_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::AdapterActivator_ptr
       );
-    static PortableServer::AdapterActivator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::AdapterActivator_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::AdapterActivator_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3426,14 +3426,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantManager>
   {
-    static PortableServer::ServantManager_ptr tao_duplicate (
+    static PortableServer::ServantManager_ptr duplicate (
         PortableServer::ServantManager_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::ServantManager_ptr
       );
-    static PortableServer::ServantManager_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::ServantManager_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::ServantManager_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3447,14 +3447,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantActivator>
   {
-    static PortableServer::ServantActivator_ptr tao_duplicate (
+    static PortableServer::ServantActivator_ptr duplicate (
         PortableServer::ServantActivator_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::ServantActivator_ptr
       );
-    static PortableServer::ServantActivator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::ServantActivator_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::ServantActivator_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3468,14 +3468,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::ServantLocator>
   {
-    static PortableServer::ServantLocator_ptr tao_duplicate (
+    static PortableServer::ServantLocator_ptr duplicate (
         PortableServer::ServantLocator_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::ServantLocator_ptr
       );
-    static PortableServer::ServantLocator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::ServantLocator_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::ServantLocator_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3491,14 +3491,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<PortableServer::Current>
   {
-    static PortableServer::Current_ptr tao_duplicate (
+    static PortableServer::Current_ptr duplicate (
         PortableServer::Current_ptr
       );
-    static void tao_release (
+    static void release (
         PortableServer::Current_ptr
       );
-    static PortableServer::Current_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static PortableServer::Current_ptr nil (void);
+    static CORBA::Boolean marshal (
         PortableServer::Current_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -3906,4 +3906,3 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableSer
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

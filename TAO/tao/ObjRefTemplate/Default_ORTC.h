@@ -206,9 +206,9 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_ORT_Export Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>
   {
-    static void tao_add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
-    static void tao_remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
-    static void tao_release (TAO_Default_ORT::ObjectReferenceTemplate *);
+    static void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
+    static void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
+    static void release (TAO_Default_ORT::ObjectReferenceTemplate *);
   };
 
 #endif /* end #if !defined */
@@ -254,4 +254,3 @@ TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::Objec
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

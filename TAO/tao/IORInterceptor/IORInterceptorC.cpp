@@ -57,7 +57,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInterceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::duplicate (
     PortableInterceptor::IORInterceptor_ptr p
   )
 {
@@ -66,7 +66,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::release (
     PortableInterceptor::IORInterceptor_ptr p
   )
 {
@@ -75,14 +75,14 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInterceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::nil (void)
 {
   return PortableInterceptor::IORInterceptor::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::marshal (
     PortableInterceptor::IORInterceptor_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -91,7 +91,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*PortableInterceptor__TAO_IORInterceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -112,10 +112,10 @@ PortableInterceptor::IORInterceptor::_narrow (
     {
       return IORInterceptor::_nil ();
     }
-  
+
   IORInterceptor_ptr proxy =
     dynamic_cast<IORInterceptor_ptr> (_tao_objref);
-  
+
   return IORInterceptor::_duplicate (proxy);
 }
 
@@ -129,10 +129,10 @@ PortableInterceptor::IORInterceptor::_unchecked_narrow (
     {
       return IORInterceptor::_nil ();
     }
-  
+
   IORInterceptor_ptr proxy =
     dynamic_cast<IORInterceptor_ptr> (_tao_objref);
-  
+
   return IORInterceptor::_duplicate (proxy);
 }
 
@@ -143,7 +143,7 @@ PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -205,7 +205,7 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         PortableInterceptor::IORInterceptor
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::IORInterceptor
@@ -222,11 +222,10 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         PortableInterceptor::IORInterceptor
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::IORInterceptor
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

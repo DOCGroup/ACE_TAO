@@ -13,14 +13,17 @@
 #include "Transport.h"
 #include "Transport_Mux_Strategy.h"
 #include "Codeset_Manager.h"
+#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            GIOP_Message_Lite,
            "$Id$")
+
 
 static const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
 static const size_t TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET = 0;
@@ -737,7 +740,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
 
       // Throw an exception if the
       if (parse_error != 0)
-        ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_TRY_THROW (CORBA::MARSHAL (0,
                                        CORBA::COMPLETED_NO));
       request_id = request.request_id ();
 
@@ -922,7 +925,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+          ACE_TRY_THROW (CORBA::MARSHAL (0,
                                          CORBA::COMPLETED_NO));
         }
 
@@ -958,7 +961,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+          ACE_TRY_THROW (CORBA::MARSHAL (0,
                                          CORBA::COMPLETED_NO));
         }
 

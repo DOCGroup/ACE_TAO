@@ -3,6 +3,7 @@
 #include "Environment.h"
 #include "debug.h"
 #include "ORB_Constants.h"
+#include "SystemException.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,

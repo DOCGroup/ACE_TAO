@@ -7,6 +7,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 #include "tao/Any_Impl.h"
+#include "tao/SystemException.h"
 
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"

@@ -409,8 +409,8 @@ TAO_Object_Manager<T,T_var>::operator= (
 
   if (this->release_)
     {
-      TAO::Objref_Traits<T>::tao_release (*this->ptr_);
-      *this->ptr_ = TAO::Objref_Traits<T>::tao_duplicate (*rhs.ptr_);
+      TAO::Objref_Traits<T>::release (*this->ptr_);
+      *this->ptr_ = TAO::Objref_Traits<T>::duplicate (*rhs.ptr_);
     }
   else
     {
@@ -430,7 +430,7 @@ TAO_Object_Manager<T,T_var>::operator= (T * p)
       // that of a var variable.  Therefore we will not duplicate the
       // user provided pointer before assigning it to the internal
       // variable.
-      TAO::Objref_Traits<T>::tao_release (*this->ptr_);
+      TAO::Objref_Traits<T>::release (*this->ptr_);
       *this->ptr_ = p;
     }
   else
@@ -451,8 +451,8 @@ TAO_Object_Manager<T,T_var>::operator= (const T_var & p)
       // that of a var variable.  Therefore we duplicate p's
       // pointer before assigning it to the internal
       // variable.
-      TAO::Objref_Traits<T>::tao_release (*this->ptr_);
-      *this->ptr_ = TAO::Objref_Traits<T>::tao_duplicate (p.in ());
+      TAO::Objref_Traits<T>::release (*this->ptr_);
+      *this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.in ());
     }
   else
     {
@@ -466,8 +466,8 @@ template <typename T, typename T_var>
 T *&
 TAO_Object_Manager<T,T_var>::out (void)
 {
-  TAO::Objref_Traits<T>::tao_release (*this->ptr_);
-  *this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
+  TAO::Objref_Traits<T>::release (*this->ptr_);
+  *this->ptr_ = TAO::Objref_Traits<T>::nil ();
   return *this->ptr_;
 }
 
@@ -476,7 +476,7 @@ T *
 TAO_Object_Manager<T,T_var>::_retn (void)
 {
   T *temp = *this->ptr_;
-  *this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
+  *this->ptr_ = TAO::Objref_Traits<T>::nil ();
   return temp;
 }
 
@@ -585,7 +585,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::TAO_Unbounded_Object_Sequence (
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
-          tmp1[i] = TAO::Objref_Traits<T>::tao_duplicate (tmp2[i]);
+          tmp1[i] = TAO::Objref_Traits<T>::duplicate (tmp2[i]);
         }
 
       this->buffer_ = tmp1;
@@ -621,8 +621,8 @@ TAO_Unbounded_Object_Sequence<T,T_var>::operator= (
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
-          TAO::Objref_Traits<T>::tao_release (tmp[i]);
-          tmp[i] = TAO::Objref_Traits<T>::tao_nil ();
+          TAO::Objref_Traits<T>::release (tmp[i]);
+          tmp[i] = TAO::Objref_Traits<T>::nil ();
         }
 
       if (this->maximum_ < rhs.maximum_)
@@ -656,7 +656,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::operator= (
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      tmp1[i] = TAO::Objref_Traits<T>::tao_duplicate (tmp2[i]);
+      tmp1[i] = TAO::Objref_Traits<T>::duplicate (tmp2[i]);
     }
 
   return *this;
@@ -675,7 +675,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (
 
   for (CORBA::ULong i = 0; i < nelems; ++i)
     {
-      buf[i] = TAO::Objref_Traits<T>::tao_nil ();
+      buf[i] = TAO::Objref_Traits<T>::nil ();
     }
 
   return buf;
@@ -727,7 +727,7 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_allocate_buffer (
         // the old instances.
         if (!this->release_)
           {
-            tmp[i] = TAO::Objref_Traits<T>::tao_duplicate (old[i]);
+            tmp[i] = TAO::Objref_Traits<T>::duplicate (old[i]);
           }
         else
           {
@@ -759,8 +759,8 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_deallocate_buffer (
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      TAO::Objref_Traits<T>::tao_release (tmp[i]);
-      tmp[i] = TAO::Objref_Traits<T>::tao_nil ();
+      TAO::Objref_Traits<T>::release (tmp[i]);
+      tmp[i] = TAO::Objref_Traits<T>::nil ();
     }
 
   TAO_Unbounded_Object_Sequence<T,T_var>::freebuf (tmp);
@@ -782,8 +782,8 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_shrink_buffer (
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
-      TAO::Objref_Traits<T>::tao_release (tmp[i]);
-      tmp[i] = TAO::Objref_Traits<T>::tao_nil ();
+      TAO::Objref_Traits<T>::release (tmp[i]);
+      tmp[i] = TAO::Objref_Traits<T>::nil ();
     }
 }
 
@@ -817,7 +817,7 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::TAO_Bounded_Object_Sequence (
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
-          tmp1[i] = TAO::Objref_Traits<T>::tao_duplicate (tmp2[i]);
+          tmp1[i] = TAO::Objref_Traits<T>::duplicate (tmp2[i]);
         }
 
       this->buffer_ = tmp1;
@@ -846,8 +846,8 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::operator= (
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
-          TAO::Objref_Traits<T>::tao_release (tmp[i]);
-          tmp[i] = TAO::Objref_Traits<T>::tao_nil ();
+          TAO::Objref_Traits<T>::release (tmp[i]);
+          tmp[i] = TAO::Objref_Traits<T>::nil ();
         }
       // No need to reallocate the buffer since it is always of size
       // MAX
@@ -876,7 +876,7 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::operator= (
 
   for (CORBA::ULong i=0; i < rhs.length_; ++i)
     {
-      tmp1[i] = TAO::Objref_Traits<T>::tao_duplicate (tmp2[i]);
+      tmp1[i] = TAO::Objref_Traits<T>::duplicate (tmp2[i]);
     }
 
   return *this;
@@ -895,7 +895,7 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::allocbuf (
 
   for (CORBA::ULong i = 0; i < MAX; ++i)
     {
-      buf[i] = TAO::Objref_Traits<T>::tao_nil ();
+      buf[i] = TAO::Objref_Traits<T>::nil ();
     }
 
   return buf;
@@ -910,10 +910,10 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::freebuf (T ** buffer)
   // complaint and call CORBA::release() on each one.
   for (CORBA::ULong i = 0; i < MAX; ++i)
     {
-      if (buffer[i] != TAO::Objref_Traits<T>::tao_nil ())
+      if (buffer[i] != TAO::Objref_Traits<T>::nil ())
         {
-          TAO::Objref_Traits<T>::tao_release (buffer[i]);
-          buffer[i] = TAO::Objref_Traits<T>::tao_nil ();
+          TAO::Objref_Traits<T>::release (buffer[i]);
+          buffer[i] = TAO::Objref_Traits<T>::nil ();
         }
     }
 
@@ -962,8 +962,8 @@ TAO_Bounded_Object_Sequence<T,T_var,MAX>::_shrink_buffer (
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
-      TAO::Objref_Traits<T>::tao_release (tmp[i]);
-      tmp[i] = TAO::Objref_Traits<T>::tao_nil ();
+      TAO::Objref_Traits<T>::release (tmp[i]);
+      tmp[i] = TAO::Objref_Traits<T>::nil ();
     }
 }
 
@@ -1395,7 +1395,7 @@ TAO_Unbounded_Array_Sequence<T,T_slice,TAG>::TAO_Unbounded_Array_Sequence (
                                              rhs.buffer_);
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
-          TAO::Array_Traits<T,T_slice,TAG>::tao_copy (tmp1[i], tmp2[i]);
+          TAO::Array_Traits<T,T_slice,TAG>::copy (tmp1[i], tmp2[i]);
         }
 
       this->buffer_ = tmp1;
@@ -1466,7 +1466,7 @@ TAO_Unbounded_Array_Sequence<T,T_slice,TAG>::operator= (
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      TAO::Array_Traits<T,T_slice,TAG>::tao_copy (
+      TAO::Array_Traits<T,T_slice,TAG>::copy (
           ACE_reinterpret_cast (T *,
                                 this->buffer_)[i],
           ACE_reinterpret_cast (const T *,
@@ -1544,7 +1544,7 @@ TAO_Unbounded_Array_Sequence<T,T_slice,TAG>::_allocate_buffer (
       T* old = (T *) this->buffer_;
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
-          TAO::Array_Traits<T,T_slice,TAG>::tao_copy (tmp[i], old[i]);
+          TAO::Array_Traits<T,T_slice,TAG>::copy (tmp[i], old[i]);
         }
 
       if (this->release_)
@@ -1631,7 +1631,7 @@ TAO_Bounded_Array_Sequence<T,T_slice,TAG,MAX>::TAO_Bounded_Array_Sequence (
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
-          TAO::Array_Traits<T,T_slice,TAG>::tao_copy (tmp1[i], tmp2[i]);
+          TAO::Array_Traits<T,T_slice,TAG>::copy (tmp1[i], tmp2[i]);
         }
 
       this->buffer_ = tmp1;
@@ -1683,7 +1683,7 @@ TAO_Bounded_Array_Sequence<T,T_slice,TAG,MAX>::operator= (
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      TAO::Array_Traits<T,T_slice,TAG>::tao_copy (
+      TAO::Array_Traits<T,T_slice,TAG>::copy (
           ((T *) this->buffer_)[i],
           ((const T *) rhs.buffer_)[i]
         );

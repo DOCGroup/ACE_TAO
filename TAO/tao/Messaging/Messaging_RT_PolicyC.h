@@ -238,14 +238,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Messaging_Export Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>
   {
-    static Messaging::RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (
+    static Messaging::RelativeRoundtripTimeoutPolicy_ptr duplicate (
         Messaging::RelativeRoundtripTimeoutPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         Messaging::RelativeRoundtripTimeoutPolicy_ptr
       );
-    static Messaging::RelativeRoundtripTimeoutPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static Messaging::RelativeRoundtripTimeoutPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
         TAO_OutputCDR & cdr
       );

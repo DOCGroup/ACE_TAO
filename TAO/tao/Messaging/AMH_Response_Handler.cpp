@@ -11,6 +11,8 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
 #include "tao/Buffer_Allocator_T.h"
+#include "tao/SystemException.h"
+
 #include "ace/Copy_Disabled.h"
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
@@ -234,7 +236,7 @@ TAO_AMH_Response_Handler::_remove_ref (void)
     ACE_GUARD (TAO_SYNCH_MUTEX,
                mon,
                this->refcount_lock_);
-    
+
     --this->refcount_;
 
     if (this->refcount_ > 0)

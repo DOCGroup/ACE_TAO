@@ -537,7 +537,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::PriorityModelPolicy_ptr
-TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::duplicate (
     RTCORBA::PriorityModelPolicy_ptr p
   )
 {
@@ -546,7 +546,7 @@ TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_release (
+TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::release (
     RTCORBA::PriorityModelPolicy_ptr p
   )
 {
@@ -555,14 +555,14 @@ TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::PriorityModelPolicy_ptr
-TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::nil (void)
 {
   return RTCORBA::PriorityModelPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::marshal (
     RTCORBA::PriorityModelPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -726,7 +726,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ThreadpoolPolicy_ptr
-TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::duplicate (
     RTCORBA::ThreadpoolPolicy_ptr p
   )
 {
@@ -735,7 +735,7 @@ TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_release (
+TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::release (
     RTCORBA::ThreadpoolPolicy_ptr p
   )
 {
@@ -744,14 +744,14 @@ TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ThreadpoolPolicy_ptr
-TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::nil (void)
 {
   return RTCORBA::ThreadpoolPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::marshal (
     RTCORBA::ThreadpoolPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -915,7 +915,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::ProtocolProperties>::duplicate (
     RTCORBA::ProtocolProperties_ptr p
   )
 {
@@ -924,7 +924,7 @@ TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_release (
+TAO::Objref_Traits<RTCORBA::ProtocolProperties>::release (
     RTCORBA::ProtocolProperties_ptr p
   )
 {
@@ -933,14 +933,14 @@ TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::ProtocolProperties>::nil (void)
 {
   return RTCORBA::ProtocolProperties::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::ProtocolProperties>::marshal (
     RTCORBA::ProtocolProperties_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1433,7 +1433,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ServerProtocolPolicy_ptr
-TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::duplicate (
     RTCORBA::ServerProtocolPolicy_ptr p
   )
 {
@@ -1442,7 +1442,7 @@ TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_release (
+TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::release (
     RTCORBA::ServerProtocolPolicy_ptr p
   )
 {
@@ -1451,14 +1451,14 @@ TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ServerProtocolPolicy_ptr
-TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::nil (void)
 {
   return RTCORBA::ServerProtocolPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::marshal (
     RTCORBA::ServerProtocolPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1624,7 +1624,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ClientProtocolPolicy_ptr
-TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::duplicate (
     RTCORBA::ClientProtocolPolicy_ptr p
   )
 {
@@ -1633,7 +1633,7 @@ TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_release (
+TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::release (
     RTCORBA::ClientProtocolPolicy_ptr p
   )
 {
@@ -1642,14 +1642,14 @@ TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::ClientProtocolPolicy_ptr
-TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::nil (void)
 {
   return RTCORBA::ClientProtocolPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::marshal (
     RTCORBA::ClientProtocolPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1815,7 +1815,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::PrivateConnectionPolicy_ptr
-TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::duplicate (
     RTCORBA::PrivateConnectionPolicy_ptr p
   )
 {
@@ -1824,7 +1824,7 @@ TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_release (
+TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::release (
     RTCORBA::PrivateConnectionPolicy_ptr p
   )
 {
@@ -1833,14 +1833,14 @@ TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::PrivateConnectionPolicy_ptr
-TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::nil (void)
 {
   return RTCORBA::PrivateConnectionPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::marshal (
     RTCORBA::PrivateConnectionPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2006,7 +2006,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::TCPProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::duplicate (
     RTCORBA::TCPProtocolProperties_ptr p
   )
 {
@@ -2015,7 +2015,7 @@ TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_release (
+TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::release (
     RTCORBA::TCPProtocolProperties_ptr p
   )
 {
@@ -2024,14 +2024,14 @@ TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::TCPProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::nil (void)
 {
   return RTCORBA::TCPProtocolProperties::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::marshal (
     RTCORBA::TCPProtocolProperties_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2197,7 +2197,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::GIOPProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::duplicate (
     RTCORBA::GIOPProtocolProperties_ptr p
   )
 {
@@ -2206,7 +2206,7 @@ TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_release (
+TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::release (
     RTCORBA::GIOPProtocolProperties_ptr p
   )
 {
@@ -2215,14 +2215,14 @@ TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::GIOPProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::nil (void)
 {
   return RTCORBA::GIOPProtocolProperties::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::marshal (
     RTCORBA::GIOPProtocolProperties_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2388,7 +2388,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::UnixDomainProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::duplicate (
     RTCORBA::UnixDomainProtocolProperties_ptr p
   )
 {
@@ -2397,7 +2397,7 @@ TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_release (
+TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::release (
     RTCORBA::UnixDomainProtocolProperties_ptr p
   )
 {
@@ -2406,14 +2406,14 @@ TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::UnixDomainProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::nil (void)
 {
   return RTCORBA::UnixDomainProtocolProperties::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::marshal (
     RTCORBA::UnixDomainProtocolProperties_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2583,7 +2583,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::SharedMemoryProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::duplicate (
     RTCORBA::SharedMemoryProtocolProperties_ptr p
   )
 {
@@ -2592,7 +2592,7 @@ TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_release (
+TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::release (
     RTCORBA::SharedMemoryProtocolProperties_ptr p
   )
 {
@@ -2601,14 +2601,14 @@ TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::SharedMemoryProtocolProperties_ptr
-TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::nil (void)
 {
   return RTCORBA::SharedMemoryProtocolProperties::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::marshal (
     RTCORBA::SharedMemoryProtocolProperties_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -3037,7 +3037,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::PriorityBandedConnectionPolicy_ptr
-TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::duplicate (
     RTCORBA::PriorityBandedConnectionPolicy_ptr p
   )
 {
@@ -3046,7 +3046,7 @@ TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_release (
+TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::release (
     RTCORBA::PriorityBandedConnectionPolicy_ptr p
   )
 {
@@ -3055,14 +3055,14 @@ TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::PriorityBandedConnectionPolicy_ptr
-TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::nil (void)
 {
   return RTCORBA::PriorityBandedConnectionPolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::marshal (
     RTCORBA::PriorityBandedConnectionPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -3232,7 +3232,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::Current_ptr
-TAO::Objref_Traits<RTCORBA::Current>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::Current>::duplicate (
     RTCORBA::Current_ptr p
   )
 {
@@ -3241,7 +3241,7 @@ TAO::Objref_Traits<RTCORBA::Current>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::Current>::tao_release (
+TAO::Objref_Traits<RTCORBA::Current>::release (
     RTCORBA::Current_ptr p
   )
 {
@@ -3250,14 +3250,14 @@ TAO::Objref_Traits<RTCORBA::Current>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::Current_ptr
-TAO::Objref_Traits<RTCORBA::Current>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::Current>::nil (void)
 {
   return RTCORBA::Current::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::Current>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::Current>::marshal (
     RTCORBA::Current_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -3415,7 +3415,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::Mutex_ptr
-TAO::Objref_Traits<RTCORBA::Mutex>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::Mutex>::duplicate (
     RTCORBA::Mutex_ptr p
   )
 {
@@ -3424,7 +3424,7 @@ TAO::Objref_Traits<RTCORBA::Mutex>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::Mutex>::tao_release (
+TAO::Objref_Traits<RTCORBA::Mutex>::release (
     RTCORBA::Mutex_ptr p
   )
 {
@@ -3433,14 +3433,14 @@ TAO::Objref_Traits<RTCORBA::Mutex>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::Mutex_ptr
-TAO::Objref_Traits<RTCORBA::Mutex>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::Mutex>::nil (void)
 {
   return RTCORBA::Mutex::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::Mutex>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::Mutex>::marshal (
     RTCORBA::Mutex_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -3594,7 +3594,7 @@ namespace RTCORBA
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::RTORB_ptr
-TAO::Objref_Traits<RTCORBA::RTORB>::tao_duplicate (
+TAO::Objref_Traits<RTCORBA::RTORB>::duplicate (
     RTCORBA::RTORB_ptr p
   )
 {
@@ -3603,7 +3603,7 @@ TAO::Objref_Traits<RTCORBA::RTORB>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTCORBA::RTORB>::tao_release (
+TAO::Objref_Traits<RTCORBA::RTORB>::release (
     RTCORBA::RTORB_ptr p
   )
 {
@@ -3612,14 +3612,14 @@ TAO::Objref_Traits<RTCORBA::RTORB>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTCORBA::RTORB_ptr
-TAO::Objref_Traits<RTCORBA::RTORB>::tao_nil (void)
+TAO::Objref_Traits<RTCORBA::RTORB>::nil (void)
 {
   return RTCORBA::RTORB::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTCORBA::RTORB>::tao_marshal (
+TAO::Objref_Traits<RTCORBA::RTORB>::marshal (
     RTCORBA::RTORB_ptr p,
     TAO_OutputCDR & cdr
   )

@@ -419,7 +419,7 @@ namespace TAO
   {
     static void tao_add_ref (Messaging::ExceptionHolder *);
     static void tao_remove_ref (Messaging::ExceptionHolder *);
-    static void tao_release (Messaging::ExceptionHolder *);
+    static void release (Messaging::ExceptionHolder *);
   };
 
 #endif /* end #if !defined */
@@ -430,14 +430,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Messaging_Export Objref_Traits<Messaging::ReplyHandler>
   {
-    static Messaging::ReplyHandler_ptr tao_duplicate (
+    static Messaging::ReplyHandler_ptr duplicate (
         Messaging::ReplyHandler_ptr
       );
-    static void tao_release (
+    static void release (
         Messaging::ReplyHandler_ptr
       );
-    static Messaging::ReplyHandler_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static Messaging::ReplyHandler_ptr nil (void);
+    static CORBA::Boolean marshal (
         Messaging::ReplyHandler_ptr p,
         TAO_OutputCDR & cdr
       );

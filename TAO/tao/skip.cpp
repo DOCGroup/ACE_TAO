@@ -26,6 +26,8 @@
 #include "Typecode.h"
 #include "Any_Impl.h"
 #include "tao/CDR.h"
+#include "SystemException.h"
+
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao,
@@ -89,7 +91,7 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_Primitive::skip detected error\n")
           ));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);
     }
@@ -207,7 +209,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_TypeCode::skip detected error\n")
           ));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);
     }
@@ -238,7 +240,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_Principal::skip detected error\n")
           ));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);
     }
@@ -301,7 +303,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
             LM_DEBUG,
             ACE_TEXT ("TAO_Marshal_ObjRef::skip detected error\n")
           ));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);
     }
@@ -340,7 +342,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Struct::skip detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -618,7 +620,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_Marshal_TypeCode::skip detected error\n")));
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                         CORBA::COMPLETED_MAYBE),
                         TAO::TRAVERSE_STOP);
     }
@@ -855,7 +857,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Alias::skip detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -905,7 +907,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Except::skip detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -936,7 +938,7 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_WString::skip detected error\n")));
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
@@ -1033,7 +1035,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Value::skip detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+  ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }

@@ -4,6 +4,7 @@
 
 #include "CodecFactory.h"
 #include "CDR_Encaps_Codec.h"
+#include "SystemException.h"
 #include "ORB_Constants.h"
 
 ACE_RCSID (TAO_CodecFactory,
@@ -42,7 +43,7 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc
           // There is no such thing as a "0.x" CDR encapsulation.
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
                               CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
+                                0,
                                 EINVAL),
                               CORBA::COMPLETED_NO),
                             IOP::Codec::_nil ());
@@ -54,7 +55,7 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc
                                               this->orb_core_),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            0,
                             ENOMEM),
                           CORBA::COMPLETED_MAYBE));
       ACE_CHECK_RETURN (IOP::Codec::_nil ());

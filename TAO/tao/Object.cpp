@@ -17,6 +17,7 @@
 #include "IFR_Client_Adapter.h"
 #include "Remote_Object_Proxy_Broker.h"
 #include "CDR.h"
+#include "SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
@@ -301,7 +302,7 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_THROW_RETURN (CORBA::INTERNAL (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         EINVAL),
                       CORBA::COMPLETED_NO),
                     0);
@@ -540,7 +541,7 @@ CORBA::Object::_set_policy_overrides (
                                   this->is_collocated_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -926,26 +927,26 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 namespace TAO
 {
   CORBA::Object_ptr
-  Objref_Traits<CORBA::Object>::tao_duplicate (CORBA::Object_ptr p)
+  Objref_Traits<CORBA::Object>::duplicate (CORBA::Object_ptr p)
   {
     return CORBA::Object::_duplicate (p);
   }
 
   void
-  Objref_Traits<CORBA::Object>::tao_release (CORBA::Object_ptr p)
+  Objref_Traits<CORBA::Object>::release (CORBA::Object_ptr p)
   {
     CORBA::release (p);
   }
 
   CORBA::Object_ptr
-  Objref_Traits<CORBA::Object>::tao_nil (void)
+  Objref_Traits<CORBA::Object>::nil (void)
   {
     return CORBA::Object::_nil ();
   }
 
   CORBA::Boolean
-  Objref_Traits<CORBA::Object>::tao_marshal (CORBA::Object_ptr p,
-                                             TAO_OutputCDR & cdr)
+  Objref_Traits<CORBA::Object>::marshal (CORBA::Object_ptr p,
+                                         TAO_OutputCDR & cdr)
   {
     return p->marshal (cdr);
   }

@@ -386,14 +386,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::Locator>
   {
-    static ImplementationRepository::Locator_ptr tao_duplicate (
+    static ImplementationRepository::Locator_ptr duplicate (
         ImplementationRepository::Locator_ptr
       );
-    static void tao_release (
+    static void release (
         ImplementationRepository::Locator_ptr
       );
-    static ImplementationRepository::Locator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static ImplementationRepository::Locator_ptr nil (void);
+    static CORBA::Boolean marshal (
         ImplementationRepository::Locator_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -458,4 +458,3 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
