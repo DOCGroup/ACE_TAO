@@ -308,7 +308,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << " (void) // dtor" << be_nl
       << "{}" << be_nl
 
-      << "void "
+      << "void ::"
       << node->name () << "::_tao_any_destructor (void *x)" << be_nl
       << "{" << be_idt_nl
       << node->name () << " *tmp = ACE_static_cast ("
