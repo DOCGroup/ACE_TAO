@@ -90,7 +90,7 @@ public:
   ~Quoter_Factory_i (void);
   // Destructor.
 
-  int Quoter_Factory_i::init (CORBA::Environment &ACE_TRY_ENV);
+  int init (CORBA::Environment &ACE_TRY_ENV);
   // Initialize everything in the factory
 
   virtual Stock::Quoter_ptr create_quoter (const char *name,
