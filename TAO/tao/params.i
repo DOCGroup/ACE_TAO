@@ -99,8 +99,8 @@ TAO_OA_Parameters::demux_strategy (DEMUX_STRATEGY strategy)
   this->demux_ = strategy;      // Trust that the value is valid!
 }
 
-ACE_INLINE
-void TAO_OA_Parameters::demux_strategy (const char* strategy)
+ACE_INLINE void 
+TAO_OA_Parameters::demux_strategy (const char* strategy)
 {
   // Determine the demux strategy based on the given name
   if (!ACE_OS::strcmp (strategy, "linear"))
@@ -144,4 +144,72 @@ TAO_OA_Parameters::tablesize (void)
   return this->tablesize_;
 }
 
+ACE_INLINE TAO_OA_Parameters *&
+TAO_OA_Parameters::instance_i (void)
+{
+#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  // Pointer to the Singleton instance.  This works around a bug with
+  // G++...
+  static TAO_OA_Parameters *instance_ = 0;
 
+  return instance_;
+#else
+  return TAO_OA_Parameters::instance_;
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+}
+
+ACE_INLINE ACE_SYNCH_MUTEX &
+TAO_OA_Parameters::singleton_lock_i (void)
+{
+#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  // ACE_SYNCH_MUTEX the creation of the singleton.  This works around a
+  // "feature" of G++... ;-)
+  static ACE_SYNCH_MUTEX ace_singleton_lock_;
+
+  return ace_singleton_lock_;
+#else
+  return TAO_OA_Parameters::ace_singleton_lock_;
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+}
+
+ACE_INLINE TAO_OA_Parameters *
+TAO_OA_Parameters::instance (void)
+{
+  ACE_TRACE ("TAO_OA_Parameters::instance");
+
+  TAO_OA_Parameters *&singleton = TAO_OA_Parameters::instance_i ();
+
+  // Perform the Double-Check pattern...
+  if (singleton == 0)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, (TAO_OA_Parameters::singleton_lock_i ()), 0);
+
+      if (singleton == 0)
+	ACE_NEW_RETURN (singleton, TAO_OA_Parameters, 0);
+    }
+
+  return singleton;
+}
+
+ACE_INLINE TAO_OA_Parameters *
+TAO_OA_Parameters::instance (TAO_OA_Parameters *new_instance)
+{
+  ACE_TRACE ("TAO_OA_Parameters::set_instance");
+
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, (TAO_OA_Parameters::singleton_lock_i ()), 0);
+
+  TAO_OA_Parameters *&singleton = TAO_OA_Parameters::instance_i ();
+  TAO_OA_Parameters *old_instance = singleton;
+  singleton = new_instance;
+
+  return old_instance;
+}
+
+
+#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+// Pointer to the Singleton instance.
+TAO_OA_Parameters *TAO_OA_Parameters::instance_ = 0;
+
+// Lock the creation of the singleton.  
+ACE_SYNCH_MUTEX TAO_OA_Parameters::ace_singleton_lock_;
+#endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
