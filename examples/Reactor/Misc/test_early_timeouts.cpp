@@ -24,7 +24,7 @@
 ACE_RCSID(Misc, test_early_timeouts, "$Id$")
 
 int
-main (int argc, char **argv)
+main (int, char *[])
 {
   // Mumber of seconds this test should run
   int runtime_in_seconds = 10;
@@ -34,13 +34,13 @@ main (int argc, char **argv)
 
   // 100 millisecond timeout
   ACE_Time_Value timeout (0, 100000);
-  
+
   // Time before starting select
   ACE_Time_Value starting_time_of_day;
 
   // Time before starting select
   ACE_Time_Value ending_time_of_day;
-  
+
   // Number of times the timer expired early
   int no_of_early_timers = 0;
 
@@ -51,7 +51,7 @@ main (int argc, char **argv)
   // Dummy handle and handle set
   // Note that some OS do not like "empty selects"
   //
-  
+
   // Dummy handle set
   ACE_Handle_Set dummy_handle_set;
 
@@ -67,7 +67,7 @@ main (int argc, char **argv)
 
       // Note the time before select
       starting_time_of_day = ACE_OS::gettimeofday ();
-      
+
       // Wait for timeout
       result = ACE_OS::select ((int) dummy_pipe.read_handle (), dummy_handle_set, 0, 0, &timeout);
       ACE_ASSERT (result == 0);
@@ -76,7 +76,7 @@ main (int argc, char **argv)
       ending_time_of_day = ACE_OS::gettimeofday ();
 
       // Expected ending time
-      ACE_Time_Value expected_ending_time_of_day = 
+      ACE_Time_Value expected_ending_time_of_day =
         starting_time_of_day + timeout;
 
       // If the timer expired early
@@ -84,7 +84,7 @@ main (int argc, char **argv)
         {
           // How early
           ACE_Time_Value early_timeout = expected_ending_time_of_day - ending_time_of_day;
-          
+
           // Increment number of early timers
           no_of_early_timers++;
 
@@ -95,11 +95,11 @@ main (int argc, char **argv)
             }
         }
     }
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
               "There were %d early timers out of %d calls to select() (%f%%)\n"
               "The max early timeout was: %dsec %dusec\n",
-              no_of_early_timers, 
+              no_of_early_timers,
               iterations,
               float (no_of_early_timers) / iterations * 100,
               maximum_early_timeout.sec (),
