@@ -178,11 +178,11 @@ public:
   // However, setting the global_scale_factor_ appropriately will
   // result in the finest resolution possible.
 
-private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
                             const ACE_hrtime_t hrt);
   // Converts an <hrt> to <tv> using global_scale_factor_.
 
+private:
   static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
                                  ACE_OS::ACE_HRTIMER_GETTIME);
   // For internal use:  gets the high-resolution time using
@@ -208,9 +208,9 @@ private:
   // global_scale_factor_ == microseconds.
 
   static int global_scale_factor_status_;
-  // Indicates the status of the global scale factor, 
+  // Indicates the status of the global scale factor,
   // 0  = hasn't been set
-  // 1  = been set 
+  // 1  = been set
   // -1 = HR timer not supported
 };
 
