@@ -1,3 +1,9 @@
+Thu Aug  6 08:56:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Module.h: Pointed out that ACE_Module should't be subclassed
+ 	  -- ACE_Task should be subclasses.  Thanks to Barney Dalton
+ 	  <barneyd@cyllene.uwa.edu.au> for pointing this out.
+
 Wed Aug 05 23:57:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Reactor.cpp (end_event_loop): Changed the code so that *all*

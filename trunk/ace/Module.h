@@ -26,9 +26,9 @@ class ACE_Export ACE_Module_Base
   //   Workaround HP/C++ compiler bug with enums in templates.
   //
   // = DESCRIPTION
-  //   The ever lamest HP/C++ compiler seems to fail if enums are
-  //   defined inside a template, hence we have to move them into a
-  //   base class.
+  //   Certain C++ compilers, e.g., the HP/UX 10.x and 9.x compilers,
+  //   seem to fail if enums are defined inside a template, hence we
+  //   have to move them into a base class.
 public:
   enum
   {
@@ -58,7 +58,9 @@ class ACE_Module : public ACE_Module_Base
   // = DESCRIPTION
   //     This is based on the Module concept in System V Streams,
   //     which contains a pair of Tasks, one for handling upstream
-  //     processing, one for handling downstream processing.
+  //     processing, one for handling downstream processing.  In
+  //     general, you shouldn't subclass from this class, but instead
+  //     subclass from the <ACE_Task>.
 public:
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 
