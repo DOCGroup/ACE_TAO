@@ -1,20 +1,10 @@
 // $Id$
 
-
 #include "ORB.h"
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
 #include "IOR_Parser.h"
 #include "Parser_Registry.h"
-
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Repository.h"
-#include "ace/Object_Manager.h"
-#include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Arg_Shifter.h"
 
 #include "Object.h"
 #include "Typecode.h"
@@ -43,12 +33,22 @@
 # include "Messaging_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#include "tao/BiDir_ORBInitializer.h"
+#include "BiDir_ORBInitializer.h"
 #if defined (TAO_HAS_VALUETYPE)
 #  include "ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
 
 #include "Object_KeyC.h"
+
+#include "ace/Dynamic_Service.h"
+#include "ace/Service_Repository.h"
+#include "ace/Object_Manager.h"
+#include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Reactor.h"
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # if defined (ACE_MVS)
