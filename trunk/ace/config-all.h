@@ -112,6 +112,26 @@
 # endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 // ============================================================================
+// EXPLICIT macro
+// ============================================================================
+
+# if defined (ACE_HAS_EXPLICIT_KEYWORD)
+#   define ACE_EXPLICIT explicit
+# else  /* ! ACE_HAS_EXPLICIT_KEYWORD */
+#   define ACE_EXPLICIT
+# endif /* ! ACE_HAS_EXPLICIT_KEYWORD */
+
+// ============================================================================
+// MUTABLE macro
+// ============================================================================
+
+# if defined (ACE_HAS_MUTABLE_KEYWORD)
+#   define ACE_MUTABLE mutable
+# else  /* ! ACE_HAS_MUTABLE_KEYWORD */
+#   define ACE_MUTABLE
+# endif /* ! ACE_HAS_MUTABLE_KEYWORD */
+
+// ============================================================================
 // UNICODE macros (to be added later)
 // ============================================================================
 
