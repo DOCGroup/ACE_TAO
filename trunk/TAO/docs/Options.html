@@ -116,7 +116,9 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <tr>
     <TD><CODE>-ORBSvcConf</CODE> <EM>config file name</EM></TD>
     <TD>Specifies the name of the file from which it will read dynamic service configuration
-        directives <EM>ala</EM> ACE's Service Configurator.</TD>
+        directives <EM>ala</EM> ACE's Service Configurator. By
+        default, a service configurator-based application will look
+        for a file named "svc.conf" in the current directory.</TD>
   </TR>
   <tr>
     <TD><CODE>-ORBSvcConfDirective</CODE> <EM>directivestring</EM></TD>
@@ -198,7 +200,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBObjRefStyle</CODE> <EM>which</EM></TD>
     <TD>Specifies the user-visible style of object references. The range of values
-        is <CODE>IOR</CODE>, which is the traditional nonsensical object reference,
+        is <CODE>IOR</CODE> (default), which is the traditional nonsensical object reference,
         or <CODE>URL</CODE>, which looks more like a URL.</TD>
   </TR>
   <TR>
@@ -214,7 +216,8 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBNameServicePort</CODE> <EM>portspec</EM></TD>
     <TD>Specifies which port the Naming Service is listening on for
-        multicast requests.</TD>
+        multicast requests. By default,
+        TAO_DEFAULT_NAME_SERVICE_REQUEST_PORT, which is 10013 is used.</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBNameServiceIOR</CODE> <EM>ior</EM></TD>
@@ -227,7 +230,8 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
     <TD>Specifies to which port the Trading Service is listening on for
-        multicast requests.</TD>
+        multicast requests. By default,
+        TAO_DEFAULT_TRADING_SERVICE_REQUEST_PORT which is 10016 is used.</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBImplRepoIOR</CODE> <EM>ior</EM></TD>
@@ -280,13 +284,15 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         between copy vs no copy marshalling of octet sequences.
         If an octet sequence is smaller than <EM>maxsize</EM> and the current
         message block contains enough space for it the octet sequence is
-        copied instead of appended to the CDR stream.</TD>
+        copied instead of appended to the CDR stream. By default,
+        ACE_DEFAULT_CDR_MEMORY_TRADEOFF is used.
+    </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBSkipServiceConfigOpen</CODE></TD>
     <TD><A name="-ORBSkipServiceConfigOpen"></a>Do not call the <code>ACE_Service_Config::open</code>
         method, which is necessary if the ORB is being linked dynamically via the ACE Service Configurator
-        which is not reentrant.</TD>
+        which is not reentrant. Default is </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBGIOPlite</CODE></TD>
@@ -298,7 +304,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0 / 1)</EM></TD>
     <TD><A name="-ORBDottedDecimalAddresses"></a> Use the dotted decimal
-        notation for addresses.</TD>
+        notation for addresses. By default domain names are used in IORs.</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
