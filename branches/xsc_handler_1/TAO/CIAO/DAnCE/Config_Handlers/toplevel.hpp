@@ -4,9 +4,12 @@
 
 // Forward declarations.
 //
-namespace Deployment
+namespace CIAO
 {
-  class TopLevelPackageDescription;
+  namespace Config_Handlers
+  {
+    class TopLevelPackageDescription;
+  }
 }
 
 #include <memory>
@@ -15,130 +18,145 @@ namespace Deployment
 
 #include "pcd.hpp"
 
-namespace Deployment
+namespace CIAO
 {
-  class TopLevelPackageDescription : public ::XSCRT::Type
+  namespace Config_Handlers
   {
-    //@@ VC6 anathema
-    typedef ::XSCRT::Type Base__;
+    class TopLevelPackageDescription : public ::XSCRT::Type
+    {
+      //@@ VC6 anathema
+      typedef ::XSCRT::Type Base__;
 
-    // package
-    // 
-    public:
-    typedef ::std::vector< ::Deployment::PackageConfiguration >::iterator package_iterator;
-    typedef ::std::vector< ::Deployment::PackageConfiguration >::const_iterator package_const_iterator;
-    package_iterator begin_package ();
-    package_iterator end_package ();
-    package_const_iterator begin_package () const;
-    package_const_iterator end_package () const;
-    void add_package (::Deployment::PackageConfiguration const& );
+      // package
+      // 
+      public:
+      typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::iterator package_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::const_iterator package_const_iterator;
+      package_iterator begin_package ();
+      package_iterator end_package ();
+      package_const_iterator begin_package () const;
+      package_const_iterator end_package () const;
+      void add_package (::CIAO::Config_Handlers::PackageConfiguration const& );
 
-    protected:
-    ::std::vector< ::Deployment::PackageConfiguration > package_;
+      protected:
+      ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration > package_;
 
-    public:
-    TopLevelPackageDescription ();
+      public:
+      TopLevelPackageDescription ();
 
-    TopLevelPackageDescription (::XSCRT::XML::Element< char > const&);
-    TopLevelPackageDescription (TopLevelPackageDescription const& s);
+      TopLevelPackageDescription (::XSCRT::XML::Element< char > const&);
+      TopLevelPackageDescription (TopLevelPackageDescription const& s);
 
-    TopLevelPackageDescription&
-    operator= (TopLevelPackageDescription const& s);
+      TopLevelPackageDescription&
+      operator= (TopLevelPackageDescription const& s);
 
-    private:
-    char regulator__;
-  };
+      private:
+      char regulator__;
+    };
+  }
 }
 
-namespace Deployment
+namespace CIAO
 {
+  namespace Config_Handlers
+  {
+  }
 }
 
 #include <XMLSchema/Traversal.hpp>
 
-namespace Deployment
+namespace CIAO
 {
-  namespace Traversal
+  namespace Config_Handlers
   {
-    struct TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::Deployment::TopLevelPackageDescription >
+    namespace Traversal
     {
-      virtual void
-      traverse (Type&);
+      struct TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TopLevelPackageDescription >
+      {
+        virtual void
+        traverse (Type&);
 
-      virtual void
-      traverse (Type const&);
+        virtual void
+        traverse (Type const&);
 
-      virtual void
-      pre (Type&);
+        virtual void
+        pre (Type&);
 
-      virtual void
-      pre (Type const&);
+        virtual void
+        pre (Type const&);
 
-      virtual void
-      package (Type&);
+        virtual void
+        package (Type&);
 
-      virtual void
-      package (Type const&);
+        virtual void
+        package (Type const&);
 
-      virtual void
-      package_pre (Type&);
+        virtual void
+        package_pre (Type&);
 
-      virtual void
-      package_pre (Type const&);
+        virtual void
+        package_pre (Type const&);
 
-      virtual void
-      package_next (Type&);
+        virtual void
+        package_next (Type&);
 
-      virtual void
-      package_next (Type const&);
+        virtual void
+        package_next (Type const&);
 
-      virtual void
-      package_post (Type&);
+        virtual void
+        package_post (Type&);
 
-      virtual void
-      package_post (Type const&);
+        virtual void
+        package_post (Type const&);
 
-      virtual void
-      post (Type&);
+        virtual void
+        post (Type&);
 
-      virtual void
-      post (Type const&);
-    };
+        virtual void
+        post (Type const&);
+      };
+    }
   }
 }
 
 #include <XMLSchema/Writer.hpp>
 
-namespace Deployment
+namespace CIAO
 {
-  namespace Writer
+  namespace Config_Handlers
   {
-    struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
-    virtual ::XSCRT::Writer< char >
+    namespace Writer
     {
-      typedef ::Deployment::TopLevelPackageDescription Type;
-      TopLevelPackageDescription (::XSCRT::XML::Element< char >&);
+      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      virtual ::XSCRT::Writer< char >
+      {
+        typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
+        TopLevelPackageDescription (::XSCRT::XML::Element< char >&);
 
-      virtual void
-      traverse (Type const&);
+        virtual void
+        traverse (Type const&);
 
-      virtual void
-      package_pre (Type const&);
+        virtual void
+        package_pre (Type const&);
 
-      virtual void
-      package_next (Type const&);
+        virtual void
+        package_next (Type const&);
 
-      virtual void
-      package_post (Type const&);
+        virtual void
+        package_post (Type const&);
 
-      protected:
-      TopLevelPackageDescription ();
-    };
+        protected:
+        TopLevelPackageDescription ();
+      };
+    }
   }
 }
 
-namespace Deployment
+namespace CIAO
 {
+  namespace Config_Handlers
+  {
+  }
 }
 
 #endif // TOPLEVEL_HPP
