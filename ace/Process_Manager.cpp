@@ -14,33 +14,35 @@
 
 ACE_RCSID(ace, Process_Manager, "$Id$")
 
-/*
- * ACE_Managed_Process_ is just an ACE_Process with an "unmanage()" routine
- * that deletes the instance.  It should be private to this file, which is
- * why I put an underscore after the class name.  (It'd be better to put it
- * in a private namespace or something, but who knows how well supported that
- * stuff is?)
- */
-class ACE_Managed_Process_ : public ACE_Process {
-  public:
-    ACE_Managed_Process_ (void);
-  private:
-    virtual ~ACE_Managed_Process_ (void);
-  public:
-    virtual void unmanage (void);
-} ;
+class ACE_Managed_Process : public ACE_Process 
+{
+  // = TITLE
+  //   <ACE_Managed_Process> is just an <ACE_Process> with an
+  //   <unmanage> method that deletes the instance.
+public:
+  virtual void unmanage (void);
 
-ACE_Managed_Process_::ACE_Managed_Process_ (void)
-  : ACE_Process ()
+private:
+  virtual ~ACE_Managed_Process (void);
+
+  ACE_CLASS_IS_NAMESPACE (ACE_Managed_Process);
+};
+
+ACE_Managed_Process::ACE_Managed_Process (void)
+{
+}
+
+ACE_Managed_Process::ACE_Managed_Process (const ACE_Managed_Process &pm)
+  : ACE_Process (pm)
 {
 }
     
-ACE_Managed_Process_::~ACE_Managed_Process_ (void)
+ACE_Managed_Process::~ACE_Managed_Process (void)
 {
 }
 
 void
-ACE_Managed_Process_::unmanage (void)
+ACE_Managed_Process::unmanage (void)
 {
   delete this;
 }
