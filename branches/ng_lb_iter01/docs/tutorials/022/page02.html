@@ -1,0 +1,98 @@
+<!-- $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>ACE Tutorial 022</title>
+  </head>
+
+  <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 022</FONT></B></CENTER>
+    We begin with <a href="server.cpp">server.cpp</a>
+    <UL>
+    <P>Abstract:
+
+	  We begin with the server and the acceptor which we developed in
+	  our ACE Tutorial 005. We modify these and add new
+	  implementation files so as to make the acceptor service dynamically
+	  (un)loadable. What we want to do is separate the implementation
+	  of the service from its configuration. So, our server will
+	  now just act as a daemon waiting for requests.
+	  We again enroll the services of the ACE_Reactor to handle
+	  events. Everything occurs in a single thread.  <P>
+	  
+	  This tutorial helps us learn apply the service configurator
+	  pattern and make services dynamically configurable. In that
+	  process, we are trying to make the acceptor we have developed
+	  previously as a dynamically configurable service. 
+    </UL>
+    <P>
+    <HR WIDTH="100%">
+    <P>
+    <PRE>
+      <font color=red>/* We try to keep the server much simpler than before and
+        remove any thing related to the acceptor from the main ().
+        This lets keep the server running irrespective of the
+        state of the acceptor service. */
+      </font>
+      <font color=red>/* As always, we would need the
+	ACE_Service_Config to help run the server as a daemon. */ </font>
+      <font color=blue>#include </font><font color=green>"ace/Service_Config.h"</font>
+      
+      <font color=red>/* Since we are seperating the acceptor service class from the
+        server, we need to declare our Acceptor_Service */ </font>
+      <font color=blue>#include </font><font color=green>"Acceptor_Service.h"</font>
+            
+      int
+      main (int argc, char *argv [])
+      {
+         <font color=red>
+         /* Perform daemon services update ... this opens the svc.conf
+            file and reads the entries present in the svc.conf
+            file. We will later learn the syntax of making an entry
+            into a svc.conf file. But for now, remember that this is a
+            file which has the entries to load or unload a service
+            dynamically or statically. */ 
+
+            In case, the function call returns a (-1), which is
+	    indicative of an error, we print out a debug statement
+	    and return (-1) to indicate an failure.</font>
+         if (ACE_Service_Config::open (argc,
+                                       argv,
+                                       ACE_DEFAULT_LOGGER_KEY,
+                                       0) == -1)
+           ACE_ERROR_RETURN ((LM_ERROR,
+                              "%p\n",
+                              "ACE_Service_Config::open"),
+                              -1);
+
+     <font color=red>
+        /* Install our signal handler.  As we already know, you can actually
+           register signal handlers with the reactor.  You might do that
+           when the signal handler is responsible for performing "real"
+           work.  Our simple flag-setter doesn't justify deriving from
+           ACE_Event_Handler and providing a callback function
+	   though.  */ </font>
+       ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
+
+     <font color=red>
+        /* Start running the event loop so that it
+           listens for events and acts accordingly. This event loop will run
+           either the event loop is ended explicitly or an error
+           occurs. */ </font>
+        ACE_Reactor::run_event_loop ();
+      
+     <font color=red>/* NOT REACHED */</font>
+      }
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
+
+    <hr>
+    <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
+<!-- Created: Thu Dec 28 15:17:34 PST 2000 -->
+<!-- hhmts start -->
+Last modified: Sat Jan 20 10:19:22 CST 2001
+<!-- hhmts end -->
+  </body>
+</html>

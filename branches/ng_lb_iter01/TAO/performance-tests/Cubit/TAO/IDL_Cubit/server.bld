@@ -1,0 +1,12 @@
+#!build
+default:
+	program
+	:debuglevel=multi
+Cubit_Client.cpp
+	C++
+cubitS.cpp
+	C++
+cubitC.cpp
+	C++
+server.cpp
+	C++

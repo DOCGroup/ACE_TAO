@@ -1,0 +1,12 @@
+
+1. Current patch level: version 2.0, patch level 1
+
+Sun Jun  9 12:26:16 PDT 1996
+
+(1). Port to linux 1.3
+(2). Reduce the number of semaphores used in the client to ONE.
+(3). Various bug fix
+
+2. Patch level: version 2.0, patch level 0
+
+Tue Nov 28 14:14:58 PST 1995

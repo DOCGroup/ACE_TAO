@@ -1,0 +1,55 @@
+// $Id$
+
+The following TAO applications test and illustate various Portable
+Object Adapter (POA) interfaces and their usage scenarios.
+
+        . Identity
+
+                The example shows the identity between servants, ids,
+                and references.
+
+        . POA_Destruction
+
+                The program tests the destruction of a POA during an
+                upcall.
+
+        . Object_Reactivation
+
+                This program tests the reactivation of a servant that
+                has been deactivated but not removed from the Active
+                Object Map yet.
+
+        . Excessive_Object_Deactivations
+
+                This program tests for excessive deactivations of a
+                servant.  The test checks excessive deactivations in a
+                POA with SYSTEM_ID and other POA with USER_ID.  The
+                test also check for excessive deactivations during
+                upcalls.
+
+        . Non_Servant_Upcalls
+
+                This program check the users ability to make calls on
+                a POA during non-servant upcalls.  In this example, a
+                servant which is being destroyed during because of a
+                deactivate_object() call, tries to deactivate another
+                object in its destructor.
+
+        . wait_for_completion
+
+                This program tests the <wait_for_completion> feature
+                of the POA.
+
+        . Single_Threaded_POA 
+
+                This program tests to make sure that two threads
+                cannot call servants in a single threaded POA
+                simultaneously.  At the same time, it makes sure that
+                a servant can call itself or other servants in the
+                same POA while in an upcall.
+
+        . Etherealization
+
+                This program tests for deactivation and
+                etherealization of reference counted and non reference
+                counted servants.
