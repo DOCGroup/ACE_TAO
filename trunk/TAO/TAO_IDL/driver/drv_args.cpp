@@ -160,8 +160,6 @@ DRV_parse_args(long ac, char **av)
         
         // Perfect hashing-Operation lookup strategy.
       case 'P':
-        ACE_DEBUG ((LM_DEBUG, 
-                    "IDL Compiler : Using Perfect Hashing Operation Lookup Strategy\n"));
         cg->lookup_strategy (TAO_CodeGen::TAO_PERFECT_HASH);
         break;
 
@@ -282,4 +280,12 @@ DRV_parse_args(long ac, char **av)
     } else
       DRV_push_file(av[i]);
   }
+
+#if !defined (ACE_HAS_GPERF)
+  // If GPERF is not there, we cannot use PERFECT_HASH strategy. Let
+  // us go for DYNAMIC_HASH.
+  if (cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH)
+    cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
+#endif /* ACE_HAS_GPERF */
 }
+

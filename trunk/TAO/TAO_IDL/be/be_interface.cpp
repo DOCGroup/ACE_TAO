@@ -1334,7 +1334,15 @@ be_interface::gen_perfect_hash_methods (void)
   process_options.set_handles (input, output);
 
   // Set the command line for the gperf program.
-  process_options.command_line ("gperf"
+  
+  // Form the absolute pathname.
+  char *ace_root = ACE_OS::getenv ("ACE_ROOT");
+  if (ace_root == NULL)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:%p:Env variable 'ACE_ROOT' not found. Can't locate GPERF Program\n"), 
+                      -1);
+  
+  process_options.command_line ("%s/apps/gperf/src/gperf"
                                 " "
                                 "-m -M -J -c -C"
                                 " "
@@ -1347,20 +1355,21 @@ be_interface::gen_perfect_hash_methods (void)
                                 "-Z TAO_%s_Perfect_Hash_OpTable"
                                 " "
                                 "-N lookup",
+                                ace_root,
                                 this->flatname ());
 
   // Spawn a process for gperf.
   if (process_manager.spawn (process_options) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p:Couldnt spawn a process for gperf program\n"),
+                       "Error:%p:Couldnt spawn a process for gperf program\n"),
                       -1);
-
+  
   // Wait for gperf to complete.
   if (process_manager.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p:wait'ing for gperf program failed.\n"),
+                       "Error:%p:Error on wait'ing for completion of gperf program.\n"),
                       -1);
-
+  
   // Adjust the file offset to the EOF for the server skeleton file.
   ACE_OS::fseek (cg->server_skeletons ()->file (), 0, SEEK_END);
   

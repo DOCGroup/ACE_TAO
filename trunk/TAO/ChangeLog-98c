@@ -1,3 +1,9 @@
+Mon Jul 20 15:05:42 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Fixed
+	the ACE_Process' command line to use absolute path
+	<$ACE/apps/gperf/src/gperf>.
+
 Mon Jul 20 13:00:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
