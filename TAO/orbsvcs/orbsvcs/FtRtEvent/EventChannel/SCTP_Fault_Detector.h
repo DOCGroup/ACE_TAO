@@ -46,7 +46,7 @@ extern "C" {
 
 typedef ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>
                       SCTP_ConnectionAcceptHandler;
-typedef ConnectionDetectHandler<ACE_SOCK_SEQPACK_ASSOCIATION> STCP_ConnectionDetectHandler;
+typedef ConnectionDetectHandler<ACE_SOCK_SEQPACK_ASSOCIATION> SCTP_ConnectionDetectHandler;
 
 class SCTP_Connector : public ACE_SOCK_SEQPACK_Connector
 {
@@ -65,13 +65,13 @@ private:
   int heart_beat_;
 };
 
-class STCP_Fault_Detector : public Fault_Detector_T<
+class SCTP_Fault_Detector : public Fault_Detector_T<
           SCTP_ConnectionAcceptHandler,
           SCTP_Connector,
-          STCP_ConnectionDetectHandler >
+          SCTP_ConnectionDetectHandler >
 {
 public:
-    virtual ~STCP_Fault_Detector();
+    virtual ~SCTP_Fault_Detector();
 private:
     virtual int parse_conf(int argc, char** argv);
 };

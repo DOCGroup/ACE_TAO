@@ -1,3 +1,11 @@
+Sat Jan 17 11:26:03 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/Fault_Detector_Loader.cpp:
+          orbsvcs/orbsvcs/FtRtEvent/SCTP_Fault_Detector.h:
+          orbsvcs/orbsvcs/FtRtEvent/SCTP_Fault_Detector.cpp:
+          Changed the class name "STCP_Fault_Detector" to
+          "STCP_Fault_Detector"
+
 Fri Jan 16 22:23:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_exception.cpp:
@@ -14,16 +22,16 @@ Fri Jan 16 22:23:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_structure.h:
         * TAO_IDL/include/ast_type.h:
         * TAO_IDL/include/ast_union.h:
-        
+
           Expanded the IDL compiler's code that checks for recursive types,
           to handle recursion that is deeply nested, occurring multiple
           times, occurring at multiple levels, or some combination of
-          these. The IDL appearing at the end of the Deployment and 
-          Configuration specification (ptc/03-07-02), taken as a whole, 
+          these. The IDL appearing at the end of the Deployment and
+          Configuration specification (ptc/03-07-02), taken as a whole,
           contains all of these use cases.
-          
+
         * tests/IDL_Test/sequence.idl:
-        
+
           Added a pared-down version of the D and C spec IDL mentioned
           above to this test, but a version that contains all the recursive
           type use cases of the original.
@@ -31,7 +39,7 @@ Fri Jan 16 22:23:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Jan 16 11:27:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
-        
+
           Modified the -g <gperf path> command line option to
 	  automatically append "\gperf.exe" if we are on
           Windows. CreateProcess (called under the hood when the gperf
