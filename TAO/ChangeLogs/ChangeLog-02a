@@ -1,3 +1,11 @@
+Tue Mar 13 22:54:45 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Three_Stage/sender.cpp: 
+	* orbsvcs/tests/AVStreams/Three_Stage/distributer.cpp: 
+	  
+	  Fixed compile errors in the Fuzz builds.
+
+	
 Tue Mar 13 15:21:32 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (ORB_init):
