@@ -140,191 +140,6 @@ class CurrentBase;
 
   static CORBA::TypeCode_ptr _tc_CurrentBase;
 
-
-#if !defined (_PORTABLESERVER_POLICY___PTR_CH_)
-#define _PORTABLESERVER_POLICY___PTR_CH_
-
-class Policy;
-  typedef Policy *Policy_ptr;
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER_POLICY___VAR_CH_)
-#define _PORTABLESERVER_POLICY___VAR_CH_
-
-  class TAO_Export Policy_var
-  {
-  public:
-    Policy_var (void); // default constructor
-    Policy_var (Policy_ptr);
-    Policy_var (const Policy_var &); // copy constructor
-    ~Policy_var (void); // destructor
-
-    Policy_var &operator= (Policy_ptr);
-    Policy_var &operator= (const Policy_var &);
-    Policy_ptr operator-> (void) const;
-
-    operator const Policy_ptr &() const;
-    operator Policy_ptr &();
-    // in, inout, out, _retn
-    Policy_ptr in (void) const;
-    Policy_ptr &inout (void);
-    Policy_ptr &out (void);
-    Policy_ptr _retn (void);
-    Policy_ptr ptr (void) const;
-
-  private:
-    Policy_ptr ptr_;
-  };
-
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER_POLICY___OUT_CH_)
-#define _PORTABLESERVER_POLICY___OUT_CH_
-
-  class TAO_Export Policy_out
-  {
-  public:
-    Policy_out (Policy_ptr &);
-    Policy_out (Policy_var &);
-    Policy_out (Policy_out &);
-    Policy_out &operator= (Policy_out &);
-    Policy_out &operator= (const Policy_var &);
-    Policy_out &operator= (Policy_ptr);
-    operator Policy_ptr &();
-    Policy_ptr &ptr (void);
-    Policy_ptr operator-> (void);
-
-  private:
-    Policy_ptr &ptr_;
-  };
-
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER_POLICY_CH_)
-#define _PORTABLESERVER_POLICY_CH_
-
-  class TAO_Export Policy: public virtual CORBA::Object
-  {
-  public:
-    // the static operations
-    static Policy_ptr _duplicate (Policy_ptr obj);
-    static Policy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-    static Policy_ptr _nil (void);
-    static Policy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
-
-    virtual Policy_ptr  copy (CORBA::Environment &env);
-    virtual void  destroy (CORBA::Environment &env);
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-  protected:
-    Policy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
-  public:
-    virtual ~Policy (void);
-  private:
-    Policy (const Policy&);
-    void operator= (const Policy&);
-  };
-
-
-#endif // end #if !defined
-
-  static CORBA::TypeCode_ptr _tc_Policy;
-
-
-#if !defined (_PORTABLESERVER__TAO_SEQ_POLICY_CH_)
-#define _PORTABLESERVER__TAO_SEQ_POLICY_CH_
-
-  // *************************************************************
-  // _tao_seq_Policy
-  // *************************************************************
-
-  typedef TAO_Unbounded_Object_Sequence<Policy > _tao_seq_Policy;
-  typedef _tao_seq_Policy* _tao_seq_Policy_ptr;
-  static CORBA::TypeCode_ptr _tc__tao_seq_Policy;
-
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER__TAO_SEQ_POLICY___VAR_CH_)
-#define _PORTABLESERVER__TAO_SEQ_POLICY___VAR_CH_
-
-// *************************************************************
-  // class PortableServer::_tao_seq_Policy_var
-  // *************************************************************
-
-  class TAO_Export _tao_seq_Policy_var
-  {
-  public:
-    _tao_seq_Policy_var (void); // default constructor
-    _tao_seq_Policy_var (_tao_seq_Policy *);
-    _tao_seq_Policy_var (const _tao_seq_Policy_var &); // copy constructor
-    ~_tao_seq_Policy_var (void); // destructor
-
-    _tao_seq_Policy_var &operator= (_tao_seq_Policy *);
-    _tao_seq_Policy_var &operator= (const _tao_seq_Policy_var &);
-    _tao_seq_Policy *operator-> (void);
-    const _tao_seq_Policy *operator-> (void) const;
-
-    operator const _tao_seq_Policy &() const;
-    operator _tao_seq_Policy &();
-    operator _tao_seq_Policy &() const;
-    TAO_Object_Manager <Policy > operator[] (CORBA::ULong index);
-    // in, inout, out, _retn
-    const _tao_seq_Policy &in (void) const;
-    _tao_seq_Policy &inout (void);
-    _tao_seq_Policy *&out (void);
-    _tao_seq_Policy *_retn (void);
-    _tao_seq_Policy *ptr (void) const;
-
-  private:
-    _tao_seq_Policy *ptr_;
-  };
-
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER__TAO_SEQ_POLICY___OUT_CH_)
-#define _PORTABLESERVER__TAO_SEQ_POLICY___OUT_CH_
-
-  class TAO_Export _tao_seq_Policy_out
-  {
-  public:
-    _tao_seq_Policy_out (_tao_seq_Policy *&);
-    _tao_seq_Policy_out (_tao_seq_Policy_var &);
-    _tao_seq_Policy_out (_tao_seq_Policy_out &);
-    _tao_seq_Policy_out &operator= (_tao_seq_Policy_out &);
-    _tao_seq_Policy_out &operator= (_tao_seq_Policy *);
-    operator _tao_seq_Policy *&();
-    _tao_seq_Policy *&ptr (void);
-    _tao_seq_Policy *operator-> (void);
-    TAO_Object_Manager <Policy > operator[] (CORBA::ULong index);
-
-  private:
-    _tao_seq_Policy *&ptr_;
-    // assignment from T_var not allowed
-    void operator= (const _tao_seq_Policy_var &);
-  };
-
-
-#endif // end #if !defined
-
-  typedef _tao_seq_Policy PolicyList;
-  typedef _tao_seq_Policy_var PolicyList_var;
-  typedef _tao_seq_Policy_out PolicyList_out;
-
-  static CORBA::TypeCode_ptr _tc_PolicyList;
-
   class POA;
 
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
@@ -582,7 +397,7 @@ class ThreadPolicy;
 #if !defined (_PORTABLESERVER_THREADPOLICY_CH_)
 #define _PORTABLESERVER_THREADPOLICY_CH_
 
-  class TAO_Export ThreadPolicy: public virtual Policy
+  class TAO_Export ThreadPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
@@ -688,7 +503,7 @@ class LifespanPolicy;
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY_CH_
 
-  class TAO_Export LifespanPolicy: public virtual Policy
+  class TAO_Export LifespanPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
@@ -794,7 +609,7 @@ class IdUniquenessPolicy;
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY_CH_
 
-  class TAO_Export IdUniquenessPolicy: public virtual Policy
+  class TAO_Export IdUniquenessPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
@@ -900,7 +715,7 @@ class IdAssignmentPolicy;
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY_CH_
 
-  class TAO_Export IdAssignmentPolicy: public virtual Policy
+  class TAO_Export IdAssignmentPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
@@ -1006,7 +821,7 @@ class ImplicitActivationPolicy;
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_
 
-  class TAO_Export ImplicitActivationPolicy: public virtual Policy
+  class TAO_Export ImplicitActivationPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
@@ -1112,7 +927,7 @@ class ServantRetentionPolicy;
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_
 
-  class TAO_Export ServantRetentionPolicy: public virtual Policy
+  class TAO_Export ServantRetentionPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
@@ -1219,7 +1034,7 @@ class RequestProcessingPolicy;
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_
 
-  class TAO_Export RequestProcessingPolicy: public virtual Policy
+  class TAO_Export RequestProcessingPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
@@ -2149,7 +1964,7 @@ class POA;
 
 #endif // end #if !defined
 
-    virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const PolicyList &policies, CORBA::Environment &env) = 0;
+    virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const CORBA::PolicyList &policies, CORBA::Environment &env) = 0;
     virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA::Environment &env) = 0;
     virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env) = 0;
     virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA::Environment &env) = 0;

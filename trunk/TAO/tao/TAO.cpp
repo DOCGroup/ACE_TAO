@@ -93,8 +93,7 @@ TAO_ORB_Manager::init_child_poa (int argc,
 
   // Create the default policies - user-supplied ID, and persistent
   // objects.
-  // CORBA::PolicyList policies (2);
-  PortableServer::PolicyList policies (2);
+  CORBA::PolicyList policies (2);
   policies.length (2);
 
   // Id Assignment policy
@@ -126,8 +125,7 @@ TAO_ORB_Manager::init_child_poa (int argc,
        i < policies.length () && env.exception () == 0;
        ++i)
     {
-      // CORBA::Policy_ptr policy = policies[i];
-      PortableServer::Policy_ptr policy = policies[i];
+      CORBA::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
   TAO_CHECK_ENV_RETURN (env, -1);

@@ -1,3 +1,25 @@
+Thu Apr 16 01:25:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa.idl: Fixed the idl file.
+
+	* tao/PolicyS.cpp (_tao_collocated_Policy): _tao_collocated_Policy
+ 	  must inherit from CORBA_Policy and not from CORBA::Policy.  This
+ 	  is because the VC++ compiler cannot deal with inheriting from
+ 	  nested typedefs.
+
+	* tao/Policy{C,S}.h: Added TAO_Export macros. Also fixed the
+ 	  #include files.
+
+	* tao/POAS.*: Added code for _get_policy_type_skel() and
+ 	  policy_type() by hand.
+
+	* tao/POAC.*: Removed code for PortableServer::Policy.
+
+	* tao/POA.cpp: Added the policy_type() method to the policy
+ 	  classes.
+
+	* TAO: Changed PortableServer::Policy to CORBA::Policy.
+
 Wed Apr 15 22:29:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_visitor_structure, be_visitor_union,

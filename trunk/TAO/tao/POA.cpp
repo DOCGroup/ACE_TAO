@@ -3,9 +3,6 @@
 // CORBA
 #include "tao/corba.h"
 
-// POA
-#include "tao/POA.h"
-
 // Exception macros
 #include "tao/poa_macros.h"
 
@@ -40,15 +37,15 @@ TAO_Thread_Policy::value (CORBA::Environment &env)
   return this->value_;
 }
 
-PortableServer::Policy_ptr
+CORBA::Policy_ptr
 TAO_Thread_Policy::copy (CORBA::Environment &env)
 {
   auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (*this));
 
-  PortableServer::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (env);
 
   if (env.exception () != 0)
-    return PortableServer::Policy::_nil ();
+    return CORBA::Policy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -78,6 +75,13 @@ TAO_Thread_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
+CORBA::PolicyType 
+TAO_Thread_Policy::policy_type (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  return 0;
+}
+
 PortableServer::POA_ptr
 TAO_Thread_Policy::_default_POA (CORBA::Environment &env)
 {
@@ -104,14 +108,14 @@ TAO_Lifespan_Policy::value (CORBA::Environment &env)
   return this->value_;
 }
 
-PortableServer::Policy_ptr
+CORBA::Policy_ptr
 TAO_Lifespan_Policy::copy (CORBA::Environment &env)
 {
   auto_ptr<TAO_Lifespan_Policy> new_policy (new TAO_Lifespan_Policy (*this));
 
-  PortableServer::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (env);
   if (env.exception () != 0)
-    return PortableServer::Policy::_nil ();
+    return CORBA::Policy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -141,6 +145,13 @@ TAO_Lifespan_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
+CORBA::PolicyType 
+TAO_Lifespan_Policy::policy_type (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  return 0;
+}
+
 PortableServer::POA_ptr
 TAO_Lifespan_Policy::_default_POA (CORBA::Environment &env)
 {
@@ -167,14 +178,14 @@ TAO_Id_Uniqueness_Policy::value (CORBA::Environment &env)
   return this->value_;
 }
 
-PortableServer::Policy_ptr
+CORBA::Policy_ptr
 TAO_Id_Uniqueness_Policy::copy (CORBA::Environment &env)
 {
   auto_ptr<TAO_Id_Uniqueness_Policy> new_policy (new TAO_Id_Uniqueness_Policy (*this));
 
-  PortableServer::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (env);
   if (env.exception () != 0)
-    return PortableServer::Policy::_nil ();
+    return CORBA::Policy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -204,6 +215,13 @@ TAO_Id_Uniqueness_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
+CORBA::PolicyType 
+TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  return 0;
+}
+
 PortableServer::POA_ptr
 TAO_Id_Uniqueness_Policy::_default_POA (CORBA::Environment &env)
 {
@@ -230,14 +248,14 @@ TAO_Id_Assignment_Policy::value (CORBA::Environment &env)
   return this->value_;
 }
 
-PortableServer::Policy_ptr
+CORBA::Policy_ptr
 TAO_Id_Assignment_Policy::copy (CORBA::Environment &env)
 {
   auto_ptr<TAO_Id_Assignment_Policy> new_policy (new TAO_Id_Assignment_Policy (*this));
 
-  PortableServer::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (env);
   if (env.exception () != 0)
-    return PortableServer::Policy::_nil ();
+    return CORBA::Policy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -267,6 +285,13 @@ TAO_Id_Assignment_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
+CORBA::PolicyType 
+TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  return 0;
+}
+
 PortableServer::POA_ptr
 TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment &env)
 {
@@ -293,14 +318,14 @@ TAO_Implicit_Activation_Policy::value (CORBA::Environment &env)
   return this->value_;
 }
 
-PortableServer::Policy_ptr
+CORBA::Policy_ptr
 TAO_Implicit_Activation_Policy::copy (CORBA::Environment &env)
 {
   auto_ptr<TAO_Implicit_Activation_Policy> new_policy (new TAO_Implicit_Activation_Policy (*this));
 
-  PortableServer::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (env);
   if (env.exception () != 0)
-    return PortableServer::Policy::_nil ();
+    return CORBA::Policy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -330,6 +355,13 @@ TAO_Implicit_Activation_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
+CORBA::PolicyType 
+TAO_Implicit_Activation_Policy::policy_type (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  return 0;
+}
+
 PortableServer::POA_ptr
 TAO_Implicit_Activation_Policy::_default_POA (CORBA::Environment &env)
 {
@@ -356,14 +388,14 @@ TAO_Servant_Retention_Policy::value (CORBA::Environment &env)
   return this->value_;
 }
 
-PortableServer::Policy_ptr
+CORBA::Policy_ptr
 TAO_Servant_Retention_Policy::copy (CORBA::Environment &env)
 {
   auto_ptr<TAO_Servant_Retention_Policy> new_policy (new TAO_Servant_Retention_Policy (*this));
 
-  PortableServer::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (env);
   if (env.exception () != 0)
-    return PortableServer::Policy::_nil ();
+    return CORBA::Policy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -393,6 +425,13 @@ TAO_Servant_Retention_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
+CORBA::PolicyType 
+TAO_Servant_Retention_Policy::policy_type (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  return 0;
+}
+
 PortableServer::POA_ptr
 TAO_Servant_Retention_Policy::_default_POA (CORBA::Environment &env)
 {
@@ -419,14 +458,14 @@ TAO_Request_Processing_Policy::value (CORBA::Environment &env)
   return this->value_;
 }
 
-PortableServer::Policy_ptr
+CORBA::Policy_ptr
 TAO_Request_Processing_Policy::copy (CORBA::Environment &env)
 {
   auto_ptr<TAO_Request_Processing_Policy> new_policy (new TAO_Request_Processing_Policy (*this));
 
-  PortableServer::Policy_var result = new_policy->_this (env);
+  CORBA::Policy_var result = new_policy->_this (env);
   if (env.exception () != 0)
-    return PortableServer::Policy::_nil ();
+    return CORBA::Policy::_nil ();
   else
     {
       // Make sure that the auto_ptr does not delete the
@@ -456,6 +495,13 @@ TAO_Request_Processing_Policy::destroy (CORBA::Environment &env)
   delete this;
 }
 
+CORBA::PolicyType 
+TAO_Request_Processing_Policy::policy_type (CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  return 0;
+}
+
 PortableServer::POA_ptr
 TAO_Request_Processing_Policy::_default_POA (CORBA::Environment &env)
 {
@@ -474,7 +520,7 @@ TAO_POA_Policies::TAO_POA_Policies (void)
 }
 
 void
-TAO_POA_Policies::parse_policies (const PortableServer::PolicyList &policies,
+TAO_POA_Policies::parse_policies (const CORBA::PolicyList &policies,
                                   CORBA::Environment &env)
 {
   for (CORBA::ULong i = 0;
@@ -522,7 +568,7 @@ TAO_POA_Policies::validity_check (void)
 }
 
 void
-TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
+TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
                                 CORBA::Environment &env)
 {
   PortableServer::ThreadPolicy_var thread
@@ -897,7 +943,7 @@ TAO_POA::lock (void)
 PortableServer::POA_ptr
 TAO_POA::create_POA (const char *adapter_name,
                      PortableServer::POAManager_ptr poa_manager,
-                     const PortableServer::PolicyList &policies,
+                     const CORBA::PolicyList &policies,
                      CORBA::Environment &env)
 {
   // If any of the policy objects specified are not valid for the ORB
@@ -3259,7 +3305,7 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         CORBA::Environment &env)
 {
   // Default policies
-  PortableServer::PolicyList default_policies;
+  CORBA::PolicyList default_policies;
 
   // This assumes that the lock on the parent is recursive
   PortableServer::POA_var child = parent->create_POA (name,
@@ -3803,8 +3849,8 @@ template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Unbounded_Set<TAO_POA *>;
 template class ACE_Unbounded_Set_Iterator<TAO_POA *>;
 template class ACE_Write_Guard<ACE_Lock>;
-template class TAO_Object_Manager<PortableServer::Policy>;
-template class TAO_Unbounded_Object_Sequence<PortableServer::Policy>;
+template class TAO_Object_Manager<CORBA::Policy>;
+template class TAO_Unbounded_Object_Sequence<CORBA::Policy>;
 template class auto_ptr<TAO_Id_Assignment_Policy>;
 template class auto_ptr<TAO_Id_Uniqueness_Policy>;
 template class auto_ptr<TAO_Implicit_Activation_Policy>;
@@ -3840,8 +3886,8 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Unbounded_Set<TAO_POA *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA *>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
-#pragma instantiate TAO_Object_Manager<PortableServer::Policy>
-#pragma instantiate TAO_Unbounded_Object_Sequence<PortableServer::Policy>
+#pragma instantiate TAO_Object_Manager<CORBA::Policy>
+#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::Policy>
 #pragma instantiate auto_ptr<TAO_Id_Assignment_Policy>
 #pragma instantiate auto_ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate auto_ptr<TAO_Implicit_Activation_Policy>

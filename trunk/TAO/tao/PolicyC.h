@@ -12,8 +12,6 @@
 #if !defined (_TAO_IDL_POLICYC_H_)
 #define _TAO_IDL_POLICYC_H_
 
-#include "tao/corba.h"
-
 #if !defined (_CORBA_POLICY___PTR_CH_)
 #define _CORBA_POLICY___PTR_CH_
 
@@ -26,7 +24,7 @@ typedef CORBA_Policy *CORBA_Policy_ptr;
 #if !defined (_CORBA_POLICY___VAR_CH_)
 #define _CORBA_POLICY___VAR_CH_
 
-class  CORBA_Policy_var
+class TAO_Export  CORBA_Policy_var
 {
 public:
   CORBA_Policy_var (void); // default constructor
@@ -58,7 +56,7 @@ private:
 #if !defined (_CORBA_POLICY___OUT_CH_)
 #define _CORBA_POLICY___OUT_CH_
 
-class  CORBA_Policy_out
+class TAO_Export  CORBA_Policy_out
 {
 public:
   CORBA_Policy_out (CORBA_Policy_ptr &);
@@ -82,7 +80,7 @@ private:
 #if !defined (_CORBA_POLICY_CH_)
 #define _CORBA_POLICY_CH_
 
-class  CORBA_Policy : public virtual CORBA::Object
+class TAO_Export  CORBA_Policy : public virtual CORBA::Object
 {
 public:
   // the static operations
@@ -126,7 +124,7 @@ private:
 // CORBA_PolicyList
 // *************************************************************
 
-class  CORBA_PolicyList : public TAO_Unbounded_Object_Sequence<CORBA_Policy>
+class TAO_Export  CORBA_PolicyList : public TAO_Unbounded_Object_Sequence<CORBA_Policy>
 {
 public:
   CORBA_PolicyList (void); // default ctor
@@ -154,7 +152,7 @@ static CORBA::TypeCode_ptr _tc_PolicyList_seq;
 // class CORBA::PolicyList_var
 // *************************************************************
 
-class  CORBA_PolicyList_var
+class TAO_Export  CORBA_PolicyList_var
 {
 public:
   CORBA_PolicyList_var (void); // default constructor
@@ -189,7 +187,7 @@ private:
 #if !defined (_CORBA_POLICYLIST___OUT_CH_)
 #define _CORBA_POLICYLIST___OUT_CH_
 
-class  CORBA_PolicyList_out
+class TAO_Export  CORBA_PolicyList_out
 {
 public:
   CORBA_PolicyList_out (CORBA_PolicyList *&);

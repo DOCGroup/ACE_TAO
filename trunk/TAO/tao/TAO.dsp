@@ -212,6 +212,14 @@ SOURCE=.\POAS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PolicyC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
@@ -400,6 +408,14 @@ SOURCE=.\poaS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PolicyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
@@ -533,6 +549,14 @@ SOURCE=.\poaC.i
 # Begin Source File
 
 SOURCE=.\poaS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyS.i
 # End Source File
 # Begin Source File
 

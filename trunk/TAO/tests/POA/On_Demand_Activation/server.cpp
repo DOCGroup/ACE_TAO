@@ -55,8 +55,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // CORBA::PolicyList policies (4);
-  PortableServer::PolicyList policies (4);
+  CORBA::PolicyList policies (4);
   policies.length (4);
 
     // ID Assignment Policy
@@ -145,8 +144,7 @@ main (int argc, char **argv)
        i < policies.length () && env.exception () == 0;
        ++i)
     {
-      // CORBA::Policy_ptr policy = policies[i];
-      PortableServer::Policy_ptr policy = policies[i];
+      CORBA::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
   if (env.exception () != 0)

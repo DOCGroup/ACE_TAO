@@ -131,8 +131,7 @@ Cubit_Task::initialize_orb (void)
         this->root_poa_->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // CORBA::PolicyList policies (2);
-      PortableServer::PolicyList policies (2);
+      CORBA::PolicyList policies (2);
       policies.length (2);
 
       // Id Assignment policy
@@ -161,8 +160,7 @@ Cubit_Task::initialize_orb (void)
            i < policies.length () && TAO_TRY_ENV.exception () == 0;
            ++i)
         {
-          // CORBA::Policy_ptr policy = policies[i];
-          PortableServer::Policy_ptr policy = policies[i];
+          CORBA::Policy_ptr policy = policies[i];
           policy->destroy (TAO_TRY_ENV);
         }
       TAO_CHECK_ENV;
@@ -474,8 +472,7 @@ Cubit_Factory_Task::initialize_orb (void)
         this->root_poa_->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // CORBA::PolicyList policies (2);
-      PortableServer::PolicyList policies (2);
+      CORBA::PolicyList policies (2);
       policies.length (2);
 
       // Id Assignment policy
@@ -504,8 +501,7 @@ Cubit_Factory_Task::initialize_orb (void)
            i < policies.length () && TAO_TRY_ENV.exception () == 0;
            ++i)
         {
-          // CORBA::Policy_ptr policy = policies[i];
-          PortableServer::Policy_ptr policy = policies[i];
+          CORBA::Policy_ptr policy = policies[i];
           policy->destroy (TAO_TRY_ENV);
         }
       TAO_CHECK_ENV;
