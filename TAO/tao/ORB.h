@@ -696,12 +696,7 @@ public:
   static TypeCode_ptr _tc_TypeCode;
   static TypeCode_ptr _tc_Principal;
   static TypeCode_ptr _tc_Object;
-  static TypeCode_ptr _tc_struct;
-  static TypeCode_ptr _tc_union;
-  static TypeCode_ptr _tc_enum;
   static TypeCode_ptr _tc_string;
-  static TypeCode_ptr _tc_sequence;
-  static TypeCode_ptr _tc_array;
   static TypeCode_ptr _tc_alias;
   static TypeCode_ptr _tc_except;
   static TypeCode_ptr _tc_longlong;
