@@ -1,7 +1,7 @@
 CC		= gcc
 CXX		= g++
-CFLAGS		+= -w
-CCFLAGS		+= -w -fno-implicit-templates
+CFLAGS		+= -w -O2
+CCFLAGS		+= -w -O2 -fno-implicit-templates
 DLD		= $(CXX)
 LD		= $(CXX)
 PIC		= -fPIC

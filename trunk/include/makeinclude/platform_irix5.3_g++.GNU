@@ -2,7 +2,7 @@
 
 CC              = gcc
 CXX             = g++
-CCFLAGS		= -fno-implicit-templates
+CCFLAGS		+= -O2 -fno-implicit-templates
 DLD             = $(CXX)
 LD		= $(CXX) 
 LDFLAGS         += -L$(WRAPPER_ROOT)/ace

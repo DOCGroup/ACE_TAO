@@ -6,8 +6,8 @@ CC              = gcc
 # for no threads
 #CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
 CXX		= g++
-CFLAGS		+= -b elf -w
-CCFLAGS		+= -b elf -Xpg4plus -fno-implicit-templates -I ${MITOSYS_DIR}/socketrpc/netsel -I ${MITOSYS_DIR}/socketrpc -I ${MITOSYS_DIR}/librerias/include -I/usr/local/lib/g++-include
+CFLAGS		+= -b elf -w -O2
+CCFLAGS		+= -b elf -Xpg4plus -O2 -fno-implicit-templates -I ${MITOSYS_DIR}/socketrpc/netsel -I ${MITOSYS_DIR}/socketrpc -I ${MITOSYS_DIR}/librerias/include -I/usr/local/lib/g++-include
 DLD             = $(CXX)
 LIBS            = -lsocket
 PIC             = -fpic -shared
