@@ -1,3 +1,10 @@
+Fri Jan 25 18:29:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Removed ACE_HAS_SIGTIMEDWAIT. It compiles,
+          but returns ENOSYS at run time.
+
+        * ace/config-aix5.1.h: Added ACE_HAS_SIGTIMEDWAIT.
+
 Fri Jan 25 15:36:40 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp: Removed /version flags from the project since
