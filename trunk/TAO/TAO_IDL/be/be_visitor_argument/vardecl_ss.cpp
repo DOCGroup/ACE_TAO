@@ -90,9 +90,9 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
         {
-          *os << bt->name () << "_var _tao_hivar_"
+          *os << bt->name () << "_var _tao_var_"
 	      << arg->local_name () << ";" << be_nl;
-          *os << bt->name () << " *&_tao_ptr_" << arg->local_name ()
+          *os << bt->name () << "_slice *&_tao_ptr_" << arg->local_name ()
               << " = _tao_var_" << arg->local_name () << ".out ();" << be_nl;
           *os << bt->name () << "_out " << arg->local_name ()
               << " (_tao_ptr_" << arg->local_name () << ");\n";

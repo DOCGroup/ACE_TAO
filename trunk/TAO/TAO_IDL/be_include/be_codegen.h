@@ -75,7 +75,7 @@ public:
                                              // variable before upcall
     TAO_ARGUMENT_UPCALL_SS,                  // passing argument variable to upcall
     TAO_ARGUMENT_COLLOCATED_UPCALL_SS,                  // passing argument
-                                                        // variable to upcall 
+                                                        // variable to upcall
     TAO_ARGUMENT_POST_UPCALL_SS,             // postprocessing of argument
                                              // variable after upcall
 
@@ -339,6 +339,7 @@ public:
     TAO_UNION_PUBLIC_CI,
     TAO_UNION_PUBLIC_CS,
     TAO_UNION_PUBLIC_ASSIGN_CS,
+    TAO_UNION_PUBLIC_RESET_CS,
     TAO_UNION_PUBLIC_SH,
     TAO_UNION_PUBLIC_SI,
     TAO_UNION_PUBLIC_SS,

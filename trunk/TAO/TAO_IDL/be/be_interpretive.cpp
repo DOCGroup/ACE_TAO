@@ -170,6 +170,8 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_union_branch_public_cs (new_ctx);
     case TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS:
       return new be_visitor_union_branch_public_assign_cs (new_ctx);
+    case TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS:
+      return new be_visitor_union_branch_public_reset_cs (new_ctx);
     case TAO_CodeGen::TAO_UNION_PRIVATE_CH:
       return new be_visitor_union_branch_private_ch (new_ctx);
     case TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CH:

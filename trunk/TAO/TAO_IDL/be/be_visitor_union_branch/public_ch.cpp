@@ -315,17 +315,30 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
-  if (node->pt () == AST_PredefinedType::PT_pseudo)
+  switch (node->pt ())
     {
+    case AST_PredefinedType::PT_pseudo:
       // set method
       *os << "void " << ub->local_name () << " ("
           << bt->nested_type_name (bu, "_ptr") << ");// set" << be_nl;
-      // get method
+        // get method
       *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
           << " (void) const; // get method\n\n";
-    }
-  else
-    {
+      break;
+    case AST_PredefinedType::PT_any:
+      // set method
+      *os << "void " << ub->local_name () << " ("
+          << bt->nested_type_name (bu) << ");// set" << be_nl;
+      // get method (read-only)
+      *os << "const " << bt->nested_type_name (bu) << " "
+          << ub->local_name () << " (void) const; // get method\n\n";
+      // get method (read/write)
+      *os << bt->nested_type_name (bu) << " "
+          << ub->local_name () << " (void); // get method\n\n";
+      break;
+    case AST_PredefinedType::PT_void:
+      break;
+    default:
       // set method
       *os << "void " << ub->local_name () << " ("
           << bt->nested_type_name (bu) << ");// set" << be_nl;

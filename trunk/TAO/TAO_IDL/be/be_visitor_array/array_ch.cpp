@@ -104,12 +104,13 @@ int be_visitor_array_ch::visit_array (be_array *node)
                              "gen slice dimensions failed\n"),
                             -1);
         }
-      *os << ";" << be_nl;
+      *os << ";\n";
     }
   else
     {
       // anonymous array case - TO-DO
     }
+
   // typedef the _var, _out, and _forany types
   if (node->gen_var_defn () == -1)
     {
@@ -119,14 +120,25 @@ int be_visitor_array_ch::visit_array (be_array *node)
                          "var_defn failed\n"),
                         -1);
     }
-  if (node->gen_out_defn () == -1)
+  // a class is generated for an out defn only for a variable length struct
+  if (node->size_type () == be_decl::VARIABLE)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ch::"
-                         "visit_argument - "
-                         "out_defn failed\n"),
-                        -1);
+      if (node->gen_out_defn () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_array_ch::"
+                             "visit_argument - "
+                             "out_defn failed\n"),
+                            -1);
+        }
     }
+  else
+    {
+      os->indent ();
+      *os << "typedef " << node->local_name () << " " << node->local_name ()
+          << "_out;\n";
+    }
+
   if (node->gen_forany_defn () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -137,6 +149,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
     }
   // the _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
+  os->indent ();
   *os << "static " << node->nested_type_name (scope, "_slice") << " *"
       << node->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
   *os << "static " << node->nested_type_name (scope, "_slice") << " *"

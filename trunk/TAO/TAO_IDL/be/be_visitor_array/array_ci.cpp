@@ -105,14 +105,18 @@ int be_visitor_array_ci::visit_array (be_array *node)
                          "var_defn failed\n"),
                         -1);
     }
-  if (node->gen_out_impl () == -1)
+  if (node->size_type () == be_decl::VARIABLE)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ci::"
-                         "visit_array - "
-                         "out_defn failed\n"),
-                        -1);
+      if (node->gen_out_impl () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_array_ci::"
+                             "visit_array - "
+                             "out_defn failed\n"),
+                            -1);
+        }
     }
+
   if (node->gen_forany_impl () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

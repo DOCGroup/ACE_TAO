@@ -58,7 +58,8 @@ int be_visitor_union_ch::visit_union (be_union *node)
       // generate the ifdefined macro for the union type
       os->gen_ifdef_macro (node->flatname ());
       os->indent (); // start with the current indentation level
-      *os << "class " << node->local_name () << be_nl
+      *os << "class " << idl_global->export_macro () << " "
+          << node->local_name () << be_nl
           << "{" << be_nl
           << "public:" << be_idt_nl
 
@@ -140,9 +141,12 @@ int be_visitor_union_ch::visit_union (be_union *node)
         }
 
       os->decr_indent ();
-      *os << "}; // end of union \n";
+      *os << "}; // end of union" << be_nl;
 
-      os->decr_indent ();
+      // the reset method (TAO extension)
+      *os << "void reset (" << bt->nested_type_name (node) 
+          << ", CORBA::Boolean);" << be_nl;
+      *os << "// TAO extension. Frees any allocated storage" << be_uidt_nl;
       *os << "}; // " << node->name () << "\n\n";
 
       // by using a visitor to declare and define the TypeCode, we have the

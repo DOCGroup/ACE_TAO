@@ -108,9 +108,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (const " <<
         node->name () << " &u)" << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
-      // first set the discriminant
+      *os << "{" << be_idt_nl;
+      // first reset and set the discriminant
+      *os << "this->reset (u.disc_, 0);" << be_nl;
       *os << "this->disc_ = u.disc_;" << be_nl;
       // now switch based on the disc value
       *os << "switch (this->disc_)" << be_nl;
@@ -137,7 +137,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
         node->name () << " &u)" << be_nl;
       *os << "{\n";
       os->incr_indent ();
-      // first set the discriminant
+      // first reset and set the discriminant
+      *os << "this->reset (u.disc_, 0);" << be_nl;
       *os << "this->disc_ = u.disc_;" << be_nl;
       // now switch based on the disc value
       *os << "switch (this->disc_)" << be_nl;
@@ -156,6 +157,29 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "return *this;\n";
       os->decr_indent ();
       *os << "}\n\n";
+
+      // the reset method
+      this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
+      os->indent ();
+      *os << "// reset method to reset old values of a union" << be_nl;
+      *os << "void " << node->name () << "::reset (" << bt->name ()
+          << " new_disc_val, CORBA::Boolean finalize)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "if ((this->disc_ != new_disc_val) || finalize)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "switch (this->disc_)" << be_nl;
+      *os << "{" << be_idt_nl;
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs"
+                             "visit_union - "
+                             "codegen for reset failed\n"), -1);
+        }
+
+      *os << be_uidt_nl << "}" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "}\n\n";
 
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be

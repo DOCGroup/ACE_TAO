@@ -49,7 +49,8 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       os = this->ctx_->stream ();
 
       os->indent (); // start from whatever indentation level we were at
-      *os << "struct " << node->local_name () << be_nl
+      *os << "struct " << idl_global->export_macro () << " "
+          << node->local_name () << be_nl
           << "{" << be_idt << "\n";
 
       // generate code for field members

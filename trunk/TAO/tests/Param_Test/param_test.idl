@@ -160,28 +160,29 @@ interface Param_Test
   // Anys. We try to pump in all kinds of data types thru these Anys
   any test_any (in any a1, inout any a2, out any a3);
 
+#if 0
   // arrays (fixed)
-  //  typedef long LongArray [10];
+  typedef long LongArray [10];
 
-  //  LongArray test_fixed_array (in LongArray l1,
-  //                          inout LongArray l2,
-  //                          out LongArray l3);
+  LongArray test_fixed_array (in LongArray l1,
+                              inout LongArray l2,
+                              out LongArray l3);
 
   // arrays (variable)
-  //  typedef string StringArray [5];
+  typedef string StringArray [5];
 
-  //  StringArray test_var_array (in StringArray s1,
-  //                        inout StringArray s2,
-  //                        out StringArray s3);
+  StringArray test_var_array (in StringArray s1,
+                              inout StringArray s2,
+                              out StringArray s3);
 
   // multidimensional arrays (fixed). The following will give rise to a 3
   // dimensional array
-  //  typedef LongArray LongLongArray [4][5];
+  typedef LongArray LongLongArray [4][5];
 
-  //  LongLongArray test_muldim_array (in LongLongArray l1,
-  //                               inout LongLongArray l2,
-  //                               out LongLongArray l3);
-
+  LongLongArray test_muldim_array (in LongLongArray l1,
+                                   inout LongLongArray l2,
+                                   out LongLongArray l3);
+#endif
   // sequence of typecodes
   //  typedef sequence<TypeCode> TypeCodeSeq;
   //  TypeCodeSeq test_tcseq (in TypeCodeSeq t1,  inout TypeCodeSeq t2, out TypeCodeSeq t3);
