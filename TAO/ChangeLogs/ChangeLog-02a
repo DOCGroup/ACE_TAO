@@ -1,3 +1,8 @@
+Fri Mar 01 07:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Makefile.bor:
+          Added TAO_Messaging library
+
 Thu Feb 28 20:25:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tests/Makefile (DIRS):
@@ -125,7 +130,7 @@ Thu Feb 28 15:12:35 2002  Carlos O'Ryan  <coryan@uci.edu>
 	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task.h:
 	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task.cpp:
 	  Add new files to the Makefile too!
-	
+
 	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.cpp:
 	  Fixed event types in the loopback supplier.
 
@@ -146,17 +151,17 @@ Thu Feb 28 13:51:30 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Feb 28 11:50:39 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.Security: 
+	* orbsvcs/orbsvcs/Makefile.Security:
 	  updated the Makefile dependencies.
 
 Thu Feb 28 11:40:19 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
-	* tests/AMI_Buffering/Makefile: 
+	* tests/AMI_Buffering/Makefile:
 	  updated the Makefile dependencies.
 
 Thu Feb 28 11:38:51 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP: 
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
 	  Updated the dependencies.
 
 Thu Feb 28 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
