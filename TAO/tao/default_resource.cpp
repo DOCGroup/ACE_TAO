@@ -9,6 +9,9 @@
 #include "tao/UIOP_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
+#include "tao/Single_Reactor.h"
+#include "tao/Reactor_Per_Priority.h"
+#include "tao/Priority_Mapping.h"
 
 #include "ace/Select_Reactor.h"
 #include "ace/FlReactor.h"
@@ -27,12 +30,14 @@ ACE_RCSID(tao, default_resource, "$Id$")
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
     use_locked_data_blocks_ (1),
+    reactor_registry_type_ (TAO_SINGLE_REACTOR),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
     protocol_factories_ (),
     connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
     purge_percentage_ (TAO_PURGE_PERCENT),
-    reactor_mask_signals_ (1)
+    reactor_mask_signals_ (1),
+    sched_policy_ (ACE_SCHED_OTHER)
 {
 }
 
@@ -102,6 +107,27 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->reactor_mask_signals_ = 0;
             else if (ACE_OS::strcasecmp (name, "1") == 0)
               this->reactor_mask_signals_= 1;
+          }
+      }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBReactorRegistry") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "single") == 0)
+              this->reactor_registry_type_ = TAO_SINGLE_REACTOR;
+            else if (ACE_OS::strcasecmp (name,
+                                         "per-priority") == 0)
+              this->reactor_registry_type_ = TAO_REACTOR_PER_PRIORITY;
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBReactorRegistry\n", name));
           }
       }
 
@@ -235,6 +261,30 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
            ACE_DEBUG ((LM_DEBUG,
                        "TAO_Default_Factory - unknown argument"
                        "for -ORBPurgePercentage\n"));
+      }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBSchedPolicy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "SCHED_OTHER") == 0)
+              this->sched_policy_ = ACE_SCHED_OTHER;
+            else if (ACE_OS::strcasecmp (name,
+                                         "SCHED_FIFO") == 0)
+              this->sched_policy_ = ACE_SCHED_FIFO;
+            else if (ACE_OS::strcasecmp (name,
+                                         "SCHED_RR") == 0)
+              this->sched_policy_ = ACE_SCHED_RR;
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBSchedPolicy\n", name));
+          }
       }
 
   return 0;
@@ -393,9 +443,28 @@ TAO_Default_Resource_Factory::get_connector_registry (void)
   return cr;
 }
 
-// @@ TODO We may be changing the state of the global
-//    Allocated_Resources structure, but without any locks?
-//    It seems to be done all over the place.
+TAO_Reactor_Registry *
+TAO_Default_Resource_Factory::get_reactor_registry (void)
+{
+  TAO_Reactor_Registry *reactor_registry = 0;
+  switch (this->reactor_registry_type_)
+    {
+    default:
+    case TAO_SINGLE_REACTOR:
+      ACE_NEW_RETURN (reactor_registry,
+                      TAO_Single_Reactor,
+                      0);
+      break;
+
+    case TAO_REACTOR_PER_PRIORITY:
+      ACE_NEW_RETURN (reactor_registry,
+                      TAO_Reactor_Per_Priority,
+                      0);
+      break;
+    }
+
+  return reactor_registry;
+}
 
 ACE_Reactor_Impl*
 TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
@@ -549,6 +618,20 @@ double
 TAO_Default_Resource_Factory::purge_percentage (void) const
 {
   return this->purge_percentage_;
+}
+
+TAO_Priority_Mapping *
+TAO_Default_Resource_Factory::get_priority_mapping (void)
+{
+#if !defined (TAO_HAS_RT_CORBA)
+  return 0;
+#else
+  TAO_Priority_Mapping *pm;
+  ACE_NEW_RETURN (pm,
+                  TAO_Priority_Mapping (this->sched_policy_),
+                  0);
+  return pm;
+#endif /* TAO_HAS_RT_CORBA */
 }
 
 // ****************************************************************

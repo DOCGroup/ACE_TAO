@@ -1,3 +1,120 @@
+Mon Aug 30 15:15:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/orbconf.h:
+	* rules.tao.GNU:
+	  Added a number of new classes to implement the
+	  endpoint-per-priority concurrency strategy.  In this strategy
+	  each priority level is assigned a different reactor, threads use 
+	  the reactor for their priority level; acceptors are also bound
+	  to the reactor of their priority level, as specificied in the
+	  command-line.
+	  Since the priority is embedded in the IOR using a tagged
+	  component the client can use that to select which endpoint it
+	  will use, preserving priority end-to-end (the client-side is not 
+	  implemented yet).
+	  This achieves total isolation of threads running at different
+	  priorities.
+
+	* tao/Pool_Per_Endpoint.h:
+	* tao/Pool_Per_Endpoint.i:
+	* tao/Pool_Per_Endpoint.cpp:
+	  Helper class that creates the threads to run the ORB based on
+	  the endpoints (and their priorities) as specified in the
+	  command-line.
+	  The user is not required to create the threads using this class, 
+	  but it is much simpler to do so.
+
+	* tao/Reactor_Registry.h:
+	* tao/Reactor_Registry.i:
+	* tao/Reactor_Registry.cpp:
+	  A new abstraction to control the number of reactors created by
+	  the ORB. This class also decides which reactor handles which
+	  endpoint and which reactor is used by each thread.
+
+	* tao/Single_Reactor.h:
+	* tao/Single_Reactor.i:
+	* tao/Single_Reactor.cpp:
+	* tao/Reactor_Per_Priority.h:
+	* tao/Reactor_Per_Priority.i:
+	* tao/Reactor_Per_Priority.cpp:
+	  Two simple implementations of the Reactor_Registry strategy. The 
+	  first one creates a single reactor for the ORB. The second one
+	  creates a new reactor for each priority level.
+
+	* tao/rtcorbafwd.h:
+	* tao/rtcorbafwd.i:
+	* tao/rtcorbafwd.cpp:
+	  Some of the new features use types and interfaces defined in the 
+	  RTCORBA spec, we added a 
+
+	* tao/Priority_Mapping.h:
+	* tao/Priority_Mapping.i:
+	* tao/Priority_Mapping.cpp:
+	  Base class and default implementation for the
+	  RTCORBA::PriorityMapping native type.
+
+	* tao/Resource_Factory.h:
+	* tao/Resource_Factory.cpp:
+	* tao/default_resource.h:
+	* tao/default_resource.cpp:
+	  Added new methods to create the Reactor_Registry and the
+	  Priority_Mapping strategies.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	  Modified to deal with the new Reactor_Registry class and the
+	  Priority_Mapping functions.
+	  Also changed shutdown() to shutdown all the reactors in the
+	  ORB.
+
+	* tao/RTCORBA.pidl:
+	  File used to generate some of the RTCORBA types.
+
+	* tao/RT_Current.h:
+	* tao/RT_Current.i:
+	* tao/RT_Current.cpp:
+	  Implement the RTCORBA::Current interface, at this point the
+	  interface is not used (i.e. resolve_initial_references() does
+	  not work), but should be fully functional soon.
+
+	* tao/Leader_Follower.h:
+	* tao/Leader_Follower.i:
+	* tao/Leader_Follower.cpp:
+	  Separate the Leader_Follower information to its own file (it
+	  used to be in ORB_Core), this class is used by the
+	  Reactor_Per_Endpoint registry to keep a separate LF group for
+	  each priority level.
+
+	* tao/Wait_Strategy.cpp:
+	* tao/Reply_Dispatcher.cpp:
+	  They must include "tao/Leader_Follower.h" now.
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/UIOP_Acceptor.cpp:
+	  Get the right reactor from the ORB_Core.
+
+	* tests/MT_Client/Makefile:
+	  Updated dependencies
+
+	* tests/Endpoint_Per_Priority/Makefile:
+	* tests/Endpoint_Per_Priority/README:
+	* tests/Endpoint_Per_Priority/client.conf:
+	* tests/Endpoint_Per_Priority/client.cpp:
+	* tests/Endpoint_Per_Priority/run_test.pl:
+	* tests/Endpoint_Per_Priority/server.conf:
+	* tests/Endpoint_Per_Priority/server.cpp:
+	* tests/Endpoint_Per_Priority/test.idl:
+	* tests/Endpoint_Per_Priority/test_i.cpp:
+	* tests/Endpoint_Per_Priority/test_i.h:
+	* tests/Endpoint_Per_Priority/test_i.i:
+	  A new test for the endpoint-per-priority concurrency strategy,
+	  still work in progress.
+
+	* */Makefile:
+	  Updated dependencies
+
 Mon Aug 30 14:19:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Reply_Dispatcher.h:

@@ -49,6 +49,9 @@ class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
 class TAO_TSS_Resources;
+class TAO_Reactor_Registry;
+class TAO_Leader_Follower;
+class TAO_Priority_Mapping;
 
 // ****************************************************************
 
@@ -72,12 +75,6 @@ public:
 
   int owns_resources_;
   // Set to 1 if this object owns the resources below
-
-  ACE_Reactor *reactor_;
-  // Used for responding to I/O reactively
-
-  int inherited_reactor_;
-  // The reactor was inherited from the spawning thread, do not delete
 
   // = The rest of the resources are not currently in use, just a plan
   //   for the future...
@@ -104,104 +101,13 @@ public:
 
   ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
   // Condition variable for the leader follower model.
-};
 
-// ****************************************************************
+  TAO_Reactor_Registry *reactor_registry_;
+  // The Reactor Holder that we should callback when destroying the
+  // cookie.
 
-class TAO_Export TAO_Leader_Follower
-{
-public:
-  TAO_Leader_Follower (TAO_ORB_Core *orb_core);
-  // Constructor
-
-  void set_server_thread (void);
-  // The current thread has become a server thread (i.e. called
-  // ORB::run), update any flags and counters.
-
-  void reset_server_thread (void);
-  // The current thread is not a server thread anymore, reset any
-  // flags and counters.
-
-  int leader_available (void) const;
-  // Is there any thread running as a leader?
-
-  void set_client_thread (void);
-  // A server thread is making a request.
-
-  void reset_client_thread (void);
-  // A server thread has finished is making a request.
-
-  void set_leader_thread (void) ;
-  // The current thread has become the leader thread in the
-  // client side leader-follower set.
-
-  void reset_leader_thread (void) ;
-  // The current thread is no longer the leader thread in the client
-  // side leader-follower set.
-
-  void set_leader_thread (ACE_thread_t thread_ID);
-  // sets the thread ID of the leader thread in the leader-follower
-  // model
-
-  int is_leader_thread (void) const;
-  // checks if we are a leader thread
-
-  int elect_new_leader (void);
-  // A leader thread is relinquishing its role, unless there are more
-  // leader threads running pick up a follower (if there is any) to
-  // play the leader role.
-
-  int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
-  // adds the a follower to the set of followers in the leader-
-  // follower model
-  // returns 0 on success, -1 on failure and 1 if the element is
-  // already there.
-
-  int follower_available (void) const;
-  // checks for the availablity of a follower
-  // returns 1 on available, 0 else
-
-  int remove_follower (ACE_SYNCH_CONDITION *follower_ptr);
-  // removes a follower from the leader-follower set
-  // returns 0 on success, -1 on failure
-
-  ACE_SYNCH_CONDITION *get_next_follower (void);
-  // returns randomly a follower from the leader-follower set
-  // returns follower on success, else 0
-
-  ACE_SYNCH_MUTEX &lock (void);
-  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
-  // Accessors
-
-  int has_clients (void) const;
-  // Check if there are any client threads running
-
-private:
-  TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
-  // Shortcut to obtain the TSS resources of the orb core.
-
-private:
-  TAO_ORB_Core *orb_core_;
-  // The orb core
-
-  ACE_SYNCH_MUTEX lock_;
-  // do protect the access to the following three members
-
-  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock_;
-  // do protect the access to the following three members
-
-  ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
-  // keep a set of followers around (protected)
-
-  int leaders_;
-  // Count the number of active leaders.
-  // There could be many leaders in the thread pool (i.e. calling
-  // ORB::run), and the same leader could show up multiple times as it
-  // receives nested upcalls and sends more requests.
-
-  int clients_;
-  // Count the number of active clients, this is useful to know when
-  // to deactivate the reactor
+  void *reactor_registry_cookie_;
+  // A TSS magic cookie used by the Reactor_Registry
 };
 
 // ****************************************************************
@@ -253,13 +159,14 @@ public:
   // = Set/get pointer to the ORB.
   CORBA::ORB_ptr orb (void);
 
-  // = Set/get the <ACE_Reactor>.
   ACE_Reactor *reactor (void);
+  ACE_Reactor *reactor (TAO_Acceptor *acceptor);
+  // Wrappers that forward the request to the concurrency strategy
 
-  // = Set/get the <ACE_Thread_Manager>.
+  // = Get the ACE_Thread_Manager
   ACE_Thread_Manager *thr_mgr (void);
 
-  // = Set/get <rootPOA>.
+  // = Get the rootPOA
   TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
                      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
@@ -411,6 +318,20 @@ public:
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
       default_relative_roundtrip_timeout (void) const;
 #endif /* TAO_HAS_CORBA_MESSAGING */
+
+#if defined (TAO_HAS_RT_CORBA)
+  TAO_Priority_Mapping *priority_mapping (void);
+  // Access the priority mapping class, this is a TAO extension but
+  // there is no standard way to get to it either.
+
+#endif /* TAO_HAS_RT_CORBA */
+
+  int get_thread_priority (CORBA::Short &priority);
+  int set_thread_priority (CORBA::Short  priority);
+  // Accessor and modifier to the current thread priority, used to
+  // implement the RTCOBA::Current interface, but it is faster for
+  // some critical components.
+  // If TAO_HAS_RT_CORBA is not defined the operations are noops.
 
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
   // Obtain the TSS resources of this orb.
@@ -602,8 +523,12 @@ protected:
   // If the resources are per-ORB (as opposed to per-ORB-per-thread)
   // then they are stored here...
 
-  TAO_Leader_Follower leader_follower_;
-  // Information about the leader follower model
+  TAO_Reactor_Registry *reactor_registry_;
+  // The server concurrency strategy
+
+  ACE_Reactor *reactor_;
+  // The reactor used for pure-clients, otherwise it comes from the
+  // reactor_registry
 
   int has_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
@@ -619,6 +544,8 @@ protected:
   int open_called_;
   // Flag which denotes that the open method was called.
 
+  TAO_Priority_Mapping *priority_mapping_;
+  // The priority mapping..
 };
 
 // ****************************************************************

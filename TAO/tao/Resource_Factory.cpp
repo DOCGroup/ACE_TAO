@@ -69,6 +69,12 @@ TAO_Resource_Factory::use_locked_data_blocks (void) const
   return 0;
 }
 
+TAO_Reactor_Registry *
+TAO_Resource_Factory::get_reactor_registry (void)
+{
+  return 0;
+}
+
 ACE_Reactor *
 TAO_Resource_Factory::get_reactor (void)
 {
@@ -131,6 +137,12 @@ TAO_Resource_Factory::connection_caching_strategy_type (void) const
 
 double
 TAO_Resource_Factory::purge_percentage (void) const
+{
+  return 0;
+}
+
+TAO_Priority_Mapping *
+TAO_Resource_Factory::get_priority_mapping (void)
 {
   return 0;
 }

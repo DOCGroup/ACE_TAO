@@ -3,6 +3,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Pluggable.h"
 #include "tao/ORB_Core.h"
+#include "tao/Leader_Follower.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, Wait_Strategy, "$Id$")
