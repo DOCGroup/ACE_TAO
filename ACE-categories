@@ -39,12 +39,15 @@ class category.
 		CORBA_Ref.h
 		CORBA_Ref.i
 	[Collections]
-		Set.cpp
-		Set.h
-		Set.i
-		Stack.cpp
-		Stack.h
-		Stack.i
+		Container.cpp
+		Container.i
+		Container.h
+		Free_List.cpp
+		Free_List.i
+		Free_List.h
+		Object_Manager.cpp
+		Object_Manager.i
+		Object_Manager.h
 		SString.cpp
 		SString.h
 		SString.i
@@ -75,9 +78,7 @@ class category.
 		Token.h
 		Token.i
 	[Config]
-		Str_Buf.h
 		config.h
-		msg_hack.h
 	[Connection]
 		Acceptor.cpp
 		Acceptor.h
@@ -90,6 +91,9 @@ class category.
 		Strategies.cpp
 		Strategies.h
 		Strategies.i
+		Strategies_T.cpp
+		Strategies_T.h
+		Strategies_T.i
 		Svc_Handler.cpp
 		Svc_Handler.h
 		Svc_Handler.i
@@ -344,12 +348,6 @@ class category.
 		Signal.cpp
 		Signal.h
 		Signal.i
-		Time_Value.cpp
-		Time_Value.h
-		Time_Value.i
-		Timer_Queue.cpp
-		Timer_Queue.h
-		Timer_Queue.i
 	[Service_Configurator]
 		Parse_Node.cpp
 		Parse_Node.h
@@ -409,6 +407,33 @@ class category.
 		Profile_Timer.cpp
 		Profile_Timer.h
 		Profile_Timer.i
+		Time_Value.cpp
+		Time_Value.h
+		Time_Value.i
+		Timer_Heap.cpp
+		Timer_Heap.h
+		Timer_Heap.i
+		Timer_Heap_T.cpp
+		Timer_Heap_T.h
+		Timer_Heap_T.i
+		Timer_List.cpp
+		Timer_List.h
+		Timer_List.i
+		Timer_List_T.cpp
+		Timer_List_T.h
+		Timer_List_T.i
+		Timer_Queue.cpp
+		Timer_Queue.h
+		Timer_Queue.i
+		Timer_Queue_T.cpp
+		Timer_Queue_T.h
+		Timer_Queue_T.i
+		Timer_Wheel.cpp
+		Timer_Wheel.h
+		Timer_Wheel.i
+		Timer_Wheel_T.cpp
+		Timer_Wheel_T.h
+		Timer_Wheel_T.i
 	[Token_Service]
 		Local_Tokens.cpp
 		Local_Tokens.h

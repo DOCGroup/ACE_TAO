@@ -2396,61 +2396,59 @@ typedef short ACE_pri_t;
 #if defined (ACE_HAS_HI_RES_TIMER)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
 typedef hrtime_t ACE_hrtime_t;
-#else
-  #if defined (ACE_HAS_LONGLONG_T)
+#elif defined (ACE_HAS_LONGLONG_T)
 typedef unsigned long long ACE_hrtime_t;
-  #else
-    class ACE_U_LongLong
-    {
-      // = TITLE
-      //     Unsigned long long for platforms that don't have one.
-      //
-      // = DESCRIPTION
-      //     Provide our own unsigned long long.  This is intended to be
-      //     use with ACE_High_Res_Timer, so the division operator assumes
-      //     that the quotient fits into a u_long.
-      //     Please note that the constructor takes (optionally) two values.
-      //     The high one contributes 0x100000000 times its value.  So,
-      //     for example, (0, 2) is _not_ 20000000000, but instead
-      //     0x200000000.  To emphasize this, the default values are expressed
-      //     in hex, and dump () outputs the value in hex.
-    public:
-      ACE_U_LongLong (u_long lo = 0x0, u_long hi = 0x0);
-      ACE_U_LongLong (const ACE_U_LongLong &);
-      ACE_U_LongLong &operator= (const ACE_U_LongLong &);
-      ~ACE_U_LongLong () {}
+#else
+class ACE_U_LongLong
+  // = TITLE
+  //     Unsigned long long for platforms that don't have one.
+  //
+  // = DESCRIPTION
+  //     Provide our own unsigned long long.  This is intended to be
+  //     use with ACE_High_Res_Timer, so the division operator assumes
+  //     that the quotient fits into a u_long.
+  //     Please note that the constructor takes (optionally) two values.
+  //     The high one contributes 0x100000000 times its value.  So,
+  //     for example, (0, 2) is _not_ 20000000000, but instead
+  //     0x200000000.  To emphasize this, the default values are expressed
+  //     in hex, and dump () outputs the value in hex.
+{
+public:
+  ACE_U_LongLong (u_long lo = 0x0, u_long hi = 0x0);
+  ACE_U_LongLong (const ACE_U_LongLong &);
+  ACE_U_LongLong &operator= (const ACE_U_LongLong &);
+  ~ACE_U_LongLong (void) {}
 
-      int operator== (const ACE_U_LongLong &) const;
-      int operator< (const ACE_U_LongLong &) const;
-      int operator<= (const ACE_U_LongLong &) const;
-      int operator> (const ACE_U_LongLong &) const;
-      int operator>= (const ACE_U_LongLong &) const;
+  int operator== (const ACE_U_LongLong &) const;
+  int operator< (const ACE_U_LongLong &) const;
+  int operator<= (const ACE_U_LongLong &) const;
+  int operator> (const ACE_U_LongLong &) const;
+  int operator>= (const ACE_U_LongLong &) const;
 
-      ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
-      ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-      u_long operator/ (const u_long) const;
+  ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
+  ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
+  u_long operator/ (u_long) const;
 
-      ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
-      ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
+  ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
+  ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
 
-      void dump (FILE * = stdout) const;
-      // Outputs the value to the FILE, in hex.
+  void dump (FILE * = stdout) const;
+  // Outputs the value to the FILE, in hex.
 
-      u_long hi () const { return hi_; }
-      u_long lo () const { return lo_; }
+  u_long hi (void) const { return hi_; }
+  u_long lo (void) const { return lo_; }
 
-      void hi (const u_long hi) { hi_ = hi; }
-      void lo (const u_long lo) { lo_ = lo; }
+  void hi (u_long hi) { hi_ = hi; }
+  void lo (u_long lo) { lo_ = lo; }
 
-      ACE_ALLOC_HOOK_DECLARE;
+  ACE_ALLOC_HOOK_DECLARE;
 
-    private:
-      u_long hi_;
-      u_long lo_;
-    };
+private:
+  u_long hi_;
+  u_long lo_;
+};
 
-    typedef ACE_U_LongLong ACE_hrtime_t;
-  #endif /* ACE_HAS_LONGLONG_T */
+typedef ACE_U_LongLong ACE_hrtime_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
 #endif /* ACE_WIN32 */
