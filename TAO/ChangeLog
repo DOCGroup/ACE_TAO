@@ -1,8 +1,28 @@
+Wed Nov 26 17:46:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FT_ORB.bor:
+	  Removed this file from the archive, it has been replaced by the three
+	  new BCB makefiles below.
+
+	* orbsvcs/orbsvcs/FT_ClientORB.bor:
+	* orbsvcs/orbsvcs/FT_ServerORB.bor:
+	* orbsvcs/orbsvcs/FTORB_Utils.bor:
+	  Added new BCB makefiles for FT
+
+	* orbsvcs/orbsvcs/Makefile.bor:
+	  Updated this makefile with the changes above
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.bor:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.bor:
+	  Updated these makefiles because of the changes above
+
 Wed Nov 26 11:00:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/RtCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
 	  Reordered the libraries to get it linking. Static linking needs
-	  proper ordering of libraries. 
+	  proper ordering of libraries.
 
 Wed Nov 26 10:20:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
