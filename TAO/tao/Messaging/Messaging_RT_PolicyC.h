@@ -92,38 +92,16 @@ TAO_NAMESPACE  Messaging
   
   typedef
     TAO_Objref_Var_T<
-        RelativeRoundtripTimeoutPolicy,
-        tao_RelativeRoundtripTimeoutPolicy_life
+        RelativeRoundtripTimeoutPolicy
       >
     RelativeRoundtripTimeoutPolicy_var;
   
   typedef
     TAO_Objref_Out_T<
-        RelativeRoundtripTimeoutPolicy,
-        tao_RelativeRoundtripTimeoutPolicy_life
+        RelativeRoundtripTimeoutPolicy
       >
     RelativeRoundtripTimeoutPolicy_out;
   
-  struct TAO_Messaging_Export tao_RelativeRoundtripTimeoutPolicy_life
-  {
-    static RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (RelativeRoundtripTimeoutPolicy_ptr);
-    static void tao_release (RelativeRoundtripTimeoutPolicy_ptr);
-    static RelativeRoundtripTimeoutPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RelativeRoundtripTimeoutPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_Messaging_Export tao_RelativeRoundtripTimeoutPolicy_cast
-  {
-    static RelativeRoundtripTimeoutPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from

@@ -39,58 +39,6 @@
 
 int Messaging::SyncScopePolicy::_tao_class_id = 0;
 
-Messaging::SyncScopePolicy_ptr
-Messaging::tao_SyncScopePolicy_life::tao_duplicate (
-    Messaging::SyncScopePolicy_ptr p
-  )
-{
-  return Messaging::SyncScopePolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_SyncScopePolicy_life::tao_release (
-    Messaging::SyncScopePolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::SyncScopePolicy_ptr
-Messaging::tao_SyncScopePolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::SyncScopePolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_SyncScopePolicy_life::tao_marshal (
-    Messaging::SyncScopePolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::SyncScopePolicy_ptr
-Messaging::tao_SyncScopePolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::SyncScopePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_SyncScopePolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::SyncScopePolicy **tmp =
-    ACE_static_cast (Messaging::SyncScopePolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<

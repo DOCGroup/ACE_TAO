@@ -38,58 +38,6 @@
 
 int TAO::ConnectionTimeoutPolicy::_tao_class_id = 0;
 
-TAO::ConnectionTimeoutPolicy_ptr
-TAO::tao_ConnectionTimeoutPolicy_life::tao_duplicate (
-    TAO::ConnectionTimeoutPolicy_ptr p
-  )
-{
-  return TAO::ConnectionTimeoutPolicy::_duplicate (p);
-}
-
-void
-TAO::tao_ConnectionTimeoutPolicy_life::tao_release (
-    TAO::ConnectionTimeoutPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-TAO::ConnectionTimeoutPolicy_ptr
-TAO::tao_ConnectionTimeoutPolicy_life::tao_nil (
-    void
-  )
-{
-  return TAO::ConnectionTimeoutPolicy::_nil ();
-}
-
-CORBA::Boolean
-TAO::tao_ConnectionTimeoutPolicy_life::tao_marshal (
-    TAO::ConnectionTimeoutPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-TAO::ConnectionTimeoutPolicy_ptr
-TAO::tao_ConnectionTimeoutPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return TAO::ConnectionTimeoutPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-TAO::tao_ConnectionTimeoutPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  TAO::ConnectionTimeoutPolicy **tmp =
-    ACE_static_cast (TAO::ConnectionTimeoutPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
