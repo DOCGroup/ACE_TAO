@@ -1,9 +1,29 @@
 Thu Aug 20 03:10:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+        * tests/UPIPE_SAP_Test.cpp (main): Reverted back to use
+	  ACE_Thread.  Although it's considered the "Right Thing" to spawn
+	  threads using ACE_Thread_Manager, I'll keep this file to use
+	  ACE_Thread to serve as an example that you can also use
+	  ACE_Thread to do any tricks you like, and, a sanity check.
+
+	* ace/OS.cpp (ACE_Thread_Adapter::invoke): Don't create the
+ 	  ACE_Thread_Exit object if we are not spawning the thread using
+ 	  ACE_Thread_Manager.  Otherwise, when a non-thread manager
+ 	  spawned thread exits, the TSS clean up routing gets into an
+ 	  infinite loop calling ~ACE_Thread_Exit recursively and
+	  eventually the stack gets overflowed and the thread then
+	  "appears" to exit normally.  But in fact, TSS cleanup does not
+	  complete at all.  
+
 	* ace/Thread_Manager.i:
 	* ace/Thread_Manager.cpp (at_exit,thr_self): Moved all at_exit
 	  methods into the .i file.  All at_exit methods and thr_self
-	  don't really need to hold Thread_Manager's lock.
+	  don't really need to hold Thread_Manager's lock.  
+
+	  Notice that after the newly spawned thread enters the
+	  ACE_Thread_Adapter::invoke routine, we can safely manipulate its
+	  Thread_Deacriptor because it has been registered properly.  This
+	  change should further reduce the times a thread gets started.
 
 Wed Aug 19 20:34:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -62,17 +82,7 @@ Wed Aug 19 10:13:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tests/UPIPE_SAP_Test.cpp (main): Changed to use
           ACE_Thread_Manager to spawn and wait for threads so the TSS
           object gets cleanup correctly.  Using plain vanilla
-          ACE_Thread::spawn and/or ACE_OS::thr_create no longer works
-          correctly because we have merged ace_thread_adapter and
-          ace_thread_manager_adapter into one adapter which always creates
-          ACE_Thread_Exit in TSS.  But it won't get removed when using
-          ACE_Thread::spawn and/or ACE_OS::thr_create.  The motto here,
-          ACE_Thread::spawn and ACE_OS::thr_create are not for application
-          programmers any more.
-
-          You ***_MUST_NOT_*** use them in your applications anymore.
-          Only use ACE_Thread_Manager to spawn user threads.  Otherwise,
-          you'll have memory leaks for all ACE_TSS objects.
+          ACE_Thread::spawn and/or ACE_OS::thr_create no longer works.
 
 Wed Aug 19 10:06:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
