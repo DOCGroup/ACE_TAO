@@ -388,9 +388,35 @@ u_long ACE_Log_Msg::process_priority_mask_ = LM_SHUTDOWN
 void
 ACE_Log_Msg::close (void)
 {
-  // Please note that this will be called by a statement that is
-  // harded coded into the ACE_Object_Manager's shutdown sequence, in
-  // its destructor.
+  // This code will be called by a statement that is harded-coded into
+  // the <ACE_Object_Manager>'s shutdown sequence, in its destructor.
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && \
+    (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+
+  if (key_created_ == 1)
+    {
+      ACE_thread_mutex_t *lock =
+        ACE_reinterpret_cast (ACE_thread_mutex_t *,
+                              ACE_OS_Object_Manager::preallocated_object
+                              [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
+      ACE_OS::thread_mutex_lock (lock);
+
+      if (key_created_ == 1)
+        {
+          {
+            ACE_NO_HEAP_CHECK;
+
+            ACE_Thread::keyfree (log_msg_tss_key_);
+          }
+
+          key_created_ = 0;
+        }
+
+      ACE_OS::thread_mutex_unlock (lock);
+    }
+
+#endif /* (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) && ACE_MT_SAFE */
 
   ACE_MT (ACE_Log_Msg_Manager::close ());
 }

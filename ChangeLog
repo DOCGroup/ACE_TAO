@@ -1,3 +1,12 @@
+Tue Jul 10 11:32:26 2001  Tibor Kiss  <tkiss@mindmaker.hu>
+  
+        * ace/Log_Msg.cpp:
+          Completed the ACE_Log_Msg::close method with the
+ 	  ACE_Thread::keyfree (log_msg_tss_key_) and key_created_ = 0; to
+ 	  ensure restartability by multiple successive ACE::init and
+ 	  ACE::fini calls.  This fix prevent leaks from occurring when
+ 	  ACE::init() and ACE::fini() are called multiple times.
+
 Tue Jul 10 11:12:00 2001  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/OS_Dirent.{h, inl}: refactored XDIR, dirent usage for pSOS - 
