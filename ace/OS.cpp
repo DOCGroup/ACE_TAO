@@ -1380,7 +1380,7 @@ ACE_Thread_Adapter::invoke (void)
   void *status = 0;
 
   ACE_SEH_TRY {
-    status = (*func) (arg);  // Call thread entry point.
+    status = (void*) (*func) (arg);  // Call thread entry point.
   }
   ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER) {
     ACE_DEBUG ((LM_DEBUG, "(%t) Win32 structured exception exiting thread\n"));
