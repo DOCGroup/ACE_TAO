@@ -64,7 +64,7 @@ int be_visitor_interface_direct_collocated_sh::visit_interface (be_interface *no
           be_interface* parent =
             be_interface::narrow_from_decl (node->inherits()[i]);
           *os << "  public virtual "
-              << be_interface::relative_name (node->full_coll_name (be_interface::DIRECT),
+              << be_interface::relative_name (parent->full_coll_name (be_interface::DIRECT),
                                               node->full_coll_name (be_interface::DIRECT));
         }
     }
