@@ -57,7 +57,6 @@ Driver::Driver (void)
 
 Driver::~Driver (void)
 {
-  CORBA::release (this->orb_ptr_);
 }
 
 // initialize the driver
