@@ -170,7 +170,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "delete ACE_const_cast (" << node->name () 
-      << " *, _tao_elem);" << be_nl
+      << " *&, _tao_elem);" << be_nl
       << "_tao_elem = 0;" << be_uidt_nl
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl

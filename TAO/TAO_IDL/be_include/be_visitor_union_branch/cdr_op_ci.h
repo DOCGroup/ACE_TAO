@@ -73,6 +73,8 @@ public:
   virtual int visit_union (be_union *node);
   // visit union type
 
+  virtual int explicit_default (void);
+  // extra code generation for an explicit default case
 };
 
 #endif /*  _BE_VISITOR_UNION_BRANCH_CDR_OP_CI_H_ */
