@@ -3,16 +3,16 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_codegen.h
 //
 // = DESCRIPTION
-//   
+//
 //   Code generation
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -73,6 +73,8 @@ TAO_CodeGen::make_state (void)
     case TAO_OPERATION_CS:
     case TAO_OPERATION_SH:
     case TAO_OPERATION_SS:
+    case TAO_OPERATION_RETVAL_DECL_SS:
+    case TAO_OPERATION_RETVAL_ASSIGN_SS:
     case TAO_OPERATION_RESULT_SS:
       return TAO_BE_STATE_OPERATION::instance ();
     case TAO_ARGUMENT_CH:
@@ -120,10 +122,10 @@ TAO_CodeGen::upcase (const char *str)
 }
 
 // set the client header stream
-int 
+int
 TAO_CodeGen::client_header (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory 
+  // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
   // retrieve a specialized instance
@@ -157,7 +159,7 @@ TAO_CodeGen::client_header (const char *fname)
                 }
             }
           ACE_OS::strcat (macro_name, "_H_");
-          
+
           this->client_header_->print ("#if !defined (%s)\n", macro_name);
           this->client_header_->print ("#define %s\n\n", macro_name);
           *this->client_header_ << "#include \"tao/corba.h\"\n\n";
@@ -174,10 +176,10 @@ TAO_CodeGen::client_header (void)
 }
 
 // set the client stub stream
-int 
+int
 TAO_CodeGen::client_stubs (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory 
+  // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
   // retrieve a specialized instance
@@ -212,10 +214,10 @@ TAO_CodeGen::client_stubs (void)
 }
 
 // set the client inline stream
-int 
+int
 TAO_CodeGen::client_inline (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory 
+  // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
   // retrieve a specialized instance
@@ -236,10 +238,10 @@ TAO_CodeGen::client_inline (void)
 }
 
 // set the server header stream
-int 
+int
 TAO_CodeGen::server_header (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory 
+  // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
   // retrieve a specialized instance
@@ -294,10 +296,10 @@ TAO_CodeGen::server_header (void)
 }
 
 // set the server skeletons stream
-int 
+int
 TAO_CodeGen::server_skeletons (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory 
+  // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
   // retrieve a specialized instance
@@ -333,10 +335,10 @@ TAO_CodeGen::server_skeletons (void)
 }
 
 // set the server inline stream
-int 
+int
 TAO_CodeGen::server_inline (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory 
+  // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
   // retrieve a specialized instance
@@ -446,4 +448,3 @@ TAO_CodeGen::node (void)
 {
   return this->node_;
 }
-

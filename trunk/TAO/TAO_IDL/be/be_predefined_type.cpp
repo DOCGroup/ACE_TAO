@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_predefined_type.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -128,7 +128,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
   // computes the fully scoped typecode name
   compute_tc_name ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -138,7 +138,7 @@ be_predefined_type::compute_tc_name (void)
 {
   // start with the head as the CORBA namespace
   this->tc_name_ = new UTL_ScopedName (new Identifier ("CORBA", 1, 0, I_FALSE),
-                                       NULL); 
+                                       NULL);
 
   switch (this->pt ())
     {
@@ -238,8 +238,8 @@ be_predefined_type::compute_tc_name (void)
 //            CODE GENERATION METHODS
 // ----------------------------------------
 
-// Generates the client-side header information for the predefined type 
-int 
+// Generates the client-side header information for the predefined type
+int
 be_predefined_type::gen_client_header (void)
 {
   TAO_OutStream *ch; // output stream
@@ -255,7 +255,7 @@ be_predefined_type::gen_client_header (void)
 }
 
 // Generates the client-side stubs for the predefined type
-int 
+int
 be_predefined_type::gen_client_stubs (void)
 {
   TAO_OutStream *cs; // output stream
@@ -268,8 +268,8 @@ be_predefined_type::gen_client_stubs (void)
   return 0;
 }
 
-// Generates the server-side header information for the predefined type 
-int 
+// Generates the server-side header information for the predefined type
+int
 be_predefined_type::gen_server_header (void)
 {
   TAO_OutStream *sh; // output stream
@@ -283,7 +283,7 @@ be_predefined_type::gen_server_header (void)
 }
 
 // Generates the server-side skeletons for the predefined type
-int 
+int
 be_predefined_type::gen_server_skeletons (void)
 {
   TAO_OutStream *ss; // output stream
@@ -297,7 +297,7 @@ be_predefined_type::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_predefined_type::gen_client_inline (void)
 {
   // nothing to be done
@@ -305,7 +305,7 @@ be_predefined_type::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_predefined_type::gen_server_inline (void)
 {
   // nothing to be done
@@ -379,7 +379,20 @@ be_predefined_type::tc_size (void)
   return 4; // for the enum value
 }
 
+long
+be_predefined_type::tc_encap_len (void)
+{
+  // XXXASG - TODO what if it was of type Object? or one of the pseudo-objects
+  return 0; // no encapsulation
+}
+
+int
+be_predefined_type::gen_encapsulation (void)
+{
+  // XXXASG - TODO what if it was of type Object? or one of the pseudo-objects
+  return 0; // nothing to be done
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type)
 IMPL_NARROW_FROM_DECL (be_predefined_type)
-
