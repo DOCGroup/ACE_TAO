@@ -1,3 +1,11 @@
+Wed Aug 16 13:16:18 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosTrading (CPP_SRCS): 
+	* orbsvcs/orbsvcs/Makefile.CosEvent (CPP_SRCS): 
+	* orbsvcs/orbsvcs/Makefile.CosNaming (CPP_SRCS): 
+	  Added entries so that the new files *_Loader.* for the
+	  respective services are also compiled.
+	
 Tue Aug 15 19:05:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/RT_Policy_i.cpp: 
@@ -197,10 +205,6 @@ Sat Aug 12 09:34:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
   	  Added the signature of _tao_del_from_IOR_table.
 
 Fri Aug 11 12:03:41 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
-
-        * orbsvcs/orbsvcs/Makefile.CosNaming :
-        * orbsvcs/orbsvcs/Makefile.CosEvent  :
-	  Modified to add the new files CEC_Event_Loader.* and Naming_Loader.*
 
         * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
 	  Moved the initialization code to TAO_CEC_Event_Loader::init () and
