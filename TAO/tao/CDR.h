@@ -196,6 +196,7 @@ public:
 
   /// Create an input stream from an ACE_Data_Block
   TAO_InputCDR (ACE_Data_Block *data,
+                ACE_Message_Block::Message_Flags flag = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   TAO_DEF_GIOP_MAJOR,
@@ -205,8 +206,9 @@ public:
 
   /// Create an input stream from an ACE_Data_Block
   TAO_InputCDR (ACE_Data_Block *data,
-                size_t read_pointer_position,
-                size_t write_pointer_position,
+                ACE_Message_Block::Message_Flags flag = 0,
+                size_t read_pointer_position = 0,
+                size_t write_pointer_position = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   TAO_DEF_GIOP_MAJOR,

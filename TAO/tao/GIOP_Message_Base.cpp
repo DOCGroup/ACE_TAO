@@ -336,6 +336,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
   TAO_InputCDR input_cdr (this->message_handler_.steal_data_block (),
+                          0,
                           rd_pos,
                           wr_pos,
                           this->message_handler_.message_state ().byte_order,
@@ -393,6 +394,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is alos done in the higher layers.
   TAO_InputCDR input_cdr (this->message_handler_.steal_data_block (),
+                          0,
                           rd_pos,
                           wr_pos,
                           this->message_handler_.message_state ().byte_order,
