@@ -130,10 +130,14 @@ Cubit_Task::create_servants ()
 			   "implementation object&d\n",
 			   i), 2);
 
-      CORBA::OctetSeq obj_key;
-
-      obj_key.buffer = (CORBA::Octet *) obj_str;
-      obj_key.length = obj_key.maximum = ACE_OS::strlen (obj_str);
+      TAO_opaque obj_key (ACE_OS::strlen (obj_str));
+      for (CORBA::ULong i = 0;
+	   i < obj_key.maximum ();
+	   ++i)
+	{
+	  obj_key[i] = obj_str[i];
+	}
+      obj_key.length (obj_key.maximum ());
 
       CORBA::Object_ptr obj = 0;
 
