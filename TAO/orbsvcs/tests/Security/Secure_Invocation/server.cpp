@@ -80,10 +80,17 @@ main (int argc, char *argv[])
                            "is nil.\n"),
                           1);
 
-      Foo_i server_impl (orb.in (), security_current.in ());
+      Foo_i *server_impl = 0;
+
+      ACE_NEW_RETURN (server_impl,
+		      Foo_i (orb.in (), 
+			     security_current.in ()),
+		      -1);
+
+      PortableServer::ServantBase_var owner_transfer (server_impl);
 
       Foo::Bar_var server =
-        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        server_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Sanity check on SSLIOP profile equivalence.
