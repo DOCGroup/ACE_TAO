@@ -41,7 +41,9 @@ class ACE_Export ACE_CString
   //   empty string.
 public:
   friend ACE_Export ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+#if !defined (ACE_HAS_WINCE)
   friend ACE_Export ostream &operator<< (ostream &, const ACE_CString &);
+#endif /* ! ACE_HAS_WINCE */
 
   static const int npos;
   // No position constant
@@ -158,7 +160,9 @@ private:
 };
 
 ACE_Export ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+#if !defined (ACE_HAS_WINCE)
 ACE_Export ostream &operator<< (ostream &, const ACE_CString &);
+#endif /* ! ACE_HAS_WINCE */
 
 class ACE_Export ACE_SString
   // = TITLE
@@ -175,7 +179,9 @@ class ACE_Export ACE_SString
   //   ACE_Allocator with a persistable memory pool
 {
 public:
+#if !defined (ACE_HAS_WINCE)
   friend ACE_Export ostream &operator<< (ostream &, const ACE_SString &);
+#endif /* ! ACE_HAS_WINCE */
 
   static const int npos;
   // No position constant
@@ -280,7 +286,9 @@ private:
   // Pointer to data.
 };
 
+#if !defined (ACE_HAS_WINCE)
 ACE_Export ostream &operator<< (ostream &, const ACE_SString &);
+#endif /* ! ACE_HAS_WINCE */
 
 class ACE_Export ACE_WString
   // = TITLE
