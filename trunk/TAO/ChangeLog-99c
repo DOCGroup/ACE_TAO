@@ -2930,7 +2930,7 @@ Sun Sep 26 22:44:50 1999  Marina Spivak  <marina@cs.wustl.edu>
           not dealing with LocateReply before attempting to extract
           context data.
         * tao/IIOP_Transport.cpp (start_locate)
-        * tao/UIIOP_Transport.cpp (start_locate):
+        * tao/UIOP_Transport.cpp (start_locate):
           When sending LocateRequest, in the header we were incorrectly
           specifying the type of the message as Request (rather than
           LocateRequest), causing misunderstanding of the message on the
