@@ -33,7 +33,7 @@
 #define ACE_FILE_STREAM ACE_FILE_IO, ACE_FILE_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
-class ACE_FILE_Info
+class ACE_Export ACE_FILE_Info
 {
   // = TITLE
   //     Abstracts basic OS FILE information.

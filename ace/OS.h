@@ -362,7 +362,7 @@
 # endif /* ACE_NON_BLOCKING_BUG_DELAY */
 
 # if defined (_DEBUG) && !defined (ACE_HAS_WINCE)
-class ACE_No_Heap_Check
+class ACE_Export ACE_No_Heap_Check
 {
 public:
   ACE_No_Heap_Check (void)
@@ -748,7 +748,7 @@ struct ACE_OVERLAPPED
 };
 
 // Use pSOS time, wrapped . . .
-class ACE_PSOS_Time_t
+class ACE_Export ACE_PSOS_Time_t
 {
 public:
 
@@ -2073,7 +2073,7 @@ typedef HANDLE ACE_event_t;
 typedef HANDLE ACE_sema_t;
 #   else
 
-class ACE_sema_t
+class ACE_Export ACE_sema_t
 {
   // = TITLE
   // Semaphore simulation for Windows CE.
@@ -3857,7 +3857,7 @@ public:
 extern "C" ACE_Export
 void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
 
-class ACE_Cleanup_Info
+class ACE_Export ACE_Cleanup_Info
 {
   // = TITLE
   //     Hold cleanup information for thread/process
@@ -3889,7 +3889,7 @@ extern "C" ACE_Export void *ace_thread_adapter (void *args);
 class ACE_Thread_Manager;
 class ACE_Thread_Descriptor;
 
-class ACE_Thread_Adapter
+class ACE_Export ACE_Thread_Adapter
 {
   // = TITLE
   //     Converts a C++ function into a function <ace_thread_adapter>
@@ -5183,7 +5183,7 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #   define ACE_DEFAULT_THREAD_KEYS 64
 # endif /* ! ACE_DEFAULT_THREAD_KEYS */
 
-class ACE_TSS_Emulation
+class ACE_Export ACE_TSS_Emulation
 {
   // = TITLE
   //     Thread-specific storage emulation.

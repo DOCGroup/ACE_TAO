@@ -132,7 +132,7 @@ private:
 typedef ACE_Null_Mutex ACE_Select_Reactor_Token;
 #endif /* ACE_MT_SAFE */
 
-class ACE_Event_Tuple
+class ACE_Export ACE_Event_Tuple
 {
   // = TITLE
   //     An ACE_Event_Handler and its associated ACE_HANDLE.
