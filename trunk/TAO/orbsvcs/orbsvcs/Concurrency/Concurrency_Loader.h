@@ -29,22 +29,22 @@ class TAO_Concurrency_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
 public:
 
-  // Constructor
+  /// Constructor
   TAO_Concurrency_Loader (void);
 
-  // Destructor
+  /// Destructor
   ~TAO_Concurrency_Loader (void);
 
-  // Called by the Service Configurator framework to initialize the
-  // Event Service. Defined in <ace/Service_Config.h>
+  /// Called by the Service Configurator framework to initialize the
+  /// Event Service. Defined in <ace/Service_Config.h>
   virtual int init (int argc, char *argv[]);
 
-  // Called by the Service Configurator framework to remove the
-  // Event Service. Defined in <ace/Service_Config.h>
+  /// Called by the Service Configurator framework to remove the
+  /// Event Service. Defined in <ace/Service_Config.h>
   virtual int fini (void);
 
-  // This function call initializes the Concurrency Service given a 
-  // reference to the ORB and the command line parameters.
+  /// This function call initializes the Concurrency Service given a
+  /// reference to the ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, char *argv[]
                                    ACE_ENV_ARG_DECL)
@@ -52,8 +52,8 @@ public:
 
 
  protected:
+  /// Instance of the TAO_Concurrency_Server
   TAO_Concurrency_Server concurrency_server_;
-  // Instance of the TAO_Concurrency_Server
 
 private:
 
