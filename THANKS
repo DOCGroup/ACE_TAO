@@ -825,7 +825,7 @@ Hani Mawlawi <hmawlawi@wecan.com>
 Benedikt Eric Heinen <beh@icemark.ch>
 Jason Topaz <topaz@panix.com>
 Dmitry Ergy <dergy@websci.ru>
-Airat A. Sadreev <airat@hq.tatenergo.ru> 
+Airat A. Sadreev <airat@hq.tatenergo.ru>
 Klaus Hofmann <Klaus.Hofmann@astrum.de>
 Miroslav Koncar <mkoncar@mail.com>
 Extern Chatterji <Extern.Chatterji@kmweg.de>
@@ -835,7 +835,7 @@ Marcelo Matus <mmatus@dinha.acms.arizona.edu>
 R Seshardi <rseshadri@lucent.com>
 Stephan Kulow <coolo@kde.org>
 Alexander Belopolsky <belopolsky@my-deja.com>
-Ben Bourner <ben@orion.no> 
+Ben Bourner <ben@orion.no>
 Lalitha Chinthamani <lchinthamani@oresis.com>
 Thomas Huang <Thomas.Huang@jpl.nasa.gov>
 Sankaranarayanan K. V <sankar@miel.mot.com>
@@ -848,6 +848,7 @@ Mirko Brandner <mbrandner@yahoo.com>
 Yuval Yosef <yuvi@isdn.net.il>
 Chad Elliott <elliott_c@ociweb.com>
 David X. Callaway <david.x.callaway@intel.com>
+Soren Ilsoe <soren.ilsoe@tellabs.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
