@@ -73,12 +73,12 @@ void* POA_PortableServer::CurrentBase::_downcast (
   return 0;
 }
 
-void POA_PortableServer::CurrentBase::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::CurrentBase::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -224,12 +224,12 @@ void* POA_PortableServer::Policy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::Policy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -375,12 +375,12 @@ void* POA_PortableServer::ThreadPolicy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::ThreadPolicy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::ThreadPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -516,12 +516,12 @@ void* POA_PortableServer::LifespanPolicy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::LifespanPolicy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::LifespanPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -657,12 +657,12 @@ void* POA_PortableServer::IdUniquenessPolicy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::IdUniquenessPolicy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::IdUniquenessPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -798,12 +798,12 @@ void* POA_PortableServer::IdAssignmentPolicy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::IdAssignmentPolicy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::IdAssignmentPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -939,12 +939,12 @@ void* POA_PortableServer::ImplicitActivationPolicy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::ImplicitActivationPolicy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::ImplicitActivationPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -1080,12 +1080,12 @@ void* POA_PortableServer::ServantRetentionPolicy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::ServantRetentionPolicy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::ServantRetentionPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -1221,12 +1221,12 @@ void* POA_PortableServer::RequestProcessingPolicy::_downcast (
   return 0;
 }
 
-void POA_PortableServer::RequestProcessingPolicy::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::RequestProcessingPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -1416,12 +1416,12 @@ void* POA_PortableServer::POAManager::_downcast (
   return 0;
 }
 
-void POA_PortableServer::POAManager::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::POAManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -1606,12 +1606,12 @@ void* POA_PortableServer::AdapterActivator::_downcast (
   return 0;
 }
 
-void POA_PortableServer::AdapterActivator::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::AdapterActivator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -1735,12 +1735,12 @@ void* POA_PortableServer::ServantManager::_downcast (
   return 0;
 }
 
-void POA_PortableServer::ServantManager::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::ServantManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -1868,12 +1868,12 @@ void* POA_PortableServer::ServantActivator::_downcast (
   return 0;
 }
 
-void POA_PortableServer::ServantActivator::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::ServantActivator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -2034,12 +2034,12 @@ void* POA_PortableServer::ServantLocator::_downcast (
   return 0;
 }
 
-void POA_PortableServer::ServantLocator::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::ServantLocator::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -2709,12 +2709,12 @@ void* POA_PortableServer::POA::_downcast (
   return 0;
 }
 
-void POA_PortableServer::POA::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::POA::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
@@ -3190,12 +3190,12 @@ void* POA_PortableServer::Current::_downcast (
   return 0;
 }
 
-void POA_PortableServer::Current::dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
+void POA_PortableServer::Current::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   CORBA::String opname = req.op_name (); // retrieve operation name
   // find the skeleton corresponding to this opname
-  if (this->find (opname, skel) == -1)
+  if (this->_find (opname, skel) == -1)
   {
     env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));

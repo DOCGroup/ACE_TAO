@@ -10,6 +10,7 @@
 
 class TAO_ServantBase;
 class TAO_Local_ServantBase;
+class TAO_DynamicImplementation;
 
 class TAO_Export PortableServer{
 public:
@@ -18,6 +19,7 @@ public:
   typedef ServantBase *Servant;
 
   typedef TAO_Local_ServantBase LocalServantBase;
+  typedef TAO_DynamicImplementation DynamicImplementation;
 
   typedef CORBA::String Identifier;
   typedef CORBA::String_var Identifier_var;

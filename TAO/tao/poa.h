@@ -19,31 +19,31 @@
 #if !defined (POA_H)
 #define POA_H
 
-// CORBA 
+// CORBA
 #include "tao/corba.h"
 
 // Stubs
-#include "tao/poaC.h" 
+#include "tao/poaC.h"
 
-// Servant 
+// Servant
 #include "tao/servant_base.h"
 
 // Skeletons
-#include "tao/poaS.h" 
+#include "tao/poaS.h"
 
-// String 
+// String
 #include "ace/SString.h"
 //#include "string"
 
-// Map 
+// Map
 //#include "map"
 #include "ace/Map_Manager.h"
 
-// Vector 
+// Vector
 //#include "vector"
 #include "ace/Containers.h"
 
-// Locking 
+// Locking
 #include "ace/Synch.h"
 
 // Active Object Table
@@ -62,7 +62,7 @@ public:
   virtual PortableServer::ThreadPolicyValue value (CORBA::Environment &env);
 
   virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
-  
+
   virtual void destroy (CORBA::Environment &env);
 
 protected:
@@ -79,7 +79,7 @@ public:
   virtual PortableServer::LifespanPolicyValue value (CORBA::Environment &env);
 
   virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
-  
+
   virtual void destroy (CORBA::Environment &env);
 
 protected:
@@ -96,7 +96,7 @@ public:
   virtual PortableServer::IdUniquenessPolicyValue value (CORBA::Environment &env);
 
   virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
-  
+
   virtual void destroy (CORBA::Environment &env);
 
 protected:
@@ -113,7 +113,7 @@ public:
   virtual PortableServer::IdAssignmentPolicyValue value (CORBA::Environment &env);
 
   virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
-  
+
   virtual void destroy (CORBA::Environment &env);
 
 protected:
@@ -130,7 +130,7 @@ public:
   virtual PortableServer::ImplicitActivationPolicyValue value (CORBA::Environment &env);
 
   virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
-  
+
   virtual void destroy (CORBA::Environment &env);
 
 protected:
@@ -147,7 +147,7 @@ public:
   virtual PortableServer::ServantRetentionPolicyValue value (CORBA::Environment &env);
 
   virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
-  
+
   virtual void destroy (CORBA::Environment &env);
 
 protected:
@@ -164,7 +164,7 @@ public:
   virtual PortableServer::RequestProcessingPolicyValue value (CORBA::Environment &env);
 
   virtual PortableServer::Policy_ptr copy (CORBA::Environment &env);
-  
+
   virtual void destroy (CORBA::Environment &env);
 
 protected:
@@ -177,34 +177,36 @@ public:
 
   TAO_POA_Policies (void);
 
-  PortableServer::ThreadPolicyValue thread (void) const;
-  void thread (PortableServer::ThreadPolicyValue value);
+  virtual PortableServer::ThreadPolicyValue thread (void) const;
+  virtual void thread (PortableServer::ThreadPolicyValue value);
 
-  PortableServer::LifespanPolicyValue lifespan (void) const;
-  void lifespan (PortableServer::LifespanPolicyValue value);
+  virtual PortableServer::LifespanPolicyValue lifespan (void) const;
+  virtual void lifespan (PortableServer::LifespanPolicyValue value);
 
-  PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
-  void id_uniqueness (PortableServer::IdUniquenessPolicyValue value);
+  virtual PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
+  virtual void id_uniqueness (PortableServer::IdUniquenessPolicyValue value);
 
-  PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
-  void id_assignment (PortableServer::IdAssignmentPolicyValue value);
+  virtual PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
+  virtual void id_assignment (PortableServer::IdAssignmentPolicyValue value);
 
-  PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
-  void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
+  virtual PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
+  virtual void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
 
-  PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
-  void servant_retention (PortableServer::ServantRetentionPolicyValue value);
+  virtual PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
+  virtual void servant_retention (PortableServer::ServantRetentionPolicyValue value);
 
-  PortableServer::RequestProcessingPolicyValue request_processing (void) const;
-  void request_processing (PortableServer::RequestProcessingPolicyValue value);
+  virtual PortableServer::RequestProcessingPolicyValue request_processing (void) const;
+  virtual void request_processing (PortableServer::RequestProcessingPolicyValue value);
 
-  void parse_policies (const PortableServer::PolicyList& policies,
-                       CORBA::Environment &env);
+  virtual void parse_policies (const PortableServer::PolicyList &policies,
+                               CORBA::Environment &env);
 
 protected:
 
-  void parse_policy (const PortableServer::Policy_ptr policy,
-                     CORBA::Environment &env);
+  virtual void parse_policy (const PortableServer::Policy_ptr policy,
+                             CORBA::Environment &env);
+
+  virtual int validity_check (void);
 
   PortableServer::ThreadPolicyValue thread_;
 
@@ -230,7 +232,7 @@ public:
 
   virtual PortableServer::POA_ptr create_POA (const char *adapter_name,
                                               PortableServer::POAManager_ptr poa_manager,
-                                              const PortableServer::PolicyList& policies,
+                                              const PortableServer::PolicyList &policies,
                                               CORBA::Environment &env);
 
   virtual PortableServer::POA_ptr find_POA (const char *adapter_name,
@@ -335,7 +337,7 @@ public:
            TAO_POA_Manager &poa_manager,
            const TAO_POA_Policies &policies,
            TAO_POA *parent,
-           TAO_Object_Table &active_object_table,
+           TAO_Object_Table &active_object_map,
            CORBA::Environment &env);
 
   virtual TAO_POA *clone (const String &adapter_name,
@@ -348,7 +350,7 @@ public:
                           TAO_POA_Manager &poa_manager,
                           const TAO_POA_Policies &policies,
                           TAO_POA *parent,
-                          TAO_Object_Table &active_object_table,
+                          TAO_Object_Table &active_object_map,
                           CORBA::Environment &env);
 
   virtual ~TAO_POA (void);
@@ -358,8 +360,8 @@ public:
                                  void *context,
                                  CORBA::Environment &env);
 
-  virtual PortableServer::Servant locate_servant (const TAO::ObjectKey &key,
-                                                  CORBA::Environment &env);
+  virtual int locate_servant (const TAO::ObjectKey &key,
+                              CORBA::Environment &env);
 
   static char name_separator (void);
 
@@ -370,9 +372,6 @@ public:
   static CORBA::ULong id_separator_length (void);
 
 protected:
-
-  virtual PortableServer::Servant locate_servant_i (const TAO::ObjectKey &key,
-                                                    CORBA::Environment &env);
 
   virtual TAO_POA *create_POA (const String &adapter_name,
                                TAO_POA_Manager &poa_manager,
@@ -387,7 +386,7 @@ protected:
   virtual TAO_POA *find_POA (const String &adapter_name,
                              CORBA::Boolean activate_it,
                              CORBA::Environment &env);
-  
+
   virtual TAO_POA *find_POA_i (const String &adapter_name,
                                CORBA::Boolean activate_it,
                                CORBA::Environment &env);
@@ -395,7 +394,7 @@ protected:
   virtual TAO_POA *find_POA_i_optimized (const String &adapter_name,
                                          CORBA::Boolean activate_it,
                                          CORBA::Environment &env);
-  
+
   virtual void destroy_i (CORBA::Boolean etherealize_objects,
                           CORBA::Boolean wait_for_completion,
                           CORBA::Environment &env);
@@ -419,10 +418,10 @@ protected:
 
   virtual void deactivate_object_i (const PortableServer::ObjectId &oid,
                                     CORBA::Environment &env);
-  
+
   virtual CORBA::Object_ptr create_reference_i (const char *intf,
                                                 CORBA::Environment &env);
-  
+
   virtual PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant,
                                                      CORBA::Environment &env);
 
@@ -433,7 +432,7 @@ protected:
 
   virtual TAO_POA_Policies &policies (void);
 
-  virtual TAO_Object_Table &active_object_table (void);
+  virtual TAO_Object_Table &active_object_map (void);
 
   virtual void delete_child (const String &child,
                              CORBA::Environment &env);
@@ -447,26 +446,55 @@ protected:
 
   virtual int leaf_poa_name (const String &adapter_name,
                              CORBA::Environment &env);
-  
+
   virtual void parse_poa_name (const TAO_POA::String &adapter_name,
                                TAO_POA::String &topmost_poa_name,
                                TAO_POA::String &tail_poa_name,
                                CORBA::Environment &env);
 
   virtual PortableServer::ObjectId *create_object_id (void);
-  
+
   virtual TAO::ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 
-  virtual int is_poa_generated_id (const PortableServer::ObjectId& id);
+  virtual int is_poa_generated_id (const PortableServer::ObjectId &id);
 
-  virtual int is_poa_generated_key (const TAO::ObjectKey& key);
+  virtual int is_poa_generated_key (const TAO::ObjectKey &key);
 
-  virtual int parse_key (const TAO::ObjectKey &key, 
+  virtual int parse_key (const TAO::ObjectKey &key,
                          String &poa_name,
                          PortableServer::ObjectId_out id,
-                         CORBA::Boolean &persistent);
+                         CORBA::Boolean &persistent,
+                         ACE_Time_Value &poa_creation_time);
 
-  virtual CORBA::Boolean persistent (void);  
+  virtual int locate_servant_i (const TAO::ObjectKey &key,
+                                CORBA::Environment &env);
+
+  virtual PortableServer::Servant locate_poa_and_servant_i (const TAO::ObjectKey &key,
+                                                            const char *operation,
+                                                            PortableServer::ObjectId_out id,
+                                                            TAO_POA *&poa_impl,
+                                                            CORBA::Environment &env);
+
+  virtual TAO_POA *locate_poa_i (const TAO::ObjectKey &key,
+                                 PortableServer::ObjectId_out id,
+                                 CORBA::Environment &env);
+
+  virtual void dispatch_servant_i (const TAO::ObjectKey &key,
+                                   CORBA::ServerRequest &req,
+                                   void *context,
+                                   CORBA::Environment &env);
+
+  virtual void pre_invoke (const TAO::ObjectKey &key,
+                           const PortableServer::ObjectId &id,
+                           CORBA::Environment &env);
+
+  virtual void post_invoke (PortableServer::Servant servant,
+                            const char *operation,
+                            CORBA::Environment &env);
+
+  virtual CORBA::Boolean persistent (void);
+
+  virtual const ACE_Time_Value &creation_time (void);
 
   virtual const String &object_key_type (void);
 
@@ -477,7 +505,7 @@ protected:
   static const char *ObjectId_to_const_string (const PortableServer::ObjectId &id);
 
   static const wchar_t *ObjectId_to_const_wstring (const PortableServer::ObjectId &id);
-  
+
   static const char *ObjectKey_to_const_string (const TAO::ObjectKey &key);
 
   String name_;
@@ -490,9 +518,9 @@ protected:
 
   TAO_POA *parent_;
 
-  TAO_Object_Table *active_object_table_;
+  TAO_Object_Table *active_object_map_;
 
-  int delete_active_object_table_;
+  int delete_active_object_map_;
 
   PortableServer::AdapterActivator_var adapter_activator_;
 
@@ -511,6 +539,10 @@ protected:
   int closing_down_;
 
   CORBA::ULong counter_;
+
+  ACE_Time_Value creation_time_;
+
+  static const int max_space_required_for_ulong;
 };
 
 class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
@@ -551,16 +583,16 @@ protected:
 
   virtual ACE_Lock &lock (void);
 
-  virtual void remove_poa (TAO_POA *poa, 
+  virtual void remove_poa (TAO_POA *poa,
                            CORBA::Environment &env);
 
-  virtual void remove_poa_i (TAO_POA *poa, 
+  virtual void remove_poa_i (TAO_POA *poa,
                              CORBA::Environment &env);
 
-  virtual void register_poa (TAO_POA *poa, 
+  virtual void register_poa (TAO_POA *poa,
                              CORBA::Environment &env);
 
-  virtual void register_poa_i (TAO_POA *poa, 
+  virtual void register_poa_i (TAO_POA *poa,
                                CORBA::Environment &env);
 
   Processing_State state_;
@@ -570,8 +602,8 @@ protected:
   ACE_Lock_Adapter<ACE_Null_Mutex> lock_;
 
   typedef ACE_Unbounded_Set<TAO_POA *> POA_COLLECTION;
-  
-  POA_COLLECTION poa_collection_; 
+
+  POA_COLLECTION poa_collection_;
 };
 
 class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActivator
@@ -592,25 +624,25 @@ public:
                     const TAO_POA_Policies &policies,
                     TAO_POA *parent,
                     CORBA::Environment &env);
-  
+
   TAO_Strategy_POA (const String &adapter_name,
                     TAO_POA_Manager &poa_manager,
                     const TAO_POA_Policies &policies,
                     TAO_POA *parent,
-                    TAO_Object_Table &active_object_table,
+                    TAO_Object_Table &active_object_map,
                     CORBA::Environment &env);
-  
+
   virtual TAO_POA *clone (const String &adapter_name,
                           TAO_POA_Manager &poa_manager,
                           const TAO_POA_Policies &policies,
                           TAO_POA *parent,
                           CORBA::Environment &env);
-  
+
   virtual TAO_POA *clone (const String &adapter_name,
                           TAO_POA_Manager &poa_manager,
                           const TAO_POA_Policies &policies,
                           TAO_POA *parent,
-                          TAO_Object_Table &active_object_table,
+                          TAO_Object_Table &active_object_map,
                           CORBA::Environment &env);
 
   virtual ~TAO_Strategy_POA (void);
@@ -666,73 +698,79 @@ class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 
 public:
   // = Specification-mandated methods
-  
-  PortableServer::POA_ptr get_POA (CORBA::Environment &env);
-  // Return pointer to the invoking POA.  This has _out
-  // semantics. (Irfan is this correct?)  Raises the
+
+  virtual PortableServer::POA_ptr get_POA (CORBA::Environment &env);
+  // Return pointer to the invoking POA.  Raises the
   // <CORBA::NoContext> exception.
 
-
-  PortableServer::ObjectId *get_object_id (CORBA::Environment &env);
+  virtual PortableServer::ObjectId *get_object_id (CORBA::Environment &env);
   // Return pointer to the object id through which this was invoked.
   // This may be necessary in cases where a <Servant> is serving under
-  // the guise of multiple object ids.  This has _out semantics
-  // (Irfan, is this correct?)  Raises the <CORBA::NoContext>
-  // exception.
+  // the guise of multiple object ids.  This has _out semantics Raises
+  // the <CORBA::NoContext> exception.
 
   // = TAO Extensions
 
-  void clear (void);
+  virtual void clear (void);
   // Clear any prior settings made.  This will make things which can
   // throw the <CORBA::NoContext> exception raise it if invoked
   // without a corresponding <set_*> operation.
 
-  int context_is_valid (void);
+  virtual int context_is_valid (void);
   // Returns non-zero if the context is valid, i.e., if it would be
   // impossible for a <CORBA::NoContext> exception to be raised.
-  
-  void POA_impl (TAO_POA *impl);
+
+  virtual void POA_impl (TAO_POA *impl);
   // Set the POA implementation.
 
-  TAO_POA *POA_impl (void) const;
+  virtual TAO_POA *POA_impl (void) const;
   // Get the POA imeplemantation
 
-  void object_id (const PortableServer::ObjectId &id);
+  virtual void object_id (const PortableServer::ObjectId &id);
   // Set the object ID.
 
-  const PortableServer::ObjectId &object_id (void) const;
+  virtual const PortableServer::ObjectId &object_id (void) const;
   // Get the object ID.
 
-  void object_key (const TAO::ObjectKey &key);
+  virtual void object_key (const TAO::ObjectKey &key);
   // Set the object key.
 
-  const TAO::ObjectKey &object_key (void) const;
+  virtual const TAO::ObjectKey &object_key (void) const;
   // Get the object key.
 
-  void in_upcall (int yesno);
+  virtual void in_upcall (int yesno);
   // Set whether we're in an upcall (non-zero is yes).
 
-  int in_upcall (void) const;
+  virtual int in_upcall (void) const;
   // Get whether we're in an upcall (non-zero is yes).
+
+  virtual PortableServer::ServantLocator::Cookie locator_cookie (void) const;
+  // Get the Servant Locator's cookie
+
+  virtual void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
+  // Set the Servant Locator's cookie
 
   TAO_POA_Current (void);
   // Constructor
 
   virtual ~TAO_POA_Current (void);
   // Destructor
-  
+
 private:
   TAO_POA *poa_impl_;
   // The POA implementation invoking an upcall
-  
+
   const PortableServer::ObjectId *object_id_;
   // The object ID of the current context.
-  
+
   int in_upcall_;
   // Flag which indicates whether we're in an upcall.
-  
+
   const TAO::ObjectKey *object_key_;
   // The object key of the current context.
+
+  PortableServer::ServantLocator::Cookie cookie_;
+  // Servant Locator's cookie
 
   // = Hidden because we don't allow these
   TAO_POA_Current (const TAO_POA_Current &);
