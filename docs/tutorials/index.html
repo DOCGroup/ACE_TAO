@@ -11,47 +11,34 @@
 <H3>
 ACE Tutorials</H3>
 
-<HR WIDTH="100%">The original audience for these tutorials was the <A HREF="http://www.lads.com">Automated
-Design Systems</A> (ADS) IPC team, lead by <A HREF="mailto:jcej@lads.com">James
-Johnson</A>. Since then, the scope has been changed to include anyone who
-wants to learn about the ACE framework. Hopefully, even experienced ACE
-programmers will find something new here. With a framework as encompassing
-as ACE, it is easy to become an expert in one area and know little or nothing
+The original audience for these tutorials was the <A
+HREF="http://www.lads.com">Automated Design Systems</A> (ADS) IPC
+team, lead by <A HREF="mailto:jcej@lads.com">James Johnson</A>. Since
+then, the scope has been changed to include anyone who wants to learn
+about the ACE framework. Hopefully, even experienced ACE programmers
+will find something new here. With a framework as encompassing as ACE,
+it is easy to become an expert in one area and know little or nothing
 about others.
 
-<P>
-<HR WIDTH="100%">
-<H3>
-What is ACE?</H3>
-The <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A> framework
-was developed mostly by <A HREF="http://www.cs.wustl.edu/~schmidt">Douglas
+<P> <HR WIDTH="100%"> <H3> What is ACE?</H3> The <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A> framework was
+developed mostly by <A HREF="http://www.cs.wustl.edu/~schmidt">Douglas
 C. Schmidt's</A> team at Washington University. The framework attempts
-to abstract the details of many things across many operating systems. Some
-of the things abstracted include: network programming, multi-threading,
-shared memory and resource locking. ACE has been <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/etc/ACE-porting.html">ported</A>
-and tested on a wide range of OS platforms including <A HREF="http://www.microsoft.com">Win32</A>
-(i.e., WinNT 3.5.x, 4.x, Win95, and WinCE using MSVC++ and Borland C++
-on Intel and Alpha platforms), most versions of UNIX (e.g., <A HREF="http://www.sun.com">Solaris</A>
-1.x and 2.x on SPARC and Intel, <A HREF="http://www.sgi.com/">SGI IRIX</A>
-5.x and 6.x, DG/UX, <A HREF="http://www.hp.com/">HP-UX</A> 9.x, 10.x, and
-11.x, <A HREF="http://www.unix.digital.com/">DEC UNIX</A> 3.x and 4.x,
-<A HREF="http://www.austin.ibm.com/software/aix_os.html">AIX</A> 3.x and
-4.x, DG/UX, UnixWare, <A HREF="http://www.sco.com/">SCO</A>, and freely
-available UNIX implementations like <A HREF="http://www.labs.redhat.com/">Linux</A>,
-<A HREF="http://www.freebsd.org/">FreeBSD</A>, and <A HREF="http://www.netbsd.org/">NetBSD</A>),
-real-time operating systems (e.g., <A HREF="http://www.lynx.com/">LynxOS</A>,
-<A HREF="http://www.wrs.com">VxWorks</A>, and <A HREF="http://www.isi.com/">PSoS</A>),
-and <A HREF="http://www.s390.ibm.com/products/oe/index.html">MVS OpenEdition</A>.
-A single <A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/ACE-directory.html">source
-tree</A> is used for all these platforms. There is also a <A HREF="http://www.cs.wustl.edu/~eea1/JACE.html">Java</A>
-version of ACE.
+to abstract the details of many things across many operating
+systems. Some of the things abstracted include: network programming,
+multi-threading, shared memory and resource locking. 
+<!--#include virtual="/~schmidt/ACE-versions-i.html" -->
+
+<HR WIDTH="50%" align=left>
 <H3>
 Why Use ACE?</H3>
 A key reason to use ACE is simple: <I>write a multi-threaded networked
 application on one platform and quickly be able to use it on another</I>.
 This is important for many projects because it is necessary for applications
 to communicate with one another. For instance, many applications will exist
-on both UNIX and Win32 platforms within a local area network.
+on both UNIX and Win32 platforms within a local area network. <P>
+
+<HR WIDTH="50%" align=left>
 <H3>
 What about TAO?</H3>
 In the early stages, these tutorials won't address The ACE ORB (<A HREF="http://www.cs.wustl.edu/~schmidt">TAO</A>).
@@ -64,12 +51,10 @@ It's rare when folks want to write documentation, so nothing will be refused!
 <H3>
 The Tutorials</H3>
 
-<UL>
+<P><HR WIDTH="50%" align=left><P>
 <H4>
 Your basic Client/Server hookup</H4>
-</UL>
 
-<OL>
 <OL>
 <LI>
 <A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/001/page01.html">A
@@ -88,6 +73,7 @@ a Client</A></LI>
 much <I>cooler</I> client</A></LI>
 </OL>
 
+<P><HR WIDTH="50%" align=left><P>
 <H4>
 A word about concurrency</H4>
 
@@ -105,6 +91,7 @@ like to dedicate... a thread to each connection.</A></LI>
 pool our resources:&nbsp; a fixed-size pool of threads.</A></LI>
 </OL>
 
+<P><HR WIDTH="50%" align=left><P>
 <H4>
 Finding servers on your network</H4>
 
@@ -112,6 +99,7 @@ Finding servers on your network</H4>
 <LI>
 <A HREF="008/page01.html">Calling
 all servers!</A></LI>
+
 <!--
 <LI>
 <A HREF="009/page01.html">Discriminating tastes...</A></LI>
@@ -128,16 +116,13 @@ React to this!</LI>
 putq, putq, putq...</LI>
 -->
 </OL>
-</OL>
 <HR>
 
-<P>Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/etc/ACE-tutorials.html">ACE
+<P>Back to the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-tutorials.html">ACE
 tutorials</A> page.
 
-<P><!--<EM>
-Visitor #
-from 
-<EM><br> --><I>Last modified 00:20:43 CDT 26
-August 1998</I>
+<P>
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
 </HTML>
