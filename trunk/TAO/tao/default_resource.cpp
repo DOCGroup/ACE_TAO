@@ -431,7 +431,11 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
       break;
 
     case TAO_REACTOR_TP:
-      ACE_NEW_RETURN (impl, ACE_TP_Reactor, 0);
+      ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
+                                            (ACE_Timer_Queue*)0,
+                                            this->reactor_mask_signals_),
+                      0);
+      break;
       break;
     }
   return impl;
