@@ -89,6 +89,7 @@ class Static_Log_Message_Receiver
   // = DESCRIPTION
   //  This class contains a static log_record member function that
   //  prints the content of log_records on stderr.
+{
 public:
   static void log_record(const char *hostname, 
                          ACE_Log_Record &record);
