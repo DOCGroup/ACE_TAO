@@ -29,7 +29,7 @@ process</A>, as well.  And as you start working with ACE, you might
 want to consult the <a href="docs/ACE-FMM.html">ACE Frequently Made
 Mistakes page</a>.  If you encounter any problems or would like to request
 an enhancement, then use our
-<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/usage-bugzilla.html">bug tracking system</a> to submit a report.<P>
+<a href="docs/usage-bugzilla.html">bug tracking system</a> to submit a report.<P>
 
 
 <H4>Document Index</H4>
@@ -1122,19 +1122,20 @@ existence.  The earlier ones have the bug, while later ones have it
 fixed.  The service pack downloadable from Microsoft's web site as of
 June 16, 1998 works fine.  The CD containing SP3, if it has part
 number X03-50158 on the disc (the part number on the jacket is
-probably different), also works fine.  <P>
-
-So, if you are experiencing problems with SP3, get a newer one - it'll
-probably work.  Sheesh...<p>
-
-We no longer actively support MSVC 4.x.  ACE might work with the
-compiler but not without some work.<p>
+probably different), also works fine.  
 
 Note, however, that regardless of the version of SP3, there are some
 STL bugs in SP3 which you should get corrected.  Please see <A
 HREF="http://www.dinkumware.com/vc_fixes.html">http://www.dinkumware.com/vc_fixes.html</A>
 for details.  Thank you to <A HREF="mailto:ben@jetpen.com">Ben Eng</A>
-for the pointer to the STL fixes.
+for the pointer to the STL fixes.<P>
+
+Right now there is a SP4 (and hopefully only one of them) which fixes a 
+deadlock problem in the STL. <P>
+
+We no longer actively support MSVC 4.x or earlier.  ACE might work with 
+these compilers but probably not without a bit of effort. <P>
+
 
 <OL>
   <LI>Uncompress the ACE distribution into a directory, where it will create a
@@ -1148,30 +1149,34 @@ for the pointer to the STL fixes.
       <BR>
       <CODE>#include "ace/config-win32.h"</CODE><BR>
       <BR>
-  <LI>Now load up the project file for ACE (ACE_ROOT\ace\ace.dsw). <BR><BR>
-  <LI>Each project will contain 8 different configurations.  These
-      are a mixture of Debug/Release, Unicode/non-Unicode, and
-      Static/Dynamic library versions for both i386 and Alpha machines.
-      Make sure you are building the one you'll use.  All these
+  <LI>Now load up the project file for ACE (ACE_ROOT\ace\ace.dsw). <BR>
+      <BR>
+  <LI>Each project will contain several different configurations.  These
+      are a mixture of Debug/Release, MFC/Non-MFC, and Static/Dynamic 
+      library versions for both i386 and sometimes Alpha machines.
+      Make sure you are building the one you'll use (for example, the 
+      debug tests need the debug version of ACE, and so on).  All these
       different configurations are provided for your convenience.  You
       can either adopt the scheme to build your applications with
       different configurations, or use <code>ace/config.h</code> to
-      tweak with the default settings on NT.
+      tweak with the default settings on NT.<BR>
       <STRONG>Note:</STRONG> If you
       use the dynamic libraries, make sure you include ACE_ROOT\bin
-      in your PATH whenever you run programs that use ACE.<BR><BR>
+      in your PATH whenever you run programs that uses ACE.  Otherwise
+      you may experience problems finding ace.dll or aced.dll.<BR>
+      <BR>
   <LI>If you are building for Windows NT then you can start building
-      now.  If you are building on Windows 95 or Windows 98, then you
-      should add the line <BR>
+      without anymore changes.  If you are building on Windows 9x/Me, 
+      then you should add the line <BR>
       <BR>
       <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h and it
-      will turn off Windows NT 4 specific code.<BR>
+      will turn off some Windows NT specific code in ACE.<BR>
       <BR>
   <li>If you want to use the standard C++ headers (iostream, cstdio, ...
-      as defined by the C++ Standard Draft 2) that comes with MSVC 5,
-      then add the line <BR>
+      as defined by the C++ Standard Draft 2) that comes with MSVC,
+      then add the line: <BR>
       <BR>
       <CODE>#define ACE_HAS_STANDARD_CPP_LIBRARY 1</CODE><BR>
       <BR>
@@ -1184,49 +1189,37 @@ for the pointer to the STL fixes.
       <br>
       <code>#define ACE_HAS_MFC 1</code><br>
       <br>
-      By default, all ACE examples use DLL version of run-time libraries
-      regardless you are building  DLL or static version of ACE.  You
-      can still choose to link ACE statically or dynamically
-      regardless of run-time libraries.  The reason of choosing to
-      link run-time library dynamically is almost every NT box has
-      these library installed and to save disk space. If
-      you prefer to link MFC as a static library into ACE, you can do
-      this by defining <code>ACE_USES_STATIC_MFC</code> in your
-      <code>config.h</code> file.  If you insist on linking everything
-      statically, you'll have to modify the project file yourself.<p>
-  <li>Static version of ACE libraries are build with the following macros defined:<br>
-      <br>
-      <code>ACE_HAS_DLL=0</code><br>
-      <code>ACE_NO_INLINE</code><br>
-      <br>
-      You should also have them defined in you application projects if you
-      want to use the default static ACE libraries with them.<p>
-
-  <li>The default project files which build ACE library have various
-      configurations to build dynamic/static, with or without Unicode
-      support.  Although we recommend using the dynamic library, if,
-      for some reasons, you would rather work with static library,
-      you'll need to add the line <BR>
+      By default, all of the ACE projects use the DLL versions of the 
+      MSVC run-time libraries.  You can still choose use the static (LIB)
+      versions of ACE libraries regardless of run-time libraries.  The 
+      reason we chose to link only the dynamic run-time library is that
+      almost every NT box has these library installed and to save disk 
+      space.  If you prefer to link MFC as a static library into ACE, you 
+      can do this by defining <code>ACE_USES_STATIC_MFC</code> in your
+      <code>config.h</code> file.  However, if you would like to link 
+      everything (including the MSVC run-time libraries) statically, 
+      you'll need to modify the project files in ACE yourself.<p>
+  <li>Static version of ACE libraries are build with 
+      <code>ACE_AS_STATIC_LIBS</code><br> defined.  This macro should 
+      also be used in application projects that link to static ACE 
+      libraries<BR>
       <BR>
-      <CODE>#define ACE_HAS_DLL 0</CODE><BR>
-      <BR>
-      before the #include statement in ACE_ROOT\ace\config.h.
-      Optionally but highly recommended, you can also add the line <BR>
+      Optionally you can also add the line <BR>
       <BR>
       <CODE>#define ACE_NO_INLINE</CODE><BR>
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h to disable
       inline function and reduce the size of static libraries (and your
-      executables.)  Notice that you need to use DLL version of
-      run-time libraries even you are using ACE as a static library.
-      That's the default behavior.<BR><BR>
-
+      executables.)<BR>
+      <BR>
   <li>ACE DLL and LIB naming scheme:<br>
       <br>
       We use the following rules to name the DLL and LIB files in ACE
       when using MSVC.<br>
       <br>
-      "Library/DLL name" + (Is static library ? "s" : "") + (Support Unicode ? "u" : "") + (Is Debugging enable ? "d" : "") + {".dll"|".lib"}<br>
+      &quot;Library/DLL name&quot; + (Is static library ? &quot;s&quot; : 
+      &quot;&quot;) + (Is Debugging enable ? &quot;d&quot; : &quot;&quot;) 
+      + {&quot;.dll&quot;|&quot;.lib&quot;}<br>
       <br>
 
   <li><a href="http://www.torus-software.com/">Barry
@@ -1239,8 +1232,8 @@ for the pointer to the STL fixes.
 
 <B>ACE TESTS</B><P>
 
-The tests are located in ACE_ROOT\tests.  There are two corresponding
-project files in that directory also (tests.dsw).<P>
+The tests are located in ACE_ROOT\tests.  There is also a workspace in 
+that directory to build all the tests (tests.dsw)<P>
 
 Once you build all the tests (Batch Build works well for this), you
 can run perl script <code>run_test.pl</code> or the the batch file <a
@@ -1284,12 +1277,12 @@ card.  This is one method:<P>
 
 <B>NT ALPHA CONFIGURATIONS</B>
 
-<P>Many project files already contain Alpha NT configurations, but others do
-not (requiring them to be added).  Also, since most of the development happens
-on x86, problems building ACE on Alpha NT can often be fixed by recreating the
-configurations from the x86 versions.</P>
+<P>CUrrently some of the project files in ACE support Alpha configurations, 
+but they are somewhat out of date.  Since the file list is global between i386
+and Alpha, they have a good chance of working.  If not, they might need to
+be created as below.</P>
 
-<P>Here are the steps to add an Alpha Configuration.</P>
+<P>Here are the steps we use to add an Alpha Configuration.</P>
 
 <OL>
   <LI>Load the project on the Alpha machine.
@@ -1314,8 +1307,9 @@ configurations from the x86 versions.</P>
 </OL>
 
 <P><B>Note:</B> MSVC 6 has a bug where if a .dsp is converted from version 5 to 6 on
-x86, the Alpha configuration will be partially corrupted.  If this occurs, the
-easiest way to fix it is as above, recreate it.</P>
+x86, the Alpha configuration can get corrupted.  This seems to happen when additional
+include or library directories are specified using backslashes instead of forward
+slashes.  If this occurs, the easiest way to fix it is to recreate it.</P>
 
 
 <P><hr align=left width="50%"><P>
@@ -1993,8 +1987,7 @@ intact.<p>
   <LI><A HREF="#flags">Makefile Flags</A>
   <LI><A HREF="http://www.cs.wustl.edu/~levine/CVS.html">Version Control</A>
   <LI><A HREF="http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html">ACE Makefile hints</a>
-  <LI><A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-SSL.html">ACE SSL effort</a>
+  <LI><A HREF="docs/ACE-SSL.html">ACE SSL effort</a>
 </UL>
 
 <P><hr align=left width="50%"><P>
@@ -2209,7 +2202,7 @@ debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 exceptions       Enable exception handling (not supported by all platforms).
 fast             Enable -fast option, e.g., with Sun C++.
 inline           Enable ACE inlining.  Some platforms enable inlining by
-default, others do not.
+                   default, others do not.
 optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 orbix            Enable use of Orbix.
 probe            Enable ACE_Timeprobes.
@@ -2223,7 +2216,7 @@ rtti             Enable run-time type identification.  On some platforms,
 shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 static_libs      Build shared libraries. Ignored if shared_libs_only is set.
 shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
-specified by the Makefile, as in performance-tests/Misc.
+                   specified by the Makefile, as in performance-tests/Misc.
 static_libs_only Only build static libraries.
 threads          Build with thread support.
 xt_reactor       Build the XtReactor.
@@ -2235,9 +2228,9 @@ targets are listed below.
 Target             Description
 ------             -----------
 show_statics       Lists all static objects in object files built for
-current directory.  Only supported for g++.
+                     current directory.  Only supported for g++.
 show_uninit        Lists all uninitialized in object files built for
-current directory.  Only supported for g++.
+                     current directory.  Only supported for g++.
 
 </PRE>
 <HR><P>
