@@ -9,47 +9,47 @@
 # - TIMEONLY - This is new naming scheme which is in the format
 #              YYYY_MM_DD_HH_MM.txt
 
-[Win32_DLL_Core]
+[Win2000_DLL_Core]
 TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/Core/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?core
 
-[Win32_DLL_Debug]
+[Win2000_DLL_Debug]
 TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_debug
 
-[Win32_DLL_Release]
+[Win2000_DLL_Release]
 TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/DLL_Release/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_release
 
-[Win32_Borland]
+[Win2000_Borland]
 TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/Borland/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland
 
-[Win32_Fuzz]
+[Win2000_Fuzz]
 TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/Fuzz/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
 
-[Win32_Unicode]
+[Win2000_Unicode]
 TYPE = TIMEONLY
 LIST = http://tao.doc.wustl.edu/bugzilla/Unicode/
 WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?unicode
 
-[Win32_LIB_Debug]
+[Win2000_LIB_Debug]
 TYPE = TIMEONLY
 LIST = http://ringil.ece.uci.edu/bugzilla/lib_debug/
 WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_debug
 
-[Win32_LIB_Release]
+[Win2000_LIB_Release]
 TYPE = TIMEONLY
 LIST = http://ringil.ece.uci.edu/bugzilla/lib_release/
 WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_release
 
-[Win32_Legacy]
+[Win2000_Legacy]
 TYPE = TIMEONLY
 LIST = http://ringil.ece.uci.edu/bugzilla/legacy/
 WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?legacy
