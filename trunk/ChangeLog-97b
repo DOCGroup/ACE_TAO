@@ -1,7 +1,9 @@
 Mon Sep 29 13:28:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (thr_setconcurrency): added support on Irix 6.x, using
-	  its ::pthread_setconcurrency ().
+	  its ::pthread_setconcurrency ().  Thanks to Felix Popp
+	  <fxpopp@immd9.informatik.uni-erlangen.de> for letting us know
+	  about this Irix 6.2/3 system function, and for testing it out.
 
 	* apps/JAWS/server/HTTP_Server_T.cpp (accept): fixed typo,
 	  "remote_address" instead of "remote_adrress".
