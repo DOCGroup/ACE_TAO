@@ -29,8 +29,8 @@
 #include "ace/SOCK_CODgram.h"
 #include "ace/Select_Reactor.h"
 // @@ Make sure you use the -I option in the makefile to avoid having to use the ../... pathname stuff..
-#include "../include/common.h"
-#include "../mpeg_server/server_proto.h"
+#include "common.h"
+#include "server_proto.h"
 #include "fileio.h"
 #include "routine.h"
 #include "com.h"
