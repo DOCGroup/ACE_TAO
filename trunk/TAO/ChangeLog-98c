@@ -5,6 +5,7 @@ Fri Jan 30 11:55:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	
 	* orbsvcs/tests/Logger/svr.cpp: 
 	* orbsvcs/tests/Logger/clnt.cpp: 
+	* orbsvcs/tests/Logger/logger_i.h: 
 	* orbsvcs/tests/Logger/logger_i.cpp: Changed <iostream.h> to
  	  "ace/streams.h".  We should always use "ace/streams.h".
 
