@@ -67,7 +67,11 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
       TAO_PICurrent_Impl *tsc = pi_current->tsc ();
 
       // Copy the TSC to the RSC.
-      this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
+      // this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
+      this->rs_pi_current_.copy (*tsc, 1);  // Deep copy since some
+                                            // users report problems
+                                            // they can't reproduce
+                                            // steadily.
 
       // PICurrent will potentially have to call back on the request
       // scope current so that it can deep copy the contents of the
