@@ -1,3 +1,26 @@
+Tue Jul 20 14:50:52 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/:
+	  Changed the unit of fread in all ftp.cpp files from BUFSIZ to 1
+	  so that the entire file is transferred.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Updated destroy methods to
+	  called end_stream on the protocol object.
+
+	* orbsvcs/orbsvcs/AV/MCast.cpp: Added a multicast_loop disable by
+	  default. This should probably be moved as a policy. Also added
+	  code to set send and recv buf sizes to 80k by default. Again
+	  this should probably be a policy set by the application. Added a
+	  get_local_addr method to get the multicast address on which it
+	  is listening.
+	
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}: Added set/get methods on
+	  the TAO_AV_Callback class for transport object.
+
+	* orbsvcs/orbsvcs/AV/sfp.cpp: Removed the commented call to
+	  TAO_SFP_Base::instance since this allowed the setting of the
+	  static variables. 
+	
 Thu Jul 15 22:43:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Policy.i:
