@@ -114,7 +114,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_DEBUG ((LM_DEBUG, "this test only runs on Win32\n"));
 }

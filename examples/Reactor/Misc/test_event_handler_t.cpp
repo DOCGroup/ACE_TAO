@@ -24,7 +24,7 @@ public:
 };
 
 int 
-main (void)
+main (int, char *[])
 {
   typedef ACE_Event_Handler_T<ACE_Sig_Handler> EH_SH;
 
@@ -38,7 +38,7 @@ main (void)
 }
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support template typedefs\n"), 1);
 }

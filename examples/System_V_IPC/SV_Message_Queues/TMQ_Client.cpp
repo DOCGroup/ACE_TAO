@@ -5,7 +5,7 @@
 #include "test.h"
 
 int
-main (void)
+main (int, char *[])
 {
   long pid = long (ACE_OS::getpid ());
 

@@ -247,7 +247,7 @@ main (int argc, char *argv[])
 }
 #else
 int 
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "test not defined for this platform\n"), -1);
 }

@@ -16,7 +16,7 @@ handler (int)
 }
 
 int 
-main (void) 
+main (int, char *[]) 
 {
   long pid = long (ACE_OS::getpid ());
   ACE_Message_Block recv_msg (SRV_ID);

@@ -14,7 +14,7 @@
 const int MAX_FDS = 200;
 
 int
-main (void)
+main (int, char *[])
 {
   // Create a server end-point.
   ACE_INET_Addr addr (ACE_DEFAULT_SERVER_PORT);
@@ -93,7 +93,7 @@ main (void)
 }
 #else
 #include <stdio.h>
-int main (void)
+int main (int, char *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

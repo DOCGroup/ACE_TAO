@@ -18,7 +18,7 @@ handler (int)
 }
 
 int
-main (void)
+main (int, char *[])
 {
   char *username = ACE_OS::cuserid (0);
   Message_Data msg_data ((int) ACE_OS::getpid (), username, "I received your message.");

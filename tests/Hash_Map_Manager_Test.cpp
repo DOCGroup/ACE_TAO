@@ -140,7 +140,7 @@ Dumb_String::operator char * (void) const
 static const int MAX_HASH = 256;
 
 int
-main(void)
+main (int, char *[])
 {
   ACE_START_TEST ("Hash_Map_Manager_Test");
 

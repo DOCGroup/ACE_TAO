@@ -89,7 +89,7 @@ main (int argc, char *argv[])
 }
 #else
 int 
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "you must have TLI to run this test\n"), 1);
 }

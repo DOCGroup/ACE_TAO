@@ -25,7 +25,7 @@
 #include "test_config.h"
 
 int
-main (void)
+main (int, char *[])
 {
   ACE_START_TEST ("Simple_Message_Block_Test");
 
