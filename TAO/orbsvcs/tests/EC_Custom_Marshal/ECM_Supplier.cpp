@@ -428,8 +428,11 @@ Test_Supplier::connect (const char* name,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (event_period);
   this->supplier_id_ = ACE::crc32 (name);
-  ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
+  ACE_DEBUG ((LM_DEBUG,
+              "ID for <%s> is %04.4x\n",
+              name,
               this->supplier_id_));
 
   ACE_SupplierQOS_Factory qos;
