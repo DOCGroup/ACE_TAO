@@ -1,3 +1,9 @@
+Mon Sep  6 21:28:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+	  (disconnect_leaf,remove_fdev): Fixed throw-spec mismatch
+	  problems.  Thanks to KCC 3.3e for reporting them.
+
 Mon Sep  6 21:07:34 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/Simple_Dynamic.h (class TAO_Simple_Dynamic_Property):
