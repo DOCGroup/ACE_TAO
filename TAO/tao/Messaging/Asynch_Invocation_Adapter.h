@@ -7,7 +7,8 @@
  *  $Id$
  *
  *
- *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ *  @author Originally Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ *  @author Modified   Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
 //=============================================================================
 #ifndef TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H
@@ -80,12 +81,17 @@ namespace TAO
                                     ACE_ENV_ARG_DECL);
     **/
 
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
+
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
 
   private:
     /// Autofunctor to manage the reply dispatcher

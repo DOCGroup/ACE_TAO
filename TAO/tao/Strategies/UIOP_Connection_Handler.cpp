@@ -48,18 +48,20 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (
   : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
+  /*
   TAO_UIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
            TAO_UIOP_Transport (this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
+  */
 }
 
 
 TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
 {
-  delete this->transport ();
+  //  delete this->transport ();
 }
 
 int
@@ -71,6 +73,7 @@ TAO_UIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_UIOP_Connection_Handler::open (void*)
 {
+  /*
   TAO_UIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
@@ -144,6 +147,8 @@ TAO_UIOP_Connection_Handler::open (void*)
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
   return 0;
+  */
+  return 0;
 }
 
 int
@@ -212,6 +217,7 @@ TAO_UIOP_Connection_Handler::release_os_resources (void)
 int
 TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
 {
+  /*
   ACE_UNIX_Addr addr;
 
   // Get the peername.
@@ -230,6 +236,8 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
   // Add the handler to Cache
   return cache.cache_idle_transport (&prop,
                                      this->transport ());
+  */
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

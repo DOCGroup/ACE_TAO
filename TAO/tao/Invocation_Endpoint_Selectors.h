@@ -61,10 +61,12 @@ public:
   /// Destructor.
   virtual ~TAO_Invocation_Endpoint_Selector (void);
 
+#if !defined (TAO_HAS_COLLOCATION)
   /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL) = 0;
+#endif
 
 };
 
@@ -92,9 +94,11 @@ public:
   /// Destructor.
   virtual ~TAO_Default_Endpoint_Selector (void);
 
+#if !defined (TAO_HAS_COLLOCATION)
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL);
+#endif
 };
 
 #if defined (__ACE_INLINE__)

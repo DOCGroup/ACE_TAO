@@ -60,6 +60,14 @@ Tue Jan  4 09:17:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
          Factored out remoting code from the strategy classes,
          particularly, transport dependecies.
 
+       * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+       * tao/Messaging/Asynch_Invocation_Adapter.h:
+         
+         If using Asynchronous communication, factored remoting code. This 
+         includes code for invoking two way operations. This inturn calls the 
+         Invocation Adapter's invoke which is already specialized for 
+         collocated operation.
+
        * tao/TAO.mpc:
          Modified mpc file to add the macro TAO_HAS_COLLOCATION that
          factores out remoting code. Additionally, several classes that

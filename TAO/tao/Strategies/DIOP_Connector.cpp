@@ -153,12 +153,15 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                     svc_handler->get_handle ()));
    }
 
+  /*
   // @@ Michael: We do not use regular connection management.
   svc_handler->add_reference ();
   TAO_Transport *transport =
     svc_handler->transport ();
 
   return transport;
+  */
+  return 0;
 }
 
 TAO_Profile *

@@ -46,18 +46,20 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_
   : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
+  /*
   TAO_SHMIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
           TAO_SHMIOP_Transport(this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
+  */
 }
 
 
 TAO_SHMIOP_Connection_Handler::~TAO_SHMIOP_Connection_Handler (void)
 {
-  delete this->transport ();
+  //delete this->transport ();
 }
 
 int
@@ -69,6 +71,7 @@ TAO_SHMIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_SHMIOP_Connection_Handler::open (void*)
 {
+  /*
   TAO_SHMIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
@@ -123,7 +126,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 
-#endif /* ! ACE_LACKS_TCP_NODELAY */
+#endif
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
@@ -162,6 +165,8 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   // Not needed, anyway
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
+  return 0;
+  */
   return 0;
 }
 
@@ -231,6 +236,7 @@ TAO_SHMIOP_Connection_Handler::release_os_resources (void)
 int
 TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
 {
+  /*
   ACE_INET_Addr addr;
 
   // Get the peername.
@@ -251,6 +257,8 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
   // Add the handler to Cache
   return cache.cache_idle_transport (&prop,
                                      this->transport ());
+  */
+  return 0;
 }
 
 // ****************************************************************

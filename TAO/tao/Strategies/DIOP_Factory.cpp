@@ -66,6 +66,7 @@ TAO_DIOP_Protocol_Factory::init (int /* argc */,
   return 0;
 }
 
+#if !defined (TAO_HAS_COLLOCATION)
 TAO_Connector *
 TAO_DIOP_Protocol_Factory::make_connector (void)
 {
@@ -76,6 +77,7 @@ TAO_DIOP_Protocol_Factory::make_connector (void)
                   0);
   return connector;
 }
+#endif
 
 int
 TAO_DIOP_Protocol_Factory::requires_explicit_endpoint (void) const

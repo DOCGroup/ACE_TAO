@@ -131,7 +131,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
   return this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-               
+
 int
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
@@ -168,6 +168,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *max_wait_time)
 {
+  /*
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
@@ -326,6 +327,8 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     }
 
   return transport;
+  */
+  return 0;
 }
 
 

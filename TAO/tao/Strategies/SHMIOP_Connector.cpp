@@ -14,7 +14,7 @@
 #include "tao/Environment.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "tao/Blocked_Connect_Strategy.h"
+//#include "tao/Blocked_Connect_Strategy.h"
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID (Strategies,
@@ -61,6 +61,7 @@ TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector (void)
 int
 TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
+  /*
   this->orb_core (orb_core);
 
   // The SHMIOP always uses a blocked connect strategy
@@ -100,6 +101,8 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
       this->base_connector_.connector ().preferred_strategy (ACE_MEM_IO::MT);
       this->connect_strategy_.connector ().preferred_strategy (ACE_MEM_IO::MT);
     }
+  return 0;
+  */
   return 0;
 }
 
@@ -152,6 +155,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                        TAO_Transport_Descriptor_Interface &desc,
                                        ACE_Time_Value *max_wait_time)
 {
+  /*
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::make_connection - ")
@@ -269,6 +273,8 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   return transport;
+  */
+  return 0;
 }
 
 TAO_Profile *
