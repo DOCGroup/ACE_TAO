@@ -1,4 +1,4 @@
-Thu Jun 17 13:40:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Jun 17 14:05:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Forwarding/MyFooServant.cpp (MyFirstFooServant):
 	  Since we are using the NULL_MASK (whose value is zero), some
@@ -8,6 +8,10 @@ Thu Jun 17 13:40:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO_IDL/fe/fe_lookup.cpp (lookup): Changed {"",} to {"",0} to
 	  keep the HP compiler happy.
+
+	* TAO_IDL/fe/Makefile.am (fe_lookup.cpp): Fixed the makefile so
+	  that the next time fe_lookup.cpp is generated, 0 is used as the
+	  fill option.  Thanks to Carlos for pointing this out.
 
 Thu Jun 17 12:58:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
