@@ -8,6 +8,7 @@
 #include "SP_Handler.h"
 
 #include "Process_Element.h"
+#include "Process_Basic_Type.h"
 
 #include <iostream>
 #include "string.h"
@@ -56,47 +57,32 @@ namespace CIAO
           if (node_name == XStr (ACE_TEXT ("Deployment:Domain")))
             {
             }
-          else if (node_name == XStr (ACE_TEXT ("UUID")))
-            {
-              node = this->iter_->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_uuid (text->getNodeValue(), domain);
-            }
-          else if (node_name == XStr (ACE_TEXT ("label")))
-            {
-              node = this->iter_->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_label (text->getNodeValue(), domain);
-            }
+          else if
+            (process_string(this->iter_, node_name, "UUID", domain.UUID));
+          else if
+            (process_string(this->iter_, node_name, "label", domain.label));
           else if (node_name == XStr (ACE_TEXT ("sharedResource")))
             {
               this->process_sr_element (node, this->doc_,
                                         this->iter_,
                                         domain);
             }
-          else if (node_name == XStr (ACE_TEXT ("node")))
+          else if
+            (process_sequence<Deployment::Node>(this->doc_, this->iter_, node,
+                                                node_name, "node", domain.node,
+                                                this, &Domain_Handler::process_node,
+                                                this->id_map_));
+          /*
+ if (node_name == XStr (ACE_TEXT ("node")))
             {
               process_function<Deployment::Node>
                 (this, domain.node, &Domain_Handler::process_node,
                  node, this->doc_, this->iter_, this->id_map_);
-
-             /*
-              Process_Member_Function<Domain_Handler, Deployment::Node> 
-                pf (this,
-                    &Domain_Handler::process_node,
-                    this->doc_);
-              process_sequential_element (node,
-                                          this->doc_,
-                                          this->iter_,
-                                          domain.node,
-                                          &pf,
-                                          this->id_map_);
-              
-              this->process_node_element (node, this->doc_,
-                                          this->iter_,
-                                          domain);
-	     */
+              //              this->process_node_element (node, this->doc_,
+              //                                          this->iter_,
+              //                                          domain);
             }
+          */
           else if (node_name == XStr (ACE_TEXT ("interconnect")))
             {
               this->process_ic_element (node, this->doc_,
@@ -155,7 +141,7 @@ namespace CIAO
             }
         }      
     }
-
+    /*
     // handle the node element
     void Domain_Handler::process_node_element (DOMNode* node,
                                                DOMDocument* doc,
@@ -182,7 +168,7 @@ namespace CIAO
             }
         }
     }
-
+    */
     // handle the interconnect element
     void Domain_Handler::process_ic_element (DOMNode* node,
                                              DOMDocument* doc,
@@ -261,30 +247,7 @@ namespace CIAO
         }
     }
 
-    /// handle uuid attribute
-    void Domain_Handler::process_uuid (const XMLCh* uuid,
-                                       Deployment::Domain& domain)
-    {
-      if (uuid)
-        {
-          CORBA::String_var value (XMLString::transcode (uuid));
-          domain.UUID = value.in ();
-        }
-    }
-
-    /// handle label attribute
-    void Domain_Handler::process_label (const XMLCh* label,
-                                        Deployment::Domain& domain)
-    {
-      if (label)
-        {
-          CORBA::String_var value (XMLString::transcode (label));
-          domain.label = value.in ();
-        }
-    }
-
-    void Domain_Handler::process_node (DOMDocument* doc,
-                                       DOMNodeIterator* iter,
+    void Domain_Handler::process_node (DOMNodeIterator*& iter,
                                        Deployment::Node& domain_node)
     {
       for (DOMNode* node = iter->nextNode();
@@ -316,12 +279,12 @@ namespace CIAO
                   if (length == 1)
                     {
                       this->process_resource 
-                        (doc, iter, domain_node.resource[resource_length]);
+                        (node->getOwnerDocument(), iter, domain_node.resource[resource_length]);
                     }
                   else if (length > 1)
                     {
                       this->process_attributes_for_resource 
-                        (named_node_map, doc,
+                        (named_node_map, node->getOwnerDocument(),
                          iter, resource_length,
                          domain_node.resource[resource_length]);
                     }
@@ -894,6 +857,7 @@ namespace CIAO
       return;
     }
 
+    /*
     void Domain_Handler::process_attributes_for_node 
          (DOMNamedNodeMap* named_node_map,
           DOMDocument* doc,
@@ -961,7 +925,7 @@ namespace CIAO
 
       return;
     }
-
+    */
     void Domain_Handler::process_attributes_for_ic 
          (DOMNamedNodeMap* named_node_map,
           DOMDocument* doc,

@@ -88,26 +88,18 @@ namespace CIAO
       /// Process the Domain type
       void process_domain (Deployment::Domain& domain);
 
-      /// Process the UUID attribute
-      void process_uuid (const XMLCh* uuid,
-                         Deployment::Domain& domain);
-
-      /// Process the label attribute
-      void process_label (const XMLCh* label,
-                          Deployment::Domain& domain);
-
       /// process the shared resource element
       void process_sr_element (DOMNode* node,
                                DOMDocument* doc,
                                DOMNodeIterator* iter,
                                Deployment::Domain& domain);
-
+      /*
       /// process the shared resource element
       void process_node_element (DOMNode* node,
                                  DOMDocument* doc,
                                  DOMNodeIterator* iter,
                                  Deployment::Domain& domain);
-
+      */
       /// process the shared resource element
       void process_ic_element (DOMNode* node,
                                DOMDocument* doc,
@@ -132,14 +124,14 @@ namespace CIAO
                                       DOMNodeIterator* iter,
                                       int length,
                                       Deployment::SharedResource& domain_sr);
-
+      /*
       /// Process the attributes for the Node
       void process_attributes_for_node (DOMNamedNodeMap* named_node_map,
                                         DOMDocument* doc,
                                         DOMNodeIterator* iter,
                                         int length,
                                         Deployment::Node& domain_node);
-
+      */
       /// Process the attributes for the interconnect
       void process_attributes_for_ic (DOMNamedNodeMap* named_node_map,
                                       DOMDocument* doc,
@@ -176,8 +168,7 @@ namespace CIAO
                                                       Deployment::SatisfierProperty& pro);
 
       /// process the node attribute
-      void process_node (DOMDocument* doc,
-                         DOMNodeIterator* iter,
+      void process_node (DOMNodeIterator*& iter,
                          Deployment::Node& domain_node);
 
       /// process the node attribute
