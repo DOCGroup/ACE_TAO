@@ -236,7 +236,7 @@ namespace CORBA
     void _tao_print_system_exception (FILE *f = stdout) const;
 
     /// Create an exception from the available exception
-    virtual CORBA::Exception *_tao_duplicate (void) const;
+    /// virtual CORBA::Exception *_tao_duplicate (void) const;
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
