@@ -151,6 +151,7 @@ ACE_INLINE int
 TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
 #if defined (POA_NO_TIMESTAMP)
+  ACE_UNUSED_ARG (rhs);
   return 1;
 #else
   return ACE_OS::memcmp (this->time_stamp_,
@@ -163,6 +164,7 @@ ACE_INLINE int
 TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
 #if defined (POA_NO_TIMESTAMP)
+  ACE_UNUSED_ARG (rhs);
   return 0;
 #else
   return ACE_OS::memcmp (this->time_stamp_,
@@ -175,6 +177,7 @@ ACE_INLINE int
 TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
 #if defined (POA_NO_TIMESTAMP)
+  ACE_UNUSED_ARG (rhs);
   return 1;
 #else
   return ACE_OS::memcmp (this->time_stamp_,
@@ -187,6 +190,7 @@ ACE_INLINE int
 TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
 #if defined (POA_NO_TIMESTAMP)
+  ACE_UNUSED_ARG (rhs);
   return 0;
 #else
   return ACE_OS::memcmp (this->time_stamp_,
