@@ -403,6 +403,9 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
 
       ACE_Reactor * eh_reactor = eh->reactor ();
       ACE_ASSERT(eh_reactor == 0 || eh_reactor == reactor);
+
+      ACE_UNUSED_ARG (orb_core_reactor);
+      ACE_UNUSED_ARG (eh_reactor);
     }
 
     if (TAO_debug_level)
