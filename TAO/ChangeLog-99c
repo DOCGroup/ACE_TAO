@@ -1,3 +1,7 @@
+Mon Jun 21 15:44:16 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * tao/IORManipultion.cpp
+          added template instantion for auto_ptr
+
 Mon Jun 21 14:50:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
