@@ -224,6 +224,7 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS	Platform does not support reentrant netdb fu
 ACE_LACKS_RPC_H				Platform lacks the ONC RPC header files.
 ACE_LACKS_PARAM_H			Platform lacks <sys/param.h> (e.g., MVS)
 ACE_LACKS_NAMED_POSIX_SEM		Platform lacks named POSIX semaphores (e.g., Chorus)
+ACE_LACKS_RLIMIT        		Platform/compiler lacks {get,set}rlimit() function (e.g., VxWorks, Chorus, and SCO UNIX)
 ACE_LACKS_RLIMIT_PROTOTYPE		Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)
 ACE_LACKS_POSIX_PROTOTYPES		Platform lacks POSIX prototypes for certain System V functions like shared memory and message queues.
 ACE_LACKS_SOME_POSIX_PROTOTYPES		Platform lacks POSIX prototypes for certain System V functions like shared memory and message queues.
