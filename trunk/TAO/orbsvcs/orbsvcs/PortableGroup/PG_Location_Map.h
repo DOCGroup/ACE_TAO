@@ -29,7 +29,7 @@
 
 #include "ace/Array_Base.h"
 #include "ace/Hash_Map_Manager_T.h"
-
+#include "ace/Null_Mutex.h"
 
 /// Forward declarations.
 struct TAO_PG_ObjectGroup_Map_Entry;

@@ -1,3 +1,16 @@
+Thu Feb  5 13:30:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Location_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+          Added explicit #include's of SString.h and Null_Mutex.h needed
+          on some platforms (Solaris and Linux).  Thanks to Thomas
+          Lockhart <Thomas.Lockhart@jpl.nasa.gov> for the patch.
+
 Wed Feb  4 04 23:54:55 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:

@@ -14,8 +14,8 @@
 
 #ifndef TAO_PG_FACTORYREGISTRY_H_
 #define TAO_PG_FACTORYREGISTRY_H_
-#include /**/ <ace/pre.h>
-#include <ace/ACE.h>
+#include /**/ "ace/pre.h"
+#include /**/ "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -31,9 +31,10 @@ namespace TAO
 /////////////////////////////////
 // Includes needed by this header
 #include "portablegroup_export.h"
-#include <orbsvcs/orbsvcs/PortableGroupS.h>
-#include <ace/Hash_Map_Manager.h>
-
+#include "orbsvcs/PortableGroupS.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
+#include "ace/Null_Mutex.h"
 
 /////////////////////
 // Forward references
@@ -249,6 +250,6 @@ namespace TAO
   };
 } // namespace TAO
 
-#include /**/ <ace/post.h>
+#include /**/ "ace/post.h"
 
 #endif // TAO_PG_FACTORYREGISTRY_H_
