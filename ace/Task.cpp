@@ -60,14 +60,16 @@ ACE_Task_Exit::instance (void)
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_task_lock_, 0));
 
       if (instance_ == 0)
-	ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Task_Exit), 0);
+        {
+	  ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Task_Exit), 0);
 
-      // Register for destruction with ACE_Object_Manager.
+          // Register for destruction with ACE_Object_Manager.
 #if defined ACE_HAS_SIG_C_FUNC
-      ACE_Object_Manager::at_exit (instance_, ACE_Task_Exit_cleanup, 0);
+          ACE_Object_Manager::at_exit (instance_, ACE_Task_Exit_cleanup, 0);
 #else
-      ACE_Object_Manager::at_exit (instance_, ACE_Task_Exit::cleanup, 0);
+          ACE_Object_Manager::at_exit (instance_, ACE_Task_Exit::cleanup, 0);
 #endif /* ACE_HAS_SIG_C_FUNC */
+        }
     }
 
   return ACE_TSS_GET (instance_, ACE_Task_Exit);
