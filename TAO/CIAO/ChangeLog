@@ -1,3 +1,25 @@
+Tue Feb 04 23:10:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html: Added a new item descirbing things that need to
+	  be done for component/home configuration using CCM's XML
+	  property files.
+
+	* tools/XML_Helpers/Handler-Interaction.png:
+	* tools/XML_Helpers/Handler-Interaction.vsd:
+	* tools/XML_Helpers/README: Files that document how to use
+	  Cascadable_DocHandler and interactions among handlers of
+	  different layers.
+
+	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
+	* tools/XML_Helpers/Cascadable_DocHandler.h:
+	* tools/XML_Helpers/Cascadable_DocHandler.i: A
+	  ACEXML_DefaultHandler subclass which can be easily cascaded
+	  together to handle hierarchical XML document structure.  There
+	  is also a Skip_DocHandler class which subclasses from
+	  Cascadable_DocHandler and can be used to skip over some certain
+	  XML tags completely.  These helper classes should probably be
+	  collected under ACEXML in the future.
+
 Sun Feb 02 21:05:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Cookies.cpp (insert): Fixed a warning.
