@@ -1,3 +1,7 @@
+Sun Jun 11 18:12:12 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* examples/QOS/QoSEvent.h: Removed a warning on Win2K.
+
 Sat Jun 10 23:34:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/CE-status.txt:
