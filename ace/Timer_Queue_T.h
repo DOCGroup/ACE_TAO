@@ -76,13 +76,13 @@ public:
   const ACE_Time_Value &get_timer_value (void) const;
 
   /// set the timer value.
-  void set_timer_value (ACE_Time_Value timer_value);
+  void set_timer_value (const ACE_Time_Value &timer_value);
 
   /// get the timer interval.
   const ACE_Time_Value &get_interval (void) const;
 
   /// Set the timer interval.
-  void set_interval (ACE_Time_Value interval);
+  void set_interval (const ACE_Time_Value &interval);
 
   /// get the previous pointer.
   ACE_Timer_Node_T<TYPE> *get_prev (void);
