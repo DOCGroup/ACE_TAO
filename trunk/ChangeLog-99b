@@ -1,5 +1,9 @@
 Mon May 31 11:51:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/CORBA_Handler.h: Updated the comments to clarify how to use
+ 	  this class.  Thanks to Ram Vishnuvajjala
+ 	  <rvishnuvajjala@lucent.com> for motivating this.
+
 	* ace/Service_Config: Added a static variable called is_initialized
 	  that keeps track of whether the <ACE_Service_Config> is already
 	  initialized.  If it is, we can't allow <yyparse> to be called
