@@ -10,8 +10,6 @@
 
 #  include <ace/Synch.h>
 
-typedef class CORBA_Principal	*CORBA_Principal_ptr;
-
 void				CORBA_release (CORBA_Principal_ptr principal);
 CORBA_Boolean			CORBA_is_nil (CORBA_Principal_ptr principal);
 

@@ -13,10 +13,6 @@
 
 #include    "cdr.hh"
 
-typedef class CORBA_ServerRequest *CORBA_ServerRequest_ptr;
-typedef class CORBA_ORB *CORBA_ORB_ptr;
-typedef class BOA *BOA_ptr;
-
 void                              CORBA_release (CORBA_ServerRequest_ptr req);
 CORBA_Boolean                     CORBA_is_nil (CORBA_ServerRequest_ptr req);
 
@@ -73,7 +69,7 @@ class _EXPCLASS CORBA_ServerRequest : public IUnknown
     virtual CORBA_Principal_ptr __stdcall	caller () = 0;
     virtual CORBA_Object_ptr __stdcall		target () = 0;
     virtual CORBA_String __stdcall		op_name () = 0;
-    virtual BOA_ptr __stdcall			oa () = 0;
+    virtual CORBA_BOA_ptr __stdcall			oa () = 0;
     virtual CORBA_ORB_ptr __stdcall		orb () = 0;
 };
 
@@ -88,7 +84,7 @@ public:
   IIOP_ServerRequest (
 		      CDR			*msg,
 		      CORBA_ORB_ptr	the_orb,
-		      BOA_ptr		the_boa
+		      CORBA_BOA_ptr		the_boa
 		      )
     : _incoming (msg), _params (0), _retval (0),
       _exception (0),
@@ -126,7 +122,7 @@ public:
   CORBA_Principal_ptr __stdcall	caller ();
   CORBA_Object_ptr __stdcall		target ();
   CORBA_ORB_ptr __stdcall		orb ();
-  BOA_ptr __stdcall			oa ();
+  CORBA_BOA_ptr __stdcall			oa ();
 
   //
   // Stuff required for COM IUnknown support
@@ -156,6 +152,6 @@ private:
   unsigned			_refcount;
   ACE_Thread_Mutex lock_;
   CORBA_ORB_ptr		_orb;
-  BOA_ptr			_boa;
+  CORBA_BOA_ptr			_boa;
 };
 #endif

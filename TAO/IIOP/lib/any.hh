@@ -7,7 +7,6 @@
 // XXX should find a way to make its memory allocation always go
 // within the appropriate OLE heap...
 //
-typedef CORBA_Any		*CORBA_Any_ptr;
 
 extern const IID	IID_CORBA_Any;
 

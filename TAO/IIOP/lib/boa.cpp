@@ -51,8 +51,8 @@ DEFINE_GUID (IID_BOA,
 // XXX the coupling could stand to be looser here, so this module did
 // not know specifically about the Internet ORB !!
 //
-BOA_ptr
-BOA::get_named_boa (
+CORBA_BOA_ptr
+CORBA_BOA::get_named_boa (
     CORBA_ORB_ptr	orb,
     CORBA_String	name,
     CORBA_Environment	&env
@@ -98,8 +98,8 @@ BOA::get_named_boa (
 // matter to anyone; it is only used to create object references with
 // a short lifespan, namely that of the process acquiring this BOA.
 //
-BOA_ptr
-BOA::get_boa (
+CORBA_BOA_ptr
+CORBA_BOA::get_boa (
     CORBA_ORB_ptr	orb,
     CORBA_Environment	&env
 )
@@ -135,4 +135,38 @@ BOA::get_boa (
     //
     env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
     return 0;
+}
+
+void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
+			*context, CORBA_Environment &env)
+{
+  skeleton skel;  // pointer to function pointer for the operation
+  CORBA_Object_ptr obj;  // object that will be looked up based on the key
+  CORBA_OctetSeq		*obj_key;
+  CORBA_String_var  opname;
+
+  obj_key = (CORBA_OctetSeq *) context;
+
+  if (obj_key->length != key.length
+      || ACE_OS::memcmp (obj_key->buffer, key.buffer,
+			 obj_key->length) != 0) {
+    env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
+#ifdef	DEBUG
+    if (debug_level)
+      dmsg_opaque ("request to nonexistent object, key = ",
+		   key.buffer, key.length);
+#endif
+    return;
+  }
+
+  obj = this->lookup(key);
+  // get the skeleton
+  if (obj != 0)
+    {
+      opname = req.op_name();
+      skel = obj->lookup(opname);
+
+    }
+  // we need to pass this skel and associated information to the scheduler. How
+  // do we do it??
 }
