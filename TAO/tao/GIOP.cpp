@@ -239,8 +239,8 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
   size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
   if (orb_core->orb_params ()->use_lite_protocol ())
     {
-      header_len = TAO_IIOP_LITE_HEADER_LEN;
-      offset = TAO_IIOP_LITE_MESSAGE_SIZE_OFFSET;
+      header_len = TAO_GIOP_LITE_HEADER_LEN;
+      offset = TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET;
     }
 
   CORBA::ULong bodylen = total_len - header_len;
@@ -459,7 +459,7 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
   ssize_t header_len = TAO_GIOP_HEADER_LEN;
 
   if (orb_core->orb_params ()->use_lite_protocol ())
-    header_len = 5;
+    header_len = TAO_GIOP_LITE_HEADER_LEN;
 
   if (CDR::grow (&msg.start_,
                  header_len) == -1)

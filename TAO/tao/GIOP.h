@@ -171,8 +171,8 @@ public:
 
 // The IIOP Lite header length and the offset of the message size
 // field in it.
-#define TAO_IIOP_LITE_HEADER_LEN 5
-#define TAO_IIOP_LITE_MESSAGE_SIZE_OFFSET 0
+#define TAO_GIOP_LITE_HEADER_LEN 5
+#define TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET 0
 
 // Support for Implicit ORB Service Context.
 typedef CORBA::ULong TAO_GIOP_ServiceID;
