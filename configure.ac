@@ -402,11 +402,6 @@ AC_SEARCH_LIBS([sched_yield],[rt posix4],[ace_has_sched_yield=yes],)
 dnl Check for asynchronous IO calls (perform check *after* thread check!)
 ACE_CHECK_ASYNCH_IO
 
-dnl Check for TLS/SSL support.
-if test "$ace_user_enable_ssl" = yes; then
-  ACE_CHECK_TLS
-fi
-
 dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
 dnl AC_SEARCH_LIBS([clock_gettime],

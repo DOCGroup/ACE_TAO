@@ -880,7 +880,8 @@ AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_enable_qos = Xyes])
 ])
 
 AC_DEFUN([ACE_ENABLE_SSL],
-[AC_ARG_ENABLE([ssl],
+[AC_REQUIRE([ACE_CHECK_TLS])
+AC_ARG_ENABLE([ssl],
 	       AS_HELP_STRING([--enable-ssl],
 			      [compile/use the ACE_SSL library [[yes]]]),
 	       [case "${enableval}" in
