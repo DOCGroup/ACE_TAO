@@ -32,8 +32,7 @@ public:
     ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
 private:
-
-  const T& dp_;
+  T dp_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
