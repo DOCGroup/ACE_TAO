@@ -1,3 +1,9 @@
+Tue Sep 15 17:33:41 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Added a new ACE_LACKS_TRUNCATE flag to work around
+ 	  platforms that lack the truncate() call.  Thanks to 
+	  Sergio for reporting this.
+
 Tue Sep 15 16:58:18 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* include/makeinclude/platform_chorus_ghs.GNU: Changed the
