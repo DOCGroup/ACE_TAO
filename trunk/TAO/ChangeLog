@@ -7,6 +7,30 @@ Tue Nov 19 15:16:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Updated executable file names.
 
 	* orbsvcs/tests/Notify/Basic/run_test.pl:
+	  Modified to accept conf files are parameters.
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+	  Fixed problems with the test not exiting gracefully.
+	
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+  	  Modified the <create> method to add missing initialization of	
+	  TAO_NS_Notify_Service. Thanks to Steve Totten<totten_s@ociweb.com>
+	  for providing the OCI test example and Irfan for showing how to
+	  use <_tao_poa_downcast>.
+	
+	* orbsvcs/Notify_Service/Notify_Service.dsp: Release executable
+	  should go in the Release directory.
+	
+Tue Nov 19 15:16:56 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Consumer.bor:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Supplier.bor:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.bor:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.bor:
+	  Updated executable file names.
+
+	* orbsvcs/tests/Notify/Basic/run_test.pl:
 	  Modified to accept conf files are parameters. 
 
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
