@@ -25,6 +25,7 @@
 // ============================================================================
 
 #ifndef ACE_TOKEN_COLLECTION_H
+#include "ace/pre.h"
 #define ACE_TOKEN_COLLECTION_H
 
 #include "ace/Map_Manager.h"
@@ -215,4 +216,5 @@ protected:
 #include "ace/Token_Collection.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_TOKEN_COLLECTION_H */

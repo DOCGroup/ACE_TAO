@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_READ_BUFFER_H
+#include "ace/pre.h"
 #define ACE_READ_BUFFER_H
 
 #include "ace/ACE.h"
@@ -108,4 +109,5 @@ private:
 # include "ace/Read_Buffer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_READ_BUFFER_H */

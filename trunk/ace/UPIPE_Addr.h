@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_UPIPE_ADDR_H
+#include "ace/pre.h"
 #define ACE_UPIPE_ADDR_H
 
 #include "ace/SPIPE_Addr.h"
@@ -41,4 +42,5 @@ public:
   // = Same interface as <ACE_SPIPE_Addr>.
 };
 #endif /* 0 */
+#include "ace/post.h"
 #endif /* ACE_UPIPE_ADDR_H */

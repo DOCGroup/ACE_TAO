@@ -6,6 +6,7 @@
 // variety of compilers.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #if defined (ACE_HAS_WINCE) || defined (UNDER_CE)
@@ -22,4 +23,5 @@
 # error "Compiler does not seem to be supported"
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

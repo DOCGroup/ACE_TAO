@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_LOG_MSG_H
+#include "ace/pre.h"
 #define ACE_LOG_MSG_H
 
 // This stuff must come first to avoid problems with circular
@@ -533,4 +534,5 @@ private:
 #define THREAD ACE_THREAD_HACK
 #undef ACE_THREAD_HACK
 #endif /* ACE_THREAD_HACK */
+#include "ace/post.h"
 #endif /* ACE_LOG_MSG_H */

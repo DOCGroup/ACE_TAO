@@ -8,6 +8,7 @@
 //   * Green Hills 1.8.8 and later
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // Compiler version-specific settings:
@@ -358,4 +359,5 @@
 #undef ACE_HAS_PROC_FS
 #undef ACE_HAS_PRUSAGE_T
 #endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

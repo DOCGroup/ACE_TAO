@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SERVICE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_SERVICE_CONFIG_H
 
 #include "ace/Service_Object.h"
@@ -447,4 +448,5 @@ private:
 // longer)
 #include "ace/Reactor.h"
 #include "ace/Svc_Conf_Tokens.h"
+#include "ace/post.h"
 #endif /* ACE_SERVICE_CONFIG_H */

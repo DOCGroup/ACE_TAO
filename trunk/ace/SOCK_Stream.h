@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_STREAM_H
+#include "ace/pre.h"
 #define ACE_SOCK_STREAM_H
 
 #include "ace/SOCK_IO.h"
@@ -131,4 +132,5 @@ public:
 #include "ace/SOCK_Stream.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_STREAM_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_DATE_TIME_H
+#include "ace/pre.h"
 #define ACE_DATE_TIME_H
 
 #include "ace/ACE.h"
@@ -94,4 +95,5 @@ private:
 #include "ace/Date_Time.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_DATE_TIME_H */

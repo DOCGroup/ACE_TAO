@@ -5,6 +5,7 @@
 // platforms using GNU C++ and the MIT threads package.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #include "ace/config-linux-common.h"
@@ -28,4 +29,5 @@
 #define _MIT_POSIX_THREADS 1
 #include /**/ <pthread/mit/pthread.h>
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

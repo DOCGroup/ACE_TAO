@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef ACE_ATM_ADDR_H
+#include "ace/pre.h"
 #define ACE_ATM_ADDR_H
 
 #include "ace/ACE.h"
@@ -153,5 +154,6 @@ private:
 #include "ace/ATM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_ATM_ADDR_H */
 

@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_ENV_VALUE_T_H
+#include "ace/pre.h"
 #define ACE_ENV_VALUE_T_H
 
 #include "ace/OS.h"             // Need to get ACE_static_cast definition
@@ -153,4 +154,5 @@ ACE_Convert (const ASYS_TCHAR *s, double &d)
 #pragma implementation ("Env_Value_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_ENV_VALUE_T_H */

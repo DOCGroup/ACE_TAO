@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEM_MAP_H
+#include "ace/pre.h"
 #define ACE_MEM_MAP_H
 
 #include "ace/ACE.h"
@@ -204,4 +205,5 @@ private:
 #include "ace/Mem_Map.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_MEM_MAP_H */

@@ -5,6 +5,7 @@
 // It has been tested with PharLap TNT Embedded ToolSuite version 9.1.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #define ACE_HAS_PHARLAP
@@ -57,4 +58,5 @@
 # include /**/ <embtcpip.h>
 #endif /* ACE_HAS_PHARLAP_RT */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_TLI_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_TLI_CONNECTOR_H
 
 #include "ace/TLI_Stream.h"
@@ -112,4 +113,5 @@ public:
 #include "ace/TLI_Connector.i"
 
 #endif /* ACE_HAS_TLI */
+#include "ace/post.h"
 #endif /* ACE_TLI_CONNECTOR_H */

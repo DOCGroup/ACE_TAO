@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_REACTOR_IMPL_H
+#include "ace/pre.h"
 #define ACE_REACTOR_IMPL_H
 
 // Timer Queue is a complicated template class. A simple forward
@@ -460,4 +461,5 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#include "ace/post.h"
 #endif /* ACE_REACTOR_IMPL_H */

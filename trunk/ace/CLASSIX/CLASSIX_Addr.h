@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_ADDR_H
+#include "ace/pre.h"
 #define ACE_CLASSIX_ADDR_H
 
 #include "ace/ACE.h"
@@ -94,4 +95,5 @@ private:
 #include "ace/CLASSIX/CLASSIX_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_CLASSIX_ADDR_H */

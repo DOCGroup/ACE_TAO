@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_SYSTEM_TIME_H
+#include "ace/pre.h"
 #define ACE_SYSTEM_TIME_H
 
 #include "ace/OS.h"
@@ -79,4 +80,5 @@ private:
   // Pointer to delta time kept in shared memory.
 };
 
+#include "ace/post.h"
 #endif /* ACE_SYSTEM_TIME_H */

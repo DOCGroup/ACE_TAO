@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_NAME_SPACE_H
+#include "ace/pre.h"
 #define ACE_NAME_SPACE_H
 
 #include "ace/ACE.h"
@@ -146,4 +147,5 @@ public:
   // Dump the state of the object
 };
 
+#include "ace/post.h"
 #endif /* ACE_NAME_SPACE_H */

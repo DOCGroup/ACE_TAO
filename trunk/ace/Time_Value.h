@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_TIME_VALUE_H
+#include "ace/pre.h"
 #define ACE_TIME_VALUE_H
 
 // This file is no longer used and is only here due to backwards
@@ -26,4 +27,5 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/post.h"
 #endif /* ACE_TIME_VALUE */

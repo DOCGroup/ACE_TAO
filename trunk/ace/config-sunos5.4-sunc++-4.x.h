@@ -5,6 +5,7 @@
 // platforms using the SunC++ 4.0.x compiler.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
@@ -199,4 +200,5 @@
 #    define ACE_NEW_THROWS_EXCEPTIONS
 #  endif /* ACE_HAS_EXCEPTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

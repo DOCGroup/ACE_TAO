@@ -8,6 +8,7 @@
 // and configures based on those.
 
 #ifndef ACE_CYGWIN32_COMMON_H
+#include "ace/pre.h"
 #define ACE_CYGWIN32_COMMON_H
 
 #define CYGWIN32
@@ -170,4 +171,5 @@
 
 #define ACE_LACKS_MKFIFO
 
+#include "ace/post.h"
 #endif /* ACE_LINUX_COMMON_H */

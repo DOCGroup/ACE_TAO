@@ -6,6 +6,7 @@
 // the SGI C++ Compiler.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #define IRIX5
@@ -118,4 +119,5 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

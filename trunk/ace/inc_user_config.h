@@ -5,6 +5,7 @@
 // config.h directly.
 
 #ifndef ACE_INC_USER_CONFIG_H
+#include "ace/pre.h"
 #define ACE_INC_USER_CONFIG_H
 
 #include "ace/config.h"
@@ -48,4 +49,5 @@
 #  define ACE_RCSID(path, file, id) /* noop */
 #endif /* #if (defined (ACE_USE_RCSID) && (ACE_USE_RCSID != 0)) */
 
+#include "ace/post.h"
 #endif /* ACE_INC_USER_CONFIG_H */

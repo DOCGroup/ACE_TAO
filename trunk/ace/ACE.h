@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_ACE_H
+#include "ace/pre.h"
 #define ACE_ACE_H
 
 #include "ace/OS.h"
@@ -699,4 +700,5 @@ private:
 #include "ace/ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif  /* ACE_ACE_H */

@@ -7,6 +7,7 @@
 // HP-UX file (config-hpux-10.x.h) for the platform information.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // There are 2 compiler-specific sections, plus a 3rd for common to both.
@@ -119,4 +120,5 @@
 
 #include "ace/config-hpux-10.x.h"	/* OS information */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

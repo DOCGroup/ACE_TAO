@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef ACE_NAME_PROXY_H
+#include "ace/pre.h"
 #define ACE_NAME_PROXY_H
 
 #include "ace/INET_Addr.h"
@@ -85,4 +86,5 @@ private:
   // Pointer to ACE_Reactor (used if we are run in "reactive-mode").
 };
 
+#include "ace/post.h"
 #endif /* ACE_NAME_PROXY_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SHARED_MALLOC_MM_H
+#include "ace/pre.h"
 #define ACE_SHARED_MALLOC_MM_H
 
 #include "ace/Shared_Memory.h"
@@ -112,4 +113,5 @@ private:
 #include "ace/Shared_Memory_MM.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_SHARED_MALLOC_MM_H */

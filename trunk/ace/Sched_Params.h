@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef ACE_SCHED_PARAMS_H
+#include "ace/pre.h"
 #define ACE_SCHED_PARAMS_H
 
 #include "ace/OS.h"
@@ -215,4 +216,5 @@ private:
 #include "ace/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_SCHED_PARAMS_H */

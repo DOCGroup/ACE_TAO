@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_ARGUMENT_VECTOR_H
+#include "ace/pre.h"
 #define ACE_ARGUMENT_VECTOR_H
 
 #include "ace/ACE.h"
@@ -151,4 +152,5 @@ private:
 #include "ace/ARGV.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEM_STREAM_H
+#include "ace/pre.h"
 #define ACE_MEM_STREAM_H
 
 #include "ace/MEM_IO.h"
@@ -123,4 +124,5 @@ public:
 #include "ace/MEM_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_MEM_STREAM_H */

@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef ACE_CODESET_IMB1047_H
+#include "ace/pre.h"
 #define ACE_CODESET_IMB1047_H
 
 #include "ace/inc_user_config.h"
@@ -110,4 +111,5 @@ public:
 
 #endif /* ACE_MVS */
 
+#include "ace/post.h"
 #endif /* ACE_CODESET_IMB1047_H */

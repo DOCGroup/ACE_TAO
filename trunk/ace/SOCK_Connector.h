@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_SOCK_CONNECTOR_H
 
 #include "ace/SOCK_Stream.h"
@@ -205,4 +206,5 @@ protected:
 #include "ace/SOCK_Connector.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_CONNECTOR_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_PIPE_H
+#include "ace/pre.h"
 #define ACE_PIPE_H
 
 #include "ace/ACE.h"
@@ -78,4 +79,5 @@ private:
 #include "ace/Pipe.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_PIPE_H */

@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef ACE_ASYNCH_ACCEPTOR_H
+#include "ace/pre.h"
 #define ACE_ASYNCH_ACCEPTOR_H
 
 #include "ace/OS.h"
@@ -181,5 +182,6 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
+#include "ace/post.h"
 #endif /* ACE_ASYNCH_ACCEPTOR_H */
 

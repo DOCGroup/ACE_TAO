@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SIGNAL_HANDLER_H
+#include "ace/pre.h"
 #define ACE_SIGNAL_HANDLER_H
 
 #if defined (ACE_DONT_INCLUDE_ACE_SIGNAL_H)
@@ -453,4 +454,5 @@ private:
 #include "ace/Signal.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_SIGNAL_HANDLER_H */

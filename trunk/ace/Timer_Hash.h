@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_TIMER_HASH_H
+#include "ace/pre.h"
 #define ACE_TIMER_HASH_H
 
 #include "ace/Timer_Hash_T.h"
@@ -69,4 +70,5 @@ typedef ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *,
                                   ACE_Hash_Timer_Heap>
         ACE_Timer_Hash_Heap_Iterator;
 
+#include "ace/post.h"
 #endif /* ACE_TIMER_HASH_H */

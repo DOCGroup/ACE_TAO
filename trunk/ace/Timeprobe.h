@@ -42,6 +42,7 @@
 // ============================================================================
 
 #ifndef ACE_TIMEPROBE_H
+#include "ace/pre.h"
 #define ACE_TIMEPROBE_H
 
 #include "ace/OS.h"
@@ -177,4 +178,5 @@ ACE_SINGLETON_DECLARATION (ACE_TIMEPROBE_SINGLETON_DEFINE);
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */
+#include "ace/post.h"
 #endif /* ACE_TIMEPROBE_H */

@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_CORBA_HANDLER_H
+#include "ace/pre.h"
 #define ACE_CORBA_HANDLER_H
 
 #include "ace/Service_Config.h"
@@ -251,4 +252,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ORBIX */
+#include "ace/post.h"
 #endif /* ACE_CORBA_HANDLER_H */

@@ -15,6 +15,7 @@
 //============================================================================
 
 #ifndef ACE_AUTO_INCDEC_T_H
+#include "ace/pre.h"
 #define ACE_AUTO_INCDEC_T_H
 
 #include "ace/OS.h"
@@ -80,4 +81,5 @@ private:
 #pragma implementation ("Auto_IncDec_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_AUTO_INCDEC_T_H */

@@ -6,6 +6,7 @@
 // and libg++ v2.6.x.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // Platform supports STREAM pipes (note that this is disabled by
@@ -64,4 +65,5 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

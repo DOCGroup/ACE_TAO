@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MALLOC_T_H
+#include "ace/pre.h"
 #define ACE_MALLOC_T_H
 
 #include "ace/ACE.h"
@@ -613,4 +614,5 @@ public:
 #pragma implementation ("Malloc_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_MALLOC_H */

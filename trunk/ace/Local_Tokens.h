@@ -45,6 +45,7 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_MUTEX_H
+#include "ace/pre.h"
 #define ACE_LOCAL_MUTEX_H
 
 #include "ace/Synch_T.h"
@@ -1036,4 +1037,5 @@ protected:
 #if defined (__ACE_INLINE__)
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
+#include "ace/post.h"
 #endif /* ACE_LOCAL_MUTEX_H */

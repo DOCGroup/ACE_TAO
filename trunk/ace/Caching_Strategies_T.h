@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef CACHING_STRATEGIES_H
+#include "ace/pre.h"
 #define CACHING_STRATEGIES_H
 
 #include "ace/OS.h"
@@ -524,4 +525,5 @@ private:
 #pragma implementation ("Caching_Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* CACHING_STRATEGIES_H */

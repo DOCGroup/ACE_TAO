@@ -24,6 +24,7 @@
 // Macros for handling CORBA exceptions.
 
 #ifndef ACE_CORBA_MACROS_H
+#include "ace/pre.h"
 #define ACE_CORBA_MACROS_H
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -408,4 +409,5 @@
 #   define ACE_PRINT_EXCEPTION(EX,INFO) ACE_PRINT_TAO_EXCEPTION(EX,INFO)
 # endif /* ACE_PRINT_EXCEPTION */
 
+#include "ace/post.h"
 #endif /* ACE_CORBA_MACROS_H */

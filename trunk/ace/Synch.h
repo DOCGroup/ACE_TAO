@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef ACE_SYNCH_H
+#include "ace/pre.h"
 #define ACE_SYNCH_H
 
 #include "ace/ACE.h"
@@ -1696,4 +1697,5 @@ public:
   void dump (void) const {}
 };
 
+#include "ace/post.h"
 #endif /* ACE_SYNCH_H */

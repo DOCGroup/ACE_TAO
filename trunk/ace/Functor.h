@@ -36,6 +36,7 @@
 // ============================================================================
 
 #ifndef ACE_FUNCTOR_H
+#include "ace/pre.h"
 #define ACE_FUNCTOR_H
 
 #include "ace/ACE.h"
@@ -389,4 +390,5 @@ public:
 // Include the templates here.
 #include "ace/Functor_T.h"
 
+#include "ace/post.h"
 #endif /* ACE_FUNCTOR_H */

@@ -17,6 +17,7 @@
 #define HPUX_11
 
 #ifndef _HPUX_SOURCE
+#include "ace/pre.h"
 #define _HPUX_SOURCE
 #endif
 
@@ -252,4 +253,5 @@
 // To build with tracing enabled, make sure ACE_NTRACE is not defined
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
+#include "ace/post.h"
 #endif /* ACE_NTRACE */

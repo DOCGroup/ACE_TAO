@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_FREE_LIST_H
+#include "ace/pre.h"
 #define ACE_FREE_LIST_H
 
 #include "ace/OS.h"
@@ -142,4 +143,5 @@ private:
 #pragma implementation ("Free_List.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_FREE_LIST_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_IOSTREAM_H
+#include "ace/pre.h"
 #define ACE_IOSTREAM_H
 
 #include "ace/OS.h"
@@ -494,4 +495,5 @@ typedef ostream& (*__omanip_)(ostream&);
 // Include the templates here.
 #include "ace/IOStream_T.h"
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
+#include "ace/post.h"
 #endif /* ACE_IOSTREAM_H */

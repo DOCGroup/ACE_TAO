@@ -15,6 +15,7 @@
 //============================================================================
 
 #ifndef ACE_SOCK_H
+#include "ace/pre.h"
 #define ACE_SOCK_H
 
 #include "ace/ACE.h"
@@ -128,6 +129,7 @@ protected:
 #include "ace/SOCK.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_H */
 
 

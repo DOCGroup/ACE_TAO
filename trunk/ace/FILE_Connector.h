@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_FILE_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_FILE_CONNECTOR_H
 
 #include "ace/FILE_IO.h"
@@ -94,4 +95,5 @@ public:
 #include "ace/FILE_Connector.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_FILE_CONNECTOR_H */

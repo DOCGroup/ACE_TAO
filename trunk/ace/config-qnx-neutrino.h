@@ -4,6 +4,7 @@
 // 2.0 (Beta) with GNU C++ and the POSIX (pthread) threads package.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #define _POSIX_C_SOURCE 199506
@@ -143,4 +144,5 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

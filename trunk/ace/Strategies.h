@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_STRATEGIES_H
+#include "ace/pre.h"
 #define ACE_STRATEGIES_H
 
 #include "ace/Event_Handler.h"
@@ -190,4 +191,5 @@ protected:
 #include "ace/Strategies.i"
 #endif /* __ACE_INLINE __ */
 
+#include "ace/post.h"
 #endif /* ACE_STRATEGIES_H */

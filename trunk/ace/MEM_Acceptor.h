@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEM_ACCEPTOR_H
+#include "ace/pre.h"
 #define ACE_MEM_ACCEPTOR_H
 
 #include "ace/SOCK_Acceptor.h"
@@ -153,4 +154,5 @@ private:
 #include "ace/MEM_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_MEM_ACCEPTOR_H */

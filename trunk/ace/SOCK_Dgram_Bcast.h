@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_DGRAM_BCAST_H
+#include "ace/pre.h"
 #define ACE_SOCK_DGRAM_BCAST_H
 
 #include "ace/INET_Addr.h"
@@ -122,4 +123,5 @@ private:
 #include "ace/SOCK_Dgram_Bcast.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_DGRAM_BCAST_H */

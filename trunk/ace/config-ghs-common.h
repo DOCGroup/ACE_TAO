@@ -6,6 +6,7 @@
 // to all Green Hills platforms.
 
 #ifndef ACE_GHS_COMMON_H
+#include "ace/pre.h"
 #define ACE_GHS_COMMON_H
 
 #if !defined (ACE_CONFIG_INCLUDE_GHS_COMMON)
@@ -40,4 +41,5 @@
 # error ace/config-ghs-common.h can only be used with Green Hills compilers!
 #endif /* ! ghs */
 
+#include "ace/post.h"
 #endif /* ACE_GHS_COMMON_H */

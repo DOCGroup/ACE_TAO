@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_PROFILE_TIMER_H
+#include "ace/pre.h"
 #define ACE_PROFILE_TIMER_H
 
 #include "ace/ACE.h"
@@ -126,5 +127,6 @@ private:
 # include "ace/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_PROFILE_TIMER_H */
 

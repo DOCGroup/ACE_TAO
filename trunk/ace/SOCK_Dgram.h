@@ -15,6 +15,7 @@
 // ===========================================================================
 
 #ifndef ACE_SOCK_DGRAM_H
+#include "ace/pre.h"
 #define ACE_SOCK_DGRAM_H
 
 #include "ace/SOCK.h"
@@ -196,4 +197,5 @@ private:
 #include "ace/SOCK_Dgram.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_DGRAM_H */

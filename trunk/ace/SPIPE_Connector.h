@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SPIPE_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_SPIPE_CONNECTOR_H
 
 #include "ace/SPIPE_Stream.h"
@@ -97,4 +98,5 @@ public:
 #include "ace/SPIPE_Connector.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_SPIPE_CONNECTOR_H */

@@ -6,6 +6,7 @@
 // compilers 2.0, 4.0, 4.1, 4.2, 5.0 and 6.0
 
 #ifndef ACE_WIN32_COMMON_H
+#include "ace/pre.h"
 #define ACE_WIN32_COMMON_H
 
 // Complain if WIN32 is not already defined.
@@ -481,4 +482,5 @@ typedef unsigned __int64 ACE_UINT64;
 # endif /* WINSOCK_VERSION */
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 
+#include "ace/post.h"
 #endif /* ACE_WIN32_COMMON_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_CONNECTOR_H
 
 #include "ace/Service_Config.h"
@@ -485,4 +486,5 @@ protected:
 #pragma implementation ("Connector.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_CONNECTOR_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_NAME_SPACE_T_H
+#include "ace/pre.h"
 #define ACE_LOCAL_NAME_SPACE_T_H
 
 #include "ace/Name_Space.h"
@@ -249,4 +250,5 @@ private:
 #pragma implementation ("Local_Name_Space_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */

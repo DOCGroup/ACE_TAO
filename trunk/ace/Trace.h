@@ -16,6 +16,7 @@
 
 
 #ifndef ACE_TRACE_H
+#include "ace/pre.h"
 #define ACE_TRACE_H
 
 #include "ace/OS.h"
@@ -81,4 +82,5 @@ private:
   };
 };
 
+#include "ace/post.h"
 #endif /* ACE_TRACE_H */

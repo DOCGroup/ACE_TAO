@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef CACHE_MAP_MANAGER_T_H
+#include "ace/pre.h"
 #define CACHE_MAP_MANAGER_T_H
 
 #include "ace/OS.h"
@@ -394,4 +395,5 @@ protected:
 #pragma implementation ("Cache_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* CACHE_MAP_MANAGER_T_H */

@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_SHARED_MEMORY_H
+#include "ace/pre.h"
 #define ACE_SHARED_MEMORY_H
 
 #include "ace/ACE.h"
@@ -46,4 +47,5 @@ public:
   virtual int get_segment_size (void) const = 0;
   virtual ACE_HANDLE get_id (void) const = 0;
 };
+#include "ace/post.h"
 #endif /* ACE_SHARED_MEMORY_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_PORT_H
+#include "ace/pre.h"
 #define ACE_CLASSIX_PORT_H
 
 #include "ace/Singleton.h"
@@ -157,4 +158,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 
+#include "ace/post.h"
 #endif /* ACE_CLASSIX_PORT_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SVC_CONF_H
+#include "ace/pre.h"
 #define ACE_SVC_CONF_H
 
 // Globally visible macros, type decls, and extern var decls for
@@ -107,4 +108,5 @@ typedef union
   char *ident_;
 } ACE_YYSTYPE;
 extern ACE_YYSTYPE ace_yylval;
+#include "ace/post.h"
 #endif /* ACE_SVC_CONF_H */

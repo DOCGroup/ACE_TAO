@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEMORY_POOL_H
+#include "ace/pre.h"
 #define ACE_MEMORY_POOL_H
 
 #include "ace/ACE.h"
@@ -670,4 +671,5 @@ private:
 #include "ace/Memory_Pool.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_MEMORY_POOL_H */

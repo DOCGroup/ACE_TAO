@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_NT_SERVICE_H
+#include "ace/pre.h"
 #define ACE_NT_SERVICE_H
 
 #include "ace/inc_user_config.h"
@@ -362,4 +363,5 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc, LPTSTR *lpszArgv);
 
 #endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
 
+#include "ace/post.h"
 #endif /* ACE_SERVICE_OBJECT_H */

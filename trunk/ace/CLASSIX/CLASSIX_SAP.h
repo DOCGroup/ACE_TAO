@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_SAP_H
+#include "ace/pre.h"
 #define ACE_CLASSIX_SAP_H
 
 /* ------------------------------------------------------------------------- */
@@ -140,4 +141,5 @@ class ACE_CLASSIX_SAP
 #include "ace/CLASSIX/CLASSIX_SAP.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_CLASSIX_SAP_H */

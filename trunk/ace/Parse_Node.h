@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_PARSE_NODE_H
+#include "ace/pre.h"
 #define ACE_PARSE_NODE_H
 
 #include "ace/Service_Types.h"
@@ -296,4 +297,5 @@ private:
 #include "ace/Parse_Node.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_PARSE_NODE_H */

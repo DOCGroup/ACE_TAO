@@ -5,6 +5,7 @@
 // using the Diab Data D-C++ 4.1a compiler
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // #if ! defined (__ACE_INLINE__)
@@ -205,4 +206,5 @@
 #endif /* ACE_PSOS_TBD */
 #define ACE_LACKS_MKFIFO
 #define ACE_MALLOC_ALIGN 8
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */
