@@ -9,7 +9,6 @@ CCFLAGS		+= $(CFLAGS) --no_rtti
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
-LDFLAGS		= -no_prelink
 LIBS            += /appl/newgreen/vxppc603/ghsbltin.o /appl/newgreen/vxppc603/ghsmath.o
 PIC		=
 AR		= ax
