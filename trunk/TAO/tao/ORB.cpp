@@ -790,8 +790,6 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   else
     id = 0;
 
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-
   // @@ Ugly, should not assume we are an IIOP Object!!
   //    Will deal with this on the next iteration of pluggable protocols! fredk
   IIOP_Object *data = 0;
