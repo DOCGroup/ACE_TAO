@@ -1,3 +1,12 @@
+Fri Oct 29 11:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{cpp,i}:
+          Moved activate_object from i to cpp file
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/Servant_Retention_Strategy.cpp:
+          Implemented the activate_object in the Servant_Retention_Strategy
+          and just call that strategy from the POA.
 
         * tao/PortableServer/POA.{cpp,h}:
           Removed default_servant, we don't need it anymore in the POA, it is

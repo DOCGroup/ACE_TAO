@@ -260,6 +260,9 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                                           this
                                           ACE_ENV_ARG_PARAMETER);
 
+// todo make here a return value of the update and check this, in case of error
+// we get inconsistent policies
+
   // Set the folded name of this POA.
   this->set_folded_name ();
 
@@ -1028,63 +1031,72 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
                    PortableServer::POA::ServantAlreadyActive,
                    PortableServer::POA::WrongPolicy))
 {
-/// @todo Johnny, this has to move out to the policy strategies
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    activate_object (servant, priority, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+}
 
-  // This operation requires the SYSTEM_ID and RETAIN policy; if not
-  // present, the WrongPolicy exception is raised.
-  if (!(this->cached_policies_.id_assignment () == PortableServer::SYSTEM_ID &&
-        this->cached_policies_.servant_retention () == PortableServer::RETAIN))
+PortableServer::ObjectId *
+TAO_POA::activate_object (PortableServer::Servant servant
+                          ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::WrongPolicy))
+{
+  while (1)
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      int wait_occurred_restart_call = 0;
+
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD_RETURN (0);
+
+      PortableServer::ObjectId *result =
+        this->activate_object_i (servant,
+                                 this->cached_policies_.server_priority (),
+                                 wait_occurred_restart_call
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      // If we ended up waiting on a condition variable, the POA state
+      // may have changed while we are waiting.  Therefore, we need to
+      // restart this call.
+      if (wait_occurred_restart_call)
+        continue;
+      else
+        return result;
     }
+}
 
-  bool may_activate =
-    this->active_policy_strategies_.id_uniqueness_strategy()->validate (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (!may_activate)
+void
+TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
+                                  PortableServer::Servant servant
+                                  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::ObjectAlreadyActive,
+                   PortableServer::POA::WrongPolicy))
+{
+  while (1)
     {
-      return 0;
+      int wait_occurred_restart_call = 0;
+
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD;
+
+      this->activate_object_with_id_i (id,
+                                       servant,
+                                       this->cached_policies_.server_priority (),
+                                       wait_occurred_restart_call
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      // If we ended up waiting on a condition variable, the POA state
+      // may have changed while we are waiting.  Therefore, we need to
+      // restart this call.
+      if (wait_occurred_restart_call)
+        continue;
+      else
+        return;
     }
-
-  // Otherwise, the activate_object operation generates an Object Id
-  // and enters the Object Id and the specified servant in the Active
-  // Object Map. The Object Id is returned.
-  PortableServer::ObjectId_var user_id;
-  if (this->active_object_map ().
-      bind_using_system_id_returning_user_id (servant,
-                                              priority,
-                                              user_id.out ()) != 0)
-    {
-// @Johnny, here is a mismatch with the spec, when the unique_id policy is set and
-// the servant is already in the map a ServantAlreadyActive should be generated
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        0);
-    }
-
-  //
-  // Everything is finally ok
-  //
-
-  // A recursive thread lock without using a recursive thread lock.
-  // Non_Servant_Upcall has a magic constructor and destructor.  We
-  // unlock the Object_Adapter lock for the duration of the servant
-  // activator upcalls; reacquiring once the upcalls complete.  Even
-  // though we are releasing the lock, other threads will not be able
-  // to make progress since
-  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-  TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-  ACE_UNUSED_ARG (non_servant_upcall);
-
-  // The implementation of activate_object will invoke _add_ref at
-  // least once on the Servant argument before returning. When the POA
-  // no longer needs the Servant, it will invoke _remove_ref on it the
-  // same number of times.
-  servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  return user_id._retn ();
 }
 
 void

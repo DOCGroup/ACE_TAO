@@ -11,6 +11,7 @@
 
 #include "Servant_Retention_Strategy.h"
 #include "Request_Processing_Strategy.h"
+#include "tao/PortableServer/Id_Uniqueness_Strategy.h"
 #include "Lifespan_Strategy.h"
 #include "tao/ORB_Core.h"
 #include "Non_Servant_Upcall.h"
@@ -842,6 +843,68 @@ namespace TAO
        * Otherwise, the ServantNotActive exception is raised.
        */
     }
+
+    PortableServer::ObjectId *
+    Retain_Servant_Retention_Strategy::activate_object (
+      PortableServer::Servant servant,
+      CORBA::Short priority,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::WrongPolicy))
+    {
+      if (this->poa_->cached_policies().id_assignment () != PortableServer::SYSTEM_ID)
+        {
+          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                            0);
+        }
+
+      bool may_activate =
+        this->poa_->active_policy_strategies().id_uniqueness_strategy()->validate (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (!may_activate)
+        {
+          return 0;
+        }
+
+      // Otherwise, the activate_object operation generates an Object Id
+      // and enters the Object Id and the specified servant in the Active
+      // Object Map. The Object Id is returned.
+      PortableServer::ObjectId_var user_id;
+      if (this->active_object_map_->
+          bind_using_system_id_returning_user_id (servant,
+                                              priority,
+                                              user_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
+
+      //
+      // Everything is finally ok
+      //
+
+      // A recursive thread lock without using a recursive thread lock.
+      // Non_Servant_Upcall has a magic constructor and destructor.  We
+      // unlock the Object_Adapter lock for the duration of the servant
+      // activator upcalls; reacquiring once the upcalls complete.  Even
+      // though we are releasing the lock, other threads will not be able
+      // to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      ACE_UNUSED_ARG (non_servant_upcall);
+
+      // The implementation of activate_object will invoke _add_ref at
+      // least once on the Servant argument before returning. When the POA
+      // no longer needs the Servant, it will invoke _remove_ref on it the
+      // same number of times.
+      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      return user_id._retn ();
+    }
   }
 }
 
@@ -1125,6 +1188,24 @@ namespace TAO
       /**
        * Otherwise, the ServantNotActive exception is raised.
        */
+    }
+
+    PortableServer::ObjectId *
+    Non_Retain_Servant_Retention_Strategy::activate_object (
+      PortableServer::Servant servant,
+      CORBA::Short priority,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::WrongPolicy))
+    {
+      ACE_UNUSED_ARG (servant);
+      ACE_UNUSED_ARG (priority);
+      ACE_UNUSED_ARG (wait_occurred_restart_call);
+
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
   }
 }

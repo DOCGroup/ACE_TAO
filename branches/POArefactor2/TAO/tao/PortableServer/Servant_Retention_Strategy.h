@@ -80,6 +80,16 @@ namespace TAO
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL) = 0;
 
+      virtual
+      PortableServer::ObjectId *
+      activate_object (PortableServer::Servant servant,
+                       CORBA::Short priority,
+                       int &wait_occurred_restart_call
+                            ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::WrongPolicy)) = 0;
+
       virtual void deactivate_object (const PortableServer::ObjectId &id
                                       ACE_ENV_ARG_DECL) = 0;
 
@@ -169,6 +179,16 @@ namespace TAO
                             int &wait_occurred_restart_call);
 
       virtual TAO_Active_Object_Map* get_aom() const;
+
+      virtual
+      PortableServer::ObjectId *
+      activate_object (PortableServer::Servant servant,
+                       CORBA::Short priority,
+                       int &wait_occurred_restart_call
+                            ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::WrongPolicy));
 
       void deactivate_object (const PortableServer::ObjectId &id
                               ACE_ENV_ARG_DECL);
@@ -266,6 +286,16 @@ namespace TAO
       virtual TAO_Active_Object_Map* get_aom() const;
 
       CORBA::ULong waiting_servant_deactivation (void) const;
+
+      virtual
+      PortableServer::ObjectId *
+      activate_object (PortableServer::Servant servant,
+                       CORBA::Short priority,
+                       int &wait_occurred_restart_call
+                            ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::WrongPolicy));
 
       virtual void deactivate_object (const PortableServer::ObjectId &id
                                       ACE_ENV_ARG_DECL);
