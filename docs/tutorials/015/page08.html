@@ -23,7 +23,6 @@ collect data from the peer and pass it along to another object for
 processing.  Again, keep it simple and delegate authority.
 <HR>
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>HANDLER_H</font>
@@ -41,54 +40,50 @@ processing.  Again, keep it simple and delegate authority.
 <font color=red>/* Just your basic event handler.  We use ACE_Svc_Handler&lt;> as a
    baseclass so that it can maintain the peer() and other details for
    us.  We're not going to activate() this object, so we can get away
-   with the NULL synch choice.
-*/</font>
-class Handler : public ACE_Svc_Handler &lt; ACE_SOCK_STREAM, ACE_NULL_SYNCH >
+   with the NULL synch choice.  */</font>
+class Handler : public ACE_Svc_Handler &lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
+  Handler (void);
+  ~Handler (void);
 
-    Handler(void);
-    ~Handler(void);
+  <font color=red>// Called by the acceptor when we're created in response to a client</font>
+  <font color=red>// connection.</font>
+  int open (void *);
 
-        <font color=red>// Called by the acceptor when we're created in response to a</font>
-        <font color=red>// client connection.</font>
-    int open (void *);
+  <font color=red>// Called when it's time for us to be deleted.  We take care of</font>
+  <font color=red>// removing ourselves from the reactor and shutting down the peer()</font>
+  <font color=red>// connectin.</font>
+  void destroy (void);
 
-        <font color=red>// Called when it's time for us to be deleted.  We take care</font>
-        <font color=red>// of removing ourselves from the reactor and shutting down</font>
-        <font color=red>// the peer() connectin.</font>
-    void destroy (void);
-
-        <font color=red>// Called when it's time for us to go away.  There are subtle</font>
-        <font color=red>// differences between destroy() and close() so don't try to</font>
-        <font color=red>// use either for all cases.</font>
-    int close (u_long);
+  <font color=red>// Called when it's time for us to go away.  There are subtle</font>
+  <font color=red>// differences between destroy() and close() so don't try to use</font>
+  <font color=red>// either for all cases.</font>
+  int close (u_long);
 
 protected:
+  <font color=red>// Respond to peer() activity.</font>
+  int handle_input (ACE_HANDLE);
 
-        <font color=red>// Respond to peer() activity.</font>
-    int handle_input (ACE_HANDLE);
-
-        <font color=red>// This will be called when handle_input() returns a failure</font>
-        <font color=red>// code.  That's our signal that it's time to begin the</font>
-        <font color=red>// shutdown process.</font>
-    int handle_close(ACE_HANDLE, ACE_Reactor_Mask _mask);
-
+  <font color=red>// This will be called when handle_input() returns a failure code.</font>
+  <font color=red>// That's our signal that it's time to begin the shutdown process.</font>
+  int handle_close (ACE_HANDLE,
+                    ACE_Reactor_Mask mask);
 private:
 
-        <font color=red>// Like the Client, we have to abide by the protocol</font>
-        <font color=red>// requirements.  We use a local Protocol_Stream object to</font>
-        <font color=red>// take care of those details.  For us, I/O then just becomes</font>
-        <font color=red>// a matter of interacting with the stream.</font>
-    Protocol_Stream stream_;
+  <font color=red>// Like the Client, we have to abide by the protocol requirements.</font>
+  <font color=red>// We use a local Protocol_Stream object to take care of those</font>
+  <font color=red>// details.  For us, I/O then just becomes a matter of interacting</font>
+  <font color=red>// with the stream.</font>
+  Protocol_Stream stream_;
 
-    Protocol_Stream & stream(void)
-        {
-            return this->stream_;
-        }
+  Protocol_Stream &stream (void)
+  {
+    return this->stream_;
+  }
 };
 
-<font color=blue>#endif</font> <font color=red>//  HANDLER_H</font>
+<font color=blue>#endif</font> <font color=red>/* HANDLER_H */</font>
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page09.html">Continue This Tutorial</A>]</CENTER>

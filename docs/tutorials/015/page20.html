@@ -21,7 +21,6 @@ show you the hooks and entry points and let someone else contribute an
 encryptor.
 <HR>
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>CRYPT_H</font>
@@ -36,26 +35,26 @@ class Crypt : public Protocol_Task
 {
 public:
 
-    typedef Protocol_Task inherited;
+  typedef Protocol_Task inherited;
 
-        <font color=red>// Again we have the option of multiple threads and again I</font>
-        <font color=red>// regret tempting folks to use it.</font>
-    Crypt( int _thr_count = 0 );
+  <font color=red>// Again we have the option of multiple threads and again I</font>
+  <font color=red>// regret tempting folks to use it.</font>
+  Crypt (int thr_count = 0);
 
-    ~Crypt(void);
+  ~Crypt (void);
 
 protected:
 
-        <font color=red>// Moving downstream will encrypt the data</font>
-     int send(ACE_Message_Block *message,
-              ACE_Time_Value *timeout);
+  <font color=red>// Moving downstream will encrypt the data</font>
+  int send (ACE_Message_Block *message,
+            ACE_Time_Value *timeout);
 
-        <font color=red>// And moving upstream will decrypt it.</font>
-     int recv(ACE_Message_Block *message,
-              ACE_Time_Value *timeout);
+  <font color=red>// And moving upstream will decrypt it.</font>
+  int recv (ACE_Message_Block *message,
+            ACE_Time_Value *timeout);
 };
 
-<font color=blue>#endif</font> <font color=red>// CRYPT_H</font>
+<font color=blue>#endif</font> <font color=red>/* CRYPT_H */</font>
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page21.html">Continue This Tutorial</A>]</CENTER>

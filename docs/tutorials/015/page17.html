@@ -12,8 +12,10 @@
 
 <P>
 <HR WIDTH="100%">
-This and the next three pages present the protocol objects that
-provide compression and encryption.  If you were hoping to 
+The Recv implementation is nearly as simple as Xmit.  There's
+opportunity for error when we get the message size and we have to
+manage the lifetime of the tickler but other than that it's pretty
+basic stuff.
 <HR>
 <PRE>
 

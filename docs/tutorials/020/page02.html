@@ -25,6 +25,8 @@
 <hr>
 <PRE>
 
+<font color=red>// $Id$</font>
+
 <font color=blue>#include</font> "<font color=green>mmap.h</font>"
 
 int
@@ -50,7 +52,7 @@ main (int, char *[])
     while (*shm != '*')
         <font color=#008888>ACE_OS::sleep</font> (1);
 
-    for (char *s = shm; *s != '\0'; s++)
+    for (s = shm; *s != '\0'; s++)
     {
         putchar (*s);
     }
