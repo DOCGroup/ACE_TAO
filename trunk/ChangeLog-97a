@@ -1,3 +1,9 @@
+Wed Apr 16 11:47:35 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/Map_Manager.cpp (free_search_structure): Added the loop
+ 	  variable back in that must have been inadvertently deleted in the
+ 	  previous entry.
+
 Wed Apr 16 09:35:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Map_Manager.cpp (free_search_structure): changed type of
