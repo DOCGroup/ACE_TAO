@@ -37,7 +37,7 @@ $SV = new PerlACE::Process ("server",
 
 $CL = new PerlACE::Process ("client",
                             "-t $type -k file://$iorfile "
-                            . " -i 50000");
+                            . " -i 150000");
 
 print STDERR $CL->CommandLine () ;
 $SV->Spawn ();

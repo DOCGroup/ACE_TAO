@@ -73,7 +73,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 //      {
 //        prev->cont (mb);
 //        prev = mb;
-        
+
 //      }
 //      }
 
@@ -97,7 +97,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 //      ACE_NEW_RETURN (mb,
 //                      ACE_Message_Block (frame_size),
 //                      -1);
-        
+
 //      ACE_OS_String::memmove (mb->rd_ptr (), iov.iov_base, n);
 //      mb->wr_ptr (mb->rd_ptr () + n);
 //      prev->cont (mb);
@@ -224,7 +224,7 @@ TimeStamp_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   return object;
 }
 
-ACE_FACTORY_DEFINE (TAO_AV, TimeStamp_Protocol_Factory)
+ACE_FACTORY_DEFINE (TAO_TS, TimeStamp_Protocol_Factory)
 ACE_STATIC_SVC_DEFINE (TimeStamp_Protocol_Factory,
                        ACE_TEXT ("TimeStamp_Protocol_Factory"),
                        ACE_SVC_OBJ_T,

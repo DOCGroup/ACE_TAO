@@ -34,6 +34,8 @@ my($TemplateExtension)       = 'mpd';
 my($TemplateInputExtension)  = 'mpt';
 
 ## Valid names for assignments within a project
+## 1 means preserve the order for additions
+## 0 means order is not preserved, it is reversed.
 my(%validNames) = ('exename'         => 1,
                    'sharedname'      => 1,
                    'staticname'      => 1,
@@ -41,11 +43,10 @@ my(%validNames) = ('exename'         => 1,
                    'install'         => 1,
                    'includes'        => 1,
                    'idlflags'        => 1,
-                   'idlpreprocessor' => 1,
-                   'defaultlibs'     => 1,
+                   'defaultlibs'     => 0,
                    'after'           => 1,
-                   'libs'            => 1,
-                   'lit_libs'        => 1,
+                   'libs'            => 0,
+                   'lit_libs'        => 0,
                    'pch_header'      => 1,
                    'pch_source'      => 1,
                    'ssl'             => 1,
@@ -60,8 +61,6 @@ my(%validNames) = ('exename'         => 1,
                    'comps'           => 1,
                    'tagname'         => 1,
                    'tagchecks'       => 1,
-                   'include_dir'     => 1,
-                   'core'            => 1,
                    'idlgendir'       => 1,
                    'macros'          => 1,
                   );
@@ -99,7 +98,7 @@ my(@specialComponents) = ('header_files', 'inline_files');
 ## Valid component names within a project along with the valid file extensions
 my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
            'template_files'      => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.c", "_T\\.C", ],
-           'header_files'        => [ "\\.h", "\\.hxx", "\\.hh", ],
+           'header_files'        => [ "\\.h", "\\.hpp", "\\.hxx", "\\.hh", ],
            'inline_files'        => [ "\\.i", "\\.inl", ],
            'idl_files'           => [ "\\.idl", ],
            'documentation_files' => [ "README", "readme", "\\.doc", "\\.txt", ],
@@ -107,7 +106,7 @@ my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C
           );
 
 ## Exclude these extensions when auto generating the component values
-my(%ec) = ('source_files' => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.C", ],
+my(%ec) = ('source_files' => $vc{'template_files'},
           );
 
 ## Match up assignments with the valid components
@@ -119,7 +118,7 @@ my(%genext) = ('idl_files' => {'automatic'     => 1,
                                'pre_extension' => [ 'C', 'S' ],
                                'source_files'  => [ '\\.cpp', '\\.cxx', '\\.cc', '\\.C', ],
                                'inline_files'  => [ '\\.i', '\\.inl', ],
-                               'header_files'  => [ '\\.h', '\\.hxx', '\\.hh', ],
+                               'header_files'  => [ '\\.h', '\\.hpp', '\\.hxx', '\\.hh', ],
                               },
               );
 
@@ -148,11 +147,14 @@ sub new {
   my($hierarchy) = shift;
   my($exclude)   = shift;
   my($makeco)    = shift;
+  my($nmod)      = shift;
+  my($applypj)   = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, $hierarchy, 'project');
+                                $feature, $hierarchy, $nmod, $applypj,
+                                'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'feature_defined'}       = 0;
@@ -163,12 +165,12 @@ sub new {
   $self->{'lexe_template_input'}   = undef;
   $self->{'lib_template_input'}    = undef;
   $self->{'dll_template_input'}    = undef;
-  $self->{'writing_type'}          = 0;
   $self->{'flag_overrides'}        = {};
   $self->{'special_supplied'}      = {};
-  $self->{'verbatim'}              = {};
-  $self->{'type_specific_assign'}  = {};
   $self->{'pctype'}                = $self->extractType("$self");
+  $self->{'verbatim'}              = {};
+  $self->{'verbatim_accessed'}     = {$self->{'pctype'} => {}};
+  $self->{'type_specific_assign'}  = {};
   $self->{'defaulted'}             = {};
   $self->{'custom_types'}          = {};
   $self->{'parents_read'}          = {};
@@ -177,6 +179,7 @@ sub new {
   $self->{'sort_files'}            = $self->sort_files();
   $self->{'source_callback'}       = undef;
   $self->{'dollar_special'}        = $self->dollar_special();
+  $self->{'exclude'}               = $exclude;
   $self->reset_generating_types();
 
   return $self;
@@ -215,6 +218,36 @@ sub process_assignment {
     $value =~ s/\$\$/\$/g;
   }
   $self->SUPER::process_assignment($name, $value, $assign);
+
+  ## Support keyword mapping here only at the project level scope. The
+  ## scoped keyword mapping is done through the parse_scoped_assignment()
+  ## method.
+  if (!defined $assign) {
+    my($mapped) = $self->{'valid_names'}->{$name};
+    if (defined $mapped && UNIVERSAL::isa($mapped, 'ARRAY')) {
+      $self->parse_scoped_assignment($$mapped[0], 'assignment',
+                                     $$mapped[1], $value,
+                                     $self->{'generated_exts'}->{$$mapped[0]});
+    }
+  }
+}
+
+
+sub get_assignment_for_modification {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($assign) = shift;
+
+  if (!defined $assign) {
+    my($mapped) = $self->{'valid_names'}->{$name};
+
+    if (defined $mapped && UNIVERSAL::isa($mapped, 'ARRAY')) {
+      $name   = $$mapped[1];
+      $assign = $self->{'generated_exts'}->{$$mapped[0]};
+    }
+  }
+
+  return $self->get_assignment($name, $assign);
 }
 
 
@@ -250,7 +283,7 @@ sub parse_line {
           ## or overrides for the project values.
           my($addproj) = $self->get_addproj();
           foreach my $ap (keys %$addproj) {
-            if (defined $validNames{$ap}) {
+            if (defined $self->{'valid_names'}->{$ap}) {
               my($val) = $$addproj{$ap};
               if ($$val[0] > 0) {
                 $self->process_assignment_add($ap, $$val[1]);
@@ -273,12 +306,29 @@ sub parse_line {
             ## End of project; Write out the file.
             ($status, $errorString) = $self->write_project();
 
+            ## write_project() can return 0 for error, 1 for project
+            ## was written and 2 for project was skipped
+            if ($status == 1) {
+              ## Check for unused verbatim markers
+              foreach my $key (keys %{$self->{'verbatim'}}) {
+                if (defined $self->{'verbatim_accessed'}->{$key}) {
+                  foreach my $ikey (keys %{$self->{'verbatim'}->{$key}}) {
+                    if (!defined $self->{'verbatim_accessed'}->{$key}->{$ikey}) {
+                      print "WARNING: Marker $ikey does not exist.\n";
+                    }
+                  }
+                }
+              }
+            }
+
+            ## Reset all of the project specific data
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
               $self->{'defaulted'}->{$key} = 0;
             }
             $self->{'assign'}               = {};
             $self->{'verbatim'}             = {};
+            $self->{'verbatim_accessed'}    = {$self->{'pctype'} => {}};
             $self->{'special_supplied'}     = {};
             $self->{'type_specific_assign'} = {};
             $self->{'flag_overrides'}       = {};
@@ -374,7 +424,7 @@ sub parse_line {
             my($def) = $self->get_default_project_name();
             $name = $self->fill_type_name($name, $def);
 
-            $self->process_assignment('project_name', $name);
+            $self->set_project_name($name);
           }
         }
         $self->{$typecheck} = 1;
@@ -392,7 +442,7 @@ sub parse_line {
     elsif ($values[0] eq 'assignment') {
       my($name)  = $values[1];
       my($value) = $values[2];
-      if (defined $validNames{$name}) {
+      if (defined $self->{'valid_names'}->{$name}) {
         $self->process_assignment($name, $value);
       }
       else {
@@ -403,7 +453,7 @@ sub parse_line {
     elsif ($values[0] eq 'assign_add') {
       my($name)  = $values[1];
       my($value) = $values[2];
-      if (defined $validNames{$name}) {
+      if (defined $self->{'valid_names'}->{$name}) {
         $self->process_assignment_add($name, $value);
       }
       else {
@@ -414,7 +464,7 @@ sub parse_line {
     elsif ($values[0] eq 'assign_sub') {
       my($name)  = $values[1];
       my($value) = $values[2];
-      if (defined $validNames{$name}) {
+      if (defined $self->{'valid_names'}->{$name}) {
         $self->process_assignment_sub($name, $value);
       }
       else {
@@ -451,7 +501,7 @@ sub parse_line {
         elsif ($comp eq 'specific') {
           my(@types) = split(/\s*,\s*/, $name);
           ($status, $errorString) = $self->parse_scope(
-                       $ih, $values[1], \@types, \%validNames);
+                       $ih, $values[1], \@types, $self->{'valid_names'});
         }
         elsif ($comp eq 'define_custom') {
           ($status, $errorString) = $self->parse_define_custom($ih, $name);
@@ -490,9 +540,14 @@ sub parse_scoped_assignment {
   my($name)   = shift;
   my($value)  = shift;
   my($flags)  = shift;
-  my($order)  = shift;
   my($over)   = {};
   my($status) = 0;
+
+  ## Map the assignment name on a scoped assignment
+  my($mapped) = $self->{'valid_names'}->{$name};
+  if (UNIVERSAL::isa($mapped, 'ARRAY')) {
+    $name = $$mapped[1];
+  }
 
   if (defined $self->{'matching_assignments'}->{$tag}) {
     foreach my $possible (@{$self->{'matching_assignments'}->{$tag}}) {
@@ -521,7 +576,7 @@ sub parse_scoped_assignment {
         my($outer) = $self->get_assignment($name);
         $self->process_assignment($name, $outer, $flags);
       }
-      $self->process_assignment_add($name, $value, $flags, $order);
+      $self->process_assignment_add($name, $value, $flags);
     }
     elsif ($type eq 'assign_sub') {
       ## If there is no value in $$flags, then we need to get
@@ -584,7 +639,7 @@ sub parse_components {
     }
   }
 
-  while($_ = $fh->getline()) {
+  while(<$fh>) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
@@ -622,8 +677,7 @@ sub parse_components {
       my(@values) = ();
       ## If this returns true, then we've found an assignment
       if ($self->parse_assignment($line, \@values)) {
-        $status = $self->parse_scoped_assignment($tag, @values,
-                                                 \%flags, $custom);
+        $status = $self->parse_scoped_assignment($tag, @values, \%flags);
         if (!$status) {
           last;
         }
@@ -662,7 +716,7 @@ sub parse_verbatim {
   $self->{'verbatim'}->{$type}->{$loc} = [];
   my($array) = $self->{'verbatim'}->{$type}->{$loc};
 
-  while($_ = $fh->getline()) {
+  while(<$fh>) {
     my($line) = $self->strip_line($_);
 
     if ($line =~ /^}/) {
@@ -715,7 +769,7 @@ sub process_feature {
     ## closing brace for the feature and it appears to the parser
     ## that nothing was defined.
     my($curly) = 1;
-    while($_ = $fh->getline()) {
+    while(<$fh>) {
       my($line) = $self->strip_line($_);
 
       ## This is a very simplistic way of finding the end of
@@ -805,7 +859,7 @@ sub parse_define_custom {
       $self->{'matching_assignments'}->{$tag} = \@keys;
     }
 
-    while($_ = $fh->getline()) {
+    while(<$fh>) {
       my($line) = $self->strip_line($_);
 
       if ($line eq '') {
@@ -813,6 +867,21 @@ sub parse_define_custom {
       elsif ($line =~ /^}/) {
         $status = 1;
         $errorString = '';
+
+        ## Propagate the custom defined values into the mapped values
+        foreach my $key (keys %{$self->{'valid_names'}}) {
+          my($mapped) = $self->{'valid_names'}->{$key};
+          if (UNIVERSAL::isa($mapped, 'ARRAY')) {
+            my($value) = $self->{'generated_exts'}->{$tag}->{$$mapped[1]};
+            if (defined $value) {
+              ## Bypass the process_assignment() defined in this class
+              ## to avoid unwanted keyword mapping.
+              $self->SUPER::process_assignment($key, $value);
+            }
+          }
+        }
+
+        ## Set some defaults (if they haven't already been set)
         if (!defined $self->{'generated_exts'}->{$tag}->{'pre_filename'}) {
           $self->{'generated_exts'}->{$tag}->{'pre_filename'} = [ '' ];
         }
@@ -892,9 +961,52 @@ sub parse_define_custom {
           }
           else {
             $status = 0;
-            $errorString =  "ERROR: Invalid assignment name: $name";
+            $errorString = "ERROR: Invalid assignment name: $name";
             last;
           }
+        }
+        elsif ($line =~ /^(\w+)\s+(\w+)(\s*=\s*(\w+)?)?/) {
+          ## Check for keyword mapping here
+          my($keyword) = $1;
+          my($newkey)  = $2;
+          my($mapkey)  = $4;
+          if ($keyword eq 'keyword') {
+            if (defined $self->{'valid_names'}->{$newkey}) {
+              $status = 0;
+              $errorString = "ERROR: Cannot map $newkey onto an " .
+                             "existing keyword";
+              last;
+            }
+            elsif (!defined $mapkey) {
+              $self->{'valid_names'}->{$newkey} = 1;
+            }
+            elsif ($newkey ne $mapkey) {
+              if (defined $customDefined{$mapkey}) {
+                $self->{'valid_names'}->{$newkey} = [ $tag, $mapkey ];
+              }
+              else {
+                $status = 0;
+                $errorString = "ERROR: Cannot map $newkey to an " .
+                               "undefined custom keyword: $mapkey";
+                last;
+              }
+            }
+            else {
+              $status = 0;
+              $errorString = "ERROR: Cannot map $newkey to $mapkey";
+              last;
+            }
+          }
+          else {
+            $status = 0;
+            $errorString = "ERROR: Unrecognized line: $line";
+            last;
+          }
+        }
+        else {
+          $status = 0;
+          $errorString = "ERROR: Unrecognized line: $line";
+          last;
         }
       }
     }
@@ -957,7 +1069,7 @@ sub read_template_input {
   my($override)    = 0;
 
   if ($self->exe_target()) {
-    if ($self->{'writing_type'} == 1) {
+    if ($self->get_static() == 1) {
       $tag = 'lexe_template_input';
       if (!defined $self->{$tag}) {
         if (defined $$ti{'lib_exe'}) {
@@ -983,7 +1095,7 @@ sub read_template_input {
     }
   }
   else {
-    if ($self->{'writing_type'} == 1) {
+    if ($self->get_static() == 1) {
       $tag = 'lib_template_input';
       if (!defined $self->{$tag}) {
         if (defined $$ti{'lib'}) {
@@ -1093,7 +1205,7 @@ sub generate_default_target_names {
       my($exename) = undef;
       foreach my $file (@sources) {
         if (open($fh, $file)) {
-          while($_ = $fh->getline()) {
+          while(<$fh>) {
             ## Remove c++ comments (ignore c style comments for now)
             $_ =~ s/\/\/.*//;
 
@@ -1123,6 +1235,16 @@ sub generate_default_target_names {
         $self->process_assignment('sharedname', $base);
         $self->process_assignment('staticname', $base);
       }
+    }
+  }
+
+  ## If we are generating only static projects, then we need to
+  ## unset the sharedname, so that we can insure that projects of
+  ## various types only generate static targets.
+  if ($self->get_static() == 1) {
+    my($sharedname) = $self->get_assignment('sharedname');
+    if (defined $sharedname) {
+      $self->process_assignment('sharedname', undef);
     }
   }
 }
@@ -1329,7 +1451,9 @@ sub generate_default_components {
               my(@built) = ();
               foreach my $file (@$array) {
                 if (-d $file) {
-                  my(@gen) = $self->generate_default_file_list($file);
+                  my(@gen) = $self->generate_default_file_list(
+                                                        $file,
+                                                        $self->{'exclude'});
                   $self->sift_files(\@gen, $exts, $pchh, $pchc, $tag, \@built);
                 }
                 else {
@@ -1406,7 +1530,7 @@ sub remove_duplicated_files {
   my($dest)   = shift;
   my($source) = shift;
   my($names)  = $self->{$dest};
-  my(@slist)  = $self->get_component_list($source);
+  my(@slist)  = $self->get_component_list($source, 1);
   my(%shash)  = ();
 
   ## Convert the array into keys for a hash table
@@ -1659,12 +1783,11 @@ sub generate_defaults {
 
   ## Generate default project name
   if (!defined $self->get_assignment('project_name')) {
-    $self->process_assignment('project_name',
-                              $self->get_default_project_name());
+    $self->set_project_name($self->get_default_project_name());
   }
 
   ## Generate the default pch file names (if needed)
-  my(@files) = $self->generate_default_file_list();
+  my(@files) = $self->generate_default_file_list('.', $self->{'exclude'});
   $self->generate_default_pch_filenames(\@files);
 
   ## If the pch file names are empty strings then we need to fix that
@@ -1720,6 +1843,23 @@ sub generate_defaults {
 }
 
 
+sub set_project_name {
+  my($self) = shift;
+  my($name) = shift;
+
+  if ($self->get_apply_project()) {
+    my($nmod) = $self->get_name_modifier();
+
+    if (defined $nmod) {
+      $nmod =~ s/\*/$name/g;
+      $name = $nmod;
+    }
+  }
+
+  $self->process_assignment('project_name', $name);
+}
+
+
 sub project_name {
   my($self) = shift;
   return $self->get_assignment('project_name');
@@ -1740,10 +1880,11 @@ sub exe_target {
 
 
 sub get_component_list {
-  my($self)  = shift;
-  my($tag)   = shift;
-  my($names) = $self->{$tag};
-  my(@list)  = ();
+  my($self)      = shift;
+  my($tag)       = shift;
+  my($noconvert) = shift;
+  my($names)     = $self->{$tag};
+  my(@list)      = ();
 
   foreach my $name (keys %$names) {
     my($comps)  = $$names{$name};
@@ -1753,7 +1894,11 @@ sub get_component_list {
     }
   }
 
-  if ($self->{'convert_slashes'}) {
+  ## By default, if 'convert_slashes' is true, then we convert slashes
+  ## to backslashes.  There are cases where we do not want to convert
+  ## the slashes, in that case get_component_list() was called with
+  ## an additional parameter indicating this.
+  if (!$noconvert && $self->{'convert_slashes'}) {
     for(my $i = 0; $i <= $#list; $i++) {
       $list[$i] = $self->slash_to_backslash($list[$i]);
     }
@@ -1927,7 +2072,9 @@ sub check_features {
   my($self)     = shift;
   my($requires) = shift;
   my($avoids)   = shift;
+  my($info)     = shift;
   my($status)   = 1;
+  my($why)      = undef;
 
   if (defined $requires) {
     foreach my $require (split(/\s+/, $requires)) {
@@ -1935,6 +2082,7 @@ sub check_features {
 
       ## By default, if the feature is not listed, then it is enabled.
       if (defined $fval && !$fval) {
+        $why = "requires $require";
         $status = 0;
         last;
       }
@@ -1949,11 +2097,17 @@ sub check_features {
 
         ## By default, if the feature is not listed, then it is enabled.
         if (!defined $fval || $fval) {
+          $why = "avoids $avoid";
           $status = 0;
           last;
         }
       }
     }
+  }
+
+  if ($info && !$status) {
+    print "Skipping " . $self->get_assignment('project_name') .
+          " (" . $self->get_current_input() . "), it $why.\n";
   }
 
   return $status;
@@ -2027,42 +2181,58 @@ sub write_output_file {
             mkpath($dir, 0, 0777);
           }
 
-          ## First write the output to a temporary file
-          my($tmp) = "MPC$>.$$";
-          my($different) = 1;
-          if (open($fh, ">$tmp")) {
-            my($lines) = $tp->get_lines();
-            foreach my $line (@$lines) {
-              print $fh $line;
-            }
-            close($fh);
-
-            if (-r $name &&
-                -s $tmp == -s $name && compare($tmp, $name) == 0) {
-              $different = 0;
-            }
-          }
-          else {
-            $error = "ERROR: Unable to open $tmp for output.";
-            $status = 0;
-          }
-
-          if ($status) {
-            ## If they are different, then rename the temporary file
-            if ($different) {
-              unlink($name);
-              if (rename($tmp, $name)) {
-                $self->add_file_written($name);
+          if ($self->compare_output()) {
+            ## First write the output to a temporary file
+            my($tmp) = "MPC$>.$$";
+            my($different) = 1;
+            if (open($fh, ">$tmp")) {
+              my($lines) = $tp->get_lines();
+              foreach my $line (@$lines) {
+                print $fh $line;
               }
-              else {
-                $error = "ERROR: Unable to open $name for output.";
-                $status = 0;
+              close($fh);
+
+              if (-r $name &&
+                  -s $tmp == -s $name && compare($tmp, $name) == 0) {
+                $different = 0;
               }
             }
             else {
-              ## We will pretend that we wrote the file
-              unlink($tmp);
+              $error = "ERROR: Unable to open $tmp for output.";
+              $status = 0;
+            }
+
+            if ($status) {
+              ## If they are different, then rename the temporary file
+              if ($different) {
+                unlink($name);
+                if (rename($tmp, $name)) {
+                  $self->add_file_written($name);
+                }
+                else {
+                  $error = "ERROR: Unable to open $name for output.";
+                  $status = 0;
+                }
+              }
+              else {
+                ## We will pretend that we wrote the file
+                unlink($tmp);
+                $self->add_file_written($name);
+              }
+            }
+          }
+          else {
+            if (open($fh, ">$name")) {
+              my($lines) = $tp->get_lines();
+              foreach my $line (@$lines) {
+                print $fh $line;
+              }
+              close($fh);
               $self->add_file_written($name);
+            }
+            else {
+              $error = "ERROR: Unable to open $name for output.";
+              $status = 0;
             }
           }
         }
@@ -2090,30 +2260,14 @@ sub write_project {
   }
 
   if ($self->check_features($self->get_assignment('requires'),
-                            $self->get_assignment('avoids'))) {
+                            $self->get_assignment('avoids'),
+                            1)) {
     if ($self->need_to_write_project()) {
-      ## Writing the non-static file so set it to 0
-      if ($self->get_dynamic()) {
-        $self->{'writing_type'} = 0;
-        ($status, $error) = $self->write_output_file($file_name);
-      }
-
-      if ($status &&
-          $self->get_static() && $self->separate_static_project()) {
-        $file_name = $self->transform_file_name(
-                          $self->static_project_file_name());
-
-        ## Writing the static file so set it to 1
-        $self->{'writing_type'} = 1;
-        ($status, $error) = $self->write_output_file($file_name);
-      }
+      ($status, $error) = $self->write_output_file($file_name);
     }
   }
   else {
-    if (defined $ENV{MPC_VERBOSE_FEATURES}) {
-      print "WARNING: Skipping the " . $self->get_assignment('project_name') .
-            " project due to the current features\n";
-    }
+    $status = 2;
   }
 
   return $status, $error;
@@ -2123,12 +2277,6 @@ sub write_project {
 sub get_project_info {
   my($self) = shift;
   return $self->{'project_info'};
-}
-
-
-sub get_writing_type {
-  my($self) = shift;
-  return $self->{'writing_type'};
 }
 
 
@@ -2172,6 +2320,7 @@ sub reset_generating_types {
                 'valid_components'     => \%vc,
                 'generated_exts'       => \%genext,
                 'exclude_components'   => \%ec,
+                'valid_names'          => \%validNames,
                );
 
   foreach my $r (keys %reset) {
@@ -2194,7 +2343,7 @@ sub get_template_input {
   ## This follows along the same logic as read_template_input() by
   ## checking for exe target and then defaulting to a lib target
   if ($self->exe_target()) {
-    if ($self->{'writing_type'} == 1) {
+    if ($self->get_static() == 1) {
       return $self->{'lexe_template_input'};
     }
     else {
@@ -2202,7 +2351,7 @@ sub get_template_input {
     }
   }
 
-  if ($self->{'writing_type'} == 1) {
+  if ($self->get_static() == 1) {
     return $self->{'lib_template_input'};
   }
   else {
@@ -2252,10 +2401,8 @@ sub update_project_info {
 sub relative {
   my($self)  = shift;
   my($value) = shift;
-  my($rel)   = $self->get_relative();
-  my(@keys)  = keys %$rel;
 
-  if (defined $value && defined $keys[0]) {
+  if (defined $value) {
     if (UNIVERSAL::isa($value, 'ARRAY')) {
       my(@built) = ();
       foreach my $val (@$value) {
@@ -2264,63 +2411,88 @@ sub relative {
       $value = \@built;
     }
     elsif ($value =~ /\$/) {
-      my($cwd)   = $self->getcwd();
-      my($start) = 0;
-      my($fixed) = 0;
+      my($rel)   = $self->get_relative();
+      my(@keys)  = keys %$rel;
 
-      if ($cwd =~ /[a-z]:[\/\\]/) {
-        substr($cwd, 0, 1) = uc(substr($cwd, 0, 1));
-      }
+      if (defined $keys[0]) {
+        my($cwd)   = $self->getcwd();
+        my($start) = 0;
 
-      while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
-        my($whole)  = $1;
-        my($name)   = $2;
-        my($val)    = $$rel{$name};
+        while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
+          my($whole)  = $1;
+          my($name)   = $2;
+          my($val)    = $$rel{$name};
 
-        if (defined $val) {
-          if ($^O eq 'cygwin' && !$fixed &&
-              $cwd !~ /[A-Za-z]:/ && $val =~ /[A-Za-z]:/) {
-            my($cyg) = `cygpath -w $cwd`;
-            if (defined $cyg) {
-              $cyg =~ s/\\/\//g;
-              chop($cwd = $cyg);
-              $fixed = 1;
+          if (defined $val) {
+            ## Fix up the value for Windows switch the \\'s to /
+            if ($self->{'convert_slashes'}) {
+              $val =~ s/\\/\//g;
             }
-          }
 
-          ## Fix up the value for Windows switch the \\'s to /
-          $val =~ s/\\/\//g;
-
-          ## Lowercase everything if we are running on Windows
-          my($icwd) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($cwd) : $cwd);
-          my($ival) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($val) : $val);
-          if (index($icwd, $ival) == 0) {
-            my($count)   = 0;
-            my($current) = $icwd;
-            substr($current, 0, length($ival)) = '';
-            while($current =~ /^\\/) {
-              $current =~ s/^\///;
-            }
-            my($length) = length($current);
-            for(my $i = 0; $i < $length; ++$i) {
-              if (substr($current, $i, 1) eq '/') {
-                ++$count;
+            ## Lowercase everything if we are running on Windows
+            my($icwd) = ($self->{'convert_slashes'} ? lc($cwd) : $cwd);
+            my($ival) = ($self->{'convert_slashes'} ? lc($val) : $val);
+            if (index($icwd, $ival) == 0) {
+              my($count)   = 0;
+              my($current) = $icwd;
+              substr($current, 0, length($ival)) = '';
+              while($current =~ /^\\/) {
+                $current =~ s/^\///;
               }
+              my($length) = length($current);
+              for(my $i = 0; $i < $length; ++$i) {
+                if (substr($current, $i, 1) eq '/') {
+                  ++$count;
+                }
+              }
+              $ival = '../' x $count;
+              $ival =~ s/\/$//;
+              if ($self->{'convert_slashes'}) {
+                $ival = $self->slash_to_backslash($ival);
+              }
+              substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
+              $whole = $ival;
             }
-            $ival = '../' x $count;
-            $ival =~ s/\/$//;
-            if ($self->convert_slashes()) {
-              $ival = $self->slash_to_backslash($ival);
-            }
-            substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
-            $whole = $ival;
           }
+          $start += length($whole);
         }
-        $start += length($whole);
       }
     }
   }
 
+  return $value;
+}
+
+
+sub reverse_relative {
+  my($self)  = shift;
+  my($value) = shift;
+
+  if (defined $value) {
+    if (UNIVERSAL::isa($value, 'ARRAY')) {
+      my(@built) = ();
+      foreach my $val (@$value) {
+        push(@built, $self->reverse_relative($val));
+      }
+      $value = \@built;
+    }
+    else {
+      my($rel) = $self->get_relative();
+
+      foreach my $key (keys %$rel) {
+        my($val) = $$rel{$key};
+        $val  =~ s/\\/\//g;
+
+        my($lval) = ($self->{'convert_slashes'} ?
+                              lc(substr($value, 0, length($val))) :
+                              substr($value, 0, length($val)));
+        if ($lval eq ($self->{'convert_slashes'} ? lc($val) : $val)) {
+          substr($value, 0, length($val)) = "\$($key)";
+          last;
+        }
+      }
+    }
+  }
   return $value;
 }
 
@@ -2342,17 +2514,21 @@ sub get_verbatim {
       }
       if (defined $str) {
         $str .= $crlf;
+        $self->{'verbatim_accessed'}->{$self->{'pctype'}}->{$marker} = 1;
       }
     }
   }
+
   return $str;
 }
 
 
 sub generate_recursive_input_list {
-  my($self) = shift;
-  my($dir)  = shift;
+  my($self)    = shift;
+  my($dir)     = shift;
+  my($exclude) = shift;
   return $self->extension_recursive_input_list($dir,
+                                               $exclude,
                                                $ProjectCreatorExtension);
 }
 
@@ -2360,6 +2536,37 @@ sub generate_recursive_input_list {
 sub get_default_element_name {
   #my($self) = shift;
   return 'FILES';
+}
+
+
+sub get_modified_project_file_name {
+  my($self) = shift;
+  my($name) = shift;
+  my($ext)  = shift;
+  my($nmod) = $self->get_name_modifier();
+
+  if (defined $nmod && !$self->get_apply_project()) {
+    $nmod =~ s/\*/$name/g;
+    $name = $nmod;
+  }
+  return "$name$ext";
+}
+
+
+sub preserve_assignment_order {
+  my($self) = shift;
+  my($name) = shift;
+  my($mapped) = $self->{'valid_names'}->{$name};
+
+  ## Only return the value stored in the valid_names hash map if it's
+  ## defined and it's not an array reference.  The array reference is
+  ## a keyword mapping and all mapped keywords should have preserved
+  ## assignment order.
+  if (defined $mapped && !UNIVERSAL::isa($mapped, 'ARRAY')) {
+    return $mapped;
+  }
+
+  return 1;
 }
 
 # ************************************************************
@@ -2403,12 +2610,7 @@ sub separate_static_project {
 
 sub project_file_name {
   #my($self) = shift;
-  return undef;
-}
-
-
-sub static_project_file_name {
-  #my($self) = shift;
+  #my($name) = shift;
   return undef;
 }
 

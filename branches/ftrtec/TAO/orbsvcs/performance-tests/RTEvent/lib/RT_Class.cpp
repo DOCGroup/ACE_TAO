@@ -7,13 +7,17 @@
  */
 
 #include "RT_Class.h"
+
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_errno.h"
 
 #if !defined(__ACE_INLINE__)
 #include "RT_Class.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(TAO_PERF_RTEC, RT_Class, "$Id$")
+ACE_RCSID (TAO_PERF_RTEC, 
+           RT_Class, 
+           "$Id$")
 
 RT_Class::RT_Class (void)
   : prc_sched_class_ (ACE_SCHED_FIFO)
@@ -21,7 +25,7 @@ RT_Class::RT_Class (void)
 {
   int priority =
     (ACE_Sched_Params::priority_min (this->prc_sched_class_)
-     + ACE_Sched_Params::priority_max (this->prc_sched_class_))/2;
+     + ACE_Sched_Params::priority_max (this->prc_sched_class_)) / 2;
 
   if (ACE_OS::sched_params (ACE_Sched_Params (this->prc_sched_class_,
                                               priority,

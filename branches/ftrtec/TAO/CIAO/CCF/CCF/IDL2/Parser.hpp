@@ -58,16 +58,16 @@ namespace CCF
       PunctuationParser;
 
       typedef
+      Parsing::OperatorParser
+      OperatorParser;
+
+      typedef
       Parsing::IdentifierParser
       IdentifierParser;
 
       typedef
       Parsing::SimpleIdentifierParser
       SimpleIdentifierParser;
-
-      typedef
-      Parsing::StringLiteralParser
-      StringLiteralParser;
 
 
       typedef
@@ -98,11 +98,11 @@ namespace CCF
         }
 
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error& e) const
+        operator() (Parsing::Scanner const& s, Parsing::Error e) const
         {
           Iterator i = e.where;
 
-          switch (e.descriptor.diagnostic_)
+          switch (e.descriptor->diagnostic_)
           {
           case Parsing::DiagnosticType::BEFORE:
             {
@@ -111,7 +111,7 @@ namespace CCF
                 (*i)->line ());
 
               rec << "before \'" << (*i)->lexeme () << "\': "
-                  << e.descriptor.description_;
+                  << e.descriptor->description_;
 
               dout_ << rec;
               break;
@@ -125,7 +125,7 @@ namespace CCF
                 (*i)->line ());
 
               rec << "after \'" << (*i)->lexeme () << "\': "
-                  << e.descriptor.description_;
+                  << e.descriptor->description_;
 
               dout_ << rec;
               break;
@@ -135,13 +135,13 @@ namespace CCF
             }
           }
 
-          if (e.descriptor.action_one_.get ())
-            e.descriptor.action_one_->execute ();
+          if (e.descriptor->action_one_.get ())
+            e.descriptor->action_one_->execute ();
 
-          if (e.descriptor.action_two_.get ())
-            e.descriptor.action_two_->execute ();
+          if (e.descriptor->action_two_.get ())
+            e.descriptor->action_two_->execute ();
 
-          switch (e.descriptor.recovery_)
+          switch (e.descriptor->recovery_)
           {
           case Parsing::RecoveryMethod::STANDARD:
             {
@@ -175,7 +175,7 @@ namespace CCF
                 }
               }
 
-              switch (e.descriptor.diagnostic_)
+              switch (e.descriptor->diagnostic_)
               {
               case Parsing::DiagnosticType::BEFORE:
                 {
@@ -205,13 +205,14 @@ namespace CCF
                 }
               }
 
-              e.descriptor.recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
-              e.descriptor.diagnostic_ = Parsing::DiagnosticType::NONE;
+              e.descriptor->recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
+              e.descriptor->diagnostic_ = Parsing::DiagnosticType::NONE;
 
-              e.descriptor.action_one_.reset ();
-              e.descriptor.action_two_.reset ();
+              e.descriptor->action_one_.reset ();
+              e.descriptor->action_two_.reset ();
 
-              return RecoveryStatus (RecoveryStatus::rethrow);
+              // return RecoveryStatus (RecoveryStatus::rethrow);
+              throw e;
             }
           case Parsing::RecoveryMethod::NONE:
           default:
@@ -222,13 +223,14 @@ namespace CCF
             }
           case Parsing::RecoveryMethod::BAIL_OUT:
             {
-              e.descriptor.recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
-              e.descriptor.diagnostic_ = Parsing::DiagnosticType::NONE;
+              e.descriptor->recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
+              e.descriptor->diagnostic_ = Parsing::DiagnosticType::NONE;
 
-              e.descriptor.action_one_.reset ();
-              e.descriptor.action_two_.reset ();
+              e.descriptor->action_one_.reset ();
+              e.descriptor->action_two_.reset ();
 
-              return RecoveryStatus (RecoveryStatus::rethrow);
+              // return RecoveryStatus (RecoveryStatus::rethrow);
+              throw e;
             }
           }
         }
@@ -240,7 +242,7 @@ namespace CCF
       struct RootErrorHandler
       {
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error& e) const
+        operator() (Parsing::Scanner const&, Parsing::Error&) const
         {
           return RecoveryStatus (RecoveryStatus::fail);
         }
@@ -272,17 +274,18 @@ namespace CCF
         }
 
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error& e) const
+        operator() (Parsing::Scanner const&, Parsing::Error e) const
         {
           assert (
-            e.descriptor.diagnostic_ == Parsing::DiagnosticType::NONE &&
-            e.descriptor.recovery_ == Parsing::RecoveryMethod::BAIL_OUT
+            e.descriptor->diagnostic_ == Parsing::DiagnosticType::NONE &&
+            e.descriptor->recovery_ == Parsing::RecoveryMethod::BAIL_OUT
           );
 
           if (action_one_.get ()) action_one_->execute ();
           if (action_two_.get ()) action_two_->execute ();
 
-          return RecoveryStatus (RecoveryStatus::rethrow);
+          // return RecoveryStatus (RecoveryStatus::rethrow);
+          throw e;
         }
 
         std::auto_ptr<Parsing::Thunk> action_one_;
@@ -295,43 +298,83 @@ namespace CCF
       ErrorHandler error_handler;
       RootErrorHandler root_error_handler;
 
-      // End of stream parser
+      // End of stream parser.
+      //
       EndOfStreamParser EOS;
 
       // Keyword parsers (alphabetic order).
+      //
       KeywordParser ABSTRACT;
       KeywordParser ATTRIBUTE;
+      KeywordParser BINCLUDE;
+      KeywordParser CASE;
+      KeywordParser CONST;
+      KeywordParser CUSTOM;
+      KeywordParser DEFAULT;
+      KeywordParser ENUM;
+      KeywordParser EXCEPTION;
       KeywordParser FACTORY;
       KeywordParser IN;
-      KeywordParser INCLUDE;
       KeywordParser INOUT;
       KeywordParser INTERFACE;
+      KeywordParser QINCLUDE;
       KeywordParser LOCAL;
       KeywordParser MODULE;
+      KeywordParser NATIVE;
+      KeywordParser ONEWAY;
       KeywordParser OUT;
-      KeywordParser SINCLUDE;
+      KeywordParser PRIVATE;
+      KeywordParser PUBLIC;
+      KeywordParser RAISES;
+      KeywordParser READONLY;
+      KeywordParser SEQUENCE;
+      KeywordParser STRUCT;
       KeywordParser SUPPORTS;
+      KeywordParser SWITCH;
+      KeywordParser TRUNCATABLE;
+      KeywordParser TYPEDEF;
       KeywordParser TYPEID;
       KeywordParser TYPEPREFIX;
+      KeywordParser UNION;
+      KeywordParser VALUETYPE;
 
       // Punctuation parsers (alphabetic group order).
+      //
       PunctuationParser COLON;
       PunctuationParser COMMA;
       PunctuationParser LBRACE;
       PunctuationParser RBRACE;
       PunctuationParser LPAREN;
       PunctuationParser RPAREN;
+      PunctuationParser LT;
+      PunctuationParser GT;
       PunctuationParser SEMI;
+
+      OperatorParser ADD;
+      OperatorParser AND;
+      OperatorParser COM;
+      OperatorParser DIV;
+      OperatorParser EQ;
+      OperatorParser LSH;
+      OperatorParser MUL;
+      OperatorParser OR;
+      OperatorParser REM;
+      OperatorParser SUB;
+      OperatorParser RSH;
+      OperatorParser XOR;
+
 
       IdentifierParser       identifier;
       SimpleIdentifierParser simple_identifier;
-      StringLiteralParser    string_literal;
 
+      Parsing::BooleanLiteralParser   boolean_literal;
+      Parsing::CharacterLiteralParser character_literal;
+      Parsing::IntegerLiteralParser   integer_literal;
+      Parsing::StringLiteralParser    string_literal;
 
       //
       // Language
       //
-
       typedef
       Parsing::Rule
       Rule;
@@ -342,12 +385,31 @@ namespace CCF
       Rule extension;
 
       Rule include_decl;
-      Rule system_include_decl;
 
-      Rule type_id;
-      Rule type_prefix;
+      Rule type_decl;
 
       Rule module_decl;
+
+      Rule const_decl;
+      Rule const_expr;
+
+      Rule enum_decl;
+      Rule enumerator_decl;
+
+      Rule boolean_const_expr;
+      Rule character_const_expr;
+      Rule integer_const_expr;
+
+      Rule integer_or_expr;
+      Rule integer_xor_expr;
+      Rule integer_and_expr;
+      Rule integer_shift_expr;
+      Rule integer_add_expr;
+      Rule integer_mul_expr;
+      Rule integer_unary_expr;
+      Rule integer_primary_expr;
+
+      Rule string_const_expr;
 
       Rule abstract_type_decl;
       Rule local_type_decl;
@@ -355,17 +417,55 @@ namespace CCF
       Rule abstract_interface_decl;
       Rule local_interface_decl;
       Rule unconstrained_interface_decl;
-      Rule interface_decl_trailer;
       Rule interface_inheritance_spec;
+      Rule interface_def_trailer;
       Rule interface_body;
 
       Rule attribute_decl;
 
+      Rule exception_decl;
+      Rule exception_body;
+
       Rule direction_specifier;
 
+      Rule member_decl;
+
+      Rule native_decl;
+
       Rule operation_decl;
+      Rule operation_decl_trailer;
       Rule operation_parameter_list;
       Rule operation_parameter;
+      Rule operation_raises_list;
+
+      Rule struct_decl;
+      Rule struct_def_trailer;
+      Rule struct_body;
+
+      Rule typedef_decl;
+      Rule typedef_type_spec;
+
+      Rule type_id_decl;
+      Rule type_prefix_decl;
+
+      Rule union_decl;
+      Rule union_def_trailer;
+      Rule union_body;
+      Rule union_case_label;
+
+      Rule abstract_value_type_decl;
+      Rule concrete_value_type_decl;
+      Rule value_type_inheritance_spec;
+      Rule value_type_supports_spec;
+      Rule value_type_def_trailer;
+      Rule value_type_body;
+
+      Rule value_type_member_decl;
+
+      Rule value_type_factory_decl;
+      Rule value_type_factory_parameter_list;
+      Rule value_type_factory_parameter;
+      Rule value_type_factory_raises_list;
 
     public:
       Parser (CompilerElements::Context& context,
@@ -384,70 +484,70 @@ namespace CCF
       //
       // Semantic actions
       //
-
       typedef
       NoArgAction<SemanticAction::Scope>
       ScopeAction;
+
+
+      // Attribute
+      //
+      //
+      NoArgAction<SemanticAction::Attribute>
+      act_attribute_begin_ro, act_attribute_begin_rw;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Attribute>
+      act_attribute_type;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
+      act_attribute_name;
+
+      NoArgAction<SemanticAction::Attribute>
+      act_attribute_end;
+
+      // Enum
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Enum>
+      act_enum_begin, act_enum_enumerator;
+
+      NoArgAction<SemanticAction::Enum>
+      act_enum_end;
+
+      // Exception
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Exception>
+      act_exception_begin;
+
+      ScopeAction
+      act_exception_open_scope;
+
+      ScopeAction
+      act_exception_close_scope;
+
+      NoArgAction<SemanticAction::Exception>
+      act_exception_end;
+
 
       // Include
       //
       //
       OneArgAction<StringLiteralPtr, SemanticAction::Include>
-      act_include_begin;
+      act_include_quote, act_include_bracket;
 
       NoArgAction<SemanticAction::Include>
       act_include_end;
 
-      // TypeId
-      //
-      //
-      TwoArgAction<IdentifierPtr,
-                   StringLiteralPtr,
-                   SemanticAction::TypeId>
-      act_type_id_begin;
-
-      NoArgAction<SemanticAction::TypeId>
-      act_type_id_end;
-
-      // TypePrefix
-      //
-      //
-      TwoArgAction<IdentifierPtr,
-                   StringLiteralPtr,
-                   SemanticAction::TypePrefix>
-      act_type_prefix_begin;
-
-      NoArgAction<SemanticAction::TypePrefix>
-      act_type_prefix_end;
-
-      // Module
-      //
-      //
-
-      OneArgAction<SimpleIdentifierPtr, SemanticAction::Module>
-      act_module_begin;
-
-      ScopeAction
-      act_module_open_scope;
-
-      ScopeAction
-      act_module_close_scope;
-
-      NoArgAction<SemanticAction::Module>
-      act_module_end;
-
       // Interface
       //
       //
-
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Interface>
-      act_abstract_interface_begin;
-
-      OneArgAction<SimpleIdentifierPtr, SemanticAction::Interface>
-      act_local_interface_begin;
-
-      OneArgAction<SimpleIdentifierPtr, SemanticAction::Interface>
-      act_unconstrained_interface_begin;
+        act_interface_begin_abstract_def,
+        act_interface_begin_abstract_fwd,
+        act_interface_begin_local_def,
+        act_interface_begin_local_fwd,
+        act_interface_begin_unconstrained_def,
+        act_interface_begin_unconstrained_fwd;
 
       OneArgAction<IdentifierPtr, SemanticAction::Interface>
       act_interface_inherits;
@@ -461,40 +561,72 @@ namespace CCF
       NoArgAction<SemanticAction::Interface>
       act_interface_end;
 
-      // Attribute
-      //
-      //
-      OneArgAction<IdentifierPtr, SemanticAction::Attribute>
-      act_attribute_type;
 
-      OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
-      act_attribute_name;
+      // Member
+      //
+      //
+      OneArgAction<IdentifierPtr, SemanticAction::Member>
+      act_member_type;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Member>
+      act_member_name;
+
+      NoArgAction<SemanticAction::Member>
+      act_member_end;
+
+      // Module
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Module>
+      act_module_begin;
+
+      ScopeAction
+      act_module_open_scope;
+
+      ScopeAction
+      act_module_close_scope;
+
+      NoArgAction<SemanticAction::Module>
+      act_module_end;
+
+      // Native
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Native>
+      act_native_name;
+
+      NoArgAction<SemanticAction::Native>
+      act_native_end;
+
 
       // Operation
       //
       //
-      TwoArgAction<IdentifierPtr,
-                   SimpleIdentifierPtr,
-                   SemanticAction::Operation>
-      act_operation_begin;
+      NoArgAction<SemanticAction::Operation>
+      act_operation_one_way, act_operation_two_way;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Operation>
+      act_operation_type;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Operation>
+      act_operation_name;
 
       void
-      act_operation_parameter_core (Iterator begin,
-                                    Iterator end) const
+      act_operation_parameter_core (Iterator begin, Iterator) const
       {
         SemanticAction::Operation::Direction::Value d;
 
         if((*begin)->lexeme () == "in")
         {
-          d = SemanticAction::Operation::Direction::IN;
+          d = SemanticAction::Operation::Direction::in;
         }
         else if((*begin)->lexeme () == "out")
         {
-          d = SemanticAction::Operation::Direction::OUT;
+          d = SemanticAction::Operation::Direction::out;
         }
         else
         {
-          d = SemanticAction::Operation::Direction::INOUT;
+          d = SemanticAction::Operation::Direction::inout;
         }
 
         begin++;
@@ -508,8 +640,113 @@ namespace CCF
       ActionExecutor<Parser>
       act_operation_parameter;
 
-      NoArgAction<SemanticAction::Operation>
-      act_operation_end;
+      OneArgAction<IdentifierPtr, SemanticAction::Operation>
+      act_operation_raises;
+
+
+      // Struct
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Struct>
+      act_struct_begin_def;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Struct>
+      act_struct_begin_fwd;
+
+      ScopeAction
+      act_struct_open_scope;
+
+      ScopeAction
+      act_struct_close_scope;
+
+      NoArgAction<SemanticAction::Struct>
+      act_struct_end;
+
+
+      // Typedef
+      //
+      //
+      OneArgAction<IdentifierPtr, SemanticAction::Typedef>
+      act_typedef_begin;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Typedef>
+      act_typedef_begin_seq;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Typedef>
+      act_typedef_declarator;
+
+      NoArgAction<SemanticAction::Typedef>
+      act_typedef_end;
+
+
+      // TypeId
+      //
+      //
+      TwoArgAction<IdentifierPtr,
+                   StringLiteralPtr,
+                   SemanticAction::TypeId>
+      act_type_id_begin;
+
+      NoArgAction<SemanticAction::TypeId>
+      act_type_id_end;
+
+
+      // TypePrefix
+      //
+      //
+      TwoArgAction<IdentifierPtr,
+                   StringLiteralPtr,
+                   SemanticAction::TypePrefix>
+      act_type_prefix_begin;
+
+      NoArgAction<SemanticAction::TypePrefix>
+      act_type_prefix_end;
+
+      // Union
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Union>
+      act_union_begin_def, act_union_begin_fwd;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Union>
+      act_union_type;
+
+      ScopeAction
+      act_union_open_scope;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Union>
+      act_union_member_type;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Union>
+      act_union_member_name;
+
+      ScopeAction
+      act_union_close_scope;
+
+      NoArgAction<SemanticAction::Union>
+      act_union_end;
+
+
+      // ValueType
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::ValueType>
+        act_value_type_begin_abstract_def,
+        act_value_type_begin_abstract_fwd,
+        act_value_type_begin_concrete_def,
+        act_value_type_begin_concrete_fwd;
+
+      OneArgAction<IdentifierPtr, SemanticAction::ValueType>
+      act_value_type_inherits, act_value_type_supports;
+
+      ScopeAction
+      act_value_type_open_scope;
+
+      ScopeAction
+      act_value_type_close_scope;
+
+      NoArgAction<SemanticAction::ValueType>
+      act_value_type_end;
     };
   }
 }

@@ -26,6 +26,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Pipe.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(WFMO_Reactor, Handle_Close, "$Id: ")
 

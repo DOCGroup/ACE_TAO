@@ -1,11 +1,15 @@
 // $Id$
 
 #include "Fault_Detector_Loader.h"
+#include "Fault_Detector_T.h"
 #include "FTEC_Fault_Listener.h"
 #include "SCTP_Fault_Detector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ConnectionHandler_T.h"
+
+#include "ace/Acceptor.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (EventChannel,
            Fault_Detector_Loader,
@@ -29,8 +33,6 @@ namespace FTRTEC {
   Fault_Detector_Loader::init (int argc,
     ACE_TCHAR* argv[])
   {
-    ACE_TRACE ("Fault_Detector_Loader::init");
-
     static int initialized = 0;
 
     // Only allow initialization once.
@@ -39,14 +41,24 @@ namespace FTRTEC {
 
     initialized = 1;
 
+    Fault_Detector* detector = 0;
+
     // Parse any service configurator parameters.
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("sctp")) == 0)
     {
-      detector_.reset(new STCP_Fault_Detector);
+#if (TAO_HAS_SCIOP == 1)
+      ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector)
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) SCTP not enabled. ",
+                  " Enable SCTP and rebuild ACE+TAO \n"));
+#endif /* TAO_HAS_SCIOP */
       argc--; argv++;
     }
-    else
-      detector_.reset(new TCP_Fault_Detector);
+    else {
+      ACE_NEW_RETURN(detector, TCP_Fault_Detector, -1);
+      ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector);
+    }
     return detector_->init(argc, argv);
   }
 
@@ -58,7 +70,7 @@ namespace FTRTEC {
 
   /////////////////////////////////////////////////////////////////////
 
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Fault_Detector_Loader);
+  ACE_FACTORY_DEFINE (TAO_FTRTEC, Fault_Detector_Loader)
 
   ACE_STATIC_SVC_DEFINE (Fault_Detector_Loader,
     ACE_TEXT ("FTRTEC_Fault_Detector"),
@@ -66,5 +78,5 @@ namespace FTRTEC {
     &ACE_SVC_NAME (Fault_Detector_Loader),
     ACE_Service_Type::DELETE_THIS
     | ACE_Service_Type::DELETE_OBJ,
-    0);
+    0)
 }

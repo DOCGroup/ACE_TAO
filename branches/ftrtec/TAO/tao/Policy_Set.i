@@ -11,7 +11,7 @@ TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
 ACE_INLINE CORBA::Boolean
 TAO_Policy_Set::compatible_scope (TAO_Policy_Scope policy_scope) const
 {
-  return ((unsigned int) policy_scope & (unsigned int) this->scope_);
+  return (((unsigned int) policy_scope & (unsigned int) this->scope_) > 0);
 }
 
 ACE_INLINE CORBA::Policy *

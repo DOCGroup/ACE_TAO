@@ -69,7 +69,7 @@ namespace FTRTEC {
   }
 
 
-  const PortableServer::ObjectId& Identification_Service::object_id() const
+  const FtRtecEventComm::ObjectId& Identification_Service::object_id() const
   {
     return object_id_;
   }
@@ -80,7 +80,7 @@ namespace FTRTEC {
     return name_;
   }
 
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Identification_Service);
+  ACE_FACTORY_DEFINE (TAO_FTRTEC, Identification_Service)
 
   ACE_STATIC_SVC_DEFINE (Identification_Service,
     ACE_TEXT ("FTRTEC_Identification"),
@@ -88,5 +88,5 @@ namespace FTRTEC {
     &ACE_SVC_NAME (Identification_Service),
     ACE_Service_Type::DELETE_THIS
     | ACE_Service_Type::DELETE_OBJ,
-    0);
+    0)
 }

@@ -29,6 +29,7 @@
                                      information */
 #endif  /* _MSC_VER */
 
+#include "ace/OS_main.h"
 #include "ace/Auto_Ptr.h"
 #include "Driver.h"
 #include "Async_Timer_Queue_Test.h"

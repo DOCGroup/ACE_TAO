@@ -94,7 +94,7 @@ protected:
   int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
-  int parse_args (int argc, ACE_TCHAR *argv []);
+  int parse_args (int& argc, ACE_TCHAR *argv []);
   // Parses the command line arguments.
 
   // = Data members

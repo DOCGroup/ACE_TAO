@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Bounded_Buffer) : aceexe {
   exename = bounded_buffer
   Source_Files {

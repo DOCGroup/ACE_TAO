@@ -17,7 +17,6 @@
 #include /**/ "ace/pre.h"
 
 #include "LF_CH_Event.h"
-#include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -3,6 +3,7 @@
 #include "task.h"
 #include "block.h"
 #include "data.h"
+#include "ace/OS_NS_unistd.h"
 
 Task::Task (size_t n_threads)
   : barrier_ (n_threads),

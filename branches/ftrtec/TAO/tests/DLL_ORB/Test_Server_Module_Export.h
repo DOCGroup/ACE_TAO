@@ -9,9 +9,15 @@
 
 #include "ace/config-all.h"
 
-#if !defined (TEST_SERVER_MODULE_HAS_DLL)
-#  define TEST_SERVER_MODULE_HAS_DLL 1
-#endif /* ! TEST_SERVER_MODULE_HAS_DLL */
+#if defined (TAO_AS_STATIC_LIBS)
+#  if !defined (TEST_SERVER_MODULE_HAS_DLL)
+#    define TEST_SERVER_MODULE_HAS_DLL 0
+#  endif /* ! TEST_SERVER_MODULE_HAS_DLL */
+#else
+#  if !defined (TEST_SERVER_MODULE_HAS_DLL)
+#    define TEST_SERVER_MODULE_HAS_DLL 1
+#  endif /* ! TEST_SERVER_MODULE_HAS_DLL */
+#endif
 
 #if defined (TEST_SERVER_MODULE_HAS_DLL) && (TEST_SERVER_MODULE_HAS_DLL == 1)
 #  if defined (TEST_SERVER_MODULE_BUILD_DLL)

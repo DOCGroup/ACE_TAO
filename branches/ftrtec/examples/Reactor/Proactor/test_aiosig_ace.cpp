@@ -41,6 +41,11 @@
 
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_aio.h"
+#include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/Asynch_IO.h" // for ACE_INFINITE
 
 static ACE_HANDLE file_handle = ACE_INVALID_HANDLE;
 static ACE_Message_Block mb1 (BUFSIZ + 1);

@@ -49,7 +49,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
     ACE_THROW (CORBA::BAD_INV_ORDER ());
   }
 
-  char *str =
+  CORBA::String_var str =
     dat->get_data (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -77,7 +77,7 @@ char *
 MyImpl::BMClosedED_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->str_.inout ();
+  return CORBA::string_dup (this->str_.inout ());
 }
 
 // Operations from Components::SessionComponent

@@ -1,4 +1,7 @@
-project: messaging, rteventexe, naming, iortable, corba_messaging {
+// -*- MPC -*-
+// $Id$
+
+project: messaging, rteventexe, naming, iortable {
   after    += Event_Test_Lib
   libs     += ECTests
   includes += ../lib

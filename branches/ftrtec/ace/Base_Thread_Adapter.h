@@ -18,14 +18,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Export.h"
+#include "ace/ACE_export.h"
+#include "ace/OS_Log_Msg_Attributes.h"
+
+#ifdef ACE_USES_GPROF
+#include "os_include/sys/os_time.h"
+#endif // ACE_USES_GPROF
 
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 #if defined (ACE_PSOS)
 extern "C" void ace_thread_adapter (unsigned long args);
 #else /* ! defined (ACE_PSOS) */
-extern "C" ACE_OS_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
+extern "C" ACE_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
 #endif /* ACE_PSOS */
 
 /**
@@ -36,7 +41,7 @@ extern "C" ACE_OS_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
  * Container for ACE_Thread_Descriptor members that are
  * used in ACE_OS.
  */
-class ACE_OS_Export ACE_OS_Thread_Descriptor
+class ACE_Export ACE_OS_Thread_Descriptor
 {
 public:
   /// Get the thread creation flags.
@@ -71,7 +76,7 @@ protected:
  * the thread that calls @c invoke() on this object.  Therefore,
  * the @c invoke() method is responsible for deleting itself.
  */
-class ACE_OS_Export ACE_Base_Thread_Adapter
+class ACE_Export ACE_Base_Thread_Adapter
 {
 public:
   /// Constructor.
@@ -91,6 +96,12 @@ public:
   /// Accessor for the C entry point function to the OS thread creation
   /// routine.
   ACE_THR_C_FUNC entry_point (void);
+
+#ifdef ACE_USES_GPROF
+  /// Accessor to the itimer_
+  /// followed http://sam.zoy.org/writings/programming/gprof.html
+  struct itimerval* timerval (void);
+#endif // ACE_USES_PROF
 
   /// Invoke the close_log_msg_hook, if it is present
   static void close_log_msg (void);
@@ -149,6 +160,10 @@ protected:
 
   /// The ACE_Log_Msg attributes.
   ACE_OS_Log_Msg_Attributes log_msg_attributes_;
+  /// That is usefull for gprof, define itimerval
+#ifdef ACE_USES_GPROF
+  struct itimerval itimer_;
+#endif // ACE_USES_GPROF
 
   /// Friend declaration to avoid compiler warning:  only defines a private
   /// destructor and has no friends.

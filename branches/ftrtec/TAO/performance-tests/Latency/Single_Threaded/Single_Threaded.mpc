@@ -1,5 +1,7 @@
-project(*server): taoserver, strategies {
-  avoids += minimum_corba
+// -*- MPC -*-
+// $Id$
+
+project(*server): taoexe, portableserver, strategies {
 
   Source_Files {
     Roundtrip.cpp
@@ -7,8 +9,7 @@ project(*server): taoserver, strategies {
   }
 }
 
-project(*client): taoclient, strategies {
-  avoids += minimum_corba
+project(*client): taoexe, strategies {
 
   Source_Files {
     TestC.cpp

@@ -4,6 +4,7 @@
 
 #include "UIOP_Endpoint.h"
 #include "UIOP_Connection_Handler.h"
+#include "tao/ORB_Constants.h"
 
 #if TAO_HAS_UIOP == 1
 
@@ -81,6 +82,22 @@ TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO_UIOP_Endpoint::hash (void)
 {
-  return ACE::hash_pjw (this->rendezvous_point ());
+  if (this->hash_val_ != 0)
+    return this->hash_val_;
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->addr_lookup_lock_,
+                      this->hash_val_);
+    // .. DCL
+    if (this->hash_val_ != 0)
+      return this->hash_val_;
+
+    this->hash_val_ =
+      ACE::hash_pjw (this->rendezvous_point ());
+  }
+
+  return this->hash_val_;
 }
 #endif  /* TAO_HAS_UIOP == 1 */

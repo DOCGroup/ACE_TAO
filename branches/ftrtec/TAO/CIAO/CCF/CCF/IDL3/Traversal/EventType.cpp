@@ -10,36 +10,6 @@ namespace CCF
   {
     namespace Traversal
     {
-      // ConcreteEventTypeDef
-      //
-      //
-
-      void ConcreteEventTypeDef::
-      traverse (NodePtr const& n)
-      {
-        if (!delegate (n))
-        {
-          pre (n);
-          scope (n);
-          post (n);
-        }
-      }
-
-      void ConcreteEventTypeDef::
-      pre (NodePtr const&)
-      {
-      }
-
-      void ConcreteEventTypeDef::
-      scope (NodePtr const& n)
-      {
-        delegate_scope (n);
-      }
-
-      void ConcreteEventTypeDef::
-      post (NodePtr const&)
-      {
-      }
     }
   }
 }

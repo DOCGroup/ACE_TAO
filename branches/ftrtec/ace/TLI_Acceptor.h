@@ -23,6 +23,7 @@
 
 #include "ace/Time_Value.h"
 #include "ace/TLI_Stream.h"
+#include "ace/Default_Constants.h"
 
 #if defined (ACE_HAS_TLI)
 

@@ -75,7 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
-#include "ace/streams.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ast, 
            ast_sequence, 
@@ -132,16 +133,13 @@ AST_Sequence::~AST_Sequence (void)
 // Public operations.
 
 idl_bool
-AST_Sequence::in_recursion (AST_Type *node)
+AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  if (node == 0)
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (this->in_recursion_ != -1)
     {
-      // There has to be a parameter.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) AST_Sequence::")
-                         ACE_TEXT ("in_recursion - ")
-                         ACE_TEXT ("bad parameter node\n")),
-                        0);
+      return this->in_recursion_;
     }
 
   AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
@@ -155,16 +153,18 @@ AST_Sequence::in_recursion (AST_Type *node)
                         0);
     }
 
-  if (!ACE_OS::strcmp (node->full_name (),
-                       type->full_name ()))
+  if (this->match_names (this, list))
     {
       // They match.
-      return 1;
+      this->in_recursion_ = 1;
+      return this->in_recursion_;
     }
   else
     {
-      // Not in recursion.
-      return 0;
+      // Check the element type.
+      list.enqueue_tail (this);
+      this->in_recursion_ = type->in_recursion (list);
+      return this->in_recursion_;
     }
 }
 
@@ -174,11 +174,11 @@ AST_Sequence::in_recursion (AST_Type *node)
 void
 AST_Sequence::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "sequence <";
+  this->dump_i (o, "sequence <");
   this->pd_base_type->dump (o);
-  o << ", ";
+  this->dump_i (o, ", ");
   this->pd_max_size->dump (o);
-  o << ">";
+  this->dump_i (o, ">");
 }
 
 int

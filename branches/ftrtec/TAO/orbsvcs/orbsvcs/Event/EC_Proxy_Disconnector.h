@@ -10,7 +10,7 @@
 
 #include /**/ "event_export.h"
 #include "orbsvcs/orbsvcs/RtecEventCommC.h"
-#include "tao/Utils/Auto_Functor.h"
+#include "tao/Auto_Functor.h"
 
 /**
  * @struct TAO_EC_Supplier_Proxy_Disconnect_Functor

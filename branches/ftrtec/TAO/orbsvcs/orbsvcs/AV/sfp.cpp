@@ -4,6 +4,7 @@
 #include "ace/ARGV.h"
 
 #include "tao/debug.h"
+#include "ace/OS_NS_strings.h"
 
 // default arguments to pass to use for the ORB
 const char *TAO_SFP_Base::TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";

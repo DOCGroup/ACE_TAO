@@ -37,6 +37,7 @@ TAO_FTEC_SupplierAdmin::disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr 
 {
   ACE_TRY_NEW_ENV {
     obj->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
   }
   ACE_CATCHALL
   {

@@ -35,6 +35,7 @@
 // ============================================================================
 
 #include "tests/test_config.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
@@ -293,7 +294,7 @@ worker (void *)
   ACE_OS::sleep (3);
   const ACE_TCHAR *msg = ACE_TEXT ("Message from Connection worker");
   ACE_TCHAR buf [BUFSIZ];
-  buf[0] = ACE_static_cast (ACE_TCHAR, (ACE_OS_String::strlen (msg) + 1));
+  buf[0] = ACE_static_cast (ACE_TCHAR, (ACE_OS::strlen (msg) + 1));
   ACE_OS::strcpy (&buf[1], msg);
 
   ACE_INET_Addr addr (rendezvous);

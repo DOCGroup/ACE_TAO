@@ -5,6 +5,7 @@
 #include "orbsvcs/Event_Utilities.h"
 
 #include "tao/debug.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(EC_Tests, EC_Supplier, "$Id$")
 

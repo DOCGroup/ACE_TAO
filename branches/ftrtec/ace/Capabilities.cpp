@@ -1,10 +1,13 @@
 #include "ace/Capabilities.h"
-#include "ace/Log_Msg.h"
+#include "ace/os_include/os_ctype.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Capabilities.i"
 #endif /* !__ACE_INLINE__ */
 
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ace,
            Capabilities,

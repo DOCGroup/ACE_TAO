@@ -22,12 +22,19 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub compare_output {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub file_sorter {
   my($self)  = shift;
   my($left)  = shift;
   my($right) = shift;
   return lc($left) cmp lc($right);
 }
+
 
 sub translate_value {
   my($self) = shift;
@@ -37,10 +44,15 @@ sub translate_value {
   if ($key eq 'after' && $val ne '') {
     my($arr) = $self->create_array($val);
     $val = '';
-    foreach my $entry (@$arr) {
-      $val .= '"' . $entry . '" ';
+
+    ## Only write dependencies for non-static projects
+    ## and static exe projects
+    if ($self->get_static() == 0 || $self->exe_target()) {
+      foreach my $entry (@$arr) {
+        $val .= '"' . $entry . '" ';
+      }
+      $val =~ s/\s+$//;
     }
-    $val =~ s/\s+$//;
   }
   return $val;
 }
@@ -76,6 +88,12 @@ sub fill_value {
 }
 
 
+sub separate_static_project {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub project_file_name {
   my($self) = shift;
   my($name) = shift;
@@ -84,7 +102,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "$name.vcproj";
+  return $self->get_modified_project_file_name($name, '.vcproj');
 }
 
 
@@ -100,9 +118,21 @@ sub get_dll_exe_template_input_file {
 }
 
 
+sub get_lib_exe_template_input_file {
+  #my($self) = shift;
+  return 'vc7libexe';
+}
+
+
 sub get_dll_template_input_file {
   #my($self) = shift;
   return 'vc7dll';
+}
+
+
+sub get_lib_template_input_file {
+  #my($self) = shift;
+  return 'vc7lib';
 }
 
 

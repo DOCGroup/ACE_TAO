@@ -6,6 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "QoS_Util.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(QOS, QoS_Util,"$Id$")
 

@@ -1,4 +1,7 @@
-project(*Server): taoserver {
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver {
   Source_Files {
     Server_Task.cpp
     Sender_i.cpp
@@ -6,9 +9,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoserver {
-  exename = client
-
+project(*Client): taoexe, portableserver {
   Source_Files {
     Client_Task.cpp
     Server_Task.cpp

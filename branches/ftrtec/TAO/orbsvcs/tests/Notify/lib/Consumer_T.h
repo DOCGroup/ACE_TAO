@@ -13,8 +13,6 @@
 #define TAO_Notify_Tests_CONSUMER_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_test_export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -44,7 +42,7 @@ class TAO_Notify_Tests_ConsumerAdmin_Ext_Traits
  *
  */
 template <class Consumer_Traits>
-class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Traits>
+class TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Traits>
 {
   typedef ACE_TYPENAME Consumer_Traits::Admin_Traits Admin_Traits;
   typedef ACE_TYPENAME Consumer_Traits::Admin_Ext_Traits Admin_Ext_Traits;

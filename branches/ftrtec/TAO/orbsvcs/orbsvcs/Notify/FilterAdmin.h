@@ -10,11 +10,15 @@
 
 
 #ifndef NOTIFY_FILTERADMIN_H
+
 #define NOTIFY_FILTERADMIN_H
+
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosNotifyFilterS.h"
+
 #include "ace/Hash_Map_Manager.h"
+
 #include "ID_Factory.h"
 #include "Event.h"
 #include "notify_export.h"
@@ -94,4 +98,5 @@ class TAO_Notify_Export TAO_Notify_FilterAdmin
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* NOTIFY_FILTERADMIN_H */

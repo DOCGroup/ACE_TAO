@@ -21,7 +21,7 @@
 // If this is not a WIN32 platform do not even try to compile the
 // test, many of the #includes make little sense.
 int
-run_main (int, char*[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("ACE_Init_Test"));
   ACE_ERROR ((LM_INFO,

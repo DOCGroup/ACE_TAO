@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_RTCORBA_Export TAO_Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
+class TAO_Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
   //
   // = TITLE

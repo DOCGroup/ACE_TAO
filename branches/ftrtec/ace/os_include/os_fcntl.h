@@ -80,11 +80,19 @@ extern "C"
 #  define O_NDELAY    1
 #endif /* ACE_WIN32 */
 
+# if !defined (O_NONBLOCK)
+#   define O_NONBLOCK  1
+# endif /* O_NONBLOCK  */
+
 #if defined (ACE_HAS_POSIX_NONBLOCK)
 #  define ACE_NONBLOCK O_NONBLOCK
 #else
 #  define ACE_NONBLOCK O_NDELAY
 #endif /* ACE_HAS_POSIX_NONBLOCK */
+
+# if !defined (F_GETFL)
+#   define F_GETFL 0
+# endif /* F_GETFL */
 
 #ifdef __cplusplus
 }

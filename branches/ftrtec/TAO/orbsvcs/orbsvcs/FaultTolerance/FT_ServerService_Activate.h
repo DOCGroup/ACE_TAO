@@ -14,7 +14,7 @@
 #define TAO_FT_SERVERACTIVATE_H
 #include /**/ "ace/pre.h"
 
-#include "fault_tol_export.h"
+#include "FT_ServerORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +33,7 @@ class TAO_Service_Callbacks;
  * to the ORB.
  *
  */
-class TAO_FT_Export TAO_FT_ServerService_Activate : public ACE_Service_Object
+class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate : public ACE_Service_Object
 {
 
 public:
@@ -49,7 +49,7 @@ public:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_FT_ServerService_Activate)
-ACE_FACTORY_DECLARE (TAO_FT, TAO_FT_ServerService_Activate)
+ACE_FACTORY_DECLARE (TAO_FT_ServerORB, TAO_FT_ServerService_Activate)
 
 #if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
 

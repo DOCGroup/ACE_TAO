@@ -1,3 +1,6 @@
-project(*Server): taoserver {
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver {
 }
 

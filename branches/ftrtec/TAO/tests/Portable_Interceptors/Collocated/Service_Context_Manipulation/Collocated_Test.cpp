@@ -3,6 +3,7 @@
 #include "Server_Task.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
+#include "tao/ORBInitializer_Registry.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"

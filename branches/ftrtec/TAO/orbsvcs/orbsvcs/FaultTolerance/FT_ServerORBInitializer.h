@@ -14,15 +14,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-#include "fault_tol_export.h"
+#include "FT_ServerORB_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -34,7 +33,7 @@
 #endif /* _MSC_VER */
 
 /// RTCORBA ORB initializer.
-class TAO_FT_Export TAO_FT_ServerORBInitializer :
+class TAO_FT_ServerORB_Export TAO_FT_ServerORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object
 {

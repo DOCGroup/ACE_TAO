@@ -1,6 +1,7 @@
 #include "SCIOP_Factory.h"
 #include "SCIOP_Acceptor.h"
 #include "SCIOP_Connector.h"
+#include "ace/OS_NS_strings.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -75,7 +76,7 @@ TAO_SCIOP_Protocol_Factory::make_connector (void)
 int
 TAO_SCIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
-  return 0;
+  return 1;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_SCIOP_Protocol_Factory,

@@ -45,7 +45,7 @@ public:
 
   /// Default constructor.  By default, the close() operation on the
   /// object will be invoked before it is destroyed.
-  ACE_DLL (int close_on_destruction = 1);
+  explicit ACE_DLL (int close_on_destruction = 1);
 
   /**
    * This constructor opens and dynamically links @a dll_name.  The
@@ -56,8 +56,8 @@ public:
    * loaded and <RTLD_GLOBAL>, which makes symbols available for
    * relocation processing of any other DLLs.
    */
-  ACE_DLL (const ACE_TCHAR *dll_name,
-           int open_mode = ACE_DEFAULT_SHLIB_MODE,
+  explicit ACE_DLL (const ACE_TCHAR *dll_name,
+                    int open_mode = ACE_DEFAULT_SHLIB_MODE,
            int close_on_destruction = 1);
 
   /// Copy constructor.
@@ -111,8 +111,8 @@ public:
    */
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0) const;
 
-  /// Set the handle for the DLL object. By default, the close() operation on
-  /// the object will be invoked before it is destroyed.
+  /// Set the handle for the DLL object. By default, the close()
+  //operation on / the object will be invoked before it is destroyed.
   int set_handle (ACE_SHLIB_HANDLE handle, int close_on_destruction = 1);
 
 private:

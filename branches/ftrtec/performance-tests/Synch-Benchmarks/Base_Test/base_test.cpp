@@ -2,7 +2,6 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/Synch.h"
 #include "Baseline_Test.h"
 
 class ACE_Svc_Export Baseline_Base_Test : public Baseline_Test_Base

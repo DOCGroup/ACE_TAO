@@ -27,6 +27,9 @@
  */
 const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
 
+// Forward declaration.
+template <class T, size_t DEFAULT_SIZE> class ACE_Vector_Iterator;
+
 /**
  * @class ACE_Vector
  *
@@ -68,7 +71,7 @@ public:
   /**
    * A short name for iterator for ACE_Vector.
    */
-  typedef ACE_Array_Iterator<T> Iterator;
+  typedef ACE_Vector_Iterator<T, DEFAULT_SIZE> Iterator;
 
 
   /**
@@ -163,6 +166,23 @@ public:
    */
   void dump (void) const;
 
+  // = Compare operators
+
+  ///Equality comparison operator.
+  /**
+   * Compare this vector with @arg s for equality.  Two vectors are equal
+   * if their sizes are equal and all the elements are equal.
+   */
+  int operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+
+  ///Inequality comparison operator.
+  /**
+   * Compare this vector with @arg s for inequality such that @c *this !=
+   * @arg s is always the complement of the boolean return value of
+   * @c *this == @arg s.
+   */
+  int operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+
 protected:
 
   /**
@@ -174,6 +194,8 @@ protected:
    * Current capacity (buffer size) of the vector.
    */
   size_t curr_max_size_;
+
+  friend class ACE_Vector_Iterator<T, DEFAULT_SIZE>;
 };
 
 #if 0
@@ -226,6 +248,50 @@ int partial_compare (const ACE_Vector<T>& v1,
 		      const size_t from_ndx,
 		      const size_t to_ndx);
 #endif /* 0 */
+// ****************************************************************
+
+/**
+ * @class ACE_Vector_Iterator
+ *
+ * @brief Implement an iterator over an ACE_Vector.
+ *
+ * This iterator is safe in the face of vector element deletions.
+ * But it is NOT safe if the vector is resized via the assignment
+ * operator during iteration.  That would be very odd, and dangerous.
+ */
+template <class T, size_t DEFAULT_SIZE = ACE_VECTOR_DEFAULT_SIZE>
+class ACE_Vector_Iterator
+{
+public:
+  // = Initialization method.
+  ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &);
+
+  // = Iteration methods.
+
+  /// Pass back the <next_item> that hasn't been seen in the vector.
+  /// Returns 0 when all items have been seen, else 1.
+  int next (T *&next_item);
+
+  /// Move forward by one element in the vector.  Returns 0 when all the
+  /// items in the vector have been seen, else 1.
+  int advance (void);
+
+  /// Returns 1 when all items have been seen, else 0.
+  int done (void) const;
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+private:
+  /// Pointer to the current item in the iteration.
+  size_t current_;
+
+  /// Reference to the vector we're iterating over.
+  ACE_Vector<T, DEFAULT_SIZE> &vector_;
+};
 
 #if defined (__ACE_INLINE__)
 #include "ace/Vector_T.i"

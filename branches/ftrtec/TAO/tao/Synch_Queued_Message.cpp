@@ -2,15 +2,13 @@
 
 #include "Synch_Queued_Message.h"
 #include "debug.h"
-#include "ace/Malloc_T.h"
-#include "ace/Log_Msg.h"
-#include "ace/Message_Block.h"
 
+#include "ace/Malloc_T.h"
+#include "ace/Message_Block.h"
 
 ACE_RCSID (tao,
            Synch_Queued_Message,
            "$Id$")
-
 
 TAO_Synch_Queued_Message::
     TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
@@ -37,7 +35,10 @@ size_t
 TAO_Synch_Queued_Message::message_length (void) const
 {
   if (this->current_block_ == 0)
-    return 0;
+    {
+      return 0;
+    }
+
   return this->current_block_->total_length ();
 }
 
@@ -88,17 +89,22 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
           byte_count = 0;
           return;
         }
+
       byte_count -= l;
       this->current_block_->rd_ptr (l);
       this->current_block_ = this->current_block_->cont ();
+
       while (this->current_block_ != 0
              && this->current_block_->length () == 0)
         {
           this->current_block_ = this->current_block_->cont ();
         }
     }
+
   if (this->current_block_ == 0)
-    this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+    {
+      this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+    }
 }
 
 TAO_Queued_Message *
@@ -111,8 +117,7 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
   // starting from <contents_> since we dont want to clone blocks that
   // have already been sent on the wire. Waste of memory and
   // associated copying.
-  ACE_Message_Block *mb =
-    this->current_block_->clone ();
+  ACE_Message_Block *mb = this->current_block_->clone ();
 
   if (alloc)
     {
@@ -141,7 +146,9 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
 
   // Set the flag to indicate that <qm> is created on the heap.
   if (qm)
-    qm->is_heap_created_ = 1;
+    {
+      qm->is_heap_created_ = 1;
+    }
 
   return qm;
 }

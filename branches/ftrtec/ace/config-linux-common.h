@@ -126,6 +126,9 @@
 # define ACE_HAS_ALT_CUSERID
 #endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
 
+#if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
+# define ACE_HAS_ISASTREAM_PROTO
+#endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
 // Then the compiler specific parts
 
@@ -254,10 +257,6 @@
 #define ACE_HAS_GETPAGESIZE 1
 
 #if (__GLIBC__  < 2)  ||  (__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
-  // GLIBC 2.2 and higher doesn't need this macro any more.
-  // Platform lacks POSIX prototypes for certain System V functions
-  // like shared memory and message queues.
-# define ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 // glibc supports wchar, but lacks fgetwc and ungetwc
 #define ACE_LACKS_FGETWC

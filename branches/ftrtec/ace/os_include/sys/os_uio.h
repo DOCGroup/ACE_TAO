@@ -75,6 +75,20 @@ extern "C"
    typedef struct iovec ACE_READV_TYPE;
 #endif /* ACE_HAS_BROKEN_READV */
 
+# if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
+
+  ssize_t readv_timedwait (ACE_HANDLE handle,
+                           iovec *iov,
+                           int iovcnt,
+                           struct timespec* timeout);
+
+  ssize_t writev_timedwait (ACE_HANDLE handle,
+                            ACE_WRITEV_TYPE *iov,
+                            int iovcnt,
+                            struct timespec *timeout);
+
+# endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

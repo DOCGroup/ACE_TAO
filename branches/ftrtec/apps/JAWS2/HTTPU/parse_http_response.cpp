@@ -1,6 +1,8 @@
 // $Id$
 
 #include "HTTPU/parse_http_response.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
 Parse_HTTP_Response::Parse_HTTP_Response (const char *response)
   : code_ (200),

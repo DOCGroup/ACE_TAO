@@ -15,6 +15,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
 #include "EC_Mcast.i"
@@ -569,7 +570,7 @@ ECM_Federation::ECM_Federation (char* name,
      consumer_names_ (consumer_names),
      addr_server_ (mcast_port)
 {
-  sender_ = TAO_ECG_UDP_Sender::create();
+  sender_ = TAO_ECG_UDP_Sender::create (true);
 
   ACE_NEW (this->supplier_ipaddr_, CORBA::ULong[this->supplier_types_]);
   ACE_NEW (this->consumer_ipaddr_, CORBA::ULong[this->consumer_types_]);
@@ -902,7 +903,7 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
      subscription_change_period_ (10000),
      publication_change_period_ (10000)
 {
-  receiver_ = TAO_ECG_UDP_Receiver::create();
+  receiver_ = TAO_ECG_UDP_Receiver::create (true);
 
   ACE_NEW (mcast_eh_, TAO_ECG_Mcast_EH((&*receiver_)));
 

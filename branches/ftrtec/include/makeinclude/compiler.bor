@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Defines specific to a particular version of the compiler
 #
 # Inputs:
@@ -70,7 +72,11 @@ DEBUG_CFLAGS = -v -y -Od -r- -vi- -k -D_DEBUG -DACE_NO_INLINE=1
 DEBUG_LFLAGS = -v
 !endif
 !else
+!if $(BCBVER) == 6
+DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG
+!else
 DEBUG_CFLAGS = -O2 -DNDEBUG
+!endif
 DEBUG_LFLAGS =
 !endif
 

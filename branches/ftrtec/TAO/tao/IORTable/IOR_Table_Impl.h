@@ -24,6 +24,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+#include "tao/LocalObject.h"
 #include "ace/SString.h"
 
 #if defined(_MSC_VER)

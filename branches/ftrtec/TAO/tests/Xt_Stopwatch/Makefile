@@ -16,7 +16,7 @@ LDLIBS = -lTAO
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
-BIN = client server
+BIN2 = client server
 
 SRC = $(addsuffix .cpp, $(BIN) test_i Stopwatch_display Control timer) \
 	$(IDL_SRC)
@@ -32,6 +32,9 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+ifeq ($(xt_reactor),1)
+  BIN=$(BIN2)
+endif #xt_reactor
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

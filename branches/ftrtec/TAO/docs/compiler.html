@@ -559,7 +559,14 @@ also receives other options that are specific to it. <P>
     <td><tt>-GC </tt></td>
 
     <td>Generate AMI stubs ("sendc_" methods, reply handler stubs,
-        etc)</td>
+        exception holders, etc)</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="GH flag">
+    <td><tt>-GH </tt></td>
+
+    <td>Generate AMH stubs, skeletons, exception holders, etc.</td>
     <td>&nbsp;</td>
   </tr>
 
@@ -603,17 +610,27 @@ also receives other options that are specific to it. <P>
     <td>&nbsp;</td>
   </tr>
 
-  <tr><a name="Gv">
-    <td><tt>-Gv</tt></td>
+  <tr><a name="GT">
+    <td><tt>-GT</tt></td>
 
-    <td>Generate code that supports Object-By-Value</td>
+    <td>Generate explicit template instantiations</td>
     <td>&nbsp;</td>
   </tr>
 
-  <tr>
-    <td>-<tt>GI</tt></td>
+  <tr><a name="Guc">
+    <td><tt>-Guc</tt></td>
 
-    <td>Generate templates files for the servant implementation </td>
+    <td>Generate uninlined constant if defined in a module</td>
+    <td>Inlined (assigned a value in the C++ header file) by default, but this causes a
+	    problem with some compilers when using pre-compiled headers. Constants declared
+		at global scope are always generated inline, while those declared in an interface
+		or a valuetype never are - neither case is affected by this option.</td>
+  </tr>
+
+  <tr>
+    <td><tt>-GI</tt></td>
+
+    <td>Generate template files for the servant implementation </td>
     <td>&nbsp;</td>
   </tr>
 
@@ -699,7 +716,7 @@ also receives other options that are specific to it. <P>
   <tr><a name="Sv">
     <td><tt>-Sv</tt></td>
 
-    <td>Suppress valuetype support (default).</td>
+    <td>Suppress valuetype support.</td>
     <td>&nbsp;</td>
   </tr>
 

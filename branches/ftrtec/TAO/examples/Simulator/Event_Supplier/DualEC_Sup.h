@@ -20,10 +20,6 @@
 #ifndef DUALEC_SUP_H
 #define DUALEC_SUP_H
 
-//#include <ctype.h>
-//#include <stdio.h>
-
-#include "tao/corba.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -31,6 +27,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/Event_Channel.h"
+
 #include "NavWeapC.h"
 #include "NavWeapS.h"
 #include "DOVE_Supplier.h"

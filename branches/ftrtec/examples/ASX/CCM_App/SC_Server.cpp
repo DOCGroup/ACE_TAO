@@ -3,9 +3,9 @@
 // Simple driver program for the server.  This driver dynamically
 // links in all the services in the <svc.conf> file.
 
+#include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Synch.h"
 #include "ace/Signal.h"
 
 ACE_RCSID(CCM_App, SC_Server, "$Id$")

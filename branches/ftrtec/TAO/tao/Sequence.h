@@ -11,20 +11,24 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SEQUENCE_H
 #define TAO_SEQUENCE_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
-#include "ace/CORBA_macros.h"
+#include "tao/orbconf.h"
+#include "tao/default_environment.h"
+
+namespace CORBA
+{
+  class Object;
+}
 
 class ACE_Message_Block;
 
@@ -593,7 +597,7 @@ public:
   /// Free the storage.
   static void freebuf (CORBA::Octet *);
 
-  /// Implement the methods for all the sequence, please seee
+  /// Implement the methods for all the sequence, please see
   /// TAO_Base_Sequence.
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);

@@ -24,6 +24,7 @@
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, Time_Service_Test, "$Id$")
 
@@ -66,7 +67,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // Add the filename to the end
-  ACE_OS_String::strcat (backing_store,
+  ACE_OS::strcat (backing_store,
                          ACE_TEXT ("ace-malloc-XXXXXX"));
 
 #endif /* ACE_DEFAULT_BACKING_STORE */

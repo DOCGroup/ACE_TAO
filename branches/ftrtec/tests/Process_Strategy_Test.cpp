@@ -38,13 +38,17 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Get_Opt.h"
+#include "ace/Null_Condition.h"
+#include "ace/Null_Mutex.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Strategies_T.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
 #include "ace/File_Lock.h"
 
 // Counting_Service and Options in here
@@ -197,7 +201,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("Temporary path too long\n")),
                       -1);
 
-  ACE_OS_String::strcat (this->filename_, ACE_TEXT ("process_strategy_test_temp"));
+  ACE_OS::strcat (this->filename_, ACE_TEXT ("process_strategy_test_temp"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

@@ -7,6 +7,7 @@
 
 #include "Factory_Map.h"
 #include "orbsvcs/orbsvcs/PortableGroupS.h"
+#include "ace/Null_Mutex.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)

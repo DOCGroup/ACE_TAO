@@ -10,6 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_main.h"
 
 static const ACEXML_Char *test_string =
 ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &quot; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
@@ -156,11 +157,48 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
     ACEXML_TRY_CHECK;
   }
-  ACEXML_CATCH (ACEXML_SAXException, ex)
+  ACEXML_CATCH (ACEXML_Exception, ex)
     {
       ex.print();
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+      return 1;
     }
   ACEXML_ENDTRY;
+//   ACEXML_TRY_EX (SECOND)
+//   {
+//     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+//     ACEXML_TRY_CHECK_EX (SECOND);
+//   }
+//   ACEXML_CATCH (ACEXML_SAXException, ex)
+//     {
+//       ex.print();
+//       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+//       return 1;
+//     }
+//   ACEXML_ENDTRY;
+//   ACEXML_TRY_EX (THIRD)
+//   {
+//     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+//     ACEXML_TRY_CHECK_EX (THIRD);
+//   }
+//   ACEXML_CATCH (ACEXML_SAXException, ex)
+//     {
+//       ex.print();
+//       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+//       return 1;
+//     }
+//   ACEXML_ENDTRY;
+//   ACEXML_TRY_EX (FOURTH)
+//   {
+//     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+//     ACEXML_TRY_CHECK_EX (FOURTH);
+//   }
+//   ACEXML_CATCH (ACEXML_SAXException, ex)
+//     {
+//       ex.print();
+//       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+//       return 1;
+//     }
+//   ACEXML_ENDTRY;
   return 0;
 }

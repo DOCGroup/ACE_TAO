@@ -13,7 +13,7 @@
 #ifndef FTRT_CLIENTORB_LOADER_H
 #define FTRT_CLIENTORB_LOADER_H
 
-#include  "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ftrt_clientorb_export.h"
 
@@ -46,9 +46,9 @@ namespace TAO_FTRT {
 
 
   ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRT, FTRT_ClientORB_Loader)
-  ACE_STATIC_SVC_REQUIRE(FTRT_ClientORB_Loader);
+  ACE_STATIC_SVC_REQUIRE(FTRT_ClientORB_Loader)
   ACE_FACTORY_DECLARE (TAO_FTRT, FTRT_ClientORB_Loader)
 }
 
-#include  "ace/post.h"
+#include /**/ "ace/post.h"
 #endif //FTRT_CLIENTORB_LOADER_H

@@ -45,7 +45,7 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../../../" /I "../../../../" /I "../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../../../../" /I "../../../../" /I "../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ../../../../../ace/ACE.lib ../../../../tao/TAO.lib ../../../../tao/PortableServer/TAO_PortableServer.lib ../../../../tao/IORManipulation/TAO_IORManip.lib ../../../orbsvcs/TAO_FT_ORB.lib /nologo /subsystem:console /machine:I386 /out:"Manager.exe"
+# ADD LINK32 ../../../../../ace/ACE.lib ../../../../tao/TAO.lib  ../../../../tao/Messaging/TAO_Messaging.lib  ../../../../tao/PortableServer/TAO_PortableServer.lib  ../../../../tao/Valuetype/TAO_Valuetype.lib  ../../../../tao/IORInterceptor/TAO_IORInterceptor.lib ../../../../tao/ObjRefTemplate/TAO_ObjRefTemplate.lib ../../../../tao/IORManipulation/TAO_IORManip.lib ../../../orbsvcs/TAO_FT_ClientORB.lib ../../../orbsvcs/TAO_FT_ServerORB.lib ../../../orbsvcs/TAO_FTORB_Utils.lib /nologo /subsystem:console /machine:I386 /out:"Manager.exe"
 
 !ELSEIF  "$(CFG)" == "FaultTolerance IOGR Manager - Win32 Debug"
 
@@ -72,7 +72,7 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../../../" /I "../../../../" /I "../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../../../../../" /I "../../../../" /I "../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ../../../../../ace/ACEd.lib ../../../../tao/TAOd.lib ../../../../tao/PortableServer/TAO_PortableServerd.lib ../../../../tao/IORManipulation/TAO_IORManipd.lib ../../../orbsvcs/TAO_FT_ORBd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 ../../../../../ace/ACEd.lib ../../../../tao/TAOd.lib ../../../../tao/PortableServer/TAO_PortableServerd.lib ../../../../tao/IORManipulation/TAO_IORManipd.lib ../../../orbsvcs/TAO_FTORB_Utilsd.lib ../../../orbsvcs/TAO_FT_ClientORBd.lib ../../../orbsvcs/TAO_FT_ServerORBd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 
 !ENDIF 
 

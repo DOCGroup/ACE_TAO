@@ -15,8 +15,7 @@
 #define TAO_OBJECT_REF_TABLE_H
 
 #include /**/ "ace/pre.h"
-
-#include "corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,9 +23,17 @@
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Functor.h"
-#include "ace/CORBA_macros.h"
 
+#include "tao/TAO_Export.h"
+#include "tao/orbconf.h"
+
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+
+  class Environment;
+}
 
 /**
  * @class TAO_Object_Ref_Table
@@ -50,7 +57,13 @@ class TAO_Export TAO_Object_Ref_Table
 {
 public:
 
-  typedef ACE_Hash_Map_Manager_Ex<const char *, CORBA::Object_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_MUTEX> Table;
+  typedef ACE_Hash_Map_Manager_Ex<const char *,
+                                  CORBA::Object_ptr,
+                                  ACE_Hash<const char *>,
+                                  ACE_Equal_To<const char *>,
+                                  TAO_SYNCH_MUTEX>
+    Table;
+
   typedef Table::iterator Iterator;
 
   /// Constructor

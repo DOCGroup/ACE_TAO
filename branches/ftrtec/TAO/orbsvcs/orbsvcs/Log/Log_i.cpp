@@ -6,7 +6,8 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
-
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (Log,
            Log_i,
@@ -1246,8 +1247,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 
   static char out[256] = "";
 
-  double temp1 =
-    ACE_UINT64_DBLCAST_ADAPTER (p_time);
+  double temp1 = ACE_UINT64_DBLCAST_ADAPTER (p_time);;
 
   ACE_OS::sprintf (out, "time > %.0f", temp1);
 

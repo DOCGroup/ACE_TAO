@@ -5,6 +5,7 @@
 #define TASK_H
 
 #include "ace/Task.h"
+#include "ace/Barrier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

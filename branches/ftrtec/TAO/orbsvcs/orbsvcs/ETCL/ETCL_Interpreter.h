@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 
 class TAO_ETCL_Constraint;
 

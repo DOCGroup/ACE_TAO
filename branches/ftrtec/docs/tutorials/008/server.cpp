@@ -5,6 +5,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
+#include "ace/OS_NS_string.h"
 
 /* Use the typical TCP/IP port address for receiving datagrams.  */
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;

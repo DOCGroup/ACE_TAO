@@ -1,6 +1,8 @@
 #
+# $Id$
+#
 # Makefile rules for building a static or dynamic library
-# 
+#
 
 !ifdef STATIC
 !include <$(ACE_ROOT)\include\makeinclude\build_lib.bor>

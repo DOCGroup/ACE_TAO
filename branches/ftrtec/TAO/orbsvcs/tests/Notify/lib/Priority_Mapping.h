@@ -15,11 +15,11 @@
 
 #include "notify_test_export.h"
 
+#include "tao/Basic_Types.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/corba.h"
 
 /**
  * @class TAO_Notify_Tests_Priority_Mapping

@@ -7,18 +7,9 @@
 
 #include "CCF/IDL3/Traversal.hpp"
 
-#include "CCF/CIDL/Traversal/Composition.hpp"
-#include "CCF/CIDL/Traversal/HomeExecutor.hpp"
+#include "CCF/CIDL/Traversal/Elements.hpp"
 
-namespace CCF
-{
-  namespace CIDL
-  {
-    namespace Traversal
-    {
-      using namespace IDL3::Traversal;
-    }
-  }
-}
+#include "CCF/CIDL/Traversal/Composition.hpp"
+#include "CCF/CIDL/Traversal/Executor.hpp"
 
 #endif  // CCF_CIDL_TRAVERSAL_HPP

@@ -33,12 +33,13 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(WFMO_Reactor, Registration, "$Id$")
 

@@ -12,7 +12,6 @@
 
 #include "ace/Module.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
 
 class Event_Analyzer : public ACE_Task<ACE_SYNCH>
 {

@@ -6,6 +6,7 @@
 #include "drv_extern_ifr.h"
 #include "be_extern.h"
 #include "ace/Process.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (IFR_Service, 
            drv_args_ifr, 

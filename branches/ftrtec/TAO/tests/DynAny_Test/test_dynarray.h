@@ -15,7 +15,7 @@
 #if !defined (TEST_DYNARRAY_H)
 #define TEST_DYNARRAY_H
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 class Test_DynArray
 {

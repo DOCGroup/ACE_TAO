@@ -3,6 +3,7 @@
 
 #include "idl3_client.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (Application_Test, 
            ifr_dii_client, 

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project {
   after    += ACEXML_Parser ACEXML
   libs     += ACEXML_Parser ACEXML

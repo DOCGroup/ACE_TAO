@@ -1,3 +1,6 @@
-project: taoserver, namingexe, rtsched {
+// -*- MPC -*-
+// $Id$
+
+project: namingexe, rtsched {
   exename  = Sched
 }

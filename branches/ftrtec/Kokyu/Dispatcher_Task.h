@@ -83,7 +83,6 @@ private:
 private:
   ConfigInfo curr_config_info_;
 
-  /// An per-task allocator
   ACE_Allocator *allocator_;
   int own_allocator_;
 

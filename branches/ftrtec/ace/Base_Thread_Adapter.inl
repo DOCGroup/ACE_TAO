@@ -32,3 +32,10 @@ ACE_Base_Thread_Adapter::entry_point (void)
 {
   return this->entry_point_;
 }
+#ifdef ACE_USES_GPROF
+ACE_INLINE itimerval*
+ACE_Base_Thread_Adapter::timerval (void)
+{
+  return &(this->itimer_);
+}
+#endif // ACE_USES_GPROF

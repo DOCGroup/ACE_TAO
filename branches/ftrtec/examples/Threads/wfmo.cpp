@@ -9,6 +9,8 @@
 // suggesting this and providing the initial code.
 
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(Threads, wfmo, "$Id$")
 

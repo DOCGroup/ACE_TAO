@@ -4,6 +4,8 @@
 
 // FlowSpec_Entry.i
 
+#include "ace/OS_NS_strings.h"
+
 ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_direction (const char *direction)
@@ -175,6 +177,54 @@ ACE_Addr*
 TAO_FlowSpec_Entry::get_local_control_addr (void)
 {
   return this->local_control_addr_;
+}
+
+ACE_INLINE
+int 
+TAO_FlowSpec_Entry::set_local_sec_addr (char** local_sec_addr,
+					int size)
+{
+  this->local_sec_addr_ = local_sec_addr;
+  this->num_local_sec_addrs_ = size;
+  return 0;
+}
+
+ACE_INLINE
+char** 
+TAO_FlowSpec_Entry::get_local_sec_addr (void)
+{
+  return this->local_sec_addr_;
+}
+
+ACE_INLINE
+int 
+TAO_FlowSpec_Entry::num_local_sec_addrs (void)
+{
+  return this->num_local_sec_addrs_;
+}
+
+ACE_INLINE
+int 
+TAO_FlowSpec_Entry::set_peer_sec_addr (char** peer_sec_addr,
+				       int size)
+{
+  this->peer_sec_addr_ = peer_sec_addr;
+  this->num_peer_sec_addrs_ = size;
+  return 0;
+}
+
+ACE_INLINE
+char** 
+TAO_FlowSpec_Entry::get_peer_sec_addr (void)
+{
+  return this->peer_sec_addr_;
+}
+
+ACE_INLINE
+int 
+TAO_FlowSpec_Entry::num_peer_sec_addrs (void)
+{
+  return this->num_peer_sec_addrs_;
 }
 
 ACE_INLINE

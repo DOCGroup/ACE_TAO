@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(IFRService) : orbsvcslib, core, typecodefactory, svc_utils, ifr_client, iortable, portableserver {
   avoids      += minimum_corba
   sharedname   = TAO_IFRService

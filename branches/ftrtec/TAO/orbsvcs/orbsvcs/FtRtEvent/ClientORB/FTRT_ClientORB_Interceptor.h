@@ -16,14 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
 
+#include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -81,4 +80,9 @@ private:
   CORBA::Long transaction_depth_;
 };
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
+#include /**/ "ace/post.h"
 #endif

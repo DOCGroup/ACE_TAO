@@ -55,6 +55,7 @@
 // the information using getenv.
 #define ACE_DEFAULT_LD_SEARCH_PATH ACE_LIB_TEXT (".\\;\\windows")
 
+#define ACE_LACKS_FCNTL_H
 #define ACE_LACKS_SYS_TYPES_H
 
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
@@ -99,7 +100,7 @@
 
 #define ACE_MAIN WINAPI WinMain
 
-// SH3 cross-compiler can't handle inline functions correctly 
+// SH3 cross-compiler can't handle inline functions correctly
 // (along with other bugs.)
 #if defined (SH3)
 # define ACE_LACKS_INLINE_FUNCTIONS
@@ -191,7 +192,7 @@
 #define ACE_LACKS_HOSTNAME
 
 #if defined (_WIN32_WCE_EMULATION)
-// @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl) 
+// @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)
 // under emulation.  So for right now, exclude it.
 # define ACE_LACKS_QSORT
 #endif  // _WIN32_WCE_EMULATION
@@ -258,6 +259,12 @@ typedef long off_t;
 #define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 
 #define ACE_HAS_TSS_EMULATION
+
+// Not sure if this is true for all versions.  dhinton
+#define ACE_LACKS_ERRNO_H
+#define ACE_LACKS_TIME_H
+#define ACE_LACKS_SIGNAL_H
+#define ACE_LACKS_SYS_STAT_H
 
 #include /**/ "ace/post.h"
 

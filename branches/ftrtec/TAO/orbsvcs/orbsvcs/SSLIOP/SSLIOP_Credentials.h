@@ -23,7 +23,7 @@
 
 #include "SSLIOP_X509.h"
 #include "SSLIOP_EVP_PKEY.h"
-
+#include "tao/LocalObject.h"
 #include "orbsvcs/SecurityLevel2C.h"
 
 
@@ -247,17 +247,11 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 
-  static TAO_SSLIOP_Credentials_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    );
-
   static TAO_SSLIOP_Credentials_ptr _nil (void)
     {
       return (TAO_SSLIOP_Credentials_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
   //@}
 
 protected:

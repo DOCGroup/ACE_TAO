@@ -25,7 +25,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
 #include "ace/Profile_Timer.h"
-#include "ace/Synch.h"
 #include "ace/Hash_Cache_Map_Manager_T.h"
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Pair_T.h"
@@ -48,7 +47,7 @@ typedef ACE_Map_Iterator <TYPE, TYPE, MUTEX>
 typedef ACE_Map_Reverse_Iterator <TYPE, TYPE, MUTEX>
         REVERSE_ITERATOR;
 typedef ACE_Map_Entry <TYPE, TYPE>
-        ENTRY;
+        MAP_ENTRY;
 typedef ACE_Hash_Map_Manager_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
         HASH_MAP_MANAGER;
 typedef ACE_Hash_Map_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
@@ -647,7 +646,7 @@ test_map_manager (size_t table_size,
              iter != end;
              ++iter)
           {
-            ENTRY &entry = *iter;
+            MAP_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%d|%d|%d)"),
                         i,
@@ -663,7 +662,7 @@ test_map_manager (size_t table_size,
 
       {
         i = 0;
-        ENTRY *entry = 0;
+        MAP_ENTRY *entry = 0;
 
         for (ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -690,7 +689,7 @@ test_map_manager (size_t table_size,
              iter != rend;
              ++iter)
           {
-            ENTRY &entry = *iter;
+            MAP_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%d|%d|%d)"),
                         k,
@@ -706,7 +705,7 @@ test_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        ENTRY *entry = 0;
+        MAP_ENTRY *entry = 0;
 
         for (REVERSE_ITERATOR iterator (map);
              iterator.next (entry) != 0;
@@ -776,7 +775,7 @@ test_map_manager (size_t table_size,
              iter != rend;
              ++iter)
           {
-            ENTRY &entry = *iter;
+            MAP_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%d|%d|%d)"),
                         k,

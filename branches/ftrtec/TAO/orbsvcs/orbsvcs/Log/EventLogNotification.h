@@ -10,8 +10,8 @@
  *
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *   
- *  
+ *
+ *
  */
 //=============================================================================
 
@@ -43,9 +43,9 @@
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_EventLog_Export TAO_EventLogNotification : 
-  public TAO_LogNotification, 
-  POA_CosEventComm::PushSupplier
+class TAO_EventLog_Export TAO_EventLogNotification :
+  public TAO_LogNotification,
+  public POA_CosEventComm::PushSupplier
 {
 public:
 

@@ -6,11 +6,13 @@
 #include "ace/Proactor.h"
 #include "ace/POSIX_Proactor.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif /*JAWS_BUILD_DLL*/
 
 #include "jaws3/Event_Dispatcher.h"
 
-static void *
+static ACE_THR_FUNC_RETURN
 JAWS_Event_Dispatcher_Proactor_Event_Loop (void *)
 {
   ACE_Proactor::run_event_loop ();

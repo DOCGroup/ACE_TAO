@@ -1,3 +1,7 @@
+#
+# $Id$
+#
+
 DIRS = Logger Naming Tokens
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -6,11 +6,18 @@
 #define CCF_IDL2_TRAVERSAL_ELEMENTS_HPP
 
 #include <map>
-#include <vector>
+#include <set>
 
 #include "CCF/CompilerElements/Introspection.hpp"
 
-#include "CCF/IDL2/SyntaxTree/Elements.hpp"
+#include "CCF/IDL2/SemanticGraph/Elements.hpp"
+
+/*
+#include <iostream>
+
+using std::cerr;
+using std::endl;
+*/
 
 namespace CCF
 {
@@ -18,21 +25,20 @@ namespace CCF
   {
     namespace Traversal
     {
-
       //
       //
       //
-      class TraverserInterface
+      template<typename T>
+      class Traverser
       {
       protected:
         virtual
-        ~TraverserInterface ()
-        {
-        }
+        ~Traverser ();
 
         virtual void
-        traverse (SyntaxTree::NodePtr const& n) = 0;
+        trampoline (T& n) = 0;
 
+        template <typename>
         friend class Dispatcher;
       };
 
@@ -40,61 +46,34 @@ namespace CCF
       //
       //
       //
+      template <typename T>
       class Dispatcher
       {
       public:
         virtual
-        ~Dispatcher ()
-        {
-        }
+        ~Dispatcher ();
 
         virtual void
-        dispatch (SyntaxTree::NodePtr const& n);
-
-      protected:
-
-        class Ambiguous {};
+        traverse (T& n);
 
         void
-        map (Introspection::TypeId id,
-             TraverserInterface* t,
-             bool suppress_ambiguity = false)
-          throw (Ambiguous)
+        map (Introspection::TypeId id, Traverser<T>& t)
         {
-          if (!traversal_map_.insert (std::make_pair (id, t)).second)
-          {
-            if (suppress_ambiguity)
-            {
-              traversal_map_[id].suppressed = true;
-            }
-            else
-            {
-              throw Ambiguous ();
-            }
-          }
+          Traversers& traversers (traversal_map_[id]);
+          traversers.push_back (&t);
         }
-
-      private:
-
-        struct TraverserDescriptor
-        {
-          TraverserDescriptor (TraverserInterface* t = 0)
-              : traverser (t),
-                suppressed (false)
-          {
-          }
-
-          TraverserInterface* traverser;
-          bool suppressed;
-        };
-
-        typedef
-        std::map<Introspection::TypeId, TraverserDescriptor>
-        TraversalMap;
 
       public:
         typedef
-        TraversalMap::const_iterator
+        std::vector<Traverser<T>*>
+        Traversers;
+
+        typedef
+        std::map<Introspection::TypeId, Traversers>
+        TraversalMap;
+
+        typedef
+        typename TraversalMap::const_iterator
         Iterator;
 
         Iterator
@@ -110,6 +89,33 @@ namespace CCF
         }
 
       private:
+        struct TypeInfoComparator
+        {
+          bool
+          operator () (Introspection::TypeInfo const& x,
+                       Introspection::TypeInfo const& y) const
+          {
+            return x.type_id () < y.type_id ();
+          }
+        };
+
+        typedef
+        std::map<Introspection::TypeInfo, unsigned long, TypeInfoComparator>
+        LevelMap;
+
+        typedef
+        std::set<Introspection::TypeInfo, TypeInfoComparator>
+        TypeInfoSet;
+
+        static unsigned long
+        compute_levels (Introspection::TypeInfo const& ti,
+                        unsigned long cur,
+                        LevelMap& map);
+
+        static void
+        flatten_tree (Introspection::TypeInfo const& ti, TypeInfoSet& set);
+
+      private:
         TraversalMap traversal_map_;
       };
 
@@ -117,118 +123,304 @@ namespace CCF
       //
       //
       //
-      class Discriminator : public virtual Dispatcher
+      typedef
+      Dispatcher<SemanticGraph::Node>
+      NodeDispatcherBase;
+
+      typedef
+      Dispatcher<SemanticGraph::Edge>
+      EdgeDispatcherBase;
+
+
+      //
+      //
+      //
+      class NodeDispatcher : public virtual NodeDispatcherBase
       {
       public:
-        virtual void
-        add (Dispatcher* d) throw (Ambiguous)
+        void
+        edge_traverser (EdgeDispatcherBase& d)
         {
-          for (Iterator i = d->begin (); i != d->end (); i++)
+          //@@ this should be done in Dispatcher in merge() function?
+          //
+          for (EdgeDispatcherBase::Iterator i (d.begin ()), end (d.end ());
+               i != end; ++i)
           {
-            map (i->first, i->second.traverser, true);
-          }
-        }
-      };
-
-
-      //
-      //
-      //
-      class Traverser : public TraverserInterface,
-                        public virtual Dispatcher
-      {
-      public:
-        virtual void
-        add_delegate (Dispatcher* d)
-        {
-          delegates_.push_back (d);
-        }
-
-      protected:
-        virtual bool
-        delegate (SyntaxTree::NodePtr const& n) const
-        {
-          if (delegates_.empty ()) return false;
-
-          for (DispatcherList::const_iterator i = delegates_.begin ();
-               i != delegates_.end ();
-               i++)
-          {
-            (*i)->dispatch (n);
-          }
-
-          return true;
-        }
-
-      protected:
-        typedef
-        std::vector<Dispatcher*>
-        DispatcherList;
-
-        DispatcherList delegates_;
-      };
-
-
-      //
-      //
-      //
-      class ScopeTraverser : public Traverser
-      {
-      public:
-        virtual void
-        add_scope_delegate (Dispatcher* d)
-        {
-          scope_delegates_.push_back (d);
-        }
-
-      protected:
-        virtual void
-        delegate_scope (SyntaxTree::ScopePtr const& s)
-        {
-          for (SyntaxTree::Scope::Iterator n = s->begin ();
-               n != s->end ();
-               n++)
-          {
-            dispatch (*n);
-
-            for (DispatcherList::const_iterator i = scope_delegates_.begin ();
-                 i != scope_delegates_.end ();
-                 i++)
+            for (EdgeDispatcherBase::Traversers::const_iterator
+                   t (i->second.begin ()), end (i->second.end ());
+                 t != end; ++t)
             {
-              (*i)->dispatch (*n);
+              dispatcher_.map (i->first, **t);
             }
           }
         }
 
       protected:
-        DispatcherList scope_delegates_;
+        template <typename I>
+        void
+        iterate_and_traverse (I begin, I end, EdgeDispatcherBase& d)
+        {
+          for (; begin != end; ++begin)
+          {
+            d.traverse (**begin);
+          }
+        }
+
+        template <typename I, typename X, typename A>
+        void
+        iterate_and_traverse (I begin,
+                              I end,
+                              EdgeDispatcherBase& d,
+                              X& x,
+                              void (X::*f)(A&),
+                              A& a)
+        {
+          for (I i (begin); i != end;)
+          {
+            d.traverse (**i);
+
+            if (++i != end) (x.*f) (a);
+          }
+        }
+
+        EdgeDispatcherBase&
+        edge_traverser ()
+        {
+          return dispatcher_;
+        }
+
+      protected:
+        EdgeDispatcherBase dispatcher_;
+      };
+
+
+      class EdgeDispatcher : public virtual EdgeDispatcherBase
+      {
+      public:
+        //@@ this should be done in Dispatcher in merge() function?
+        //
+        void
+        node_traverser (NodeDispatcherBase& d)
+        {
+          for (NodeDispatcherBase::Iterator i (d.begin ()), end (d.end ());
+               i != end; ++i)
+          {
+            for (NodeDispatcherBase::Traversers::const_iterator
+                   t (i->second.begin ()), end (i->second.end ());
+                 t != end; ++t)
+            {
+              dispatcher_.map (i->first, **t);
+            }
+          }
+        }
+
+      protected:
+        NodeDispatcherBase&
+        node_traverser ()
+        {
+          return dispatcher_;
+        }
+
+      protected:
+        NodeDispatcherBase dispatcher_;
       };
 
 
       //
       //
       //
-      struct Comma : Traverser
+      template <typename T>
+      struct Node : Traverser<SemanticGraph::Node>, virtual NodeDispatcher
       {
         typedef
-        SyntaxTree::CommaPtr
-        NodePtr;
+        T
+        Type;
 
-        Comma ()
+        Node ()
         {
-          map (typeid (SyntaxTree::Comma), this);
+          map (typeid (Type), *this);
         }
 
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
+        trampoline (SemanticGraph::Node& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Comma> ());
+          //cerr << "trampoline for " << &n << " to type "
+          //     << typeid (Type).name () << endl;
+
+          traverse (dynamic_cast<Type&> (n));
         }
 
         virtual void
-        traverse (NodePtr const& n)
+        traverse (Type&) = 0;
+      };
+
+
+      template <typename T>
+      struct Edge : Traverser <SemanticGraph::Edge>, virtual EdgeDispatcher
+      {
+        typedef
+        T
+        Type;
+
+        Edge ()
         {
-          delegate (n);
+          map (typeid (Type), *this);
+        }
+
+        virtual void
+        trampoline (SemanticGraph::Edge& e)
+        {
+          traverse (dynamic_cast<Type&> (e));
+        }
+
+
+        virtual void
+        traverse (Type& e) = 0;
+      };
+
+      // Edges
+      //
+      //
+      struct Names : Edge<SemanticGraph::Names>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.named ());
+        }
+      };
+
+
+      struct Defines : Edge<SemanticGraph::Defines>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.named ());
+        }
+      };
+
+
+      struct Mentions : Edge<SemanticGraph::Mentions>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.named ());
+        }
+      };
+
+
+
+      struct Aliases : Edge<SemanticGraph::Aliases>
+      {
+        virtual void
+        traverse (Type& a)
+        {
+          pre (a);
+          type (a);
+          name (a);
+          post (a);
+        }
+
+        virtual void
+        pre (Type& e)
+        {
+        }
+
+        virtual void
+        type (Type& e)
+        {
+          node_traverser ().traverse (e.named ());
+        }
+
+        virtual void
+        name (Type& e)
+        {
+        }
+
+        virtual void
+        post (Type& e)
+        {
+        }
+      };
+
+
+      struct Belongs : Edge<SemanticGraph::Belongs>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.type ());
+        }
+      };
+
+
+      struct Specialized : Edge<SemanticGraph::Specialized>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.type ());
+        }
+      };
+
+
+      struct Inherits : Edge<SemanticGraph::Inherits>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.inheritee ());
+        }
+      };
+
+
+      struct Contains : Edge<SemanticGraph::Contains>
+      {
+      };
+
+
+      // Nodes
+      //
+      //
+      struct Nameable : Node<SemanticGraph::Nameable>
+      {
+      };
+
+
+      template <typename T>
+      struct ScopeTemplate : Node<T>
+      {
+      public:
+        virtual void
+        traverse (T& s)
+        {
+          names (s);
+        }
+
+        virtual void
+        names (T& s)
+        {
+          names_pre (s);
+          names (s, edge_traverser ());
+          names_post (s);
+        }
+
+        virtual void
+        names (T& s, EdgeDispatcherBase& d)
+        {
+          iterate_and_traverse (s.names_begin (), s.names_end (), d);
+        }
+
+        virtual void
+        names_pre (T&)
+        {
+        }
+
+        virtual void
+        names_post (T&)
+        {
         }
       };
 
@@ -236,121 +428,23 @@ namespace CCF
       //
       //
       //
-      struct Declaration : Traverser
+      typedef
+      ScopeTemplate<SemanticGraph::Scope>
+      Scope;
+
+
+      //
+      //
+      //
+      struct Type : Node<SemanticGraph::Type>
       {
-        typedef
-        SyntaxTree::DeclarationPtr
-        NodePtr;
-
-        Declaration ()
-        {
-          map (typeid (SyntaxTree::Declaration), this);
-        }
-
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::Declaration> ());
-        }
-
-        virtual void
-        traverse (NodePtr const& n)
-        {
-          delegate (n);
-        }
-      };
-
-
-      //
-      //
-      //
-      struct Scope : ScopeTraverser
-      {
-        typedef
-        SyntaxTree::ScopePtr
-        NodePtr;
-
-        Scope ()
-        {
-          map (typeid (SyntaxTree::Scope), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::Scope> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-      };
-
-
-      //
-      //
-      //
-      struct TypeDecl : Traverser
-      {
-        typedef
-        SyntaxTree::TypeDeclPtr
-        NodePtr;
-
-        TypeDecl ()
-        {
-          map (typeid (SyntaxTree::TypeDecl), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::TypeDecl> ());
-        }
-
-        virtual void
-        traverse (NodePtr const& n)
-        {
-          delegate (n);
-        }
-      };
-
-
-      //
-      //
-      //
-      struct TypeDef : Traverser
-      {
-        typedef
-        SyntaxTree::TypeDefPtr
-        NodePtr;
-
-        TypeDef ()
-        {
-          map (typeid (SyntaxTree::TypeDef), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::TypeDef> ());
-        }
-
-        virtual void
-        traverse (NodePtr const& n)
-        {
-          delegate (n);
-        }
+        traverse (SemanticGraph::Type&) = 0;
       };
     }
   }
 }
+
+#include "CCF/IDL2/Traversal/Elements.tpp"
 
 #endif  // CCF_IDL2_TRAVERSAL_ELEMENTS_HPP

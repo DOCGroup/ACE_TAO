@@ -33,6 +33,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+ifeq (,$(versioned_so))
+  versioned_so = 0
+endif
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
@@ -95,7 +98,8 @@ else
 endif
 
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE +W302
+CCFLAGS		+= +W302
+CPPFLAGS	+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
 # If exception support is explicitly disabled, tell the compiler.
 # This is not recommended since the run-time library can throw exceptions.
@@ -141,8 +145,6 @@ endif
 endif
 
 SOEXT		= sl
-SONAME		=
-SOVERSION	=
 
 ifeq ($(buildbits),32)
 CCFLAGS		+= +DA1.1 +DS1.1

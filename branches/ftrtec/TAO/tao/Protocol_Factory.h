@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file   Protocol_Factory.h
@@ -11,19 +10,20 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PROTOCOL_FACTORY_H
 #define TAO_PROTOCOL_FACTORY_H
-#include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
 #include "ace/SStringfwd.h"
+
+#include "TAO_Export.h"
+#include "Basic_Types.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -53,7 +53,7 @@ public:
 
   // Factory methods
   /// Create an acceptor
-  virtual TAO_Acceptor  *make_acceptor (void);
+  virtual TAO_Acceptor *make_acceptor (void);
 
   /// Create a connector
   virtual TAO_Connector *make_connector  (void);
@@ -73,4 +73,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_PROTOCOL_FACTORY_H */

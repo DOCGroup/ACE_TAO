@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 // todo : Once MPC is used for everything, we should consider
 //        removing the includes += lines below, and updating
 //        the source code instead.

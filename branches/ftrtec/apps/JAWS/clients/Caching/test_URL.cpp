@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/streams.h"
 #include "Locator_Request_Reply.h"
 
 ACE_RCSID(Caching, test_URL, "$Id$")

@@ -3,6 +3,8 @@
 
 // Module.i
 
+#include "ace/OS_NS_string.h"
+
 template <ACE_SYNCH_DECL> ACE_INLINE void *
 ACE_Module<ACE_SYNCH_USE>::arg (void) const
 {

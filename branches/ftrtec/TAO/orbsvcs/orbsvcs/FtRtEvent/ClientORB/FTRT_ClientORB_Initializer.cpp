@@ -7,8 +7,6 @@ ACE_RCSID (ClientORB,
            FTRT_ClientORB_Initializer,
            "$Id$")
 
-#include "tao/debug.h"
-
 
 FTRT_ClientORB_Initializer::FTRT_ClientORB_Initializer (int transaction_depth)
 : client_interceptor_ ( new FTRT_ClientORB_Interceptor(transaction_depth) )
@@ -18,7 +16,7 @@ FTRT_ClientORB_Initializer::FTRT_ClientORB_Initializer (int transaction_depth)
 void
 FTRT_ClientORB_Initializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

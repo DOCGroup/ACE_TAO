@@ -11,6 +11,7 @@
 INFO  = README
 
 DIRS  =	ASX \
+        APG \
 	C++NPv1 \
 	C++NPv2 \
 	Connection \

@@ -8,6 +8,8 @@
 #include "ace/Get_Opt.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "tao/Stub.h"
+#include "tao/ORB_Core.h"
+#include "tao/Policy_Manager.h"
 
 const char *ior = "file://test1.ior";
 int n = 1;

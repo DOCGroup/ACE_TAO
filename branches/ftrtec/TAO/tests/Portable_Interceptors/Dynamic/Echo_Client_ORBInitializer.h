@@ -7,7 +7,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -15,7 +15,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

@@ -1,9 +1,29 @@
+// -*- MPC -*-
+// $Id$
+
+// ***********************************************************************
+// The default configuration for the 'make' project type is gcc.  This
+// is controlled by the configurations template variable.  It may be
+// changed on the MPC command line via the -value_template option. 
+// Additionally, each compiler has a default platform.  The default
+// platform for gcc is linux.  This too can be changed via the
+// -value_template option.  Below are some examples.
+//
+// Use SunCC on the default platform (solaris):
+//   mwc.pl -type make -value_template configurations=SunCC
+// Use the default configuration (gcc) on LynxOS:
+//   mwc.pl -type make -value_template platforms=lynxos
+// Use HP-UX aCC on the default platform (HP-UX):
+//   mwc.pl -type make -value_template configurations=aCC
+// ***********************************************************************
+
 conditional_include "idl_compiler"
 conditional_include "common"
 
 configurations = gcc
 soext          = so
-cppflags       = -O
+cppflags       =
+arflags        =
 
 // ***********************************************************************
 // Configuration Section
@@ -27,7 +47,7 @@ SunCC {
   cxx       = CC
   pic       = -KPIC
   linkflags = -library=Cstd -library=Crun
-  clean     = SunWS_cache
+  clean     = SunWS_cache ir.out
   platforms = solaris
 }
 
@@ -51,14 +71,38 @@ SGICC {
   platforms = irix
 }
 
+wrsppc {
+  cxx          = g++ppc
+  ld           = ldppc
+  cputype      = ppc
+  cpu          = PPC604
+  ar           = arppc
+  nm           = nmppc
+  compileflags = -mlongcall -nostdlib
+  linkflags    = -X -r
+  platforms    = vxworks
+}
+
+wrspentium {
+  cxx          = g++pentium
+  ld           = ldpentium
+  cputype      = pentium
+  cpu          = PENTIUM
+  ar           = arpentium
+  nm           = nmpentium
+  compileflags = -nostdlib
+  linkflags    = -X -r
+  platforms    = vxworks
+}
+
 // ***********************************************************************
 // Platform Section
 // ***********************************************************************
 
 tru64 {
-  extraflags = -D__USE_STD_IOSTREAM
-  shflags    = -shared /usr/lib/libcxxstd.a
-  ldlibs     = -ltli -lrt
+  extracppflags = -D__USE_STD_IOSTREAM
+  shflags       = -shared /usr/lib/libcxxstd.a
+  ldlibs        = -ltli -lrt
 }
 
 linux {
@@ -88,7 +132,8 @@ irix {
 }
 
 lynxos {
-  soext =
+  soext         =
+  extracppflags = -D__NO_INCLUDE_WARN__
 }
 
 macos {
@@ -104,7 +149,15 @@ unixware {
 }
 
 qnx {
-  shflags    = -shared
-  ldlibs     = -lsocket
-  extraflags = -D__GCC_BUILTIN
+  shflags       = -shared
+  ldlibs        = -lsocket
+  extracppflags = -D__GCC_BUILTIN
+}
+
+vxworks {
+  soext         =
+  extracppflags = -I$(WIND_BASE)/target/h
+  specialscript = "#!/bin/sh\nfor i in $$3; do\nfor j in $$4; do\ni=`echo $$i | sed sa\^-laa`\n[ -r \"$$j/lib$$i.a\" ] && libs=\"$$libs $$j/lib$$i.a\" && break\ndone\ndone\n$$1 $$2 $$libs | munch | grep -v \\.cpp > $$5"
+  prelink       = __ctordtor.c
+  ldlibs        = -L$(WIND_BASE)/target/lib/$(CPUTYPE)/$(CPU)/common -larch
 }

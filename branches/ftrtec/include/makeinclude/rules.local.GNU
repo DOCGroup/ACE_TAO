@@ -7,25 +7,79 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
+
+CLEANUP_OBJDIRS =
+CLEANUP_DIRS =
+
+ifdef CLEANUP_BIN
+  CLEANUP_OBJDIRS = $(VDIR)
+else # ! CLEANUP_BIN
+  ifdef CLEANUP_LIB
+    CLEANUP_OBJDIRS = $(VDIR)
+  endif # CLEANUP_LIB
+endif # CLEANUP_BIN
+
+ifdef CLEANUP_SHLIB
+  CLEANUP_OBJDIRS += $(VSHDIR)
+endif # CLEANUP_VSHLIB
+
+ifdef TEMPINCDIR
+  CLEANUP_DIRS += $(TEMPINCDIR)
+endif 
+
+ifdef sun
+  CLEANUP_DIRS += SunWS_cache
+endif
+
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
 #### platform_sunos5_sunc++.GNU for an example.
-OBJDIRS += $(TEMPLATE_REPOSITORY)
+ifdef TEMPLATE_REPOSITORY
+CLEANUP_DIRS += $(TEMPLATE_REPOSITORY)
+endif
 
-all.local: $(split_target) build.objdirs build.local install.local
+makefile_name.local:
+	@echo
+	@echo Makefile: $(shell pwd)/$(MAKEFILE)
+	@echo
+
+all.local: makefile_name.local $(split_target) build.objdirs build.local install.local
 
 #----------------------------------------------------------------------------
 #       C/C++ compilation targets
 #----------------------------------------------------------------------------
 
-build.local: $(BUILD)
 
-# Set up the suffixes for C++ and IDL.
+IDL_SRC ?=
+VLIBS ?=
+BUILD ?=
+BIN ?=
+VBIN ?= $(BIN:%=%$(VAR))
+$(VBIN): $(VLIBS)
+
+# Always build the V* targets in this order.  We control assignment to them
+# elsewhere. We add the existing $(BUILD) targets to the end to allow the
+# caller to set additional ones, e.g., when defining multiple targets in a
+# single makefile--note that we filter out any that are already present.
+VBUILD = $(IDL_SRC) $(VLIBS) $(VBIN) $(filter-out $(IDL_SRC) $(VLIBS) $(VBIN), $(BUILD))
+
+build.local: $(VBUILD)
+
+# By setting SUFFIXES to nothing, we turn off all implicit rules, and force
+# make to only use the explicit ones we define.
 .SUFFIXES:
-.SUFFIXES: .cpp .cc .C .cxx .idl $(SUFFIXES)
 
 # C++ related targets
 
+STATIC_LINK_FLAG ?=
+static_link ?= 0
+ifeq ($(static_link),1)
+  ifeq ($(static_libs_only),1)
+    LDFLAGS += $(STATIC_LINK_FLAG)
+  endif # static_libs_only = 1
+endif # static_link = 1
+
+OS ?=
 ifeq ($(OS),"Windows_NT")
 $(VDIR)%.obj: %.c
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
@@ -65,23 +119,23 @@ ifndef SOLINK
 # normal shared object files and executable shared object files (the kind
 # that the service configurator needs to be able to function).
 # 970104 Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
-ifdef (ESOBUILD)
+  ifdef (ESOBUILD)
 $(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR).creation_stamp
 	$(ESOBUILD)
-else
+  else # ! ESOBUILD
 $(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR).creation_stamp
 	$(SOBUILD)
-endif
+  endif # ESOBUILD
 
-ifeq ($(split), 1)
+  ifeq ($(split), 1)
 $(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
 	mv *.$(OBJEXT) $(VSHDIR)
-else
+  else # ! split
 
 $(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
-endif
+  endif # split
 
 $(VSHDIR)%.$(OBJEXT): %.cc $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
@@ -95,9 +149,14 @@ $(VSHDIR)%.$(OBJEXT): %.cxx $(VSHDIR).creation_stamp
 $(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR).creation_stamp
 	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
+  ifneq (,$(COMPILE.rc))
+$(VSHDIR)%.rc.$(OBJEXT): %.rc $(VSHDIR).creation_stamp
+	$(COMPILE.rc) $< $@
+  endif # COMPILE.rc
+
+$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR).creation_stamp
 	$(SOLINK)
-endif
+endif # SOLINK
 
 ifeq ($(OS),"Windows_NT")
 $(VDIR).creation_stamp:
@@ -125,8 +184,6 @@ endif
 #       Library generation targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(VLIB)
-
 #### show_statics shows static objects in locally-created object files.
 #### It assumes that the object files were built using g++.
 #### TOOLENV selects the proper nm in VxWorks host environments.
@@ -145,16 +202,26 @@ show_uninit:
 #       Installation targets
 #----------------------------------------------------------------------------
 
+# Always add LIB_INSTALL to INSTALL, so libs will get installed even no BIN
+# is built.  LIB_INSTALL is a dependency for BIN, so libs are installed prior
+# to use.  Also, make LIB_INSTALL depend on VLIBS, so libs get built prior to
+# installation.
+ifdef LIB_INSTALL
+  INSTALL ?= $(LIB_INSTALL)
+  $(LIB_INSTALL): $(VLIBS)
+endif
+
+INSTALL ?=
 install.local: $(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) $(LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
-$(SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+ifdef CLEANUP_INSTALL
+  ifneq ($(CLEANUP_INSTALL),)
+	$(RM) $(CLEANUP_INSTALL)
+  endif # CLEANUP_INSTALL
+endif # CLEANUP_INSTALL
 
-
-#### To disable installs, just add "INSTALL=" to your "make" invocation.
-
-ifeq (,$(LN_S))
+ifndef LN_S
   ifndef COMSPEC
     ifdef ComSpec
       #### ACE+TAO use COMSPEC, but ComSpec is defined.
@@ -211,43 +278,73 @@ endif
 #       Cleanup targets
 #----------------------------------------------------------------------------
 
-clean.local:
-	-$(RM) *.$(OBJEXT) *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) cxx_repository ptrepository ti_files
-	-$(RM) -r Templates.DB gcctemp.c gcctemp so_locations *.ics
-	-$(RM) -r templateregistry SunWS_cache ir.out core.*
-
-clean_idl_stubs.local:
-ifneq ($(IDL_FILES),)
-	-$(RM) $(addsuffix $(IDL_CLIENT_HDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_CLIENT_INL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_CLIENT_SRC_EXT),$(IDL_FILES))
-	-$(RM) $(addsuffix $(IDL_SERVER_HDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_INL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_SRC_EXT),$(IDL_FILES))
-	-$(RM) $(addsuffix $(IDL_SERVER_THDR_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_TINL_EXT), $(IDL_FILES)) $(addsuffix $(IDL_SERVER_TSRC_EXT),$(IDL_FILES))
+clean_idl_stubs.local: makefile_name.local
+ifdef IDL_FILES
+	-$(RM) $(foreach ext, $(IDL_EXT), $(addsuffix $(ext), $(IDL_FILES)))
 endif
 
+CLEANUP_BIN ?=
+ifneq ($(CLEANUP_BIN),)
+  DO_CLEANUP = 1
+  REALCLEAN_FILES = $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT))
+endif # !CLEANUP_BIN
+
+ifdef static_libs
+  CLEANUP_LIB ?=
+  ifneq ($(CLEANUP_LIB),)
+    DO_CLEANUP = 1
+    REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
+  endif # !CLEANUP_LIB
+endif # static_libs
+
+ifdef shared_libs
+  CLEANUP_SHLIB ?=
+  ifneq ($(CLEANUP_SHLIB),)
+    DO_CLEANUP = 1
+    REALCLEAN_FILES += $(CLEANUP_VSHLIB:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%*) $(CLEANUP_VSHLIB_NO_VER:%=%_debug) $(CLEANUP_VSHLIB_NO_VER:%=%_profile) $(CLEANUP_VSHLIB_NO_VER:%=%_optimize)
+  endif # !CLEANUP_SHLIB
+endif # shared_libs
+
+CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
+
+ifdef SRC
+  CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
+endif # SRC
+ifneq ($(CLEANUP_BIN),)
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(CLEANUP_BIN)))))
+endif # CLEANUP_BIN
+ifdef LSRC
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
+endif # LSRC
+
+clean.local: makefile_name.local
+ifdef DO_CLEANUP
+	-$(RM) -r \
+	*.$(OBJEXT) *~ *.bak *.rpo *.sym lib*.*_pure_* \
+	Makefile.old core-r $(CLEANUP_DIRS) \
+	cxx_repository ptrepository ti_files \
+	gcctemp.c gcctemp so_locations *.ics \
+	templateregistry ir.out core.* $(CLEANUP_OBJS)
+endif # DO_CLEANUP
+
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
-	-$(RM) $(BIN:%=%$(EXEEXT)) $(BIN:%=%_debug$(EXEEXT)) $(BIN:%=%_profile$(EXEEXT)) $(BIN:%=%_optimize$(EXEEXT)) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%.*) $(SHLIB:%.so=%.a) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2:%=%$(EXEEXT)) $(BIN2:%=%_debug$(EXEEXT)) $(BIN2:%=%_profile$(EXEEXT)) $(BIN2:%=%_optimize$(EXEEXT)) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
+ifdef DO_CLEANUP
+	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS))
+endif # DO_CLEANUP
+
 
 #----------------------------------------------------------------------------
 #       Dependency generation target
 #----------------------------------------------------------------------------
 
-ifeq ($(MAKEFILE),)
-  MAKEFILE = Makefile
-endif # ! MAKEFILE
+MAKEFILE ?= Makefile
+DEPENDENCY_FILE ?= $(MAKEFILE)
 
-ifeq ($(DEPENDENCY_FILE),)
-  DEPENDENCY_FILE = $(MAKEFILE)
-endif
-
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif # TAO_ROOT
+TAO_ROOT ?= $(ACE_ROOT)/TAO
 
 # If no libraries are build in the current directory (actually, if
 # rules.lib.GNU isn't included), then SOEXT might not be set.
-ifndef SOEXT
-  SOEXT=so
-endif # SOEXT
+SOEXT ?= so
 
 ORIGdepend.local: $(MAKEFILE)
 	@$(RM) $(MAKEFILE).old
@@ -277,14 +374,17 @@ depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
 
-ifeq ($(DEPGEN),)
+ifndef DEPGEN
   DEPGEN = $(ACE_ROOT)/bin/g++dep
 endif
 
-depend.local: $(MAKEFILE)
+depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
-	SOEXT=$(SOEXT) VDIR=.obj/ VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
+	ACE_PLATFORM_CONFIG=$(ACE_PLATFORM_CONFIG) OBJEXT=$(OBJEXT) SOEXT=$(SOEXT) \
+	VDIR=$(VDIR) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" \
+	$(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) $(CPPFLAGS) \
+	-DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "Makefile dependencies unchanged." ;\
 	else \
@@ -296,7 +396,19 @@ depend.local: $(MAKEFILE)
 #       RCS info target
 #----------------------------------------------------------------------------
 
+IDL_FILES ?=
+IDL_CLIENT_HDR_EXT ?=
+
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
+
+ifdef $(TAO_IDL_DEP)
+$(TAO_IDL_DEP):
+	@if test ! -s $(TAO_IDL_DEP); then \
+	  echo " ***"; \
+	  echo " *** ERROR: $(TAO_IDL_DEP) not found."; \
+	  echo " ***"; \
+	  echo; /bin/false; fi
+endif # TAO_IDL_DEP
 
 #----------------------------------------------------------------------------
 #       RCS info target
@@ -309,14 +421,14 @@ rcs_info.local:
 #       Variant targets and conditional macros
 #----------------------------------------------------------------------------
 
-build.objdirs: $(OBJDIRS)
+build.objdirs: $(CLEANUP_DIRS)
 
 ifeq ($(OS),"Windows_NT")
-$(OBJDIRS):
+$(CLEANUP_DIRS):
 	@if not exist $@ mkdir $@
 else
-$(OBJDIRS):
-	@test -d $@ || mkdir $@ $(ACE_NUL_STDERR)
+$(CLEANUP_DIRS):
+	@test -d $@ || mkdir -p $@ $(ACE_NUL_STDERR)
 endif
 
 #---------------------------------------------------------------------------
@@ -326,3 +438,4 @@ SPLIT:
 	@echo "Splitting source files..."
 	@$(ACE_ROOT)/bin/split-cpp -s Svc_Conf_l.cpp -s Svc_Conf_y.cpp $(LSRC)
 	@echo "done."
+

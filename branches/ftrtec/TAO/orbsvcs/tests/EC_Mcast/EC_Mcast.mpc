@@ -1,3 +1,6 @@
-project(EC_Mcast): rteventexe, messaging, corba_messaging {
+// -*- MPC -*-
+// $Id$
+
+project(EC_Mcast): rteventexe, messaging {
   exename  = EC_Mcast
 }

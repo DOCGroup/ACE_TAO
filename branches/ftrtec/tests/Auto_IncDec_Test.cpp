@@ -21,7 +21,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "tests/test_config.h"
-
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Auto_IncDec_Test, "Auto_IncDec_Test.cpp, by Edan Ayal")
 

@@ -13,12 +13,11 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Factory : public virtual IDL3::SemanticAction::Factory
+      struct Composition;
+      struct HomeExecutor;
+      
+      struct Factory : virtual IDL3::SemanticAction::Factory
       {
-      public:
         virtual Composition&
         composition () = 0;
 

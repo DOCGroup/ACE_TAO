@@ -2,7 +2,7 @@
 
 //==============================================================
 /**
- * @file RTEventService_exec.h
+ * @file RTEventService_exec.cpp
  *
  * Source file for the actual RTEventService and RTEventServiceHome
  * component implementations.

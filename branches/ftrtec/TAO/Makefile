@@ -26,7 +26,8 @@ DIRS    = tao \
           examples \
           performance-tests \
           utils \
-	  docs/tutorials/Quoter
+	  docs/tutorials/Quoter \
+          CIAO
 
 CLONE   = Makefile \
           tao \
@@ -60,7 +61,7 @@ clone:
 	done
 
 reverseclean:
-	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
+	@$(ACE_ROOT)/bin/reverse_clean $(MAKE) $(DIRS)
 
 CONTROLLED_FILES = TAO/COPYING* \
 	    	   TAO/ChangeLog* \
@@ -89,8 +90,8 @@ CONTROLLED_FILES = TAO/COPYING* \
 
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
-                ACE_wrappers/TAO/INSTALL \
-                ACE_wrappers/TAO/orbsvcs/README
+                ACE_wrappers/TAO/INSTALL
+
 
 .PHONY: INSTALL
 INSTALL: TAO-INSTALL.html

@@ -1,3 +1,5 @@
-project(POA Identity): taoserver {
-  exename = Identity
+// -*- MPC -*-
+// $Id$
+
+project(POA*): taoexe, portableserver {
 }

@@ -1,13 +1,19 @@
-// $Id$
-// wxNamingViewer.cpp - wxWindows-based CORBA naming viewer
-// Author:  Charlie Frasch (cfrasch@spawar.navy.mil)
-//
+// @file wxNamingViewer.cpp
+// A wxWindows-based CORBA naming viewer.
 // Based on NamingViewer Version 1.0 by Chris Hafey (chris@stentorsoft.com)
+//
+// @author:  Charlie Frasch (cfrasch@atdesk.com)
+//
+// $Id$
 
 #include "pch.h"
 #include "wx/resource.h"
 #include "wxNamingViewerFrame.h"
 #include "wxNamingViewer.wxr"
+
+#if defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
+#include "wxNamingViewer.wxr"
+#endif // defined(wxUSE_RESOURCES)
 
 // Stuff for the C++Builder IDE
 #define USEUNIT(x)
@@ -24,7 +30,9 @@ USEUNIT("wxAddNameServerDlg.cpp");
 USEUNIT("wxBindDialog.cpp");
 USEUNIT("wxViewIORDialog.cpp");
 USERC("wxNamingViewer.rc");
+
 //---------------------------------------------------------------------------
+
 class WxNamingViewer:
     public wxApp
 {
@@ -56,11 +64,13 @@ bool WxNamingViewer::OnInit()
       argc,
       argv);
 
+#if defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   wxResourceParseData( bindObject);
   wxResourceParseData( selectNS);
   wxResourceParseData( addNameServer);
   wxResourceParseData( bindNewContext);
   wxResourceParseData( viewIOR);
+#endif // defined(wxUSE_WX_RESOURCES)
 
   WxNamingViewerFrame* frame = new WxNamingViewerFrame(
       "wxNamingViewer",

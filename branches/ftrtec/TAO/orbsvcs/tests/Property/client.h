@@ -20,7 +20,7 @@
 #ifndef PROPERTY_CLIENT_H
 #define PROPERTY_CLIENT_H
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -2,6 +2,7 @@
 
 // Simple multi-threaded database server example. 
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
 

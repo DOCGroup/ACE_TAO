@@ -12,6 +12,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/Reactor_Notification_Strategy.h"
+#include "ace/Signal.h"
 
 ACE_RCSID(Misc, test_demuxing, "$Id$")
 
@@ -55,9 +56,10 @@ Sig_Handler::Sig_Handler (void)
   // internal demuxing table, but doesn't cause it to dispatch the
   // event handler directly.  Instead, we use the signal handler to do
   // this.
+  ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
   if (ACE_Reactor::instance ()->register_handler
       (this,
-       ACE_Event_Handler::NULL_MASK) == -1)
+       mask) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n%a",
                 "register_handler",

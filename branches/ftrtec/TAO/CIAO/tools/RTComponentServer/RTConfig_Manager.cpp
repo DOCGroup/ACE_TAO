@@ -185,7 +185,7 @@ CIAO::RTPolicy_Set_Manager::init (const CIAO::RTConfiguration::Policy_Sets &sets
 }
 
 void
-CIAO::RTPolicy_Set_Manager::fini (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::RTPolicy_Set_Manager::fini (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We are keeping the PolicyList in var variables in the map.
@@ -216,14 +216,16 @@ CIAO::RTPolicy_Set_Manager::find_policies_by_name (const char *name
     }
 
   // duplicate the sequence PolicyList.
-  CORBA::PolicyList_var retv = new CORBA::PolicyList (entry->int_id_);
+  CORBA::PolicyList_var retv =
+    new CORBA::PolicyList (entry->int_id_.in ());
+
   return retv._retn ();
 }
 
 CORBA::Policy_ptr
 CIAO::RTPolicy_Set_Manager::create_single_policy
 (const CIAO::RTConfiguration::Policy_Config &policy_config
- ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+ ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "RTPolicy_Set_Manager::create_single_policy\n"));
@@ -274,8 +276,9 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
                                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        retv = this->rtorb_->create_priority_banded_connection_policy (bands
-                                                                       ACE_ENV_ARG_PARAMETER);
+        retv = 
+          this->rtorb_->create_priority_banded_connection_policy (bands.in ()
+                                                                  ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
       }
       break;

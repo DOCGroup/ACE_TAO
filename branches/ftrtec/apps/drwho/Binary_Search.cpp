@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "Binary_Search.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 // This function is passed to qsort to perform the comparison between
 // login names for two friends.

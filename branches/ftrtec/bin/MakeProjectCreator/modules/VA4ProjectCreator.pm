@@ -18,12 +18,6 @@ use vars qw(@ISA);
 @ISA = qw(ProjectCreator);
 
 # ************************************************************
-# Data Section
-# ************************************************************
-
-my($sname) = '_Static';
-
-# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -33,12 +27,10 @@ sub translate_value {
   my($val)  = shift;
 
   if ($key eq 'after' && $val ne '') {
-    my($wt)  = $self->get_writing_type();
     my($arr) = $self->create_array($val);
     $val = '';
     foreach my $entry (@$arr) {
-      $val .= '"' . ($wt == 1 ? $self->static_project_file_name($entry) :
-                                 $self->project_file_name($entry)) . '" ';
+      $val .= '"' . $self->project_file_name($entry) . '" ';
     }
     $val =~ s/\s+$//;
   }
@@ -80,19 +72,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "$name.icc";
-}
-
-
-sub static_project_file_name {
-  my($self) = shift;
-  my($name) = shift;
-
-  if (!defined $name) {
-    $name = $self->project_name();
-  }
-
-  return "$name$sname.icc";
+  return $self->get_modified_project_file_name($name, '.icc');
 }
 
 

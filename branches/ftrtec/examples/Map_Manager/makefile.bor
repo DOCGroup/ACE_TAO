@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Makefile for building the test_hash_map_manager ace examples
 #
 

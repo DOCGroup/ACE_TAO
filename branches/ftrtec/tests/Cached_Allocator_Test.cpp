@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Malloc_T.h"
 #include "ace/High_Res_Timer.h"
 

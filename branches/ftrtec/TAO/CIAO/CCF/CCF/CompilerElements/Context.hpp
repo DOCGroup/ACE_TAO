@@ -18,7 +18,7 @@ namespace CCF
       typedef
       std::map<std::string, Utility::Hetero::Container>
       Map;
-      
+
     public:
       Context ()
       {
@@ -87,7 +87,7 @@ namespace CCF
           throw Typing ();
         }
       }
-      
+
     private:
       Map map_;
 

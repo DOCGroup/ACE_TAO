@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 # Makefile for building the Current exe with Borland C++ Builder
 
 NAME = Current

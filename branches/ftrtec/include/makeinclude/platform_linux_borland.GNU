@@ -1,4 +1,5 @@
 # Hey Emacs, this is a -*- Makefile -*-
+# $Id$
 
 # platform_linux_borland.GNU
 
@@ -113,5 +114,4 @@ LINK.cc = override
 LINK.cc.override = $(LD) $(LDFLAGS) $(BOREXELIBS) $(BORLDFLAGS) $(POSTLINK)
 SOLINK.cc = $(LD) -Tpd
 
-SONAME=
-SOVERSION=
+versioned_so=0

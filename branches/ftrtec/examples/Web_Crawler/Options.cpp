@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "URL_Addr.h"
 #include "Options.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Web_Crawler, Options, "$Id$")
 

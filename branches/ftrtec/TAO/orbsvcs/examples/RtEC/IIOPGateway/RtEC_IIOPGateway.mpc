@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Consumer): messaging, rteventexe, naming {
   requires  += corba_messaging
 

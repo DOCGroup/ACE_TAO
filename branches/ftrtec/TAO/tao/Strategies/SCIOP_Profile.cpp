@@ -236,20 +236,12 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
 }
 
 CORBA::Boolean
-TAO_SCIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
+TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
-
-  if (other_profile->tag () != TAO_TAG_SCIOP_PROFILE)
-    return 0;
-
   const TAO_SCIOP_Profile *op =
     ACE_dynamic_cast (const TAO_SCIOP_Profile *, other_profile);
 
-
-  if (!(this->ref_object_key_->object_key () ==
-        op->ref_object_key_->object_key ()
-        && this->version_ == op->version_
-        && this->count_ == op->count_))
+  if (op == 0)
     return 0;
 
   // Check endpoints equivalence.
@@ -263,9 +255,6 @@ TAO_SCIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
       else
         return 0;
     }
-
-  if (!this->is_profile_equivalent_i (other_profile))
-    return 0;
 
   return 1;
 }
@@ -307,7 +296,7 @@ TAO_SCIOP_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_SCIOP_Profile::endpoint_count (void)
+TAO_SCIOP_Profile::endpoint_count (void) const
 {
   return this->count_;
 }

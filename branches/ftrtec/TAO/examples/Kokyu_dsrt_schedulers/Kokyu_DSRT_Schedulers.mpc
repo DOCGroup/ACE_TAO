@@ -1,20 +1,10 @@
-project(Kokyu_DSRT_Schedulers){
+// -*- MPC -*-
+// $Id$
 
+project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   sharedname  = Kokyu_DSRT_Schedulers
   dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL
-  includes  +=  $(TAO_ROOT) \
-                $(ACE_ROOT) \
-                $(TAO_ROOT)/tao/RTScheduling \
-                $(TAO_ROOT)/tao/RTCORBA \
-                $(ACE_ROOT)/Kokyu
-
-  libs += TAO_RTScheduler Kokyu TAO_RTCORBA ACE TAO
-  libpaths += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
-              $(TAO_ROOT)/tao \  
-              $(ACE_ROOT)/ace \  
-              $(TAO_ROOT)/tao/RTCORBA \
-              $(TAO_ROOT)/tao/RTScheduling \
-              $(ACE_ROOT)/Kokyu 
+  idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
 
   Source_Files {
         FP_Scheduler.cpp      
@@ -26,5 +16,9 @@ project(Kokyu_DSRT_Schedulers){
         FP_SchedulingC.cpp    
         MUF_SchedulingC.cpp
         MIF_SchedulingC.cpp  
+  }
+  
+  Header_Files {
+		Kokyu_dsrt_schedulers_export.h
   }
 }

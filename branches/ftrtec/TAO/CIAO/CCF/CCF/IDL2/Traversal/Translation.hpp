@@ -6,7 +6,8 @@
 #define CCF_IDL2_TRAVERSAL_TRANSLATION_HPP
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/IDL2/SyntaxTree/Translation.hpp"
+
+#include "CCF/IDL2/SemanticGraph/Translation.hpp"
 
 namespace CCF
 {
@@ -14,387 +15,91 @@ namespace CCF
   {
     namespace Traversal
     {
-
+      // Some edges.
       //
       //
-      //
-      class RegionTraverser : public Traverser
+      struct ContainsPrincipal : Edge<SemanticGraph::ContainsPrincipal>
       {
-      public:
         virtual void
-        add_content_delegate (Dispatcher* d)
+        traverse (Type& e)
         {
-          content_delegates_.push_back (d);
+          node_traverser ().traverse (e.element ());
         }
+      };
 
-      protected:
-        RegionTraverser (Dispatcher* scope)
-            : scope_ (scope)
-        {
-        }
-
+      struct ContainsImplied : Edge<SemanticGraph::ContainsImplied>
+      {
         virtual void
-        delegate_content (SyntaxTree::TranslationRegionPtr const& tr)
+        traverse (Type& e)
         {
-          for (SyntaxTree::TranslationRegion::Iterator n = tr->begin ();
-               n != tr->end ();
-               n++)
-          {
-            if (content_delegates_.empty ())
-            {
-              dispatch (*n);
-            }
-            else
-            {
-              for (DispatcherList::const_iterator i =
-                     content_delegates_.begin ();
-                   i != content_delegates_.end ();
-                   i++)
-              {
-                (*i)->dispatch (*n);
-              }
-            }
-          }
+          node_traverser ().traverse (e.element ());
         }
+      };
 
-      protected:
-        Dispatcher* scope_;
-        DispatcherList content_delegates_;
+      struct ContainsRoot : Edge<SemanticGraph::ContainsRoot>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.element ());
+        }
+      };
+
+      struct Includes : Edge<SemanticGraph::Includes>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.element ());
+        }
+      };
+
+      struct QuoteIncludes : Edge<SemanticGraph::QuoteIncludes>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.element ());
+        }
+      };
+
+      struct BracketIncludes : Edge<SemanticGraph::BracketIncludes>
+      {
+        virtual void
+        traverse (Type& e)
+        {
+          node_traverser ().traverse (e.element ());
+        }
       };
 
 
       //
       //
       //
-      struct FileScope : ScopeTraverser
+      typedef
+      ScopeTemplate <SemanticGraph::Root>
+      Root;
+
+
+      //
+      //
+      //
+      struct TranslationRegion : Node<SemanticGraph::TranslationRegion>
       {
-        typedef
-        SyntaxTree::FileScopePtr
-        NodePtr;
-
-        FileScope ()
-        {
-          map (typeid (SyntaxTree::FileScope), this);
-        }
-
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::FileScope> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
+        traverse (SemanticGraph::TranslationRegion&);
       };
 
 
       //
       //
       //
-      struct TranslationRegion : RegionTraverser
+      struct TranslationUnit : Node<SemanticGraph::TranslationUnit>
       {
-        typedef
-        SyntaxTree::TranslationRegionPtr
-        NodePtr;
-
-        TranslationRegion (Dispatcher* scope = 0)
-            : RegionTraverser (scope)
-        {
-          map (typeid (SyntaxTree::TranslationRegion), this);
-        }
-
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::TranslationRegion> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        content (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
+        traverse (SemanticGraph::TranslationUnit&);
       };
 
-
-      //
-      //
-      //
-      struct IncludeTranslationRegion : RegionTraverser
-      {
-        typedef
-        SyntaxTree::IncludeTranslationRegionPtr
-        NodePtr;
-
-        IncludeTranslationRegion (Dispatcher* scope = 0)
-            : RegionTraverser (scope)
-        {
-          map (typeid (SyntaxTree::IncludeTranslationRegion), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::IncludeTranslationRegion> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        content (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-      };
-
-
-      //
-      //
-      //
-      struct UserIncludeTranslationRegion : RegionTraverser
-      {
-        typedef
-        SyntaxTree::UserIncludeTranslationRegionPtr
-        NodePtr;
-
-        UserIncludeTranslationRegion (Dispatcher* scope = 0)
-            : RegionTraverser (scope)
-        {
-          map (typeid (SyntaxTree::UserIncludeTranslationRegion), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (
-            n->dynamic_type<SyntaxTree::UserIncludeTranslationRegion> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        content (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-      };
-
-
-      //
-      //
-      //
-      struct SysIncludeTranslationRegion : RegionTraverser
-      {
-        typedef
-        SyntaxTree::SysIncludeTranslationRegionPtr
-        NodePtr;
-
-        SysIncludeTranslationRegion (Dispatcher* scope = 0)
-            : RegionTraverser (scope)
-        {
-          map (typeid (SyntaxTree::SysIncludeTranslationRegion), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (
-            n->dynamic_type<SyntaxTree::SysIncludeTranslationRegion> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        content (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-      };
-
-
-      //
-      //
-      //
-      struct ImpliedIncludeTranslationRegion : RegionTraverser
-      {
-        typedef
-        SyntaxTree::ImpliedIncludeTranslationRegionPtr
-        NodePtr;
-
-        ImpliedIncludeTranslationRegion (Dispatcher* scope = 0)
-            : RegionTraverser (scope)
-        {
-          map (typeid (SyntaxTree::ImpliedIncludeTranslationRegion), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (
-            n->dynamic_type<SyntaxTree::ImpliedIncludeTranslationRegion> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        content (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-      };
-
-
-      //
-      //
-      //
-      struct PrincipalTranslationRegion : RegionTraverser
-      {
-        typedef
-        SyntaxTree::PrincipalTranslationRegionPtr
-        NodePtr;
-
-        PrincipalTranslationRegion (Dispatcher* scope = 0)
-            : RegionTraverser (scope)
-        {
-          map (typeid (SyntaxTree::PrincipalTranslationRegion), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::PrincipalTranslationRegion> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        content (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-      };
-
-
-      //
-      //
-      //
-      struct TranslationUnit : Traverser
-      {
-        typedef
-        SyntaxTree::TranslationUnitPtr
-        NodePtr;
-
-        TranslationUnit ()
-        {
-          map (typeid (SyntaxTree::TranslationUnit), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::TranslationUnit> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        content (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-
-      public:
-        virtual void
-        add_content_delegate (Dispatcher* d)
-        {
-          content_delegates_.push_back (d);
-        }
-
-      protected:
-        virtual void
-        delegate_content (NodePtr const& tu)
-        {
-          for (SyntaxTree::TranslationRegion::Iterator n = tu->begin ();
-               n != tu->end ();
-               n++)
-          {
-            if (content_delegates_.empty ())
-            {
-              dispatch (*n);
-            }
-            else
-            {
-              for (DispatcherList::const_iterator i =
-                     content_delegates_.begin ();
-                   i != content_delegates_.end ();
-                   i++)
-              {
-                (*i)->dispatch (*n);
-              }
-            }
-          }
-        }
-
-      private:
-        DispatcherList content_delegates_;
-      };
     }
   }
 }

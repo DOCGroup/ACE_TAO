@@ -1,4 +1,6 @@
-project(POA MT Servant Locator): taoserver {
-  exename = MT_Servant_Locator
+// -*- MPC -*-
+// $Id$
+
+project(POA*): taoexe, portableserver {
   avoids += minimum_corba
 }

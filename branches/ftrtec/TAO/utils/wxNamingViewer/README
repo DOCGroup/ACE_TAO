@@ -1,5 +1,5 @@
 wxNamingViewer - a wxWindows implementation of NamingViewer
-Author: Charlie Frasch (cfrasch@spawar.navy.mil)
+Author: Charlie Frasch <cfrasch@atdesk.com>
 
 Based on NamingViewer by Chris Hafey (chris@stentorsoft.com)
 
@@ -7,7 +7,8 @@ Based on NamingViewer by Chris Hafey (chris@stentorsoft.com)
 1. This is an (almost) exact port of NamingViewer to wxWindows. There are some
 differences and a few minor improvements. The port was done with
 ACE 5.1.4/TAO 1.1.4 and wxWindows 2.1.5 on Borland C++ Builder 4. Chris Hafey
-contributed changes for MSVC.
+contributed changes for MSVC. It has recently (11/11/03) been updated for 
+ACE 5.3.1/TAO 1.3.1, wxWindows2.4.2 and linux. 
 
 *) put <null> as the "root" of the naming context if a naming service cannot be
 found
@@ -43,6 +44,16 @@ install directory) or use the C++ Builder IDE (double-click on
 wxNamingViewer.bpr. You may need to modify the include and library paths to
 suit your particular installation.
 
+
+For linux/gcc:
+
+*) Obtain, make and install wxWindows. See http://www.wxwindows.org.
+
+*) Obtain ACE/TAO. See http://www.cs.wustl.edu/~schmidt/ACE.html.
+
+*) Build the the dynamically linked release version of ACE and TAO.
+
+*) Make the wxNamingViewer with wxNamingView=1.
 
 For others: (TBD)
 

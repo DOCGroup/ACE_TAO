@@ -29,6 +29,7 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Naming_Context.h"
 #include "ace/Name_Request_Reply.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Singleton.h"
 #include "ace/svc_export.h"
 

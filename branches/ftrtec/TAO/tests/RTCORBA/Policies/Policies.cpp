@@ -18,8 +18,10 @@
 //
 //=========================================================================
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
+
+#include "ace/Log_Msg.h"
 
 int
 main (int argc, char **argv)

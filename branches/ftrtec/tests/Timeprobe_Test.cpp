@@ -25,6 +25,7 @@
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Timeprobe_Test, "$Id$")
 

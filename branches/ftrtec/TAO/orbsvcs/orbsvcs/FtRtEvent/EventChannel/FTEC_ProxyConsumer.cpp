@@ -4,7 +4,7 @@
 #include "Request_Context_Repository.h"
 #include "Replication_Service.h"
 #include "../Utils/activate_with_id.h"
-#include "../Utils/ScopeGuard.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushConsumer,
@@ -20,7 +20,7 @@ TAO_FTEC_ProxyPushConsumer::TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Bas
 }
 
 
-const PortableServer::ObjectId&
+const FtRtecEventChannelAdmin::ObjectId&
 TAO_FTEC_ProxyPushConsumer::id() const
 {
   return object_id_.in();
@@ -36,7 +36,8 @@ TAO_FTEC_ProxyPushConsumer::activate (
 {
   result = RtecEventChannelAdmin::ProxyPushConsumer::_nil();
   ACE_TRY {
-    object_id_ = Request_Context_Repository().get_object_id();
+    object_id_ = Request_Context_Repository().get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
     PortableServer::POA_var poa = _default_POA(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
     activate_object_with_id(result, poa.in(), this, object_id_ ACE_ENV_ARG_PARAMETER);
@@ -54,10 +55,11 @@ TAO_FTEC_ProxyPushConsumer::activate (
 void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos
-                ACE_ENV_ARG_DECL_NOT_USED)
+                ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected))
 {
+  FTRTEC_TRACE("TAO_FTEC_ProxyPushConsumer::connect_push_supplier");
   if (Request_Context_Repository().is_executed_request())
     return;
 
@@ -71,22 +73,25 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
   Inherited::connect_push_supplier(push_supplier, qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ScopeGuard guard = MakeObjGuard(*this, &Inherited::disconnect_push_consumer);
-
-  FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-  {
+  ACE_TRY {
+    FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(update,
-      &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_consumer
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                           &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_consumer
+                           ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
   }
-
-  guard.Dismiss();
+  ACE_CATCHALL {
+    TAO_FTRTEC::Log(1, "Cannot replicate the request connect_push_supplier, rollback...\n");
+    this->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
-void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (Request_Context_Repository().is_executed_request())
@@ -101,7 +106,15 @@ void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DE
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
   ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
-  svc->replicate_request(update, 0 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY {
+    svc->replicate_request(update, 0 ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHALL {
+    /// we do not propagate the exception of unsubscription messages because client
+    /// can do nothing about it.
+  }
+  ACE_ENDTRY;
   ACE_CHECK;
 }
 
@@ -116,7 +129,8 @@ void TAO_FTEC_ProxyPushConsumer::get_state(FtRtecEventChannelAdmin::ProxyPushCon
   }
 }
 
-void TAO_FTEC_ProxyPushConsumer::set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state)
+void TAO_FTEC_ProxyPushConsumer::set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state
+                                           ACE_ENV_ARG_DECL)
 {
   if (!CORBA::is_nil(state.parameter.info().push_supplier.in()) )
   {

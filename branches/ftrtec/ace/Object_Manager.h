@@ -16,7 +16,9 @@
 #define ACE_OBJECT_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
+#include "ace/Object_Manager_Base.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,17 +35,18 @@ class ACE_Sig_Set;
   class ACE_Recursive_Thread_Mutex;
   class ACE_RW_Thread_Mutex;
 
-  // This is included because Svc_conf_l.cpp needs it and I don't want to 
-  // have to change it right now.  :-(
-  // The worst thing about this, is that it still includes OS.h, but since we
-  // have to include it above anyway, it doesn't make a difference right now.
-  // dhinton.
-  #include "ace/Recursive_Thread_Mutex.h"
+#  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
+
+// only used by ACE_OS_Object_Manager::ctor
+# if defined (ACE_WIN32)
+// Default WIN32 structured exception handler.
+int ACE_SEH_Default_Exception_Selector (void *);
+int ACE_SEH_Default_Exception_Handler (void *);
+# endif /* ACE_WIN32 */
 
 class ACE_Cleanup_Info_Node;
 template <class T> class ACE_Cleanup_Adapter;
-
 
 // Configuration parameters.
 #if !defined (ACE_MAX_MANAGED_OBJECTS)
@@ -57,7 +60,6 @@ template <class T> class ACE_Cleanup_Adapter;
 #if !defined (ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS)
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS
 #endif /* ! ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS */
-
 
 /**
  * @class ACE_Object_Manager
@@ -422,33 +424,7 @@ private:
 };
 
 
-#if defined (ACE_HAS_THREADS)
-
-class ACE_Recursive_Thread_Mutex;
-
-/**
- * @class ACE_Static_Object_Lock
- *
- * @brief Provide an interface to access a global lock.
- *
- * This class is used to serialize the creation of static
- * singleton objects.  It really isn't needed any more, because
- * anyone can access ACE_STATIC_OBJECT_LOCK directly.  But, it
- * is retained for backward compatibility.
- */
-class ACE_Export ACE_Static_Object_Lock
-{
-public:
-  /// Static lock access point.
-  static ACE_Recursive_Thread_Mutex *instance (void);
-
-  /// For use only by ACE_Object_Manager to clean up lock if it
-  /// what dynamically allocated.
-  static void cleanup_lock (void);
-};
-
-#endif /* ACE_HAS_THREADS */
-
+#include "ace/Static_Object_Lock.h"
 
 #if defined (__ACE_INLINE__)
 #include "ace/Object_Manager.i"
@@ -466,22 +442,6 @@ ACE_Service_Object *
 _make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
-// hack to get around errors while compiling using split-cpp
-#if defined (ACE_HAS_THREADS)
-
-# if defined (ACE_IS_SPLITTING)
-typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> ACE_Static_Object_Lock_Type;
-
-#  if defined (__GNUC__)
-// With g++, suppress the warning that this is unused.
-static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock __attribute__ ((unused)) = 0;
-#  else
-static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
-#  endif /* __GNUC__ */
-
-# endif /* ACE_IS_SPLITTING */
-
-#endif /* ACE_HAS_THREADS */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OBJECT_MANAGER_H */

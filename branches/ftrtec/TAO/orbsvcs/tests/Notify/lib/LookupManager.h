@@ -112,7 +112,7 @@ protected:
 
 typedef ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX> _TAO_Notify_Tests_LookupManager;
 
-TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX);
+TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX)
 
 #define LOOKUP_MANAGER  _TAO_Notify_Tests_LookupManager::instance()
 

@@ -28,6 +28,10 @@
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
+# include "ace/Null_Mutex.h"
+#endif
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)

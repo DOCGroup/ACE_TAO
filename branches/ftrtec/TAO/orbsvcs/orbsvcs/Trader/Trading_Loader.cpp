@@ -22,6 +22,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (Trader, Trading_Loader, "$Id$")
 

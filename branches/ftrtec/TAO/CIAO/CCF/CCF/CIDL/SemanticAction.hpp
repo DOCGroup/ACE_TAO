@@ -7,20 +7,11 @@
 
 #include "CCF/IDL3/SemanticAction.hpp"
 
+#include "CCF/CIDL/SemanticAction/Elements.hpp"
+
 #include "CCF/CIDL/SemanticAction/Composition.hpp"
 #include "CCF/CIDL/SemanticAction/HomeExecutor.hpp"
 
 #include "CCF/CIDL/SemanticAction/Factory.hpp"
-
-namespace CCF
-{
-  namespace CIDL
-  {
-    namespace SemanticAction
-    {
-      using namespace IDL3::SemanticAction;
-    }
-  }
-}
 
 #endif  // CCF_CIDL_SEMANTIC_ACTION_HPP

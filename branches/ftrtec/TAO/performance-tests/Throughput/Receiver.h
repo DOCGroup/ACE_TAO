@@ -7,6 +7,7 @@
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
+#include "ace/OS_NS_time.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)

@@ -2,6 +2,8 @@
 
 // Test program for the INET IPC-SAPs...
 
+#include "ace/OS_main.h"
+#include "ace/OS_NS_string.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"

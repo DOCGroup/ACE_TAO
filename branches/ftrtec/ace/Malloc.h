@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_MALLOC_STATS)

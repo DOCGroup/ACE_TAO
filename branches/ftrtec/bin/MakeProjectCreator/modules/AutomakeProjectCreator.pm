@@ -52,7 +52,7 @@ sub fill_value {
       my($comps) = $$names{$name};
       foreach my $key (keys %$comps) {
         foreach my $item (@{$$comps{$key}}) {
-          my($dname) = dirname($item);
+          my($dname) = $self->relative(dirname($item));
           if ($dname ne '.' && $dname !~ /^\.\.\//) {
             $vpath{$dname} = 1;
           }
@@ -85,7 +85,9 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return 'Makefile' . ($name eq '' ? '' : ".$name") . '.am';
+  return $self->get_modified_project_file_name('Makefile' .
+                                               ($name eq '' ? '' : ".$name"),
+                                               '.am');
 }
 
 

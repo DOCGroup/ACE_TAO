@@ -2,11 +2,12 @@
 
 #include "tao/Exclusive_TMS.h"
 #include "tao/Reply_Dispatcher.h"
-#include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/debug.h"
 #include "Transport.h"
 
-ACE_RCSID(tao, Exclusive_TMS, "$Id$")
+ACE_RCSID (tao, 
+           Exclusive_TMS, 
+           "$Id$")
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),
@@ -100,19 +101,22 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   return rd->dispatch_reply (params);
 }
 
-int
+bool
 TAO_Exclusive_TMS::idle_after_send (void)
 {
-  return 0;
+  return false;
 }
 
-int
+bool
 TAO_Exclusive_TMS::idle_after_reply (void)
 {
+  // Irrespective of whether we are successful or not we need to
+  // return true. If *this* class is not successfull in idling the
+  // transport no one can.
   if (this->transport_ != 0)
-    return this->transport_->make_idle ();
+    (void) this->transport_->make_idle ();
 
-  return 0;
+  return true;
 }
 
 void

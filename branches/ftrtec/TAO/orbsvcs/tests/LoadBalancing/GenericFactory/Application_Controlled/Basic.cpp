@@ -22,7 +22,7 @@ char *
 Basic::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup ("TAO Load Balancing Works!");
+  return CORBA::string_dup (this->location_);
 }
 
 void
@@ -38,6 +38,9 @@ Basic::remove_member (ACE_ENV_SINGLE_ARG_DECL)
                                 location
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
+                      this->location_));
 
     }
   ACE_CATCH (PortableGroup::ObjectNotFound, ex)

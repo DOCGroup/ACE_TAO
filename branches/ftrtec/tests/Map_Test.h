@@ -22,11 +22,12 @@
 #ifndef ACE_TESTS_MAP_TEST_H
 #define ACE_TESTS_MAP_TEST_H
 
+#include "ace/OS_NS_string.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 #include "ace/Active_Map_Manager.h"
 #include "ace/Containers.h"
 

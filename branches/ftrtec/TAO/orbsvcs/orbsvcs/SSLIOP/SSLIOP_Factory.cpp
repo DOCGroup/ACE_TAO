@@ -2,6 +2,7 @@
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_ORBInitializer.h"
+#include "ace/OS_NS_strings.h"
 
 #include "orbsvcs/Security/Security_ORBInitializer.h"  // @todo:
                                                        // should go away

@@ -28,38 +28,9 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj
 {
   if (obj->_is_local () != 0)
     {
-      return
-        ACE_reinterpret_cast (
-            CORBA::LocalObject_ptr,
-            obj->_tao_QueryInterface (
-                ACE_reinterpret_cast (
-                    ptrdiff_t,
-                    &CORBA::LocalObject::_narrow
-                  )
-              )
-          );
-    }
-
-  return 0;
-}
-
-ACE_INLINE
-CORBA::LocalObject_ptr
-CORBA::LocalObject::_unchecked_narrow (CORBA::Object_ptr obj
-                                       ACE_ENV_ARG_DECL_NOT_USED)
-{
-  if (obj->_is_local () != 0)
-    {
-      return
-         ACE_reinterpret_cast (
-             CORBA::LocalObject_ptr,
-             obj->_tao_QueryInterface (
-                 ACE_reinterpret_cast (
-                     ptrdiff_t,
-                     &CORBA::LocalObject::_narrow
-                   )
-               )
-           );
+      return CORBA::LocalObject::_duplicate (
+          dynamic_cast<CORBA::LocalObject_ptr> (obj)
+        );
     }
 
   return 0;

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 feature(!minimum_corba) {
   Source_Files(TAO_COMPONENTS) {
     ORB_Core {
@@ -8,7 +11,7 @@ feature(!minimum_corba) {
   }
 }
 
-feature(!minimum_corba, corba_messaging) {
+feature(corba_messaging) {
   Source_Files(TAO_COMPONENTS) {
     ORB_Core {
       Policy_Manager.cpp

@@ -11,18 +11,18 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ACCEPTOR_IMPL_H
 #define TAO_ACCEPTOR_IMPL_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/Acceptor.h"
+#include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
 
 // Forward declarations.
 class TAO_ORB_Core;

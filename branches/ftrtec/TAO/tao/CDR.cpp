@@ -32,8 +32,8 @@
 // THREADING NOTE: "CDR" is a data structure which must be protected
 // by external critical sections.
 
-#include "tao/Timeprobe.h"
 #include "tao/CDR.h"
+#include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 

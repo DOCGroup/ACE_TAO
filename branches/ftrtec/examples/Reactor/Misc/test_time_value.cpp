@@ -1,8 +1,10 @@
 // $Id$
 
-#include "ace/OS.h"
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
 
 ACE_RCSID(Misc, test_time_value, "$Id$")
 

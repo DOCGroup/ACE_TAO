@@ -18,7 +18,7 @@
 #ifndef ACE_ID_GENERATOR_H
 #define ACE_ID_GENERATOR_h
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -23,6 +23,9 @@
 # if DIGITAL_UNIX >= 0x40D
 #   define ACE_LACKS_SYSTIME_H
 # endif /* DIGITAL_UNIX >= 0x40D */
+# if DIGITAL_UNIX >= 0x510
+#   define ACE_LACKS_STDINT_H
+# endif /* DIGITAL_UNIX >= 0x40D */
 #else  /* ! DIGITAL_UNIX */
 # include "ace/config-osf1-3.2.h"
 #endif /* ! DIGITAL_UNIX */

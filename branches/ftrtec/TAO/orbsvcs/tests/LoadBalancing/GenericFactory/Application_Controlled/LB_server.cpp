@@ -2,6 +2,7 @@
 #include "Basic.h"
 
 #include "TestC.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Application_Controlled,
            LB_server,
@@ -148,7 +149,7 @@ LB_server::create_object_group (void)
       property.nam.length (1);
 
       property.nam[0].id =
-        CORBA::string_dup ("omg.org.PortableGroup.MembershipStyle");
+        CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
 
       PortableGroup::MembershipStyleValue msv =
         PortableGroup::MEMB_APP_CTRL;

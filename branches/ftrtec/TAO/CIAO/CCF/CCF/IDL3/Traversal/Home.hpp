@@ -5,8 +5,10 @@
 #ifndef CCF_IDL3_TRAVERSAL_HOME_HPP
 #define CCF_IDL3_TRAVERSAL_HOME_HPP
 
-#include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/IDL3/SyntaxTree/Home.hpp"
+#include "CCF/IDL3/SemanticGraph/Home.hpp"
+
+#include "CCF/IDL2/Traversal/Operation.hpp"
+#include "CCF/IDL3/Traversal/Elements.hpp"
 
 namespace CCF
 {
@@ -14,39 +16,202 @@ namespace CCF
   {
     namespace Traversal
     {
+
       //
       //
       //
-      struct HomeDef : IDL2::Traversal::ScopeTraverser
+      struct Manages : Edge<SemanticGraph::Manages>
       {
-        typedef
-        SyntaxTree::HomeDefPtr
-        NodePtr;
-
-        HomeDef ()
+        virtual void
+        traverse (Type& e)
         {
-          map (typeid (SyntaxTree::HomeDef), this);
+          node_traverser ().traverse (e.managee ());
         }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::HomeDef> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-
       };
+
+      //
+      //
+      //
+      struct Home : ScopeTemplate<SemanticGraph::Home>
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        inherits (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        inherits (Type&);
+
+        virtual void
+        inherits_pre (Type&);
+
+        virtual void
+        inherits_post (Type&);
+
+        virtual void
+        inherits_none (Type&);
+
+        virtual void
+        supports (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        supports (Type&);
+
+        virtual void
+        supports_pre (Type&);
+
+        virtual void
+        supports_post (Type&);
+
+        virtual void
+        supports_none (Type&);
+
+        virtual void
+        manages (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        manages (Type&);
+
+        virtual void
+        manages_pre (Type&);
+
+        virtual void
+        manages_post (Type&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        comma (Type&);
+      };
+
+
+      //
+      //
+      //
+      /*
+      struct HomeFactory : Node<SemanticGraph::HomeFactory>
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        returns (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        returns (Type&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        receives (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        receives (Type&);
+
+        virtual void
+        receives_pre (Type&);
+
+        virtual void
+        receives_post (Type&);
+
+        virtual void
+        raises (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        raises (Type&);
+
+        virtual void
+        raises_pre (Type&);
+
+        virtual void
+        raises_post (Type&);
+
+        virtual void
+        raises_none (Type&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        comma (Type&);
+      };
+      */
+
+      typedef
+      OperationTemplate<SemanticGraph::HomeFactory>
+      HomeFactory;
+
+      //
+      //
+      //
+      /*
+      struct HomeFinder : Node<SemanticGraph::HomeFinder>
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        returns (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        returns (Type&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        receives (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        receives (Type&);
+
+        virtual void
+        receives_pre (Type&);
+
+        virtual void
+        receives_post (Type&);
+
+        virtual void
+        raises (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        raises (Type&);
+
+        virtual void
+        raises_pre (Type&);
+
+        virtual void
+        raises_post (Type&);
+
+        virtual void
+        raises_none (Type&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        comma (Type&);
+      };
+      */
+
+      typedef
+      OperationTemplate<SemanticGraph::HomeFinder>
+      HomeFinder;
     }
   }
 }

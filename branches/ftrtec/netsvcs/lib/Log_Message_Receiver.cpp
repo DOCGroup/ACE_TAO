@@ -4,8 +4,6 @@
 #define LOG_MESSAGE_RECEIVER_CPP
 
 #include "ace/Log_Msg.h"
-#include "ace/Synch.h"
-#include "ace/Synch_T.h"
 #include "Log_Message_Receiver.h"
 
 ACE_RCSID(lib, Log_Message_Receiver, "$Id$")

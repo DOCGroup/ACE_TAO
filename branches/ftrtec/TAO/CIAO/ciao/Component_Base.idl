@@ -22,9 +22,9 @@
 //  import ::CosNotification
 //  import ::CosNotifyChannelAdmin
 
+#inclide <orb.idl>
 #include <SecurityLevel2.idl>
 #include <CosPersistentState.idl>
-#include <tao/IFR_Client/Interface.pidl>
 // #include <CosNotification.idl>
 // #include <CosNotifyChannelAdmin.idl>
 

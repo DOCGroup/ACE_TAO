@@ -18,6 +18,7 @@
 //=========================================================================
 
 #include "testS.h"
+#include "ace/OS_NS_string.h"
 
 class test_i : public POA_test
 {
@@ -94,7 +95,7 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
                                 PortableServer::Servant servant,
                                 CORBA::Boolean,
                                 CORBA::Boolean
-                                ACE_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_name =
@@ -108,7 +109,10 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
                       "without reference counting") == 0)
     delete servant;
   else
-    servant->_remove_ref ();
+    {
+      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 int

@@ -28,7 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INET_Addr.h"
+#include "ace/Multihomed_INET_Addr.h"
 
 // Forward declarations.
 class ACE_Message_Block;
@@ -175,7 +175,7 @@ public:
   int close (void);
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
+  typedef ACE_Multihomed_INET_Addr PEER_ADDR;
 
   /// Dump the state of an object.
   void dump (void) const;

@@ -2,12 +2,14 @@
 //
 // $Id$
 
+#include "ace/OS_NS_string.h"
+
 ACE_INLINE
 ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (void)
 {
   // If you change ~0, please change ACE_Map_Manager::free_list_id()
   // accordingly.
-  this->key_data_.slot_index_ = ~0;
+  this->key_data_.slot_index_ = (ACE_UINT32) ~0;
   this->key_data_.slot_generation_ = 0;
 }
 
@@ -74,16 +76,16 @@ ACE_INLINE void
 ACE_Active_Map_Manager_Key::decode (const void *data)
 {
   // Copy the information from the user buffer into the key.
-  ACE_OS_String::memcpy (&this->key_data_,
-                         data,
-                         sizeof this->key_data_);
+  ACE_OS::memcpy (&this->key_data_,
+                  data,
+                  sizeof this->key_data_);
 }
 
 ACE_INLINE void
 ACE_Active_Map_Manager_Key::encode (void *data) const
 {
   // Copy the key data to the user buffer.
-  ACE_OS_String::memcpy (data,
-                         &this->key_data_,
-                         sizeof this->key_data_);
+  ACE_OS::memcpy (data,
+                  &this->key_data_,
+                  sizeof this->key_data_);
 }

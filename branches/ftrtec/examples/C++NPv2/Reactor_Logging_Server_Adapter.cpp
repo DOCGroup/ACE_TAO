@@ -11,6 +11,8 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 #include "Reactor_Logging_Server_Adapter.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
@@ -45,13 +47,13 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%hu"),
                    local_addr.get_port_number ());
-  ACE_OS_String::strcat 
+  ACE_OS::strcat 
     (buf, ACE_TEXT ("/tcp  # Reactor-based logging server\n"));
   if (*bufferp == 0)
     *bufferp = ACE::strnew (buf);
   else
-    ACE_OS_String::strncpy (*bufferp, buf, length);
-  return ACE_OS_String::strlen (*bufferp);
+    ACE_OS::strncpy (*bufferp, buf, length);
+  return ACE_OS::strlen (*bufferp);
 }
 
 

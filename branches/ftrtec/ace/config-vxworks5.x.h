@@ -28,17 +28,24 @@
 #   define ACE_MAIN ace_main
 # endif /* ! ACE_MAIN */
 
-  // Even though the documentation suggests that g++/VxWorks 5.3.1
-  // (Tornado 1.0.1) supports long long, Wind River tech support says
-  // that it doesn't.  It causes undefined symbols for math functions.
-# define ACE_LACKS_LONGLONG_T
-
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
-# if defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x542
+// An explicit check for Tornado 2.1, which had very limited release.
+// See include/makeinclude/platform_vxworks5.x_g++.GNU for details
+// on version conventions used by ACE for VxWorks.
+# if defined (ACE_VXWORKS) && ACE_VXWORKS == 0x542
+    // Older versions of Tornado accidentally omitted math routines from
+    // the link library to support long long arithmetic. These could be
+    // found and used from another library in the distro.
+    // Recent versions of Tornado include these symbols, so we no longer
+    // have a problem.
+#   define ACE_LACKS_LONGLONG_T
 #   define ACE_LACKS_CLEARERR
-# endif /* ACE_VXWORKS >= 0x542 */
+    // This is for inofficial(!) gcc2.96 shipped with Tornado2.1.0 for
+    // Hitachi SuperH platform.
+#   define ACE_LACKS_AUTO_PTR
+# endif /* ACE_VXWORKS == 0x542 */
 
 #elif defined (ghs)
   // Processor type, if necessary.  Green Hills defines "ppc".
@@ -82,6 +89,10 @@
 #else  /* ! __GNUG__ && ! ghs */
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
+
+#if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
+#  define ACE_LACKS_ARPA_INET_H
+#endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
 
 // OS-specific configuration
 
@@ -183,6 +194,13 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_MSG_H
+#define ACE_LACKS_WCHAR_H
+#define ACE_LACKS_PWD_H
+#define ACE_LACKS_SEARCH_H
+#define ACE_LACKS_SYS_SHM_H
+#define ACE_LACKS_STRINGS_H
+#define ACE_LACKS_TERMIOS_H
+#define ACE_LACKS_POLL_H
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H

@@ -2,8 +2,8 @@
 
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/Event/Event_Channel.h"
+//#include "orbsvcs/Event/Module_Factory.h"
+//#include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -18,10 +18,12 @@
 #include "ace/Sched_Params.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/Thread.h"
 
 ACE_RCSID(EC_Examples, Service, "$Id$")
 
-namespace 
+namespace
 {
   int config_run = 0;
   ACE_CString sched_type ="rms";
@@ -35,9 +37,9 @@ inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
 
 int parse_args (int argc, char *argv[]);
 
-typedef TAO_Reconfig_Scheduler<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_RMS_SCHED_TYPE;
+typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_RMS_SCHED_TYPE;
 
-typedef TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
+typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
 
 int
 main (int argc, char* argv[])
@@ -171,9 +173,9 @@ main (int argc, char* argv[])
       consumer_qos1.insert_type (ACE_ES_EVENT_UNDEFINED,
                                 consumer1_rt_info);
 
-      RtecEventChannelAdmin::ConsumerQOS qos = 
-        consumer_qos1.get_ConsumerQOS (); 
-/*      
+      RtecEventChannelAdmin::ConsumerQOS qos =
+        consumer_qos1.get_ConsumerQOS ();
+/*
       for (int i=0;i<qos.dependencies.length (); ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -211,13 +213,13 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connecting consumers\n"));
-      ACE_DEBUG ((LM_DEBUG, "connecting consumer1\n"));      
+      ACE_DEBUG ((LM_DEBUG, "connecting consumer1\n"));
       supplier_proxy1->connect_push_consumer (consumer1.in (),
                                              consumer_qos1.get_ConsumerQOS ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "connecting consumer2\n"));      
+      ACE_DEBUG ((LM_DEBUG, "connecting consumer2\n"));
       supplier_proxy2->connect_push_consumer (consumer2.in (),
                                              consumer_qos2.get_ConsumerQOS ()
                                              ACE_ENV_ARG_PARAMETER);
@@ -271,7 +273,7 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connecting suppliers\n"));
-      ACE_DEBUG ((LM_DEBUG, "connecting supplier1\n"));      
+      ACE_DEBUG ((LM_DEBUG, "connecting supplier1\n"));
       consumer_proxy1->connect_push_supplier (supplier1.in (),
                                              supplier_qos1.get_SupplierQOS ()
                                              ACE_ENV_ARG_PARAMETER);
@@ -411,43 +413,43 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "Printing intermediate results\n"));
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             dependencies.in (),
-					    configs.in (),
-					    unsafe_anomalies,
-					    "schedule.out");
-      
+                                            configs.in (),
+                                            unsafe_anomalies,
+                                            "schedule.out");
+
       // Obtain the range of valid priorities in the current
       // platform, the scheduler hard-code this values in the
       // generated file, but in the future we may just use the
       // "logical" priorities and define the mapping to OS
       // priorities at run-time.
       int min_os_priority =
-	ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-					ACE_SCOPE_THREAD);
+        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                        ACE_SCOPE_THREAD);
       int max_os_priority =
-	ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-					ACE_SCOPE_THREAD);
+        ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                        ACE_SCOPE_THREAD);
       scheduler->compute_scheduling (min_os_priority,
-				     max_os_priority,
-				     infos.out (),
+                                     max_os_priority,
+                                     infos.out (),
                                      dependencies.out (),
-				     configs.out (),
-				     anomalies.out ()
-				     ACE_ENV_ARG_PARAMETER);
+                                     configs.out (),
+                                     anomalies.out ()
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-	  
+
       // Dump the schedule to a file..
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             dependencies.in (),
-					    configs.in (),
-					    anomalies.in (),
-					    "schedule.out");
+                                            configs.in (),
+                                            anomalies.in (),
+                                            "schedule.out");
 
       // ****************************************************************
       ACE_DEBUG ((LM_DEBUG, "Pushing events\n"));
 
       ACE_hthread_t thr_handle;
       ACE_Thread::self (thr_handle);
-      
+
       int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
       ACE_OS::thr_setprio (thr_handle, prio);
 
@@ -480,7 +482,7 @@ main (int argc, char* argv[])
 //           ACE_Time_Value rate (0, 10000);
 //           ACE_OS::sleep (rate);
 //         }
-      
+
       ACE_DEBUG ((LM_DEBUG, "(%t) activating EC\n"));
       ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -574,24 +576,24 @@ template class ACE_RB_Tree_Node<const char *, TAO_RT_Info_Ex*>;
 template class ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
 template class ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>;
 template class ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_Tuple_Admission_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
-template class TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_Reconfig_Scheduler<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Dependency_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_DFS_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Priority_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Criticality_Propagation_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Forward_Propagation_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Reverse_Propagation_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_Tuple_Admission_Visitor<TAO_RMS_Reconfig_Sched_Strategy>;
-template class TAO_RSE_SCC_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>;
+template class TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Dependency_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_DFS_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Priority_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Criticality_Propagation_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Forward_Propagation_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Reverse_Propagation_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_Tuple_Admission_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy>;
+template class TAO_RSE_SCC_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 #  endif /* __GNUC__ */
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
@@ -632,24 +634,23 @@ template class TAO_RSE_SCC_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MU
 #pragma instantiate ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_MUF_Reconfig_Sched_Strategy>
-#pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Reconfig_Scheduler<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_DFS_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Priority_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_RMS_Reconfig_Sched_Strategy>
-#pragma instantiate TAO_RSE_SCC_Visitor<TAO_RMS_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>
+#pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_DFS_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Priority_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy>
+#pragma instantiate TAO_RSE_SCC_Visitor<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #  endif /* __GNUC__ */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

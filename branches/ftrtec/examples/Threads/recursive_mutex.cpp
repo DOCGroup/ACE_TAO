@@ -3,14 +3,17 @@
 // This test program verifies the functionality of the ACE_OS
 // implementation of recursive mutexes on Win32 and Posix pthreads.
 
+#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
-#include "ace/Synch.h"
 
 ACE_RCSID(Threads, recursive_mutex, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+
+#include "ace/Guard_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 // Total number of iterations.
 static size_t n_iterations = 1000;

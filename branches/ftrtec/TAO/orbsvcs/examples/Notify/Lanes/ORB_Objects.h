@@ -11,9 +11,9 @@
 
 #ifndef TAO_Notify_ORB_OBJECTS_H
 #define TAO_Notify_ORB_OBJECTS_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/orbsvcs/NotifyExtC.h"

@@ -1,9 +1,12 @@
 // $Id$
 
+#include "ace/ACE.h"
 #include "ace/OS.h"
 #include "ace/Reactor.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/IO.h"
 #include "jaws3/Reactive_IO.h"

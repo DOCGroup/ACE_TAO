@@ -2,11 +2,14 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
+#include <vector>
+#include <iostream>
+
+#include "CCF/CompilerElements/Context.hpp"
 #include "CCF/CompilerElements/FileSystem.hpp"
+#include "CCF/CompilerElements/Diagnostic.hpp"
 #include "CCF/CompilerElements/TokenStream.hpp"
 #include "CCF/CompilerElements/Preprocessor.hpp"
-#include "CCF/CompilerElements/Diagnostic.hpp"
-#include "CCF/CompilerElements/Context.hpp"
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineParser.hpp"
@@ -14,23 +17,21 @@
 
 #include "CCF/CIDL/LexicalAnalyzer.hpp"
 #include "CCF/CIDL/Parser.hpp"
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/SemanticAction/Impl/Factory.hpp"
 
 #include "ExecutorMappingGenerator.hpp"
 
-#include <iostream>
-
 using std::cerr;
 using std::endl;
 
-using namespace CCF;
-using namespace CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CompilerElements;
+using namespace CCF::CIDL;
+using namespace CCF::CIDL::SemanticGraph;
 
-int main (int argc, char* argv[])
+int
+main (int argc, char* argv[])
 {
-
   try
   {
     // Parsing command line options and arguments
@@ -81,15 +82,14 @@ int main (int argc, char* argv[])
       return 0;
     }
 
-
     fs::ifstream ifs;
     ifs.exceptions (ios_base::badbit | ios_base::failbit);
 
     fs::path file_path;
 
-    CommandLine::ArgumentIterator i = cl.argument_begin ();
+    CommandLine::ArgumentsIterator i = cl.arguments_begin ();
 
-    if (i != cl.argument_end ())
+    if (i != cl.arguments_end ())
     {
       try
       {
@@ -114,39 +114,38 @@ int main (int argc, char* argv[])
     ifs.exceptions (ios_base::iostate (0));
 
     std::istream& is = ifs.is_open ()
-    ? static_cast<std::istream&> (ifs)
-    : static_cast<std::istream&> (std::cin);
+      ? static_cast<std::istream&> (ifs)
+      : static_cast<std::istream&> (std::cin);
 
     InputStreamAdapter isa (is);
-    Preprocessor pp (isa);
+    CPP::Preprocessor pp (isa);
 
     if (cl.get_value ("preprocess-only", false))
     {
       while (true)
       {
-        Preprocessor::int_type i = pp.next ();
+        CPP::Token t (pp.next ());
 
-        if (pp.eos (i)) break;
+        if (t == CPP::Token::eos) break;
 
-        Preprocessor::char_type c = pp.to_char_type (i);
-
-        std::cout << c ;
+        std::cout << t;
       }
       return 0;
     }
 
+    //}
 
-    Diagnostic::Stream diagnostic_stream;
-
+    Diagnostic::Stream dout;
 
     LexicalAnalyzer lexer (pp);
+
     TokenList token_stream;
 
     //@@ bad token comparison
     for (TokenPtr token = lexer.next ();; token = lexer.next ())
     {
+      //cerr << token << endl;
       token_stream.push_back (token);
-      cerr << token << endl;
       if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
 
@@ -156,106 +155,74 @@ int main (int argc, char* argv[])
       return 0;
     }
 
-    TranslationUnitPtr unit (new TranslationUnit);
+    TranslationUnit tu;
 
-    //-----------------------------------------------------------------
-    //@@ exeprimental code
-
-    //Create .builtin region
-    {
-      TranslationRegionPtr builtin (
-        new TranslationRegion (fs::path (".builtin"),
-                               unit->table (),
-                               unit->create_order ()));
-      unit->insert (builtin);
-
-      // Inject built-in types into the file scope of this
-      // translation region
-
-      ScopePtr s = builtin->scope ();
-
-      s->insert (BuiltInTypeDefPtr (new Object           (s)));
-      s->insert (BuiltInTypeDefPtr (new ValueBase        (s)));
-      s->insert (BuiltInTypeDefPtr (new Any              (s)));
-      s->insert (BuiltInTypeDefPtr (new Boolean          (s)));
-      s->insert (BuiltInTypeDefPtr (new Char             (s)));
-      s->insert (BuiltInTypeDefPtr (new Double           (s)));
-      s->insert (BuiltInTypeDefPtr (new Float            (s)));
-      s->insert (BuiltInTypeDefPtr (new Long             (s)));
-      s->insert (BuiltInTypeDefPtr (new LongDouble       (s)));
-      s->insert (BuiltInTypeDefPtr (new LongLong         (s)));
-      s->insert (BuiltInTypeDefPtr (new Octet            (s)));
-      s->insert (BuiltInTypeDefPtr (new Short            (s)));
-      s->insert (BuiltInTypeDefPtr (new String           (s)));
-      s->insert (BuiltInTypeDefPtr (new UnsignedLong     (s)));
-      s->insert (BuiltInTypeDefPtr (new UnsignedLongLong (s)));
-      s->insert (BuiltInTypeDefPtr (new UnsignedShort    (s)));
-      s->insert (BuiltInTypeDefPtr (new Void             (s)));
-      s->insert (BuiltInTypeDefPtr (new Wchar            (s)));
-      s->insert (BuiltInTypeDefPtr (new Wstring          (s)));
-
-    }
-
-    //Create implied #include <Components.idl>
-    {
-      TranslationRegionPtr builtin (
-        new ImpliedIncludeTranslationRegion (fs::path ("Components.idl"),
-                                             unit->table (),
-                                             unit->create_order ()));
-      unit->insert (builtin);
-
-      ScopePtr fs = builtin->scope ();
-      ModulePtr m (new Module (SimpleName("Components"), fs));
-      fs->insert (m);
-
-      LocalInterfaceDefPtr i (
-        new LocalInterfaceDef (SimpleName ("EnterpriseComponent"),
-                               m,
-                               ScopedNameSet ()));
-
-      m->insert (i);
-    }
-
-    TranslationRegionPtr tr (
-      new PrincipalTranslationRegion (file_path,
-                                      unit->table (),
-                                      unit->create_order ()));
-    unit->insert (tr);
-
-
-    CompilerElements::Context context;
+    // Initialize compilation context.
+    //
+    CCF::CompilerElements::Context context;
     context.set ("file-path", file_path);
-
-    bool trace = cl.get_value ("trace-semantic-actions", false);
-
-    context.set ("idl2::semantic-action::trace", trace);
-    context.set ("idl3::semantic-action::trace", trace);
-    context.set ("cidl::semantic-action::trace", trace);
+    context.set ("trace-semantic-action",
+                 cl.get_value ("trace-semantic-actions", false));
 
 
-    SemanticAction::Impl::Factory actions (context, diagnostic_stream, tr);
+    // Extract include search paths.
+    //
 
-    //-----------------------------------------------------------------
+    std::vector<fs::path> include_paths;
 
-    Parser parser (context, diagnostic_stream, lexer, actions);
-
-    IDL2::Parsing::parse (token_stream.begin (),
-                          token_stream.end (),
-                          parser.start ());
-
-    if (diagnostic_stream.error_count () != 0) return -1;
-
-    // Generate executor mapping
+    for (CommandLine::OptionsIterator
+           i (cl.options_begin ()), e (cl.options_end ()); i != e; ++i)
     {
-      lem_gen.generate (cl, unit);
+      if (i->name () == "I")
+      {
+        include_paths.push_back (fs::path (i->value (), fs::native));
+      }
+      else if (i->name ()[0] == 'I')
+      {
+        std::string opt (i->name ());
+        std::string path (opt.begin () + 1, opt.end ());
+        include_paths.push_back (fs::path (path, fs::native));
+      }
     }
+
+    context.set ("include-search-paths", include_paths);
+
+    // Instantiate semantic actions factory.
+    //
+    SemanticAction::Impl::Factory actions (context, dout, tu);
+
+    Parser parser (context, dout, lexer, actions);
+
+    //@@ should be able to use CIDL here. Or better yet get rid of this
+    //   function completely.
+    //
+    CCF::IDL2::Parsing::parse (token_stream.begin (),
+                               token_stream.end (),
+                               parser.start ());
+
+    if (dout.error_count () != 0) return -1;
+
+
+    // Generate executor mapping.
+    //
+    lem_gen.generate (cl, tu, file_path);
+
   }
-  catch (Declaration::NotInScope const&)
+  catch (std::bad_cast const&)
   {
-    cerr << "exception: " << "Declaration::NotInScope" << endl;
+    cerr << "bad cast exception" << endl;
+  }
+  catch (InvalidName const&)
+  {
+    cerr << "invalid name exception" << endl;
+  }
+  catch (std::exception const& e)
+  {
+    cerr << "caught standard exception " << e.what () << endl;
   }
   catch (...)
   {
-    cerr << "exception: " << "unknow" << endl;
+    cerr << "caught unknown exception" << endl;
+    return -1;
   }
 }

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_THREADPOOL_TASK_H
 #define TAO_Notify_THREADPOOL_TASK_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,6 +23,7 @@
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
+
 #include "AdminProperties.h"
 #include "Worker_Task.h"
 
@@ -34,7 +36,7 @@ class TAO_Notify_Timer_Queue;
  * @brief Implements a Thread Pool Worker Task.
  *
  */
-class TAO_Notify_Export TAO_Notify_ThreadPool_Task : public TAO_Notify_Worker_Task, ACE_Task<ACE_NULL_SYNCH>
+class TAO_Notify_Export TAO_Notify_ThreadPool_Task : public TAO_Notify_Worker_Task, public ACE_Task<ACE_NULL_SYNCH>
 {
   friend class TAO_Notify_Method_Request_Shutdown;
 
@@ -72,7 +74,7 @@ public:
   TAO_Notify_Buffering_Strategy* buffering_strategy (void);
 
 protected:
-    /// task svc
+  /// Task svc
   virtual int svc (void);
 
 private:
@@ -91,4 +93,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_THREADPOOL_TASK_H */

@@ -9,6 +9,8 @@
 #define ACE_CONFIG_LINUX_H
 #include /**/ "ace/pre.h"
 
+#define ACE_PLATFORM_CONFIG config-linux.h
+
 #include "ace/config-linux-common.h"
 
 #define ACE_HAS_SVR4_DYNAMIC_LINKING

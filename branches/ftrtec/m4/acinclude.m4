@@ -1,12 +1,12 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
-dnl 
+dnl
 dnl       ACE M4 include file which contains general M4 macros
 dnl       to be used by the ACE configure script.
 dnl
 dnl       The macros in this file were designed for ACE but should be
 dnl       general enough for general use.
-dnl 
+dnl
 dnl -------------------------------------------------------------------------
 
 dnl  Copyright (C) 1998, 1999, 2000, 2002  Ossama Othman
@@ -15,7 +15,7 @@ dnl  All Rights Reserved
 dnl
 dnl This library is free software; you can redistribute it and/or
 dnl modify it under the current ACE distribution terms.
-dnl 
+dnl
 dnl This library is distributed in the hope that it will be useful,
 dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -52,7 +52,7 @@ AC_DEFUN([ACE_CHECK_FOR_CVS_DIR],
           ../configure
           make
 
-      This will create a build space in the directory \`objdir' and
+      This will create a build space in the directory `objdir' and
       start a build in that directory.
      ])
  fi
@@ -71,7 +71,7 @@ AC_DEFUN([ACE_CHECK_TOP_SRCDIR],
      [
       Please configure and build in a directory other than the
       top-level source directory.  Doing so will prevent files
-      distributed with the package from being overwritten.  This
+      distributed with the package from being overwritten.  This is
       currently necessary since autoconf support is still
       experimental.  If you encounter problems please use the stock
       build procedure.
@@ -84,7 +84,7 @@ AC_DEFUN([ACE_CHECK_TOP_SRCDIR],
           ../configure
           make
 
-      This will create a build space in the directory \`objdir' and
+      This will create a build space in the directory `objdir' and
       start a build in that directory.
      ])
  fi
@@ -130,9 +130,7 @@ AC_DEFUN([ACE_USE_TEMP_FILE],
    test -f ./$1 && mv ./$1 ./$1.conf
    dnl Create all of the sub-directories (assume "mkdir -p" is not portable).
    acetmp="."
-changequote(, )dnl
-   for ace_dir in `echo $1 | sed -e 's,/[^/][^/]*\$,,' -e 's,/, ,g'`; do
-changequote([, ])dnl
+   for ace_dir in `echo $1 | [sed -e 's,/[^/][^/]*\$,,' -e 's,/, ,g']`; do
      acetmp="$acetmp/$ace_dir"
      test -f $acetmp && AC_MSG_ERROR([cannot create directory: $acetmp])
      test -d $acetmp || mkdir $acetmp
@@ -347,7 +345,7 @@ EOF
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-       $EGREP "ACE_REAL_FUNCTION" | 
+       $EGREP "ACE_REAL_FUNCTION" |
        (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
          rm -f conftest.$ac_ext
          ace_real_function=`cat conftest.awk`
@@ -430,16 +428,14 @@ if test "$ac_cv_func_setrlimit" = yes; then
 #include <sys/resource.h>
 EOF
 
-changequote(, )dnl
 dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_setrlimit_enum=`eval "$ac_cpp conftest.$ac_ext" | \
-       $EGREP '[ ]+setrlimit.*\(.*[^,]*enum' | \
-       sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[^ ]*,.*$//'`
-changequote([, ])dnl
+       $EGREP '[[ ]]+setrlimit.*\(.*[[^,]]*enum' | \
+       sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[[^ ]]*,.*$//'`
 
-     ace_setrlimit_enum="enum $ace_setrlimit_enum" 
+     ace_setrlimit_enum="enum $ace_setrlimit_enum"
 
      AC_MSG_RESULT([$ace_setrlimit_enum])
 
@@ -473,16 +469,14 @@ if test "$ac_cv_func_getrusage" = yes; then
 #include <sys/resource.h>
 EOF
 
-changequote(, )dnl
 dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_rusage_who=`eval "$ac_cpp conftest.$ac_ext" | \
-       $EGREP '[ ]+getrusage.*\(.*[^,]*enum' | \
-       sed -e 's/^.*getrusage.*(.*enum//' -e 's/[^ ]*,.*$//'`
-changequote([, ])dnl
+       $EGREP '[[ ]]+getrusage.*\(.*[[^,]]*enum' | \
+       sed -e 's/^.*getrusage.*(.*enum//' -e 's/[[^ ]]*,.*$//'`
 
-     ace_rusage_who="enum $ace_rusage_who" 
+     ace_rusage_who="enum $ace_rusage_who"
 
      AC_MSG_RESULT([$ace_rusage_who])
 
@@ -590,13 +584,11 @@ AC_DEFUN([ACE_CHECK_OFF64_T],
 #endif
 EOF
 
-changequote(, )dnl
 dnl Here we attempt to determine the type of the second argument of
 dnl lseek64()/llseek() from its prototype.
      ace_off64_t=`eval "$ac_cpp conftest.$ac_ext" | \
-       $EGREP '[ ]+lseek64.*\(.*' | \
-       sed -e 's/^.*(.*,[ ]*\(.*\) .*,.*$/\1/'`
-changequote([, ])dnl
+       $EGREP '[[ ]]+lseek64.*\(.*' | \
+       sed -e 's/^.*(.*,[[ ]]*\(.*\) .*,.*$/\1/'`
 
 
 if test -n "$ace_off64_t"; then
@@ -786,4 +778,3 @@ dnl if test $ac_cv_sys_restartable_syscalls = yes; then
 dnl   AC_DEFINE([HAVE_RESTARTABLE_SYSCALLS])
 dnl fi
 dnl ])
-

@@ -3,6 +3,8 @@
 
 #include "DynAny_i.h"
 #include "DynAnyFactory.h"
+#include "tao/Any_Unknown_IDL_Type.h"
+#include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (DynamicAny,
            DynAny_i,
@@ -181,39 +183,15 @@ TAO_DynAny_i::init (const CORBA::Any& any
 // ****************************************************************
 
 TAO_DynAny_i *
-TAO_DynAny_i::_narrow (CORBA::Object_ptr obj
+TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref
                        ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return 0;
     }
 
-  return ACE_reinterpret_cast (
-             TAO_DynAny_i*,
-             obj->_tao_QueryInterface (
-                      ACE_reinterpret_cast (
-                          ptrdiff_t,
-                          &TAO_DynAny_i::_narrow
-                        )
-                    )
-           );
-}
-
-void*
-TAO_DynAny_i::_tao_QueryInterface (ptrdiff_t type)
-{
-  ptrdiff_t mytype =
-    ACE_reinterpret_cast (ptrdiff_t,
-                          &TAO_DynAny_i::_narrow);
-  if (type == mytype)
-    {
-      this->_add_ref ();
-      return this;
-    }
-
-  return
-    this->ACE_NESTED_CLASS (DynamicAny, DynAny::_tao_QueryInterface) (type);
+  return dynamic_cast<TAO_DynAny_i *> (_tao_objref);
 }
 
 // ****************************************************************
@@ -464,7 +442,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
                                           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+        CORBA::ULong bound = 
+          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         const char *rhs_v, *lhs_v;
@@ -502,7 +481,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
                                           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+        CORBA::ULong bound = 
+          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         const CORBA::WChar *rhs_v, *lhs_v;

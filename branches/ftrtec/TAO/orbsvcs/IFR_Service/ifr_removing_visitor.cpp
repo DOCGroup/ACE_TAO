@@ -3,6 +3,7 @@
 
 #include "ifr_removing_visitor.h"
 #include "utl_scope.h"
+#include "ast_root.h"
 
 ACE_RCSID (IFR_Service,
            ifr_removing_visitor,
@@ -85,3 +86,62 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
   return 0;
 }
+
+int
+ifr_removing_visitor::visit_root (AST_Root *node)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Container_var new_scope =
+        CORBA::Container::_narrow (be_global->repository ()
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
+              ACE_TEXT (" scope push failed\n")
+            ),
+            -1
+          );
+        }
+
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
+              ACE_TEXT (" visit_scope failed\n")
+            ),
+            -1
+          );
+        }
+
+      CORBA::Container_ptr tmp = CORBA::Container::_nil ();
+
+      if (be_global->ifr_scopes ().pop (tmp) != 0)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_root -")
+              ACE_TEXT (" scope pop failed\n")
+            ),
+            -1
+          );
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("visit_root"));
+
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+

@@ -26,9 +26,12 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Message_Queue.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Null_Condition.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Message_Block.h"
+#include "ace/OS_NS_sys_time.h"
 #include "Message_Queue_Test_Ex.h"    // Declares User_Class
 
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test_Ex <number of messages>\n");

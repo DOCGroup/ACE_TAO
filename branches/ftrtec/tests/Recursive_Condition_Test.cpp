@@ -21,8 +21,9 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Event_Handler.h"
-#include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Timer_Heap.h"

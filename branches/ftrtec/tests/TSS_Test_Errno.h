@@ -16,6 +16,9 @@
 //
 // ============================================================================
 
+#include "ace/Guard_T.h"
+#include "ace/Thread_Mutex.h"
+
 class Errno
 {
   // = TITLE

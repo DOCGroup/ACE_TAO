@@ -367,16 +367,8 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
-
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
   *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
@@ -472,16 +464,8 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
-
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
   *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
@@ -705,18 +689,27 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << bu->name () << "::" << ub->local_name () << " (const " << bt->name ();
+      << bu->name () << "::" << ub->local_name () << " (";
+  
 
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)
     {
-      *os << "_ptr";
+      *os << "const "
+          << bt->name ()
+          << "_ptr";
     }
   else if (pt == AST_PredefinedType::PT_any)
     {
-      *os << " &";
+      *os << "const "
+          << bt->name ()
+          << " &";
+    }
+  else 
+    {
+      *os << bt->name ();
     }
 
   *os << " val)" << be_nl

@@ -8,6 +8,8 @@
 
 #include "interceptors.h"
 
+#include "ace/OS_NS_string.h"
+
 void
 Echo_Collocated_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr

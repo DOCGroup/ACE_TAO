@@ -93,6 +93,8 @@ Collocation_Test::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 int
 Collocation_Test::parse_args (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG(argc);
+  ACE_UNUSED_ARG(argv);
   return 0;
 }
 
@@ -104,23 +106,23 @@ Collocation_Test::test_narrow (ACE_ENV_SINGLE_ARG_DECL)
   // the lifetime of the factory object can be managed by the framework.
   Smart_Diamond_Top_Factory *factory = 0;
   ACE_NEW_RETURN (factory,
-                                  Smart_Diamond_Top_Factory,
-                                  -1);
+                  Smart_Diamond_Top_Factory,
+                  -1);
 
   Diamond::Top_var top =
-    Diamond::Top::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Top::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Left_var left =
-    Diamond::Left::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Left::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Right_var right =
-    Diamond::Right::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Right::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Buttom_var buttom =
-    Diamond::Buttom::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Buttom::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::String_var str = top->shape (ACE_ENV_SINGLE_ARG_PARAMETER);

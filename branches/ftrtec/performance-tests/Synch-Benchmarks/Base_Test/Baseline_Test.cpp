@@ -2,7 +2,6 @@
 
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Service_Repository.h"
-#include "ace/Synch.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 #include "Baseline_Test.h"

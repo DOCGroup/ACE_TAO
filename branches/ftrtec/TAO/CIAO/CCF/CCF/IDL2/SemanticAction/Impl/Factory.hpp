@@ -5,14 +5,30 @@
 #ifndef CCF_IDL2_SEMANTIC_ACTION_IMPL_FACTORY_HPP
 #define CCF_IDL2_SEMANTIC_ACTION_IMPL_FACTORY_HPP
 
+#include "CCF/CompilerElements/Diagnostic.hpp"
+
+#include "CCF/IDL2/SemanticGraph/Translation.hpp"
+
 #include "CCF/IDL2/SemanticAction/Factory.hpp"
 
-#include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
-#include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
-#include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
-#include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
+
+//@@ It would be nice to move this includes into .cpp
+//
 #include "CCF/IDL2/SemanticAction/Impl/Attribute.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Enum.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Exception.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Member.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Native.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Operation.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Struct.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Typedef.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Union.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/ValueType.hpp"
 
 namespace CCF
 {
@@ -22,37 +38,76 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class Factory : public virtual IDL2::SemanticAction::Factory
+        struct Factory : virtual IDL2::SemanticAction::Factory
         {
-        public:
-          virtual
-          ~Factory () throw () {}
-
-
           Factory (CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
-                   SyntaxTree::TranslationRegionPtr const& r)
-              : trace_ (context.get ("idl2::semantic-action::trace", false)),
+                   SemanticGraph::TranslationUnit& tu);
 
-                scope_ (r->scope ()),
-
-                include_ (trace_, *this, r, scope_),
-                type_id_ (trace_, scope_),
-                type_prefix_ (trace_, scope_),
-                module_ (trace_, scope_),
-                interface_ (trace_, scope_),
-                attribute_ (trace_, scope_),
-                operation_ (trace_, scope_)
+          virtual SemanticAction::Attribute&
+          attribute ()
           {
+            return attribute_;
+          }
+
+          virtual SemanticAction::Enum&
+          enum_ ()
+          {
+            return enum__;
+          }
+
+          virtual SemanticAction::Exception&
+          exception ()
+          {
+            return exception_;
           }
 
           virtual SemanticAction::Include&
           include ()
           {
             return include_;
+          }
+
+          virtual SemanticAction::Interface&
+          interface ()
+          {
+            return interface_;
+          }
+
+          virtual SemanticAction::Member&
+          member ()
+          {
+            return member_;
+          }
+
+          virtual SemanticAction::Module&
+          module ()
+          {
+            return module_;
+          }
+
+          virtual SemanticAction::Native&
+          native ()
+          {
+            return native_;
+          }
+
+          virtual SemanticAction::Operation&
+          operation ()
+          {
+            return operation_;
+          }
+
+          virtual SemanticAction::Struct&
+          struct_ ()
+          {
+            return struct__;
+          }
+
+          virtual SemanticAction::Typedef&
+          typedef_ ()
+          {
+            return typedef__;
           }
 
           virtual SemanticAction::TypeId&
@@ -67,43 +122,37 @@ namespace CCF
             return type_prefix_;
           }
 
-          virtual SemanticAction::Module&
-          module ()
+          virtual SemanticAction::Union&
+          union_ ()
           {
-            return module_;
+            return union__;
           }
 
-          virtual SemanticAction::Interface&
-          interface ()
+          virtual SemanticAction::ValueType&
+          value_type ()
           {
-            return interface_;
-          }
-
-          virtual SemanticAction::Attribute&
-          attribute ()
-          {
-            return attribute_;
-          }
-
-          virtual SemanticAction::Operation&
-          operation ()
-          {
-            return operation_;
+            return value_type_;
           }
 
         protected:
-          bool trace_;
+          Context ctx_;
 
-          SyntaxTree::ScopePtr scope_;
-          SyntaxTree::TranslationRegionPtr region_;
-
+        private:
+          Attribute attribute_;
+          Enum enum__;
+          Exception exception_;
           Include include_;
+          Interface interface_;
+          Member member_;
+          Module module_;
+          Native native_;
+          Operation operation_;
+          Struct struct__;
+          Typedef typedef__;
           TypeId type_id_;
           TypePrefix type_prefix_;
-          Module module_;
-          Interface interface_;
-          Attribute attribute_;
-          Operation operation_;
+          Union union__;
+          ValueType value_type_;
         };
       }
     }

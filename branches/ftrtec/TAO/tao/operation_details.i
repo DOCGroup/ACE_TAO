@@ -5,13 +5,21 @@
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len,
-                                              CORBA::Boolean argument_flag)
-  : opname_ (name),
-    opname_len_ (len),
-    request_id_ (0),
-    argument_flag_ (argument_flag),
-    response_flags_ (0),
-    addressing_mode_ (TAO_Target_Specification::Key_Addr)
+                                              CORBA::Boolean argument_flag,
+                                              TAO::Argument **args,
+                                              CORBA::ULong num,
+                                              TAO::Exception_Data *data,
+                                              CORBA::Long count)
+  : opname_ (name)
+    , opname_len_ (len)
+    , request_id_ (0)
+    , argument_flag_ (argument_flag)
+    , response_flags_ (0)
+    , addressing_mode_ (TAO_Target_Specification::Key_Addr)
+    , args_ (args)
+    , num_args_ (num)
+    , ex_data_ (data)
+    , ex_count_ (count)
 {
 }
 
@@ -48,14 +56,12 @@ TAO_Operation_Details::request_service_context (void) const
 ACE_INLINE IOP::ServiceContextList &
 TAO_Operation_Details::request_service_info (void)
 {
-  // @@ This should go ...
   return this->request_service_context ().service_info ();
 }
 
 ACE_INLINE const IOP::ServiceContextList &
 TAO_Operation_Details::request_service_info (void) const
 {
-  // @@ This should go ...
   return this->request_service_context ().service_info ();
 }
 
@@ -74,15 +80,24 @@ TAO_Operation_Details::reply_service_context (void) const
 ACE_INLINE IOP::ServiceContextList &
 TAO_Operation_Details::reply_service_info (void)
 {
-  // @@ This should go ...
   return this->reply_service_context ().service_info ();
 }
 
 ACE_INLINE const IOP::ServiceContextList &
 TAO_Operation_Details::reply_service_info (void) const
 {
-  // @@ This should go ...
   return this->reply_service_context ().service_info ();
+}
+
+ACE_INLINE void
+TAO_Operation_Details::reset_request_service_info (void)
+{
+  this->request_service_context ().service_info ()._deallocate_buffer ();
+}
+ACE_INLINE void
+TAO_Operation_Details::reset_reply_service_info (void)
+{
+  this->reply_service_context ().service_info ()._deallocate_buffer ();
 }
 
 ACE_INLINE void
@@ -103,12 +118,6 @@ TAO_Operation_Details::modify_request_id (int originator)
   if ((originator == 1 && ACE_ODD (this->request_id_))
       || (originator == 0 && ACE_EVEN (this->request_id_)))
     ++(this->request_id_);
-}
-
-ACE_INLINE CORBA::ULong
-TAO_Operation_Details::request_id (void)
-{
-  return this->request_id_;
 }
 
 ACE_INLINE CORBA::ULong
@@ -156,4 +165,16 @@ TAO_Operation_Details::addressing_mode (CORBA::Short mode)
     this->addressing_mode_ = TAO_Target_Specification::Profile_Addr;
   else if (mode == 2)
     this->addressing_mode_ = TAO_Target_Specification::Reference_Addr;
+}
+
+ACE_INLINE TAO::Argument **
+TAO_Operation_Details::args (void)
+{
+  return this->args_;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_Operation_Details::args_num (void) const
+{
+  return this->num_args_;
 }

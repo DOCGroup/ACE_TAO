@@ -9,8 +9,7 @@
 #define ACE_CC_YY_FLEX_MAJOR_VERSION 2
 #define ACE_CC_YY_FLEX_MINOR_VERSION 5
 
-#include "ace/OS.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */

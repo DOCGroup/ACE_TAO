@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_string.h"
 #include "Options.h"
 #include "Event_Analyzer.h"
 

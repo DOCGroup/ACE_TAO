@@ -8,6 +8,7 @@
 #include "EC_Disjunction_Filter.h"
 #include "EC_Timeout_Filter.h"
 #include "EC_Event_Channel_Base.h"
+#include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Kokyu_Filter_Builder.i"

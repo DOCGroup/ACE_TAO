@@ -5,6 +5,9 @@
 #include "TestC.h"
 #include "tao/PortableServer/PortableServer.h"
 
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+
 int
 main (int, char *[])
 {

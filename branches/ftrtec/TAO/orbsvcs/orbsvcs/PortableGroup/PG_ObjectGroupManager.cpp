@@ -4,6 +4,7 @@
 #include "PG_Operators.h"
 
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Reverse_Lock_T.h"
@@ -252,15 +253,39 @@ TAO_PG_ObjectGroupManager::remove_member (
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
 
+  TAO_PG_ObjectGroup_Array * groups = 0;
+  if (this->location_map_.find (the_location, groups) != 0)
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
+                      PortableGroup::ObjectGroup::_nil ());
+
+  // Multiple members from different object groups may reside at the
+  // same location.  Iterate through the list to attempt to find a
+  // match for the exact object group. 
+  size_t to_be_removed = 0;
+
+  // get the position of the object group in the object_group_array
+  to_be_removed = this->get_object_group_position (*groups, group_entry);
+
+  // remove the element from the array and resize the array.
+  const size_t groups_len = groups->size ();
+  size_t j;
+  for (size_t i = to_be_removed; i < groups_len - 1; ++i)
+    {
+      j = i + 1;
+      (*groups)[i] = (*groups)[j];
+    }
+
+  groups->size (groups_len - 1);
+
   TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
-       i != end;
-       ++i)
+  for (TAO_PG_MemberInfo_Set::iterator iter = member_infos.begin ();
+       iter != end;
+       ++iter)
     {
-      const TAO_PG_MemberInfo & info = *i;
+      const TAO_PG_MemberInfo & info = *iter;
 
       if (info.location == the_location)
         {
@@ -468,6 +493,39 @@ TAO_PG_ObjectGroupManager::get_member_ref (
                     CORBA::Object::_nil ());
 }
 
+PortableGroup::ObjectGroup_ptr
+TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
+        PortableGroup::ObjectGroupId group_id
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::ObjectGroupNotFound
+      ))
+{
+  //@@ If we change the PG's concept of ObjectGroupId from
+  // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
+  // just call TAO_PG_ObjectGroupManager::object_group() here.
+
+  TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->lock_,
+                      PortableGroup::ObjectGroup::_nil ());
+
+    if (this->object_group_map_.find (group_id, group_entry) != 0)
+      ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
+                        PortableGroup::ObjectGroup::_nil ());
+  }
+
+  if (group_entry == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      PortableGroup::ObjectGroup::_nil ());
+
+  return
+    PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
+}
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
@@ -701,6 +759,32 @@ TAO_PG_ObjectGroupManager::member_already_present (
           // Member with given type ID exists at the given
           // location.
           return 1;
+        }
+    }
+
+  // No member with given type ID present at the given location.
+  return 0;
+}
+
+size_t
+TAO_PG_ObjectGroupManager::get_object_group_position (
+  const TAO_PG_ObjectGroup_Array &groups,
+  TAO_PG_ObjectGroup_Map_Entry * group_entry)
+{
+  // Multiple members from different object groups may reside at the
+  // same location.  Iterate through the list to attempt to find a
+  // match.
+  size_t len = groups.size ();
+  for (size_t i = 0; i < len; ++i)
+    {
+      // It should be enough just to compare the group_entry pointers,
+      // but that seems brittle.  Better to check a controlled value,
+      // like the ObjectGroupId.
+      if (groups[i]->group_id == group_entry->group_id)
+        {
+          // Member with given type ID exists at the given
+          // location.
+          return i;
         }
     }
 

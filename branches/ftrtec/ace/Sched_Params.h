@@ -15,11 +15,14 @@
 #define ACE_SCHED_PARAMS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Time_Value.h"
+#include "ace/OS_NS_Thread.h"
 
 /**
  * @class ACE_Sched_Params

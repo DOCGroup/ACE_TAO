@@ -2,6 +2,8 @@
 // $Id$
 //
 #include "Roundtrip.h"
+#include "tao/TC_Constants_Forward.h"
+#include "tao/NVList.h"
 #include "tao/DynamicInterface/Server_Request.h"
 
 ACE_RCSID(Single_Threaded_Latency, Roundtrip, "$Id$")

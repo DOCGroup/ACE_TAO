@@ -9,6 +9,9 @@
 #include "SSL_SOCK.i"
 #endif
 
+#include "ace/OS_NS_errno.h"
+#include "ace/os_include/os_signal.h"
+
 ACE_RCSID (ACE_SSL,
            SSL_SOCK,
            "$Id$")

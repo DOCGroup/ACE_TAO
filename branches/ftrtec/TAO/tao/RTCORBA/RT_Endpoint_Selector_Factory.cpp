@@ -6,7 +6,6 @@
 #include "RT_Endpoint_Utils.h"
 #include "RT_Stub.h"
 
-#include "tao/Invocation.h"
 #include "tao/Protocols_Hooks.h"
 
 ACE_RCSID (tao,
@@ -27,8 +26,7 @@ RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory (void)
 }
 
 TAO_Invocation_Endpoint_Selector *
-RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+RT_Endpoint_Selector_Factory::get_selector (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->rt_invocation_endpoint_selector_;
 }

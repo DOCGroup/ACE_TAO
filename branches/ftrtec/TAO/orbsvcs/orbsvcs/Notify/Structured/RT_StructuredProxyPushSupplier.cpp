@@ -1,6 +1,9 @@
 // $Id$
 
 #include "RT_StructuredProxyPushSupplier.h"
+#include "tao/debug.h"
+
+#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_StructuredProxyPushSupplier.inl"

@@ -1,5 +1,7 @@
 // -*- C++ -*-
 
+#include "ace/OS_NS_string.h"
+#include "ace/ACE.h"
 #include "SSL_Context.h"
 
 #include "sslconf.h"
@@ -8,7 +10,6 @@
 #include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"

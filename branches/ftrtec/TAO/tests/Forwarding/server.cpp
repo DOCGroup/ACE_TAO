@@ -3,6 +3,7 @@
 #include "test_i.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Forwarding, server, "$Id$")
 

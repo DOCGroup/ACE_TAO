@@ -12,6 +12,7 @@ ACE_RCSID(Notify, TAO_Notify_ThreadPool_Task, "$Id$")
 #include "tao/ORB_Core.h"
 #include "Properties.h"
 #include "Timer_Queue.h"
+#include "ace/OS_NS_errno.h"
 
 TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task (void)
   : buffering_strategy_ (0), shutdown_ (0), timer_ (0)

@@ -13,6 +13,9 @@ ACE_RCSID (ace, Future, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#  include "ace/Guard_T.h"
+#  include "ace/Recursive_Thread_Mutex.h"
+
 template <class T>
 ACE_Future_Holder<T>::ACE_Future_Holder (void)
 {

@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/streams.h"
-
 #include "HTTP_10.h"
 
 #include "JAWS/JAWS.h"

@@ -22,7 +22,7 @@
 #define TAO_BE_FACTORY_H
 
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 class TAO_OutStream;
 

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Thread_Adapter.h"
 
 struct cancel_state
@@ -197,17 +197,17 @@ public:
                          const sigset_t *sigset,
                          sigset_t *osigset = 0);
 
+  /**
+   * Allocates a <keyp> that is used to identify data that is specific
+   * to each thread in the process.  The key is global to all threads
+   * in the process.
+   */
   static int keycreate (ACE_thread_key_t *keyp,
 #if defined (ACE_HAS_THR_C_DEST)
                         ACE_THR_C_DEST destructor,
 #else
                         ACE_THR_DEST destructor,
 #endif /* ACE_HAS_THR_C_DEST */
-  /**
-   * Allocates a <keyp> that is used to identify data that is specific
-   * to each thread in the process.  The key is global to all threads
-   * in the process.
-   */
                         void * = 0);
 
   /// Free up the key so that other threads can reuse it.

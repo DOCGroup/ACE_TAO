@@ -57,10 +57,9 @@ int main(int argc, ACE_TCHAR* argv[])
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv
-                                             ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, ""
+                                         ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
     if (parse_args(argc, argv) == -1)
       return -1;

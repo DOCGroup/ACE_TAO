@@ -1,4 +1,7 @@
-project(*Basic): taoserver, dynamicany {
+// -*- MPC -*-
+// $Id$
+
+project(*Basic): taoexe, portableserver, dynamicany {
   exename  = basic_test
 
   Source_Files {

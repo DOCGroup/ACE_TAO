@@ -4,12 +4,15 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-ACE_RCSID(RTCORBA, RT_Thread_Lane_Resources_Manager, "$Id$")
+ACE_RCSID (RTCORBA, 
+           RT_Thread_Lane_Resources_Manager, 
+           "$Id$")
 
 #include "tao/ORB_Core.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/RTCORBA/Thread_Pool.h"
+#include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)

@@ -3,6 +3,7 @@
 #include "SCIOP_Connector.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_strings.h"
 
 #if TAO_HAS_SCIOP == 1
 

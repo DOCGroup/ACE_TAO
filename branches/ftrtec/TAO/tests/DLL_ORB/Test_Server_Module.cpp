@@ -2,6 +2,8 @@
 
 #include "Test_Server_Module.h"
 #include "tao/TAO_Singleton_Manager.h"
+#include "tao/StringSeqC.h"
+
 #include "ace/Service_Config.h"
 
 ACE_RCSID (DLL_ORB,

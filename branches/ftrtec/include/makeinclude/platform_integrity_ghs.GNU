@@ -1,3 +1,4 @@
+# $Id$
 CROSS-COMPILE = 1
 
 ifndef debug

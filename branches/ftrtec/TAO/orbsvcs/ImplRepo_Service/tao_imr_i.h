@@ -32,6 +32,7 @@ class TAO_IMR_Op;
 class TAO_IMR_i
 {
 public:
+
   // = Constructor and destructor.
   TAO_IMR_i (void);
   ~TAO_IMR_i (void);
@@ -77,16 +78,19 @@ private:
 class TAO_IMR_Op
 {
 public:
+  enum RETURN_CODES {
+    NORMAL = 0,
+    UNKNOWN,
+    NO_PERMISSION,
+    ALREADY_REGISTERED,
+    CANNOT_ACTIVATE,
+    NOT_FOUND
+  };
+
   /// Factory.
   static TAO_IMR_Op *make_op (const ACE_TCHAR *op_name);
 
-  /// Constructor.
-  TAO_IMR_Op (void);
-
-  /// Sets the implrepo locator pointer
-  virtual void set_imr_locator (ImplementationRepository::Locator_ptr imr);
-
-  /// Virtual Destructor.
+  /// Destructor.
   virtual ~TAO_IMR_Op (void);
 
   /// Parse arguments.
@@ -94,6 +98,9 @@ public:
 
   /// Do the work.
   virtual int run (void) = 0;
+
+  /// Sets the implrepo locator pointer
+  void set_imr_locator (ImplementationRepository::Locator_ptr imr);
 
 protected:
   /// Reference to our implementation repository.
@@ -116,9 +123,6 @@ protected:
 class TAO_IMR_Op_Activate : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_Activate (void);
-  ~TAO_IMR_Op_Activate (void);
-
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
@@ -129,7 +133,8 @@ protected:
   /// POA server name.
   ACE_CString server_name_;
 
-  ACE_CString location_;
+  /// The name of the activator 
+  ACE_CString activator_;
 };
 
 
@@ -144,7 +149,6 @@ class TAO_IMR_Op_Add : public TAO_IMR_Op
 {
 public:
   TAO_IMR_Op_Add (void);
-  ~TAO_IMR_Op_Add (void);
 
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
@@ -172,7 +176,7 @@ protected:
   ImplementationRepository::ActivationMode activation_;
 
   /// Hostname where the activator is running.
-  ACE_CString location_;
+  ACE_CString activator_;
 };
 
 
@@ -187,9 +191,6 @@ protected:
 class TAO_IMR_Op_Autostart : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_Autostart (void);
-  ~TAO_IMR_Op_Autostart (void);
-
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
@@ -210,9 +211,6 @@ protected:
 class TAO_IMR_Op_IOR : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_IOR (void);
-  ~TAO_IMR_Op_IOR (void);
-
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
@@ -240,7 +238,6 @@ class TAO_IMR_Op_List : public TAO_IMR_Op
 {
 public:
   TAO_IMR_Op_List (void);
-  ~TAO_IMR_Op_List (void);
 
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
@@ -271,9 +268,6 @@ protected:
 class TAO_IMR_Op_Remove : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_Remove (void);
-  ~TAO_IMR_Op_Remove (void);
-
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
@@ -285,7 +279,7 @@ protected:
   ACE_CString server_name_;
 
   /// Hostname where the activator is running.
-  ACE_CString location_;
+  ACE_CString activator_;
 };
 
 
@@ -299,9 +293,6 @@ protected:
 class TAO_IMR_Op_Shutdown : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_Shutdown (void);
-  ~TAO_IMR_Op_Shutdown (void);
-
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
@@ -312,7 +303,7 @@ protected:
   /// POA server name.
   ACE_CString server_name_;
 
-  ACE_CString location_;
+  ACE_CString activator_;
 };
 
 
@@ -327,8 +318,7 @@ protected:
 class TAO_IMR_Op_Update : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_Update (void);
-  ~TAO_IMR_Op_Update (void);
+  TAO_IMR_Op_Update(void);
 
   virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
@@ -371,8 +361,7 @@ protected:
   int set_location_;
 
   /// Hostname where the activator is running.
-  ACE_CString location_;
-
+  ACE_CString activator_;
 };
 
 #endif /* TAO_IMR_I_H */

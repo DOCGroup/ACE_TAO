@@ -1,3 +1,5 @@
-project(POA Object Reactivation): taoserver {
-  exename = Object_Reactivation
+// -*- MPC -*-
+// $Id$
+
+project(POA*): taoexe, portableserver {
 }

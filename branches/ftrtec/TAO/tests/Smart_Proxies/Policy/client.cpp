@@ -17,6 +17,7 @@
 //=========================================================================
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
 

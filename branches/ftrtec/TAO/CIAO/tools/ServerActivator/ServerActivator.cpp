@@ -16,9 +16,10 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 char *ior_file_name_ = 0;
-char *comserv_path_ = "../ComponentServer/ComponentServer";
+const char *comserv_path_ = "../ComponentServer/ComponentServer";
 char *installation_ior_ = 0;
 CORBA::ULong spawn_wait_ = 5;
 
@@ -92,7 +93,8 @@ main (int argc, char *argv[])
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv
+                                            argv,
+                                            ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -26,8 +26,6 @@
 #include "Asynch_Timeout_Handler.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
 /// Reply dispatcher for Asynchoronous Method Invocation (AMI)s.
 class TAO_Messaging_Export TAO_Asynch_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
@@ -53,7 +51,8 @@ public:
 
   /// Install the timeout handler
   long schedule_timer (CORBA::ULong request_id,
-                       const ACE_Time_Value &max_wait_time);
+                       const ACE_Time_Value &max_wait_time
+                       ACE_ENV_ARG_DECL);
 
 private:
   /// Skeleton for the call back method in the Reply Handler.
@@ -63,10 +62,9 @@ private:
   Messaging::ReplyHandler_var reply_handler_;
 
   /// Timeout Handler in case of AMI timeouts
-  TAO_Asynch_Timeout_Handler timeout_handler_;
+  TAO_Asynch_Timeout_Handler *timeout_handler_;
 };
 
-#endif /* TAO_HAS_AMI_CALLBACK == */
 
 #if defined (__ACE_INLINE__)
 #include "Asynch_Reply_Dispatcher.i"

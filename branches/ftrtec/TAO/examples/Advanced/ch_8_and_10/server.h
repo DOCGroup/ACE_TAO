@@ -25,8 +25,10 @@
 
 #include "CCSS.h"
 #include <map>
-//#include <assert.h>
+#include <iostream>
+#include <assert.h>
 
+using namespace std;
 
 class Controller_impl;
 
@@ -43,7 +45,7 @@ public:
                                 throw(CORBA::SystemException);
     virtual void            location(const char * loc)
                                 throw(CORBA::SystemException);
-    
+
     // Constructor and destructor
     Thermometer_impl(CCS::AssetType anum, const char * location);
     virtual ~Thermometer_impl();

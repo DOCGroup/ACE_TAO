@@ -371,7 +371,7 @@ TAO_ServerRequestInfo::object_id (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::ULong len = id.length ();
       obj_id->length (len);
       CORBA::Octet *buffer = obj_id->get_buffer ();
-      ACE_OS_String::memcpy (buffer, id.get_buffer (), len);
+      ACE_OS::memcpy (buffer, id.get_buffer (), len);
 
       return obj_id._retn ();
     }

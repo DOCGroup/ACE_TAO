@@ -12,6 +12,8 @@ ACE_RCSID (Security,
 #include "EstablishTrustPolicy.h"
 #include "InvocationCredentialsPolicy.h"
 
+#include "tao/ORB_Constants.h"
+
 CORBA::Policy_ptr
 TAO_Security_PolicyFactory::create_policy (
     CORBA::PolicyType type,

@@ -6,7 +6,9 @@
 #include "CEC_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_ConsumerControl, "$Id$")
+ACE_RCSID (CosEvent, 
+           CEC_ConsumerControl, 
+           "$Id$")
 
 TAO_CEC_ConsumerControl::TAO_CEC_ConsumerControl (void)
 {

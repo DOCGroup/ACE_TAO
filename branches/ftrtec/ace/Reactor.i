@@ -1,8 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Reactor_Impl.h"
-#include "ace/Handle_Set.h"
 
 ACE_INLINE ACE_Reactor_Impl *
 ACE_Reactor::implementation (void) const

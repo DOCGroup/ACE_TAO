@@ -1,7 +1,6 @@
 // -*- C++ -*-
 #include "LF_Invocation_Event.h"
 
-
 #if !defined (__ACE_INLINE__)
 # include "tao/LF_Invocation_Event.inl"
 #endif /* __ACE_INLINE__ */

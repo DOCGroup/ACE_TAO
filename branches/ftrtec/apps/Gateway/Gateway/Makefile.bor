@@ -1,3 +1,7 @@
+#
+# $Id$
+#
+
 NAME = gatewayd
 OBJFILES = \
 	$(OBJDIR)\Concrete_Connection_Handlers.obj \

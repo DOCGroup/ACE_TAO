@@ -23,8 +23,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           rettype_marshal_ss, 
+ACE_RCSID (be_visitor_operation,
+           rettype_marshal_ss,
            "$Id$")
 
 // ****************************************************************************
@@ -537,5 +537,3 @@ be_visitor_operation_rettype_marshal_ss::visit_home (be_home *node)
 {
   return this->visit_interface (node);
 }
-
-

@@ -101,11 +101,15 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "{" << be_nl
       << "public:" << be_idt_nl
 
-      // Generate the _ptr_type and _var_type typedefs.
+      << "friend class TAO::Narrow_Utils<"
+      << node->local_name () << ">;" << be_nl
+
+    // Generate the _ptr_type and _var_type typedefs.
       << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
       << be_nl;
+
 
   // Generate the static variable that we use for narrowing.
   *os << "static int _tao_class_id;" << be_nl << be_nl;
@@ -116,12 +120,6 @@ be_visitor_component_ch::visit_component (be_component *node)
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
-  *os << "static " << node->local_name () << "_ptr "
-      << "_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
@@ -161,10 +159,6 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt;
 
-  // The _tao_QueryInterface method.
-  *os << be_nl << be_nl
-      << "virtual void *_tao_QueryInterface (ptrdiff_t type);";
-
   // The _interface_repository_id method.
   *os << be_nl << be_nl
       << "virtual const char* _interface_repository_id (void) const;";
@@ -175,7 +169,7 @@ be_visitor_component_ch::visit_component (be_component *node)
   // Add the Proxy Broker member variable.
   *os << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << node->base_proxy_broker_name () << " *"
+      << "TAO::Collocation_Proxy_Broker *"
       << "the" << node->base_proxy_broker_name ()
       << "_;";
 
@@ -234,44 +228,25 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
 
-  // Smart Proxy related classes.
+  // List that generates proxy broker factory function pointer.
+  be_global->non_local_interfaces.enqueue_tail (node);
+
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
-  be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);
-
-  if (node->accept (&sp_visitor) == -1)
+  if (be_global->gen_smart_proxies ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_ch::"
-                         "visit_component - "
-                         "codegen for smart proxy classes failed\n"),
-                        -1);
-    }
+       *os << be_nl << be_nl;
+       // Smart Proxy related classes.
+       ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
+       be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);
 
-  // Proxy Implementation Declaration.
-  ctx = *this->ctx_;
-  be_visitor_interface_proxy_impls_ch spi_visitor (&ctx);
-
-  if (node->accept (&spi_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_ch::"
-                         "visit_component - "
-                         "codegen for Proxy Broker classes failed\n"),
-                        -1);
-    }
-
-  // Proxy Broker Declaration.
-  ctx = *this->ctx_;
-  be_visitor_interface_proxy_brokers_ch pb_visitor (&ctx);
-
-  if (node->accept (&pb_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_ch::"
-                         "visit_component - "
-                         "codegen for Proxy Broker classes failed\n"),
-                        -1);
+       if (node->accept (&sp_visitor) == -1)
+         {
+           ACE_ERROR_RETURN ((LM_ERROR,
+                              "be_visitor_component_ch::"
+                              "visit_component - "
+                              "codegen for smart proxy classes failed\n"),
+                             -1);
+         }
     }
 
   os->gen_endif ();

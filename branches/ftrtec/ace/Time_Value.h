@@ -15,7 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/OS_Export.h"
 #include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,22 +23,15 @@
 
 
 # if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
-#     include /**/ <time.h>
+#   include "ace/os_include/sys/os_time.h"
 #   if defined (__Lynx__)
 #     include /**/ <st.h>
 #     include /**/ <sem.h>
 #   endif /* __Lynx__ */
-# endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
-
-# if defined (ACE_LACKS_SYSTIME_H)
-// Some platforms may need to include this, but I suspect that most
-// will get it from <time.h>
 #   if defined (VXWORKS)
 #     include /**/ <sys/times.h>
-#   else
-#     include /**/ <sys/time.h>
 #   endif /* VXWORKS */
-# endif /* ACE_LACKS_SYSTIME_H */
+# endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
 
 // HP-UX 10.20 doesn't define timespec_t - it defined struct timespec.
 #if defined (HPUX_10)
@@ -58,10 +50,10 @@ typedef struct timespec timespec_t;
 // compilers and they can be removed once MS release a SP that contains
 // the fix.
 class ACE_Time_Value;
-ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
+ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                          const ACE_Time_Value &tv2);
 
-ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
+ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                          const ACE_Time_Value &tv2);
 
 // This forward declaration is needed by the set() and FILETIME() functions
@@ -100,7 +92,7 @@ typedef struct timespec timespec_t;
  * ACE.  These time values are typically used in conjunction with OS
  * mechanisms like <select>, <poll>, or <cond_timedwait>.
  */
-class ACE_OS_Export ACE_Time_Value
+class ACE_Export ACE_Time_Value
 {
 public:
 
@@ -255,43 +247,43 @@ public:
   ACE_Time_Value &operator-- (void);
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
-  friend ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
+  friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                                   const ACE_Time_Value &tv2);
 
   /// Subtracts two ACE_Time_Value objects, returns the difference.
-  friend ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
+  friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                                   const ACE_Time_Value &tv2);
 
   /// True if @a tv1 < @a tv2.
-  friend ACE_OS_Export int operator < (const ACE_Time_Value &tv1,
+  friend ACE_Export int operator < (const ACE_Time_Value &tv1,
                                        const ACE_Time_Value &tv2);
 
   /// True if @a tv1 > @a tv2.
-  friend ACE_OS_Export int operator > (const ACE_Time_Value &tv1,
+  friend ACE_Export int operator > (const ACE_Time_Value &tv1,
                                        const ACE_Time_Value &tv2);
 
   /// True if @a tv1 <= @a tv2.
-  friend ACE_OS_Export int operator <= (const ACE_Time_Value &tv1,
+  friend ACE_Export int operator <= (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
   /// True if @a tv1 >= @a tv2.
-  friend ACE_OS_Export int operator >= (const ACE_Time_Value &tv1,
+  friend ACE_Export int operator >= (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
   /// True if @a tv1 == @a tv2.
-  friend ACE_OS_Export int operator == (const ACE_Time_Value &tv1,
+  friend ACE_Export int operator == (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
   /// True if @a tv1 != @a tv2.
-  friend ACE_OS_Export int operator != (const ACE_Time_Value &tv1,
+  friend ACE_Export int operator != (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
   //@{
   /// Multiplies the time value by @a d
-  friend ACE_OS_Export ACE_Time_Value operator * (double d,
+  friend ACE_Export ACE_Time_Value operator * (double d,
                                                   const ACE_Time_Value &tv);
 
-  friend ACE_OS_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
+  friend ACE_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
                                                   double d);
   //@}
 
@@ -319,6 +311,50 @@ private:
 
   /// Store the values as a timeval.
   timeval tv_;
+};
+
+/**
+ * @class ACE_Countdown_Time
+ *
+ * @brief Keeps track of the amount of elapsed time.
+ *
+ * This class has a side-effect on the <max_wait_time> -- every
+ * time the <stop> method is called the <max_wait_time> is
+ * updated.
+ */
+class ACE_Export ACE_Countdown_Time
+{
+public:
+  // = Initialization and termination methods.
+  /// Cache the <max_wait_time> and call <start>.
+  ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
+
+  /// Call <stop>.
+  ~ACE_Countdown_Time (void);
+
+  /// Cache the current time and enter a start state.
+  int start (void);
+
+  /// Subtract the elapsed time from max_wait_time_ and enter a stopped
+  /// state.
+  int stop (void);
+
+  /// Calls stop and then start.  max_wait_time_ is modified by the
+  /// call to stop.
+  int update (void);
+
+  /// Returns 1 if we've already been stopped, else 0.
+  int stopped (void) const;
+
+private:
+  /// Maximum time we were willing to wait.
+  ACE_Time_Value *max_wait_time_;
+
+  /// Beginning of the start time.
+  ACE_Time_Value start_time_;
+
+  /// Keeps track of whether we've already been stopped.
+  int stopped_;
 };
 
 #if defined (__ACE_INLINE__)

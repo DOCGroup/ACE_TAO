@@ -18,7 +18,7 @@ TAO_CEC_TypedSupplierAdmin::TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChanne
   this->default_POA_ =
     this->typed_event_channel_->typed_supplier_poa ();
 }
-  
+
 // Implementation skeleton destructor
 TAO_CEC_TypedSupplierAdmin::~TAO_CEC_TypedSupplierAdmin (void)
 {
@@ -61,6 +61,7 @@ TAO_CEC_TypedSupplierAdmin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
     const char * supported_interface
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -68,19 +69,20 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
   ))
 
 {
-  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
+  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface ACE_ENV_ARG_PARAMETER);
 
   if (result == -1)
     {
-      ACE_THROW (CosTypedEventChannelAdmin::InterfaceNotSupported ());
+      ACE_THROW_RETURN (CosTypedEventChannelAdmin::InterfaceNotSupported (),0);
     }
 
   return this->typed_push_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-  
+
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
     const char * /* uses_interface */
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -88,21 +90,21 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
   ))
 
 {
-  ACE_THROW (CosTypedEventChannelAdmin::NoSuchImplementation ());
+  ACE_THROW_RETURN (CosTypedEventChannelAdmin::NoSuchImplementation (), 0);
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 // ****************************************************************

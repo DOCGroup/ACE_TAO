@@ -23,7 +23,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DLL dll;
 
-  const ACE_TCHAR * dll_name = ACE_TEXT ("NOT_A_DLL.so");
+  const ACE_TCHAR * dll_name = ACE_TEXT ("NOT_A_DLL") ACE_DLL_SUFFIX;
 
   // Normally applications should check the return value, but if they
   // ignore it...
@@ -31,9 +31,10 @@ run_main (int, ACE_TCHAR *[])
 
   if(result == -1)
   {
+    // Use dll.error() is you want to get the error text, but we don't this in
+    // this test because else the error is shown on the scoreboard
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Load failed, as expected (%s)\n"),
-                dll.error ()));
+                ACE_TEXT ("Load failed, as expected\n")));
   }
   else
   {
@@ -48,9 +49,10 @@ run_main (int, ACE_TCHAR *[])
 
   if(symbol == 0)
   {
+    // Use dll.error() is you want to get the error text, but we don't this in
+    // this test because else the error is shown on the scoreboard
     ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("Symbol lookup failed, as expected (%s)\n"),
-               dll.error ()));
+               ACE_TEXT ("Symbol lookup failed, as expected\n")));
   }
   else
   {

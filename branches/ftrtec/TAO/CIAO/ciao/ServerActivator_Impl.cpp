@@ -3,6 +3,7 @@
 #include "ServerActivator_Impl.h"
 #include "ace/Process.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ServerActivator_Impl.inl"
@@ -32,7 +33,7 @@ CIAO::Activator_Callback_Impl::_default_POA (void)
 Components::Deployment::ServerActivator_ptr
 CIAO::Activator_Callback_Impl::register_component_server (Components::Deployment::ComponentServer_ptr svr,
                                                           Components::ConfigValues_out config
-                                                          ACE_ENV_ARG_DECL)
+                                                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   config = this->config_._retn ();
@@ -240,10 +241,23 @@ CIAO::ServerActivator_Impl::parse_config_value (const Components::ConfigValues &
         }
       else
         {
-          Components::InvalidConfiguration exc;
-          exc.name = CORBA::string_dup (options[l]->name ());
-          exc.reason = Components::InvalidConfigValueType;
-          ACE_THROW (exc);
+          Components::InvalidConfiguration *exc = 0;
+
+          ACE_NEW_THROW_EX (exc,
+                            Components::InvalidConfiguration,
+                            CORBA::NO_MEMORY ());
+
+          exc->name = CORBA::string_dup (options[l]->name ());
+          exc->reason = Components::InvalidConfigValueType;
+#if defined (ACE_HAS_EXCEPTIONS)
+          auto_ptr<Components::InvalidConfiguration> safety (exc);
+
+          // Direct throw because we don't have the ACE_TRY_ENV.
+          exc->_raise ();
+#else
+          // We can not use ACE_THROW here.
+          ACE_TRY_ENV.exception (exc);
+#endif
         }
     }
 }

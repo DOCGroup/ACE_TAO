@@ -28,7 +28,7 @@ GPERF = ../src/gperf
 PROG_SRCS = \
 	test.cpp \
 	cinset.cpp \
-	c++inset.cpp \
+	cppinset.cpp \
 	iinset.cpp \
 	iinset2.cpp \
 	tinset.cpp \
@@ -47,7 +47,7 @@ AOUT_OBJS = test.o \
 	    adainset.o
 
 CPPOUT_OBJS = test.o \
-	      c++inset.o
+	      cppinset.o
 
 PREOUT_OBJS = test.o \
 	      preinset.o
@@ -72,7 +72,7 @@ TAOOUT_OBJS = test.o \
 
 BIN  =  cout \
 	aout \
-	c++out \
+	cppout \
 	preout \
 	m3out \
 	pout \
@@ -103,7 +103,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 all: cout \
 	aout \
-	c++out \
+	cppout \
 	preout \
 	m3out \
 	pout \
@@ -118,8 +118,8 @@ cinset.cpp: $(srcdir)/c.gperf $(GPERF)
 adainset.cpp: $(srcdir)/ada.gperf $(GPERF)
 	$(GPERF)  -a -k1,4,'$$' $(srcdir)/ada.gperf > $@
 
-c++inset.cpp: $(srcdir)/c++.gperf $(GPERF)
-	$(GPERF) -a -D $(srcdir)/c++.gperf > $@
+cppinset.cpp: $(srcdir)/cpp.gperf $(GPERF)
+	$(GPERF) -a -D $(srcdir)/cpp.gperf > $@
 
 preinset.cpp: $(srcdir)/adadefs.gperf $(GPERF)
 	$(GPERF)  -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > $@
@@ -151,7 +151,7 @@ cout:$(addprefix $(VDIR),$(COUT_OBJS))
 aout:$(addprefix $(VDIR),$(AOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-c++out:$(addprefix $(VDIR),$(CPPOUT_OBJS))
+cppout:$(addprefix $(VDIR),$(CPPOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 preout:$(addprefix $(VDIR),$(PREOUT_OBJS))
@@ -175,7 +175,7 @@ tout:$(addprefix $(VDIR),$(TOUT_OBJS))
 taoout:$(addprefix $(VDIR),$(TAOOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
+runtests: cout aout cppout preout m3out pout iout iout2 tout taoout
 	 @echo "performing some tests of the perfect hash generator"
 	 # test cout
 	 ./cout -v < $(srcdir)/c.gperf > c.out
@@ -183,9 +183,9 @@ runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
 	 # test aout
 	 ./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	 -diff -b $(srcdir)/ada-res.exp ada-res.out
-	 # test c++out
-	 ./c++out -v < $(srcdir)/c++.gperf > c++-res.out
-	 -diff -b $(srcdir)/c++-res.exp c++-res.out
+	 # test cppout
+	 ./cppout -v < $(srcdir)/cpp.gperf > cpp-res.out
+	 -diff -b $(srcdir)/cpp-res.exp cpp-res.out
 	 # test preout
 	 ./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
 	 -diff -b $(srcdir)/ada-pred.exp ada-pred.out
@@ -225,39 +225,83 @@ runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
 	 -diff -b $(srcdir)/test-7.exp test-7.out
 
 realclean:
-	$(RM) -rf *.out cinset.cpp c++inset.cpp iinset.cpp iinset2.cpp \
+	$(RM) -rf *.out cinset.cpp cppinset.cpp iinset.cpp iinset2.cpp \
 	tinset.cpp taoinset.cpp pinset.cpp m3inset.cpp adainset.cpp preinset.cpp
-	$(RM) -rf c.out aout preout m3out pout cout c++out iout iout2 tout taoout
+	$(RM) -rf c.out aout preout m3out pout cout cppout iout iout2 tout taoout
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_limits.h \
+  $(ACE_ROOT)/ace/os_include/os_unistd.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_types.h \
+  $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/os_inttypes.h \
+  $(ACE_ROOT)/ace/os_include/os_stdint.h \
+  $(ACE_ROOT)/ace/os_include/os_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_NS_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -11,13 +11,12 @@
 #define _TAO_IDL_SCIOP_ENDPOINTSC_H_
 
 #include /**/ "ace/pre.h"
-#include "tao/corbafwd.h"
+
+#include "strategies_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "strategies_export.h"
 
 #include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
@@ -219,4 +218,5 @@ TAO_Strategies_Export CORBA::Boolean operator>> (
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */

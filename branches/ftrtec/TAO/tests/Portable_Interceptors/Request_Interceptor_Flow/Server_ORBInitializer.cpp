@@ -5,6 +5,7 @@ ACE_RCSID (Request_Interceptor_Flow,
            "$Id$")
 
 #include "tao/Exception.h"
+#include "tao/ORB_Constants.h"
 
 #include "Server_Request_Interceptor.h"
 

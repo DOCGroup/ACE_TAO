@@ -32,6 +32,7 @@ $debug = 0;
 $verbose = 0;
 $print_status = 0;
 $Ignore_errors = 0;              # By default, bail out if an error occurs.
+$Use_MPC = 0;
 $Build_DLL = 0;
 $Build_LIB = 0;
 $Build_Debug = 0;
@@ -153,52 +154,74 @@ sub Build_Core ()
         }
     }
     if ($Build_LIB) {
-        @core_list = ($ACE_ROOT."\\ace\\ace_lib.dsp",
+      if ($Use_MPC == 1) {
+        @core_list = ($ACE_ROOT."\\ace\\ace.dsp",
+                      $ACE_ROOT."\\Kokyu\\Kokyu.dsp",
+                      $ACE_ROOT."\\ACEXML\\parser\\parser\\ACEXML_Parser.dsp",
+                      $ACE_ROOT."\\ACEXML\\common\\ACEXML.dsp",
                       $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
-                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_BE_LIB.dsp",
-                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_FE_LIB.dsp",
-                      $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl_static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\TAO_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\PortableServer\\TAO_PortableServer_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\DynamicAny\\TAO_DynamicAny_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\IORManipulation\\TAO_IORManip_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\IORTable\\TAO_IORTable_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\Messaging\\TAO_Messaging_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\Strategies\\TAO_Strategies_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\RTCORBA\\TAO_RTCORBA_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\RTPortableServer\\TAO_RTPortableServer_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\Valuetype\\TAO_Valuetype_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\IORInterceptor\\TAO_IORInterceptor_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\ObjRefTemplate\\TAO_ObjRefTemplate_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\Svc_Utils_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNaming_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosProperty_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTrading_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\AV_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSched_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSchedEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTOLDEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosConcurrency_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLifeCycle_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNotification_Static.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\PortableGroup_Static.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLoadBalancing_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Server_static.dsp");
+                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_BE.dsp",
+                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_FE.dsp",
+                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_EXE.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\TAO.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\Valuetype\\Valuetype.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\IORInterceptor\\IORInterceptor.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\ObjRefTemplate\\ObjRefTemplate.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\PortableServer\\PortableServer.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\DynamicAny\\DynamicAny.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\IORManipulation\\IORManipulation.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\IORTable\\IORTable.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\Messaging\\Messaging.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\DynamicInterface\\DynamicInterface.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\Strategies\\Strategies.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\RTCORBA\\RTCORBA.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\RTPortableServer\\RTPortableServer.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\Utils\\Utils.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\RTScheduling\\RTScheduler.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\IFR_Client\\IFR_Client.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\TypeCodeFactory\\TypeCodeFactory.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\Svc_Utils.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNaming.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosProperty.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTrading.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\AV.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTEvent.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSched.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSchedEvent.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTOLDEvent.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosEvent.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTKokyuEvent.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosConcurrency.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLifeCycle.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNotification.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsEventLogAdmin.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsNotifyLogAdmin.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\FTORB_Utils.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\FT_ClientORB.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\FT_ServerORB.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\PortableGroup.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLoadBalancing.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\IFRService.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RT_Notification.dsp",
+                      $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Service.dsp",
+                      $ACE_ROOT."\\tests\\Test_Output.dsp");
+         } 
 
+
+      if ($Use_MPC == 1) {
         foreach $c (@core_list) {
             if ($Build_Debug) {
-                $Status = Build ($c, "ALL - Win32 Static Debug");
+                $Status = Build ($c, "ALL - Win32 Debug");
                 return if $Status != 0 && !$Ignore_errors;
             }
             if ($Build_Release) {
-                $Status = Build ($c, "ALL - Win32 Static Release");
+                $Status = Build ($c, "ALL - Win32 Release");
                 return if $Status != 0 && !$Ignore_errors;
             }
         }
+      }
     }
 }
 
@@ -213,8 +236,10 @@ sub Build_All ()
         if ($Build_All
             || ($Build_DLL && $Build_Debug && $c =~ /Win32 Debug/)
             || ($Build_DLL && $Build_Release && $c =~ /Win32 Release/)
-            || ($Build_LIB && $Build_Debug && $c =~ /Win32 Static Debug/)
-            || ($Build_LIB && $Build_Release && $c =~ /Win32 Static Release/))
+            || ($Build_LIB && $Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
+            || ($Build_LIB && $Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
+            || ($Build_LIB && $Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
+            || ($Build_LIB && $Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/))
         {
             my $Status = 0;
             $Status = Build_Config ($c)
@@ -233,8 +258,10 @@ sub Build_All ()
         Build_Config ($c)
         if (($Build_DLL && $Build_Debug && $c =~ /Win32 Debug/)
            || ($Build_DLL && $Build_Release && $c =~ /Win32 Release/)
-           || ($Build_LIB && $Build_Debug && $c =~ /Win32 Static Debug/)
-           || ($Build_LIB && $Build_Release && $c =~ /Win32 Static Release/));
+           || ($Build_LIB && $Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
+           || ($Build_LIB && $Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
+           || ($Build_LIB && $Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
+           || ($Build_LIB && $Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/));
     }
 }
 
@@ -320,6 +347,10 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         $Build_LIB = 1;
         $Build_All = 0;
     }
+    elsif ($ARGV[0] =~ '-MPC') {        # Use MPC
+        print "Use MPC generated files\n" if ( $verbose );
+        $Use_MPC = 1;
+    }
     elsif ($ARGV[0] =~ '-(\?|h)') {     # Help information
         print "Options\n";
         print "-d         = Debug (only print out projects)\n";
@@ -339,6 +370,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-Release   = Compile Release versions\n";
         print "-DLL       = Comple DLL Configurations\n";
         print "-LIB       = Comple LIB Configurations\n";
+        print "-MPC       = Use MPC generate project files\n";
         exit;
     }
     else {

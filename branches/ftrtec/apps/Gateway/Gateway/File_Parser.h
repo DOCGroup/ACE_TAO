@@ -17,7 +17,7 @@
 #ifndef _FILE_PARSER
 #define _FILE_PARSER
 
-#include "ace/OS.h"
+#include "ace/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,12 +30,12 @@ class FP
 public:
   enum Return_Type
   {
-    EOLINE,
-    EOFILE,
-    SUCCESS,
-    COMMENT,
-    DEFAULT,
-    PARSE_ERROR
+    RT_EOLINE,
+    RT_EOFILE,
+    RT_SUCCESS,
+    RT_COMMENT,
+    RT_DEFAULT,
+    RT_PARSE_ERROR
   };
 };
 

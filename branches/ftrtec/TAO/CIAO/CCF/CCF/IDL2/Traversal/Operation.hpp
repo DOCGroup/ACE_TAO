@@ -6,7 +6,7 @@
 #define CCF_IDL2_TRAVERSAL_OPERATION_HPP
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/IDL2/SyntaxTree/Operation.hpp"
+#include "CCF/IDL2/SemanticGraph/Operation.hpp"
 
 namespace CCF
 {
@@ -14,189 +14,157 @@ namespace CCF
   {
     namespace Traversal
     {
-
       //
       //
       //
-      class OperationTraverser : public Traverser
+      struct Receives : Edge<SemanticGraph::Receives>
       {
-      public:
-        OperationTraverser (Dispatcher* type)
-            : type_ (type)
-        {
-        }
-
-      public:
         virtual void
-        add_parameter_delegate (Dispatcher* d)
+        traverse (Type& e)
         {
-          parameter_delegates_.push_back (d);
+          node_traverser ().traverse (e.parameter ());
         }
-
-      protected:
-        virtual void
-        parameter_delegate (SyntaxTree::OperationDeclPtr const& op)
-        {
-          SyntaxTree::CommaPtr comma (new SyntaxTree::Comma);
-
-          for (SyntaxTree::OperationDecl::Iterator n = op->begin ();
-               n != op->end ();
-               n++)
-          {
-            bool need_comma = n + 1 != op->end ();
-
-            if (parameter_delegates_.empty ())
-            {
-              dispatch (*n);
-              if (need_comma) dispatch (comma);
-            }
-            else
-            {
-              for (DispatcherList::const_iterator i =
-                     parameter_delegates_.begin ();
-                   i != parameter_delegates_.end ();
-                   i++)
-              {
-                (*i)->dispatch (*n);
-                if (need_comma) (*i)->dispatch (comma);
-              }
-            }
-          }
-        }
-
-      protected:
-        Dispatcher* type_;
-        DispatcherList parameter_delegates_;
       };
 
 
       //
       //
       //
-      struct AttributeDecl : Traverser
+      struct Returns : Edge<SemanticGraph::Returns>
       {
-        typedef
-        SyntaxTree::AttributeDeclPtr
-        NodePtr;
-
-        AttributeDecl (Dispatcher* type = 0)
-            : type_ (type)
+        virtual void
+        traverse (Type& e)
         {
-          map (typeid (SyntaxTree::AttributeDecl), this);
+          node_traverser ().traverse (e.type ());
         }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::AttributeDecl> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        type (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-
-      private:
-        Dispatcher* type_;
       };
 
-
       //
       //
       //
-      struct OperationParameter : Traverser
+      struct Raises : Edge<SemanticGraph::Raises>
       {
-        typedef
-        SyntaxTree::OperationParameterPtr
-        NodePtr;
-
-        OperationParameter (Dispatcher* in,
-                            Dispatcher* out,
-                            Dispatcher* inout)
-            : in_ (in), out_ (out), inout_ (inout)
+        virtual void
+        traverse (Type& e)
         {
-          map (typeid (SyntaxTree::OperationParameter), this);
+          node_traverser ().traverse (e.exception ());
         }
-
-        OperationParameter ()
-            : in_ (0), out_ (0), inout_ (0)
-        {
-          map (typeid (SyntaxTree::OperationParameter), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::OperationParameter> ());
-        }
-
-        virtual void
-        traverse (NodePtr const&);
-
-        virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        type (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
-
-      private:
-        Dispatcher* in_;
-        Dispatcher* out_;
-        Dispatcher* inout_;
       };
 
-
       //
       //
       //
-      struct OperationDecl : OperationTraverser
+      template<typename T>
+      struct ParameterTemplate : Node<T>
       {
-        typedef
-        SyntaxTree::OperationDeclPtr
-        NodePtr;
-
-        OperationDecl (Dispatcher* type = 0)
-            : OperationTraverser (type)
-        {
-          map (typeid (SyntaxTree::OperationDecl), this);
-        }
+        virtual void
+        traverse (T&);
 
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::OperationDecl> ());
-        }
+        pre (T&);
 
         virtual void
-        traverse (NodePtr const&);
+        belongs (T&, EdgeDispatcherBase&);
 
         virtual void
-        pre (NodePtr const&);
+        belongs (T&);
 
         virtual void
-        type (NodePtr const&);
+        name (T&);
 
         virtual void
-        name (NodePtr const&);
-
-        virtual void
-        parameters (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
+        post (T&);
       };
+
+      typedef
+      ParameterTemplate<SemanticGraph::Parameter>
+      Parameter;
+
+      typedef
+      ParameterTemplate<SemanticGraph::InParameter>
+      InParameter;
+
+      typedef
+      ParameterTemplate<SemanticGraph::InOutParameter>
+      InOutParameter;
+
+      typedef
+      ParameterTemplate<SemanticGraph::OutParameter>
+      OutParameter;
+
+      //
+      //
+      //
+      template <typename T>
+      struct OperationTemplate : Node<T>
+      {
+        virtual void
+        traverse (T&);
+
+        virtual void
+        pre (T&);
+
+        virtual void
+        returns (T&, EdgeDispatcherBase&);
+
+        virtual void
+        returns (T&);
+
+        virtual void
+        name (T&);
+
+        virtual void
+        receives (T&, EdgeDispatcherBase&);
+
+        virtual void
+        receives (T&);
+
+        virtual void
+        receives_pre (T&);
+
+        virtual void
+        receives_post (T&);
+
+        virtual void
+        receives_none (T&);
+
+        virtual void
+        raises (T&, EdgeDispatcherBase&);
+
+        virtual void
+        raises (T&);
+
+        virtual void
+        raises_pre (T&);
+
+        virtual void
+        raises_post (T&);
+
+        virtual void
+        raises_none (T&);
+
+        virtual void
+        post (T&);
+
+        virtual void
+        comma (T&);
+      };
+
+      typedef
+      OperationTemplate<SemanticGraph::Operation>
+      Operation;
+
+      typedef
+      OperationTemplate<SemanticGraph::OneWayOperation>
+      OneWayOperation;
+
+      typedef
+      OperationTemplate<SemanticGraph::TwoWayOperation>
+      TwoWayOperation;
     }
   }
 }
+
+#include "CCF/IDL2/Traversal/Operation.tpp"
 
 #endif  // CCF_IDL2_TRAVERSAL_OPERATION_HPP

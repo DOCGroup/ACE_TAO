@@ -128,7 +128,7 @@ LD              = $(CXX)
 #### workaround recommended in PTR 43-4-204.  It must appear before any
 #### linker commands.
 LDFLAGS         += -hidden $(wildcard /usr/lib/libcxxstd.a) -non_hidden
-LIBS            += $(CFLAGS) -ltli -lrt
+LIBS            += $(CFLAGS) -lxti -lrt
 MATHLIB         = -lm
 OCFLAGS         += -O3
 PIC             =

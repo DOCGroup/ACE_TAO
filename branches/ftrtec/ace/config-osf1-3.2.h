@@ -135,8 +135,7 @@ extern "C" pid_t getpgid (pid_t);
 #define ACE_HAS_STREAMS
 
 // Platform has 64bit longs and 32bit ints...
-// NOTE: ACE_HAS_64BIT_LONGS is deprecated.  Instead, use ACE_SIZEOF_LONG == 8.
-#define ACE_HAS_64BIT_LONGS
+#define ACE_SIZEOF_LONG 8
 
 // Platform supports STREAM pipes.
 // #define ACE_HAS_STREAM_PIPES

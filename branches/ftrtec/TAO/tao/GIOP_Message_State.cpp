@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/GIOP_Message_State.h"
-#include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 
@@ -11,11 +10,9 @@
 # include "tao/GIOP_Message_State.inl"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            GIOP_Message_State,
            "$Id$")
-
 
 TAO_GIOP_Message_State::TAO_GIOP_Message_State (
     TAO_ORB_Core * /*orb_core*/,

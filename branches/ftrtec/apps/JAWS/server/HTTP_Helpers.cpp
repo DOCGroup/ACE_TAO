@@ -4,6 +4,10 @@
 
 #include "HTTP_Helpers.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Guard_T.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(server, HTTP_Helpers, "$Id$")
 

@@ -3,11 +3,11 @@
 // -- PortableServer Include --
 #include "Object_Adapter.h"
 #include "POA.h"
-#include "Strategized_Object_Proxy_Broker.h"
 #include "ServerRequestInfo.h"
 #include "Default_Servant_Dispatcher.h"
 #include "ServerInterceptorAdapter.h"
 #include "PortableServer_ORBInitializer.h"
+#include "Collocated_Object_Proxy_Broker.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
@@ -22,6 +22,7 @@
 #include "tao/MProfile.h"
 #include "tao/debug.h"
 #include "tao/PortableInterceptor.h"
+#include "tao/ORBInitializer_Registry.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
@@ -736,6 +737,24 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
   ACE_TRY
     {
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
+      CORBA::OctetSeq_var ocs;
+      sri_adapter.tao_ft_interception_point (&ri,
+                                             ocs.out ()
+                                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      /// If we have a cached result, just go ahead and send the reply
+      /// and let us  return
+      if (ocs.ptr () != 0)
+        {
+          // request.result_seq (
+          request.send_cached_reply (ocs.inout ());
+
+          return TAO_Adapter::DS_OK;
+        }
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+
       // The receive_request_service_contexts() interception point
       // must be invoked before the operation is dispatched to the
       // servant.
@@ -834,7 +853,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                       CORBA::Object::_nil ());
 
       // Here we set the strategized Proxy Broker.
-      x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+      x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
 
       // Success.
       return x;
@@ -876,7 +895,7 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
       obj->set_collocated_servant (sb);
 
       // Here we set the strategized Proxy Broker.
-      obj->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+      obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
 
      // Success.
      return 0;
@@ -1226,7 +1245,8 @@ TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_POA &poa)
       this->previous_ = this->object_adapter_.non_servant_upcall_in_progress_;
 
       // Assert that the thread is the same as the one before.
-      ACE_ASSERT (this->object_adapter_.non_servant_upcall_thread_ == ACE_OS::thr_self ());
+      ACE_ASSERT (ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
+                                     ACE_OS::thr_self ()));
     }
 
   // Remember which thread is calling the adapter activators.

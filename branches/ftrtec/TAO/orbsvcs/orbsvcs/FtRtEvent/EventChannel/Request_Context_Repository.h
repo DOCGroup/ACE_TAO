@@ -49,7 +49,7 @@ public:
                           ACE_ENV_ARG_DECL);
   void set_object_id(const FtRtecEventChannelAdmin::ObjectId& object_id
                      ACE_ENV_ARG_DECL);
-  FtRtecEventChannelAdmin::ObjectId_var get_object_id(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  FtRtecEventChannelAdmin::ObjectId_var get_object_id(ACE_ENV_SINGLE_ARG_DECL);
   FtRtecEventChannelAdmin::ObjectId_var
     get_object_id(PortableInterceptor::ServerRequestInfo_ptr ri
                   ACE_ENV_ARG_DECL);
@@ -58,7 +58,7 @@ public:
                          const CORBA::Any& result
                          ACE_ENV_ARG_DECL);
 
-  CORBA::Any_ptr get_cached_result(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Any_ptr get_cached_result(ACE_ENV_SINGLE_ARG_DECL);
   bool is_executed_request();
 
   void set_sequence_number(PortableInterceptor::ServerRequestInfo_ptr ri,
@@ -78,8 +78,8 @@ public:
     ACE_ENV_ARG_DECL);
 
   CORBA::Any_var get_ft_request_service_context(
-      PortableInterceptor::ClientRequestInfo_ptr
-      riACE_ENV_ARG_DECL);
+      PortableInterceptor::ClientRequestInfo_ptr ri
+      ACE_ENV_ARG_DECL);
 
   void set_transaction_depth(
     PortableInterceptor::ServerRequestInfo_ptr ri,
@@ -91,7 +91,7 @@ public:
     ACE_ENV_ARG_DECL);
 
  FTRT::TransactionDepth get_transaction_depth(
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    ACE_ENV_SINGLE_ARG_DECL);
 
  FTRT::TransactionDepth get_transaction_depth(
     PortableInterceptor::ClientRequestInfo_ptr

@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 # $Id$
 
 # SunOS 5.x (Solaris 2.x) with Sun C++ 4.2 and 5.x
@@ -53,7 +55,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
-
+ifeq (,$(versioned_so))
+  versioned_so = 1
+endif
 tk_reactor = 0
 ace_with_x11 = 0
 
@@ -163,10 +167,15 @@ ifeq ($(templates),)
     templates = explicit
   else
     ifeq (C++ 5.3,$(findstring C++ 5.3,$(CC_VERSION)))
-      # Set this to automaic if automatic template instantiation works for you.
+      # Set this to automatic if automatic template instantiation works for you.
       templates = explicit
     else
+      ifeq (C++ 5.5,$(findstring C++ 5.5,$(CC_VERSION)))
+        # SunForte8 has no problems using implicit templates 
+        templates = implicit
+      else 
         templates = explicit
+      endif
     endif
   endif
 endif
@@ -217,13 +226,15 @@ RANLIB          = echo
 SOFLAGS         += -G $(CPPFLAGS)
 
 # The correct flags to pass to the linker for ELF dynamic shared library
-# versioning
+# versioning. This knows that wrapper_macros.GNU will set versioned_so to
+# 1 if it's not set. So, the only way SOFLAGS should _not_ get this is if
+# versioned_so has been explicitly disabled.
 #
-ifneq ($(SONAME),)
+ifeq ($(versioned_so),1)
   SOFLAGS += -h $(SONAME)
 endif
 
-ifdef BIN
+ifdef CLEANUP_BIN
   #### Builds .shobj/$*.o file, then .shobj/$*.so file.  The .o files
   #### are used for building libraries and executables.  But, it seems
   #### to be necessary to build the .so files (with -G) in order to get
@@ -244,7 +255,7 @@ else
   #### after building it.
   SOBUILD = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                       /bin/ln $(VSHDIR)$*.o $@
-endif # BIN
+endif # CLEANUP_BIN
 
 #### The following macro overrides enable creation of fast executables.
 #### They _don't_ support fast compilation :-)

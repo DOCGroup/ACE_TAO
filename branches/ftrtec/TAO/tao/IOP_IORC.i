@@ -54,26 +54,20 @@ CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/cdr_op_ci.cpp:81
 
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
-
-#if !defined _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_I_
-#define _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_I_
+#if !defined _TAO_CDR_OP_IOP_IOR__tao_seq_IOP_TaggedProfile__I_
+#define _TAO_CDR_OP_IOP_IOR__tao_seq_IOP_TaggedProfile__I_
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const IOP::IOR::_tao_seq_TaggedProfile_profiles &
+    const IOP::IOR::_tao_seq_IOP_TaggedProfile_ &
   );
 
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    IOP::IOR::_tao_seq_TaggedProfile_profiles &
+    IOP::IOR::_tao_seq_IOP_TaggedProfile_ &
   );
 
-#endif /* _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_I_ */
+#endif /* _TAO_CDR_OP_IOP_IOR__tao_seq_IOP_TaggedProfile__I_ */
 
 // TAO_IDL - Generated from
 // be/be_visitor_structure/cdr_op_ci.cpp:70
@@ -180,24 +174,6 @@ CORBA::Boolean TAO_Export operator>> (
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentSeq_I_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_context_data_I_
-#define _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_context_data_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const IOP::ServiceContext::_tao_seq_Octet_context_data &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    IOP::ServiceContext::_tao_seq_Octet_context_data &
-  );
-
-#endif /* _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_context_data_I_ */
-
-// TAO_IDL - Generated from
 // be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
@@ -239,3 +215,4 @@ CORBA::Boolean TAO_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_IOP_ServiceContextList_I_ */
+

@@ -3,6 +3,7 @@
 
 #include "ace/SPIPE_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SPIPE_Connector.i"

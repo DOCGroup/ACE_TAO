@@ -39,7 +39,6 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 
-#include "ace/OS.h"
 #include "asnmp/ctr64.h"
 #include "test_config.h"
 
@@ -48,6 +47,7 @@ ACE_RCSID(tests, Counter64_Test, "$Id$")
 // TODO: verify this with ACE folks
 #if defined(_WIN32)
 #define LLONG __int64
+#define ULLONG unsigned __int64
 #else
 #define LLONG long long
 #define ULLONG unsigned long long

@@ -22,7 +22,7 @@ Logging_Process::Logging_Process (const char *prog_name,
                                   const ACE_SOCK_Stream &logging_peer)
     : logging_peer_ (logging_peer.get_handle ())
 {
-  strcpy (prog_name_, prog_name);
+  ACE_OS::strcpy (prog_name_, prog_name);
 }
 
 // Set up the process options here. If the decision to do a fork

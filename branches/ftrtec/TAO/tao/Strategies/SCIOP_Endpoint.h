@@ -1,10 +1,12 @@
-// $Id$
+// -*- C++ -*-
+
 //===========================================================================
 /**
  *  @file     SCIOP_Endpoint.h
  *
- *   SCIOP implementation of PP Framework Endpoint interface.
+ *  SCIOP implementation of PP Framework Endpoint interface.
  *
+ *  $Id$
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
@@ -19,14 +21,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Endpoint.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if TAO_HAS_SCIOP == 1
-
+#include "tao/Endpoint.h"
 #include "strategies_export.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
@@ -110,6 +112,9 @@ private:
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
+
+  /// Helper method for object_addr ().
+  void object_addr_i (void) const;
 
   /// String representing the host name.
   CORBA::String_var host_;

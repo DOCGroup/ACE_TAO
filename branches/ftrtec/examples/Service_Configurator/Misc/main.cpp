@@ -18,6 +18,7 @@
 //
 // ============================================================================
 
+#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"

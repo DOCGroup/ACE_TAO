@@ -22,6 +22,7 @@
 #include "test_config.h"
 #include "ace/Mem_Map.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, Mem_Map_Test, "$Id$")
 
@@ -144,12 +145,12 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::strcpy (temp_file2, test_file);
 
   // Add the filenames to the end
-  ACE_OS_String::strcat (test_file,
-                         ACE_TEXT ("ace_mem_map_test"));
-  ACE_OS_String::strcat (temp_file1,
-                         ACE_TEXT ("ace_mem_map_temp_1"));
-  ACE_OS_String::strcat (temp_file2,
-                         ACE_TEXT ("ace_mem_map_temp_2"));
+  ACE_OS::strcat (test_file,
+                  ACE_TEXT ("ace_mem_map_test"));
+  ACE_OS::strcat (temp_file1,
+                  ACE_TEXT ("ace_mem_map_temp_1"));
+  ACE_OS::strcat (temp_file2,
+                  ACE_TEXT ("ace_mem_map_temp_2"));
 
   // First create a test file to work on
   if (create_test_file (test_file, LINE_LENGTH, NUM_LINES) != 0)

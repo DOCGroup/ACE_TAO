@@ -12,6 +12,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ECM_Supplier.h"
 #include "ECM_Data.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(EC_Custom_Marshal, ECM_Supplier, "$Id$")
 

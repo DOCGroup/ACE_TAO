@@ -17,8 +17,11 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Stats.h"
 #include "ace/Task.h"
+#include "ace/Barrier.h"
 
-ACE_RCSID(TAO_RTEC_PERF_RTCORBA_Baseline, client, "$Id$")
+ACE_RCSID (TAO_RTEC_PERF_RTCORBA_Baseline, 
+           client, 
+           "$Id$")
 
 class Roundtrip_Task : public ACE_Task_Base
 {

@@ -5,8 +5,8 @@
 #ifndef CCF_IDL3_TRAVERSAL_COMPONENT_HPP
 #define CCF_IDL3_TRAVERSAL_COMPONENT_HPP
 
-#include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/IDL3/SyntaxTree/Component.hpp"
+#include "CCF/IDL3/SemanticGraph/Component.hpp"
+#include "CCF/IDL3/Traversal/Elements.hpp"
 
 namespace CCF
 {
@@ -14,69 +14,246 @@ namespace CCF
   {
     namespace Traversal
     {
-
-      //
-      //
-      //
-      struct ComponentDecl : IDL2::Traversal::Traverser
+      template <typename T>
+      struct PortTemplate : Node<T>
       {
-        typedef
-        SyntaxTree::ComponentDeclPtr
-        NodePtr;
-
-        ComponentDecl ()
-        {
-          map (typeid (SyntaxTree::ComponentDecl), this);
-        }
-
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::ComponentDecl> ());
-        }
-
-        virtual void
-        traverse (NodePtr const& n)
-        {
-          delegate (n);
-        }
+        traverse (T&);
       };
 
-
-      //
-      //
-      //
-      struct ComponentDef : IDL2::Traversal::ScopeTraverser
+      template <typename T>
+      struct PortAccessorTemplate : Node<T>
       {
-        typedef
-        SyntaxTree::ComponentDefPtr
-        NodePtr;
-
-        ComponentDef ()
-        {
-          map (typeid (SyntaxTree::ComponentDef), this);
-        }
+        virtual void
+        traverse (T&);
 
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::ComponentDef> ());
-        }
+        pre (T&);
 
         virtual void
-        traverse (NodePtr const&);
+        returns (T&, EdgeDispatcherBase&);
 
         virtual void
-        pre (NodePtr const&);
+        returns (T&);
 
         virtual void
-        scope (NodePtr const&);
+        name (T&);
 
         virtual void
-        post (NodePtr const&);
+        receives (T&, EdgeDispatcherBase&);
+
+        virtual void
+        receives (T&);
+
+        virtual void
+        receives_pre (T&);
+
+        virtual void
+        receives_post (T&);
+
+        virtual void
+        raises (T&, EdgeDispatcherBase&);
+
+        virtual void
+        raises (T&);
+
+        virtual void
+        raises_pre (T&);
+
+        virtual void
+        raises_post (T&);
+
+        virtual void
+        post (T&);
+      };
+
+      template <typename T>
+      struct PortGetTemplate : PortAccessorTemplate<T>
+      {
+        virtual void
+        returns (T&);
+      };
+
+      template <typename T>
+      struct PortSetTemplate : PortAccessorTemplate<T>
+      {
+        virtual void
+        receives (T&);
+      };
+
+      template <typename T>
+      struct PortDataTemplate : Node<T>
+      {
+        virtual void
+        traverse (T&);
+
+        virtual void
+        pre (T&);
+
+        virtual void
+        belongs (T&, EdgeDispatcherBase&);
+
+        virtual void
+        belongs (T&);
+
+        virtual void
+        name (T&);
+
+        virtual void
+        post (T&);
+      };
+
+      //
+      //
+      //
+      typedef
+      PortTemplate<SemanticGraph::Provider>
+      Provider;
+
+      typedef
+      PortGetTemplate<SemanticGraph::Provider>
+      ProviderGet;
+
+      typedef
+      PortSetTemplate<SemanticGraph::Provider>
+      ProviderSet;
+
+      typedef
+      PortDataTemplate<SemanticGraph::Provider>
+      ProviderData;
+
+      //
+      //
+      //
+      typedef
+      PortTemplate<SemanticGraph::User>
+      User;
+
+      typedef
+      PortGetTemplate<SemanticGraph::User>
+      UserGet;
+
+      typedef
+      PortSetTemplate<SemanticGraph::User>
+      UserSet;
+
+      typedef
+      PortDataTemplate<SemanticGraph::User>
+      UserData;
+
+
+      //
+      //
+      //
+      typedef
+      PortTemplate<SemanticGraph::Publisher>
+      Publisher;
+
+      typedef
+      PortGetTemplate<SemanticGraph::Publisher>
+      PublisherGet;
+
+      typedef
+      PortSetTemplate<SemanticGraph::Publisher>
+      PublisherSet;
+
+      typedef
+      PortDataTemplate<SemanticGraph::Publisher>
+      PublisherData;
+
+      //
+      //
+      //
+      typedef
+      PortTemplate<SemanticGraph::Emitter>
+      Emitter;
+
+      typedef
+      PortGetTemplate<SemanticGraph::Emitter>
+      EmitterGet;
+
+      typedef
+      PortSetTemplate<SemanticGraph::Emitter>
+      EmitterSet;
+
+      typedef
+      PortDataTemplate<SemanticGraph::Emitter>
+      EmitterData;
+
+
+      //
+      //
+      //
+      typedef
+      PortTemplate<SemanticGraph::Consumer>
+      Consumer;
+
+      typedef
+      PortGetTemplate<SemanticGraph::Consumer>
+      ConsumerGet;
+
+      typedef
+      PortSetTemplate<SemanticGraph::Consumer>
+      ConsumerSet;
+
+      typedef
+      PortDataTemplate<SemanticGraph::Consumer>
+      ConsumerData;
+
+      //
+      //
+      //
+      struct Component : ScopeTemplate<SemanticGraph::Component>
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        inherits (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        inherits (Type&);
+
+        virtual void
+        inherits_pre (Type&);
+
+        virtual void
+        inherits_post (Type&);
+
+        virtual void
+        inherits_none (Type&);
+
+        virtual void
+        supports (Type&, EdgeDispatcherBase&);
+
+        virtual void
+        supports (Type&);
+
+        virtual void
+        supports_pre (Type&);
+
+        virtual void
+        supports_post (Type&);
+
+        virtual void
+        supports_none (Type&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        comma (Type&);
       };
     }
   }
 }
+
+#include "CCF/IDL3/Traversal/Component.tpp"
 
 #endif  // CCF_IDL3_TRAVERSAL_COMPONENT_HPP

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_PROXYPUSHCONSUMER_H
 #define TAO_Notify_PROXYPUSHCONSUMER_H
+
 #include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
@@ -35,7 +36,10 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_ProxyPushConsumer : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_ProxyPushConsumer 
+  : public virtual TAO_Notify_ProxyConsumer_T <
+                       POA_CosNotifyChannelAdmin::ProxyPushConsumer
+                     >
 {
  friend class TAO_Notify_Builder;
 public:

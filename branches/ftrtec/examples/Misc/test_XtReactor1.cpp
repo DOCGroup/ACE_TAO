@@ -3,6 +3,7 @@
 // The following is another test that exercises the Eric C. Newton's
 // <ecn@clark.net> XtReactor implementation.
 
+#include "ace/OS_main.h"
 #include "ace/XtReactor.h"
 #include "ace/Reactor.h"
 #include "ace/Message_Block.h"
@@ -10,7 +11,7 @@
 ACE_RCSID(Misc, test_XtReactor1, "$Id$")
 
 #if defined (ACE_HAS_XT)
-#define String XtString
+//#define String XtString
 #include <Xm/PushB.h>
 
 class Stdout : public ACE_Event_Handler

@@ -73,7 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_interface.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
-#include "ace/streams.h"
 
 ACE_RCSID( ast, 
            ast_interface_fwd, 
@@ -134,14 +133,14 @@ AST_InterfaceFwd::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->is_abstract ())
     {
-      o << "abstract ";
+      this->dump_i (o, "abstract ");
     }
   else if (this->is_local ())
     {
-      o << "local ";
+      this->dump_i (o, "local ");
     }
 
-  o << "interface ";
+  this->dump_i (o, "interface ");
 
   this->local_name ()->dump (o);
 }

@@ -46,7 +46,14 @@ $dot_path = '/usr/local/bin';
              ,'tao_costrader'
              ,'tao_portablegroup'
              ,'tao_pss'
-            );
+             ,'tao_ifr'
+             ,'ciao_assembly_deployer'
+             ,'ciao_componentserver'
+	     ,'ciao_daemon'
+	     ,'ciao_serveractivator'
+	     ,'ciao_xml_helpers'
+	     ,'ciao'
+	     );
 
 # Modify defaults using the command line arguments
 &parse_args ();

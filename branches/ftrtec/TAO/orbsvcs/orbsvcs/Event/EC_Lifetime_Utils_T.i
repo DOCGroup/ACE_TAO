@@ -129,9 +129,18 @@ TAO_EC_Servant_Var(TAO_EC_Servant_Var<T> const & rhs)
   : ptr_(rhs.ptr_)
 {
   if (ptr_)
-  {
-    ptr_->_add_ref();
-  }
+    {
+      ACE_TRY_NEW_ENV
+        {
+          ptr_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHALL
+        {
+	  ACE_RE_THROW;
+        }
+	ACE_ENDTRY;
+    }
 }
 
 template <class T>

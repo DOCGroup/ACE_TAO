@@ -72,7 +72,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_string.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
-#include "ace/streams.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "utl_identifier.h"
+#include "idl_defines.h"
+#include "global_extern.h"
 
 ACE_RCSID (ast, 
            ast_string, 
@@ -107,6 +111,51 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
+
+  Identifier *id = 0;
+  UTL_ScopedName *new_name = 0;
+  UTL_ScopedName *conc_name = 0;
+
+  ACE_NEW (id,
+           Identifier (this->width () == 1 ? "Char *" : "WChar *"));
+
+  ACE_NEW (conc_name,
+           UTL_ScopedName (id,
+                           0));
+
+  ACE_NEW (id,
+           Identifier ("CORBA"));
+
+  ACE_NEW (new_name,
+           UTL_ScopedName (id,
+                           conc_name));
+
+  this->set_name (new_name);
+
+  unsigned long bound = ms->ev ()->u.ulval;
+
+  static char namebuf[NAMEBUFSIZE];
+  static char boundbuf[NAMEBUFSIZE];
+  ACE_OS::memset (namebuf,
+                  '\0',
+                  NAMEBUFSIZE);
+  ACE_OS::memset (boundbuf,
+                  '\0',
+                  NAMEBUFSIZE);
+
+  if (bound)
+    {
+      ACE_OS::sprintf (boundbuf,
+                       "_%ld",
+                       bound);
+    }
+
+  ACE_OS::sprintf (namebuf,
+                   "CORBA_%sSTRING%s",
+                   (wide == 1 ? "" : "W"),
+                   boundbuf);
+
+  this->flat_name_ = ACE::strnew (namebuf);
 }
 
 AST_String::~AST_String (void)
@@ -119,9 +168,9 @@ AST_String::~AST_String (void)
 void
 AST_String::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "string <";
+  this->dump_i (o, "string <");
   this->pd_max_size->dump (o);
-  o << ">";
+  this->dump_i (o, ">");
 }
 
 int

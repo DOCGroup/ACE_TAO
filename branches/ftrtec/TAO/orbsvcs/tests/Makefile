@@ -22,11 +22,18 @@ DIRS = \
 
 ifeq ($(corba_messaging),1)
 DIRS += \
-  EC_Multiple \
   EC_Throughput \
   EC_Mcast \
   EC_MT_Mcast \
   EC_Custom_Marshal
+
+  ifdef TAO_ORBSVCS
+    ifneq (,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
+      DIRS +=   EC_Multiple
+    endif
+  else
+      DIRS +=   EC_Multiple
+  endif
 endif # corba_messaging
 
 DIRS += \
@@ -53,7 +60,17 @@ DIRS += Concurrency \
   Security \
   Miop \
   LoadBalancing \
-  Log
+  Log \
+  Bug_1334_Regression \
+  Bug_1395_Regression \
+  Bug_1630_Regression \
+
+
+ifeq ($(rt_corba),1)
+  ifeq ($(interceptors),1)
+     DIRS += RTCosScheduling
+  endif #interceptors
+endif #rt_corba
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

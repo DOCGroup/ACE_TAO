@@ -2,27 +2,16 @@
 //
 // $Id$
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_nil (void)
 {
   return (CORBA::AbstractBase_ptr)0;
 }
 
-/// Just call _duplicate and let it decide what to do.
-ACE_INLINE 
-CORBA::AbstractBase_ptr
+ACE_INLINE CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj
                               ACE_ENV_ARG_DECL_NOT_USED)
-{
-  return CORBA::AbstractBase::_duplicate (obj);
-}
-
-/// Same for this one.
-ACE_INLINE 
-CORBA::AbstractBase_ptr
-CORBA::AbstractBase::_unchecked_narrow (CORBA::AbstractBase_ptr obj
-                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   return CORBA::AbstractBase::_duplicate (obj);
 }
@@ -48,13 +37,6 @@ const char *
 CORBA::AbstractBase::_tao_obv_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
-}
-
-ACE_INLINE
-void *
-CORBA::AbstractBase::_tao_obv_narrow (ptrdiff_t /* type_id */)
-{
-  return this;
 }
 
 ACE_INLINE
@@ -91,4 +73,3 @@ CORBA::AbstractBase::_is_local (void) const
 {
   return this->is_local_;
 }
-

@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Application_Controlled \
-        Infrastructure_Controlled
+        Infrastructure_Controlled \
+        Manage_Object_Group
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

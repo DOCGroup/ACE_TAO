@@ -65,25 +65,25 @@ namespace CCF
 
     protected:
       void
-      act_composition_begin_core (Iterator begin, Iterator end) const
+      act_composition_begin_core (Iterator begin, Iterator) const
       {
         SemanticAction::Composition::Category::Value c;
 
         if((*begin)->lexeme () == "entity")
         {
-          c = SemanticAction::Composition::Category::ENTITY;
+          c = SemanticAction::Composition::Category::entity;
         }
         else if ((*begin)->lexeme () == "process")
         {
-          c = SemanticAction::Composition::Category::PROCESS;
+          c = SemanticAction::Composition::Category::process;
         }
         else if ((*begin)->lexeme () == "service")
         {
-          c = SemanticAction::Composition::Category::SERVICE;
+          c = SemanticAction::Composition::Category::service;
         }
         else
         {
-          c = SemanticAction::Composition::Category::SESSION;
+          c = SemanticAction::Composition::Category::session;
         }
 
         begin++;
@@ -111,17 +111,11 @@ namespace CCF
       OneArgAction<SimpleIdentifierPtr, SemanticAction::HomeExecutor>
       act_home_executor_begin;
 
-      ScopeAction
-      act_home_executor_open_scope;
-
       OneArgAction<IdentifierPtr, SemanticAction::HomeExecutor>
       act_home_executor_implements;
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::HomeExecutor>
       act_home_executor_manages;
-
-      ScopeAction
-      act_home_executor_close_scope;
 
       NoArgAction<SemanticAction::HomeExecutor>
       act_home_executor_end;

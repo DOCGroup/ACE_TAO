@@ -2,16 +2,19 @@
 
 #include "DLL_Parser.h"
 #include "Object_Loader.h"
-#include "tao/Object.h"
-#include "tao/Exception.h"
-#include "tao/Environment.h"
+#include "Object.h"
+#include "Environment.h"
+#include "ORB_Constants.h"
+
 #include "ace/Dynamic_Service.h"
 
 #if !defined(__ACE_INLINE__)
 #include "DLL_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, DLL_Parser, "$Id$")
+ACE_RCSID (tao, 
+           DLL_Parser, 
+           "$Id$")
 
 TAO_DLL_Parser::~TAO_DLL_Parser (void)
 {

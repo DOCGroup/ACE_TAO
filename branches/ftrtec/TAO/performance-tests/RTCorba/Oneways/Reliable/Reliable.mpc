@@ -1,6 +1,7 @@
 // $Id$
 
 project(*oneways server RT): rt_server, messaging {
+  avoids += minimum_corba
   Source_Files {
     test_i.cpp
     server.cpp
@@ -8,6 +9,7 @@ project(*oneways server RT): rt_server, messaging {
 }
 
 project(*oneways client RT): rt_client, messaging {
+  avoids += minimum_corba
   Source_Files {
     testC.cpp
     client.cpp

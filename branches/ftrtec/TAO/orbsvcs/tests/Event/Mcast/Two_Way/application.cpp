@@ -15,6 +15,7 @@
 #include "ace/Array_Base.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
+#include "ace/os_include/os_netdb.h"
 
 // Indicates whether this application is responsible for destroying
 // the Event Channel it's using upon exit.

@@ -18,7 +18,6 @@
 #if !defined (AIRPLANE_SERVER_I_H)
 #define AIRPLANE_SERVER_I_H
 
-#include "tao/corba.h"
 #include "airplane_i.h"
 
 /**

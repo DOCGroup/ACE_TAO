@@ -12,15 +12,19 @@
 //=============================================================================
 #ifndef TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
-#include "fault_tol_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Endpoint_Selector_Factory.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
+
 #include "ace/Service_Config.h"
 
 class TAO_FT_Invocation_Endpoint_Selector;
@@ -34,7 +38,7 @@ class TAO_FT_Invocation_Endpoint_Selector;
  * right factory
  */
 
-class TAO_FT_Export TAO_FT_Endpoint_Selector_Factory
+class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
@@ -48,8 +52,7 @@ public:
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
-      TAO_GIOP_Invocation *
-      ACE_ENV_ARG_DECL);
+      ACE_ENV_SINGLE_ARG_DECL);
 
 private:
 
@@ -61,9 +64,10 @@ private:
   TAO_SYNCH_MUTEX mutex_;
 };
 
-//extern TAO_FT_Export ACE_Static_Svc_Descriptor ace_svc_desc_TAO_FT_Endpoint_Selector_Factory;
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FT, TAO_FT_Endpoint_Selector_Factory)
-ACE_FACTORY_DECLARE (TAO_FT, TAO_FT_Endpoint_Selector_Factory)
+//extern TAO_FT_ClientORB_Export ACE_Static_Svc_Descriptor ace_svc_desc_TAO_FT_Endpoint_Selector_Factory;
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FT_ClientORB, TAO_FT_Endpoint_Selector_Factory)
+ACE_FACTORY_DECLARE (TAO_FT_ClientORB, TAO_FT_Endpoint_Selector_Factory)
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H */

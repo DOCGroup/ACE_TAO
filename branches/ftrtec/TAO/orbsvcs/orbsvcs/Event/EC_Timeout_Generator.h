@@ -14,15 +14,16 @@
 
 #ifndef TAO_EC_TIMEOUT_GENERATOR_H
 #define TAO_EC_TIMEOUT_GENERATOR_H
-#include /**/ "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include /**/ "ace/pre.h"
+#include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
+#include /**/ "event_export.h"
+
 #include "EC_Timeout_Filter.h"
 
 class TAO_EC_QOS_Info;
@@ -91,4 +92,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_TIMEOUT_GENERATOR_H */

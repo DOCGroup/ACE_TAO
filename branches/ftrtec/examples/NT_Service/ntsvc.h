@@ -24,7 +24,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Mutex.h"
 
 class Service : public ACE_NT_Service
 {

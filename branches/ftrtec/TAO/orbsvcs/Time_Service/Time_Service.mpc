@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Time_Service_Server) : orbsvcsexe, core, time {
   exename  = Time_Service_Server
   Source_Files {

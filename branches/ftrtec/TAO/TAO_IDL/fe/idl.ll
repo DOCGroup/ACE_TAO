@@ -270,6 +270,9 @@ oneway		return IDL_ONEWAY;
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
+                    else {
+                      break;
+                    }
                   }
 		  tmp[strlen (tmp) - 1] = '\0';
 		  ACE_NEW_RETURN (yylval.sval,
@@ -570,14 +573,29 @@ idl_store_pragma (char *buf)
               delete [] trash;
             }
 
+          UTL_Scope *top_scope = idl_global->scopes ().top ();
+
           if (depth > 1)
             {
-              UTL_Scope *top_scope = idl_global->scopes ().top ();
-              top_scope->has_prefix (1);
+              top_scope->has_prefix (I_TRUE);
               ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
           idl_global->pragma_prefixes ().push (new_prefix);
+
+          if (idl_global->in_main_file ())
+            {
+              idl_global->root ()->prefix (new_prefix);
+              idl_global->root ()->set_imported (I_FALSE);
+              top_scope->has_prefix (I_TRUE);
+            }
+
+          ACE_CString ext_id;
+          ext_id.set (idl_global->filename ()->get_string (),
+                      0);
+          char *int_id = ACE::strnew (new_prefix);
+          (void) idl_global->file_prefixes ().rebind (ext_id, 
+                                                      int_id);
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
@@ -664,25 +682,39 @@ idl_store_pragma (char *buf)
 static long
 idl_atoi(char *s, long b)
 {
-	long	r = 0;
-	s++;
+  long    r = 0;
+  s++;
 
-	if (b == 8 && *s == '0')
-	  s++;
-	else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
-	  s += 2;
+  if (b == 8 && *s == '0')
+    {
+      s++;
+    }
+  else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
+    {
+      s += 2;
+    }
 
-	for (; *s; s++)
-	  if (*s <= '9' && *s >= '0')
-	    r = (r * b) + (*s - '0');
-	  else if (b > 10 && *s <= 'f' && *s >= 'a')
-	    r = (r * b) + (*s - 'a' + 10);
-	  else if (b > 10 && *s <= 'F' && *s >= 'A')
-	    r = (r * b) + (*s - 'A' + 10);
-	  else
-	    break;
+  for (; *s; ++s)
+    {
+      if (*s <= '9' && *s >= '0')
+        {
+          r = (r * b) + (*s - '0');
+        }
+      else if (b > 10 && *s <= 'f' && *s >= 'a')
+        {
+          r = (r * b) + (*s - 'a' + 10);
+        }
+      else if (b > 10 && *s <= 'F' && *s >= 'A')
+        {
+          r = (r * b) + (*s - 'A' + 10);
+        }
+      else
+        {
+          break;
+        }
+    }
 
-	return -r;
+  return -r;
 }
 
 /*
@@ -691,82 +723,118 @@ idl_atoi(char *s, long b)
 static ACE_UINT64
 idl_atoui(char *s, long b)
 {
-	ACE_UINT64	r = 0;
+  ACE_UINT64    r = 0;
 
-	if (b == 8 && *s == '0')
-	  s++;
-	else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
-	  s += 2;
+  if (b == 8 && *s == '0')
+    {
+      s++;
+    }
+  else if (b == 16 && *s == '0' && (*(s + 1) == 'x' || *(s + 1) == 'X'))
+    {
+      s += 2;
+    }
 
-	for (; *s; s++)
-	  if (*s <= '9' && *s >= '0')
-	    r = (r * b) + (*s - '0');
-	  else if (b > 10 && *s <= 'f' && *s >= 'a')
-	    r = (r * b) + (*s - 'a' + 10);
-	  else if (b > 10 && *s <= 'F' && *s >= 'A')
-	    r = (r * b) + (*s - 'A' + 10);
-	  else
-	    break;
+  for (; *s; ++s)
+    {
+      if (*s <= '9' && *s >= '0')
+        {
+          r = (r * b) + (*s - '0');
+        }
+      else if (b > 10 && *s <= 'f' && *s >= 'a')
+        {
+          r = (r * b) + (*s - 'a' + 10);
+        }
+      else if (b > 10 && *s <= 'F' && *s >= 'A')
+        {
+          r = (r * b) + (*s - 'A' + 10);
+        }
+      else
+        {
+          break;
+        }
+    }
 
-	return r;
+  return r;
 }
 
 /*
  * Convert a string to a float; atof doesn't seem to work, always.
  */
 static double
-idl_atof(char *s)
+idl_atof (char *s)
 {
-	char    *h = s;
-	double	d = 0.0;
-	double	f = 0.0;
-	double	e, k;
-	long	neg = 0, negexp = 0;
+  double d = 0.0;
+  double e, k;
+  long neg = 0, negexp = 0;
 
-	ACE_UNUSED_ARG (f);
-	ACE_UNUSED_ARG (h);
+  if (*s == '-') 
+    {
+      neg = 1;
+      s++;
+    }
 
-	if (*s == '-') {
-	  neg = 1;
-	  s++;
-	}
-	while (*s >= '0' && *s <= '9') {
-		d = (d * 10) + *s - '0';
-		s++;
-	}
-	if (*s == '.') {
-		s++;
-		e = 10;
-		while (*s >= '0' && *s <= '9') {
-			d += (*s - '0') / (e * 1.0);
-			e *= 10;
-			s++;
-		}
-	}
-	if (*s == 'e' || *s == 'E') {
-		s++;
-		if (*s == '-') {
-			negexp = 1;
-			s++;
-		} else if (*s == '+')
-			s++;
-		e = 0;
-		while (*s >= '0' && *s <= '9') {
-			e = (e * 10) + *s - '0';
-			s++;
-		}
-		if (e > 0) {
-			for (k = 1; e > 0; k *= 10, e--);
-			if (negexp)
-				d /= k;
-			else
-				d *= k;
-		}
-	}
+  while (*s >= '0' && *s <= '9') 
+    {
+      d = (d * 10) + *s - '0';
+      s++;
+    }
 
-	if (neg) d *= -1.0;
+  if (*s == '.') 
+    {
+      s++;
+      e = 10;
 
-	return d;
+      while (*s >= '0' && *s <= '9') 
+        {
+          d += (*s - '0') / (e * 1.0);
+          e *= 10;
+          s++;
+        }
+    }
+
+  if (*s == 'e' || *s == 'E') 
+    {
+      s++;
+
+      if (*s == '-') 
+        {
+            negexp = 1;
+            s++;
+        } 
+      else if (*s == '+')
+        {
+          s++;
+        }
+
+      e = 0;
+
+      while (*s >= '0' && *s <= '9') 
+        {
+          e = (e * 10) + *s - '0';
+          s++;
+        }
+
+      if (e > 0) 
+        {
+          for (k = 1; e > 0; k *= 10, e--);
+
+          if (negexp)
+            {
+              d /= k;
+            }
+          else
+            {
+              d *= k;
+            }
+        }
+    }
+
+  if (neg) 
+    {
+      d *= -1.0;
+    }
+
+  return d;
 }
 
 /*

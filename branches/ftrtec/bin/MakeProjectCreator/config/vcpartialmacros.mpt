@@ -1,6 +1,7 @@
-// ACE specific macros for nmake, vc6, vc7 and em3
+// -*- MPC -*-
+// $Id$
 
-pch_defines += ACE_USING_PCH
+// ACE specific macros for nmake, vc6, vc7 and em3
 
 MFC Release {
   defines += ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER

@@ -11,36 +11,25 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PARAMS_H
 #define TAO_PARAMS_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/Unbounded_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
+
 #include "objectid.h"
 #include "CORBA_String.h"
-#include "ace/SString.h"
-#include "ace/Unbounded_Queue.h"
-
 
 // Forward decls.
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
-
-// This is a quick hack to avoid having to unravel the intricacies of
-// the all the hairy order interdepencies that currently exist in TAO.
-// #if ! defined (__ACE_INLINE__)
-// #define TAO_LOCAL_INLINE
-// #else
-// #define TAO_LOCAL_INLINE ACE_INLINE
-// #endif /* ! __ACE_INLINE__ */
-
 
 // @@ Using an ACE_Unbounded_Queue to contain the endpoints and
 //    preconnects may not be the best container to use.  However, it
@@ -74,18 +63,6 @@ public:
 
   /// Destructor.
   ~TAO_ORB_Parameters (void);
-
-#if 0
-  /*
-   *  TODO: Need to be removed since preconnects are being
-   *  discontinued.
-   *
-   */
-  /// Specifies the endpoints to pre-establish connections on.
-  int preconnects (ACE_CString &preconnects);
-  TAO_EndpointSet &preconnects (void);
-  void add_preconnect (ACE_CString &preconnect);
-#endif /*if 0*/
 
   /// Specifies the endpoints on which this server is willing to
   /// listen for requests.
@@ -178,6 +155,10 @@ public:
   int single_read_optimization (void) const;
   void single_read_optimization (int x);
 
+  /// Mutators and accessors for rt_collocation_resolver
+  bool disable_rt_collocation_resolver (void) const;
+  void disable_rt_collocation_resolver (bool);
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -268,6 +249,19 @@ private:
 
   /// Single read optimization.
   int single_read_optimization_;
+
+  /// Default collocation resolver
+  /**
+   * The vanilla ORB has only one collocation resolver. But if the
+   * RTORB is in place, the RTORB can get in a new collocation
+   * resolver. There are some applications that would like to use the
+   * default collocation resolver with the RTORB. This boolean is the
+   * value of the option that the application passes in to enable/disable
+   * the use of RT collocation resolver with the RTORB. The default value
+   * is false to indicate that the RT_Collocation_Resolver will be
+   * loaded if the RTORB is used.
+   */
+  bool disable_rt_collocation_resolver_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -275,4 +269,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_PARAMS_H */

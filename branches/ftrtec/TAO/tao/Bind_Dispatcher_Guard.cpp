@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "tao/Bind_Dispatcher_Guard.h"
 
 #if !defined (__ACE_INLINE__)

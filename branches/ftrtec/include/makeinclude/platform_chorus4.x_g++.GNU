@@ -141,6 +141,9 @@ else  # ! exceptions
   CCFLAGS += -fno-exceptions
 endif # ! exceptions
 
+# Chorus doesn't have rwho
+rwho = 0
+
 OCFLAGS        += -O
 PIC             = -fPIC
 ARFLAGS         = srv

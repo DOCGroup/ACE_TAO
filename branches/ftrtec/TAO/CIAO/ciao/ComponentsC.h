@@ -26,37 +26,33 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_COMPONENTSC_H_
 #define _TAO_IDL_COMPONENTSC_H_
 
-
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Valuetype/AbstractBase.h"
-#include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/Value_VarOut_T.h"
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
-#include "tao/Valuetype/ValueFactory.h"
-#include "tao/Valuetype/Sequence_T.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Typecode.h"
 
 #include "CCM_ContainerC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO 
+#  define TAO_EXPORT_NESTED_MACRO
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -71,14 +67,26 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+// be/be_visitor_traits.cpp:50
+
+// Traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
+// be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+// be/be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
+
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:911
+
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
@@ -89,4 +97,3 @@
 #endif /* __BORLANDC__ */
 
 #endif /* ifndef */
-

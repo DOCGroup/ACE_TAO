@@ -3,7 +3,9 @@
 
 // INET_Addr.i
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Global_Macros.h"
+#include "ace/OS_NS_arpa_inet.h"
 
 // Default dtor.
 ACE_INLINE
@@ -14,14 +16,12 @@ ACE_INET_Addr::~ACE_INET_Addr (void)
 ACE_INLINE void
 ACE_INET_Addr::reset (void)
 {
-  ACE_OS::memset(&this->inet_addr_, 0, sizeof(this->inet_addr_));
-  if (this->get_type() == AF_INET) {
+  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  if (this->get_type() == AF_INET) 
     this->inet_addr_.in4_.sin_family = AF_INET;
-  }
 #if defined (ACE_HAS_IPV6)
-  else if (this->get_type() == AF_INET6) {
+  else if (this->get_type() == AF_INET6) 
     this->inet_addr_.in6_.sin6_family = AF_INET6;
-  }
 #endif  /* ACE_HAS_IPV6 */
 }
 
@@ -177,3 +177,10 @@ ACE_INET_Addr::set (const wchar_t addr[])
 }
 
 #endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE void
+ACE_INET_Addr::set_addr (void *addr, int len)
+{
+  this->set_addr (addr, len, 0);
+}
+

@@ -9,11 +9,9 @@
  *   Wrapper for Dijkstra style general semaphores that work
  *   across processes.
  *
- *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H
@@ -134,6 +132,26 @@ protected:
   /// We need this to get the right semantics...
   ACE_SV_Semaphore_Complex lock_;
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+};
+
+/*****************************************************************************/
+
+template <class T> class ACE_Malloc_Lock_Adapter_T;
+
+/**
+ * @class ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
+ *
+ * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for
+ * ACE_Process_Semaphore.
+ *
+ * This is needed since the ctor for ACE_Process_Semaphore doesn't match
+ * the standard form used by other lock strategy classes.
+ */
+ACE_TEMPLATE_SPECIALIZATION
+class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
+{
+public:
+  ACE_Process_Semaphore * operator () (const ACE_TCHAR *name);
 };
 
 #if defined (__ACE_INLINE__)

@@ -13,7 +13,7 @@
 #define CIAO_OBJECT_SET_T_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/ORB_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

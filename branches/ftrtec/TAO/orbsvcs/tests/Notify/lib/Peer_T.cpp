@@ -185,7 +185,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_ENDTRY;
 #else
-  ACE_UNUSED_ARG (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_ENV_ARG_NOT_USED;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 

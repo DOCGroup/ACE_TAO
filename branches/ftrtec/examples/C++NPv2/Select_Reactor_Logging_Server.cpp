@@ -4,7 +4,9 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Thread_Manager.h"
@@ -63,7 +65,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   for (;;) {
     char user_input[80];
     gets (user_input);
-    if (ACE_OS_String::strcmp (user_input, "quit") == 0) {
+    if (ACE_OS::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;
     }

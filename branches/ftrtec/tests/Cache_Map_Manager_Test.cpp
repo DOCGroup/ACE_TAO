@@ -19,19 +19,21 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_time.h"
 #include "test_config.h"
 #include "ace/Hash_Cache_Map_Manager_T.h"
 #include "ace/Map_Manager.h"
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Functor.h"
 #include "ace/Pair_T.h"
-#include "ace/Synch.h"
 #include "ace/Get_Opt.h"
 #include "Cache_Map_Manager_Test.h"     // Hash_Key class defined in here
 

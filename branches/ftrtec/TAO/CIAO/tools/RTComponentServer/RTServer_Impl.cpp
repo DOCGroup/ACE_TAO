@@ -127,10 +127,23 @@ parse_server_config_values (const Components::ConfigValues &options
         }
       else
         {
-          Components::InvalidConfiguration exc;
-          exc.name = CORBA::string_dup (options[i]->name ());
-          exc.reason = Components::UnknownConfigValueName;
-          ACE_THROW (exc);
+           Components::InvalidConfiguration *exc = 0;
+
+          ACE_NEW_THROW_EX (exc,
+                            Components::InvalidConfiguration,
+                            CORBA::NO_MEMORY ());
+
+          exc->name = CORBA::string_dup (options[i]->name ());
+          exc->reason = Components::InvalidConfigValueType;
+#if defined (ACE_HAS_EXCEPTIONS)
+          auto_ptr<Components::InvalidConfiguration> safety (exc);
+
+          // Direct throw because we don't have the ACE_TRY_ENV.
+          exc->_raise ();
+#else
+          // We can not use ACE_THROW here.
+          ACE_TRY_ENV.exception (exc);
+#endif
         }
     }
 }
@@ -144,7 +157,7 @@ CIAO::RTServer::RTContainer_Impl::~RTContainer_Impl ()
 int
 CIAO::RTServer::RTContainer_Impl::init (const Components::ConfigValues &options,
                                         Components::Deployment::ComponentInstallation_ptr inst
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidConfiguration))
 {
@@ -212,10 +225,23 @@ parse_container_config_values (const Components::ConfigValues &options
         }
       else
         {
-          Components::InvalidConfiguration exc;
-          exc.name = CORBA::string_dup (options[i]->name ());
-          exc.reason = Components::UnknownConfigValueName;
-          ACE_THROW (exc);
+           Components::InvalidConfiguration *exc = 0;
+
+          ACE_NEW_THROW_EX (exc,
+                            Components::InvalidConfiguration,
+                            CORBA::NO_MEMORY ());
+
+          exc->name = CORBA::string_dup (options[i]->name ());
+          exc->reason = Components::InvalidConfigValueType;
+#if defined (ACE_HAS_EXCEPTIONS)
+          auto_ptr<Components::InvalidConfiguration> safety (exc);
+
+          // Direct throw because we don't have the ACE_TRY_ENV.
+          exc->_raise ();
+#else
+          // We can not use ACE_THROW here.
+          ACE_TRY_ENV.exception (exc);
+#endif
         }
     }
 }

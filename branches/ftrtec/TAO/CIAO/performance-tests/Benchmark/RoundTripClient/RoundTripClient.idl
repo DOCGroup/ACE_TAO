@@ -3,14 +3,15 @@
 /**
  * @file RoundTripClient.idl
  *
- * Definition of the Component that provides the LatencyTest interface
- *
+ * Definition of the Component that uses the LatencyTest interface
+ * provided by RoundTrip component
  */
 //=============================================================================
 
 #ifndef CIAO_ROUNDTRIPCLIENT_IDL
 #define CIAO_ROUNDTRIPCLIENT_IDL
 
+#include <Components.idl>
 #include "../Benchmark.idl"
 
 module Benchmark

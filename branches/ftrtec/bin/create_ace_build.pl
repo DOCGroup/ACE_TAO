@@ -37,7 +37,7 @@ use File::Basename;
 use FileHandle;
 use File::stat;
 use File::Copy;
-
+use File::Path;
 
 $usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] [-nompc] <build name>\n";
 $directory_mode = 0777;   #### Will be modified by umask, also.
@@ -123,20 +123,39 @@ sub cab_link {
     }
     $status = chdir($curdir);
     if (! $status) {
-       die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
+      die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
     }
     
     my($base_linked) = basename($linked);
 
     if (! -e $real) {
-       ## This should never happen, but there appears to be a bug
-       ## with the underlying win32 apis on Windows Server 2003.
-       ## Long paths will cause an error which perl will ignore.
-       ## Unicode versions of the apis seem to work fine. 
-       ## To experiment try Win32 _fullpath() and CreateHardLink with
-       ## long paths. 
-       print "ERROR : Skipping $real.\n";
-       return;
+      ## If the real file "doesn't exist", then we need to change back to
+      ## the starting directory and look up the short file name.
+      chdir($starting_dir);
+      my($short) = Win32::GetShortPathName($fixed);
+
+      ## If we were able to find the short file name, then we need to
+      ## modyfy $real.  Note, we don't need to change back to $curdir
+      ## unless the short name lookup was successful.
+      if (defined $short) {
+        ## Replace a section of $real (the part that isn't a relative
+        ## path) with the short file name.  The hard link will still have
+        ## the right name, it's just pointing to the short name.
+        substr($real, length($real) - length($fixed)) = $short;
+
+        ## Get back to the right directory for when we make the hard link
+        chdir($curdir);
+      }
+      else {
+        ## This should never happen, but there appears to be a bug
+        ## with the underlying win32 apis on Windows Server 2003.
+        ## Long paths will cause an error which perl will ignore.
+        ## Unicode versions of the apis seem to work fine. 
+        ## To experiment try Win32 _fullpath() and CreateHardLink with
+        ## long paths. 
+        print "ERROR : Skipping $real.\n";
+        return;
+      }
     }
 
     if (-e $base_linked) {
@@ -228,7 +247,7 @@ unless (-d "$starting_dir/build") {
 foreach $build (@builds) {
   unless (-d "$starting_dir/$build") {
     print "Creating $starting_dir/$build\n";
-    mkdir ("$starting_dir/$build", $directory_mode);
+    mkpath ("$starting_dir/$build", 0, $directory_mode);
   }
 }
 
@@ -296,7 +315,6 @@ sub wanted {
         ! /^.*\.opt\z/s &&
         ! /^.*\.bak\z/s &&
         ! /^.*\.ilk\z/s &&
-        ! /^.*\.exp\z/s &&
         ! /^.*\.pdb\z/s &&
         ! /^\.cvsignore\z/s &&
         ! /^\.disable\z/s &&
@@ -329,7 +347,10 @@ foreach $file (@files) {
     } else {
       unless (($^O ne 'MSWin32') && (-e "$build/$file")) {
         if (!$absolute) { 
-          $up = '../..';
+          $up = '..';
+          while ($build =~ m%/%g) {
+            $up .= '/..';
+          }
           while ($file =~ m%/%g) {
             $up .= '/..';
           }

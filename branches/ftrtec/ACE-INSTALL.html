@@ -24,8 +24,9 @@ code.  In addition, you should check out our <A
 HREF="docs/ACE-development-process.html">development
 process</A>.  As you start working with ACE, we suggest you get copies
 of the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE/book1/">C++NPv1</A> and <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE/book2/">C++NPv2</A> books
+HREF="http://www.cs.wustl.edu/~schmidt/ACE/book1/">C++NPv1</A>, <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE/book2/">C++NPv2</A>, and <A
+HREF="http://www.amazon.com/exec/obidos/tg/detail/-/0201699710/qid=1066059513/sr=8-1/ref=sr_8_1/103-7740325-3955843?v=glance&s=books&n=507846">APG</A> books
 to help guide you after you've built and installed ACE.  You should
 also consult the <a href="docs/ACE-FMM.html">ACE Frequently Made
 Mistakes page</a>.  If you encounter any problems or would like to
@@ -61,7 +62,7 @@ HREF="http://www.cs.wustl.edu/~doc/">DOC group</A>, <A
 HREF="http://www.riverace.com/">Riverace</A>, <A
 HREF="http://www.theaceorb.com">OCI</A>, and members of the ACE user
 community have all contributed ports to make ACE the successful and
-far-reaching toolkit it is today.  Any UNIX/POSIX/Win32 variation is a
+far-reaching toolkit it is today.  Any UNIX/POSIX/Windows variation is a
 potential target platform for ACE.  If you have <A
 HREF="docs/ACE-porting.html">porting questions</A> or have a problem
 compiling the ACE source distribution, please contact one of the
@@ -89,7 +90,7 @@ For information on TAO's platform coverage and support, please also see
 <tbody>
   <tr>
     <th>DOC Group</th>
-    <td><A HREF="http://www.dre.vanderbilt.edu/scoreboard/">Tested</A> 
+    <td><A HREF="http://www.dre.vanderbilt.edu/scoreboard/">Tested</A>
         and used daily by the DOC group:
         Solaris 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)
         Windows NT 4.0, 2000, XP (MSVC++ 6.x, and 7.x, and
@@ -117,7 +118,7 @@ For information on TAO's platform coverage and support, please also see
   </tr>
   <tr>
     <th>Remedy IT</th>
-    <td>Maintains ACE on certain platforms required for their ACE and 
+    <td>Maintains ACE on certain platforms required for their ACE and
         TAO service offerings.
     </td>
     <td>Remedy IT <A HREF="http://www.theaceorb.nl">web site</A></td>
@@ -165,21 +166,23 @@ supported by the DOC group, Riverace, or OCI. <P>
 <H3><A NAME="installnotes">Installation Notes</A></H3>
 
 <UL>
-  <LI><B>Win32 (Windows NT, Windows 2000 and Windows '9x/ME) </B><P>
+  <LI><B>Windows (Windows NT, 2000, XP, 2003, etc., and Windows '9x/ME) </B><P>
 
       All of ACE has been ported to the Win32 API (which includes
-      Windows NT, Windows 2000, and Windows '95/98/ME).  The entire
-      release now compiles using the Microsoft Visual C++ 5.0, and
-      6.0 compilers.  ACE can be built as both a static (LIB) and
-      dynamic (DLL) library, using the Win32 installation process
-      described below.<P>
+      Windows NT, Windows 2000, and Windows '95/98/ME) and Win64.  The entire
+      release now compiles using the Microsoft Visual C++ 6.0, and
+      7.1 (aka Visual C++ .NET 2003) compilers.  ACE can be built as both
+      a static (LIB) and dynamic (DLL) library, using the Win32 installation
+      process described below.<P>
 
       Please see the <A HREF="#Non-static Object Manager">Non-static
       ACE_Object_Manager</A> discussion below.<p>
 
       We've also added some support for
       <A HREF="#mingw">GNU g++ with MinGW</A>,
-      Borland C++ Builder 4.0 and later, and IBM's VisualAge C++ compiler.
+      <A HREF="#cygwin">GNU g++ with Cygwin</A>
+      <A HREF="#borland">Borland C++ 5.5, Borland C++ Builder 4.0/5.0/6.0
+      and Borland C++ BuilderX</A>, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
       to the ACE mailing list if you run into problems. <P>
@@ -187,7 +190,7 @@ supported by the DOC group, Riverace, or OCI. <P>
   <li><b>Windows CE</b><p>
 
       Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for
-      up-to-date information about ACE on CE.  <P>
+      up-to-date information about ACE on CE.<P>
 
   <LI><B> Solaris 2.6, 7, 8, and 9 using Sun
       Sun 5.x, Forte 6 and 7, Centerline C++ 2.x, GNU gcc 2.7.x
@@ -614,7 +617,7 @@ supported by the DOC group, Riverace, or OCI. <P>
       VxWorks/Tornado.  An anonymous contributor has also
       provided <a href="os-patches/vxworks-5.1.txt">notes for using
       ACE with VxWorks 5.1.</a>. It is not possible to use VxWorks 5.4
-      and earlier with ACE anymore because the compilers delivered with 
+      and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.<P>
 
       Tornado 2.2/VxWorks 5.5 support IP multicast.  That is not enabled
@@ -742,8 +745,8 @@ supported by the DOC group, Riverace, or OCI. <P>
       ToolSuite (ETS) version 9.1. The port is being tested with
       Microsoft Visual C++ 6.<p> To build for PharLap, use the
       ace/config-pharlap.h configuration file, and the instructions
-      for building on Win32. Building the ACE library is the same as
-      for regular Win32 platforms, except you choose one of the PharLap
+      for building on Windows. Building the ACE library is the same as
+      for regular Windows platforms, except you choose one of the PharLap
       ETS configurations to build within Visual C++. Only static
       library configurations are available for PharLap at this time.
       For an example of how to build
@@ -762,7 +765,7 @@ supported by the DOC group, Riverace, or OCI. <P>
         <p>1. The latest version of the Apple Developer Tools
         (December 2002)</p> 
         <p>2. The dlcompat library (obtained either through Fink or
-        SourceForge)</p> 
+        SourceForge)</p>
 
         <p>When creating $ACE_ROOT/ace/config.h for Mac OS X, you need
         to add the following if you obtained dlcompat via Fink:</p>
@@ -771,7 +774,7 @@ supported by the DOC group, Riverace, or OCI. <P>
 
         <p>You'll also need to do:</p>
 
-        <p>setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace</p>
+        <p>setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib</p>
         <p>setenv MACOSX_DEPLOYMENT_TARGET 10.2</p>
 
         <p>Currently, all ACE tests pass except Process_Mutex_Test and
@@ -781,7 +784,7 @@ supported by the DOC group, Riverace, or OCI. <P>
         <p>The work to port ACE to Mac OS X was done by several people,
         John Zorko
         &lt;<Ahref="mailto:j.zorko@att.net">j.zorko@att.net</A>&gt; is
-        only one of  them.</p>
+        only one of them.</p>
 
 </UL>
 
@@ -1061,7 +1064,7 @@ option available with
 <H3><A NAME="aceinstall">Building and Installing ACE</A></H3>
 
 The following explains how to build ACE on <A HREF="#unix">UNIX</A>
-and <A HREF="#win32">Win32</A>.
+and <A HREF="#win32">Windows</A>.
 
 <h4>General Rules</h4>
 <UL>
@@ -1080,9 +1083,117 @@ and <A HREF="#win32">Win32</A>.
 <hr align=left width="50%">
 <H4><A NAME="unix">Building and Installing ACE on UNIX</A></H4>
 
-Building and installing ACE on UNIX is relatively simple (the <A
-HREF="#win32">process</A> for Win32 is different).  Here's what you
-need to do:<P>
+As of ACE 5.4, you can choose between two methods of building ACE on
+UNIX:
+<OL>
+  <LI><A HREF="#unix_autoconf">GNU Autoconf</A></LI>
+  <LI><A HREF="#unix_traditional">Traditional ACE/GNU Make Configuration</A></LI>
+</OL>
+The <A HREF="#win32">build process</A> for Windows is different from both of
+the UNIX methods.
+
+<H5><A NAME="unix_autoconf">Building ACE with GNU Autoconf</A></H5>
+<P>
+GNU Autoconf support has been partially present in a number of ACE versions.
+However, ACE 5.4 was the first version that supported it in earnest. There
+are still a few problems with this method, so you should be careful to test
+the resulting ACE library before using it in your applications. The
+traditional configuration method is still more reliable. Any help you can
+lend to improve the ACE build process using GNU Autoconf would be very much
+appreciated. Please send any fixes to the
+<A HREF="mailto:ace-users@cs.wustl.edu">ACE users</A>mailing list.</P>
+<P>
+The ACE kit has been bootstrapped so you do not need to install the GNU
+Autotools (autoconf, automake, libtool) unless you want to participate in
+testing and developing this process further. To simply configure and build
+ACE, do:
+<OL>
+  <LI><CODE>cd</CODE> to the top-level <CODE>ACE_wrappers</CODE> directory.</LI>
+  <LI>Create a subdirectory to hold your build's configuration and built
+      ACE version, and then change to the new directory:
+       <pre>
+       mkdir build
+       cd build
+       </pre>
+      Note that you do not run the <code>create_ace_build</code> utility
+      mentioned in the <A HREF="#cloning">Cloning the Source Tree</A>
+      section. The configure script takes care of creating all files
+      and links that are needed.</LI>
+  <LI>Configure ACE for your platform by issuing the following command:
+       <pre>
+       ../configure [options]
+       </pre>
+      <code>options</code> can be a variable setting (such as setting
+      <code>CXX</code> to your C++ compiler command) any standard GNU
+      configure options, or any of the following ACE configure options
+      (default values are in parentheses):
+      <UL>
+        <LI><code>--enable-alloca</code> (no): Enable <code>alloca()</code>
+          support.</LI>
+        <LI><code>--enable-debug</code> (yes): Build ACE with debugging
+          support.</LI>
+        <LI><code>--enable-exceptions</code> (yes): Build ACE with C++
+          exception support compiled in.</LI>
+        <LI><code>--enable-fast</code> (no): Use the Sun C++ <code>-fast</code>
+          option to build. Only used on Solaris.</LI>
+        <LI><code>--enable-inline</code> (yes): Enable inline functions.</LI>
+        <LI><code>--enable-optimize</code> (yes): Enable building optimized.</LI>
+        <LI><code>--enable-prof</code> (no): Enable profiling support.</LI>
+        <LI><code>--enable-purify</code> (no): Build with support for
+          IBM Rational Purify.</LI>
+        <LI><code>--enable-quantify</code> (no): Build with support for
+          IBM Rational Quantify.</LI>
+        <LI><code>--enable-repo</code> (no): Enable the GNU g++
+          <code>-frepo</code> option. Only useful for pre-3.0 g++ and egcs.</LI>
+        <LI><code>--enable-rtti</code> (yes): Compile with C++ run-time type
+          information RTTI support.</LI>
+        <LI><code>--enable-stdcpplib</code> (yes): Build with support for the
+          standard C++ library, as opposed to the older iostreams library.</LI>
+        <LI><code>--enable-log-msg-prop</code> (yes): Enable
+          <code>ACE_Log_Msg</code> property propagation to ACE-created
+          threads.</LI>
+        <LI><code>--enable-logging</code> (yes): Enable the ACE logging
+          macros.</LI>
+        <LI><code>--enable-malloc-stats</code> (no): Compile in additional code
+          for collecting memory allocation statistics.</LI>
+        <LI><code>--enable-pi-pointers</code> (yes): Enable
+          position-independent pointers for shared memory classes.</LI>
+        <LI><code>--enable-probe</code> (no): Enable the
+          <code>ACE_Timeprobe</code> class.</LI>
+        <LI><code>--enable-reentrant</code> (yes): Enable use of platform's
+          reentrant functions.</LI>
+        <LI><code>--enable-static-obj-mgr</code> (yes): Enable use of a
+          static <code>ACE_Object_Manager</code>.</LI>
+        <LI><code>--enable-threads</code> (yes): Enable threading support.</LI>
+        <LI><code>--enable-verb-not-sup</code> (no): Enable verbose ENOTSUP
+          reports at run time.</LI>
+        <LI><code>--enable-trace</code> (no): Enable ACE execution tracing
+          support.</LI>
+        <LI><code>--enable-xt-reactor</code> (no): Enable support for the
+          <code>ACE_XtReactor</code> class.</LI>
+        <LI><code>--enable-fl-reactor</code> (no): Enable support for the
+          <code>ACE_FlReactor</code> class.</LI>
+        <LI><code>--with-gperf</code> (yes): Build the implementation of
+          gperf that comes with ACE.</LI>
+        <LI><code>--with-rmcast</code> (yes): Include the ACE_RMCast library
+          when building ACE.</LI>
+        <LI><code>--with-qos</code> (no): Include the ACE_QoS library when
+          building ACE.</LI>
+        <LI><code>--with-ssl</code> (yes): Include the ACE_SSL library when
+          building ACE. Requires the SSL components to be available using the
+          compiler's and linker's default search directories.</LI>
+        <LI><code>--with-tli-device</code> (/dev/tcp): Specifies the device
+          name for opening a TLI device at run time.</LI>
+      </UL>
+  </LI>
+  <LI>Build ACE by typing <code>make</code>.
+  <LI>(Optional) Install ACE by typing <code>make install</code>.
+</OL>
+
+<H5><A NAME="unix_traditional">Using the Traditional ACE/GNU Configuration</A></H5>
+<P>
+Here's what you need to do to build ACE using GNU Make and ACE's traditional
+per-platform configuration method:</P>
 
 <OL>
   <LI>Install <A HREF="ftp://prep.ai.mit.edu/pub/gnu/make/">GNU make</A>
@@ -1094,15 +1205,21 @@ need to do:<P>
       name of the root of the directory where you keep the ACE wrapper
       source tree.  The ACE recursive Makefile scheme needs this information.
       There are several ways to set the ACE_ROOT variable.  For
-      instance, in my .login file I have the following entry:<P>
+      instance, in my .login file for TSCH/CSH I have the following entry:<P>
 
       <pre><code>
       % setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers
       </code></pre><P>
 
-      However, if you're building a number of versions of ACE, e.g., for
-      different OS platforms or for different releases of ACE, you might use
-      the following approach:
+      BTW, if you're running BASH or Bourne Shell you'll need to do the following:
+
+      <pre><code>
+      % ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
+      </code></pre><P>
+
+      If you're building a number of versions of ACE, however, (e.g., for
+      different OS platforms or for different releases of ACE) you might use
+      the following approach (again assuming TCSH/CSH):
 
       <pre><code>
       % setenv ACE_ROOT $cwd
@@ -1114,19 +1231,18 @@ need to do:<P>
       however that you can normally skip this step because the
       defaults are typically fine for most systems. <P>
 
-  <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
-      <code>$ACE_ROOT/ace/config.h</code>
-      file that contains the appropriate platform/compiler-specific
-      header configurations, e.g.,
+  <LI>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
+      that includes the appropriate platform/compiler-specific
+      header configurations from the ACE source directory. For example:
 <PRE><CODE>
-% ln -s config-sunos5-sunc++-4.x.h config.h
+#include "ace/config-sunos5-sunc++-4.x.h"
 </CODE></PRE>
-      This file
+      The platform/compiler-specific configuration file
       contains the #defines that are used throughout ACE to indicate
-      which features your system supports (see the
-      <code>$ACE_ROOT/ace/OS.h</code> file for many examples of how
-      the ACE build configuration is affected by these macro
-      settings).  Make sure you settings are placed
+      which features your system supports. See the
+      <code>$ACE_ROOT/ace/README</code> file for a description of these
+      macro settings. If you desire to add some site-specific or build-specific
+      changes, you can add them to your config.h file; place them
       <strong>before</strong> the inclusion of the platform-specific
       header file.<P>
 
@@ -1136,16 +1252,16 @@ need to do:<P>
       email if you get it working so I can add it to the master ACE
       release.<P>
 
-  <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
-      $ACE_ROOT/include/makeinclude/platform_macros.GNU file
+  <LI>Create a build configuration file,
+      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>,
       that contains the appropriate platform/compiler-specific
       Makefile configurations, e.g.,
 <PRE><CODE>
-% ln -s platform_sunos5_sunc++.GNU platform_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
 </CODE></PRE>
- This file
-      contains the compiler and Makefile directives that are
-      platform/compiler-specific<P>
+      This file contains the compiler and Makefile directives that are
+      platform/compiler-specific. If you'd like to add make options, you
+      can add them before including the paltform-specific configuration.<P>
 
   <LI>Note that because ACE builds shared libraries, you'll need to set
       LD_LIBRARY_PATH to whereever you put the binary version of the
@@ -1153,7 +1269,7 @@ need to do:<P>
       like the following<P>
 
       <pre><code>
-      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
+      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
       </code></pre><P>
 
   <LI>When all this is done, hopefully all you'll need to do is type:<P>
@@ -1186,11 +1302,11 @@ need to do:<P>
 
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
+<H4><A NAME="win32">Building and Installing ACE on Windows</A></H4>
 
 Below are instructions for building ACE with <A
 HREF="#borland">Borland C++Builder</A>, <A HREF="#msvc">Microsoft
-Visual C++</A> and <A HREF="#mingw">MinGw</A>. <P>
+Visual C++</A>, <A HREF="#mingw">MinGw</A>, and <A HREF="#cygwin">Cygwin</A>.<P>
 
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt
@@ -1205,15 +1321,15 @@ Makefile.bor files to compile ACE, the ACE one-button tests, and TAO
 with Borland C++ Builder. <P>
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="borland">Building and Installing ACE on Win32 with Borland
-C++Builder</A></H4>
+<H4><A NAME="borland">Building and Installing ACE on Windows with Borland
+C++</A></H4>
 
 If you are building for a machine without a network card, you may want
 to check <A HREF="#win32nonic">here</A> first. <P>
 
 <OL>
   <LI>Uncompress the ACE distribution into a directory, where it will
-create an
+      create an
       ACE_wrappers directory containing the source.  The ACE_wrappers
       directory will be referred to as ACE_ROOT in the following steps -- so
       ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
@@ -1240,7 +1356,7 @@ create an
       <BR>
       <CODE>set ACE_ROOT=C:\ACE_wrappers</CODE><BR>
       <BR>
-  <LI>Set the BCBVER environment vairable to the main version of your BCB compiler.
+  <LI>Set the BCBVER environment vairable to the main version of your Borland C++ compiler.
       Currently 4, 5, and 6 are supported. For example:<BR>
       <BR>
       <CODE>set BCBVER=5</CODE><BR>
@@ -1269,6 +1385,12 @@ variables
       <BR>
       Set the environment variable below to build a version of ACE that is build against the VCL-compatible run-time library. This can only be used with BCB version 4<BR>
       <CODE>set PASCAL=1</CODE><BR>
+      <BR>
+      Set the environment variable below to build a version of ACE using the
+      C++BuilderX preview compiler. This compiler isn't supported at this moment
+      but by setting this environment variable the new compiler is used and
+      you can expirement with this compiler.<BR>
+      <CODE>set CBX=1</CODE><BR>
       <BR>
       You can then start the build with the command
       <BR><CODE>make -f Makefile.bor</CODE><BR>
@@ -1301,9 +1423,10 @@ pascal).  To build VCL compatible libraries try
 make -f Makefile.bor
 </CODE></PRE></BLOCKQUOTE> <P>
 
-The Borland C++ Builder 4.0/5.0 port has been done by <A
-HREF="mailto:jody@atdesk.com">Jody Hagins</A> and <A
-HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A>. <P>
+The Borland C++ Builder 4.0/5.0/6.0 port has been done by <A
+HREF="mailto:jody@atdesk.com">Jody Hagins</A>, <A
+HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A> and <A
+HREF="mailto:jwillemsen@remedy.nl">Johnny Willemsen</A>. <P>
 
 <B>ACE TESTS</B><P>
 
@@ -1313,16 +1436,15 @@ Makefile.bor file, that is:<P>
 make -f Makefile.bor
 </CODE></BLOCKQUOTE><P>
 
-Once you build all the tests, you can run a perl script:<P>
+Once you build all the tests, you can run the perl script:<P>
 <BLOCKQUOTE><CODE>run_test.pl -ExeSubDir
-Dynamic\Release</CODE></BLOCKQUOTE><P> or the the batch file:<P>
-<BLOCKQUOTE><CODE>run_tests.bat bor</CODE></BLOCKQUOTE><P> in the
+Dynamic\Release</CODE></BLOCKQUOTE><P> in the
 <code>tests</code> directory to try all the tests. You need to make
 sure the ACE bin directory (in this case ACE_ROOT\bin\Dynamic\Release)
 is on the path before you try to run the tests.<p>
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="msvc">Building and Installing ACE on Win32 with
+<H4><A NAME="msvc">Building and Installing ACE on Windows with
 Microsoft Visual C++</A></H4>
 
 <EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
@@ -1378,9 +1500,9 @@ with these compilers but probably not without a bit of effort. <P>
       in your PATH whenever you run programs that uses ACE.  Otherwise
       you may experience problems finding ace.dll or aced.dll.<BR>
       <BR>
-  <LI>If you are building for Windows NT or Windows 2K then you can start building
-      without anymore changes.  If you are building on Windows 9x/Me,
-      then you should add the line <BR>
+  <LI>If you are building for Windows NT 4 or later (Windows 2000, XP, etc.)
+      then you can start building without anymore changes. If you are building
+      on Windows 9x/Me, then you should add the line <BR>
       <BR>
       <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
       <BR>
@@ -1446,8 +1568,7 @@ The tests are located in ACE_ROOT\tests.  There is also a workspace in
 that directory to build all the tests (tests.dsw)<P>
 
 Once you build all the tests (Batch Build works well for this), you
-can run perl script <code>run_test.pl</code> or the the batch file <a
-href="tests/run_tests.bat"><code>run_tests.bat</code></a> in the
+can run perl script <code>run_test.pl</code> in the
 <code>tests</code> directory to try all the tests.<p>
 
 <A NAME="win32nonic">
@@ -1521,7 +1642,7 @@ slashes.  If this occurs, the easiest way to fix it is to recreate it.</P>
 
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="mingw">Building and Installing ACE on Win32 with MinGW</A></H4>
+<H4><A NAME="mingw">Building and Installing ACE on Win32 with MinGW/ MSYS</A></H4>
 
 <p>
 If you are building for a machine without a network card, you may want
@@ -1537,71 +1658,33 @@ a look at the <A HREF="#g++">Compiling ACE with GNU g++</A> section.
 <p>
 You will need the MinGW build tools and libraries, downloable from
 <A HREF="http://www.mingw.org"><TT>http://www.mingw.org</TT></A>.
-For our build we required the following packages:
-<A NAME="mingwpacks">
-<blockquote>
-<B><TT>gcc, binutils, ld, libbfd, mingw-runtime, w32api</TT></B>.
-</blockquote>
 
-<p>
-You will also need GNU make for Win32 and the set of UNIX tools that
-the ACE UNIX build system uses (this include but is not limited to
-<TT><B>sh, rm, cp</B></TT>).
-For this purpose you can grab the
-<A HREF="http://cygwin.com/setup.exe">cygwin</A>
-distribution from
-<A HREF="http://cygwin.com"><TT>http://cygwin.com</TT></A>.
-
-<p>
-Be careful, because cygwin includes it's own version of the compiler
-and build tools, you will need to have the MinGW build tools before
-the cygwin set on you PATH environment variable (more on this later).
-The steps we followed in the build are:
+<BR>
+For our build we require the packages
+<B><TT>MinGW</TT></B> and <B><TT>MSYS</TT></B>.
 
 <OL>
 
-  <LI> Install cygwin (this can be easy downloading and running
-       <A HREF="http://cygwin.com/setup.exe"><tt>setup.exe</tt></A>
-       from the cygwin site).
+  <LI> Install the MinGW tools into a common directory, say c:/mingw.
+      <BR><BR>
+
+  <LI> Install the MSYS tools into a common directory, say c:/msys.
        <BR><BR>
 
-  <LI> Install the MinGW tools. Download all the needed packages (see
-       <A HREF="#mingwpacks">above</A>) and
-       unpack them on the same base directory, say c:/mingw32.
-       If some of the packages are distributed on
-       <TT>.tar.gz</TT> format, you may need to use
-       the cygwin version of the <TT><B>tar</B></TT> utility.
-       <BR><BR>
-
-  <LI> Open a cygwin shell. Set your <TT>PATH</TT> environment variable so
+  <LI> Open a MSYS shell. Set your <TT>PATH</TT> environment variable so
        your MinGW's <TT>bin</TT> directory is first:
 
        <blockquote><code><pre>
-       % export PATH=//c/mingw32/bin:$PATH
+       % export PATH=/c/mingw/bin:$PATH
        </pre></code></blockquote>
-
-       <p>
-       Note cygwin uses ``<TT>/</TT>'' as directory separator,
-       and ``<TT>//X</TT>'' as a notation for Win32 drive <TT>X</TT>.
-       Note also that you <EM>can't</EM> use ``<TT>c:/mingw32/bin</TT>''
-       because, for cygwin,
-       ``<TT>:</TT>'' is path separator character, as in UNIX.
-       <BR><BR>
 
   <LI> Add an <TT>ACE_ROOT</TT> environment variable pointing to the
        root of your ACE wrappers source tree:
 
        <blockquote><code><pre>
-       % export ACE_ROOT=c:/work/mingw/ACE_wrappers
+       % export ACE_ROOT=/c/work/mingw/ACE_wrappers
        </pre></code></blockquote>
 
-       <p>
-       Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' cygwin
-       notation as this is seen by MinGW's compiler and it doesn't
-       support that (it <EM>does</EM> support ``<TT>/</TT>'' as directory
-       separator however).
-
-       <p>
        From now on, we will refer to the root directory of the ACE
        source tree as <TT>$ACE_ROOT</TT>.
        <BR><BR>
@@ -1621,23 +1704,6 @@ The steps we followed in the build are:
        </pre></code></blockquote>
 
        before the <CODE>#include</CODE> line.
-
-       Also, if you don't have Winsock 2 (check the <TT>SYSTEM</TT>
-       and/or <TT>SYSTEM32</TT> subdirectories of the windows
-       instalation directory for <TT><B>ws2_32.dll</B></TT>), you
-       will need
-
-       <blockquote><code><pre>
-       #define ACE_HAS_WINSOCK2 0
-       </pre></code></blockquote>
-
-       before the <TT>#include</TT> line. On NT 4, Windows 98 and
-       later versions, you surely have Winsock 2. In Windows 95,
-       including OSR2, you may don't have it if it wasn't specially
-       installed. You may download it from the <A
-       HREF="http://www.microsoft.com">microsoft</A> site. This is
-       recommended as much ACE functionality depends on Winsock 2, and
-       ACE without Winsock 2 support is tested very infrequently.
        <BR><BR>
 
   <LI> Create a file called <TT>platform_macros.GNU</TT> in the
@@ -1651,6 +1717,7 @@ The steps we followed in the build are:
        actual directory, GNU make will take the value from the
        environment variable you defined previously.
 
+       <p>
        If you lack Winsock 2, add the line
 
        <blockquote><code><pre>
@@ -1660,7 +1727,149 @@ The steps we followed in the build are:
        before the previous one.
        <BR><BR>
 
-  <LI> On the cygwin shell, change to the $ACE_ROOT/ace directory and
+  <LI> In the MSYS shell, change to the $ACE_ROOT/ace directory and
+       run make:
+
+       <blockquote><code><pre>
+       % cd $ACE_ROOT/ace
+       % make
+       </pre></code></blockquote>
+       
+       <p>
+       This should create <TT>libACE.dll</TT> (the Win32 shared library) and
+       <TT>libACE.dll.a</TT> (the Win32 import library for the DLL).
+       Note that the name for the ACE DLL follows the MinGW convention, which itself
+       resembles UNIX.
+     
+       <p>
+       If you want static libs also, you may run:
+
+       <blockquote><code><pre>
+       % make static_libs=1
+       </pre></code></blockquote>
+
+  <LI> <A NAME="mingwrunpath">
+       The same rules for Win32 search of DLLs apply for MinGW. If you
+       want to run some ACE programs from the MSYS shell, you may
+       need to add the directory for <TT>libACE.dll</TT> to your PATH:
+
+       <blockquote><code><pre>
+       % export PATH=/c/work/mingw/ACE_wrappers/ace:$PATH
+       </pre></code></blockquote>
+
+</OL>
+
+<B>ACE TESTS</B><P>
+
+The tests are located in <TT>$ACE_ROOT/tests</TT>.
+After building the library, you can change to that directory and run
+make:
+
+       <blockquote><code><pre>
+       % cd $ACE_ROOT/tests
+       % make
+       </pre></code></blockquote>
+
+<p>
+Once you build all the tests, you can run
+<code>run_tests.pl</code> in the
+<code>tests</code> directory to try all the tests:
+
+       <blockquote><code><pre>
+       % perl run_test.pl
+       </pre></code></blockquote>
+
+<p>
+If you are using ACE as a DLL, you will need to modify your PATH
+variable as explained <A HREF="#mingwrunpath">above</A>.
+
+<p>
+You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
+of the various tests on MinGW and the different Windows flavors.
+
+<P><hr align=left width="50%"><P>
+<H4><A NAME="cygwin">Building and Installing ACE on Win32 with Cygwin</A></H4>
+
+<p>
+If you are building for a machine without a network card, you may want
+to check <A HREF="#win32nonic">here</A> first.
+
+<p>
+Building and installing ACE on <A HREF="http://www.cygwin.com">Cygwin</A>
+uses the <A HREF="#unix">UNIX</A> building process.
+Also, as Cygwin uses GNU g++, you may want to take
+a look at the <A HREF="#g++">Compiling ACE with GNU g++</A> section.
+
+<p>
+You will need the Cygwin build tools and libraries, downloable from
+<A HREF="http://www.cygwin.com"><TT>http://www.cygwin.com</TT></A>.
+For our build we require the following packages besides the packages the
+setup selects by default:
+<A NAME="cygwinpacks">
+<blockquote>
+<B><TT>gcc (version 3.2.3), cygipc, make, perl</TT></B>.
+</blockquote>
+
+<OL>
+
+  <LI> Install Cygwin (this can be easy downloading and running
+       <A HREF="http://cygwin.com/setup.exe"><tt>setup.exe</tt></A>
+       from the Cygwin site). For working with ACE we recommend
+       to select <code>DOS</code> as default text file type.
+       <BR><BR>
+
+  <LI> Open a Cygwin shell. Set your <TT>PATH</TT> environment variable so
+       your CYgwin <TT>bin</TT> directory is first:
+
+       <blockquote><code><pre>
+       % export PATH=//c/cygwin/bin:$PATH
+       </pre></code></blockquote>
+
+       <p>
+       Note Cygwin uses ``<TT>/</TT>'' as directory separator,
+       and ``<TT>//X</TT>'' as a notation for Win32 drive <TT>X</TT>.
+       Note also that you <EM>can't</EM> use ``<TT>c:/cygwin/bin</TT>''
+       because, for Cygwin,
+       ``<TT>:</TT>'' is path separator character, as in UNIX.
+       <BR><BR>
+
+  <LI> Add an <TT>ACE_ROOT</TT> environment variable pointing to the
+       root of your ACE wrappers source tree:
+
+       <blockquote><code><pre>
+       % export ACE_ROOT=c:/work/cygwin/ACE_wrappers
+       </pre></code></blockquote>
+
+       <p>
+       Note here you <EM>can't</EM> use the ``<TT>//X</TT>'' Cygwin
+       notation as this is seen by Cygwin's compiler and it doesn't
+       support that (it <EM>does</EM> support ``<TT>/</TT>'' as directory
+       separator however).
+
+       <p>
+       From now on, we will refer to the root directory of the ACE
+       source tree as <TT>$ACE_ROOT</TT>.
+       <BR><BR>
+
+  <LI> Create a file called <TT>config.h</TT> in the
+       <TT>$ACE_ROOT/ace</TT> directory that contains:
+
+       <blockquote><code><pre>
+       #include "ace/config-cygwin32.h"
+       </pre></code></blockquote>
+
+  <LI> Create a file called <TT>platform_macros.GNU</TT> in the
+       <TT>$ACE_ROOT/include/makeinclude</TT> directory containing:
+
+       <blockquote><code><pre>
+       include $(ACE_ROOT)/include/makeinclude/platform_cygwin32.GNU
+       </pre></code></blockquote>
+
+       In the above text, don't replace <TT>$(ACE_ROOT)</TT> with the
+       actual directory, GNU make will take the value from the
+       environment variable you defined previously.
+
+  <LI> On the Cygwin shell, change to the $ACE_ROOT/ace directory and
        run make:
 
        <blockquote><code><pre>
@@ -1670,9 +1879,8 @@ The steps we followed in the build are:
 
        <p>
        This should create <TT>libACE.dll</TT> (the Win32 shared library) and
-       <TT>libACE.dll.a</TT> (the Win32 import library for the DLL).
-       Note the name for the ACE DLL on MinGW follows the MinGW
-       convention, that resembles UNIX.
+       <TT>libACE.dll</TT> (the Win32 import library for the DLL).
+       Note the name for the ACE DLL on Cygwin follows the UNIX convention.
        <BR><BR>
 
        <p>
@@ -1682,14 +1890,21 @@ The steps we followed in the build are:
        % make static_libs=1
        </pre></code></blockquote>
 
-
-  <LI> <A NAME="mingwrunpath">
-       The same rules for Win32 search of DLLs apply for MinGW. If you
-       want to run some ACE programs from the cygwin shell, you may
+  <LI> <A NAME="cygwinrunpath">
+       The same rules for Win32 search of DLLs apply for Cygwin. If you
+       want to run some ACE programs from the Cygwin shell, you may
        need to add the directory for <TT>libACE.dll</TT> to your PATH:
 
        <blockquote><code><pre>
-       # export PATH=//c/work/mingw/ACE_wrappers/ace:$PATH
+       # export PATH=//c/work/cygwin/ACE_wrappers/ace:$PATH
+       </pre></code></blockquote>
+
+       If you are using MPC generated Makefiles, then the DLLs have been
+       placed in the lib directory instead of ace and thus your PATH
+       addition would need to look like this:
+
+       <blockquote><code><pre>
+       # export PATH=//c/work/mingw/ACE_wrappers/lib:$PATH
        </pre></code></blockquote>
 
 
@@ -1708,20 +1923,20 @@ make:
 
 <p>
 Once you build all the tests, you can run
-<code>run_tests.sh</code> in the
+<code>run_tests.pl</code> in the
 <code>tests</code> directory to try all the tests:
 
        <blockquote><code><pre>
-       % run_tests.sh
+       % perl run_test.pl
        </pre></code></blockquote>
 
 <p>
 If you are using ACE as a DLL, you will need to modify your PATH
-variable as explained <A HREF="#mingwrunpath">above</A>.
+variable as explained <A HREF="#cygwinrunpath">above</A>.
 
 <p>
 You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
-of the various tests on MinGW and the different Windows flavors.
+of the various tests on Cygwin and the different Windows flavors.
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
@@ -2106,36 +2321,35 @@ on Windows NT hosts:
 <H4><A NAME="vxworks">&nbsp;</a>
 <a href="mailto:Jaffar_Shaikh@Mitel.COM">Jaffar Shaikh's</a>
 Notes for Building ACE and TAO for VxWorks on NT host</H4>
-<B><P>Scenario:</B>  I was building the ACE and TAO for VxWorks =
-on NT. The target system was a PPC860 based chassis and another a NT =
+<B><P>Scenario:</B>  I was building the ACE and TAO for VxWorks
+on NT. The target system was a PPC860 based chassis and another a NT
 host based card.</P>
 <B><P>Host System:</P>
 </B><P>NT 4.0 workstation with 128 M RAM, 266MHz Pentium.</P>
 
 <B><P>Software Needed For Building TAO</P>
-</B><P>1) PERL: Active State's ActivePerl 5.6.0.618 for NT available as =
-freeware from =
-http://www.ActiveState.com/download/contrib/Microsoft/NT/InstMsi.exe =
+</B><P>1) PERL: Active State's ActivePerl 5.6.0.618 for NT available as
+freeware from
+http://www.ActiveState.com/download/contrib/Microsoft/NT/InstMsi.exe
 </P>
 
 <P>2) Tornado II .Release V 9904 from Windriver.</P>
 
-<P>3) Cygwin GNU to build TAO. It is available for NT as a freeware =
+<P>3) Cygwin GNU to build TAO. It is available for NT as a freeware
 from </P>
-<P>http://sources.redhat.com/cygwin/</P>
-<P>The Cygwin Make (version 3.75) can only build the TAO not the =
+<P>http://www.cygwin.com/</P>
+<P>The Cygwin Make (version 3.75) can only build the TAO not the
 Tornado II make (version 3.74)</P>
 
 <B><P>Environment Variables:</P>
-</B><P>On NT the environment Variables are set as follows, (from =
+</B><P>On NT the environment Variables are set as follows, (from
 Control Panel-&gt; System -&gt; Environment)</P>
 <P>I added following Environment variable entries to PATH </P>
 
 <P>C:\Perl\bin\;</P>
 <P>C:\tornado\host\x86-win32\bin;</P>
 <P>C:\tornado\host\x86-win32\powerpc-wrs-vxworks\bin;</P>
-<P>C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.=
-2-960126;</P>
+<P>C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.2-960126;</P>
 <P>C:\Corba\Ace_wrappers\bin;</P>
 <P>C:\Cygwin\bin;</P>
 <P>C:\Cygwin\usr\bin;</P>
@@ -2151,8 +2365,7 @@ Control Panel-&gt; System -&gt; Environment)</P>
 <P>SHELL=/bin/sh.exe</P>
 <P>TERM=pcbios</P>
 <P>TAO_ROOT=/Corba/ACE_wrapper/Tao</P>
-<P>CPP_LOCATION=/Program Files/Microsoft Visual =
-Studio/VC98/Bin/CL.exe</P>
+<P>CPP_LOCATION=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe</P>
 <P>GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/</P>
 <P>WIND_HOST_TYPE=x86-win32</P>
 <P>PERL_PATH=/perl/bin/perl.exe</P>
@@ -2184,20 +2397,20 @@ Studio/VC98/Bin/CL.exe</P>
 <P>2) C:\Corba\ACE_wrappers\include\makeinclude\platform_macros.GNU</P>
 <P>WIND_BASE = /tornado</P>
 <P>WIND_HOST_TYPE = x86-win32</P>
-<P>include =
+<P>include
 $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU</P>
-<P>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE =
+<P>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE
 library that supports TAO)</P>
 
 <P>&nbsp;</P>
 <B><P>Steps to Build</P>
 </B><P>1) Build Ace.dll under NT</P>
-<P>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.dsw And build Ace =
+<P>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.dsw And build Ace
 DLL</P>
 <P>Copy Ace.dll in C:\bin</P>
 
 <P>2) Build gperf utility under NT</P>
-<P>In MS Visual C++ open =
+<P>In MS Visual C++ open
 C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</P>
 <P>Copy gperf.exe to C:\bin</P>
 
@@ -2206,7 +2419,7 @@ C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</P>
 <P>Mount following directories by using mount command.</P>
 <P>create respective directories first then use mount command </P>
 
-<P>e.g. Create /Corba directory then use $mount -s "C:\Corba" =
+<P>e.g. Create /Corba directory then use $mount -s "C:\Corba"
 /Corba</P>
 
 <P>C:\Corba  mount to /Corba</P>
@@ -2219,13 +2432,13 @@ C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</P>
 <P>4) Build ACE in Cygwin</P>
 <P>$cd /Corba/ACE_wrappers/ace </P>
 <P>$make static_libs=1</P>
-<P>This will build your ace library libACE.a for VxWorks. If you use =
-option shared_libs=1 then the build will be libACE.so. The other =
+<P>This will build your ace library libACE.a for VxWorks. If you use
+option shared_libs=1 then the build will be libACE.so. The other
 options are same as follows.</P>
 
 <P>5) Build TAO in Cygwin</P>
 <P>$cd $TAO_ROOT/tao</P>
-<P>$make debug=0 optimize=1 static_libs_only=1 minimum_orb=1 =
+<P>$make debug=0 optimize=1 static_libs_only=1 minimum_orb=1
 </P>
 <P>for shared libs use shared_libs=1</P>
 
@@ -2238,9 +2451,9 @@ options are same as follows.</P>
 <P>Advanced POA features</P>
 <P>CORBA/COM interworking</P>
 
-<P>You may play around with above options to find suitable build for =
-your needs. For example when you give option debug=1 all the debug =
-symbols will be created and the build will huge in size. The debug =
+<P>You may play around with above options to find suitable build for
+your needs. For example when you give option debug=1 all the debug
+symbols will be created and the build will huge in size. The debug
 symbols are necessary when you want to debug your code.</P>
 
 
@@ -2274,7 +2487,7 @@ Here's what you need to do:<P>
       want to do something like the following<P>
 
       <pre><code>
-      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
+      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
       </code></pre><P>
 
   <LI>By default, if the shared object library is built, the services
@@ -2326,7 +2539,7 @@ cd ../../../..
 
 # build the host side of things
 cd build/Linux_g++
-export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH
+export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:`pwd`/lib:$LD_LIBRARY_PATH
 cd ace
 make
 
@@ -2421,7 +2634,7 @@ below.</p>
    HREF="http://www.tenermerx.com/tao_bcb/index.html">
    http://www.tenermerx.com/tao_bcb/index.html</A>. Then build the OpenSSL
    library. When you use the DLL version of ACE+TAO you have to build a DLL
-   version of OpenSSL. Then you must set the environment variable SSL_ROOT 
+   version of OpenSSL. Then you must set the environment variable SSL_ROOT
    to the location of your OpenSSL and then build ACE and TAO as normally.
 </p>
 
@@ -2620,8 +2833,9 @@ Once this is done, then invoke the top-level Makefile with the
 </pre><P>
 
 This will establish a complete tree of links.  In addition, make sure
-you set your LD_LIBRARY_PATH to $ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4
-UNIX platforms.<P>
+you set your LD_LIBRARY_PATH to
+$ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH on SVR4 UNIX
+platforms.<P>
 
 When you do a make in the $ACE_ROOT directory you will be producing
 object code that is not stored in the same place as the original

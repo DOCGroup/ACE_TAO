@@ -2,6 +2,7 @@
 
 // Simple file transfer example 
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TLI_Acceptor.h"
 

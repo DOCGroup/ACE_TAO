@@ -21,11 +21,16 @@
 //    Irfan Pyarali
 // ========================================================================
 
-#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/SString.h"
 
-ACE_RCSID(NewPOA, NewPOA, "$Id$")
+#include "tao/ORB.h"
+
+#include "ace/SString.h"
+#include "ace/Log_Msg.h"
+
+ACE_RCSID (NewPOA, 
+           NewPOA, 
+           "$Id$")
 
 void
 print_poa (PortableServer::POA_ptr poa

@@ -44,8 +44,7 @@ int
 be_visitor_enum_cs::visit_enum (be_enum *node)
 {
   if (node->cli_stub_gen () 
-      || node->imported () 
-      || node->is_local ())
+      || node->imported ())
     {
 		  return 0;
     }

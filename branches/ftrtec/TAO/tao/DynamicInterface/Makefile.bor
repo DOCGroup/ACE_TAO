@@ -1,3 +1,4 @@
+# $Id$
 #
 # Makefile for building the TAO DynamicInterface library
 #
@@ -6,8 +7,9 @@ NAME = TAO_DynamicInterface
 
 OBJFILES = \
 	$(OBJDIR)\Context.obj \
+   $(OBJDIR)\DII_Arguments.obj \
 	$(OBJDIR)\DII_Invocation.obj \
-	$(OBJDIR)\DII_ClientRequestInfo.obj \
+   $(OBJDIR)\DII_Invocation_Adapter.obj \
 	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Dynamic_Adapter_Impl.obj \
 	$(OBJDIR)\Dynamic_Implementation.obj \
@@ -19,9 +21,9 @@ OBJFILES = \
 RESOURCE = $(OBJDIR)\TAO_DynamicInterface.res
 
 !ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICINTERFACE_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS)
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICINTERFACE_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) $(TAO_MESSAGING_CFLAGS)
 !else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICINTERFACE_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) \
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICINTERFACE_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) $(TAO_MESSAGING_CFLAGS) \
 	-DTAO_DYNAMICINTERFACE_BUILD_DLL
 !endif
 
@@ -33,6 +35,7 @@ INCLUDES = *.h *.inl
 LIBFILES = \
         $(ACE_LIB) \
         $(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB)
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_MESSAGING_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

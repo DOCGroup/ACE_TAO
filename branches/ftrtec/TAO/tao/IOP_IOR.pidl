@@ -10,19 +10,22 @@
  * command:
  *
  *   tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1 -Gv
+ *        -o orig -Gp -Gd -Ge 1 -GT -GA
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=TAO_Export.h
  *        -Wb,pre_include="ace/pre.h"
  *        -Wb,post_include="ace/post.h"
- *        IOP.pidl
+ *        IOP_IOR.pidl
  *
  * and then:
  *
  * cp orig/IOP_IORC.{h,i,cpp} .
- * patch < diffs/IOPC.diff
+ * cp orig/IOP_IORA.{h,cpp} .
  *
- * The code left in IOP_IORC.{h,i,cpp} is ready for use.
+ * patch < diffs/IOP_IOR.diff
+ *
+ * The code left in IOP_IORC.{h,i,cpp} and IOP_IORA.{h,cpp} is ready
+ * for use. 
  *
  */
 
@@ -45,9 +48,11 @@ module IOP
     CORBA::OctetSeq profile_data;
   };
 
+  typedef sequence<TaggedProfile> TaggedProfileSeq;
+
   struct IOR {
-    string                    type_id;
-    sequence<TaggedProfile>   profiles;
+    string           type_id;
+    TaggedProfileSeq profiles;
   };
 
   typedef unsigned long ComponentId;
@@ -78,7 +83,7 @@ module IOP
   typedef unsigned long ServiceId;
   struct ServiceContext {
     ServiceId          context_id;
-    sequence <octet>   context_data;
+    CORBA::OctetSeq    context_data;
   };
   typedef sequence <ServiceContext> ServiceContextList;
 

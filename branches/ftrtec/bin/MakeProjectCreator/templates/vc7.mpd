@@ -57,12 +57,18 @@
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
+<%if(type_is_static)%>
+				Name="VCLibrarianTool"
+<%if(staticname)%>
+				OutputFile="$(OutDir)/<%staticname%><%lib_modifier%>.lib"
+<%endif%>
+<%else%>
 				Name="VCLinkerTool"
 <%if(type_is_binary)%>
 				AdditionalDependencies="<%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>"
 <%endif%>
 <%if(exename || sharedname || staticname)%>
-				OutputFile="$(OutDir)/<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%>.dll<%else%><%if(type_is_static)%><%staticname%><%lib_modifier%>.lib<%else%><%exename%>.exe<%endif%><%endif%>"
+				OutputFile="$(OutDir)/<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%>.dll<%else%><%exename%>.exe<%endif%>"
 <%endif%>
 				Version="<%version("1.0")%>"
 				LinkIncremental="<%LinkIncremental("1")%>"
@@ -85,6 +91,7 @@
 <%endif%>
 <%if(type_is_dynamic)%>
 				ImportLibrary="$(OutDir)/<%sharedname%><%lib_modifier%>.lib"
+<%endif%>
 <%endif%>
 			/>
 			<Tool
@@ -115,7 +122,7 @@
 			Filter="cpp;cxx;cc;C;c">
 <%if(pch_source)%>
 			<File
-				RelativePath=".\<%pch_source%>">
+				RelativePath="<%pch_source%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>">
@@ -126,11 +133,25 @@
 <%endfor%>
 			</File>
 <%endif%>
+<%if(grouped_source_files)%>
+<%foreach(grouped_source_files)%>
+			<Filter
+				Name="<%grouped_source_file%>"
+				Filter="">
+<%foreach(grouped_source_file->files)%>
+				<File
+					RelativePath="<%grouped_source_file->file%>">
+				</File>
+<%endfor%>
+			</Filter>
+<%endfor%>
+<%else%>
 <%foreach(source_files)%>
 			<File
-				RelativePath=".\<%source_file%>">
+				RelativePath="<%source_file%>">
 			</File>
 <%endfor%>
+<%endif%>
 		</Filter>
 <%endif%>
 <%endif%>
@@ -140,12 +161,12 @@
 			Filter="h;hpp;hxx;hh">
 <%if(pch_header)%>
 			<File
-				 RelativePath=".\<%pch_header%>">
+				 RelativePath="<%pch_header%>">
 			</File>
 <%endif%>
 <%foreach(header_files)%>
 			<File
-				RelativePath=".\<%header_file%>">
+				RelativePath="<%header_file%>">
 			</File>
 <%endfor%>
 		</Filter>
@@ -156,7 +177,7 @@
 			Filter="idl">
 <%foreach(idl_files)%>
 			<File
-				RelativePath=".\<%idl_file%>">
+				RelativePath="<%idl_file%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>">
@@ -166,20 +187,24 @@
 <%if(flag_overrides(idl_file, idlgendir))%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
 <%idl_compiler%> -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						AdditionalDependencies="<%idl_compiler%>.exe"
 						Outputs="<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.h;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.i;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.cpp;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.h;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.i;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 <%if(idlgendir)%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
 <%idl_compiler%> -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						AdditionalDependencies="<%idl_compiler%>.exe"
 						Outputs="<%idlgendir%>\<%basenoextension(idl_file)%>C.h;<%idlgendir%>\<%basenoextension(idl_file)%>C.i;<%idlgendir%>\<%basenoextension(idl_file)%>C.cpp;<%idlgendir%>\<%basenoextension(idl_file)%>S.h;<%idlgendir%>\<%basenoextension(idl_file)%>S.i;<%idlgendir%>\<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 <%if(dirname_found)%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
 <%idl_compiler%> -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						AdditionalDependencies="<%idl_compiler%>.exe"
 						Outputs="<%basenoextension(idl_file)%>C.h;<%basenoextension(idl_file)%>C.i;<%basenoextension(idl_file)%>C.cpp;<%basenoextension(idl_file)%>S.h;<%basenoextension(idl_file)%>S.i;<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
 <%idl_compiler%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						AdditionalDependencies="<%idl_compiler%>.exe"
 						Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp"/>
 <%endif%>
 <%endif%>
@@ -197,7 +222,7 @@
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
 			<File
-				RelativePath=".\<%custom_type->input_file%>">
+				RelativePath="<%custom_type->input_file%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>">
@@ -206,6 +231,7 @@
 						Description="Invoking <%custom_type->command%> on <%custom_type->input_file%>"
 						CommandLine="<%if(custom_type->libpath)%>PATH=%PATH%;<%custom_type->libpath%>
 <%endif%><%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_files)%><%else%><%custom_type->input_file->output_files%><%endif%><%endif%>"
+						AdditionalDependencies="<%custom_type->command%>.exe"
 						Outputs="<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(";")%><%endfor%>"/>
 				</FileConfiguration>
 <%endfor%>
@@ -220,7 +246,7 @@
 			Filter="i;inl">
 <%foreach(inline_files)%>
 			<File
-				RelativePath=".\<%inline_file%>">
+				RelativePath="<%inline_file%>">
 			</File>
 <%endfor%>
 		</Filter>
@@ -231,7 +257,7 @@
 			Filter="">
 <%foreach(template_files)%>
 			<File
-				RelativePath=".\<%template_file%>">
+				RelativePath="<%template_file%>">
 <%foreach(configurations)%>
 				<FileConfiguration
 					Name="<%configuration%>|<%platform%>"
@@ -250,7 +276,7 @@
 			Filter="">
 <%foreach(documentation_files)%>
 			<File
-				RelativePath=".\<%documentation_file%>">
+				RelativePath="<%documentation_file%>">
 			</File>
 <%endfor%>
 		</Filter>
@@ -261,7 +287,7 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe">
 <%foreach(resource_files)%>
 			<File
-				RelativePath=".\<%resource_file%>">
+				RelativePath="<%resource_file%>">
 			</File>
 <%endfor%>
 		</Filter>

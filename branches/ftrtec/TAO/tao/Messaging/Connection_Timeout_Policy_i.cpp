@@ -1,3 +1,4 @@
+//$Id$
 #include "Connection_Timeout_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
@@ -52,7 +53,7 @@ TAO_ConnectionTimeoutPolicy::policy_type (
 void
 TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                                    TAO_Stub *stub,
-                                   int &has_timeout,
+                                   bool &has_timeout,
                                    ACE_Time_Value &time_value)
 {
   CORBA::Policy_var policy =

@@ -40,7 +40,6 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 
-#include "ace/OS.h"
 #include "asnmp/octet.h"
 #include "asnmp/target.h"
 #include "test_config.h"

@@ -20,7 +20,6 @@
 
 #include "ace/config-all.h"
 #include "ace/ACE_export.h"
-#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -638,6 +637,9 @@ private:
 #  endif /* __ACE_INLINE__ */
 
 #else /* NOT WIN32 or POSIX with AIO features. */
+
+#  include "ace/os_include/os_stddef.h"
+#  include "ace/os_include/os_signal.h"
 
 class ACE_Time_Value;
 

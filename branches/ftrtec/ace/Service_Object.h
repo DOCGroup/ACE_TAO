@@ -89,6 +89,10 @@ public:
                     ACE_Service_Type_Impl *o,
                     const ACE_DLL &dll,
                     int active);
+  ACE_Service_Type (const ACE_TCHAR *n,
+                    ACE_Service_Type_Impl *o,
+                    ACE_SHLIB_HANDLE handle,
+                    int active);
   ~ACE_Service_Type (void);
 
   const ACE_TCHAR *name (void) const;
@@ -123,7 +127,7 @@ private:
   const ACE_Service_Type_Impl *type_;
 
   /// ACE_DLL representing the shared object file (non-zero if dynamically linked).
-  const ACE_DLL dll_;
+  mutable ACE_DLL dll_;
 
   /// 1 if svc is currently active, otherwise 0.
   int active_;

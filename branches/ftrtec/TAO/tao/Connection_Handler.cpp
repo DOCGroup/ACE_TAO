@@ -2,9 +2,7 @@
 
 #include "Connection_Handler.h"
 #include "ORB_Core.h"
-#include "Server_Strategy_Factory.h"
 #include "debug.h"
-#include "Object.h"
 #include "Resume_Handle.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"
@@ -27,7 +25,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 {
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
-
   this->lock_ =
     this->orb_core_->resource_factory ()->create_cached_connection_lock ();
 
@@ -163,8 +160,9 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
   this->transport_ = transport;
 
   // Enable reference counting on the event handler.
-  this->transport_->event_handler_i ()->reference_counting_policy ().value
-    (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+  this->transport_->event_handler_i ()->reference_counting_policy ().value (
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED
+    );
 }
 
 int
@@ -248,10 +246,9 @@ TAO_Connection_Handler::handle_input_eh (
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
-  this->transport ()->send_connection_closed_notifications ();
-
   // Save the ID for debugging messages
   ACE_HANDLE handle = eh->get_handle ();
+
   size_t id = this->transport ()->id ();
   if (TAO_debug_level)
     {
@@ -260,6 +257,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
                    "close_connection, purging entry from cache\n",
                    handle));
     }
+
   this->transport ()->purge_entry ();
 
   // @@ This seems silly, but if we have no reason to be in the
@@ -327,6 +325,13 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
       this->transport ()->wait_strategy ()->is_registered (0);
     }
 
+  // This call should be made only after the cache and reactor are
+  // cleaned up. This call can make upcalls to the application which
+  // in turn can make remote calls (Bug 1551 and Bug 1482). The remote
+  // calls from the application can try to use this handler from the
+  // cache or from the reactor. So clean them up before this is
+  // called.
+  this->transport ()->send_connection_closed_notifications ();
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
   if (TAO_debug_level)

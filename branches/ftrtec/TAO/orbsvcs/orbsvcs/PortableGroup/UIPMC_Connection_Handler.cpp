@@ -28,6 +28,8 @@ ACE_RCSID(tao, UIPMC_Connect, "$Id$")
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
+    udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
+    mcast_socket_ (),
     using_mcast_ (0),
     uipmc_properties_ (0)
 {
@@ -44,6 +46,8 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_co
                                                             void *arg)
   : TAO_UIPMC_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
+    udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
+    mcast_socket_ (),
     using_mcast_ (0),
     uipmc_properties_ (ACE_static_cast
                        (TAO_UIPMC_Properties *, arg))
@@ -137,7 +141,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_UIPMC_Connection_Handler::open -")
                  ACE_TEXT("listening on: <%s:%u>\n"),
-                 this->local_addr_.get_host_name (),
+                 this->local_addr_.get_host_addr (),
                  this->local_addr_.get_port_number ()));
   }
 
@@ -151,13 +155,13 @@ TAO_UIPMC_Connection_Handler::open (void*)
 int
 TAO_UIPMC_Connection_Handler::open_server (void)
 {
-  this->mcast_socket_.subscribe (this->local_addr_);
+  this->mcast_socket_.join (this->local_addr_);
   if( TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_UIPMC_Connection_Handler::open_server -")
                  ACE_TEXT("subcribed to multicast group at %s:%d\n"),
-                 this->local_addr_.get_host_name (),
+                 this->local_addr_.get_host_addr (),
                  this->local_addr_.get_port_number ()
                ));
   }

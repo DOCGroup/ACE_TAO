@@ -14,6 +14,8 @@
 #define TAO_PRIORITY_MAPPING_MANAGER_H
 
 #include "RTScheduler.h"
+#include "tao/LocalObject.h"
+
 
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
@@ -32,7 +34,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
 {
 public:
 
-	TAO_RTScheduler_Manager (void);
+        TAO_RTScheduler_Manager (void);
   /// Constructor.
   TAO_RTScheduler_Manager (TAO_ORB_Core*);
 
@@ -55,16 +57,10 @@ public:
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  static TAO_RTScheduler_Manager_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
   static TAO_RTScheduler_Manager_ptr _nil (void)
     {
       return (TAO_RTScheduler_Manager_ptr)0;
     }
-
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   virtual const char* _interface_repository_id (void) const;
 

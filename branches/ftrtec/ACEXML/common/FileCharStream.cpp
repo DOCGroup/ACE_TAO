@@ -3,6 +3,12 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_stat.h"
+
+#if defined (ACE_USES_WCHAR)
+#  include "ace/OS_NS_wchar.h"
+#endif /* ACE_USES_WCHAR */
 
 ACEXML_FileCharStream::ACEXML_FileCharStream (void)
   : filename_ (0), encoding_ (0), size_ (0), infile_ (0), peek_ (0)
@@ -51,13 +57,15 @@ ACEXML_FileCharStream::determine_encoding (void)
     return -1;
 
   // Rewind the stream
-  this->rewind();
+  ACE_OS::rewind (this->infile_);
 
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (!temp)
     return -1;
   else
     {
+      if (this->encoding_)
+        delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
 //       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
 //                   this->encoding_));
@@ -86,6 +94,7 @@ ACEXML_FileCharStream::rewind()
   if (this->infile_ == 0)
     return;
   ACE_OS::rewind (this->infile_);
+  this->determine_encoding();
 }
 
 int

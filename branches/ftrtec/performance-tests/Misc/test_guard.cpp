@@ -6,7 +6,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 #error You must compile ACE and this program with ACE_USES_OBSOLETE_GUARD_CLASSES defined!

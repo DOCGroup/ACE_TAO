@@ -13,15 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Scope
+      struct Scope
       {
-      public:
-        virtual
-        ~Scope () throw () {}
-
         virtual void
         open_scope () = 0;
 

@@ -21,7 +21,7 @@
 #define LATENCY_QUERY_CLIENT_H
 
 #include "tao/IFR_Client/IFR_BasicC.h"
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 class Latency_Query_Client
 {

@@ -23,6 +23,7 @@
 #include "test_wrapper.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
 
 int main (int argc, char* argv[])
 {

@@ -1,12 +1,17 @@
 // $Id$
 
+#include "ace/Logging_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
-#include "ace/Logging_Strategy.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(lib, Logging_Strategy, "$Id$")
 
@@ -30,13 +35,13 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
 
   // Parse string and alternate priority mask.
 
-  for (ACE_TCHAR *priority = ACE_OS_String::strtok_r (priority_string,
-                                                      ACE_LIB_TEXT ("|"),
-                                                      &strtokp);
+  for (ACE_TCHAR *priority = ACE_OS::strtok_r (priority_string,
+                                               ACE_LIB_TEXT ("|"),
+                                               &strtokp);
        priority != 0;
-       priority = ACE_OS_String::strtok_r (0,
-                                           ACE_LIB_TEXT ("|"),
-                                           &strtokp))
+       priority = ACE_OS::strtok_r (0,
+                                    ACE_LIB_TEXT ("|"),
+                                    &strtokp))
     {
       if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("SHUTDOWN")) == 0)
         ACE_SET_BITS (priority_mask, LM_SHUTDOWN);
@@ -251,7 +256,8 @@ ACE_Logging_Strategy::fini (void)
   delete [] this->logger_key_;
   delete [] this->program_name_;
 
-  if (this->interval_ > 0 && this->max_size_ > 0)
+  if (this->reactor () && 
+      this->interval_ > 0 && this->max_size_ > 0)
     this->reactor ()->cancel_timer (this);
 
   return 0;

@@ -1,8 +1,10 @@
+# $Id$
 #
 # Makefile for building the Smart_Proxies tests
 #
 
 DIRS = \
+	Collocation \
         Benchmark \
         On_Demand \
         Policy

@@ -3,7 +3,9 @@
 #include "ace/OS.h"
 #include "ace/ACE.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/IO.h"
 #include "jaws3/Synch_IO.h"

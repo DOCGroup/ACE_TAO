@@ -3,7 +3,7 @@
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_CPP
 #define ACE_LOCK_SOCK_ACCEPTOR_CPP
 
-#include "ace/Synch.h"
+#include "ace/Guard_T.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
 
 ACE_RCSID(ace, LOCK_SOCK_Acceptor, "$Id$")

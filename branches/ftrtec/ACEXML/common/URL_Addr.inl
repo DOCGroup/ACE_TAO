@@ -3,7 +3,7 @@
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
-
+#include "ace/OS_NS_string.h"
 
 ACE_INLINE size_t
 ACEXML_URL_Addr::calculate_length (int ipaddr_format) const

@@ -22,26 +22,27 @@
 // ============================================================================
 
 #include "tao/Marshal.h"
-#include "tao/CDR.h"
-#include "tao/Environment.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Marshal.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Marshal, "$Id$")
+ACE_RCSID (tao,
+           Marshal, 
+           "$Id$")
 
 TAO_Marshal_Object::~TAO_Marshal_Object (void)
 {
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
                                   TAO_InputCDR *stream
                                   ACE_ENV_ARG_DECL)
 {
   CORBA::ULong kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   switch (kind)
     {
@@ -53,7 +54,7 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
     case CORBA::tk_component:
     case CORBA::tk_home:
       // @@ We don't know how to handle any of them yet.
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
 
     case CORBA::tk_null:
     case CORBA::tk_void:
@@ -144,14 +145,14 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
     }
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
                                     TAO_InputCDR *src,
                                     TAO_OutputCDR *dest
                                     ACE_ENV_ARG_DECL)
 {
   CORBA::ULong kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   switch (kind)
     {
@@ -163,7 +164,7 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
     case CORBA::tk_component:
     case CORBA::tk_home:
       // @@ We don't know how to handle any of them yet.
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
 
     case CORBA::tk_null:
     case CORBA::tk_void:

@@ -24,7 +24,10 @@
 #include    <map>
 #include    <algorithm>
 #include    <stdlib.h>
+#include    <iostream>
 #include    "icp.h"
+
+using namespace std;
 
 //----------------------------------------------------------------
 
@@ -300,7 +303,7 @@ ICP_set(unsigned long id, const char * attr, const void * value)
 
 //----------------------------------------------------------------
 
-#include <fstream.h>
+#include <fstream>
 
 class ICP_Persist {
 public:

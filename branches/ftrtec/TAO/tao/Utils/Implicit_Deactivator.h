@@ -13,13 +13,13 @@
 #include /**/ "ace/pre.h"
 #include "utils_export.h"
 
-#include "Auto_Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Auto_Functor.h"
 
 
 namespace TAO

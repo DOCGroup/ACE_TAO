@@ -3,6 +3,7 @@
 #include "../test_config.h"
 #include "ace/RMCast/RMCast_Proxy.h"
 #include "ace/RMCast/RMCast_Reordering.h"
+#include "ace/OS_NS_time.h"
 
 #include "ace/Task.h"
 

@@ -28,6 +28,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
+#include "ace/Barrier.h"
 
 ACE_RCSID(TAO_PERF_RTEC_Colocated_Roundtrip, driver, "$Id$")
 

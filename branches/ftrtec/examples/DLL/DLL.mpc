@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Newsweek) : acelib {
   Source_Files {
     Newsweek.cpp

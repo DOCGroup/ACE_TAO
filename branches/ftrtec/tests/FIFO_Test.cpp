@@ -20,7 +20,9 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_sys_wait.h"
 #include "ace/ACE.h"
 #include "ace/FIFO_Send_Msg.h"
 #include "ace/FIFO_Recv_Msg.h"
@@ -187,7 +189,7 @@ test_fifo_msg (void)
   if (ACE_Lib_Find::get_temp_dir (fifo_path, MAXPATHLEN) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_temp_dir")), 1);
-  ACE_OS_String::strcat (fifo_path, ACE_TEXT ("FIFO_Test"));
+  ACE_OS::strcat (fifo_path, ACE_TEXT ("FIFO_Test"));
   ACE_FIFO_Recv_Msg read_side;
   // Open read only, not persistent (4th arg is 0)
   if (-1 == read_side.open (fifo_path,

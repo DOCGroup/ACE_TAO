@@ -12,15 +12,24 @@
 #define TAO_COLLOCATION_RESOLVER_H
 
 #include /**/ "ace/pre.h"
-#include "tao/orbconf.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
-#include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
+
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+
+  class Environment;
+}
 
 /**
  * @class TAO_Collocation_Resolver
@@ -38,7 +47,7 @@ public:
   /// Destructor.
   virtual ~TAO_Collocation_Resolver (void);
 
-  /// Is <object> collocated?
+  /// Is @a object collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
                                         ACE_ENV_ARG_DECL) const = 0;
 };

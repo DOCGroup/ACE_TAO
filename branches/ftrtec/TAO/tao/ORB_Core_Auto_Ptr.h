@@ -18,7 +18,6 @@
 
 #include "tao/TAO_Export.h"
 
-
 class TAO_ORB_Core;
 
 /**

@@ -1,10 +1,12 @@
 #
+# $Id$
+#
 # Makefile for building the FL_Cube example
 #
 
 MAKEFILES = \
 	client.bor \
-	server.bor 
+	server.bor
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 

@@ -1,3 +1,7 @@
-project : aceexe {
-  requires += wxwindows
+// -*- MPC -*-
+// $Id$
+
+project : aceexe, wxwindows {
+  pch_header = stdafx.h
+  pch_source = stdafx.cpp
 }

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*cancel) : aceexe {
   exename = test_cancel
   Source_Files {

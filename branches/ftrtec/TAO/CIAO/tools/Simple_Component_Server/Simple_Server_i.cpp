@@ -24,7 +24,7 @@ CIAO::Simple_Server_i::_default_POA (void)
 }
 
 Components::CCMHome_ptr
-CIAO::Simple_Server_i::get_home (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Simple_Server_i::get_home (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Components::CCMHome::_duplicate (this->home_.in ());
@@ -49,7 +49,7 @@ CIAO::Simple_Server_i::get_component (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();

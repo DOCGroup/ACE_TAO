@@ -27,13 +27,14 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#include "ace/INET_Addr.h"
-#include "ace/Handle_Set.h"
+#  include "ace/INET_Addr.h"
+#  include "ace/Handle_Set.h"
+#  include "ace/Global_Macros.h"
 
-#if defined (ACE_HAS_STRING_CLASS)
+#  if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
 template <class STREAM> STREAM & operator<< (STREAM &stream, ACE_Quoted_String &str);
-#endif /* defined (ACE_HAS_STRING_CLASS) */
+#  endif /* defined (ACE_HAS_STRING_CLASS) */
 
 template <class STREAM>
 class ACE_Streambuf_T : public ACE_Streambuf
@@ -134,7 +135,7 @@ public:
    */
   int eof (void) const;
 
-#if defined (ACE_HAS_STRING_CLASS)
+#  if defined (ACE_HAS_STRING_CLASS)
   /**
    * A simple string operator.  The base <iostream> has them for char*
    * but that isn't always the best thing for a <String>.  If we don't
@@ -145,11 +146,11 @@ public:
   /// The converse of the <String::put> operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
-#endif /* ACE_HAS_STRING_CLASS */
+#  endif /* ACE_HAS_STRING_CLASS */
   // = Using the macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
-#if defined (ACE_LACKS_IOSTREAM_FX)
+#  if defined (ACE_LACKS_IOSTREAM_FX)
   virtual int ipfx (int noskip = 0)
     {
       if (good ())
@@ -167,10 +168,10 @@ public:
           if (good ())
               return 1;
         }
-#if !defined (ACE_WIN32)
+#    if !defined (ACE_WIN32)
       // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#endif /* !ACE_WIN32 */
+#    endif /* !ACE_WIN32 */
       return (0);
     }
   virtual int ipfx0 (void)         {  return ipfx (0); }  // Optimized ipfx(0)
@@ -183,10 +184,10 @@ public:
           if (good ())
               return 1;
         }
-#if !defined (ACE_WIN32)
+#    if !defined (ACE_WIN32)
       // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#endif /* !ACE_WIN32 */
+#    endif /* !ACE_WIN32 */
       return (0);
     }
   virtual void isfx (void) {  return; }
@@ -197,19 +198,19 @@ public:
       return good ();
     }
   virtual void osfx (void) {  if (flags () & unitbuf) flush (); }
-#else
-#if defined (__GNUC__)
+#  else
+#    if defined (__GNUC__)
   virtual int ipfx0 (void) { return iostream::ipfx0 (); }  // Optimized ipfx(0)
   virtual int ipfx1 (void) { return iostream::ipfx1 (); }  // Optimized ipfx(1)
-#else
+#    else
   virtual int ipfx0 (void) { return iostream::ipfx (0); }
   virtual int ipfx1 (void) { return iostream::ipfx (1); }
-#endif /* __GNUC__ */
+#    endif /* __GNUC__ */
   virtual int ipfx (int need = 0) {  return iostream::ipfx (need); }
   virtual void isfx (void)        {  iostream::isfx (); }
   virtual int opfx (void)         {  return iostream::opfx (); }
   virtual void osfx (void)        {  iostream::osfx (); }
-#endif /* ACE_LACKS_IOSTREAM_FX */
+#  endif /* ACE_LACKS_IOSTREAM_FX */
 
   /// Allow the programmer to provide a timeout for read operations.
   /// Give it a pointer to NULL to block forever.
@@ -272,17 +273,18 @@ protected:
   ACE_INET_Addr peer_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/IOStream_T.i"
-#endif /* __ACE_INLINE__ */
+#  if defined (__ACE_INLINE__)
+#    include "ace/IOStream_T.i"
+#  endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/IOStream_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#  if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#    include "ace/IOStream_T.cpp"
+#  endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("IOStream_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#  if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#    pragma implementation ("IOStream_T.cpp")
+#  endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_IOSTREAM_T_H */

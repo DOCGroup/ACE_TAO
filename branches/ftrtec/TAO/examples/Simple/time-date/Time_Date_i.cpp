@@ -2,21 +2,7 @@
 // $Id$
 
 #include "Time_Date_i.h"
-#include "tao/corba.h"
-
-// Default constructor.
-
-Time_Date_i::Time_Date_i (void)
-{
-  //no-op
-}
-
-// Default destructor.
-
-Time_Date_i::~Time_Date_i (void)
-{
-  // no-op.
-}
+#include "ace/OS_NS_time.h"
 
 // Obtain the time and date in binary format.
 

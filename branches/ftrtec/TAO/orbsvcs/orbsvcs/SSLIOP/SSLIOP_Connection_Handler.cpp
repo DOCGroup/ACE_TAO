@@ -15,6 +15,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Wait_Strategy.h"
+#include "ace/os_include/netinet/os_tcp.h"
+#include "ace/os_include/os_netdb.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connection_Handler.i"

@@ -1,3 +1,4 @@
+# $Id$
 #
 # Makefile for building the TAO PortableServer library
 #
@@ -7,7 +8,7 @@ NAME = TAO_PortableServer
 OBJFILES = \
 	$(OBJDIR)\Active_Object_Map.obj \
 	$(OBJDIR)\AMH_Response_handler.obj \
-	$(OBJDIR)\Collocated_Object.obj \
+   $(OBJDIR)\Collocated_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Default_Acceptor_Filter.obj \
 	$(OBJDIR)\Default_Policy_Validator.obj \
 	$(OBJDIR)\Default_ORTC.obj \
@@ -15,8 +16,6 @@ OBJFILES = \
 	$(OBJDIR)\Direct_Object_Proxy_Impl.obj \
 	$(OBJDIR)\ImR_LocatorC.obj \
 	$(OBJDIR)\ImR_LocatorS.obj \
-	$(OBJDIR)\ImR_ActivatorC.obj \
-	$(OBJDIR)\ImR_ActivatorS.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
    $(OBJDIR)\IORInfo.obj \
@@ -41,7 +40,6 @@ OBJFILES = \
 	$(OBJDIR)\Servant_Dispatcher.obj \
 	$(OBJDIR)\ServerInterceptorAdapter.obj \
 	$(OBJDIR)\ServerRequestInfo.obj \
-	$(OBJDIR)\Strategized_Object_Proxy_Broker.obj \
 	$(OBJDIR)\ThruPOA_Object_Proxy_Impl.obj
 
 RESOURCE = $(OBJDIR)\TAO_PortableServer.res

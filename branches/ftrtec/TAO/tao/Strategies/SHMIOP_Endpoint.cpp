@@ -8,12 +8,17 @@
 
 #include "SHMIOP_Connection_Handler.h"
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
-ACE_RCSID(Strategies, SHMIOP_Endpoint, "$Id$")
+ACE_RCSID (Strategies,
+           SHMIOP_Endpoint,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "SHMIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/os_include/os_netdb.h"
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
                                           int use_dotted_decimal_addresses)
@@ -182,9 +187,23 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO_SHMIOP_Endpoint::hash (void)
 {
-  return
-    ACE::hash_pjw (this->host_.in ())
-    + this->port_;
+  if (this->hash_val_ != 0)
+    return this->hash_val_;
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->addr_lookup_lock_,
+                      this->hash_val_);
+    // .. DCL
+    if (this->hash_val_ != 0)
+      return this->hash_val_;
+
+    this->hash_val_ =
+      ACE::hash_pjw (this->host ()) + this->port ();
+  }
+
+  return this->hash_val_;
 }
 
 const ACE_INET_Addr &

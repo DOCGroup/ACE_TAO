@@ -5,9 +5,9 @@
 #ifndef CCF_IDL2_SEMANTIC_ACTION_IMPL_MODULE_HPP
 #define CCF_IDL2_SEMANTIC_ACTION_IMPL_MODULE_HPP
 
-#include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
-
+#include "CCF/IDL2/SemanticGraph/Module.hpp"
 #include "CCF/IDL2/SemanticAction/Module.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
 
 namespace CCF
 {
@@ -17,62 +17,22 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class Module : public virtual SemanticAction::Module,
-                       public virtual ScopeBase<SyntaxTree::ModulePtr>
+        struct Module : SemanticAction::Module,
+                        ScopeBase<SemanticGraph::Module>
         {
-        public:
-          virtual
-          ~Module () throw () {}
-
-
-          Module (bool trace,
-                  SyntaxTree::ScopePtr& scope)
-              : ScopeBase<SyntaxTree::ModulePtr> (scope),
-                trace_ (trace)
-          {
-          }
+          Module (Context& c);
 
           virtual void
-          begin (SimpleIdentifierPtr const& id)
-          {
-            if (trace_) cerr << "module " << id << endl;
-
-            using namespace SyntaxTree;
-
-            SimpleName name (id->lexeme ());
-
-            ModulePtr m (new SyntaxTree::Module (name, scope_));
-
-            scope_->insert (m);
-            push (m);
-          }
+          begin (SimpleIdentifierPtr const& id);
 
           virtual void
-          open_scope ()
-          {
-            if (trace_) cerr << "scope open" << endl;
-            scope_ = top ();
-          }
+          open_scope ();
 
           virtual void
-          close_scope ()
-          {
-            scope_ = scope_->scope ();
-            if (trace_) cerr << "scope close" << endl;
-          }
+          close_scope ();
 
           virtual void
-          end ()
-          {
-            pop ();
-            if (trace_) cerr << "end" << endl;
-          }
-
-        private:
-          bool trace_;
+          end ();
         };
       }
     }

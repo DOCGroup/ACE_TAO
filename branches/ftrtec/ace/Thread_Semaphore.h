@@ -55,6 +55,26 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
+/*****************************************************************************/
+
+template <class T> class ACE_Malloc_Lock_Adapter_T;
+
+/**
+ * @class ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
+ *
+ * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for
+ * ACE_Thread_Semaphore.
+ *
+ * This is needed since the ctor for ACE_Thread_Semaphore doesn't match
+ * the standard form used by other lock strategy classes.
+ */
+ACE_TEMPLATE_SPECIALIZATION
+class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
+{
+public:
+  ACE_Thread_Semaphore * operator () (const ACE_TCHAR *name);
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Thread_Semaphore.inl"
 #endif /* __ACE_INLINE__ */

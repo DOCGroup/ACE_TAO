@@ -1,7 +1,9 @@
 // $Id$
 
 #include "Key_Adapters.h"
+
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Key_Adapters.i"

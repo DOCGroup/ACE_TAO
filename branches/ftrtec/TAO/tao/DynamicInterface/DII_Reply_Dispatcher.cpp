@@ -5,6 +5,7 @@
 #include "tao/Environment.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
+#include "tao/Pluggable_Messaging_Utils.h"
 
 
 ACE_RCSID(DynamicInterface,
@@ -19,21 +20,8 @@ ACE_RCSID(DynamicInterface,
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     const CORBA::Request_ptr req,
     TAO_ORB_Core *orb_core)
-  : TAO_Asynch_Reply_Dispatcher_Base (orb_core),
-    db_ (sizeof buf_,
-         ACE_Message_Block::MB_DATA,
-         this->buf_,
-         orb_core->input_cdr_buffer_allocator (),
-         orb_core->locking_strategy (),
-         ACE_Message_Block::DONT_DELETE,
-         orb_core->input_cdr_dblock_allocator ()),
-    reply_cdr_ (&db_,
-                ACE_Message_Block::DONT_DELETE,
-                TAO_ENCAP_BYTE_ORDER,
-                TAO_DEF_GIOP_MAJOR,
-                TAO_DEF_GIOP_MINOR,
-                orb_core),
-    req_ (req)
+  : TAO_Asynch_Reply_Dispatcher_Base (orb_core)
+  , req_ (req)
 {
 }
 
@@ -48,11 +36,25 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params
   )
 {
+  if (params.input_cdr_ == 0)
+    return -1;
+
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (params.input_cdr_);
+    this->reply_cdr_.clone_from (*params.input_cdr_);
+
+
+  if (db == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_ERROR ((
+          LM_ERROR,
+          "TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply ",
+          "clone_from failed \n"));
+      return -1;
+    }
 
   // See whether we need to delete the data block by checking the
   // flags. We cannot be happy that we initally allocated the
@@ -94,9 +96,8 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     }
   ACE_ENDTRY;
 
-  // This was dynamically allocated. Now the job is done. Commit
-  // suicide here.
-  delete this;
+  // This was dynamically allocated. Now the job is done.
+  (void) this->decr_refcount ();
 
   return 1;
 }
@@ -104,7 +105,9 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 void
 TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Generate a fake exception....
       CORBA::COMM_FAILURE comm_failure (0,
@@ -135,4 +138,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
         }
     }
   ACE_ENDTRY;
+  ACE_CHECK;
+
+  (void) this->decr_refcount ();
 }

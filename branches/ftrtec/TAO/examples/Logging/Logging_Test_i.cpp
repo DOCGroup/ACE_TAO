@@ -6,7 +6,10 @@
 #include "tao/debug.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(Logger, Logging_Test_i, "$Id$")
 
@@ -222,7 +225,7 @@ Logger_Client::run (void)
       // Setup the fourth log record
       this->init_record (rec4,
                          Logger::LM_EMERGENCY,
-                         "log2() test (4) \n");
+                         "log_twoway() test (4) \n");
 
       // If debugging, output the new log records
       if (TAO_debug_level > 0)
@@ -273,8 +276,8 @@ Logger_Client::run (void)
       this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Log the fourth record using log2()
-      this->logger_2_->log2 (rec4 ACE_ENV_ARG_PARAMETER);
+      // Log the fourth record using log_twoway()
+      this->logger_2_->log_twoway (rec4 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 

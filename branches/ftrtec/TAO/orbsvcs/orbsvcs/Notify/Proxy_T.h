@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_PROXY_T_H
 #define TAO_Notify_PROXY_T_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"

@@ -21,13 +21,11 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub process {
-  my($self)    = shift;
-  my($file)    = shift;
+  my($noext)   = $_[1];
   my(@objects) = ();
   my(@exts)    = ('o');
   my(@dirs)    = (defined $ENV{VDIR} ? $ENV{VDIR} : '');
-  my($noext)   = $file;
-  $noext =~ s/\.[^\.]+$//;
+  $noext =~ s/\.[^\.]+$//o;
 
   if (defined $ENV{SOEXT}) {
     push(@exts, $ENV{SOEXT});

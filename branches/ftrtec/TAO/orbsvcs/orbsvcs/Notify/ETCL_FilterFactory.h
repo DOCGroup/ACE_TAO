@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_ETCL_FILTERFACTORY_H
 #define TAO_Notify_ETCL_FILTERFACTORY_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -20,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyFilterS.h"
+
 #include "FilterFactory.h"
 
 #if defined(_MSC_VER)
@@ -35,9 +37,10 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_ETCL_FilterFactory : public virtual PortableServer::RefCountServantBase
-                                                  , public virtual POA_CosNotifyFilter::FilterFactory
-                                                  , public TAO_Notify_FilterFactory
+class TAO_Notify_Export TAO_Notify_ETCL_FilterFactory 
+  : public virtual PortableServer::RefCountServantBase, 
+    public virtual POA_CosNotifyFilter::FilterFactory, 
+    public TAO_Notify_FilterFactory
 {
 public:
   /// Constuctor
@@ -48,22 +51,27 @@ public:
 
   ///= TAO_Notify_FilterFactory methods.
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL);
+  virtual CosNotifyFilter::FilterFactory_ptr create (
+      PortableServer::POA_var& filter_poa 
+      ACE_ENV_ARG_DECL
+    );
 
   ///= CosNotifyFilter::FilterFactory methods
 
-  virtual CosNotifyFilter::Filter_ptr create_filter (const char * constraint_grammar
-                                                     ACE_ENV_ARG_DECL
-                                                     )
+  virtual CosNotifyFilter::Filter_ptr create_filter (
+      const char * constraint_grammar
+      ACE_ENV_ARG_DECL
+    )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::InvalidGrammar
                      ));
 
-  virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (const char * constraint_grammar,
-                                                                    const CORBA::Any & default_value
-                                                                    ACE_ENV_ARG_DECL
-                                                                    )
+  virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (
+      const char * constraint_grammar,
+      const CORBA::Any & default_value
+      ACE_ENV_ARG_DECL
+    )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::InvalidGrammar
@@ -85,4 +93,5 @@ ACE_FACTORY_DECLARE (TAO_Notify, TAO_Notify_ETCL_FilterFactory)
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_ETCL_FILTERFACTORY_H */

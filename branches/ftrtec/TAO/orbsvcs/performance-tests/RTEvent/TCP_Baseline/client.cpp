@@ -11,6 +11,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/Barrier.h"
 
 ACE_RCSID(TAO_RTEC_PERF_TCP_Baseline, client, "$Id$")
 

@@ -35,6 +35,9 @@ optimize = 1
 shared_libs =
 static_libs = 1
 
+# Chorus doesn't have rwho
+rwho = 0
+
 PATH +=:$(GHS_DIR)
 
 CC      = cxch68

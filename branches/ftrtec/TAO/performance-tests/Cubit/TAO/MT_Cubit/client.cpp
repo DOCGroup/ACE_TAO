@@ -11,6 +11,7 @@
 #include "server.h"
 #include "client.h"
 #include "Globals.h"
+#include "ace/Barrier.h"
 
 #if defined (ACE_HAS_QUANTIFY)
 # include "quantify.h"

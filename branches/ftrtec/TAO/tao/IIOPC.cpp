@@ -15,17 +15,21 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// be/be_codegen.cpp:338
 
 
-#include "tao/IIOPC.h"
-#include "tao/Typecode.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "IIOPC.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -36,108 +40,40 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_arg_traits.cpp:62
 
-static const CORBA::Long _oc_IIOP_ListenPoint[] =
+// Arg traits specializations.
+namespace TAO
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x2f4c6973),
-  ACE_NTOHL (0x74656e50),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x3a312e30),
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
-    12,
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x656e506f),
-  ACE_NTOHL (0x696e7400),  // name = ListenPoint
-  2, // member count
-    5,
-  ACE_NTOHL (0x686f7374),
-  ACE_NTOHL (0x0),  // name = host
-    CORBA::tk_string,
-  0U, // string length
-  5,
-  ACE_NTOHL (0x706f7274),
-  ACE_NTOHL (0x0),  // name = port
-    CORBA::tk_ushort,
+}
 
-};
 
-static CORBA::TypeCode _tc_TAO_tc_IIOP_ListenPoint (
-    CORBA::tk_struct,
-    sizeof (_oc_IIOP_ListenPoint),
-    (char *) &_oc_IIOP_ListenPoint,
-    0,
-    sizeof (IIOP::ListenPoint)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (IIOP)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ListenPoint,
-    &_tc_TAO_tc_IIOP_ListenPoint
-  )
-TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+// be/be_visitor_structure/structure_cs.cpp:66
 
-void IIOP::ListenPoint::_tao_any_destructor (void *_tao_void_pointer)
+void
+IIOP::ListenPoint::_tao_any_destructor (
+    void *_tao_void_pointer
+  )
 {
-  ListenPoint *tmp = ACE_static_cast (ListenPoint*, _tao_void_pointer);
-  delete tmp;
+  ListenPoint *_tao_tmp_pointer =
+    ACE_static_cast (ListenPoint *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_Var_Var_T<
-      IIOP::ListenPoint
-    >;
-template class TAO_Var_Base_T<IIOP::ListenPoint>;
-template class TAO_Unbounded_Sequence<IIOP::ListenPoint>;
-
-template class
-  TAO_Out_T<
-      IIOP::ListenPoint,
-      IIOP::ListenPoint_var
-    >;
-
-template class TAO_Seq_Var_Base_T<IIOP::ListenPointList, IIOP::ListenPoint>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Var_Var_T< \
-      IIOP::ListenPoint \
-    >
-#pragma instantiate TAO_Var_Base_T<IIOP::ListenPoint>
-#pragma instantiate TAO_Unbounded_Sequence<IIOP::ListenPoint>
-#pragma instantiate TAO_Seq_Var_Base_T<IIOP::ListenPointList, IIOP::ListenPoint>
-
-# pragma instantiate \
-  TAO_Out_T< \
-      IIOP::ListenPoint, \
-      IIOP::ListenPoint_var \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
+#if !defined (_IIOP_LISTENPOINTLIST_CS_)
+#define _IIOP_LISTENPOINTLIST_CS_
 
 IIOP::ListenPointList::ListenPointList (void)
 {}
 
-IIOP::ListenPointList::ListenPointList (CORBA::ULong max)
+IIOP::ListenPointList::ListenPointList (
+    CORBA::ULong max
+  )
   : TAO_Unbounded_Sequence<
         IIOP::ListenPoint
       >
@@ -147,7 +83,7 @@ IIOP::ListenPointList::ListenPointList (CORBA::ULong max)
 IIOP::ListenPointList::ListenPointList (
     CORBA::ULong max,
     CORBA::ULong length,
-    IIOP::ListenPoint *buffer,
+    IIOP::ListenPoint * buffer,
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
@@ -156,7 +92,9 @@ IIOP::ListenPointList::ListenPointList (
     (max, length, buffer, release)
 {}
 
-IIOP::ListenPointList::ListenPointList (const ListenPointList &seq)
+IIOP::ListenPointList::ListenPointList (
+    const ListenPointList &seq
+  )
   : TAO_Unbounded_Sequence<
         IIOP::ListenPoint
       >
@@ -166,463 +104,35 @@ IIOP::ListenPointList::ListenPointList (const ListenPointList &seq)
 IIOP::ListenPointList::~ListenPointList (void)
 {}
 
-void IIOP::ListenPointList::_tao_any_destructor (void *_tao_void_pointer)
+void IIOP::ListenPointList::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
 {
-  ListenPointList *tmp = ACE_static_cast (ListenPointList*, _tao_void_pointer);
-  delete tmp;
+  ListenPointList * _tao_tmp_pointer =
+    ACE_static_cast (ListenPointList *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_VarSeq_Var_T<
-      IIOP::ListenPointList,
-      IIOP::ListenPoint
-    >;
-
-template class
-  TAO_Seq_Out_T<
-      IIOP::ListenPointList,
-      IIOP::ListenPointList_var,
-      IIOP::ListenPoint
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_VarSeq_Var_T< \
-      IIOP::ListenPointList, \
-      IIOP::ListenPoint \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Out_T< \
-      ListenPointList, \
-      ListenPointList_var, \
-      IIOP::ListenPoint \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_structure/structure_cs.cpp:66
 
-static const CORBA::Long _oc_IIOP_ListenPointList[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x2f4c6973),
-  ACE_NTOHL (0x74656e50),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x3a312e30),
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPointList:1.0
-    16,
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x656e506f),
-  ACE_NTOHL (0x696e744c),
-  ACE_NTOHL (0x69737400),  // name = ListenPointList
-    CORBA::tk_sequence, // typecode kind
-  116, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_struct, // typecode kind
-    100, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      33,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x49494f50),
-      ACE_NTOHL (0x2f4c6973),
-      ACE_NTOHL (0x74656e50),
-      ACE_NTOHL (0x6f696e74),
-      ACE_NTOHL (0x3a312e30),
-      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
-            12,
-      ACE_NTOHL (0x4c697374),
-      ACE_NTOHL (0x656e506f),
-      ACE_NTOHL (0x696e7400),  // name = ListenPoint
-      2, // member count
-            5,
-      ACE_NTOHL (0x686f7374),
-      ACE_NTOHL (0x0),  // name = host
-            CORBA::tk_string,
-      0U, // string length
-      5,
-      ACE_NTOHL (0x706f7274),
-      ACE_NTOHL (0x0),  // name = port
-            CORBA::tk_ushort,
-
-
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_IIOP_ListenPointList (
-    CORBA::tk_alias,
-    sizeof (_oc_IIOP_ListenPointList),
-    (char *) &_oc_IIOP_ListenPointList,
-    0,
-    sizeof (IIOP::ListenPointList)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (IIOP)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ListenPointList,
-    &_tc_TAO_tc_IIOP_ListenPointList
+void
+IIOP::BiDirIIOPServiceContext::_tao_any_destructor (
+    void *_tao_void_pointer
   )
-TAO_NAMESPACE_END
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_IIOP_BiDirIIOPServiceContext[] =
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  45,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x2f426944),
-  ACE_NTOHL (0x69724949),
-  ACE_NTOHL (0x4f505365),
-  ACE_NTOHL (0x72766963),
-  ACE_NTOHL (0x65436f6e),
-  ACE_NTOHL (0x74657874),
-  ACE_NTOHL (0x3a312e30),
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/BiDirIIOPServiceContext:1.0
-    24,
-  ACE_NTOHL (0x42694469),
-  ACE_NTOHL (0x7249494f),
-  ACE_NTOHL (0x50536572),
-  ACE_NTOHL (0x76696365),
-  ACE_NTOHL (0x436f6e74),
-  ACE_NTOHL (0x65787400),  // name = BiDirIIOPServiceContext
-  1, // member count
-    14,
-  ACE_NTOHL (0x6c697374),
-  ACE_NTOHL (0x656e5f70),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x73000000),  // name = listen_points
-    CORBA::tk_alias, // typecode kind for typedefs
-  192, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    37,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x49494f50),
-    ACE_NTOHL (0x2f4c6973),
-    ACE_NTOHL (0x74656e50),
-    ACE_NTOHL (0x6f696e74),
-    ACE_NTOHL (0x4c697374),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPointList:1.0
-        16,
-    ACE_NTOHL (0x4c697374),
-    ACE_NTOHL (0x656e506f),
-    ACE_NTOHL (0x696e744c),
-    ACE_NTOHL (0x69737400),  // name = ListenPointList
-        CORBA::tk_sequence, // typecode kind
-    116, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_struct, // typecode kind
-      100, // encapsulation length
-        TAO_ENCAP_BYTE_ORDER, // byte order
-        33,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x49494f50),
-        ACE_NTOHL (0x2f4c6973),
-        ACE_NTOHL (0x74656e50),
-        ACE_NTOHL (0x6f696e74),
-        ACE_NTOHL (0x3a312e30),
-        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
-                12,
-        ACE_NTOHL (0x4c697374),
-        ACE_NTOHL (0x656e506f),
-        ACE_NTOHL (0x696e7400),  // name = ListenPoint
-        2, // member count
-                5,
-        ACE_NTOHL (0x686f7374),
-        ACE_NTOHL (0x0),  // name = host
-                CORBA::tk_string,
-        0U, // string length
-        5,
-        ACE_NTOHL (0x706f7274),
-        ACE_NTOHL (0x0),  // name = port
-                CORBA::tk_ushort,
-
-
-      0U,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_IIOP_BiDirIIOPServiceContext (
-    CORBA::tk_struct,
-    sizeof (_oc_IIOP_BiDirIIOPServiceContext),
-    (char *) &_oc_IIOP_BiDirIIOPServiceContext,
-    0,
-    sizeof (IIOP::BiDirIIOPServiceContext)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (IIOP)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_BiDirIIOPServiceContext,
-    &_tc_TAO_tc_IIOP_BiDirIIOPServiceContext
-  )
-TAO_NAMESPACE_END
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
-
-void IIOP::BiDirIIOPServiceContext::_tao_any_destructor (void *_tao_void_pointer)
-{
-  BiDirIIOPServiceContext *tmp = ACE_static_cast (BiDirIIOPServiceContext*, _tao_void_pointer);
-  delete tmp;
+  BiDirIIOPServiceContext *_tao_tmp_pointer =
+    ACE_static_cast (BiDirIIOPServiceContext *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_Var_Var_T<
-      IIOP::BiDirIIOPServiceContext
-    >;
-template class TAO_Var_Base_T<IIOP::BiDirIIOPServiceContext>;
-
-template class
-  TAO_Out_T<
-      IIOP::BiDirIIOPServiceContext,
-      IIOP::BiDirIIOPServiceContext_var
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Var_Var_T< \
-      IIOP::BiDirIIOPServiceContext \
-    >
-#pragms instantiate TAO_Var_Base_T<IIOP::BiDirIIOPServiceContext>
-
-# pragma instantiate \
-  TAO_Out_T< \
-      IIOP::BiDirIIOPServiceContext, \
-      IIOP::BiDirIIOPServiceContext_var \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const IIOP::ListenPoint &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<IIOP::ListenPoint>::insert_copy (
-      _tao_any,
-      IIOP::ListenPoint::_tao_any_destructor,
-      IIOP::_tc_ListenPoint,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    IIOP::ListenPoint *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<IIOP::ListenPoint>::insert (
-      _tao_any,
-      IIOP::ListenPoint::_tao_any_destructor,
-      IIOP::_tc_ListenPoint,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    IIOP::ListenPoint *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const IIOP::ListenPoint *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const IIOP::ListenPoint *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<IIOP::ListenPoint>::extract (
-        _tao_any,
-        IIOP::ListenPoint::_tao_any_destructor,
-        IIOP::_tc_ListenPoint,
-        _tao_elem
-      );
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<IIOP::ListenPoint>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<IIOP::ListenPoint>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const IIOP::ListenPointList &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::insert_copy (
-      _tao_any,
-      IIOP::ListenPointList::_tao_any_destructor,
-      IIOP::_tc_ListenPointList,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    IIOP::ListenPointList *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::insert (
-      _tao_any,
-      IIOP::ListenPointList::_tao_any_destructor,
-      IIOP::_tc_ListenPointList,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    IIOP::ListenPointList *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const IIOP::ListenPointList *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const IIOP::ListenPointList *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::extract (
-        _tao_any,
-        IIOP::ListenPointList::_tao_any_destructor,
-        IIOP::_tc_ListenPointList,
-        _tao_elem
-      );
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<IIOP::ListenPointList>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<IIOP::ListenPointList>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const IIOP::BiDirIIOPServiceContext &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<IIOP::BiDirIIOPServiceContext>::insert_copy (
-      _tao_any,
-      IIOP::BiDirIIOPServiceContext::_tao_any_destructor,
-      IIOP::_tc_BiDirIIOPServiceContext,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    IIOP::BiDirIIOPServiceContext *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<IIOP::BiDirIIOPServiceContext>::insert (
-      _tao_any,
-      IIOP::BiDirIIOPServiceContext::_tao_any_destructor,
-      IIOP::_tc_BiDirIIOPServiceContext,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    IIOP::BiDirIIOPServiceContext *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const IIOP::BiDirIIOPServiceContext *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const IIOP::BiDirIIOPServiceContext *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<IIOP::BiDirIIOPServiceContext>::extract (
-        _tao_any,
-        IIOP::BiDirIIOPServiceContext::_tao_any_destructor,
-        IIOP::_tc_BiDirIIOPServiceContext,
-        _tao_elem
-      );
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<IIOP::BiDirIIOPServiceContext>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<IIOP::BiDirIIOPServiceContext>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
+#if !defined _TAO_CDR_OP_IIOP_ListenPointList_CPP_
+#define _TAO_CDR_OP_IIOP_ListenPointList_CPP_
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -682,7 +192,141 @@ CORBA::Boolean operator>> (
         }
 
       return _tao_marshal_flag;
+
     }
 
   return 0;
 }
+
+#endif /* _TAO_CDR_OP_IIOP_ListenPointList_CPP_ */
+
+// TAO_IDL - Generated from
+// be/be_visitor_root/root.cpp:1725
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO_Var_Var_T<
+        IIOP::ListenPoint
+      >;
+
+  template class
+    TAO_Var_Base_T<
+        IIOP::ListenPoint
+      >;
+
+  template class
+    TAO_Out_T<
+        IIOP::ListenPoint,
+        IIOP::ListenPoint_var
+      >;
+
+  template class
+    TAO_VarSeq_Var_T<
+        IIOP::ListenPointList,
+        IIOP::ListenPoint
+      >;
+
+  template class
+    TAO_Seq_Var_Base_T<
+        IIOP::ListenPointList,
+        IIOP::ListenPoint
+      >;
+
+  template class
+    TAO_Seq_Out_T<
+        IIOP::ListenPointList,
+        IIOP::ListenPointList_var,
+        IIOP::ListenPoint
+      >;
+
+#if !defined (_IIOP_LISTENPOINT__EXPLICIT_CS_)
+#define _IIOP_LISTENPOINT__EXPLICIT_CS_
+
+  template class
+    TAO_Unbounded_Sequence<
+        IIOP::ListenPoint
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO_Var_Var_T<
+        IIOP::BiDirIIOPServiceContext
+      >;
+
+  template class
+    TAO_Var_Base_T<
+        IIOP::BiDirIIOPServiceContext
+      >;
+
+  template class
+    TAO_Out_T<
+        IIOP::BiDirIIOPServiceContext,
+        IIOP::BiDirIIOPServiceContext_var
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO_Var_Var_T< \
+        IIOP::ListenPoint \
+      >
+
+# pragma instantiate \
+    TAO_Var_Base_T< \
+        IIOP::ListenPoint \
+      >
+
+# pragma instantiate \
+    TAO_Out_T< \
+        IIOP::ListenPoint, \
+        IIOP::ListenPoint_var \
+      >
+
+# pragma instantiate \
+    TAO_VarSeq_Var_T< \
+        IIOP::ListenPointList, \
+        IIOP::ListenPoint \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Var_Base_T< \
+        IIOP::ListenPointList, \
+        IIOP::ListenPoint \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        IIOP::ListenPointList, \
+        IIOP::ListenPointList_var, \
+        IIOP::ListenPoint \
+      >
+
+#if !defined (_IIOP_LISTENPOINT__EXPLICIT_CS_)
+#define _IIOP_LISTENPOINT__EXPLICIT_CS_
+
+# pragma instantiate \
+    TAO_Unbounded_Sequence< \
+        IIOP::ListenPoint \
+      >
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO_Var_Var_T< \
+        IIOP::BiDirIIOPServiceContext \
+      >
+
+# pragma instantiate \
+    TAO_Var_Base_T< \
+        IIOP::BiDirIIOPServiceContext \
+      >
+
+# pragma instantiate \
+    TAO_Out_T< \
+        IIOP::BiDirIIOPServiceContext, \
+        IIOP::BiDirIIOPServiceContext_var \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

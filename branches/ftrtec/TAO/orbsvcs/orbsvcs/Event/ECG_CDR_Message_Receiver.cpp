@@ -2,15 +2,20 @@
 
 #include "ECG_CDR_Message_Receiver.h"
 #include "ECG_CDR_Message_Sender.h"
+
 #include "tao/Exception.h"
+
 #include "ace/SOCK_Dgram.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_CDR_Message_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, ECG_CDR_Message_Receiver, "$Id$")
+ACE_RCSID (Event, 
+           ECG_CDR_Message_Receiver, 
+           "$Id$")
 
 
 TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor (void)
@@ -284,6 +289,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 
   if (this->check_crc_)
     {
+      iov[1].iov_len = n - iov[0].iov_len;
       iov[0].iov_len -= 4;  // don't include crc
 
       crc = ACE::crc32 (iov, 2);

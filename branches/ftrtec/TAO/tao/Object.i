@@ -9,7 +9,6 @@ CORBA::Object::Object (int)
   : servant_ (0),
     is_collocated_ (0),
     is_local_ (1),
-    proxy_broker_ (0),
     is_evaluated_ (1),
     ior_ (),
     orb_core_ (0),
@@ -69,10 +68,9 @@ CORBA::Object::_nil (void)
 ACE_INLINE
 CORBA::Object_ptr
 CORBA::Object::_narrow (CORBA::Object_ptr obj
-                        ACE_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return CORBA::Object::_unchecked_narrow (obj
-                                           ACE_ENV_ARG_PARAMETER);
+  return CORBA::Object::_duplicate (obj);
 }
 
 ACE_INLINE

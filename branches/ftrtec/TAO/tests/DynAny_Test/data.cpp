@@ -13,6 +13,7 @@
 
 
 #include "data.h"
+#include "tao/Typecode.h"
 #include "tao/PortableServer/PortableServer.h"
 
 Data::Data (CORBA::ORB_var orb)

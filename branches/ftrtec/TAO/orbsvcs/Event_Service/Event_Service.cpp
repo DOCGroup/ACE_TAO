@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/OS_main.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -16,6 +17,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Event_Service, Event_Service, "$Id$")
 

@@ -1,6 +1,9 @@
 // $Id$
 
 #include "Event_Comm_i.h"
+#if defined (ACE_HAS_REGEX)
+# include "ace/OS_NS_regex.h"
+#endif
 
 ACE_RCSID(Event_Comm, Event_Comm_i, "$Id$")
 

@@ -6,6 +6,7 @@
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_CString sched_policy_str = "fifo";
 
@@ -18,9 +19,14 @@ public:
     :Kokyu::Dispatch_Command(1),id_(i)
   {
   }
+  int execute ();
 
-  int execute()
-  {
+private:
+  int id_;
+};
+
+int MyCommand::execute()
+{
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -44,12 +50,7 @@ public:
                 ACE_TEXT (("(%t|prio=%d) | command %d executed\n")),
                 prio, id_));
     return 0;
-  }
-
-private:
-  int id_;
-};
-
+}
 
 int main (int argc, char** argv)
 {

@@ -1,12 +1,16 @@
 #include "ace/SOCK_Dgram.h"
+
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#  include "ace/SOCK_Dgram.i"
+#endif
+
 #include "ace/Handle_Set.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
-
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram.i"
-#endif
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_select.h"
+#include "ace/os_include/net/os_if.h"
 
 ACE_RCSID (ace,
            SOCK_Dgram,
@@ -118,7 +122,9 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
 #endif /* ACE_HAS_IPV6 */
           )
         {
-          if (ACE::bind_port (this->get_handle ()) == -1)
+          if (ACE::bind_port (this->get_handle (), 
+			      INADDR_ANY, 
+			      protocol_family) == -1)
             error = 1;
         }
     }
@@ -298,6 +304,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
                                     &recv_msg,
                                     flags);
   addr.set_size (recv_msg.msg_namelen);
+  addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
   return status;
 }
 

@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/ACE.h"
 

@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Scheduler.h"
+#include "tao/ORB.h"
 #include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 

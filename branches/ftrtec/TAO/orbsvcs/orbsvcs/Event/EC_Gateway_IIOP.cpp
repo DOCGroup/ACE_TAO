@@ -4,12 +4,15 @@
 #include "orbsvcs/Event/ECG_Defaults.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "EC_Gateway_IIOP_Factory.h"
-#include "ace/Dynamic_Service.h"
 
+#include "EC_Gateway_IIOP_Factory.h"
 #include "ECG_ConsumerEC_Control.h"
 
-ACE_RCSID(Event, EC_Gateway_IIOP, "$Id$")
+#include "ace/Dynamic_Service.h"
+
+ACE_RCSID (Event, 
+           EC_Gateway_IIOP, 
+           "$Id$")
 
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
   :  busy_count_ (0),

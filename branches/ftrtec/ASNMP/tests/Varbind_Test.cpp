@@ -40,7 +40,6 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 
-#include "ace/OS.h"
 #include "asnmp/oid.h"
 #include "asnmp/vb.h"
 #include "test_config.h"

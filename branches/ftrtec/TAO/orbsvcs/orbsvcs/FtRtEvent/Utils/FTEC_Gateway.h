@@ -11,7 +11,7 @@
 #ifndef FTEC_GATEWAY_H
 #define FTEC_GATEWAY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -69,5 +69,5 @@ namespace TAO_FTRTEC
 #include "FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/  "ace/post.h"
 #endif

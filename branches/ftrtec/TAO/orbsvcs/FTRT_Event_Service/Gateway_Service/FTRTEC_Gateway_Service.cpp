@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 /// include this file to statically linked with FT ORB
@@ -80,7 +81,8 @@ int main(int argc,  ACE_TCHAR** argv)
 {
   ACE_TRY_NEW_ENV
   {
-    orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
+    orb = CORBA::ORB_init (argc, argv, ""
+                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (parse_args(argc, argv)==-1)

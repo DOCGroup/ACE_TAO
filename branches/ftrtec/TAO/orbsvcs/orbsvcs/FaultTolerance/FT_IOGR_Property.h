@@ -26,7 +26,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"
-#include "fault_tol_export.h"
+#include "FT_ORB_Utils_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -51,7 +51,7 @@ class TAO_Profile;
  * use this class (like the RM) should use them in a thread safe
  * manner.
  */
-class TAO_FT_Export TAO_FT_IOGR_Property
+class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
   : public virtual TAO_IOP::TAO_IOR_Property,
     public virtual TAO_Local_RefCounted_Object
 {

@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 
 NAME = deadlock_detection_test
 OBJFILES=$(OBJDIR)\$(NAME).obj

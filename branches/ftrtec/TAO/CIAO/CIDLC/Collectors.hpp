@@ -1,10 +1,13 @@
-// $Id$
+// file      : CIDLC/Collectors.hpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
 #ifndef COLLECTORS_HPP
 #define COLLECTORS_HPP
 
 #include <map>
 
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
 class Declarations
@@ -151,7 +154,7 @@ public:
         h->table ().exist (expl) ||
         h->table ().exist (impl)) return;
 
-    if(declarations_.add (h))
+    if (declarations_.add (h))
     {
       // Note that I don't go after components that inherited home manages
       // because it will be handled by component inheritance tree.

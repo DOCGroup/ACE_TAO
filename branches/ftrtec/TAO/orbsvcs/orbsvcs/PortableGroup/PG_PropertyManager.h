@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PG_Default_Property_Validator.h"
-
+#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
 #include "ace/Functor.h"

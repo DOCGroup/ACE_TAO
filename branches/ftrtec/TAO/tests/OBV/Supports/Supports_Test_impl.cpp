@@ -1,7 +1,9 @@
 // $Id$
+// FUZZ: disable check_for_streams_include
 
 #include "Supports_Test_impl.h"
 
+#include "ace/streams.h"
 
 /* vt_graph_impl */
 
@@ -26,7 +28,7 @@ vt_graph_impl::vt_graph_impl (int num_nodes ACE_ENV_ARG_DECL)
 }
 
 // Get the number of nodes in the vt_graph.
-CORBA::Long vt_graph_impl::size (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Long vt_graph_impl::size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return nodes_ ().length ();
@@ -34,7 +36,7 @@ CORBA::Long vt_graph_impl::size (ACE_ENV_SINGLE_ARG_DECL)
 
 // Add a node to the graph with no edges.
 void
-vt_graph_impl::add_node (const char * name ACE_ENV_ARG_DECL)
+vt_graph_impl::add_node (const char * name ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Supports_Test::Node * new_node = 0;
@@ -45,21 +47,24 @@ vt_graph_impl::add_node (const char * name ACE_ENV_ARG_DECL)
 
 // Print out information about each node.
 void
-vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL)
+vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << "Printing graph data..." << endl;
-  cout << "Number of nodes: " << nodes_ ().length () << endl;
+  ACE_DEBUG ((LM_DEBUG,
+	      "Printing graph data... \n"));
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "Number of nodes: [%d] \n", nodes_ ().length ()));
+
   for (size_t i = 0; i < nodes_ ().length (); i++)
     nodes_ ()[i]->print ();
-  cout << endl;
 }
 
 
 /* vt_graph_init_impl - factory operations */
 
 Supports_Test::vt_graph *
-vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+vt_graph_init_impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   vt_graph_impl * ret_val = 0;
@@ -68,8 +73,7 @@ vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ValueBase *
-vt_graph_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+vt_graph_init_impl::create_for_unmarshal (void)
 {
   vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
@@ -182,14 +186,16 @@ test_impl::pass_vt_graph_inout (
 }
 
 void
-test_impl::start (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
+test_impl::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-test_impl::finish (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
+test_impl::finish (ACE_ENV_SINGLE_ARG_DECL) 
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->_remove_ref ();
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
@@ -202,15 +208,15 @@ node_impl::node_impl (void)
 // Initialize state.
 node_impl::node_impl (const char * name)
 {
-	name_ (name);
-	weight_ (0);
-	degree_ (0);
-	neighbors_ ().length (0);
+        name_ (name);
+        weight_ (0);
+        degree_ (0);
+        neighbors_ ().length (0);
 }
 
 // Add an edge from this node to neighbor.
 void
-node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   degree_ (degree_ () + 1);
@@ -222,7 +228,7 @@ node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
 
 // Remove the edge from this node to neighbor.
 void
-node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (unsigned int i = 0; i < neighbors_ ().length (); i++)
@@ -235,14 +241,14 @@ node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
 }
 
 void
-node_impl::change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL)
+node_impl::change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   weight_ (new_weight);
 }
 
 void
-node_impl::print (ACE_ENV_SINGLE_ARG_DECL)
+node_impl::print (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   cout << "  Name: " << name_ () << endl;
@@ -256,7 +262,7 @@ node_impl::print (ACE_ENV_SINGLE_ARG_DECL)
 /* node_init_impl - factory operations */
 
 Supports_Test::Node *
-node_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+node_init_impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   node_impl * ret_val = 0;
@@ -265,8 +271,7 @@ node_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ValueBase *
-node_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+node_init_impl::create_for_unmarshal (void)
 {
   node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);

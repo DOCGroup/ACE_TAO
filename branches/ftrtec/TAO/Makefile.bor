@@ -1,3 +1,4 @@
+# $Id$
 #
 # Makefile for building	ACE and	TAO
 #
@@ -38,6 +39,7 @@ DIRS = \
         ..\performance-tests \
         ..\ACEXML \
         ..\ACEXML\tests \
+        ..\Kokyu \
 	tao \
 	TAO_IDL	\
 	orbsvcs	\

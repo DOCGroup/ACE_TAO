@@ -1,8 +1,10 @@
 // $Id$
 #include "Adapter.h"
 #include "Object.h"
-#include "ace/Dynamic_Service.h"
 #include "debug.h"
+
+#include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Adapter.i"
@@ -137,7 +139,7 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
       int r = this->adapters_[i]->dispatch (key,
                                             request,
                                             forward_to
-                                             ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (r != TAO_Adapter::DS_MISMATCHED_KEY)

@@ -77,6 +77,9 @@ namespace CCF
       IdentityParser<Punctuation>
       PunctuationParser;
 
+      typedef
+      IdentityParser<Operator>
+      OperatorParser;
 
       //
       //
@@ -122,10 +125,24 @@ namespace CCF
       TypeParser<ScopedIdentifier>
       ScopedIdentifierParser;
 
+      // Literal parsers.
+      //
+
+      typedef
+      TypeParser<BooleanLiteral>
+      BooleanLiteralParser;
+
+      typedef
+      TypeParser<CharacterLiteral>
+      CharacterLiteralParser;
+
+      typedef
+      TypeParser<IntegerLiteral>
+      IntegerLiteralParser;
+
       typedef
       TypeParser<StringLiteral>
       StringLiteralParser;
-
 
       //
       //

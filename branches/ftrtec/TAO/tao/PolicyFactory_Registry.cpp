@@ -1,4 +1,6 @@
 #include "PolicyFactory_Registry.h"
+#include "PortableInterceptorC.h"
+#include "ORB_Constants.h"
 
 ACE_RCSID (tao,
            PolicyFactory_Registry,
@@ -17,7 +19,9 @@ TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
   TABLE::ITERATOR end = this->factories_.end ();
 
   for (TABLE::ITERATOR i = this->factories_.begin (); i != end; ++i)
-    CORBA::release ((*i).int_id_);
+    {
+      CORBA::release ((*i).int_id_);
+    }
 
   this->factories_.close ();
 }
@@ -29,11 +33,13 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (policy_factory))
-    ACE_THROW (CORBA::BAD_PARAM (
-                 CORBA::SystemException::_tao_minor_code (
-                   TAO_DEFAULT_MINOR_CODE,
-                   EINVAL),
-                 CORBA::COMPLETED_NO));
+    {
+      ACE_THROW (CORBA::BAD_PARAM (
+                   CORBA::SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
 
   PortableInterceptor::PolicyFactory_ptr factory =
     PortableInterceptor::PolicyFactory::_duplicate (policy_factory);
@@ -44,7 +50,6 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   if (result == 1)
     {
       // PolicyFactory of given type already exists.
-
       ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
                                        CORBA::COMPLETED_NO));
     }
@@ -63,8 +68,7 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();
 
-  if (this->factories_.find (type,
-                             policy_factory) == -1)
+  if (this->factories_.find (type, policy_factory) == -1)
     {
       // Policy factory corresponding to given policy type does not
       // exist in policy factory map.

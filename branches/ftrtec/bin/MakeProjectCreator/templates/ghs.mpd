@@ -3,10 +3,10 @@ default:
 <%if(exename)%>
 	program
 <%endif%>
-<%if(sharedname)%>
+<%if(sharedname || staticname)%>
 	library
 	:cx_pch_option=automatic
-	:outputname=<%libout%>\<%sharedname%>.lib
+	:outputname=<%libout%>\<%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>.lib
 	:object_dir=obj
 	:cx_pch_dir=pch
 <%endif%>

@@ -9,7 +9,6 @@
 
 #include "CCF/IDL2/SemanticAction/Impl/Factory.hpp"
 
-#include "CCF/IDL3/SemanticAction/Impl/Include.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Component.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Provides.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Uses.hpp"
@@ -19,6 +18,8 @@
 #include "CCF/IDL3/SemanticAction/Impl/EventType.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Home.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/HomeFactory.hpp"
+#include "CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp"
+#include "CCF/IDL3/SemanticAction/Impl/Include.hpp"
 
 namespace CCF
 {
@@ -28,38 +29,17 @@ namespace CCF
     {
       namespace Impl
       {
-        class Factory : public virtual IDL3::SemanticAction::Factory,
-                        public virtual IDL2::SemanticAction::Impl::Factory
+        struct Factory : virtual IDL3::SemanticAction::Factory,
+                         virtual IDL2::SemanticAction::Impl::Factory
         {
-        public:
-          virtual
-          ~Factory () throw () {}
-
           Factory (CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
-                   SyntaxTree::TranslationRegionPtr const& r)
-              : IDL2::SemanticAction::Impl::Factory (context, dout, r),
-                trace_ (context.get ("idl3::semantic-action::trace", false)),
+                   SemanticGraph::TranslationUnit& tu);
 
-                include_ (trace_, context, dout, *this, r, scope_),
-                component_ (trace_, scope_),
-                provides_ (trace_, scope_),
-                uses_ (trace_, scope_),
-                publishes_ (trace_, scope_),
-                emits_ (trace_, scope_),
-                consumes_ (trace_, scope_),
-                event_type_ (trace_, scope_),
-                home_ (trace_, scope_),
-                home_factory_ (trace_, scope_)
+          virtual SemanticAction::Consumes&
+          consumes ()
           {
-          }
-
-        public:
-
-          virtual IDL2::SemanticAction::Include&
-          include ()
-          {
-            return include_;
+            return consumes_;
           }
 
           virtual SemanticAction::Component&
@@ -68,34 +48,10 @@ namespace CCF
             return component_;
           }
 
-          virtual SemanticAction::Provides&
-          provides ()
-          {
-            return provides_;
-          }
-
-          virtual SemanticAction::Uses&
-          uses ()
-          {
-            return uses_;
-          }
-
-          virtual SemanticAction::Publishes&
-          publishes ()
-          {
-            return publishes_;
-          }
-
           virtual SemanticAction::Emits&
           emits ()
           {
             return emits_;
-          }
-
-          virtual SemanticAction::Consumes&
-          consumes ()
-          {
-            return consumes_;
           }
 
 
@@ -117,22 +73,49 @@ namespace CCF
             return home_factory_;
           }
 
+          virtual SemanticAction::HomeFinder&
+          home_finder ()
+          {
+            return home_finder_;
+          }
+
+          virtual IDL2::SemanticAction::Include&
+          include ()
+          {
+            return include_;
+          }
+
+          virtual SemanticAction::Provides&
+          provides ()
+          {
+            return provides_;
+          }
+
+          virtual SemanticAction::Publishes&
+          publishes ()
+          {
+            return publishes_;
+          }
+
+          virtual SemanticAction::Uses&
+          uses ()
+          {
+            return uses_;
+          }
 
         private:
 
-          bool trace_;
-
-          Include include_;
-
           Component component_;
-          Provides provides_;
-          Uses uses_;
-          Publishes publishes_;
-          Emits emits_;
           Consumes consumes_;
+          Emits emits_;
           EventType event_type_;
           Home home_;
           HomeFactory home_factory_;
+          HomeFinder home_finder_;
+          Include include_;
+          Provides provides_;
+          Publishes publishes_;
+          Uses uses_;
         };
       }
     }

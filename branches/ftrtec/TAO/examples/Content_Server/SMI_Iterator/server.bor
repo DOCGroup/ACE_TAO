@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Makefile for building the Content_Server SMI_Iterator example
 #
 
@@ -36,7 +38,7 @@ LIBFILES = \
         $(TAO_VALUETYPE_LIB) \
 	$(TAO_IORINTERCEPTOR_LIB) \
 	$(TAO_ORT_LIB)
-        
+
 IDLFILES = \
         $(IDLDIR)\Web_Server.idl
 

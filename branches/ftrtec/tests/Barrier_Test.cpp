@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch.h"
+#include "ace/Barrier.h"
 #include "ace/Thread_Manager.h"
 
 ACE_RCSID(tests, Barrier_Test, "$Id$")

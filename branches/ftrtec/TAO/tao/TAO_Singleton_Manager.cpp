@@ -1,14 +1,13 @@
 // $Id$
 
-#include "tao/orbconf.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
-#include "ace/Synch.h"
-
 #include "tao/TAO_Singleton_Manager.h"
-
 #include "tao/Exception.h"
-#include "tao/Typecode.h"
+#include "tao/Typecode_Constants.h"
+
+#include "ace/Guard_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Log_Msg.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Singleton_Manager.inl"
@@ -26,17 +25,17 @@
 # endif /* ACE_MVS */
 #endif /* ACE_HAS_EXCEPTIONS */
 
-
 ACE_RCSID (tao,
            TAO_Singleton_Manager,
            "$Id$")
-
 
 extern "C" void
 TAO_Singleton_Manager_cleanup_destroyer (void *, void *)
 {
   if (TAO_Singleton_Manager::instance_)
-    (void) TAO_Singleton_Manager::instance ()->fini ();
+    {
+      (void) TAO_Singleton_Manager::instance ()->fini ();
+    }
 }
 
 TAO_Singleton_Manager *TAO_Singleton_Manager::instance_ = 0;
@@ -58,7 +57,9 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
 {
   // Be sure that no further instances are created via instance ().
   if (instance_ == 0)
-    instance_ = this;
+    {
+      instance_ = this;
+    }
 
   // @@ This is a hack.  Allow the TAO_Singleton_Manager to be registered
   //    with the ACE_Object_Manager (or not) in an explicit call to
@@ -116,7 +117,9 @@ TAO_Singleton_Manager::instance (void)
       return instance_pointer;
     }
   else
-    return instance_;
+    {
+      return instance_;
+    }
 }
 
 int
@@ -276,7 +279,7 @@ TAO_Singleton_Manager::fini (void)
   TAO_Exceptions::fini ();
 
   // Clean up all ORB owned TypeCodes.
-  TAO_TypeCodes::fini ();
+  TAO::TypeCode_Constants::fini ();
 
   return 0;
 }
@@ -322,8 +325,10 @@ TAO_Singleton_Manager::at_exit_i (void *object,
                                   ACE_CLEANUP_FUNC cleanup_hook,
                                   void *param)
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-    *instance_->internal_lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                            ace_mon,
+                            *instance_->internal_lock_,
+                            -1));
 
   if (this->shutting_down_i ())
     {

@@ -1,4 +1,7 @@
-project(*latency server): taoserver, strategies {
+// -*- MPC -*-
+// $Id$
+
+project(*latency server): taoexe, portableserver, strategies {
   avoids += minimum_corba
 
   Source_Files {
@@ -7,8 +10,7 @@ project(*latency server): taoserver, strategies {
   }
 }
 
-project(*latency client): taoserver, strategies, dynamicinterface {
-  exename  = client
+project(*latency client): taoexe, portableserver, strategies, dynamicinterface {
   avoids  += minimum_corba
 
   Source_Files {

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(IFR_Service) : orbsvcsexe, core, ifrservice, typecodefactory, svc_utils, ifr_client, iortable, portableserver, crosscompile {
   avoids   += minimum_corba
   exename  = IFR_Service
@@ -34,10 +37,17 @@ project(TAO_IFR_EXE) : taoexe, core, ifr_client, crosscompile {
   avoids         += minimum_corba
   after          += TAO_IFR_BE TAO_IDL_FE
   exename         = tao_ifr
-  idlpreprocessor = 1
   libs           += TAO_IFR_BE TAO TAO_IDL_FE
   includes       += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
   libpaths       += $(TAO_ROOT)/TAO_IDL
+
+  verbatim(gnuace, local) {
+    ifeq ($(TAO_IDL_PREPROCESSOR),)
+      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+    else
+      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
+    endif
+  }
 
   Source_Files {
     tao_ifr.cpp

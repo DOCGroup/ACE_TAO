@@ -21,6 +21,7 @@
 # include "ace/Object_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Mutex.h"
 #include "ace/RW_Thread_Mutex.h"

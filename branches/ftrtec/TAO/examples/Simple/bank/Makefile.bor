@@ -1,7 +1,8 @@
-
+#
+# $Id$
 #
 # Makefile for building the Bank example
-# 
+#
 
 MAKEFILES = Bank_Client.bor Bank_Server.bor
 

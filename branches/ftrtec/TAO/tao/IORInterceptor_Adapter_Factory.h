@@ -13,15 +13,17 @@
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H
 #define TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IORInterceptor_Adapter.h"
+#include "tao/Exception.h"
+
+class TAO_IORInterceptor_Adapter;
 
 /**
  * @class TAO_IORInterceptor_Adapter_Factory
@@ -32,7 +34,8 @@
  * ORB on the ORB's first usage of its ior_interceptor_adapter_. This is a base
  * class for the actual implementation in the TAO_IORInterceptor library.
  */
-class TAO_Export TAO_IORInterceptor_Adapter_Factory : public ACE_Service_Object
+class TAO_Export TAO_IORInterceptor_Adapter_Factory 
+  : public ACE_Service_Object
 {
 public:
   virtual ~TAO_IORInterceptor_Adapter_Factory (void);
@@ -44,4 +47,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H */

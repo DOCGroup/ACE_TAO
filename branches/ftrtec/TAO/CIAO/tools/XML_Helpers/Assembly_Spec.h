@@ -18,6 +18,7 @@
 #include "ace/SString.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Null_Mutex.h"
+#include "tao/Environment.h"
 #include "XML_Helpers_Export.h"
 
 namespace CIAO

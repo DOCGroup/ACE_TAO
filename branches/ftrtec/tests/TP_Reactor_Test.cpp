@@ -57,10 +57,14 @@
 #include "ace/Signal.h"
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
+#include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Semaphore.h"
 
 ACE_RCSID(TPReactor, TPReactor_Test, "TPReactor_Test.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 
@@ -126,7 +130,7 @@ public:
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void): sem_ (0),
+  MyTask (void): sem_ ((unsigned int) 0),
                  my_reactor_ (0) {}
 
   virtual ~MyTask () { stop (); }
@@ -822,7 +826,7 @@ Sender::initiate_write (void)
 {
   if ( this->msg_queue ()->message_count () < 20) // flow control
     {
-      size_t nbytes = ACE_OS_String::strlen (send_buf_);
+      size_t nbytes = ACE_OS::strlen (send_buf_);
 
       ACE_Message_Block *mb = 0;
       ACE_NEW_RETURN (mb,

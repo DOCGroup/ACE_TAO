@@ -1,9 +1,12 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+
 #include "testC.h"
 #include "interceptors.h"
 #include "Echo_Client_ORBInitializer.h"
+
+#include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (Dynamic,
            client,
@@ -41,7 +44,10 @@ void
 run_test (Test_Interceptors::Visual_ptr server
           ACE_ENV_ARG_DECL)
 {
-  server->normal (10
+  CORBA::String_var msg;
+
+  server->normal (10,
+                  msg.out ()
                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -96,6 +102,7 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+#if TAO_HAS_INTERCEPTORS == 1    
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
@@ -108,6 +115,7 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);

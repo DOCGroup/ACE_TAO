@@ -1,4 +1,10 @@
-// $Id$
+// file      : CIDLC/Literals.hpp
+// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
+// cvs-id    : $Id$
+
+#ifndef LITERALS_HPP
+#define LITERALS_HPP
+
 namespace StringLiterals
 {
   static const char COPYRIGHT[] =
@@ -50,7 +56,7 @@ namespace StringLiterals
 
     // Commonly used Components module members.
     "::Components::Cookie",                               // COMP_CK
-    "::Components::NameList &names",                      // COMP_NAMES
+    "::Components::NameList & /* names */",               // COMP_NAMES
     "::Components::EventConsumerBase",                    // COMP_ECB
 
     // This could change - don't want it scattered all over.
@@ -62,7 +68,9 @@ namespace StringLiterals
     // Labels for things stored in a SyntaxTree node's Context.
     "CIDLC::RepositoryIdGenerator::TypeId",               // TYPE_ID
     "CIDLC::RepositoryIdGenerator::TypePrefix",           // TYPE_PREFIX
-    "CIDLC::RepositoryIdGenerator::RepoId"                // REPO_ID
+    "CIDLC::RepositoryIdGenerator::RepoId",               // REPO_ID
+    
+    "variable-size"                                       // VAR_SIZE
   };
 
   // Index into the strings above.
@@ -95,6 +103,9 @@ namespace StringLiterals
     INH_RCSB,
     TYPE_ID,
     TYPE_PREFIX,
-    REPO_ID
+    REPO_ID,
+    VAR_SIZE
   };
 }
+
+#endif  // LITERALS_HPP

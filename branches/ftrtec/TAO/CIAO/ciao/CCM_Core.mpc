@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   sharedname  = CIAO_Client
   idlflags  += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
@@ -16,6 +19,11 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
     CCM_ComponentC.cpp
     CIAO_ValueC.cpp
     Client_init.cpp
+  }
+  
+  Header_Files {
+    CIAO_Client_Export.h
+    CIAO_common.h
   }
 }
 
@@ -75,5 +83,10 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
 //    HomeRegistrar_i.cpp
     Server_init.cpp
     ServerActivator_Impl.cpp
+  }
+  
+  Header_Files {
+    CIAO_Server_Export.h
+    CIAO_common.h
   }
 }

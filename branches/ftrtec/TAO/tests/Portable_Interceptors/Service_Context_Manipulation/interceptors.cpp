@@ -3,6 +3,9 @@
 #include "interceptors.h"
 #include "tao/OctetSeqC.h"
 
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+
 ACE_RCSID (Service_Context_Manipulation,
            interceptors,
            "$Id$")
@@ -71,12 +74,16 @@ Echo_Client_Request_Interceptor::send_request (
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_request "
               "from \"%s\" on object: %s\n",
               this->myname_,
               operation.in (),
               ior.in ()));
+#endif /*if 0*/
+
+
 
   // Populate target member of the ClientRequestInfo.
 
@@ -132,6 +139,11 @@ Echo_Client_Request_Interceptor::receive_reply (
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Return if it is a hard coded invocation
+  if (ACE_OS::strcmp (operation.in (),
+                      "_is_a") == 0)
+    return;
+
   CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -139,12 +151,14 @@ Echo_Client_Request_Interceptor::receive_reply (
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_reply from "
               "\"%s\" on object: %s\n",
               this->myname_,
               operation.in (),
               ior.in ()));
+#endif /*if 0*/
 
   // Check that the reply service context was received as
   // expected.
@@ -154,9 +168,11 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   const char *buf =
     ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
+#endif /*if 0*/
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
     {
@@ -222,12 +238,14 @@ Echo_Client_Request_Interceptor::receive_exception (
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.received_exception "
               "from \"%s\" on object: %s\n",
               this->myname_,
               operation.in (),
               ior.in ()));
+#endif /*if 0*/
 
   // Check that the reply service context was received as
   // expected.
@@ -237,9 +255,12 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   const char *buf =
     ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
+#endif /*if 0*/
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
     {
@@ -308,7 +329,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceId id = ::service_id;
@@ -318,9 +339,11 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   const char *buf =
     ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "  Received service context: %s\n",
               buf));
+#endif /*if 0*/
 
   if (ACE_OS::strcmp (buf, request_msg) != 0)
     {
@@ -368,10 +391,12 @@ Echo_Server_Request_Interceptor::send_reply (
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_reply from \"%s\"\n",
               this->myname_,
               ri->operation ()));
+#endif /*if 0*/
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
@@ -380,9 +405,12 @@ Echo_Server_Request_Interceptor::send_reply (
 
   const char *buf = ACE_reinterpret_cast (const char *,
                                           sc->context_data.get_buffer ());
+
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "  Reply service context: %s\n",
               buf));
+#endif /*if 0*/
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
     {
@@ -422,10 +450,12 @@ Echo_Server_Request_Interceptor::send_exception (
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_exception from \"%s\"\n",
               this->myname_,
               operation.in ()));
+#endif /*if 0*/
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
@@ -434,9 +464,12 @@ Echo_Server_Request_Interceptor::send_exception (
 
   const char *buf = ACE_reinterpret_cast (const char *,
                                           sc->context_data.get_buffer ());
+
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "  Reply service context: %s\n",
               buf));
+#endif /*if 0*/
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
     {

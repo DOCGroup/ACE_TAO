@@ -15,7 +15,7 @@
 #if !defined (TEST_DYNUNION_H)
 #define TEST_DYNUNION_H
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 class Test_DynUnion
 {

@@ -8,7 +8,6 @@ int
 main (int argc, char *argv[])
 {
   Time_Date_Client_i client;
-  
 
   ACE_DEBUG ((LM_DEBUG,
               "\nTime_Date client\n\n"));

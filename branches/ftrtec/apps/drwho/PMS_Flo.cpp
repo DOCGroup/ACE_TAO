@@ -5,6 +5,7 @@
 #include "PMS_Flo.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on

@@ -9,8 +9,9 @@
 #include "orbsvcs/CosTradingC.h"
 #include "orbsvcs/CosTradingReposC.h"
 #include "orbsvcs/CosTradingDynamicC.h"
+#include "ttest_export.h"
 
-class TT_Info
+class TAO_TTest_Export TT_Info
 {
 public:
 
@@ -176,7 +177,7 @@ public:
   static const char* QUERIES[][3];
 };
 
-class TT_Parse_Args
+class TAO_TTest_Export TT_Parse_Args
   // = TITLE
   // Utility to parse the command-line arguments to the trading service tests.
 {

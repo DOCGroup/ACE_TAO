@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
@@ -6,9 +7,11 @@
 # debug = 1
 # optimize = 1
 
-ifndef exceptions
-  exceptions = 1
-endif
+# We always include config-linux.h on Linux platforms.
+ACE_PLATFORM_CONFIG ?= config-linux.h
+
+exceptions ?= 1
+
 ifeq (,$(debug))
   debug = 1
 endif
@@ -16,9 +19,7 @@ ifeq (,$(optimize))
   optimize = 1
 endif
 
-ifeq (,$(threads))
-  threads = 1
-endif
+threads ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -47,7 +48,7 @@ PLATFORM_WX_LDFLAGS =
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
-
+ssl ?= 0
 ifeq ($(ssl),1)
   # Some Linux OpenSSL installations compile in Kerberos support.  Add
   # the Kerberos include path to preprocessor include path.
@@ -59,14 +60,15 @@ ifeq ($(ssl),1)
   # installations use shared OpenSSL libraries so we should be okay,
   # at least until we migrate to Autoconf.
   PLATFORM_SSL_CPPFLAGS += -I/usr/kerberos/include
-endif # threads
+endif # ssl
 
+insure ?= 0
 ifeq ($(insure),1)
-CC  = insure
-CXX = insure
+  CC  = insure
+  CXX = insure
 else
-CC  = gcc
-CXX = g++
+  CC  = gcc
+  CXX = g++
 endif
 
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
@@ -121,6 +123,7 @@ ifeq ($(threads),1)
     endif # ! PRELIB
 endif
 
+sctp ?=
 # support for OpenSS7 SCTP
 ifeq ($(sctp),openss7)
   PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_OPENSS7_SCTP

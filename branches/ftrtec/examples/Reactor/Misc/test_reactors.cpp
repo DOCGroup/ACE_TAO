@@ -4,7 +4,6 @@
 // the same process...  Thanks to Detlef Becker for contributing this.
 
 #include "ace/Reactor.h"
-#include "ace/Synch.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
@@ -12,6 +11,8 @@
 ACE_RCSID(Misc, test_reactors, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+
+#include "ace/Recursive_Thread_Mutex.h"
 
 static const int NUM_INVOCATIONS = 10;
 static const int MAX_TASKS = 20;

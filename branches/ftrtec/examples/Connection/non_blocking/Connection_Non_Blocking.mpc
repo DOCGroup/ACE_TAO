@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project (*SockClient) : aceexe {
   exename = sock_client
   Source_Files {

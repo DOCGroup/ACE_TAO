@@ -12,9 +12,7 @@
 
 #include "Iterator.h"
 
-// Plain old constructor
-
-ImR_Iterator::ImR_Iterator (Server_Repository::HASH_IMR_ITER *iterator,
+ImR_Iterator::ImR_Iterator (Server_Repository::HASH_IMR_MAP::ITERATOR *iterator,
                             PortableServer::POA_ptr poa)
   : iterator_ (iterator),
     poa_ (poa)
@@ -22,8 +20,6 @@ ImR_Iterator::ImR_Iterator (Server_Repository::HASH_IMR_ITER *iterator,
   // Nothing
 }
 
-
-// Destructor
 
 ImR_Iterator::~ImR_Iterator ()
 {
@@ -52,7 +48,7 @@ ImR_Iterator::next_n (CORBA::ULong how_many,
   // bindings.
   server_list->length (how_many);
 
-  Server_Repository::HASH_IMR_ENTRY *server_entry;
+  Server_Repository::HASH_IMR_MAP::ENTRY *server_entry;
 
   // Iterate and populate the BindingList.
 

@@ -34,13 +34,21 @@ TAO_LB_ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
+    PortableInterceptor::ServerRequestInfo_ptr ri
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   if (this->load_alert_.alerted ())
     {
+      CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (ACE_OS::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
+          || ACE_OS::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
+          || ACE_OS::strcmp (op.in (), "enable_alert") == 0)  // LoadAlert
+        return;  // Do not redirect.
+
 #if 0
       ACE_TRY
         {

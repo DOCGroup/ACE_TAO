@@ -6,7 +6,8 @@
 
 
 DIRS = \
-	GenericFactory
+  GenericFactory \
+  LoadMonitor
 
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -21,15 +21,15 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub process {
-  my($self)    = shift;
-  my($objects) = shift;
-  my($files)   = shift;
+  my($objects) = $_[1];
+  my($files)   = $_[2];
   my($dep)     = "@$objects: \\\n";
-  my($count)   = scalar(@$files) - 1;
 
-  for(my $i = 0; $i <= $count; ++$i) {
-    $dep .= "  $$files[$i]" . ($i != $count ? " \\\n" : "\n");
+  ## Sort the dependencies to make them reproducible
+  foreach my $file (sort @$files) {
+    $dep .= "  $file \\\n";
   }
+  $dep =~ s/ \\$//;
 
   return $dep;
 }

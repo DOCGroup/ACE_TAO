@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Makefile for building the AMH_Exceptions server
 #
 
@@ -18,7 +20,7 @@ CFLAGS = \
         $(TAO_VALUETYPE_CFLAGS) \
 	$(TAO_IORINTERCEPTOR_CFLAGS) \
 	$(TAO_ORT_CFLAGS)
-        
+
 
 LIBFILES = \
 	$(ACE_LIB) \

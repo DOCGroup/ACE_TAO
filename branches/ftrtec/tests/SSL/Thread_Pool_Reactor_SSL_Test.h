@@ -29,7 +29,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Svc_Handler.h"
-#include "ace/Synch.h"
 
 class Request_Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_STREAM,
                                                ACE_MT_SYNCH>

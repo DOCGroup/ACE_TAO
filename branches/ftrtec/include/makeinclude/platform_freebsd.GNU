@@ -2,8 +2,15 @@
 
 # platform_freebsd.GNU
 
-VERSION := $(shell uname -r | sed -e "s/`uname -r | sed -e 's/.//'`//")
-ifeq ($(VERSION),2)
+##  See /usr/ports/Mk/bsd.port.mk for sample usage of the OSVERSION
+##  variable, especially with respect to defining the correct compiler
+##  flags for threads.
+OSVERSION := $(shell sysctl -n kern.osreldate)
+
+## GNU make does not support boolean conditional expressions
+## so we have to use a dummy RET variable.
+RET = $(shell test $(OSVERSION) -ge 200000 && printf 1)
+ifeq ($(RET),1)
 versioned_so = 1
 endif
 
@@ -28,7 +35,8 @@ CXX             = g++
 
 CFLAGS          += -W -Wall -Wpointer-arith -pipe
 DCFLAGS         += -g
-ifneq ($(VERSION),3)
+RET = $(shell test $(OSVERSION) -ge 300000 && printf 1)
+ifneq ($(RET),1)
   LDFLAGS       += -Wl,-rpath $(ACE_ROOT)/ace
 endif
 DLD             = $(CXX)
@@ -43,9 +51,21 @@ SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB = @echo
 
+## Set the correct compiler flags for pthreads.  This
+## test is copied from /usr/ports/Mk/bsd.port.mk
 ifeq ($(threads),1)
-LDFLAGS         += -pthread
-CFLAGS          += -D_THREAD_SAFE
+RET = $(shell test $(OSVERSION) -lt 500016 && printf 1)
+ifeq ($(RET),1)
+  PTHREAD_CFLAGS = -D_THREAD_SAFE
+  PTHREAD_LIBS   = -pthread
+else
+  PTHREAD_CFLAGS = -D_THREAD_SAFE
+  PTHREAD_LIBS   = -lc_r
+endif # RET
+
+CFLAGS  += $(PTHREAD_CFLAGS)
+LDFLAGS += $(PTHREAD_LIBS)
+ 
 endif # threads
 
 # Test for template instantiation, add to SOFLAGS if SONAME set, 

@@ -1105,11 +1105,8 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   *os << "::" << ub->local_name ()
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
-  *os << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->" << bu->field_pd_prefix () << ub->local_name ()
-      << bu->field_pd_postfix () << "_var," << be_nl
-      << bt->name () << " (val)" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
+  *os << "this->" << bu->field_pd_prefix () << ub->local_name ()
+      << bu->field_pd_postfix () << " = val;" << be_uidt_nl;
   *os << "}" << be_nl;
 
   *os << "// Readonly get method." << be_nl
@@ -1120,7 +1117,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
 
   *os << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
-      << "return *this->"
+      << "return this->"
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
@@ -1134,7 +1131,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
 
   *os << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "return *this->"
+      << "return this->"
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl

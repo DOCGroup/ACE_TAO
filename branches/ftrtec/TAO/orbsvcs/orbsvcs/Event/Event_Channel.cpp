@@ -1514,7 +1514,8 @@ ACE_ES_Consumer_Module::obtain_push_supplier (
   ACE_CHECK_RETURN (proxy);
 
   // Give away ownership to the POA....
-  new_consumer.release ()->_remove_ref ();
+  new_consumer.release ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (proxy);
 
   return proxy;
 }
@@ -3422,7 +3423,8 @@ ACE_ES_Supplier_Module::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (proxy);
 
   // Give ownership to the POA
-  new_supplier.release ()->_remove_ref ();
+  new_supplier.release ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (proxy);
 
   return proxy;
 }

@@ -19,8 +19,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 
-#include "tao/corba.h"
-
 #include "UDP_i.h"
 
 // The following include file forces DIOP to be linked into the

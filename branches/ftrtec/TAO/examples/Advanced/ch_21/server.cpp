@@ -22,9 +22,11 @@
 #include <algorithm>
 #include "icp.h"
 #include <ace/Synch_T.h>
-#include <strstream.h>
-// #include <iostream.h>
-// #include <fstream.h>
+#include <strstream>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
 
 const char* Controller_oid = "Controller";
 

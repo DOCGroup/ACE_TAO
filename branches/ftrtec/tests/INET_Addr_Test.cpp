@@ -19,9 +19,10 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_arpa_inet.h"
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
@@ -71,6 +72,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr addr;
   status |= check_type_consistency (addr);
+  char hostaddr[1024];
 
   for (int i=0; ipv4_addresses[i] != 0; i++)
     {
@@ -110,6 +112,29 @@ int run_main (int argc, ACE_TCHAR *argv[])
           status = 1;
         }
 
+      // Now we check the operation of get_host_addr(char*,int)
+      const char* haddr = addr.get_host_addr (&hostaddr[0], sizeof(hostaddr));
+      if (0 != ACE_OS::strcmp (&hostaddr[0], haddr))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s failed get_host_addr(char* buf,int) check\n")
+                      ACE_TEXT ("buf ['%s'] != return value ['%s']\n"),
+                      ipv4_addresses[i],
+                      &hostaddr[0],
+                      haddr));
+          status = 1;
+        }
+      if (0 != ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s failed get_host_addr(char*,int) check\n")
+                      ACE_TEXT ("buf ['%s'] != expected value ['%s']\n"),
+                      ipv4_addresses[i],
+                      &hostaddr[0],
+                      ipv4_addresses[i]));
+          status = 1;
+        }
+
       // Clear out the address by setting it to 1 and check
       addr.set (0, ACE_UINT32 (1), 1);
       status |= check_type_consistency (addr);
@@ -128,7 +153,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%s failed second get_host_addr() check\n")
-                      ACE_TEXT ("%s != %s\n"),
+                      ACE_TEXT ("return value ['%s'] != expected value ['%s']\n"),
                       ipv4_addresses[i],
                       addr.get_host_addr (),
                       ipv4_addresses[i]));

@@ -9,12 +9,12 @@ namespace CCF
   namespace CIDL
   {
     LexicalAnalyzer::
-    LexicalAnalyzer (TokenStream<char>& is)
+    LexicalAnalyzer (CompilerElements::TokenStream<Char>& is)
         : IDL2::LexicalAnalyzer (is),
           IDL3::LexicalAnalyzer (is)
     {
       // Keywords (alphabetic order).
-      
+
       keyword_table_.insert ("composition");
       keyword_table_.insert ("entity"     );
       keyword_table_.insert ("executor"   );

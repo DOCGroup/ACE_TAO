@@ -5,10 +5,13 @@
 // single-threaded concurrent server.  This server program can be
 // driven by the oneway test mode of CPP-inclient.cpp.
 
+#include "ace/OS_main.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_poll.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(SOCK_SAP, CPP_inserver_poll, "$Id$")
 

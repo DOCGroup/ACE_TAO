@@ -12,12 +12,19 @@
 #ifndef TAO_ESF_WORKER_H
 #define TAO_ESF_WORKER_H
 
-#include "tao/corba.h"
+#include "ace/CORBA_macros.h"
+#include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class Object;
+
+namespace CORBA
+{
+  class Environment;
+}
 /// Define the interface for the Worker objects
 /**
  * The Event Service Framework uses Worker classes to iterate over

@@ -10,37 +10,6 @@ namespace CCF
   {
     namespace Traversal
     {
-      
-      // Module
-      //
-      //
-
-      void Module::
-      traverse (NodePtr const& n)
-      {
-        if (!delegate (n))
-        {
-          pre (n);
-          scope (n);
-          post (n);
-        }
-      }
-
-      void Module::
-      pre (NodePtr const&)
-      {
-      }
-
-      void Module::
-      scope (NodePtr const& n)
-      {
-        delegate_scope (n);
-      }
-
-      void Module::
-      post (NodePtr const&)
-      {
-      }
     }
   }
 }

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_COSEC_PROXYPUSHCONSUMER_H
 #define TAO_Notify_COSEC_PROXYPUSHCONSUMER_H
+
 #include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
@@ -20,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosEventChannelAdminS.h"
+
 #include "../ProxyConsumer_T.h"
 
 #if defined(_MSC_VER)
@@ -35,7 +37,8 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushConsumer : public virtual TAO_Notify_ProxyConsumer_T <POA_CosEventChannelAdmin::ProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushConsumer 
+  : public virtual TAO_Notify_ProxyConsumer_T <POA_CosEventChannelAdmin::ProxyPushConsumer>
 {
  friend class TAO_Notify_Builder;
 public:
@@ -84,4 +87,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_COSEC_PROXYPUSHCONSUMER_H */

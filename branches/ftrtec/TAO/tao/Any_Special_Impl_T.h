@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Any.h"
+#include "tao/Any_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,7 +62,7 @@ namespace TAO
     T * value_;
     CORBA::ULong bound_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any_Special_Impl_T.inl"

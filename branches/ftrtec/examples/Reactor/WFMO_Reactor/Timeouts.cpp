@@ -26,7 +26,7 @@
 
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(WFMO_Reactor, Timeouts, "$Id$")
 

@@ -4,6 +4,7 @@
 #include "Kokyu_qosC.h"
 #include "utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
+#include "tao/ORB_Constants.h"
 
 MUF_Scheduling::SchedulingParameter
 MUF_Sched_Param_Policy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -295,8 +296,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
       sc_qos_as_any <<= sc_qos;
 
       sc.context_data =
-        ACE_reinterpret_cast(IOP::ServiceContext::
-                             _tao_seq_Octet_context_data &,
+        ACE_reinterpret_cast(CORBA::OctetSeq &,
                              *codec_->encode (sc_qos_as_any));
       
 #ifdef KOKYU_DSRT_LOGGING
@@ -357,7 +357,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceContext_var sc =
@@ -504,9 +504,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
 
-      sc.context_data = ACE_reinterpret_cast(
-                                             IOP::ServiceContext::
-                                             _tao_seq_Octet_context_data &,
+      sc.context_data = ACE_reinterpret_cast(CORBA::OctetSeq &,
                                              *codec_->encode (sc_qos_as_any));
 
       // Add this context to the service context list.

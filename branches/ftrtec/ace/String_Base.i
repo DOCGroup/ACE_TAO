@@ -5,6 +5,8 @@
 
 #include "ace/Malloc_Base.h"
 #include "ace/Min_Max.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_Memory.h"
 
 // Default constructor.
 
@@ -35,7 +37,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
 
   size_t length;
   if (s != 0)
-    length = ACE_OS_String::strlen (s);
+    length = ACE_OS::strlen (s);
   else
     length = 0;
 
@@ -146,7 +148,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s, int release)
 {
   size_t length;
   if (s != 0)
-    length = ACE_OS_String::strlen (s);
+    length = ACE_OS::strlen (s);
   else
     length = 0;
 
@@ -200,7 +202,7 @@ ACE_String_Base<CHAR>::rep (void) const
 
   CHAR *new_string;
   ACE_NEW_RETURN (new_string, CHAR[this->len_ + 1], 0);
-  ACE_OS_String::strsncpy (new_string, this->rep_, this->len_+1);
+  ACE_OS::strsncpy (new_string, this->rep_, this->len_+1);
 
   return new_string;
 }
@@ -225,7 +227,7 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
   // Pick smaller of the two lengths and perform the comparison.
   size_t smaller_length = ace_min (this->len_, s.len_);
 
-  int result = ACE_OS_String::memcmp (this->rep_,
+  int result = ACE_OS::memcmp (this->rep_,
                                s.rep_,
                                smaller_length * sizeof (CHAR));
 
@@ -277,8 +279,8 @@ template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::find (const CHAR *s, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
-  size_t len = ACE_OS_String::strlen (s);
-  CHAR *pointer = ACE_OS_String::strnstr (substr, s, len);
+  size_t len = ACE_OS::strlen (s);
+  CHAR *pointer = ACE_OS::strnstr (substr, s, len);
   if (pointer == 0)
     return ACE_String_Base<CHAR>::npos;
   else
@@ -289,7 +291,7 @@ template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::find (CHAR c, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
-  CHAR *pointer = ACE_OS_String::strnchr (substr, c, this->len_ - pos);
+  CHAR *pointer = ACE_OS::strnchr (substr, c, this->len_ - pos);
   if (pointer == 0)
     return ACE_String_Base<CHAR>::npos;
   else

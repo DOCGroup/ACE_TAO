@@ -28,6 +28,9 @@ ACE_RCSID(src, Gen_Perf, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 #include "Vectors.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_Memory.h"
 
 // Current release version.
 extern const char *version_string;

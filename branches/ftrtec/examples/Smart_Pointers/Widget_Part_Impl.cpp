@@ -14,6 +14,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/Null_Mutex.h"
 
 Widget_Part_Impl::Widget_Part_Impl (Widget *owner, const char* name, int size)
   : owner_ (owner),

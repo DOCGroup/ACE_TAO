@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : orbsvcslib, namingexe, rt_server {
   exename = activity
   // We use macros instead of dynamicflags so that 

@@ -1,4 +1,7 @@
-project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging, corba_messaging {
+// -*- MPC -*-
+// $Id$
+
+project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging {
   exename  = ECM_Supplier
   Source_Files {
     ECM_Data.cpp
@@ -6,7 +9,7 @@ project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging, corba_m
   }
 }
 
-project(ECM Consumer): rteventexe, rtsched, naming, iortable, messaging, corba_messaging {
+project(ECM Consumer): rteventexe, rtsched, naming, iortable, messaging {
   exename  = ECM_Consumer
   Source_Files {
     ECM_Data.cpp

@@ -5,6 +5,8 @@
 #include "Softpkg_Commands.h"
 #include "Client_init.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_stdio.h"
 #include "CCM_DeploymentC.h"
 
 #if !defined (__ACE_INLINE__)
@@ -48,7 +50,9 @@ CIAO::Daemon_i::controller::write_IOR(const char* ior,
 }
 
 int
-CIAO::Daemon_i::controller::parse_args (int argc, char *argv[] ACE_ENV_ARG_DECL)
+CIAO::Daemon_i::controller::parse_args (int argc, 
+                                        char *argv[] 
+                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Make sure one command was given
   if (argc < 2)

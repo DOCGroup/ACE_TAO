@@ -14,11 +14,13 @@
 #define ACE_FILE_LOCK_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS_NS_stdio.h"
 
 /**
  * @class ACE_File_Lock

@@ -4,27 +4,20 @@
 
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
-
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
-
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
 #include "tao/Leader_Follower_Flushing_Strategy.h"
-
-#include "tao/Leader_Follower.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
-
 #include "tao/LF_Strategy_Complete.h"
 #include "tao/Codeset_Manager.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Memory_Pool.h"
 #include "ace/Malloc.h"
 #include "ace/Codeset_Registry.h"
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_resource.i"
@@ -182,8 +175,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                                       ncs) == 0)
           {
             char **endPtr =0;
-            ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                         endPtr, 0);
+            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                  endPtr, 0);
   }
         // Validate the CodesetId
         if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
@@ -208,8 +201,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                                       ncs) == 0)
           {
             char **endPtr = 0;
-            ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-                                         endPtr, 0);
+            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+                                  endPtr, 0);
           }
         // Validate the CodesetId
         int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
@@ -744,10 +737,13 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 {
   ACE_Reactor_Impl *impl = 0;
 
-  ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
-                                        (ACE_Timer_Queue*)0,
-                                        this->reactor_mask_signals_,
-                                        ACE_Select_Reactor_Token::LIFO),
+  ACE_NEW_RETURN (impl,
+                  ACE_TP_Reactor (ACE::max_handles (),
+                                  1,
+                                  (ACE_Sig_Handler*)0,
+                                  (ACE_Timer_Queue*)0,
+                                  this->reactor_mask_signals_,
+                                  ACE_Select_Reactor_Token::LIFO),
                   0);
   return impl;
 }
@@ -755,14 +751,12 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 ACE_Reactor *
 TAO_Default_Resource_Factory::get_reactor (void)
 {
-  ACE_LOG_MSG->errnum (0);
-
   ACE_Reactor *reactor = 0;
   ACE_NEW_RETURN (reactor,
                   ACE_Reactor (this->allocate_reactor_impl (), 1),
                   0);
 
-  if (ACE_LOG_MSG->errnum () != 0)
+  if (reactor->initialized () == 0)
     {
       delete reactor;
       reactor = 0;
@@ -781,10 +775,7 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 }
 
 
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
-typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
-
-#if TAO_USE_LOCAL_MEMORY_POOL
+#if TAO_USE_LOCAL_MEMORY_POOL == 1
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,TAO_SYNCH_MUTEX> LOCKED_MALLOC;
 typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR;
 #else
@@ -834,7 +825,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -842,7 +835,9 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 
@@ -850,7 +845,9 @@ ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_msgblock_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
+  ACE_NEW_RETURN (allocator,
+                  LOCKED_ALLOCATOR,
+                  0);
   return allocator;
 }
 

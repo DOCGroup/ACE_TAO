@@ -3,6 +3,8 @@
 
 // Thread.i
 
+#include "ace/OS_NS_string.h"
+
 // Allocates a <keyp> that is used to identify data that is specific
 // to each thread in the process.  The key is global to all threads in
 // the process.

@@ -1,9 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "Options.h"
+#include "Activator_Options.h"
 #include "ImR_Activator_i.h"
-#include "NT_Service.h"
+#include "Activator_NT_Service.h"
 
 int
 run_standalone (void)
@@ -34,29 +34,27 @@ run_standalone (void)
           if (status == -1)
             return 1;
         }
+      return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_PRINT_EXCEPTION (sysex, "System Exception");
-      return 1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_PRINT_EXCEPTION (userex, "User Exception");
-      return 1;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
-      return 1;
     }
   ACE_ENDTRY;
 
-  return 0;
+  return 1;
 }
 
 #if defined (ACE_WIN32)
-ACE_NT_SERVICE_DEFINE (service, ImR_NT_Service, IMR_SERVICE_NAME);
+ACE_NT_SERVICE_DEFINE (service, Activator_NT_Service, IMR_ACTIVATOR_SERVICE_NAME);
 #endif /* ACE_WIN32 */
 
 int
@@ -89,7 +87,7 @@ main (int argc, char *argv[])
   else if (result > 0)
     return 0;  // No error, but we should exit anyway.
 
-  if (OPTIONS::instance ()->service () == 1)
+  if (OPTIONS::instance()->service())
     return run_service ();
 
   return run_standalone ();

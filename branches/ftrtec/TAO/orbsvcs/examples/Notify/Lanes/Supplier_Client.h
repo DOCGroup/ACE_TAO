@@ -11,12 +11,12 @@
 
 #ifndef TAO_Notify_SUPPLIER_CLIENT_H
 #define TAO_Notify_SUPPLIER_CLIENT_H
+
 #include /**/ "ace/pre.h"
+#include "ace/Task.h"
+#include "ace/SString.h"
 
 #include "ORB_Objects.h"
-#include "ace/Task.h"
-#include "tao/corba.h"
-#include "ace/SString.h"
 
 class TAO_Notify_Lanes_Supplier;
 

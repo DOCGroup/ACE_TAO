@@ -107,6 +107,32 @@ if ($receiver != 0) {
     $status = 1;
 }
 
+$SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -f sctp_output");
+$CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -p SCTP_SEQ");
+
+print STDERR "Using SCTP\n";
+print STDERR "Starting Receiver\n";
+
+$SV->Spawn ();
+
+sleep $sleeptime;
+
+print STDERR "Starting Sender\n";
+
+$sender = $CL->SpawnWaitKill (200);
+
+if ($sender != 0) {
+    print STDERR "ERROR: sender returned $sender\n";
+    $status = 1;
+}
+
+$receiver = $SV->TerminateWaitKill (5);
+
+if ($receiver != 0) {
+    print STDERR "ERROR: receiver returned $receiver\n";
+    $status = 1;
+}
+
 $nserver = $NS->TerminateWaitKill (5);
 
 if ($nserver != 0) {

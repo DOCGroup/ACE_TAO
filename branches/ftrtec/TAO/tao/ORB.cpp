@@ -9,18 +9,12 @@ ACE_RCSID (tao,
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
 #include "IOR_Parser.h"
-#include "Parser_Registry.h"
-
-#include "Object.h"
-#include "Typecode.h"
+#include "Typecode_Constants.h"
 #include "Stub.h"
 #include "ORB_Core.h"
-#include "debug.h"
 #include "TAO_Internal.h"
 #include "NVList.h"
 #include "Dynamic_Adapter.h"
-#include "CDR.h"
-#include "MProfile.h"
 #include "Profile.h"
 #include "default_ports.h"
 #include "ORBInitInfo.h"
@@ -28,28 +22,20 @@ ACE_RCSID (tao,
 #include "TAO_Singleton_Manager.h"
 #include "Policy_Manager.h"
 #include "Valuetype_Adapter.h"
-
+#include "IFR_Client_Adapter.h"
 #include "CodecFactory_ORBInitializer.h"
-
 #include "TypeCodeFactory_Adapter.h"
+#include "debug.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "Object_KeyC.h"
-
 #include "ace/Dynamic_Service.h"
-#include "ace/Service_Repository.h"
-#include "ace/Object_Manager.h"
-#include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Reactor.h"
 #include "ace/Argv_Type_Converter.h"
-
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
@@ -340,8 +326,30 @@ CORBA::ORB::create_exception_list (CORBA::ExceptionList_ptr &list
 }
 
 void
+CORBA::ORB::create_operation_list (CORBA::OperationDef_ptr opDef,
+                                   CORBA::NVList_ptr &result
+                                   ACE_ENV_ARG_DECL)
+{
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW (CORBA::INTF_REPOS ());
+    }
+
+  adapter->create_operation_list (this, 
+                                  opDef, 
+                                  result 
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
+
+void
 CORBA::ORB::create_environment (CORBA::Environment_ptr &environment
-                               ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (environment,
                     CORBA::Environment (),
@@ -467,7 +475,7 @@ CORBA::ORB::create_struct_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_struct_tc (id,
@@ -494,7 +502,7 @@ CORBA::ORB::create_union_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_union_tc (id,
@@ -521,7 +529,7 @@ CORBA::ORB::create_enum_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_enum_tc (id,
@@ -547,7 +555,7 @@ CORBA::ORB::create_alias_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_alias_tc (id,
@@ -573,7 +581,7 @@ CORBA::ORB::create_exception_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_exception_tc (id,
@@ -598,7 +606,7 @@ CORBA::ORB::create_interface_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_interface_tc (id,
@@ -621,7 +629,7 @@ CORBA::ORB::create_string_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_string_tc (bound
@@ -643,7 +651,7 @@ CORBA::ORB::create_wstring_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_wstring_tc (bound
@@ -666,7 +674,7 @@ CORBA::ORB::create_fixed_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_fixed_tc (digits,
@@ -690,7 +698,7 @@ CORBA::ORB::create_sequence_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_sequence_tc (bound,
@@ -714,7 +722,7 @@ CORBA::ORB::create_array_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_array_tc (length,
@@ -741,7 +749,7 @@ CORBA::ORB::create_value_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_value_tc (id,
@@ -769,7 +777,7 @@ CORBA::ORB::create_value_box_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_value_box_tc (id,
@@ -794,7 +802,7 @@ CORBA::ORB::create_native_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_native_tc (id,
@@ -817,7 +825,7 @@ CORBA::ORB::create_recursive_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_recursive_tc (id
@@ -840,7 +848,7 @@ CORBA::ORB::create_abstract_interface_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_abstract_interface_tc (id,
@@ -864,12 +872,90 @@ CORBA::ORB::create_local_interface_tc (
   if (adapter == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+                        0);
     }
 
   return adapter->create_local_interface_tc (id,
                                              name
                                              ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+CORBA::ORB::create_component_tc (
+    const char *id,
+    const char *name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        0);
+    }
+
+  return adapter->create_component_tc (id,
+                                       name
+                                       ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+CORBA::ORB::create_home_tc (
+    const char *id,
+    const char *name
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        0);
+    }
+
+  return adapter->create_home_tc (id,
+                                  name
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+CORBA::ORB::create_event_tc (
+    const char *id,
+    const char *name,
+    CORBA::ValueModifier type_modifier,
+    CORBA::TypeCode_ptr concrete_base,
+    const CORBA::ValueMemberSeq &members
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_TypeCodeFactory_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        0);
+    }
+
+  return adapter->create_event_tc (id,
+                                   name,
+                                   type_modifier,
+                                   concrete_base,
+                                   members
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -895,8 +981,11 @@ CORBA::ORB::resolve_policy_manager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   TAO_Policy_Manager *policy_manager =
     this->orb_core_->policy_manager ();
+
   if (policy_manager == 0)
-    return CORBA::Object::_nil ();
+    {
+      return CORBA::Object::_nil ();
+    }
 
   return CORBA::Object::_duplicate (policy_manager);
 
@@ -925,16 +1014,8 @@ CORBA::ORB::resolve_policy_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CORBA::Object_ptr
 CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
-                             ACE_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL_NOT_USED)
 {
-  const char *env_service_ior [] =
-  {
-    "NameServiceIOR",
-    "TradingServiceIOR",
-    "ImplRepoServiceIOR",
-    "InterfaceRepoServiceIOR"
-  };
-
   const char * env_service_port [] =
   {
     "NameServicePort",
@@ -951,82 +1032,67 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
     TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT
   };
 
- CORBA::Object_var return_value = CORBA::Object::_nil ();
+  CORBA::Object_var return_value = CORBA::Object::_nil ();
 
- // By now, the table filled in with -ORBInitRef arguments has been
- // checked.  We only get here if the table didn't contain an initial
- // reference for the requested Service.
+  // By now, the table filled in with -ORBInitRef arguments has been
+  // checked.  We only get here if the table didn't contain an initial
+  // reference for the requested Service.
 
- // Check to see if the user has an environment variable.
- ACE_CString service_ior = ACE_OS::getenv (env_service_ior[mcast_service_id]);
+  // First, determine if the port was supplied on the command line
+  u_short port =
+  this->orb_core_->orb_params ()->service_port (mcast_service_id);
 
- if (ACE_OS::strcmp (service_ior.c_str (), "") != 0)
-   {
-     return_value =
-       this->string_to_object (service_ior.c_str () ACE_ENV_ARG_PARAMETER);
-     ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  if (port == 0)
+  {
+    // Look for the port among our environment variables.
+    const char *port_number =
+      ACE_OS::getenv (env_service_port[mcast_service_id]);
 
-     // Return ior.
-     return return_value._retn ();
-   }
- else
-   {
-     // First, determine if the port was supplied on the command line
-     u_short port =
-       this->orb_core_->orb_params ()->service_port (mcast_service_id);
+    if (port_number != 0)
+      port = (u_short) ACE_OS::atoi (port_number);
+    else
+      port = default_service_port[mcast_service_id];
+  }
 
-     if (port == 0)
-       {
-         // Look for the port among our environment variables.
-         const char *port_number =
-           ACE_OS::getenv (env_service_port[mcast_service_id]);
+  // Set the port value in ORB_Params: modify the default mcast
+  // value.
+  const char prefix[] = "mcast://:";
 
-         if (port_number != 0)
-           port = (u_short) ACE_OS::atoi (port_number);
-         else
-           port = default_service_port[mcast_service_id];
-       }
+  char port_char[256];
 
-     // Set the port value in ORB_Params: modify the default mcast
-     // value.
-     const char prefix[] = "mcast://:";
+  ACE_OS::itoa (port,
+                port_char,
+                10);
 
-     char port_char[256];
+  CORBA::String_var port_ptr =
+  CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
+                         ACE_OS::strlen ((const char *) port_char)));
 
-     ACE_OS_String::itoa (port,
-                          port_char,
-                          10);
+  port_ptr = (const char *) port_char;
 
-     CORBA::String_var port_ptr =
-       CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
-                              ACE_OS::strlen ((const char *) port_char)));
+  CORBA::String_var def_init_ref =
+  CORBA::string_alloc (sizeof (prefix) +
+                       ACE_static_cast (CORBA::ULong,
+                         ACE_OS::strlen (port_ptr.in ())) +
+                       2);
 
-     port_ptr = (const char *) port_char;
+  ACE_OS::strcpy (def_init_ref.inout (), prefix);
+  ACE_OS::strcat (def_init_ref.inout (), port_ptr.in ());
+  ACE_OS::strcat (def_init_ref.inout (), "::");
 
-     CORBA::String_var def_init_ref =
-       CORBA::string_alloc (sizeof (prefix) +
-                            ACE_static_cast (CORBA::ULong,
-                              ACE_OS::strlen (port_ptr.in ())) +
-                            2);
+  CORBA::String_var default_init_ref =
+        this->orb_core_->orb_params ()->default_init_ref ();
 
-      ACE_OS::strcpy (def_init_ref.inout (), prefix);
-      ACE_OS::strcat (def_init_ref.inout (), port_ptr.in ());
-      ACE_OS::strcat (def_init_ref.inout (), "::");
+  static const char mcast_prefix[] = "mcast://:::";
 
-      CORBA::String_var default_init_ref =
-             this->orb_core_->orb_params ()->default_init_ref ();
+  if ((ACE_OS::strncmp (default_init_ref.in (),
+                       mcast_prefix,
+                       sizeof mcast_prefix - 1) == 0))
+  {
+    this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
+  }
 
-      static const char mcast_prefix[] = "mcast://:::";
-
-      if ((ACE_OS::strncmp (default_init_ref.in (),
-                            mcast_prefix,
-                            sizeof mcast_prefix - 1) == 0))
-      {
-         this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
-      }
-
-      return CORBA::Object::_nil ();
-   }
+  return CORBA::Object::_nil ();
 }
 
 CORBA::Object_ptr
@@ -1095,6 +1161,29 @@ CORBA::ORB::resolve_initial_references (const char *name,
   if (this->orb_core_->init_ref_map ()->find (object_id, ior) == 0)
     return this->string_to_object (ior.c_str ()
                                    ACE_ENV_ARG_PARAMETER);
+
+  // Look for an environment variable called "<name>IOR".
+  //
+  CORBA::String_var ior_env_var_name =
+    CORBA::string_alloc (ACE_OS::strlen (name) + 3);
+
+  ACE_OS::strcpy (ior_env_var_name.inout (),
+                  name);
+
+  ACE_OS::strcat (ior_env_var_name.inout (),
+                  "IOR");
+
+  ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
+
+  if (ACE_OS::strcmp (service_ior.c_str (), "") != 0 )
+    {
+      result =
+        this->string_to_object (service_ior.c_str()
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      return result._retn ();
+    }
 
   // May be trying the explicitly specified services and the well
   // known services should be tried first before falling on to default
@@ -1209,12 +1298,16 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
 
   // Prevent multiple initializations.
   if (CORBA::ORB::orb_init_count_ != 0)
-    return;
+    {
+      return;
+    }
   else
-    CORBA::ORB::orb_init_count_++;
+    {
+      CORBA::ORB::orb_init_count_++;
+    }
 
   // initialize the system TypeCodes
-  TAO_TypeCodes::init ();
+  TAO::TypeCode_Constants::init ();
 
   // initialize the system exceptions
   TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1356,7 +1449,9 @@ CORBA::ORB_init (int &argc,
   // We need to initialize before TAO_default_environment() is called
   // since that call instantiates a TAO_TSS_Singleton.
   if (TAO_Singleton_Manager::instance ()->init () == -1)
-    return CORBA::ORB::_nil ();
+    {
+      return CORBA::ORB::_nil ();
+    }
 
   return CORBA::ORB_init (argc,
                           argv,
@@ -1387,7 +1482,9 @@ CORBA::ORB_init (int &argc,
 
   // Make sure TAO's singleton manager is initialized.
   if (TAO_Singleton_Manager::instance ()->init () == -1)
-    return CORBA::ORB::_nil ();
+    {
+      return CORBA::ORB::_nil ();
+    }
 
   CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
@@ -1500,8 +1597,8 @@ CORBA::ORB_init (int &argc,
   // Initialize the Service Configurator.  This must occur before the
   // ORBInitializer::pre_init() method is invoked on each registered
   // ORB initializer.
-  int result = TAO_Internal::open_services (command_line.get_argc(),
-                                            command_line.get_TCHAR_argv());
+  int result = TAO_Internal::open_services (command_line.get_argc (),
+                                            command_line.get_TCHAR_argv ());
 
   // Check for errors returned from <TAO_Internal::open_services>.
   if (result != 0 && errno != ENOENT)
@@ -1951,80 +2048,6 @@ CORBA::ORB::_optimize_collocation_objects (void) const
     return 0; // Need to return something
 }
 
-// ****************************************************************
-
-// *************************************************************
-// Inline operators for TAO_opaque encoding and decoding
-// *************************************************************
-
-CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
-{
-  CORBA::ULong length = x.length ();
-  cdr.write_ulong (length);
-
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-  if (x.mb () != 0)
-    {
-      cdr.write_octet_array_mb (x.mb ());
-    }
-  else
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-    {
-      cdr.write_octet_array (x.get_buffer (), length);
-    }
-  return (CORBA::Boolean) cdr.good_bit ();
-}
-
-CORBA::Boolean
-operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
-{
-  CORBA::ULong length;
-  cdr.read_ulong (length);
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-  if(ACE_BIT_DISABLED(cdr.start()->flags(),
-                      ACE_Message_Block::DONT_DELETE)
-     && (cdr.orb_core() == 0
-         || 1 == cdr.orb_core()->
-         resource_factory()->
-         input_cdr_allocator_type_locked()
-         )
-     )
-    {
-      x.replace (length, cdr.start ());
-      x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
-      cdr.skip_bytes (length);
-    }
-  else
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    {
-      x.length (length);
-      cdr.read_octet_array (x.get_buffer (), length);
-    }
-  return (CORBA::Boolean) cdr.good_bit ();
-}
-
-CORBA::Boolean operator<< (TAO_OutputCDR &strm,
-                           const CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean operator>> (TAO_InputCDR &strm,
-                           CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (CORBA::TCKind, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
 ACE_Time_Value *
 CORBA::ORB::get_timeout (void)
 {
@@ -2066,10 +2089,12 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 
   int result =
     this->orb_core ()->valuetype_adapter ()->vf_map_rebind (repository_id,
-                                             factory);
+                                                            factory);
 
   if (result == 0)              // No previous factory found
-    return 0;
+    {
+      return 0;
+    }
 
   if (result == -1)
     {

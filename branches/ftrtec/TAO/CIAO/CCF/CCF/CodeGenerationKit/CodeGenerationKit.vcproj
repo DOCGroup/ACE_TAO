@@ -135,6 +135,9 @@
 				RelativePath=".\IndentationBuffer.hpp">
 			</File>
 			<File
+				RelativePath=".\IndentationCxx.hpp">
+			</File>
+			<File
 				RelativePath=".\IndentationIDL.hpp">
 			</File>
 			<File

@@ -1,10 +1,15 @@
-project(CosNaming) : orbsvcslib, core, svc_utils, iortable {
+// -*- MPC -*-
+// $Id$
+
+project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
   sharedname   = TAO_CosNaming
   idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming/naming_export.h
   dynamicflags = TAO_NAMING_BUILD_DLL
   tagchecks   += Naming
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+  libs += TAO_Messaging
+  after += Messaging
 
   IDL_Files {
     CosNaming.idl
@@ -28,5 +33,9 @@ project(CosNaming) : orbsvcslib, core, svc_utils, iortable {
       Naming/Storable_Naming_Context_Activator.cpp
       Naming/Transient_Naming_Context.cpp
     }
+  }
+  
+  Header_Files {
+	Naming/naming_export.h
   }
 }

@@ -12,16 +12,16 @@
 
 #ifndef TAO_LF_FOLLOWER_AUTO_ADDER_H
 #define TAO_LF_FOLLOWER_AUTO_ADDER_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
-#include "tao/Leader_Follower.h"
+#include "tao/LF_Follower.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_LF_Follower;
+#include "tao/Leader_Follower.h"
 
 /**
  * @brief Implement an auto_adder-like class for the TAO_LF_Followers
@@ -52,4 +52,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_LF_FOLLOWER_AUTO_ADDER_H */

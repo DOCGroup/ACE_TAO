@@ -1,5 +1,7 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
-#	$Id: Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for the Token tests
 #----------------------------------------------------------------------------
@@ -19,8 +21,10 @@ DIRS  =	collection \
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
+include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

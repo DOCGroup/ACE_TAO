@@ -9,11 +9,15 @@
  * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 
+#include "ace/RW_Mutex.h"
+
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
 #include "ace/RW_Mutex.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, RW_Mutex, "$Id$")
 

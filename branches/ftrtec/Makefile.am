@@ -40,19 +40,21 @@ SUBDIRS = \
 ## Additional flags to pass to `aclocal' when invoked by the generated
 ## Makefile.  In particular, add ACE's `m4' directory to the macro
 ## search path.
+ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
 
 ## If any of these files are modified, `configure' will be
 ## regenerated.
 CONFIGURE_DEPENDENCIES = \
   m4/ace.m4 \
+  m4/aio.m4 \
   m4/acinclude.m4 \
   m4/compiler.m4 \
   m4/config_h.m4 \
-  m4/features.m4 \
   m4/platform.m4 \
   m4/subsets.m4 \
-  m4/threads.m4
+  m4/threads.m4 \
+  m4/tls.m4
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST = \

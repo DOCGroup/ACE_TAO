@@ -39,8 +39,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SStringfwd.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_String.h"
 #include "ace/Message_Block.h"
 
 

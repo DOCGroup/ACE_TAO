@@ -27,11 +27,12 @@ LIBS="ace/libACE.a \
     TAO/tao/IORManipulation/libTAO_IORManip.a \
     TAO/tao/IORTable/libTAO_IORTable.a \
     TAO/tao/TypeCodeFactory/libTAO_TypeCodeFactory.a \
-    TAO/tao/SmartProxies/libTAO_SmartProxies.a \
     TAO/tao/RTCORBA/libTAO_RTCORBA.a \
     TAO/tao/IORInterceptor/libTAO_IORInterceptor.a \
     TAO/tao/Messaging/libTAO_Messaging.a \
     TAO/tao/ObjRefTemplate/libTAO_ObjRefTemplate.a \
+    TAO/tao/ObjRefTemplate/libTAO_Valuetype.a \
+    TAO/tao/ObjRefTemplate/libTAO_RTScheduler.a \
     TAO/tao/RTPortableServer/libTAO_RTPortableServer.a"
 
 cd $ACE_ROOT

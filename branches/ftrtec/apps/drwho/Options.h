@@ -60,7 +60,7 @@ public:
   static char *user_name;
 
   static void print_usage_and_die (int long_msg);
-  static u_int option_word;
+  static unsigned int option_word;
 };
 
 #endif /* _OPTIONS_H */

@@ -2,6 +2,9 @@
 
 #include "interceptors.h"
 #include "tao/OctetSeqC.h"
+#include "ace/Log_Msg.h"
+#include "tao/ORB_Constants.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (Service_Context_Manipulation,
            interceptors,
@@ -54,8 +57,6 @@ Echo_Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  send_request_count++;
-
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
@@ -65,10 +66,12 @@ Echo_Client_Request_Interceptor::send_request (
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var operation =
+    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var target =
+    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
@@ -81,6 +84,13 @@ Echo_Client_Request_Interceptor::send_request (
               this->myname_,
               operation.in (),
               ior.in ()));
+
+  // No svccontextx for _is_a call.
+  if (ACE_OS::strcmp (operation.in (),
+                      "_is_a") == 0)
+    return;
+
+  send_request_count++;
 
   ACE_TRY_NEW_ENV
     {
@@ -96,6 +106,11 @@ Echo_Client_Request_Interceptor::send_request (
 
   if (send_request_count == 1)
     {
+      if (exception_count != 1)
+        {
+	  ACE_ERROR ((LM_ERROR,
+                      "ERROR: Expected exception_count is <1>\n"));
+        }
       ACE_ASSERT (exception_count == 1);
       // Populate target member of the ClientRequestInfo.
 
@@ -132,6 +147,12 @@ Echo_Client_Request_Interceptor::send_request (
     }
   else if (send_request_count == 2)
     {
+      ACE_DEBUG ((LM_DEBUG, "Exception count: %i\n", exception_count));
+      if (exception_count != 2)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: Expected exception_count is <2>\n"));
+        }
       ACE_ASSERT (exception_count == 2);
       // Populate target member of the ClientRequestInfo.
 
@@ -188,10 +209,12 @@ Echo_Client_Request_Interceptor::receive_reply (
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var operation =
+    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var target =
+    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
@@ -204,6 +227,11 @@ Echo_Client_Request_Interceptor::receive_reply (
               this->myname_,
               operation.in (),
               ior.in ()));
+
+  // No svccontextx for _is_a call.
+  if (ACE_OS::strcmp (operation.in (),
+                      "_is_a") == 0)
+    return;
 
   // Check that the reply service context was received as
   // expected.
@@ -428,7 +456,9 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0)
+  // Same goes for the shutdown call
+  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0 ||
+      ACE_OS_String::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   IOP::ServiceId id = ::service_id;

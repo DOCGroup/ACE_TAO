@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_REFCOUNTABLE_H
 #define TAO_Notify_REFCOUNTABLE_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -19,9 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
 #include "tao/orbconf.h"
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 /**
  * @class TAO_Notify_Refcountable
@@ -38,7 +40,8 @@ public:
   /// Destructor
   virtual ~TAO_Notify_Refcountable ();
 
-  /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
+  /// This method sigantures deliberately match the 
+  /// RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
@@ -58,4 +61,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_REFCOUNTABLE_H */

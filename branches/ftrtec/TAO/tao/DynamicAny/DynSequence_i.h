@@ -1,4 +1,5 @@
 /* -*- C++ -*- */
+// $Id$
 
 //=============================================================================
 /**
@@ -22,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DynCommon.h"
+#include "tao/LocalObject.h"
 #include "ace/Containers.h"
 
 #if defined (_MSC_VER)
@@ -60,8 +62,6 @@ public:
   static TAO_DynSequence_i *_narrow (
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   // = Functions specific to DynSequence.
 

@@ -8,6 +8,7 @@
 #include "PSDL_y.h"
 
 #include "PSDL_Stream.h"
+#include "tao/CORBA_String.h"
 
 ACE_RCSID (PSS, PSDL_Node, "$Id$")
 

@@ -30,7 +30,7 @@
 
 // Needed for VxWorks to pickup errnoSet()
 #if defined (VXWORKS)
-#include <errnoLib.h>
+#include /**/ <errnoLib.h>
 #endif /* VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
@@ -198,9 +198,6 @@ extern int t_errno;
 #if !defined (ENXIO)     /* Needed in SOCK_Dgram_Mcast */
 #   define ENXIO  6
 #endif /* ENXIO */
-
-#define LOCALNAME 0
-#define REMOTENAME 1
 
 #if !defined (ETIMEDOUT) && defined (ETIME)
 #  define ETIMEDOUT ETIME

@@ -51,17 +51,11 @@ namespace CCF
           act_home_executor_begin (
             f.home_executor (), &SemanticAction::HomeExecutor::begin),
 
-          act_home_executor_open_scope (
-            f.home_executor (), &SemanticAction::Scope::open_scope),
-
           act_home_executor_implements (
             f.home_executor (), &SemanticAction::HomeExecutor::implements),
 
           act_home_executor_manages (
             f.home_executor (), &SemanticAction::HomeExecutor::manages),
-
-          act_home_executor_close_scope (
-            f.home_executor (), &SemanticAction::Scope::open_scope),
 
           act_home_executor_end (
             f.home_executor (), &SemanticAction::HomeExecutor::end)
@@ -100,10 +94,10 @@ namespace CCF
       //
       home_executor_decl =
            home_executor_header
-        >> LBRACE[act_home_executor_open_scope]
+        >> LBRACE
         >> home_executor_home_impl_decl
         >> home_executor_executor_decl
-        >> RBRACE[act_home_executor_close_scope]
+        >> RBRACE
         >> SEMI[act_home_executor_end]
         ;
 

@@ -10,6 +10,7 @@
 #include "PSDL_Exception_Scope.h"
 #include "PSDL_Op_Dcl_Scope.h"
 #include "PSDL_Stream.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (PSS, PSDL_Scope, "$Id$")
 
@@ -664,8 +665,6 @@ TAO_PSDL_Scope::stub_initialization (TAO_PSDL_Stream *ps_si)
   ps_si->nl ();
   *ps_si << "#include \"tao/Stub.h\"";
   ps_si->nl ();
-  *ps_si << "#include \"tao/Invocation.h\"";
-  ps_si->nl ();
   *ps_si << "#include \"tao/PortableInterceptor.h\"";
   ps_si->nl ();
 
@@ -676,8 +675,6 @@ TAO_PSDL_Scope::stub_initialization (TAO_PSDL_Stream *ps_si)
   *ps_si << "#include \"tao/RequestInfo_Util.h\"";
   ps_si->nl ();
   *ps_si << "#include \"tao/ClientRequestInfo_i.h\"";
-  ps_si->nl ();
-  *ps_si << "#include \"tao/ClientInterceptorAdapter.h\"";
   ps_si->nl ();
   *ps_si << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */";
   ps_si->nl ();

@@ -7,6 +7,7 @@
 #if defined (ACE_HAS_THREADS)
 
 // We need the following only if we have threads enabled..
+#include "ace/OS_main.h"
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -364,7 +365,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_timer.elapsed_time (elapsed_time);
 
   double elapsed_time_per_invocation =
-    (double) elapsed_time / number_of_messages;
+    ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / number_of_messages);
 
   /*ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Throughput is [%f] \n",

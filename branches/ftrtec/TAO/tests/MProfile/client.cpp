@@ -4,7 +4,6 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "testC.h"
-#include "ace/streams.h"
 
 ACE_RCSID(MT_Server, client, "$Id$")
 
@@ -128,15 +127,13 @@ void run_test (Simple_Server_ptr server
       ACE_TRY
         {
           // Make a remote call
-          cout << "Remote call "<<endl;
-          CORBA::Long ret=
+          CORBA::Long ret =
             server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          cout << "The retval is .. " << ret << endl;
-          cout << "Kill Primary... " <<endl;
+	  ACE_UNUSED_ARG (ret);
+
           ACE_OS::sleep (25);
-          cout << "Hope you have .." <<endl;
         }
       ACE_CATCH (CORBA::TRANSIENT, t)
         {

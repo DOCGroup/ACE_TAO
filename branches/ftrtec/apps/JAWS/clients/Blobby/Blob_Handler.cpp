@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Blob_Handler.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Blobby, Blob_Handler, "$Id$")
 
@@ -17,7 +18,7 @@ ACE_Blob_Handler::ACE_Blob_Handler (ACE_Message_Block * mb,
   mb_ (mb),
   length_ (length),
   offset_ (offset),
-  filename_ (ACE_OS_String::strdup (filename)),
+  filename_ (ACE_OS::strdup (filename)),
   bytecount_ (0)
 {
 }
@@ -96,9 +97,9 @@ ACE_Blob_Reader::send_request (void)
   char mesg [MAX_HEADER_SIZE];
 
   // Check to see if the request is too big
-  if (MAX_HEADER_SIZE < (ACE_OS_String::strlen (request_prefix_)
-                         + ACE_OS_String::strlen (filename_) 
-                         + ACE_OS_String::strlen (request_suffix_) + 4))
+  if (MAX_HEADER_SIZE < (ACE_OS::strlen (request_prefix_)
+                         + ACE_OS::strlen (filename_) 
+                         + ACE_OS::strlen (request_suffix_) + 4))
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file

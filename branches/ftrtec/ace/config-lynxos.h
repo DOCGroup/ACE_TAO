@@ -112,7 +112,6 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
@@ -120,6 +119,9 @@
 #define ACE_LACKS_INET_ATON
 #define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_SYS_SELECT_H
+#define ACE_LACKS_WCHAR_H
+#define ACE_LACKS_REGEX_H
+#define ACE_LACKS_TCP_NODELAY
 #define ACE_MALLOC_ALIGN 8
 #define ACE_HAS_TYPENAME_KEYWORD
 // Don't use MAP_FIXED, at least for now.
@@ -200,7 +202,7 @@ extern "C"
   int putenv (const char *);
 }
 
-#if 0
+#if _POSIX_VERSION >= 199009L
 // The following are patches for LynxOS 4.0.0, which we'll add as soon
 // as we know the right incantations to avoid breaking earlier
 // versions of LynxOS!
@@ -218,7 +220,7 @@ extern "C"
 
 // Requested for example: $ACE_ROOT/examples/IPC_SAP/DEV_SAP 
 #define ACE_HAS_TERM_IOCTLS
-#endif /* 0 */
+#endif /* _POSIX_VERSION */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

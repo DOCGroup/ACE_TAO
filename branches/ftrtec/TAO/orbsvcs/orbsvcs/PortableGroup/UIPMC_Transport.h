@@ -22,7 +22,6 @@
 
 
 #include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "portablegroup_export.h"
 

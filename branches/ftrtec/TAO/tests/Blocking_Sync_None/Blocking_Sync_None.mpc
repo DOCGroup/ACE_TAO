@@ -1,13 +1,14 @@
-project(*Server): taoserver, messaging, corba_messaging {
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver, messaging {
   Source_Files {
     Blocking_Sync_None.cpp
     server.cpp
   }
 }
 
-project(*Client): taoclient, messaging, corba_messaging {
-  exename  = client
-
+project(*Client): taoexe, messaging {
   Source_Files {
     TestC.cpp
     client.cpp

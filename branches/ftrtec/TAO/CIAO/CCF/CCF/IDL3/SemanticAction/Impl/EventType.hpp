@@ -5,8 +5,8 @@
 #ifndef CCF_IDL3_SEMANTIC_ACTION_IMPL_EVENT_TYPE_HPP
 #define CCF_IDL3_SEMANTIC_ACTION_IMPL_EVENT_TYPE_HPP
 
+#include "CCF/IDL3/SemanticGraph/EventType.hpp"
 #include "CCF/IDL3/SemanticAction/EventType.hpp"
-
 #include "CCF/IDL3/SemanticAction/Impl/Elements.hpp"
 
 namespace CCF
@@ -17,72 +17,37 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class EventType : public virtual SemanticAction::EventType,
-                          public virtual ScopeBase<SyntaxTree::EventTypeDeclPtr>
+        struct EventType : SemanticAction::EventType,
+                           ScopeBase<SemanticGraph::EventType>
         {
-        public:
-          virtual
-          ~EventType () throw () {}
-
-          EventType (bool trace, SyntaxTree::ScopePtr& scope)
-              : ScopeBase<SyntaxTree::EventTypeDeclPtr> (scope),
-                trace_ (trace),
-                name_ ("::") //@@ this is dirty
-          {
-          }
-
-        public:
+          EventType (Context& c);
 
           virtual void
-          begin (SimpleIdentifierPtr const& id)
-          {
-            if (trace_) cerr << "eventtype " << id << endl;
-            name_ = SyntaxTree::SimpleName (id->lexeme ());
-          }
+          begin_abstract_def (SimpleIdentifierPtr const& id);
 
           virtual void
-          inherits (IdentifierPtr const& id)
-          {
-            if (trace_) cerr << "inherits " << id << endl;
-          }
+          begin_abstract_fwd (SimpleIdentifierPtr const& id);
 
           virtual void
-          open_scope ()
-          {
-            using namespace SyntaxTree;
-
-            ConcreteEventTypeDefPtr et( new ConcreteEventTypeDef (
-                                          name_,
-                                          scope_,
-                                          inherits_));
-            scope_->insert (et);
-            push (et);
-            scope_ = et;
-
-            name_ = SimpleName ("::"); //indicate that we are done
-            inherits_.clear ();
-          }
+          begin_concrete_def (SimpleIdentifierPtr const& id);
 
           virtual void
-          close_scope ()
-          {
-            scope_ = scope_->scope ();
-          }
+          begin_concrete_fwd (SimpleIdentifierPtr const& id);
 
           virtual void
-          end ()
-          {
-            if (trace_) cerr << "end" << endl;
-            pop ();
-          }
+          inherits (IdentifierPtr const& id);
 
-        private:
-          bool trace_;
-          SyntaxTree::SimpleName name_;
-          SyntaxTree::ScopedNameSet inherits_;
+          virtual void
+          supports (IdentifierPtr const& id);
+
+          virtual void
+          open_scope ();
+
+          virtual void
+          close_scope ();
+
+          virtual void
+          end ();
         };
       }
     }

@@ -18,6 +18,8 @@ DIRS  = \
   ForwardRequest \
   Request_Interceptor_Flow \
   PICurrent \
+  Bug_1559 \
+  Collocated \
   AMI
 
 ifndef TAO_ROOT

@@ -3,6 +3,8 @@
 #include "FTRT_ClientORB_Interceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
+#include "ace/Log_Msg.h"
+#include "../Utils/Safe_InputCDR.h"
 
 ACE_RCSID (ClientORB,
            FTRT_ClientORB_Interceptor,
@@ -11,7 +13,7 @@ ACE_RCSID (ClientORB,
 namespace FTRT {
   const unsigned FT_TRANSACTION_DEPTH = 30;
   const unsigned FT_FORWARD = 32;
-};
+}
 
 FTRT_ClientORB_Interceptor::
 FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth)
@@ -112,8 +114,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
     ACE_reinterpret_cast (const char *,
     service_context->context_data.get_buffer ());
 
-  TAO_InputCDR cdr (buf,
-    service_context->context_data.length ());
+  Safe_InputCDR cdr (buf, service_context->context_data.length ());
 
 
   CORBA::Object_var obj;
@@ -122,7 +123,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
     // update the target
      CORBA::Object_var target = ri->target(ACE_ENV_SINGLE_ARG_PARAMETER);
      target->_stubobj ()->base_profiles ( obj->_stubobj()->base_profiles() );
-     ACE_DEBUG((LM_DEBUG, "target object updated\n"));
+     //TAO_FTRTEC::Log(1, "target object updated\n");
   }
 }
 
@@ -138,7 +139,7 @@ FTRT_ClientORB_Interceptor::receive_other (
 void
 FTRT_ClientORB_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

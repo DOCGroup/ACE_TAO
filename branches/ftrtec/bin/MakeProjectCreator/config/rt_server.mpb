@@ -1,2 +1,5 @@
-project : taoserver, rtportableserver, rtcorba {
+// -*- MPC -*-
+// $Id$
+
+project : taoexe, rtportableserver, rtcorba {
 }

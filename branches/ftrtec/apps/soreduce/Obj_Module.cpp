@@ -150,7 +150,7 @@ Obj_Module::add_source(const ACE_TCHAR *p, int imports_only)
     if (eoln == 2)
       break;
     is_import = dummy == 'U';
-    is_export = !imports_only && (ACE_OS_String::strchr("BCDRTVW",dummy) != 0);
+    is_export = !imports_only && (ACE_OS::strchr("BCDRTVW",dummy) != 0);
 
     //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_EVENT_MANAGER_H
 #define TAO_Notify_EVENT_MANAGER_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,13 +22,24 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 
+#include "tao/orbconf.h"
+
+#include "ace/CORBA_macros.h"
+
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_ProxyConsumer;
 class TAO_Notify_EventTypeSeq;
 
-template <class PROXY, class ACE_LOCK> class TAO_Notify_Event_Map_T;
-typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier, TAO_SYNCH_RW_MUTEX> TAO_Notify_Consumer_Map;
-typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_Notify_Supplier_Map;
+template <class PROXY, class ACE_LOCK> 
+class TAO_Notify_Event_Map_T;
+
+typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier, 
+                               TAO_SYNCH_RW_MUTEX> 
+  TAO_Notify_Consumer_Map;
+
+typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, 
+                               TAO_SYNCH_RW_MUTEX> 
+  TAO_Notify_Supplier_Map;
 
 /**
  * @class TAO_Notify_Event_Manager
@@ -147,4 +159,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_EVENT_MANAGER_H */

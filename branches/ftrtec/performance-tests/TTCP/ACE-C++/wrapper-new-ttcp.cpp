@@ -14,13 +14,13 @@
  *      T.C. Slattery, USNA
  * Minor improvements, Mike Muuss and Terry Slattery, 16-Oct-85.
  * Modified in 1989 at Silicon Graphics, Inc.
- *      catch SIGPIPE to be able to print stats when receiver has died 
+ *      catch SIGPIPE to be able to print stats when receiver has died
  *      for tcp, don't look for sentinel during reads to allow small transfers
  *      increased default buffer size to 8K, nbuf to 2K to transfer 16MB
  *      moved default port to 5001, beyond IPPORT_USERRESERVED
- *      make sinkmode default because it is more popular, 
- *              -s now means don't sink/source 
- *      count number of read/write system calls to see effects of 
+ *      make sinkmode default because it is more popular,
+ *              -s now means don't sink/source
+ *      count number of read/write system calls to see effects of
  *              blocking from full socket buffers
  *      for tcp, -D option turns off buffered writes (sets TCP_NODELAY sockopt)
  *      buffer alignment options, -A and -O
@@ -100,7 +100,7 @@ struct sockaddr_un fromunix;
 
 struct Session_Control_Message
 {
-  long nbuf_; 
+  long nbuf_;
   // number of buffers that will be sent this round.
   long size_;
   // size of the buffers that will be sent
@@ -138,7 +138,7 @@ int nodelay = 0;		/* set TCP_NODELAY socket option */
 int b_flag = 0;			/* use mread() */
 int sockbufsize = 0;		/* socket buffer size to use */
 char fmt = 'K';			/* output format: k = kilobits, K = kilobytes,
-				 *  m = megabits, M = megabytes, 
+				 *  m = megabits, M = megabytes,
 				 *  g = gigabits, G = gigabytes */
 int touchdata = 0;		/* access data after reading */
 
@@ -191,11 +191,11 @@ int mread (int fd, register char *bufp, unsigned n);
 int Nread (ACE_SOCK_Stream &s, void *buf, int count);
 int Nwrite (ACE_SOCK_Stream &s, void *buf, int count);
 
-#if !defined (__cplusplus) 
-typedef void (*SIG_TYP)(); 
+#if !defined (__cplusplus)
+typedef void (*SIG_TYP)();
 #else
 typedef void (*SIG_TYP)(int);
-#endif 
+#endif
 
 #ifdef SVR4
 void
@@ -219,7 +219,6 @@ int
 main (int argc, char *argv[])
 {
   ACE_SOCK_Stream connection_stream;
-  unsigned long addr_tmp;
   int c;
 
   printf("HZ = %d\n", HZ);
@@ -348,8 +347,8 @@ main (int argc, char *argv[])
 	       data_buf_len, nbuf, bufalign, bufoffset, port);
       if (sockbufsize)
 	fprintf (stdout, ", sockbufsize=%d", sockbufsize);
-      fprintf (stdout, "  %s  -> %s\n", 
-	       domain == PF_INET ? (udp ? "udp" : "tcp") : "unix", 
+      fprintf (stdout, "  %s  -> %s\n",
+	       domain == PF_INET ? (udp ? "udp" : "tcp") : "unix",
 	       host == 0 ? domainname : host);
     }
   else // receiver
@@ -364,7 +363,7 @@ main (int argc, char *argv[])
 
   mes ("socket");
 
-  // 
+  //
   // connect and accept
   //
 
@@ -382,7 +381,7 @@ main (int argc, char *argv[])
 
 	      if (p && connection_stream.set_option (p->p_proto,
 						     TCP_NODELAY,
-						     (char *)& one, 
+						     (char *)& one,
 						     sizeof (one)))
 		err ("setsockopt: nodelay");
 	      mes ("nodelay");
@@ -422,7 +421,7 @@ main (int argc, char *argv[])
 
 	  ACE_INET_Addr remote_address;
 
-	  if (acceptor_factory.accept (connection_stream, 
+	  if (acceptor_factory.accept (connection_stream,
 				       (ACE_Addr *) &remote_address) == -1)
 	    perror ("acceptor accept"), exit (1);
 
@@ -466,7 +465,7 @@ main (int argc, char *argv[])
 	      != sizeof ack)
 	    ACE_ERROR_RETURN ((LM_ERROR, "%p recv of ack failed\n",
 			       "ttcp"), -1);
-	  
+
 	  if (ack != data_buf_len)
 	    ACE_DEBUG ((LM_DEBUG, "received ack for only %d bytes\n", ack));
 	}
@@ -682,12 +681,12 @@ prep_timer ()
       perror ("Setting 'itimer' REAL failed");
       return;
     }
-  fprintf(stdout, "Beginning transaction time = %d sec and %d usec\n", itime0.it_value.tv_sec, itime0.it_value.tv_usec); 
+  fprintf(stdout, "Beginning transaction time = %d sec and %d usec\n", itime0.it_value.tv_sec, itime0.it_value.tv_usec);
 }
 
 /*
  *                    R E A D _ T I M E R
- * 
+ *
  */
 double
 read_timer (char *str, int len)

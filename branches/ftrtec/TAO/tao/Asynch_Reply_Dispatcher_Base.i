@@ -1,14 +1,12 @@
 // $Id$
 
-ACE_INLINE void
-TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
+namespace TAO
 {
-  if (this->transport_ != 0) {
-    this->transport_->remove_reference ();
+  ACE_INLINE void
+  ARDB_Refcount_Functor::operator () (
+      TAO_Asynch_Reply_Dispatcher_Base *ardb)
+    ACE_THROW_SPEC (())
+  {
+    (void) ardb->decr_refcount ();
   }
-
-  this->transport_ = t;
-  this->transport_->add_reference ();
 }
-
-

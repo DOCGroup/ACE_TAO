@@ -68,13 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _UTL_STRLIST_UTL_STRLIST_HH
 
 #include "utl_list.h"
-#include "ace/OS.h"
-
-// Needed to recognize ACE_OSTREAM_TYPE, and for BCB it's
-// not included in ace/OS.h, so we include it here.
-#if defined (__BORLANDC__)
-# include "ace/streams.h"
-#endif
+#include "ace/iosfwd.h"
 
 class UTL_String;
 

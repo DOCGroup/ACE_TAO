@@ -1,3 +1,4 @@
+
 #include "tao/PortableServer/POA.h"
 
 ACE_RCSID (PortableServer,
@@ -31,6 +32,9 @@ ACE_RCSID (PortableServer,
 #include "tao/debug.h"
 #include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"
+#include "ace/OS_NS_wchar.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_netdb.h"
 
 #include "PortableGroup_Hooks.h"
 
@@ -374,6 +378,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Remove POA from the POAManager.
   int result = this->poa_manager_.remove_poa (this);
+
   if (result != 0)
     ACE_THROW (CORBA::OBJ_ADAPTER ());
 
@@ -780,7 +785,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
             this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          tao_poa = poa->_tao_poa_downcast();
+          tao_poa = poa->_tao_poa_downcast ();
           PortableServer::ObjectId_var id =
             tao_poa->servant_to_id_i (this->server_object_
                                       ACE_ENV_ARG_PARAMETER);
@@ -1360,6 +1365,7 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // same number of times.
   servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+
 
   return user_id._retn ();
 }
@@ -2206,8 +2212,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
 }
 
 CORBA::Object_ptr
-TAO_POA::servant_to_reference (PortableServer::Servant servant
-                               ACE_ENV_ARG_DECL)
+TAO_POA::servant_to_reference_i (PortableServer::Servant servant
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -2220,10 +2226,11 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
   // consistent Object Id value when asked politely).
   CORBA::Short priority =
     this->cached_policies_.server_priority ();
+
   PortableServer::ObjectId_var system_id =
-    this->servant_to_system_id (servant,
-                                priority
-                                ACE_ENV_ARG_PARAMETER);
+    this->servant_to_system_id_i (servant,
+                                  priority
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ObjectId user_id;
@@ -2250,9 +2257,14 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
                           user_id);
 
   // Ask the ORT to create the object.
-  return this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
-                                              user_oid
-                                              ACE_ENV_ARG_PARAMETER);
+  // @@NOTE:There is a possible deadlock lurking here. We held the
+  // lock, and we are possibly trying to make a call into the
+  // application code. Think what would happen if the app calls us
+  // back. We need to get to this at some point.
+  return this->obj_ref_factory_->make_object (
+    servant->_interface_repository_id (),
+    user_oid
+    ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
@@ -4050,54 +4062,50 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
       return;
     }
 
-  CORBA::String_var svr_str =
+  CORBA::String_var ior =
     svr->_stubobj ()->profile_in_use ()->to_string (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Search for "corbaloc:" alone, without the protocol.  This code
   // should be protocol neutral.
   const char corbaloc[] = "corbaloc:";
-  char *pos = ACE_OS::strstr (svr_str.inout (), corbaloc);
+  char *pos = ACE_OS::strstr (ior.inout (), corbaloc);
   pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
 
   pos = ACE_OS::strchr (pos + 1,
                         svr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
-  if (pos)
-    *(pos + 1) = 0;  // Crop the string
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Could not parse ServerObject IOR, bailing out.\n"));
-      return;
-    }
-
-  ACE_CString ior (svr_str.in ());
-
-  CORBA::String_var curr_addr (svr_str);
+  ACE_CString partial_ior(ior.in (), (pos - ior.in()) + 1);
 
   ImplementationRepository::Locator_var imr_locator =
     ImplementationRepository::Locator::_narrow (imr.in ()
                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (imr_locator.in () == 0)
+  if (CORBA::is_nil(imr_locator.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Couldn't narrow down the ImR interface\n"));
+      ACE_DEBUG ((LM_DEBUG, "Couldnt narrow down the ImR interface\n"));
       return;
     }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Informing ImR that we are running at: %s\n",
-                curr_addr.in ()));
+                "Informing IMR that we are running at: %s\n",
+                partial_ior.c_str()));
+
+  char host_name[MAXHOSTNAMELEN + 1];
+  ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
   ACE_TRY
     {
-      imr_locator->server_is_running (this->name ().c_str (),
-                                      curr_addr.in (),
-                                      svr.in ()
+      // Relies on the fact that host_name will be same for the activator
+      // We must pass this separately, because it is NOT possible to parse
+      // the hostname from the ior portably. On some platforms the hostname
+      // will be like 'foo.bar.com' and on others it will just be 'foo'
+      imr_locator->server_is_running_in_activator (this->name().c_str (),
+                                      host_name,
+                                      partial_ior.c_str(),
+                                      svr.in()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -4124,7 +4132,10 @@ void
 TAO_POA::imr_notify_shutdown (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifying ImR of Shutdown\n"));
+    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown\n"));
+
+  char host_name[MAXHOSTNAMELEN + 1];
+  ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
   // Notify the Implementation Repository about shutting down.
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
@@ -4141,7 +4152,8 @@ TAO_POA::imr_notify_shutdown (void)
                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      imr_locator->server_is_shutting_down (this->the_name ()
+      imr_locator->server_is_shutting_down_in_activator (this->the_name (),
+                                                         host_name
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

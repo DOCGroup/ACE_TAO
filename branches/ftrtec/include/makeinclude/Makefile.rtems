@@ -1,4 +1,7 @@
-# $id: Makefile $
+# -*- Makefile -*-
+# $Id$
+
+MAKEFILE = Makefile.rtems
 
 #export RTEMS_MAKEFILE_PATH=/opt/rtems/sparc-rtems/erc32/
 include $(RTEMS_MAKEFILE_PATH)/Makefile.inc

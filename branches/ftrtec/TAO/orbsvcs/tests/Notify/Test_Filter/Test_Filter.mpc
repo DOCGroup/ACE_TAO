@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(TAO_RT_NotifyTests_Filter): orbsvcslib, notify, rtcorba, etcl, dynamicany, portableserver, iortable {
 				    
   sharedname = TAO_RT_NotifyTests_Filter

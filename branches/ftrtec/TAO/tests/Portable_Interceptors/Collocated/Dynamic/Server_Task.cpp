@@ -3,6 +3,7 @@
 //
 #include "Server_Task.h"
 #include "test_i.h"
+#include "interceptors.h"
 
 #include "ace/Manual_Event.h"
 
@@ -84,13 +85,23 @@ Server_Task::svc (void)
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
-     
+
       // Signal the main thread before we call orb->run ();
       this->me_.signal ();
+
+      CORBA::ULong val =
+        Echo_Server_Request_Interceptor::server_interceptor_check_;
 
       this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      if (Echo_Server_Request_Interceptor::server_interceptor_check_ -
+          val != 10)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR: Server Side Interceptors not"
+                      " called properly \n"));
+        }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);

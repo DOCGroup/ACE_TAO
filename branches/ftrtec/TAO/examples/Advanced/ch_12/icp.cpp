@@ -22,7 +22,10 @@
 #include    <string>
 #include    <map>
 #include    <algorithm>
+#include    <iostream>
 #include    "icp.h"
+
+using namespace std;
 
 // The following header is #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
@@ -289,7 +292,7 @@ ICP_set (unsigned long id, const char * attr, const void * value)
   return 0;                               // OK
 }
 
-#include <fstream.h>
+#include <fstream>
 
 class ICP_Persist 
 {

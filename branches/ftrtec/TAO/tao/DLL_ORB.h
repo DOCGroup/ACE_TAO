@@ -18,7 +18,6 @@
 #define TAO_DLL_ORB_H
 
 #include /**/ "ace/pre.h"
-
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,8 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "tao/ORB.h"
 
+#include "tao/ORB.h"
 /**
  * @class TAO_DLL_ORB
  *

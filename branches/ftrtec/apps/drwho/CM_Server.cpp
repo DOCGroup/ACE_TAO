@@ -5,6 +5,9 @@
 #include "CM_Server.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_arpa_inet.h"
 
 // Creates and binds a UDP socket...
 

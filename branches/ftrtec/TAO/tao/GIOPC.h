@@ -26,27 +26,21 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:186
 
 #ifndef _TAO_IDL_ORIG_GIOPC_H_
 #define _TAO_IDL_ORIG_GIOPC_H_
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/IOP_IORC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOP_IORC.h"
 #include "tao/VarOut_T.h"
-#include "Any_Dual_Impl_T.h"
-
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
+#include "tao/Any.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -74,11 +68,11 @@
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  GIOP
+namespace GIOP
 {
 
   // TAO_IDL - Generated from
-  // be/be_visitor_typedef/typedef_ch.cpp:333
+  // be/be_visitor_typedef/typedef_ch.cpp:342
 
   typedef CORBA::Short AddressingDisposition;
   typedef CORBA::Short_out AddressingDisposition_out;
@@ -104,7 +98,7 @@ TAO_NAMESPACE  GIOP
   const CORBA::Short ReferenceAddr = 2;
 
   // TAO_IDL - Generated from
-  // be/be_type.cpp:249
+  // be/be_type.cpp:258
 
   struct Version;
 
@@ -136,7 +130,7 @@ TAO_NAMESPACE  GIOP
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Version;
 
   // TAO_IDL - Generated from
-  // be/be_type.cpp:249
+  // be/be_type.cpp:258
 
   struct IORAddressingInfo;
 
@@ -171,7 +165,7 @@ TAO_NAMESPACE  GIOP
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IORAddressingInfo;
 
   // TAO_IDL - Generated from
-  // be/be_type.cpp:249
+  // be/be_type.cpp:258
 
   class TargetAddress;
 
@@ -266,34 +260,17 @@ TAO_NAMESPACE  GIOP
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:67
+// be/be_visitor_module/module_ch.cpp:66
 
+} // module GIOP
+
+// TAO_IDL - Generated from
+// be/be_visitor_traits.cpp:59
+
+// Traits specializations.
+namespace TAO
+{
 }
-TAO_NAMESPACE_CLOSE // module GIOP
-
-// TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::Version &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::Version*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::Version *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const GIOP::Version *&);
-
-// TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::IORAddressingInfo &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::IORAddressingInfo*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::IORAddressingInfo *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const GIOP::IORAddressingInfo *&);
-
-// TAO_IDL - Generated from
-// be/be_visitor_union/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const GIOP::TargetAddress &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, GIOP::TargetAddress*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::TargetAddress *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const GIOP::TargetAddress *&);
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
@@ -324,7 +301,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1018
+// be/be_codegen.cpp:1050
 
 #if defined (__ACE_INLINE__)
 #include "GIOPC.i"
@@ -339,4 +316,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */

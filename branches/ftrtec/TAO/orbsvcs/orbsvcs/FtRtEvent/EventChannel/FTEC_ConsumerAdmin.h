@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef TAO_FTEC_CONSUMERADMIN_H
 #define TAO_FTEC_CONSUMERADMIN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 
 namespace FtRtecEventChannelAdmin {
   struct ConsumerAdminState;
-};
+}
 
 
 class TAO_FTEC_Event_Channel_Impl;
@@ -65,5 +65,5 @@ public:
   void disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr obj);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_CONSUMERADMIN_H */

@@ -7,6 +7,7 @@
 #include "FT_ClientRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
+#include "tao/ORB_Constants.h"
 
 
 ACE_RCSID (FaultTolerance,
@@ -81,11 +82,13 @@ TAO_FT_ClientORBInitializer::register_policy_factories (
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  /*
   type = FT::HEARTBEAT_ENABLED_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  */
 
   // Transfer ownership of the policy factory to the registry.
   (void) policy_factory._retn ();

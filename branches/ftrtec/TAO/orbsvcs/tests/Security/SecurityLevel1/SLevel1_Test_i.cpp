@@ -1,6 +1,7 @@
 //
 
 #include "SLevel1_Test_i.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (SecurityLevel1,
            SLevel1_Test_i,

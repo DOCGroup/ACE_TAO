@@ -18,8 +18,9 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/wd4800"
+				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
 				Optimization="0"
+				AdditionalIncludeDirectories="../.."
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -63,7 +64,8 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/wd4800"
+				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
+				AdditionalIncludeDirectories="../.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="4"
 				DisableLanguageExtensions="FALSE"
@@ -108,6 +110,12 @@
 			<File
 				RelativePath=".\Introspection.cpp">
 			</File>
+			<File
+				RelativePath=".\Preprocessor.cpp">
+			</File>
+			<File
+				RelativePath=".\PreprocessorToken.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -130,6 +138,9 @@
 			</File>
 			<File
 				RelativePath=".\Preprocessor.hpp">
+			</File>
+			<File
+				RelativePath=".\PreprocessorToken.hpp">
 			</File>
 			<File
 				RelativePath=".\ReferenceCounting.hpp">

@@ -3,11 +3,12 @@
 #if !defined (TAO_DIAMOND_I_H)
 #define TAO_DIAMOND_I_H
 
+#include "DiamondS.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DiamondS.h"
 
 class Diamond_Export Top_i : public POA_Diamond::Top
 {

@@ -15,12 +15,18 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:553
 
 #ifndef _TAO_IDL_ORIG_POLICYS_T_H_
 #define _TAO_IDL_ORIG_POLICYS_T_H_
@@ -39,7 +45,7 @@
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
-TAO_NAMESPACE  POA_CORBA
+namespace POA_CORBA
 {
   
   // TAO_IDL - Generated from
@@ -121,12 +127,11 @@ TAO_NAMESPACE  POA_CORBA
     Policy_tie (const Policy_tie &);
     void operator= (const Policy_tie &);
   };
-}
-TAO_NAMESPACE_CLOSE // module CORBA
+} // module CORBA
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1101
 
 #if defined (__ACE_INLINE__)
 #include "PolicyS_T.i"

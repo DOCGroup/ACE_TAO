@@ -1,7 +1,10 @@
 // $Id$
 
+#include "ace/OS_main.h"
 #include "ace/Naming_Context.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Naming, test_writers, "$Id$")
 

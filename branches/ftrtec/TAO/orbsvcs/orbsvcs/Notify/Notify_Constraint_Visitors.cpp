@@ -3,19 +3,21 @@
 #include "Notify_Constraint_Visitors.h"
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/ETCL/ETCL_y.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
-  : implicit_id_ (NONE)
+  : implicit_id_ (TAO_Notify_Constraint_Visitor::EMPTY)
 {
   (void) this->implicit_ids_.bind (ACE_CString ("filterable_data",
                                                 0,
-                                               0),
+                                                0),
                                    FILTERABLE_DATA);
   (void) this->implicit_ids_.bind (ACE_CString ("header",
                                                 0,
@@ -35,11 +37,11 @@ TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
                                    VARIABLE_HEADER);
   (void) this->implicit_ids_.bind (ACE_CString ("event_name",
                                                 0,
-                                                         0),
+                                                0),
                                    EVENT_NAME);
   (void) this->implicit_ids_.bind (ACE_CString ("event_type",
                                                 0,
-                                                         0),
+                                                0),
                                    EVENT_TYPE);
   (void) this->implicit_ids_.bind (ACE_CString ("domain_name",
                                                 0,
@@ -697,7 +699,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
 
   if (this->implicit_ids_.find (component_name, this->implicit_id_) != 0)
     {
-      this->implicit_id_ = NONE;
+      this->implicit_id_ = TAO_Notify_Constraint_Visitor::EMPTY;
     }
 
   // If this component has no sub-component, only an identifier,
@@ -709,7 +711,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
   // matches one of the nested field names in
   // CosNotification::StructuredEvent, we just visit the nested
   // component, if any.
-  if (this->implicit_id_ == NONE)
+  if (this->implicit_id_ == TAO_Notify_Constraint_Visitor::EMPTY)
     {
       if (nested == 0)
         {

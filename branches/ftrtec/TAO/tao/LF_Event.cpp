@@ -1,6 +1,6 @@
 // -*- C++ -*-
 // $Id$
-#include "tao/LF_Event.h"
+#include "LF_Event.h"
 #include "LF_Follower.h"
 #include "Leader_Follower.h"
 
@@ -8,7 +8,9 @@
 # include "tao/LF_Event.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, LF_Event, "$Id$")
+ACE_RCSID (tao, 
+           LF_Event, 
+           "$Id$")
 
 TAO_LF_Event::TAO_LF_Event (void)
   : state_ (TAO_LF_Event::LFS_IDLE)

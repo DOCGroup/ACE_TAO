@@ -3,16 +3,10 @@
 
 // Date_Time.i
 
-#include "ace/OS.h"
+#include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
-
-ASYS_INLINE void
-ACE_Date_Time::update (void)
-{
-  ACE_TRACE ("ACE_Date_Time::update");
-
-  update(ACE_OS::gettimeofday ());
-}
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
 
 ASYS_INLINE void
 ACE_Date_Time::update (const ACE_Time_Value& timevalue)
@@ -45,6 +39,14 @@ ACE_Date_Time::update (const ACE_Time_Value& timevalue)
   this->microsec_ = timevalue.usec ();
   this->wday_ = tm_time.tm_wday;
 #endif /* ACE_HAS_WINCE */
+}
+
+ASYS_INLINE void
+ACE_Date_Time::update (void)
+{
+  ACE_TRACE ("ACE_Date_Time::update");
+
+  update(ACE_OS::gettimeofday ());
 }
 
 ASYS_INLINE

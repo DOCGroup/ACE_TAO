@@ -29,6 +29,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 
 #include "tao/ORB_Core.h"
+#include "tao/Typecode.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"

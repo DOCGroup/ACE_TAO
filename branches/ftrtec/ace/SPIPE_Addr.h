@@ -23,7 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Addr.h"
-#include "ace/OS.h"
+#include "ace/os_include/sys/os_types.h"
+#include "ace/os_include/os_dirent.h"
 
 /**
  * @class ACE_SPIPE_Addr

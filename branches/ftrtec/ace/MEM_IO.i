@@ -3,6 +3,8 @@
 
 // MEM_IO.i
 
+#include "ace/OS_NS_string.h"
+
 ASYS_INLINE
 ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
 {

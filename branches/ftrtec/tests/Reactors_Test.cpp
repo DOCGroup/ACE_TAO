@@ -20,10 +20,10 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Reactor.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(tests, Reactors_Test, "$Id$")
 

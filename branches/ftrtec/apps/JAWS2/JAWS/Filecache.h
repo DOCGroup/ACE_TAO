@@ -4,7 +4,6 @@
 #ifndef JAWS_FILECACHE_H
 #define JAWS_FILECACHE_H
 
-#include "ace/OS.h"
 #include "ace/FILE_IO.h"
 
 #include "JAWS/Cache_Manager.h"

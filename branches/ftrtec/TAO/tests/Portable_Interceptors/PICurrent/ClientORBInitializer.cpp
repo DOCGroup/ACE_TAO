@@ -3,6 +3,10 @@
 #include "ClientORBInitializer.h"
 #include "ClientRequestInterceptor.h"
 
+#include "tao/ORB_Constants.h"
+
+#include "ace/Log_Msg.h"
+
 ACE_RCSID (PICurrent,
            ClientORBInitializer,
            "$Id$")

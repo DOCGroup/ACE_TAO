@@ -7,6 +7,7 @@
 #include "ace/Log_Msg_NT_Event_Log.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(ace, Log_Msg_NT_Event_Log, "$Id$")
 
@@ -32,7 +33,8 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                                    MAXPATHLEN))
     return -1;
   DWORD msg_file_length = ACE_static_cast (DWORD,
-                                           ACE_OS_String::strlen (msg_file));
+                                           (ACE_OS::strlen (msg_file) + 1) 
+                                           * sizeof (ACE_TCHAR));
 
   // If a logger_key has been supplied then we use that as the event
   // source name, otherwise we default to the program name.
@@ -67,7 +69,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                           0,
                           REG_SZ,
                           (LPBYTE) msg_file,
-                          msg_file_length + 1);
+                          msg_file_length);
   RegCloseKey (hkey);
 
   // Obtain a handle to the event source.

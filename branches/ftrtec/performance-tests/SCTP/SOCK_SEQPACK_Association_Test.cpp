@@ -23,11 +23,10 @@
 //
 // ============================================================================
 
-#include /**/ "ace/OS.h"
-#include /**/ "ace/SOCK_SEQPACK_Association.h"
-#include /**/ "ace/SOCK_SEQPACK_Connector.h"
-#include /**/ "ace/INET_Addr.h"
-#include /**/ "ace/Log_Msg.h"
+#include "ace/SOCK_SEQPACK_Association.h"
+#include "ace/SOCK_SEQPACK_Connector.h"
+#include "ace/INET_Addr.h"
+#include "ace/Log_Msg.h"
 
 void dump_names(const ACE_SOCK_SEQPACK_Association& assoc);
 

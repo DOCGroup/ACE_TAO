@@ -6,6 +6,7 @@ ACE_RCSID(Notify, TAO_RT_Test_FilterFactory, "$Id$")
 
 #include "RT_Test_Filter.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_string.h"
 
 TAO_Notify_Tests_RT_Test_FilterFactory::TAO_Notify_Tests_RT_Test_FilterFactory (void)
 {

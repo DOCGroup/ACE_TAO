@@ -18,11 +18,13 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 
 #include "ace/Reactor.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID(WFMO_Reactor, Directory_Changes, "$Id$")
 

@@ -4,7 +4,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 

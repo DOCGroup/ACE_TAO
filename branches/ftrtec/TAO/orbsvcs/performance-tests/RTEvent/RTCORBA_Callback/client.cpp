@@ -23,6 +23,7 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Stats.h"
 #include "ace/Task.h"
+#include "ace/Barrier.h"
 
 ACE_RCSID(TAO_PERF_RTEC_RTCORBA_Baseline, client, "$Id$")
 

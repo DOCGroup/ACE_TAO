@@ -21,7 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/Global_Macros.h"
+#include "ace/os_include/sys/os_mman.h"
+#include "ace/os_include/os_limits.h"
+#include "ace/os_include/os_fcntl.h"
+#include "ace/Default_Constants.h"
 
 /**
  * @class ACE_Mem_Map

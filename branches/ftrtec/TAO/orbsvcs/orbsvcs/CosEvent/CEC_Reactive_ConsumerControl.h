@@ -16,17 +16,20 @@
 
 #ifndef TAO_CEC_REACTIVE_CONSUMERCONTROL_H
 #define TAO_CEC_REACTIVE_CONSUMERCONTROL_H
+
 #include /**/ "ace/pre.h"
 
 #include "CEC_ConsumerControl.h"
+
 #include "orbsvcs/ESF/ESF_Worker.h"
+
+#include "tao/ORB.h"
+
 #include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/corba.h"
 
 class TAO_CEC_EventChannel;
 
@@ -71,7 +74,8 @@ private:
  * = LOCKING
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_Reactive_ConsumerControl : public TAO_CEC_ConsumerControl
+class TAO_Event_Export TAO_CEC_Reactive_ConsumerControl 
+  : public TAO_CEC_ConsumerControl
 {
 public:
   /// Constructor.  It does not assume ownership of the <event_channel>
@@ -83,10 +87,12 @@ public:
 
   /// Constructor for the typed ec.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                    const ACE_Time_Value &timeout,
-                                    TAO_CEC_TypedEventChannel *typed_event_channel,
-                                    CORBA::ORB_ptr orb);
+  TAO_CEC_Reactive_ConsumerControl (
+      const ACE_Time_Value &rate,
+      const ACE_Time_Value &timeout,
+      TAO_CEC_TypedEventChannel *typed_event_channel,
+      CORBA::ORB_ptr orb
+    );
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
@@ -150,7 +156,8 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Ping_Push_Consumer : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
+class TAO_CEC_Ping_Push_Consumer 
+  : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
@@ -164,7 +171,8 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Ping_Pull_Consumer : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier>
+class TAO_CEC_Ping_Pull_Consumer 
+  : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier>
 {
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
@@ -181,4 +189,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_CEC_CONSUMERCONTROL_H */

@@ -5,6 +5,8 @@
 #include "task.h"
 #include "block.h"
 #include "data.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 
 
 static int
@@ -38,7 +40,7 @@ run_test (int iterations,
 
       /* As before, put a text message into the block.  */
       ACE_OS::sprintf (message->wr_ptr (), "This is message %d.", i);
-      message->wr_ptr (strlen (message->rd_ptr ()));
+      message->wr_ptr (ACE_OS::strlen (message->rd_ptr ()));
 
       message->wr_ptr (1);        // Move beyond the NULL
 

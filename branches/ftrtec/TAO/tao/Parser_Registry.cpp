@@ -4,15 +4,16 @@
 #include "tao/Parser_Registry.h"
 #include "tao/IOR_Parser.h"
 #include "tao/ORB_Core.h"
-#include "tao/default_resource.h"
+
 #include "ace/Dynamic_Service.h"
-#include "ace/Service_Repository.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Parser_Registry.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Parser_Registry, "$Id$")
+ACE_RCSID (tao, 
+           Parser_Registry, 
+           "$Id$")
 
 TAO_Parser_Registry::TAO_Parser_Registry (void)
   : parsers_ (0),
@@ -35,10 +36,14 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
                                                    number_of_names);
 
   if (number_of_names == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   this->size_ = number_of_names;
-  this->parsers_ = new TAO_IOR_Parser*[this->size_];
+  ACE_NEW_RETURN (this->parsers_,
+                  TAO_IOR_Parser*[this->size_],
+                  -1);
 
   for (size_t i = 0; i != this->size_; ++i)
     {
@@ -46,7 +51,9 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
         ACE_Dynamic_Service<TAO_IOR_Parser>::instance (names [i]);
 
       if (this->parsers_[i] == 0)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -62,6 +69,7 @@ TAO_Parser_Registry::match_parser (const char *ior_string)
           return *i;
         }
     }
+
   return 0;
 }
 

@@ -1,6 +1,7 @@
 #include "FOO_IORInterceptor.h"
 #include "testS.h"
 
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (IORInterceptor,
            FOO_IORInterceptor,

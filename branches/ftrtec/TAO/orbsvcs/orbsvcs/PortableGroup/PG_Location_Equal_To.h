@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PG_Operators.h"
-
+#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
 

@@ -25,7 +25,7 @@
 // ACE platform supports some form of threading.
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS.h"
+#include "ace/OS_NS_Thread.h"
 
 /**
  * @class ACE_RW_Mutex

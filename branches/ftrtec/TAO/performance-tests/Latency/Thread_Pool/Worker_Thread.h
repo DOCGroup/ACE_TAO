@@ -6,7 +6,7 @@
 #define WORKER_THREAD_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "ace/Task.h"
 
 /// Implement the Test::Worker_Thread interface

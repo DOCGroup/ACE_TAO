@@ -7,11 +7,13 @@
 //
 // This examples points the cool iterators in ACE_Registry
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 
 #include "ace/Registry.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 ACE_RCSID(Registry, test_registry_iterator, "$Id$")

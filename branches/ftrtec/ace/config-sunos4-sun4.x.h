@@ -15,7 +15,6 @@
 #define ACE_LACKS_SETREUID
 
 #define ACE_HAS_CHARPTR_SPRINTF
-#define ACE_LACKS_POSIX_PROTOTYPES
 // #define ACE_HAS_UNION_WAIT
 
 // Maximum compensation (10 ms) for early return from timed ::select ().

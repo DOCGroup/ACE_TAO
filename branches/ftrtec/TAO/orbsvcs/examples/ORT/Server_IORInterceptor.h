@@ -7,6 +7,7 @@
 
 #include "GatewayC.h"
 #include "tao/IORInterceptor/IORInterceptorC.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

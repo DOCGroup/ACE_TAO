@@ -14,7 +14,7 @@
 #define ACE_UUID_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -217,7 +217,7 @@ namespace ACE_Utils
 
   typedef ACE_Singleton <UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
 
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "ace/UUID.inl"

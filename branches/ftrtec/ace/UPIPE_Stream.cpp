@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/UPIPE_Stream.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, UPIPE_Stream, "$Id$")
 

@@ -25,28 +25,28 @@ CORBA::NamedValue::NamedValue (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 const char *
 CORBA::NamedValue::name (void) const
 {
   return this->name_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Any_ptr
 CORBA::NamedValue::value (void) const
 {
   return ACE_const_cast (CORBA::Any_ptr, &this->any_);
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Flags
 CORBA::NamedValue::flags (void) const
 {
   return this->flags_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::NamedValue *
 CORBA::NamedValue::_duplicate (CORBA::NamedValue * x)
 {
@@ -58,7 +58,7 @@ CORBA::NamedValue::_duplicate (CORBA::NamedValue * x)
   return x;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::NamedValue*
 CORBA::NamedValue::_nil (void)
 {
@@ -67,14 +67,14 @@ CORBA::NamedValue::_nil (void)
 
 // *************************************************************
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::NVList_ptr nvl)
 {
   return (CORBA::Boolean) (nvl == 0);
 }
 
-ACE_INLINE 
+ACE_INLINE
 void
 CORBA::release (CORBA::NVList_ptr nvl)
 {
@@ -95,7 +95,7 @@ CORBA::NVList::NVList (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ULong
 CORBA::NVList::count (ACE_ENV_SINGLE_ARG_DECL) const
 {
@@ -106,7 +106,7 @@ CORBA::NVList::count (ACE_ENV_SINGLE_ARG_DECL) const
   return this->max_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::NVList *
 CORBA::NVList::_duplicate (CORBA::NVList * x)
 {
@@ -118,7 +118,7 @@ CORBA::NVList::_duplicate (CORBA::NVList * x)
   return x;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::NVList *
 CORBA::NVList::_nil (void)
 {

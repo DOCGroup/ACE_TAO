@@ -10,13 +10,14 @@ static const ACEXML_Char empty_string[] = { 0 };
 
 
 ACEXML_Entity_Manager::ACEXML_Entity_Manager (void)
-  : entities_ ()
+  : entities_ (0)
 {
 
 }
 
 ACEXML_Entity_Manager::~ACEXML_Entity_Manager (void)
 {
+  this->reset();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -47,7 +47,9 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return 'Makefile' . ($name eq '' ? '' : ".$name");
+  return $self->get_modified_project_file_name('Makefile' .
+                                               ($name eq '' ? '' : ".$name"),
+                                               '');
 }
 
 

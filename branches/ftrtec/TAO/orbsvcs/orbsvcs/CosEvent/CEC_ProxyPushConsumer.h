@@ -12,6 +12,7 @@
 
 #ifndef TAO_CEC_PROXYPUSHCONSUMER_H
 #define TAO_CEC_PROXYPUSHCONSUMER_H
+
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -40,7 +41,8 @@ class TAO_CEC_ProxyPushSupplier;
  * The object commits suicide when disconnect_push_consumer() is
  * called.
  */
-class TAO_Event_Export TAO_CEC_ProxyPushConsumer : public POA_CosEventChannelAdmin::ProxyPushConsumer
+class TAO_Event_Export TAO_CEC_ProxyPushConsumer 
+  : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
 public:
   typedef CosEventChannelAdmin::ProxyPushConsumer_ptr _ptr_type;
@@ -187,4 +189,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_CEC_PROXYPUSHCONSUMER_H */
