@@ -1,0 +1,7 @@
+// $Id$
+
+interface W32_Test_Interface
+	{
+	string getresponse (in long respnr);
+	};
+
