@@ -90,9 +90,9 @@ namespace TAO
    * @brief Return stub value of fixed size element array.
    *
    */
-  template<typename S_slice, 
+  template<typename S,
+           typename S_slice, 
            typename S_var, 
-           typename S_life, 
            typename S_forany>
   class Ret_Fixed_Array_Argument_T : public Argument
   {
@@ -218,7 +218,6 @@ namespace TAO
   template<typename T, 
            typename T_slice, 
            typename T_var, 
-           typename T_life,
            typename T_forany>
   struct Fixed_Array_Arg_Traits_T
   {
@@ -232,9 +231,9 @@ namespace TAO
                                       T_forany>         in_arg_val;
     typedef Inout_Fixed_Array_Argument_T<T,T_forany>    inout_arg_val;
     typedef Out_Fixed_Array_Argument_T<T,T_forany>      out_arg_val;
-    typedef Ret_Fixed_Array_Argument_T<T_slice,
+    typedef Ret_Fixed_Array_Argument_T<T,
+                                       T_slice,
                                        T_var,
-                                       T_life, 
                                        T_forany>        stub_ret_val;
 
     typedef In_Fixed_Array_SArgument_T<T,T_forany>      in_sarg_val;

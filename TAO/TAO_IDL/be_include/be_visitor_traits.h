@@ -49,9 +49,17 @@ public:
 
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
 
+  virtual int visit_sequence (be_sequence *node);
+
+  virtual int visit_string (be_string *node);
+
   virtual int visit_structure (be_structure *node);
 
+  virtual int visit_field (be_field *node);
+
   virtual int visit_union (be_union *node);
+
+  virtual int visit_union_branch (be_union_branch *node);
 
   virtual int visit_typedef (be_typedef *node);
 };

@@ -72,7 +72,7 @@ namespace TAO
    * @brief OUT stub argument of variable size element array.
    *
    */
-  template<typename S_var, typename S_out, typename S_life, typename S_forany>
+  template<typename S, typename S_var, typename S_out, typename S_forany>
   class Out_Var_Array_Argument_T : public Argument
   {
   public:
@@ -90,9 +90,9 @@ namespace TAO
    * @brief Return stub value of variable size element array.
    *
    */
-  template<typename S_slice, 
+  template<typename S,
+           typename S_slice, 
            typename S_var, 
-           typename S_life, 
            typename S_forany>
   class Ret_Var_Array_Argument_T : public Argument
   {
@@ -219,7 +219,6 @@ namespace TAO
            typename T_slice, 
            typename T_var, 
            typename T_out,
-           typename T_life,
            typename T_forany>
   struct Var_Array_Arg_Traits_T
   {
@@ -232,13 +231,13 @@ namespace TAO
                                     T_slice,
                                     T_forany>           in_arg_val;
     typedef Inout_Var_Array_Argument_T<T,T_forany>      inout_arg_val;
-    typedef Out_Var_Array_Argument_T<T_var,
-                                     T_out,
-                                     T_life,
-                                     T_forany>          out_arg_val;
-    typedef Ret_Var_Array_Argument_T<T_slice,
+    typedef Out_Var_Array_Argument_T<T,
                                      T_var,
-                                     T_life, 
+                                     T_out,
+                                     T_forany>          out_arg_val;
+    typedef Ret_Var_Array_Argument_T<T,
+                                     T_slice,
+                                     T_var,
                                      T_forany>          stub_ret_val;
 
     typedef In_Var_Array_SArgument_T<T,T_forany>        in_sarg_val;

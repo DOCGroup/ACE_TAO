@@ -1,3 +1,46 @@
+Thu Jun 26 17:13:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+
+          Added Array_Traits to Array_VarOut_T.h. Even though
+          only the slice type is used in this traits template,
+          I had to have the array type for a parameter as well,
+          to distinguish among more than one array with the 
+          same element type. So this parameter had to be added
+          to the _var and _out classes, and changed in generated
+          code.
+
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/be/be_typedef.cpp:
+
+          Added overrides for the seen_in_* and used_in_*
+          methods to propagate these flags to the underlying
+          type.
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+
+          Completed the traits generation methods.
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Object_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+
+          Minor changes.
+
+        * tao/corba.h:
+
+          Added the argument helper files to corba.h.
+
 Wed Jun 25 19:01:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_traits.h:

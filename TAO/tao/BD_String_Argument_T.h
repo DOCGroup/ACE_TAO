@@ -15,6 +15,7 @@
 #define TAO_BD_STRING_ARGUMENT_T_H
 
 #include "ace/pre.h"
+#include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -207,7 +208,7 @@ namespace TAO
            typename to_S, 
            typename from_S, 
            size_t BOUND>
-  class Ret_BD_String_SArgument_T : public Skel_Retval
+  class Ret_BD_String_SArgument_T : public Argument
   {
   public:
     Ret_BD_String_SArgument_T (void);
@@ -306,7 +307,7 @@ namespace TAO
                                     CORBA::String_out,
                                     ACE_InputCDR::to_string,
                                     ACE_OutputCDR::from_string,
-                                    size_t BOUND>
+                                    BOUND>
   {
   };
 
@@ -317,7 +318,7 @@ namespace TAO
                                     CORBA::WString_out,
                                     ACE_InputCDR::to_wstring,
                                     ACE_OutputCDR::from_wstring,
-                                    size_t BOUND>
+                                    BOUND>
   {
   };
 };
