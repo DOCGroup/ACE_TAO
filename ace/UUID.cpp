@@ -3,11 +3,16 @@
 #include "ace/Log_Msg.h"
 #include "ace/UUID.h"
 
+ACE_RCSID (ace,
+           UUID,
+           "$Id$")
+
+
 UUID_node::UUID_node (void)
 {
-  for (int i = 0; i < 6; i++)
+  for (int i = 0; i < UUID_node::NODE_ID_SIZE; ++i)
     {
-      nodeID_ [i] = 0;
+      nodeID_[i] = 0;
     }
 }
 
@@ -20,9 +25,9 @@ UUID_node::nodeID (void)
 void
 UUID_node::nodeID (NodeID& nodeID)
 {
-  for (int i = 0; i < 6; i++)
+  for (int i = 0; i < UUID_node::NODE_ID_SIZE; ++i)
     {
-      nodeID_ [i] = nodeID [i];
+      nodeID_[i] = nodeID[i];
     }
 }
 
@@ -30,7 +35,7 @@ ACE_UUID ACE_UUID::NIL_UUID;
 
 /// Construct a nil UUID. Such a UUID has every one of it's data
 /// elements set to zero.
-ACE_UUID::ACE_UUID()
+ACE_UUID::ACE_UUID(void)
   : timeLow_ (0),
     timeMid_ (0),
     timeHiAndVersion_ (0),
@@ -87,12 +92,12 @@ ACE_UUID::ACE_UUID (const ACE_CString& uuid_string)
       return;
     }
 
-  int timeLow;
-  int timeMid;
-  int timeHiAndVersion;
-  int clockSeqHiAndReserved;
-  int clockSeqLow;
-  int node [UUID_node::NODE_ID_SIZE];
+  unsigned int timeLow;
+  unsigned int timeMid;
+  unsigned int timeHiAndVersion;
+  unsigned int clockSeqHiAndReserved;
+  unsigned int clockSeqLow;
+  unsigned int node [UUID_node::NODE_ID_SIZE];
   char thr_pid_buf [BUFSIZ];
 
   if (uuid_string.length() == NIL_UUID.to_string()->length())
@@ -196,7 +201,7 @@ ACE_UUID::ACE_UUID (const ACE_CString& uuid_string)
   this->clockSeqLow_ = ACE_static_cast (u_char, clockSeqLow);
 
   UUID_node::NodeID nodeID;
-  for (int i = 0; i < UUID_node::NODE_ID_SIZE; i++)
+  for (int i = 0; i < UUID_node::NODE_ID_SIZE; ++i)
     nodeID [i] = ACE_static_cast (u_char, node[i]);
 
   this->node_->nodeID (nodeID);
@@ -473,7 +478,7 @@ ACE_UUID_Generator::get_timestamp (UUID_time& timestamp)
  * 122192928000000000U (0x1B21DD213814000) 100 ns ticks.
  */
 void
-ACE_UUID_Generator::get_systemtime(UUID_time& timestamp)
+ACE_UUID_Generator::get_systemtime (UUID_time & timestamp)
 {
   const UUID_time timeOffset = 0;
   //const UUID_time timeOffset = 0x1B21DD213814000;
