@@ -129,9 +129,13 @@ ACE_Handle_Set::operator fd_set *()
 {
   ACE_TRACE ("ACE_Handle_Set::operator ACE_FD_SET_TYPE *");
 
+#if defined (ACE_WIN32)
+  return (fd_set*) &this->mask_;
+#else
   if (this->size_ > 0)
     return (fd_set*) &this->mask_;
   else
     return (fd_set*) NULL;
+#endif /* ACE_WIN32 */
 }
 
