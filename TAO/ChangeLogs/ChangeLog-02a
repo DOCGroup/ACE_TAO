@@ -1,3 +1,50 @@
+Fri Jun 23 22:21:31 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/GIOP_Message_Acceptors.h
+	* tao/GIOP_Message_Acceptors.cpp
+	* tao/GIOP_Message_Lite.cpp
+	* tao/GIOP_Message_Lite.h:
+
+	  Added IOP::ServiceContextList parameter to the
+	  <send_reply_exception> method (in lite and non-lite versions).
+	  This service context is sent back in the reply.
+
+	  Modified <TAO_GIOP_Message_Acceptors::process_client_request> to
+	  send back the same ServiceContextList we received in the
+	  request.  This is needed for RTCORBA::CLIENT_PROPAGATED priority
+	  model.
+
+	* tao/GIOP_Server_Request.cpp (send_no_exception_reply):
+
+	  Send back the same ServiceContextList we received in the
+	  request.  This is needed for RTCORBA::CLIENT_PROPAGATED priority
+	  model.
+
+	* tao/Invocation.cpp:
+
+	  Added comments and error checking for cdr operations in
+	  TAO_GIOP_Invocation::start.
+
+	* tao/Object_Adapter.cpp
+	* tao/Object_Adapter.h
+	* tao/Object_Adapter.i:
+
+	  Added new helper class, Priority_Model_Processing.  This class
+	  encapsulates processing necessary for RTCORBA::CLIENT_PROPAGATED
+	  priority model.  The destructor of this class is magic: it
+	  resets the priority of the current back to its original value if
+	  normal reset method, i.e., <post_invoke> isn't reached,
+	  e.g., due to an exception.
+
+	  Modified Object_Adapter::dispatch_servant to use
+	  Priority_Model_Processing.  Now TAO supports
+	  RTCORBA::CLIENT_PROPAGATED priority model.
+
+	* tao/POA.h:
+
+	  Made Priority_Model_Processing class mentioned above friend of
+	  TAO_POA, so that it can access its policies.
+
 Fri Jun 23 21:17:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send): The

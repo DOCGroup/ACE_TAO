@@ -55,7 +55,7 @@ public:
 
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
-  
+
 
   CORBA::Boolean write_reply_header (TAO_OutputCDR &cdr,
                                      TAO_Pluggable_Reply_Params &reply,
@@ -65,7 +65,7 @@ public:
   // This would prepare a version specific reply to the
   // messages from the client. The type of reply would be context
   // sensitive. Only the common stuff for all the replies to be
-  // sent would be handled. 
+  // sent would be handled.
 private:
 
   int process_client_request (TAO_Transport *transport,
@@ -102,6 +102,7 @@ private:
   int send_reply_exception (TAO_Transport *transport,
                             TAO_ORB_Core* orb_core,
                             CORBA::ULong request_id,
+                            IOP::ServiceContextList *svc_info,
                             CORBA::Exception *x);
   // We must send a LocateReply through <transport>, this request
   // resulted in some kind of exception.
@@ -116,7 +117,7 @@ private:
 
   TAO_GIOP_Message_Accept_Impl implementations_;
   // Different strategies that we know
-  
+
   ACE_Allocator *cdr_buffer_alloc_;
   ACE_Allocator *cdr_dblock_alloc_;
   // Allocators for the outpur CDR that we hold. As we cannot rely on
@@ -124,11 +125,11 @@ private:
   // reason that we cannot believe the ORB core is that, for a
   // multi-threaded servers it dishes out resources cached in
   // TSS. This would be dangerous as TSS gets destroyed before we
-  // would. So we have our own memory that we can rely on. 
+  // would. So we have our own memory that we can rely on.
 
   TAO_OutputCDR *output_;
   // The output CDR stream
-  
+
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
   // A buffer that we will use to initialise the CDR stream
 
