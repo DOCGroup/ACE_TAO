@@ -257,7 +257,7 @@ ifeq ($(<%require%>),1)
 ifneq ($(<%avoid%>),1)
 <%endfor%>
 ifeq ($(LIBCHECK), 1)
-BIN    = $(BIN_UNCHECKED)
+BIN    = $(BIN_UNCHECKED)$(EXEEXT)
 else
   all: lib_warning
 endif
@@ -290,8 +290,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 <%if(install && exename)%>
 
 ifneq ($(OUTPUT_DIRECTORY),.)
-  INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
-  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(EXEEXT))
+  INSTALL = $(VBIN:%=$(INSBIN)/%)
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%)
 endif
 
 <%endif%>
