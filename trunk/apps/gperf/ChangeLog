@@ -1,3 +1,8 @@
+Thu Oct  1 12:40:59 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Options.cpp (parse_args): Comments for Vishal to incorporate
+	Binary Seach on to GPERF. 
+
 Wed Sep 30 16:55:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile: 
