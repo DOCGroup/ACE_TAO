@@ -1,7 +1,6 @@
 //$Id$
 
 #include "tao/GIOP_Message_Base.h"
-#include "tao/debug.h"
 #include "tao/operation_details.h"
 
 
