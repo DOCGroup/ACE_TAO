@@ -1,3 +1,12 @@
+Sat Sep 14 18:17:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Multiple/Makefile.bor:
+        * orbsvcs/tests/CosEvent/Basic/Makefile.bor:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.bor:
+        * orbsvcs/tests/CosEvent/lib/Makefile.bor:
+        * orbsvcs/tests/Notify/lib/Makefile.bor:
+          Fixed these BCB makefiles for the static build.
+
 Sat Sep 14 08:42:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
