@@ -38,12 +38,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
       ACE_ASSERT (dynamic_instance != 0);
 
-#if defined(ACE_NEW_THROWS_EXCEPTIONS) && defined(ACE_HAS_EXCEPTIONS)
-      throw ACE_bad_alloc ();
-#else
-      void* gcc_will_complain_if_literal_0_is_returned = 0;
-      return gcc_will_complain_if_literal_0_is_returned;
-#endif /* ACE_NEW_THROWS_EXCEPTIONS && ACE_HAS_EXCEPTIONS */
+      ACE_throw_bad_alloc;
     }
   else
     {
