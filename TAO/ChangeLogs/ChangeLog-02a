@@ -1,3 +1,9 @@
+Sun Dec  9 20:53:01 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* TAO/tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h
+
+	  Fixed a compile error
+
 Sun Dec  9 10:10:01 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Callback:

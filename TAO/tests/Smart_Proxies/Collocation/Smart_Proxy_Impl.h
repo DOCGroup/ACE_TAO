@@ -12,7 +12,7 @@ class ACE_Svc_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Dia
 
   virtual Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy
                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
-                                                                                 );
+
   // This method will create the smart_proxy.
 };
 
