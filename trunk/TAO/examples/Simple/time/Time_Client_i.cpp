@@ -29,14 +29,29 @@ Time_Client_i::run (const char *name,
 
   ACE_TRY
     {
+      // 64-bit OS's require pointers to be aligned on an
+      // 8 byte boundary.  64-bit HP-UX requires a double to do this
+      // while a long does it for 64-bit Solaris.
+#if defined (HPUX)
+      CORBA::Double padding;
+#else
+      CORBA::Long padding;
+#endif /* HPUX */
+      CORBA::Long timedate;
+
+      ACE_UNUSED_ARG (padding);
+
       //Make the RMI.
-      CORBA::Long timedate = client->current_time (ACE_ENV_SINGLE_ARG_PARAMETER);
+      timedate = client->current_time (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Print out value
-      char *ascii_timedate =
-        ACE_OS::ctime (ACE_reinterpret_cast (time_t *,
-                                             &timedate));
+      // Use ACE_OS::ctime_r(), ctime() doesn't seem to work properly
+      // under 64-bit solaris.
+      ACE_TCHAR ascii_timedate[64] = "";
+      ACE_OS::ctime_r (ACE_reinterpret_cast (const time_t *, &timedate),
+                       ascii_timedate, 64);
+
       ACE_DEBUG ((LM_DEBUG,
                   "string time is %s\n",
                   ascii_timedate));
