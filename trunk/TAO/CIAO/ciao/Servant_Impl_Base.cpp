@@ -11,8 +11,12 @@ namespace CIAO
     ACE_ASSERT (0);
   }
 
-  Servant_Impl_Base::Servant_Impl_Base (Session_Container * c)
-    : container_ (c)
+  Servant_Impl_Base::Servant_Impl_Base (Components::CCMHome_ptr home,
+                                        Home_Servant_Impl_Base *home_servant,
+                                        Session_Container * c)
+    : home_ (Components::CCMHome::_duplicate (home)),
+      home_servant_ (home_servant),
+      container_ (c)
   {
   }
 

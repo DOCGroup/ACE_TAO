@@ -199,6 +199,7 @@ namespace CIAO
     ACE_NEW_RETURN (svt,
                     COMP_SVNT (exe,
                                home.in (),
+                               this,
                                this->container_),
                     COMP::_nil ());
 
