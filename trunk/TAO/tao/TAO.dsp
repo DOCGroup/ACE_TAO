@@ -188,6 +188,10 @@ SOURCE=.\optable.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Orb_Core.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\orbobj.cpp
 # End Source File
 # Begin Source File
