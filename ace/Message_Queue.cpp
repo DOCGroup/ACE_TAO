@@ -921,6 +921,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_static_message_queue (size_t hw
 {
   return new ACE_Message_Queue<ACE_SYNCH_USE> (hwm, lwm, ns);
 }
+  // factory method for a statically prioritized ACE_Message_Queue 
 
 template <ACE_SYNCH_DECL>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> * 
@@ -945,6 +946,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_deadline_message_queue (size_t 
 
   return new ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*adms, hwm, lwm, ns);
 }
+  // factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
 
 template <ACE_SYNCH_DECL>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> * 
@@ -970,6 +972,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_laxity_message_queue (size_t hw
 
   return new ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*alms, hwm, lwm, ns);
 }
+  // factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
 
 
 #endif /* ACE_MESSAGE_QUEUE_C */

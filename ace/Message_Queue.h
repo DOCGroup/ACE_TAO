@@ -458,11 +458,25 @@ private:
 template <ACE_SYNCH_DECL>
 class ACE_Export ACE_Message_Queue_Factory
 {
+  // = TITLE
+  //     ACE_Message_Queue_Factory is a static factory class template which
+  //     provides a separate factory method for each of the major kinds of
+  //     priority based message dispatching: static, earliest deadline first
+  //     (EDF), and minimum laxity first (MLF).
+  //
+  // = DESCRIPTION
+  //     The ACE_Dynamic_Message_Queue class assumes responsibility for
+  //     releasing the resources of the strategy with which it was
+  //     constructed: the user of a message queue constructed by
+  //     any of these factory methods is only responsible for 
+  //     ensuring destruction of the message queue itself.
+ 
 public:
   static ACE_Message_Queue<ACE_SYNCH_USE> * 
     create_static_message_queue (size_t hwm = DEFAULT_HWM,
                                  size_t lwm = DEFAULT_LWM,
                                  ACE_Notification_Strategy * = 0);
+  // factory method for a statically prioritized ACE_Message_Queue 
 
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> * 
     create_deadline_message_queue (size_t hwm = DEFAULT_HWM,
@@ -473,6 +487,7 @@ public:
                                    u_long pending_threshold = 0x200000UL,         // 2^(22-1)
                                    u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                    u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  // factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
 
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> * 
     create_laxity_message_queue (size_t hwm = DEFAULT_HWM, 
@@ -483,6 +498,7 @@ public:
                                  u_long pending_threshold = 0x200000UL,         // 2^(22-1)
                                  u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                  u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  // factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
 };
 
 // This must go here to avoid problems with circular includes.
@@ -501,3 +517,4 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_MESSAGE_QUEUE_H */
+
