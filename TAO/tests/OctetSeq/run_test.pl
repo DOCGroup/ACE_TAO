@@ -17,7 +17,7 @@ unlink $file;
 
 $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
                        "-o $file");
-if (ACE::waitforfile_timed ($file, 3) == -1) {
+if (ACE::waitforfile_timed ($file, 15) == -1) {
   print STDERR "ERROR: cannot find file <$file>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
