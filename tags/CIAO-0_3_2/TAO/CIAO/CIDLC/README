@@ -1,0 +1,49 @@
+
+The C++ source files in this directory are compiled into the 
+code generators and driver for the CIAO CIDL compiler.
+
+The CIDL compiler's front end is built from files in the
+$CIAO_ROOT/CCF directory.
+
+The CIAO CIDL compiler uses the Boost library, which may be
+downloaded from:
+
+http://www.boost.org
+
+See documentation files in CIAO_ROOT/CCF/External/Utility/Documentation 
+for more information on installation, supported platforms, design, etc.
+
+Binary executables for the CIDL compiler are available at
+
+http://www.dre.vanderbilt.edu/CIAO/CIDL.html
+
+Versions are available at the above site for Linux and Windows.
+
+
+-jeff
+
+-----------------------------------------------------------------
+Naming Convention.
+
+The CIAO's CIDL compiler directory was called CIDLC which stands for
+CIDL Compiler (like CC stands for C Compiler, etc). This directory
+wasn't called CCIDLC (CIAO's CIDL Compiler) or CIAO_CIDLC because 
+that would incure needless tautology since the directory structure 
+(.../CIAO/tools/CIDLC) already implies that it's CIAO's CIDC.
+
+Now about CIDLC executable name. The logical name of the excutable 
+implied by directory name (CIDLC) would be cidlc (like cc for 
+C Compiler). However there was a concern originally expressed by
+Nanbor that cidlc is too generic name and when installed for 
+example as /usr/bin/cidlc would loose it's CIAO's context.
+
+At the same time recommended by FHS (Filesystem Hierarchy Standard) 
+package installation location is /opt/<package>. Thus if installation 
+directory would be for instance /opt/CIAO then naming CIDLC executable 
+ciao_cidlc would create needless tautology (i.e./opt/CIAO/bin/ciao_cidlc).
+Though in my opinion there is nothing bad in having generic name like 
+cidlc (user always can execute cidlc --version) and as suggested by FHS 
+installations like /usr/bin/ciao_cidl are non-conformant the decision was
+made to call CIAO's CIDLC execuatable ciao_cidlc.
+
+-boris

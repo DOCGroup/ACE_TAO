@@ -1,0 +1,54 @@
+// $Id$
+project(NavDisplayGUI_exec) : ciao_server {
+  depends   += NavDisplay_exec
+  sharedname = NavDisplayGUI_exec
+// @@ Notice: Currently, we need to manually change the following Qt library
+//            to qt-mt230nc.lib if you are compiling on Win32.
+  lit_libs  += qt-mt
+  libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
+  libpaths  += .. ../NavDisplay $(QTDIR)/lib
+  dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL QT_THREAD_SUPPORT
+  includes  += ../NavDisplay $(QTDIR)/include
+  idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
+  idlgendir = ./
+
+  IDL_Files {
+    ../NavDisplay/NavDisplayEI.idl
+  }
+
+  Source_Files {
+        NavDisplayEIC.cpp
+        AddNavUnitCmd.cpp
+        DetailView.cpp
+        MapView.cpp
+        NavUnit.cpp
+        NodeItem.cpp
+        QuitCmd.cpp
+        RootPanel.cpp
+        UpdatePositionCmd.cpp
+        Worker.cpp
+        NavDisplayGUI_exec.cpp
+  }
+
+  Define_Custom(MOC) {
+    automatic = 0
+    command = $(QTDIR)/bin/moc
+    output_option = -o
+    inputext = .h
+    pre_extension = _moc
+    source_outputext = .cpp
+  }
+  MOC_Files {
+    DetailView.h
+    MapView.h
+    NodeItem.h
+    RootPanel.h
+  }
+  Source_Files {
+    DetailView_moc.cpp
+    MapView_moc.cpp
+    NodeItem_moc.cpp
+    RootPanel_moc.cpp
+  }
+
+}
