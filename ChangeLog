@@ -1,3 +1,10 @@
+Fri Aug 27 07:40:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * ace/ace_wchar.h:
+
+        Fixed for broken OpenVMS build because of missing <cwchar>
+        and <cwctype> includes.
+
 Thu Aug 26 19:55:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Makefile.am:
