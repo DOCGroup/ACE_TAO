@@ -9,6 +9,9 @@
 
 #include "LB_Minimum_Dispersion.h"  // @@ REMOVE ME!
 
+#include "tao/ORB_Core.h"
+#include "ace/Auto_Ptr.h"
+
 ACE_RCSID (LoadBalancing,
            LoadBalancingI,
            "$Id$")
@@ -20,7 +23,7 @@ TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
   : orb_ (),
     poa_ (),
     lock_ (),
-    location_map_
+    location_map_ (),
     object_group_map_ (),
     property_manager_ (this->object_group_map_),
     generic_factory_ (this->location_map_,
@@ -29,9 +32,10 @@ TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
     object_group_manager_ (this->location_map_,
                            this->object_group_map_,
                            this->property_manager_),
-    balancing_strategy_ (new TAO_LB_Minimum_Dispersion_Strategy) //@@ FIXME!
+   balancing_strategy_ (new TAO_LB_Minimum_Dispersion_Strategy),
+   pull_handler_ (this->location_map_)
 {
-  //  (void) this->init ();  
+  //  (void) this->init ();
 }
 
 // Implementation skeleton destructor
@@ -72,12 +76,13 @@ TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
 
   int result = this->location_map_.find (the_location,
                                          location_entry);
-  
+
   // If no location entry exists for the given location, then create
   // and bind a new one.
   if (result != 0)
     {
       ACE_NEW_THROW_EX (location_entry,
+                        TAO_LB_Location_Map_Entry,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -85,14 +90,16 @@ TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
                           CORBA::COMPLETED_NO));
       ACE_CHECK;
 
-      safe_location_entry = location_entry;
+      ACE_AUTO_PTR_RESET (safe_location_entry,
+                          location_entry,
+                          TAO_LB_Location_Map_Entry);
 
       if (this->location_map_.bind (the_location,
                                     location_entry) != 0)
         ACE_THROW (CORBA::INTERNAL ());  // @@ Pick a better (user?)
                                          //    exception.
     }
-  else if (CORBA::is_nil (location_entry->load_monitor))
+  else if (CORBA::is_nil (location_entry->load_monitor.in ()))
     {
       location_entry->load_monitor =
         LoadBalancing::LoadMonitor::_duplicate (load_monitor);

@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "LB_Minimum_Dispersion.h"
+#include "LB_Location_Map.h"
 #include "LB_ObjectGroup_Map.h"
 //#include "ReplicaProxy.h"
 
@@ -51,7 +52,7 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (
 
           // @@ Hardcode one load and don't bother checking the
           // LoadId, for now.  (just to get things going)
-          if (d[CORBA::ULong (0)].value > load[CORBA::ULong (0)].value)
+          if ((*d)[CORBA::ULong (0)].value > (*load)[CORBA::ULong (0)].value)
             {
               replica_info = *i;
               d = (*i)->location_entry->load_list.ptr ();

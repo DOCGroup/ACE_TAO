@@ -25,10 +25,7 @@
 #include "orbsvcs/LoadBalancingC.h"
 
 #include "LB_ReplicaInfo.h"
-
-
-// Forward declarations.
-class TAO_LB_Location_Map;
+#include "LB_Location_Map.h"
 
 
 /**
@@ -48,7 +45,6 @@ public:
   TAO_LB_Pull_Handler (TAO_LB_Location_Map &location_map);
 
   /// Receive the timeout event.
-    /
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *arg);
 

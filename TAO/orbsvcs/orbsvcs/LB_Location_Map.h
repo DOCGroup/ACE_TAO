@@ -35,7 +35,7 @@
  * @brief Value field (internal ID) of the location hash map.
  *
  * Structure that contains all information corresponding to a given
- * location.  
+ * location.
  */
 struct TAO_LB_Location_Map_Entry
 {
@@ -56,7 +56,7 @@ struct TAO_LB_Location_Map_Entry
 /// Location hash map.
 typedef ACE_Hash_Map_Manager_Ex<
   LoadBalancing::Location,
-  TAO_LB_Location_Map_Entry,
+  TAO_LB_Location_Map_Entry *,
   TAO_LB_Location_Hash,
   TAO_LB_Location_Equal_To,
   TAO_SYNCH_MUTEX> TAO_LB_Location_Map;

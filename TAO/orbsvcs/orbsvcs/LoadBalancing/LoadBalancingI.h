@@ -24,10 +24,12 @@
 
 #include "orbsvcs/LoadBalancingS.h"
 
+#include "LB_Location_Map.h"
 #include "LB_ObjectGroup_Map.h"
 #include "LB_PropertyManager.h"
 #include "LB_GenericFactory.h"
 #include "LB_ObjectGroupManager.h"
+#include "LB_Pull_Handler.h"
 
 
 /// Forward declarations
@@ -300,7 +302,8 @@ public:
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the ReplicaLocator).
-  void init (PortableServer::POA_ptr root_poa,
+  void init (CORBA::ORB_ptr orb,
+             PortableServer::POA_ptr root_poa,
              CORBA::Environment &ACE_TRY_ENV);
 
 private:
@@ -358,6 +361,10 @@ private:
   /// The load balancing strategy used when making load balancing
   /// decisions.
   TAO_LB_Balancing_Strategy *balancing_strategy_;
+
+  /// The event handler that performs "pull monitoring" on all
+  /// registered load monitors.
+  TAO_LB_Pull_Handler pull_handler_;
 
 };
 
