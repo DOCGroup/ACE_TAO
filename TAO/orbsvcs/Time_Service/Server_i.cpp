@@ -109,6 +109,7 @@ Server_i::init_naming_service (CORBA::Environment& env)
 }
 
 // Initialize the Implementation Repository.
+
 /*
 int
 Server_i::init_IR (void)
@@ -155,7 +156,7 @@ Server_i::init_IR (void)
 	  ACE_OS::fclose (this->ior_output_file_);
 	}
 
-    }
+	}
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Exception:");
@@ -383,7 +384,7 @@ Server_i::init (int argc,
       this->create_server ();
 
       // Initialize the IR.
-      //      this->init_IR ();
+      this->init_IR ();
 
       // Register the server object with the Naming Service.
       // ??this->register_server ();
@@ -405,23 +406,26 @@ Server_i::run (CORBA::Environment &env)
 {
   TAO_TRY
     {
+      /*
       if (this->use_ir_ == 1)
 	{
 	  this->ir_helper_->notify_startup (TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
-
+      */
       // Run the main event loop for the ORB.
       if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
 			  -1);
-
+      /*
       if (this->use_ir_ == 1)
 	{
 	  this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
+      */
+
     }
   TAO_CATCHANY
     {
