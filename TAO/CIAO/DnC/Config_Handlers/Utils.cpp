@@ -4,6 +4,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
+#include "ace/Auto_Ptr.h"
 
 #include "XercesString.h"
 #include <xercesc/util/XMLURL.hpp>
@@ -33,8 +34,8 @@ CORBA::Short
 CIAO::Config_Handler::Utils::parse_short (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
+  auto_ptr<char> cleanup_char (temp);
   CORBA::Short ret_val = ACE_OS::atoi (temp);
-  XMLString::release (&temp);
   return ret_val;
 }
 
@@ -42,8 +43,8 @@ CORBA::ULong
 CIAO::Config_Handler::Utils::parse_ulong (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
+  auto_ptr<char> cleanup_char (temp);
   CORBA::ULong ret_val = ACE_OS::strtoul (temp, 0, 10);
-  XMLString::release (&temp);
   return ret_val;
 }
 
@@ -51,8 +52,8 @@ CORBA::Long
 CIAO::Config_Handler::Utils::parse_long (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
+  auto_ptr<char> cleanup_char (temp);
   CORBA::ULong ret_val = ACE_OS::strtol (temp, 0, 10);
-  XMLString::release (&temp);
   return ret_val;
 }
 
@@ -60,8 +61,8 @@ CORBA::Double
 CIAO::Config_Handler::Utils::parse_double (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
+  auto_ptr<char> cleanup_char (temp);
   CORBA::Double ret_val = ACE_OS::strtod (temp, 0);
-  XMLString::release (&temp);
   return ret_val;
 }
 
@@ -86,25 +87,25 @@ CIAO::Config_Handler::Utils::parse_bool (DOMNodeIterator * iter)
     return 0;
 }
 
-CORBA::Char 
+CORBA::Char
 CIAO::Config_Handler::Utils::parse_char (DOMNodeIterator * iter)
 {
   DOMText * text = ACE_reinterpret_cast (DOMText *, iter->nextNode ());
-  char * temp_string = XMLString::transcode (text->getNodeValue ()); 
+  char * temp_string = XMLString::transcode (text->getNodeValue ());
+  auto_ptr<char> cleanup_char (temp_string);
 
-  // Should be non-null 
+  // Should be non-null
   ACE_ASSERT (temp_string != 0);
 
-  // Return the first character in the node as char value 
+  // Return the first character in the node as char value
   char ret_char = temp_string [0];
-  XMLString::release (&temp_string);
   return ret_char;
 }
 
 CORBA::Octet
 CIAO::Config_Handler::Utils::parse_octet (DOMNodeIterator * iter)
 {
-  return Utils::parse_char (iter); 
+  return Utils::parse_char (iter);
 }
 
 DOMDocument *
@@ -117,9 +118,11 @@ CIAO::Config_Handler::Utils::create_document (const char * url)
 
   DOMImplementation* impl
     = DOMImplementationRegistry::getDOMImplementation(gLS);
+  auto_ptr<DOMImplementation> cleanup_impl (impl);
 
   DOMBuilder* parser =
     ((DOMImplementationLS*)impl)->createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
+  auto_ptr<DOMBuilder> cleanup_parser (parser);
 
   // Discard comment nodes in the document
   parser->setFeature (XMLUni::fgDOMComments, false);
@@ -157,13 +160,12 @@ CIAO::Config_Handler::Utils::create_document (const char * url)
 
 
   DOMDocument* doc = parser->parseURI (url);
-  ACE_TString root_node_name;
-  root_node_name = XMLString::transcode (doc->getDocumentElement ()->getNodeName ());
+  auto_ptr<DOMDocument> cleanup_doc (doc);
 
   return doc;
 }
 
-DOMNodeIterator * 
+DOMNodeIterator *
 CIAO::Config_Handler::Utils::parse_href_tag (XMLURL url, DOMDocument * doc)
 {
   const char * document_path = 0;
@@ -180,7 +182,7 @@ CIAO::Config_Handler::Utils::parse_href_tag (XMLURL url, DOMDocument * doc)
     document_path = path.c_str ();
   }
 
-  DOMDocument* href_doc = 
+  DOMDocument* href_doc =
     CIAO::Config_Handler::Utils::create_document (document_path);
   DOMDocumentTraversal* traverse (href_doc);
   DOMNode* root = (href_doc->getDocumentElement ());
