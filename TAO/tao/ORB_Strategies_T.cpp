@@ -4,6 +4,7 @@
 #define ORB_STRATEGIES_T_C
 
 #include "tao/ORB_Strategies_T.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/ORB_Strategies_T.i"

@@ -31,7 +31,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/GIOP.h"
 
-class TAO_Exception_Data;
+struct TAO_Exception_Data;
 
 class TAO_Export TAO_GIOP_Invocation
 {
