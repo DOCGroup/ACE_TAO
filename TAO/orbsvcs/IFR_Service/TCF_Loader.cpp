@@ -14,7 +14,7 @@ TCF_Loader::TCF_Loader (void)
 CORBA::Object_ptr
 TCF_Loader::create_object (CORBA::ORB_ptr orb,
                            CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
   ACE_TRY
     {
