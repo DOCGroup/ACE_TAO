@@ -1,3 +1,48 @@
+Mon May 27 15:21:57 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Codecs.h:
+        * ace/Codecs.cpp:
+
+          New files meant to hold all encoding/decoding classes/functions.
+          Currently implements Base 64 encoding.
+
+        * ACEXML/common/XML_Codecs.h:
+        * ACEXML/common/XML_Codecs.cpp:
+
+          Same guy under a different hood.
+
+        * ace/Basic_Types.h:
+
+          Added definition of ACE_Byte.
+
+        * tests/Codecs_Test.cpp:
+        * tests/run_test.lst:
+
+          Regression test which tests the encoding/decoding functionality
+          added above.
+
+        * tests/Makefile:
+        * tests/RMCast/Makefile:
+        * ace/Makefile:
+        * ace/RMCast/Makefile:
+
+          Updated dependencies.
+
+        * ace/Read_Buffer.cpp:
+
+          Decrement the extra increment of slot. This is not completely
+          correct, as we should abstract the handling of end-of-line across
+          Unix and Windows and then use it here and all the places which
+          read stuff from files. See Fri May 24 10:42:25 2002  Douglas C.
+          Schmidt  <schmidt@tango.doc.wustl.edu> for another manifestation
+          of the same bug.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Remove files named core.[0-9]+. Newer kernels dump a core file
+          associated with each process separately.
+
+
 Mon May 27 15:04:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h (ACE_FACTORY_DEFINE): Add the export declaration to
