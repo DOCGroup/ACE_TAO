@@ -1,3 +1,16 @@
+Mon Dec 10 16:33:39 2001  Justin Michel  <michel_j@ociweb.com>
+
+        * TAO/tests/TAO_Tests.dsw
+        * TAO/tests/ORB_init/Portspan/portspan.dsp
+        * TAO/tests/ORB_init/Portspan/run_test.pl
+        * TAO/tests/ORB_init/Portspan/simpleI.cpp
+        * TAO/tests/ORB_init/Portspan/simpleI.h
+
+        The server.exe was returning 1 on error, but perl
+        SpawnWaitKill() returned -1. Updated to check == 0.
+        Added the servant implementation files and updated
+        the vc++ project to be like the other tests. 
+
 Mon Dec 10 15:52:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	The effect of breaking ace/Strategies into multiple files. 

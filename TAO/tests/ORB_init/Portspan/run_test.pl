@@ -26,8 +26,8 @@ if ($test2 != 0) {
     exit 1;
 }
 
-$test3 = $P3->SpawnWaitKill(1);
-if ($test3 != 1) {
+$test3 = $P3->SpawnWaitKill(5);
+if ($test3 == 0) {
     print STDERR "ERROR: Last server didn't fail! Err:$test3\n";
     $P1->Kill();
     $P2->Kill();
