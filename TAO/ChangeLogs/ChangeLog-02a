@@ -1,3 +1,15 @@
+Tue Nov  7 12:24:48 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Made the changes for
+	  the new caching scheme in SSLIOP.
+
 Tue Nov  7 11:50:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.cpp:

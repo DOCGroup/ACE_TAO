@@ -77,7 +77,7 @@ public:
   TAO_SSLIOP_Client_Connection_Handler *&ssl_hint (void);
   // Access to our <hint_>.
 
-  CORBA::Boolean is_equivalent (const TAO_SSLIOP_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
   // Return true if this endpoint is equivalent to <other_endpoint>.  Two
   // endpoints are equivalent iff their iiop counterparts are
   // equivalent, and, if both have non-zero ssl ports, their ssl ports
@@ -85,6 +85,13 @@ public:
 
   TAO_IIOP_Endpoint *iiop_endpoint (void) const;
   // Accessor to our IIOP counterpart.
+
+  virtual TAO_Endpoint *duplicate (void);
+  // This method returns a copy of the corresponding endpoints by
+  // allocation memory
+
+  virtual CORBA::ULong hash (void);
+  // Return a hash value for this object.
 
 private:
 
