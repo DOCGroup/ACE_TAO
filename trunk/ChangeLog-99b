@@ -1,3 +1,10 @@
+Mon Jun 21 10:11:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Makefile:
+	  The TP_Reactor is used by TAO, but was listed in the OTHER
+	  component. Moved to the DEMUX component to make it always
+	  available.  Thanks to David Levine for pointing this out.
+
 Mon Jun 21 09:58:42 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/QoS.{h,cpp}: Removed these files from ACE since they have a
