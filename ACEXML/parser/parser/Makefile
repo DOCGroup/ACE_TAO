@@ -32,6 +32,12 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS += -DACEXML_PARSER_BUILD_DLL
+endif
+endif
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
