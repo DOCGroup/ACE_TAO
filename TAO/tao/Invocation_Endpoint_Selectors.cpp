@@ -1,4 +1,4 @@
-// $Id$
+// -*- C++ -*-
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 
@@ -12,7 +12,9 @@
 #include "tao/Endpoint.h"
 #include "tao/Base_Transport_Property.h"
 
-ACE_RCSID(tao, Invocation_Endpoint_Selectors, "$Id$")
+ACE_RCSID (tao,
+           Invocation_Endpoint_Selectors,
+           "$Id$")
 
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
@@ -26,26 +28,34 @@ TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 }
 
 void
-TAO_Default_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation,
-                                                CORBA::Environment &ACE_TRY_ENV)
+TAO_Default_Endpoint_Selector::select_endpoint (
+  TAO_GIOP_Invocation *invocation,
+  CORBA::Environment &ACE_TRY_ENV)
 {
   do
     {
       invocation->profile (invocation->stub ()->profile_in_use ());
       invocation->endpoint (invocation->profile ()->endpoint ());
 
-      // If known endpoint, select it.
-      if (invocation->endpoint () != 0)
+      size_t endpoint_count = invocation->profile ()->endpoint_count();
+      for (size_t i = 0; i < endpoint_count; ++i)
         {
-          TAO_Base_Transport_Property default_desc (invocation->endpoint ());
+          // If known endpoint, select it.
+          if (invocation->endpoint () != 0)
+            {
+              TAO_Base_Transport_Property desc (invocation->endpoint ());
 
-          int status =
-            invocation->perform_call (default_desc, ACE_TRY_ENV);
-          ACE_CHECK;
+              int status =
+                invocation->perform_call (desc, ACE_TRY_ENV);
+              ACE_CHECK;
 
-          // Check if the invocation has completed.
-          if (status == 1)
-            return;
+              // Check if the invocation has completed.
+              if (status == 1)
+                return;
+
+              // Go to the next endpoint in this profile.
+              invocation->endpoint (invocation->endpoint()->next());
+            }
         }
     }
   while (invocation->stub ()->next_profile_retry () != 0);
