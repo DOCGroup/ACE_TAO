@@ -72,7 +72,7 @@ Cubit_Server::init (int argc,
   // Now create the implementations
   this->factory_impl_ = new Cubit_Factory_i (orb.in ());
 
-  CORBA::String_var str  =
+  this->factory_id_ =
     this->orb_manager_.activate_under_child_poa ("factory",
                                                  this->factory_impl_,
                                                  ACE_TRY_ENV);
@@ -80,13 +80,13 @@ Cubit_Server::init (int argc,
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
-              str.in ()));
+              this->factory_id_.in ()));
 
   if (this->ior_output_file_)
     {
       ACE_OS::fprintf (this->ior_output_file_,
                        "%s",
-                       str.in ());
+                       this->factory_id_.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
 
@@ -105,5 +105,6 @@ Cubit_Server::run (CORBA::Environment& env)
 
 Cubit_Server::~Cubit_Server (void)
 {
+  this->orb_manager_.deactivate_under_child_poa (this->factory_id_.in ());
   delete this->factory_impl_;
 }

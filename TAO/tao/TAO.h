@@ -64,6 +64,10 @@ public:
   // can call this method multiple times to activate multiple objects.
   // Returns 0 on failure.
 
+  void deactivate (const char *id,
+                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Deactivate object in RootPOA.
+
   CORBA::String activate_under_child_poa (const char *servant_name,
                                           PortableServer::Servant servant,
                                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -71,6 +75,10 @@ public:
   // using the POA <activate_object_with_id> created from the string
   // servant_name. Users should call this to activate objects under
   // the child_poa.
+
+  void deactivate_under_child_poa (const char *id,
+                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Deactivate object in child POA.
 
   int run (CORBA_Environment &TAO_IN_ENV,
            ACE_Time_Value *tv);
