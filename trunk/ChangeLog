@@ -1,3 +1,9 @@
+Wed Aug 25 17:33:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Removed ACE_NTRACE definition.  It slipped in again.
+
 Wed Aug 25 16:00:11 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/Auto_Ptr.h:
