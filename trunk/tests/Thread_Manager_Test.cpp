@@ -322,7 +322,7 @@ run_main (int, ACE_TCHAR *[])
 #endif /* VXWORKS */
                   n_threads,
                   (ACE_THR_FUNC) worker,
-                  ACE_reinterpret_cast (void *, n_iterations),
+                  reinterpret_cast <void *> (n_iterations),
                   THR_BOUND
 #if defined (VXWORKS)
                   , ACE_DEFAULT_THREAD_PRIORITY
