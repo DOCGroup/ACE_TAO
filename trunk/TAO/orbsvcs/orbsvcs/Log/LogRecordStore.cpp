@@ -165,8 +165,8 @@ template class ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::RecordId, DsLogAdmin::L
 template class ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
   ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>;
-template class ACE_Hash<DsLogAdmin::LogId>;
-template class ACE_Equal_To<DsLogAdmin::LogId>;
+template class ACE_Hash<DsLogAdmin::RecordId>;
+template class ACE_Equal_To<DsLogAdmin::RecordId>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -182,7 +182,7 @@ ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
 ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash<DsLogAdmin::LogId>
-#pragma instantiate ACE_Equal_To<DsLogAdmin::LogId>
+#pragma instantiate ACE_Hash<DsLogAdmin::RecordId>
+#pragma instantiate ACE_Equal_To<DsLogAdmin::RecordId>
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
