@@ -4,7 +4,7 @@
 
 #ifndef CLIENT_TASK_H
 #define CLIENT_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestC.h"
 #include "ace/Task.h"
@@ -58,5 +58,5 @@ private:
   ACE_Basic_Stats latency_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CLIENT_TASK_H */

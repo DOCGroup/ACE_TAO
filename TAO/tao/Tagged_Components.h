@@ -13,7 +13,7 @@
 
 #ifndef TAO_TAGGED_COMPONENTS_H
 #define TAO_TAGGED_COMPONENTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
 
@@ -145,5 +145,5 @@ private:
 # include "tao/Tagged_Components.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TAGGED_COMPONENTS_H */

@@ -19,7 +19,7 @@
 #ifndef TAO_ABSTRACT_SERVANT_BASE_H_
 #define TAO_ABSTRACT_SERVANT_BASE_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -128,6 +128,6 @@ protected:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ABSTRACT_SERVANT_BASE_H_ */

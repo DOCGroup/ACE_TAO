@@ -19,7 +19,7 @@
 
 #ifndef CIAO_GLUE_SESSION_BASICSP_H
 #define CIAO_GLUE_SESSION_BASICSP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 ///Source in the container interface definitions
 #include "ciao/Container_Base.h"
@@ -69,5 +69,5 @@ namespace CIAO_GLUE_BasicSP
   };
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_HUDISPLAYGS_H */

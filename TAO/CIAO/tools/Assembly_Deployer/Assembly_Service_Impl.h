@@ -13,7 +13,7 @@
 
 #ifndef CIAO_ASSEMBLY_SERVICE_IMPL_H
 #define CIAO_ASSEMBLY_SERVICE_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Assembly_ServiceS.h"
 
@@ -59,5 +59,5 @@ namespace CIAO
   };
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_ASSEMBLY_IMPL_H */

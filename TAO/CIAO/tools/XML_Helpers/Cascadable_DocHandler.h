@@ -12,7 +12,7 @@
 #ifndef CIAO_XMLHELPERS_CASCADABLE_DOCHANDLER_H
 #define CIAO_XMLHELPERS_CASCADABLE_DOCHANDLER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/common/XMLReader.h"
 
@@ -248,5 +248,5 @@ namespace CIAO
 # include "Cascadable_DocHandler.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_XMLHELPERS_CASCADABLE_DOCHANDLER_H */

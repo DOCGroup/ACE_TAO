@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_DIRECT_CONSUMER_H
 #define TAO_Notify_Tests_DIRECT_CONSUMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -40,5 +40,5 @@ public:
   virtual void connect (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_DIRECT_CONSUMER_H */

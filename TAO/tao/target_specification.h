@@ -17,7 +17,7 @@
 
 #ifndef TAO_TARGET_SPECIFICATION_H
 #define TAO_TARGET_SPECIFICATION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Object_KeyC.h"
 #include "tao/IOPC.h"
@@ -141,5 +141,5 @@ private:
 #include "target_specification.i"
 #endif /* defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_TARGET_SPECIFICATION_H*/

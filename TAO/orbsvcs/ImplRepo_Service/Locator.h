@@ -13,7 +13,7 @@
 
 #ifndef IMR_LOCATOR_H
 #define IMR_LOCATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IORTable/IORTable.h"
 
@@ -55,5 +55,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* IMR_LOCATOR_H */

@@ -20,7 +20,7 @@
 #ifndef TAO_PSDL_STREAM_H
 #define TAO_PSDL_STREAM_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Scope.h"
 
@@ -85,6 +85,6 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_STREAM_H */

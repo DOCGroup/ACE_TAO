@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_IORC_H_
 #define _TAO_IDL_ORIG_IORC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Exception.h"
 
 #ifndef TAO_IORMANIP_SAFE_INCLUDE
@@ -871,5 +871,5 @@ TAO_IORManip_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::MultiPro
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

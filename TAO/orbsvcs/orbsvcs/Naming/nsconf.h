@@ -14,7 +14,7 @@
 
 #ifndef TAO_NAMESERVICE_CONF_H
 #define TAO_NAMESERVICE_CONF_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -41,5 +41,5 @@
 #endif /* ! TAO_NAMING_CONTEXT_INDEX */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_NAMESERVICE_CONF_H*/

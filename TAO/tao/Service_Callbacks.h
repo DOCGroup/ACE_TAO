@@ -15,7 +15,7 @@
 
 #ifndef TAO_SERVICE_CALLBACK_H
 #define TAO_SERVICE_CALLBACK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
 
@@ -113,5 +113,5 @@ public:
 # include "tao/Service_Callbacks.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_SERVICE_CALLBACK_H*/

@@ -17,7 +17,7 @@
 
 #ifndef TAO_IORMANIP_LOADER_H
 #define TAO_IORMANIP_LOADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ior_manip_export.h"
 #include "tao/Object_Loader.h"
@@ -65,5 +65,5 @@ TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
 #include "IORC.h"
 #undef TAO_IORMANIP_SAFE_INCLUDE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_IORManip_H */

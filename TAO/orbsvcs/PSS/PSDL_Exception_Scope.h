@@ -20,7 +20,7 @@
 #ifndef TAO_PSDL_EXCEPTION_SCOPE_H
 #define TAO_PSDL_EXCEPTION_SCOPE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Scope.h"
 
@@ -66,6 +66,6 @@ protected:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_MODULE_SCOPE_H */

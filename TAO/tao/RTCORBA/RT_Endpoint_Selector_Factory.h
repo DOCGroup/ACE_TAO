@@ -16,7 +16,7 @@
 
 #ifndef RT_ENDPOINT_SELECTOR_FACTORY_H
 #define RT_ENDPOINT_SELECTOR_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
 
@@ -71,5 +71,5 @@ ACE_FACTORY_DECLARE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* RT_ENDPOINT_SELECTOR_FACTORY_H */

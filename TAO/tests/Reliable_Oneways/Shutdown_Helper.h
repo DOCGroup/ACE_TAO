@@ -4,7 +4,7 @@
 
 #ifndef SHUTDOWN_HELPER_H
 #define SHUTDOWN_HELPER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -38,5 +38,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* SHUTDOWN_HELPER_H */

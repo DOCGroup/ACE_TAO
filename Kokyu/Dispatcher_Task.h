@@ -12,7 +12,7 @@
 
 #ifndef TAO_DISPATCHER_TASK_H
 #define TAO_DISPATCHER_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -102,5 +102,5 @@ private:
 #include "Dispatcher_Task.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* DISPATCHER_TASK_H */

@@ -16,7 +16,7 @@
 
 #ifndef TAO_MIOPCONF_H
 #define TAO_MIOPCONF_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -37,5 +37,5 @@
 #define TAO_DEF_MIOP_MINOR 0
 #endif /* TAO_DEF_MIOP_MINOR */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_MIOPCONF_H*/

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_SEQUENCEPUSHCONSUMER_H
 #define TAO_Notify_SEQUENCEPUSHCONSUMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
 
@@ -112,5 +112,5 @@ protected:
 #include "SequencePushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_SEQUENCEPUSHCONSUMER_H */

@@ -15,7 +15,7 @@
 
 #ifndef MT_SSLIOP_CLIENT_WORKER_H
 #define MT_SSLIOP_CLIENT_WORKER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Task.h"
 
 #if defined (_MSC_VER)
@@ -60,5 +60,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* MT_SSLIOP_CLIENT_WORKER_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_STUB_H
 #define TAO_STUB_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -464,6 +464,6 @@ protected:
 # include "tao/Stub.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_STUB_H */

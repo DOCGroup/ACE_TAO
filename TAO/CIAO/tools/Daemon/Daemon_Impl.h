@@ -16,7 +16,7 @@
 
 #ifndef CIAO_DAEMON_IMPL_H
 #define CIAO_DAEMON_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "DaemonS.h"
 
@@ -100,5 +100,5 @@ namespace CIAO
 # include "Daemon_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_DAEMON_IMPL_H */

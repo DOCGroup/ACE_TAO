@@ -12,7 +12,7 @@
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_BASE_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_BASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
 
@@ -83,5 +83,5 @@ protected:
 #include "tao/Asynch_Reply_Dispatcher_Base.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_REPLY_DISPATCHER_BASE_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "valuetype_export.h"
 #include "tao/corbafwd.h"
@@ -107,6 +107,6 @@ namespace CORBA
 # include "ValueFactory.inl"
 #endif /* __ACE_INLINE__) */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_VALUEFACTORY_H */

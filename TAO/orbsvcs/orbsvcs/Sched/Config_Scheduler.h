@@ -2,7 +2,7 @@
 
 #ifndef ACE_CONFIG_SCHEDULER_H
 #define ACE_CONFIG_SCHEDULER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -183,7 +183,7 @@ private:
 #include "Config_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_SCHEDULER_H */
 
 

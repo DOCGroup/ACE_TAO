@@ -21,7 +21,7 @@
 #ifndef PUSH_ITERATOR_FACTORY_I_H
 #define PUSH_ITERATOR_FACTORY_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_IO.h"
@@ -74,6 +74,6 @@ private:
   // of data to the client.
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* PUSH_ITERATOR_FACTORY_I_H */

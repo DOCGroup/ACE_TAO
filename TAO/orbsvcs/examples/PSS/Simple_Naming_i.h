@@ -20,7 +20,7 @@
 
 #ifndef SIMPLE_NAMING_I_H
 #define SIMPLE_NAMING_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Simple_NamingS.h"
 #include "Simple_NamingC.h"
@@ -52,5 +52,5 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* SIMPLE_NAMING_I_H */

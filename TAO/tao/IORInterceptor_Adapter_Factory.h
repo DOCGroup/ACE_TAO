@@ -13,7 +13,7 @@
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H
 #define TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -43,5 +43,5 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H */

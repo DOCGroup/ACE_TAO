@@ -14,7 +14,7 @@
 #ifndef TAO_PG_LOCATION_EQUAL_TO_H
 #define TAO_PG_LOCATION_EQUAL_TO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -52,6 +52,6 @@ public:
 #include "PG_Location_Equal_To.inl"
 #endif  /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_LOCATION_EQUAL_TO_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_PG_OBJECT_GROUP_MANAGER_H
 #define TAO_PG_OBJECT_GROUP_MANAGER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/PortableGroupS.h"
 
@@ -288,6 +288,6 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_OBJECT_GROUP_MANAGER_H */

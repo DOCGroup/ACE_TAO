@@ -19,12 +19,12 @@
 
 #ifndef NOTIFY_SEQUENCEPUSHCONSUMER_H
 #define NOTIFY_SEQUENCEPUSHCONSUMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SequencePushConsumer.h"
 
 typedef TAO_Notify_Tests_SequencePushConsumer TAO_Notify_SequencePushConsumer;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* NOTIFY_SEQUENCEPUSHCONSUMER_H */

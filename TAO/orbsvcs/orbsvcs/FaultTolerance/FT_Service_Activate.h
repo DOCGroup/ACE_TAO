@@ -12,7 +12,7 @@
 
 #ifndef TAO_FT_ACTIVATE_H
 #define TAO_FT_ACTIVATE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "fault_tol_export.h"
 
@@ -81,5 +81,5 @@ TAO_FT_Requires_Service_Activate = TAO_FT_Service_Activate::Initializer ();
 #include "FT_IOGR_Property.h"
 #undef TAO_FT_SERVICE_SAFE_INCLUDE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_FT_ACTIVATE_H*/

@@ -4,7 +4,7 @@
 
 #ifndef CRASHED_CALLBACK_CRASHED_CALLBACK_H
 #define CRASHED_CALLBACK_CRASHED_CALLBACK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -39,5 +39,5 @@ public:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CRASHED_CALLBACK_CRASHED_CALLBACK_H */

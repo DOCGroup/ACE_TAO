@@ -17,7 +17,7 @@
 #ifndef TAO_REQUEST_H
 #define TAO_REQUEST_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -248,6 +248,6 @@ namespace CORBA
 # include "Request.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_REQUEST_H */

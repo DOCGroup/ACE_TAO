@@ -10,7 +10,7 @@
 
 #ifndef CIAO_COOKIES_H
 #define CIAO_COOKIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "CCM_BaseC.h"
 #include "CIAO_Container_Export.h"
@@ -72,5 +72,5 @@ namespace CIAO
 #include "Cookies.inl"
 #endif /* !defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_COOKIES_H */

@@ -15,7 +15,7 @@
 
 #ifndef TAO_TRADER_BASE_H
 #define TAO_TRADER_BASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Interpreter_Utils.h"
 
@@ -491,5 +491,5 @@ int operator== (const CosTrading::Admin::OctetSeq& left,
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TRADER_BASE_H */

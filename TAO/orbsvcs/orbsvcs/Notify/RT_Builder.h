@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_RT_BUILDER_H
 #define TAO_Notify_RT_BUILDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rt_notify_export.h"
 
@@ -47,5 +47,5 @@ public:
 #include "RT_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_BUILDER_H */

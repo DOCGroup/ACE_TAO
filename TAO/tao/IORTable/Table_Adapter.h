@@ -13,7 +13,7 @@
 
 #ifndef TAO_TABLE_ADAPTER_H
 #define TAO_TABLE_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "iortable_export.h"
 
@@ -79,5 +79,5 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_Table_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_IORTable, TAO_Table_Adapter_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TABLE_ADAPTER_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_PG_MEMBER_INFO_H
 #define TAO_PG_MEMBER_INFO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -55,6 +55,6 @@ struct TAO_PG_MemberInfo
 typedef ACE_Unbounded_Set<TAO_PG_MemberInfo> TAO_PG_MemberInfo_Set;
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_MEMBER_INFO_H */

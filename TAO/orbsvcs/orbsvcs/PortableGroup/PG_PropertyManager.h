@@ -14,7 +14,7 @@
 #ifndef TAO_PG_PROPERTY_MANAGER_H
 #define TAO_PG_PROPERTY_MANAGER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -185,6 +185,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PG_PROPERTY_MANAGER_H */

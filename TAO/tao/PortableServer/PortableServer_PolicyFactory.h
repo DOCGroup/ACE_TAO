@@ -13,7 +13,7 @@
 #ifndef TAO_PORTABLESERVER_POLICY_FACTORY_H
 #define TAO_PORTABLESERVER_POLICY_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,6 +38,6 @@ public:
                      CORBA::PolicyError));
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PORTABLESERVER_POLICY_FACTORY_H */

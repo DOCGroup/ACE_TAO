@@ -2,7 +2,7 @@
 
 #ifndef ACCEPTOR_SERVICE_H
 #define ACCEPTOR_SERVICE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 /* The ACE_Acceptor<> template lives in the ace/Acceptor.h header
    file. */
@@ -97,5 +97,5 @@ ACE_STATIC_SVC_DECLARE (Acceptor_Service)
     and export macros. */
 ACE_SVC_FACTORY_DECLARE (Acceptor_Service)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACCEPTOR_SERVICE_H */

@@ -16,7 +16,7 @@
 #ifndef TAO_ORB_H
 #define TAO_ORB_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -631,5 +631,5 @@ namespace CORBA
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ORB_H */

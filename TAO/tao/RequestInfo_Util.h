@@ -13,7 +13,7 @@
 #ifndef TAO_REQUEST_INFO_UTIL_H
 #define TAO_REQUEST_INFO_UTIL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -61,6 +61,6 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_REQUEST_INFO_UTIL_H */

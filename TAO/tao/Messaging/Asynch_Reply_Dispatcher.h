@@ -15,7 +15,7 @@
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Messaging.h"
 
@@ -72,5 +72,5 @@ private:
 #include "Asynch_Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_REPLY_DISPATCHER_H */

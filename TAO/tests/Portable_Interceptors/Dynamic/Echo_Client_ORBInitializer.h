@@ -5,7 +5,7 @@
 #ifndef TAO_ECHO_CLIENT_ORB_INITIALIZER_H
 #define TAO_ECHO_CLIENT_ORB_INITIALIZER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -49,6 +49,6 @@ public:
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ECHO_CLIENT_ORB_INITIALIZER_H */

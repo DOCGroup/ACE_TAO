@@ -17,7 +17,7 @@
 #ifndef TAO_PSDL_TYPE_DCL_VISITOR_H
 #define TAO_PSDL_TYPE_DCL_VISITOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "PSDL_Node_Visitor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -53,6 +53,6 @@ private:
   void gen_code_for_si (void);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_TYPE_DCL_VISITOR_H */

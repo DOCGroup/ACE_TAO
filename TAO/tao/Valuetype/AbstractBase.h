@@ -14,7 +14,7 @@
 #ifndef TAO_ABSTRACTBASE_H
 #define TAO_ABSTRACTBASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "valuetype_export.h"
 #include "tao/corbafwd.h"
 
@@ -138,6 +138,6 @@ operator>> (TAO_InputCDR &, CORBA::AbstractBase_ptr &);
 # include "AbstractBase.inl"
 #endif /* __ACE_INLINE__) */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ABSTRACTBASE_H */

@@ -15,7 +15,7 @@
 #ifndef TAO_CACHE_ENTRIES_H
 #define TAO_CACHE_ENTRIES_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport_Descriptor_Interface.h"
 
@@ -181,6 +181,6 @@ private:
 # include "tao/Cache_Entries.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CACHE_ENTRIES_H */

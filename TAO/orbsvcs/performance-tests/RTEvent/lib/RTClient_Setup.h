@@ -8,7 +8,7 @@
 
 #ifndef TAO_PERF_RTEC_RTCLIENT_SETUP_H
 #define TAO_PERF_RTEC_RTCLIENT_SETUP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RTCORBA_Setup.h"
 #include "PriorityBand_Setup.h"
@@ -55,5 +55,5 @@ private:
 #include "RTClient_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PERF_RTEC_RTCLIENT_SETUP_H */

@@ -16,7 +16,7 @@
 
 #ifndef CIAO_SERVERACTIVATOR_IMPL_H
 #define CIAO_SERVERACTIVATOR_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -251,5 +251,5 @@ namespace CIAO
 # include "ServerActivator_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_SERVERACTIVATOR_IMPL_H */

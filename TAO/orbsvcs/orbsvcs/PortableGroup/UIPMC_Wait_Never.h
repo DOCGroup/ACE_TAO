@@ -13,7 +13,7 @@
 
 #ifndef TAO_UIPMC_WAIT_NEVER_H
 #define TAO_UIPMC_WAIT_NEVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Wait_Strategy.h"
 
@@ -49,5 +49,5 @@ public:
   virtual int non_blocking (void);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_WAIT_NEVER_H */

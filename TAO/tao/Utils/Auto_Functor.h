@@ -10,7 +10,7 @@
 //=============================================================================
 #ifndef TAO_UTILS_AUTO_FUNCTOR_H
 #define TAO_UTILS_AUTO_FUNCTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -143,5 +143,5 @@ namespace TAO
 # include "Auto_Functor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_UTILS_AUTO_FUNCTOR_H*/

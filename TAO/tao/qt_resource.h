@@ -13,7 +13,7 @@
 
 #ifndef _TAO_QTRESOURCE_H
 #define _TAO_QTRESOURCE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/default_resource.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -59,5 +59,5 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_QtResource_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_QtResource_Factory)
 
 #endif /*ACE_HAS_QT */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* QTRESOURCE_H */

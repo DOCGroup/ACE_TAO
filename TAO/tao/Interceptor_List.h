@@ -13,7 +13,7 @@
 #ifndef TAO_INTERCEPTOR_LIST_H
 #define TAO_INTERCEPTOR_LIST_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -168,6 +168,6 @@ private:
 #include "Interceptor_List.inl"
 #endif /* defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_INTERCEPTOR_LIST_H */

@@ -4,7 +4,7 @@
 
 #ifndef COLLOCATED_SERVER_TASK_H
 #define COLLOCATED_SERVER_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 
@@ -38,5 +38,5 @@ private:
   CORBA::ORB_var sorb_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* COLLOCATED_SERVER_TASK_H */

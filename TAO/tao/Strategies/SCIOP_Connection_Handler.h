@@ -13,7 +13,7 @@
 
 #ifndef TAO_SCIOP_CONNECTION_HANDLER_H
 #define TAO_SCIOP_CONNECTION_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/TimeBaseC.h"
@@ -194,5 +194,5 @@ private:
 
 #endif /* TAO_HAS_SCIOP == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SCIOP_CONNECTION_HANDLER_H */

@@ -29,5 +29,5 @@
 #include "ace/Refcountable.h"
 
 
-#include"ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_STRATEGIES_H*/

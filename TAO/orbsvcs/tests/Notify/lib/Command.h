@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_COMMAND_H
 #define TAO_Notify_Tests_COMMAND_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -67,5 +67,5 @@ private:
   void next (TAO_Notify_Tests_Command* command);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_COMMAND_H */

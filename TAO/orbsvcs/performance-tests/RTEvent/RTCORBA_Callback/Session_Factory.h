@@ -4,7 +4,7 @@
 
 #ifndef SESSION_FACTORY_H
 #define SESSION_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -36,5 +36,5 @@ private:
   PortableServer::POA_var poa_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* SESSION_FACTORY_H */

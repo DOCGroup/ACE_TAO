@@ -10,7 +10,7 @@
 
 #ifndef CIAO_GLUE_SESSION_BMDISPLAY_SVNT_H
 #define CIAO_GLUE_SESSION_BMDISPLAY_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "BMDisplayS.h"
 
@@ -468,5 +468,5 @@ namespace CIAO_GLUE_BasicSP
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_BMDISPLAY_SVNT_H */

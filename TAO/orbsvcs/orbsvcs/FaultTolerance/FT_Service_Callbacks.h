@@ -12,7 +12,7 @@
 
 #ifndef TAO_FT_CALLBACKS_H
 #define TAO_FT_CALLBACKS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "fault_tol_export.h"
 
@@ -159,5 +159,5 @@ private:
 # include "FT_Service_Callbacks.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_FT_CALLBACKS_H*/

@@ -20,7 +20,7 @@
 
 #ifndef TAO_DII_INVOCATION_H
 #define TAO_DII_INVOCATION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Invocation.h"
 
@@ -103,5 +103,5 @@ private:
 #  include "DII_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

@@ -16,7 +16,7 @@
 
 #ifndef TAO_GIOP_MESSAGE_VERSION_H
 #define TAO_GIOP_MESSAGE_VERSION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -67,5 +67,5 @@ public:
 # include "tao/GIOP_Message_Version.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_GIOP_VERSION_H */

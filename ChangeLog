@@ -1,5 +1,17 @@
+Mon Jul 21 22:57:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-	
+        * bin/fuzz.pl:
+          Added check for "/**/" comment in pre.h/post.h includes.  Thanks
+          to Johnny Willemsen <jwillemsen@remedy.nl>.
+
+        * ace/Basic_Types.h:
+        * ace/Strategies.h:
+        * ace/UUID.h:
+        * docs/tutorials/022/Acceptor_Service.h:
+        * Kokyu/*.h:
+          Added comment that adding "/**/" between the #include and the
+          filenames in order to improve doxygen documentation.
+
 Mon Jul 21 08:59:14 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\UUID.cpp (get_systemtime): 

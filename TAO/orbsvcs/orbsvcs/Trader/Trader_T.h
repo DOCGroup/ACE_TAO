@@ -15,7 +15,7 @@
 
 #ifndef TAO_TRADER_H
 #define TAO_TRADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Trader.h"
 #include "Offer_Database.h"
@@ -272,5 +272,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TRADER_H */

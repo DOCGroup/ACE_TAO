@@ -13,7 +13,7 @@
 #ifndef TAO_ORB_INIT_INFO_H
 #define TAO_ORB_INIT_INFO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -330,6 +330,6 @@ private:
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ORB_INIT_INFO_H */

@@ -17,7 +17,7 @@
 
 #ifndef TAO_ASYNCH_INVOCATION_H
 #define TAO_ASYNCH_INVOCATION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Invocation.h"
 
@@ -74,5 +74,5 @@ protected:
 #  include "tao/Asynch_Invocation.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

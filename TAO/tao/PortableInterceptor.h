@@ -20,7 +20,7 @@
 #ifndef TAO_PORTABLE_INTERCEPTOR_H
 #define TAO_PORTABLE_INTERCEPTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbconf.h"
 
@@ -42,6 +42,6 @@
 # define TAO_INTERCEPTOR_THROW_RETURN(X,Y) ACE_THROW_RETURN(X,Y)
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PORTABLE_INTERCEPTOR_H */

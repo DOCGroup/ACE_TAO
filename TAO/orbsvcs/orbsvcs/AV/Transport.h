@@ -13,7 +13,7 @@
 
 #ifndef TAO_AV_TRANSPORT_H
 #define TAO_AV_TRANSPORT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Acceptor.h"
@@ -334,5 +334,5 @@ public:
 #include "Transport.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_TRANSPORT_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_SERVICE_CONTEXT_H
 #define TAO_SERVICE_CONTEXT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
 
@@ -142,5 +142,5 @@ private:
 #endif /* ! __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_SERVICE_CONTEXT_H */

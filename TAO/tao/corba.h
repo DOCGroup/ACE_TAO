@@ -22,7 +22,7 @@
 
 #ifndef TAO_MASTER_CORBA_H
 #define TAO_MASTER_CORBA_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // ACE specific includes
 #include "ace/config-all.h"
@@ -88,5 +88,5 @@
 #include "tao/PortableInterceptorC.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_MASTER_CORBA_H */

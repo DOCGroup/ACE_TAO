@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_OPTIONS_PARSER_H
 #define TAO_Notify_Tests_OPTIONS_PARSER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -44,5 +44,5 @@ public:
   void execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_OPTIONS_PARSER_H */

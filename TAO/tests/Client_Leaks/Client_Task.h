@@ -4,7 +4,7 @@
 
 #ifndef CLIENT_LEAKS_CLIENT_TASK_H
 #define CLIENT_LEAKS_CLIENT_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestC.h"
 #include "ace/Task.h"
@@ -48,5 +48,5 @@ private:
   TAO_SYNCH_MUTEX mutex_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CLIENT_LEAKS_CLIENT_TASK_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_CODESET_MANAGER_H
 #define TAO_CODESET_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/CONV_FRAMEC.h"
 
@@ -207,5 +207,5 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
   TAO_CodesetFactorySet wchar_factories_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CODESET_MANAGER_H */

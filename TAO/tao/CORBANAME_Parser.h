@@ -12,7 +12,7 @@
 
 #ifndef TAO_CORBANAME_PARSER_H
 #define TAO_CORBANAME_PARSER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOR_Parser.h"
 
@@ -64,5 +64,5 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBANAME_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBANAME_Parser)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CORBANAME_PARSER_H */

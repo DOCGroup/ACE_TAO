@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_RT_Test_FILTER_H
 #define TAO_Notify_Tests_RT_Test_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rt_test_filter_export.h"
 
@@ -133,5 +133,5 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_Test_FILTER_H */

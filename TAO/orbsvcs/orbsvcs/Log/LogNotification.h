@@ -16,7 +16,7 @@
 #ifndef TAO_TLS_LOG_NOTIFICATION_H
 #define TAO_TLS_LOG_NOTIFICATION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 
@@ -179,6 +179,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_TLS_LOG_NOTIFICATION_H */

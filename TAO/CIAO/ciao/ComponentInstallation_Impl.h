@@ -16,7 +16,7 @@
 
 #ifndef CIAO_COMPONENTINSTALLATION_IMPL_H
 #define CIAO_COMPONENTINSTALLATION_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "CCM_DeploymentS.h"
 #include "ace/Configuration.h"
@@ -113,5 +113,5 @@ namespace CIAO
 # include "ComponentInstallation_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_COMPONENTINSTALLATION_IMPL_H */

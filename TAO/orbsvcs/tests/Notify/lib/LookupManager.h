@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_LOOKUPMANAGER_H
 #define TAO_Notify_Tests_LOOKUPMANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -116,5 +116,5 @@ TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_Notify_Tests_LookupManager
 
 #define LOOKUP_MANAGER  _TAO_Notify_Tests_LookupManager::instance()
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_LOOKUPMANAGER_H */

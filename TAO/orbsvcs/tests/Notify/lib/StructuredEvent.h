@@ -12,7 +12,7 @@
 #ifndef TAO_Notify_Tests_STRUCTUREDEVENT_H
 #define TAO_Notify_Tests_STRUCTUREDEVENT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "notify_test_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -63,5 +63,5 @@ private:
   CosNotification::StructuredEvent event_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_STRUCTUREDEVENT_H */

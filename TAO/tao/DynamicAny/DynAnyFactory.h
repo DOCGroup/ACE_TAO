@@ -17,7 +17,7 @@
 
 #ifndef TAO_DYNANYFACTORY_H
 #define TAO_DYNANYFACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "DynamicAny.h"
 
@@ -92,5 +92,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DYNANYFACTORY_H */

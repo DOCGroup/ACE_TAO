@@ -15,7 +15,7 @@
 #ifndef TAO_MESSAGING_POLICY_FACTORY_H
 #define TAO_MESSAGING_POLICY_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -59,6 +59,6 @@ public:
 
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_MESSAGING_POLICY_FACTORY_H */

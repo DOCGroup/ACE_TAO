@@ -13,7 +13,7 @@
 
 #ifndef TAO_IIOP_FACTORY_H
 #define TAO_IIOP_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Protocol_Factory.h"
 
@@ -61,5 +61,5 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_IIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Protocol_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_IIOP_FACTORY_H */

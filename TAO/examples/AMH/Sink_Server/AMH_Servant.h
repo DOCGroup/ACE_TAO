@@ -15,7 +15,7 @@
 #ifndef AMH_SERVANT_H
 #define AMH_SERVANT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/ORB_Core.h"
 
 #include "TestS.h"
@@ -52,6 +52,6 @@ protected:
   int sleep_time_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* AMH_SERVANT_H */

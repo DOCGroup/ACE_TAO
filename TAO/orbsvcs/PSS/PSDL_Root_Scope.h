@@ -20,7 +20,7 @@
 #ifndef TAO_PSDL_ROOT_SCOPE_H
 #define TAO_PSDL_ROOT_SCOPE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Scope.h"
 #include "PSDL_Module_Scope.h"
@@ -79,6 +79,6 @@ protected:
   Scope_Map root_scope_map_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_ROOT_SCOPE_H */

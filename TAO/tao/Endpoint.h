@@ -16,7 +16,7 @@
 
 #ifndef TAO_ENDPOINT_H
 #define TAO_ENDPOINT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -132,5 +132,5 @@ private:
 # include "tao/Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_PROFILE_H */

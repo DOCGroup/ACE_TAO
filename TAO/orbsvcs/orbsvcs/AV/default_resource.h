@@ -11,7 +11,7 @@
 
 #ifndef TAO_AV_DEFAULT_RESOURCE_H
 #define TAO_AV_DEFAULT_RESOURCE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Resource_Factory.h"
@@ -56,5 +56,5 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_AV, TAO_AV_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_Default_Resource_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_DEFAULT_RESOURCE_H */

@@ -13,7 +13,7 @@
 #ifndef TAO_TYPECODEFACTORY_I_H
 #define TAO_TYPECODEFACTORY_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "TypeCodeFactory_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -308,5 +308,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TYPECODEFACTORY_I_H */

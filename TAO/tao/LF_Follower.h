@@ -12,7 +12,7 @@
 
 #ifndef TAO_LF_FOLLOWER_H
 #define TAO_LF_FOLLOWER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
@@ -65,5 +65,5 @@ private:
 # include "tao/LF_Follower.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_LF_FOLLOWER_H */

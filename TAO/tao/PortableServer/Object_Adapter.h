@@ -13,7 +13,7 @@
 #ifndef TAO_OBJECT_ADAPTER_H
 #define TAO_OBJECT_ADAPTER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 
@@ -898,6 +898,6 @@ ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_OBJECT_ADAPTER_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
 #define TAO_CLIENT_STRATEGY_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -76,5 +76,5 @@ public:
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

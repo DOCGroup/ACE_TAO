@@ -14,7 +14,7 @@
 
 #ifndef TAO_UIPMC_ACCEPTOR_H
 #define TAO_UIPMC_ACCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport_Acceptor.h"
 
@@ -158,5 +158,5 @@ private:
 #include "UIPMC_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_ACCEPTOR_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_LB_CONF_H
 #define TAO_LB_CONF_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -36,6 +36,6 @@ const long TAO_LB_PULL_HANDLER_RESTART = 5;
 #endif  /* TAO_LB_PULL_HANDLER_RESTART */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_CONF_H */

@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_EXTENDEDS_H_
 #define _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_EXTENDEDS_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "IFR_BasicS.h"
 #include "tao/IFR_Client/IFR_ExtendedC.h"
 
@@ -2667,6 +2667,6 @@ TAO_NAMESPACE_CLOSE // module CORBA
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

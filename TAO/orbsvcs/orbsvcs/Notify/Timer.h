@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_TIMER_H
 #define TAO_Notify_TIMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -45,5 +45,5 @@ public:
   virtual int cancel_timer (long timer_id) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_TIMER_H */

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_PROPERTIES_H
 #define TAO_Notify_PROPERTIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -133,5 +133,5 @@ TAO_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MU
 #include "Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROPERTIES_H */

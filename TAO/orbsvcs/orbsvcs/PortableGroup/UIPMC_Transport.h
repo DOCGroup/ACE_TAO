@@ -12,7 +12,7 @@
 
 #ifndef TAO_UIPMC_TRANSPORT_H
 #define TAO_UIPMC_TRANSPORT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport.h"
 
@@ -128,5 +128,5 @@ private:
 #include "UIPMC_Transport.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_TRANSPORT_H */

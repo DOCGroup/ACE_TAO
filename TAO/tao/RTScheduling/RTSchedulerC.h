@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_RTSCHEDULERC_H_
 #define _TAO_IDL_RTSCHEDULERC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corba.h"
 
@@ -1373,6 +1373,6 @@ TAO_RTScheduler_Export CORBA::Boolean operator>>= (const CORBA::Any &, const RTS
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

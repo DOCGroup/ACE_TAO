@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_ID_FACTORY_H
 #define TAO_Notify_ID_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -48,5 +48,5 @@ private:
 #include "ID_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_ID_FACTORY_H */

@@ -12,7 +12,7 @@
 
 #ifndef KOKYU_H
 #define KOKYU_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -159,5 +159,5 @@ namespace Kokyu
 #include "Dispatcher_Impl.h"
 #include "DSRT_Dispatcher_Impl.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* KOKYU_H */

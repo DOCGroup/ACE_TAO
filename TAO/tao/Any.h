@@ -14,7 +14,7 @@
 #ifndef TAO_ANY_H
 #define TAO_ANY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/CDR_Stream.h"
 
@@ -480,6 +480,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
 
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ANY_H */

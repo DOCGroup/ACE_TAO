@@ -14,7 +14,7 @@
 
 #ifndef CIAO_GLUE_SESSION_EC_SVNT_H
 #define CIAO_GLUE_SESSION_EC_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ECS.h"        // Source in the skeletons for component
                                 // client-view equivalent interfaces
@@ -387,5 +387,5 @@ createECHome_Servant (::Components::HomeExecutorBase_ptr p,
                            CIAO::Session_Container *c
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_EC_SVNT_H */

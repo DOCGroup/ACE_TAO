@@ -19,7 +19,7 @@
 #define TAO_DIRECT_OBJECT_PROXY_IMPL_H_
 
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 
@@ -67,6 +67,6 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_DIRECT_OBJECT_PROXY_IMPL */

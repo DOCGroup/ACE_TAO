@@ -13,7 +13,7 @@
 #ifndef TAO_IOR_INTERCEPTOR_LIST_H
 #define TAO_IOR_INTERCEPTOR_LIST_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "iorinterceptor_export.h"
 
@@ -75,5 +75,5 @@ private:
 #include "IORInterceptor_List.inl"
 #endif /* defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_IOR_INTERCEPTOR_LIST_H*/

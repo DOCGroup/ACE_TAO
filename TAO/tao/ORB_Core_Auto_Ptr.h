@@ -14,7 +14,7 @@
 #ifndef TAO_ORB_CORE_AUTO_PTR_H
 #define TAO_ORB_CORE_AUTO_PTR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
 
@@ -65,6 +65,6 @@ protected:
 # include "ORB_Core_Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_ORB_CORE_AUTO_PTR_H */

@@ -1,6 +1,6 @@
 #ifndef TIMESTAMP_H
 #define TIMESTAMP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
@@ -53,7 +53,7 @@ class TAO_AV_Export TimeStamp_Protocol_Factory : public TAO_AV_Flow_Protocol_Fac
 ACE_STATIC_SVC_DECLARE (TimeStamp_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TimeStamp_Protocol_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TIMESTAMP_H*/
 
 

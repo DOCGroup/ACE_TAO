@@ -16,7 +16,7 @@
 #ifndef TAO_SSLIOP_UTIL_H
 #define TAO_SSLIOP_UTIL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -51,6 +51,6 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_UTIL_H */
