@@ -1,0 +1,22 @@
+/* -*- C++ -*- */
+// @(#)ttcp.idl	1.1	10/18/96
+
+
+interface ttcp_sequence 
+{
+  typedef sequence<char> my_sequence;
+
+  long send (in  my_sequence ttcp_seq);
+  oneway void start_timer ();
+  oneway void stop_timer ();
+};
+
+interface ttcp_string 
+{
+  long send (in string ttcp_str);
+  oneway void start_timer ();
+  oneway void stop_timer ();
+};
+  
+
+

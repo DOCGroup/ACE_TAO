@@ -1,0 +1,491 @@
+// Name_Request_Reply.cpp
+// $Id$
+
+#define ACE_BUILD_DLL
+#include "ace/Log_Msg.h"
+#include "ace/Name_Request_Reply.h"
+
+// Default "do nothing" constructor.
+
+ACE_Name_Request::ACE_Name_Request (void)
+{
+  ACE_TRACE ("ACE_Name_Request::ACE_Name_Request");
+}
+
+// Create a ACE_Name_Request message.  
+
+ACE_Name_Request::ACE_Name_Request (ACE_UINT32 t, // Type of request.
+				    const ACE_USHORT16 name[], // Name
+				    const size_t name_length, // size in bytes
+				    const ACE_USHORT16 value[], // 
+				    const size_t value_length, // size in bytes
+				    const char type[], // 
+				    const size_t type_length, // size in bytes
+				    ACE_Time_Value *timeout) // Max time waiting for request.
+{
+  ACE_TRACE ("ACE_Name_Request::ACE_Name_Request");
+  this->msg_type (t);
+  this->name_len (name_length);
+  this->value_len (value_length);
+  this->type_len (type_length);
+
+  // If timeout is a NULL pointer, then block forever...
+  if (timeout == 0)
+    {
+      this->transfer_.block_forever_ = 1;
+      this->transfer_.sec_timeout_   = 0;
+      this->transfer_.usec_timeout_  = 0;
+    }
+  else // Do a "timed wait."
+    {
+      this->block_forever (0);
+      // Keep track of how long client is willing to wait.
+      this->transfer_.sec_timeout_ = timeout->sec ();
+      this->transfer_.usec_timeout_ = timeout->usec ();
+    }
+
+  // Set up pointers and copy name value and type into request.
+  this->name_ = this->transfer_.data_;
+  this->value_  = &this->name_[name_length / sizeof (ACE_USHORT16) ];
+  this->type_  = (char *)(&this->value_[value_length / sizeof (ACE_USHORT16)]); //
+
+  (void) ACE_OS::memcpy (this->name_, name, name_length);
+  (void) ACE_OS::memcpy (this->value_, value, value_length);
+  (void) ACE_OS::memcpy (this->type_, type, type_length);
+
+  // Compute size of the fixed portion of the message...
+  size_t len = sizeof this->transfer_ - sizeof this->transfer_.data_;
+  
+  // ... then add in the amount of the variable-sized portion. 
+  len += name_length + value_length + type_length ;
+
+  this->length (len);
+}
+
+// Initialize length_ in order to avoid problems with byte-ordering
+void
+ACE_Name_Request::init (void)
+{
+  ACE_TRACE ("ACE_Name_Request::init");
+  this->length (sizeof this->transfer_);
+}
+
+// = Set/get the length of the encoded/decoded message.
+ACE_UINT32 
+ACE_Name_Request::length (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::length");
+  return this->transfer_.length_;
+}
+
+void 
+ACE_Name_Request::length (ACE_UINT32 l)
+{
+  ACE_TRACE ("ACE_Name_Request::length");
+  this->transfer_.length_ = l;
+}
+
+// = Set/get the type of the message.
+ACE_UINT32 
+ACE_Name_Request::msg_type (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::msg_type");
+  return this->transfer_.msg_type_;
+}
+
+void 
+ACE_Name_Request::msg_type (ACE_UINT32 t)
+{
+  ACE_TRACE ("ACE_Name_Request::msg_type");
+  this->transfer_.msg_type_ = t;
+}
+
+// = Set/get the len of the name
+ACE_UINT32 
+ACE_Name_Request::name_len (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::name_len");
+  return this->transfer_.name_len_;
+}
+
+void 
+ACE_Name_Request::name_len (ACE_UINT32 t)
+{
+  ACE_TRACE ("ACE_Name_Request::name_len");
+  this->transfer_.name_len_ = t;
+}
+
+// = Set/get the len of the value
+ACE_UINT32 
+ACE_Name_Request::value_len (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::value_len");
+  return this->transfer_.value_len_;
+}
+
+void 
+ACE_Name_Request::value_len (ACE_UINT32 t)
+{
+  ACE_TRACE ("ACE_Name_Request::value_len");
+  this->transfer_.value_len_ = t;
+}
+
+// = Set/get the len of the type
+ACE_UINT32 
+ACE_Name_Request::type_len (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::type_len");
+  return this->transfer_.type_len_;
+}
+
+void 
+ACE_Name_Request::type_len (ACE_UINT32 t)
+{
+  ACE_TRACE ("ACE_Name_Request::type_len");
+  this->transfer_.type_len_ = t;
+}
+
+// = Set/get the blocking semantics.
+ACE_UINT32
+ACE_Name_Request::block_forever (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::block_forever");
+  return this->transfer_.block_forever_;
+}
+
+void 
+ACE_Name_Request::block_forever (ACE_UINT32 bs)
+{
+  ACE_TRACE ("ACE_Name_Request::block_forever");
+  this->transfer_.block_forever_ = bs;
+}
+
+// = Set/get the timeout.
+ACE_Time_Value
+ACE_Name_Request::timeout (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::timeout");
+  return ACE_Time_Value (this->transfer_.sec_timeout_, this->transfer_.usec_timeout_);
+}
+
+void 
+ACE_Name_Request::timeout (const ACE_Time_Value timeout)
+{
+  ACE_TRACE ("ACE_Name_Request::timeout");
+  this->transfer_.sec_timeout_  = timeout.sec ();
+  this->transfer_.usec_timeout_ = timeout.usec ();
+}
+
+// = Set/get the name
+const ACE_USHORT16 *
+ACE_Name_Request::name (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::name");
+  return this->name_;
+}
+
+void 
+ACE_Name_Request::name (const ACE_USHORT16 *t)
+{
+  ACE_TRACE ("ACE_Name_Request::name");
+  (void) ACE_OS::memcpy (this->name_, t, this->name_len());
+}
+
+// = Set/get the value
+const ACE_USHORT16 *
+ACE_Name_Request::value (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::value");
+  return this->value_;
+}
+
+void 
+ACE_Name_Request::value (const ACE_USHORT16 *c)
+{
+  ACE_TRACE ("ACE_Name_Request::value");
+  (void) ACE_OS::memcpy (this->value_, c, this->value_len());
+}
+
+// = Set/get the type
+const char *
+ACE_Name_Request::type (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::type");
+  return this->type_;
+}
+
+void 
+ACE_Name_Request::type (const char *c)
+{
+  ACE_TRACE ("ACE_Name_Request::type");
+  (void) ::strncpy (this->type_, c, MAXPATHLEN + 1);
+}
+
+// Encode the transfer buffer into network byte order 
+// so that it can be sent to the server.
+
+int
+ACE_Name_Request::encode (void *&buf)
+{
+  ACE_TRACE ("ACE_Name_Request::encode");
+  // Compute the length *before* doing the marshaling.
+  ssize_t len = this->length ();
+  size_t nv_data_len =
+    (this->transfer_.name_len_ + this->transfer_.value_len_) / sizeof (ACE_USHORT16);
+
+  for (size_t i = 0; i < nv_data_len; i++)
+    this->transfer_.data_[i] = htons (this->transfer_.data_[i]);
+
+  buf = (void *) &this->transfer_;
+  this->transfer_.block_forever_ = htonl (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_	 = htonl (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_	 = htonl (this->transfer_.sec_timeout_);
+  this->transfer_.length_	 = htonl (this->transfer_.length_);
+  this->transfer_.msg_type_	 = htonl (this->transfer_.msg_type_);
+  this->transfer_.name_len_	 = htonl (this->transfer_.name_len_);
+  this->transfer_.value_len_	 = htonl (this->transfer_.value_len_);
+  this->transfer_.type_len_	 = htonl (this->transfer_.type_len_);
+
+  return len;
+}
+
+// Decode the transfer buffer into host byte byte order 
+// so that it can be used by the server.
+
+int
+ACE_Name_Request::decode (void)
+{
+  ACE_TRACE ("ACE_Name_Request::decode");
+  // Decode the fixed-sized portion first.
+  this->transfer_.block_forever_ = ntohl (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_	 = ntohl (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_	 = ntohl (this->transfer_.sec_timeout_);
+  this->transfer_.length_	 = ntohl (this->transfer_.length_);
+  this->transfer_.msg_type_	 = ntohl (this->transfer_.msg_type_);
+  this->transfer_.name_len_	 = ntohl (this->transfer_.name_len_);
+  this->transfer_.value_len_	 = ntohl (this->transfer_.value_len_);
+  this->transfer_.type_len_	 = ntohl (this->transfer_.type_len_);
+
+  size_t nv_data_len =
+    (this->transfer_.name_len_ + this->transfer_.value_len_) / sizeof (ACE_USHORT16);
+
+  for (size_t i = 0; i < nv_data_len; i++)
+    this->transfer_.data_[i] = ntohs (this->transfer_.data_[i]);
+
+  this->name_ = this->transfer_.data_;
+  this->value_  = &this->name_[this->transfer_.name_len_ / sizeof (ACE_USHORT16)];
+  this->type_  = (char *)(&this->value_[this->transfer_.value_len_ / sizeof (ACE_USHORT16)]);
+  this->type_[this->transfer_.type_len_] = '\0';
+
+  // Decode the variable-sized portion.
+  return 0;
+}
+
+// Print out the current values of the ACE_Name_Request.
+
+void
+ACE_Name_Request::dump (void) const
+{
+  ACE_TRACE ("ACE_Name_Request::dump");
+  ACE_DEBUG ((LM_DEBUG, "*******\nlength = %d\n", 
+	      this->length ()));
+  ACE_DEBUG ((LM_DEBUG, "message-type = "));
+
+  switch (this->msg_type ())
+    {
+    case ACE_Name_Request::BIND:
+      ACE_DEBUG ((LM_DEBUG, "BIND\n"));
+      break;
+    case ACE_Name_Request::REBIND:
+      ACE_DEBUG ((LM_DEBUG, "REBIND\n"));
+      break;
+    case ACE_Name_Request::RESOLVE:
+      ACE_DEBUG ((LM_DEBUG, "RESOLVE\n"));
+      break;
+    case ACE_Name_Request::UNBIND:
+      ACE_DEBUG ((LM_DEBUG, "UNBIND\n"));
+      break;
+    case ACE_Name_Request::LIST_NAMES:
+      ACE_DEBUG ((LM_DEBUG, "LIST_NAMES\n"));
+      break;
+    case ACE_Name_Request::LIST_VALUES:
+      ACE_DEBUG ((LM_DEBUG, "LIST_VALUES\n"));
+      break;
+    case ACE_Name_Request::LIST_TYPES:
+      ACE_DEBUG ((LM_DEBUG, "LIST_TYPES\n"));
+      break;
+    case ACE_Name_Request::LIST_NAME_ENTRIES:
+      ACE_DEBUG ((LM_DEBUG, "LIST_NAME_ENTRIES\n"));
+      break;
+    case ACE_Name_Request::LIST_VALUE_ENTRIES:
+      ACE_DEBUG ((LM_DEBUG, "LIST_VALUE_ENTRIES\n"));
+      break;
+    case ACE_Name_Request::LIST_TYPE_ENTRIES:
+      ACE_DEBUG ((LM_DEBUG, "LIST_TYPE_ENTRIES\n"));
+      break;
+    default:
+      ACE_DEBUG ((LM_DEBUG, "<unknown type> = %d\n", this->msg_type ()));
+      break;
+    }
+
+  if (this->block_forever ())
+    ACE_DEBUG ((LM_DEBUG, "blocking forever\n"));
+  else
+    {
+      ACE_Time_Value tv = this->timeout ();
+      ACE_DEBUG ((LM_DEBUG, "waiting for %ld secs and %ld usecs\n", 
+		  tv.sec (), tv.usec ()));
+    }
+  ACE_DEBUG ((LM_DEBUG, "*******\nname_len = %d\n", 
+	      this->name_len ()));
+  ACE_DEBUG ((LM_DEBUG, "*******\nvalue_len = %d\n", 
+	      this->value_len ()));
+#if 0
+  cout << "Name = " << ACE_WString (this->name(), this->name_len() / sizeof (ACE_USHORT16)) << endl;
+  cout << "value = " << ACE_WString (this->value(), this->value_len() / sizeof (ACE_USHORT16)) << endl;
+  cout << "type = "  << this->type () << endl;
+#endif
+  ACE_DEBUG ((LM_DEBUG, "+++++++\n"));
+}
+
+// Default constructor.
+
+ACE_Name_Reply::ACE_Name_Reply (void)
+{
+  ACE_TRACE ("ACE_Name_Reply::ACE_Name_Reply");
+  // Initialize to a known quantity.
+  this->msg_type (0);
+  this->errnum (0);
+  this->length (sizeof this->transfer_);
+}
+
+// Create a ACE_Name_Reply message.  
+
+ACE_Name_Reply::ACE_Name_Reply (ACE_UINT32 t, ACE_UINT32 err) // Type of reply.
+{
+  ACE_TRACE ("ACE_Name_Reply::ACE_Name_Reply"); 
+  this->msg_type (t);
+  this->errnum (err);
+  this->length (sizeof this->transfer_);
+}
+
+// Initialize length_ in order to avoid problems with byte-ordering
+void
+ACE_Name_Reply::init (void)
+{
+  ACE_TRACE ("ACE_Name_Reply::init");
+  this->length (sizeof this->transfer_);
+}
+
+// = Set/get the length of the encoded/decoded message.
+ACE_UINT32 
+ACE_Name_Reply::length (void) const
+{
+  ACE_TRACE ("ACE_Name_Reply::length");
+  return this->transfer_.length_;
+}
+
+void 
+ACE_Name_Reply::length (ACE_UINT32 l)
+{
+  ACE_TRACE ("ACE_Name_Reply::length");
+  this->transfer_.length_ = l;
+}
+
+// = Set/get the type of the message.
+ACE_UINT32 
+ACE_Name_Reply::msg_type (void) const
+{
+  ACE_TRACE ("ACE_Name_Reply::msg_type");
+  return this->transfer_.type_;
+}
+
+void 
+ACE_Name_Reply::msg_type (ACE_UINT32 t)
+{
+  ACE_TRACE ("ACE_Name_Reply::msg_type");
+  this->transfer_.type_ = t;
+}
+
+// = Set/get the status of the reply (0 == success, -1 == failure).
+ACE_UINT32 
+ACE_Name_Reply::status (void) const
+{
+  ACE_TRACE ("ACE_Name_Reply::status");
+  return this->transfer_.type_ == ACE_Name_Reply::SUCCESS ? 0 : -1;
+}
+
+void 
+ACE_Name_Reply::status (ACE_UINT32 s)
+{
+  ACE_TRACE ("ACE_Name_Reply::status");
+  this->transfer_.type_ = s == (ACE_UINT32) -1 ? ACE_Name_Reply::FAILURE : ACE_Name_Reply::SUCCESS;
+}
+
+// = Set/get the errno of a failed reply.
+ACE_UINT32 
+ACE_Name_Reply::errnum (void) const
+{
+  ACE_TRACE ("ACE_Name_Reply::errnum");
+  return this->transfer_.errno_;
+}
+
+void 
+ACE_Name_Reply::errnum (ACE_UINT32 e)
+{
+  ACE_TRACE ("ACE_Name_Reply::errnum");
+  this->transfer_.errno_ = e;
+}
+
+// Encode the transfer buffer into network byte order 
+// so that it can be sent to the client.
+
+int
+ACE_Name_Reply::encode (void *&buf)
+{
+  ACE_TRACE ("ACE_Name_Reply::encode");
+  int len = this->length (); // Get length *before* marshaling.
+
+  this->transfer_.length_ = htonl (this->transfer_.length_);
+  this->transfer_.type_	  = htonl (this->transfer_.type_);
+  this->transfer_.errno_  = htonl (this->transfer_.errno_);
+  buf = (void *) &this->transfer_;
+  return len;
+}
+
+// Decode the transfer buffer into host byte order 
+// so that it can be used by the client.
+
+int
+ACE_Name_Reply::decode (void)
+{
+  ACE_TRACE ("ACE_Name_Reply::decode");
+  this->transfer_.length_ = ntohl (this->transfer_.length_);
+  this->transfer_.type_	  = ntohl (this->transfer_.type_);
+  this->transfer_.errno_  = ntohl (this->transfer_.errno_);
+  return 0;
+}
+
+// Print out current values of the ACE_Name_Reply object.
+
+void
+ACE_Name_Reply::dump (void) const
+{
+  ACE_TRACE ("ACE_Name_Reply::dump");
+  ACE_DEBUG ((LM_DEBUG, "*******\nlength = %d\nerrnum = %d", 
+	      this->length (), this->errnum ()));
+  ACE_DEBUG ((LM_DEBUG, "type = "));
+
+  switch (this->msg_type ())
+    {
+    case ACE_Name_Reply::SUCCESS:
+      ACE_DEBUG ((LM_DEBUG, "SUCCESS\n"));
+      break;
+    case ACE_Name_Reply::FAILURE:
+      ACE_DEBUG ((LM_DEBUG, "FAILURE\n"));
+      break;
+    default:
+      ACE_DEBUG ((LM_DEBUG, "<unknown type> = %d\n", this->msg_type ()));
+      break;
+    }
+}
