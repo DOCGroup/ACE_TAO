@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_PortableServer.lib TAO.lib ace.lib TAO_CosNaming.lib TAO_RTEvent.lib TAO_RTSched.lib TAO_Messaging.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\Messaging"
+# ADD LINK32 TAO_PSDL_Datastore.lib TAO_PSDL.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\PSS" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Simple_Naming - Win32 Debug"
 
@@ -225,7 +225,7 @@ InputPath=.\naming_data.psdl
 InputName=naming_data
 
 BuildCmds= \
-	..\..\..\..\bin\psdl_tao.exe $(InputName).psdl
+	..\..\..\..\bin\Release\psdl_tao.exe $(InputName).psdl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
