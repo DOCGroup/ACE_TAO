@@ -1,0 +1,36 @@
+$Id$
+
+pace/win32      NATIVE          EMULATION       NOT_SUPPORTED
+..............................................................
+aio.inl                                         aio_cancel()
+                                                aio_error()
+                                                aio_fsync()
+                                                aio_read()
+                                                aio_return()
+                                                aio_suspend()
+                                                aio_write()
+                                                lio_listen()
+.............................................................
+assert.inl      assert()
+.............................................................
+ctype.inl       isalnum()
+                isalpha()
+                iscntrl()
+                isdigit()
+                isgraph()
+                islower()
+                isprint()
+                ispunct()
+                isspace()
+                isupper()
+                isxdigit()
+                tolower()
+.............................................................
+dirent.inl                      closedir()
+                                opendir()
+                                readdir()
+                                                readdir_r()
+                                                rewinddir()
+.............................................................
+fcntl.inl                                       creat()
+.............................................................
