@@ -1,9 +1,39 @@
+Mon Nov 19 00:53:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_Tokens.h:
+
+          Fixed some bugs introduced by my previous checkin because of
+          patch confusion. Replaced all the standard C system calls with
+          ACE_OS calls. Made it more wchar friendly.
+
+        * ace/Makefile:
+
+          Removed the dependency on /pkg/gnu/bin/flex. It was broken. We
+          now use $(LEX) and $(YACC) defined in
+          $ACE_ROOT/include/makeinclude/wrapper_macros.GNU.
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Changed the definition of YACC to bison (by default). If people
+          want to change this, it can be overridden by a variable in the
+          Makefile. But things are most likely to break if you use yacc.
+
+        * etc/Svc_Conf_l.cpp.diff:
+        * etc/Svc_Conf_y.cpp.diff:
+
+          Regenerated the diffs.
+
+          *Sigh* This patching business is ugly.
+
+
 Fri Nov 16 07:22:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/make_release: Updated the script to copy the beta to a
 	  different location.  Have tested this by creating a dummy
 	  repository and a dummy export directory. Things worked
-	  fine. Hopefully the beta should go through without any hassle. 
+	  fine. Hopefully the beta should go through without any hassle.
 
 	  The script is tied to its usage on ace.cs. Needs to be
 	  changed. Will do that after this beta goes out. Having too many
@@ -13,7 +43,7 @@ Thu Nov 15 20:44:40 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* etc/Svc_Conf_l.cpp.diff: Updated.  Thanks to Kitty for reporting it.
 	* etc/Svc_Conf_y.cpp.diff: Added.  We need it for uses of ACE_LIB_TEXT.
-	* ace/Makefile: Added rule to apply patch to Svc_Conf_y.cpp. 
+	* ace/Makefile: Added rule to apply patch to Svc_Conf_y.cpp.
 
 Thu Nov 15 08:26:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
@@ -43,7 +73,7 @@ Tue Nov 13 15:25:04 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 Sun Nov 11 09:50:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Naming_Context.cpp (info): Added an ACE_UNUSED_ARG to 
+	* ace/Naming_Context.cpp (info): Added an ACE_UNUSED_ARG to
 	  silence warning about "length" parameter and changed buf from
  	  char to ACE_TCHAR.  Thanks to Johnny Willemsen for reporting
  	  this.
@@ -96,7 +126,7 @@ Tue Nov 13 15:04:15 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Nov 13 11:46:11 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print 
+	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print
 	  statements that were accessing the element of the unbounded set
  	  as an int rather than an UglyThing.  Thanks to Ossama for
  	  pointing this out.

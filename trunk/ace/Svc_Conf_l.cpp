@@ -1600,7 +1600,7 @@ int len;
 
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = len + 2;
-	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n );
+	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n * sizeof (ACE_TCHAR));
 	if ( ! buf )
 		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "out of dynamic memory in ace_yy_scan_bytes()" ));
 
