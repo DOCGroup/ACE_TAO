@@ -11,6 +11,7 @@
 
 #include "Servant_Retention_Strategy.h"
 #include "Request_Processing_Strategy.h"
+#include "Activation_Strategy.h"
 #include "tao/PortableServer/Id_Uniqueness_Strategy.h"
 #include "Lifespan_Strategy.h"
 #include "tao/ORB_Core.h"
@@ -51,7 +52,7 @@ namespace TAO
     Retain_Servant_Retention_Strategy::strategy_init (
       TAO_POA *poa)
     {
-      Servant_Retention_Strategy::strategy_init (poa);
+      ServantRetentionStrategy::strategy_init (poa);
 
       // Create the active object map to be used
       TAO_Active_Object_Map *active_object_map = 0;
@@ -712,7 +713,7 @@ namespace TAO
       // active, the servant is activated using a POA-generated Object Id
       // and the Interface Id associated with the servant, and that Object
       // Id is returned.
-      if (this->poa_->cached_policies().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
+      if (this->poa_->active_policy_strategies().activation_strategy ()->allow_implicit_activation ())
         {
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active
@@ -815,7 +816,7 @@ namespace TAO
       // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
       // exception is raised.
       if (!((this->poa_->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID
-                || this->poa_->cached_policies().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)))
+                || this->poa_->active_policy_strategies().activation_strategy ()->allow_implicit_activation ())))
         {
           ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                             0);
@@ -840,7 +841,7 @@ namespace TAO
       // active, the servant is activated using a POA-generated Object Id
       // and the Interface Id associated with the servant, and that Object
       // Id is returned.
-      if (this->poa_->cached_policies().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
+      if (this->poa_->active_policy_strategies().activation_strategy ()->allow_implicit_activation ())
         {
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active
@@ -1235,36 +1236,38 @@ namespace TAO
       CORBA::Object_ptr reference
       ACE_ENV_ARG_DECL)
     {
+      ACE_UNUSED_ARG (reference);
+
       // @Johnny, shouldn't we check here whether reference belongs to this POA?
 
-       // Always try the request processing strategy
-       PortableServer::Servant servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-       ACE_CHECK_RETURN (0);
+     // Always try the request processing strategy
+     PortableServer::Servant servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+     ACE_CHECK_RETURN (0);
 
-        if (servant != 0)
-          {
-            // A recursive thread lock without using a recursive thread
-            // lock.  Non_Servant_Upcall has a magic constructor and
-            // destructor.  We unlock the Object_Adapter lock for the
-            // duration of the servant activator upcalls; reacquiring once
-            // the upcalls complete.  Even though we are releasing the lock,
-            // other threads will not be able to make progress since
-            // <Object_Adapter::non_servant_upcall_in_progress_> has been
-            // set.
-            TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
-            ACE_UNUSED_ARG (non_servant_upcall);
+      if (servant != 0)
+        {
+          // A recursive thread lock without using a recursive thread
+          // lock.  Non_Servant_Upcall has a magic constructor and
+          // destructor.  We unlock the Object_Adapter lock for the
+          // duration of the servant activator upcalls; reacquiring once
+          // the upcalls complete.  Even though we are releasing the lock,
+          // other threads will not be able to make progress since
+          // <Object_Adapter::non_servant_upcall_in_progress_> has been
+          // set.
+          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          ACE_UNUSED_ARG (non_servant_upcall);
 
-            // The POA invokes _add_ref once on the Servant before returning
-            // it. If the application uses reference counting, the caller of
-            // id_to_servant is responsible for invoking _remove_ref once on
-            // the returned Servant when it is finished with it. A
-            // conforming caller need not invoke _remove_ref on the returned
-            // Servant if the type of the Servant uses the default reference
-            // counting inherited from ServantBase.
-            servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK_RETURN (0);
+          // The POA invokes _add_ref once on the Servant before returning
+          // it. If the application uses reference counting, the caller of
+          // id_to_servant is responsible for invoking _remove_ref once on
+          // the returned Servant when it is finished with it. A
+          // conforming caller need not invoke _remove_ref on the returned
+          // Servant if the type of the Servant uses the default reference
+          // counting inherited from ServantBase.
+          servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
 
-            return servant;
+          return servant;
         }
       else
         {
@@ -1572,10 +1575,10 @@ namespace TAO
 
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
-                                       intf,
-                                       0,
-                                       1,
-                                       priority);
+                                             intf,
+                                             0,
+                                             1,
+                                             priority);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
                                                   user_id

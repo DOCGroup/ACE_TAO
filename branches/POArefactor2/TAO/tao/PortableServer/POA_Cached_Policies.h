@@ -50,7 +50,10 @@ namespace TAO
       void update (TAO_POA_Policy_Set &policy_set
                    ACE_ENV_ARG_DECL);
 
-      /// Accessor methods to cached values.
+      /**
+       * @name Accessor methods to cached values.
+       */
+      //@{
       PortableServer::ThreadPolicyValue thread (void) const;
       PortableServer::LifespanPolicyValue lifespan (void) const;
       PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
@@ -64,6 +67,7 @@ namespace TAO
       void priority_model (PriorityModel priority_model);
       void server_priority (CORBA::Short priority);
       void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
+      //@}
 
     protected:
 
@@ -91,7 +95,6 @@ namespace TAO
     };
   }
 }
-
 
 #if defined (__ACE_INLINE__)
 # include "POA_Cached_Policies.i"

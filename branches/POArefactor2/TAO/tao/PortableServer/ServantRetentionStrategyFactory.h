@@ -29,14 +29,14 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class Servant_Retention_Strategy;
+    class ServantRetentionStrategy;
 
     class TAO_PortableServer_Export ServantRetentionStrategyFactory :
        public virtual StrategyFactory
     {
     public:
       /// Create a new servant retention strategy
-      virtual Servant_Retention_Strategy* create (
+      virtual ServantRetentionStrategy* create (
         ::PortableServer::ServantRetentionPolicyValue value) = 0;
     };
   }

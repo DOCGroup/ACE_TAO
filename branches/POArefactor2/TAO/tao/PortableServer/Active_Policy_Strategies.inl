@@ -47,7 +47,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Servant_Retention_Strategy*
+    ServantRetentionStrategy*
     Active_Policy_Strategies::servant_retention_strategy (void) const
     {
       return servant_retention_strategy_;

@@ -24,12 +24,6 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
-
 namespace TAO
 {
   namespace Portable_Server
@@ -38,12 +32,9 @@ namespace TAO
        public virtual Policy_Strategy
     {
     public:
-      virtual ~Activation_Strategy (void) {};
+      virtual ~Activation_Strategy (void);
 
-      void strategy_init (TAO_POA *)
-      {
-        // dependent on type create the correct strategy.
-      }
+      virtual void strategy_init (TAO_POA *);
 
       virtual bool allow_implicit_activation (void) const = 0;
     };
@@ -52,12 +43,9 @@ namespace TAO
        public virtual Activation_Strategy
     {
     public:
-      virtual ~Implicit_Activation_Strategy (void) {};
+      virtual ~Implicit_Activation_Strategy (void);
 
-      virtual bool allow_implicit_activation (void) const
-      {
-        return true;
-      }
+      virtual bool allow_implicit_activation (void) const;
 
     private:
     };
@@ -66,12 +54,9 @@ namespace TAO
        public virtual Activation_Strategy
     {
     public:
-      virtual ~Explicit_Activation_Strategy (void) {};
+      virtual ~Explicit_Activation_Strategy (void);
 
-      virtual bool allow_implicit_activation (void) const
-      {
-        return false;
-      }
+      virtual bool allow_implicit_activation (void) const;
     };
   }
 }

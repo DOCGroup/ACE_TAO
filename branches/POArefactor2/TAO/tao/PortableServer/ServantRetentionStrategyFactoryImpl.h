@@ -36,7 +36,7 @@ namespace TAO
       virtual ~ServantRetentionStrategyFactoryImpl (void);
 
       /// Create a new servant retention strategy
-      virtual Servant_Retention_Strategy* create (
+      virtual ServantRetentionStrategy* create (
         ::PortableServer::ServantRetentionPolicyValue value);
     };
 

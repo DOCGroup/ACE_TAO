@@ -18,11 +18,11 @@ namespace TAO
     ServantRetentionStrategyFactoryImpl::~ServantRetentionStrategyFactoryImpl (void)
     {
     }
-    Servant_Retention_Strategy*
+    ServantRetentionStrategy*
     ServantRetentionStrategyFactoryImpl::create (
       ::PortableServer::ServantRetentionPolicyValue value)
     {
-      Servant_Retention_Strategy* strategy = 0;
+      ServantRetentionStrategy* strategy = 0;
 
       switch (value)
       {

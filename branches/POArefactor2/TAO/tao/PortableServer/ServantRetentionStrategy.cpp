@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Servant_Retention_Strategy.cpp
+ *  @file    ServantRetentionStrategy.cpp
  *
  *  $Id$
  *
@@ -33,17 +33,17 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Servant_Retention_Strategy::Servant_Retention_Strategy (void) :
+    ServantRetentionStrategy::ServantRetentionStrategy (void) :
       poa_ (0)
     {
     }
 
-    Servant_Retention_Strategy::~Servant_Retention_Strategy (void)
+    ServantRetentionStrategy::~ServantRetentionStrategy (void)
     {
     }
 
     void
-    Servant_Retention_Strategy::strategy_init (
+    ServantRetentionStrategy::strategy_init (
       TAO_POA *poa)
     {
       poa_ = poa;

@@ -34,7 +34,7 @@ namespace TAO
     class Lifespan_Strategy;
     class Id_Uniqueness_Strategy;
     class Activation_Strategy;
-    class Servant_Retention_Strategy;
+    class ServantRetentionStrategy;
 
     /**
      * This class stores the active policy strategies used for a certain POA.
@@ -60,7 +60,7 @@ namespace TAO
 
       Activation_Strategy *activation_strategy (void) const;
 
-      Servant_Retention_Strategy *servant_retention_strategy (void) const;
+      ServantRetentionStrategy *servant_retention_strategy (void) const;
 
     private:
       Thread_Strategy *thread_strategy_;
@@ -69,7 +69,7 @@ namespace TAO
       Lifespan_Strategy *lifespan_strategy_;
       Id_Uniqueness_Strategy *id_uniqueness_strategy_;
       Activation_Strategy *activation_strategy_;
-      Servant_Retention_Strategy *servant_retention_strategy_;
+      ServantRetentionStrategy *servant_retention_strategy_;
     };
   }
 }

@@ -1,3 +1,25 @@
+Thu Nov  4 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Activation_Strategy.{h,cpp}:
+          Move implementation to the cpp file
+
+        * tao/PortableServer/Servant_Retention_Strategy.cpp:
+          Use the Activation_Strategy instead of the Cached_Policies
+
+        * tao/PortableServer/POA.cpp (create_POA_i):
+          Handle a system exception from the unknown_adapter call as described
+          in 11.3.9.2 in the spec
+
+        * tao/PortableServer/Servant_Location.h:
+          Moved TAO_SERVANT_LOCATION enum to its own file to reduce the need
+          to include Object_Adapter.h
+
+        * tao/PortableServer/Object_Adapter.{h,cpp}:
+        * tao/PortableServer/Servant_Retention_Strategy.h:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/Request_Processing_Strategy.h:
+          Updated because of change above
+
 Thu Nov  4 12:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,i}:
