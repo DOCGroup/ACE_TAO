@@ -2202,9 +2202,11 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr,
 TAO_NAMESPACE_END
 
 
+
+
 // default constructor
 FT_InterfaceNotFound::FT_InterfaceNotFound (void)
-  : CORBA_UserException (::FT::_tc_InterfaceNotFound)
+  : CORBA_UserException ("IDL:omg.org/FT/InterfaceNotFound:1.0")
 {
 }
 
@@ -2221,7 +2223,7 @@ void FT_InterfaceNotFound::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_InterfaceNotFound::FT_InterfaceNotFound (const ::FT_InterfaceNotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -2311,9 +2313,17 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InterfaceNotFound, &_tc_TAO_tc_FT_InterfaceNotFound)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_InterfaceNotFound::_type (void) const
+{
+  return FT::_tc_InterfaceNotFound;
+}
+
 // default constructor
 FT_ObjectGroupNotFound::FT_ObjectGroupNotFound (void)
-  : CORBA_UserException (::FT::_tc_ObjectGroupNotFound)
+  : CORBA_UserException ("IDL:omg.org/FT/ObjectGroupNotFound:1.0")
 {
 }
 
@@ -2330,7 +2340,7 @@ void FT_ObjectGroupNotFound::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_ObjectGroupNotFound::FT_ObjectGroupNotFound (const ::FT_ObjectGroupNotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -2422,9 +2432,18 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectGroupNotFound, &_tc_TAO_tc_FT_ObjectGroupNotFound)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_ObjectGroupNotFound::_type (void) const
+{
+  return FT::_tc_ObjectGroupNotFound;
+}
+
+
 // default constructor
 FT_MemberNotFound::FT_MemberNotFound (void)
-  : CORBA_UserException (::FT::_tc_MemberNotFound)
+  : CORBA_UserException ("IDL:omg.org/FT/MemberNotFound:1.0")
 {
 }
 
@@ -2442,7 +2461,7 @@ void FT_MemberNotFound::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_MemberNotFound::FT_MemberNotFound (const ::FT_MemberNotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -2520,8 +2539,16 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_MemberNotFound, &_tc_TAO_tc_FT_Me
 TAO_NAMESPACE_END
 // default constructor
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_MemberNotFound::_type (void) const
+{
+  return FT::_tc_MemberNotFound;
+}
+
+
 FT_ObjectNotFound::FT_ObjectNotFound (void)
-  : CORBA_UserException (::FT::_tc_ObjectNotFound)
+  : CORBA_UserException ("IDL:omg.org/FT/ObjectNotFound:1.0")
 {
 }
 
@@ -2538,7 +2565,7 @@ void FT_ObjectNotFound::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_ObjectNotFound::FT_ObjectNotFound (const ::FT_ObjectNotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -2628,9 +2655,17 @@ TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectNotFound, &_tc_TAO_tc_FT_ObjectNotFound)
 TAO_NAMESPACE_END
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_ObjectNotFound::_type (void) const
+{
+  return FT::_tc_ObjectNotFound;
+}
+
+
 // default constructor
 FT_MemberAlreadyPresent::FT_MemberAlreadyPresent (void)
-  : CORBA_UserException (::FT::_tc_MemberAlreadyPresent)
+  : CORBA_UserException ("IDL:omg.org/FT/MemberAlreadyPresent:1.0")
 {
 }
 
@@ -2648,7 +2683,7 @@ void FT_MemberAlreadyPresent::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_MemberAlreadyPresent::FT_MemberAlreadyPresent (const ::FT_MemberAlreadyPresent &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
 }
 
@@ -2741,9 +2776,17 @@ TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_MemberAlreadyPresent, &_tc_TAO_tc_FT_MemberAlreadyPresent)
 TAO_NAMESPACE_END
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_MemberAlreadyPresent::_type (void) const
+{
+  return FT::_tc_MemberAlreadyPresent;
+}
+
+
 // default constructor
 FT_BadReplicationStyle::FT_BadReplicationStyle (void)
-  : CORBA_UserException (::FT::_tc_BadReplicationStyle)
+  : CORBA_UserException ("IDL:omg.org/FT/BadReplicationStyle:1.0")
 {
 }
 
@@ -2760,7 +2803,7 @@ void FT_BadReplicationStyle::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_BadReplicationStyle::FT_BadReplicationStyle (const ::FT_BadReplicationStyle &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -2829,9 +2872,18 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_BadReplicationStyle, &_tc_TAO_tc_FT_BadReplicationStyle)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_BadReplicationStyle::_type (void) const
+{
+  return FT::_tc_BadReplicationStyle;
+}
+
+
 // default constructor
 FT_ObjectNotCreated::FT_ObjectNotCreated (void)
-  : CORBA_UserException (::FT::_tc_ObjectNotCreated)
+  : CORBA_UserException ("IDL:omg.org/FT/ObjectNotCreated:1.0")
 {
 }
 
@@ -2848,7 +2900,7 @@ void FT_ObjectNotCreated::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_ObjectNotCreated::FT_ObjectNotCreated (const ::FT_ObjectNotCreated &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
 }
 
@@ -2940,9 +2992,16 @@ TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectNotCreated, &_tc_TAO_tc_FT_ObjectNotCreated)
 TAO_NAMESPACE_END
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_ObjectNotCreated::_type (void) const
+{
+  return FT::_tc_ObjectNotCreated;
+}
+
 // default constructor
 FT_ObjectNotAdded::FT_ObjectNotAdded (void)
-  : CORBA_UserException (::FT::_tc_ObjectNotAdded)
+  : CORBA_UserException ("IDL:omg.org/FT/ObjectNotAdded:1.0")
 {
 }
 
@@ -2959,7 +3018,7 @@ void FT_ObjectNotAdded::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_ObjectNotAdded::FT_ObjectNotAdded (const ::FT_ObjectNotAdded &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -3049,9 +3108,16 @@ TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectNotAdded, &_tc_TAO_tc_FT_ObjectNotAdded)
 TAO_NAMESPACE_END
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_ObjectNotAdded::_type (void) const
+{
+  return FT::_tc_ObjectNotAdded;
+}
+
 // default constructor
 FT_PrimaryNotSet::FT_PrimaryNotSet (void)
-  : CORBA_UserException (::FT::_tc_PrimaryNotSet)
+  : CORBA_UserException ("IDL:omg.org/FT/PrimaryNotSet:1.0")
 {
 }
 
@@ -3068,9 +3134,9 @@ void FT_PrimaryNotSet::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_PrimaryNotSet::FT_PrimaryNotSet (const ::FT_PrimaryNotSet &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 FT_PrimaryNotSet&
@@ -3159,9 +3225,16 @@ TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PrimaryNotSet, &_tc_TAO_tc_FT_PrimaryNotSet)
 TAO_NAMESPACE_END
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_PrimaryNotSet::_type (void) const
+{
+  return FT::_tc_PrimaryNotSet;
+}
+
 // default constructor
 FT_UnsupportedProperty::FT_UnsupportedProperty (void)
-  : CORBA_UserException (::FT::_tc_UnsupportedProperty)
+  : CORBA_UserException ("IDL:omg.org/FT/UnsupportedProperty:1.0")
 {
 }
 
@@ -3178,7 +3251,7 @@ void FT_UnsupportedProperty::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_UnsupportedProperty::FT_UnsupportedProperty (const ::FT_UnsupportedProperty &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   this->nam = _tao_excp.nam;
   this->val = _tao_excp.val;
@@ -3243,7 +3316,7 @@ FT_UnsupportedProperty::FT_UnsupportedProperty (
   const FT_Name & _tao_nam,
   const FT::Value & _tao_val
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (FT::_tc_UnsupportedProperty))
+  : CORBA_UserException  (CORBA::string_dup ("IDL:omg.org/FT/UnsupportedProperty:1.0"))
 {
   this->nam = _tao_nam;
   this->val = _tao_val;
@@ -3395,9 +3468,18 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnsupportedProperty, &_tc_TAO_tc_FT_UnsupportedProperty)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_UnsupportedProperty::_type (void) const
+{
+  return FT::_tc_UnsupportedProperty;
+}
+
+
 // default constructor
 FT_InvalidProperty::FT_InvalidProperty (void)
-  : CORBA_UserException (::FT::_tc_InvalidProperty)
+  : CORBA_UserException ("IDL:omg.org/FT/InvalidProperty:1.0")
 {
 }
 
@@ -3414,7 +3496,7 @@ void FT_InvalidProperty::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_InvalidProperty::FT_InvalidProperty (const ::FT_InvalidProperty &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->nam = _tao_excp.nam;
   this->val = _tao_excp.val;
@@ -3478,7 +3560,7 @@ CORBA::Exception *FT_InvalidProperty::_alloc (void)
 FT_InvalidProperty::FT_InvalidProperty (
   const FT_Name & _tao_nam,
   const FT::Value & _tao_val)
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (FT::_tc_InvalidProperty))
+  : CORBA_UserException  (CORBA::string_dup ("IDL:omg.org/FT/InvalidProperty:1.0"))
 {
   this->nam = _tao_nam;
   this->val = _tao_val;
@@ -3629,9 +3711,17 @@ TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InvalidProperty, &_tc_TAO_tc_FT_InvalidProperty)
 TAO_NAMESPACE_END
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_InvalidProperty::_type (void) const
+{
+  return FT::_tc_InvalidProperty;
+}
+
+
 // default constructor
 FT_NoFactory::FT_NoFactory (void)
-  : CORBA_UserException (::FT::_tc_NoFactory)
+  : CORBA_UserException ("IDL:omg.org/FT/NoFactory:1.0")
 {
 }
 
@@ -3648,7 +3738,7 @@ void FT_NoFactory::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_NoFactory::FT_NoFactory (const ::FT_NoFactory &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->the_location = _tao_excp.the_location;
   this->type_id = CORBA::string_dup (_tao_excp.type_id.in ());
@@ -3713,7 +3803,7 @@ FT_NoFactory::FT_NoFactory (
   const FT::Location & _tao_the_location,
   const char * _tao_type_id
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (FT::_tc_NoFactory))
+  : CORBA_UserException  (CORBA::string_dup ("IDL:omg.org/FT/NoFactory:1.0"))
 {
   this->the_location =_tao_the_location;
   this->type_id = CORBA::string_dup (_tao_type_id);
@@ -3804,9 +3894,17 @@ TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NoFactory, &_tc_TAO_tc_FT_NoFactory)
 TAO_NAMESPACE_END
 
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_NoFactory::_type (void) const
+{
+  return FT::_tc_NoFactory;
+}
+
+
 // default constructor
 FT_InvalidCriteria::FT_InvalidCriteria (void)
-  : CORBA_UserException (::FT::_tc_InvalidCriteria)
+  : CORBA_UserException ("IDL:omg.org/FT/InvalidCriteria:1.0")
 {
 }
 
@@ -3823,7 +3921,7 @@ void FT_InvalidCriteria::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_InvalidCriteria::FT_InvalidCriteria (const ::FT_InvalidCriteria &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->invalid_criteria = _tao_excp.invalid_criteria;
 }
@@ -3885,7 +3983,7 @@ CORBA::Exception *FT_InvalidCriteria::_alloc (void)
 FT_InvalidCriteria::FT_InvalidCriteria (
   const FT_Criteria & _tao_invalid_criteria
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (FT::_tc_InvalidCriteria))
+  : CORBA_UserException (CORBA::string_dup ("IDL:omg.org/FT/InvalidCriteria:1.0"))
 {
     this->invalid_criteria = _tao_invalid_criteria;
 }
@@ -4085,9 +4183,18 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InvalidCriteria, &_tc_TAO_tc_FT_InvalidCriteria)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_InvalidCriteria::_type (void) const
+{
+  return FT::_tc_InvalidCriteria;
+}
+
+
 // default constructor
 FT_CannotMeetCriteria::FT_CannotMeetCriteria (void)
-  : CORBA_UserException (::FT::_tc_CannotMeetCriteria)
+  : CORBA_UserException ("IDL:omg.org/FT/CannotMeetCriteria:1.0")
 {
 }
 
@@ -4104,7 +4211,7 @@ void FT_CannotMeetCriteria::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_CannotMeetCriteria::FT_CannotMeetCriteria (const ::FT_CannotMeetCriteria &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->unmet_criteria = _tao_excp.unmet_criteria;
 }
@@ -4166,7 +4273,7 @@ CORBA::Exception *FT_CannotMeetCriteria::_alloc (void)
 FT_CannotMeetCriteria::FT_CannotMeetCriteria (
   const FT_Criteria & _tao_unmet_criteria
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (FT::_tc_CannotMeetCriteria))
+  : CORBA_UserException (CORBA::string_dup ("IDL:omg.org/FT/Criteria:1.0"))
 {
     this->unmet_criteria = _tao_unmet_criteria;
 }
@@ -4260,6 +4367,14 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CannotMeetCriteria, &_tc_TAO_tc_FT_CannotMeetCriteria)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_CannotMeetCriteria::_type (void) const
+{
+  return FT::_tc_CannotMeetCriteria;
+}
+
 
 // default constructor
 FT_PropertyManager::FT_PropertyManager (void)
@@ -8580,7 +8695,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_State, &_tc_TAO_tc_FT_State)
 TAO_NAMESPACE_END
 // default constructor
 FT_NoStateAvailable::FT_NoStateAvailable (void)
-  : CORBA_UserException (::FT::_tc_NoStateAvailable)
+  : CORBA_UserException ("IDL:omg.org/FT/NoStateAvailable:1.0")
 {
 }
 
@@ -8597,7 +8712,7 @@ void FT_NoStateAvailable::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_NoStateAvailable::FT_NoStateAvailable (const ::FT_NoStateAvailable &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -8666,9 +8781,18 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NoStateAvailable, &_tc_TAO_tc_FT_NoStateAvailable)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_NoStateAvailable::_type (void) const
+{
+  return FT::_tc_NoStateAvailable;
+}
+
+
 // default constructor
 FT_InvalidState::FT_InvalidState (void)
-  : CORBA_UserException (::FT::_tc_InvalidState)
+  : CORBA_UserException ("IDL:omg.org/FT/InvalidState:1.0")
 {
 }
 
@@ -8685,7 +8809,7 @@ void FT_InvalidState::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_InvalidState::FT_InvalidState (const ::FT_InvalidState &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -8754,9 +8878,18 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InvalidState, &_tc_TAO_tc_FT_InvalidState)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_InvalidState::_type (void) const
+{
+  return FT::_tc_InvalidState;
+}
+
+
 // default constructor
 FT_NoUpdateAvailable::FT_NoUpdateAvailable (void)
-  : CORBA_UserException (::FT::_tc_NoUpdateAvailable)
+  : CORBA_UserException ("IDL:omg.org/FT/NoUpdateAvailable:1.0")
 {
 }
 
@@ -8773,7 +8906,7 @@ void FT_NoUpdateAvailable::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_NoUpdateAvailable::FT_NoUpdateAvailable (const ::FT_NoUpdateAvailable &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -8842,9 +8975,18 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NoUpdateAvailable, &_tc_TAO_tc_FT_NoUpdateAvailable)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_NoUpdateAvailable::_type (void) const
+{
+  return FT::_tc_NoUpdateAvailable;
+}
+
+
 // default constructor
 FT_InvalidUpdate::FT_InvalidUpdate (void)
-  : CORBA_UserException (::FT::_tc_InvalidUpdate)
+  : CORBA_UserException ("IDL:omg.org/FT/InvalidUpdate:1.0")
 {
 }
 
@@ -8861,7 +9003,7 @@ void FT_InvalidUpdate::_tao_any_destructor (void *x)
 
 // copy constructor
 FT_InvalidUpdate::FT_InvalidUpdate (const ::FT_InvalidUpdate &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -8930,6 +9072,13 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (FT)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InvalidUpdate, &_tc_TAO_tc_FT_InvalidUpdate)
 TAO_NAMESPACE_END
+
+// TAO extension - the virtual _type method
+CORBA::TypeCode_ptr
+FT_InvalidUpdate::_type (void) const
+{
+  return FT::_tc_InvalidUpdate;
+}
 
 // default constructor
 FT_Checkpointable::FT_Checkpointable (void)
