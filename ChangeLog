@@ -1,3 +1,19 @@
+Sun Mar 19 22:11:47 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/ACE.cpp (recv_n_i, send_n_i, recvv_n_i, sendv_n_i):
+
+	  Loop should continue if EWOULDBLOCK is set.  Previously, calls
+	  to these methods returned right away on error, even if errno was
+	  set to EWOULDBLOCK, instead of continuing until all of the data
+	  was received or sent.
+
+	  If the number of bytes received/transfered during the current
+	  iteration of the loop is zero, then break out of the loop so
+	  that the actual number of bytes received/transfered is used as
+	  the return value.  Prior to this change, a value of zero was
+	  returned, which may not always be the number of bytes
+	  received/transfered.
+
 Sun Mar 19 23:52:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ACE.cpp: Reformatted some code.
