@@ -1,3 +1,9 @@
+Fri Aug 31 16:32:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
+	  Changed the typename declaration to class. The usage of typename
+	  chokes SunCC42. 
+
 Fri Aug 31 08:31:09 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/TestUtils/TestCombinedThreads.cpp:
