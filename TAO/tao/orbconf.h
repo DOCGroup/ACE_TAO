@@ -267,12 +267,13 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif /* major*/
 
 #if !defined (ACE_NESTED_CLASS)
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_BROKEN_NAMESPACES)
 #define ACE_NESTED_CLASS(SCOPE,CLASS) CLASS
-#else /* !ACE_WIN32 */
+#else /* !ACE_HAS_BROKEN_NAMSPACES*/
 #define ACE_NESTED_CLASS(SCOPE,CLASS) SCOPE::CLASS
-#endif /* ACE_WIN32 */
-#endif /* ACE_NESTED_CLASS */
+#endif /* ACE_HAS_BROKEN_NAMSPACES*/
+#endif /*ACE_NESTED_CLASS */
+
 
 #if !defined (TAO_EXPORT_NESTED_CLASSES) \
     && defined (ACE_EXPORT_NESTED_CLASSES)
