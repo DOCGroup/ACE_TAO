@@ -35,7 +35,6 @@
    stop it earlier, just hit the control-C sequence
    and you'll see the same messages. */
 
-
 #include "ace/Synch.h"
 #include "ace/Reactor.h"
 #include "ace/Pipe.h"
