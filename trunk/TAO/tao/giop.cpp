@@ -71,7 +71,7 @@ TAO_GIOP::dump_msg (const char *label,
                   digits[ptr[5]],
                   len - TAO_GIOP_HEADER_LEN,
                   (ptr[6] == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
-                  (ptr[7] <= TAO_GIOP_MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
+                  (ptr[7] <= TAO_GIOP::MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
 
       if (TAO_debug_level >= 4)
         ACE_HEX_DUMP ((LM_DEBUG, (const char*)ptr, len, "(%P|%t) data bytes\n"));
@@ -240,7 +240,7 @@ error_message [TAO_GIOP_HEADER_LEN] =
   MY_MAJOR,
   MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
-  TAO_GIOP_MessageError,
+  TAO_GIOP::MessageError,
   0, 0, 0, 0
 };
 
@@ -321,7 +321,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   if (msg.grow (TAO_GIOP_HEADER_LEN) == 0)
     {
       env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
-      return TAO_GIOP_MessageError;
+      return TAO_GIOP::MessageError;
     }
 
   assert (msg.size () > TAO_GIOP_HEADER_LEN);
@@ -362,7 +362,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
-      return TAO_GIOP_MessageError;
+      return TAO_GIOP::MessageError;
     }
 
   // Set the end of the message....
@@ -383,7 +383,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
-      return TAO_GIOP_MessageError;
+      return TAO_GIOP::MessageError;
     }
 
   // Then make sure the major version is ours, and the minor version
@@ -394,7 +394,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
-      return TAO_GIOP_MessageError;
+      return TAO_GIOP::MessageError;
     }
 
   // Get the message type out and adjust the buffer's records to record
@@ -421,7 +421,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   if (msg.grow (TAO_GIOP_HEADER_LEN + message_size) == 0)
     {
       env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
-      return TAO_GIOP_MessageError;
+      return TAO_GIOP::MessageError;
     }
 
   // The offset from the current position were data writing should
@@ -463,7 +463,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE)); // body
       ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
-      return TAO_GIOP_MessageError;
+      return TAO_GIOP::MessageError;
     }
 
   // Set the end of the message....

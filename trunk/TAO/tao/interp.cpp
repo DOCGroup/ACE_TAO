@@ -749,7 +749,7 @@ calc_key_union_attributes (CDR *stream,
       case CORBA::tk_ulong:
       case CORBA::tk_enum:
         {
-          CORBA::Long   l;
+          CORBA::Long l;
 
           if (!stream->get_long (l))
             {
@@ -762,7 +762,7 @@ calc_key_union_attributes (CDR *stream,
       case CORBA::tk_boolean:
       case CORBA::tk_char:
         {
-          char          c;
+          CORBA::Char c;
 
           if (!stream->get_byte (c))
             {
@@ -1118,15 +1118,12 @@ union_traverse (CDR *stream,
 
   CORBA::TypeCode discrim_tc (CORBA::tk_null);
 
-  {
-    size_t scratch;
+  size_t scratch;
 
-    (void) calc_nested_size_and_alignment (&discrim_tc,
-                                           stream,
-                                           scratch,
-                                           env);
-  }
-
+  (void) calc_nested_size_and_alignment (&discrim_tc,
+                                         stream,
+                                         scratch,
+                                         env);
   if (visit (&discrim_tc,
              value1,
              value2,
@@ -1229,7 +1226,6 @@ union_traverse (CDR *stream,
       CDR temp_str;
       temp_str.setup_encapsulation (default_tc_ptr,
                                     default_tc_len);
-
       // Get and use the TypeCode.
       //
       // XXX we really don't care about size and alignment this time,
@@ -1255,15 +1251,15 @@ union_traverse (CDR *stream,
 
 CORBA::TypeCode::traverse_status
 CORBA::TypeCode::traverse (const void *value1,
-                          const void *value2,
-                          CORBA::TypeCode::traverse_status (_FAR *visit)
-                          (CORBA::TypeCode_ptr tc,
-                           const void *value1,
                            const void *value2,
+                           CORBA::TypeCode::traverse_status (_FAR *visit)
+                           (CORBA::TypeCode_ptr tc,
+                            const void *value1,
+                            const void *value2,
+                            void *context,
+                            CORBA::Environment &env),
                            void *context,
-                           CORBA::Environment &env),
-                          void *context,
-                          CORBA::Environment &env)
+                           CORBA::Environment &env)
 {
   env.clear ();
 

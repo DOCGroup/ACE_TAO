@@ -152,9 +152,8 @@ template <class T>
 struct CORBA_SEQUENCE
   // = TITLE
   //    Utility template class.
-  //
-  // = DESCRIPTION
 {
+  // @@ Is there any reason we don't use CORBA::Long here?
 #if ACE_SIZEOF_LONG == 4
   u_long maximum;
   u_long length;
@@ -164,7 +163,8 @@ struct CORBA_SEQUENCE
   u_int length;
 #endif /* ACE_SIZEOF_LONG */
   T *buffer;
-  CORBA_Boolean release; // Only here to make it compliant with IDL-generated layout
+  CORBA_Boolean release; 
+  // Only here to make it compliant with IDL-generated layout.
 
   CORBA_SEQUENCE (void)
     : maximum (0),

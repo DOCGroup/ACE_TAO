@@ -1,5 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 
+// CORBA_SEQUENCE support.
+template 
+
 // String utility support
 
 ACE_INLINE TAO_Export CORBA::String
