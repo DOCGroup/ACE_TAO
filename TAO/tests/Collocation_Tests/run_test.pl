@@ -68,7 +68,6 @@ print STDERR "======== Running in no collocation mode and two ORBS \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill (60);
 
-$SV->check_return_value (0);
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
     $status = 1;
