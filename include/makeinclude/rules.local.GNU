@@ -87,15 +87,7 @@ ifeq ($(static_link),1)
 endif # static_link = 1
 
 OS ?=
-ifeq ($(OS),"Windows_NT")
-$(VDIR)%.obj: %.c
-	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
-	${MVCMD}
 
-$(VDIR)%.obj: %.cpp
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
-	${MVCMD}
-else
 $(VDIR)%.o: %.c $(VDIR)%.creation_stamp
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
@@ -103,7 +95,6 @@ $(VDIR)%.o: %.c $(VDIR)%.creation_stamp
 $(VDIR)%.o: %.cpp $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
-endif
 
 $(VDIR)%.o: %.C $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
@@ -166,9 +157,9 @@ $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR)%.creation_stamp
 	$(SOLINK)
 endif # SOLINK
 
-ifeq ($(OS),"Windows_NT")
-$(VDIR).creation_stamp:
-	@if not exist $(VDIR) mkdir $(VDIR)
+ifeq ("$(OS)","Windows_NT")
+$(VDIR)%.creation_stamp:
+	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
 	@echo > $@
 else
 .PHONY: $(VDIR)%.creation_stamp
@@ -177,9 +168,9 @@ $(VDIR)%.creation_stamp:
 endif
 
 ifneq ($(VDIR),$(VSHDIR))
-  ifeq ($(OS),"Windows_NT")
-$(VSHDIR).creation_stamp:
-	@if not exist $(VSHDIR) mkdir $(VSHDIR)
+  ifeq ("$(OS)","Windows_NT")
+$(VSHDIR)%.creation_stamp:
+	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
 	@echo > $@
   else
 .PHONY: $(VSHDIR)%.creation_stamp
@@ -444,7 +435,7 @@ rcs_info.local:
 
 build.objdirs: $(CLEANUP_DIRS)
 
-ifeq ($(OS),"Windows_NT")
+ifeq ("$(OS)","Windows_NT")
 $(CLEANUP_DIRS):
 	@if not exist $@ mkdir $@
 else
