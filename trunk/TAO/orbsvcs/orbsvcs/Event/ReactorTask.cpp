@@ -12,11 +12,7 @@ ACE_ES_Reactor_Task::ACE_ES_Reactor_Task() :
 {
   // Change the timer mechanism used by the reactor and the timer
   // queue.
-#if defined (VXWORKS)
   timer_queue_.gettimeofday (ACE_OS::gettimeofday);
-#else
-  timer_queue_.gettimeofday (ACE_High_Res_Timer::gettimeofday);
-#endif /* VXWORKS */
 }
 
 ACE_ES_Reactor_Task::~ACE_ES_Reactor_Task (void)
