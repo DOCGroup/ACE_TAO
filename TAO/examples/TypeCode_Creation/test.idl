@@ -1,0 +1,23 @@
+// $Id$
+//===============================================================================
+//
+// = FILENAME
+//     test.idl
+//
+//==================================================================================
+
+// IDL
+
+interface iface {};
+
+struct foo
+{
+  string foo_str_member;
+  iface foo_iface_member;
+};
+
+struct bar
+{
+  long bar_long_member;
+  foo bar_foo_member;
+};
