@@ -182,6 +182,7 @@ public:
  */
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
+
 class TAO_Export TAO_DTId_Hash
 {
 public:
@@ -190,7 +191,12 @@ public:
   u_long operator () (const IdType &id) const;
 };
 
+
 ////////////////////////////////////////////////////////////////////////////////
+
+typedef ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Null_Mutex> DT_Hash_Map;
+typedef ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Null_Mutex> DT_Hash_Map_Iterator;
+typedef ACE_Hash_Map_Entry <IdType,CORBA::Object_ptr> DT_Hash_Map_Entry;
 
 
 // ****************************************************************
@@ -953,7 +959,6 @@ public:
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map (void);
 
-  typedef ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Null_Mutex> DT_Hash_Map;
 
   ///Return a pointer to the Distributable Thread Hash Map.
   DT_Hash_Map * dt_hash (void);

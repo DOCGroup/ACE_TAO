@@ -3,7 +3,31 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "test_client"=.\VoidData\test_client.dsp - Package Owner=<4>
+Project: "Current"=.\Current\Current.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Thread_Cancel"=.\Thread_Cancel\Thread_Cancel.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VoidData"=.\VoidData\VoidData.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
