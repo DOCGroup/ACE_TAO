@@ -1,3 +1,25 @@
+Tue  Apr 8 13:20:02 2003 Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+	  Method <destroy>: Removed extraneous call to shutdown ec_container_. 
+	
+	* orbsvcs/orbsvcs/Notify/Object.cpp:
+	  Eat exceptions in the <deactivate> method.
+	  Shutdown the proxy_poa_ and object_poa_ in the destructor.
+	
+	* orbsvcs/orbsvcs/Notify/Property_T.cpp:
+	  Method <set>: Check to see if the >>= operator returned success.
+	
+	* orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
+	  Method <init>: Try to set the individual QoS properties only if some properties are available.
+	
+	* orbsvcs/tests/Notify/ThreadPool/consumer.conf:
+	  Corrected formatting of the conf. file.
+	
+	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+	* orbsvcs/tests/Notify/Notify_Tests.dsw:	
+	  Corrected  to fix compile errors.
+	
 Tue Apr  8 16:38:00 2003  Dave Smith  <dts@prismtechnologies.com>
 
 	* tao/Any_T.cpp:

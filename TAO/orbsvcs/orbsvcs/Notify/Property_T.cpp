@@ -100,20 +100,20 @@ TAO_NS_StructProperty_T<TYPE>::set (const TAO_NS_PropertySeq& property_seq)
 {
   CosNotification::PropertyValue value;
 
-  if (property_seq.find (this->name_, value) == -1)
+  if (property_seq.find (this->name_, value) == 0)
     {
-      this->valid_ = 0;
-      return -1;
+      TYPE* extract_type = 0;
+      
+      if ((value >>= extract_type)  && extract_type != 0) // make sure we get something valid.
+	{
+	  this->value_ = *extract_type; // copy
+	  this->valid_ = 1;
+	  return 0;
+	}
     }
-
-  TYPE* extract_type;
-  value >>= extract_type;
-
-  this->value_ = *extract_type; // copy
-
-  this->valid_ = 1;
-
-  return 0;
+  
+  this->valid_ = 0;
+  return -1;
 }
 
 #endif /* TAO_NS_PROPERTY_T_CPP */

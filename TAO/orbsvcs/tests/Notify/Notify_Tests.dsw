@@ -489,7 +489,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_RT_NotifyTests DLL"=..\..\..\..\..\..\ACE_wrappers\TAO\orbsvcs\tests\Notify\RT_lib\TAO_RT_NotifyTests.dsp - Package Owner=<4>
+Project: "TAO_RT_NotifyTests DLL"=.\RT_lib\TAO_RT_NotifyTests.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -497,11 +497,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO_RT_NotifyTests_Filter DLL"=..\..\..\..\..\..\ACE_wrappers\TAO\orbsvcs\tests\Notify\Test_Filter\TAO_RT_NotifyTests_Filter.dsp - Package Owner=<4>
+Project: "TAO_RT_NotifyTests_Filter DLL"=.\Test_Filter\TAO_RT_NotifyTests_Filter.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

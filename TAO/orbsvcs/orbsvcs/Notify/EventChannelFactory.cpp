@@ -43,9 +43,6 @@ TAO_NS_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return;
 
-  this->ec_container_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
 
   delete this->ec_container_;
