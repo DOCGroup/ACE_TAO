@@ -642,50 +642,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     << be_global->be_get_server_hdr_fname (1)
     << "\"";
 
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/Object_Adapter.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/Operation_Table.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/TAO_Server_Request.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/ORB_Core.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/Profile.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/Stub.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/IFR_Client_Adapter.h");
-
-  if (be_global->gen_thru_poa_collocation () 
-      || be_global->gen_direct_collocation ())
-    {
-      this->gen_arg_file_includes (this->server_skeletons_);
-    }
-
-  // The following header must always be included.
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableInterceptor.h");
-
-  // Include Portable Interceptor related headers.
-  *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1";
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/RequestInfo_Util.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PICurrent.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ServerRequestInfo.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ServerInterceptorAdapter.h");
-  *this->server_skeletons_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
-
-  this->gen_standard_include (this->server_skeletons_,
-                              "ace/Dynamic_Service.h");
-  // To get ACE_UNUSED_ARGS
-  this->gen_standard_include (this->server_skeletons_,
-                              "ace/config-all.h");
-
-
+  this->gen_skel_src_includes ();
 
   *this->server_skeletons_ << "\n\n#if defined (__BORLANDC__)\n"
                            << "#pragma option -w-rvl -w-rch -w-ccc -w-aus\n"
@@ -1420,6 +1377,60 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   this->gen_any_file_includes ();
   this->gen_arg_file_includes (this->client_stubs_);
+}
+
+void
+TAO_CodeGen::gen_skel_src_includes (void)
+{
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Object_Adapter.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Operation_Table.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/TAO_Server_Request.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/ORB_Core.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/Profile.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/Stub.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/IFR_Client_Adapter.h");
+
+  if (be_global->gen_thru_poa_collocation () 
+      || be_global->gen_direct_collocation ())
+    {
+      this->gen_arg_file_includes (this->server_skeletons_);
+    }
+
+  // Need _unchecked_narrow () for reply handler _this() method.
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      this->gen_standard_include (this->server_skeletons_,
+                                  "tao/Object_T.h");
+    }
+
+  // The following header must always be included.
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableInterceptor.h");
+
+  // Include Portable Interceptor related headers.
+  *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1";
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/RequestInfo_Util.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PICurrent.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/ServerRequestInfo.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/ServerInterceptorAdapter.h");
+  *this->server_skeletons_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
+
+  this->gen_standard_include (this->server_skeletons_,
+                              "ace/Dynamic_Service.h");
+  // To get ACE_UNUSED_ARGS
+  this->gen_standard_include (this->server_skeletons_,
+                              "ace/config-all.h");
 }
 
 void
