@@ -1,5 +1,13 @@
 Mon Mar 15 00:26:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* netsvcs/ACE-netsvcs.html: Updated this to document the current
+ 	  version.  Thanks to Bill Rizzi <rizzi@softserv.com> for
+ 	  reporting this.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp: Make sure that debug
+ 	  messages go to stderr and log messages go to stdout.  Thanks to
+ 	  Bill Rizzi <rizzi@softserv.com> for reporting this.
+
 	* netsvcs/lib/Client_Logging_Handler.cpp (fini): Oops, fixed a
  	  minor buglet with return values.  Thanks to David for reporting
  	  this.
