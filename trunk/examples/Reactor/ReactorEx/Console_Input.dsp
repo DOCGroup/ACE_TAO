@@ -1,23 +1,23 @@
-# Microsoft Developer Studio Project File - Name="Exceptions" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Console_Input" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Exceptions - Win32 Debug
+CFG=Console_Input - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Exceptions.mak".
+!MESSAGE NMAKE /f "Console_Input.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Exceptions.mak" CFG="Exceptions - Win32 Debug"
+!MESSAGE NMAKE /f "Console_Input.mak" CFG="Console_Input - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Exceptions - Win32 Debug" (based on\
+!MESSAGE "Console_Input - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -28,8 +28,8 @@ CPP=cl.exe
 RSC=rc.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Exceptio"
-# PROP BASE Intermediate_Dir "Exceptio"
+# PROP BASE Output_Dir "Console_"
+# PROP BASE Intermediate_Dir "Console_"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -46,13 +46,13 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace"
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # Begin Target
 
-# Name "Exceptions - Win32 Debug"
+# Name "Console_Input - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_exceptions.cpp
+SOURCE=.\test_console_input.cpp
 # End Source File
 # End Target
 # End Project

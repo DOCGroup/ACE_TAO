@@ -3,6 +3,30 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
+Project: "Console_Input"=.\Console_Input.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Directory_Changes"=.\Directory_Changes.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Exceptions"=.\Exceptions.dsp - Package Owner=<4>
 
 Package=<5>
@@ -40,6 +64,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Registration"=.\Registration.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Registry_Changes"=.\Registry_Changes.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
