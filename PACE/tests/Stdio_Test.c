@@ -112,9 +112,10 @@ main (int argc, char **argv)
   printf("pace_fclose %s\n", success);
 
 
-  // use this to pause the program to test the size of the exe
-  // Cntr-Alt-Del and then look at the task manager to
-  // find the size
+  /* use this to pause the program to test the size of the exe
+  *  Cntr-Alt-Del and then look at the task manager to
+  *  find the size
+  */
   pace_sleep (SLEEPTIME);
 
   PACE_UNUSED_ARG (argc);
