@@ -1,3 +1,21 @@
+Thu Mar 26 08:31:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy: We were setting the name of a sequence (named
+	sequence) when the code for client header generation was
+	invoked. However, in cases where we import some definitions, we
+	never go into the code generation code for that type. As a result,
+	such imported typedefed (a.k.a named) sequences remained
+	nameless. So when the time came to emit their name, it resulted in
+	a segmentation fault.
+
+	We fix this by setting the name of the sequence in the parsing
+	stage itself.
+
+	Thanks to Torben Worm (tworm@cs.wustl.edu) for reporting the bug
+	to me.
+
+	Changed files also include y.tab.cpp and y.tab.h
+
 Thu Mar 26 06:29:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Marshal.{h,cpp},ORB.*,Object.{h,cpp},corba.h:
