@@ -182,7 +182,7 @@ public:
   // Initialize the <Peer_Connector>.  NOTE:  the arguments are
   // ignored.  They are only provided to avoid a compiler warning
   // about hiding the virtual function ACE_Connector<Peer_Handler,
-  // ACE_SOCK_CONNECTOR>::open(ACE_Reactor*, int)
+  // ACE_SOCK_CONNECTOR>::open(ACE_Reactor*, int).
 
 private:
   int open_connector (Peer_Handler *&ph, u_short port);
