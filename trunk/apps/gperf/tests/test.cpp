@@ -14,7 +14,7 @@ char *in_word_set (const char *str, int len);
 int 
 main (int argc, char *argv[])
 {
-  int verbose = argc > 1 && strcmp (argv[1], "-v") ? 1 : 0;
+  int verbose = argc > 1 && strcmp (argv[1], "-v") == 0 ? 1 : 0;
   char buf[MAX_LEN];
 
   while (fgets (buf, sizeof buf, stdin) != 0) 

@@ -51,8 +51,8 @@ check:
 	@echo "testing Modula3 reserved words, all items should be found in the set"
 	./m3out -v < $(srcdir)/modula3.gperf > modula.out
 	-diff -b $(srcdir)/modula.exp modula.out
-	$(GPERF) -a -o -S2 -p < $(srcdir)/pascal.gperf > pinset.c
-	$(CXX) $(CFLAGS) -o pout pinset.c test.o
+	$(GPERF) -a -o -S2 -p < $(srcdir)/pascal.gperf > pinset.cpp
+	$(CXX) $(CFLAGS) -o pout pinset.cpp test.o
 	@echo "testing Pascal reserved words, all items should be found in the set"
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
