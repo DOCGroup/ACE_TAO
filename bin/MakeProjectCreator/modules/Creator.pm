@@ -116,12 +116,14 @@ sub parse_file {
   my($linenumber) = $self->line_number();
 
   if (!$status) {
-    print STDERR "$input: line $linenumber: $errorString\n";
+    print STDERR $self->getcwd() .
+                 "/$input: line $linenumber:\n$errorString\n";
   }
   elsif ($status && $self->{$typecheck}) {
     ## If we are at the end of the file and the type we are looking at
     ## is still defined, then we have an error
-    print STDERR "$input: line $linenumber: ERROR: Did not " .
+    print STDERR $self->getcwd() .
+                 "/$input: line $linenumber:\nERROR: Did not " .
                  "find the end of the $self->{'grammar_type'}\n";
     $status = 0;
   }
