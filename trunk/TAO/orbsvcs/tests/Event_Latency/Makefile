@@ -1,7 +1,7 @@
 # $Id$
 
 BIN = Event_Latency
-VBIN = $(BIN:%=%$(VAR))
+
 
 EVENT_LATENCY_SRCS= \
 	Event_Latency.cpp

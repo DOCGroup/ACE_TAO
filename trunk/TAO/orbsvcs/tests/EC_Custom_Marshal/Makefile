@@ -1,7 +1,7 @@
 # $Id$
 
 BIN = ECM_Supplier ECM_Consumer
-VBIN = $(BIN:%=%$(VAR))
+
 LDLIBS= -lorbsvcs -lTAO
 
 ifndef TAO_ROOT

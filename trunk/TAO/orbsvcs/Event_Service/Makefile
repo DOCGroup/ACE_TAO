@@ -3,7 +3,7 @@
 #
 
 BIN = Event_Service
-VBIN = $(BIN:%=%$(VAR))
+
 
 LSRC = 	\
 	Event_Service.cpp \

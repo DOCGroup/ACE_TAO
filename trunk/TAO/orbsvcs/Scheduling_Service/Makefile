@@ -3,7 +3,7 @@
 #
 
 BIN = Scheduling_Service
-VBIN = $(BIN:%=%$(VAR))
+
 
 SCHEDULE_SRCS = \
 	Scheduling_Service.cpp
