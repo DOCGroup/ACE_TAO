@@ -85,7 +85,7 @@ Alex V. Maclinovsky <alexm@teltrunk1.tait.co.nz>
 Todd Blanchard <tblancha@evolving.com>
 Rob Clairmont <rclairmo@bnr.ca>
 Christian Millour <chris@etca.fr>
-Neil Cohen <nbc@metsci.com>
+Neil B. Cohen <nbc@cisco.com>
 Dieter Quehl <dieter.quehl@med.siemens.de>
 Reginald S. Perry <perry@zso.dec.com>
 James Morris <jmorris@aurora.apana.org.au>
@@ -671,6 +671,7 @@ Peter Brandstrom <peter.brandstrom@ericsson.com>
 Eugene Surovegin <ebs@glasnet.ru>
 Thaddeus Olczyk <olczyk@interaccess.com>
 John Chludzinski <john_chludzinski@jsims.com>
+Pedro Alves Ferreira <pedro.ferreira@inescn.pt>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
