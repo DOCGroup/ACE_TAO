@@ -33,8 +33,8 @@
 #endif
 
 #ifndef	_POSIX_THREADS		// _POSIX_THREAD_SAFE_FUNCTIONS implied
-#define	flockfile (f)
-#define funlockfile (f)
+#define	flockfile(f)
+#define funlockfile(f)
 #endif	// _POSIX_THREADS
 
 u_int TAO_debug_level	= 0;
@@ -113,7 +113,7 @@ setup (void)
   // other setup goes here
 }
 
-#define	emit_prefix (stream) fprintf (stream, "p%ld:  ", my_pid)
+#define	emit_prefix(stream) fprintf (stream, "p%ld:  ", my_pid)
 
 #else
 
@@ -128,13 +128,13 @@ dmsg_filter (const char *_FAR categories,
 {
   const char *cp;
 
-  if (!categories || !debug_filter)
+  if (!categories || !TAO_debug_filter)
     return;
 
-  if (*debug_filter != '*') 
+  if (*TAO_debug_filter != '*') 
     {		// filter with "*" --> all pass
       for (cp = categories; *cp; cp++)
-	if (strchr (debug_filter, *cp) != 0)
+	if (strchr (TAO_debug_filter, *cp) != 0)
 	  break;
 
       if (!*cp)
