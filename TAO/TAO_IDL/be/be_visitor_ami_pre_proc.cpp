@@ -38,6 +38,7 @@ be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc (void)
 int 
 be_visitor_ami_pre_proc::visit_module (be_module *node)
 {
+  ACE_UNUSED_ARG (node);
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_module\n"));
   if (this->visit_scope (node) == -1)
     {
@@ -194,6 +195,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 int 
 be_visitor_ami_pre_proc::visit_interface_fwd (be_interface_fwd *node)
 {
+  ACE_UNUSED_ARG (node);
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_interface_fwd\n"));
 
   return 0;
@@ -220,6 +222,7 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 int 
 be_visitor_ami_pre_proc::visit_argument (be_argument *node)
 {
+  ACE_UNUSED_ARG (node);
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_argument\n"));
 
   return 0;
@@ -228,6 +231,7 @@ be_visitor_ami_pre_proc::visit_argument (be_argument *node)
 int
 be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 {
+  ACE_UNUSED_ARG (node);
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_attribute\n"));
   
   return 0;
