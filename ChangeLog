@@ -1,3 +1,9 @@
+Wed Apr 28 12:53:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lib_Find.cpp:
+        * ace/Memory_Pool.cpp:
+          Added missing quotes to the ACE_RCSID macro.
+
 Wed Apr 28 12:19:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         First checkin of the OpenVMS port of ACE. This port is done by
