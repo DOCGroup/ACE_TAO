@@ -9,8 +9,7 @@
 //   CosPropertyService_i.cpp
 //
 // = AUTHOR
-//    Sumedh Mungee <sumedh@cs.wustl.edu>
-//    
+//    Alexander Babu Arulanthu
 //
 // ============================================================================
 
@@ -23,7 +22,7 @@ TAO_PropertySetFactory::TAO_PropertySetFactory (void)
 CosPropertyService::PropertySet_ptr
 TAO_PropertySetFactory::create_propertyset (CORBA::Environment &env) 
 {
-  CosPropertyService::PropertySet_ptr return_val;
+  CosPropertyService::PropertySet_ptr return_val = 0;
   
   return return_val;
 }
@@ -33,17 +32,16 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
                                                         const CosPropertyService::Properties &allowed_properties, 
                                                         CORBA::Environment &env)
 {
-  CosPropertyService::PropertySet_ptr return_val;
+  CosPropertyService::PropertySet_ptr return_val = 0;
 
   return return_val;
-
 }  
 
 CosPropertyService::PropertySet_ptr 
 TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Properties &initial_properties, 
                                                     CORBA::Environment &env) 
 {
-  CosPropertyService::PropertySet_ptr return_val;
+  CosPropertyService::PropertySet_ptr return_val = 0;
 
   return return_val;
 }
@@ -87,12 +85,8 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
   return return_val;
 }
 
-// Constructor
-// Init the hash_table_ member variable.
-// alex : Is it correct to have this const hash Table size ????
-
+// Makes default sized hash_table_ 
 TAO_PropertySet::TAO_PropertySet (void)
-  : hash_table_ (HASH_TABLE_SIZE)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Hash_Map_Manager created::  CurntSize : %d , TotalSize : %d \n",
