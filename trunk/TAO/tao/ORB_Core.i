@@ -181,6 +181,12 @@ TAO_ORB_Core::default_priority_model (void) const
   return this->default_policies_->priority_model ();
 }
 
+ACE_INLINE TAO_ServerProtocolPolicy *
+TAO_ORB_Core::default_server_protocol (void) const
+{
+  return this->default_policies_->server_protocol ();
+}
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources*

@@ -384,6 +384,12 @@ public:
   // This policy is only available at the POA and ORB level; not
   // available at the object or thread level.
 
+  TAO_ServerProtocolPolicy *default_server_protocol (void) const;
+
+  TAO_ServerProtocolPolicy *server_protocol (void);
+  // This policy is only available at the POA and ORB level; not
+  // available at the object or thread level.
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   int get_thread_priority (CORBA::Short &priority);

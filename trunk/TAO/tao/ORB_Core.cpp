@@ -2211,6 +2211,28 @@ TAO_ORB_Core::priority_model (void)
   return result;
 }
 
+TAO_ServerProtocolPolicy *
+TAO_ORB_Core::server_protocol (void)
+{
+  TAO_ServerProtocolPolicy *result = 0;
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->server_protocol ();
+    }
+
+  if (result == 0)
+    result = this->default_server_protocol ();
+
+  return result;
+}
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
