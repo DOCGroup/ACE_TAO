@@ -259,14 +259,21 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // @@ (JP) The following code depends on the fact that 
       // TO_InputCDR does not contain chained message blocks.
       char *begin, *end;
+
+      // This will be the start of a new message block.
       begin = this->incoming_->rd_ptr ();
 
-      CORBA::TypeCode::traverse_status retval = 
+      // No need to duplicate - it gets done below.
+      ACE_Message_Block *cdr = ACE_const_cast (ACE_Message_Block*,
+                                               this->incoming_->start ());
+
+      cdr->rd_ptr (begin);
+
+      // Skip over the next aregument.
+      CORBA::TypeCode::traverse_status status = 
         this->incoming_->skip (tc.in (), env);
 
-      TAO_CHECK_ENV (env);
-
-      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
           const char* param_name = nv->name ();
 
@@ -279,15 +286,12 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
           return;
         }
 
+      // This will be the end of the new message block.
       end = this->incoming_->rd_ptr ();
-
-      ACE_Message_Block* cdr;
-
-      ACE_NEW(cdr,
-              ACE_Message_Block (end - begin));
 
       cdr->wr_ptr (end);
 
+      // Stick it into the Any. It gets duplicated here.
       any->_tao_replace (tc.in (),
                          cdr,
                          0,
