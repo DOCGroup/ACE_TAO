@@ -1,9 +1,15 @@
+Wed Mar 17 12:33:35 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.i: Reenabed ACE_OS::rename() and we'll see which
+ 	  platforms need to have ACE_LACKS_RENAME.  Thanks to Susan
+ 	  Liebeskind <shl@cc.gatech.edu> for reporting this.
+
 Wed Mar 17 10:46:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Message_Block.i (space): Moved ACE_Message_Block::space()
-	after inline declarations of ACE_Message_Block::end() and
-	ACE_Message_Block::wr_ptr() to prevent "used before it was declared
-	inline"	warnings on end() and wr_ptr().
+ 	  after inline declarations of ACE_Message_Block::end() and
+ 	  ACE_Message_Block::wr_ptr() to prevent "used before it was
+ 	  declared inline" warnings on end() and wr_ptr().
 
 Wed Mar 17 10:24:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
