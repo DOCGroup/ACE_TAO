@@ -15,6 +15,10 @@ OBJFILES = \
 	$(OBJDIR)\constantsS.obj \
 	$(OBJDIR)\enum_in_structC.obj \
 	$(OBJDIR)\enum_in_structS.obj \
+	$(OBJDIR)\fullC.obj \
+	$(OBJDIR)\fullS.obj \
+	$(OBJDIR)\fwdC.obj \
+	$(OBJDIR)\fwdS.obj \
 	$(OBJDIR)\generic_objectC.obj \
 	$(OBJDIR)\generic_objectS.obj \
 	$(OBJDIR)\includedC.obj \
@@ -61,6 +65,8 @@ IDLFILES = \
         $(IDLDIR)\array.idl \
         $(IDLDIR)\constants.idl \
         $(IDLDIR)\enum_in_struct.idl \
+        $(IDLDIR)\full.idl \
+        $(IDLDIR)\fwd.idl \
         $(IDLDIR)\generic_object.idl \
         $(IDLDIR)\included.idl \
         $(IDLDIR)\including.idl \

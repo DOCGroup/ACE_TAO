@@ -19,6 +19,8 @@ IDL_ALWAYS =	anonymous		\
 		array			\
 		constants		\
 		enum_in_struct		\
+                full                    \
+                fwd                     \
 		generic_object		\
 		included		\
 		including		\
