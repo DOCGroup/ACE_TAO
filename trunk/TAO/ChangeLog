@@ -1,3 +1,11 @@
+Sat Jun 21 09:34:14 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/BiDir_GIOP/BiDir_Policy_i.cpp (TAO_BidirectionalPolicy):
+
+	  Corrected base class initialization order in base member
+	  initialization list to match class inheritance order.  Fixes a
+	  warning.
+
 Sat Jun 21 14:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Event_Service/Event_Service.cpp:
