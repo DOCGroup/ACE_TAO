@@ -28,7 +28,6 @@ SRC   	= $(addsuffix .cpp,$(BIN))
 OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
 
 LSRC	= $(addsuffix .cpp,$(FILES))
-LIBS	= -lACE
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

@@ -33,10 +33,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
 
-$usage = "usage: $0 -? | [-d <directory mode>] [-v] <build name>\n";
+$usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] <build name>\n";
 $directory_mode = 042755;   #### fine on Suns, but maybe not all Unix platforms
 $verbose = 0;
 
+$source='.';
+$absolute= 0;
+
+require Cwd;
 
 ####
 #### process command line args
@@ -51,6 +55,9 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ ) {
             warn "$0:  must provide argument for -d option\n";
             die $usage;
         }
+    } elsif ($ARGV[0] eq '-a' ) {
+	$source = Cwd::getcwd();
+	$absolute = 1;
     } elsif ( $ARGV[0] eq '-?' ) {
         print "$usage";
         exit;
@@ -81,7 +88,8 @@ $build = "build/$build";
 ####
 #### Get all ACE plain file and directory names.
 ####
-@files = ( `/usr/bin/find . -name CVS -prune -o -name build -prune -o \\\
+@files = ( `/usr/bin/find . -name CVS -prune \\\
+	-o -name build -prune -o \\\
     -name '.*obj' -prune -o -name Templates.DB -prune -o \\\
     \\( ! -type l ! -name core ! -name '*.state' ! -name '*.so' \\\
     ! -name '*.[oa]' ! -name '*~' ! -name '.' ! -name '.#*' \\\
@@ -92,22 +100,29 @@ $build = "build/$build";
 #### Create directories and symlinks to files.
 ####
 foreach $file ( @files ) {
-    chop $file;          #### remove trailing newline (from find command above)
-    $file =~ s%^\./%%g;  #### excise leading ./ directory component
+   chop $file;         #### remove trailing newline (from find command above)
+   $file =~ s%^./%%g;  #### excise leading ./ directory component
 
-    if ( -d $file ) {
+   if ( -d $file ) {
         unless ( -d "$build/$file" ) {
             print "mkdir $build/$file, $directory_mode\n" if $verbose;
             mkdir "$build/$file", $directory_mode;
         }
     } else {
         unless ( -e "$build/$file" ) {
-            $up = '../..';
-            while ( $file =~ m%/%g ) { $up .= '/..'; }
-
-            print "symlink $up/$file $build/$file\n" if $verbose;
-            symlink "$up/$file", "$build/$file"  ||
+	    if (!$absolute) {
+		$up = '../..';
+		while ( $file =~ m%/%g ) { $up .= '/..'; }
+		
+		print "symlink $up/$file $build/$file\n" if $verbose;
+		symlink "$up/$file", "$build/$file"  ||
                 die "$0 symlink to $build/$file failed\n";
+	    } else {
+		$path = $source . '/' . $file;
+		print "symlink $path $build/$file\n" if $verbose;
+		symlink "$path", "$build/$file"
+		    || die "$0 symlink to $build/$file failed\n";
+	    }
         }
     }
 }
@@ -116,8 +131,13 @@ foreach $file ( @files ) {
 #### If this is for an ACE top-level directory, create ChangeLog symlink.
 ####
 unless ( -e "$build/ChangeLog" ) {
-    symlink '../../ChangeLog', "$build/ChangeLog"  ||
-        die "$0: unable to create $build/ChangeLog symlink\n";
+    if (!$absolute) {
+	symlink "../../ChangeLog", "$build/ChangeLog"  ||
+	    die "$0: unable to create $build/ChangeLog symlink\n";
+    } else {
+	symlink "$source/ChangeLog", "$build/ChangeLog"  ||
+	    die "$0: unable to create $build/ChangeLog symlink\n";
+    }
 }
 
 ####

@@ -27,7 +27,6 @@ LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
 
 LDLIBS	= -lGateway
-LIBS	= -lACE
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

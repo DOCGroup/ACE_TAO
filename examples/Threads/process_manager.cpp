@@ -58,7 +58,7 @@ sig_handler (void *)
 		}
 	    }
 	  
-	  break;
+	  /* NOTREACHED */
 	case -1:
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sigwait"), 0);
 	  /* NOTREACHED */

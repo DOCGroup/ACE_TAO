@@ -117,5 +117,5 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, ".\n"));
     }
 
-  return 0;
+  ACE_NOTREACHED(return 0);
 }

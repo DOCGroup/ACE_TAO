@@ -100,7 +100,7 @@ Peer_Handler<ROUTER, KEY>::svc (void)
           // return this->router_task_->reply (hb) == -1 ? -1 : 0;
 	}
     }
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 template <class ROUTER, class KEY> int
