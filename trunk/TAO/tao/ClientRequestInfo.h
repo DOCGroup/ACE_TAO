@@ -18,7 +18,7 @@
 
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +35,6 @@
 
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
-//#include "StringSeqC.h"
 
 class TAO_ClientRequestInfo_i;
 
@@ -227,7 +226,7 @@ private:
 
   /// Check if this ClientRequestInfo object is called within the
   /// context of a request.
-  void check_validity (TAO_ENV_ARG_DECL);
+  void check_validity (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
 

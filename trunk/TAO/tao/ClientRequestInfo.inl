@@ -3,7 +3,7 @@
 // $Id$
 
 ACE_INLINE void
-TAO_ClientRequestInfo::check_validity (TAO_ENV_ARG_DECL)
+TAO_ClientRequestInfo::check_validity (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (this->info_ == 0)
     ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
