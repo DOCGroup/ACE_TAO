@@ -57,10 +57,10 @@ Test_DynArray::run_test (void)
 
       CORBA::Any in_any1;
       in_any1 <<= ta;
-      CORBA_DynAny_ptr dp1 = this->orb_->create_dyn_any (in_any1,
+      CORBA_DynAny_var dp1 = this->orb_->create_dyn_any (in_any1,
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynArray_ptr fa1 = CORBA_DynArray::_narrow (dp1,
+      CORBA_DynArray_var fa1 = CORBA_DynArray::_narrow (dp1,
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->seek (1,
@@ -86,7 +86,7 @@ Test_DynArray::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA_DynArray_ptr ftc1 = 
+      CORBA_DynArray_var ftc1 = 
         this->orb_->create_dyn_array (DynAnyTests::_tc_test_array,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -96,19 +96,16 @@ Test_DynArray::run_test (void)
       ftc1->from_any (in_any2,
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::Any* out_any1 = ftc1->to_any (ACE_TRY_ENV);
+      CORBA::Any_var out_any1 = ftc1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       DynAnyTests::test_array_forany ta_out;
-      *out_any1 >>= ta_out; 
+      out_any1.in () >>= ta_out; 
       
       if (ta_out[(CORBA::ULong) 1] == data.m_long1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
-
-      // Created with NEW
-      delete out_any1;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_elements/get_elements\n"));
@@ -138,11 +135,8 @@ Test_DynArray::run_test (void)
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (fa1);
       ftc1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::release (ftc1);
-      CORBA::release (dp1);
     }
   ACE_CATCHANY
     {

@@ -43,7 +43,8 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
 
       if (kind == CORBA::tk_array)
         {
-          CORBA::ULong numfields = this->get_arg_length (any.type (),
+          CORBA::TypeCode_var tc = any.type ();
+          CORBA::ULong numfields = this->get_arg_length (tc.in (),
                                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
           // Resize the array.
@@ -183,11 +184,14 @@ TAO_DynArray_i::set_elements (const CORBA_AnySeq& value,
     this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::TypeCode_var value_tc;
+
   for (CORBA::ULong i = 0; i < length; i++)
     {
       // Check each arg element for type match.
-      CORBA::Boolean equal = value[i].type ()->equal (element_type.in (),
-                                                      ACE_TRY_ENV);
+      value_tc = value[i].type ();
+      CORBA::Boolean equal = value_tc->equal (element_type.in (),
+                                              ACE_TRY_ENV);
       ACE_CHECK;
 
       if (equal)
@@ -273,7 +277,8 @@ void
 TAO_DynArray_i::from_any (const CORBA_Any& any,
                           CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean equal = this->type_.in ()->equal (any.type (),
+  CORBA::TypeCode_var tc = any.type ();
+  CORBA::Boolean equal = this->type_.in ()->equal (tc.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -285,7 +290,7 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
                         any._tao_byte_order ());
 
       CORBA::ULong length = this->da_members_.size ();
-      CORBA::ULong arg_length = this->get_arg_length (any.type (),
+      CORBA::ULong arg_length = this->get_arg_length (tc.in (),
                                                       ACE_TRY_ENV);
       ACE_CHECK;
 

@@ -49,8 +49,7 @@ int main (int argc, char* argv[])
 
 // constructor
 Driver::Driver (void)
-  : orb_ (0),
-    test_type_ (NO_TEST)
+  : test_type_ (NO_TEST)
 {
 }
 
@@ -196,6 +195,33 @@ Driver::run (void)
       default:
         break;
     }
+
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::Object_var obj =
+        this->orb_->resolve_initial_references ("RootPOA",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Driver::run");
+
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return retstatus;
 }
