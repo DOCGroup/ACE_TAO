@@ -1,3 +1,11 @@
+Thu Oct  3 11:16:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
+
+	  Fixed a compile-time error I introduced.
+
+	  Left comments for David.
+
 Thu Oct  3 11:05:57 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp (create_with_id):
