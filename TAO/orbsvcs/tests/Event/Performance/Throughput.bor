@@ -7,7 +7,7 @@ NAME = Throughput
 OBJFILES = $(OBJDIR)\Throughput.obj
 
 CFLAGS = \
-	-I..\lib \
+	$(TAO_RTEVENT_TEST_CFLAGS) \
 	$(TAO_RTEVENT_CFLAGS) \
 	$(TAO_NAMING_CFLAGS) \
 	$(TAO_SVC_UTILS_CFLAGS) \
@@ -17,7 +17,7 @@ CFLAGS = \
 	$(ACE_CFLAGS)
 
 LIBFILES = \
-	..\lib\$(BINDIR)\ECTests$(LIB_DECORATOR).lib \
+	$(TAO_RTEVENT_TEST_LIB) \
 	$(TAO_RTEVENT_LIB) \
         $(TAO_NAMING_LIB) \
         $(TAO_SVC_UTILS_LIB) \
