@@ -1302,7 +1302,7 @@ TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this
                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   return this->protocols_hooks_;
 }
@@ -1648,7 +1648,7 @@ TAO_ORB_Core::lf_strategy (void)
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int perform_work
-                   ACE_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
