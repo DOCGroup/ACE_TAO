@@ -1,3 +1,10 @@
+Thu Jun 24 17:29:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+	  Fixed problems with exception handling, thanks to Paul Calabrese
+	  <calabrese_p@ociweb.com> for pointing this out.
+
 Thu Jun 24 17:22:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/MT_Client/orb_creation.cpp:
