@@ -14,7 +14,7 @@
 // 
 // ========================================================================
 
-#if !defined (ACE_ARG_SHIFTER_H)
+#ifndef ACE_ARG_SHIFTER_H
 #define ACE_ARG_SHIFTER_H
 
 class ACE_Export ACE_Arg_Shifter

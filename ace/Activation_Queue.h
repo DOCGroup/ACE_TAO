@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_ACTIVATION_QUEUE_H)
+#ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H
 
 #include "ace/Synch_T.h"
