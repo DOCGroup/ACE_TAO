@@ -118,7 +118,7 @@ main (int argc, char *argv [])
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Calling shutdown \n"));
-      server->shutdown (TAO_ENV_ARG_PARAMETER);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

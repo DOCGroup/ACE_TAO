@@ -79,7 +79,7 @@ ServerServant::CreateExtra (CORBA::ULong len,
 
 void
 ServerServant::DeleteExtra (const ServerSequence &seq
-                            TAO_ENV_ARG_DECL)
+                            TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -111,7 +111,7 @@ void
 ServerServant::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  this->orb_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 /******************************************************/
