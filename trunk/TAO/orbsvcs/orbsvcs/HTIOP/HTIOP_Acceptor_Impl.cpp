@@ -5,6 +5,7 @@
 #define HTIOP_ACCEPTOR_IMPL_CPP
 
 #include "HTIOP_Acceptor_Impl.h"
+#include "HTIOP_Completion_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -130,6 +131,7 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_open (
     int protocol_family,
     int backlog)
 {
+  int error = 0;
 #if defined (ACE_HAS_IPV6)
   ACE_ASSERT (protocol_family == PF_INET || protocol_family == PF_INET6);
 
@@ -141,7 +143,7 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_open (
                       0,
                       sizeof local_inet6_addr);
 
-      if (local_sap == ACE_Addr::sap_any)
+      if (local_addr == ACE_Addr::sap_any)
         {
           local_inet6_addr.sin6_family = AF_INET6;
           local_inet6_addr.sin6_port = 0;
@@ -149,7 +151,7 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_open (
         }
       else
         local_inet6_addr = *ACE_reinterpret_cast (sockaddr_in6 *,
-                                                  local_sap.get_addr ());
+                                                  local_addr.get_addr ());
 
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
@@ -170,13 +172,13 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_open (
 			0,
 			sizeof local_inet_addr);
 
-	if (local_sap == ACE_Addr::sap_any)
+	if (local_addr == ACE_Addr::sap_any)
 	  {
 	    local_inet_addr.sin_port = 0;
 	  }
 	else
 	  local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
-						   local_sap.get_addr ());
+						   local_addr.get_addr ());
 	if (local_inet_addr.sin_port == 0)
 	  {
 	    if (ACE::bind_port (this->get_handle ()) == -1)
@@ -189,8 +191,8 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_open (
 	  error = 1;
       }
     else if (ACE_OS::bind (this->get_handle (),
-			   (sockaddr *) local_sap.get_addr (),
-			   local_sap.get_size ()) == -1)
+			   (sockaddr *) local_addr.get_addr (),
+			   local_addr.get_size ()) == -1)
       error = 1;
 
   if (error != 0
@@ -288,7 +290,7 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (A
   // re-establishes an existing session.
   do
     {
-      TAO::HTIOP::Completion_Handler *sh;
+      TAO::HTIOP::Completion_Handler *sh = 0;
       if (this->make_svc_handler(sh) == -1 ||
           this->accept_svc_handler (sh) == -1 ||
           this->activate_svc_handler (sh) == -1)
