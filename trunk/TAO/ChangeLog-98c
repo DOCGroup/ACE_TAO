@@ -1,3 +1,7 @@
+Thu Oct 15 17:29:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Added EC_UDP_Admin.cpp.
+
 Thu Oct 15 13:54:23 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Supplier_i.cpp:
