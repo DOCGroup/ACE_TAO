@@ -63,13 +63,29 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
 {
   char *certificate_path = 0;
   char *private_key_path = 0;
+  char *dhparams_path = 0;
 
   int certificate_type = -1;
   int private_key_type = -1;
+  int dhparams_type = -1;
+
+  int prevdebug = -1;
 
   for (int curarg = 0; curarg != argc; ++curarg)
     {
-      if (ACE_OS::strcasecmp (argv[curarg],
+      if ((ACE_OS::strcasecmp (argv[curarg],
+                               "-verbose") == 0)
+          || (ACE_OS::strcasecmp (argv[curarg],
+                                  "-v") == 0))
+        {
+          if (TAO_debug_level == 0)
+            {
+              prevdebug = TAO_debug_level;
+              TAO_debug_level = 1;
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
                               "-SSLNoProtection") == 0)
         {
           // Enable the eNULL cipher.  Note that enabling the "eNULL"
@@ -167,44 +183,145 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
               ACE_SSL_Context::instance ()->default_verify_mode (mode);
             }
         }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLDHparams") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              char *lasts = 0;
+              const char *type_name =
+                ACE_OS::strtok_r (argv[curarg], ":", &lasts);
+              dhparams_path = ACE_OS::strtok_r (0, ":", &lasts);
+
+              if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
+                {
+                  dhparams_type = SSL_FILETYPE_ASN1;
+                }
+              else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
+                {
+                  dhparams_type = SSL_FILETYPE_PEM;
+                }
+            }
+        }
+
+    }
+
+  // Load in the DH params.  If there was a file explicitly specified,
+  // then we do that here, otherwise we load them in from the cert file.
+  // Note that we only do this on the server side, I think so we might
+  // need to defer this 'til later in the acceptor or something...
+  if (dhparams_path == 0)
+    {
+      // If the user didn't explicitly specify a DH parameters file, we
+      // also might find it concatenated in the certificate file.
+      // So, we set the dhparams to that if it wasn't explicitly set.
+      dhparams_path = certificate_path;
+      dhparams_type = certificate_type;
+    }
+  
+  if (dhparams_path != 0)
+    {
+      if (ACE_SSL_Context::instance ()->dh_params (dhparams_path,
+                                                   dhparams_type) != 0)
+        {
+          if (dhparams_path != certificate_path)
+            {
+              // We only want to fail catastrophically if the user specified
+              // a dh parameter file and we were unable to actually find it
+              // and load from it.
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
+                            ACE_TEXT ("unable to set ")
+                            ACE_TEXT ("DH parameters <%s>"),
+                            dhparams_path));
+              return -1; 
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_INFO,
+                            ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
+                            ACE_TEXT ("No DH parameters found in ")
+                            ACE_TEXT ("certificate <%s>; either none ")
+                            ACE_TEXT ("are needed (RSA) or badness will ensue later.\n"),
+                            dhparams_path));
+            }
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_INFO,
+                        ACE_TEXT ("(%P|%t) SSLIOP loaded ")
+                        ACE_TEXT ("Diffie-Hellman params ")
+                        ACE_TEXT ("from %s\n"),
+                        dhparams_path));
+        }
     }
 
   // The certificate must be set before the private key since the
   // ACE_SSL_Context attempts to check the private key for
   // consistency.  That check requires the certificate to be available
   // in the underlying SSL_CTX.
-  if (certificate_path != 0
-      && ACE_SSL_Context::instance ()->certificate (certificate_path,
-                                                    certificate_type) != 0)
+  if (certificate_path != 0)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Unable to set ")
-                    ACE_TEXT ("SSL certificate <%s> ")
-                    ACE_TEXT ("in SSLIOP factory.\n"),
-                    certificate_path));
+      if (ACE_SSL_Context::instance ()->certificate (certificate_path,
+                                                    certificate_type) != 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Unable to set ")
+                        ACE_TEXT ("SSL certificate <%s> ")
+                        ACE_TEXT ("in SSLIOP factory.\n"),
+                        certificate_path));
 
-                  return -1;
+          return -1;
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_INFO,
+                        ACE_TEXT ("(%P|%t) SSLIOP loaded ")
+                        ACE_TEXT ("SSL certificate ")
+                        ACE_TEXT ("from %s\n"),
+                        certificate_path));
+        }
     }
 
-  if (private_key_path != 0
-      && ACE_SSL_Context::instance ()->private_key (private_key_path,
-                                                    private_key_type) != 0)
+  if (private_key_path != 0)
     {
-      if (TAO_debug_level > 0)
+      if (ACE_SSL_Context::instance ()->private_key (private_key_path,
+                                                     private_key_type) != 0)
         {
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Unable to set ")
-                      ACE_TEXT ("SSL private key ")
-                      ACE_TEXT ("<%s> in SSLIOP factory.\n"),
-                      private_key_path));
-        }
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) Unable to set ")
+                          ACE_TEXT ("SSL private key ")
+                          ACE_TEXT ("<%s> in SSLIOP factory.\n"),
+                          private_key_path));
+            }
 
-      return -1;
+          return -1;
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_INFO,
+                        ACE_TEXT ("(%P|%t) SSLIOP loaded ")
+                        ACE_TEXT ("Private Key ")
+                        ACE_TEXT ("from %s\n"),
+                        private_key_path));
+        }
     }
 
   if (this->register_orb_initializer () != 0)
     return -1;
+
+  if (prevdebug != -1)
+    TAO_debug_level = prevdebug;
 
   return 0;
 }
