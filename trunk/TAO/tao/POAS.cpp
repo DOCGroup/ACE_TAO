@@ -71,16 +71,16 @@ TAO_PortableServer_ThreadPolicy_Perfect_Hash_OpTable::lookup (const char *str, u
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0},
-      {"copy", 	&POA_PortableServer::ThreadPolicy::copy_skel},
+      {"copy",  &POA_PortableServer::ThreadPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::ThreadPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_PortableServer::ThreadPolicy::destroy_skel},
+      {"destroy",       &POA_PortableServer::ThreadPolicy::destroy_skel},
       {"",0}, {"",0},
-      {"_get_value", 	&POA_PortableServer::ThreadPolicy::_get_value_skel},
+      {"_get_value",    &POA_PortableServer::ThreadPolicy::_get_value_skel},
       {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::ThreadPolicy::_non_existent_skel},
       {"",0}, {"",0},
-      {"_get_policy_type", 	&POA_PortableServer::ThreadPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_PortableServer::ThreadPolicy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -357,16 +357,16 @@ TAO_PortableServer_LifespanPolicy_Perfect_Hash_OpTable::lookup (const char *str,
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0},
-      {"copy", 	&POA_PortableServer::LifespanPolicy::copy_skel},
+      {"copy",  &POA_PortableServer::LifespanPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::LifespanPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_PortableServer::LifespanPolicy::destroy_skel},
+      {"destroy",       &POA_PortableServer::LifespanPolicy::destroy_skel},
       {"",0}, {"",0},
-      {"_get_value", 	&POA_PortableServer::LifespanPolicy::_get_value_skel},
+      {"_get_value",    &POA_PortableServer::LifespanPolicy::_get_value_skel},
       {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::LifespanPolicy::_non_existent_skel},
       {"",0}, {"",0},
-      {"_get_policy_type", 	&POA_PortableServer::LifespanPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_PortableServer::LifespanPolicy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -641,16 +641,16 @@ TAO_PortableServer_IdUniquenessPolicy_Perfect_Hash_OpTable::lookup (const char *
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0},
-      {"copy", 	&POA_PortableServer::IdUniquenessPolicy::copy_skel},
+      {"copy",  &POA_PortableServer::IdUniquenessPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::IdUniquenessPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_PortableServer::IdUniquenessPolicy::destroy_skel},
+      {"destroy",       &POA_PortableServer::IdUniquenessPolicy::destroy_skel},
       {"",0}, {"",0},
-      {"_get_value", 	&POA_PortableServer::IdUniquenessPolicy::_get_value_skel},
+      {"_get_value",    &POA_PortableServer::IdUniquenessPolicy::_get_value_skel},
       {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::IdUniquenessPolicy::_non_existent_skel},
       {"",0}, {"",0},
-      {"_get_policy_type", 	&POA_PortableServer::IdUniquenessPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_PortableServer::IdUniquenessPolicy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -926,16 +926,16 @@ TAO_PortableServer_IdAssignmentPolicy_Perfect_Hash_OpTable::lookup (const char *
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0},
-      {"copy", 	&POA_PortableServer::IdAssignmentPolicy::copy_skel},
+      {"copy",  &POA_PortableServer::IdAssignmentPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::IdAssignmentPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_PortableServer::IdAssignmentPolicy::destroy_skel},
+      {"destroy",       &POA_PortableServer::IdAssignmentPolicy::destroy_skel},
       {"",0}, {"",0},
-      {"_get_value", 	&POA_PortableServer::IdAssignmentPolicy::_get_value_skel},
+      {"_get_value",    &POA_PortableServer::IdAssignmentPolicy::_get_value_skel},
       {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::IdAssignmentPolicy::_non_existent_skel},
       {"",0}, {"",0},
-      {"_get_policy_type", 	&POA_PortableServer::IdAssignmentPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_PortableServer::IdAssignmentPolicy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -1212,16 +1212,16 @@ TAO_PortableServer_ImplicitActivationPolicy_Perfect_Hash_OpTable::lookup (const 
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0},
-      {"copy", 	&POA_PortableServer::ImplicitActivationPolicy::copy_skel},
+      {"copy",  &POA_PortableServer::ImplicitActivationPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::ImplicitActivationPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_PortableServer::ImplicitActivationPolicy::destroy_skel},
+      {"destroy",       &POA_PortableServer::ImplicitActivationPolicy::destroy_skel},
       {"",0}, {"",0},
-      {"_get_value", 	&POA_PortableServer::ImplicitActivationPolicy::_get_value_skel},
+      {"_get_value",    &POA_PortableServer::ImplicitActivationPolicy::_get_value_skel},
       {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::ImplicitActivationPolicy::_non_existent_skel},
       {"",0}, {"",0},
-      {"_get_policy_type", 	&POA_PortableServer::ImplicitActivationPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_PortableServer::ImplicitActivationPolicy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -1496,16 +1496,16 @@ TAO_PortableServer_ServantRetentionPolicy_Perfect_Hash_OpTable::lookup (const ch
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0},
-      {"copy", 	&POA_PortableServer::ServantRetentionPolicy::copy_skel},
+      {"copy",  &POA_PortableServer::ServantRetentionPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::ServantRetentionPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_PortableServer::ServantRetentionPolicy::destroy_skel},
+      {"destroy",       &POA_PortableServer::ServantRetentionPolicy::destroy_skel},
       {"",0}, {"",0},
-      {"_get_value", 	&POA_PortableServer::ServantRetentionPolicy::_get_value_skel},
+      {"_get_value",    &POA_PortableServer::ServantRetentionPolicy::_get_value_skel},
       {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::ServantRetentionPolicy::_non_existent_skel},
       {"",0}, {"",0},
-      {"_get_policy_type", 	&POA_PortableServer::ServantRetentionPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_PortableServer::ServantRetentionPolicy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -1780,16 +1780,16 @@ TAO_PortableServer_RequestProcessingPolicy_Perfect_Hash_OpTable::lookup (const c
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0},
-      {"copy", 	&POA_PortableServer::RequestProcessingPolicy::copy_skel},
+      {"copy",  &POA_PortableServer::RequestProcessingPolicy::copy_skel},
       {"_is_a",  &POA_PortableServer::RequestProcessingPolicy::_is_a_skel},
       {"",0},
-      {"destroy", 	&POA_PortableServer::RequestProcessingPolicy::destroy_skel},
+      {"destroy",       &POA_PortableServer::RequestProcessingPolicy::destroy_skel},
       {"",0}, {"",0},
-      {"_get_value", 	&POA_PortableServer::RequestProcessingPolicy::_get_value_skel},
+      {"_get_value",    &POA_PortableServer::RequestProcessingPolicy::_get_value_skel},
       {"",0}, {"",0},
       {"_non_existent",  &POA_PortableServer::RequestProcessingPolicy::_non_existent_skel},
       {"",0}, {"",0},
-      {"_get_policy_type", 	&POA_PortableServer::RequestProcessingPolicy::_get_policy_type_skel},
+      {"_get_policy_type",      &POA_PortableServer::RequestProcessingPolicy::_get_policy_type_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -2133,9 +2133,7 @@ POA_PortableServer::_tao_collocated_POAManager:: get_state(CORBA::Environment &A
 PortableServer::POAManager*
 POA_PortableServer::POAManager::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_POAManager (this, stub);
+  return new POA_PortableServer::_tao_collocated_POAManager (this, 0);
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -2217,9 +2215,7 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_AdapterActivator::unknown_ada
 PortableServer::AdapterActivator*
 POA_PortableServer::AdapterActivator::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_AdapterActivator (this, stub);
+  return new POA_PortableServer::_tao_collocated_AdapterActivator (this, 0);
 }
 
 // skeleton constructor
@@ -2286,9 +2282,7 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantManager::_is_a (
 PortableServer::ServantManager*
 POA_PortableServer::ServantManager::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_ServantManager (this, stub);
+  return new POA_PortableServer::_tao_collocated_ServantManager (this, 0);
 }
 
 // skeleton constructor
@@ -2391,9 +2385,7 @@ void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
 PortableServer::ServantActivator*
 POA_PortableServer::ServantActivator::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_ServantActivator (this, stub);
+  return new POA_PortableServer::_tao_collocated_ServantActivator (this, 0);
 }
 
 // skeleton constructor
@@ -2500,9 +2492,7 @@ void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
 PortableServer::ServantLocator*
 POA_PortableServer::ServantLocator::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_ServantLocator (this, stub);
+  return new POA_PortableServer::_tao_collocated_ServantLocator (this, 0);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -2907,9 +2897,7 @@ CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::id_to_reference (
 PortableServer::POA*
 POA_PortableServer::POA::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_POA (this, stub);
+  return new POA_PortableServer::_tao_collocated_POA (this, 0);
 }
 
 // skeleton constructor
@@ -2998,7 +2986,5 @@ PortableServer::ObjectId * POA_PortableServer::_tao_collocated_Current::get_obje
 PortableServer::Current*
 POA_PortableServer::Current::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return new POA_PortableServer::_tao_collocated_Current (this, stub);
+  return new POA_PortableServer::_tao_collocated_Current (this, 0);
 }

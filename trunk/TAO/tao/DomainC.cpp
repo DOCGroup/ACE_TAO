@@ -153,28 +153,23 @@ CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA::ConstructionPolicy::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV);
+  CORBA::Boolean check =
+    !obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ConstructionPolicy::_nil ());
-  if (is_a == 0)
+  if (check)
     return CORBA::ConstructionPolicy::_nil ();
-  return CORBA::ConstructionPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
-}
-
-CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  if (CORBA::is_nil (obj))
-    return CORBA::ConstructionPolicy::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/ConstructionPolicy:1.0");
+#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+  if (servant == 0)
+    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::ConstructionPolicy::_nil ());
+#else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new CORBA::ConstructionPolicy(stub);
+#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_CORBA::_tao_collocated_ConstructionPolicy(
       ACE_reinterpret_cast(POA_CORBA::ConstructionPolicy_ptr, servant),
       stub

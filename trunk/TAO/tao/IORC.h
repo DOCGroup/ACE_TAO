@@ -118,11 +118,6 @@ TAO_NAMESPACE  TAO_IOP
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-    static TAO_IOR_Manipulation_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
     static TAO_IOR_Manipulation_ptr _nil (void);
 
 
@@ -382,7 +377,7 @@ TAO_NAMESPACE  TAO_IOP
         TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
         TAO_IOP::TAO_IOR_Manipulation::Duplicate,
         TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR
-      ));
+      )) = 0;
 
     virtual CORBA::Object_ptr add_profiles (
         CORBA::Object_ptr ior1,
@@ -395,7 +390,7 @@ TAO_NAMESPACE  TAO_IOP
         TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
         TAO_IOP::TAO_IOR_Manipulation::Duplicate,
         TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR
-      ));
+      )) = 0;
 
     virtual CORBA::Object_ptr remove_profiles (
         CORBA::Object_ptr ior1,
@@ -408,7 +403,7 @@ TAO_NAMESPACE  TAO_IOP
         TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR,
         TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList,
         TAO_IOP::TAO_IOR_Manipulation::NotFound
-      ));
+      )) = 0;
 
     virtual CORBA::ULong is_in_ior (
         CORBA::Object_ptr ior1,
@@ -419,7 +414,7 @@ TAO_NAMESPACE  TAO_IOP
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::TAO_IOR_Manipulation::NotFound
-      ));
+      )) = 0;
 
     virtual CORBA::ULong get_profile_count (
         CORBA::Object_ptr ior,
@@ -429,7 +424,7 @@ TAO_NAMESPACE  TAO_IOP
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList
-      ));
+      )) = 0;
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
