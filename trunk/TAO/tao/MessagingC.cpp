@@ -174,7 +174,9 @@ Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RebindPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/RebindPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RebindPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::RebindPolicy::_nil ());
+  if (is_a == 0)
     return Messaging::RebindPolicy::_nil ();
   return Messaging::RebindPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -239,7 +241,9 @@ Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::SyncScopePolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/SyncScopePolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/SyncScopePolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::SyncScopePolicy::_nil ());
+  if (is_a == 0)
     return Messaging::SyncScopePolicy::_nil ();
   return Messaging::SyncScopePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -332,7 +336,9 @@ Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RequestPriorityPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/RequestPriorityPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RequestPriorityPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::RequestPriorityPolicy::_nil ());
+  if (is_a == 0)
     return Messaging::RequestPriorityPolicy::_nil ();
   return Messaging::RequestPriorityPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -397,7 +403,9 @@ Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyPriorityPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/ReplyPriorityPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyPriorityPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::ReplyPriorityPolicy::_nil ());
+  if (is_a == 0)
     return Messaging::ReplyPriorityPolicy::_nil ();
   return Messaging::ReplyPriorityPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -462,7 +470,9 @@ Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_narrow
 {
   if (CORBA::is_nil (obj))
     return Messaging::RequestStartTimePolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/RequestStartTimePolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RequestStartTimePolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::RequestStartTimePolicy::_nil ());
+  if (is_a == 0)
     return Messaging::RequestStartTimePolicy::_nil ();
   return Messaging::RequestStartTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -527,7 +537,9 @@ Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RequestEndTimePolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/RequestEndTimePolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RequestEndTimePolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::RequestEndTimePolicy::_nil ());
+  if (is_a == 0)
     return Messaging::RequestEndTimePolicy::_nil ();
   return Messaging::RequestEndTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -592,7 +604,9 @@ Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyStartTimePolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/ReplyStartTimePolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyStartTimePolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::ReplyStartTimePolicy::_nil ());
+  if (is_a == 0)
     return Messaging::ReplyStartTimePolicy::_nil ();
   return Messaging::ReplyStartTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -657,7 +671,9 @@ Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyEndTimePolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/ReplyEndTimePolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyEndTimePolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::ReplyEndTimePolicy::_nil ());
+  if (is_a == 0)
     return Messaging::ReplyEndTimePolicy::_nil ();
   return Messaging::ReplyEndTimePolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -722,7 +738,9 @@ Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPol
 {
   if (CORBA::is_nil (obj))
     return Messaging::RelativeRequestTimeoutPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/RelativeRequestTimeoutPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RelativeRequestTimeoutPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::RelativeRequestTimeoutPolicy::_nil ());
+  if (is_a == 0)
     return Messaging::RelativeRequestTimeoutPolicy::_nil ();
   return Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -787,7 +805,10 @@ Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeou
 {
   if (CORBA::is_nil (obj))
     return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::RelativeRoundtripTimeoutPolicy::_nil
+                    ());
+  if (is_a == 0)
     return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
   return Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -880,7 +901,9 @@ Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::RoutingPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/RoutingPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/RoutingPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::RoutingPolicy::_nil ());
+  if (is_a == 0)
     return Messaging::RoutingPolicy::_nil ();
   return Messaging::RoutingPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -945,7 +968,9 @@ Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::MaxHopsPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/MaxHopsPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/MaxHopsPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::MaxHopsPolicy::_nil ());
+  if (is_a == 0)
     return Messaging::MaxHopsPolicy::_nil ();
   return Messaging::MaxHopsPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -1010,7 +1035,9 @@ Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::QueueOrderPolicy::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/QueueOrderPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/QueueOrderPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::QueueOrderPolicy::_nil ());
+  if (is_a == 0)
     return Messaging::QueueOrderPolicy::_nil ();
   return Messaging::QueueOrderPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -1254,7 +1281,9 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::ReplyHandler::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/ReplyHandler:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/ReplyHandler:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::ReplyHandler::_nil ());
+  if (is_a == 0)
     return Messaging::ReplyHandler::_nil ();
   return Messaging::ReplyHandler::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -1315,7 +1344,9 @@ Messaging::Poller_ptr Messaging::Poller::_narrow (
 {
   if (CORBA::is_nil (obj))
     return Messaging::Poller::_nil ();
-  if (!obj->_is_a ("IDL:Messaging/Poller:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:Messaging/Poller:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Messaging::Poller::_nil ());
+  if (is_a == 0)
     return Messaging::Poller::_nil ();
   return Messaging::Poller::_unchecked_narrow (obj, ACE_TRY_ENV);
 }

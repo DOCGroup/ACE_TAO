@@ -39,7 +39,9 @@ CORBA_DomainManager_ptr CORBA_DomainManager::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_DomainManager::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/DomainManager:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/DomainManager:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_DomainManager::_nil ());
+  if (is_a == 0)
     return CORBA_DomainManager::_nil ();
   return CORBA_DomainManager::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -94,7 +96,6 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -152,7 +153,9 @@ CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA::ConstructionPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ConstructionPolicy::_nil ());
+  if (is_a == 0)
     return CORBA::ConstructionPolicy::_nil ();
   return CORBA::ConstructionPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -210,7 +213,6 @@ void CORBA::ConstructionPolicy::make_domain_manager (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
