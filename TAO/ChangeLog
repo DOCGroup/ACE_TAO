@@ -9,8 +9,8 @@ Sun Dec 28 23:24:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Any_Basic_Impl.cpp:
 	* tao/Any_Basic_Impl.h:
 
-	  Fix for [BUGID 1693]. Thanks to Christoph Liebig for reporting
-	  the problem.
+	  Fix for [BUGID 1693]. Thanks to Christoph Liebig
+	  <xfrog2000@yahoo.com> for reporting the problem.
 
 	  Please see
 
