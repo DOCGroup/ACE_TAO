@@ -1,5 +1,9 @@
 Wed May 13 11:29:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* performance-tests/Synch-Benchmarks/Options.cpp (print_results):
+	  My previous change to add print_results functionality when
+	  ACE_HAS_GETRUSAGE broke this on Win32.
+
 	* ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS): 
 	  Made this macro defined for all versions of g++.
 
