@@ -780,10 +780,12 @@ bgcolor="#ffffff">
 <hr>
 <h3>Script Guidelines</h3>
 <ul>
-  <li>In general, it's best to write scripts in Perl.<p>
+  <li>In general, it's best to write scripts in Perl.  It's
+    OK to use Bourne shell.  Never, never, never use csh, ksh,
+    bash, or any other kind of shell.<p>
 
   <li>Follow the Perl style guide guide as closely as
-      possible.  <code>man perlstyle</code> to view it.
+    possible.  <code>man perlstyle</code> to view it.
 
   <li>Don't specify a hard-coded path to Perl itself.  Use
     the following code at the top of the script to pick up
@@ -793,6 +795,13 @@ bgcolor="#ffffff">
       & eval 'exec perl -S $0 $argv:q'
       if 0;
       </pre><p>
+
+  <li>Never, never, never start the first line of a script
+    with ``#'', unless the first line is ``#! /bin/sh''.
+    With just ``#'', t/csh users will spawn a new shell.
+    That will cause their <code>.[t]cshrc</code> to be
+    processed, possibly clobbering a necessary part of
+    their environment.<p>
 
   <li>If your Perl script relies on features only available
     in newer versions of Perl, include the a statement similar
