@@ -1411,6 +1411,25 @@ SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\InterfaceS.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -3310,6 +3329,10 @@ SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\InterfaceS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
@@ -3783,6 +3806,10 @@ SOURCE=.\InterceptorC.i
 # Begin Source File
 
 SOURCE=.\InterfaceC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterfaceS.i
 # End Source File
 # Begin Source File
 
