@@ -1,40 +1,37 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for Message_Queue tests
+#       Makefile for Message_Queue tests
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 BIN     = buffer_stream \
-	  bounded_buffer \
-	  priority_buffer
+          bounded_buffer \
+          priority_buffer
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-
-BUILD   = $(VBIN)
-
-SRC=$(addsuffix .cpp,$(BIN))
+PSRC    = $(addsuffix .cpp,$(BIN))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
