@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:153
+// be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_SERVEROBJECTC_H_
-#define _TAO_IDL_SERVEROBJECTC_H_
+#ifndef _TAO_IDL_ORIG_SERVEROBJECTC_H_
+#define _TAO_IDL_ORIG_SERVEROBJECTC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -52,13 +52,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_IMR_Client_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_IMR_Client_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -69,7 +62,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be/be_visitor_root/root_ch.cpp:62
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -80,13 +73,13 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace ImplementationRepository
 {
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:598
+  // be\be_interface.cpp:598
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_
@@ -109,7 +102,7 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_
@@ -145,7 +138,7 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void ping (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -155,7 +148,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void shutdown (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -165,7 +158,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:210
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -211,19 +204,19 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerObject;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module ImplementationRepository
 
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:139
+// be\be_visitor_root/root.cpp:139
 
 extern TAO_IMR_Client_Export
 TAO::Collocation_Proxy_Broker *
@@ -232,7 +225,7 @@ TAO::Collocation_Proxy_Broker *
   );
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -261,20 +254,20 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_IMR_Client_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr); // copying
 TAO_IMR_Client_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr *); // non-copying
 TAO_IMR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerObject_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ch.cpp:55
+// be\be_visitor_interface/cdr_op_ch.cpp:55
 
 TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerObject_ptr );
 TAO_IMR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerObject_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:969
+// be\be_codegen.cpp:958
 
 #if defined (__ACE_INLINE__)
 #include "ServerObjectC.inl"
