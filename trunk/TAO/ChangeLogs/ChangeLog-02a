@@ -1,3 +1,44 @@
+Sat May 19 17:00:00 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Profile.cpp (parse_string):
+
+	  Fixed misguided code that appended a default port to the address
+	  string in the event one wasn't specified, only to be converted
+	  to an integer.  Just use the integer value!
+
+	  Fixed broken code that attempted to extract the specified port
+	  from the address string.  The code was unnecessarily
+	  complicated.  It is surprising that the old code actually
+	  worked.
+
+	  Made the code more efficient by removing an unnecessary
+	  allocation and several string operations.
+
+	  Throw a CORBA::INV_OBJREF exception if no hostname was
+	  specified.  A hostname is required by the spec.
+
+	  If no version is specified, default to IIOP 1.0, as dictated by
+	  the spec.
+
+	* tao/IIOP_Endpoint.cpp (TAO_IIOP_Endpoint):
+
+	  If a port isn't specified, use the default IANA assigned IIOP
+	  port (683).  This constructor is only used on the client side.
+
+	  Force the address family type of the INET_Addr to be invalid.
+	  It will be set when it is first accessed from the
+	  IIOP_Endpoint.  This delays resolution of the IP address until
+	  the first request is made.  For some reason this functionality
+	  was once again disabled.
+
+	* tao/RT_Policy_i.cpp (hook):
+
+	  Fixed all misuses of the emulated exception macros, and lack
+	  thereof.
+
+	  Fixed misuses of ACE_static_cast where an ACE_dynamic_cast was
+	  needed.
+
 Sat May 19 17:17:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html,

@@ -2,19 +2,23 @@
 
 #include "tao/RT_Policy_i.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "tao/RT_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(TAO, RT_Policy_i, "$Id$")
+ACE_RCSID (TAO,
+           RT_Policy_i,
+           "$Id$")
 
-#if (TAO_HAS_RT_CORBA == 1)
 
-TAO_PriorityModelPolicy::TAO_PriorityModelPolicy
-(RTCORBA::PriorityModel priority_model,
- RTCORBA::Priority server_priority)
+TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
+  RTCORBA::PriorityModel priority_model,
+  RTCORBA::Priority server_priority)
   : priority_model_ (priority_model),
     server_priority_ (server_priority)
 {
@@ -102,8 +106,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 {
 }
 
-TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy
-                                            &rhs)
+TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs)
   : RTCORBA::ThreadpoolPolicy (),
     TAO_Local_RefCounted_Object (),
     id_ (rhs.id_)
@@ -153,8 +156,8 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
 {
 }
 
-TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const
-                                                           TAO_PrivateConnectionPolicy &)
+TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (
+  const TAO_PrivateConnectionPolicy &)
   : RTCORBA::PrivateConnectionPolicy (),
     TAO_Local_RefCounted_Object ()
 {
@@ -213,7 +216,8 @@ TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy (void)
 }
 
 RTCORBA::PriorityBands *
-TAO_PriorityBandedConnectionPolicy::priority_bands (CORBA::Environment &ACE_TRY_ENV)
+TAO_PriorityBandedConnectionPolicy::priority_bands (
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::PriorityBands *tmp;
@@ -536,15 +540,15 @@ TAO_SMEM_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 
 // ****************************************************************
 
-TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
-                                                    RTCORBA::ProtocolList &protocols)
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (
+  const RTCORBA::ProtocolList &protocols)
   : RTCORBA::ServerProtocolPolicy (),
     protocols_ (protocols)
 {
 }
 
-TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
-                                                    TAO_ServerProtocolPolicy &rhs)
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (
+  const TAO_ServerProtocolPolicy &rhs)
   : RTCORBA::ServerProtocolPolicy (),
     TAO_Local_RefCounted_Object (),
     protocols_ (rhs.protocols_)
@@ -612,150 +616,171 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
     orb_core->server_protocol ();
 
   ACE_DECLARE_NEW_CORBA_ENV;
-
-  RTCORBA::ServerProtocolPolicy_var server_protocols_policy;
-  TAO_ServerProtocolPolicy *server_protocols = 0;
-
-  if (!CORBA::is_nil (policy.in ()))
-  {
-    server_protocols_policy =
-      RTCORBA::ServerProtocolPolicy::_narrow (policy.in (),
-                                              ACE_TRY_ENV);
-    ACE_CHECK_RETURN (-1);
-
-    server_protocols =
-      ACE_static_cast (TAO_ServerProtocolPolicy *,
-                       server_protocols_policy.in ());
-
-    if (server_protocols != 0)
-      {
-        RTCORBA::ProtocolList & protocols = server_protocols->protocols_rep ();
-
-        // Find protocol properties.
-        for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-          {
-            if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
-              {
-                properties =
-                  RTCORBA::ProtocolProperties::_narrow (
-                     protocols[j].transport_protocol_properties.in (),
-                     ACE_TRY_ENV);
-                ACE_CHECK_RETURN (-1);
-
-                if (ACE_OS::strcmp (protocol_type,
-                                    "iiop") == 0)
-                  break;
-              }
-            else if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
-              {
-                properties =
-                  RTCORBA::ProtocolProperties::_narrow (
-                     protocols[j].transport_protocol_properties.in (),
-                     ACE_TRY_ENV);
-                ACE_CHECK_RETURN (-1);
-
-                if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
-                  break;
-              }
-          }
-      }
-  }
-
-  if (CORBA::is_nil (properties.in ()))
+  ACE_TRY
     {
-      // TCP/UIOP/SHMIOP Properties were not specified in the effective policy.
-      // We must use orb defaults.
-      policy = orb_core->default_server_protocol ();
+      RTCORBA::ServerProtocolPolicy_var server_protocols_policy;
+      TAO_ServerProtocolPolicy *server_protocols = 0;
 
       if (!CORBA::is_nil (policy.in ()))
         {
           server_protocols_policy =
             RTCORBA::ServerProtocolPolicy::_narrow (policy.in (),
                                                     ACE_TRY_ENV);
-          ACE_CHECK_RETURN (-1);
+          ACE_TRY_CHECK;
 
           server_protocols =
-            ACE_static_cast (TAO_ServerProtocolPolicy *,
-                             server_protocols_policy.in ());
+            ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                              server_protocols_policy.in ());
 
-          if (!CORBA::is_nil (server_protocols))
+          if (server_protocols != 0)
             {
-              // Find protocol properties for IIOP.
               RTCORBA::ProtocolList & protocols =
                 server_protocols->protocols_rep ();
 
+              // Find protocol properties.
               for (CORBA::ULong j = 0; j < protocols.length (); ++j)
                 {
                   if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
                     {
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
-                           protocols[j].transport_protocol_properties.in (),
-                           ACE_TRY_ENV);
-                      ACE_CHECK_RETURN (-1);
+                          protocols[j].transport_protocol_properties.in (),
+                          ACE_TRY_ENV);
+                      ACE_TRY_CHECK;
 
-                      if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+                      if (ACE_OS::strcmp (protocol_type,
+                                          "iiop") == 0)
                         break;
                     }
                   else if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
                     {
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
-                           protocols[j].transport_protocol_properties.in (),
-                           ACE_TRY_ENV);
-                      ACE_CHECK_RETURN (-1);
+                          protocols[j].transport_protocol_properties.in (),
+                          ACE_TRY_ENV);
+                      ACE_TRY_CHECK;
 
-                      if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
-                        break;
+                        if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+                          break;
                     }
                 }
             }
         }
-    }
 
-  if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-    {
-      RTCORBA::TCPProtocolProperties_var tcp_properties =
-        RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
-                                                 ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-
-      send_buffer_size = tcp_properties->send_buffer_size ();
-      recv_buffer_size = tcp_properties->recv_buffer_size ();
-      no_delay = tcp_properties->no_delay ();
-    }
-
-  if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
-    {
-      RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
-        RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
-                                                        ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-
-      if (!CORBA::is_nil (uiop_properties.in ()))
+      if (CORBA::is_nil (properties.in ()))
         {
-          // Extract and locally store properties of interest.
+          // TCP/UIOP/SHMIOP Properties were not specified in the
+          // effective policy.
+          // We must use ORB defaults.
+          policy = orb_core->default_server_protocol ();
+
+          if (!CORBA::is_nil (policy.in ()))
+            {
+              server_protocols_policy =
+                RTCORBA::ServerProtocolPolicy::_narrow (policy.in (),
+                                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              server_protocols =
+                ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                                  server_protocols_policy.in ());
+
+              if (!CORBA::is_nil (server_protocols))
+                {
+                  // Find protocol properties for IIOP.
+                  RTCORBA::ProtocolList & protocols =
+                    server_protocols->protocols_rep ();
+
+                  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+                    {
+                      if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                        {
+                          properties =
+                            RTCORBA::ProtocolProperties::_narrow (
+                              protocols[j].transport_protocol_properties.in (),
+                              ACE_TRY_ENV);
+                          ACE_TRY_CHECK;
+
+                          if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+                            break;
+                        }
+                      else if (protocols[j].protocol_type ==
+                                 TAO_TAG_UIOP_PROFILE)
+                        {
+                          properties =
+                            RTCORBA::ProtocolProperties::_narrow (
+                              protocols[j].transport_protocol_properties.in (),
+                              ACE_TRY_ENV);
+                          ACE_TRY_CHECK;
+
+                          if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+      if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+        {
+          RTCORBA::TCPProtocolProperties_var tcp_properties =
+            RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
+                                                     ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           send_buffer_size =
-            uiop_properties->send_buffer_size ();
+            tcp_properties->send_buffer_size (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
           recv_buffer_size =
-            uiop_properties->recv_buffer_size ();
+            tcp_properties->recv_buffer_size (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          no_delay = tcp_properties->no_delay (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+        {
+          RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
+            RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
+                                                            ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (!CORBA::is_nil (uiop_properties.in ()))
+            {
+              // Extract and locally store properties of interest.
+              send_buffer_size =
+                uiop_properties->send_buffer_size (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              recv_buffer_size =
+                uiop_properties->recv_buffer_size (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
         }
     }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_ServerProtocolPolicy::hook");
+
+      return -1;
+    }
+  ACE_ENDTRY;
 
   return 0;
 }
 
 // ****************************************************************
 
-TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
-                                                    RTCORBA::ProtocolList &protocols)
+TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (
+  const RTCORBA::ProtocolList &protocols)
   : RTCORBA::ClientProtocolPolicy (),
     protocols_ (protocols)
 {
 }
 
-TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
-                                                    TAO_ClientProtocolPolicy &rhs)
+TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (
+  const TAO_ClientProtocolPolicy &rhs)
   : RTCORBA::ClientProtocolPolicy (),
     TAO_Local_RefCounted_Object (),
     protocols_ (rhs.protocols_)
@@ -822,136 +847,156 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
     orb_core->policy_manager ()->client_protocol ();
 
   ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      RTCORBA::ClientProtocolPolicy_var client_protocols_policy;
+      TAO_ClientProtocolPolicy *client_protocols = 0;
 
-  RTCORBA::ClientProtocolPolicy_var client_protocols_policy;
-  TAO_ClientProtocolPolicy *client_protocols = 0;
-
-  if (!CORBA::is_nil (policy.in ()))
-  {
-    client_protocols_policy =
-      RTCORBA::ClientProtocolPolicy::_narrow (policy.in (),
-                                              ACE_TRY_ENV);
-    ACE_CHECK_RETURN (-1);
-
-    client_protocols =
-      ACE_static_cast (TAO_ClientProtocolPolicy *,
-                       client_protocols_policy.in ());
-
-    if (client_protocols != 0)
-      {
-        //TAO_ClientProtocolPolicy
-        RTCORBA::ProtocolList & protocols =
-          client_protocols->protocols_rep ();
-
-        for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+      if (!CORBA::is_nil (policy.in ()))
         {
-          if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
-            {
-              properties =
-                RTCORBA::ProtocolProperties::_narrow (
-                  protocols[j].transport_protocol_properties.in (),
-                  ACE_TRY_ENV);
-              ACE_CHECK_RETURN (-1);
+          client_protocols_policy =
+            RTCORBA::ClientProtocolPolicy::_narrow (policy.in (),
+                                                    ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-              if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-                  break;
-            }
-          else if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
-            {
-              properties =
-                RTCORBA::ProtocolProperties::_narrow (
-                  protocols[j].transport_protocol_properties.in (),
-                  ACE_TRY_ENV);
-              ACE_CHECK_RETURN (-1);
+          client_protocols =
+            ACE_dynamic_cast (TAO_ClientProtocolPolicy *,
+                              client_protocols_policy.in ());
 
-              if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
-                break;
+          if (client_protocols != 0)
+            {
+              //TAO_ClientProtocolPolicy
+              RTCORBA::ProtocolList & protocols =
+                client_protocols->protocols_rep ();
+
+              for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+                {
+                  if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                    {
+                      properties =
+                        RTCORBA::ProtocolProperties::_narrow (
+                          protocols[j].transport_protocol_properties.in (),
+                          ACE_TRY_ENV);
+                      ACE_TRY_CHECK;
+
+                      if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+                        break;
+                    }
+                  else if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
+                    {
+                      properties =
+                        RTCORBA::ProtocolProperties::_narrow (
+                          protocols[j].transport_protocol_properties.in (),
+                          ACE_TRY_ENV);
+                      ACE_TRY_CHECK;
+
+                      if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+                        break;
+                    }
+                }
             }
         }
-      }
-  }
 
-  if (CORBA::is_nil (properties.in ()))
-  {
-    // No tcp/uiop properties in ORB-level override.  Use ORB defaults.
-    // Orb defaults should never be null - they were initialized by
-    // the ORB_Core.
-    policy =
-      orb_core->default_client_protocol ();
+      if (CORBA::is_nil (properties.in ()))
+        {
+          // No tcp/uiop properties in ORB-level override.  Use ORB
+          // defaults.  ORB defaults should never be null - they were
+          // initialized by the ORB_Core.
+          policy =
+            orb_core->default_client_protocol ();
 
-    if (!CORBA::is_nil (policy.in ()))
-      {
-        client_protocols_policy =
-          RTCORBA::ClientProtocolPolicy::_narrow (policy.in (),
-                                                  ACE_TRY_ENV);
-        ACE_CHECK_RETURN (-1);
-
-        client_protocols =
-          ACE_dynamic_cast (TAO_ClientProtocolPolicy *,
-                           client_protocols_policy.in ());
-
-        if (client_protocols != 0)
-          {
-            RTCORBA::ProtocolList & protocols =
-              client_protocols->protocols_rep ();
-
-            for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-              {
-                if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
-                  {
-                    properties =
-                      RTCORBA::ProtocolProperties::_narrow (
-                         protocols[j].transport_protocol_properties.in (),
-                         ACE_TRY_ENV);
-                    ACE_CHECK_RETURN (-1);
-
-                    if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-                      break;
-                  }
-                else if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
-                  {
-                    properties =
-                      RTCORBA::ProtocolProperties::_narrow (
-                         protocols[j].transport_protocol_properties.in (),
-                         ACE_TRY_ENV);
-                    ACE_CHECK_RETURN (-1);
-
-                    if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
-                      break;
-                  }
-              }
-          }
-      }
-  }
-
-  if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-    {
-      RTCORBA::TCPProtocolProperties_var tcp_properties =
-        RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
-                                                 ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-
-      send_buffer_size = tcp_properties->send_buffer_size ();
-      recv_buffer_size = tcp_properties->recv_buffer_size ();
-      no_delay = tcp_properties->no_delay ();
-    }
-
-  if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
-    {
-      RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
-        RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
+          if (!CORBA::is_nil (policy.in ()))
+            {
+              client_protocols_policy =
+                RTCORBA::ClientProtocolPolicy::_narrow (policy.in (),
                                                         ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
+              ACE_TRY_CHECK;
 
-      if (!CORBA::is_nil (uiop_properties.in ()))
+              client_protocols =
+                ACE_dynamic_cast (TAO_ClientProtocolPolicy *,
+                                  client_protocols_policy.in ());
+
+              if (client_protocols != 0)
+                {
+                  RTCORBA::ProtocolList & protocols =
+                    client_protocols->protocols_rep ();
+
+                  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+                    {
+                      if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                        {
+                          properties =
+                            RTCORBA::ProtocolProperties::_narrow (
+                              protocols[j].transport_protocol_properties.in (),
+                              ACE_TRY_ENV);
+                          ACE_TRY_CHECK;
+
+                          if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+                            break;
+                        }
+                      else if (protocols[j].protocol_type ==
+                                 TAO_TAG_UIOP_PROFILE)
+                        {
+                          properties =
+                            RTCORBA::ProtocolProperties::_narrow (
+                              protocols[j].transport_protocol_properties.in (),
+                              ACE_TRY_ENV);
+                          ACE_TRY_CHECK;
+
+                          if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+      if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
         {
-          // Extract and locally store properties of interest.
+          RTCORBA::TCPProtocolProperties_var tcp_properties =
+            RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
+                                                     ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           send_buffer_size =
-            uiop_properties->send_buffer_size ();
+            tcp_properties->send_buffer_size (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
           recv_buffer_size =
-            uiop_properties->recv_buffer_size ();
+            tcp_properties->recv_buffer_size (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          no_delay = tcp_properties->no_delay (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+        {
+          RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
+            RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
+                                                            ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (!CORBA::is_nil (uiop_properties.in ()))
+            {
+              // Extract and locally store properties of interest.
+              send_buffer_size =
+                uiop_properties->send_buffer_size (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              recv_buffer_size =
+                uiop_properties->recv_buffer_size ();
+              ACE_TRY_CHECK;
+            }
         }
     }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_ClientProtocolPolicy::hook");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  
   return 0;
 }
 
@@ -1044,7 +1089,8 @@ TAO_GIOP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 // ****************************************************************
 
 RTCORBA::ProtocolProperties*
-TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id)
+TAO_Protocol_Properties_Factory::create_transport_protocol_property (
+  IOP::ProfileId id)
 {
   RTCORBA::ProtocolProperties* property = 0;
 
@@ -1067,7 +1113,8 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 }
 
 RTCORBA::ProtocolProperties*
-TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id)
+TAO_Protocol_Properties_Factory::create_orb_protocol_property (
+  IOP::ProfileId id)
 {
   RTCORBA::ProtocolProperties* property = 0;
 
