@@ -1,3 +1,11 @@
+Sat Feb  9 23:40:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/PICurrent/client.bor (OBJFILES):
+	* tests/Portable_Interceptors/PICurrent/client.dsp:
+
+	  Added new client request interceptor related files to the list
+	  of sources to compile.
+
 Sat Feb  9 23:27:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo_i.cpp (TAO_ClientRequestInfo_i):
