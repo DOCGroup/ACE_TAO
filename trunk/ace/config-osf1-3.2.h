@@ -124,8 +124,9 @@
 #define ACE_HAS_PTHREAD_EQUAL
 #define ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
 
-// ACE supports POSIX Pthreads.
-#define ACE_HAS_DCETHREADS
+// ACE supports POSIX Pthreads. OSF/1 3.2 has draft 4
+#define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_DRAFT4
 #define ACE_HAS_THREAD_SELF
 
 // Compiler/platform defines the sig_atomic_t typedef.
