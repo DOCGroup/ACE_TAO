@@ -59,6 +59,8 @@ idl_stubs realclean depend:
           $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
 	done
 
+.PHONY: LoadManager LoadMonitor
+
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
