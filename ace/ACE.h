@@ -51,13 +51,13 @@ class ACE_Export ACE : public ACE_Flag_Manip, public ACE_Handle_Ops,
 public:
 
   // = ACE version information.
-  /// E.g., the "4" in ACE 4.3.19.
+  /// e.g., the "5" in ACE 5.1.12.
   static u_int major_version (void);
 
-  /// E.g., the "3" in ACE 4.3.19.
+  /// e.g., the "1" in ACE 5.1.12.
   static u_int minor_version (void);
 
-  /// E.g., the "19" in ACE 4.3.19.
+  /// e.g., the "12" in ACE 5.1.12.
   /// Returns 0 for "stable" (non-beta) releases.
   static u_int beta_version (void);
 

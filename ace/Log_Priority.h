@@ -26,6 +26,8 @@ enum ACE_Log_Priority
 {
 
   // = Note, this first argument *must* start at 1!
+  // We only use 12 bits, however, so users are free to use the
+  // remaining bits to define their own priority masks.
 
   /// Shutdown the logger (decimal 1).
   LM_SHUTDOWN = 01,

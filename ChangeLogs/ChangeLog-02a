@@ -1,3 +1,17 @@
+Mon Jan 15 09:11:12 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added support for ACE_HAS_LLSEEK, though
+	  this should probably be changed to be compiled only on some
+ 	  Win32 platforms.
+  
+        * ace/OS.{h,i}: Added support for ACE_OS::llseek() on Win32.  Thanks
+	  to Nick Lin <nicklin@vantech.com.tw> for contributing this.
+
+	* ace/Log_Priority.h: Clarified the fact that we only use 12 bits
+	  for ACE_Log_Priority.  Thus, the remaining bits are available
+ 	  for application use.  Thanks to David Singer
+ 	  <David_P_Singer@res.raytheon.com> for motivating this comment.
+
 Sun Jan 14 16:53:11 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Configuration.{h,cpp}: Fixed a memory leak that occurred
