@@ -1,3 +1,10 @@
+Tue Nov 30 13:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	  Changed the order of files in the SRC macro so the IDL-generated
+	  files will compile first. Thanks to David for this
+	  suggestion.
+
 Tue Nov 30 12:04:43 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
