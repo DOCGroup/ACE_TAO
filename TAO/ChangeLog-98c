@@ -1,3 +1,9 @@
+Wed Aug  5 15:38:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tests/Param_Test/fixed_array.{h,cpp}:
+	* tests/Param_Test.var_array.{h,cpp}:
+	  Fixed DII implementation.
+
 Wed Aug  5 14:17:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Logger_i.cpp: 
