@@ -1,3 +1,13 @@
+Thu Feb 27 21:36:28 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{i,cpp} (gethrtime):  support on all platforms by
+	  using ACE_OS::gettimeofday () if there is no native high
+	  resolution timer. Moved ACE_OS::getimeofday () definition
+	  toward top of OS.i so that it is always defined before
+	  being called.  Finally, expanded gethrtime () support from
+	  linux to __GNUC__ with ACE_HAS_PENTIUM; it should work on
+	  platforms such as VxWorks with gcc on Pentiums.
+
 Thu Feb 27 17:06:12 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/High_Res_Timer.h (get_env_global_scale_factor):  This static
