@@ -90,7 +90,7 @@ BEGIN_MESSAGE_MAP(CWindozeCEDlg, CDialog)
   SetIcon(m_hIcon, FALSE);		// Set small icon
 	
   this->SetDlgItemText (IDC_PROGRAM_OUTPUT, 
-                        TEXT ("A really long string that will hopefully show whether this kind of string can be fit and wrap around a simple TEXT object within a Dialog box.  If this doesn't work, we'll see what to do next."));
+                        TEXT ("Fill in the command line arguments you want to pass to the program below:"));
   CenterWindow(GetDesktopWindow());	// center to the hpc screen
 
   this->ace.set_window (this, NC_ACE_NOTIFY, INC_ACE_LOGMSG);
