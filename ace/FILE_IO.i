@@ -18,9 +18,9 @@ ACE_FILE_IO::send_n (const ACE_Message_Block *message_block,
                      size_t *bytes_transferred)
 {
   ACE_TRACE ("ACE_FILE_IO::send_n");
-  return ACE::send_n (this->get_handle (),
+  ACE_UNUSED_ARG (timeout);
+  return ACE::write_n (this->get_handle (),
                       message_block,
-                      timeout,
                       bytes_transferred);
 }
 
@@ -125,21 +125,21 @@ ACE_FILE_IO::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int flags) 
 
 ASYS_INLINE ssize_t
 ACE_FILE_IO::send (const void *buf, size_t n,
-		       ACE_OVERLAPPED *overlapped) const
+                       ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
-  return ACE_OS::write (this->get_handle (), 
-			(const char *) buf, n,
-			overlapped);
+  return ACE_OS::write (this->get_handle (),
+                        (const char *) buf, n,
+                        overlapped);
 }
 
 ASYS_INLINE ssize_t
 ACE_FILE_IO::recv (void *buf, size_t n,
-		       ACE_OVERLAPPED *overlapped) const
+                       ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
   return ACE_OS::read (this->get_handle (), (char *) buf, n,
-		       overlapped);
+                       overlapped);
 }
 
 #endif /* ACE_HAS_STREAM_PIPES */
