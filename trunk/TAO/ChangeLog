@@ -1,3 +1,16 @@
+Tue May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.{h,cpp} (parse_args):
+          Made argc a reference so that parse_args() can properly remove
+          the -t option and argument from the commandline args if found.
+          Also, make sure we process the arguments in order, by using the
+          "-" prefix, RETURN_IN_ORDER, so as not to disturbe the rest of
+          the arguments.  Thanks to Scott Gammil <srgammill@sbcglobal.net>
+          for reporting the problem and supplying a fix.
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+          Added the "-t" option to first test.
+
 Sat May 03 15:55:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Object.cpp (operator<<): If the object reference is not

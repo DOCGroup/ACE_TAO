@@ -82,7 +82,7 @@ sub client
          "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile",
          "-c file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile");
 
-@server_opts = ("",
+@server_opts = ("-t 30",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u .",
                 "", "", "", "", "",

@@ -50,7 +50,7 @@ public:
 
 protected:
 
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int &argc, ACE_TCHAR* argv[]);
   // Parse the command line arguments to find
   // the timeout period.
 
