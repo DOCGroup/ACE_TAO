@@ -245,7 +245,6 @@ composite_list ()
           DIR="${i%?}"                           # strip off last "'"
           DIR="${DIR#*ACE_wrappers/}"            # strip off $ACE_ROOT
           DIR="${DIR//\//___}___"                # replace "/" with "___"
-          #DIR=".metrics/data/${DIR}"             # prepend path
           break
         else
           let INDEX="$INDEX+1"
@@ -275,7 +274,6 @@ composite_list ()
       FOUND_OBJ=0
       OBJ_LIST=""
       BASE_OBJ=""
-      #DIR=""
     fi
   done # while
 }
