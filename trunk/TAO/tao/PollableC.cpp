@@ -466,7 +466,7 @@ CORBA::Exception *CORBA_PollableSet::NoPossiblePollable::_alloc (void)
   CORBA::Exception *retval = 0;
 
   ACE_NEW_RETURN (retval,
-                  CORBA_PollableSet::NoPossiblePollable
+                  CORBA_PollableSet::NoPossiblePollable,
                   0);
 
   return retval;
@@ -530,7 +530,7 @@ CORBA::Exception *CORBA_PollableSet::UnknownPollable::_alloc (void)
   CORBA::Exception *retval = 0;
 
   ACE_NEW_RETURN (retval,
-                  CORBA_PollableSet::UnknownPollable
+                  CORBA_PollableSet::UnknownPollable,
                   0);
 
   return retval;

@@ -1,3 +1,8 @@
+Mon Jan 10 18:12:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PollableC.cpp: Fixed two instances of wrong usage of
+	  ACE_NEW_RETURN. 
+
 Mon Jan 10 16:43:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union_branch.cpp:
