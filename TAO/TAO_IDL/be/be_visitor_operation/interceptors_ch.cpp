@@ -120,7 +120,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
 
   //generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing
-  
+ 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH);
   visitor = tao_cg->make_visitor (&ctx);
@@ -143,6 +143,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
+  *os  << ");\n\n";
 
   os->indent ();
   // Here I still need to generate the other methods + private args
