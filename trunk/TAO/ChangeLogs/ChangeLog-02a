@@ -1,3 +1,9 @@
+Sat Oct 28 15:27:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* performance-tests/Callback/Callback_i.h:
+	* performance-tests/Callback/Server_i.cpp:
+	  Fixed throw specs
+
 Fri Oct 27 15:54:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Performance/Makefile:
