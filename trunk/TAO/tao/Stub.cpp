@@ -13,7 +13,7 @@
 #include "tao/corba.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/STUB_Object.i"
+# include "tao/Stub.i"
 #endif /* ! __ACE_INLINE__ */
 
 #include "tao/Timeprobe.h"
