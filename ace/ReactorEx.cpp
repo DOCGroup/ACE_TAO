@@ -72,29 +72,29 @@ ACE_ReactorEx_Handler_Repository::remove_network_events_i (long existing_masks,
 {
   long result = existing_masks;
   
-  if ((to_be_removed_masks & ACE_Event_Handler::READ_MASK) == ACE_Event_Handler::READ_MASK)
-    result &= ~FD_READ;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::READ_MASK))
+    ACE_CLR_BITS (result, FD_READ);
   
-  if ((to_be_removed_masks & ACE_Event_Handler::WRITE_MASK) == ACE_Event_Handler::WRITE_MASK)
-    result &= ~FD_WRITE;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::WRITE_MASK))
+    ACE_CLR_BITS (result, FD_WRITE);
   
-  if ((to_be_removed_masks & ACE_Event_Handler::EXCEPT_MASK) == ACE_Event_Handler::EXCEPT_MASK)
-    result &= ~FD_OOB;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::EXCEPT_MASK))
+    ACE_CLR_BITS (result, FD_OOB);
   
-  if ((to_be_removed_masks & ACE_Event_Handler::ACCEPT_MASK) == ACE_Event_Handler::ACCEPT_MASK)
-    result &= ~FD_ACCEPT;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::ACCEPT_MASK))
+    ACE_CLR_BITS (result, FD_ACCEPT);
   
-  if ((to_be_removed_masks & ACE_Event_Handler::CONNECT_MASK) == ACE_Event_Handler::CONNECT_MASK)
-    result &= ~FD_CONNECT;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::CONNECT_MASK))
+    ACE_CLR_BITS (result, FD_CONNECT);
   
-  if ((to_be_removed_masks & ACE_Event_Handler::QOS_MASK) == ACE_Event_Handler::QOS_MASK)
-    result &= ~FD_QOS;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::QOS_MASK))
+    ACE_CLR_BITS (result, FD_QOS);
   
-  if ((to_be_removed_masks & ACE_Event_Handler::GROUP_QOS_MASK) == ACE_Event_Handler::GROUP_QOS_MASK)
-    result &= ~FD_GROUP_QOS;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::GROUP_QOS_MASK))
+    ACE_CLR_BITS (result, FD_GROUP_QOS);
   
-  if ((to_be_removed_masks & ACE_Event_Handler::CLOSE_MASK) == ACE_Event_Handler::CLOSE_MASK)
-    result &= ~FD_CLOSE;
+  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::CLOSE_MASK))
+    ACE_CLR_BITS (result, FD_CLOSE);
   
   return result;
 }
@@ -823,7 +823,7 @@ ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
   long new_network_events = 0;
   int delete_event = 0;
 
-  auto_ptr <ACE_Auto_Event> event ((ACE_Auto_Event *) 0);
+  auto_ptr <ACE_Auto_Event> event;
 
   // Look up the repository to see if the <Event_Handler> is already
   // there.
@@ -837,7 +837,7 @@ ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
   // need to create one
   if (event_handle == ACE_INVALID_HANDLE)
     {
-      event = auto_ptr <ACE_Auto_Event> (new ACE_Auto_Event);
+      event = new ACE_Auto_Event;
       event_handle = event->handle ();
       delete_event = 1;
     }  
@@ -905,28 +905,28 @@ ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
 	event_handle = this->current_suspended_info_[i].event_handle_;
       }
 
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::READ_MASK, ACE_Event_Handler::READ_MASK))
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (new_mask, FD_READ);
-
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::WRITE_MASK, ACE_Event_Handler::WRITE_MASK))
+  
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     ACE_SET_BITS (new_mask, FD_WRITE);
   
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::EXCEPT_MASK, ACE_Event_Handler::EXCEPT_MASK))
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
     ACE_SET_BITS (new_mask, FD_OOB);
 
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::ACCEPT_MASK, ACE_Event_Handler::ACCEPT_MASK))
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
     ACE_SET_BITS (new_mask, FD_ACCEPT);
 
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::CONNECT_MASK, ACE_Event_Handler::CONNECT_MASK))
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     ACE_SET_BITS (new_mask, FD_CONNECT);
 
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::QOS_MASK, ACE_Event_Handler::QOS_MASK))
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::QOS_MASK))
     ACE_SET_BITS (new_mask, FD_QOS);
 
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::GROUP_QOS_MASK, ACE_Event_Handler::GROUP_QOS_MASK))
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::GROUP_QOS_MASK))
     ACE_SET_BITS (new_mask, FD_GROUP_QOS);
 
-  if (ACE_BIT_CMP_MASK (mask, ACE_Event_Handler::CLOSE_MASK, ACE_Event_Handler::CLOSE_MASK))
+  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::CLOSE_MASK))
     ACE_SET_BITS (new_mask, FD_CLOSE);
 
   return found;
