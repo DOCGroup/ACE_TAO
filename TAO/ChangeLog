@@ -1,3 +1,17 @@
+Tue Aug  5 15:51:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+
+          Minor cosmetic changes.
+
+        * orbsvcs/tests/InterfaceRepo/Makefile:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/InterfaceRepo_IDL3_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/README:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
+
+          New files to complete the test integration.
+
 Tue Aug  5 14:01:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_home.cpp:
