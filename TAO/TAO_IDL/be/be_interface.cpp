@@ -1087,12 +1087,11 @@ be_interface::gen_operation_table (const char *flat_name,
 
         os->indent ();
         *os << "{\"_non_existent\", &" << skeleton_class_name
-            << "::_non_existent_skel}\n";
+            << "::_non_existent_skel},\n";
         this->skel_count_++;
 
         os->indent ();
-        *os << "{\"_interface\", &"
-            << skeleton_class_name
+        *os << "{\"_interface\", &" << skeleton_class_name
             << "::_interface_skel}\n";
         this->skel_count_++;
 
