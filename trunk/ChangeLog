@@ -1,3 +1,10 @@
+Sun Jun 13 17:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+        * apps/JAWS/server/IO.cpp:
+        * apps/gperf/src/Hash_Table.cpp:
+          Added needed includes
+
 Sun Jun 13 17:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Logging/Callback-2.h:

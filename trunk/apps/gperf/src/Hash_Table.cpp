@@ -29,6 +29,7 @@ ACE_RCSID(src, Hash_Table, "$Id$")
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_Memory.h"
 
 // The size of the hash table is always the smallest power of 2 >= the
 // size indicated by the user.  This allows several optimizations,
@@ -53,8 +54,8 @@ Hash_Table::~Hash_Table (void)
 {
   if (option[DEBUGGING])
     {
-      size_t keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
-        ? option.max_keysig_size () 
+      size_t keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig")
+        ? option.max_keysig_size ()
         : ACE_OS::strlen ("keysig");
 
       ACE_DEBUG ((LM_DEBUG,
