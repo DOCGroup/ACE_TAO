@@ -21,6 +21,7 @@
 #include "ace/Timer_List.h"
 #include "test_config.h"
 
+#if defined (ACE_HAS_UALARM)
 // Number of lines of input read.
 static int lines = 0;
 
@@ -131,7 +132,7 @@ parse_commands (char *buf)
   u_int choice;
   long value;
 
-  if (sscanf (buf, "%d %d", &choice, &value) != 2)
+  if (sscanf (buf, "%u %ld", &choice, &value) != 2)
     ACE_ERROR_RETURN ((LM_ERROR, "invalid input %s", buf), -1);
 
   switch (choice)
@@ -197,6 +198,8 @@ parse_commands (char *buf)
 	/* NOTREACHED */
       }
     }
+
+  return 0;
 }
 
 static char menu[] = 
@@ -205,9 +208,10 @@ static char menu[] =
 "2) cancel_timer <timer_id>\n"
 "^C list_timers\n"
 "please enter your choice: ";
+#endif /* ACE_HAS_UALARM */
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   // ACE_START_TEST ("Timer_Queue_Test");
 #if defined (ACE_HAS_UALARM)
@@ -241,7 +245,7 @@ main (int argc, char *argv[])
 	}
     }
 #else
-  ACE_ERROR_RETURN ((LM_ERROR, "platform doesn't support ualarm\n", -1));
+  ACE_ERROR_RETURN ((LM_ERROR, "platform doesn't support ualarm\n"), -1);
 #endif /* ACE_HAS_UALARM */
   // ACE_END_TEST;
   return 0;
