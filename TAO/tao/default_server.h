@@ -30,6 +30,8 @@
 #  include "tao/objtable.h"
 #endif /* 0 */
 
+#include "tao/corba.h"
+
 #  if !defined(SERVER_OBJECT_TABLE_SIZE)
 #    define SERVER_OBJECT_TABLE_SIZE 64
 #  endif

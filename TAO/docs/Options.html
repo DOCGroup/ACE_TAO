@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+  <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Mac">
+  <TITLE>Options for TAO Components</TITLE>
+</HEAD>
+<BODY>
+
+<H1 ALIGN=CENTER>Options for TAO Components</H1>
+
+<H2>Overview</H2>
+
+<P>Certain components in TAO are tuneable by the user by handing the components
+options. These options are commonly specified as a string or on the command
+line and are passed to the components initialization methods for consumption.</P>
+
+<P><EM>Programmer's Note:</EM> the internal structure for these options
+is the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
+style popularized by C and Unix. Also, by convention any initialization
+method will consume, <EM>i.e.</EM> remove from the vector, any options which
+it recognizes.</P>
+
+<H2>Types of Options</H2>
+
+<H2>Roadmap</H2>
+
+<P>The following components</P>
+
+<UL>
+  <LI><A HREF="#ORB"><CODE>CORBA::ORB</CODE></A>
+  <LI><A HREF="#BOA"><CODE>CORBA::BOA</CODE></A>
+  <LI><A HREF="#DefaultServer"><CODE>TAO_Default_Server_Strategy_Factory</CODE></A>
+  <LI><A HREF="#DefaultClient" TARGET="_top"><CODE>TAO_Default_Client_Strategy_Factory</CODE></A>
+</UL>
+
+<H2>Options</H2>
+
+<P>&nbsp;</P>
+
+<H3><CODE>CORBA::ORB</CODE><A NAME="ORB"></A></H3>
+
+<P><TABLE BORDER="2" WIDTH="100%" HEIGHT="96" CELLSPACING="2" CELLPADDING=
+"0">
+<TR>
+<TH WIDTH="43%" HEIGHT="17">Option</TH>
+<TH WIDTH="57%">Description</TH></TR>
+<TR>
+<TD HEIGHT="30"><CODE>-ORBsvcconf</CODE> <EM>config file name</EM></TD>
+<TD>Specifies the name of the file from which it will read dynamic service configuration
+directives <EM>ala</EM> ACE's Service Configurator.</TD></TR>
+<TR>
+<TD HEIGHT="17"><CODE>-ORBdaemon</CODE></TD>
+<TD>Specifies that the ORB should <I>daemonize</I> itself.</TD></TR>
+<TR>
+<TD HEIGHT="17"><CODE>-ORBdebug</CODE></TD>
+<TD>Turns on the output of debugging messages within ACE's Service Configurator
+componentry.</TD></TR>
+</TABLE>
+</P>
+
+<H3><CODE>CORBA::BOA</CODE><A NAME="BOA"></A></H3>
+
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">
+<TR>
+<TH WIDTH="43%">Option</TH>
+<TH WIDTH="55%">Description</TH></TR>
+<TR>
+<TD><CODE>-OAid</CODE> <EM>OA Identifier</EM></TD>
+<TD>Associates <I><EM>OA Identifier</EM></I> with the Object Adapter.</TD></TR>
+<TR>
+<TD><CODE>-OAhost</CODE> <EM>hostname</EM></TD>
+<TD>Tells the Object Adapter to listen for requests on the interface associated
+with the host named <I><EM>hostname</EM></I>. <STRONG>NOTE: This is a <EM>required</EM>
+argument.</STRONG></TD></TR>
+<TR>
+<TD><CODE>-OAport</CODE> <EM>portspec</EM></TD>
+<TD>Tells the Object Adapter to listen for requests on the port specified by
+<I><EM>portspec</EM></I>, which can be a name as found in <TT>/etc/services</TT>
+or a number. The default is <TT>5001</TT>.</TD></TR>
+<TR>
+<TD><CODE>-OAobjdemux</CODE> <EM>demux_method</EM></TD>
+<TD>Specifies the method used to demultiplex to an object. The range of values
+is <CODE>dynamic</CODE>, <CODE>linear</CODE>, <CODE>active</CODE>, or <CODE>user</CODE>.</TD></TR>
+<TR>
+<TD><CODE>-OAtablesize</CODE> <EM>object table size</EM></TD>
+<TD>Specifies the size of the object table as a positive, non-zero integer.
+If not specified, the default is <TT>64</TT>.</TD></TR>
+<TR>
+<TD><CODE>-OArcvsock</CODE> <EM>receive buffer size</EM></TD>
+<TD>Specify the size of the socket receive buffer as a positive, non-zero integer.
+If not specified, the system-dependent default is used.</TD></TR>
+<TR>
+<TD><CODE>-OAsndsock</CODE> <EM>send buffer size</EM></TD>
+<TD>Specify the size of the socket send buffer as a positive, non-zero integer.
+If not specified, the system-dependent default is used.</TD></TR>
+<TR>
+<TD><CODE>-OAthread</CODE></TD>
+<TD>Specify a thread-per-connection concurrency policy be utilized in processing
+requests.</TD></TR>
+</TABLE>
+</P>
+
+<H3><CODE>TAO_Default_Server_Strategy_Factory</CODE><A NAME="DefaultServer"></A></H3>
+
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="100%" HEIGHT=
+"186">
+<TR>
+<TH WIDTH="43%" HEIGHT="17">Option</TH>
+<TH WIDTH="55%">Description</TH></TR>
+<TR>
+<TD HEIGHT="43"><CODE>-t </CODE><EM>thread flags</EM></TD>
+<TD>Specify the flags used for thread creation. Flags can be any logical-OR
+combination of <CODE>THR_DETACHED</CODE>, <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
+<CODE>THE_SUSPENDED</CODE>.</TD></TR>
+<TR>
+<TD HEIGHT="30"><CODE>-s </CODE><EM>object table size</EM></TD>
+<TD>Specify the size of the object table. If not specified, the default value
+is 64.</TD></TR>
+<TR>
+<TD HEIGHT="17"><CODE>-R</CODE></TD>
+<TD>Use Reactive concurrency strategy.</TD></TR>
+<TR>
+<TD HEIGHT="17"><CODE>-T</CODE></TD>
+<TD>Use Thread-per-connection concurrency strategy.</TD></TR>
+<TR>
+<TD HEIGHT="43"><CODE>-L </CODE><EM>lookup strategy</EM></TD>
+<TD>Specify the demultiplexing lookup strategy. The <EM>lookup strategy</EM>
+can be one of <CODE>dynamic</CODE>, <CODE>linear</CODE>, <CODE>active</CODE>,
+or <CODE>user</CODE>.</TD></TR>
+</TABLE>
+</P>
+
+<H3><CODE>TAO_Default_Client_Strategy_Factory</CODE><A NAME="DefaultClient"></A></H3>
+
+<BLOCKQUOTE>
+  <P>There are currently no options for the <CODE>TAO_Default_Client_Strategy_Factory</CODE>.</P>
+</BLOCKQUOTE>
+
+<P><HR ALIGN=LEFT></P>
+
+<ADDRESS><A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A></ADDRESS>
+
+<P><!-- Created: Fri Aug 29 10:06:40 CDT 1997 --><!-- hhmts start -->Last
+modified: Wed Sep 3 16:35:23 CDT 1997 <!-- hhmts end -->
+</BODY>
+</HTML>
