@@ -24,18 +24,18 @@ int
 be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   os->indent ();
-  
+
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//                    Base  Impl. Declaration" << be_nl 
+      << "//                    Base  Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
 
   // Generate Class Declaration.
-  *os << "class " << be_global->stub_export_macro () 
+  *os << "class " << be_global->stub_export_macro ()
       << " " << node->base_proxy_impl_name ();
-  
+
   if (node->n_inherits () > 0)
     {
       *os << " : " << be_idt_nl; // idt = 1
@@ -43,13 +43,6 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
         {
           be_interface *inherited =
             be_interface::narrow_from_decl (node->inherits ()[i]);
-          be_decl *scope = 0;
-          if (inherited->is_nested ())
-            {
-              // inherited node is used in the scope of "node" node
-              scope =
-                be_scope::narrow_from_scope (node->defined_in ())->decl ();
-            }
 
           *os << "public virtual ";
           *os << inherited->full_base_proxy_impl_name ();
@@ -65,13 +58,13 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
     {
       *os << " : public virtual TAO_Object_Proxy_Impl" << be_nl;
     }
-  *os << "{" << be_nl << "public:" 
+  *os << "{" << be_nl << "public:"
       << be_idt_nl; // idt = 1
-  
+
    // Destructor Declaration.
-  *os << "virtual ~" << node->base_proxy_impl_name () << " (void);" 
+  *os << "virtual ~" << node->base_proxy_impl_name () << " (void);"
       << be_nl  << be_nl;
-  
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,10 +77,8 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
       << "};" << be_nl;
   *os << be_nl
       << "//" << be_nl
-      << "//                Base  Proxy Impl. Declaration" << be_nl 
+      << "//                Base  Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
   return 0;
 }
-
-
