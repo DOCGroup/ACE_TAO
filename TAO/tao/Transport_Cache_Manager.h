@@ -130,6 +130,9 @@ public:
   /// Return the total size of the cache.
   size_t total_size (void) const;
 
+  /// Return the underlying cache map
+  HASH_MAP &map (void);
+
 private:
 
   /// Associate <ext_id> with <int_id>. Grabs the lock and calls the

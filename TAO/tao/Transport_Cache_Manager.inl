@@ -138,3 +138,9 @@ TAO_Transport_Cache_Manager::total_size (void) const
 {
   return this->cache_map_.total_size ();
 }
+
+ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP &
+TAO_Transport_Cache_Manager::map (void)
+{
+  return this->cache_map_;
+}

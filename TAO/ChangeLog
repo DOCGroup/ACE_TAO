@@ -1,3 +1,10 @@
+Sat Jan 25 18:06:51 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport_Cache_Manager.h:
+	* tao/Transport_Cache_Manager.inl: Added an accessor for the hash
+	  map used inside the Cache_Manager. Useful for writing regression
+	  tests as we will demonstrate shortly in a test. 
+
 Fri Jan 24 11:42:57 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Crash_Test/run_test.pl: fixed yet another
