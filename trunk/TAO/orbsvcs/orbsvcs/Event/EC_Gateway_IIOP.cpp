@@ -14,6 +14,8 @@ ACE_RCSID(Event, EC_Gateway_IIOP, "$Id$")
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
   :  busy_count_ (0),
      update_posted_ (0),
+     cleanup_posted_ (0),
+     supplier_ec_suspended_ (0),
      supplier_info_ (0),
      consumer_info_ (0),
      consumer_ (this),
@@ -101,6 +103,13 @@ void
 TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  // In case we are still pushing, don't cleanup the proxies
+  if (this->busy_count_ != 0)
+    {
+      this->cleanup_posted_ = 1;
+      return;
+    }
 
   this->cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -517,6 +526,13 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
 
     this->busy_count_--;
 
+    if (this->busy_count_ == 0 && this->cleanup_posted_ != 0)
+      {
+        this->cleanup_posted_ = 0;
+        this->cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
     if (this->busy_count_ == 0 && this->update_posted_ != 0)
       {
         this->update_posted_ = 0;
@@ -665,6 +681,30 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
+}
+
+void
+TAO_EC_Gateway_IIOP::suspend_supplier_ec (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 0)
+    {
+      this->supplier_proxy_->suspend_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      supplier_ec_suspended_ = 1;
+    }
+}
+
+void
+TAO_EC_Gateway_IIOP::resume_supplier_ec (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 1)
+    {
+      this->supplier_proxy_->resume_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      supplier_ec_suspended_ = 0;
+    }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
