@@ -160,6 +160,8 @@ MT_Server::init (int argc,
         this->orb_manager_ptr_->activate_under_child_poa ("MT",
                                                           &this->mT_Object_i_,
                                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
                   this->str_.in ()));
@@ -245,8 +247,9 @@ MT_Server::~MT_Server (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in (),
-                                                          ACE_TRY_ENV);
+      if (this->orb_manager_ptr_)
+        this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in (),
+                                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -1,3 +1,16 @@
+Sat Mar 10 18:17:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/NestedUpcall/MT_Client_Test/client.cpp (main):
+
+	  Make sure the server task was activated before continuing with
+	  the test.
+
+	* tests/NestedUpcall/MT_Client_Test/local_server.cpp (MT_Server):
+
+	  The ORB_Manager pointer may be zero, i.e. uninitialized, if the
+	  server task was not activated.  Check that it is non-zero before
+	  attempting to call methods through it.  Fixes a seg fault.
+
 Sat Mar 10 18:20:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI/server.cpp:
