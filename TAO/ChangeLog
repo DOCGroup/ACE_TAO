@@ -2,8 +2,8 @@ Mon Jul 29 17:29:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.cpp:
 
-	  Stand-alone LoadManager service.  This is basically thin wrapper
-	  around the CosLoadBalancing library.
+	  Stand-alone LoadManager service.  This is basically a thin
+	  wrapper around the CosLoadBalancing library.
 	
 	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
 
