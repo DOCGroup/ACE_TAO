@@ -61,7 +61,9 @@ $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior
 
 print STDERR "Starting Naming Service\n";
 
-$NS->Spawn ();
+if ($NS->Spawn () == -1) {
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($nsior, 100) == -1)
 {

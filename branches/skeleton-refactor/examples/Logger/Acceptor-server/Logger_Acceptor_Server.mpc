@@ -2,4 +2,5 @@
 // $Id$
 
 project : aceexe {
+  exename = server_loggerd
 }

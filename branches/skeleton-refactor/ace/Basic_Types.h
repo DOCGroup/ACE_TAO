@@ -31,7 +31,7 @@
  *    - ACE_INT32
  *    - ACE_UINT32
  *    - ACE_UINT64
- *  (Note: ACE_INT64 is not defined, because there is no ACE_LongLong for
+ *  (Note: ACE_INT64 is partly defined, there is no ACE_LongLong for
  *   platforms that don't have a native 8-byte integer type.)
  *
  *  Byte-order (endian-ness) determination:
@@ -142,7 +142,8 @@
 #   else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 #     if ACE_SIZEOF_LONG == 8
 #       define ACE_SIZEOF_LONG_LONG 8
-       typedef unsigned long ACE_UINT64;
+        typedef unsigned long ACE_UINT64;
+        typedef   signed long ACE_INT64;
 #     elif defined (ULLONG_MAX) && !defined (__GNUG__)
        // Some compilers use ULLONG_MAX and others, e.g. Irix, use
        // ULONGLONG_MAX.
@@ -154,6 +155,7 @@
 #         error Unsupported long long size needs to be updated for this platform
 #       endif
        typedef unsigned long long ACE_UINT64;
+       typedef   signed long long ACE_INT64;
 #     elif defined (ULONGLONG_MAX) && !defined (__GNUG__)
        // Irix 6.x, for example.
 #       if (ULONGLONG_MAX) == 18446744073709551615ULL
@@ -164,6 +166,7 @@
 #         error Unsupported long long size needs to be updated for this platform
 #       endif
        typedef unsigned long long ACE_UINT64;
+       typedef   signed long long ACE_INT64;
 #     else
        // ACE_SIZEOF_LONG_LONG is not yet known, but the platform doesn't
        // claim ACE_LACKS_LONGLONG_T, so assume it has 8-byte long longs.
@@ -173,9 +176,11 @@
          // Use it, at least with g++, so that its -pedantic doesn't
          // complain about no ANSI C++ long long.
          typedef u_longlong_t ACE_UINT64;
+         typedef   longlong_t ACE_INT64;
 #       else
          // LynxOS 2.5.0 and Linux don't have u_longlong_t.
          typedef unsigned long long ACE_UINT64;
+         typedef   signed long long ACE_INT64;
 #       endif /* sun */
 #     endif /* ULLONG_MAX && !__GNUG__ */
 #   endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
@@ -229,6 +234,7 @@ typedef unsigned char ACE_Byte;
   typedef unsigned int ACE_UINT32;
 #   if defined (__KCC) && !defined (ACE_LACKS_LONGLONG_T)
   typedef unsigned long long ACE_UINT64;
+  typedef   signed long long ACE_INT64;
 #   endif /* __KCC */
 # elif ACE_SIZEOF_LONG == 4
   typedef long ACE_INT32;
@@ -240,6 +246,7 @@ typedef unsigned char ACE_Byte;
       typedef unsigned int ACE_UINT32;
 #   endif
   typedef unsigned long long ACE_UINT64;
+  typedef   signed long long ACE_INT64;
 # else
 #   error Have to add to the ACE_UINT32 type setting
 # endif

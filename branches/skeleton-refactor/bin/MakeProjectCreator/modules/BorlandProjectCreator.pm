@@ -53,14 +53,14 @@ sub fill_value {
     $value = join(';', sort keys %dirnames);
   }
   elsif ($name eq 'relwd') {
-    my($expenv) = $self->get_expand_env();
-    my($rel)    = ($expenv ? \%ENV : $self->get_relative());
+    my($useenv) = $self->get_use_env();
+    my($rel)    = ($useenv ? \%ENV : $self->get_relative());
     $value = $self->getcwd();
 
     foreach my $key (keys %$rel) {
       ## Do not use PWD or CD if we are expanding environment variables.
       ## They could conflict with the "real" values we're looking for.
-      if ($expenv && ($key eq 'PWD' || $key eq 'CD')) {
+      if ($useenv && ($key eq 'PWD' || $key eq 'CD')) {
         next;
       }
 

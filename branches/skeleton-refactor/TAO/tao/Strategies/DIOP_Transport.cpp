@@ -22,16 +22,12 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 
-#if !defined (__ACE_INLINE__)
-# include "DIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (tao, DIOP_Transport, "$Id$")
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Boolean flag)
-  : TAO_Transport (TAO_TAG_UDP_PROFILE,
+  : TAO_Transport (TAO_TAG_DIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
@@ -260,6 +256,7 @@ TAO_DIOP_Transport::send_request (TAO_Stub *stub,
                           max_wait_time) == -1)
 
     return -1;
+
   this->first_request_sent();
 
   return 0;
@@ -299,7 +296,29 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
+int
+TAO_DIOP_Transport::send_message_shared (TAO_Stub *stub,
+                                         int message_semantics,
+                                         const ACE_Message_Block *message_block,
+                                         ACE_Time_Value *max_wait_time)
+{
+  int result;
 
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+    result =
+      this->send_message_shared_i (stub, message_semantics,
+                                   message_block, max_wait_time);
+  }
+
+  if (result == -1)
+    {
+      this->close_connection ();
+    }
+
+  return result;
+}
 
 int
 TAO_DIOP_Transport::messaging_init (CORBA::Octet major,

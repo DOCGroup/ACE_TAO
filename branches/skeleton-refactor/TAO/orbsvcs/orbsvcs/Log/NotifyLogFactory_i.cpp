@@ -87,7 +87,7 @@ TAO_NotifyLogFactory_i::create (
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         const CosNotification::QoSProperties & initial_qos,
         const CosNotification::AdminProperties & initial_admin,
-        DsLogAdmin::LogId_out id
+        DsLogAdmin::LogId_out id_out
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -98,11 +98,14 @@ TAO_NotifyLogFactory_i::create (
         CosNotification::UnsupportedAdmin
       ))
 {
-  // Get an id for this Log.
-  this->max_id_++;
+  DsLogAdmin::LogId id;
+
+  // Get an unused/unique id for this Log.
+  while (hash_map_.find ((id = this->next_id_++)) == 0)
+    ;
 
   DsNotifyLogAdmin::NotifyLog_ptr notifylog =
-    this->create_with_id (this->max_id_,
+    this->create_with_id (id,
                           full_action,
                           max_rec_size,
                           thresholds,
@@ -112,12 +115,7 @@ TAO_NotifyLogFactory_i::create (
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
   // Set the id to return..
-  id = this->max_id_;
-
-  // Store the id in the LogIdList.
-  CORBA::ULong len = logid_list_.length();
-  logid_list_.length(len+1);
-  logid_list_[len] = id;
+  id_out = id;
 
   return notifylog;
 }
@@ -185,7 +183,7 @@ TAO_NotifyLogFactory_i::create_with_id (
   ACE_CHECK_RETURN (notify_log._retn ());
 
   // Add to the Hash table..
-  if (hash_map_.bind (id, 
+  if (hash_map_.bind (id,
                       DsNotifyLogAdmin::NotifyLog::_duplicate (notify_log.in ())) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       DsNotifyLogAdmin::NotifyLog::_nil ());

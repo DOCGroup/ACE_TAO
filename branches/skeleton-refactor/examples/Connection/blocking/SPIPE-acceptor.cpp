@@ -30,7 +30,7 @@ int
 Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "client connected on handle %d\n",
+              ACE_TEXT ("client connected on handle %d\n"),
 	      this->peer ().get_handle ()));
   if (this->ar_.open (*this,
                       this->peer ().get_handle ()) == -1)
@@ -48,10 +48,10 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       // Print out the message received from the server.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) message size %d.\n",
+                  ACE_TEXT ("(%t) message size %d.\n"),
                   result.message_block ().length ()));
       ACE_DEBUG ((LM_DEBUG,
-                  "%s",
+                  ACE_TEXT ("%C"),
                   result.message_block ().rd_ptr ()));
       // Reset the message block here to make sure multiple writes to
       // the pipe don't keep appending to the message_block!
@@ -79,8 +79,7 @@ IPC_Server::handle_signal (int,
                            siginfo_t *,
                            ucontext_t *)
 {
-  ACE_LOG_MSG->log (LM_INFO,
-                    "IPC_Server::handle_signal().\n");
+  ACE_LOG_MSG->log (LM_INFO, ACE_TEXT ("IPC_Server::handle_signal().\n"));
 
   // Flag the main <svc> loop to shutdown.
   this->shutdown_ = 1;
@@ -92,21 +91,18 @@ IPC_Server::handle_signal (int,
 }
 
 int
-IPC_Server::init (int argc, char *argv[])
+IPC_Server::init (int argc, ACE_TCHAR *argv[])
 {
-  if (this->parse_args (argc,
-                        argv) == -1)
+  if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Opening %s\n",
-              rendezvous_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening %s\n"), rendezvous_));
 
   // Initialize named pipe listener.
   if (this->open (ACE_SPIPE_Addr (rendezvous_)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"), 1);
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")), 1);
 
   // Register to receive shutdowns using this handler.
   else if (ACE_Reactor::instance ()->register_handler
@@ -123,11 +119,11 @@ IPC_Server::fini (void)
 }
 
 int
-IPC_Server::parse_args (int argc, char *argv[])
+IPC_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt get_opt (argc, argv, "ut:r:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("ut:r:"));
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -135,12 +131,12 @@ IPC_Server::parse_args (int argc, char *argv[])
 	{
 	case 'r':
 	  ACE_OS::strncpy (rendezvous_,
-			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
+			   get_opt.opt_arg (),
 			   sizeof (rendezvous_) / sizeof (ACE_TCHAR));
 	  break;
 	case 't':
 	  n_threads_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  ACE_DEBUG ((LM_DEBUG, "%s == %d.\n",
+	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s == %d.\n"),
 		      get_opt.opt_arg (),
 		      n_threads_));
 	  ACE_Proactor::instance (2 * n_threads_);
@@ -150,8 +146,8 @@ IPC_Server::parse_args (int argc, char *argv[])
 	case 'u':
 	default:
 	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "usage: %n -t <threads>\n"
-			     "-r <rendezvous>\n"), -1);
+			     ACE_TEXT ("usage: %n -t <threads>\n")
+			     ACE_TEXT (" -r <rendezvous>\n")), -1);
 	  break;
 	}
     }
@@ -162,7 +158,7 @@ IPC_Server::parse_args (int argc, char *argv[])
 static ACE_THR_FUNC_RETURN
 run_reactor_event_loop (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) worker thread starting\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker thread starting\n")));
 
   ACE_Proactor::run_event_loop ();
   return 0;
@@ -181,8 +177,8 @@ IPC_Server::svc (void)
       // EINTR).
       if (this->accept (&sh, 0) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "accept"),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("accept")),
                           1);
 
       // SH's destructor closes the stream implicitly but the
@@ -199,15 +195,14 @@ IPC_Server::svc (void)
                     THR_NEW_LWP) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "%p\n",
-                                 "spawn_n"),
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("spawn_n")),
                                 1);
 
               ACE_Thread_Manager::instance ()->wait ();
             }
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) main thread exiting.\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) main thread exiting.\n")));
 
           // Reset the Proactor so another accept will work.
           ACE_Proactor::reset_event_loop();

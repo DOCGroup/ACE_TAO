@@ -30,6 +30,7 @@
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 #include "log_serv_export.h"
 #include "PersistStore.h"
 
@@ -60,7 +61,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
                       = LOG_DEFAULT_MAX_REC_LIST_LEN);
 
   /// Destructor.
-  ~LogRecordStore (void);
+  ~TAO_LogRecordStore (void);
 
   /// Initialization.
   int open (void);
@@ -92,7 +93,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// id. Returns 0 on success, -1 on failure.
   int retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec);
 
-  /// update into storage. Returns 0 on success -1 on failure.
+  /// Update into storage. Returns 0 on success -1 on failure.
   int update (DsLogAdmin::LogRecord &rec);
 
   /// Remove the record with id <id> from the LogRecordStore. Returns 0 on
@@ -117,7 +118,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Get the underlying storage.
   /// @@ return a const ref? we don't want anyone to modify the storage.
-  LogRecordStore::LOG_RECORD_STORE& get_storage (void);
+  TAO_LogRecordStore::LOG_RECORD_STORE& get_storage (void);
 
  protected:
 
@@ -142,10 +143,10 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   CORBA::ULong max_rec_list_len_;
 
   /// The persistence storage.
-  PersistStore persist_store_;
+  TAO_PersistStore persist_store_;
 
   /// The hash of LogRecord ids to LogRecord 's.
-  LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
+  TAO_LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
 
   /// Persistent log file name.
   char file_name_[256];

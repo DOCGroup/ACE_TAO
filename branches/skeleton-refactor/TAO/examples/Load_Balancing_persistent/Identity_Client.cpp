@@ -115,7 +115,7 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 
   if (obj.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run] \n"),
+                       ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run] \n")
                        ACE_TEXT ("factory_resolve \n")),
                       -1);
 

@@ -94,7 +94,7 @@ Driver::run (int argc, char* argv[])
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
-                               ACE_static_cast (long, ACE_OS::getpid ()));
+                               static_cast<long> (ACE_OS::getpid ()));
               ACE_OS::fclose (pid);
             }
         }
@@ -191,7 +191,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   // int ID =
-  //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
+  //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
   //    - this->consumers_);
   //
   // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
@@ -221,6 +221,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   for (u_int i = 0; i < events.length (); ++i)
     {
       const RtecEventComm::Event& e = events[i];
@@ -275,6 +276,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
             }
         }
     }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 }
 
 void

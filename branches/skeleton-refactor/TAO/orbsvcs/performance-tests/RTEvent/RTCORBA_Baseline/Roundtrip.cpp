@@ -22,11 +22,15 @@ Roundtrip::test_method (Test::Timestamp send_time,
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   CORBA::Long elapsed = 0;
+  
   while (elapsed < workload_in_usecs)
     {
-      // ACE_OS::sleep (0);
-      elapsed = (ACE_OS::gethrtime () - start) / this->gsf_;
+      elapsed =
+        static_cast<CORBA::Long> (
+            (ACE_OS::gethrtime () - start) / this->gsf_
+          );
     }
+    
   return send_time;
 }
 

@@ -7,6 +7,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"
 #include "Client_Test.h"
+#include "ace/Reactor.h"
 #include "ace/os_include/os_ctype.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
@@ -14,7 +15,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_assert.h"
 
-ACE_RCSID(Client, Client_Test, "$Id$")
+ACE_RCSID (Client,
+           Client_Test,
+           "$Id$")
 
 class ACE_Svc_Export Client_Test : public ACE_Service_Object
 {
@@ -30,7 +33,7 @@ public:
   virtual int handle_input (ACE_HANDLE handle);
   // Handle user entered commands
 
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize name options and naming context when dynamically
   // linked.
 
@@ -120,7 +123,7 @@ Client_Test::Client_Test (void)
 
 int
 Client_Test::init (int /* argc */,
-                   char * /* argv */ [])
+                   ACE_TCHAR * /* argv */ [])
 {
   ACE_DEBUG ((LM_DEBUG, "Client_Test::init\n"));
 

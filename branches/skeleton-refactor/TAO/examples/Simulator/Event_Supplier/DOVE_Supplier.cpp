@@ -421,18 +421,15 @@ DOVE_Supplier::connect_Supplier ()
 
     this->current_connection_params_->scheduler_var_->
       set (this->current_connection_params_->rt_info_,
-           ACE_static_cast (RtecScheduler::Criticality_t,
-                            this->current_connection_params_->pod_rt_info_.criticality),
+           static_cast<RtecScheduler::Criticality_t> (this->current_connection_params_->pod_rt_info_.criticality),
            this->current_connection_params_->pod_rt_info_.worst_case_execution_time,
            this->current_connection_params_->pod_rt_info_.typical_execution_time,
            this->current_connection_params_->pod_rt_info_.cached_execution_time,
            this->current_connection_params_->pod_rt_info_.period,
-           ACE_static_cast (RtecScheduler::Importance_t,
-                            this->current_connection_params_->pod_rt_info_.importance),
+           static_cast<RtecScheduler::Importance_t> (this->current_connection_params_->pod_rt_info_.importance),
            this->current_connection_params_->pod_rt_info_.quantum,
            this->current_connection_params_->pod_rt_info_.threads,
-           ACE_static_cast (RtecScheduler::Info_Type_t,
-                            this->current_connection_params_->pod_rt_info_.info_type)
+           static_cast<RtecScheduler::Info_Type_t> (this->current_connection_params_->pod_rt_info_.info_type)
            ACE_ENV_ARG_PARAMETER);
 
     ACE_TRY_CHECK;

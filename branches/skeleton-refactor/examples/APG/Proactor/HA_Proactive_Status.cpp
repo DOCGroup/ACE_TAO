@@ -106,11 +106,9 @@ HA_Proactive_Acceptor::validate_connection (
    const ACE_INET_Addr& local)
 {
   struct in_addr *remote_addr =
-    ACE_reinterpret_cast (struct in_addr*,
-                          remote.get_addr ());
+    reinterpret_cast<struct in_addr*> (remote.get_addr ());
   struct in_addr *local_addr =
-    ACE_reinterpret_cast (struct in_addr*,
-                          local.get_addr ());
+    reinterpret_cast<struct in_addr*> (local.get_addr ());
   if (inet_netof (*local_addr) == inet_netof (*remote_addr))
     return 0;
 

@@ -346,8 +346,7 @@ Logger_Client::init_record (Logger::Log_Record &newrec,
   ACE_OS::hostname (name, MAXHOSTNAMELEN);
   hostent *he = ACE_OS::gethostbyname (name);
   newrec.host_addr =
-    (ACE_reinterpret_cast (in_addr *,
-                           he->h_addr_list[0])->s_addr);
+    (reinterpret_cast<in_addr *> (he->h_addr_list[0])->s_addr);
 }
 
 void

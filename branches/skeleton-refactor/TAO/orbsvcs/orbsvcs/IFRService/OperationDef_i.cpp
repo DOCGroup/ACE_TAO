@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "OperationDef_i.h"
@@ -6,11 +5,15 @@
 #include "IDLType_i.h"
 #include "ExceptionDef_i.h"
 #include "IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IFRService, 
-           OperationDef_i, 
+#include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           OperationDef_i,
            "$Id$")
+
 
 TAO_OperationDef_i::TAO_OperationDef_i (
     TAO_Repository_i *repo
@@ -91,7 +94,7 @@ TAO_OperationDef_i::result_i (ACE_ENV_SINGLE_ARG_DECL)
                                             result_path);
 
 
-  TAO_IDLType_i *impl = 
+  TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
                                             this->repo_);
 
@@ -119,7 +122,7 @@ TAO_OperationDef_i::result_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "result",
                                             result_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (result_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -148,7 +151,7 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def
                                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  char *result_path = 
+  char *result_path =
     TAO_IFR_Service_Utils::reference_to_path (result_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
@@ -207,7 +210,7 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, key_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (key_queue.size ());
 
   CORBA::ParDescriptionSeq *pd_seq = 0;
   ACE_NEW_THROW_EX (pd_seq,
@@ -241,21 +244,21 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
                                                  "mode",
                                                  mode);
 
-      retval[i].mode = ACE_static_cast (CORBA::ParameterMode, mode);
+      retval[i].mode = static_cast<CORBA::ParameterMode> (mode);
 
       ACE_TString type_path;
       this->repo_->config ()->get_string_value (key,
                                                 "type_path",
                                                 type_path);
 
-      TAO_IDLType_i *impl = 
+      TAO_IDLType_i *impl =
         TAO_IFR_Service_Utils::path_to_idltype (type_path,
                                                 this->repo_);
 
       retval[i].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Object_var obj = 
+      CORBA::Object_var obj =
         TAO_IFR_Service_Utils::path_to_ir_object (type_path,
                                                   this->repo_
                                                   ACE_ENV_ARG_PARAMETER);
@@ -322,7 +325,7 @@ TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params
       this->repo_->config ()->set_string_value (param_key,
                                                 "name",
                                                 params[i].name.in ());
-      type_path = 
+      type_path =
         TAO_IFR_Service_Utils::reference_to_path (params[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (param_key,
@@ -356,7 +359,7 @@ TAO_OperationDef_i::mode_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "mode",
                                              mode);
 
-  return ACE_static_cast (CORBA::OperationMode, mode);
+  return static_cast<CORBA::OperationMode> (mode);
 }
 
 void
@@ -426,12 +429,12 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
         {
           context_queue.enqueue_tail (context);
           ++index;
-          stringified = 
+          stringified =
             TAO_IFR_Service_Utils::int_to_string (index);
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, context_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (context_queue.size ());
 
   CORBA::ContextIdSeq *ci_seq = 0;
   ACE_NEW_THROW_EX (ci_seq,
@@ -541,7 +544,7 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, path_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (path_queue.size ());
 
   CORBA::ExceptionDefSeq *ed_seq = 0;
   ACE_NEW_THROW_EX (ed_seq,
@@ -635,13 +638,13 @@ TAO_OperationDef_i::make_description (
   od.mode = this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ContextIdSeq_var cid_seq = 
+  CORBA::ContextIdSeq_var cid_seq =
     this->contexts_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   od.contexts = cid_seq.in ();
 
-  CORBA::ParDescriptionSeq_var pd_seq = 
+  CORBA::ParDescriptionSeq_var pd_seq =
     this->params_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -680,7 +683,7 @@ TAO_OperationDef_i::make_description (
             }
         }
 
-      CORBA::ULong size = ACE_static_cast (CORBA::ULong, path_queue.size ());
+      CORBA::ULong size = static_cast<CORBA::ULong> (path_queue.size ());
 
       od.exceptions.length (size);
 
@@ -736,10 +739,9 @@ TAO_OperationDef_i::make_description (
     }
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 TAO_OperationDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->result_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-

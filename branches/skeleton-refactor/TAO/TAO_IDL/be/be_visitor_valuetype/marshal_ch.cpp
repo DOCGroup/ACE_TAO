@@ -81,3 +81,10 @@ be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
 
   return 0;
 }
+
+int
+be_visitor_valuetype_marshal_ch::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+

@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Thread.i
+// Thread.inl
 
 #include "ace/OS_NS_string.h"
 

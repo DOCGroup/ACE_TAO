@@ -12,8 +12,7 @@ ACE_RCSID (tests,
 static ACE_THR_FUNC_RETURN
 invoke_service_config (void *arg)
 {
-  const ACE_TCHAR *directive = ACE_reinterpret_cast (const ACE_TCHAR *,
-                                                     arg);
+  const ACE_TCHAR *directive = reinterpret_cast<const ACE_TCHAR *> (arg);
 
 
   // Process a Service Configurator directive in the current thread.

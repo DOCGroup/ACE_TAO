@@ -18,32 +18,58 @@ public class Client
     private WCharReference ref;
     private org.omg.CORBA.ORB orb;
 
-    final private static int WCHAR_TO_SERVER = 0x0001;
-    final private static int WSTRING_TO_SERVER = 0x0002;
-    final private static int WARRAY_TO_SERVER = 0x0004;
-    final private static int ANY_WCHAR_TO_SERVER = 0x0008;
-    final private static int WSTRING_EXCEPTION = 0x0010;
-    final private static int WCHAR_FROM_SERVER = 0x0020;
-    final private static int WSTRING_FROM_SERVER = 0x0040;
-    final private static int WARRAY_FROM_SERVER = 0x0080;
-    final private static int ANY_WCHAR_FROM_SERVER = 0x0100;
-    final private static int ANY_WSTRING_TO_SERVER = 0x0200;
-    final private static int ANY_WSTRING_FROM_SERVER = 0x0400;
-    final private static int ANY_WSTRING_ECHO = 0x0800;
-    final private static int WSTRUCTSEQ_FROM_SERVER = 0x1000;
-    final private static int WSTRUCTSEQ_TO_SERVER = 0x2000;
-    final private static int TBD_1 = 0x4000; // update ALL_TESTS if this is defined
-    final private static int TBD_0 = 0x8000; // update ALL_TESTS if this is defined
-    final private static int ALL_TESTS = 0x3FFF;
+    final private static int WCHAR_TO_SERVER         = 0x00000001;
+    final private static int WSTRING_TO_SERVER       = 0x00000002;
+    final private static int WARRAY_TO_SERVER        = 0x00000004;
+    final private static int ANY_WCHAR_TO_SERVER     = 0x00000008;
+    final private static int WSTRING_EXCEPTION       = 0x00000010;
+    final private static int WCHAR_FROM_SERVER       = 0x00000020;
+    final private static int WSTRING_FROM_SERVER     = 0x00000040;
+    final private static int WARRAY_FROM_SERVER      = 0x00000080;
+    final private static int ANY_WCHAR_FROM_SERVER   = 0x00000100;
+    final private static int ANY_WSTRING_TO_SERVER   = 0x00000200;
+    final private static int ANY_WSTRING_FROM_SERVER = 0x00000400;
+    final private static int ANY_WSTRING_ECHO        = 0x00000800;
+    final private static int WSTRUCTSEQ_FROM_SERVER  = 0x00001000;
+    final private static int WSTRUCTSEQ_TO_SERVER    = 0x00002000;
+    final private static int NUL_WSTRING_TO_SERVER   = 0x00004000;
+    final private static int TBD_16 = 0x00008000; // update ALL_TESTS if this is defined
+    final private static int TBD_15 = 0x00010000; // update ALL_TESTS if this is defined
+    final private static int TBD_14 = 0x00020000; // update ALL_TESTS if this is defined
+    final private static int TBD_13 = 0x00040000; // update ALL_TESTS if this is defined
+    final private static int TBD_12 = 0x00080000; // update ALL_TESTS if this is defined
+    final private static int TBD_11 = 0x00100000; // update ALL_TESTS if this is defined
+    final private static int TBD_10 = 0x00200000; // update ALL_TESTS if this is defined
+    final private static int TBD_9  = 0x00400000; // update ALL_TESTS if this is defined
+    final private static int TBD_8  = 0x00800000; // update ALL_TESTS if this is defined
+    final private static int TBD_7  = 0x01000000; // update ALL_TESTS if this is defined
+    final private static int TBD_6  = 0x02000000; // update ALL_TESTS if this is defined
+    final private static int TBD_5  = 0x04000000; // update ALL_TESTS if this is defined
+    final private static int TBD_4  = 0x08000000; // update ALL_TESTS if this is defined
+    final private static int TBD_3  = 0x10000000; // update ALL_TESTS if this is defined
+    final private static int TBD_2  = 0x20000000; // update ALL_TESTS if this is defined
+    final private static int TBD_1  = 0x40000000; // update ALL_TESTS if this is defined
+    final private static int TBD_0  = 0x80000000; // update ALL_TESTS if this is defined
+
+    final private static int ALL_TESTS = 0x00007FFF;
 
     // for all tests, run each test named in this array
-    final private static String test_name[] =
-        {
-            "wchar_to_server", "wstring_to_server", "warray_to_server",
-            "any(wchar)_to_server", "wstring_exception", "wchar_from_server",
-            "wstring_from_server", "warray_from_server", "any(wchar)_from_server",
-            "any(wstring)_to_server", "any(wstring)_from_server",
-            "any(wstring)_echo", "wstructseq_from_server", "wstructseq_to_server"
+    final private static String test_name[] = {
+        "wchar_to_server",
+        "wstring_to_server",
+        "warray_to_server",
+        "any(wchar)_to_server",
+        "wstring_exception",
+        "wchar_from_server",
+        "wstring_from_server",
+        "warray_from_server",
+        "any(wchar)_from_server",
+        "any(wstring)_to_server",
+        "any(wstring)_from_server",
+        "any(wstring)_echo",
+        "wstructseq_from_server",
+        "wstructseq_to_server",
+        "nul_wstring_to_server"
         };
 
     private int tests_to_run = 0;
@@ -52,100 +78,85 @@ public class Client
 
     private boolean runOneTest (WChar_Passer server, int test_num)
     {
+        if (test_num > ALL_TESTS)
+            return false;
+
         switch (test_num)
         {
-            case 0x0001: //WCHAR_TO_SERVER:
+            case 0x00000001: //WCHAR_TO_SERVER:
             {
-                if (verbose)
-                    System.out.println ("test wchar_to_server");
                 return server.wchar_to_server (ref.get_wchar(data_set),
                     data_set);
             }
-            case 0x0002: //WSTRING_TO_SERVER:
+            case 0x00000002: //WSTRING_TO_SERVER:
             {
-                if (verbose)
-                    System.out.println ("test wstring_to_server");
                 return server.wstring_to_server (ref.get_wstring(data_set),
                     data_set);
-            }          
-            case 0x0004: //WARRAY_TO_SERVER:
+            }
+            case 0x00000004: //WARRAY_TO_SERVER:
             {
-                if (verbose)
-                    System.out.println ("test warray_to_server");
                 return server.warray_to_server (ref.get_warray(data_set),
                     data_set);
             }
-            case 0x0008: //ANY_WCHAR_TO_SERVER:
+            case 0x00000008: //ANY_WCHAR_TO_SERVER:
             {
-                if (verbose)
-                    System.out.println ("test any_wchar_to_server");
                 Any a = orb.create_any();
                 a.insert_wchar (ref.get_wchar(data_set));
                 return server.any_to_server (a,data_set);
             }
-            case 0x0010: //WSTRING_EXCEPTION:
+            case 0x00000010: //WSTRING_EXCEPTION:
             {
-                if (verbose)
-                    System.out.println ("test wstring_exception");
-                try 
+                try
                 {
                     server.exception_test(data_set);
-                } 
-                catch (interop.WChar_PasserPackage.WStringException ex) 
+                }
+                catch (interop.WChar_PasserPackage.WStringException ex)
                 {
                     return ref.match_except (data_set,ex.why);
                 }
                 break;
             }
-            case 0x0020: // WCHAR_FROM_SERVER:
+            case 0x00000020: // WCHAR_FROM_SERVER:
             {
-                if (verbose)
-                    System.out.println ("test wchar_from_server");
                 char wc = server.wchar_from_server (data_set);
                 return ref.match_wchar (data_set,wc);
             }
-            case 0x0040: //WSTRING_FROM_SERVER:
+            case 0x00000040: //WSTRING_FROM_SERVER:
             {
-                if (verbose)
-                    System.out.println ("test wstring_from_server");
                 String ws = server.wstring_from_server (data_set);
                 return ref.match_wstring (data_set,ws);
             }
-            case 0x0080: //WARRAY_FROM_SERVER:
+            case 0x00000080: //WARRAY_FROM_SERVER:
             {
-                if (verbose)
-                    System.out.println ("test warray_from_server");
                 char wa[] = server.warray_from_server (data_set);
                 return ref.match_warray (data_set,wa);
             }
-            case 0x0100: // ANY_WCHAR_FROM_SERVER:
+            case 0x00000100: // ANY_WCHAR_FROM_SERVER:
             {
                 if (verbose)
-                    System.out.println ("test any(wchar) from server not yet implemented");
+                    System.out.println ("     not yet implemented");
                 return true;
             }
-            case 0x0200: // ANY_WSTRING_TO_SERVER:
-                {
-                if (verbose)
-                    System.out.println ("test wstring to server not yet implemented");
-                return true;
-            }
-            case 0x0400: // ANY_WSTRING_FROM_SERVER:
-                {
-                if (verbose)
-                    System.out.println ("test wstring from server not yet implemented");
-                return true;
-            }
-            case 0x0800: // ANY_WSTRING_ECHO:
-                {
-                if (verbose)
-                    System.out.println ("test wstring echo not yet implemented");
-                return true;
-            }
-            case 0x1000: // WSTRUCTSEQ_FROM_SERVER
+            case 0x00000200: // ANY_WSTRING_TO_SERVER:
             {
                 if (verbose)
-                    System.out.println ("test wstructseq_from_server");
+                    System.out.println ("     not yet implemented");
+                return true;
+            }
+            case 0x00000400: // ANY_WSTRING_FROM_SERVER:
+            {
+                if (verbose)
+                    System.out.println ("    not yet implemented");
+                return true;
+            }
+            case 0x00000800: // ANY_WSTRING_ECHO:
+            {
+                if (verbose)
+                    System.out.println ("    not yet implemented");
+                return true;
+            }
+            case 0x00001000: // WSTRUCTSEQ_FROM_SERVER
+            {
                 wstruct wsList[] =
                     server.wstructseq_from_server(data_set);
                 boolean result = true;
@@ -155,10 +166,8 @@ public class Client
                         wsList[i].st_string);
                 return result;
             }
-            case 0x2000: // WSTRUCTSEQ_TO_SERVER
+            case 0x00002000: // WSTRUCTSEQ_TO_SERVER
             {
-                if (verbose)
-                    System.out.println ("test wstructseq_to_server");
                 wstruct wsList[] = new wstruct[5];
                 for (int i = 0; i < wsList.length; ++i)
                 {
@@ -168,13 +177,19 @@ public class Client
                 }
                 return server.wstructseq_to_server(wsList, data_set);
             }
-      
+
+            case 0x00004000: // NUL_WSTRING_TO_SERVER
+            {
+                return server.wstring_to_server ("", (short)-1);
+            }
+
             default:
             {
                 if (verbose)
-                    System.out.println ("unknown test type" + test_num);
-                break;
-            }        
+                    System.out.println ("    not yet implemented");
+                return false;
+
+            }
         }
         return false;
     }
@@ -188,6 +203,8 @@ public class Client
         for (int i = 0; i < test_name.length; i++, t <<= 1)
             if ((tests_to_run & t) == t)
             {
+                if (verbose)
+                    System.out.println ("test " + test_name[i]);
                 boolean result = runOneTest (server,t);
                 ++numtests;
                 if (result) ++successes;
@@ -198,7 +215,7 @@ public class Client
             }
         if (verbose)
             System.out.println ("Total of " + successes +
-                                "successes out of " + numtests + " tests");
+                                " successes out of " + numtests + " tests");
         return successes == numtests;
     }
 
@@ -213,10 +230,10 @@ public class Client
         result.st_array = ref.get_warray(key);
         result.st_any = orb.create_any();
         result.st_any.insert_wstring(ref.get_wstring(key));
-          
+
         return result;
     }
-      
+
     // TODO: this should have a home where it's accessable to both
     // client & server, but it doesn't belong in WCharReference
     public boolean match_wstruct (short key, wstruct test )
@@ -227,7 +244,7 @@ public class Client
         // @@ todo result &= ref.match_wstring (key, test.st_any.extract_wstring());
         return result;
     }
-  
+
 
     public void run(String[] args)
         throws Exception
@@ -311,5 +328,5 @@ public class Client
         Client client = new Client();
         client.run(args);
     }
-  
+
 }// Client

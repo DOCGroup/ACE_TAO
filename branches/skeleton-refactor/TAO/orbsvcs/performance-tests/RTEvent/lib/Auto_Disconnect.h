@@ -37,7 +37,7 @@ public:
   /**
    * @param client The client
    */
-  ACE_EXPLICIT Auto_Disconnect (Client *s = 0);
+  explicit Auto_Disconnect (Client *s = 0);
 
   /// Assignment operator
   Auto_Disconnect<Client>& operator= (Client *client);

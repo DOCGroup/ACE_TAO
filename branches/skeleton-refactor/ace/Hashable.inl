@@ -24,7 +24,7 @@ ACE_Hashable::hash (void) const
   // relative to the simple comparison.
 
   if (this->hash_value_ == 0)
-    ((ACE_Hashable *) this)->hash_value_ = this->hash_i ();
+    (const_cast <ACE_Hashable *> (this))->hash_value_ = this->hash_i ();
 
   return this->hash_value_;
 }

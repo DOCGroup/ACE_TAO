@@ -79,9 +79,5 @@ ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_CosNotify_Service)
 
 ACE_STATIC_SVC_DECLARE (TAO_Notify_Default_EMO_Factory_OLD)
 
-#if defined (__ACE_INLINE__)
-#include "CosNotify_Service.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_COSNOTIFY_SERVICE_H */

@@ -7,8 +7,13 @@
 #include "Iterator_Factory_i.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID (AMI_Iterator, Iterator_Factory_i, "$Id$")
+
+ACE_RCSID (AMI_Iterator,
+           Iterator_Factory_i,
+           "$Id$")
+
 
 void
 Iterator_Factory_i::get_iterator (const char *pathname,
@@ -110,18 +115,17 @@ Iterator_Factory_i::content_type (const char *filename,
   // Handle the case where multiple periods exists in the filename,
   // e.g.:  foo.bar.ps
   char *extension = 0;
-  for (char * tmp = ACE_const_cast (char *, filename);
+  for (char * tmp = const_cast<char *> (filename);
        tmp != 0 && tmp != tmp + len;
        )
     {
-      tmp = ACE_const_cast (char *,
-                            ACE_OS::strchr (tmp, '.'));
+      tmp = const_cast<char *> (ACE_OS::strchr (tmp, '.'));
       if (tmp != 0)
         extension = ++tmp;  // Skip over the '.'
     }
 
   if (extension == 0)
-    extension = ACE_const_cast (char *, filename);  // No extension!
+    extension = const_cast<char *> (filename);  // No extension!
 
   if (ACE_OS::strcasecmp (extension, "htm") == 0
       || ACE_OS::strcasecmp (extension, "html") == 0)

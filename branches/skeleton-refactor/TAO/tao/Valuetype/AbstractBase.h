@@ -68,8 +68,6 @@ namespace CORBA
     typedef CORBA::AbstractBase_ptr _ptr_type;
     typedef CORBA::AbstractBase_var _var_type;
 
-    static int _tao_class_id;
-
     static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 

@@ -22,6 +22,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "ace/Log_Msg.h"
+#include "ace/Reactor.h"
 #include "Gateway.h"
 
 ACE_RCSID (Gateway,

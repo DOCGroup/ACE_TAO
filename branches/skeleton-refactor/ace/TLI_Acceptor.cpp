@@ -160,7 +160,7 @@ open_new_endpoint (ACE_HANDLE listen_handle,
 #if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
   else if (rwf != 0 && ACE_OS::ioctl (fd,
                                       I_PUSH,
-                                      ACE_const_cast (char *, "tirdwr"))
+                                      const_cast<char *> ("tirdwr"))
                                       == ACE_INVALID_HANDLE)
     fd = ACE_INVALID_HANDLE;
 #else

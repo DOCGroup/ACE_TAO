@@ -20,6 +20,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/ARGV.h"
 
@@ -82,8 +83,7 @@ Test_Singleton::instance (u_short variety)
 
   ACE_Object_Manager::at_exit (instances[variety],
                                test_singleton_cleanup,
-                               ACE_reinterpret_cast (void *,
-                                 ACE_static_cast (size_t, variety)));
+                               reinterpret_cast<void *> (static_cast<size_t> (variety)));
   return instances[variety];
 }
 

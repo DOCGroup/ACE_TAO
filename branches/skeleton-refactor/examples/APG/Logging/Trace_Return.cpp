@@ -1,17 +1,19 @@
 // $Id$
 
-#if defined (__GNUC__) && (__GNUC__ >= 3 || __GNUC_MINOR__ > 95)
-// The DEBUG stuff only works with g++ 2.96 and later.
-
-// Listing 1 code/ch03
 #include "Trace.h"
 
+#if defined (__GNUC__) && (__GNUC__ >= 3 || __GNUC_MINOR__ > 95) && \
+    (!defined (VXWORKS) || !(__GNUC__ == 2 && __GNUC_MINOR__ == 96))
+// The DEBUG stuff only works with g++ 2.96 and later.
+// But not with VxWorks g++ 2.96.
+
+// Listing 1 code/ch03
 void foo (void);
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  TRACE (ACE_TEXT ("main"));
-    
+  TRACE ("main");
+
   MY_DEBUG (ACE_TEXT ("Hi Mom\n"));
   foo ();
   MY_DEBUG (ACE_TEXT ("Goodnight\n"));
@@ -21,7 +23,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
 void foo (void)
 {
-  TRACE (ACE_TEXT ("foo"));
+  TRACE ("foo");
   MY_DEBUG (ACE_TEXT ("Howdy Pardner\n"));
   TRACE_RETURN_VOID ();
 }
@@ -30,7 +32,7 @@ void foo (void)
 #else
 #include <stdio.h>
 
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   puts ("This example only works on g++ 2.96 and later.\n");
   return 0;

@@ -8,10 +8,6 @@
 #include "ORB_Constants.h"
 #include "SystemException.h"
 
-#if !defined (__ACE_INLINE__)
-#include "tao/Invocation_Endpoint_Selectors.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            Invocation_Endpoint_Selectors,
            "$Id$")

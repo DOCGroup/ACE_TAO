@@ -29,7 +29,8 @@ Handle_L_FIFO::info (ACE_TCHAR **strp, size_t length) const
 
   this->get_local_addr (rendezvous_fifo);
 
-  ACE_OS::sprintf (buf, ACE_TEXT("%s %s"), rendezvous_fifo, ACE_TEXT("# tests local ACE_FIFO\n"));
+  ACE_OS::strcpy (buf, rendezvous_fifo);
+  ACE_OS::strcat (buf, ACE_TEXT(" # tests local ACE_FIFO\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -56,11 +57,11 @@ Handle_L_FIFO::init (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::unlink (rendezvous_fifo);
   if (this->open (rendezvous_fifo) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler
 	   (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "registering service with ACE_Reactor\n"),
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("registering service with ACE_Reactor")),
                       -1);
   return 0;
 }

@@ -156,7 +156,7 @@ ClientService::handle_input (ACE_HANDLE)
     }
 
   send_cnt =
-    this->sock_.send (buffer, ACE_static_cast (size_t, recv_cnt));
+    this->sock_.send (buffer, static_cast<size_t> (recv_cnt));
   if (send_cnt == recv_cnt)
     return 0;
   if (send_cnt == -1 && ACE_OS::last_error () != EWOULDBLOCK)
@@ -168,7 +168,7 @@ ClientService::handle_input (ACE_HANDLE)
     send_cnt = 0;
   ACE_Message_Block *mb;
   size_t remaining =
-    ACE_static_cast (size_t, (recv_cnt - send_cnt));
+    static_cast<size_t> ((recv_cnt - send_cnt));
   ACE_NEW_RETURN (mb, ACE_Message_Block (remaining), -1);
   mb->copy (&buffer[send_cnt], remaining);
   int output_off = this->output_queue_.is_empty ();
@@ -204,7 +204,7 @@ ClientService::handle_output (ACE_HANDLE)
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send")));
       else
-        mb->rd_ptr (ACE_static_cast (size_t, send_cnt));
+        mb->rd_ptr (static_cast<size_t> (send_cnt));
       if (mb->length () > 0)
         {
           this->output_queue_.enqueue_head (mb);

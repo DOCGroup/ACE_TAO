@@ -56,7 +56,7 @@ namespace CIAO
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
                         this->mutex_,
-                        false);
+                        0);
 
       const unsigned int sz = this->slot_index_;
 
@@ -95,7 +95,7 @@ namespace CIAO
                                   PortableServer::Servant ,
                                   CORBA::Boolean ,
                                   CORBA::Boolean
-                                  ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /// Need to investigate what needs to be handled here..

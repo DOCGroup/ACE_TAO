@@ -17,6 +17,10 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ImR_Locator_i;
 
 /**
@@ -31,7 +35,7 @@ class ImR_Locator_i;
 class ImR_Forwarder: public PortableServer::ServantLocator
 {
 public:
-  ImR_Forwarder (ImR_Locator_i *ir_impl, CORBA::ORB_ptr orb);
+  ImR_Forwarder (ImR_Locator_i& imr_impl);
 
   /// Called before the invocation begins.
   virtual PortableServer::Servant preinvoke (
@@ -42,18 +46,20 @@ public:
     ACE_ENV_ARG_DECL
   ) ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest));
 
-  /// Called after the invocation finishes.
-  virtual void postinvoke (const PortableServer::ObjectId &oid,
-                           PortableServer::POA_ptr poa,
-                           const char * operation,
-                           PortableServer::ServantLocator::Cookie cookie,
-                           PortableServer::Servant servant
-                           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void postinvoke (
+    const PortableServer::ObjectId & oid,
+    PortableServer::POA_ptr adapter,
+    const char * operation,
+    PortableServer::ServantLocator::Cookie the_cookie,
+    PortableServer::Servant the_servant
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ) ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void init(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
 private:
   /// Where we find out where to forward to.
-  ImR_Locator_i *imr_impl_;
+  ImR_Locator_i& locator_;
 
   /// POA reference.
   PortableServer::Current_var poa_current_var_;

@@ -15,8 +15,9 @@
 #define TAO_AV_UDP_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
 #include "Protocol_Factory.h"
+
+#include "ace/Service_Config.h"
 
 /**
  * @class TAO_AV_UDP_Factory
@@ -38,7 +39,7 @@ class TAO_AV_UDP_Flow_Handler;
 
 /**
  * @class TAO_AV_UDP_Transport
- * @brief A transport abstraction for udp sockets. 
+ * @brief A transport abstraction for udp sockets.
  *        Uses the ACE_SOCK_Dgram to send the data.
  */
 class TAO_AV_Export TAO_AV_UDP_Transport
@@ -92,7 +93,7 @@ public:
                         ACE_Time_Value *s = 0);
 
   TAO_AV_UDP_Flow_Handler *handler (void) { return this->handler_; }
-  
+
 protected:
   TAO_AV_UDP_Flow_Handler *handler_;
   ACE_Addr *addr_;
@@ -101,7 +102,7 @@ protected:
 
 /**
  * @class TAO_AV_UDP_Flow_Handler
- * @brief Flow Handler for UDP flows. 
+ * @brief Flow Handler for UDP flows.
  */
 class TAO_AV_Export TAO_AV_UDP_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
@@ -132,7 +133,7 @@ protected:
 
 /**
  * @class TAO_AV_UDP_Acceptor
- * @brief 
+ * @brief
  */
 class TAO_AV_Export TAO_AV_UDP_Acceptor
   :public TAO_AV_Acceptor
@@ -173,7 +174,7 @@ protected:
 
 /**
  * @class TAO_AV_UDP_Connector
- * @brief 
+ * @brief
  */
 class TAO_AV_Export TAO_AV_UDP_Connector
   :public TAO_AV_Connector
@@ -247,7 +248,7 @@ public:
 
   virtual int send_frame (const char*buf,
                           size_t len);
-  
+
   /// end the stream.
   virtual int destroy (void);
 

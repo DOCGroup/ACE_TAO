@@ -94,7 +94,7 @@ be_visitor_traits::visit_module (be_module *node)
 int
 be_visitor_traits::visit_interface (be_interface *node)
 {
-  if (node->cli_traits_gen ())
+  if (node->cli_traits_gen () || !node->is_defined ())
     {
       return 0;
     }
@@ -103,10 +103,8 @@ be_visitor_traits::visit_interface (be_interface *node)
 
   // Since the three blocks below generate specialized (i.e., non-template)
   // classes, we don't want to generate them unless it's necessary - thus
-  // the logic surrounding each one.
+  // the ifdef logic surrounding each one.
 
-  // I think we need to generate this only for non-defined forward
-  // declarations.
   if (!node->imported ())
     {
       os->gen_ifdef_macro (node->flat_name (), "traits");
@@ -387,39 +385,6 @@ be_visitor_traits::visit_array (be_array *node)
   const char *name = name_holder.fast_rep ();
 
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Generate the array traits specialization definitions,
-  // guarded by #ifdef on unaliased array element type and length.
-
-  ACE_CString unique;
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  AST_Decl::NodeType nt = bt->node_type ();
-
-  if (nt == AST_Decl::NT_typedef)
-    {
-      be_typedef *td = be_typedef::narrow_from_decl (bt);
-      unique = td->primitive_base_type ()->flat_name ();
-    }
-  else
-    {
-      unique = bt->flat_name ();
-    }
-
-  char buf[NAMEBUFSIZE];
-
-  for (unsigned long i = 0; i < node->n_dims (); ++i)
-    {
-      ACE_OS::memset (buf,
-                      '\0',
-                      NAMEBUFSIZE);
-      ACE_OS::sprintf (buf,
-                       "_%ld",
-                       node->dims ()[i]->ev ()->u.ulval);
-      unique += buf;
-    }
-
-  unique += "_traits";
-//  os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl

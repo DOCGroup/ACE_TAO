@@ -2,10 +2,6 @@
 
 #include "ECG_ConsumerEC_Control.h"
 
-#if ! defined (__ACE_INdLINE__)
-#include "ECG_ConsumerEC_Control.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, ECG_ConsumerEventChannelControl, "$Id$")
 
 TAO_ECG_ConsumerEC_Control::TAO_ECG_ConsumerEC_Control (void)
@@ -41,8 +37,3 @@ TAO_ECG_ConsumerEC_Control::system_exception (TAO_EC_Gateway_IIOP *,
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

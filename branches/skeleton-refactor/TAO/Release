@@ -10,32 +10,31 @@
 #### the make invocation.
 ####
 
-CONTROLLED_FILES = TAO/COPYING* \
-	    	   TAO/ChangeLog* \
-	  	   TAO/LICENSE.sun \
-		   TAO/PROBLEM-REPORT-FORM \
-                   TAO/Release \
-		   TAO/README* \
-		   TAO/TAO-INSTALL.html \
-		   TAO/TAOACE* \
-		   TAO/TAO.mwc \
-		   TAO/TAO_IDL \
-		   TAO/VERSION \
-		   TAO/docs \
-		   TAO/NEWS \
-		   TAO/examples \
-		   TAO/orbsvcs \
-		   TAO/performance-tests \
-		   TAO/release.pl \
-		   TAO/rules.tao.GNU \
-		   TAO/tao \
-		   TAO/tao-config.1.in \
-		   TAO/tao-config.in \
-		   TAO/taoConf.sh.in \
-	           TAO/tao_targets.GNU \
-		   TAO/taoconfig.mk \
-		   TAO/tests \
-		   TAO/utils
+CONTROLLED_FILES = \
+	TAO/COPYING* \
+	TAO/ChangeLog* \
+	TAO/LICENSE.sun \
+	TAO/PROBLEM-REPORT-FORM \
+	TAO/Release \
+	TAO/README* \
+	TAO/TAO-INSTALL.html \
+	TAO/TAOACE* \
+	TAO/TAO.mwc \
+	TAO/TAO_IDL \
+	TAO/VERSION \
+	TAO/docs \
+	TAO/NEWS \
+	TAO/examples \
+	TAO/interop-tests \
+	TAO/orbsvcs \
+	TAO/performance-tests \
+	TAO/release.pl \
+	TAO/rules.tao.GNU \
+	TAO/tao \
+	TAO/Makefile.am \
+	TAO/configure.ac \
+	TAO/tests \
+	TAO/utils
 
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
@@ -43,11 +42,13 @@ RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
 		ACE_wrappers/TAO/*.dsw \
         	ACE_wrappers/TAO/*.sln \
         	ACE_wrappers/TAO/*.bor \
-                ACE_wrappers/TAO/INSTALL
+        	ACE_wrappers/TAO/configure \
+        	ACE_wrappers/TAO/Makefile.in \
+                ACE_wrappers/TAO/TAO-INSTALL
 
 
 .PHONY: INSTALL
-INSTALL: TAO-INSTALL.html
+TAO-INSTALL: TAO-INSTALL.html
 	@lynx -dump $^ > $@; chmod a+r $@
 
 .PHONY: release tag
@@ -88,3 +89,6 @@ show_release_lib_files:
 
 show_release_tag_files:
 	@echo ""
+
+INSTALL: TAO-INSTALL.html
+	@lynx -dump $< > TAO-INSTALL

@@ -107,9 +107,5 @@ public:
       destroy_supplier_control (TAO_EC_SupplierControl*);
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Null_Factory.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_NULL_FACTORY_H */

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver {
+project(*Server): taoserver {
   idlflags  = -Ge 0 -Sc
   requires += exceptions
 
@@ -11,7 +11,7 @@ project(*Server): taoexe, portableserver {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
   idlflags  = -Ge 0 -Sc
   requires += exceptions
 

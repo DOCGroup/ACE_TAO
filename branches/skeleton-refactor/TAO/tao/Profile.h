@@ -215,7 +215,7 @@ public:
 
   /// Verify profile equivalance.
   /**
-   * Two profiles are equivalent @e iff their tag, object_key, version
+   * Two profiles are equivalent if their tag, object_key, version
    * and all endpoints are the same.
    *
    * @see do_is_equivalent_i()
@@ -239,7 +239,7 @@ protected:
   /// Decode the protocol specific profile details.
   virtual int decode_profile (TAO_InputCDR &cdr) = 0;
 
-  /// Creates an encapsulation of the ProfileBody struct in the <cdr>
+  /// Creates an encapsulation of the ProfileBody struct in the @a cdr
   virtual void create_profile_body (TAO_OutputCDR &cdr) const = 0;
 
   /**
@@ -285,7 +285,7 @@ protected:
 
 private:
 
-  /// this object keeps ownership of this object
+  /// This object keeps ownership of this object
   TAO_MProfile *forward_to_i (void);
 
   /// Verify that the current ORB's configuration supports tagged
@@ -308,10 +308,6 @@ protected:
   /// The tagged components
   TAO_Tagged_Components tagged_components_;
 
-  /// Flag indicating whether the lazy decoding of the client exposed
-  /// policies has taken place.
-  CORBA::Boolean are_policies_parsed_;
-
   /// Pointer to the TAO_Stub to which this profile is related.
   TAO_Stub *stub_;
 
@@ -323,6 +319,10 @@ protected:
   // So to save memory, each TAO_Profile has a pointer to the same
   // PolicyList object. The life cycle of this object is managed
   // by the TAO_MProfile class.
+
+  /// Flag indicating whether the lazy decoding of the client exposed
+  /// policies has taken place.
+  CORBA::Boolean are_policies_parsed_;
 
   /// The current addressing mode.
   /// This may be changed if a remote server sends back an address mode
@@ -342,7 +342,7 @@ private:
   /// Pointer to the ORB core
   TAO_ORB_Core *orb_core_;
 
-  /// the TAO_MProfile which contains the profiles for the forwarded
+  /// The TAO_MProfile which contains the profiles for the forwarded
   /// object.
   TAO_MProfile* forward_to_;
 

@@ -43,12 +43,7 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // The number of children to run, it can be changed using the -c
 // option.
-static int opt_nchildren =
-#if defined (__Lynx__)
-  5;
-#else  /* ! __Lynx__ */
- 10;
-#endif /* ! __Lynx__ */
+static int opt_nchildren = 10;
 
 // The number of loops per children, it can be changed using the -l
 // option.
@@ -187,7 +182,7 @@ static void *
 client (void *arg)
 {
   ACE_INET_Addr *connection_addr =
-    ACE_reinterpret_cast (ACE_INET_Addr *, arg);
+    reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) running client\n")));
   CONNECTOR connector;

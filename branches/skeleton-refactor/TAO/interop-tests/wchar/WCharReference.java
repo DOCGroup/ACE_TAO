@@ -63,6 +63,12 @@ public class WCharReference
 
     public boolean match_wstring (short key, String test)
     {
+        if (key == -1) {
+            if (verbose)
+                System.out.println ("match_wstring: expcting nul string, " +
+                                    "got string length " + test.length());
+            return test.length() == 0;
+        }
         if (verbose)
             System.out.println ("match_wstring: expecting " +
                                 ref_wstring[key] + " got " +

@@ -27,9 +27,11 @@
 
 #include "BoundsC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -39,12 +41,12 @@ TAO::Any_Dual_Impl_T<CORBA::Bounds>::demarshal_value (
   )
 {
   CORBA::String_var id;
-
+  
   if ((cdr >> id.out ()) == 0)
     {
       return 0;
     }
-
+  
   ACE_TRY_NEW_ENV
     {
       this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -55,7 +57,7 @@ TAO::Any_Dual_Impl_T<CORBA::Bounds>::demarshal_value (
       return 0;
     }
   ACE_ENDTRY;
-
+  
   return 1;
 }
 
@@ -93,8 +95,8 @@ CORBA::Boolean operator>>= (
     CORBA::Bounds *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::Bounds *&,
+  return _tao_any >>= const_cast<
+      const CORBA::Bounds *&> (
       _tao_elem
     );
 }
@@ -114,8 +116,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -130,4 +130,4 @@ CORBA::Boolean operator>>= (
         CORBA::Bounds \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

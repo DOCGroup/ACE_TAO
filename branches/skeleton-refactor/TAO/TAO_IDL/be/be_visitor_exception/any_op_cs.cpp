@@ -60,9 +60,9 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "CORBA::String_var id;" << be_nl << be_nl
-          << "if ((cdr >> id.out ()) == 0)" << be_idt_nl
+          << "if (!(cdr >> id.out ()))" << be_idt_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "ACE_TRY_NEW_ENV" << be_idt_nl
           << "{" << be_idt_nl
@@ -71,10 +71,10 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "}" << be_uidt_nl
           << "ACE_CATCHANY" << be_idt_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "ACE_ENDTRY;" << be_nl << be_nl
-          << "return 1;" << be_uidt_nl
+          << "return true;" << be_uidt_nl
           << "}";
     }
   // Since we don't generate CDR stream operators for types that
@@ -91,7 +91,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "TAO::Any_Dual_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -100,7 +100,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "TAO::Any_Dual_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
     }
 

@@ -52,10 +52,10 @@ private:
   // Put in something to query about.
 
 private:
-  CORBA::Boolean debug_;
+  bool debug_;
   // Toggle debugging output.
 
-  CORBA::Boolean do_dump_history_;
+  bool do_dump_history_;
   // Toggle saving of dump history.
 
   CORBA::ULong iterations_;

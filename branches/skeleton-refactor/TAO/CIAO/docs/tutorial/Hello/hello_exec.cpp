@@ -2,6 +2,9 @@
 
 #include "hello_exec.h"
 
+#include "ace/OS_NS_string.h"
+
+
 hello_example::HelloWorld_Impl::HelloWorld_Impl ()
 {
 }
@@ -12,7 +15,7 @@ hello_example::HelloWorld_Impl::~HelloWorld_Impl ()
 
 char *
 hello_example::HelloWorld_Impl::sayhello (const char *username
-					  ACE_ENV_ARG_DECL_NOT_USED)
+                                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   static const char *fmt = "Hello World message for ";
@@ -34,14 +37,14 @@ hello_example::HelloWorld_Impl::set_session_context (
     Components::SessionContext_ptr ctx
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::CCMException))
+                   Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "hello_example::HelloWorld_Impl::set_session_context\n"));
 
   this->context_ =
     hello_example::HelloWorld_Exec_Context::_narrow (ctx
-						     ACE_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 
@@ -51,16 +54,16 @@ hello_example::HelloWorld_Impl::set_session_context (
 }
 
 void
-hello_example::HelloWorld_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
+hello_example::HelloWorld_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::CCMException))
+                   Components::CCMException))
 {
 }
 
 void
 hello_example::HelloWorld_Impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::CCMException))
+                   Components::CCMException))
 {
 }
 
@@ -68,7 +71,7 @@ void
 hello_example::HelloWorld_Impl::ciao_postactivate (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::CCMException))
+                   Components::CCMException))
 {
 }
 
@@ -76,14 +79,14 @@ void
 hello_example::HelloWorld_Impl::ccm_passivate (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::CCMException))
+                   Components::CCMException))
 {
 }
 
 void
 hello_example::HelloWorld_Impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::CCMException))
+                   Components::CCMException))
 {
 }
 

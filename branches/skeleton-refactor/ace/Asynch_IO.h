@@ -35,6 +35,14 @@
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 
+#include "ace/Synch_Traits.h"
+#if defined (ACE_HAS_THREADS)
+#  include "ace/Thread_Mutex.h"
+#else
+#  include "ace/Null_Mutex.h"
+#endif /* ACE_HAS_THREADS */
+#include "ace/Refcounted_Auto_Ptr.h"
+
 #include "ace/os_include/os_signal.h"
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/os_include/sys/os_types.h"
@@ -565,8 +573,8 @@ public:
    */
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            u_long offset = 0,
-            u_long offset_high = 0,
+            unsigned long offset = 0,
+            unsigned long offset_high = 0,
             const void *act = 0,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
@@ -580,8 +588,8 @@ public:
   */
   int readv (ACE_Message_Block &message_block,
              size_t bytes_to_read,
-             u_long offset = 0,
-             u_long offset_high = 0,
+             unsigned long offset = 0,
+             unsigned long offset_high = 0,
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
@@ -699,8 +707,8 @@ public:
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             u_long offset = 0,
-             u_long offset_high = 0,
+             unsigned long offset = 0,
+             unsigned long offset_high = 0,
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
@@ -714,8 +722,8 @@ public:
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
-              u_long offset = 0,
-              u_long offset_high = 0,
+              unsigned long offset = 0,
+              unsigned long offset_high = 0,
               const void *act = 0,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
@@ -1059,10 +1067,10 @@ public:
   int transmit_file (ACE_HANDLE file,
                      Header_And_Trailer *header_and_trailer = 0,
                      size_t bytes_to_write = 0,
-                     u_long offset = 0,
-                     u_long offset_high = 0,
+                     unsigned long offset = 0,
+                     unsigned long offset_high = 0,
                      size_t bytes_per_send = 0,
-                     u_long flags = 0,
+                     unsigned long flags = 0,
                      const void *act = 0,
                      int priority = 0,
                      int signal_number = ACE_SIGRTMIN);
@@ -1550,12 +1558,38 @@ public:
   /// Set the ACE_HANDLE value for this Handler.
   virtual void handle (ACE_HANDLE);
 
+  /**
+   * @class Proxy
+   *
+   * @brief The Proxy class acts as a proxy for dispatch of completions
+   * to operations issued for the associated handler. It allows the handler
+   * to be deleted while operations are outstanding. The proxy must be used
+   * to get the ACE_Handler pointer for dispatching, and if it's 0, the
+   * handler is no longer valid and the result should not be dispatched.
+   */
+  class ACE_Export Proxy
+  {
+  public:
+    Proxy (ACE_Handler *handler) : handler_ (handler) {};
+    void reset (void) { this->handler_ = 0; };
+    ACE_Handler *handler (void) { return this->handler_; };
+  private:
+    ACE_Handler *handler_;
+  };
+  typedef ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy,ACE_SYNCH_MUTEX>
+    Proxy_Ptr;
+
+  ACE_Handler::Proxy_Ptr &proxy (void);
+
 protected:
   /// The proactor associated with this handler.
   ACE_Proactor *proactor_;
 
   /// The ACE_HANDLE in use with this handler.
   ACE_HANDLE    handle_;
+
+  /// Refers to proxy for this handler.
+  ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX> proxy_;
 };
 
 // Forward declarations

@@ -81,7 +81,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           << "if (strm << _tao_aggregate._rep_id ())" << be_idt_nl
           << "{" << be_idt_nl
           << "// Now marshal the members (if any)." << be_nl
-          << "if (" << be_idt_nl;
+          << "return (" << be_idt_nl;
 
       if (this->visit_scope (node) == -1)
         {
@@ -92,33 +92,18 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << be_uidt_nl << " )"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << "return 1;" << be_uidt_nl
+      *os << be_uidt_nl << " );" << be_uidt_nl
           << "}" << be_uidt_nl
           << "else" << be_idt_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "else" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl;
     }
   else
     {
       // No members.
-      *os << "// First marshal the repository ID." << be_nl
-          << "if (strm << _tao_aggregate._rep_id ())" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return 1;" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "else" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl;
+      *os << "// Marshal the repository ID." << be_nl
+          << "return (strm << _tao_aggregate._rep_id ());" << be_uidt_nl;
     }
 
   *os << "}" << be_nl << be_nl;
@@ -159,7 +144,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
       // Some members.
       *os << "// Demarshal the members." << be_nl
-          << "if (" << be_idt_nl;
+          << "return (" << be_idt_nl;
 
       if (this->visit_scope (node) == -1)
         {
@@ -170,19 +155,11 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << be_uidt_nl << ")"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << "return 1;" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "else" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl;
+      *os << be_uidt_nl << ");" << be_uidt_nl;
     }
   else
     {
-      *os << "return 1;" << be_uidt_nl;
+      *os << "return true;" << be_uidt_nl;
     }
 
   *os << "}";

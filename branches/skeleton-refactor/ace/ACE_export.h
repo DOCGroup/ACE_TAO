@@ -44,10 +44,18 @@
 #endif     /* ACE_HAS_DLL */
 
 // Added by hand to help with ACE_OS namespace
+#if defined (__TANDEM) && defined(USE_EXPLICIT_EXPORT)
+#define ACE_NAMESPACE_STORAGE_CLASS ACE_EXPORT_MACRO extern
+#else
 #define ACE_NAMESPACE_STORAGE_CLASS extern ACE_EXPORT_MACRO
+#endif
 
-#if (defined (_MSC_VER) || defined (__MINGW32__) || defined (CYGWIN32)) && defined (__ACE_INLINE__)
-#  define ACE_NAMESPACE_INLINE_FUNCTION inline
+#if defined (__ACE_INLINE__)
+#  if defined (_MSC_VER) || defined (__MINGW32__) || defined (CYGWIN32)
+#    define ACE_NAMESPACE_INLINE_FUNCTION inline
+#  else
+#    define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS inline
+#  endif
 #else
 #  define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS
 #endif

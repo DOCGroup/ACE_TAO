@@ -19,7 +19,7 @@
 
 # include /**/ "ace/pre.h"
 
-# include "ace/config-all.h"
+# include "ace/config-lite.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
@@ -46,8 +46,6 @@
 # endif /* SIG_SETMASK */
 
 // Create some useful typedefs.
-// @todo: remove, not used  dhinton
-//typedef const char **SYS_SIGLIST;
 
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t
@@ -64,7 +62,7 @@ struct ACE_Export siginfo_t
 # endif /* ACE_HAS_SIGINFO_T */
 
 #if !defined (ACE_WIN32)
-extern "C" 
+extern "C"
 {
   typedef void (*ACE_SIGNAL_C_FUNC)(int, siginfo_t *, void *);
 }

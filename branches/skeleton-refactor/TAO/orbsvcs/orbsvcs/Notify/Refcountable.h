@@ -40,7 +40,7 @@ public:
   /// Destructor
   virtual ~TAO_Notify_Refcountable ();
 
-  /// This method sigantures deliberately match the 
+  /// This method sigantures deliberately match the
   /// RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -55,10 +55,6 @@ protected:
   /// The mutex to serialize access to state variables.
   TAO_SYNCH_MUTEX lock_;
 };
-
-#if defined (__ACE_INLINE__)
-#include "Refcountable.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

@@ -112,18 +112,6 @@ namespace ACE_OS {
   wchar_t *strchr (wchar_t *s, wint_t c);
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_LACKS_STRCHR)
-  /// Emulated strchr (char version) - Finds the first occurance of a
-  /// character in a string.
-  extern ACE_Export
-  char *strchr_emulation (char *s, int c);
-
-  /// Emulated strchr (const char version) - Finds the first occurance of a
-  /// character in a string.
-  extern ACE_Export
-  const char *strchr_emulation (const char *s, int c);
-#endif /* ACE_LACKS_STRCHR */
-
   /// Compares two strings (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   int strcmp (const char *s, const char *t);
@@ -153,12 +141,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strcspn (const wchar_t *s, const wchar_t *reject);
 #endif /* ACE_HAS_WCHAR */
-
-#if defined (ACE_LACKS_STRCSPN)
-  /// Emulated strcspn - Finds a substring in a string.
-  extern ACE_Export
-  size_t strcspn_emulation (const char *s, const char *reject);
-#endif /* ACE_LACKS_STRCSPN */
 
   /// Returns a malloced duplicated string (char version).
   extern ACE_Export
@@ -352,9 +334,9 @@ namespace ACE_OS {
    * Unlike strncpy() this function will always add a terminating '\0'
    * char if maxlen > 0.  So the user doesn't has to provide an extra
    * '\0' if the user wants a '\0' terminated dst.  The function
-   * doesn't check for a 0 <dst>, because this will give problems
-   * anyway.  When <src> is 0 an empty string is made.  We do not
-   * "touch" *<dst> if maxlen is 0.  Returns <dst>.  Care should be
+   * doesn't check for a 0 @a dst, because this will give problems
+   * anyway.  When @a src is 0 an empty string is made.  We do not
+   * "touch" * @a dst if maxlen is 0.  Returns @a dst.  Care should be
    * taken when replacing strncpy() calls, because in some cases a
    * strncpy() user is using the "not '\0' terminating" feature from
    * strncpy().  This happens most when the call to strncpy() was
@@ -373,9 +355,9 @@ namespace ACE_OS {
    * Unlike strncpy() this function will always add a terminating '\0'
    * char if maxlen > 0.  So the user doesn't has to provide an extra
    * '\0' if the user wants a '\0' terminated dst.  The function
-   * doesn't check for a 0 <dst>, because this will give problems
-   * anyway.  When <src> is 0 an empty string is made.  We do not
-   * "touch" *<dst> if maxlen is 0.  Returns <dst>.  Care should be
+   * doesn't check for a 0 @a dst, because this will give problems
+   * anyway.  When @a src is 0 an empty string is made.  We do not
+   * "touch" * @a dst if maxlen is 0.  Returns @a dst.  Care should be
    * taken when replacing strncpy() calls, because in some cases a
    * strncpy() user is using the "not '\0' terminating" feature from
    * strncpy().  This happens most when the call to strncpy() was
@@ -456,13 +438,13 @@ namespace ACE_OS {
   /// Emulated strtok_r.
   extern ACE_Export
   char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
+#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
-# if defined (ACE_HAS_WCHAR)
+# if defined (ACE_HAS_WCHAR) && defined(ACE_LACKS_WCSTOK)
   /// Emulated strtok_r (wchar_t version).
   extern ACE_Export
   wchar_t *strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts);
-# endif  // ACE_HAS_WCHAR
-#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
+# endif  // ACE_HAS_WCHAR && ACE_LACKS_WCSTOK
 
 } /* namespace ACE_OS */
 

@@ -51,7 +51,6 @@
 #include "be_visitor_valuetype.h"
 #include "be_visitor_argument.h"
 #include "be_visitor_array.h"
-#include "be_visitor_eventtype.h"
 #include "be_visitor_field.h"
 #include "be_visitor_constant.h"
 #include "be_visitor_enum.h"

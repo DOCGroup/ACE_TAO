@@ -41,10 +41,10 @@ public:
   TAO_Notify_Find_Worker_T (void);
 
   /// Find the Type.
-  TYPE* find (TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
+  TYPE* find (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
 
   /// Find and resolve to the Interface.
-  INTERFACE_PTR resolve (TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
+  INTERFACE_PTR resolve (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
 
 protected:
   ///= TAO_ESF_Worker method

@@ -9,11 +9,14 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/CDR.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_strings.h"
+
 
 ACE_RCSID (EventChannel,
            Replication_Service,
            "$Id$")
+
 
 namespace FTRTEC
 {
@@ -104,6 +107,8 @@ namespace FTRTEC
 
   void Replication_Service::become_primary()
   {
+    TAO_FTRTEC::Log(3, "become_primary\n");
+
     Replication_Strategy* strategy =
       replication_strategy->make_primary_strategy();
 
@@ -129,8 +134,23 @@ namespace FTRTEC
 
     ACE_Message_Block mb;
     ACE_CDR::consolidate(&mb, cdr.begin());
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     FTRT::State state(mb.length(), &mb);
-    //FT::State state;
+#else
+    // If the form of the constructor is not available, we will need
+    // to do the copy manually.  First, set the octet sequence length.
+    FTRT::State state;
+    CORBA::ULong length = mb.length ();
+    state.length (length);
+
+    // Now copy over each byte.
+    char* base = mb.data_block ()->base ();
+    for(CORBA::ULong i = 0; i < length; i++)
+      {
+        state[i] = base[i];
+      }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+
 
     replication_strategy->replicate_request(
       state,

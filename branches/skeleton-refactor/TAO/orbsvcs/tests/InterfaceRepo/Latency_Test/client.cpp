@@ -12,9 +12,6 @@ main (int argc, char *argv[])
 {
   Latency_Query_Client client;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n\t IFR Latency Test \n\n"));
-
   int retval = client.init (argc, 
                             argv);
 

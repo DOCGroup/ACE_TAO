@@ -2,6 +2,8 @@
 
 #include "tao/ORB_Constants.h"
 
+#include "ace/SString.h"
+
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Credentials,

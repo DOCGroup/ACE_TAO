@@ -67,7 +67,7 @@ TAO_Notify_Buffering_Strategy::update_qos_properties (
 
       this->blocking_time_ =
 # if defined (ACE_CONFIG_WIN32_H)
-        ACE_Time_Value (ACE_static_cast (long, blocking_timeout.value ()));
+        ACE_Time_Value (static_cast<long> (blocking_timeout.value ()));
 # else
       ACE_Time_Value (blocking_timeout.value () / 1);
 # endif /* ACE_CONFIG_WIN32_H */
@@ -87,7 +87,7 @@ TAO_Notify_Buffering_Strategy::shutdown (void)
 }
 
 int
-TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request& method_request)
+TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable& method_request)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -174,7 +174,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request& method_reques
 }
 
 int
-TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request* &method_request, const ACE_Time_Value *abstime)
+TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &method_request, const ACE_Time_Value *abstime)
 {
   ACE_Message_Block *mb;
 
@@ -194,7 +194,7 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request* &method_reque
   if (this->msg_queue_.dequeue (mb) == -1)
     return -1;
 
-  method_request = ACE_dynamic_cast (TAO_Notify_Method_Request*, mb);
+  method_request = dynamic_cast<TAO_Notify_Method_Request_Queueable*> (mb);
 
   if (method_request == 0)
     return -1;
@@ -210,7 +210,7 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request* &method_reque
 }
 
 int
-TAO_Notify_Buffering_Strategy::queue (TAO_Notify_Method_Request& method_request)
+TAO_Notify_Buffering_Strategy::queue (TAO_Notify_Method_Request_Queueable& method_request)
 {
   int result;
 

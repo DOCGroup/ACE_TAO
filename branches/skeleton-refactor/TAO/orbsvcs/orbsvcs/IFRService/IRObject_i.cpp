@@ -16,13 +16,22 @@ ACE_RCSID (IFR_Service,
 
 
 TAO_IRObject_i::TAO_IRObject_i (TAO_Repository_i *repo)
-  : repo_ (repo),
-    section_key_ (ACE_Configuration_Section_Key ())
+  : repo_ (repo)
 {
 }
 
 TAO_IRObject_i::~TAO_IRObject_i (void)
 {
+}
+
+CORBA::DefinitionKind
+TAO_IRObject_i::def_kind (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Will always be overridden by concrete classes.
+  return CORBA::dk_none;
 }
 
 void
@@ -36,8 +45,7 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_POA_Current_Impl *pc_impl =
-    ACE_static_cast (TAO_POA_Current_Impl *,
-                     TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+    static_cast<TAO_POA_Current_Impl *> (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
   PortableServer::ObjectId object_id;
   int status = TAO_POA::parse_ir_object_key (pc_impl->object_key (),

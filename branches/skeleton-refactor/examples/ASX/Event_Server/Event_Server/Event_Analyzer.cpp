@@ -43,8 +43,8 @@ Event_Analyzer::put (ACE_Message_Block *mb, ACE_Time_Value *)
 {
   if (Options::instance ()->debug ())
     ACE_DEBUG ((LM_DEBUG,
-                "(%t) passing through Event_Analyser::put() (%s)\n",
-		this->is_reader () ? "reader" : "writer"));
+                ACE_TEXT ("(%t) passing through Event_Analyser::put() (%s)\n"),
+		this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer")));
 
   if (mb->msg_type () == ACE_Message_Block::MB_IOCTL)
     this->control (mb);
@@ -54,7 +54,7 @@ Event_Analyzer::put (ACE_Message_Block *mb, ACE_Time_Value *)
 }
 
 int 
-Event_Analyzer::init (int, char *[])
+Event_Analyzer::init (int, ACE_TCHAR *[])
 {
   // No-op for now.
   return 0;
@@ -68,9 +68,9 @@ Event_Analyzer::fini (void)
 }
 
 int 
-Event_Analyzer::info (char **strp, size_t length) const
+Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
 {
-  const char *mod_name = this->name ();
+  const ACE_TCHAR *mod_name = this->name ();
   
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;

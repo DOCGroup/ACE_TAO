@@ -27,7 +27,6 @@
 
 #include "tao/ORB_Constants.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -35,12 +34,6 @@
 #include "tao/TC_Constants_Forward.h"
 #include "tao/OBV_Constants.h"
 #include "tao/CORBA_methods.h"
-
-
-
-#if defined (__ACE_INLINE__)
-# include "tao/corbafwd.i"
-#endif /* ! __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

@@ -26,20 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_NO_IMPLC_H_
 #define _TAO_IDL_ORIG_MESSAGING_NO_IMPLC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "messaging_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
@@ -67,9 +70,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -78,7 +79,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -95,7 +96,7 @@ namespace Messaging
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short Priority;
   typedef CORBA::Short_out Priority_out;
@@ -106,7 +107,7 @@ namespace Messaging
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Priority;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short RebindMode;
   typedef CORBA::Short_out RebindMode_out;
@@ -132,7 +133,7 @@ namespace Messaging
   const Messaging::RebindMode NO_RECONNECT = 2;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short RoutingType;
   typedef CORBA::Short_out RoutingType_out;
@@ -158,7 +159,7 @@ namespace Messaging
   const Messaging::RoutingType ROUTE_STORE_AND_FORWARD = 2;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::UShort Ordering;
   typedef CORBA::UShort_out Ordering_out;
@@ -194,7 +195,7 @@ namespace Messaging
   const CORBA::PolicyType REBIND_POLICY_TYPE = 23U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REBINDPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_REBINDPOLICY__VAR_OUT_CH_
@@ -223,7 +224,7 @@ namespace Messaging
 #define _MESSAGING_REBINDPOLICY_CH_
   
   class TAO_Messaging_Export RebindPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef RebindPolicy_ptr _ptr_type;
@@ -244,7 +245,7 @@ namespace Messaging
     
     static RebindPolicy_ptr _nil (void)
     {
-      return (RebindPolicy_ptr)0;
+      return static_cast<RebindPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -348,7 +349,7 @@ namespace Messaging
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityRange;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY__VAR_OUT_CH_
@@ -377,7 +378,7 @@ namespace Messaging
 #define _MESSAGING_REQUESTPRIORITYPOLICY_CH_
   
   class TAO_Messaging_Export RequestPriorityPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef RequestPriorityPolicy_ptr _ptr_type;
@@ -398,7 +399,7 @@ namespace Messaging
     
     static RequestPriorityPolicy_ptr _nil (void)
     {
-      return (RequestPriorityPolicy_ptr)0;
+      return static_cast<RequestPriorityPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -470,7 +471,7 @@ namespace Messaging
   const CORBA::PolicyType REPLY_PRIORITY_POLICY_TYPE = 26U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY__VAR_OUT_CH_
@@ -499,7 +500,7 @@ namespace Messaging
 #define _MESSAGING_REPLYPRIORITYPOLICY_CH_
   
   class TAO_Messaging_Export ReplyPriorityPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef ReplyPriorityPolicy_ptr _ptr_type;
@@ -520,7 +521,7 @@ namespace Messaging
     
     static ReplyPriorityPolicy_ptr _nil (void)
     {
-      return (ReplyPriorityPolicy_ptr)0;
+      return static_cast<ReplyPriorityPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -592,7 +593,7 @@ namespace Messaging
   const CORBA::PolicyType REQUEST_START_TIME_POLICY_TYPE = 27U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY__VAR_OUT_CH_
@@ -621,7 +622,7 @@ namespace Messaging
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY_CH_
   
   class TAO_Messaging_Export RequestStartTimePolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef RequestStartTimePolicy_ptr _ptr_type;
@@ -642,7 +643,7 @@ namespace Messaging
     
     static RequestStartTimePolicy_ptr _nil (void)
     {
-      return (RequestStartTimePolicy_ptr)0;
+      return static_cast<RequestStartTimePolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -714,7 +715,7 @@ namespace Messaging
   const CORBA::PolicyType REQUEST_END_TIME_POLICY_TYPE = 28U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY__VAR_OUT_CH_
@@ -743,7 +744,7 @@ namespace Messaging
 #define _MESSAGING_REQUESTENDTIMEPOLICY_CH_
   
   class TAO_Messaging_Export RequestEndTimePolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef RequestEndTimePolicy_ptr _ptr_type;
@@ -764,7 +765,7 @@ namespace Messaging
     
     static RequestEndTimePolicy_ptr _nil (void)
     {
-      return (RequestEndTimePolicy_ptr)0;
+      return static_cast<RequestEndTimePolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -836,7 +837,7 @@ namespace Messaging
   const CORBA::PolicyType REPLY_START_TIME_POLICY_TYPE = 29U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY__VAR_OUT_CH_
@@ -865,7 +866,7 @@ namespace Messaging
 #define _MESSAGING_REPLYSTARTTIMEPOLICY_CH_
   
   class TAO_Messaging_Export ReplyStartTimePolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef ReplyStartTimePolicy_ptr _ptr_type;
@@ -886,7 +887,7 @@ namespace Messaging
     
     static ReplyStartTimePolicy_ptr _nil (void)
     {
-      return (ReplyStartTimePolicy_ptr)0;
+      return static_cast<ReplyStartTimePolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -958,7 +959,7 @@ namespace Messaging
   const CORBA::PolicyType REPLY_END_TIME_POLICY_TYPE = 30U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY__VAR_OUT_CH_
@@ -987,7 +988,7 @@ namespace Messaging
 #define _MESSAGING_REPLYENDTIMEPOLICY_CH_
   
   class TAO_Messaging_Export ReplyEndTimePolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef ReplyEndTimePolicy_ptr _ptr_type;
@@ -1008,7 +1009,7 @@ namespace Messaging
     
     static ReplyEndTimePolicy_ptr _nil (void)
     {
-      return (ReplyEndTimePolicy_ptr)0;
+      return static_cast<ReplyEndTimePolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -1080,7 +1081,7 @@ namespace Messaging
   const CORBA::PolicyType RELATIVE_REQ_TIMEOUT_POLICY_TYPE = 31U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY__VAR_OUT_CH_
@@ -1109,7 +1110,7 @@ namespace Messaging
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_
   
   class TAO_Messaging_Export RelativeRequestTimeoutPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef RelativeRequestTimeoutPolicy_ptr _ptr_type;
@@ -1130,7 +1131,7 @@ namespace Messaging
     
     static RelativeRequestTimeoutPolicy_ptr _nil (void)
     {
-      return (RelativeRequestTimeoutPolicy_ptr)0;
+      return static_cast<RelativeRequestTimeoutPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -1234,7 +1235,7 @@ namespace Messaging
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RoutingTypeRange;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_ROUTINGPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_ROUTINGPOLICY__VAR_OUT_CH_
@@ -1263,7 +1264,7 @@ namespace Messaging
 #define _MESSAGING_ROUTINGPOLICY_CH_
   
   class TAO_Messaging_Export RoutingPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef RoutingPolicy_ptr _ptr_type;
@@ -1284,7 +1285,7 @@ namespace Messaging
     
     static RoutingPolicy_ptr _nil (void)
     {
-      return (RoutingPolicy_ptr)0;
+      return static_cast<RoutingPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -1356,7 +1357,7 @@ namespace Messaging
   const CORBA::PolicyType MAX_HOPS_POLICY_TYPE = 34U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_MAXHOPSPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_MAXHOPSPOLICY__VAR_OUT_CH_
@@ -1385,7 +1386,7 @@ namespace Messaging
 #define _MESSAGING_MAXHOPSPOLICY_CH_
   
   class TAO_Messaging_Export MaxHopsPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef MaxHopsPolicy_ptr _ptr_type;
@@ -1406,7 +1407,7 @@ namespace Messaging
     
     static MaxHopsPolicy_ptr _nil (void)
     {
-      return (MaxHopsPolicy_ptr)0;
+      return static_cast<MaxHopsPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -1478,7 +1479,7 @@ namespace Messaging
   const CORBA::PolicyType QUEUE_ORDER_POLICY_TYPE = 35U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_QUEUEORDERPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY__VAR_OUT_CH_
@@ -1507,7 +1508,7 @@ namespace Messaging
 #define _MESSAGING_QUEUEORDERPOLICY_CH_
   
   class TAO_Messaging_Export QueueOrderPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef QueueOrderPolicy_ptr _ptr_type;
@@ -1528,7 +1529,7 @@ namespace Messaging
     
     static QueueOrderPolicy_ptr _nil (void)
     {
-      return (QueueOrderPolicy_ptr)0;
+      return static_cast<QueueOrderPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -1610,17 +1611,17 @@ namespace TAO
 #define _MESSAGING_REBINDPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::RebindPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::RebindPolicy>
   {
-    static Messaging::RebindPolicy_ptr duplicate (
-        Messaging::RebindPolicy_ptr
+    static ::Messaging::RebindPolicy_ptr duplicate (
+        ::Messaging::RebindPolicy_ptr
       );
     static void release (
-        Messaging::RebindPolicy_ptr
+        ::Messaging::RebindPolicy_ptr
       );
-    static Messaging::RebindPolicy_ptr nil (void);
+    static ::Messaging::RebindPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::RebindPolicy_ptr p,
+        ::Messaging::RebindPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1631,17 +1632,17 @@ namespace TAO
 #define _MESSAGING_REQUESTPRIORITYPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::RequestPriorityPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::RequestPriorityPolicy>
   {
-    static Messaging::RequestPriorityPolicy_ptr duplicate (
-        Messaging::RequestPriorityPolicy_ptr
+    static ::Messaging::RequestPriorityPolicy_ptr duplicate (
+        ::Messaging::RequestPriorityPolicy_ptr
       );
     static void release (
-        Messaging::RequestPriorityPolicy_ptr
+        ::Messaging::RequestPriorityPolicy_ptr
       );
-    static Messaging::RequestPriorityPolicy_ptr nil (void);
+    static ::Messaging::RequestPriorityPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::RequestPriorityPolicy_ptr p,
+        ::Messaging::RequestPriorityPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1652,17 +1653,17 @@ namespace TAO
 #define _MESSAGING_REPLYPRIORITYPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::ReplyPriorityPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::ReplyPriorityPolicy>
   {
-    static Messaging::ReplyPriorityPolicy_ptr duplicate (
-        Messaging::ReplyPriorityPolicy_ptr
+    static ::Messaging::ReplyPriorityPolicy_ptr duplicate (
+        ::Messaging::ReplyPriorityPolicy_ptr
       );
     static void release (
-        Messaging::ReplyPriorityPolicy_ptr
+        ::Messaging::ReplyPriorityPolicy_ptr
       );
-    static Messaging::ReplyPriorityPolicy_ptr nil (void);
+    static ::Messaging::ReplyPriorityPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::ReplyPriorityPolicy_ptr p,
+        ::Messaging::ReplyPriorityPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1673,17 +1674,17 @@ namespace TAO
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::RequestStartTimePolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::RequestStartTimePolicy>
   {
-    static Messaging::RequestStartTimePolicy_ptr duplicate (
-        Messaging::RequestStartTimePolicy_ptr
+    static ::Messaging::RequestStartTimePolicy_ptr duplicate (
+        ::Messaging::RequestStartTimePolicy_ptr
       );
     static void release (
-        Messaging::RequestStartTimePolicy_ptr
+        ::Messaging::RequestStartTimePolicy_ptr
       );
-    static Messaging::RequestStartTimePolicy_ptr nil (void);
+    static ::Messaging::RequestStartTimePolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::RequestStartTimePolicy_ptr p,
+        ::Messaging::RequestStartTimePolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1694,17 +1695,17 @@ namespace TAO
 #define _MESSAGING_REQUESTENDTIMEPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::RequestEndTimePolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::RequestEndTimePolicy>
   {
-    static Messaging::RequestEndTimePolicy_ptr duplicate (
-        Messaging::RequestEndTimePolicy_ptr
+    static ::Messaging::RequestEndTimePolicy_ptr duplicate (
+        ::Messaging::RequestEndTimePolicy_ptr
       );
     static void release (
-        Messaging::RequestEndTimePolicy_ptr
+        ::Messaging::RequestEndTimePolicy_ptr
       );
-    static Messaging::RequestEndTimePolicy_ptr nil (void);
+    static ::Messaging::RequestEndTimePolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::RequestEndTimePolicy_ptr p,
+        ::Messaging::RequestEndTimePolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1715,17 +1716,17 @@ namespace TAO
 #define _MESSAGING_REPLYSTARTTIMEPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::ReplyStartTimePolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::ReplyStartTimePolicy>
   {
-    static Messaging::ReplyStartTimePolicy_ptr duplicate (
-        Messaging::ReplyStartTimePolicy_ptr
+    static ::Messaging::ReplyStartTimePolicy_ptr duplicate (
+        ::Messaging::ReplyStartTimePolicy_ptr
       );
     static void release (
-        Messaging::ReplyStartTimePolicy_ptr
+        ::Messaging::ReplyStartTimePolicy_ptr
       );
-    static Messaging::ReplyStartTimePolicy_ptr nil (void);
+    static ::Messaging::ReplyStartTimePolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::ReplyStartTimePolicy_ptr p,
+        ::Messaging::ReplyStartTimePolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1736,17 +1737,17 @@ namespace TAO
 #define _MESSAGING_REPLYENDTIMEPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::ReplyEndTimePolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::ReplyEndTimePolicy>
   {
-    static Messaging::ReplyEndTimePolicy_ptr duplicate (
-        Messaging::ReplyEndTimePolicy_ptr
+    static ::Messaging::ReplyEndTimePolicy_ptr duplicate (
+        ::Messaging::ReplyEndTimePolicy_ptr
       );
     static void release (
-        Messaging::ReplyEndTimePolicy_ptr
+        ::Messaging::ReplyEndTimePolicy_ptr
       );
-    static Messaging::ReplyEndTimePolicy_ptr nil (void);
+    static ::Messaging::ReplyEndTimePolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::ReplyEndTimePolicy_ptr p,
+        ::Messaging::ReplyEndTimePolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1757,17 +1758,17 @@ namespace TAO
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::RelativeRequestTimeoutPolicy>
   {
-    static Messaging::RelativeRequestTimeoutPolicy_ptr duplicate (
-        Messaging::RelativeRequestTimeoutPolicy_ptr
+    static ::Messaging::RelativeRequestTimeoutPolicy_ptr duplicate (
+        ::Messaging::RelativeRequestTimeoutPolicy_ptr
       );
     static void release (
-        Messaging::RelativeRequestTimeoutPolicy_ptr
+        ::Messaging::RelativeRequestTimeoutPolicy_ptr
       );
-    static Messaging::RelativeRequestTimeoutPolicy_ptr nil (void);
+    static ::Messaging::RelativeRequestTimeoutPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::RelativeRequestTimeoutPolicy_ptr p,
+        ::Messaging::RelativeRequestTimeoutPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1778,17 +1779,17 @@ namespace TAO
 #define _MESSAGING_ROUTINGPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::RoutingPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::RoutingPolicy>
   {
-    static Messaging::RoutingPolicy_ptr duplicate (
-        Messaging::RoutingPolicy_ptr
+    static ::Messaging::RoutingPolicy_ptr duplicate (
+        ::Messaging::RoutingPolicy_ptr
       );
     static void release (
-        Messaging::RoutingPolicy_ptr
+        ::Messaging::RoutingPolicy_ptr
       );
-    static Messaging::RoutingPolicy_ptr nil (void);
+    static ::Messaging::RoutingPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::RoutingPolicy_ptr p,
+        ::Messaging::RoutingPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1799,17 +1800,17 @@ namespace TAO
 #define _MESSAGING_MAXHOPSPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::MaxHopsPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::MaxHopsPolicy>
   {
-    static Messaging::MaxHopsPolicy_ptr duplicate (
-        Messaging::MaxHopsPolicy_ptr
+    static ::Messaging::MaxHopsPolicy_ptr duplicate (
+        ::Messaging::MaxHopsPolicy_ptr
       );
     static void release (
-        Messaging::MaxHopsPolicy_ptr
+        ::Messaging::MaxHopsPolicy_ptr
       );
-    static Messaging::MaxHopsPolicy_ptr nil (void);
+    static ::Messaging::MaxHopsPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::MaxHopsPolicy_ptr p,
+        ::Messaging::MaxHopsPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1820,17 +1821,17 @@ namespace TAO
 #define _MESSAGING_QUEUEORDERPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::QueueOrderPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::QueueOrderPolicy>
   {
-    static Messaging::QueueOrderPolicy_ptr duplicate (
-        Messaging::QueueOrderPolicy_ptr
+    static ::Messaging::QueueOrderPolicy_ptr duplicate (
+        ::Messaging::QueueOrderPolicy_ptr
       );
     static void release (
-        Messaging::QueueOrderPolicy_ptr
+        ::Messaging::QueueOrderPolicy_ptr
       );
-    static Messaging::QueueOrderPolicy_ptr nil (void);
+    static ::Messaging::QueueOrderPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::QueueOrderPolicy_ptr p,
+        ::Messaging::QueueOrderPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -1944,13 +1945,13 @@ TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RoutingTypeRange &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "Messaging_No_ImplC.i"
+#include "Messaging_No_ImplC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -1961,4 +1962,5 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Routi
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

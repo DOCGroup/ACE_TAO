@@ -22,6 +22,9 @@ project(RTSched) : orbsvcslib, core, naming, portableserver, svc_utils {
     }
   }
 
+  Template_Files {
+  }
+
   // To avoid picking up RTSchedEvent.rc as well, explicitly list the files.
   Resource_Files {
     RTSched.rc

@@ -348,7 +348,8 @@ TAO_Thread_Lane_Resources::ami_response_handler_allocator (void)
 }
 
 int
-TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
+TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
+                                                   bool ignore_address
                                                    ACE_ENV_ARG_DECL)
 {
   // Access the acceptor registry.
@@ -357,6 +358,7 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
   // Open it.
   int result = ar.open (&this->orb_core_,
                         this->leader_follower ().reactor (),
+                        endpoint_set,
                         ignore_address
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);

@@ -1,12 +1,15 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
 #include "WstringDef_i.h"
 
-ACE_RCSID (IFRService, 
-           WstringDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           WstringDef_i,
            "$Id$")
+
 
 TAO_WstringDef_i::TAO_WstringDef_i (
     TAO_Repository_i *repo
@@ -97,7 +100,7 @@ TAO_WstringDef_i::bound_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "bound",
                                              retval);
 
-  return ACE_static_cast (CORBA::ULong, retval);
+  return static_cast<CORBA::ULong> (retval);
 }
 
 void
@@ -123,4 +126,3 @@ TAO_WstringDef_i::bound_i (CORBA::ULong bound
                                              "bound",
                                              bound);
 }
-

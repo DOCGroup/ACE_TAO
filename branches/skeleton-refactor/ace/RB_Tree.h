@@ -193,6 +193,7 @@ public:
 
   typedef EXT_ID KEY;
   typedef INT_ID VALUE;
+  typedef ACE_LOCK lock_type;
   typedef ACE_RB_Tree_Node<EXT_ID, INT_ID> ENTRY;
 
   // = ACE-style iterator typedefs.

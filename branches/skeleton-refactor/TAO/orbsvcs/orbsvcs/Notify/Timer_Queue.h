@@ -59,9 +59,5 @@ protected:
   ACE_Timer_Heap timer_queue_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "Timer_Queue.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_TIMER_QUEUE_H */

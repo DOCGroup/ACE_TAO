@@ -26,27 +26,29 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_SERVICESC_H_
 #define _TAO_IDL_ORIG_SERVICESC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/VarOut_T.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
+#include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
 
-#include "OctetSeqC.h"
+#include "tao/OctetSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -61,9 +63,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -383,13 +383,13 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ServiceInfor
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ServiceInformation &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "ServicesC.i"
+#include "ServicesC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -400,4 +400,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ServiceInformation 
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

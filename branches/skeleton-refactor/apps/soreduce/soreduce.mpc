@@ -1,6 +1,7 @@
 // $Id$
 
 project(soreduce) : aceexe {
+  avoids += uses_wchar
   exename = soreduce
   Source_Files {
     Signature.cpp

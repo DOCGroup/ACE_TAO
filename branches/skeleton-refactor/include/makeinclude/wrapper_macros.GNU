@@ -50,11 +50,10 @@
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
 #  threads          Build with thread support.
-#  xt_reactor       Build the XtReactor.
-#  fl_reactor       Build the FlReactor.
-#  tk_reactor       Build the TkReactor.
-#  qt_reactor       Build the QtReactor.
-#  gtk_reactor      Build the GtkReactor.
+#  ace_xtreactor    Build the XtReactor.
+#  ace_flreactor    Build the FlReactor.
+#  ace_tkreactor    Build the TkReactor.
+#  ace_qtreactor    Build the QtReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
 #  stlport          Build with STLPort support
@@ -170,6 +169,7 @@
 #  PWD          Command to get the current working directory
 #  PTDIRS       Pathnames of directories containing template code
 #  RM           Name of program to use to remove files
+#  ACE_MKDIR    Name of program to (recursively) create directories
 #  SOFLAGS      Flags used to build a shared library
 #  SOLINK.cc    Link line necessary to build a share library
 #  VAR          Variant identifier suffix
@@ -255,14 +255,12 @@ endif # static_libs
 
 #### The system has X Windows and we want to include the XtReactor in
 #### the library
-xt_reactor = 0
+ace_xtreactor = 0
 
 #### Set up the build ACE version in case the platform_macros.GNU wants it.
 ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-
-PACE_ROOT ?= $(ACE_ROOT)/PACE
 
 # Define some variables to silence warnings
 SHR_FILTER ?=
@@ -288,25 +286,28 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions off (0), fast off (0), rtti off (0), and
+#### Defaults are exceptions off (0), fast off (0), rtti on (1), and
 #### versioned_so on (1).
 ####
 exceptions ?= 0
 
 fast ?= 0
 
-# @@@ Should this really be the default?  Or should we let the
-# compiler choose?
-rtti ?= 0
+rtti ?= 1
 
-ifeq (,$(versioned_so))
-  versioned_so = 1
-endif
+versioned_so ?= 1
+
 SOVERSION ?=
 SONAME ?=
 
 ifeq ($(PWD),)
   PWD=$(shell pwd)
+endif
+
+ifeq ($(ACE_MKDIR),)
+  MKDIR = mkdir -p
+else
+  MKDIR = $(ACE_MKDIR)
 endif
 
 #----------------------------------------------------------------------------
@@ -332,7 +333,6 @@ IDL_SERVER_TSRC_EXT ?= S_T.cpp
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
-INSBIN          ?= $(ACE_ROOT)/bin
 INSINC          ?= $(ACE_ROOT)/ace
 INSLIB          ?= $(ACE_ROOT)/lib
 INSMAN          ?= $(ACE_ROOT)/man
@@ -440,66 +440,49 @@ ifeq ($(threads),0)
   override threads =
 endif # threads
 
-ifeq ($(xt_reactor),0)
-  override xt_reactor =
-endif # xt_reactor
+ifeq ($(ace_xtreactor),0)
+  override ace_xtreactor =
+endif # ace_xtreactor
 
-ifneq ($(xt_reactor),)
-  override ace_with_x11=1
-  CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
-  LIBS += $(PLATFORM_XT_LIBS)
-  LDFLAGS += $(PLATFORM_XT_LDFLAGS)
-  ACE_MAKE_OPTIONS += xt_reactor
-endif # xt_reactor
+ifneq ($(ace_xtreactor),)
+  override x11=1
+  override xt=1
+  ACE_MAKE_OPTIONS += ace_xtreactor
+endif # ace_xtreactor
 
-fl_reactor ?=
-ifeq ($(fl_reactor),0)
-  override fl_reactor =
-endif # fl_reactor
+ace_flreactor ?=
+ifeq ($(ace_flreactor),0)
+  override ace_flreactor =
+endif # ace_flreactor
 
-ifneq ($(fl_reactor),)
-  override ace_with_x11=1
-  override ace_with_gl=1
-  CPPFLAGS += -DACE_HAS_FL $(PLATFORM_FL_CPPFLAGS)
-  LIBS += $(PLATFORM_FL_LIBS)
-  LDFLAGS += $(PLATFORM_FL_LDFLAGS)
-  ACE_MAKE_OPTIONS += rl_reactor
-endif # fl_reactor
+ifneq ($(ace_flreactor),)
+  override x11=1
+  override gl=1
+  ACE_MAKE_OPTIONS += ace_flreactor
+endif # ace_flreactor
 
-tk_reactor ?=
-ifeq ($(tk_reactor),0)
-  override tk_reactor =
-endif # tk_reactor
+ace_tkreactor ?=
+ifeq ($(ace_tkreactor),0)
+  override ace_tkreactor =
+endif # ace_tkreactor
 
-ifneq ($(tk_reactor),)
-  override ace_with_tk=1
-  CPPFLAGS += -DACE_HAS_TK $(PLATFORM_TK_CPPFLAGS)
-  LIBS += $(PLATFORM_TK_LIBS)
-  LDFLAGS += $(PLATFORM_TK_LDFLAGS)
-  ACE_MAKE_OPTIONS += tk_reactor
-endif # tk_reactor
+ifneq ($(ace_tkreactor),)
+  override x11=1
+  override tk=1
+  ACE_MAKE_OPTIONS += ace_tkreactor
+endif # ace_tkreactor
 
-qt_reactor ?=
+ace_qtreactor ?=
 ifeq ($(qt_reactor),0)
-  override qt_reactor =
-endif # qt_reactor
+  override ace_qtreactor =
+endif # ace_qtreactor
 
-ifneq ($(qt_reactor),)
-  override ace_with_qt=1
-  CPPFLAGS += -DACE_HAS_QT $(PLATFORM_QT_CPPFLAGS)
-  LIBS += $(PLATFORM_QT_LIBS)
-  LDFLAGS += $(PLATFORM_QT_LDFLAGS)
-  ACE_MAKE_OPTIONS += qt_reactor
-endif # qt_reactor
-
-QTDIR ?=
-ifneq ($(QTDIR),)
-  MOC = ${QTDIR}/bin/moc
-else
-  MOC = moc
-endif
-
+ifneq ($(ace_qtreactor),)
+  override qt=1
+  ACE_MAKE_OPTIONS += ace_qtreactor
+endif # ace_qtreactor
 gtk_reactor ?=
+
 ifeq ($(gtk_reactor),0)
   override gtk_reactor =
 endif # gtk_reactor
@@ -511,6 +494,13 @@ ifneq ($(gtk_reactor),)
   LDFLAGS += $(PLATFORM_GTK_LDFLAGS)
   ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
+
+QTDIR ?=
+ifneq ($(QTDIR),)
+  MOC = ${QTDIR}/bin/moc
+else
+  MOC = moc
+endif
 
 rapi ?=
 ifeq ($(rapi),0)
@@ -537,36 +527,27 @@ ifneq ($(sctp),)
   ACE_MAKE_OPTIONS += sctp
 endif
 
-ace_with_gl ?=
-ifeq ($(ace_with_gl),0)
-  override ace_with_gl =
-endif # ace_with_gl
+gl ?=
+ifeq ($(gl),0)
+  override gl =
+endif # gl
 
-ifneq ($(ace_with_gl),)
-  override ace_with_x11 = 1
-  CPPFLAGS += $(PLATFORM_GL_CPPFLAGS)
-  LIBS += $(PLATFORM_GL_LIBS)
-  LDFLAGS += $(PLATFORM_GL_LDFLAGS)
-  ACE_MAKE_OPTIONS += ace_with_gl
-endif # ace_with_gl
-
-ace_with_x11 ?=
-ifeq ($(ace_with_x11),0)
-  override ace_with_x11 =
-endif # ace_with_x11
-
-ifneq ($(ace_with_x11),)
-  CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
-  LIBS += $(PLATFORM_X11_LIBS)
-  LDFLAGS += $(PLATFORM_X11_LDFLAGS)
-  ACE_MAKE_OPTIONS += ace_with_x11
-endif # ace_with_x11
+ifneq ($(gl),)
+  ACE_MAKE_OPTIONS += gl
+endif # gl
 
 ssl ?=
 ifeq ($(ssl),0)
   override ssl =
 else
+  ifneq ($(SSL_ROOT),)
+      # Don't do a thing..
+    else
+      CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+      LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
+      LIBS     += $(PLATFORM_SSL_LIBS)
   ACE_MAKE_OPTIONS += ssl
+  endif
 endif
 
 ifeq ($(exceptions),0)
@@ -780,7 +761,6 @@ ifeq ($(stlport),1)
   LIBS     += $(PLATFORM_STLPORT_LIBS)
 endif
 
-
 # If not explicitly is set that we have wfmo, assume we don't have it.
 wfmo ?= 0
 
@@ -794,6 +774,7 @@ ace_token     ?= 1
 ace_svcconf   ?= 1
 ace_uuid      ?= 1
 ace_filecache ?= 1
+acexml        ?= 1
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions

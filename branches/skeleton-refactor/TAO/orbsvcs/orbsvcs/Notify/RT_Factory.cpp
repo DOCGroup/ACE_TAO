@@ -1,11 +1,6 @@
 // $Id$
 
 #include "RT_Factory.h"
-
-#if ! defined (__ACE_INLINE__)
-#include "RT_Factory.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "Structured/RT_StructuredProxyPushSupplier.h"
 
 ACE_RCSID(RT_Notify, TAO_Notify_RT_Factory, "$Id$")

@@ -11,6 +11,7 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "NamingTreeCtrl.h"
+
 /////////////////////////////////////////////////////////////////////////////
 // CNamingViewerDlg dialog
 
@@ -46,9 +47,10 @@ protected:
 	afx_msg void OnSelectNs();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
+#if !defined (_WIN32_WCE)
   afx_msg void OnGetMinMaxInfo( MINMAXINFO FAR* lpMMI );
+#endif
 	DECLARE_MESSAGE_MAP()
-
   void Resolve();
 
   CORBA::ORB_ptr                  m_pORB;

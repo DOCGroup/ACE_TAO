@@ -57,6 +57,9 @@ public:
 
   void get (CosNotification::PropertySeq& prop_seq);
 
+  /// Return the name
+  const char * name (void) const;
+
   /// Return the value.
   CORBA::Boolean value (void) const;
 

@@ -111,9 +111,9 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     }
 
   *os << be_nl << be_nl
-      << "if ((strm >> obj.inout ()) == 0)" << be_idt_nl
+      << "if (!(strm >> obj.inout ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "typedef ::" << node->name () << " RHS_SCOPED_NAME;"
       << be_nl << be_nl

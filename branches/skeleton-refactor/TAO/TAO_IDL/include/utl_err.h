@@ -135,6 +135,7 @@ public:
     EIDL_EMPTY_MODULE,          // Empty modules not allowed in IDL.
     EIDL_BACK_END,              // Back end error
     EIDL_ILLEGAL_INFIX,         // Illegal infix operator in expression
+    EIDL_LOCAL_REMOTE_MISMATCH, // Local type used in remote operation
     EIDL_OK                     // No error
   };
 
@@ -324,6 +325,10 @@ public:
   // Report illegal infix operator error (they can be used
   // only with integer, floating point or fixed point expressions.
   void illegal_infix (void);
+  
+  // Report local type used in remote operation.
+  void local_remote_mismatch (AST_Decl *l,
+                              UTL_Scope *s);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

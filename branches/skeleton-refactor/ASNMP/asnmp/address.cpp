@@ -527,7 +527,6 @@ int IpAddress::parse_address( const char *inaddr)
 
         // save the friendly name
         ACE_OS::strcpy( iv_friendly_name_, inaddr);
-        return 1;
 
     }    // end if lookup result
     else {
@@ -554,7 +553,12 @@ int IpAddress::addr_to_friendly()
     return 0;
  }
  else {
+#if defined (VXWORKS)
+   // VxWorks doesn't have h_errno
+   iv_friendly_name_status_ = errno;
+#else
    iv_friendly_name_status_ = h_errno;
+#endif /* VXWORKS */
    return iv_friendly_name_status_;
  }
 }

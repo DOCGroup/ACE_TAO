@@ -168,9 +168,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#if defined (__ACE_INLINE__)
-#include "ETCL_Filter.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_ETCL_FILTER_H */

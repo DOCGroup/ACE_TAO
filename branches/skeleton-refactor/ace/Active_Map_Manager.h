@@ -39,9 +39,9 @@ public:
   ACE_Active_Map_Manager_Key (void);
 
   /**
-   * Constructor given the <slot_index> and <slot_generation> number.
+   * Constructor given the @a slot_index and @a slot_generation number.
    * This is useful once the user has somehow recovered the
-   * <slot_index> and <slot_generation> number from the client.
+   * @a slot_index and @a slot_generation number from the client.
    */
   ACE_Active_Map_Manager_Key (ACE_UINT32 slot_index,
                               ACE_UINT32 slot_generation);

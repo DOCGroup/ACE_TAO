@@ -47,7 +47,7 @@ o test_multiple_loops.cpp       : This example application shows how
 o test_timeout.cpp      : Multithreaded application testing the Timers
         mechanism of the Proactor.
 
-o test_timeout_st.cpp   : Sinle threaded version of test_timeout.cpp.
+o test_timeout_st.cpp   : Single-threaded version of test_timeout.cpp.
 
 o post_completions.cpp  : Tests the completion posting mechanism of
         the Proactor.  
@@ -58,8 +58,6 @@ o test_end_event_loop.cpp : Tests the event loop mechanism of the
 o test_cancel.cpp         : Tests <cancel> interface of the
         Asynch_Operation class.
         
-
-
 Behavior of POSIX AIO of various platforms:
 ==========================================
 

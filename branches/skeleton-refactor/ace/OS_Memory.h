@@ -69,6 +69,13 @@ typedef void *ACE_MALLOC_T;
 // being used).
 // ============================================================================
 
+// If new(std::nothrow) is defined then, by definition, new throws exceptions.
+#if defined (ACE_HAS_NEW_NOTHROW)
+#  if !defined (ACE_NEW_THROWS_EXCEPTIONS)
+#    define ACE_NEW_THROWS_EXCEPTIONS
+#  endif
+#endif
+
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
 
 // Since new() throws exceptions, we need a way to avoid passing
@@ -121,7 +128,7 @@ typedef void *ACE_MALLOC_T;
 #        define ACE_bad_alloc std::bad_alloc
 #        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #      endif /* __SUNPRO_CC < 0x500 */
-#  elif defined (__BORLANDC__) || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#  elif defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #    include /**/ <new>
 #    define ACE_bad_alloc std::bad_alloc
 #    define ACE_nothrow   std::nothrow

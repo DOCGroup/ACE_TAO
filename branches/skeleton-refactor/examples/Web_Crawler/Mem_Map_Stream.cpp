@@ -38,8 +38,7 @@ int
 Mem_Map_Stream::rewind (void)
 {
   this->recv_pos_ =
-    ACE_reinterpret_cast (char *,
-                          this->mem_map_.addr ());
+    reinterpret_cast<char *> (this->mem_map_.addr ());
   this->get_pos_ = this->recv_pos_;
   this->end_of_mapping_plus1_ =
     this->recv_pos_ + this->mem_map_.size ();
@@ -102,8 +101,7 @@ Mem_Map_Stream::seek (off_t offset, int whence)
     {
     case SEEK_SET:
       this->get_pos_ =
-        ACE_reinterpret_cast (char *,
-                              this->mem_map_.addr ())
+        reinterpret_cast<char *> (this->mem_map_.addr ())
         + offset;
       break;
 
@@ -125,8 +123,7 @@ Mem_Map_Stream::seek (off_t offset, int whence)
       return (off_t) -1;
 
   this->recv_pos_ = this->get_pos_;
-  return this->recv_pos_ - ACE_reinterpret_cast (char *,
-                                                 this->mem_map_.addr ());
+  return this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ());
 }
 
 Mem_Map_Stream::Svc_Handler * 
@@ -224,14 +221,12 @@ Mem_Map_Stream::grow_file_and_remap (void)
   // MAP_FAILED is used as a "first time in" flag.
   if (this->recv_pos_ == MAP_FAILED)
     {
-      this->recv_pos_ = ACE_reinterpret_cast (char *,
-                                              this->mem_map_.addr ());
+      this->recv_pos_ = reinterpret_cast<char *> (this->mem_map_.addr ());
       this->get_pos_ = this->recv_pos_;
     }
 
   this->end_of_mapping_plus1_ =
-    ACE_reinterpret_cast (char *,
-                          this->mem_map_.addr ())
+    reinterpret_cast<char *> (this->mem_map_.addr ())
     + this->mem_map_.size ();
 
   return 0;

@@ -321,7 +321,7 @@ ACE_THR_FUNC_RETURN
 DualEC_Supplier::run_nav_thread (void *arg)
 {
   DualEC_Supplier * sup =
-    ACE_static_cast (DualEC_Supplier *, arg);
+    static_cast<DualEC_Supplier *> (arg);
 
   ACE_TRY_NEW_ENV
     {
@@ -403,7 +403,7 @@ ACE_THR_FUNC_RETURN
 DualEC_Supplier::run_weap_thread (void *arg)
 {
   DualEC_Supplier * sup =
-    ACE_static_cast (DualEC_Supplier *, arg);
+    static_cast<DualEC_Supplier *> (arg);
 
   ACE_TRY_NEW_ENV
     {
@@ -528,18 +528,15 @@ DualEC_Supplier::create_schedulers (void)
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_hi_,
-                 ACE_static_cast (RtecScheduler::Criticality_t,
-                                  this->rt_info_dummy_hi_.criticality),
+                 static_cast<RtecScheduler::Criticality_t> (this->rt_info_dummy_hi_.criticality),
                  this->rt_info_dummy_hi_.worst_case_execution_time,
                  this->rt_info_dummy_hi_.typical_execution_time,
                  this->rt_info_dummy_hi_.cached_execution_time,
                  this->rt_info_dummy_hi_.period,
-                 ACE_static_cast (RtecScheduler::Importance_t,
-                                  this->rt_info_dummy_hi_.importance),
+                 static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_hi_.importance),
                  this->rt_info_dummy_hi_.quantum,
                  this->rt_info_dummy_hi_.threads,
-                 ACE_static_cast (RtecScheduler::Info_Type_t,
-                                  this->rt_info_dummy_hi_.info_type)
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
           ACE_TRY_CHECK;
@@ -553,18 +550,15 @@ DualEC_Supplier::create_schedulers (void)
 
           this->sched_hi_->
             set (this->sched_hi_rt_info_lo_,
-                 ACE_static_cast (RtecScheduler::Criticality_t,
-                                  this->rt_info_dummy_lo_.criticality),
+                 static_cast<RtecScheduler::Criticality_t> (this->rt_info_dummy_lo_.criticality),
                  this->rt_info_dummy_lo_.worst_case_execution_time,
                  this->rt_info_dummy_lo_.typical_execution_time,
                  this->rt_info_dummy_lo_.cached_execution_time,
                  this->rt_info_dummy_lo_.period,
-                 ACE_static_cast (RtecScheduler::Importance_t,
-                                  this->rt_info_dummy_lo_.importance),
+                 static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_lo_.importance),
                  this->rt_info_dummy_lo_.quantum,
                  this->rt_info_dummy_lo_.threads,
-                 ACE_static_cast (RtecScheduler::Info_Type_t,
-                                  this->rt_info_dummy_lo_.info_type)
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
           ACE_TRY_CHECK;
@@ -578,18 +572,15 @@ DualEC_Supplier::create_schedulers (void)
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_hi_,
-                 ACE_static_cast (RtecScheduler::Criticality_t,
-                                  this->rt_info_dummy_hi_.criticality),
+                 static_cast<RtecScheduler::Criticality_t> (this->rt_info_dummy_hi_.criticality),
                  this->rt_info_dummy_hi_.worst_case_execution_time,
                  this->rt_info_dummy_hi_.typical_execution_time,
                  this->rt_info_dummy_hi_.cached_execution_time,
                  this->rt_info_dummy_hi_.period,
-                 ACE_static_cast (RtecScheduler::Importance_t,
-                                  this->rt_info_dummy_hi_.importance),
+                 static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_hi_.importance),
                  this->rt_info_dummy_hi_.quantum,
                  this->rt_info_dummy_hi_.threads,
-                 ACE_static_cast (RtecScheduler::Info_Type_t,
-                                  this->rt_info_dummy_hi_.info_type)
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_hi_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
           ACE_TRY_CHECK;
@@ -603,18 +594,15 @@ DualEC_Supplier::create_schedulers (void)
 
           this->sched_lo_->
             set (this->sched_hi_rt_info_lo_,
-                 ACE_static_cast (RtecScheduler::Criticality_t,
-                                  this->rt_info_dummy_lo_.criticality),
+                 static_cast<RtecScheduler::Criticality_t> (this->rt_info_dummy_lo_.criticality),
                  this->rt_info_dummy_lo_.worst_case_execution_time,
                  this->rt_info_dummy_lo_.typical_execution_time,
                  this->rt_info_dummy_lo_.cached_execution_time,
                  this->rt_info_dummy_lo_.period,
-                 ACE_static_cast (RtecScheduler::Importance_t,
-                                  this->rt_info_dummy_lo_.importance),
+                 static_cast<RtecScheduler::Importance_t> (this->rt_info_dummy_lo_.importance),
                  this->rt_info_dummy_lo_.quantum,
                  this->rt_info_dummy_lo_.threads,
-                 ACE_static_cast (RtecScheduler::Info_Type_t,
-                                  this->rt_info_dummy_lo_.info_type)
+                 static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type)
                  ACE_ENV_ARG_PARAMETER);
 
           ACE_TRY_CHECK;
@@ -1061,7 +1049,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           if (temp >= 0)
             {
               this->nav_pause_ =
-                ACE_Time_Value(0, ACE_static_cast (long, temp));
+                ACE_Time_Value(0, static_cast<long> (temp));
               ACE_DEBUG ((LM_DEBUG,
                           "Navigation pause: %d usec\n",
                           temp));
@@ -1079,7 +1067,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           if (temp >= 0)
             {
               this->weap_pause_ =
-                ACE_Time_Value(0, ACE_static_cast (long, temp));
+                ACE_Time_Value(0, static_cast<long> (temp));
               ACE_DEBUG ((LM_DEBUG,
                           "Weapons pause: %d usec\n",
                           temp));

@@ -39,7 +39,8 @@ public:
 
    /// Create a new IOGR (with FT_PRIMARY and FT_GROUP components) by merging
    /// the profiles lists in the supplied list of one or more object references.
-  CORBA::Object_ptr make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList&
+  CORBA::Object_ptr make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList&,
+                              CORBA::ULong object_group_ref_version
                               ACE_ENV_ARG_DECL);
 
   /// Make an new IOGR with obj as primary.
@@ -59,7 +60,9 @@ public:
   CORBA::ULong get_ref_version() const;
 
 private:
-  void set_tag_components(CORBA::Object_ptr merged, CORBA::Object_ptr primary
+  void set_tag_components(CORBA::Object_ptr merged, 
+                          CORBA::Object_ptr primary,
+                          FT::TagFTGroupTaggedComponent& ft_tag_component
                           ACE_ENV_ARG_DECL);
   TAO_IOP::TAO_IOR_Manipulation_var iorm_;
   FT::TagFTGroupTaggedComponent ft_tag_component_;

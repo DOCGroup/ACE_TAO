@@ -119,8 +119,7 @@ BOOL CACE_Init_TestApp::InitInstance()
 static ACE_THR_FUNC_RETURN
 wait_and_kill_dialog (void *pBox)
 {
-  CACE_Init_TestDlg *pDialog = ACE_reinterpret_cast (CACE_Init_TestDlg *,
-                                                     pBox);
+  CACE_Init_TestDlg *pDialog = reinterpret_cast<CACE_Init_TestDlg *> (pBox);
   ACE_OS::sleep(2);
   pDialog->EndModalLoop (IDOK);
   return 0;

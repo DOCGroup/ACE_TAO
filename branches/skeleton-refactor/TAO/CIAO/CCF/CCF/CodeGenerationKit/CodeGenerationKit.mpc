@@ -4,7 +4,7 @@ project(CodeGenerationKit) {
   requires += cidl exceptions
   sharedname =
   staticname = CodeGenerationKit
-  includes += ../..
+  includes += $(CIAO_ROOT)/CCF
   libout = ..
   
   specific(vc71) {

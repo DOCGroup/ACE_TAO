@@ -60,8 +60,10 @@ static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
 static size_t svr_thrno = ACE_MAX_THREADS;
 
 
-#if defined (CHORUS) // Add platforms that can't handle too many
-                     // connection simultaneously here.
+#if defined (CHORUS) \
+	|| defined (ACE_VXWORKS) 	// default network parameters (MAX_BINDS and system buffers) are too small for full test
+		 // Add platforms that can't handle too many
+         // connection simultaneously here.
 #define ACE_LOAD_FACTOR /2
 #else
 #define ACE_LOAD_FACTOR
@@ -172,7 +174,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
 
   if (result > 0
       && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR))
-          == ACE_static_cast (ssize_t, len * sizeof (ACE_TCHAR)))
+          == static_cast<ssize_t> (len * sizeof (ACE_TCHAR)))
     {
       ++this->nr_msgs_rcvd_;
 
@@ -254,7 +256,7 @@ cli_worker (void *arg)
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
   ACE_Time_Value delay (0, req_delay);
-  size_t len = * ACE_reinterpret_cast (ACE_TCHAR *, arg);
+  size_t len = * reinterpret_cast<ACE_TCHAR *> (arg);
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {
@@ -295,7 +297,7 @@ worker (void *)
   ACE_OS::sleep (3);
   const ACE_TCHAR *msg = ACE_TEXT ("Message from Connection worker");
   ACE_TCHAR buf [BUFSIZ];
-  buf[0] = ACE_static_cast (ACE_TCHAR, (ACE_OS::strlen (msg) + 1));
+  buf[0] = static_cast<ACE_TCHAR> ((ACE_OS::strlen (msg) + 1));
   ACE_OS::strcpy (&buf[1], msg);
 
   ACE_INET_Addr addr (rendezvous);

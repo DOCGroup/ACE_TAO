@@ -196,7 +196,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << endl;
+    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n", this->detector_ior_);
     result = -1;
   }
   if (result == 0)
@@ -211,7 +211,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj.in ());
       if (CORBA::is_nil(replica.in ()))
       {
-        cerr << "Can't resolve Replica IOR " << iorName << endl;
+        ACE_OS::fprintf (stderr, "Can't resolve Replica IOR %s\n", iorName);
         result = -1;
       }
       else
@@ -362,9 +362,9 @@ void StubFaultNotifier::push_structured_fault (
     "FaultNotifier:   Header EventType domain: %s\n"
     "FaultNotifier:   Header EventType type: %s\n"
     "FaultNotifier:   Header EventName: %s\n",
-    ACE_static_cast (const char *, event.header.fixed_header.event_type.domain_name),
-    ACE_static_cast (const char *, event.header.fixed_header.event_type.type_name),
-    ACE_static_cast (const char *, event.header.fixed_header.event_name)
+    static_cast<const char *> (event.header.fixed_header.event_type.domain_name),
+    static_cast<const char *> (event.header.fixed_header.event_type.type_name),
+    static_cast<const char *> (event.header.fixed_header.event_name)
     ));
   const CosNotification::FilterableEventBody & filterable = event.filterable_data;
 
@@ -374,7 +374,7 @@ void StubFaultNotifier::push_structured_fault (
     const CosNotification::Property & property = filterable[nProp];
     ACE_ERROR ((LM_ERROR,
       "FaultNotifier:   Property Name: %s\n",
-      ACE_static_cast (const char *, property.name)
+      static_cast<const char *> (property.name)
       ));
     //@@ we could stand to decode more--just for completeness
   }

@@ -56,41 +56,7 @@ namespace TAO
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->out_stream ();
-
     Invocation_Status s = TAO_INVOKE_FAILURE;
-
-    this->write_header (tspec,
-                        cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (s);
-
-    this->marshal_data (cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (s);
-
-
-    // Register a reply dispatcher for this invocation. Use the
-    // preallocated reply dispatcher.
-    TAO_Bind_Dispatcher_Guard dispatch_guard (
-         this->details_.request_id (),
-         &rd,
-         this->resolver_.transport ()->tms ());
-
-    if (dispatch_guard.status () != 0)
-      {
-        // @@ What is the right way to handle this error? Why should
-        // we close the connection?
-        this->resolver_.transport ()->close_connection ();
-
-        ACE_THROW_RETURN (
-            CORBA::INTERNAL (
-                0,
-                CORBA::COMPLETED_NO),
-            s);
-      }
-
 
 #if TAO_HAS_INTERCEPTORS == 1
     // Start the interception point here..
@@ -102,13 +68,46 @@ namespace TAO
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
 
-    countdown.update ();
-
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
     // try block is to do just this.
     ACE_TRY
       {
+        TAO_OutputCDR &cdr =
+          this->resolver_.transport ()->out_stream ();
+
+        this->write_header (tspec,
+                            cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (s);
+
+        this->marshal_data (cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (s);
+
+
+        // Register a reply dispatcher for this invocation. Use the
+        // preallocated reply dispatcher.
+        TAO_Bind_Dispatcher_Guard dispatch_guard (
+          this->details_.request_id (),
+          &rd,
+          this->resolver_.transport ()->tms ());
+
+        if (dispatch_guard.status () != 0)
+          {
+            // @@ What is the right way to handle this error? Why should
+            // we close the connection?
+            this->resolver_.transport ()->close_connection ();
+
+            ACE_THROW_RETURN (
+              CORBA::INTERNAL (
+                               0,
+                               CORBA::COMPLETED_NO),
+              s);
+          }
+
+        countdown.update ();
+
         s = this->send_message (cdr,
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time

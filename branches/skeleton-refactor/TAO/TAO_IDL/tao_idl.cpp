@@ -143,6 +143,7 @@ DRV_refresh (void)
 //  idl_global->set_import (I_TRUE);
 //  idl_global->set_in_main_file (I_FALSE);
   idl_global->set_lineno (-1);
+  idl_global->reset_flag_seen ();
 }
 
 /*

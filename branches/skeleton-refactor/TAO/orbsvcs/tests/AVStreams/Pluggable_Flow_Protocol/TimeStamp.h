@@ -2,9 +2,13 @@
 #define TIMESTAMP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/Protocol_Factory.h"
-#include "ace/Dynamic_Service.h"
 #include "export.h"
+
+#include "orbsvcs/AV/Protocol_Factory.h"
+
+#include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
+
 
 // $Id$
 
@@ -55,10 +59,3 @@ ACE_FACTORY_DECLARE (TAO_TS, TimeStamp_Protocol_Factory)
 
 #include /**/ "ace/post.h"
 #endif /*TIMESTAMP_H*/
-
-
-
-
-
-
-

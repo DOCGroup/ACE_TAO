@@ -10,7 +10,7 @@
 #include "RT_Policy_Validator.h"
 #include "RT_Collocation_Resolver.h"
 
-ACE_RCSID (TAO_RTPortableServer,
+ACE_RCSID (RTPortableServer,
            RT_Object_Adapter_Factory,
            "$Id$")
 
@@ -61,7 +61,7 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
 
 ACE_FACTORY_DEFINE (TAO_RTPortableServer, TAO_RT_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_RT_Object_Adapter_Factory,
-                       ACE_TEXT ("TAO_RT_POA"),
+                       ACE_TEXT ("TAO_RT_Object_Adapter_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_RT_Object_Adapter_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

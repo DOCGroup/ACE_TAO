@@ -174,10 +174,28 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
                TAO::Unknown_IDL_Type (params[i].type.in ()));
       value.replace (unk);
 
+      // Convert the parameter mode to an arg mode
+      CORBA::Flags flags = 0;
+      switch(params[i].mode)
+        {
+        case CORBA::PARAM_IN:
+          flags = CORBA::ARG_IN;
+          break;
+        case CORBA::PARAM_OUT:
+          flags = CORBA::ARG_OUT;
+          break;
+        case CORBA::PARAM_INOUT:
+          flags = CORBA::ARG_INOUT;
+          break;
+        default:
+          // Shouldn't happen
+          ACE_THROW (CORBA::INTERNAL());
+        }
+
       // Add an argument to the NVList.
       result->add_value (params[i].name.in (),
                          value,
-                         params[i].mode);
+                         flags);
    }
 }
 

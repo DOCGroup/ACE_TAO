@@ -18,6 +18,7 @@
 #include "ace/Vector_T.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,11 +50,12 @@ public:
 
   const BackupList& backups() const;
 
-  Info_ptr setup_info(const FTRT::ManagerInfoList & info_list,
-              int my_position
+  Info* setup_info(const FTRT::ManagerInfoList & info_list,
+              int my_position,
+              CORBA::ULong object_group_ref_version
               ACE_ENV_ARG_DECL);
 
-  void update_info(Info_ptr info);
+  void update_info(Info_ptr& info);
 
   const PortableServer::ObjectId& object_id() const;
   const CosNaming::Name& name() const;

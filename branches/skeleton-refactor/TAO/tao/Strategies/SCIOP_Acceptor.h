@@ -203,10 +203,6 @@ protected:
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
 
-  /// TCP configuration properties to be used for all
-  /// connections opened by this acceptor.
-  TAO_SCIOP_Properties tcp_properties_;
-
   /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
 

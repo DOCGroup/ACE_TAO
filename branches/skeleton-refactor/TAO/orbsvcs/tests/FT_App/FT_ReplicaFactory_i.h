@@ -30,6 +30,7 @@ class  FT_ReplicaFactory_i;
 #include <ace/Vector_T.h>
 #include "FT_TestReplicaS.h"
 #include <ace/Thread_Manager.h>
+#include <ace/SString.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 
 /////////////////////

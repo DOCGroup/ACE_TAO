@@ -100,8 +100,7 @@ MIF_Task::perform_task (void)
       for (int i = 0; i < this->iter_; i++)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
-          TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
-                                           count_);
+          TASK_STATS::instance ()->sample (run_time.sec (), count_);
 
           ACE_Time_Value count_down_time (1);
           ACE_Countdown_Time count_down (&count_down_time);
@@ -130,8 +129,7 @@ MIF_Task::perform_task (void)
           for (int j = 0; j < this->iter_; j++)
             {
               ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
-              TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
-                                               count_);
+              TASK_STATS::instance ()->sample (run_time.sec (), count_);
 
               ACE_Time_Value count_down_time (1);
               ACE_Countdown_Time count_down (&count_down_time);

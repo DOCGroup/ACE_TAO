@@ -176,7 +176,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   << be_nl << be_nl;
 
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "(" << full_skel_name << " *) _tao_servant;" << be_uidt_nl << be_nl;
+      << "static_cast<" << full_skel_name
+      << " *> (_tao_servant);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "CORBA::String_var value;" << be_nl << be_nl;
@@ -235,7 +236,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "(" << full_skel_name << " *) _tao_servant;" << be_uidt_nl << be_nl;
+      << "static_cast<" << full_skel_name
+      << " *> (_tao_servant);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Boolean _tao_retval =" << be_idt_nl
       << "_tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);"
@@ -286,7 +288,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_THROW (CORBA::INTF_REPOS ());" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "(" << full_skel_name << " *) _tao_servant;" << be_uidt_nl << be_nl;
+      << "static_cast<" << full_skel_name
+      << " *> (_tao_servant);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
       << "_tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);"
@@ -322,8 +325,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "(" << full_skel_name << " *) _tao_object_reference;"
-      << be_uidt_nl << be_nl;
+      << "static_cast<" << full_skel_name
+      << " *> (_tao_object_reference);" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Object_var _tao_retval =" << be_idt_nl
       << "_tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);"
@@ -362,7 +365,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "if (" << be_idt << be_idt_nl;
+      << "return" << be_idt_nl
+      << "(" << be_idt_nl;
 
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
@@ -374,7 +378,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "(char *)value," << be_nl
+      << "value," << be_nl
       << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
       << ")";
 
@@ -388,14 +392,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << be_uidt << be_uidt_nl
-      << " )" << be_nl
-      << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // the downcast method.
@@ -481,12 +478,16 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
+          // We pass the node's is_abstract flag to the operation
+          // constructor so we will get the right generated operation
+          // body if we are regenerating an operation from an
+          // abstract interface in a concrete interface or component.
           AST_Operation *op = AST_Operation::narrow_from_decl (d);
           be_operation new_op (op->return_type (),
                                op->flags (),
                                0,
                                op->is_local (),
-                               op->is_abstract ());
+                               node->is_abstract ());
           new_op.set_defined_in (node);
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);
@@ -537,25 +538,16 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
-  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
-      << be_nl
-      << "if (stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ())" << be_idt_nl
-      << "{" << be_idt_nl
+  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" 
+      << be_nl << be_nl
+      << "CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
+      << "stub->servant_orb_var ()->orb_core ()->"
+      << "optimize_collocation_objects ();" << be_uidt_nl << be_nl
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
-      << "CORBA::Object (stub, 1, this)," << be_nl
+      << "CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
       << "0" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "tmp," << be_nl
-      << "CORBA::Object (stub, 0, this)," << be_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << ");" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl << be_nl

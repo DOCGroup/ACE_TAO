@@ -35,6 +35,12 @@
 #  include /**/ <sys/param.h>
 #endif /* ACE_LACKS_SYS_PARAM_H */
 
+// On VxWorks _POSIX_TIMER_MAX is defined in time.h, report this to WindRiver
+// support.
+#if defined (VXWORKS)
+#  include /**/ <time.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

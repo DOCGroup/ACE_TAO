@@ -8,9 +8,8 @@ ACE_INLINE pid_t
 ACE_OS::wait (int *status)
 {
   ACE_OS_TRACE ("ACE_OS::wait");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined(CHORUS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_LACKS_WAIT)
   ACE_UNUSED_ARG (status);
-
   ACE_NOTSUP_RETURN (0);
 #else
 # if defined (ACE_HAS_UNION_WAIT)
@@ -18,7 +17,7 @@ ACE_OS::wait (int *status)
 # else
   ACE_OSCALL_RETURN (::wait (status), pid_t, -1);
 # endif /* ACE_HAS_UNION_WAIT */
-#endif /* ACE_WIN32 || VXWORKS || CHORUS || ACE_PSOS */
+#endif /* ACE_LACKS_WAIT */
 }
 
 ACE_INLINE pid_t
@@ -28,7 +27,7 @@ ACE_OS::waitpid (pid_t pid,
                  ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::waitpid");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_LACKS_WAITPID)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (status);
   ACE_UNUSED_ARG (wait_options);
@@ -94,7 +93,7 @@ ACE_OS::waitpid (pid_t pid,
   ACE_UNUSED_ARG (handle);
   ACE_OSCALL_RETURN (::waitpid (pid, status, wait_options),
                      pid_t, -1);
-#endif /* VXWORKS || ACE_PSOS */
+#endif /* ACE_LACKS_WAITPID */
 }
 
 ACE_INLINE pid_t

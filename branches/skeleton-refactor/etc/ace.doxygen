@@ -54,7 +54,9 @@ INPUT                 = docs \
                         ace/os_include/arpa \
                         ace/os_include/net \
                         ace/os_include/netinet \
-                        ace/os_include/sys
+                        ace/os_include/sys \
+                        ace/config-lite.h \
+                        ace/config-all.h
 FILE_PATTERNS         = *.h *.cpp *.inl *.i *.txt
 RECURSIVE             = NO
 EXCLUDE               = ace/config.h \

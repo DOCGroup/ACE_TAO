@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : ftrtevent, utils {
+project : ftrtevent, utils, corba_messaging {
   after     += FTRT_EventChannel
   libs      += TAO_FTRT_EventChannel
   includes  += $(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel
-  requires  += corba_messaging
 }

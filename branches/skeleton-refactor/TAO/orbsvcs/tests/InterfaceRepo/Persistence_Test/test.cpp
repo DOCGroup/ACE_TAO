@@ -3,7 +3,9 @@
 
 #include "Ptest.h"
 
-ACE_RCSID(Persistence_Test, test, "$Id$")
+ACE_RCSID (Persistence_Test,
+           test,
+           "$Id$")
 
 int main (int argc, char *argv[])
 {

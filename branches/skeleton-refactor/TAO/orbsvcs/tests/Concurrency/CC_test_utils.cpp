@@ -27,21 +27,21 @@ ACE_RCSID(Concurrency, CC_test_utils, "$Id$")
 char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {
   if (mode==CosConcurrencyControl::read)
-    return ACE_const_cast (char*, "read");
+    return const_cast<char*> ("read");
 
   if (mode==CosConcurrencyControl::write)
-    return  ACE_const_cast (char*, "write");
+    return  const_cast<char*> ("write");
 
   if (mode==CosConcurrencyControl::upgrade)
-    return ACE_const_cast (char*, "upgrade");
+    return const_cast<char*> ("upgrade");
 
   if (mode==CosConcurrencyControl::intention_read)
-    return ACE_const_cast (char*, "intention_read");
+    return const_cast<char*> ("intention_read");
 
   if (mode==CosConcurrencyControl::intention_write)
-    return ACE_const_cast (char*, "intention_write");
+    return const_cast<char*> ("intention_write");
 
-  return ACE_const_cast (char*, "unknown lock mode");
+  return const_cast<char*> ("unknown lock mode");
 }
 
 CosConcurrencyControl::LockSet_ptr

@@ -7,7 +7,7 @@
 ACE_RCSID(FIFO, client, "$Id$")
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   char buf[] = "hello world";
   ACE_Str_Buf msg (buf, sizeof buf);

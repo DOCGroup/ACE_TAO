@@ -14,7 +14,7 @@
 #ifndef DS_LOG_ADMIN_IDL
 #define DS_LOG_ADMIN_IDL
 
-#include "TimeBase.idl"
+#include "tao/TimeBase.pidl"
 // CORBA Time Service
 
 #pragma prefix "omg.org"

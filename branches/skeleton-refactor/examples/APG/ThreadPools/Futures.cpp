@@ -24,7 +24,7 @@ public:
     ACE_CString *result;
 
     // Block for the result.
-    ((ACE_Future<ACE_CString*>)future).get (result);
+    future.get (result);
     ACE_DEBUG ((LM_INFO, ACE_TEXT("%C\n"), result->c_str ()));
     delete result;
   }
@@ -42,7 +42,7 @@ public:
     ACE_OS::sleep (1);
 
     char buf[1024];
-    ACE_OS::strcpy (buf, ACE_TEXT ("Completed assigned task\n"));
+    ACE_OS::strcpy (buf, "Completed assigned task\n");
     ACE_CString *msg;
     ACE_NEW_RETURN
       (msg, ACE_CString (buf, ACE_OS::strlen (buf) + 1), -1);
@@ -250,7 +250,7 @@ Manager::shut_down (void)
 {
   ACE_TRACE (ACE_TEXT ("Manager::shut_down"));
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter = this->workers_.begin ();
-  Worker **worker_ptr = NULL;
+  Worker **worker_ptr = 0;
   do
     {
       iter.next (worker_ptr);

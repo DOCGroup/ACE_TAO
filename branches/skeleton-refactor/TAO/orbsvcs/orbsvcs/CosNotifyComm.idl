@@ -289,7 +289,9 @@ module CosNotifyComm
     void disconnect_sequence_push_consumer();
   };
 
-  /**
+#ifdef TAO_HAS_NOTIFY_PULL_INTERFACES
+
+/**
    * @interface SequencePullConsumer
    *
    * @brief Defines the interface used by pull-style consumers that
@@ -353,6 +355,8 @@ module CosNotifyComm
      */
     void disconnect_sequence_pull_supplier();
   };
+
+#endif /* TAO_HAS_NOTIFY_PULL_INTERFACES */
 
   /**
    * @interface SequencePushSupplier

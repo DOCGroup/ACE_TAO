@@ -709,14 +709,14 @@ ACE_OS::fgets (char *buf, int size, FILE *fp)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgets (buf, size, fp), char *, 0);
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FGETWS)
 ACE_INLINE wchar_t *
 ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fgets");
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetws (buf, size, fp), wchar_t *, 0);
 }
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
 #if !defined (ACE_WIN32)
 // Win32 implementation of fopen () is in OS_NS_stdio.cpp.
@@ -749,14 +749,14 @@ ACE_OS::fputs (const char *s, FILE *stream)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputs (s, stream), int, -1);
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FPUTWS)
 ACE_INLINE int
 ACE_OS::fputs (const wchar_t *s, FILE *stream)
 {
   ACE_OS_TRACE ("ACE_OS::fputs");
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputws (s, stream), int, -1);
 }
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_FPUTWS */
 
 ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
@@ -824,19 +824,6 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
   ACE_OS_TRACE ("ACE_OS::fwrite");
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp), int, 0);
 }
-
-#if 0
-// @@ gets is evil anyway.
-//    and it is *** DEPRECATED *** now.  If you
-//    really needs gets, use ACE_OS::gets (char*, int)
-//    instead.
-ACE_INLINE char *
-ACE_OS::gets (char *str)
-{
-  ACE_OS_TRACE ("ACE_OS::gets");
-  ACE_OSCALL_RETURN (::gets (str), char *, 0);
-}
-#endif /* 0 */
 
 ACE_INLINE void
 ACE_OS::perror (const char *s)
@@ -975,19 +962,19 @@ ACE_INLINE char *
 ACE_OS::tempnam (const char *dir, const char *pfx)
 {
   ACE_OS_TRACE ("ACE_OS::tempnam");
-#if defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
+#if defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_PSOS)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
-  ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
-#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600))))
-  ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
-#else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
+  ACE_OSCALL_RETURN (::tmpnam (const_cast <char *> (dir)), char *, 0);
+#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)))
+  ACE_OSCALL_RETURN (::_tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
+#else /* ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_TEMPNAM */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -995,17 +982,17 @@ ACE_INLINE wchar_t *
 ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 {
   ACE_OS_TRACE ("ACE_OS::tempnam");
-#if defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
+#if defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined(ACE_WIN32)
-#  if defined (__BORLANDC__) && (__BORLANDC__ < 0x600)
-  ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
+#  if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)
+  ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *, 0);
 #  else
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
 #  endif /* __BORLANDC__ */
-#else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
+#else /* ACE_LACKS_TEMPNAM */
   // No native wide-char support; convert to narrow and call the char* variant.
   char *ndir = ACE_Wide_To_Ascii (dir).char_rep ();
   char *npfx = ACE_Wide_To_Ascii (pfx).char_rep ();
@@ -1023,7 +1010,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
       ACE_OS::free (name);
     }
   return wname;
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_TEMPNAM */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -1039,11 +1026,12 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL))
+     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
-  // a length that works (ULONG_MAX doesn't). If this isn't ok, use
+  // a length that works (ULONG_MAX doesn't on all platform since some check
+  // to see if the operation will remain in bounds). If this isn't ok, use
   // ACE_OS::snprintf().
   return vswprintf (buffer, 4096, format, argptr);
 

@@ -2,5 +2,9 @@
 // $Id$
 
 project : aceexe {
+  exename = reader
+  Source_Files {
+    reader.cpp
+  }
 }
 

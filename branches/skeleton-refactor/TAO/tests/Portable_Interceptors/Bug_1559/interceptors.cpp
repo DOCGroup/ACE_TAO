@@ -120,7 +120,7 @@ Echo_Client_Request_Interceptor::send_request (
 
       CORBA::ULong string_len = ACE_OS::strlen (request_msg) + 1;
       CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-      ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), request_msg);
+      ACE_OS::strcpy (reinterpret_cast<char *> (buf), request_msg);
 
       sc.context_data.replace (string_len, string_len, buf, 1);
 
@@ -134,7 +134,7 @@ Echo_Client_Request_Interceptor::send_request (
       ACE_CHECK;
 
       const char *buf2 =
-        ACE_reinterpret_cast (const char *, sc2->context_data.get_buffer ());
+        reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
       if (ACE_OS::strcmp (buf2, request_msg) != 0)
         {
@@ -162,7 +162,7 @@ Echo_Client_Request_Interceptor::send_request (
 
       CORBA::ULong string_len = ACE_OS::strlen (forward_msg) + 1;
       CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-      ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), forward_msg);
+      ACE_OS::strcpy (reinterpret_cast<char *> (buf), forward_msg);
 
       sc.context_data.replace (string_len, string_len, buf, 1);
       // Add this context to the service context list.
@@ -175,7 +175,7 @@ Echo_Client_Request_Interceptor::send_request (
       ACE_CHECK;
 
       const char *buf2 =
-        ACE_reinterpret_cast (const char *, sc2->context_data.get_buffer ());
+        reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
       if (ACE_OS::strcmp (buf2, forward_msg) != 0)
         {
@@ -240,7 +240,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   ACE_CHECK;
 
   const char *buf =
-    ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+    reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
@@ -258,7 +258,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   ACE_CHECK;
 
   const char *buf2 =
-    ACE_reinterpret_cast (const char *, sc2->context_data.get_buffer ());
+    reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
   if (ACE_OS::strcmp (buf2, forward_msg) != 0)
     {
@@ -309,7 +309,7 @@ Echo_Client_Request_Interceptor::receive_other (
   ACE_CHECK;
 
   const char *buf =
-    ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+    reinterpret_cast<const char *> (sc->context_data.get_buffer ());
 
   if (ACE_OS::strcmp (buf, request_msg) != 0)
     {
@@ -362,7 +362,7 @@ Echo_Client_Request_Interceptor::receive_exception (
   ACE_CHECK;
 
   const char *buf =
-    ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+    reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
@@ -380,7 +380,7 @@ Echo_Client_Request_Interceptor::receive_exception (
   ACE_CHECK;
 
   const char *buf2 =
-    ACE_reinterpret_cast (const char *, sc2->context_data.get_buffer ());
+    reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
   if (ACE_OS::strcmp (buf2, forward_msg) != 0)
     {
@@ -467,7 +467,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   ACE_CHECK;
 
   const char *buf =
-    ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+    reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received service context: %s\n",
               buf));
@@ -486,7 +486,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
       CORBA::ULong string_len = ACE_OS::strlen (reply_msg) + 1;
       CORBA::Octet *buff = CORBA::OctetSeq::allocbuf (string_len);
 
-      ACE_OS::strcpy (ACE_reinterpret_cast (char *, buff), reply_msg);
+      ACE_OS::strcpy (reinterpret_cast<char *> (buff), reply_msg);
 
       scc.context_data.replace (string_len, string_len, buff, 1);
 
@@ -535,8 +535,7 @@ Echo_Server_Request_Interceptor::send_reply (
     ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  const char *buf = ACE_reinterpret_cast (const char *,
-                                          sc->context_data.get_buffer ());
+  const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Reply service context: %s\n",
               buf));
@@ -554,8 +553,7 @@ Echo_Server_Request_Interceptor::send_reply (
     ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  const char *buf2 = ACE_reinterpret_cast (const char *,
-                                           sc2->context_data.get_buffer ());
+  const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
   if (ACE_OS::strcmp (buf2, forward_msg) != 0)
     {
@@ -589,8 +587,7 @@ Echo_Server_Request_Interceptor::send_exception (
     ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  const char *buf = ACE_reinterpret_cast (const char *,
-                                          sc->context_data.get_buffer ());
+  const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Reply service context: %s\n",
               buf));
@@ -608,8 +605,7 @@ Echo_Server_Request_Interceptor::send_exception (
     ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  const char *buf2 = ACE_reinterpret_cast (const char *,
-                                           sc2->context_data.get_buffer ());
+  const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
   if (ACE_OS::strcmp (buf2, forward_msg) != 0)
     {
@@ -642,8 +638,7 @@ Echo_Server_Request_Interceptor::send_other (
     ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  const char *buf = ACE_reinterpret_cast (const char *,
-                                           sc->context_data.get_buffer ());
+  const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
 
   if (ACE_OS::strcmp (buf, request_msg) != 0)
     {

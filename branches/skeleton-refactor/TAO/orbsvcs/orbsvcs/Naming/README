@@ -10,7 +10,7 @@ $TAO_ROOT/orbsvcs/Naming_Service.
 
 UTILITIES
 =========
-Naming_Utils.{h,cpp} contain utility classes that can simplify
+Naming_{Client,Server}.{h,cpp} contain utility classes that can simplify
 programs which play a role of Naming Service server or client.  See
 $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service.{h,cpp} and
 $TAO_ROOT/orbsvcs/tests/Simple_Naming/client.{h,cpp} for examples of

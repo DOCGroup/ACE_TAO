@@ -14,12 +14,12 @@
 template<class T>
 void
 activate_object_with_id (T * &result,
-                         PortableServer::POA_var poa,
+                         PortableServer::POA_ptr poa,
                          PortableServer::ServantBase *servant,
                          const FtRtecEventComm::ObjectId &oid
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
-  const PortableServer::ObjectId& id = ACE_reinterpret_cast(const PortableServer::ObjectId& ,oid);
+  const PortableServer::ObjectId& id = reinterpret_cast<const PortableServer::ObjectId&> (oid);
   poa->activate_object_with_id(id,
     servant ACE_ENV_ARG_PARAMETER);
 

@@ -273,7 +273,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> u_int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_spoke
   (const ACE_Time_Value& t) const
 {
-  return ACE_static_cast(u_int, (t.msec () >> this->res_bits_) & (this->spoke_count_ - 1));
+  return static_cast<u_int> ((t.msec () >> this->res_bits_) & (this->spoke_count_ - 1));
 }
 
 /// Generates a unique timer_id for the given spoke. It should be pretty
@@ -304,7 +304,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::generate_timer_id (u_int spoke)
 #  pragma warning(push)
 #  pragma warning(disable : 4311)
 #endif /* ACE_WIN64 */
-  long next_cnt = ACE_reinterpret_cast (long, root->get_act ());
+  long next_cnt = reinterpret_cast<long> (root->get_act ());
 #if defined (ACE_WIN64)
 #  pragma warning(pop)
 #endif /* ACE_WIN64 */
@@ -359,7 +359,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::generate_timer_id (u_int spoke)
 #  pragma warning(push)
 #  pragma warning(disable : 4312)
 #endif /* ACE_WIN64 */
-          root->set_act (ACE_reinterpret_cast (void*, next_cnt));
+          root->set_act (reinterpret_cast<void*> (next_cnt));
 #if defined (ACE_WIN64)
 #  pragma warning(pop)
 #endif /* ACE_WIN64 */
@@ -828,14 +828,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_ti
       // Get the dispatch info
       n->get_dispatch_info (info);
 
-      const void *upcall_act = 0;
-
-      this->preinvoke (info, cur_time, upcall_act);
-
-      this->upcall (info, cur_time);
-
-      this->postinvoke (info, cur_time, upcall_act);
-
       if (n->get_interval () > ACE_Time_Value::zero)
         {
           // Make sure that we skip past values that have already
@@ -852,10 +844,16 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_ti
           this->free_node (n);
         }
 
+      const void *upcall_act = 0;
+
+      this->preinvoke (info, cur_time, upcall_act);
+
+      this->upcall (info, cur_time);
+
+      this->postinvoke (info, cur_time, upcall_act);
+
       n = this->remove_first_expired (cur_time);
     }
-
-  //ACE_ERROR((LM_ERROR, "Expired %d nodes\n", expcount));
 
   return expcount;
 }

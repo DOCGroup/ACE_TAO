@@ -15,7 +15,7 @@
 
 #include "rtportableserver_export.h"
 
-#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Object_Adapter_Factory.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

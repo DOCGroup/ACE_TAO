@@ -38,7 +38,7 @@ public:
   void dump (void) const;
 
 protected:
-  /// Return instance using <name> to search the Service_Repository.
+  /// Return instance using @a name to search the Service_Repository.
   static void* instance (const ACE_TCHAR *name);
 };
 

@@ -42,7 +42,7 @@ ACEXML_Mem_Map_Stream::get_char (void)
 void
 ACEXML_Mem_Map_Stream::rewind (void)
 {
-  this->recv_pos_ = ACE_reinterpret_cast (char *, this->mem_map_.addr ());
+  this->recv_pos_ = reinterpret_cast<char *> (this->mem_map_.addr ());
   this->get_pos_ = this->recv_pos_;
   this->end_of_mapping_plus1_ = this->recv_pos_ + this->mem_map_.size ();
 }
@@ -73,7 +73,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
       return 0;
     }
   const char *s = this->recv_pos_;
-  this->seek (ACE_static_cast (off_t, len), SEEK_CUR);
+  this->seek (static_cast<off_t> (len), SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
 }
@@ -103,8 +103,7 @@ ACEXML_Mem_Map_Stream::seek (off_t offset, int whence)
     {
     case SEEK_SET:
       this->get_pos_ =
-        ACE_reinterpret_cast (char *,
-                              this->mem_map_.addr ())
+        reinterpret_cast<char *> (this->mem_map_.addr ())
         + offset;
       break;
 
@@ -126,8 +125,7 @@ ACEXML_Mem_Map_Stream::seek (off_t offset, int whence)
       this->get_pos_ = this->end_of_mapping_plus1_;
 
   this->recv_pos_ = this->get_pos_;
-  return this->recv_pos_ - ACE_reinterpret_cast (char *,
-                                                 this->mem_map_.addr ());
+  return this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ());
 }
 
 Svc_Handler *
@@ -246,13 +244,12 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
   // MAP_FAILED is used as a "first time in" flag.
   if (this->recv_pos_ == MAP_FAILED)
     {
-      this->recv_pos_ = ACE_reinterpret_cast (char *, this->mem_map_.addr ());
+      this->recv_pos_ = reinterpret_cast<char *> (this->mem_map_.addr ());
       this->get_pos_ = this->recv_pos_;
     }
 
   this->end_of_mapping_plus1_ =
-    ACE_reinterpret_cast (char *,
-                          this->mem_map_.addr ())
+    reinterpret_cast<char *> (this->mem_map_.addr ())
     + this->mem_map_.size ();
 
   return 0;

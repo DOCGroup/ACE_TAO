@@ -156,8 +156,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       //    application?
       char buf[64];
       ACE_OS::sprintf (buf, "TIMEOUT:%u",
-                       ACE_static_cast (u_int,
-                                        (e.header.creation_time / 10000)));
+                       static_cast<u_int> ((e.header.creation_time / 10000)));
       ACE_CString name = buf;
 
       TAO_EC_QOS_Info qos_info;
@@ -167,8 +166,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
 
       // Convert the time to the proper units....
       RtecScheduler::Period_t period =
-        ACE_static_cast (RtecScheduler::Period_t,
-                         e.header.creation_time / 10);
+        static_cast<RtecScheduler::Period_t> (e.header.creation_time / 10);
 
       scheduler->set (qos_info.rt_info,
                       RtecScheduler::VERY_LOW_CRITICALITY,
@@ -296,8 +294,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
 
       char buf[64];
       ACE_OS::sprintf (buf, "TIMEOUT:%u",
-                       ACE_static_cast (u_int,
-                                        (e.header.creation_time / 10000)));
+                       static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 
       return;

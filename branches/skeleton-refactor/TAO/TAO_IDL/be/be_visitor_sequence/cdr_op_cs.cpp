@@ -137,7 +137,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     }
 
   *os << "}" << be_uidt_nl << be_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   //  Set the sub state as generating code for the input operator.
@@ -176,7 +176,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "// of the stream. (See bug 58.)" << be_nl;
       *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
           << "{" << be_idt_nl;
-      *os << "return 0;" << be_uidt_nl
+      *os << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
       // Now check if the length does not exceed the maximum. We do this only
@@ -219,7 +219,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "// If length is 0 we return true." << be_nl;
       *os << "if (0 >= _tao_seq_len) " << be_idt_nl
           << "{" << be_idt_nl;
-      *os << "return 1;" << be_uidt_nl
+      *os << "return true;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
       *os << "// Retrieve all the elements." << be_nl;
@@ -249,7 +249,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << be_nl << "}" << be_uidt_nl << be_nl;
     }
 
-  *os << "return 0;" << be_uidt_nl
+  *os << "return false;" << be_uidt_nl
       << "}";
 
   *os << be_nl << be_nl
@@ -285,6 +285,24 @@ be_visitor_sequence_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_sequence_cdr_op_cs::visit_component (be_component *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_component_fwd (be_component_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_home (be_home *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_cdr_op_cs::visit_valuetype (be_valuetype *node)
 {
   return this->visit_node (node);
@@ -292,6 +310,18 @@ be_visitor_sequence_cdr_op_cs::visit_valuetype (be_valuetype *node)
 
 int
 be_visitor_sequence_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   return this->visit_node (node);
 }
@@ -374,11 +404,11 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
         case TAO_CodeGen::TAO_CDR_OUTPUT:
           {
             *os << "{" << be_idt_nl
-                << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> ("
-                << "(" << sequence->name () << " *)&_tao_sequence);" << be_nl
-                << "if (oseq->mb ())" << be_idt_nl
-                << "return strm.write_octet_array_mb (oseq->mb ());"
+                << "TAO_Unbounded_Sequence<CORBA::Octet> *_tao_octet_seq = " << be_nl
+                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> "
+                << "(const_cast<" << sequence->name () << " *> (&_tao_sequence));" << be_nl
+                << "if (_tao_octet_seq->mb ())" << be_idt_nl
+                << "return strm.write_octet_array_mb (_tao_octet_seq->mb ());"
                 << be_uidt_nl
                 << "else" << be_idt_nl
                 << "return strm.write_octet_array ("
@@ -561,7 +591,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
   be_visitor_sequence_base visitor (&ctx);
 
   // Initialize a boolean variable.
-  *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl << be_nl;
+  *os << "CORBA::Boolean _tao_marshal_flag = true;" << be_nl << be_nl;
 
   // We get here if the "type" of individual elements of the sequence is not a
   // primitive type. In this case, we are left with no other alternative but
@@ -789,31 +819,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_dup (\n";
-
-          // Even though the following arg is declared const in the
-          // function signature, MSVC++ 5.0 needs the const cast,
-          // and many other compilers just won't do it.
-          *os << "#if defined (_MSC_VER) && (_MSC_VER <= 1100)";
-
-          os->indent ();
-
-          *os << be_idt << be_idt_nl;
-          *os << "const_cast<const " << this->ctx_->node ()->name ()
-              << "> (_tao_sequence)[i]\n";
-          *os << "#else";
-
-          os->indent ();
-
-          *os << be_nl;
-          *os << "_tao_sequence[i]\n";
-          *os << "#endif /* defined (_MSC_VER) && (_MSC_VER <= 1100) */";
-
-          os->indent ();
-
-          *os << be_uidt_nl;
-          *os << ")" << be_uidt << be_uidt_nl;
-          *os << ");" << be_uidt_nl;
+          *os << "_dup (_tao_sequence[i])" << be_uidt_nl
+              << ");" << be_uidt_nl;
 
           if (bt->accept (&visitor) == -1)
             {
@@ -830,19 +837,11 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           break;
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          *os << "_tao_marshal_flag =" << be_idt_nl;
-
-          if (bt->is_defined ())
-            {
-              *os << "_tao_sequence[i].in ()->marshal (strm);" << be_uidt;
-            }
-          else
-            {
-              *os << "TAO::Objref_Traits<" << bt->name () << ">::marshal ("
-                  << be_idt << be_idt_nl
-                  << "_tao_sequence[i].in (), strm" << be_uidt_nl
-                  << ");" << be_uidt << be_uidt;
-            }
+          *os << "_tao_marshal_flag =" << be_idt_nl
+              << "TAO::Objref_Traits<" << bt->name () << ">::marshal ("
+              << be_idt << be_idt_nl
+              << "_tao_sequence[i].in (), strm" << be_uidt_nl
+              << ");" << be_uidt << be_uidt;
 
           break;
         case AST_Decl::NT_string:

@@ -80,7 +80,7 @@ short_stream (void)
 
   // Basic types for output
   ACE_CDR::Char ch = 'A';
-  ACE_CDR::Char wchtmp[] = {"\xF3"};
+  ACE_CDR::Char wchtmp[] = {'\xF3'};
   ACE_CDR::WChar wch = *wchtmp;
   ACE_CDR::WChar wchar2[] = {'\x00'};    // empty wide string
   ACE_CDR::WChar *wstr = wchar2;
@@ -444,7 +444,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("-n <num> ")
                         ACE_TEXT ("-l <loops> ")
                         ACE_TEXT ("\n"),
-                        argv[0]));
+                        ACE_TEXT ("CDR_Test")));
             return -1;
         }
     }

@@ -2,8 +2,13 @@
 // $Id$
 //
 #include "Hello.h"
+#include "ace/ACE.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
+
+ACE_RCSID (Bug_1482_Regression,
+           Hello,
+           "$Id$")
+
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

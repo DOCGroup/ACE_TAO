@@ -47,6 +47,8 @@
 #    include "ace/config-win32-ghs.h"
 #elif defined (__MINGW32__)
 #    include "ace/config-win32-mingw.h"
+#elif defined (__DMC__)
+#    include "ace/config-win32-dmc.h"
 #else
 #    error Compiler is not supported
 #endif

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:153
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_PI_FORWARDC_H_
 #define _TAO_IDL_ORIG_PI_FORWARDC_H_
@@ -44,8 +44,8 @@
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 
-#include "OctetSeqC.h"
-#include "StringSeqC.h"
+#include "tao/OctetSeqC.h"
+#include "tao/StringSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -60,9 +60,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -71,88 +69,88 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:376
+  // be\be_visitor_typedef/typedef_ch.cpp:376
   
   typedef char * ServerId;
   typedef CORBA::String_var ServerId_var;
   typedef CORBA::String_out ServerId_out;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerId;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:376
+  // be\be_visitor_typedef/typedef_ch.cpp:376
   
   typedef char * ORBId;
   typedef CORBA::String_var ORBId_var;
   typedef CORBA::String_out ORBId_out;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORBId;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:435
+  // be\be_visitor_typedef/typedef_ch.cpp:435
   
   typedef CORBA::StringSeq AdapterName;
   typedef CORBA::StringSeq_var AdapterName_var;
   typedef CORBA::StringSeq_out AdapterName_out;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterName;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:435
+  // be\be_visitor_typedef/typedef_ch.cpp:435
   
   typedef CORBA::OctetSeq ObjectId;
   typedef CORBA::OctetSeq_var ObjectId_var;
   typedef CORBA::OctetSeq_out ObjectId_out;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:342
   
   typedef CORBA::Long AdapterManagerId;
   typedef CORBA::Long_out AdapterManagerId_out;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterManagerId;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:342
   
   typedef CORBA::Short AdapterState;
   typedef CORBA::Short_out AdapterState_out;
   
   // TAO_IDL - Generated from
-  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterState;
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module PortableInterceptor
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -160,13 +158,13 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "PI_ForwardC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -177,4 +175,5 @@ namespace TAO
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

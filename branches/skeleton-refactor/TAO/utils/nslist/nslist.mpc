@@ -3,6 +3,7 @@
 
 project(nsadd): namingexe, core {
   install = $(ACE_ROOT)/bin
+  exename = nsadd
   Source_Files {
     nsadd.cpp
   }
@@ -10,6 +11,7 @@ project(nsadd): namingexe, core {
 
 project(nsdel): namingexe, core {
   install = $(ACE_ROOT)/bin
+  exename = nsdel
   Source_Files {
     nsdel.cpp
   }
@@ -17,6 +19,7 @@ project(nsdel): namingexe, core {
 
 project(nslist): namingexe, core {
   install = $(ACE_ROOT)/bin
+  exename = nslist
   Source_Files {
     nslist.cpp
   }

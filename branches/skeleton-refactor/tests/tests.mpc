@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(Test_Output) : acelib {
+project(Test_Output) : acelib, script {
   sharedname = Test_Output
   dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
@@ -12,6 +12,10 @@ project(Test_Output) : acelib {
     test_config.h
   }
   Resource_Files {
+  }
+  Script_Files {
+    run_test.pl
+    run_test.lst
   }
 }
 
@@ -463,6 +467,13 @@ project(Multihomed INET Addr Test) : acetest {
   }
 }
 
+project(Network_Adapters_Test) : acetest {
+  exename = Network_Adapters_Test
+  Source_Files {
+    Network_Adapters_Test.cpp
+  }
+}
+
 project(New Fail Test) : acetest {
   exename = New_Fail_Test
   Source_Files {
@@ -869,13 +880,6 @@ project(UPIPE SAP Test) : acetest {
   }
 }
 
-project(Unbounded Set Test Ex) : acetest {
-  exename = Unbounded_Set_Test_Ex
-  Source_Files {
-    Unbounded_Set_Test_Ex.cpp
-  }
-}
-
 project(Upgradable RW Test) : acetest {
   exename = Upgradable_RW_Test
   Source_Files {
@@ -910,26 +914,31 @@ project(Thread Pool Reactor Resume Test) : acetest {
   }
 }
 
-project(XtReactor Test) : acetest {
-  exename   = XtReactor_Test
-  requires += ace_other
+project(XtMotifReactor Test) : acetest, ace_xtreactor, ace_motif {
+  exename   = XtMotifReactor_Test
+
   Source_Files {
-    XtReactor_Test.cpp
+    XtMotifReactor_Test.cpp
   }
 }
 
-project(FlReactor Test) : acetest {
+project(XtAthenaReactor Test) : acetest, ace_xtreactor, ace_athena {
+  exename   = XtAthenaReactor_Test
+  Source_Files {
+    XtAthenaReactor_Test.cpp
+  }
+}
+
+project(FlReactor Test) : acetest, ace_flreactor {
   exename   = FlReactor_Test
-  requires += ace_other
 
   Source_Files {
     FlReactor_Test.cpp
   }
 }
 
-project(TkReactor Test) : acetest {
+project(TkReactor Test) : acetest,ace_tkreactor {
   exename   = TkReactor_Test
-  requires += ace_other
 
   Source_Files {
     TkReactor_Test.cpp
@@ -1064,6 +1073,13 @@ project(UUIDTest) : acetest {
   }
 }
 
+project(Unbounded Set Test) : acetest {
+  exename = Unbounded_Set_Test
+  Source_Files {
+    Unbounded_Set_Test.cpp
+  }
+}
+
 project(INET Addr Test IPV6) : acetest {
   exename = INET_Addr_Test_IPV6
   Source_Files {
@@ -1120,9 +1136,15 @@ project(SOCK_Dgram_Bcast_Test) : acetest {
   }
 }
 
-project(QtReactor Test) : acetest, ace_qt, qt_moc {
+project(SOCK_SEQPACK_SCTP_Test) : acetest {
+  exename = SOCK_SEQPACK_SCTP_Test
+  Source_Files {
+  	SOCK_SEQPACK_SCTP_Test.cpp
+  }
+}
+
+project(QtReactor Test) : acetest, ace_qtreactor {
   exename   = QtReactor_Test
-  requires += qt
   MOC_Files {
     QtReactor_Test.h
   }

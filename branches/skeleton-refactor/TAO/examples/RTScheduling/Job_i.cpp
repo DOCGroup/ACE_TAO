@@ -82,23 +82,21 @@ Job_i::work (CORBA::ULong work,
       //    ACE_hrtime_t now = ACE_OS::gethrtime ();
 
       ACE_Time_Value run_time = ACE_OS::gettimeofday () - *(dt_creator_->base_time ());
-      TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
-       				       guid_);
+      TASK_STATS::instance ()->sample (run_time.sec (), guid_);
 
       ACE_Time_Value count_down_time (1);
       ACE_Countdown_Time count_down (&count_down_time);
 
       while (count_down_time > ACE_Time_Value::zero)
-	{
-	  ACE::is_prime (prime_number,
-			 2,
-			 prime_number / 2);
-	  count_down.update ();
-	}
+	      {
+	        ACE::is_prime (prime_number,
+			      2,
+			      prime_number / 2);
+	        count_down.update ();
+	      }
 
       run_time = ACE_OS::gettimeofday () - *(dt_creator_->base_time ());
-      TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
-       				       guid_);
+      TASK_STATS::instance ()->sample (run_time.sec (), guid_);
 
       CORBA::Policy_var sched_param;
       sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (importance));

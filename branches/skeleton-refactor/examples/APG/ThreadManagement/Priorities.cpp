@@ -23,7 +23,15 @@ public:
     ACE_OS::sleep (2);
     ACE_Message_Block *mb;
     while (this->getq (mb) != -1)
-      process_message (mb);
+      {
+        if (mb->msg_type () == ACE_Message_Block::MB_BREAK)
+          {
+            mb->release ();
+            break;
+          }
+        process_message (mb);
+        mb->release ();
+      }
     return 0;
   }
 
@@ -42,10 +50,14 @@ private:
 };
 // Listing 2
 
+#if !defined (ACE_THR_PRI_OTHER_MAX)
 // This should be fixed in ACE... There's no _MAX, _MIN values for
 // thread priorities.
-#if defined (ACE_WIN32) && !defined (ACE_THR_PRI_OTHER_MAX)
+#if defined (ACE_WIN32)
 #  define ACE_THR_PRI_OTHER_MAX ((ACE_THR_PRI_OTHER_DEF) + 1)
+#elif defined (VXWORKS)
+#  define ACE_THR_PRI_OTHER_MAX 0
+#endif
 #endif
 
 // Listing 1 code/ch13
@@ -62,10 +74,16 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Message_Block mb;
   for (int i = 0; i < 100; i++)
     {
-      hp_handler.putq (&mb);
-      lp_handler.putq (&mb);
+      ACE_Message_Block *mb_hp, *mb_lp;
+      mb_hp = mb.clone ();
+      mb_lp = mb.clone ();
+      hp_handler.putq (mb_hp);
+      lp_handler.putq (mb_lp);
     }
 
+  ACE_Message_Block stop (0, ACE_Message_Block::MB_BREAK);
+  hp_handler.putq (stop.clone ());
+  lp_handler.putq (stop.clone ());
   hp_handler.wait ();
   lp_handler.wait ();
 

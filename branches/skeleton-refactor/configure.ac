@@ -428,12 +428,6 @@ AS_IF([test "$ac_cv_header_dirent_dirent_h" = yes ||
 dnl Check for sys/wait.h Posix.1 compliance
 AC_HEADER_SYS_WAIT
 
-AS_IF([test "$ac_cv_cygwin" = yes],
-  [
-   AC_CHECK_HEADER([cygwin32/socket.h],
-                   [AC_DEFINE([ACE_HAS_CYGWIN32_SOCKET_H])],)
-  ],[])
-
 AC_CHECK_HEADER([dlfcn.h],
   [
    dnl We already checked for dlopen in the previous library checks however,
@@ -545,6 +539,8 @@ ACE_CHECK_LACKS_HEADERS(errno.h)
 
 ACE_CHECK_LACKS_HEADERS(fcntl.h)
 
+ACE_CHECK_HAS_HEADERS(pthread_np.h)
+
 ACE_CHECK_LACKS_HEADERS(search.h)
 
 ACE_CHECK_HAS_HEADERS(select.h)
@@ -609,6 +605,8 @@ ACE_CHECK_LACKS_HEADERS(time.h)
 
 ACE_CHECK_LACKS_HEADERS(termios.h)
 
+ACE_CHECK_LACKS_HEADERS(wctype.h)
+
 
 
 AC_CHECK_HEADER([sys/systeminfo.h],[],[])
@@ -657,17 +655,13 @@ AS_IF([test "$ace_has_xti_funcs" = yes],
      ],)
 
 dnl Check if XTI headers define TCP macros that conflict with netinet/tcp.h's
-   ACE_CACHE_CHECK([if TCP macros are defined in XTI headers],
+   ACE_CACHE_CHECK([if TCP macros in sys/xti.h conflict with netinet/tcp.h],
      [ace_cv_lib_has_conflicting_xti_macros],
      [
-      AC_EGREP_CPP([ACE_CONFLICTING_XTI_MACROS],
-        [
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-
-#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
+      ACE_CONVERT_WARNINGS_TO_ERRORS([
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #  if defined (ACE_HAS_XTI)
+#    include <sys/types.h>
 #    if defined (ACE_HAS_SYS_XTI_H)
 #      include /**/ <sys/xti.h>
 #    else
@@ -678,18 +672,17 @@ dnl Check if XTI headers define TCP macros that conflict with netinet/tcp.h's
 #      include /**/ <tiuser.h>
 #    endif
 #  endif /* ACE_HAS_XTI */
-#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
-
-#if defined (TCP_NODELAY) || defined (TCP_MAXSEG)
-ACE_CONFLICTING_XTI_MACROS
-#endif  /* TCP_NODELAY || TCPMAXSEG  */
-        ],
-        [
-         ace_cv_lib_has_conflicting_xti_macros=yes
-        ],
-        [
+#  if !defined (ACE_LACKS_NETINET_TCP_H)
+#    include /**/ <netinet/tcp.h>
+#  endif /* !ACE_LACKS_NETIINET_TCP_H */
+        ]],[[
+         int a = 0;
+        ]])],[
          ace_cv_lib_has_conflicting_xti_macros=no
+        ],[
+         ace_cv_lib_has_conflicting_xti_macros=yes
         ])
+      ])
      ],
      [
       AC_DEFINE([ACE_HAS_CONFLICTING_XTI_MACROS])
@@ -1101,30 +1094,64 @@ dnl AC_CHECK_TYPE([off64_t],[long long])
 
 dnl Specific typedef checks
 dnl TODO: Check whether these typedefs can be defined somewhere else.
-ACE_CHECK_TYPE([idtype_t],[signal.h],[AC_DEFINE([ACE_HAS_IDTYPE_T])],)
+AC_CHECK_TYPE([idtype_t],
+	      [AC_DEFINE([ACE_HAS_IDTYPE_T], 1,
+			 [Define to 1 if the system has the type `idtype_t'.])],
+	      [],
+	      [#include <signal.h>])
+
+AC_CHECK_TYPE([key_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_KEY_T], 1,
+			 [Define to 1 if the system lacks the type `key_t'.])],
+	      [#include <sys/types.h>])
+
 ACE_CHECK_TYPE([sem_t],[semaphore.h],,)
-ACE_CHECK_TYPE([key_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_KEY_T])])
-ACE_CHECK_TYPE([ssize_t],[sys/types.h],[AC_DEFINE([ACE_HAS_SSIZE_T])],)
-ACE_CHECK_TYPE([u_longlong_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_U_LONGLONG_T])])
-ACE_CHECK_TYPE([pri_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_PRI_T])])
+
+AC_CHECK_TYPE([pri_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_PRI_T], 1,
+			 [Define to 1 if the system lacks the type 'pri_t'.])],
+	      [#include <sys/types.h>])
+
+AC_CHECK_TYPE([sig_atomic_t],
+	      [AC_DEFINE([ACE_HAS_SIG_ATOMIC_T], 1,
+			 [Define to 1 if the system has the type 'sig_atomic_t'.])],
+	      [],
+	      [#include <signal.h>])
+
+AC_CHECK_TYPE([ssize_t],
+	      [AC_DEFINE([ACE_HAS_SSIZE_T], 1,
+			 [Define to 1 if the system has the type `ssize_t'.])],
+	      [],
+	      [#include <sys/types.h>])
 
 dnl Some platforms define ucontext_t in <sys/ucontext.h>, but ACE
 dnl doesn't explicitly include that header.  However, it is very
 dnl likely that <signal.h> does, either directly or indirectly.
 AC_CHECK_TYPE([ucontext_t],
-	AC_DEFINE([ACE_HAS_UCONTEXT_T]),
-	,
-	[
-#include <signal.h>
+	      [AC_DEFINE([ACE_HAS_UCONTEXT_T], 1,
+			 [Define to 1 if the system has the type `ucontext_t'.])],
+	      [],
+[#include <signal.h>
 #ifndef ACE_LACKS_UCONTEXT_H
 # include <ucontext.h>
 #endif
 ])
 
-ACE_CHECK_TYPE([wchar_t],[wchar.h],,
-  [
-   ACE_CHECK_TYPE([wchar_t],[sys/types.h],,[AC_DEFINE([ACE_LACKS_WCHAR_T])])
-  ])
+AC_CHECK_TYPE([u_longlong_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_U_LONGLONG_T], 1,
+			 [Define to 1 if the system lacks the type `u_long_long'.])],
+	      [#include <sys/types.h>])
+
+AC_CHECK_TYPE([wchar_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_WCHAR_T], 1,
+			 [Define to 1 if the system lacks the type `wchar_t'.])],
+[#include <sys/types.h>
+#include <wchar.h>
+])
 
 ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
   [
@@ -1175,23 +1202,6 @@ ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
       ],[AC_DEFINE([ACE_HAS_SIZET_SOCKET_LEN])],)
     ])
   ])
-
-dnl Check for sig_atomic_t
-ACE_CACHE_CHECK([for sig_atomic_t],
-    [ace_cv_lib_posix_defines_sig_atomic_t],[
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <signal.h>
-         ]],[[
-          sig_atomic_t sat;
-         ]])],[
-          ace_cv_lib_posix_defines_sig_atomic_t=yes
-         ],[
-          ace_cv_lib_posix_defines_sig_atomic_t=no
-         ])
-],[AC_DEFINE([ACE_HAS_SIG_ATOMIC_T])],)
 
 
 
@@ -1258,28 +1268,25 @@ dnl structure we are testing for.
 
 dnl Thanks to Konstantinos Margaritis <kmargar@cc.uoa.gr> for pointing out
 dnl that struct siginfo_t may also be defined in signal.h
-ACE_CACHE_CHECK([for struct siginfo_t],[ace_cv_struct_siginfo_t],
-  [
-   dnl Since we are checking for siginfo_t in more than one header
-   dnl we can't use the ACE_CHECK_STRUCT macro so we have to do things
-   dnl manually.
-   ACE_TRY_COMPILE_STRUCT([siginfo_t],[siginfo.h],
-     [
-      ace_cv_struct_siginfo_t=yes
-     ],
-     [
-      ACE_TRY_COMPILE_STRUCT([siginfo_t],[signal.h],
-        [
-         ace_cv_struct_siginfo_t=yes
-        ],
-        [
-         ace_cv_struct_siginfo_t=no
-        ])
-     ])
-  ],
-  [
-   AC_DEFINE([ACE_HAS_SIGINFO_T])
-  ],)
+AC_CHECK_TYPE([siginfo_t],
+	      [AC_DEFINE([ACE_HAS_SIGINFO_T], 1,
+			 [Define to 1 if the system has the type `siginfo_t'.])],
+	      [],
+	      [#include <signal.h>
+#ifndef ACE_LACKS_SIGINFO_H
+#include <siginfo.h>
+#endif])
+
+if test "$ac_cv_type_siginfo_t" = yes; then
+  AC_CHECK_MEMBER([siginfo_t.si_addr],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_SI_ADDR], 1,
+			     [Define to 1 if `si_addr' is not a member of `siginfo_t'.])],
+		  [#include <signal.h>
+#ifndef ACE_LACKS_SIGINFO_H
+#include <siginfo.h>
+#endif])
+fi
 
 dnl Some platforms need to include sys/types.h before sys/socket.h
 dnl in order for struct msghdr to work.
@@ -1701,54 +1708,60 @@ dnl If we get a size of zero, then the type is unknown to the compiler.
 dnl We don't need to check for sizeof(char) right now.  Also conflicts with
 dnl ACE definition in Basic_Types.h, so we leave the test out.
 if test "$cross_compiling" != yes; then
-  dnl AC_CHECK_SIZEOF([char],[1])
-  dnl if test "$ac_cv_sizeof_char" != "0"; then
-  dnl   AC_DEFINE([ACE_SIZEOF_CHAR],[SIZEOF_CHAR])
-  dnl fi
   AC_CHECK_SIZEOF([wchar_t])
   if test "$ac_cv_sizeof_wchar_t" != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_WCHAR],[$ac_cv_sizeof_wchar_t])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_WCHAR],[$ac_cv_sizeof_wchar_t],
+		       [Size of the native "wchar_t" type])
   fi
   AC_CHECK_SIZEOF([short])
   if test "$ac_cv_sizeof_short" != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_SHORT],[$ac_cv_sizeof_short])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_SHORT],[$ac_cv_sizeof_short],
+		       [Size of the native "short" type])
   fi
   AC_CHECK_SIZEOF([int])
   if test $ac_cv_sizeof_int != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_INT],[$ac_cv_sizeof_int])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_INT],[$ac_cv_sizeof_int],
+		       [Size of the native "int" type])
   fi
   AC_CHECK_SIZEOF([long])
   if test $ac_cv_sizeof_long != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG],[$ac_cv_sizeof_long])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG],[$ac_cv_sizeof_long],
+		       [Size of the native "long" type])
   fi
   AC_CHECK_SIZEOF([long long])
   if test $ac_cv_sizeof_long_long != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_LONG],[$ac_cv_sizeof_long_long])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_LONG],[$ac_cv_sizeof_long_long],
+		       [Size of the native "long long" type])
   else
     AC_DEFINE([ACE_LACKS_LONGLONG_T])
   fi
   AC_CHECK_SIZEOF([void *])
   if test $ac_cv_sizeof_void_p != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_VOID_P],[$ac_cv_sizeof_void_p])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_VOID_P],[$ac_cv_sizeof_void_p],
+		       [Size of the native "pointer to void" type])
   fi
   AC_CHECK_SIZEOF([float])
   if test $ac_cv_sizeof_float != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_FLOAT],[$ac_cv_sizeof_float])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_FLOAT],[$ac_cv_sizeof_float],
+		       [Size of the native "float" type])
   else
     AC_DEFINE([ACE_LACKS_FLOATING_POINT])
   fi
   AC_CHECK_SIZEOF([double])
   if test $ac_cv_sizeof_double != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_DOUBLE],[$ac_cv_sizeof_double])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_DOUBLE],[$ac_cv_sizeof_double],
+		       [Size of the native "double" type])
   else
     AC_DEFINE([ACE_LACKS_FLOATING_POINT])
   fi
   AC_CHECK_SIZEOF([long double])
   if test $ac_cv_sizeof_long_double != 0; then
-    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_DOUBLE],[$ac_cv_sizeof_long_double])
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_LONG_DOUBLE],[$ac_cv_sizeof_long_double],
+		       [Size of the native "long double" type])
   fi
 
-  dnl Set the 64 bit unsigned int typedef
+  dnl Set the 64 bit typedefs
+  ACE_INT64=""
   ACE_UINT64=""
   dnl if test "$ace_cv_type_u_longlong_t" = yes; then
   dnl This doesn't work:  AC_CHECK_SIZEOF([u_longlong_t],[8])
@@ -1758,9 +1771,11 @@ if test "$cross_compiling" != yes; then
   dnl   fi
   dnl elif test $ac_cv_sizeof_long = 8; then
   if test $ac_cv_sizeof_long = 8; then
+    ACE_INT64="signed long"
     ACE_UINT64="unsigned long"
     ace_u_long_long_typedef_set=yes
   elif test $ac_cv_sizeof_long_long = 8; then
+    ACE_INT64="signed long long"
     ACE_UINT64="unsigned long long"
     ace_u_long_long_typedef_set=yes
   else
@@ -1826,8 +1841,76 @@ cin >> b;
                   ])
   ],,[AC_DEFINE([ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS])])
 
-dnl Check if we have working C++ explicit template destructors
+dnl Check to see how to call the explicit destructor on a template.
+dnl There are a few different possibilities:
+dnl   ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR (two cases):
+dnl     ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS: ~CLASS<PARAM>()
+dnl     (no other settings): ~CLASS()
+dnl   w/o ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR:
+dnl     CLASS<PARAM>::~CLASS()
+dnl
+dnl The first seems to be the most widely used form, although very few
+dnl hand-made configs have it set. Many compilers take all three forms.
+dnl The only one that seems to be less-used is #2 above, ~CLASS().
+dnl So, we check for the first two cases, and if neither of them work,
+dnl we assume the third (no config macros).
+
+ACE_CACHE_CHECK([to see if template destructor call takes template args],
+  [ace_cv_feature_explicit_template_des_takes_args],
+  [
+   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+
+class dyn
+{
+ public:
+   dyn () { }
+   ~dyn () { }
+};
+
+template <class T>
+class Base
+{
+ public:
+   Base () { }
+   virtual void f (void) { }
+   ~Base () { }
+};
+
+template <class T>
+class Derived
+{
+ public:
+   Derived ()
+     {
+      x_ = new Base<T> ();
+     }
+   virtual void f (void) { }
+   ~Derived () { x_->~Base<T> (); }
+ private:
+   Base<T> *x_;
+   T t_;
+};
+                  ]],[[
+                   Derived<dyn> *x = new Derived<dyn> ();
+
+                   x->f ();
+
+                   delete x;
+                   return 0;
+                  ]])],[
+                   ace_cv_feature_explicit_template_des_takes_args=yes
+                  ],[
+                   ace_cv_feature_explicit_template_des_takes_args=no
+                  ])
+  ],[
+      AC_DEFINE([ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS])
+      AC_DEFINE([ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR])
+    ],
+)
+
+dnl Check for the second form of C++ explicit template destructors
 dnl Thanks to Nanbor Wang <nanbor@cs.wustl.edu> for providing this test.
+if test "$ace_cv_feature_explicit_template_des_takes_args" = no; then
 ACE_CACHE_CHECK([for working C++ explicit template destructors],
   [ace_cv_feature_working_explicit_des],
   [
@@ -1876,6 +1959,7 @@ class Derived
                    ace_cv_feature_working_explicit_des=no
                   ])
   ],[AC_DEFINE([ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR])],)
+fi
 
 dnl Check for working C++ conversions
 ACE_CACHE_CHECK([for working C++ conversions],
@@ -2134,15 +2218,11 @@ ACE_CACHE_CHECK([for C++ typename keyword],
                      public:
                        typedef typename T::Y Y;
                        Foo(T* foo) : foo_(foo) {}
-                       void bilbo(typename T::Y y);
+                       void bilbo(typename T::Y y)
+                         { typename T::Y x(10); }
                      private:
                        T* foo_;
                      };
-
-                     template <class T>
-                     void Foo<T>::bilbo(typename T::Y y)
-                     {
-                     }
                    ]],[[
                      Bar bar(15);
                      Foo<Bar> foo(&bar);
@@ -3194,6 +3274,10 @@ ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
 
+ACE_CHECK_LACKS_FUNCS(getipnodebyaddr)
+
+ACE_CHECK_LACKS_FUNCS(getipnodebyname)
+
 ACE_CHECK_HAS_FUNCS(getifaddrs)
 
 ACE_CHECK_HAS_FUNCS(itoa)
@@ -3201,10 +3285,6 @@ ACE_CHECK_HAS_FUNCS(itoa)
 ACE_CHECK_LACKS_FUNCS(qsort)
 
 ACE_CHECK_HAS_FUNCS(strnlen)
-
-ACE_CHECK_LACKS_FUNCS(strchr)
-
-ACE_CHECK_LACKS_FUNCS(strcspn)
 
 ACE_CHECK_LACKS_FUNCS(strerror)
 
@@ -3218,7 +3298,54 @@ ACE_CHECK_LACKS_FUNCS(strtol)
 
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
-ACE_CHECK_LACKS_FUNCS(swab)
+# swab() comes in a number of forms:
+#   swab (const void*, void*, ssize_t) is POSIX, XPG4, SUS, SUSv2 standard.
+#   swab (const char*, char*, ssize_t) is SVID third edition.
+#   swab (char*, char*, ssize_t) is on some odd platforms like Windows.
+# So, if swab() is available, figure out which of the three variants it is.
+# The second and third have ACE config settings.
+ACE_CHECK_LACKS_FUNCS([swab],
+    [
+      AC_LINK_IFELSE([
+      AC_LANG_PROGRAM([
+#include <stdlib.h>
+#include <unistd.h>
+       ],
+       [
+// If this compiles, we have the POSIX, XPG4, etc. standard.
+const char src[2] = {'a', 'b'};
+char dst[2];
+const void *vsrc = src;
+void *vdst = dst;
+swab (vsrc, vdst, 2);
+       ])
+      ],
+      [
+        ace_cv_std_swab=yes
+      ],
+      [
+        AC_LINK_IFELSE([
+        AC_LANG_PROGRAM([
+#include <stdlib.h>
+#include <unistd.h>
+        ],
+        [
+// If this compiles, we have the SVID3 version, else it's the odd,
+// non-const one.
+const char src[2] = {'a', 'b'};
+char dst[2];
+swab (src, dst, 2);
+        ])
+       ],
+       [
+         AC_DEFINE([ACE_HAS_CONST_CHAR_SWAB])
+       ],
+       [
+         AC_DEFINE([ACE_HAS_NONCONST_SWAB])
+       ])
+      ])
+    ],
+)
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
@@ -3375,6 +3502,53 @@ AC_CHECK_FUNC([poll],
         ])
      ],[AC_DEFINE([ACE_POLL_IS_BROKEN])],)
   ],)
+
+case "$host" in
+  *linux*)
+    dnl Linux Event Poll
+    ACE_CACHE_CHECK([for epoll_create],
+     [ace_cv_linux_event_poll],
+     [
+      AC_LINK_IFELSE([
+      AC_LANG_PROGRAM([
+#include <sys/epoll.h>
+#include <linux/version.h>
+#if LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45)
+#  error Disabling Linux epoll support.  Kernel used in C library is too old.
+#  error Linux kernel 2.5.45 or better is required.
+#endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45) */
+       ],
+       [
+int const ACE_NUM_DESCRIPTORS = 10;
+(void) epoll_create (ACE_NUM_DESCRIPTORS);
+       ])
+      ],
+      [
+       ace_cv_linux_event_poll=yes
+      ],
+      [
+       ace_cv_linux_event_poll=no
+      ])
+     ],
+     [
+      AC_DEFINE([ACE_HAS_EVENT_POLL])
+     ],
+     [])
+    ;;
+  *)
+    AS_IF([test "$cross_compiling" = no],
+      [
+       dnl AC_CHECK_FILE cannot be run when cross-compiling.
+
+       dnl Check if /dev/poll character device file exists and is
+       dnl readable.
+       AC_CHECK_FILE([/dev/poll],
+                     [AC_DEFINE([ACE_HAS_DEV_POLL])],
+                     [])
+      ],
+      [])
+    ;;
+esac
 
 AC_CHECK_FUNC([gethrtime],
   [
@@ -3602,7 +3776,9 @@ ACE_CHECK_LACKS_FUNCS(sbrk)
 
 ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
 
-ACE_CHECK_LACKS_FUNCS(itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
+ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
+
+ACE_CHECK_LACKS_FUNCS(umask)
 
 if test "$ac_cv_func_wcstok" = yes; then
 dnl The wcstok() function varies with standards. Check which one we have.
@@ -5613,7 +5789,7 @@ if test "$ace_cv_lib_voidptr_gettimeofday" = no; then
 ACE_CONVERT_WARNINGS_TO_ERRORS(
 [
 dnl Check for old OSF1 style gettimeofday()
-  AC_CACHE_CHECK([if gettimeofday() takes a timezone * second argument],
+  AC_CACHE_CHECK([if gettimeofday() takes a struct timezone * second argument],
     [ace_cv_lib_timezone_gettimeofday],
     [
      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -6166,6 +6342,25 @@ ACE_CACHE_CHECK([for UNIX domain sockets],
        ace_cv_feature_unix_sockets=no
       ])
    ], , [AC_DEFINE([ACE_LACKS_UNIX_DOMAIN_SOCKETS])])
+
+dnl Check for raw sockets
+ACE_CACHE_CHECK([for raw sockets],
+  [ace_cv_feature_raw_sockets],
+   [
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <netinet/in.h>
+      ]], [[
+return socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+      ]])],[
+       ace_cv_feature_raw_sockets=yes
+      ],[
+       ace_cv_feature_raw_sockets=no
+      ])
+   ], [AC_DEFINE([ACE_HAS_ICMP_SUPPORT])])
 
 dnl Check for ACE_Handle_Set optimized for select()
 ACE_CACHE_CHECK([for ACE_Handle_Set optimized for select()],
@@ -6897,6 +7092,7 @@ dnl
 
 dnl Make final substitutions and defines
 if test "$ace_u_long_long_typedef_set" = yes; then
+  AC_DEFINE_UNQUOTED([ACE_INT64_TYPEDEF], [$ACE_INT64])
   AC_DEFINE_UNQUOTED([ACE_UINT64_TYPEDEF], [$ACE_UINT64])
 fi
 
@@ -6935,6 +7131,9 @@ ACE_CACHE_CHECK([if generated ACE configuration is usable],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7008,6 +7207,9 @@ ACE_CACHE_CHECK([for ACE_IOStream support],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7015,7 +7217,7 @@ ACE_CACHE_CHECK([for ACE_IOStream support],
 #include "ace/IOStream.cpp"
         ],
         [
-         int a=0; a += 1;
+         int a = 0; a += 1;
         ],
         [
          ace_cv_feature_ace_iostream=yes
@@ -7041,6 +7243,9 @@ ACE_CACHE_CHECK([for ACE_addr::sap_any support],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7058,6 +7263,9 @@ ACE_CACHE_CHECK([for ACE_addr::sap_any support],
          dnl compilation work!
          ACE_TRY_COMPILE([-I. -I${srcdir}],
            [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7090,6 +7298,9 @@ ACE_CACHE_CHECK([if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7107,6 +7318,9 @@ ACE_CACHE_CHECK([if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector],
          dnl compilation work!
          ACE_TRY_COMPILE([-I. -I${srcdir}],
            [
+#if defined(ACE_INT64_TYPEDEF)
+  typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
 #endif /* ACE_UINT64_TYPEDEF */
@@ -7205,17 +7419,135 @@ dnl   netsvcs/servers/Makefile
 dnl   tests/Makefile
 
 AC_CONFIG_FILES([
-  ace-config
-  ace-config.1
-  aceConf.sh
   Makefile
   ace/Makefile
-  ace/RMCast/Makefile
   ace/QoS/Makefile
+  ace/RMCast/Makefile
   ace/SSL/Makefile
+  ace/TMCast/Makefile
+  ASNMP/Makefile
+  ASNMP/asnmp/Makefile
+  ASNMP/agent/Makefile
+  ASNMP/examples/Makefile
+  ASNMP/examples/get/Makefile
+  ASNMP/examples/next/Makefile
+  ASNMP/examples/set/Makefile
+  ASNMP/examples/trap/Makefile
+  ASNMP/examples/walk/Makefile
+  ASNMP/tests/Makefile
   apps/Makefile
+  apps/Gateway/Makefile
+  apps/Gateway/Gateway/Makefile
+  apps/Gateway/Peer/Makefile
+  apps/JAWS/Makefile
+  apps/JAWS/clients/Makefile
+  apps/JAWS/clients/Blobby/Makefile
+  apps/JAWS/clients/Caching/Makefile
+  apps/JAWS/server/Makefile
+  apps/JAWS3/Makefile
+  apps/JAWS3/jaws3/Makefile
+  apps/drwho/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile
+  apps/gperf/tests/Makefile
+  apps/mkcsregdb/Makefile
+  apps/soreduce/Makefile
+  bin/Makefile
+  bin/PerlACE/Makefile
+  examples/Makefile
+  examples/APG/Makefile
+  examples/APG/Active_Objects/Makefile
+  examples/APG/Config/Makefile
+  examples/APG/Containers/Makefile
+  examples/APG/Logging/Makefile
+  examples/APG/Misc_IPC/Makefile
+  examples/APG/Naming/Makefile
+  examples/APG/Proactor/Makefile
+  examples/APG/Processes/Makefile
+  examples/APG/Reactor/Makefile
+  examples/APG/Shared_Memory/Makefile
+  examples/APG/Signals/Makefile
+  examples/APG/Sockets/Makefile
+  examples/APG/Streams/Makefile
+  examples/APG/Svc_Config/Makefile
+  examples/APG/ThreadManagement/Makefile
+  examples/APG/ThreadPools/Makefile
+  examples/APG/ThreadSafety/Makefile
+  examples/APG/Threads/Makefile
+  examples/APG/Timers/Makefile
+  examples/ASX/Makefile
+  examples/ASX/CCM_App/Makefile
+  examples/ASX/Message_Queue/Makefile
+  examples/Bounded_Packet_Relay/Makefile
+  examples/C++NPv1/Makefile
+  examples/C++NPv2/Makefile
+  examples/Connection/Makefile
+  examples/Connection/blocking/Makefile
+  examples/Connection/misc/Makefile
+  examples/Connection/non_blocking/Makefile
+  examples/DLL/Makefile
+  examples/Export/Makefile
+  examples/IOStream/Makefile
+  examples/IOStream/client/Makefile
+  examples/IOStream/server/Makefile
+  examples/IPC_SAP/Makefile
+  examples/IPC_SAP/ATM_SAP/Makefile
+  examples/IPC_SAP/DEV_SAP/Makefile
+  examples/IPC_SAP/DEV_SAP/reader/Makefile
+  examples/IPC_SAP/DEV_SAP/writer/Makefile
+  examples/IPC_SAP/FIFO_SAP/Makefile
+  examples/IPC_SAP/FILE_SAP/Makefile
+  examples/IPC_SAP/SOCK_SAP/Makefile
+  examples/IPC_SAP/SPIPE_SAP/Makefile
+  examples/IPC_SAP/SSL_SAP/Makefile
+  examples/IPC_SAP/TLI_SAP/Makefile
+  examples/IPC_SAP/UPIPE_SAP/Makefile
+  examples/Log_Msg/Makefile
+  examples/Logger/Makefile
+  examples/Logger/Acceptor-server/Makefile
+  examples/Logger/client/Makefile
+  examples/Logger/simple-server/Makefile
+  examples/Mem_Map/Makefile
+  examples/Mem_Map/IO-tests/Makefile
+  examples/Mem_Map/file-reverse/Makefile
+  examples/Misc/Makefile
+  examples/NT_Service/Makefile
+  examples/Naming/Makefile
+  examples/OS/Makefile
+  examples/OS/Process/Makefile
+  examples/QOS/Makefile
+  examples/QOS/Change_Receiver_FlowSpec/Makefile
+  examples/QOS/Change_Sender_TSpec/Makefile
+  examples/QOS/Diffserv/Makefile
+  examples/QOS/Simple/Makefile
+  examples/RMCast/Makefile
+  examples/RMCast/Send_Msg/Makefile
+  examples/Reactor/Makefile
+  examples/Reactor/Dgram/Makefile
+  examples/Reactor/FIFO/Makefile
+  examples/Reactor/Misc/Makefile
+  examples/Reactor/Multicast/Makefile
+  examples/Reactor/Ntalker/Makefile
+  examples/Reactor/Proactor/Makefile
+  examples/Reactor/WFMO_Reactor/Makefile
+  examples/Registry/Makefile
+  examples/Service_Configurator/Makefile
+  examples/Service_Configurator/IPC-tests/Makefile
+  examples/Service_Configurator/IPC-tests/client/Makefile
+  examples/Service_Configurator/IPC-tests/server/Makefile
+  examples/Service_Configurator/Misc/Makefile
+  examples/Shared_Malloc/Makefile
+  examples/Shared_Memory/Makefile
+  examples/Smart_Pointers/Makefile
+  examples/Synch/Makefile
+  examples/System_V_IPC/Makefile
+  examples/System_V_IPC/SV_Message_Queues/Makefile
+  examples/System_V_IPC/SV_Semaphores/Makefile
+  examples/TMCast/Makefile
+  examples/TMCast/Member/Makefile
+  examples/Threads/Makefile
+  examples/Timer_Queue/Makefile
+  examples/Web_Crawler/Makefile
   netsvcs/Makefile
   netsvcs/lib/Makefile
   netsvcs/clients/Makefile
@@ -7223,21 +7555,67 @@ AC_CONFIG_FILES([
   netsvcs/clients/Naming/Makefile
   netsvcs/clients/Naming/Client/Makefile
   netsvcs/clients/Naming/Dump_Restore/Makefile
-  netsvcs/clients/Tokens/Makefile
-  netsvcs/clients/Tokens/collection/Makefile
-  netsvcs/clients/Tokens/deadlock/Makefile
-  netsvcs/clients/Tokens/invariant/Makefile
-  netsvcs/clients/Tokens/manual/Makefile
-  netsvcs/clients/Tokens/mutex/Makefile
-  netsvcs/clients/Tokens/rw_lock/Makefile
   netsvcs/servers/Makefile
+  performance-tests/Makefile
+  performance-tests/Misc/Makefile
+  performance-tests/SCTP/Makefile
+  performance-tests/Server_Concurrency/Makefile
+  performance-tests/Server_Concurrency/Leader_Follower/Makefile
+  performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
+  performance-tests/Synch-Benchmarks/Makefile
+  performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
+  performance-tests/Synch-Benchmarks/Base_Test/Makefile
+  performance-tests/Synch-Benchmarks/Perf_Test/Makefile
+  performance-tests/TCP/Makefile
+  performance-tests/UDP/Makefile
+  protocols/Makefile
+  protocols/ace/Makefile
+  protocols/ace/HTBP/Makefile
+  protocols/ace/RMCast/Makefile
+  protocols/ace/TMCast/Makefile
   tests/Makefile
+  tests/HTBP/Makefile
+  tests/HTBP/Reactor_Tests/Makefile
+  tests/HTBP/Send_Large_Msg/Makefile
+  tests/HTBP/Send_Recv_Tests/Makefile
+  tests/HTBP/ping/Makefile
   tests/SSL/Makefile
+  websvcs/Makefile
+  websvcs/lib/Makefile
+  websvcs/tests/Makefile
 ])
 
 dnl Configure subdirectories if they are present.
+if test -d $srcdir/ACEXML; then
+  AC_CONFIG_FILES([
+    ACEXML/Makefile
+    ACEXML/common/Makefile
+    ACEXML/parser/Makefile
+    ACEXML/parser/parser/Makefile
+    ACEXML/apps/Makefile
+    ACEXML/apps/svcconf/Makefile
+    ACEXML/examples/Makefile
+    ACEXML/examples/SAXPrint/Makefile
+    ACEXML/tests/Makefile
+  ])
+fi
+
+if test -d $srcdir/Kokyu; then
+  AC_CONFIG_FILES([
+    Kokyu/Makefile
+    Kokyu/tests/Makefile
+    Kokyu/tests/DSRT_MIF/Makefile
+    Kokyu/tests/EDF/Makefile
+    Kokyu/tests/FIFO/Makefile
+  ])
+  AC_SUBST([KOKYU],[Kokyu])
+fi
+AM_CONDITIONAL([BUILD_KOKYU],
+               [test -d $srcdir/Kokyu])
+
 if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
   AC_CONFIG_SUBDIRS([TAO])
+  AC_SUBST([TAO],[TAO])
 fi
 AM_CONDITIONAL([BUILD_TAO],
                [test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes])

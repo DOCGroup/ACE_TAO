@@ -94,10 +94,9 @@ be_home::be_home (UTL_ScopedName *n,
   be_component *bt =
      be_component::narrow_from_decl (managed_component);
 
-  bt->seen_in_operation ();
+  bt->seen_in_operation (I_TRUE);
 
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.object_arg_seen_);
+  idl_global->object_arg_seen_ = true;
 }
 
 be_home::~be_home (void)

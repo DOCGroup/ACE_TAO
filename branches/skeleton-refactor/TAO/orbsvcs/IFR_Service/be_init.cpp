@@ -31,7 +31,7 @@ BE_save_orb_args (int &argc, char *argv[])
 
           // If the arg ends with either .idl or .pidl, we're done.
 
-          int len = ACE_static_cast (int, tmp.length ());
+          int len = static_cast<int> (tmp.length ());
           int pos = tmp.find (".idl");
 
           if (len - pos == 4)
@@ -62,7 +62,7 @@ BE_save_orb_args (int &argc, char *argv[])
   return 0;
 }
 
-// ac must be passed in by reference, because it is also
+// 'ac' must be passed in by reference, because it is also
 // passed by reference to ORB_init, which may modify it.
 // After BE_ifr_init returns to main() the modified argc
 // must be passed to DRV_parse_args().
@@ -108,6 +108,8 @@ BE_init (int &argc, char *argv[])
     {
       return status;
     }
+    
+  idl_global->using_ifr_backend (true);
     
   return BE_ifr_orb_init (argc, argv);
 }

@@ -1074,7 +1074,7 @@ ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::advance (void)
   if (this->iterated_items_ < this->s_.cur_size_)
     {
       for (++this->next_;
-           ACE_static_cast(size_t, this->next_) < this->s_.max_size_;
+           static_cast<size_t> (this->next_) < this->s_.max_size_;
            ++this->next_)
       if (this->s_.search_structure_[this->next_].is_free_ == 0)
         {
@@ -1111,7 +1111,7 @@ ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::next_i (T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::next_i");
 
-  if (ACE_static_cast(size_t, this->next_) < this->s_.max_size_)
+  if (static_cast<size_t> (this->next_) < this->s_.max_size_)
     do
       {
         if (this->s_.search_structure_[this->next_].is_free_ == 0)

@@ -17,6 +17,8 @@
 
 #include "FT_FaultEventDescriptor.h"
 
+#include "ace/SString.h"
+
 ACE_RCSID (FT_FaultEventDescriptor,
            FT_FaultEventDescriptor,
            "$Id$")
@@ -88,4 +90,3 @@ void TAO::FT_FaultEventDescriptor::dump ()
     ));
   }
 }
-

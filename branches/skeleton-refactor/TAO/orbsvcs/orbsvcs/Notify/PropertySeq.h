@@ -48,7 +48,15 @@ public:
   int find (const char* name, CosNotification::PropertyValue& value) const;
 
   /// Return -1 on error.
-  int populate (CosNotification::PropertySeq_var& prop_seq);
+  int populate (CosNotification::PropertySeq_var& prop_seq) const;
+
+  /// return the number of properties available as a sequence
+  size_t size() const;
+
+protected:
+  /// Add the value. Used by subclasses to initialize the property map from their
+  /// member variables.
+  void add(const ACE_CString& name, const CORBA::Any& val);
 
 protected:
   /// Property Map.

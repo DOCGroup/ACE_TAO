@@ -47,7 +47,7 @@ public:
     ACEXML_INVALID_ARGS = -3,
     ACEXML_IS_SURROGATE = -4,
     ACEXML_NON_UNICODE = -5
-  } STATUS;
+  } ACEXML_STATUS;
 
 
   // The following functions translate a unicode characters
@@ -166,10 +166,6 @@ public:
                            ACEXML_UTF8 *dst,
                            size_t len);
 };
-
-#if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/Transcode.i"
-#endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"
 

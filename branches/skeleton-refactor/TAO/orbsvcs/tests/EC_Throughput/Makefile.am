@@ -5,7 +5,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-## Makefile.ECT_Consumer.am 
+## Makefile.ECT_Consumer.am
 
 noinst_PROGRAMS = ECT_Consumer
 
@@ -23,8 +23,7 @@ ECT_Consumer_SOURCES = \
   ECT_Driver.cpp \
   ECT_Consumer.h \
   ECT_Consumer_Driver.h \
-  ECT_Driver.h \
-  ECT_Driver.i
+  ECT_Driver.h
 
 ECT_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTOLDEvent.la \
@@ -41,7 +40,7 @@ ECT_Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.ECT_Supplier.am 
+## Makefile.ECT_Supplier.am
 
 noinst_PROGRAMS += ECT_Supplier
 
@@ -77,7 +76,7 @@ ECT_Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.ECT_Throughput.am 
+## Makefile.ECT_Throughput.am
 
 noinst_PROGRAMS += ECT_Throughput
 

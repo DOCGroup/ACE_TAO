@@ -27,12 +27,12 @@ TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
 TAO/tests/Bug_1269_Regression/run_test.pl: !Win32 !MINIMUM
 TAO/tests/Bug_1495_Regression/run_test.pl: !MINIMUM !ST !DISABLE_INTERCEPTORS
-TAO/tests/Bug_1568_Regression/run_test.pl
-TAO/tests/Bug_1670_Regression/run_test.pl
+TAO/tests/Bug_1568_Regression/run_test.pl: !NO_MESSAGING
+TAO/tests/Bug_1670_Regression/run_test.pl: !NO_MESSAGING
 TAO/tests/Bug_1270_Regression/run_test.pl: !Win32 !MINIMUM
 TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !ST
 TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST !Win32
-TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32
+TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32 !IRIX
 TAO/tests/Bug_1482_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/Bug_1551_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
@@ -114,7 +114,7 @@ TAO/tests/Connection_Timeout/run_test.pl: !MINIMUM
 TAO/tests/MProfile_Connection_Timeout/run_test.pl: !MINIMUM
 TAO/tests/Codec/run_test.pl
 TAO/tests/Bug_1693_Test/run_test.pl
-TAO/tests/IDL_Test/run_test.pl
+TAO/tests/IDL_Test/run_test.pl: !NO_MESSAGING
 TAO/tests/ORB_init/run_test.pl
 TAO/tests/ORB_destroy/run_test.pl
 TAO/tests/ORB_shutdown/run_test.pl
@@ -161,3 +161,8 @@ TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/tests/UNKNOWN_Exception/run_test.pl: Exceptions
 TAO/tests/Native_Exceptions/run_test.pl: Exceptions
 TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !ST
+TAO/tests/Sequence_Unit_Tests/run_test.pl
+TAO/tests/Typedef_String_Array/run_test.pl
+TAO/tests/Bug_1535_Regression/run_test.pl: !MINIMUM
+TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl
+TAO/tests/CodeSets/simple/run_test.pl : !GIOP10 !STATIC

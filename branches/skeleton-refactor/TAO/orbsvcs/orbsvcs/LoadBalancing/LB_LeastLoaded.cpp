@@ -6,11 +6,15 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
+
 #include "ace/Null_Mutex.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_LeastLoaded,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "LB_LeastLoaded.inl"
@@ -438,8 +442,7 @@ TAO_LB_LeastLoaded::get_location (
                       // n == 0:  Use previously selected location.
                       // n == 1:  Use current location.
                       const CORBA::ULong n =
-                        ACE_static_cast (CORBA::ULong,
-                                         NUM_MEMBERS * ACE_OS::rand ()
+                        static_cast<CORBA::ULong> (NUM_MEMBERS * ACE_OS::rand ()
                                          / (RAND_MAX + 1.0));
 
                       ACE_ASSERT (n == 0 || n == 1);

@@ -4,7 +4,6 @@
 #ifndef JAWS_ASYNCH_IO_HELPERS_H
 #define JAWS_ASYNCH_IO_HELPERS_H
 
-#include "ace/OS.h"
 #include "ace/Asynch_IO.h"
 #include "ace/Singleton.h"
 

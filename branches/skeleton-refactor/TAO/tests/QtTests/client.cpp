@@ -2,27 +2,17 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "tao/QtResource_Loader.h"
 
 ACE_RCSID(QtTests, client, "$Id$")
 
-#if !defined (ACE_HAS_QT)
-
-int
-main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "Qt not supported on this platform\n"));
-  return 0;
-}
-
-#else
 #include "client.h"
 
 int
 main (int argc, char *argv[])
 {
   QApplication app (argc, argv);
-  TAO_QtResource_Factory::set_context (&app);
+  TAO::QtResource_Loader qt_resources (&app);
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -167,4 +157,3 @@ Client::shutdown_call (void)
   this->server_->shutdown ();
 }
 
-#endif /* ACE_HAS_QT*/

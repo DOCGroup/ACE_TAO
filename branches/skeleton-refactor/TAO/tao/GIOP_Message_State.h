@@ -41,10 +41,14 @@ class TAO_Export TAO_GIOP_Message_State
 public:
 
   /// Ctor
-  TAO_GIOP_Message_State (TAO_ORB_Core *orb_core,
-                          TAO_GIOP_Message_Base *base);
+  TAO_GIOP_Message_State (void);
 
   /// Parse the message header.
+  ///
+  /// \return -1 There was some error parsing the GIOP header
+  /// \return 0  The GIOP header was parsed correctly
+  /// \return 1  There was not enough data in the message block to
+  ///            parse the header
   int parse_message_header (ACE_Message_Block &incoming);
 
   /// Return the message size
@@ -85,18 +89,14 @@ private:
 
   /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
   /// stream.
-  int parse_fragment_header (char *buf,
+  int parse_fragment_header (const char *buf,
                              size_t length);
 
   /// Read the unsigned long from the buffer. The <buf> should just
   /// point to the next 4 bytes data that represent the ULong
-  CORBA::ULong read_ulong (char *buf);
+  CORBA::ULong read_ulong (const char *buf);
 
 private:
-
-  /// The GIOP base class..
-  TAO_GIOP_Message_Base *base_;
-
   // GIOP version information..
   TAO_GIOP_Message_Version giop_version_;
 
@@ -113,6 +113,9 @@ private:
   CORBA::ULong request_id_;
 
   /// (Requests and Replys)
+  /// A value of zero indicates that this message does not have any
+  /// fragments.  A value of non-zero indicates that it does have
+  /// fragments.
   CORBA::Octet more_fragments_;
 
   /// Missing data

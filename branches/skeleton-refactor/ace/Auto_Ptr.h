@@ -86,6 +86,7 @@ class auto_ptr : public ACE_Auto_Basic_Ptr <X>
 public:
   // = Initialization and termination methods
   explicit auto_ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
+  auto_ptr (auto_ptr<X> &ap) : ACE_Auto_Basic_Ptr<X> (ap.release()) {}
 
   X *operator-> () const;
 };

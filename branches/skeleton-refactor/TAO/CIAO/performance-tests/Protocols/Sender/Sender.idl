@@ -24,7 +24,7 @@ module Protocols
                 in unsigned long number_of_connection_attempts,
                 in boolean enable_diffserv_code_points,
                 in short priority,
-                in Test_Type test_type);
+                in Test_Type testtype);
 
     void shutdown ();
   };

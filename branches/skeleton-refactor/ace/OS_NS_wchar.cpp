@@ -11,6 +11,7 @@ ACE_RCSID(ace, OS_NS_wchar, "$Id$")
 
 #if defined (ACE_HAS_WCHAR)
 #  include "ace/OS_NS_ctype.h"
+#  include "ace/OS_NS_string.h"
 #endif /* ACE_HAS_WCHAR */
 
 // The following wcs*_emulation methods were created based on BSD code:
@@ -68,8 +69,8 @@ wchar_t *
 ACE_OS::wcschr_emulation (const wchar_t *string, wint_t c)
 {
   for (;*string ; ++string)
-    if (*string == ACE_static_cast (wchar_t, c))
-      return ACE_const_cast (wchar_t *, string);
+    if (*string == static_cast<wchar_t> (c))
+      return const_cast<wchar_t *> (string);
 
   return 0;
 }
@@ -290,7 +291,7 @@ ACE_OS::wcspbrk_emulation (const wchar_t *string,
     {
       for (scanp = charset; (sc = *scanp++) != 0;)
         if (sc == c)
-          return ACE_const_cast (wchar_t *, string - 1);
+          return const_cast<wchar_t *> (string - 1);
     }
 
   return 0;
@@ -303,7 +304,7 @@ ACE_OS::wcsrchr_emulation (const wchar_t *s, wint_t c)
 {
   const wchar_t *p = s + ACE_OS::strlen (s);
 
-  while (*p != ACE_static_cast (wchar_t, c))
+  while (*p != static_cast<wchar_t> (c))
     if (p == s)
       return 0;
     else
@@ -317,7 +318,7 @@ ACE_OS::wcsrchr_emulation (wchar_t *s, wint_t c)
 {
   wchar_t *p = s + ACE_OS::strlen (s);
 
-  while (*p != ACE_static_cast(wchar_t, c))
+  while (*p != static_cast<wchar_t> (c))
     if (p == s)
       return 0;
     else
@@ -356,7 +357,7 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
 
   if ((c = *charset++) != 0)
     {
-      len = strlen(charset);
+      len = ACE_OS::strlen (charset);
       do
         {
           do
@@ -364,11 +365,11 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
               if ((sc = *string++) == 0)
                 return 0;
             } while (sc != c);
-        } while (strncmp(string, charset, len) != 0);
+        } while (ACE_OS::strncmp (string, charset, len) != 0);
       string--;
     }
 
-  return ACE_const_cast (wchar_t *, string);
+  return const_cast<wchar_t *> (string);
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSTR */
 

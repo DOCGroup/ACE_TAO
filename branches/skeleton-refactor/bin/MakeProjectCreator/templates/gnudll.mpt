@@ -2,3 +2,5 @@
 // $Id$
 
 conditional_include "common"
+
+targetoutdir =

@@ -32,6 +32,9 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming, minimum_cor
       FtRtEvent/Utils
     }
   }
+
+  Template_Files {
+  }
 }
 
 project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
@@ -48,6 +51,12 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
       FtRtEvent/ClientORB
     }
   }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
 }
 
 project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, utils, corba_messaging {
@@ -56,6 +65,10 @@ project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, utils, corba_messagi
   tagchecks    = FTRT_EventChannel
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
   after       += FTORB_Utils
+
+  // We don't want to export symbols from PortableGroup_Simple_DSC.cpp
+  // from this library or FTORB_Utils.
+  macros += TAO_PORTABLEGROUP_SIMPLE_HAS_DLL=0
 
   IDL_Files {
   }

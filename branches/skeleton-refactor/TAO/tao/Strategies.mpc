@@ -1,4 +1,5 @@
 //$Id$
+
 project : taolib, core {
   sharedname   = TAO_Strategies
   dynamicflags = TAO_STRATEGIES_BUILD_DLL
@@ -25,5 +26,9 @@ project : taolib, core {
 
   PIDL_Files {
     Strategies
+  }
+
+  Pkgconfig_Files {
+    Strategies/TAO_Strategies.pc.in
   }
 }

@@ -60,7 +60,8 @@ be_interface::be_interface (void)
     in_mult_inheritance_ (-1),
     strategy_ (0),
     original_interface_ (0),
-    has_mixed_parentage_ (-1)
+    has_mixed_parentage_ (-1),
+    session_component_child_ (-1)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
@@ -95,7 +96,8 @@ be_interface::be_interface (UTL_ScopedName *n,
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
-    has_mixed_parentage_ (-1)
+    has_mixed_parentage_ (-1),
+    session_component_child_ (-1)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
@@ -108,34 +110,29 @@ be_interface::be_interface (UTL_ScopedName *n,
   if (this->is_defined ())
     {
       // Set the flag that says we have a interface in this IDL file.
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.interface_seen_);
+      idl_global->interface_seen_ = true;
 
       if (abstract || this->has_mixed_parentage ())
         {
           // Set the flag for abstract interface seen in this IDL file.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.abstract_iface_seen_);
+          idl_global->abstract_iface_seen_ = true;
         }
 
       if (local)
         {
           // Set the flag for local interface seen in this IDL file.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.local_iface_seen_);
+          idl_global->local_iface_seen_ = true;
         }
       else
         {
           // Set the flag for non-local interface seen in this IDL file.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.non_local_iface_seen_);
+          idl_global->non_local_iface_seen_ = true;
         }
     }
   else
     {
       // Forward declared non-defined interface. Still gets a _var decl.
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.fwd_iface_seen_);
+      idl_global->fwd_iface_seen_ = true;
     }
 }
 
@@ -706,9 +703,10 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
       return 0;
     }
 
-  // A parent that's local will already have its operations declared
-  // as pure virtual.
-  if (base_interface->is_local ())
+  // If the parent is local, it will already have its operations declared
+  // as pure virtual, and if it's abstract, its operations will already
+  // be generated as pure virtual for the derived local interface.
+  if (base_interface->is_local () || base_interface->is_abstract ())
     {
       return 0;
     }
@@ -716,8 +714,8 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
   be_decl *d = 0;
 
   for (UTL_ScopeActiveIterator si (base_interface, UTL_Scope::IK_decls);
-        !si.is_done ();
-        si.next ())
+       !si.is_done ();
+       si.next ())
     {
       d = be_decl::narrow_from_decl (si.item ());
 
@@ -1891,76 +1889,12 @@ be_interface::is_a_helper (be_interface * /*derived*/,
 {
   // Emit the comparison code.
   *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "(char *)value," << be_nl
+      << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
       << ") ||" << be_uidt_nl;
 
   return 0;
 }
-
-int
-be_interface::queryinterface_helper (be_interface *derived,
-                                     be_interface *ancestor,
-                                     TAO_OutStream *os)
-{
-  // Emit the comparison code.
-  *os << "(type == reinterpret_cast<"
-      << be_idt << be_idt <<be_idt << be_idt << be_idt << be_idt_nl
-      << "ptrdiff_t> (" << be_nl;
-
-  be_decl *scope =
-    be_scope::narrow_from_scope (ancestor->defined_in ())->decl ();
-
-  be_decl *derived_scope =
-    be_scope::narrow_from_scope (derived->defined_in ())->decl ();
-
-  // If the ancestor is in the root scope, we can use the local name.
-  if (scope->node_type () == AST_Decl::NT_root)
-    {
-      *os << "&" << ancestor->local_name () << "::_tao_class_id)"
-          << be_uidt_nl;
-    }
-  // Or, if it's defined in a scope different than the child's, the
-  // ACE_NESTED_CLASS macro won't work - we use the scoped name.
-  else if (scope != derived_scope)
-    {
-      *os << "&::" << ancestor->name () << "::_tao_class_id)"
-          << be_uidt_nl;
-    }
-  // The ACE_NESTED_CLASS macro is necessary in this case.
-  else
-    {
-      *os << "&ACE_NESTED_CLASS (::" << scope->name () << ", "
-          << ancestor->local_name () << ")" << "::_tao_class_id)"
-          << be_uidt_nl;
-    }
-
-  *os << ")" << be_uidt << be_uidt << be_uidt << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  if (derived == ancestor)
-    {
-      *os << "retv = reinterpret_cast<void*> (this);" << be_uidt_nl;
-    }
-  else
-    {
-      *os << "retv =" << be_idt_nl
-          << "reinterpret_cast<" << be_idt << be_idt_nl
-          << "void *> (" << be_nl
-          << "static_cast<" << be_idt << be_idt_nl
-          << ancestor->full_name () << "_ptr> (" << be_nl
-          << "this" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
-          << ");" << be_uidt << be_uidt << be_uidt_nl;
-    }
-
-  *os << "}" << be_uidt_nl
-      << "else if ";
-
-  return 0;
-}
-
-
 
 int
 be_interface::downcast_helper (be_interface * /* derived */,
@@ -2417,8 +2351,15 @@ be_interface::copy_ctor_helper (be_interface *derived,
     }
 
   *os << "," << be_idt_nl;
+  
+  idl_bool is_rh_base =
+    (ACE_OS::strcmp (base->flat_name (), "Messaging_ReplyHandler") == 0);
 
-  if (base->is_nested ())
+  if (is_rh_base)
+    {
+      *os << "ACE_NESTED_CLASS (POA_Messaging, ReplyHandler) (rhs)";
+    }
+  else if (base->is_nested ())
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
@@ -2594,6 +2535,55 @@ be_interface::has_mixed_parentage (void)
     }
 
   return this->has_mixed_parentage_;
+}
+
+int
+be_interface::session_component_child (void)
+{
+  if (this->session_component_child_ == -1)
+    {
+      // We are looking only for executor interfaces.
+      if (!this->is_local_)
+        {
+          this->session_component_child_ = 0;
+          return this->session_component_child_;
+        }
+        
+      Identifier tail_id ("SessionComponent");
+      UTL_ScopedName tail (&tail_id, 0);
+      Identifier head_id ("Components");
+      UTL_ScopedName sn (&head_id, &tail);
+     
+      AST_Decl *session_component =
+        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn, 
+                                                                    I_TRUE);
+        
+      tail_id.destroy ();
+      head_id.destroy ();
+        
+      // If Components::SessionComponent is not in the AST, we are
+      // barking up the wrong tree.  
+      if (session_component == 0)
+        {
+          this->session_component_child_ = 0;
+          return this->session_component_child_;
+        }
+        
+      for (long i = 0; i < this->pd_n_inherits; ++i)
+        {
+          AST_Decl *tmp = this->pd_inherits[i];
+          
+          if (tmp == session_component)
+            {
+              this->session_component_child_ = 1;
+              return this->session_component_child_;
+            }
+        }
+        
+      this->session_component_child_ = 0;
+    }
+  
+  return this->session_component_child_;
 }
 
 const char *

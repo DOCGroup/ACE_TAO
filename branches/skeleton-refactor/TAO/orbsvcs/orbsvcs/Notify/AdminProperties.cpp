@@ -6,8 +6,8 @@
 #include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           TAO_Notify_AdminProperties, 
+ACE_RCSID (Notify,
+           TAO_Notify_AdminProperties,
            "$Id$")
 
 #include "orbsvcs/CosNotificationC.h"
@@ -41,6 +41,38 @@ TAO_Notify_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
   // This will happen when number of successfull inits != numbers of items bound in map_.
 
   return 0;
+}
+
+void
+TAO_Notify_AdminProperties::init ()
+{
+  // This method should only be called once, (during topo load)
+  ACE_ASSERT(this->size() == 0);
+
+  if (this->max_global_queue_length_.is_valid())
+  {
+    CORBA::Any a;
+    a <<= this->max_global_queue_length_.value();
+    this->add(this->max_global_queue_length_.name(), a);
+  }
+  if (this->max_consumers_.is_valid())
+  {
+    CORBA::Any a;
+    a <<= this->max_consumers_.value();
+    this->add(this->max_consumers_.name(), a);
+  }
+  if (this->max_suppliers_.is_valid())
+  {
+    CORBA::Any a;
+    a <<= this->max_suppliers_.value();
+    this->add(this->max_suppliers_.name(), a);
+  }
+  if (this->reject_new_events_.is_valid())
+  {
+    CORBA::Any a;
+    a <<= CORBA::Any::from_boolean(this->reject_new_events_.value());
+    this->add(this->reject_new_events_.name(), a);
+  }
 }
 
 CORBA::Boolean

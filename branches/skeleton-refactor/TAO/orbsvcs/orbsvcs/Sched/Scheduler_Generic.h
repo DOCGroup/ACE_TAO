@@ -130,13 +130,7 @@ private:
     const Scheduler_Generic &))
 };
 
-
-#if defined (__ACE_INLINE__)
-#include "Scheduler_Generic.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* SCHEDULER_INTERNAL_H */
-
 
 // EOF

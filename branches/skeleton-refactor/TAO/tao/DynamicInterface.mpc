@@ -19,10 +19,14 @@ project : taolib, core, messaging, minimum_corba {
     DynamicInterface
   }
 
-  Resource_files {
+  Resource_Files {
     DynamicInterface
   }
 
   PIDL_Files {
+  }
+
+  Pkgconfig_Files {
+    DynamicInterface/TAO_DynamicInterface.pc.in
   }
 }

@@ -19,7 +19,7 @@ SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),
     undefs_(undef_wrapper_.imports()),
     libs_ (0),
-    max_libs_ (30),
+    max_libs_ (128),
     num_libs_(0)
 {
   libs_ = new Library*[max_libs_];

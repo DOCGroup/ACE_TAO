@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_ENDPOINT_H
 #define TAO_IIOP_ENDPOINT_H
 
@@ -25,6 +24,7 @@
 
 #include "tao/Endpoint.h"
 #include "tao/CORBA_String.h"
+#include "tao/IIOP_EndpointsC.h"
 
 class TAO_IIOP_Connection_Handler;
 
@@ -64,6 +64,8 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
+
+
   /// Destructor.
   ~TAO_IIOP_Endpoint (void);
 
@@ -71,6 +73,7 @@ public:
   // Endpoint.h for their documentation.
 
   virtual TAO_Endpoint *next (void);
+
   virtual int addr_to_string (char *buffer, size_t length);
 
   /// Makes a copy of @c this
@@ -102,6 +105,12 @@ public:
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
 
+  /// Do we have a preferred local network for the target?
+  bool is_preferred_network (void) const;
+
+  /// Return the preferred network if any.
+  const char *preferred_network (void) const;
+
 private:
 
   /// Helper method for setting INET_Addr.
@@ -111,6 +120,18 @@ private:
   /// Helper method for object_addr () call.
   void object_addr_i (void) const;
 
+  /// Generate preferred interfaces from the options passed in by the
+  /// user.
+  CORBA::ULong preferred_interfaces (TAO_ORB_Core *oc);
+
+  /// Canonical copy constructor
+  /**
+   * In private section to prevent clients from invoking this
+   * accidentally. Clients should only use duplicate () to make a depp
+   * copy
+   */
+  TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &);
+
 private:
 
   /// String representing the host name.
@@ -119,17 +140,22 @@ private:
   /// TCP port number.
   CORBA::UShort port_;
 
-  /// Cached instance of ACE_INET_Addr for use in making
-  /// invocations, etc.
-  mutable ACE_INET_Addr object_addr_;
+  /// Is this endpoint created encodable as part of the IOR?
+  bool is_encodable_;
 
   /// Flag to indicate if the address has been resolved and set.
   mutable bool object_addr_set_;
 
+  /// Cached instance of ACE_INET_Addr for use in making
+  /// invocations, etc.
+  mutable ACE_INET_Addr object_addr_;
+
+  /// Preferred path for this endpoint.
+  TAO::IIOP_Endpoint_Info preferred_path_;
+
   /// IIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
-
 };
 
 

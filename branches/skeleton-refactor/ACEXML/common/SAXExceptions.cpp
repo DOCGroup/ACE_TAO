@@ -51,7 +51,7 @@ ACEXML_SAXException*
 ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
 {
   if (ex->is_a (ACE_TEXT ("ACEXML_SAXException")))
-    return ACE_dynamic_cast (ACEXML_SAXException*, ex);
+    return dynamic_cast<ACEXML_SAXException*> (ex);
   return 0;
 }
 
@@ -106,7 +106,7 @@ ACEXML_SAXNotSupportedException*
 ACEXML_SAXNotSupportedException::_downcast (ACEXML_Exception* ex)
 {
   if (ex->is_a (ACE_TEXT ("ACEXML_SAXNotSupportedException")))
-    return ACE_dynamic_cast (ACEXML_SAXNotSupportedException*, ex);
+    return dynamic_cast<ACEXML_SAXNotSupportedException*> (ex);
   return 0;
 }
 
@@ -170,7 +170,7 @@ ACEXML_SAXNotRecognizedException*
 ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
 {
   if (ex->is_a (ACE_TEXT ("ACEXML_SAXNotRecognizedException")))
-    return ACE_dynamic_cast (ACEXML_SAXNotRecognizedException*, ex);
+    return dynamic_cast<ACEXML_SAXNotRecognizedException*> (ex);
   return 0;
 }
 
@@ -228,7 +228,7 @@ ACEXML_SAXParseException*
 ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
 {
   if (ex->is_a (ACE_TEXT ("ACEXML_SAXParseException")))
-    return ACE_dynamic_cast (ACEXML_SAXParseException*, ex);
+    return dynamic_cast<ACEXML_SAXParseException*> (ex);
   return 0;
 }
 

@@ -142,13 +142,6 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_NonBlocking_Connect_Handler<Svc_Handler>;
 template class ACE_Auto_Basic_Array_Ptr<pid_t>;
 
-#if defined (__BORLANDC__)
-// Borland C++ doesn't link with these instantiations in the ACE library.
-template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
-#endif /* defined (__BORLANDC__) */
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate CACHED_CONNECT_STRATEGY
@@ -193,13 +186,6 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<Svc_Handler>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
-
-#if defined (__BORLANDC__)
-// Borland C++ doesn't link with these instantiations in the ACE library.
-#pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
-#endif /* defined (__BORLANDC__) */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -510,8 +496,7 @@ client_connections (void *arg)
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *,
-                                                     arg);
+  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
@@ -718,7 +703,7 @@ spawn_threads (ACCEPTOR *acceptor,
 {
   int status = 0;
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
   ACE_NEW_RETURN (server_name,
@@ -750,18 +735,18 @@ spawn_threads (ACCEPTOR *acceptor,
     }
 
   ACE_TCHAR *client_name = ACE_TEXT ("Conn client");
-#endif /* VXWORKS */
+#endif /* VXWORKS && !ACE_HAS_PTHREADS*/
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
        server_name,
 #endif /* VXWORKS */
        n_servers,
        (ACE_THR_FUNC) server,
        (void *) acceptor,
        THR_NEW_LWP
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
        , ACE_DEFAULT_THREAD_PRIORITY
        , -1
 #if 0 /* Don't support setting of stack, because it doesn't seem to work. */
@@ -781,7 +766,7 @@ spawn_threads (ACCEPTOR *acceptor,
       ((ACE_THR_FUNC) client,
        (void *) server_addr,
        THR_NEW_LWP
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
        , &client_name
 #endif /* VXWORKS */
        ) == -1)
@@ -806,7 +791,7 @@ spawn_threads (ACCEPTOR *acceptor,
       status = -1;
     }
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   for (i = 0; i < n_servers; ++i)
     {
       delete [] server_name[i];

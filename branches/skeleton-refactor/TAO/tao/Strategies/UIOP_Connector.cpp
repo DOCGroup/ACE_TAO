@@ -68,9 +68,6 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
   if (this->create_connect_strategy () == -1)
     return -1;
 
-  if (this->init_uiop_properties () != 0)
-    return -1;
-
   // Our connect creation strategy
   TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
@@ -78,7 +75,6 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_UIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
-                       &(this->uiop_properties_),
                        this->lite_flag_),
                   -1);
 
@@ -105,7 +101,37 @@ TAO_UIOP_Connector::close (void)
   return this->base_connector_.close ();
 }
 
+TAO_Profile *
+TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
+                                   ACE_ENV_ARG_DECL)
+{
+  if (this->check_prefix (str) != 0)
+    return 0;
 
+  const char *separator = ACE_OS::strchr (str,'|');
+  if (separator == 0)
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan error: "
+                    "explicit terminating charactor '|' is missing from <%s>",
+                    str));
+      return 0;
+    }
+  if (*(separator+1) != ',' && *(separator+1) != '/')
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan warning: "
+                    "terminating charactor '|' should be followed by a ','"
+                    "or a '/' in <%s>",
+                    str));
+    }
+  len = (separator - str) + 1;
+  return this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+               
 int
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
@@ -373,51 +399,6 @@ char
 TAO_UIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_UIOP_Profile::object_key_delimiter_;
-}
-
-int
-TAO_UIOP_Connector::init_uiop_properties (void)
-{
-  // Connector protocol properties are obtained from ORB-level
-  // RTCORBA::ClientProtocolProperties policy override.
-  // If the override doesn't exist or doesn't contain the
-  // properties, we use ORB default.
-  //
-  // Currently, we do not use Object-level and Current-level policy
-  // overrides for protocol configuration because connection
-  // lookup and caching are not done based on protocol
-  // properties.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  int no_delay = 0;
-  int enable_network_priority = 0;
-
-  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (tph != 0)
-    {
-      static const char protocol[] = "uiop";
-      const char *protocol_type = protocol;
-      const int hook_result =
-        tph->call_client_protocols_hook (send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         enable_network_priority,
-                                         protocol_type);
-
-      if(hook_result == -1)
-        return -1;
-    }
-
-    // Extract and locally store properties of interest.
-    this->uiop_properties_.send_buffer_size = send_buffer_size;
-    this->uiop_properties_.recv_buffer_size = recv_buffer_size;
-
-  return 0;
 }
 
 TAO_UIOP_Endpoint *

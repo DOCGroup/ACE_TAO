@@ -50,8 +50,6 @@ ACE_IO_SAP::enable (int value) const
   if (ACE_IO_SAP::pid_ == 0)
     ACE_IO_SAP::pid_ = ACE_OS::getpid ();
 
-#if !defined(ACE_WIN32) && !defined (VXWORKS)
-
   switch (value)
     {
 #if defined (SIGURG)
@@ -90,9 +88,6 @@ ACE_IO_SAP::enable (int value) const
     default:
       return -1;
     }
-#else
-  ACE_UNUSED_ARG (value);
-#endif /* !ACE_WIN32 */
 
   return 0;
 }
@@ -102,7 +97,6 @@ ACE_IO_SAP::disable (int value) const
 {
   ACE_TRACE ("ACE_IO_SAP::disable");
 
-#if !defined(ACE_WIN32) && !defined (VXWORKS)
   switch (value)
     {
 #if defined (SIGURG)
@@ -142,8 +136,4 @@ ACE_IO_SAP::disable (int value) const
       return -1;
     }
   return 0;
-#else
-  ACE_UNUSED_ARG (value);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* !ACE_WIN32 */
 }

@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : acelib {
-  requires += rmcast
+project : acelib, exceptions {
   after    += RMCast
   libs     += ACE_RMCast
+  includes += $(ACE_ROOT)/protocols
 }

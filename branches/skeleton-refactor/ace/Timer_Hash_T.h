@@ -134,7 +134,7 @@ public:
   virtual ACE_Timer_Node_T<TYPE> *item (void);
 
 protected:
-  /// Pointer to the <ACE_Timer_Hash> that we are iterating over.
+  /// Pointer to the ACE_Timer_Hash that we are iterating over.
   ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &timer_hash_;
 
   /// Current position in <timer_hash_>'s table

@@ -435,7 +435,7 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
     {
       ACE_ERROR (( LM_ERROR,
         "Remove detector %d mismatch.\n",
-        ACE_static_cast(int, id)
+        static_cast<int> (id)
         ));
     }
   }
@@ -443,8 +443,8 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
   {
     ACE_ERROR (( LM_ERROR,
       "Attempt to remove invalid detector %d. Limit %d.\n",
-      ACE_static_cast(int, id),
-      ACE_static_cast(int, this->detectors_.size())
+      static_cast<int> (id),
+      static_cast<int> (this->detectors_.size())
       ));
   }
 }
@@ -474,8 +474,8 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
   {
     // note: these should be unsigned long, but
     // ACE_Time_Value wants longs.
-    long uSec = ACE_static_cast (long, (value / timeT_per_uSec) % uSec_per_sec);
-    long sec = ACE_static_cast (long, (value / timeT_per_uSec) / uSec_per_sec);
+    long uSec = static_cast<long> ((value / timeT_per_uSec) % uSec_per_sec);
+    long sec = static_cast<long> ((value / timeT_per_uSec) / uSec_per_sec);
     ACE_Time_Value atv(sec, uSec);
     TAO::Fault_Detector_i::set_time_for_all_detectors(atv);
   }
@@ -566,7 +566,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   if (::TAO::find (decoder, ::FT::FT_DOMAIN_ID, domain_id_string) )
   {
     // NOTE the assumption that we can assign a char * to a domain id
-    domain_id = ACE_const_cast (char *, domain_id_string);
+    domain_id = const_cast<char *> (domain_id_string);
   }
   else
   {
@@ -597,11 +597,11 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   const char * object_type_string;
   if (::TAO::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
   {
-    object_type = ACE_const_cast (char *, object_type_string);
+    object_type = const_cast<char *> (object_type_string);
   }
   else
   {
-    object_type = ACE_const_cast (char *, "unknown");
+    object_type = const_cast<char *> ("unknown");
     // Not required: missingParameter = 1;
     ACE_DEBUG ((LM_DEBUG, "Object type not given.\n"));
   }

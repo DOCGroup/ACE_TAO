@@ -56,8 +56,7 @@ Simple_Server_i::validate_protocol (ACE_ENV_SINGLE_ARG_DECL)
           // @@ Worst possible way to check. If SSLIOP had a tag
           // things would have been a  lot simpler.
           TAO::SSLIOP::Transport *ssl_t =
-            ACE_dynamic_cast (TAO::SSLIOP::Transport *,
-                              t);
+            dynamic_cast<TAO::SSLIOP::Transport *> (t);
 
           // There should be no SSL Transport
           if (ssl_t != 0)

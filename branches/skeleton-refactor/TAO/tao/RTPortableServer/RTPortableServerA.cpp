@@ -27,24 +27,26 @@
 
 #include "RTPortableServerC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_RTPortableServer_POA[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254506f),
-  ACE_NTOHL (0x72746162),
-  ACE_NTOHL (0x6c655365),
-  ACE_NTOHL (0x72766572),
-  ACE_NTOHL (0x2f504f41),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254506f), 
+  ACE_NTOHL (0x72746162), 
+  ACE_NTOHL (0x6c655365), 
+  ACE_NTOHL (0x72766572), 
+  ACE_NTOHL (0x2f504f41), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTPortableServer/POA:1.0
     4,
   ACE_NTOHL (0x504f4100),  // name = POA
@@ -55,7 +57,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTPortableServer_POA (
     sizeof (_oc_RTPortableServer_POA),
     (char *) &_oc_RTPortableServer_POA,
     0,
-    sizeof (RTPortableServer::POA)
+    0
   );
 
 namespace RTPortableServer
@@ -133,8 +135,6 @@ operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -149,5 +149,4 @@ operator>>= (
         RTPortableServer::POA \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

@@ -22,7 +22,9 @@ $E = new PerlACE::Process ("export_test",
 $I = new PerlACE::Process ("import_test",
                            "-ORBInitRef TradingService=file://$ior -quiet");
 
-$TS->Spawn ();
+if ($TS->Spawn () == -1) {
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($ior, $sleeptime) == -1) {
     print STDERR "ERROR: waiting for trading service IOR file\n";
@@ -30,12 +32,15 @@ if (PerlACE::waitforfile_timed ($ior, $sleeptime) == -1) {
     exit 1;
 }
 
-$E->Spawn ();
+if ($E->Spawn () == -1) {
+    $TS->Kill ();
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($ready_file, 120) == -1) {
     print STDERR "ERROR: waiting for the export test to finish\n";
-    $E->Kill (); 
-    $TS->Kill (); 
+    $E->Kill ();
+    $TS->Kill ();
     exit 1;
 }
 

@@ -16,7 +16,8 @@ parse_args (int argc, char *argv[]);
 int
 main (int argc, char *argv[])
 {
-	cout << "Starting shutdown" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+             "Starting shutdown\n"));
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =

@@ -35,10 +35,5 @@ public:
   virtual int init (const char *arg) = 0;
 };
 
-
-#if defined(__ACE_INLINE__)
-#include "ECG_Address_Server_Base.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_ADDRESS_SERVER_BASE_H */

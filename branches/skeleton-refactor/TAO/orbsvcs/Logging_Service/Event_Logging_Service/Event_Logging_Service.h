@@ -38,9 +38,6 @@ class Event_Logging_Service
   virtual ~Event_Logging_Service (void);
   // Destructor.
 
-  int parse_args (int argc, char *argv []);
-  // Parses the command line arguments.
-
   int startup (int argc, char *argv[]
                ACE_ENV_ARG_DECL);
   // Initializes the Telecom EventLog Service.
@@ -59,13 +56,13 @@ protected:
                  ACE_ENV_ARG_DECL);
   // initialize the ORB.
 
+  int parse_args (int argc, char *argv []);
+  // Parses the command line arguments.
+
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
   // = Data members
-  const char* event_log_factory_name_;
-  // The Log Factory name.
-
   TAO_EventLogFactory_i event_log_factory_;
   // The Event Log Factory.
 
@@ -77,5 +74,17 @@ protected:
 
   CosNaming::NamingContext_var naming_;
   // A naming context.
+	
+  const char* service_name_;
+  // The name we use to bind with the NameService
+
+  const char* ior_file_name_;
+  // The name of the file were we output the Event_Service IOR.
+
+  const char* pid_file_name_;
+  // The name of a file where the process stores its pid
+
+  int bind_to_naming_service_;
+  // If true, bind to naming service
 };
 #endif /* EVENT_LOGGING_SERVICE_H */

@@ -4,10 +4,7 @@
 #include "tao/debug.h"
 
 #include "tao/debug.h"
-
-#if ! defined (__ACE_INLINE__)
-#include "RT_StructuredProxyPushSupplier.inl"
-#endif /* __ACE_INLINE__ */
+#include "../Method_Request_Dispatch.h"
 
 ACE_RCSID (Notify, TAO_Notify_RT_StructuredProxyPushSupplier, "$Id$")
 
@@ -34,12 +31,19 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ser
   return object._retn ();
 }
 
+CORBA::Object_ptr
+TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ,
+                                                     CORBA::Long ACE_ENV_ARG_DECL_NOT_USED)
+{
+   return CORBA::Object::_nil ();
+}
+
 void
-TAO_Notify_RT_StructuredProxyPushSupplier::push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_RT_StructuredProxyPushSupplier::deliver_request (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      event->push (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
+      request.event()->push (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -72,14 +76,3 @@ TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_E
   ACE_ENDTRY;
 }
 
-void
-TAO_Notify_RT_StructuredProxyPushSupplier::push (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  this->push (event.get () ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  this->push_no_filtering (event.get () ACE_ENV_ARG_PARAMETER);
-}

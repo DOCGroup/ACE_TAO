@@ -26,4 +26,8 @@ project : taolib, core {
   PIDL_Files {
     IFR_Client
   }
+
+  Pkgconfig_Files {
+    IFR_Client/TAO_IFR_Client.pc.in
+  }
 }

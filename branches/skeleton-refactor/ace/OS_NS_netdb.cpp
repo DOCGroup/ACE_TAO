@@ -208,7 +208,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   ACE_OS::memset (&ncb, 0, sizeof(ncb));
   ncb.ncb_command = NCBENUM;
-  ncb.ncb_buffer  = ACE_reinterpret_cast (unsigned char*,&lenum);
+  ncb.ncb_buffer  = reinterpret_cast<unsigned char*> (&lenum);
   ncb.ncb_length  = sizeof(lenum);
 
   result = Netbios (&ncb);
@@ -229,10 +229,10 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
       ADAPTERSTAT adapter;
       ACE_OS::memset (&ncb, 0, sizeof (ncb));
-      ACE_OS::strcpy (ACE_reinterpret_cast (char*, ncb.ncb_callname), "*");
+      ACE_OS::strcpy (reinterpret_cast<char*> (ncb.ncb_callname), "*");
       ncb.ncb_command     = NCBASTAT;
       ncb.ncb_lana_num    = lenum.lana[i];
-      ncb.ncb_buffer      = ACE_reinterpret_cast (unsigned char*, &adapter);
+      ncb.ncb_buffer      = reinterpret_cast<unsigned char*> (&adapter);
       ncb.ncb_length      = sizeof (adapter);
 
       result = Netbios (&ncb);

@@ -164,7 +164,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
                   "can be established\n"));
 #endif
       TAO_EC_Kokyu_Filter* kokyu_filter =
-        ACE_dynamic_cast(TAO_EC_Kokyu_Filter*, filter);
+        dynamic_cast<TAO_EC_Kokyu_Filter*> (filter);
   
       //add the dependency between the root in the filter hierarchy and
       //the final consumer
@@ -305,8 +305,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 
         //build a unique name using the cosumer_rt_info
         ACE_OS::sprintf (buf, "TIMEOUT:%umsec:%d",
-                         ACE_static_cast (u_int,
-                                          (e.header.creation_time / 10000)),
+                         static_cast<u_int> ((e.header.creation_time / 10000)),
                          h_consumer_rt_info);
         ACE_CString name = buf;
         
@@ -316,8 +315,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
         
         // Convert the time to the proper units....
         RtecScheduler::Period_t period =
-          ACE_static_cast (RtecScheduler::Period_t,
-                           e.header.creation_time);
+          static_cast<RtecScheduler::Period_t> (e.header.creation_time);
         
 #if 1 //by VS original code replaced with this
         RtecScheduler::RT_Info* consumer_rt_info_ptr;
@@ -471,8 +469,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
 
       char buf[64];
       ACE_OS::sprintf (buf, "TIMEOUT:%umsec",
-                       ACE_static_cast (u_int,
-                                        (e.header.creation_time / 10000)));
+                       static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 
       return;

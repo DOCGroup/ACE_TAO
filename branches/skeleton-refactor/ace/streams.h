@@ -27,13 +27,13 @@
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
-
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Do this so the #pragma warning in the MSVC headers do not
 // affect our #pragma warning settings
-#if defined (_MSC_VER) && (_MSC_VER >= 1200)
+#if defined (_MSC_VER)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
+#endif /* _MSC_VER*/
 
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -132,9 +132,9 @@
 
 // Do this so the #pragma warning in the MSVC headers do not
 // affect our #pragma warning settings
-#if defined (_MSC_VER) && (_MSC_VER >= 1200)
+#if defined (_MSC_VER)
 #pragma warning(pop)
-#endif /* _MSC_VER >= 1200 */
+#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_STREAMS_H */

@@ -39,7 +39,7 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-
+#include "ace/OS_main.h"
 #include "asnmp/oid.h"
 #include "asnmp/vb.h"
 #include "test_config.h"
@@ -187,9 +187,9 @@ static void VbTest()
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST ("VbTest");
+  ACE_START_TEST (ACE_TEXT ("Varbind_Test"));
   VbTest();
   ACE_END_TEST;
   return 0;

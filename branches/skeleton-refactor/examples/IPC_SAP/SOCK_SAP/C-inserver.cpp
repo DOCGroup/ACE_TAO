@@ -50,7 +50,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   /* Associate address with endpoint */
   if (ACE_OS::bind (s_handle,
-                    ACE_reinterpret_cast(struct sockaddr *, &saddr),
+                    reinterpret_cast<struct sockaddr *> (&saddr),
                     sizeof saddr) == -1)
     ACE_OS::perror (ACE_TEXT("bind")), ACE_OS::exit (1);
 
@@ -72,8 +72,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       do
         n_handle =
           ACE_OS::accept (s_handle,
-                          ACE_reinterpret_cast(struct sockaddr *,
-                                               &cli_addr),
+                          reinterpret_cast<struct sockaddr *> (&cli_addr),
                           &cli_addr_len);
       while (n_handle == ACE_INVALID_HANDLE && errno == EINTR);
 

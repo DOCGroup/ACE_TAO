@@ -17,6 +17,7 @@
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
+#include "ace/OS_NS_string.h"
 
 Test_DynStruct::Test_DynStruct (CORBA::ORB_var orb, int debug)
   : orb_ (orb),

@@ -95,7 +95,14 @@ ifeq ($(CPU),I80386)
   CFLAGS += -tI386EH:tornado -DCPU=I80386  #### not sure about that
   TOOLENV = 386
 else
+ifeq ($(CPU),PPCE500)
   BINXSYM_NAME = xsym
+  CFLAGS += -tPPCE500ES -DCPU=PPC505
+  CCFLAGS +=
+  TOOLENV = ppc
+else
+  BINXSYM_NAME = xsym
+endif # PPCE500E
 endif # I80386
 endif # I80486
 endif # PPC860
@@ -129,8 +136,8 @@ endif # ! static_libs
 CC              = dplus
 CXX             = $(CC)
 CFLAGS          += -Xsmall-data=0 -Xsmall-const=0 -Xno-implicit-templates \
-                   -Xstrings-in-text=0 -tPPC750EN:tornado
-CCFLAGS         += $(CFLAGS) -Xenum-is-int -Xbool-is-int
+                   -Xstrings-in-text=0
+CCFLAGS         += -Xenum-is-int -Xbool-is-int
 ifeq (0,$(rtti))
   #### Don't use RTTI, because Tornado 1.0.x libraries don't support it.
   CCFLAGS += -DACE_LACKS_RTTI

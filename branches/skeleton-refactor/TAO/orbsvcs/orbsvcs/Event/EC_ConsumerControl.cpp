@@ -2,10 +2,6 @@
 
 #include "EC_ConsumerControl.h"
 
-#if ! defined (__ACE_INdLINE__)
-#include "EC_ConsumerControl.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_ConsumerControl, "$Id$")
 
 TAO_EC_ConsumerControl::TAO_EC_ConsumerControl (void)

@@ -15,7 +15,7 @@
 class Args {};
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   int status = 0;
   try
@@ -32,7 +32,7 @@ main (int argc, char* argv[])
 
     ACE_INET_Addr address (argv[3]);
 
-    TMCast::Group group (address, argv[2]);
+    ACE_TMCast::Group group (address, ACE_TEXT_ALWAYS_CHAR (argv[2]));
 
     if (receiver)
     {
@@ -53,8 +53,7 @@ main (int argc, char* argv[])
 
         ACE_UINT64 tmpl = 1000000U;
         unsigned long t =
-          ACE_static_cast (unsigned long,
-                           ((tmpl * ACE_OS::rand ()) / RAND_MAX));
+          static_cast<unsigned long> (((tmpl * ACE_OS::rand ()) / RAND_MAX));
 
         // ACE_DEBUG ((LM_DEBUG, "sleeping for %u\n", t));
 
@@ -66,7 +65,7 @@ main (int argc, char* argv[])
         {
           group.send (buffer, ACE_OS::strlen (buffer) + 1);
         }
-        catch (TMCast::Group::Aborted const&)
+        catch (ACE_TMCast::Group::Aborted const&)
         {
           ACE_ERROR ((LM_ERROR, "%s has been aborted\n", buffer));
         }
@@ -79,13 +78,13 @@ main (int argc, char* argv[])
                 "Usage: member {r|s} <id> <IPv4 mcast address>:<port>\n"));
     status++;
   }
-  catch (TMCast::Group::Failed const&)
+  catch (ACE_TMCast::Group::Failed const&)
   {
     ACE_ERROR ((LM_ERROR,
                 "Group failure. Perhaps I am alone in the group.\n"));
     status++;
   }
-  catch (TMCast::Group::InsufficienSpace const&)
+  catch (ACE_TMCast::Group::InsufficienSpace const&)
   {
     ACE_ERROR ((LM_ERROR, "Insufficient space in receive buffer.\n"));
     status++;

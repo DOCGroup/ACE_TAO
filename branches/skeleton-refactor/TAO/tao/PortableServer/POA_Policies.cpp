@@ -4,10 +4,6 @@
 
 #include "tao/ORB_Constants.h"
 
-#if !defined (__ACE_INLINE__)
-# include "POA_Policies.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID(PortableServer, POA_Policies, "$Id$")
 
 

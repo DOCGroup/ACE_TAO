@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
@@ -11,9 +10,13 @@
 #include "ExtAttributeDef_i.h"
 #include "IFR_Service_Utils.h"
 
+#include "ace/SString.h"
+
+
 ACE_RCSID (IFRService,
            ComponentDef_i,
            "$Id$")
+
 
 // Specialization.
 template<>
@@ -30,8 +33,7 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
                              "is_multiple",
                              is_multiple);
   desc_seq[index].is_multiple =
-    ACE_static_cast (CORBA::Boolean,
-                     is_multiple);
+    static_cast<CORBA::Boolean> (is_multiple);
 }
 
 // Specialization.

@@ -189,7 +189,6 @@ AH_TEMPLATE([ACE_HAS_DLL],[Build ACE using the frigging PC DLL nonsense...])
 AH_TEMPLATE([ACE_HAS_STRICT],[Use the STRICT compilation mode on Win32.])
 
 AH_TEMPLATE([CYGWIN32], [GNU Win32 environement])
-AH_TEMPLATE([ACE_HAS_CYGWIN32_SOCKET_H],[Platform has cygwin32 socket.h.])
 
 
 dnl ACE internals
@@ -206,20 +205,19 @@ AH_TEMPLATE([ACE_USE_RCSID],[Enable embedding of global RCS ID strings into comp
 AH_TEMPLATE([IP_ADD_MEMBERSHIP],[])
 AH_TEMPLATE([IP_DROP_MEMBERSHIP],[])
 
+AH_VERBATIM([ACE_INT64_TYPEDEF],
+[
+/*
+   typedef for ACE_INT64
 
-dnl Specify sizes of given built-in types.  If a size isn't defined here,
-dnl then ace/Basic_Types.h will attempt to deduce the size.
-dnl AH_TEMPLATE([ACE_SIZEOF_CHAR],[Size of native "char" type])
-AH_TEMPLATE([ACE_SIZEOF_WCHAR],[Size of native "wchar_t" type])
-AH_TEMPLATE([ACE_SIZEOF_SHORT],[Size of the native "short" type])
-AH_TEMPLATE([ACE_SIZEOF_INT],[Size of the native "int" type])
-AH_TEMPLATE([ACE_SIZEOF_LONG],[Size of the native "long" type])
-AH_TEMPLATE([ACE_SIZEOF_LONG_LONG],[Size of the native "long long" type])
-AH_TEMPLATE([ACE_SIZEOF_VOID_P],[Size of the native "pointer to void" type])
-AH_TEMPLATE([ACE_SIZEOF_FLOAT],[Size of the native "float" type])
-AH_TEMPLATE([ACE_SIZEOF_DOUBLE],[Size of the native "double" type])
-AH_TEMPLATE([ACE_SIZEOF_LONG_DOUBLE],[Size of the native "long double" type])
-
+   We only make the typedef if ACE_INT64_TYPEDEF is defined.  Otherwise,
+   let ace/Basic_Types.h do the work for us.
+*/
+#undef ACE_INT64_TYPEDEF
+#ifdef ACE_INT64_TYPEDEF
+   typedef ACE_INT64_TYPEDEF ACE_INT64;
+#endif /* ACE_INT64_TYPEDEF */
+])
 
 AH_VERBATIM([ACE_UINT64_TYPEDEF],
 [
@@ -311,8 +309,10 @@ AH_TEMPLATE([ACE_HAS_AUTOMATIC_INIT_FINI],
 [Compiler/platform correctly calls init()/fini() for shared libraries.])
 
 AH_TEMPLATE([ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR],
-[Compiler handles explicit calling of template destructor correctly.
-See `ace/OS.h' for details.])
+[Compiler handles explicit calling of template destructor correctly.])
+
+AH_TEMPLATE([ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS],
+[Compiler requires template args when explicitly calling template destructor.])
 
 AH_TEMPLATE([ACE_HAS_BROKEN_MAP_FAILED],
 [Platform doesn't cast MAP_FAILED to a (void *).])
@@ -390,6 +390,9 @@ AH_TEMPLATE([ACE_HAS_CONFLICTING_XTI_MACROS],
 AH_TEMPLATE([ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES],
 [Prototypes for both signal() and struct sigaction are consistent.])
 
+AH_TEMPLATE([ACE_HAS_CONST_CHAR_SWAB],
+[Platform has swab(const char*, char*, ssize_t) variant.])
+
 AH_TEMPLATE([ACE_HAS_CPLUSPLUS_HEADERS],
 [Compiler/platform has correctly prototyped header files.])
 
@@ -429,8 +432,6 @@ AH_TEMPLATE([ACE_HAS_LLSEEK],
 AH_TEMPLATE([ACE_HAS_HI_RES_TIMER],
 [Compiler/platform supports SunOS high resolution timers])
 
-AH_TEMPLATE([ACE_HAS_IDTYPE_T],[Compiler/platform supports idtype_t.])
-
 AH_TEMPLATE([ACE_HAS_INLINED_OSCALLS],[
 Inline all the static class OS methods to remove call overhead
 Note: This gets defined by OS.h if __ACE_INLINE__ is defined])
@@ -443,6 +444,9 @@ AH_TEMPLATE([ACE_USES_IPV4_IPV6_MIGRATION],
 
 AH_TEMPLATE([ACE_HAS_NEW_NOTHROW],
 [Compiler supports new (std::nothrow)])
+
+AH_TEMPLATE([ACE_HAS_NONCONST_SWAB],
+[Platform has swab(char*, char*, ssize_t) variant.])
 
 AH_TEMPLATE([ACE_HAS_NONSTATIC_OBJECT_MANAGER],
 [Causes the ACE_Object_Manager instance to be created in
@@ -536,6 +540,9 @@ AH_TEMPLATE([ACE_HAS_POSIX_GETPWNAM_R],
 
 AH_TEMPLATE([ACE_HAS_POSIX_NONBLOCK],
 [Platform supports POSIX O_NONBLOCK semantics])
+
+AH_TEMPLATE([ACE_HAS_POSIX_REALTIME_SIGNALS],
+[Platform supports POSIX realtime signals])
 
 AH_TEMPLATE([ACE_HAS_POSIX_SEM],
 [Platform supports POSIX real-time semaphores (e.g., VxWorks and
@@ -643,8 +650,6 @@ AH_TEMPLATE([ACE_HAS_SET_T_ERRNO],
 
 AH_TEMPLATE([ACE_HAS_SHM_OPEN],[Platform has shm_open()])
 
-AH_TEMPLATE([ACE_HAS_SIGINFO_T],[Platform supports SVR4 extended signals])
-
 AH_TEMPLATE([ACE_HAS_SIGISMEMBER_BUG],
 [Platform has bug with sigismember() (HP/UX 11).])
 
@@ -676,8 +681,6 @@ AH_TEMPLATE([ACE_HAS_SOCKLEN_T],
 
 AH_TEMPLATE([ACE_HAS_SPARCWORKS_401_SIGNALS],
 [Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...])
-
-AH_TEMPLATE([ACE_HAS_SSIZE_T],[Compiler supports the ssize_t typedef])
 
 AH_TEMPLATE([ACE_HAS_THR_YIELD],[Platform has thr_yield()])
 
@@ -810,6 +813,7 @@ AH_TEMPLATE([ACE_HAS_UNIXWARE_SVR4_SIGNAL_T],
    platforms])
 
 AH_TEMPLATE([ACE_HAS_WCHAR],[Platform/compiler supports wchar_t])
+AH_TEMPLATE([ACE_USES_WCHAR],[ACE is built to use wide characters internally])
 
 AH_TEMPLATE([ACE_HAS_TYPENAME_KEYWORD],
 [Compiler supports the C++ typename keyword])
@@ -822,7 +826,7 @@ AH_TEMPLATE([ACE_HAS_VERBOSE_NOTSUP],
    origin of ACE_NOTSUP.])
 
 AH_TEMPLATE([ACE_HAS_VOIDPTR_GETTIMEOFDAY],
-[Platform/compiler supports void * as second parameter to 
+[Platform/compiler supports void * as second parameter to
    gettimeofday() and has a prototype.])
 
 AH_TEMPLATE([ACE_HAS_VOIDPTR_MMAP],[Platform requires void * for mmap().])
@@ -946,9 +950,6 @@ AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE],
 AH_TEMPLATE([ACE_LACKS_PRAGMA_ONCE],
 [Compiler complains about use of obsolete "pragma once"])
 
-AH_TEMPLATE([ACE_LACKS_PRI_T],
-[Platform lacks pri_t (e.g., Tandem NonStop UNIX).])
-
 AH_TEMPLATE([ACE_LACKS_THREAD_STACK_ADDR],
 [Platform lack pthread_attr_setstackaddr()])
 
@@ -991,9 +992,6 @@ AH_TEMPLATE([ACE_LACKS_SYS_MSG_H],
 
 AH_TEMPLATE([ACE_LACKS_SYSV_MSQ_PROTOS],
 [Platform lacks SYSV message queue prototypes])
-
-AH_TEMPLATE([ACE_LACKS_KEY_T],
-[Platform lacks key_t (e.g., Chorus, VxWorks, Win32)])
 
 AH_TEMPLATE([ACE_LACKS_SI_ADDR],
 [Platform lacks the si_addr field of siginfo_t (e.g., VxWorks and
@@ -1058,8 +1056,6 @@ AH_TEMPLATE([ACE_LACKS_UNIX_SIGNALS],
 
 AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
 [Platform lacks struct utsname (e.g., Win32 and VxWorks)])
-
-AH_TEMPLATE([ACE_LACKS_WCHAR_T],[Platform lacks wchar_t typedef])
 
 AH_TEMPLATE([ACE_HAS_3_PARAM_WCSTOK],
 [Platform's wcstok() takes 3 arguments])
@@ -1127,6 +1123,9 @@ AH_TEMPLATE([ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION],
    explicit C++ specializations for all used templates. This is also
    used for GNU G++ if you don't use the "repo" patches.])
 
+AH_TEMPLATE([ACE_HAS_ICMP_SUPPORT],
+[Defined to 1 if platform supports ICMP over raw sockets])
+
 AH_TEMPLATE([ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA],
 [Compiler's template instantiation mechanism supports the use of
    "#pragma instantiate".  Edison Design Group compilers, e.g., SGI
@@ -1147,11 +1146,17 @@ AH_TEMPLATE([ACE_USE_POLL],
 
 AH_TEMPLATE([ACE_POLL_IS_BROKEN],[Platform has broken poll()])
 
+AH_TEMPLATE([ACE_HAS_EVENT_POLL],[Platform (Linux) supports event poll 
+  interface.])
+
+AH_TEMPLATE([ACE_HAS_DEV_POLL],[Platform supports /dev/poll character
+  device.])
+
 AH_TEMPLATE([ACE_USES_ASM_SYMBOL_IN_DLSYM],
 [Platform uses assembly symbols instead of C symbols in dlsym()])
 
 AH_TEMPLATE([ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB],
-[Platform has its standard c++ library in the namespace std.])
+[Platform has its standard C++ library in the namespace std.])
 
 AH_TEMPLATE([HAVE_RESTARTABLE_SYSCALLS],[])
 

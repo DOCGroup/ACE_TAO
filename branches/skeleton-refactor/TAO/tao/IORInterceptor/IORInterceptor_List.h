@@ -21,10 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IORInterceptorC.h"
-
 #include "tao/Interceptor_List.h"
 #include "tao/PortableServer/ORT_Adapter.h"
+#include "tao/IORInterceptor/IORInterceptor.h"
+
 
 /**
  * @class TAO_IORInterceptor_List

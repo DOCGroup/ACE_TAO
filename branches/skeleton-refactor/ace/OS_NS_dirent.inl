@@ -51,8 +51,7 @@ ACE_OS::opendir (const ACE_TCHAR *filename)
 #  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
-#    elif defined (VXWORKS)
-  // VxWorks' ::opendir () is declared with a non-const argument.
+#    elif defined (ACE_HAS_NONCONST_OPENDIR)
   return ::opendir (const_cast<char *> (filename));
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
@@ -107,7 +106,8 @@ ACE_OS::readdir_r (ACE_DIR *dirp,
     return 1; // Oops, some type of error!
 #elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
 #  if (defined (sun) && (defined (_POSIX_PTHREAD_SEMANTICS) || \
-                        (_FILE_OFFSET_BITS == 64))) || \
+                        (_FILE_OFFSET_BITS == 64) || \
+                        (_POSIX_C_SOURCE - 0 >= 199506L))) || \
       (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
                          defined (__USE_POSIX) || \

@@ -26,4 +26,8 @@ project : taolib, core {
   PIDL_Files {
     DynamicAny
   }
+
+  Pkgconfig_Files {
+    DynamicAny/TAO_DynamicAny.pc.in
+  }
 }

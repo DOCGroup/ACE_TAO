@@ -16,13 +16,13 @@ class Manager : public ACE_Process
 public:
   Manager (const ACE_TCHAR* program_name)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::Manager"));
+    ACE_TRACE ("Manager::Manager");
     ACE_OS::strcpy (programName_, program_name);
   }
 
   int doWork (void)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::doWork"));
+    ACE_TRACE ("Manager::doWork");
 
     // Spawn the new process; prepare() hook is called first.
     ACE_Process_Options options;
@@ -46,7 +46,7 @@ private:
   // Listing 3 code/ch10
   int dumpRun (void)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::dumpRun"));
+    ACE_TRACE ("Manager::dumpRun");
 
     if (ACE_OS::lseek (this->outputfd_, 0, SEEK_SET) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -73,13 +73,13 @@ private:
   // prepare() is inherited from ACE_Process.
   int prepare (ACE_Process_Options &options)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::prepare"));
+    ACE_TRACE ("Manager::prepare");
 
     options.command_line ("%s 1", this->programName_);
     if (this->setStdHandles (options) == -1 ||
         this->setEnvVariable (options) == -1)
       return -1;
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_PWD_FUNCTIONS)
     return this->setUserID (options);
 #else
     return 0;
@@ -88,7 +88,7 @@ private:
 
   int setStdHandles (ACE_Process_Options &options)
   {
-    ACE_TRACE(ACE_TEXT ("Manager::setStdHandles"));
+    ACE_TRACE ("Manager::setStdHandles");
 
     ACE_OS::unlink ("output.dat");
     this->outputfd_ =
@@ -99,16 +99,17 @@ private:
 
   int setEnvVariable (ACE_Process_Options &options)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::setEnvVariables"));
-    return options.setenv (ACE_TEXT("PRIVATE_VAR=/that/seems/to/be/it"));
+    ACE_TRACE ("Manager::setEnvVariables");
+    return options.setenv
+      (ACE_TEXT ("PRIVATE_VAR=/that/seems/to/be/it"));
   }
  // Listing 2
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)
  // Listing 10 code/ch10
   int setUserID (ACE_Process_Options &options)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::setUserID"));
+    ACE_TRACE ("Manager::setUserID");
     passwd* pw = ACE_OS::getpwnam ("nobody");
     if (pw == 0)
       return -1;
@@ -116,7 +117,7 @@ private:
     return 0;
   }
  // Listing 10
-#endif /* ACE_WIN32 */
+#endif /* !ACE_LACKS_PWD_FUNCTIONS */
 
 private:
   ACE_HANDLE outputfd_;
@@ -129,12 +130,12 @@ class Slave
 public:
   Slave ()
   {
-    ACE_TRACE (ACE_TEXT ("Slave::Slave"));
+    ACE_TRACE ("Slave::Slave");
   }
 
   int doWork (void)
   {
-    ACE_TRACE (ACE_TEXT ("Slave::doWork"));
+    ACE_TRACE ("Slave::doWork");
 
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) started at %T, parent is %d\n"),
@@ -146,7 +147,7 @@ public:
 
     ACE_TCHAR str[128];
     ACE_OS::sprintf (str, ACE_TEXT ("(%d) Enter your command\n"),
-                     static_cast<int> (ACE_OS::getpid ()));
+                     static_cast<int>(ACE_OS::getpid ()));
     ACE_OS::write (ACE_STDOUT, str, ACE_OS::strlen (str));
     this->readLine (str);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Executed: %C\n"),
@@ -157,8 +158,8 @@ public:
 
   void showWho (void)
   {
-    ACE_TRACE (ACE_TEXT ("Slave::showWho"));
-#if !defined (ACE_WIN32)
+    ACE_TRACE ("Slave::showWho");
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)
     passwd *pw = ::getpwuid (::geteuid ());
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) Running this process as:%s\n"),
@@ -168,22 +169,22 @@ public:
 
   ACE_TCHAR* readLine (ACE_TCHAR* str)
   {
-    ACE_TRACE (ACE_TEXT ("Slave::readLine"));
+    ACE_TRACE ("Slave::readLine");
 
     int i = 0;
     while (true)
       {
-	int retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
-	if (retval > 0)
-	  {
-	    if (str[i] == '\n')
-	      {
-		str[++i] = 0;
-		return str;
-	      }
-	    i++;
-	  }
-	else
+        int retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
+        if (retval > 0)
+          {
+            if (str[i] == '\n')
+              {
+                str[++i] = 0;
+                return str;
+              }
+            i++;
+          }
+        else
           return str;
       }
   }

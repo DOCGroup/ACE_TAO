@@ -26,20 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_TAO_EXTC_H_
 #define _TAO_IDL_ORIG_TAO_EXTC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "messaging_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
@@ -60,9 +63,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -71,7 +72,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -93,7 +94,7 @@ namespace TAO
   const CORBA::PolicyType CONNECTION_TIMEOUT_POLICY_TYPE = 1413545992U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY__VAR_OUT_CH_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY__VAR_OUT_CH_
@@ -122,7 +123,7 @@ namespace TAO
 #define _TAO_CONNECTIONTIMEOUTPOLICY_CH_
   
   class TAO_Messaging_Export ConnectionTimeoutPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef ConnectionTimeoutPolicy_ptr _ptr_type;
@@ -143,7 +144,7 @@ namespace TAO
     
     static ConnectionTimeoutPolicy_ptr _nil (void)
     {
-      return (ConnectionTimeoutPolicy_ptr)0;
+      return static_cast<ConnectionTimeoutPolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -225,17 +226,17 @@ namespace TAO
 #define _TAO_CONNECTIONTIMEOUTPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<TAO::ConnectionTimeoutPolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::TAO::ConnectionTimeoutPolicy>
   {
-    static TAO::ConnectionTimeoutPolicy_ptr duplicate (
-        TAO::ConnectionTimeoutPolicy_ptr
+    static ::TAO::ConnectionTimeoutPolicy_ptr duplicate (
+        ::TAO::ConnectionTimeoutPolicy_ptr
       );
     static void release (
-        TAO::ConnectionTimeoutPolicy_ptr
+        ::TAO::ConnectionTimeoutPolicy_ptr
       );
-    static TAO::ConnectionTimeoutPolicy_ptr nil (void);
+    static ::TAO::ConnectionTimeoutPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        TAO::ConnectionTimeoutPolicy_ptr p,
+        ::TAO::ConnectionTimeoutPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -251,13 +252,13 @@ TAO_Messaging_Export void operator<<= (CORBA::Any &, TAO::ConnectionTimeoutPolic
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::ConnectionTimeoutPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "TAO_ExtC.i"
+#include "TAO_ExtC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -268,4 +269,5 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::Connec
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

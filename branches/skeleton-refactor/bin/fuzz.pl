@@ -126,7 +126,7 @@ sub store_file ($)
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
         push @files_mpc, ($name);
     }
-    elsif ($name =~ /\.(icc|ncb|opt)$/i) {
+    elsif ($name =~ /\.(icc|ncb|opt|zip)$/i) {
         push @files_noncvs, ($name);
     }
 }
@@ -210,6 +210,36 @@ sub check_for_id_string ()
     }
 }
 
+# check for _MSC_VER >= 1200
+sub check_for_msc_ver_string ()
+{
+    print "Running _MSC_VER check\n";
+    foreach $file (@files_cpp, @files_inl, @files_h) {
+        my $found = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_msc_ver/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_msc_ver/) {
+                    $disable = 0;
+                }
+                if ($disable == 0 and /\_MSC_VER \>= 1200/) {
+                    $found = 1;
+                }
+            }
+            close (FILE);
+            if ($found == 1) {
+               print_error ("Incorrect _MSC_VER >= 1200 found in $file");
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
 
 # This test checks for the newline at the end of a file
 sub check_for_newline ()
@@ -461,6 +491,36 @@ sub check_for_preprocessor_comments ()
     }
 }
 
+# We should not have empty inline files in the repo
+sub check_for_empty_inline_files ()
+{
+    print "Running empty inline files test\n";
+    foreach $file (@files_inl) {
+        my $found_non_empty_line = 0;
+        my $idl_generated = 0;
+        if (open (FILE, $file)) {
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+              if (m/TAO and the TAO IDL Compiler have been developed by/) {# skip IDL generated files
+                $idl_generated = 1;
+                last;}
+              next if /^[:blank:]*$/; # skip empty lines
+              next if /^[:blank:]*\/\//; # skip C++ comments
+              $found_non_empty_line = 1;
+              last;
+            }
+            close (FILE);
+            if ($found_non_empty_line == 0 and $idl_generated == 0) {
+             print_error ("File $file is empty and should not be in the "
+                         ."repository");
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 
 # This test checks for the use of the Win32 Unicode string defines
 # or outdated ASYS_* macros
@@ -618,10 +678,10 @@ sub check_for_pre_and_post ()
                         print_error ("post.h missing \"/**/\" in $file");
                         ++$post;
                     }
-                    if (/^\s*#\s*include\s*/**/\s*\"ace\/pre\.h\"/) {
+                    if (/^\s*#\s*include\s*\/\*\*\/\s*\"ace\/pre\.h\"/) {
                         ++$pre;
                     }
-                    if (/^\s*#\s*include\s*/**/\s*\"ace\/post\.h\"/) {
+                    if (/^\s*#\s*include\s*\/\*\*\/\s*\"ace\/post\.h\"/) {
                         ++$post;
                     }
                 }
@@ -686,7 +746,7 @@ sub check_for_mismatched_filename ()
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (m/\@file\s*([^\s]*)/){
+                if (m/\@file\s*([^\s]+)/){
                     # $file includes complete path, $1 is the name after
                     # @file. We must strip the complete path from $file.
                     # we do that using the basename function from
@@ -1157,8 +1217,8 @@ sub check_for_non_bool_operators ()
                 if ($found_bool == 0
                     && (/[^\w]bool\s*$/
                         || /^bool\s*$/
-                        || /\sbool\s\w/
-                        || /^bool\s\w/
+                        || /\sbool\s+\w/
+                        || /^bool\s+\w/
                         || /[^\w]return\s*$/))
                   {
                     $found_bool = 1;
@@ -1193,7 +1253,7 @@ sub check_for_non_bool_operators ()
     }
 }
 
-# This test verifies that all filenames are short enough 
+# This test verifies that all filenames are short enough
 
 sub check_for_long_file_names ()
 {
@@ -1201,21 +1261,21 @@ sub check_for_long_file_names ()
     my $max_mpc_filename = $max_filename - 20;
     print "Running file names check\n";
 
-    foreach $file (@files_cpp, @files_inl, @files_h, @files_html, 
-                   @files_dsp, @files_dsw, @files_gnu, @files_idl, 
-                   @files_pl, @files_changelog, @files_makefile, 
+    foreach $file (@files_cpp, @files_inl, @files_h, @files_html,
+                   @files_dsp, @files_dsw, @files_gnu, @files_idl,
+                   @files_pl, @files_changelog, @files_makefile,
                    @files_bor ) {
-        if ( length( basename($file) ) >= $max_filename ) 
+        if ( length( basename($file) ) >= $max_filename )
         {
             print_error ("File name $file exceeds $max_filename chars.");
         }
     }
     foreach $file (@files_mpc) {
-        if ( length( basename($file) ) >= $max_mpc_filename ) 
+        if ( length( basename($file) ) >= $max_mpc_filename )
         {
             print_warning ("File name $file exceeds $max_mpc_filename chars.");
         }
-  
+
     }
 }
 
@@ -1289,6 +1349,8 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_empty_inline_files () if ($opt_l >= 1);
+check_for_msc_ver_string () if ($opt_l >= 6);
 check_for_noncvs_files () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 6);
 check_for_dependency_file () if ($opt_l >= 1);

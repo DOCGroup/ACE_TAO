@@ -16,7 +16,7 @@ Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, ACE_TEXT("%s"), ACE_TEXT("# tests timeout facility\n"));
+  ACE_OS::strcpy (buf, ACE_TEXT("# tests timeout facility\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -50,8 +50,7 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
        }
 
   if (ACE_Reactor::instance ()->schedule_timer (this,
-                                                ACE_reinterpret_cast (void *,
-                                                                      arg),
+                                                reinterpret_cast<void *> (arg),
                                                       delta,
                                                       interval) == -1)
     return -1;
@@ -81,7 +80,7 @@ Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
   // Cast arg to a long, first, because a pointer is the same
   // size as a long on all current ACE platforms.
   ACE_DEBUG ((LM_INFO,
-              "time for this(%u) expired at (%d, %d) with arg = %d\n",
+              ACE_TEXT ("time for this(%u) expired at (%d, %d) with arg = %d\n"),
              this, tv.sec (), tv.usec (), (int) (long) arg));
   return 0;
 }

@@ -751,17 +751,15 @@ ACE_Scheduler_Factory::preemption_priority (void)
       // call the type conversion operator.  So, call it explicitly.
 #if defined (HPUX) && !defined (__GNUG__)
       const RtecScheduler::Preemption_Priority_t preemption_priority =
-        ACE_static_cast (RtecScheduler::Preemption_Priority_t,
-                         tss->operator RtecScheduler_Preemption_Priority_t ());
+        static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler_Preemption_Priority_t ());
 #else
       const RtecScheduler::Preemption_Priority_t preemption_priority =
-        ACE_static_cast (RtecScheduler::Preemption_Priority_t,
-                         tss->operator RtecScheduler::Preemption_Priority_t ());
+        static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler::Preemption_Priority_t ());
 #endif /* HPUX && !g++ */
       return preemption_priority;
     }
   else
-    return ACE_static_cast (RtecScheduler::Preemption_Priority_t, -1);
+    return static_cast<RtecScheduler::Preemption_Priority_t> (-1);
 }
 
 void
@@ -888,4 +886,6 @@ template class TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYN
 #pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #pragma instantiate TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>
 #pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex> *ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

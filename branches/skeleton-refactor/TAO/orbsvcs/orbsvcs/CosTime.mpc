@@ -18,4 +18,11 @@ project(CosTime) : orbsvcslib, core, portableserver {
       Time
     }
   }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTime.pc.in
+  }
 }

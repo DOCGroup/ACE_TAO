@@ -1,6 +1,7 @@
 // $Id$
 #include "ace/Configuration.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 
 // Can remove this when import_config and export_config are removed from
@@ -1071,8 +1072,7 @@ int
 ACE_Configuration_Win32Registry::load_key (const ACE_Configuration_Section_Key& key,
                                            HKEY& hKey)
 {
-  ACE_Section_Key_Win32* pKey = ACE_dynamic_cast (ACE_Section_Key_Win32*,
-                                                  get_internal_key (key));
+  ACE_Section_Key_Win32* pKey = dynamic_cast<ACE_Section_Key_Win32*> (get_internal_key (key));
   if (!pKey)
     return -1;
 
@@ -1439,7 +1439,7 @@ ACE_Configuration_Heap::create_index (void)
         {
           // Attempt to clean up.
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("create_index\n")));
+                      ACE_LIB_TEXT ("create_index failed\n")));
           this->allocator_->remove ();
           return -1;
         }
@@ -1463,8 +1463,7 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
 {
   ACE_ASSERT (this->allocator_);
   ACE_Configuration_Section_Key_Heap* pKey =
-    ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
-                      get_internal_key (key));
+    dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
 
   if (!pKey)
     {
@@ -1807,8 +1806,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
 {
   ACE_ASSERT (this->allocator_);
   ACE_Configuration_Section_Key_Heap* pKey =
-    ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
-                      get_internal_key (key));
+    dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
   if (!pKey)
     return -1;
 
@@ -1857,8 +1855,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
   ACE_ASSERT (this->allocator_);
   // cast to a heap section key
   ACE_Configuration_Section_Key_Heap* pKey =
-    ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
-                      get_internal_key (key));
+    dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
   if (!pKey)
     return -1;  // not a heap key!
 

@@ -4,6 +4,8 @@
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
+
 
 ACE_RCSID(SPIPE_SAP, producer_read, "$Id$")
 

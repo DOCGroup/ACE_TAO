@@ -6,9 +6,9 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/HttpCharStream.h"
 
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
 #include "ACEXML/common/ZipCharStream.h"
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
 
 ACE_RCSID (common, StreamFactory, "$Id$")
 
@@ -37,7 +37,7 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
       ACE_NEW_RETURN (fstream, ACEXML_FileCharStream, 0);
       if (fstream->open (uri) != -1)
         return fstream;
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
       else
         {
           ACEXML_ZipCharStream* zstream = 0;
@@ -45,7 +45,7 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
           if (zstream->open (uri) != -1)
             return zstream;
         }
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
     }
   return 0;
 }

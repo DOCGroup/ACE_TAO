@@ -21,10 +21,6 @@
 #include "Scheduler_Generic.h"
 #include "ace/OS_NS_stdio.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Scheduler_Generic.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Sched, Scheduler_Generic, "$Id$")
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -232,7 +228,7 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *>
   status_t status = ACE_Scheduler::SUCCEEDED;
 
   // store number of tasks, based on registrations
-  tasks (ACE_static_cast (u_int, task_entries_.size ()));
+  tasks (static_cast<u_int> (task_entries_.size ()));
 
   if (output_level () > 0)
     {

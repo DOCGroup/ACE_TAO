@@ -26,20 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_SYNCSCOPE_POLICYC_H_
 #define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPE_POLICYC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "messaging_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
@@ -60,9 +63,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -71,7 +72,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -93,7 +94,7 @@ namespace Messaging
   const CORBA::PolicyType SYNC_SCOPE_POLICY_TYPE = 24U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY__VAR_OUT_CH_
@@ -122,7 +123,7 @@ namespace Messaging
 #define _MESSAGING_SYNCSCOPEPOLICY_CH_
   
   class TAO_Messaging_Export SyncScopePolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     typedef SyncScopePolicy_ptr _ptr_type;
@@ -143,7 +144,7 @@ namespace Messaging
     
     static SyncScopePolicy_ptr _nil (void)
     {
-      return (SyncScopePolicy_ptr)0;
+      return static_cast<SyncScopePolicy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -225,17 +226,17 @@ namespace TAO
 #define _MESSAGING_SYNCSCOPEPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Messaging_Export Objref_Traits<Messaging::SyncScopePolicy>
+  struct TAO_Messaging_Export Objref_Traits< ::Messaging::SyncScopePolicy>
   {
-    static Messaging::SyncScopePolicy_ptr duplicate (
-        Messaging::SyncScopePolicy_ptr
+    static ::Messaging::SyncScopePolicy_ptr duplicate (
+        ::Messaging::SyncScopePolicy_ptr
       );
     static void release (
-        Messaging::SyncScopePolicy_ptr
+        ::Messaging::SyncScopePolicy_ptr
       );
-    static Messaging::SyncScopePolicy_ptr nil (void);
+    static ::Messaging::SyncScopePolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        Messaging::SyncScopePolicy_ptr p,
+        ::Messaging::SyncScopePolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -251,13 +252,13 @@ TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::SyncScopePolicy_
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::SyncScopePolicy_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "Messaging_SyncScope_PolicyC.i"
+#include "Messaging_SyncScope_PolicyC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -268,4 +269,5 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

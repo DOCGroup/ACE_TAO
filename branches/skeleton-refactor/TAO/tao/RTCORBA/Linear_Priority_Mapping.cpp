@@ -9,12 +9,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Linear_Priority_Mapping.i"
-#endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID (Strategies, 
-           Linear_Priority_Mapping, 
+ACE_RCSID (RTCORBA,
+           Linear_Priority_Mapping,
            "$Id$")
 
 TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)
@@ -32,7 +28,7 @@ CORBA::Boolean
 TAO_Linear_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                         RTCORBA::NativePriority &native_priority)
 {
-  if (corba_priority < RTCORBA::minPriority 
+  if (corba_priority < RTCORBA::minPriority
            // The line below will always be false unless the value of
            // RTCORBA::maxPriority, which is now assigned the value of
            // 32767, is changed in RTCORBA.pidl.

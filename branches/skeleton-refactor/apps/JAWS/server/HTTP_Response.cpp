@@ -203,7 +203,7 @@ HTTP_Response::normal_response (void)
           char *auth
             = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
 
-          if (mmapfile.map ("jaws.auth") != -1
+          if (mmapfile.map (ACE_TEXT ("jaws.auth")) != -1
 	      && auth != 0
               && ACE_OS::strstr((const char *) mmapfile.addr (), auth) != 0)
             this->io_.receive_file (this->request_.path (),

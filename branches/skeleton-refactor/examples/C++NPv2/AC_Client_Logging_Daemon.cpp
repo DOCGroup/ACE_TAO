@@ -89,6 +89,14 @@ protected:
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
      int reuse_addr, int flags, int perms);
 
+  virtual int connect_svc_handler
+    (AC_Output_Handler *&svc_handler,
+     AC_Output_Handler *&sh_copy,
+     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_Time_Value *timeout,
+     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     int reuse_addr, int flags, int perms);
+
   // Pointer to <AC_Output_Handler> we're connecting.
   AC_Output_Handler *handler_;
 
@@ -136,7 +144,7 @@ public:
 
 int AC_Output_Handler::open (void *connector) {
   connector_ =
-    ACE_static_cast (AC_CLD_Connector *, connector);
+    static_cast<AC_CLD_Connector *> (connector);
   int bufsiz = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   peer ().set_option (SOL_SOCKET, SO_SNDBUF,
                       &bufsiz, sizeof bufsiz);
@@ -327,7 +335,7 @@ int AC_CLD_Connector::connect_svc_handler
        local_addr, reuse_addr, flags, perms) == -1) return -1;
   SSL_clear (ssl_);
   SSL_set_fd (ssl_,
-              ACE_reinterpret_cast (int, svc_handler->get_handle ()));
+              reinterpret_cast<int> (svc_handler->get_handle ()));
 
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
 
@@ -335,6 +343,18 @@ int AC_CLD_Connector::connect_svc_handler
       || SSL_shutdown (ssl_) == -1) return -1;
   remote_addr_ = remote_addr;
   return 0;
+}
+
+int AC_CLD_Connector::connect_svc_handler
+    (AC_Output_Handler *&svc_handler,
+     AC_Output_Handler *&sh_copy,
+     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_Time_Value *timeout,
+     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     int reuse_addr, int flags, int perms) {
+  sh_copy = svc_handler;
+  return this->connect_svc_handler (svc_handler, remote_addr, timeout,
+                                    local_addr, reuse_addr, flags, perms);
 }
 
 int AC_CLD_Connector::reconnect () {
@@ -373,12 +393,10 @@ int AC_Client_Logging_Daemon::init
   for (int c; (c = get_opt ()) != -1;)
     switch (c) {
     case 'p': // Client logging daemon acceptor port number.
-      cld_port = ACE_static_cast
-        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
+      cld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 'r': // Server logging daemon acceptor port number.
-      sld_port = ACE_static_cast
-        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
+      sld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 's': // Server logging daemon hostname.
       ACE_OS::strsncpy

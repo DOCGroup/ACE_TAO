@@ -170,8 +170,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "static " << node->local_name () << "_ptr _nil (void)"
       << be_nl
       << "{" << be_idt_nl
-      << "return (" << node->local_name ()
-      << "_ptr)0;" << be_uidt_nl
+      << "return static_cast<" << node->local_name ()
+      << "_ptr> (0);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   if (be_global->any_support ())
@@ -207,11 +207,31 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  if (node->session_component_child () == 1)
+    {
+      *os << "// These two are inherited from SessionComponent." 
+          << be_nl << be_nl
+          << "virtual void ciao_preactivate (" << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << ")" << be_nl
+          << "ACE_THROW_SPEC ((" << be_idt_nl
+          << "CORBA::SystemException," << be_nl
+          << "::Components::CCMException" << be_uidt_nl
+          << "));" << be_uidt_nl << be_nl
+          << "virtual void ciao_postactivate (" << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << ")" << be_nl
+          << "ACE_THROW_SPEC ((" << be_idt_nl
+          << "CORBA::SystemException," << be_nl
+          << "::Components::CCMException" << be_uidt_nl
+          << "));" << be_uidt_nl << be_nl;
+    }
+
   if (! node->is_abstract ())
     {
       node->analyze_parentage ();
     }
-
+    
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
   // we have to override _add_ref() to avoid ambiguity.
   if (node->has_mixed_parentage ())
@@ -411,7 +431,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
           be_operation new_op (op->return_type (),
                                op->flags (),
                                &item_new_name,
-                               op->is_local (),
+                               node->is_local (),
                                op->is_abstract ());
           new_op.set_defined_in (node);
           be_visitor_interface::add_abstract_op_args (op,

@@ -33,7 +33,7 @@ public:
   Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
   Peer_Router<PEER_HANDLER, KEY> *router (void);
 
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the acceptor when it's linked dynamically.
 
 private:
@@ -97,7 +97,7 @@ protected:
   ACE_Map_Manager <PEER_KEY, PEER_HANDLER *, ACE_RW_Mutex> peer_map_;
 
   // Dynamic linking initialization hooks inherited from ACE_Task.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini (void);
 
   // Factory for accepting new PEER_HANDLERs.

@@ -39,6 +39,8 @@ ACE_RCSID (tests,
 
 #if defined (VXWORKS) || defined(CHORUS)
 #define TEST_DIR "log"
+#define DIR_DOT "."
+#define DIR_DOT_DOT ".."
 #define TEST_ENTRY ".."
 #else
 #  define TEST_DIR "../tests"
@@ -152,11 +154,34 @@ dirent_count (const ACE_TCHAR *dir_path,
               int &file_count,
               int recursion_level)
 {
+#if !defined (ACE_LACKS_CHDIR)
+
+# if defined (ACE_VXWORKS)
+  // VxWorks only allows full paths (incl. device spec if applicable) to be specified
+  ACE_TCHAR full_path[MAXPATHLEN];
+  if (ACE_OS::getcwd (full_path, sizeof(full_path)) == NULL)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("getcwd: failed\n")),
+                      -1);
+  if ((ACE_OS::strlen (full_path) + 1 + ACE_OS::strlen (dir_path)) >= sizeof(full_path))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("getcwd: too long\n")),
+                      -1);
+  ACE_OS::strcat (ACE_OS::strcat (full_path, "/"), dir_path);
+  if (ACE_OS::chdir (full_path) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("chdir: %p\n"),
+                       full_path),
+                      -1);
+# else
   if (ACE_OS::chdir (dir_path) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("chdir: %p\n"),
                        dir_path),
                       -1);
+# endif
+#endif /* !ACE_LACKS_CHDIR */
+
   ACE_Dirent dir (ACE_TEXT ("."));
 
   // Since the dir struct d_name type changes depending on the setting
@@ -232,12 +257,23 @@ dirent_count (const ACE_TCHAR *dir_path,
                   local_dir_count));
               dir_count++;
 
+#if !defined (ACE_LACKS_CHDIR)
+# if defined (ACE_VXWORKS)
+              // Move back to parent directory.
+              if (ACE_OS::chdir (full_path) == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("chdir: %p\n"),
+                                   full_path),
+                                  -1);
+# else
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("chdir: %p\n"),
                                    dir_path),
                                   -1);
+# endif
+#endif /* !ACE_LACKS_CHDIR */
             }
           break;
         }

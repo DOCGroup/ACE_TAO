@@ -5,8 +5,8 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/os_include/os_ctype.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_ctype.h"
 
 // The following #include is needed only for the instantiation pragmas.
 #include "Trader_Interfaces.h"
@@ -76,22 +76,22 @@ TAO_Trader_Base::trading_components (void) const
 }
 
 CORBA::Boolean
-TAO_Trader_Base::is_valid_identifier_name (const char* ident)
+TAO_Trader_Base::is_valid_property_name (const char* ident)
 {
-  int return_value = 0;
+  bool return_value = false;
 
   if (ident == 0)
     return return_value;
 
   size_t length = ACE_OS::strlen (ident);
-  if (length >= 1 && isalpha (ident[0]))
+  if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
     {
-      return_value = 1;
+      return_value = true;
       for (size_t i = 0; i < length; i++)
         {
-          if (! (isalnum (ident[i]) || ident[i] == '_'))
+          if (! (ACE_OS::ace_isalnum (ident[i]) || ident[i] == '_'))
             {
-              return_value = 0;
+              return_value = false;
               break;
             }
         }
@@ -99,6 +99,68 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
 
   return return_value;
 }
+
+CORBA::Boolean
+TAO_Trader_Base::is_valid_identifier_name (const char* ident)
+{
+  static char const * const double_colon = "::";
+
+  if (ident == 0)
+    return 0;
+
+  int return_value = 1;
+
+  // Allow scoped identifiers
+  CORBA::Boolean done = 0;
+  char const * pos =
+    ACE_OS::strstr (ident,
+                    double_colon);
+
+  do
+  {
+    if ('_' == ident[0])
+      {
+        // Treat escaped identifiers the same way as IDL
+        ++ident;
+      }
+
+    size_t length =
+      pos ? pos - ident : ACE_OS::strlen (ident);
+
+    if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
+      {
+        // First character must be alpha
+        for (size_t i = 0; i < length; ++i)
+          {
+            if (! (ACE_OS::ace_isalnum (ident[i])
+                   || ident[i] == '_'))
+              {
+                // Subsequent characters is not alpha, numeric, or '_'
+                return_value = 0;
+                break;
+              }
+          }
+      }
+    else
+      return_value = 0;
+
+    if (pos)
+      {
+        // More identifiers
+        ident = pos + 2;
+        pos = ACE_OS::strstr (ident, double_colon);
+      }
+    else
+      {
+        // Last or only identifier
+        done = 1;
+      }
+  }
+  while (!done);
+
+  return return_value;
+}
+
 
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
@@ -608,26 +670,24 @@ TAO_Trader_Factory::manufacture_trader (void)
 #endif /* ACE_HAS_THREADS */
 
   TAO_TRADER* return_value = 0;
-  int components = ACE_static_cast (int, TAO_Trader_Base::LOOKUP);
+  int components = static_cast<int> (TAO_Trader_Base::LOOKUP);
 
   if (this->conformance_ >= TAO_TRADER_SIMPLE)
-    components |= ACE_static_cast (int, TAO_Trader_Base::REGISTER);
+    components |= static_cast<int> (TAO_Trader_Base::REGISTER);
 
   if (this->conformance_ >= TAO_TRADER_STANDALONE)
-    components |= ACE_static_cast (int, TAO_Trader_Base::ADMIN);
+    components |= static_cast<int> (TAO_Trader_Base::ADMIN);
 
   if (this->conformance_ >= TAO_TRADER_LINKED)
-    components |= ACE_static_cast (int, TAO_Trader_Base::LINK);
+    components |= static_cast<int> (TAO_Trader_Base::LINK);
 
   if (this->threadsafe_)
     ACE_NEW_RETURN (return_value,
-                    MT_TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
-                                                components)),
+                    MT_TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
                     0);
   else
     ACE_NEW_RETURN (return_value,
-                    TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
-                                             components)),
+                    TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
                     0);
 
   TAO_Import_Attributes_i &import_attributes =
@@ -728,8 +788,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
           if (arg_shifter.is_parameter_next ())
             {
               CORBA::ULong value =
-                ACE_static_cast (CORBA::ULong,
-                                 ACE_OS::atoi (arg_shifter.get_current ()));
+                static_cast<CORBA::ULong> (ACE_OS::atoi (arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
 
               if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("card")))

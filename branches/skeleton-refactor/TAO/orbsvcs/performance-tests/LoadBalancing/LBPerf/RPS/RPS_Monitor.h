@@ -58,7 +58,7 @@ public:
   /// LoadMonitor resides.
   /**
    * @return A "Load" sequence of length 1 that contains a LoadId
-   *         equal to CosLoadBalancing::CPU, and the average CPU
+   *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
   virtual CosLoadBalancing::LoadList * loads (

@@ -121,17 +121,12 @@ TAO_PSDL_Struct_Visitor::visit_predefined_type (TAO_PSDL_Predefined_Type *predef
       *ps_sh << "{";
       ps_sh->nl ();
 
-      *ps_sh << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)";
-
-      ps_sh->incr_indent ();
       ps_sh->nl ();
 
       *ps_sh << "typedef " << this->struct_name_ << "_var _var_type;\n";
 
-      ps_sh->decr_indent ();
       ps_sh->nl ();
 
-      *ps_sh << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n";
       ps_sh->nl ();
 
       *ps_sh << "static void _tao_any_destructor (void*);";
@@ -442,7 +437,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_si (void)
   ps_si->incr_indent (0); ps_si->nl ();
   *ps_si << "_tc_" << this->struct_name_ << ","; ps_si->nl ();
   *ps_si << "1,"; ps_si->nl ();
-  *ps_si << "ACE_static_cast (void *, tmp),"; ps_si->nl ();
+  *ps_si << "static_cast<void *> (tmp),"; ps_si->nl ();
   *ps_si << this->struct_name_ << "::_tao_any_destructor";
 
   ps_si->decr_indent (0); ps_si->nl ();

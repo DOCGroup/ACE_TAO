@@ -96,7 +96,6 @@ namespace CORBA
   // Some more typecodes in the CORBA namespace. We keep adding
   // to this list as we find more and more things being introduced
   // to the CORBA namespace.
-  TypeCode_ptr  _tc_ORBid = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
      TypeCode_ptr  _tc_NamedValue = 0;
@@ -311,30 +310,6 @@ namespace TAO
                               1,
                               sizeof (CORBA::TypeCode::BadKind)));
 
-    static const CORBA::Long _oc_CORBA_ORBid[] =
-    {
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      28, ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x434f5242),
-      ACE_NTOHL (0x412f4f52),
-      ACE_NTOHL (0x4269643a),
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ORBid:1.0
-      6,
-      ACE_NTOHL (0x4f524269),
-      ACE_NTOHL (0x64000000),  // name = ORBid
-      CORBA::tk_string,
-      0, // string length
-    };
-
-    ACE_NEW (CORBA::_tc_ORBid,
-             CORBA::TypeCode (CORBA::tk_alias,
-                              sizeof (_oc_CORBA_ORBid),
-                              (char *) &_oc_CORBA_ORBid,
-                              0,
-                              sizeof (CORBA::ORBid)));
-
   #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     static const CORBA::Long _oc_corba_NamedValue[] =
@@ -494,8 +469,6 @@ namespace TAO
     CORBA::release (CORBA::TypeCode::_tc_Bounds);
 
     CORBA::release (CORBA::TypeCode::_tc_BadKind);
-
-    CORBA::release (CORBA::_tc_ORBid);
 
   #if (TAO_HAS_MINIMUM_CORBA == 0)
 

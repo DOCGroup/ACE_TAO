@@ -3,7 +3,7 @@
 #include "ace/OS_NS_sys_time.h"
 
 ACE_INLINE void
-TAO_Notify_Method_Request::init (const TAO_Notify_Event_var& event)
+TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event * event)
 {
   // Set the parameters that affect queuing in the message queue.
   // The ACE_Message_Block priorities go from 0 (lowest) to ULONG_MAX
@@ -32,8 +32,7 @@ TAO_Notify_Method_Request::init (const TAO_Notify_Event_var& event)
       ACE_Time_Value current = ACE_OS::gettimeofday () +
 # if defined (ACE_CONFIG_WIN32_H)
         ACE_Time_Value (
-                        ACE_static_cast (long,
-                                         timeout.value ()));
+                        static_cast<long> (timeout.value ()));
 # else
       ACE_Time_Value (timeout.value () / 1);
 # endif /* ACE_CONFIG_WIN32_H */

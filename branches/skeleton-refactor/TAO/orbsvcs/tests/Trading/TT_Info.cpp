@@ -9,11 +9,11 @@ ACE_RCSID(Trading, TT_Info, "$Id$")
 
 const char* TT_Info::INTERFACE_NAMES[] =
 {
-  "Remote_IO",
-  "Plotter",
-  "Printer",
-  "File_System",
-  "PostScript_Printer"
+  "TAO_Trader_Test::Remote_IO",
+  "TAO_Trader_Test::Plotter",
+  "TAO_Trader_Test::Printer",
+  "TAO_Trader_Test::File_System",
+  "TAO_Trader_Test::PostScript_Printer"
 };
 
 const char* TT_Info::REMOTE_IO_NAME = "Remote_IO";
@@ -131,12 +131,12 @@ const int TT_Info::NUM_QUERIES = 7;
 const char* TT_Info::QUERIES[][3] =
 {
   {INTERFACE_NAMES[REMOTE_IO], "", ""},
-  {INTERFACE_NAMES[REMOTE_IO], "Location ~ 'Cupples'", ""},
+  {INTERFACE_NAMES[REMOTE_IO], "'Cupples' ~ Location", ""},
   {INTERFACE_NAMES[PLOTTER], "'sbw1' in User_Queue", "min Cost_Per_Page"},
-  {INTERFACE_NAMES[PLOTTER], "Num_Colors > 1 and Location ~ 'Cupples'", "min Cost_Per_Page"},
+  {INTERFACE_NAMES[PLOTTER], "Num_Colors > 1 and 'Cupples' ~ Location", "min Cost_Per_Page"},
   {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > 3 and Color == TRUE", "with 'sbw1' in User_Queue"},
   {INTERFACE_NAMES[PRINTER], "Color == TRUE or Double_Sided == TRUE", "random"},
-  {INTERFACE_NAMES[PRINTER], "(Color or Double_Sided) and 'sbw1' in User_Queue", "with Location ~ 'Cupples'"}
+  {INTERFACE_NAMES[PRINTER], "(Color or Double_Sided) and 'sbw1' in User_Queue", "with 'Cupples' ~ Location"}
 };
 
 void

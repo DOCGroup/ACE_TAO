@@ -1,15 +1,17 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "concrete_classes.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
+
+ACE_RCSID (IFRService,
            Contained_i,
            "$Id$")
-           
+
+
 const char *TAO_Contained_i::tmp_name_holder_ = 0;
 
 TAO_Contained_i::TAO_Contained_i (
@@ -143,7 +145,7 @@ TAO_Contained_i::id_i (const char *id
        == 0)
     {
       // Repository id already exists.
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, 
+      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2,
                                    CORBA::COMPLETED_NO));
     }
 
@@ -331,7 +333,7 @@ TAO_Contained_i::defined_in_i (ACE_ENV_SINGLE_ARG_DECL)
                                             container_id.c_str (),
                                             container_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (container_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -373,6 +375,26 @@ TAO_Contained_i::containing_repository (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->repo_->repo_objref ();
+}
+
+CORBA::Contained::Description *
+TAO_Contained_i::describe (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // This will always be overridden by derived classes.
+  return 0;
+}
+
+CORBA::Contained::Description *
+TAO_Contained_i::describe_i (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // This will always be overridden by derived classes.
+  return 0;
 }
 
 void
@@ -520,61 +542,32 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
 {
   CORBA::Repository_var my_repo = this->repo_->repo_objref ();
 
-  CORBA::DefinitionKind container_dk = 
+  CORBA::DefinitionKind container_dk =
     TAO_IFR_Service_Utils::reference_to_def_kind (new_container,
                                                   this->repo_);
 
   ACE_Configuration_Section_Key container_key;
-  TAO_Container_i *container_impl = 0;
-  TAO_Contained_i *contained_impl = 0;
 
   // Check that we're not trying to move to a different repository,
   // and set the container impl, used in each switch case below.
   if (container_dk == CORBA::dk_Repository)
     {
-      if (my_repo.in () != new_container)
-        {
-          ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 4, 
-                                       CORBA::COMPLETED_NO));
-        }
-
       container_key = this->repo_->root_key ();
-
-      container_impl = this->repo_;
     }
   else
     {
-      // The only case where a container is not also a contained is
-      // CORBA::Repository, which is covered by the other IF branch, so
-      // we're ok here.
       ACE_TString container_path (
           TAO_IFR_Service_Utils::reference_to_path (new_container)
         );
-      contained_impl = 
-        TAO_IFR_Service_Utils::path_to_contained (container_path,
-                                                  this->repo_);
-
-      CORBA::Repository_var your_repo =
-        contained_impl->containing_repository (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      if (my_repo.in () != your_repo.in ())
-        {
-          ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 4,
-                                       CORBA::COMPLETED_NO));
-        }
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            container_path,
                                            container_key,
                                            0);
-
-      container_impl = 
-        TAO_IFR_Service_Utils::path_to_container (container_path,
-                                                  this->repo_);
     }
 
-  CORBA::DefinitionKind my_dk = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::DefinitionKind my_dk =
+    this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -594,13 +587,19 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
   // Used for cleanup at the end of this function.
   ACE_Configuration_Section_Key old_section_key = this->section_key_;
 
-  CORBA::String_var container_id = 
-    contained_impl->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Contained_i as_contained (this->repo_);
+  as_contained.section_key (container_key);
+
+  CORBA::String_var container_id =
+    as_contained.id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_TString new_id (container_id.in ());
-  new_id = 
+  new_id =
     new_id.substr (0, new_id.rfind (':')) + "/" + new_name + ":" + new_version;
+
+  TAO_Container_i container_impl (this->repo_);
+  container_impl.section_key (container_key);
 
   ACE_TRY
     {
@@ -612,7 +611,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_EnumDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::EnumMemberSeq_var members = 
+          CORBA::EnumMemberSeq_var members =
             impl.members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -628,12 +627,17 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
             }
 
           CORBA::EnumDef_var new_defn =
-            container_impl->create_enum_i (new_id.c_str (),
-                                           new_name,
-                                           new_version,
-                                           members.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+            container_impl.create_enum_i (new_id.c_str (),
+                                          new_name,
+                                          new_version,
+                                          members.in ()
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+
           break;
         }
         case CORBA::dk_Alias:
@@ -641,24 +645,30 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_AliasDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::IDLType_var otype = 
+          CORBA::IDLType_var otype =
             impl.original_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          container_impl->create_alias_i (new_id.c_str (),
+          CORBA::AliasDef_var new_defn =
+            container_impl.create_alias_i (new_id.c_str (),
                                           new_name,
                                           new_version,
                                           otype.in ()
                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+
           break;
         }
         case CORBA::dk_Native:
         {
-          container_impl->create_native_i (new_id.c_str (),
-                                           new_name,
-                                           new_version
-                                           ACE_ENV_ARG_PARAMETER);
+          container_impl.create_native_i (new_id.c_str (),
+                                          new_name,
+                                          new_version
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           break;
         }
@@ -667,16 +677,22 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_ValueBoxDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::IDLType_var otype = 
+          CORBA::IDLType_var otype =
             impl.original_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          container_impl->create_value_box_i (new_id.c_str (),
+          CORBA::ValueBoxDef_var new_defn =
+            container_impl.create_value_box_i (new_id.c_str (),
                                               new_name,
                                               new_version,
                                               otype.in ()
                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
+
           break;
         }
         case CORBA::dk_Struct:
@@ -684,7 +700,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_StructDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::StructMemberSeq_var members = 
+          CORBA::StructMemberSeq_var members =
             impl.members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -700,12 +716,16 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
             }
 
           CORBA::StructDef_var new_defn =
-            container_impl->create_struct_i (new_id.c_str (),
-                                             new_name,
-                                             new_version,
-                                             members.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+            container_impl.create_struct_i (new_id.c_str (),
+                                            new_name,
+                                            new_version,
+                                            members.in ()
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
 
           this->move_contents (new_defn.in ()
                                ACE_ENV_ARG_PARAMETER);
@@ -721,7 +741,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
             impl.discriminator_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::UnionMemberSeq_var members = 
+          CORBA::UnionMemberSeq_var members =
             impl.members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -737,13 +757,17 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
             }
 
           CORBA::UnionDef_var new_defn =
-            container_impl->create_union_i (new_id.c_str (),
-                                            new_name,
-                                            new_version,
-                                            disc_type.in (),
-                                            members.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+            container_impl.create_union_i (new_id.c_str (),
+                                           new_name,
+                                           new_version,
+                                           disc_type.in (),
+                                           members.in ()
+                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
 
           this->move_contents (new_defn.in ()
                                ACE_ENV_ARG_PARAMETER);
@@ -753,10 +777,10 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
         case CORBA::dk_Module:
         {
           CORBA::ModuleDef_var new_defn =
-            container_impl->create_module_i (new_id.c_str (),
-                                             new_name,
-                                             new_version
-                                             ACE_ENV_ARG_PARAMETER);
+            container_impl.create_module_i (new_id.c_str (),
+                                            new_name,
+                                            new_version
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->move_contents (new_defn.in ()
@@ -769,16 +793,16 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_ExceptionDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::StructMemberSeq_var members = 
+          CORBA::StructMemberSeq_var members =
             impl.members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::ExceptionDef_var new_defn =
-            container_impl->create_exception_i (new_id.c_str (),
-                                                new_name,
-                                                new_version,
-                                                members.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+            container_impl.create_exception_i (new_id.c_str (),
+                                               new_name,
+                                               new_version,
+                                               members.in ()
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->move_contents (new_defn.in ()
@@ -796,12 +820,16 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           ACE_TRY_CHECK;
 
           CORBA::InterfaceDef_var new_defn =
-            container_impl->create_interface_i (new_id.c_str (),
-                                                new_name,
-                                                new_version,
-                                                bases.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+            container_impl.create_interface_i (new_id.c_str (),
+                                               new_name,
+                                               new_version,
+                                               bases.in ()
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          ACE_TString new_path =
+            TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
+          container_impl.update_refs (new_path.c_str ());
 
           this->move_contents (new_defn.in ()
                                ACE_ENV_ARG_PARAMETER);
@@ -813,19 +841,19 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_ConstantDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::IDLType_var type_def = 
+          CORBA::IDLType_var type_def =
             impl.type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::Any_var value = impl.value_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          container_impl->create_constant_i (new_id.c_str (),
-                                             new_name,
-                                             new_version,
-                                             type_def.in (),
-                                             value.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+          container_impl.create_constant_i (new_id.c_str (),
+                                            new_name,
+                                            new_version,
+                                            type_def.in (),
+                                            value.in ()
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           break;
         }
@@ -834,11 +862,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_AttributeDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::IDLType_var type_def = 
+          CORBA::IDLType_var type_def =
             impl.type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::AttributeMode mode = 
+          CORBA::AttributeMode mode =
             impl.mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -881,15 +909,15 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           TAO_OperationDef_i impl (this->repo_);
           impl.section_key (this->section_key_);
 
-          CORBA::IDLType_var result = 
+          CORBA::IDLType_var result =
             impl.result_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::OperationMode mode = 
+          CORBA::OperationMode mode =
             impl.mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::ParDescriptionSeq_var params = 
+          CORBA::ParDescriptionSeq_var params =
             impl.params_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -897,7 +925,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
             impl.exceptions_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::ContextIdSeq_var contexts = 
+          CORBA::ContextIdSeq_var contexts =
             impl.contexts_i (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -1020,7 +1048,7 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
                                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  char *container_path = 
+  char *container_path =
     TAO_IFR_Service_Utils::reference_to_path (container);
 
   ACE_Configuration_Section_Key container_key;
@@ -1116,7 +1144,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container
                                                          "def_kind",
                                                          kind);
               CORBA::DefinitionKind def_kind =
-                ACE_static_cast (CORBA::DefinitionKind, kind);
+                static_cast<CORBA::DefinitionKind> (kind);
 
               TAO_Contained_i *impl = this->repo_->select_contained (def_kind);
               impl->section_key (defn_key);
@@ -1225,4 +1253,3 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container
         }
     }
 }
-

@@ -29,13 +29,11 @@
 //
 
 Object1_impl::Object1_impl()
-  throw (CORBA::SystemException)
 {
 }
 
 
 Object1_impl::~Object1_impl()
-  throw (CORBA::SystemException)
 {
 }
 
@@ -44,7 +42,7 @@ void Object1_impl::method1(const char* activity,
     CORBA::Long seconds,
     char* &output
     ACE_ENV_ARG_DECL_NOT_USED)
-  throw (testSched::testSchedException)
+  ACE_THROW_SPEC ((CORBA::SystemException, testSched::testSchedException))
 {
   const int scale_factor = 2000;
   int work;
@@ -58,8 +56,6 @@ void Object1_impl::method1(const char* activity,
                    ACE::timestamp(date_and_time, time_size),
                    activity);
   ACE_DEBUG((LM_DEBUG,"%s",buf));
-
-
 
   if (ACE_OS::strcmp(activity,"Client1") == 0)
     {

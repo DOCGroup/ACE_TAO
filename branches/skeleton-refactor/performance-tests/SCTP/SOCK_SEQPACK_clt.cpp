@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_Memory.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
@@ -41,26 +42,26 @@ ACE_UINT32 const microsec_clock_scale_factor = ACE_High_Res_Timer::global_scale_
 // file readability.
 HIST runTest(ACE_SOCK_SEQPACK_Association &);
 
-int main(int argc, char **argv){
+int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // Initialize the options manager
-  Options_Manager optsMgr(argc, argv, "client-opts");
+  Options_Manager optsMgr(argc, argv, ACE_TEXT ("client-opts"));
 
   // show usage is requested
   if (optsMgr._usage) {
-    optsMgr._show_usage(cerr, "client-opts");
+    optsMgr._show_usage(stderr, ACE_TEXT ("client-opts"));
     return 1;
   }
 
 #ifndef ACE_HAS_SCTP
   ACE_ERROR_RETURN((LM_ERROR,
-                    "SCTP was NOT installed/accessible when this binary was compiled.\n"),
+                    ACE_TEXT ("SCTP was NOT installed/accessible when this binary was compiled.\n")),
                    1);
 #endif
 
   // check that valid options were specified
   if (optsMgr._error) {
-    cerr << "ERROR: " << optsMgr._error_message << endl;
+    ACE_OS::fprintf (stderr, "ERROR: %s\n", ACE_TEXT_ALWAYS_CHAR (optsMgr._error_message));
     return 1;
   }
 
@@ -89,12 +90,12 @@ int main(int argc, char **argv){
                          0,clientAddr, 0, 0, 0, optsMgr.test_transport_protocol) == -1) /*, // ALL DEFAULT ARGUMENTS
                                                                                                  Options_Manager::test_transport_protocol) == -1) */
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "connection failed"),
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("connection failed")),
                       1);
 
   // run the test
-  HIST testResultsHistogram = NULL;
+  HIST testResultsHistogram = 0;
   // connection is closed by runTest* functions
   testResultsHistogram = runTest(dataStream);
 
@@ -174,8 +175,8 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
     nagle=1;
   if (-1 == stream.set_option(IPPROTO_SCTP, SCTP_NODELAY, &nagle, sizeof nagle))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "set_option"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("set_option")),
                       0);
 
   // prime the client and server before starting the test
@@ -186,33 +187,33 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
     if (-1 == stream.send_n (&msgLenExpressed, ACE_CDR::LONG_SIZE, 0, &bt))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n")),
                         0);
 
     // send a message
     if (-1 == stream.send_n (buf, msgLen, 0, &bt))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n")),
                         0);
 
     // block for a Short reply
     ACE_CDR::Short reply;
     if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "recv_n"),
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("recv_n")),
                        0);
   }
 
   // AFTER PRIMING THE PUMP CREATE THE HISTOGRAM
-  HIST aceStream_hist=NULL;
+  HIST aceStream_hist = 0;
   aceStream_hist = createHistogram(msgLen);
-  if (NULL == aceStream_hist)
+  if (0 == aceStream_hist)
     ACE_ERROR_RETURN((LM_ERROR,
-                      "%p\n",
-                      "histogram create failed"),
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("histogram create failed")),
                      0);
 
   iovec iov[2];
@@ -223,45 +224,43 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
     startTime = ACE_OS::gethrtime();
     if (!startTime)
       ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "ACE_OS::gethrtime()"),
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("ACE_OS::gethrtime()")),
                        0);
 
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
-    iov[0].iov_base = ACE_reinterpret_cast(char *, &msgLenExpressed);
+    iov[0].iov_base = reinterpret_cast<char *> (&msgLenExpressed);
     iov[0].iov_len = ACE_CDR::LONG_SIZE;
-    iov[1].iov_base = ACE_reinterpret_cast(char *, buf);
+    iov[1].iov_base = reinterpret_cast<char *> (buf);
     iov[1].iov_len = msgLen;
 
     if (-1 == stream.sendv_n (iov, 2))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n")),
                         0);
 
     // block for a Short reply
     ACE_CDR::Short reply;
     if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "recv_n"),
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("recv_n")),
                        0);
 
     // get the end time
     endTime = ACE_OS::gethrtime();
     if (!endTime)
       ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "ACE_OS::gethrtime()"),
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("ACE_OS::gethrtime()")),
                        0);
 
     // compute the message latency in micro-seconds
     messageLatency_usec =
 
-      (ACE_static_cast(double,
-                       ACE_UINT64_DBLCAST_ADAPTER(endTime)) -
-       ACE_static_cast(double,
-                       ACE_UINT64_DBLCAST_ADAPTER(startTime)))
+      (static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(endTime)) -
+       static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(startTime)))
 
       / microsec_clock_scale_factor;
 
@@ -288,13 +287,13 @@ HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
   size_t msgLen = 1;
   for (int i=1; i <= Options_Manager::payload_size_power_of_2; i++)
     msgLen *= 2;
-  
+
 
 
   // send a header to the server that contains test parameters
   if (sendHeader(stream) < 0)
     ACE_ERROR_RETURN((LM_ERROR,
-                      "Could NOT Send CDR Encoded Header"),
+                      ACE_TEXT ("Could NOT Send CDR Encoded Header")),
                      0);
 
   // create the forward message buffer

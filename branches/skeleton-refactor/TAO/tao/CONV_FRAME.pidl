@@ -3,20 +3,18 @@
  *
  * $Id$
  *
- * This file is used to generate CONV_FRAMEC.{h,i,cpp}, using the
+ * This file is used to generate CONV_FRAMEC.{h,inl,cpp}, using the
  * following command:
  *
  *   tao_idl
  *        -o orig -Ge 1 -GT -GA
  *        -Wb,export_macro=TAO_Export
- *        -Wb,export_include=TAO_Export.h
+ *        -Wb,export_include="tao/TAO_Export.h"
  *        -Wb,pre_include="ace/pre.h"
  *        -Wb,post_include="ace/post.h"
  *        CONV_FRAME.pidl
  *
- * Remember to patch the generated files using the patch command. Look
- * at diff/CONV_FRAME.diff for the patches.
- *
+ * The files are ready to use.
  */
 
 #ifndef TAO_CORBA_CONV_FRAME_PIDL

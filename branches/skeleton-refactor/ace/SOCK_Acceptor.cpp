@@ -229,8 +229,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   if (protocol_family == PF_INET6)
     {
       sockaddr_in6 local_inet6_addr;
-      ACE_OS::memset (ACE_reinterpret_cast (void *,
-                                            &local_inet6_addr),
+      ACE_OS::memset (reinterpret_cast<void *> (&local_inet6_addr),
                       0,
                       sizeof local_inet6_addr);
 
@@ -241,15 +240,13 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet6_addr.sin6_addr = in6addr_any;
         }
       else
-        local_inet6_addr = *ACE_reinterpret_cast (sockaddr_in6 *,
-                                                  local_sap.get_addr ());
+        local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
 
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
       // ACE_LACKS_WILDCARD_BIND.
       if (ACE_OS::bind (this->get_handle (),
-                        ACE_reinterpret_cast (sockaddr *,
-                                              &local_inet6_addr),
+                        reinterpret_cast<sockaddr *> (&local_inet6_addr),
                         sizeof local_inet6_addr) == -1)
         error = 1;
     }
@@ -258,8 +255,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   if (protocol_family == PF_INET)
     {
       sockaddr_in local_inet_addr;
-      ACE_OS::memset (ACE_reinterpret_cast (void *,
-                                            &local_inet_addr),
+      ACE_OS::memset (reinterpret_cast<void *> (&local_inet_addr),
                       0,
                       sizeof local_inet_addr);
 
@@ -268,8 +264,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet_addr.sin_port = 0;
         }
       else
-        local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
-                                                 local_sap.get_addr ());
+        local_inet_addr = *reinterpret_cast<sockaddr_in *> (local_sap.get_addr ());
       if (local_inet_addr.sin_port == 0)
         {
           if (ACE::bind_port (this->get_handle (),
@@ -277,8 +272,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
             error = 1;
         }
       else if (ACE_OS::bind (this->get_handle (),
-                             ACE_reinterpret_cast (sockaddr *,
-                                                   &local_inet_addr),
+                             reinterpret_cast<sockaddr *> (&local_inet_addr),
                              sizeof local_inet_addr) == -1)
         error = 1;
     }

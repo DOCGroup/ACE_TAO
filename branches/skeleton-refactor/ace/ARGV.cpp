@@ -183,7 +183,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
     }
 
   // Put the new argument at the end of the queue.
-  if (this->queue_.enqueue_tail ((ACE_TCHAR *) next_arg) == -1)
+  if (this->queue_.enqueue_tail (const_cast <ACE_TCHAR *> (next_arg)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Can't add more to ARGV queue")),
                       -1);

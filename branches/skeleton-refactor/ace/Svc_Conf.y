@@ -172,9 +172,7 @@ module
                                                 svc_type,
                                                 ACE_SVC_CONF_PARAM->yyerrno);
           ACE_Stream_Type *st =
-            ACE_dynamic_cast (ACE_Stream_Type *,
-                              ACE_const_cast (ACE_Service_Type_Impl *,
-                                              module->record ()->type ()));
+            dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (module->record ()->type ()));
 
           if (mt->init (args.argc (), args.argv ()) == -1
               || st->push (mt) == -1)
@@ -224,9 +222,7 @@ module
                                             ACE_SVC_CONF_PARAM->yyerrno);
 
       ACE_Stream_Type *st =
-        ACE_dynamic_cast (ACE_Stream_Type *,
-                          ACE_const_cast (ACE_Service_Type_Impl *,
-                                          stream->record ()->type ()));
+        dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (stream->record ()->type ()));
       if (mt != 0 && st->remove (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -363,9 +359,7 @@ ace_get_module (ACE_Static_Node *str_rec,
   const ACE_Service_Type_Impl *type = sr->type ();
   ACE_Stream_Type *st = sr == 0
     ? 0
-    : ACE_dynamic_cast (ACE_Stream_Type *,
-                        ACE_const_cast (ACE_Service_Type_Impl *,
-                                        type));
+    : dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (type));
   ACE_Module_Type *mt = st == 0 ? 0 : st->find (svc_name);
 
   if (sr == 0 || st == 0 || mt == 0)

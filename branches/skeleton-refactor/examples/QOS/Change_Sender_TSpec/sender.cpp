@@ -40,7 +40,7 @@
 
 int
 FillQoSParams (ACE_QoS_Params &qos_params,
-               iovec* iov, 
+               iovec* iov,
                ACE_QoS* qos)
 {
   qos_params.callee_data (iov);
@@ -53,8 +53,8 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 }
 
 int
-main (int argc, char * argv[])
-{  
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
+{
 
   ACE_DEBUG ((LM_DEBUG,
               "Sender\n"));
@@ -88,7 +88,7 @@ main (int argc, char * argv[])
                                                             25,
                                                             1)))
          {
-         case 1 : 
+         case 1 :
            ACE_ERROR_RETURN ((LM_ERROR,
                               "Unable to bind the new flow spec\n"
                               "The Flow Spec name already exists\n"),
@@ -100,7 +100,7 @@ main (int argc, char * argv[])
                              -1);
            break;
          }
-    
+
        ACE_DEBUG ((LM_DEBUG,
                    "g_711 Flow Spec bound successfully\n"));
 
@@ -115,31 +115,31 @@ main (int argc, char * argv[])
        else
          ACE_DEBUG ((LM_DEBUG,
                      "Filled up the Sender QoS parameters\n"));
-       
+
        // Opening a new Multicast Datagram. It is absolutely necessary that
        // the sender and the receiver subscribe to the same multicast
        // addresses to make sure the "multicast sessions" for the two are
        // the same. This is used to match the RESV<->PATH states.
        ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos;
-       
+
       // Multicast Session Address specified by user at command line.
-      // If this address is not specified, 
-      // <localhost:ACE_DEFAULT_MULTICAST_PORT> is assumed. 
+      // If this address is not specified,
+      // <localhost:ACE_DEFAULT_MULTICAST_PORT> is assumed.
        ACE_INET_Addr mult_addr (*(qos_util.mult_session_addr ()));
-      
+
       // Fill the ACE_QoS_Params to be passed to the <ACE_OS::join_leaf>
       // through subscribe.
-      
+
       ACE_QoS_Params qos_params;
       FillQoSParams (qos_params, 0, &ace_qos_sender);
-      
+
       // Create a QoS Session Factory.
       ACE_QoS_Session_Factory session_factory;
-      
+
       // Ask the factory to create a QoS session.
-      ACE_QoS_Session *qos_session = 
+      ACE_QoS_Session *qos_session =
         session_factory.create_session ();
-      
+
       // Create a destination address for the QoS session. The same
       // address should be used for the subscribe call later. A copy is
       // made below only to distinguish the two usages of the dest
@@ -171,7 +171,7 @@ main (int argc, char * argv[])
       // done, the subscribe call will fail. A more abstract version of
       // subscribe will be added that constrains the various features of
       // GQoS like different flags etc.
-      
+
       if (dgram_mcast_qos.subscribe (mult_addr,
                                      qos_params,
                                      1,
@@ -181,8 +181,8 @@ main (int argc, char * argv[])
                                      0,
                                      0, // ACE_Protocol_Info,
                                      0,
-                                     ACE_OVERLAPPED_SOCKET_FLAG 
-                                     | ACE_FLAG_MULTIPOINT_C_LEAF 
+                                     ACE_OVERLAPPED_SOCKET_FLAG
+                                     | ACE_FLAG_MULTIPOINT_C_LEAF
                                      | ACE_FLAG_MULTIPOINT_D_LEAF,
                                      qos_session) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -195,7 +195,7 @@ main (int argc, char * argv[])
       int nIP_TTL = 25;
       char achInBuf [BUFSIZ];
       u_long dwBytes;
-  
+
       // Should this be abstracted into QoS objects ?? Doesnt seem to have
       // to do anything directly with QoS.
       if (ACE_OS::ioctl (dgram_mcast_qos.get_handle (), // Socket.

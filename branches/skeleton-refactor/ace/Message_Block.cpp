@@ -322,7 +322,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
     cur_size_ (0),          // Reset later if memory alloc'd ok
     max_size_ (0),
     flags_ (flags),
-    base_ ((char *) msg_data),
+    base_ (const_cast <char *> (msg_data)),
     allocator_strategy_ (allocator_strategy),
     locking_strategy_ (locking_strategy),
     reference_count_ (1),
@@ -1046,12 +1046,15 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
 
   ACE_Data_Block *nb = this->clone_nocopy (mask);
 
-  // Copy all of the payload memory into the new object.
+  // Copy all of the payload memory into the new object. The new block
+  // was allocated with max_size_ (and, thus, it's cur_size_ is the same
+  // as max_size_). Maintain the same "has been written" boundary in the
+  // new block by only copying cur_size_ bytes.
   if (nb != 0)
     {
       ACE_OS::memcpy (nb->base_,
                       this->base_,
-                      this->max_size_);
+                      this->cur_size_);
     }
 
   return nb;

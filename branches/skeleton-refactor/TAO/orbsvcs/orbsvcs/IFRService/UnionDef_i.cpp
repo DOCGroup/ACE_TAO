@@ -1,7 +1,7 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "UnionDef_i.h"
+#include "RecursDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
 
@@ -9,10 +9,13 @@
 #include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
 
 ACE_RCSID (IFRService,
            UnionDef_i,
            "$Id$")
+
 
 TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -80,6 +83,25 @@ TAO_UnionDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "id",
                                             id);
 
+  //---------------------------------------------------------------------------
+  // Have we already seen this union definition at an outer scope?
+  // If yes, return a recursive type code to signal the nesting.
+  // If not, record this new union id in our stack (it will automatically be
+  // removed when NowSeenThis goes out of scope).
+  //---------------------------------------------------------------------------
+
+  if (TAO_RecursiveDef_OuterScopes::SeenBefore( id ))
+    return this->repo_->tc_factory ()->
+                 create_recursive_tc ( id.c_str () ACE_ENV_ARG_PARAMETER);
+
+  TAO_RecursiveDef_OuterScopes NowSeenThis( id );
+
+  //---------------------------------------------------------------------------
+  // Create a new type code for this structure; the create_union_tc() call
+  // that follows may recursivly call this method again if one of its children
+  // refers to a union (which is the point of the above NowSeenThis stack).
+  //---------------------------------------------------------------------------
+
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "name",
@@ -122,6 +144,10 @@ TAO_UnionDef_i::discriminator_type_i (ACE_ENV_SINGLE_ARG_DECL)
   TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (disc_path,
                                             this->repo_);
+  if (0 == impl)
+  {
+     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST(), CORBA::TypeCode::_nil () );
+  }
 
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -246,7 +272,7 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, key_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (key_queue.size ());
 
   CORBA::UnionMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,
@@ -292,6 +318,10 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 
       impl = TAO_IFR_Service_Utils::path_to_idltype (path,
                                                      this->repo_);
+      if (0 == impl)
+      {
+        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST(), 0 );
+      }
 
       retval[k].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -353,7 +383,7 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members
                                                 "name",
                                                 members[i].name.in ());
 
-      member_path = 
+      member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
@@ -389,7 +419,7 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
                                              "label",
                                              value);
 
-  CORBA::TypeCode_var tc = 
+  CORBA::TypeCode_var tc =
     this->discriminator_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -399,46 +429,43 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
   switch (kind)
   {
     case CORBA::tk_char:
-      member.label <<= CORBA::Any::from_char (ACE_static_cast (CORBA::Char,
-                                                               value));
+      member.label <<= CORBA::Any::from_char (static_cast<CORBA::Char> (value));
       break;
     case CORBA::tk_wchar:
-      member.label <<= CORBA::Any::from_wchar (ACE_static_cast (CORBA::WChar,
-                                                                value));
+      member.label <<= CORBA::Any::from_wchar (static_cast<CORBA::WChar> (value));
       break;
     case CORBA::tk_boolean:
-      member.label <<= CORBA::Any::from_boolean (ACE_static_cast (CORBA::Boolean,
-                                                                  value));
+      member.label <<= CORBA::Any::from_boolean (static_cast<CORBA::Boolean> (value));
       break;
     case CORBA::tk_short:
-      member.label <<= ACE_static_cast (CORBA::Short, value);
+      member.label <<= static_cast<CORBA::Short> (value);
       break;
     case CORBA::tk_ushort:
-      member.label <<= ACE_static_cast (CORBA::UShort, value);
+      member.label <<= static_cast<CORBA::UShort> (value);
       break;
     case CORBA::tk_long:
-      member.label <<= ACE_static_cast (CORBA::Long, value);
+      member.label <<= static_cast<CORBA::Long> (value);
       break;
     case CORBA::tk_ulong:
-      member.label <<= ACE_static_cast (CORBA::ULong, value);
+      member.label <<= static_cast<CORBA::ULong> (value);
       break;
 #if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
-      member.label <<= ACE_static_cast (CORBA::LongLong, value);
+      member.label <<= static_cast<CORBA::LongLong> (value);
       break;
 #endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_ulonglong:
-      member.label <<= ACE_static_cast (CORBA::ULongLong, value);
+      member.label <<= static_cast<CORBA::ULongLong> (value);
       break;
     case CORBA::tk_enum:
     {
       TAO_OutputCDR cdr;
-      cdr.write_ulong (ACE_static_cast (CORBA::ULong, value));
+      cdr.write_ulong (static_cast<CORBA::ULong> (value));
+      TAO_InputCDR in_cdr (cdr);
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW (impl,
                TAO::Unknown_IDL_Type (tc.in (),
-                                      cdr.begin (),
-                                      TAO_ENCAP_BYTE_ORDER));
+                                      in_cdr));
       member.label.replace (impl);
       break;
     }

@@ -34,29 +34,15 @@
 #include /**/ "ace/pre.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:1111
 
-#if defined (__ACE_INLINE__)
-#include "IOPS_T.i"
-#endif /* defined INLINE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "IOPS_T.cpp"
-#endif /* defined REQUIRED SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("IOPS_T.cpp")
-#endif /* defined REQUIRED PRAGMA */
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

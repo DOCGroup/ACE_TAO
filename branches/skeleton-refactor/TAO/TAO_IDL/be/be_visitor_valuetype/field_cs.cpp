@@ -307,8 +307,9 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
 
   *os << "this->"
       << bu->field_pd_prefix () << ub->local_name () 
-      << bu->field_pd_postfix ()
-      << " = " << bt->name () << "::_duplicate (val);" << be_uidt_nl;
+      << bu->field_pd_postfix () << " =" << be_idt_nl
+      << "TAO::Objref_Traits< ::" << bt->name () 
+      << ">::duplicate (val);" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   *os << "// Retrieve the member." << be_nl
@@ -467,6 +468,12 @@ be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
 }
 
 int
+be_visitor_valuetype_field_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
 be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
@@ -533,6 +540,12 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
   *os << "}";
 
   return 0;
+}
+
+int
+be_visitor_valuetype_field_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
 }
 
 int

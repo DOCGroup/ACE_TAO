@@ -145,11 +145,6 @@ private:
   TAO_Pluggable_Messaging *messaging_object_;
 };
 
-
-#if defined (__ACE_INLINE__)
-#include "tao/IIOP_Transport.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_IIOP_TRANSPORT_H */

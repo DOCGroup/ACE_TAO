@@ -4,8 +4,6 @@
 
 ACE_RCSID(ace, FlReactor, "$Id$")
 
-#if defined (ACE_HAS_FL)
-
 #include /**/ <FL/Fl.h>
 
 ACE_ALLOC_HOOK_DEFINE (ACE_FlReactor)
@@ -326,5 +324,3 @@ ACE_FlReactor::cancel_timer (long timer_id,
       return 0;
     }
 }
-
-#endif /* ACE_HAS_FL */

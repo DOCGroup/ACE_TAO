@@ -2,5 +2,9 @@
 // $Id$
 
 project : aceexe {
+  exename = writer
+  Source_Files {
+    writer.cpp
+  }
 }
 

@@ -83,10 +83,8 @@ ACE_Parse_Node::link (ACE_Parse_Node *n)
 ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
                                   const ACE_Parse_Node *str_mods)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-  : ACE_Parse_Node (str_ops == 0 ? ACE_static_cast (ACE_TCHAR *,
-                                                    ACE_LIB_TEXT ("<unknown>"))
-                                 : ACE_static_cast (ACE_TCHAR *,
-                                                    str_ops->name ())),
+  : ACE_Parse_Node (str_ops == 0 ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT ("<unknown>"))
+                                 : static_cast<ACE_TCHAR *> (str_ops->name ())),
 #else
   : ACE_Parse_Node ((str_ops == 0 ? ACE_LIB_TEXT ("<unknown>") : str_ops->name ())),
 #endif /* defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
@@ -100,11 +98,9 @@ ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
 ACE_Stream_Node::~ACE_Stream_Node (void)
 {
   ACE_TRACE ("ACE_Stream_Node::~ACE_Stream_Node");
-  ACE_Static_Node *n = ACE_const_cast (ACE_Static_Node *,
-                                       this->node_);
+  ACE_Static_Node *n = const_cast<ACE_Static_Node *> (this->node_);
   delete n;
-  ACE_Parse_Node *m = ACE_const_cast (ACE_Parse_Node *,
-                                      this->mods_);
+  ACE_Parse_Node *m = const_cast<ACE_Parse_Node *> (this->mods_);
   delete m;
 }
 
@@ -140,7 +136,7 @@ ACE_Parse_Node::print (void) const
 ACE_Parse_Node::~ACE_Parse_Node (void)
 {
   ACE_TRACE ("ACE_Parse_Node::~ACE_Parse_Node");
-  delete[] ACE_const_cast (ACE_TCHAR*, this->name_);
+  delete[] const_cast<ACE_TCHAR*> (this->name_);
   delete this->next_;
 }
 
@@ -447,7 +443,7 @@ ACE_Object_Node::symbol (int & yyerrno,
   ACE_TRACE ("ACE_Object_Node::symbol");
   if (this->open_dll (yyerrno) == 0)
     {
-      ACE_TCHAR *object_name = ACE_const_cast (ACE_TCHAR *, this->object_name_);
+      ACE_TCHAR *object_name = const_cast<ACE_TCHAR *> (this->object_name_);
 
       this->symbol_ = this->dll_.symbol (object_name);
       if (this->symbol_ == 0)
@@ -474,7 +470,7 @@ ACE_Object_Node::symbol (int & yyerrno,
 ACE_Object_Node::~ACE_Object_Node (void)
 {
   ACE_TRACE ("ACE_Object_Node::~ACE_Object_Node");
-  delete[] ACE_const_cast (ACE_TCHAR *, this->object_name_);
+  delete[] const_cast<ACE_TCHAR *> (this->object_name_);
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Function_Node)
@@ -511,8 +507,7 @@ ACE_Function_Node::symbol (int & yyerrno,
 
       // Locate the factory function <function_name> in the shared
       // object.
-      ACE_TCHAR *function_name = ACE_const_cast (ACE_TCHAR *,
-                                                 this->function_name_);
+      ACE_TCHAR *function_name = const_cast<ACE_TCHAR *> (this->function_name_);
       void *func_p = this->dll_.symbol (function_name);
       if (func_p == 0)
         {
@@ -534,8 +529,8 @@ ACE_Function_Node::symbol (int & yyerrno,
               return 0;
             }
         }
-      ptrdiff_t temp_p = ACE_reinterpret_cast (ptrdiff_t, func_p);
-      func = ACE_reinterpret_cast (ACE_Service_Factory_Ptr, temp_p);
+      ptrdiff_t temp_p = reinterpret_cast<ptrdiff_t> (func_p);
+      func = reinterpret_cast<ACE_Service_Factory_Ptr> (temp_p);
       // Invoke the factory function and record it's return value.
       this->symbol_ = (*func) (gobbler);
 
@@ -554,8 +549,8 @@ ACE_Function_Node::symbol (int & yyerrno,
 ACE_Function_Node::~ACE_Function_Node (void)
 {
   ACE_TRACE ("ACE_Function_Node::~ACE_Function_Node");
-  delete[] ACE_const_cast (ACE_TCHAR *, function_name_);
-  delete[] ACE_const_cast (ACE_TCHAR *, pathname_);
+  delete[] const_cast<ACE_TCHAR *> (function_name_);
+  delete[] const_cast<ACE_TCHAR *> (pathname_);
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Dummy_Node)
@@ -596,11 +591,9 @@ ACE_Dummy_Node::apply (int & yyerrno)
 ACE_Dummy_Node::~ACE_Dummy_Node (void)
 {
   ACE_TRACE ("ACE_Dummy_Node::~ACE_Dummy_Node");
-  ACE_Static_Node *n = ACE_const_cast (ACE_Static_Node *,
-                                       this->node_);
+  ACE_Static_Node *n = const_cast<ACE_Static_Node *> (this->node_);
   delete n;
-  ACE_Parse_Node *m = ACE_const_cast (ACE_Parse_Node *,
-                                      this->mods_);
+  ACE_Parse_Node *m = const_cast<ACE_Parse_Node *> (this->mods_);
   delete m;
 }
 
@@ -635,7 +628,7 @@ ACE_Static_Function_Node::symbol (int & yyerrno,
 
   ACE_Static_Svc_Descriptor **ssdp = 0;
   ACE_STATIC_SVCS &svcs = *ACE_Service_Config::static_svcs ();
-  ACE_TCHAR *function_name = ACE_const_cast (ACE_TCHAR *, this->function_name_);
+  ACE_TCHAR *function_name = const_cast<ACE_TCHAR *> (this->function_name_);
 
   for (ACE_STATIC_SVCS_ITERATOR iter (svcs);
        iter.next (ssdp) != 0;
@@ -680,7 +673,7 @@ ACE_Static_Function_Node::symbol (int & yyerrno,
 ACE_Static_Function_Node::~ACE_Static_Function_Node (void)
 {
   ACE_TRACE ("ACE_Static_Function_Node::~ACE_Static_Function_Node");
-  delete[] ACE_const_cast (ACE_TCHAR *, this->function_name_);
+  delete[] const_cast<ACE_TCHAR *> (this->function_name_);
 }
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */

@@ -10,7 +10,7 @@ and configured with Server Protocol Policy containing a single
 protocol specified with <-p> (see options section below).
 The object is registered with child POA if one was created (root poa
 otherwise) and the server waits for requests.
-The client obtains server IOR and makes a single incocation, causing
+The client obtains server IOR and makes a single invocation, causing
 server process to shut down its orb and exit.
 
 To run (on Unix):

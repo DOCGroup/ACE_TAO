@@ -121,7 +121,7 @@ public:
   int wait (void) const { return this->wait_;}
   ACE_SOCK_Dgram_Mcast::options options (void) const
   {
-    return ACE_static_cast (ACE_SOCK_Dgram_Mcast::options, this->sdm_opts_);
+    return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
   }
 
 private:
@@ -482,6 +482,7 @@ MCT_Event_Handler::~MCT_Event_Handler (void)
       delete this->address_vec_[i];
       this->address_vec_[i] = 0;
     }
+  mcast_.close ();
 }
 
 
@@ -511,7 +512,7 @@ MCT_Event_Handler::find (const char *buf)
       local += this->address_vec_[i]->c_str ();
       local += "\n";
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s not in:\n%s"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C not in:\n%C"),
               buf, local.c_str ()));
 
   return -1;
@@ -757,7 +758,7 @@ int producer (MCT_Config &config)
   int retval = 0;
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
-  ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &));
+  ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
 
   // Note that is is IPv4 specific and needs to be changed once
   //
@@ -794,6 +795,7 @@ int producer (MCT_Config &config)
       // Give the task thread a chance to run.
       ACE_Thread::yield ();
     }
+  socket.close ();
   return retval;
 }
 
@@ -901,6 +903,12 @@ run_main (int argc, ACE_TCHAR *argv[])
                                 ? &wait_time : 0;
       if (ACE_Thread_Manager::instance ()->wait (ptime) == -1)
         {
+          // We will no longer wait for this thread, so we must
+          // force it to exit otherwise the thread will be referencing
+          // deleted memory.
+          finished = 1;
+          reactor->end_reactor_event_loop ();
+
           if (errno == ETIME)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
@@ -929,14 +937,14 @@ template class ACE_Array<ACE_String_Base<char> *>;
 
 #else
 int
-run_main (int, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Multicast_Test"));
 
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("%s must be run on a platform ")
-              ACE_TEXT ("that support IP multicast.\n"),
-              argv[0]));
+              ACE_TEXT ("This test must be run on a platform ")
+              ACE_TEXT ("that support IP multicast.\n")));
+
   ACE_END_TEST;
   return 1;
 }

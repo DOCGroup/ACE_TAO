@@ -118,7 +118,7 @@ namespace CORBA
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Throws CORBA::NO_IMPLEMENT.
-    CORBA::Policy_ptr _get_client_policy (CORBA::PolicyType type
+    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Throws CORBA::NO_IMPLEMENT.

@@ -12,6 +12,8 @@ $ACE_ROOT = $ENV {'ACE_ROOT'};
 $CIAO_ROOT = $ENV {'CIAO_ROOT'};
 
 $ORBdebuglevel = 0;
+$protocols = "-ORBEndpoint \'iiop://\'";
+#$protocols = "-ORBEndpoint \'iiop://;diop://:5678;sciop://\'";
 
 $daemon_1 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
                                   "-ORBEndpoint iiop://localhost:20000 " .
@@ -19,7 +21,7 @@ $daemon_1 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
 
 $daemon_2 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon",
                                   "-ORBEndpoint iiop://localhost:12000 " .
-                                  "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel -ORBEndpoint iiop:// -ORBEndpoint diop://:5678\"");
+                                  "-n \"${CIAO_ROOT}/tools/RTComponentServer/RTComponentServer -ORBdebuglevel $ORBdebuglevel $protocols\"");
 
 $assembly_manager_args = "-o assembly_manager.ior -c test.dat";
 $assembly_manager = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager", "$assembly_manager_args");
@@ -27,7 +29,7 @@ $assembly_manager = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/
 $assembly_deployer_args = "-k file://assembly_manager.ior -a remote.cad -o assembly";
 $assembly_deployer = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer", "$assembly_deployer_args");
 
-$controller = new PerlACE::Process ("../Controller/Controller", "-p DIOP -x 1 -z 1");
+$controller = new PerlACE::Process ("../Controller/Controller", "-x 1 -z 1");
 
 # Remove all ior files
 unlink "assembly_manager.ior";
@@ -53,23 +55,23 @@ $assembly_deployer->Spawn ();
 PerlACE::waitforfile ("sender.ior");
 PerlACE::waitforfile ("receiver.ior");
 
-## Now start the controller
-#$controller->Spawn ();
-#
-## Wait for controller to get done.
-#$controller->Wait ();
-#$controller->{RUNNING} = 0;
-#
-## Kill daemons.
-#$daemon_1->Kill ();
-#$daemon_2->Kill ();
-#$assembly_manager->Kill ();
-#$assembly_deployer->Kill ();
-#
-## Remove all ior files
-#unlink "assembly_manager.ior";
-#unlink "daemon.ior";
-#unlink "receiver.ior";
-#unlink "sender.ior";
-#unlink "assembly";
+# Now start the controller
+$controller->Spawn ();
+
+# Wait for controller to get done.
+$controller->Wait ();
+$controller->{RUNNING} = 0;
+
+# Kill daemons.
+$daemon_1->Kill ();
+$daemon_2->Kill ();
+$assembly_manager->Kill ();
+$assembly_deployer->Kill ();
+
+# Remove all ior files
+unlink "assembly_manager.ior";
+unlink "daemon.ior";
+unlink "receiver.ior";
+unlink "sender.ior";
+unlink "assembly";
 

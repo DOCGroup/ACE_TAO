@@ -47,8 +47,14 @@ $SEC = new PerlACE::Process ("Sequence_Consumer");
 
 $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
-$NS->Spawn ();
-$TS->Spawn ();
+if ($NS->Spawn () == -1) {
+    exit 1;
+}
+
+if ($TS->Spawn () == -1) {
+    $NS->Kill ();
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
@@ -82,7 +88,7 @@ for($i = 0; $i <= $#policies; $i++) {
   }
 
   $STC->Arguments($client_args . " -d $discard_policy");
-  $client = $STC->SpawnWaitKill (60);
+  $client = $STC->SpawnWaitKill (200);
 
   $STS->Kill ();
   if ($client != 0) {
@@ -112,7 +118,7 @@ if ($status == 0) {
     }
 
     $SEC->Arguments($client_args . " -d $discard_policy");
-    $client = $SEC->SpawnWaitKill (60);
+    $client = $SEC->SpawnWaitKill (200);
 
     $SES->Kill ();
     if ($client != 0) {

@@ -6,7 +6,7 @@ void foo (void);
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_TRACE (ACE_TEXT ("main"));
+  ACE_TRACE ("main");
   
   // Listing 1 code/ch03
   ACE_DEBUG ((MY_DEBUG ACE_TEXT ("Hi Mom\n")));

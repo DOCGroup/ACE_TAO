@@ -6,10 +6,6 @@
 #include "ProxyConsumer_T.h"
 #include "SupplierAdmin.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ProxyConsumer_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_ProxyConsumer_T, "$Id$")
 
 #include "Event_Manager.h"
@@ -63,7 +59,7 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::E
                         CORBA::INTERNAL ());
     ACE_CHECK;
 
-    this->subscribed_types_.init (seq_added, seq_removed);
+    this->subscribed_types_.add_and_remove (seq_added, seq_removed);
   }
 
   this->event_manager_->offer_change (this, seq_added, seq_removed ACE_ENV_ARG_PARAMETER);

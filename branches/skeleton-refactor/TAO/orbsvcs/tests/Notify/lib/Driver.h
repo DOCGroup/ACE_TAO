@@ -19,12 +19,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
-#include "ace/Task.h"
+#include "Driver_Base.h"
 
 #include "tao/ORB.h"
 
-#include "Driver_Base.h"
+#include "ace/Service_Config.h"
+#include "ace/Task.h"
+#include "ace/SString.h"
+
 
 class TAO_Notify_Tests_Command_Builder;
 class TAO_Notify_Tests_Activation_Manager;

@@ -21,6 +21,7 @@
 #define ACE_LACKS_ISATTY
 
 #define ACE_LACKS_DIFFTIME
+#define ACE_LACKS_DUP2
 
 #define ACE_LACKS_FCNTL
 
@@ -40,6 +41,8 @@
 # define ACE_HAS_EXCEPTIONS
 #endif /* __GNUG__ */
 
+#define ACE_LACKS_WAIT
+#define ACE_LACKS_WAITPID
 #define ACE_PSOS_LACKS_PREPC
 
 #define ACE_PSOS_HAS_TIME
@@ -104,6 +107,7 @@
 #define ACE_LACKS_WRITEV
 
 #define ACE_LACKS_READV
+#define ACE_LACKS_UMASK
 
 // rename the main entry point
 #define ACE_MAIN extern "C" void root

@@ -103,7 +103,7 @@ ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
 {
-  this->ior_output_file_ = ACE_const_cast (char*, "test.ior");
+  this->ior_output_file_ = const_cast<char*> ("test.ior");
 }
 
 ST_AMH_Server::~ST_AMH_Server ()

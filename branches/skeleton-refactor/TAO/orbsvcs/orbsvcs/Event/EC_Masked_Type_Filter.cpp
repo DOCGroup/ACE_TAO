@@ -2,10 +2,6 @@
 
 #include "EC_Masked_Type_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Masked_Type_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Masked_Type_Filter, "$Id$")
 
 TAO_EC_Masked_Type_Filter::

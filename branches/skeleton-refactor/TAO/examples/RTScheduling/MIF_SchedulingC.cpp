@@ -102,7 +102,7 @@ void
 MIF_Scheduling::SegmentSchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SegmentSchedulingParameterPolicy *_tao_tmp_pointer =
-    ACE_static_cast (SegmentSchedulingParameterPolicy *, _tao_void_pointer);
+    static_cast<SegmentSchedulingParameterPolicy *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -277,7 +277,7 @@ void
 MIF_Scheduling::MIF_Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   MIF_Scheduler *_tao_tmp_pointer =
-    ACE_static_cast (MIF_Scheduler *, _tao_void_pointer);
+    static_cast<MIF_Scheduler *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 

@@ -3,8 +3,10 @@
 //
 
 #include "AMH_Servant.h"
-#include "ace/Get_Opt.h"
 #include "Timer_Handler.h"
+
+#include "ace/Reactor.h"
+#include "ace/Get_Opt.h"
 
 
 AMH_Servant::AMH_Servant (CORBA::ORB_ptr orb)
@@ -83,7 +85,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       //    schedule_timer() call below fails (which you do not check
       //    for).  If the schedule_timer() call fails, then you should
       //    delete() the Timer_Handler instance.
-      // 
+      //
       // Done.
 
       // Handler will 'kill' itself when it is done.
@@ -102,7 +104,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
           delete handler;
 
           // send a no-op to the client
-          _tao_rh->test_method (ACE_static_cast (Test::Timestamp, 0));
+          _tao_rh->test_method (static_cast<Test::Timestamp> (0));
 
           // just in case we add code later on after this if stmt
           return;

@@ -11,11 +11,8 @@ SUBDIRS = \
 	Naming_Service \
 	Logging_Service \
 	LoadBalancer \
-	LifeCycle_Service
-
-#	 ImplRepo_Service
-
-SUBDIRS += \
+	LifeCycle_Service \
+        ImplRepo_Service \
 	IFR_Service \
 	Fault_Notifier \
 	Fault_Detector \

@@ -145,7 +145,7 @@ int CLD_Handler::open (CLD_Connector *connector) {
 
 
 ACE_THR_FUNC_RETURN CLD_Handler::run_svc (void *arg) {
-  CLD_Handler *handler = ACE_static_cast (CLD_Handler *, arg);
+  CLD_Handler *handler = static_cast<CLD_Handler *> (arg);
   return handler->forward ();
 }
 
@@ -347,12 +347,10 @@ int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   for (int c; (c = get_opt ()) != -1;)
     switch (c) {
     case 'p': // Client logging daemon acceptor port number.
-      cld_port = ACE_static_cast
-        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
+      cld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 'r': // Server logging daemon acceptor port number.
-      sld_port = ACE_static_cast
-        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
+      sld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 's': // Server logging daemon hostname.
       ACE_OS::strsncpy

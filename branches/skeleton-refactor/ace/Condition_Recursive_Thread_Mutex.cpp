@@ -80,7 +80,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
                          &mutex.get_nesting_mutex ())
     : ACE_OS::cond_timedwait (&this->cond_,
                               &mutex.get_nesting_mutex (),
-                              (ACE_Time_Value *) abstime);
+                              const_cast <ACE_Time_Value *> (abstime));
   // We are holding the mutex, whether the wait succeeded or failed.
   // Stash errno (in case it failed) and then we need to reset the
   // recursive mutex state to what it was on entry to this method.

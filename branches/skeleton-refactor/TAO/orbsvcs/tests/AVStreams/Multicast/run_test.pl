@@ -19,7 +19,9 @@ $test1 = PerlACE::LocalFile ("test1");
 $test2 = PerlACE::LocalFile ("test2");
 
 # generate test stream data
-$input = PerlACE::generate_test_file("test_input", 102400);
+# the size of this file is limited by the maximum packet size
+# windows has a maximum size of 8KB
+$input = PerlACE::generate_test_file("test_input", 32000);
 
 unlink $nsior, $test1, $test2;
 
@@ -30,7 +32,9 @@ $CL  = new PerlACE::Process ("ftp", "-ORBSvcConf components_svc$PerlACE::svcconf
 
 print STDERR "Starting Naming Service\n";
 
-$NS->Spawn ();
+if ($NS->Spawn () == -1) {
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($nsior, 15) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";

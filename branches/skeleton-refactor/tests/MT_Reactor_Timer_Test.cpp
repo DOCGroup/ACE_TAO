@@ -124,8 +124,7 @@ int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
-  long time_tag = ACE_static_cast (long,
-                    ACE_reinterpret_cast (size_t, arg));
+  long time_tag = static_cast <long> (reinterpret_cast <size_t> (arg));
   ACE_UNUSED_ARG(tv);
 
   ACE_GUARD_RETURN (ACE_Thread_Mutex, id_lock, this->lock_, 0);
@@ -236,8 +235,7 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
 
   ++this->timers_fired_;
 
-  long value = ACE_static_cast (long,
-                 ACE_reinterpret_cast (size_t, arg));
+  long value = static_cast <long> (reinterpret_cast <size_t> (arg));
 
   // This case just tests to make sure the Reactor is counting timer
   // expiration correctly.
@@ -250,12 +248,34 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
 int
 Dispatch_Count_Handler::verify_results (void)
 {
+  int result = 0;
 
-  ACE_ASSERT (this->input_seen_ == 1);
-  ACE_ASSERT (this->notify_seen_ == 1);
-  ACE_ASSERT (this->timers_fired_ == ACE_MAX_TIMERS);
-  return 0;
+  if (this->input_seen_ != 1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                 ACE_TEXT ("input_seen_ is not 1 but %d\n"),
+                 input_seen_));
+    result = -1;
+  }
 
+  if (this->notify_seen_ != 1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                 ACE_TEXT ("notify_seen_ is not 1 but %d\n"),
+                 notify_seen_));
+    result = -1;
+  }
+
+  if (this->timers_fired_ != ACE_MAX_TIMERS)
+    {
+      ACE_ERROR ((LM_ERROR,
+                 ACE_TEXT ("timers fired not equal max timers: %d != %d\n"),
+                 this->timers_fired_,
+                 ACE_MAX_TIMERS));
+    result = -1;
+  }
+
+  return result;
 }
 
 int
@@ -273,8 +293,7 @@ run_main (int, ACE_TCHAR *[])
   for (int i = ACE_MAX_TIMERS; i > 0; i--)
     // Schedule a timeout to expire immediately.
     if (r->schedule_timer (&callback,
-                           ACE_reinterpret_cast (const void *,
-                                                 ACE_static_cast (size_t, i)),
+                           reinterpret_cast <const void *> (static_cast <size_t> (i)),
                            ACE_Time_Value (0)) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -307,7 +326,6 @@ run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("expected %d events, got %d instead\n"),
                   ACE_MAX_TIMERS + 2,
                   events));
-      ACE_ASSERT (events >= ACE_MAX_TIMERS + 2);
     }
 
   status = callback.verify_results ();

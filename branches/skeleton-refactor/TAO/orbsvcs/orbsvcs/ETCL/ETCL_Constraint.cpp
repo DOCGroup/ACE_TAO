@@ -5,7 +5,7 @@
 #include "ETCL_Constraint_Visitor.h"
 #include "ETCL_y.h"
 
-#include "tao/Any.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Managed_Types.h"
 #include "tao/Environment.h"
 #include "tao/CDR.h"
@@ -88,9 +88,25 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
         }
       else if (corba_type == CORBA::tk_enum)
         {
-          TAO_InputCDR cdr (any_ref._tao_get_cdr (),
-                            any_ref._tao_byte_order ());
-          (void) cdr.read_ulong (this->op_.uinteger_);
+          TAO::Any_Impl *impl = any->impl ();
+          
+          if (impl->encoded ())
+            {
+              TAO::Unknown_IDL_Type *unk =
+                dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+                
+              // We don't want unk's rd_ptr to move, in case we are shared by
+              // another Any, so we use this to copy the state, not the buffer.
+              TAO_InputCDR for_reading (unk->_tao_get_cdr ());
+              for_reading.read_ulong (this->op_.uinteger_);
+            }
+          else
+            {
+              TAO_OutputCDR out;
+              impl->marshal_value (out);
+              TAO_InputCDR in (out);
+              in.read_ulong (this->op_.uinteger_);
+            }
         }
       else
         {

@@ -14,7 +14,7 @@ ACE_RCSID (Misc,
            test_XtReactor2,
            "$Id$")
 
-#if defined (ACE_HAS_XT)
+
 #include <Xm/PushB.h>
 
 class Stdin : public ACE_Event_Handler
@@ -99,12 +99,3 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
   // Demonstrate Reactor/Xt event loop unification:
   XtAppMainLoop (XtWidgetToApplicationContext (top_level));
 }
-#else
-int
-ACE_TMAIN (int, ACE_TCHAR *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "XT not configured for this platform\n"),
-                    0);
-}
-#endif /* ACE_HAS_XT */

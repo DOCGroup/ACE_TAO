@@ -130,7 +130,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership
     ACE_CHECK_RETURN(0);
 
     FtRtecEventChannelAdmin::EventChannel_var result;
-    activate_object_with_id(result.out(), persistent_poa_, this, object_id
+    activate_object_with_id(result.out(), persistent_poa_.in(), this, object_id
                 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 

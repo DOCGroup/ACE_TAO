@@ -107,9 +107,11 @@ void TAO_FTEC_Group_Manager::create_group (
     Fault_Detector::instance()->my_location());
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
-  GroupInfoPublisherBase::Info_ptr info ( 
-    publisher->setup_info(impl_->info_list, impl_->my_position
-                    ACE_ENV_ARG_PARAMETER));
+  GroupInfoPublisherBase::Info_ptr info (
+    publisher->setup_info(impl_->info_list, 
+                          impl_->my_position,
+                          object_group_ref_version
+                          ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
 
   publisher->update_info(info);
@@ -142,7 +144,7 @@ void TAO_FTEC_Group_Manager::join_group (
   if (impl_->my_position == 0) {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
-    add_member(info, IOGR_Maker::instance()->increment_ref_version()
+    add_member(info, IOGR_Maker::instance()->get_ref_version()+1
                ACE_ENV_ARG_PARAMETER);
   }
 }
@@ -166,8 +168,10 @@ void TAO_FTEC_Group_Manager::add_member (
   new_impl->info_list[pos] = info;
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
-  GroupInfoPublisherBase::Info_ptr group_info ( 
-    publisher->setup_info(new_impl->info_list, new_impl->my_position
+  GroupInfoPublisherBase::Info_ptr group_info (
+    publisher->setup_info(new_impl->info_list, 
+                          new_impl->my_position,
+                          object_group_ref_version
                     ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
 
@@ -192,9 +196,10 @@ void TAO_FTEC_Group_Manager::add_member (
       /// group_info = publisher->set_info(..) should be enough.
       /// However, GCC 2.96 is not happy with that.
 
-      GroupInfoPublisherBase::Info_ptr group_info1 ( 
+      GroupInfoPublisherBase::Info_ptr group_info1 (
         publisher->setup_info(new_impl->info_list,
-                              new_impl->my_position
+                              new_impl->my_position,
+                              object_group_ref_version
                               ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;
       ACE_AUTO_PTR_RESET(group_info, group_info1.release(), GroupInfoPublisherBase::Info);
@@ -207,27 +212,57 @@ void TAO_FTEC_Group_Manager::add_member (
 
   if (last_one)
   {
-  // this is the last replica in the list
-  // synchornize the state with the newly joined replica.
-  FtRtecEventChannelAdmin::EventChannelState state;
-  get_state(state ACE_ENV_ARG_PARAMETER);
+    // this is the last replica in the list
+    // synchornize the state with the newly joined replica.
+    FtRtecEventChannelAdmin::EventChannelState state;
+    get_state(state ACE_ENV_ARG_PARAMETER);
 
-  TAO_OutputCDR cdr;
-  cdr << state;
+    TAO_OutputCDR cdr;
+    cdr << state;
 
-  FTRT::State s;
-  if (cdr.begin()->cont()) {
-    ACE_Message_Block* blk;
-    ACE_NEW_THROW_EX(blk, ACE_Message_Block, CORBA::NO_MEMORY());
-    ACE_CDR::consolidate(blk, cdr.begin());
-    s.replace(blk->length(), blk);
-    blk->release();
-  }
-  else
-    s.replace(cdr.begin()->length(), cdr.begin());
+    FTRT::State s;
+    if (cdr.begin()->cont()) {
+      ACE_Message_Block* blk;
+      ACE_NEW_THROW_EX(blk, ACE_Message_Block, CORBA::NO_MEMORY());
+      ACE_CDR::consolidate(blk, cdr.begin());
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      s.replace(blk->length(), blk);
+#else
+      // If the replace method is not available, we will need
+      // to do the copy manually.  First, set the octet sequence length.
+      CORBA::ULong length = blk->length ();
+      s.length (length);
+
+      // Now copy over each byte.
+      char* base = blk->data_block ()->base ();
+      for(CORBA::ULong i = 0; i < length; i++)
+      {
+        s[i] = base[i];
+      }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+
+      blk->release();
+    }
+    else {
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      s.replace(cdr.begin()->length(), cdr.begin());
+#else
+      // If the replace method is not available, we will need
+      // to do the copy manually.  First, set the octet sequence length.
+      CORBA::ULong length = cdr.begin ()->length ();
+      s.length (length);
+
+      // Now copy over each byte.
+      char* base = cdr.begin()->data_block ()->base ();
+      for(CORBA::ULong i = 0; i < length; i++)
+      {
+        s[i] = base[i];
+      }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+    }
 
     TAO_FTRTEC::Log(2, "Setting state\n");
-  info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
+    info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     info.ior->create_group(new_impl->info_list,
                            object_group_ref_version
@@ -260,7 +295,7 @@ void TAO_FTEC_Group_Manager::replica_crashed (
   TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::replica_crashed\n");
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
-    remove_member(location, IOGR_Maker::instance()->increment_ref_version()
+    remove_member(location, IOGR_Maker::instance()->get_ref_version()+1
                   ACE_ENV_ARG_PARAMETER);
 }
 
@@ -283,8 +318,10 @@ void TAO_FTEC_Group_Manager::remove_member (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
 
-  GroupInfoPublisherBase::Info_ptr info ( 
-    publisher->setup_info(impl_->info_list, impl_->my_position
+  GroupInfoPublisherBase::Info_ptr info (
+    publisher->setup_info(impl_->info_list, 
+                          impl_->my_position,
+                          object_group_ref_version
                           ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
   publisher->update_info(info);

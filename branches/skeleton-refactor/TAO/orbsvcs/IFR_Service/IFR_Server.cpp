@@ -4,14 +4,14 @@
 #include "IFR_Service.h"
 #include "tao/Environment.h"
 
-ACE_RCSID(IFR_Service, IFR_Server, "$Id$")
+ACE_RCSID (IFR_Service, 
+           IFR_Server,
+           "$Id$")
 
 int
 main (int argc, char *argv[])
 {
   IFR_Service server;
-
-  ACE_DEBUG ((LM_DEBUG, "TAO Interface Repository\n"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

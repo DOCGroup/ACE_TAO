@@ -90,6 +90,18 @@ SOEXT      = dll
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
+PLATFORM_FL_CPPFLAGS  ?=
+PLATFORM_FL_LIBS      ?= -lfltk -lfltk_forms -lfltk_gl -lfltk_images
+PLATFORM_FL_LDFLAGS   ?=
+
+PLATFORM_GL_CPPFLAGS  ?= -I/usr/X11R6/include
+PLATFORM_GL_LIBS      ?= -lGL
+PLATFORM_GL_LDFLAGS   ?= -L/usr/X11R6/lib
+
+PLATFORM_WX_CPPFLAGS  ?= $(shell wx-config --cxxflags) -I/usr/local/include
+PLATFORM_WX_LIBS      ?= $(shell wx-config --libs)
+PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
+
 # The sed below is to strip comments on the .def file,
 # to workaround to a bug in ld.
 SHLIBBUILD = \

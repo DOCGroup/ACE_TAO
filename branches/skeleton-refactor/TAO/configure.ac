@@ -149,15 +149,22 @@ AC_SUBST([TAO_MAJOR])
 AC_SUBST([TAO_MINOR])
 AC_SUBST([TAO_BETA])
 
+dnl We should have --with/--enable flags for these options.
+dnl Until we do, set them to reasonable defaults.
 AM_CONDITIONAL(TEMPLATES_REQUIRE_SOURCE, false)
-
 AM_CONDITIONAL(BUILD_RT_CORBA, true)
 AM_CONDITIONAL(BUILD_CORBA_MESSAGING, true)
 AM_CONDITIONAL(BUILD_MINIMUM_CORBA, false)
 AM_CONDITIONAL(BUILD_INTERCEPTORS, true)
 AM_CONDITIONAL(BUILD_ACE_UUID, true)
 AM_CONDITIONAL(BUILD_AMI, true)
-AM_CONDITIONAL(BUILD_SSL, false)
+
+ACE_ENABLE_ACEXML
+ACE_ENABLE_SSL
+ACE_ENABLE_FL_REACTOR
+ACE_ENABLE_QT_REACTOR
+ACE_ENABLE_TK_REACTOR
+ACE_ENABLE_XT_REACTOR
 
 
 dnl
@@ -169,9 +176,6 @@ dnl created from Makefile.in, etc.  Top-level Makefiles should be
 dnl created first.
 
 AC_CONFIG_FILES([
-  tao-config
-  tao-config.1
-  taoConf.sh
   Makefile
   TAO_IDL/Makefile
   tao/Makefile
@@ -186,6 +190,7 @@ AC_CONFIG_FILES([
   orbsvcs/FT_ReplicationManager/Makefile
   orbsvcs/Fault_Detector/Makefile
   orbsvcs/Fault_Notifier/Makefile
+  orbsvcs/ImplRepo_Service/Makefile
   orbsvcs/IFR_Service/Makefile
   orbsvcs/LifeCycle_Service/Makefile
   orbsvcs/LoadBalancer/Makefile

@@ -29,6 +29,12 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
+#if defined (__USE_POSIX199309)
+#  if !defined (ACE_HAS_CLOCK_GETTIME)
+#    define ACE_HAS_CLOCK_GETTIME
+#  endif
+#endif
+
 // First the machine specific part
 
 #if defined (__alpha)
@@ -40,7 +46,7 @@
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
-#elif defined (__ia64)
+#elif defined (__ia64) || defined (__x86_64__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 // Zero base address should work fine for Linux of IA-64: it just lets
 // the kernel to choose the right value.
@@ -172,7 +178,18 @@
 # undef ACE_LACKS_LLSEEK_PROTOTYPE
 # undef ACE_LACKS_LSEEK64_PROTOTYPE
 # include "ace/config-borland-common.h"
-#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__*/
+#elif defined (__PGI)
+// Portable group compiler
+# define ACE_HAS_CPLUSPLUS_HEADERS
+# define ACE_HAS_STDCPP_STL_INCLUDES
+# define ACE_HAS_TEMPLATE_TYPEDEFS
+# define ACE_HAS_TYPENAME_KEYWORD
+# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+# define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+# define ACE_LACKS_SWAB
+# undef ACE_HAS_CLOCK_GETTIME
+#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 
@@ -325,7 +342,7 @@
 
 #define ACE_HAS_DIRENT
 
-#if defined (__ia64) || defined(__alpha)
+#if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
@@ -335,9 +352,24 @@
 
 #define ACE_SIZEOF_WCHAR 4
 
-#include /**/ "ace/post.h"
+#define ACE_LACKS_GETIPNODEBYADDR
+#define ACE_LACKS_GETIPNODEBYNAME
 
 // Enables use of POSIX termios struct
 #define ACE_USES_NEW_TERMIOS
+
+#if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) 
+// Detect if getsockname() and getpeername() returns random values in
+// the sockaddr_in::sin_zero field by evaluation of the kernel
+// version. Since version 2.5.47 this problem is fixed.
+#include <linux/version.h>
+#  if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,47))
+#    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 0
+#  else
+#    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 1
+#  endif  /* (LINUX_VERSION_CODE <= KERNEL_VERSION(2,5,47)) */
+#endif  /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
+
+#include /**/ "ace/post.h"
 
 #endif /* ACE_LINUX_COMMON_H */

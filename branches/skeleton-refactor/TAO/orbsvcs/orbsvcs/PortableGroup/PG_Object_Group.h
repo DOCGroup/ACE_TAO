@@ -372,6 +372,6 @@ namespace TAO
   };
 } // namespace TAO
 
-#include /**/ <ace/post.h>
+#include /**/ "ace/post.h"
 
 #endif // TAO_PG_OBJECT_GROUP_H_

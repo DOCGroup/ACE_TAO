@@ -279,9 +279,5 @@ private:
   // The array of precomputed RT_Info structures.
 };
 
-#if defined (__ACE_INLINE__)
-#include "orbsvcs/Runtime_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_RUNTIME_SCHEDULER_H */

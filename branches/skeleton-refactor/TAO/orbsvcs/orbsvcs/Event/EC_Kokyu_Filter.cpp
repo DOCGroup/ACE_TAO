@@ -4,10 +4,6 @@
 #include "EC_QOS_Info.h"
 #include "ace/Log_Msg.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Kokyu_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Kokyu_Filter, "$Id$")
 
 TAO_EC_Kokyu_Filter::
@@ -154,7 +150,7 @@ TAO_EC_Kokyu_Filter::can_match (const RtecEventComm::EventHeader& header) const
   return this->body_->can_match (header);
 }
 
-/* 
+/*
     Kokyu_Filter
         |
         |body
@@ -171,7 +167,7 @@ TAO_EC_Kokyu_Filter::can_match (const RtecEventComm::EventHeader& header) const
 
 The entire hierarchy will have the same rt_info as the root. Only the root
 rt_info will be part of the dependency graph in the scheduler. The root
-rt_info will have a dependency on the consumer rt_info. 
+rt_info will have a dependency on the consumer rt_info.
 
 <--- shows dependency (oneway)
 
@@ -192,7 +188,7 @@ TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
   ACE_CHECK_RETURN (0);
 
 #ifdef EC_KOKYU_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "this->rt_info_ = %d, header.type = %d, qos_info.rt_info = %d\n",
               this->rt_info_, header.type, qos_info.rt_info));
 #endif

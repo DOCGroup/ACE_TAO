@@ -1,10 +1,7 @@
 // $Id$
 
 #include "Peer_i.h"
-
-#if !defined(__ACE_INLINE__)
-#include "Peer_i.i"
-#endif /* __ACE_INLINE__ */
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(FL_Callback, Peer_i, "$Id$")
 

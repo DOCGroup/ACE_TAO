@@ -6,9 +6,10 @@
 #include "tao/Marshal.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
-#include "tao/Any_Impl.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/SystemException.h"
 
+#include "ace/SString.h"
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
@@ -188,7 +189,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               raw_default_index = i;
               // Only the multiple labels that come before the
               // default label affect its adjusted value.
-              default_index = ACE_static_cast (CORBA::Long, i - dups);
+              default_index = static_cast<CORBA::Long> (i - dups);
             }
         }
       else
@@ -254,7 +255,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
             }
         }
 
-      CORBA::TCKind kind = discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind kind =
+        discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       if (index == raw_default_index)
         {
@@ -269,7 +271,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
           CORBA::Boolean good_label =
             members[index].label.impl ()->marshal_value (cdr);
 
-          if (good_label == 0)
+          if (!good_label)
             {
               return CORBA::TypeCode::_nil ();
             }
@@ -561,7 +563,7 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
   // value -1 goes where the TCKind would go for any
   // other embedded typecode.
   CORBA::TCKind rec_kind =
-    ACE_static_cast (CORBA::TCKind, max_neg);
+    static_cast<CORBA::TCKind> (max_neg);
 
   return this->assemble_tc (cdr,
                             rec_kind,
@@ -770,9 +772,28 @@ TAO_TypeCodeFactory_i::compute_default_label (
 #endif /* ACE_LACKS_LONGLONG_T */
             case CORBA::tk_enum:
             {
-              TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
-                                members[i].label._tao_byte_order ());
-              cdr.read_ulong (u.enum_val);
+              TAO::Any_Impl *impl = members[i].label.impl ();
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              
+              if (impl->encoded ())
+                {
+                  TAO::Unknown_IDL_Type *unk =
+                    dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+                    
+                  // We don't want unk's rd_ptr to move, in case
+                  // we are shared by another Any, so we use this
+                  // to copy the state, not the buffer.
+                  for_reading = unk->_tao_get_cdr ();
+                }
+              else
+                {
+                  TAO_OutputCDR out;
+                  impl->marshal_value (out);
+                  TAO_InputCDR tmp (out);
+                  for_reading = tmp;
+                }
+                
+              for_reading.read_ulong (u.enum_val);
 
               if (u.enum_val == dv.enum_val)
                 {
@@ -1425,9 +1446,28 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members
               break;
             case CORBA::tk_enum:
             {
-              TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
-                                members[i].label._tao_byte_order ());
-              cdr.read_ulong (s.enum_val);
+              TAO::Any_Impl *impl = members[i].label.impl ();
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              
+              if (impl->encoded ())
+                {
+                  TAO::Unknown_IDL_Type *unk =
+                    dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+                    
+                  // We don't want unk's rd_ptr to move, in case
+                  // we are shared by another Any, so we use this
+                  // to copy the state, not the buffer.
+                  for_reading = unk->_tao_get_cdr ();
+                }
+              else
+                {
+                  TAO_OutputCDR out;
+                  impl->marshal_value (out);
+                  TAO_InputCDR tmp (out);
+                  for_reading = tmp;
+                }
+                
+              for_reading.read_ulong (s.enum_val);
 
               if (checker.insert (s.enum_val) != 0)
                 {
@@ -1504,12 +1544,10 @@ TAO_TypeCodeFactory_i::update_map (
   )
 {
   ptrdiff_t unaligned_offset =
-    ACE_static_cast (ptrdiff_t,
-                     cdr.total_length ());
+    static_cast<ptrdiff_t> (cdr.total_length ());
 
   CORBA::Long aligned_offset =
-    ACE_static_cast (CORBA::Long,
-                     ACE_align_binary (unaligned_offset,
+    static_cast<CORBA::Long> (ACE_align_binary (unaligned_offset,
                                        sizeof (CORBA::Long)));
 
   CORBA::TypeCode::OFFSET_MAP *member_offset_map = member_tc->offset_map ();
@@ -1522,11 +1560,10 @@ TAO_TypeCodeFactory_i::update_map (
   // For anything except the immediate product of create_recursive_tc,
   // the insertion of a member will include an encap length.
   CORBA::Long member_encap_len_bytes =
-    member_tc->kind_ == ~0 ? 0 : ACE_static_cast (CORBA::Long,
-                                                  sizeof (CORBA::Long));
+    member_tc->kind_ == ~0 ? 0 : static_cast<CORBA::Long> (sizeof (CORBA::Long));
 
   CORBA::Long tc_kind_bytes =
-    ACE_static_cast (CORBA::Long, sizeof (CORBA::TCKind));
+    static_cast<CORBA::Long> (sizeof (CORBA::TCKind));
 
   for (CORBA::TypeCode::OFFSET_MAP_ITERATOR iter (*member_offset_map);
        ! iter.done ();
@@ -1572,8 +1609,7 @@ TAO_TypeCodeFactory_i::update_map (
           else
             {
               const char *slot =
-                member_tc->buffer_ + ACE_static_cast (ptrdiff_t,
-                                                      *list_entry);
+                member_tc->buffer_ + static_cast<ptrdiff_t> (*list_entry);
 
               CORBA::Long recursion_offset =
                 -1 * (aligned_offset
@@ -1584,24 +1620,18 @@ TAO_TypeCodeFactory_i::update_map (
                       + tc_kind_bytes);             // Top level TCKind.
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-              *ACE_reinterpret_cast (CORBA::Long *,
-                                     ACE_const_cast (char *,
-                                                     slot)) =
+              *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
                 recursion_offset;
 #else
               if (! cdr.do_byte_swap ())
                 {
-                  *ACE_reinterpret_cast (CORBA::Long *,
-                                         ACE_const_cast (char *,
-                                                         slot)) =
+                  *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
                     recursion_offset;
                 }
               else
                 {
-                  ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
-                                                         &recursion_offset),
-                                   ACE_const_cast (char *,
-                                                   slot));
+                  ACE_CDR::swap_4 (reinterpret_cast<char *> (&recursion_offset),
+                                   const_cast<char *> (slot));
                 }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
             }

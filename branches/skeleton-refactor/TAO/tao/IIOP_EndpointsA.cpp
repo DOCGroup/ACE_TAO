@@ -27,43 +27,45 @@
 
 #include "IIOP_EndpointsC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_TAO_IIOP_Endpoint_Info[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x54414f2f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x5f456e64),
-  ACE_NTOHL (0x706f696e),
-  ACE_NTOHL (0x745f496e),
-  ACE_NTOHL (0x666f3a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x54414f2f), 
+  ACE_NTOHL (0x49494f50), 
+  ACE_NTOHL (0x5f456e64), 
+  ACE_NTOHL (0x706f696e), 
+  ACE_NTOHL (0x745f496e), 
+  ACE_NTOHL (0x666f3a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:TAO/IIOP_Endpoint_Info:1.0
     19,
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x5f456e64),
-  ACE_NTOHL (0x706f696e),
-  ACE_NTOHL (0x745f496e),
+  ACE_NTOHL (0x49494f50), 
+  ACE_NTOHL (0x5f456e64), 
+  ACE_NTOHL (0x706f696e), 
+  ACE_NTOHL (0x745f496e), 
   ACE_NTOHL (0x666f0000),  // name = IIOP_Endpoint_Info
   3, // member count
     5,
-  ACE_NTOHL (0x686f7374),
+  ACE_NTOHL (0x686f7374), 
   ACE_NTOHL (0x0),  // name = host
-    CORBA::tk_string,
+    CORBA::tk_string, 
   0U, // string length
   5,
-  ACE_NTOHL (0x706f7274),
+  ACE_NTOHL (0x706f7274), 
   ACE_NTOHL (0x0),  // name = port
     CORBA::tk_short,
 
   9,
-  ACE_NTOHL (0x7072696f),
-  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x7072696f), 
+  ACE_NTOHL (0x72697479), 
   ACE_NTOHL (0x0),  // name = priority
     CORBA::tk_short,
 
@@ -74,7 +76,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IIOP_Endpoint_Info (
     sizeof (_oc_TAO_IIOP_Endpoint_Info),
     (char *) &_oc_TAO_IIOP_Endpoint_Info,
     0,
-    sizeof (TAO::IIOP_Endpoint_Info)
+    0
   );
 
 namespace TAO
@@ -84,27 +86,27 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_TAO_IIOPEndpointSequence[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x54414f2f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x456e6470),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x53657175),
-  ACE_NTOHL (0x656e6365),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x54414f2f), 
+  ACE_NTOHL (0x49494f50), 
+  ACE_NTOHL (0x456e6470), 
+  ACE_NTOHL (0x6f696e74), 
+  ACE_NTOHL (0x53657175), 
+  ACE_NTOHL (0x656e6365), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:TAO/IIOPEndpointSequence:1.0
     21,
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x456e6470),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x53657175),
-  ACE_NTOHL (0x656e6365),
+  ACE_NTOHL (0x49494f50), 
+  ACE_NTOHL (0x456e6470), 
+  ACE_NTOHL (0x6f696e74), 
+  ACE_NTOHL (0x53657175), 
+  ACE_NTOHL (0x656e6365), 
   ACE_NTOHL (0x0),  // name = IIOPEndpointSequence
     CORBA::tk_sequence, // typecode kind
   140, // encapsulation length
@@ -113,34 +115,34 @@ static const CORBA::Long _oc_TAO_IIOPEndpointSequence[] =
     124, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       31,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x54414f2f),
-      ACE_NTOHL (0x49494f50),
-      ACE_NTOHL (0x5f456e64),
-      ACE_NTOHL (0x706f696e),
-      ACE_NTOHL (0x745f496e),
-      ACE_NTOHL (0x666f3a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x54414f2f), 
+      ACE_NTOHL (0x49494f50), 
+      ACE_NTOHL (0x5f456e64), 
+      ACE_NTOHL (0x706f696e), 
+      ACE_NTOHL (0x745f496e), 
+      ACE_NTOHL (0x666f3a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:TAO/IIOP_Endpoint_Info:1.0
             19,
-      ACE_NTOHL (0x49494f50),
-      ACE_NTOHL (0x5f456e64),
-      ACE_NTOHL (0x706f696e),
-      ACE_NTOHL (0x745f496e),
+      ACE_NTOHL (0x49494f50), 
+      ACE_NTOHL (0x5f456e64), 
+      ACE_NTOHL (0x706f696e), 
+      ACE_NTOHL (0x745f496e), 
       ACE_NTOHL (0x666f0000),  // name = IIOP_Endpoint_Info
       3, // member count
             5,
-      ACE_NTOHL (0x686f7374),
+      ACE_NTOHL (0x686f7374), 
       ACE_NTOHL (0x0),  // name = host
-            CORBA::tk_string,
+            CORBA::tk_string, 
       0U, // string length
       5,
-      ACE_NTOHL (0x706f7274),
+      ACE_NTOHL (0x706f7274), 
       ACE_NTOHL (0x0),  // name = port
             CORBA::tk_short,
 
       9,
-      ACE_NTOHL (0x7072696f),
-      ACE_NTOHL (0x72697479),
+      ACE_NTOHL (0x7072696f), 
+      ACE_NTOHL (0x72697479), 
       ACE_NTOHL (0x0),  // name = priority
             CORBA::tk_short,
 
@@ -154,7 +156,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IIOPEndpointSequence (
     sizeof (_oc_TAO_IIOPEndpointSequence),
     (char *) &_oc_TAO_IIOPEndpointSequence,
     0,
-    sizeof (TAO::IIOPEndpointSequence)
+    0
   );
 
 namespace TAO
@@ -163,7 +165,7 @@ namespace TAO
     &_tc_TAO_tc_TAO_IIOPEndpointSequence;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -200,8 +202,8 @@ CORBA::Boolean operator>>= (
     TAO::IIOP_Endpoint_Info *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const TAO::IIOP_Endpoint_Info *&,
+  return _tao_any >>= const_cast<
+      const TAO::IIOP_Endpoint_Info *&> (
       _tao_elem
     );
 }
@@ -221,7 +223,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -258,8 +260,8 @@ CORBA::Boolean operator>>= (
     TAO::IIOPEndpointSequence *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const TAO::IIOPEndpointSequence *&,
+  return _tao_any >>= const_cast<
+      const TAO::IIOPEndpointSequence *&> (
       _tao_elem
     );
 }
@@ -278,8 +280,6 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -305,5 +305,4 @@ CORBA::Boolean operator>>= (
         TAO::IIOPEndpointSequence \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

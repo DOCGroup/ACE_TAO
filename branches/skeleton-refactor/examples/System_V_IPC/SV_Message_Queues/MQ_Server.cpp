@@ -33,7 +33,7 @@ main (int, char *[])
   Message_Block recv_msg (SRV_ID);
   Message_Block send_msg (0,
                           pid,
-                          ACE_OS::cuserid (ACE_static_cast (char *, 0)),
+                          ACE_OS::cuserid (static_cast<char *> (0)),
                           "I received your message.");
 
   // Register a signal handler.
@@ -69,7 +69,7 @@ main (int, char *[])
 
 #else
 
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "SYSV IPC, or SYSV SHMEM is not supported on this platform\n"));

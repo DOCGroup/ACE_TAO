@@ -47,10 +47,6 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
 ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
 
-#if defined (__ACE_INLINE__)
-# include "tao/RTPortableServer/RT_Collocation_Resolver.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"

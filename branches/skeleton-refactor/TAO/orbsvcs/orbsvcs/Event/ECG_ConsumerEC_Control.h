@@ -73,10 +73,6 @@ public:
                                  ACE_ENV_ARG_DECL_NOT_USED);
 };
 
-#if defined (__ACE_INLINE__)
-#include "ECG_ConsumerEC_Control.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_ECG_ConsumerEC_Control_H */

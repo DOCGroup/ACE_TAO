@@ -2,10 +2,6 @@
 
 #include "Method_Request_Updates.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Method_Request_Updates.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Updates, "$Id$")
 
 #include "tao/debug.h"
@@ -39,10 +35,10 @@ TAO_Notify_Method_Request_Updates_No_Copy::~TAO_Notify_Method_Request_Updates_No
 {
 }
 
-TAO_Notify_Method_Request*
+TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Updates_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_Notify_Method_Request* request;
+  TAO_Notify_Method_Request_Queueable* request;
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Updates (this->added_, this->removed_, this->proxy_),

@@ -7,8 +7,8 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID (tao, 
-           Wait_On_Reactor, 
+ACE_RCSID (tao,
+           Wait_On_Reactor,
            "$Id$")
 
 TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
@@ -48,8 +48,8 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
         }
 
       // Did we timeout? If so, stop running the loop.
-      if (result == 0 
-          && max_wait_time != 0 
+      if (result == 0
+          && max_wait_time != 0
           && *max_wait_time == ACE_Time_Value::zero)
         {
           break;
@@ -103,8 +103,14 @@ TAO_Wait_On_Reactor::register_handler (void)
   return 1;
 }
 
-int
-TAO_Wait_On_Reactor::non_blocking (void)
+bool
+TAO_Wait_On_Reactor::non_blocking (void) const
 {
-  return 1;
+  return true;
+}
+
+bool
+TAO_Wait_On_Reactor::can_process_upcalls (void) const
+{
+  return true;
 }

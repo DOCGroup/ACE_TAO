@@ -18,6 +18,7 @@
 #include "orbsvcs/FT_ReplicationManagerC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (FT_DefaultFaultAnalyzer,
            FT_DefaultFaultAnalyzer,
@@ -166,4 +167,3 @@ int TAO::FT_DefaultFaultAnalyzer::analyze_fault_event (
   // no-op
   return 0;
 }
-

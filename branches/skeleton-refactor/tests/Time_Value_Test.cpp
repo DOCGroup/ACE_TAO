@@ -1,4 +1,3 @@
-#include <iostream>
 // $Id$
 
 // ============================================================================
@@ -191,13 +190,13 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value tv4 (1, 1000000);
   ACE_Time_Value tv5 (2UL);
   ACE_Time_Value tv6 (1, -1000000);
-  ACE_Time_Value tv7 (ACE_static_cast (long, 2.0));
+  ACE_Time_Value tv7 (static_cast<long> (2.0));
 
   // Beware!  2.5 gets truncated to 2!
   // NOTE:  this is intended to show what happens with
   // ACE_Time_Value (2.5).  Some compilers, such as g++ 2.7.2.3,
   // actually warn about it without the case.
-  ACE_Time_Value tv8 (ACE_static_cast (long, 2.5));
+  ACE_Time_Value tv8 (static_cast <long> (2.5));
 
   // Test assignment operator, tv9 and tv6 must be the same after this
   ACE_Time_Value tv9;

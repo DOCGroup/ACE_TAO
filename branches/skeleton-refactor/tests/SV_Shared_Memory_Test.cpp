@@ -24,7 +24,10 @@
 
 #include "test_config.h"
 #include "ace/Malloc.h"
+#include "ace/SV_Semaphore_Simple.h"
+#include "ace/SV_Semaphore_Complex.h"
 #include "ace/OS_NS_unistd.h"
+
 
 ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
 
@@ -151,8 +154,7 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && \
     !defined(ACE_LACKS_SYSV_SHMEM)
-  char *shm = ACE_reinterpret_cast (char *,
-                                    myallocator ().malloc (SHMSZ));
+  char *shm = reinterpret_cast<char *> (myallocator ().malloc (SHMSZ));
 
   // Create the mutex and synch before spawning the child process, to
   // avoid race condition between their creation in the parent and use

@@ -211,8 +211,8 @@ BE_produce (void)
           return;
         }
 
-//      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
-//      ACE_TRY_CHECK;
+      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Get the root node.
       AST_Decl *d = idl_global->root ();

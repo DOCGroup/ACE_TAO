@@ -153,9 +153,5 @@ private:
 
 };
 
-#if defined (__ACE_INLINE__)
-# include "UIPMC_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_PROFILE_H */

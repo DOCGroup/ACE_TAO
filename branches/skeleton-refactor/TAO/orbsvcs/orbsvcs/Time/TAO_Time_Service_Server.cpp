@@ -58,12 +58,9 @@ TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
   // Return the local time of the system as a UTO.
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO ((TAO_Time_Base_Offset +
-                              ACE_static_cast (CORBA::ULongLong,
-                                               timeofday.sec ())) *
-                             ACE_static_cast (ACE_UINT32,
-                                              10000000) +
-                             ACE_static_cast  (CORBA::ULongLong,
-                                               timeofday.usec () * 10),
+                              static_cast<CORBA::ULongLong> (timeofday.sec ())) *
+                             static_cast<ACE_UINT32> (10000000) +
+                             static_cast<CORBA::ULongLong> (timeofday.usec () * 10),
                              0,
                              0),
                     CORBA::NO_MEMORY ());

@@ -15,9 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/config-all.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/varbase.h"
 
 namespace TAO
 {
@@ -46,7 +50,7 @@ namespace TAO
  *
  */
 template <typename T>
-class TAO_Value_Var_T
+class TAO_Value_Var_T : private TAO_Base_var
 {
 public:
   TAO_Value_Var_T (void);
@@ -76,7 +80,15 @@ public:
   T * ptr (void) const;
 
 private:
+
+  // Prevent widening assignment.
+  TAO_Value_Var_T (const TAO_Base_var &);
+  void operator= (const TAO_Base_var &);
+
+private:
+
   T * ptr_;
+
 };
 
 /**
@@ -106,10 +118,6 @@ private:
   typedef TAO_Value_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
 };
-
-#if defined (__ACE_INLINE__)
-#include "Value_VarOut_T.inl"
-#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Value_VarOut_T.cpp"

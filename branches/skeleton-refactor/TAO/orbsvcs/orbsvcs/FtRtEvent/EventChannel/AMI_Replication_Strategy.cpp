@@ -3,9 +3,13 @@
 #include "AMI_Replication_Strategy.h"
 #include "AMI_Primary_Replication_Strategy.h"
 
+#include "ace/Auto_Ptr.h"
+
+
 ACE_RCSID (EventChannel,
            AMI_Replication_Strategy,
            "$Id$")
+
 
 AMI_Replication_Strategy::AMI_Replication_Strategy(bool mt)
 : mt_(mt)
@@ -62,4 +66,3 @@ int  AMI_Replication_Strategy::release (void)
 {
   return 0;
 }
-

@@ -10,7 +10,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(ace, Filecache, "$Id$")
+ACE_RCSID (ace,
+           Filecache,
+           "$Id$")
 
 #if defined (ACE_WIN32)
 // Specifies no sharing flags.
@@ -111,7 +113,7 @@ ACE_Filecache_Handle::handle (void) const
   if (this->handle_ == ACE_INVALID_HANDLE && this->file_ != 0)
     {
       ACE_Filecache_Handle *mutable_this =
-        (ACE_Filecache_Handle *) this;
+        const_cast<ACE_Filecache_Handle *> (this);
       mutable_this->handle_ = ACE_OS::dup (this->file_->handle ());
     }
   return this->handle_;
@@ -139,26 +141,27 @@ ACE_Filecache_Handle::size (void) const
 // ACE_Filecache_Hash
 // ------------------
 
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-
 #define ACE_Filecache_Hash \
         ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
 #define ACE_Filecache_Hash_Entry \
         ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>
 
-ACE_TEMPLATE_SPECIALIZATION
-ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (const ACE_TCHAR *const &ext_id,
-                                              ACE_Filecache_Object *const &int_id,
-                                              ACE_Filecache_Hash_Entry *next,
-                                              ACE_Filecache_Hash_Entry *prev)
-  : ext_id_ (ext_id ? ACE_OS::strdup (ext_id) : ACE_OS::strdup (ACE_LIB_TEXT (""))),
+template <>
+ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
+  const ACE_TCHAR *const &ext_id,
+  ACE_Filecache_Object *const &int_id,
+  ACE_Filecache_Hash_Entry *next,
+  ACE_Filecache_Hash_Entry *prev)
+  : ext_id_ (ext_id
+             ? ACE_OS::strdup (ext_id)
+             : ACE_OS::strdup (ACE_LIB_TEXT (""))),
     int_id_ (int_id),
     next_ (next),
     prev_ (prev)
 {
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
                                               ACE_Filecache_Hash_Entry *prev)
   : ext_id_ (0),
@@ -167,7 +170,7 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
 {
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template <>
 ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry (void)
 {
   ACE_OS::free ((void *) ext_id_);
@@ -176,24 +179,23 @@ ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry (void)
 // We need these template specializations since KEY is defined as a
 // ACE_TCHAR*, which doesn't have a hash() or equal() method defined on it.
 
-ACE_TEMPLATE_SPECIALIZATION
+template <>
 unsigned long
 ACE_Filecache_Hash::hash (const ACE_TCHAR *const &ext_id)
 {
   return ACE::hash_pjw (ext_id);
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template <>
 int
-ACE_Filecache_Hash::equal (const ACE_TCHAR *const &id1, const ACE_TCHAR *const &id2)
+ACE_Filecache_Hash::equal (const ACE_TCHAR *const &id1,
+                           const ACE_TCHAR *const &id2)
 {
   return ACE_OS::strcmp (id1, id2) == 0;
 }
 
 #undef ACE_Filecache_Hash
 #undef ACE_Filecache_Hash_Entry
-
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 
 // -------------
@@ -745,31 +747,15 @@ ACE_Filecache_Object::update (void) const
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 template class ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>;
 template class ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
-#else
-template class ACE_Hash_Map_Entry<ACE_TString, ACE_Filecache_Object *>;
-template class ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 #pragma instantiate ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
-#else
-#pragma instantiate ACE_Hash_Map_Entry<ACE_TString, ACE_Filecache_Object *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

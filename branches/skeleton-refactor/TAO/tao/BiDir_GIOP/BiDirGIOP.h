@@ -50,22 +50,14 @@ public:
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator)
+  virtual void load_policy_validators (TAO_Policy_Validator &validator
+                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 
-  /// Accessor for the <validator_loaded_> flag
-  static int validator_loaded (void);
-  static void validator_loaded (int f);
 private:
-
-  /// Our policy validator
-  TAO_BiDirPolicy_Validator *validator_;
-
-  /// Flag to indicate whether validator has been loaded
-  static int validator_loaded_;
 
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.

@@ -13,7 +13,7 @@
 #ifndef TAO_PG_GROUP_FACTORY_H
 #define TAO_PG_GROUP_FACTORY_H
 
-#include /**/ <ace/pre.h>
+#include /**/ "ace/pre.h"
 
 #include <ace/ACE.h>
 

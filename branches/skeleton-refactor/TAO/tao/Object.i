@@ -7,9 +7,10 @@
 ACE_INLINE
 CORBA::Object::Object (int)
   : servant_ (0),
-    is_collocated_ (0),
-    is_local_ (1),
-    is_evaluated_ (1),
+    proxy_broker_ (0),
+    is_collocated_ (false),
+    is_local_ (true),
+    is_evaluated_ (true),
     ior_ (),
     orb_core_ (0),
     protocol_proxy_ (0),

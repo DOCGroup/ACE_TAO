@@ -224,9 +224,6 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->init_uiop_properties () != 0)
-    return -1;
-
   if (address == 0)
     return -1;
 
@@ -249,9 +246,6 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  const char *options)
 {
   this->orb_core_ = orb_core;
-
-  if (this->init_uiop_properties () != 0)
-    return -1;
 
   if (major >= 0 && minor >= 0)
     this->version_.set_version (static_cast<CORBA::Octet> (major),
@@ -276,7 +270,6 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_,
-                                              &(this->uiop_properties_),
                                               this->lite_flag_),
                   -1);
 
@@ -508,56 +501,6 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
-  return 0;
-}
-
-int
-TAO_UIOP_Acceptor::init_uiop_properties (void)
-{
-  // @@ Currently (in the code below), we obtain protocol properties from
-  // ORB-level ServerProtocol, even though the policy may
-  // have been overridden on POA level.  That's because currently all
-  // endpoints (acceptors) are global.  Once endpoints become per POA,
-  // the code below will have to be changed to look at the POA-level
-  // ServerProtocol policy first.
-
-  // ServerProtocolProperties policy controls protocols configuration.
-  // Look for protocol properties in the effective
-  // ServerProtocolPolicy.
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  // Initialize the settings to the ORB defaults.  If RT CORBA is enabled,
-  // it may override these.
-  int send_buffer_size = this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  int recv_buffer_size = this->orb_core_->orb_params ()->sock_rcvbuf_size ();
-  int no_delay = 0;
-  int enable_network_priority = 0;
-
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (tph != 0)
-    {
-      static const char protocol[] = "uiop";
-      const char *protocol_type = protocol;
-
-      int hook_result =
-        tph->call_server_protocols_hook (send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         enable_network_priority,
-                                         protocol_type);
-
-      if(hook_result == -1)
-        return -1;
-    }
-
-  // Extract and locally store properties of interest.
-  this->uiop_properties_.send_buffer_size =
-    send_buffer_size;
-  this->uiop_properties_.recv_buffer_size =
-   recv_buffer_size;
-
   return 0;
 }
 

@@ -93,7 +93,7 @@ ACE_Pipe::open (int buffer_size)
 # else  /* ! ACE_LACKS_SOCKET_BUFSIZ */
   if (reader.set_option (SOL_SOCKET,
                          SO_RCVBUF,
-                         ACE_reinterpret_cast (void *, &buffer_size),
+                         reinterpret_cast <void *> (&buffer_size),
                          sizeof (buffer_size)) == -1
       && errno != ENOTSUP)
     {
@@ -102,7 +102,7 @@ ACE_Pipe::open (int buffer_size)
     }
   else if (writer.set_option (SOL_SOCKET,
                               SO_SNDBUF,
-                              ACE_reinterpret_cast (void *, &buffer_size),
+                              reinterpret_cast <void *> (&buffer_size),
                               sizeof (buffer_size)) == -1
            && errno != ENOTSUP)
     {
@@ -153,8 +153,7 @@ ACE_Pipe::open (int buffer_size)
   if (ACE_OS::setsockopt (this->handles_[0],
                           SOL_SOCKET,
                           SO_RCVBUF,
-                          ACE_reinterpret_cast (const char *,
-                                                &buffer_size),
+                          reinterpret_cast <const char *> (&buffer_size),
                           sizeof (buffer_size)) == -1
       && errno != ENOTSUP)
     {
@@ -164,7 +163,7 @@ ACE_Pipe::open (int buffer_size)
   if (ACE_OS::setsockopt (this->handles_[1],
                           SOL_SOCKET,
                           SO_SNDBUF,
-                          ACE_reinterpret_cast (const char *, &buffer_size),
+                          reinterpret_cast <const char *> (&buffer_size),
                           sizeof (buffer_size)) == -1
       && errno != ENOTSUP)
     {

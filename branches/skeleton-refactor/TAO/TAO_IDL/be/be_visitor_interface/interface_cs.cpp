@@ -142,17 +142,20 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  // Generate the proxy broker factory function pointer definition.
-  *os << be_nl << be_nl
-      << "// Function pointer for collocation factory initialization."
-      << be_nl
-      << "TAO::Collocation_Proxy_Broker * " << be_nl
-      << "(*" << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer) ("
-      << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ") = 0;" << be_uidt;
+  if (!node->is_local ())
+    {
+      // Generate the proxy broker factory function pointer definition.
+      *os << be_nl << be_nl
+          << "// Function pointer for collocation factory initialization."
+          << be_nl
+          << "TAO::Collocation_Proxy_Broker * " << be_nl
+          << "(*" << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer) ("
+          << be_idt << be_idt_nl
+          << "CORBA::Object_ptr obj" << be_uidt_nl
+          << ") = 0;" << be_uidt;
+    }
 
   // Generate code for the elements of the interface.
   if (this->visit_scope (node) == -1)
@@ -323,6 +326,31 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  // Empty implementations so the application can override or not.
+  if (node->session_component_child () == 1)
+    {
+      *os << "// These two are inherited from SessionComponent." 
+          << be_nl << be_nl
+          << "void" << be_nl
+          << node->full_name () << "::ciao_preactivate (" 
+          << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "ACE_THROW_SPEC ((CORBA::SystemException," << be_nl
+          << "                 ::Components::CCMException))" << be_uidt_nl
+          << "{" << be_nl
+          << "}" << be_nl << be_nl
+          << "void" << be_nl
+          << node->full_name () << "::ciao_postactivate (" 
+          << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "ACE_THROW_SPEC ((CORBA::SystemException," << be_nl
+          << "                 ::Components::CCMException))" << be_uidt_nl
+          << "{" << be_nl
+          << "}" << be_nl << be_nl;
+    }
+
   *os << "CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
       << "const char *value" << be_nl;
@@ -352,14 +380,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->is_abstract () || node->has_mixed_parentage ())
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
           << ")";
     }
   else if (node->is_local ())
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
           << ")";
     }
@@ -376,21 +404,21 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (! node->is_abstract ())
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl;
     }
 
-  *os << " )" << be_nl
+  *os << ")" << be_nl
       << "{" << be_idt_nl
-      << "return 1; // success using local knowledge" << be_uidt_nl
+      << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl;
 
   if (node->is_abstract () || node->is_local ())
     {
-      *os << "return 0;" << be_uidt_nl;
+      *os << "return false;" << be_uidt_nl;
     }
   else
     {
@@ -419,7 +447,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << node->name () << "::marshal (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
     }
   else
@@ -562,7 +590,9 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
 {
-  if (!base->is_abstract ())
+  // If the derived interface is local, the abstract parent's operation
+  // was generated as pure virtual.
+  if (!base->is_abstract () || node->is_local ())
     {
       return 0;
     }
@@ -597,12 +627,16 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
           UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
           base->nconc (item_new_name);
 
+          // We pass the node's is_abstract flag to the operation
+          // constructor so we will get the right generated operation
+          // body if we are regenerating an operation from an
+          // abstract interface in a concrete interface or component.
           AST_Operation *op = AST_Operation::narrow_from_decl (d);
           be_operation new_op (op->return_type (),
                                op->flags (),
                                0,
                                op->is_local (),
-                               op->is_abstract ());
+                               node->is_abstract ());
           new_op.set_defined_in (node);
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);

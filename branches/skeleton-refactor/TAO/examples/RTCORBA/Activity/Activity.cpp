@@ -1,5 +1,12 @@
 //$Id$
 #include "Activity.h"
+#include "Thread_Task.h"
+#include "Job_i.h"
+#include "POA_Holder.h"
+#include "Builder.h"
+
+#include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
@@ -8,14 +15,9 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
 #include "ace/Signal.h"
+#include "ace/Reactor.h"
 
-#include "Thread_Task.h"
-#include "Job_i.h"
-#include "POA_Holder.h"
-#include "Builder.h"
 
 //***************************************************************//
 extern "C" void handler (int)
@@ -461,5 +463,9 @@ template class ACE_Singleton<Activity, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Singleton<Activity, ACE_Null_Mutex>
+
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template ACE_Singleton<Activity, ACE_Null_Mutex> *ACE_Singleton<Activity, ACE_Null_Mutex>::singleton_;
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -186,10 +186,6 @@ public:
         ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 };
 
-#if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/DefaultHandler.i"
-#endif /* __ACEXML_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACEXML_DEFAULTHANDLER_H */

@@ -19,6 +19,12 @@ $IMR_LOCATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service
 $IMR_ACTIVATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImR_Activator");
 $TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
 
+# We want the tao_imr executable to be found exactly in the path
+# given, without being modified by the value of -ExeSubDir.
+# So, we tell its Process object to ignore the setting of -ExeSubDir.
+
+$TAO_IMR->IgnoreExeSubDir (1);
+
 ################################################################################
 
 $errors = 0;
@@ -30,7 +36,7 @@ unlink $pfile;
 ################################################################################
 ## Start the implementation Repository Locator
 
-$IMR_LOCATOR->Arguments ("-o $imr_locator_ior ");
+$IMR_LOCATOR->Arguments ("-p $pfile -o $imr_locator_ior -d 1");
 $IMR_LOCATOR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -41,7 +47,7 @@ if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
 
 ## Start the implementation Repository Activator
 
-$IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior -d 0 -p $pfile -ORBInitRef ImplRepoService=file://$imr_locator_ior");
+$IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior -d 1 -ORBInitRef ImplRepoService=file://$imr_locator_ior");
 $IMR_ACTIVATOR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
@@ -57,9 +63,9 @@ if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
 print "===== Adding a server\n";
 
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
-                  . " add Foo -c foobarbaz");
+		    . " add Foo -c foobarbaz");
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
 
 if ($taoimr != 0) {
     print STDERR "ERROR: tao_imr (add) returned $taoimr\n";
@@ -69,9 +75,9 @@ if ($taoimr != 0) {
 print "===== Updating a server\n";
 
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
-                    . " update Foo -w foodir");
+                    . " update Foo -w foodir" );
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
 
 if ($taoimr != 0) {
     print STDERR "ERROR: tao_imr (update) returned $taoimr\n";
@@ -83,7 +89,7 @@ print "===== Removing a server\n";
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
                     . " remove Foo");
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
 
 if ($taoimr != 0) {
     print STDERR "ERROR: tao_imr (remove) returned $taoimr\n";
@@ -95,7 +101,7 @@ print "===== Readding a server\n";
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
                     . " add Foo -c foobarbaz");
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
 
 if ($taoimr != 0) {
     print STDERR "ERROR: tao_imr (add) returned $taoimr\n";
@@ -114,19 +120,10 @@ if ($iserver != 0) {
 
 unlink $imr_locator_ior;
 
-$iserver = $IMR_ACTIVATOR->TerminateWaitKill (5);
-
-if ($iserver != 0) {
-    print STDERR "ERROR: IMR returned $iserver\n";
-    ++$errors;
-}
-
-unlink $imr_activator_ior;
-
 ################################################################################
 ## Restart the Implementation Repository in locked mode.
 
-$IMR_LOCATOR->Arguments ("-o $imr_locator_ior ");
+$IMR_LOCATOR->Arguments ("-l -p $pfile -o $imr_locator_ior -d 1");
 $IMR_LOCATOR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -135,27 +132,31 @@ if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
     exit 1;
 }
 
-$IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior -d 0 -l -p $pfile -ORBInitRef ImplRepoService=file://$imr_locator_ior");
-$IMR_ACTIVATOR->Spawn ();
-
-if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
-    print STDERR "ERROR: waiting for $imr_activator_ior\n";
-    $IMR_ACTIVATOR->Kill ();
-    $IMR_LOCATOR->Kill ();
-    exit 1;
-}
-
 ################################################################################
 ## Test out commands on the IMR
+
+print "===== Listing registered servers.\n";
+
+$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
+                    . " list");
+
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
+
+if ($taoimr != 0) {
+    print STDERR "ERROR: tao_imr (list) returned $taoimr\n";
+    ++$errors;
+}
 
 print "===== Adding a server (should fail)\n";
 
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
                     . " add Foo2 -c foobarbaz");
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
 
-if ($taoimr != 2) {
+## Note : If you receive a 5 (NOT_FOUND) then it's likely that
+## persistence isn't working correctly.
+if ($taoimr != 2) {  # NO_PERMISSION
     print STDERR "ERROR: tao_imr (add) returned $taoimr\n";
     ++$errors;
 }
@@ -165,9 +166,9 @@ print "===== Updating a server (should fail)\n";
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
                     . " update Foo -w foodir");
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
 
-if ($taoimr != 2) {
+if ($taoimr != 2) {  # NO_PERMISSION
     print STDERR "ERROR: tao_imr (update) returned $taoimr\n";
     ++$errors;
 }
@@ -177,9 +178,9 @@ print "===== Removing a server (should fail)\n";
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
                     . " remove Foo");
 
-$taoimr = $TAO_IMR->SpawnWaitKill (60);
+$taoimr = $TAO_IMR->SpawnWaitKill (10);
 
-if ($taoimr != 2) {
+if ($taoimr != 2) {  # NO_PERMISSION
     print STDERR "ERROR: tao_imr (remove) returned $taoimr\n";
     ++$errors;
 }

@@ -32,9 +32,9 @@ namespace MyImpl
     Pulse_Handler (RateGen_exec_i *cb);
     ~Pulse_Handler ();
 
-    int open (void);
+    int open_h (void);
 
-    int close (void);
+    int close_h (void);
 
     int start (CORBA::Long hertz);
 

@@ -185,7 +185,7 @@ main (int argc, char *argv[])
       ACE_Time_Value tv;
       cdr_encoding.elapsed_time_incr (tv);
       ACE_hrtime_t usecs = tv.sec ();
-      usecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
+      usecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
       usecs += tv.usec ();
       double average = ACE_U64_TO_U32(usecs) / repeat;
 

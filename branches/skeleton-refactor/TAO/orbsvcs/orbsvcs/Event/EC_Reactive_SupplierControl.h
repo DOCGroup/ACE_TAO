@@ -131,6 +131,11 @@ private:
 
   /// The ORB reactor
   ACE_Reactor *reactor_;
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  /// The timer id
+  int timer_id_;
+#endif /* TAO_HAS_CORBA_MESSAGING */
 };
 
 // ****************************************************************

@@ -134,10 +134,13 @@ Ptest::parse_args (int argc,
 void
 Ptest::populate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT ("\n============== POPULATE ==============\n\n")
-    ));
+  if (this->debug_)
+    {
+      ACE_DEBUG ((
+          LM_DEBUG,
+          ACE_TEXT ("\n============== POPULATE ==============\n\n")
+        ));
+    }
 
   CORBA::StructMemberSeq members (2);
   members.length (2);
@@ -181,10 +184,13 @@ Ptest::populate (ACE_ENV_SINGLE_ARG_DECL)
 void
 Ptest::query (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT ("\n============== QUERY ==============\n\n")
-    ));
+  if (this->debug_)
+    {
+      ACE_DEBUG ((
+          LM_DEBUG,
+          ACE_TEXT ("\n============== QUERY ==============\n\n")
+        ));
+    }
 
   const char *members[] =
   {
@@ -193,71 +199,64 @@ Ptest::query (ACE_ENV_SINGLE_ARG_DECL)
     "my_enum"
   };
 
-  CORBA::ContainedSeq_var contents = this->repo_->contents (CORBA::dk_all,
-                                                            0
-                                                            ACE_ENV_ARG_PARAMETER);
+  CORBA::ContainedSeq_var contents = 
+    this->repo_->contents (CORBA::dk_all,
+                           0
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong length = contents->length ();
 
   if (this->debug_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Repository::contents::length: %d\n"),
-                length));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Repository::contents::length: %d\n"),
+                  length));
+    }
 
   ACE_ASSERT (length == 1);
 
   CORBA::ULong i = 0;
 
-  CORBA::StructDef_var svar = CORBA::StructDef::_narrow (contents[i]
-                                                         ACE_ENV_ARG_PARAMETER);
+  CORBA::StructDef_var svar =
+    CORBA::StructDef::_narrow (contents[i]
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (svar.in ()));
 
-  CORBA::StructMemberSeq_var out_members = svar->members (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::StructMemberSeq_var out_members =
+    svar->members (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   length = out_members->length ();
 
   if (this->debug_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\nStructDef::members::length: %d\n"),
-                length));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\nStructDef::members::length: %d\n"),
+                  length));
+    }
 
   ACE_ASSERT (length == 3);
 
-  for (i = 0; i < length; i++)
+  for (i = 0; i < length; ++i)
     {
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
-                    i,
-                    out_members[i].name.in ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
+                      i,
+                      out_members[i].name.in ()));
+        }
 
       if (i == length - 1)
         {
-          if (ACE_OS::strcmp (out_members[i].name, "my_enum"))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("persistence_test::query::members -")
-                          ACE_TEXT ("incorrect local name in item %d"),
-                          i));
-
-              return;
-            }
+          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, "my_enum") == 0);
         }
       else
         {
-          if (ACE_OS::strcmp (out_members[i].name, members[i]))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("persistence_test::query::members -")
-                          ACE_TEXT ("incorrect local name in item %d"),
-                          i));
-
-              return;
-            }
+          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, members[i]) == 0);
         }
     }
 

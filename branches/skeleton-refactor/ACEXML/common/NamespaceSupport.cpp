@@ -3,10 +3,6 @@
 #include "ACEXML/common/NamespaceSupport.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/NamespaceSupport.i"
-#endif /* __ACEXML_INLINE__ */
-
 static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
 
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
@@ -94,8 +90,7 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
   ACEXML_String ns_prefix (prefix, 0, 0);
   ACEXML_String ns_uri (uri, 0, 0);
 
-  return this->effective_context_->bind (ns_prefix,
-                                         ns_uri);
+  return this->effective_context_->rebind (ns_prefix, ns_uri);
 }
 
 int
@@ -124,8 +119,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    if (entry->int_id_ == ACEXML_String (uri, 0, 0) &&
-        entry->ext_id_ != ACEXML_String (ACEXML_DEFAULT_NS_PREFIX, 0, 0))
+    if (entry->int_id_ == ACEXML_String (uri, 0, 0))
       return entry->ext_id_.c_str ();
 
   return 0;                     // Nothing found.
@@ -141,11 +135,7 @@ ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
        iter.advance ())
-    if (entry->ext_id_ != ACEXML_String(ACEXML_DEFAULT_NS_PREFIX, 0, 0))
-      prefixes.enqueue_tail (entry->ext_id_.c_str ());
-    else
-      continue;
-
+    prefixes.enqueue_tail (entry->ext_id_.c_str ());
   return 0;
 }
 
@@ -221,7 +211,7 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
                                       const ACEXML_Char *&name,
                                       int is_attribute) const
 {
-  int qlen = ACE_static_cast (int, ACE_OS::strlen (qName));
+  int qlen = static_cast<int> (ACE_OS::strlen (qName));
   int len = -1;
   for (int i = 0; i < qlen; ++i)
     if (qName [i] == ':')
@@ -246,16 +236,8 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
 
   ACEXML_NS_CONTEXT_ENTRY *entry;
 
-  if (prefix != ACEXML_DEFAULT_NS_PREFIX)
-    {
-      if (this->effective_context_->find (prefix, entry) == 0)
-        uri = entry->int_id_.c_str ();
-      else
-        {
-          uri = ACEXML_DEFAULT_NS_PREFIX;
-          return -1;
-        }
-    }
+  if (this->effective_context_->find (prefix, entry) == 0)
+    uri = entry->int_id_.c_str ();
   else
     {
       uri = ACEXML_DEFAULT_NS_PREFIX;

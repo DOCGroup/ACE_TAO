@@ -13,6 +13,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
 
@@ -91,7 +92,9 @@ BEGIN_MESSAGE_MAP(CNamingViewerDlg, CDialog)
 	ON_BN_CLICKED(IDC_SELECT_NS, OnSelectNs)
 	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
+#if !defined (_WIN32_WCE)
   ON_WM_GETMINMAXINFO()
+#endif
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -107,6 +110,7 @@ BOOL CNamingViewerDlg::OnInitDialog()
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
+#if !defined (_WIN32_WCE)
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != NULL)
 	{
@@ -118,6 +122,7 @@ BOOL CNamingViewerDlg::OnInitDialog()
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
+#endif
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
@@ -175,8 +180,6 @@ void CNamingViewerDlg::OnPaint()
 	{
 		CPaintDC dc(this); // device context for painting
 
-		SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
-
 		// Center icon in client rectangle
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
@@ -206,7 +209,7 @@ void CNamingViewerDlg::Resolve()
   m_Tree.Resolve(m_RootContext);
 }
 
-void CNamingViewerDlg::OnSelectNs() 
+void CNamingViewerDlg::OnSelectNs()
 {
 	// TODO: Add your control notification handler code here
 	CSelectNSDialog Dialog;
@@ -216,7 +219,7 @@ void CNamingViewerDlg::OnSelectNs()
   }
   try
   {
-    CORBA::Object_var Object = m_pORB->string_to_object(Dialog.GetIOR());
+    CORBA::Object_var Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (Dialog.GetIOR()));
     m_RootContext = CosNaming::NamingContext::_narrow(Object);
     m_Server = Dialog.GetName();
     UpdateData(FALSE);
@@ -224,19 +227,19 @@ void CNamingViewerDlg::OnSelectNs()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
-void CNamingViewerDlg::OnSize(UINT nType, int cx, int cy) 
+void CNamingViewerDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
 	// TODO: Add your message handler code here
-  
+
   // Resize the tree control
   if(m_Tree.m_hWnd)
   {
-    CRect Size; 
+    CRect Size;
     m_Tree.GetWindowRect(Size);
     ScreenToClient(Size);
     int Border = Size.left;
@@ -246,6 +249,7 @@ void CNamingViewerDlg::OnSize(UINT nType, int cx, int cy)
   }
 }
 
+#if !defined (_WIN32_WCE)
 void CNamingViewerDlg::OnGetMinMaxInfo( MINMAXINFO FAR* lpMMI )
 {
   // Prevent the window from being resized too small
@@ -259,3 +263,4 @@ void CNamingViewerDlg::OnGetMinMaxInfo( MINMAXINFO FAR* lpMMI )
     lpMMI->ptMinTrackSize.y = 200;
   }
 }
+#endif

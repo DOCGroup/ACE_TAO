@@ -6,7 +6,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/os_include/sys/os_mman.h"
 
 #if defined (__Lynx__)
 #  include "ace/OS_NS_sys_stat.h"
@@ -160,8 +159,8 @@ ACE_OS::mmap (void *addr,
     ACE_FAIL_RETURN (MAP_FAILED);
   else
     return addr_mapping;
-#elif defined (__Lynx__)
-  // The LynxOS 2.5.0 mmap doesn't allow operations on plain
+#elif defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
+  // The LynxOS mmap doesn't allow operations on plain
   // file descriptors.  So, create a shm object and use that.
   ACE_UNUSED_ARG (sa);
 

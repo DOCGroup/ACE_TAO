@@ -5,13 +5,11 @@ feature(ace_token) {
   macros += ACE_HAS_ACE_TOKEN
 
   Source_Files(ACE_COMPONENTS) {
-    Token {
-      Local_Tokens.cpp
-      Remote_Tokens.cpp
-      Token_Collection.cpp
-      Token_Invariants.cpp
-      Token_Manager.cpp
-      Token_Request_Reply.cpp
-    }
+    Local_Tokens.cpp
+    Remote_Tokens.cpp
+    Token_Collection.cpp
+    Token_Invariants.cpp
+    Token_Manager.cpp
+    Token_Request_Reply.cpp
   }
 }

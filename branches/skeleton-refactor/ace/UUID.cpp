@@ -132,7 +132,7 @@ namespace ACE_Utils
           {
             ACE_DEBUG ((LM_DEBUG,
                         "UUID::UUID - "
-                        "IllegalArgument(invalid string representation)"));
+                        "IllegalArgument(invalid string representation)\n"));
             return;
           }
       }
@@ -159,20 +159,20 @@ namespace ACE_Utils
           {
             ACE_DEBUG ((LM_DEBUG,
                         "ACE_UUID::ACE_UUID - "
-                        "IllegalArgument(invalid string representation)"));
+                        "IllegalArgument(invalid string representation)\n"));
             return;
           }
       }
 
-    this->timeLow_ = ACE_static_cast (ACE_UINT32, timeLow);
-    this->timeMid_ = ACE_static_cast (ACE_UINT16, timeMid);
-    this->timeHiAndVersion_ = ACE_static_cast (ACE_UINT16, timeHiAndVersion);
-    this->clockSeqHiAndReserved_ = ACE_static_cast (u_char, clockSeqHiAndReserved);
-    this->clockSeqLow_ = ACE_static_cast (u_char, clockSeqLow);
+    this->timeLow_ = static_cast<ACE_UINT32> (timeLow);
+    this->timeMid_ = static_cast<ACE_UINT16> (timeMid);
+    this->timeHiAndVersion_ = static_cast<ACE_UINT16> (timeHiAndVersion);
+    this->clockSeqHiAndReserved_ = static_cast<u_char> (clockSeqHiAndReserved);
+    this->clockSeqLow_ = static_cast<u_char> (clockSeqLow);
 
     UUID_node::NodeID nodeID;
     for (int i = 0; i < UUID_node::NODE_ID_SIZE; ++i)
-      nodeID [i] = ACE_static_cast (u_char, node[i]);
+      nodeID [i] = static_cast<u_char> (node[i]);
 
     this->node_->nodeID (nodeID);
 
@@ -181,7 +181,7 @@ namespace ACE_Utils
       {
         ACE_DEBUG ((LM_DEBUG,
                     "ACE_UUID_Impl::ACE_UUID_Impl - "
-                    "IllegalArgument(unsupported variant)"));
+                    "IllegalArgument(unsupported variant)\n"));
         return;
       }
 
@@ -194,7 +194,7 @@ namespace ACE_Utils
       {
         ACE_DEBUG ((LM_DEBUG,
                     "ACE_UUID::ACE_UUID - "
-                    "IllegalArgument(unsupported version)"));
+                    "IllegalArgument(unsupported version)\n"));
         return;
       }
     if ((this->clockSeqHiAndReserved_ & 0xc0) == 0xc0)
@@ -203,7 +203,7 @@ namespace ACE_Utils
           {
             ACE_DEBUG ((LM_DEBUG,
                       "ACE_UUID::ACE_UUID - "
-                        "IllegalArgument (Missing Thread and Process Id)"));
+                        "IllegalArgument (Missing Thread and Process Id)\n"));
             return;
           }
         ACE_CString thr_pid_str (thr_pid_buf);
@@ -211,7 +211,7 @@ namespace ACE_Utils
         if (pos == -1)
           ACE_DEBUG ((LM_DEBUG,
                       "ACE_UUID::ACE_UUID - "
-                      "IllegalArgument (Thread and Process Id format incorrect)"));
+                      "IllegalArgument (Thread and Process Id format incorrect)\n"));
 
         this->thr_id_ = thr_pid_str.substr (0, pos);
       this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);
@@ -332,12 +332,12 @@ namespace ACE_Utils
       }
     else
       {
-        nodeID [0] = ACE_static_cast (u_char, ACE_OS::rand());
-        nodeID [1] = ACE_static_cast (u_char, ACE_OS::rand());
-        nodeID [2] = ACE_static_cast (u_char, ACE_OS::rand());
-        nodeID [3] = ACE_static_cast (u_char, ACE_OS::rand());
-        nodeID [4] = ACE_static_cast (u_char, ACE_OS::rand());
-        nodeID [5] = ACE_static_cast (u_char, ACE_OS::rand());
+        nodeID [0] = static_cast<u_char> (ACE_OS::rand());
+        nodeID [1] = static_cast<u_char> (ACE_OS::rand());
+        nodeID [2] = static_cast<u_char> (ACE_OS::rand());
+        nodeID [3] = static_cast<u_char> (ACE_OS::rand());
+        nodeID [4] = static_cast<u_char> (ACE_OS::rand());
+        nodeID [5] = static_cast<u_char> (ACE_OS::rand());
       }
 
     this->get_timestamp (timeLast_);
@@ -358,11 +358,11 @@ namespace ACE_Utils
 
 
     // Construct a Version 1 UUID with the information in the arguements.
-    uuid.timeLow (ACE_static_cast (ACE_UINT32, timestamp & 0xFFFFFFFF));
-    uuid.timeMid (ACE_static_cast(ACE_UINT16, (timestamp >> 32) & 0xFFFF));
+    uuid.timeLow (static_cast<ACE_UINT32> (timestamp & 0xFFFFFFFF));
+    uuid.timeMid (static_cast<ACE_UINT16> ((timestamp >> 32) & 0xFFFF));
 
 
-    ACE_UINT16 tHAV = ACE_static_cast (ACE_UINT16, (timestamp >> 48) & 0xFFFF);
+    ACE_UINT16 tHAV = static_cast<ACE_UINT16> ((timestamp >> 48) & 0xFFFF);
     tHAV |= (version << 12);
     uuid.timeHiAndVersion (tHAV);
 
@@ -387,7 +387,7 @@ namespace ACE_Utils
 
       ACE_OS::sprintf (buf,
                        "%d",
-                       ACE_static_cast (int, ACE_OS::getpid ()));
+                       static_cast<int> (ACE_OS::getpid ()));
       uuid.pid (buf);
     }
   }

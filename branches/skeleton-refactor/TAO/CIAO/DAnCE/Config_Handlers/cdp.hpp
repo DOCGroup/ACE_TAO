@@ -14,8 +14,8 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include "XSCRT/XMLSchema.hpp"
+#include "XSCRT/Parser.hpp"
 
 #include "ccd.hpp"
 
@@ -29,7 +29,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< char > const& label () const;
@@ -40,7 +40,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
@@ -51,7 +51,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // realizes
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription& realizes ();
@@ -61,7 +61,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > realizes_;
 
       // implementation
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::MonolithicDeploymentDescription const& implementation () const;
       ::CIAO::Config_Handlers::MonolithicDeploymentDescription& implementation ();
@@ -71,7 +71,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > implementation_;
 
       // instance
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::iterator instance_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::const_iterator instance_const_iterator;
@@ -85,7 +85,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription > instance_;
 
       // connection
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription >::iterator connection_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription >::const_iterator connection_const_iterator;
@@ -99,7 +99,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription > connection_;
 
       // dependsOn
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency >::iterator dependsOn_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency >::const_iterator dependsOn_const_iterator;
@@ -113,7 +113,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
 
       // artifact
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::iterator artifact_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::const_iterator artifact_const_iterator;
@@ -127,7 +127,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > artifact_;
 
       // infoProperty
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;

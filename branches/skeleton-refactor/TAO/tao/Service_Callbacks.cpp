@@ -4,10 +4,6 @@
 #include "Environment.h"
 #include "Invocation_Utils.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/Service_Callbacks.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            Service_Callbacks,
            "$Id$")

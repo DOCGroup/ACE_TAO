@@ -14,7 +14,7 @@ class Options
   // = TITLE
   //     Keeps track of the options.
 public:
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
   u_short port (void);
 
 private:

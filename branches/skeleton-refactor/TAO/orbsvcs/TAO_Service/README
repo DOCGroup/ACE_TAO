@@ -27,10 +27,10 @@ To load Naming Service dynamically :
 ----------------------------------
 	
   dynamic TAO_Naming_Loader Service_Object * \
-          TAO_CosNaming:_make_TAO_Naming_Loader () "dummy -o ns.ior"
+          TAO_CosNaming_Serv:_make_TAO_Naming_Loader () "dummy -o ns.ior"
 
   So, here we want our service name to be TAO_Naming_Loader and its a
-  <Service_Object *> and the factory function is in TAO_CosNaming
+  <Service_Object *> and the factory function is in TAO_CosNaming_Serv
   DLL. We specify argv [0] to be "dummy" and the actual arguments
   start from argv [1] as in the usual case.
 
@@ -43,17 +43,18 @@ add these two entries when we want to load the event service.
 
 # Dynamically configure the default Event Service Factory
 dynamic CEC_Factory Service_Object * \
-	TAO_CosEvent:_make_TAO_CEC_Default_Factory () ""
+	TAO_CosEvent_Serv:_make_TAO_CEC_Default_Factory () ""
 
 # Dynamically configure the event service into the application process.
 dynamic TAO_CEC_Event_Loader Service_Object * \
-        TAO_CosEvent:_make_TAO_CEC_Event_Loader () "dummy -o foo.ref"
+        TAO_CosEvent_Serv:_make_TAO_CEC_Event_Loader () "dummy -o foo.ref"
 
 To load Trading Service dynamically:
 ---------------------------------
 
 #  Dynamically configure the trading service into the application process.
-dynamic TAO_Trading_Loader Service_Object * TAO_CosTrading:_make_TAO_Trading_Loader () "dummy -TSdumpior foo.ref"
+dynamic TAO_Trading_Loader Service_Object * \
+	TAO_CosTrading_Serv:_make_TAO_Trading_Loader () "dummy -TSdumpior foo.ref"
 
 To Remove a Service
 *******************

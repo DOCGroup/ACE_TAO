@@ -71,7 +71,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
           *os << "::_tao_marshal_state (strm))" << be_idt_nl
               << "{" << be_idt_nl
-              << "return 0;" << be_uidt_nl
+              << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
         }
       // Can access base class only via virtual function.
@@ -81,7 +81,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
               <<       inh->flat_name ()
               << " (strm))" << be_idt_nl
               << "{" << be_idt_nl
-              << "return 0;" << be_uidt_nl
+              << "return false;" << be_uidt_nl
               << "}" << be_uidt_nl << be_nl;
         }
     }
@@ -159,7 +159,12 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-// Retrieve the fully scoped skeleton name.
+int
+be_visitor_valuetype_marshal_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
 void
 be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
                                              TAO_OutStream *os)

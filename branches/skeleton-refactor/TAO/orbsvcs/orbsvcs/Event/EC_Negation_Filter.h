@@ -79,9 +79,5 @@ private:
   TAO_EC_Filter* child_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Negation_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_NEGATION_FILTER_H */

@@ -71,13 +71,20 @@ public:
   bool operator!= (int error);
 
 private:
+  // Prevent copying
+  ACE_Errno_Guard (const ACE_Errno_Guard &);
+  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &);
+
 #if defined (ACE_MT_SAFE)
   ACE_ERRNO_TYPE *errno_ptr_;
 #endif /* ACE_MT_SAFE */
   int error_;
 };
 
-#if defined (ACE_HAS_INLINED_OSCALLS)
+// Inlining this class on debug builds with gcc on Solaris can cause
+// deadlocks during static initialization.
+#if defined (ACE_HAS_INLINED_OSCALLS) && \
+    (!defined (__GNUG__) || !defined (__sun__) || defined (ACE_NDEBUG))
 # if defined (ACE_INLINE)
 #  undef ACE_INLINE
 # endif /* ACE_INLINE */

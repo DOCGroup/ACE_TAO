@@ -39,10 +39,10 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-
+#include "ace/OS_main.h"
+#include "ace/OS_NS_string.h"
 #include "asnmp/octet.h"
 #include "test_config.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, Octet_Test, "$Id$")
 
@@ -146,9 +146,9 @@ static void TestOctet()
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST ("Octet_Test");
+  ACE_START_TEST (ACE_TEXT ("Octet_Test"));
 
   TestOctet();
   ACE_END_TEST;

@@ -1103,3 +1103,9 @@ ACE_Managed_Process::ACE_Managed_Process (void)
 ACE_Managed_Process::~ACE_Managed_Process (void)
 {
 }
+
+void
+ACE_Managed_Process::unmanage (void)
+{
+  delete this;
+}

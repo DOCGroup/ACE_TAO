@@ -62,6 +62,9 @@ public:
   CORBA::Boolean asynch_updates (void);
   void asynch_updates (CORBA::Boolean asynch_updates);
 
+  bool allow_reconnect (void);
+  void allow_reconnect (bool b);
+
   // Turn on/off update messages.
   CORBA::Boolean updates (void);
   void updates (CORBA::Boolean updates);
@@ -111,6 +114,9 @@ protected:
 
   /// True if send asynch updates.
   CORBA::Boolean asynch_updates_;
+
+  /// True if clients can reconnect to proxies.
+  bool allow_reconnect_;
 
   /// True if updates are enabled (default).
   CORBA::Boolean updates_;

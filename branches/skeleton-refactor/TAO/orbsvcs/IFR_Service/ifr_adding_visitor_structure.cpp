@@ -39,8 +39,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
     }
 
   AST_Structure *s = AST_Structure::narrow_from_scope (node);
-  CORBA::ULong nfields = ACE_static_cast (CORBA::ULong,
-                                          s->nfields ());
+  CORBA::ULong nfields = static_cast<CORBA::ULong> (s->nfields ());
   this->members_.length (nfields);
   AST_Field **f = 0;
 
@@ -74,8 +73,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                   // Since the enclosing scope hasn't been created yet,
                   // we make a special visitor to create this member
                   // at global scope and move it into the struct later.
-                  ifr_adding_visitor_structure visitor (ft,
-                                                        1);
+                  ifr_adding_visitor_structure visitor (ft, 1);
 
                   if (ft->ast_accept (&visitor) == -1)
                     {
@@ -94,7 +92,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
 
                   CORBA::Contained_ptr tmp =
                     CORBA::Contained::_narrow (visitor.ir_current ()
-                                              ACE_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   this->move_queue_.enqueue_tail (tmp);
@@ -161,6 +159,39 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
+          CORBA::StructDef_var    struct_def;
+          CORBA::StructMemberSeq  dummyMembers( 0 );
+          dummyMembers.length( 0 );
+
+          CORBA::Container_ptr current_scope= CORBA::Container::_nil ();
+          if (this->is_nested_)
+            {
+              current_scope= be_global->holding_scope ();
+            }
+          else if (be_global->ifr_scopes ().top (current_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                  ACE_TEXT ("visit_structure -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),
+                -1
+              );
+            }
+
+          // First create the named structure without any members
+          struct_def=
+            current_scope->create_struct (
+                node->repoID (),
+                node->local_name ()->get_string (),
+                node->version (),
+                dummyMembers
+                ACE_ENV_ARG_PARAMETER
+              );
+          ACE_TRY_CHECK;
+
+          // Then recurse into the real structure members (which corrupts ir_current_)
           if (this->visit_scope (node) == -1)
             {
               ACE_ERROR_RETURN ((
@@ -173,43 +204,9 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
               );
             }
 
-          if (this->is_nested_)
-            {
-              this->ir_current_ =
-                be_global->holding_scope ()->create_struct (
-                    node->repoID (),
-                    node->local_name ()->get_string (),
-                    node->version (),
-                    this->members_
-                    ACE_ENV_ARG_PARAMETER
-                  );
-            }
-          else
-            {
-              CORBA::Container_ptr current_scope =
-                CORBA::Container::_nil ();
-
-              if (be_global->ifr_scopes ().top (current_scope) != 0)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
-                      ACE_TEXT ("visit_structure -")
-                      ACE_TEXT (" scope stack is empty\n")
-                    ),
-                    -1
-                  );
-                }
-
-              this->ir_current_ =
-                current_scope->create_struct (
-                                   node->repoID (),
-                                   node->local_name ()->get_string (),
-                                   node->version (),
-                                   this->members_
-                                   ACE_ENV_ARG_PARAMETER
-                                );
-            }
+          // Correct ir_current_ and move the real structure members into the struct
+          this->ir_current_= CORBA::StructDef::_duplicate (struct_def.in ());
+          struct_def->members( this->members_ );
 
           ACE_TRY_CHECK;
 
@@ -221,14 +218,15 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
               CORBA::Container_var new_container =
                 CORBA::Container::_narrow (this->ir_current_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               for (size_t i = 0; i < size; ++i)
                 {
                   this->move_queue_.dequeue_head (traveller);
-
-                  CORBA::String_var name = traveller->name (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  
+                  CORBA::String_var name =
+                    traveller->name (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   CORBA::String_var version =
@@ -295,8 +293,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          CORBA::ULong member_count = ACE_static_cast (CORBA::ULong,
-                                                       node->member_count ());
+          CORBA::ULong member_count = static_cast<CORBA::ULong> (node->member_count ());
 
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);

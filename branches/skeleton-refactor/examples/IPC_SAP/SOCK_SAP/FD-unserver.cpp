@@ -37,7 +37,7 @@ handle_client (ACE_LSOCK_Stream &stream)
        )
     ACE_DEBUG ((LM_DEBUG, "%*s", n, buf));
 
-  ACE_OS::sprintf (buf, "%d", ACE_static_cast (int, ACE_OS::getpid ()));
+  ACE_OS::sprintf (buf, "%d", static_cast<int> (ACE_OS::getpid ()));
 
   ACE_DEBUG ((LM_DEBUG, "(%s, %d) ----------------------------------------\n", buf, ACE_OS::strlen (buf)));
 
@@ -51,9 +51,9 @@ handle_client (ACE_LSOCK_Stream &stream)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const char *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+  const ACE_TCHAR *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
   // Create a server.
   ACE_OS::unlink (rendezvous);
   ACE_UNIX_Addr addr (rendezvous);

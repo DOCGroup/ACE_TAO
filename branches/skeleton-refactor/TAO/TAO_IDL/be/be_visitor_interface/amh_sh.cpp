@@ -88,7 +88,10 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
             be_interface::narrow_from_decl (node->inherits ()[i]);
           base->compute_full_name ("AMH_", "", buf);
           amh_name += buf;
-          delete [] buf;
+          // buf was allocated by ACE_OS::strdup, so we need to use free
+          // instead of delete. 
+          ACE_OS::free (buf);
+
 
           if (i != 0)
             {

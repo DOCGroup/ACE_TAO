@@ -1,12 +1,15 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ModuleDef_i.h"
 #include "Repository_i.h"
 
-ACE_RCSID (IFRService, 
-           ModuleDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           ModuleDef_i,
            "$Id$")
+
 
 TAO_ModuleDef_i::TAO_ModuleDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -89,7 +92,6 @@ TAO_ModuleDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   ACE_TString container_id;
-
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
                                             container_id);

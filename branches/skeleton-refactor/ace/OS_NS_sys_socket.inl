@@ -8,6 +8,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_QoS.h"
 #include "ace/Global_Macros.h"
+#include "ace/os_include/netinet/os_in.h"
+
+#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+#include "ace/OS_NS_string.h"
+#endif
 
 #if defined (ACE_HAS_VOIDPTR_SOCKOPT)
 typedef void *ACE_SOCKOPT_TYPE1;
@@ -177,17 +183,59 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
                      int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::getpeername");
-#if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
+
+#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+  int result;
+#  if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
+  ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
+                               (struct sockaddr_in *) addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+                int,
+                -1,
+                result);
+#  else
+  ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
+                               addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+               int,
+                -1,
+                result);
+#  endif /* defined (ACE_PSOS) */
+
+  // Some platforms, like older versions of the Linux kernel, do not
+  // initialize the sin_zero field since that field is generally only
+  // used for padding/alignment purposes.  On those platforms
+  // memcmp()-based comparisons of the sockaddr_in structure, such as
+  // the one in the ACE_INET_Addr equality operator, may fail due to
+  // random bytes in the sin_zero field even though that field is
+  // unused.  Prevent equality comparison of two different sockaddr_in
+  // instances that refer to the same socket from failing by
+  // explicitly initializing the sockaddr_in::sin_zero field to a
+  // consistent value, e.g. zero.
+  if (result != -1 && addr->sa_family == AF_INET)
+    {
+      ACE_OS::memset (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero,
+                      0,
+                      sizeof (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero));
+    }
+
+  return result;
+#else
+#  if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
                                       (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
-#else
+                       int,
+                       -1);
+#  else
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
                                       addr,
                                       (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
-#endif /* defined (ACE_PSOS) */
+                       int,
+                       -1);
+#  endif /* defined (ACE_PSOS) */
+#endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 }
 
 ACE_INLINE int
@@ -196,17 +244,54 @@ ACE_OS::getsockname (ACE_HANDLE handle,
                      int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::getsockname");
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
+#if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
+         && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
+  int result;
+#  if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
+  ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
+                               (struct sockaddr_in *) addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+                int,
+                -1,
+                result);
+#  else
+  ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
+                               addr,
+                               (ACE_SOCKET_LEN *) addrlen),
+               int, -1, result);
+#  endif /* defined (ACE_PSOS) */
+
+  // Some platforms, like older versions of the Linux kernel, do not
+  // initialize the sin_zero field since that field is generally only
+  // used for padding/alignment purposes.  On those platforms
+  // memcmp()-based comparisons of the sockaddr_in structure, such as
+  // the one in the ACE_INET_Addr equality operator, may fail due to
+  // random bytes in the sin_zero field even though that field is
+  // unused.  Prevent equality comparison of two different sockaddr_in
+  // instances that refer to the same socket from failing by
+  // explicitly initializing the sockaddr_in::sin_zero field to a
+  // consistent value, e.g. zero.
+  if (result != -1 && addr->sa_family == AF_INET)
+    {
+      ACE_OS::memset (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero,
+                      0,
+                      sizeof (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero));
+    }
+
+  return result;
+#else
+#  if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
                                       (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#else
+#  else
   ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
                                       addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#endif /* defined (ACE_PSOS) */
+#  endif /* defined (ACE_PSOS) */
+#endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 }
 
 ACE_INLINE int
@@ -479,11 +564,11 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
                                flags), int, -1);
 #else
   int ace_result_;
-#  if defined (VXWORKS) || defined (HPUX) || defined (ACE_PSOS)
-  ace_result_ = ::send ((ACE_SOCKET) handle, (char *) buf, len, flags);
+#  if defined (ACE_PSOS)
+  ace_result_ = ::send ((ACE_SOCKET) handle, const_cast <char *> (buf), len, flags);
 #  else
   ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
-#  endif /* VXWORKS */
+#  endif /* ACE_PSOS */
 
 # if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
   // Optimize this code out if we can detect that EAGAIN ==
@@ -532,9 +617,9 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
   else
     return (ssize_t) bytes_sent;
 # elif defined (ACE_HAS_NONCONST_SENDMSG)
-  ACE_SOCKCALL_RETURN (::sendmsg (handle, 
-				  const_cast<struct msghdr *>(msg), 
-				  flags), int, -1);
+  ACE_SOCKCALL_RETURN (::sendmsg (handle,
+                                  const_cast<struct msghdr *>(msg),
+                                  flags), int, -1);
 # else
   ACE_SOCKCALL_RETURN (::sendmsg (handle, msg, flags), int, -1);
 # endif
@@ -557,7 +642,8 @@ ACE_OS::sendto (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
 #if defined (VXWORKS)
-  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf,
+  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
+                                 const_cast <char *> (buf),
                                  len,
                                  flags,
                                  const_cast<struct sockaddr *> (addr),
@@ -633,8 +719,8 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; ++i)
     {
        result = ACE_OS::sendto (handle,
-                                reinterpret_cast<char *ACE_CAST_CONST> (
-                                                      buffers[i].iov_base),
+                                reinterpret_cast<char *> (
+                                                 buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,
                                 addr,
@@ -709,6 +795,29 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
   return (ssize_t) bytes_sent;
 
+#elif defined (ACE_HAS_SOCK_BUF_SIZE_MAX)
+
+  // Platform limits the maximum socket message size.  Pare down the
+  // iovec, if necessary, to obey the limit.
+  iovec local_iov[ACE_IOV_MAX];
+  long total = 0;
+  long new_total;
+  for (int i = 0; i < n; i++)
+    {
+      local_iov[i].iov_base = buffers[i].iov_base;
+      local_iov[i].iov_len  = buffers[i].iov_len;
+
+      new_total = total + buffers[i].iov_len;
+      if ( new_total >= SSIZE_MAX )
+        {
+          local_iov[i].iov_len = SSIZE_MAX - total;
+          n = i+1;
+          break;
+        }
+      total = new_total;
+    }
+  return ACE_OS::writev (handle, local_iov, n);
+
 #else
   return ACE_OS::writev (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
@@ -726,12 +835,14 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
   #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
   // To work around an inconsistency with Microsofts implementation of
   // sockets, we will check for SO_REUSEADDR, and ignore it. Winsock
-  // always behaves as if SO_REUSEADDR=1. Some implementations have the
-  // same behaviour as Winsock, but use a new name for it. SO_REUSEPORT.
-  // If you want the normal behaviour for SO_REUSEADDR=0, then NT 4 sp4 and later
-  // supports SO_EXCLUSIVEADDRUSE. This also requires using an updated Platform SDK
-  // so it was decided to ignore the option for now. (Especially since ACE always
-  // sets SO_REUSEADDR=1, which we can mimic by doing nothing.)
+  // always behaves as if SO_REUSEADDR=1. Some implementations have
+  // the same behaviour as Winsock, but use a new name for
+  // it. SO_REUSEPORT.  If you want the normal behaviour for
+  // SO_REUSEADDR=0, then NT 4 sp4 and later supports
+  // SO_EXCLUSIVEADDRUSE. This also requires using an updated Platform
+  // SDK so it was decided to ignore the option for now. (Especially
+  // since Windows always sets SO_REUSEADDR=1, which we can mimic by doing
+  // nothing.)
   if (level == SOL_SOCKET) {
     if (optname == SO_REUSEADDR) {
       return 0; // Not supported by Winsock
@@ -806,7 +917,7 @@ ACE_OS::socketpair (int domain, int type,
                     int protocol, ACE_HANDLE sv[2])
 {
   ACE_OS_TRACE ("ACE_OS::socketpair");
-#if defined (ACE_WIN32) || defined (ACE_LACKS_SOCKETPAIR)
+#if defined (ACE_LACKS_SOCKETPAIR)
   ACE_UNUSED_ARG (domain);
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (protocol);
@@ -816,7 +927,7 @@ ACE_OS::socketpair (int domain, int type,
 #else
   ACE_OSCALL_RETURN (::socketpair (domain, type, protocol, sv),
                      int, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_SOCKETPAIR */
 }
 
 #if defined (__linux__) && defined (ACE_HAS_IPV6)

@@ -1,6 +1,6 @@
 // $Id$
 
-// Simple file transfer example 
+// Simple file transfer example
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/Thread_Manager.h"
@@ -74,7 +74,7 @@ main (int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform isn't configured to support TLI\n"),

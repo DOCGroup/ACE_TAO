@@ -96,8 +96,7 @@ be_sequence::be_sequence (AST_Expression *v,
 
   // This one gets set for all sequences, in addition to any specialized
   // one that may get set below.
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.seq_seen_);
+  idl_global->seq_seen_ = true;
 
   // Don't need the return value - just set the member.
   (void) this->managed_type ();
@@ -105,24 +104,19 @@ be_sequence::be_sequence (AST_Expression *v,
   switch (this->mt_)
     {
       case MNG_OBJREF:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.iface_seq_seen_);
+        idl_global->iface_seq_seen_ = true;
         break;
       case MNG_PSEUDO:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.pseudo_seq_seen_);
+        idl_global->pseudo_seq_seen_ = true;
         break;
       case MNG_VALUE:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.vt_seq_seen_);
+        idl_global->vt_seq_seen_ = true;
         break;
       case MNG_STRING:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.string_seq_seen_);
+        idl_global->string_seq_seen_ = true;
         break;
       case MNG_WSTRING:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.wstring_seq_seen_);
+        idl_global->wstring_seq_seen_ = true;
         break;
       default:
         break;
@@ -147,8 +141,7 @@ be_sequence::be_sequence (AST_Expression *v,
       switch (pdt->pt ())
         {
           case AST_PredefinedType::PT_octet:
-            ACE_SET_BITS (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.octet_seq_seen_);
+            idl_global->octet_seq_seen_ = true;
             break;
           default:
             break;
@@ -575,7 +568,8 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         {
           *os << "TAO_Bounded_Pseudo_Sequence<" << linebreak
               << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << linebreak << be_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak
+              << be_nl
               << this->max_size ()->ev ()->u.ulval << linebreak
               << be_uidt_nl
               << ">" << be_uidt;

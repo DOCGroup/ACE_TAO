@@ -31,7 +31,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
   // Must reset errno first. Refer to WindRiver SPR# 34949, SPR# 36026
   ::errnoSet(0);
   int result = ERROR;
-  ACE_OSCALL (::inet_aton ((char*)host_name, addr), int, ERROR, result);
+  ACE_OSCALL (::inet_aton (const_cast <char*>(host_name), addr), int, ERROR, result);
   return (result == ERROR) ? 0 : 1;
 #else
   // inet_aton() returns 0 upon failure, not -1 since -1 is a valid

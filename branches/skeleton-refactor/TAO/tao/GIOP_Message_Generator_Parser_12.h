@@ -92,6 +92,9 @@ public:
   /// request/response?
   virtual int is_ready_for_bidirectional (void);
 
+  /// The header length of a fragment
+  virtual size_t fragment_header_length (void) const;
+
 private:
 
   /// Marshall the TargetSpecification
@@ -112,11 +115,6 @@ private:
   int process_bidir_context (TAO_Service_Context &,
                              TAO_Transport *transport);
 };
-
-
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Generator_Parser_12.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_12_H*/

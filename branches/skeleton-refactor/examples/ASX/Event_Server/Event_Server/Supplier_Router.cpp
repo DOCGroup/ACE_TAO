@@ -132,24 +132,30 @@ Supplier_Router::put (ACE_Message_Block *mb,
 }
 
 // Return information about the <Supplier_Router>.
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+#  define FMTSTR  ACE_TEXT ("%s\t %d/%s %s (%s)\n")
+#else
+#  define FMTSTR  ACE_TEXT ("%ls\t %d/%ls %ls (%ls)\n")
+#endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
 int 
-Supplier_Router::info (char **strp, size_t length) const
+Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr addr;
-  const char *mod_name = this->name ();
+  const ACE_TCHAR *mod_name = this->name ();
 
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;
   
   ACE_OS::sprintf (buf,
-                   "%s\t %d/%s %s (%s)\n",
+                   FMTSTR,
 		   mod_name,
                    addr.get_port_number (),
-                   "tcp",
-		   "# supplier router",
-                   this->is_reader () ? "reader" : "writer");
+                   ACE_TEXT ("tcp"),
+		   ACE_TEXT ("# supplier router"),
+                   this->is_reader () ?
+                     ACE_TEXT ("reader") : ACE_TEXT ("writer"));
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;
   else

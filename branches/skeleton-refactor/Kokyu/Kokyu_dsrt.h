@@ -101,9 +101,9 @@ namespace Kokyu
        *
        * @param config Configuration information for the DSRT dispatcher.
        *
-       * @return Auto pointer to the DSRT dispatcher.
+       * @return pointer to the DSRT dispatcher.
        */
-      static DSRT_Dispatcher_Auto_Ptr create_DSRT_dispatcher (const DSRT_ConfigInfo&);
+      static DSRT_Dispatcher<DSRT_Scheduler_Traits>* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
     };
 
   /**

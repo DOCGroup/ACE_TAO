@@ -20,4 +20,11 @@ project(CosProperty) : orbsvcslib, core, portableserver {
       Property
     }
   }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosProperty.pc.in
+  }
 }

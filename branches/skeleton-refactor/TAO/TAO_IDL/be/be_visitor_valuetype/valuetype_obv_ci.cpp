@@ -72,25 +72,32 @@ be_visitor_valuetype_obv_ci::visit_valuetype (be_valuetype *node)
                              ), -1);
         }
     } // if !opt_accessor ()
+    
   return 0;
 }
 
+int
+be_visitor_valuetype_obv_ci::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
 
 int
 be_visitor_valuetype_obv_ci::visit_field (be_field *node)
 {
-  be_visitor_context *ctx = new be_visitor_context (*this->ctx_);
-  be_visitor_valuetype_field_ci *visitor =
-    new be_visitor_valuetype_field_ci (ctx);
-  visitor->in_obv_space_ = 1;
-  if (visitor->visit_field (node) == -1)
+  be_visitor_context new_ctx (*this->ctx_);
+  be_visitor_valuetype_field_ci visitor (&new_ctx);
+  
+  visitor.in_obv_space_ = 1;
+  
+  if (visitor.visit_field (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_obv_ci::"
                          "visit_field - "
-                         "visit_field failed\n"
-                         ), -1);
+                         "visit_field failed\n"),
+                        -1);
     }
-  delete visitor;
+    
   return 0;
 }

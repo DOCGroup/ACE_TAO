@@ -2,6 +2,7 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/sys/os_loadavg.h"
@@ -16,9 +17,9 @@ double calc_cpu_loading (void)
   static unsigned long prev_idle = 0;
   static double prev_total = 0.0;
 
-  FILE *file_ptr = NULL;
-  char *item = NULL;
-  char *arg = NULL;
+  FILE *file_ptr = 0;
+  char *item = 0;
+  char *arg = 0;
   unsigned long delta_idle = 0;
   unsigned long user = 0;
   unsigned long nice = 0;
@@ -27,15 +28,15 @@ double calc_cpu_loading (void)
 
   double percent_cpu_load = 0.0;
 
-  if ((file_ptr = fopen("/proc/stat", "r")) == NULL)
+  if ((file_ptr = fopen("/proc/stat", "r")) == 0)
           return percent_cpu_load;
 
-  while ((fgets (buf, sizeof (buf), file_ptr)) != NULL)
+  while ((fgets (buf, sizeof (buf), file_ptr)) != 0)
   {
-    item = strtok (buf, " \t\n");
-    arg = strtok (NULL, "\n");
+    item = ACE_OS::strtok (buf, " \t\n");
+    arg = ACE_OS::strtok (0, "\n");
 
-    if (item == NULL || arg == NULL)
+    if (item == 0 || arg == 0)
             continue;
     if (item[0] == 'c' && strlen (item) == 3)
     {
@@ -77,7 +78,7 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * loc
         {
           // Couldn't determine hostname.  Use the current time
           // instead.
-          CORBA::ULong t = ACE_static_cast (CORBA::ULong, ACE_OS::time ());
+          CORBA::ULong t = static_cast<CORBA::ULong> (ACE_OS::time ());
 
           // A 64 byte buffer is more than enough to contain the
           // string representation of a 32 bit unsigned integer.
@@ -148,7 +149,7 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
   load_list->length (1);
 
-  load_list[0].id = CosLoadBalancing::CPU;
+  load_list[0].id = CosLoadBalancing::LoadAverage;
   load_list[0].value = load;
 
   ACE_DEBUG ((LM_DEBUG, "%2f\n", load_list[0].value));

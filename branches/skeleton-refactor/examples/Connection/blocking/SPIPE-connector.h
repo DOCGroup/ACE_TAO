@@ -5,6 +5,7 @@
 #define SP_CONNECTOR_H
 
 #include "ace/Svc_Handler.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,7 +52,7 @@ public:
   ~IPC_Client (void);
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the IPC client.
 
   virtual int fini (void);
@@ -64,7 +65,7 @@ public:
   // Report connection errors.
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse command-line arguments.
 
   int iterations_;

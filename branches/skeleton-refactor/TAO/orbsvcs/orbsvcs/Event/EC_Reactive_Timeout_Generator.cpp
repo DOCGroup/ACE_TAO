@@ -1,15 +1,10 @@
 // $Id$
 
 #include "EC_Reactive_Timeout_Generator.h"
-
 #include "ace/Reactor.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Reactive_Timeout_Generator.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Event, 
-           EC_Reactive_Timeout_Generator, 
+ACE_RCSID (Event,
+           EC_Reactive_Timeout_Generator,
            "$Id$")
 
 TAO_EC_Reactive_Timeout_Generator::
@@ -41,7 +36,7 @@ TAO_EC_Reactive_Timeout_Generator::schedule_timer (
       const ACE_Time_Value& interval)
 {
   return this->reactor_->schedule_timer (&this->event_handler_,
-                                         ACE_static_cast(void*,filter),
+                                         static_cast<void*> (filter),
                                          delta,
                                          interval);
 }

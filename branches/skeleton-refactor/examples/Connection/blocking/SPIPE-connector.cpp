@@ -26,9 +26,7 @@ Peer_Handler::~Peer_Handler (void)
 int
 Peer_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "activating %d\n",
-              this->get_handle ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("activating %d\n"), this->get_handle ()));
 
   // If iterations_ has not been set, read from stdin.
   if (iterations_ == 0)
@@ -39,8 +37,8 @@ Peer_Handler::open (void *)
            ACE_Reactor::instance (),
            ACE_Thread_Manager::instance ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "register_stdin_handler"),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("register_stdin_handler")),
                           -1);
       else
         return 0;
@@ -62,7 +60,7 @@ Peer_Handler::open (void *)
         continue;
 
       this->peer ().close ();
-      ACE_Reactor::end_event_loop();
+      ACE_Reactor::instance ()->end_reactor_event_loop();
       return 0;
     }
 }
@@ -79,15 +77,15 @@ Peer_Handler::handle_input (ACE_HANDLE)
   if (n > 0)
     if (this->peer ().send (buf, n) != n)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "write failed"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("write failed")),
                         -1);
     else if (n == 0) // Explicitly close the connection.
       {
         if (this->peer ().close () == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "%p\n",
-                             "close"),
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("close")),
                             1);
         return -1;
       }
@@ -100,8 +98,7 @@ int
 Peer_Handler::handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Shutting down\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Shutting down\n")));
   return 0;
 }
 
@@ -114,16 +111,14 @@ Peer_Handler::get_handle (void) const
 void
 Peer_Handler::display_menu (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "\nplease enter input..: "));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nplease enter input..: ")));
 }
 
 IPC_Client::IPC_Client (void)
   : iterations_ (0),
     done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
 {
-  ACE_OS::strcpy (rendezvous_,
-                  ACE_TEXT ("acepipe"));
+  ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
 IPC_Client::~IPC_Client (void)
@@ -133,7 +128,7 @@ IPC_Client::~IPC_Client (void)
 // Dynamic linking hooks.
 
 int
-IPC_Client::init (int argc, char *argv[])
+IPC_Client::init (int argc, ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
     return -1;
@@ -143,9 +138,7 @@ IPC_Client::init (int argc, char *argv[])
             &this->done_handler_) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Opening %s\n",
-              rendezvous_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening %s\n"), rendezvous_));
 
   Peer_Handler *ph;
 
@@ -162,8 +155,8 @@ IPC_Client::init (int argc, char *argv[])
                      O_RDWR | FILE_FLAG_OVERLAPPED,
                      0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "connect"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("connect")),
                       -1);
 
   return 0;
@@ -178,7 +171,7 @@ IPC_Client::fini (void)
 int
 IPC_Client::svc (void)
 {
-  ACE_Reactor::run_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
   return 0;
 }
 
@@ -190,11 +183,11 @@ IPC_Client::handle_close (ACE_HANDLE,
 }
 
 int
-IPC_Client::parse_args (int argc, char *argv[])
+IPC_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt get_opt (argc, argv, "ui:r:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("ui:r:"));
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -202,7 +195,7 @@ IPC_Client::parse_args (int argc, char *argv[])
         {
         case 'r':
           ACE_OS::strncpy (rendezvous_,
-                           ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
+                           get_opt.opt_arg (),
                            sizeof (rendezvous_) / sizeof (ACE_TCHAR));
           break;
         case 'i':
@@ -211,8 +204,8 @@ IPC_Client::parse_args (int argc, char *argv[])
         case 'u':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "usage: %n -i <iterations>\n"
-                             "-r <rendezvous>\n"),
+                             ACE_TEXT ("usage: %n -i <iterations>\n")
+                             ACE_TEXT ("-r <rendezvous>\n")),
                             -1);
           break;
         }

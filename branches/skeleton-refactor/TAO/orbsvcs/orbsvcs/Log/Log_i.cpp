@@ -601,7 +601,7 @@ TAO_Log_i::query_i (const char *constraint,
   // Create an iterator
   TAO_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter (store);
 
-  CORBA::ULong len = ACE_static_cast (CORBA::ULong, store.current_size ());
+  CORBA::ULong len = static_cast<CORBA::ULong> (store.current_size ());
 
   // How many entries?
 
@@ -756,7 +756,7 @@ TAO_Log_i::match_i (const char *constraint,
   // Create an iterator
   TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
 
-  CORBA::ULong len = ACE_static_cast (CORBA::ULong, store.current_size ());
+  CORBA::ULong len = static_cast<CORBA::ULong> (store.current_size ());
   // How many entries?
 
   // Iterate over and populate the list.
@@ -1236,6 +1236,9 @@ void
 TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (this->max_record_life_ == 0) {
+    return;
+  }
 
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, ACE_OS::gettimeofday ());
@@ -1247,7 +1250,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   static char out[256] = "";
 
   double temp1 = 
-    ACE_static_cast (double, ACE_UINT64_DBLCAST_ADAPTER (p_time));
+    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (p_time));
 
   ACE_OS::sprintf (out, "time > %.0f", temp1);
 
@@ -1263,7 +1266,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   // Create an iterator
   TAO_LogRecordStore::LOG_RECORD_STORE_ITER iter (store);
 
-  CORBA::ULong len = ACE_static_cast (CORBA::ULong, store.current_size ());
+  CORBA::ULong len = static_cast<CORBA::ULong> (store.current_size ());
   // How many entries?
 
   // Iterate over and populate the list.
@@ -1303,9 +1306,7 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
     {
       CORBA::ULongLong current_size = this->recordstore_.get_current_size ();
       const CORBA::UShort percent =
-        ACE_static_cast (
-          CORBA::UShort,
-          ((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U) /
+        static_cast<CORBA::UShort> (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U) /
            (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
       while (current_threshold_ < this->thresholds_.length ()
@@ -1358,9 +1359,7 @@ TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       CORBA::ULongLong current_size = this->recordstore_.get_current_size ();
       const CORBA::UShort percent =
-        ACE_static_cast (
-          CORBA::UShort,
-          (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
+        static_cast<CORBA::UShort> ((((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
             (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
       this->current_threshold_ = 0;

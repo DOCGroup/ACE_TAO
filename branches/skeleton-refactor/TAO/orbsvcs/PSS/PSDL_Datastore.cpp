@@ -26,8 +26,7 @@ TAO_PSDL_Datastore::TAO_PSDL_Datastore ()
 TAO_PSDL_Datastore::~TAO_PSDL_Datastore (void)
 {
   // delete allocator_;
-  //ACE_OS::free (ACE_const_cast (ACE_TCHAR *,
-  //                            this->index_file_));
+  // ACE_OS::free (const_cast<ACE_TCHAR *> (this->index_file_));
 }
 
 int
@@ -164,8 +163,7 @@ TAO_PSDL_Datastore::create_index (void)
   // memory-mapped file we know it's already initialized.
   if (this->allocator_->find (TAO_PERSISTENT_NAME_OBJ_MAP, name_obj_map) == 0)
     {
-      this->obj_ref_map_ = ACE_static_cast (NAME_OBJ_REF_MAP *,
-                                            name_obj_map);
+      this->obj_ref_map_ = static_cast<NAME_OBJ_REF_MAP *> (name_obj_map);
     }
   else
     {

@@ -37,6 +37,13 @@ TAO_Notify_Property_Boolean::operator!= (const CORBA::Boolean &rhs) const
   return (this->value_ != rhs);
 }
 
+ACE_INLINE
+const char *
+TAO_Notify_Property_Boolean::name (void) const
+{
+  return this->name_;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_Notify_Property_Boolean::value (void) const
 {

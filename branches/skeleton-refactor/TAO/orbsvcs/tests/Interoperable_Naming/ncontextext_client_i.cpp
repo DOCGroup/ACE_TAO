@@ -136,7 +136,7 @@ NContextExt_Client_i::get_name ()
           break;
 
         default:
-          cout << "shouldnt come here" << endl;
+          ACE_ERROR ((LM_ERROR, "shouldnt come here"));
           break;
         }
     }

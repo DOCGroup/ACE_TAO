@@ -27,7 +27,10 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
 {
 #if (TAO_HAS_MINIMUM_POA == 0)
   CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION);
+    policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   PortableServer::ServantRetentionPolicy_var srp =
     PortableServer::ServantRetentionPolicy::_narrow (policy.in ()
                                                      ACE_ENV_ARG_PARAMETER);
@@ -36,7 +39,11 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
     srp->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  policy = policies.get_cached_policy (TAO_CACHED_POLICY_REQUEST_PROCESSING);
+  policy = 
+    policies.get_cached_policy (TAO_CACHED_POLICY_REQUEST_PROCESSING
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   PortableServer::RequestProcessingPolicy_var rpp =
     PortableServer::RequestProcessingPolicy::_narrow (policy.in ()
                                                       ACE_ENV_ARG_PARAMETER);
@@ -58,7 +65,12 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
       ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
 
-  policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS);
+  policy = 
+    policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS
+                                ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK;
+
   PortableServer::IdUniquenessPolicy_var iup =
     PortableServer::IdUniquenessPolicy::_narrow (policy.in ()
                                                  ACE_ENV_ARG_PARAMETER);
@@ -68,7 +80,11 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
   ACE_CHECK;
 
 
-  policy = policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION);
+  policy = 
+    policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   PortableServer::ImplicitActivationPolicy_var iap =
     PortableServer::ImplicitActivationPolicy::_narrow (policy.in ()
                                                        ACE_ENV_ARG_PARAMETER);
@@ -77,7 +93,11 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
     iap->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT);
+  policy = 
+    policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   PortableServer::IdAssignmentPolicy_var idap =
     PortableServer::IdAssignmentPolicy::_narrow (policy.in ()
                                                  ACE_ENV_ARG_PARAMETER);
@@ -85,7 +105,6 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
   PortableServer::IdAssignmentPolicyValue id_assignment =
     idap->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
 
   // USE_DEFAULT_SERVANT requires the MULTIPLE_ID policy.
   if (request_processing == PortableServer::USE_DEFAULT_SERVANT)

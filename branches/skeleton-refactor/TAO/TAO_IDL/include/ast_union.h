@@ -160,7 +160,7 @@ private:
   // Operations.
 
   // Look up a branch by node pointer.
-  AST_UnionBranch *lookup_branch(AST_UnionBranch *branch);
+  AST_UnionBranch *lookup_branch (AST_UnionBranch *branch);
 
   // Look up the branch with the "default" label.
   AST_UnionBranch *lookup_default (void);
@@ -185,7 +185,7 @@ private:
   virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
-
+  
   virtual int compute_default_value (void);
   // Compute the default value (if any).
 

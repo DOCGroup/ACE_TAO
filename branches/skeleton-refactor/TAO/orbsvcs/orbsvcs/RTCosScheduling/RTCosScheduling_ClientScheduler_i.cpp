@@ -457,9 +457,7 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       // Convert the priority to an octet stream
       // (that is how service contexts send data)
       sc.context_data =
-        ACE_reinterpret_cast(
-          CORBA::OctetSeq &,
-          *this->codec_->encode (the_priority_as_any));
+        reinterpret_cast<CORBA::OctetSeq &> (*this->codec_->encode (the_priority_as_any));
       ACE_TRY_CHECK;
 
       // add the service context

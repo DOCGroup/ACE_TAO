@@ -38,9 +38,9 @@ the following steps to generate its results.
    process is repeated until the entire list of undefined symbols is
    traversed without change.
 
-4. Makefiles are generated. Rather than invoking the linker directly, a make
+4. MPC files are generated. Rather than invoking the linker directly, an mpc
    file is generated that may be used to build the libs. With these
-   makefiles, the actual library will be named lib(orig)_subset.so.
+   mpc files, the actual library will be named (orig)_subset.
 
 Analysis Artifacts
 ------------------
@@ -77,9 +77,8 @@ pass 4, undef count = 245
 pass 5, undef count = 235
 Writing results
 Making directory /opt/wustl/ACE_wrappers/build/native/ace/usage_metrics
-mkdir: File exists
 ACE: 61 out of 210 modules required
-writing file /opt/wustl/ACE_wrappers/build/native/ace/Makefile.ACE_subset
+writing file /opt/wustl/ACE_wrappers/build/native/ace/ACE_subset.mpc
 Done.
 
 The size of libACE.so before rebuilding:
@@ -101,7 +100,7 @@ Here is another example, using the Naming Service, and its simple test
 client.  Note that the orbsvcs results are bogus, the libraries are
 already fairly well factored so that the additional subsetting by
 soreduce is not effective. Also, due to the layout of the orbsvcs
-library source directory, the tool does not generate valid makefiles.
+library source directory, the tool may not generate valid mpc files.
 
 bash$ $ACE_ROOT/apps/soreduce/soreduce Naming_Service/Naming_Service tests/Simple_Naming/client                    
 discovering libraries
@@ -124,25 +123,22 @@ pass 6, undef count = 242
 Writing results
 Making directory /opt/wustl/ACE_wrappers/build/native/TAO/orbsvcs/orbsvcs/usage_metrics
 TAO_CosNaming: 11 out of 256 modules required
-writing file /opt/wustl/ACE_wrappers/build/native/TAO/orbsvcs/orbsvcs/Makefile.TAO_CosNaming_subset
+writing file /opt/wustl/ACE_wrappers/build/native/TAO/orbsvcs/orbsvcs/TAO_CosNaming_subset.mpc
 Making directory /opt/wustl/ACE_wrappers/build/native/TAO/orbsvcs/orbsvcs/usage_metrics
-mkdir: File exists
 TAO_Svc_Utils: 8 out of 256 modules required
-writing file /opt/wustl/ACE_wrappers/build/native/TAO/orbsvcs/orbsvcs/Makefile.TAO_Svc_Utils_subset
+writing file /opt/wustl/ACE_wrappers/build/native/TAO/orbsvcs/orbsvcs/TAO_Svc_Utils_subset.mpc
 Making directory /opt/wustl/ACE_wrappers/build/native/TAO/tao/IORTable/usage_metrics
 TAO_IORTable: 4 out of 4 modules required
-writing file /opt/wustl/ACE_wrappers/build/native/TAO/tao/IORTable/Makefile.TAO_IORTable_subset
+writing file /opt/wustl/ACE_wrappers/build/native/TAO/tao/IORTable/TAO_IORTable_subset.mpc
 Making directory /opt/wustl/ACE_wrappers/build/native/TAO/tao/PortableServer/usage_metrics
 TAO_PortableServer: 26 out of 29 modules required
-writing file /opt/wustl/ACE_wrappers/build/native/TAO/tao/PortableServer/Makefile.TAO_PortableServer_subset
+writing file /opt/wustl/ACE_wrappers/build/native/TAO/tao/PortableServer/TAO_PortableServer_subset.mpc
 Making directory /opt/wustl/ACE_wrappers/build/native/TAO/tao/usage_metrics
-mkdir: File exists
 TAO: 160 out of 191 modules required
-writing file /opt/wustl/ACE_wrappers/build/native/TAO/tao/Makefile.TAO_subset
+writing file /opt/wustl/ACE_wrappers/build/native/TAO/tao/TAO_subset.mpc
 Making directory /opt/wustl/ACE_wrappers/build/native/ace/usage_metrics
-mkdir: File exists
 ACE: 75 out of 210 modules required
-writing file /opt/wustl/ACE_wrappers/build/native/ace/Makefile.ACE_subset
+writing file /opt/wustl/ACE_wrappers/build/native/ace/ACE_subset.mpc
 Done.
 
 Size before & after:

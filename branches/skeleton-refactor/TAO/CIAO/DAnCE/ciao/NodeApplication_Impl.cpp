@@ -1,6 +1,7 @@
 //$Id$
 
 #include "NodeApplication_Impl.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"

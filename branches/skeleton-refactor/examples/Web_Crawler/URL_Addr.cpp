@@ -145,11 +145,9 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
 int
 ACE_URL_Addr::set (const ACE_URL_Addr &addr)
 {
-  ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      const_cast<ACE_TCHAR *>
+  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
                                                       (this->path_name_)));
-  ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      const_cast<ACE_TCHAR *>
+  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
                                                       (this->addr_string_)));
   if (this->ACE_INET_Addr::set (addr) == -1)
     return -1;
@@ -220,11 +218,9 @@ ACE_URL_Addr::get_path_name (void) const
 
 ACE_URL_Addr::~ACE_URL_Addr (void)
 {
-  ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      const_cast<ACE_TCHAR *>
+  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
                                                       (this->path_name_)));
-  ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      const_cast<ACE_TCHAR *>
+  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
                                                       (this->addr_string_)));
   this->path_name_ = 0;
 }

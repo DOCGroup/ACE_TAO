@@ -16,7 +16,7 @@
 #define FT_USES_PORTABLE_GROUP
 
 #ifdef FT_USES_PORTABLE_GROUP
-# include "orbsvcs/orbsvcs/PortableGroup.idl"
+# include "orbsvcs/PortableGroup.idl"
 #else // FT_USES_PORTABLE_GROUP
 #include "orbsvcs/CosNaming.idl" // 98-10-19.idl
 #endif // FT_USES_PORTABLE_GROUP

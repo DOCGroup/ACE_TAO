@@ -44,7 +44,7 @@ private:
 
 
 static ACE_THR_FUNC_RETURN controller (void *arg) {
-  ACE_Reactor *reactor = ACE_static_cast (ACE_Reactor *, arg);
+  ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
   Quit_Handler *quit_handler = 0;
   ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), 0);
@@ -53,7 +53,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
                             (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
   for (;;) {
     char user_input[80];
-    gets (user_input);
+    fgets (user_input, sizeof (user_input), stdin);
     if (ACE_OS::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;

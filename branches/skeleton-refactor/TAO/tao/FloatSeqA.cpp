@@ -27,26 +27,28 @@
 
 #include "FloatSeqC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_FloatSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f466c),
-  ACE_NTOHL (0x6f617453),
-  ACE_NTOHL (0x65713a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f466c), 
+  ACE_NTOHL (0x6f617453), 
+  ACE_NTOHL (0x65713a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/FloatSeq:1.0
     9,
-  ACE_NTOHL (0x466c6f61),
-  ACE_NTOHL (0x74536571),
+  ACE_NTOHL (0x466c6f61), 
+  ACE_NTOHL (0x74536571), 
   ACE_NTOHL (0x0),  // name = FloatSeq
     CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -62,7 +64,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_FloatSeq (
     sizeof (_oc_CORBA_FloatSeq),
     (char *) &_oc_CORBA_FloatSeq,
     0,
-    sizeof (CORBA::FloatSeq)
+    0
   );
 
 namespace CORBA
@@ -71,7 +73,7 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_FloatSeq;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -108,8 +110,8 @@ CORBA::Boolean operator>>= (
     CORBA::FloatSeq *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::FloatSeq *&,
+  return _tao_any >>= const_cast<
+      const CORBA::FloatSeq *&> (
       _tao_elem
     );
 }
@@ -129,8 +131,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
@@ -145,5 +145,4 @@ CORBA::Boolean operator>>= (
         CORBA::FloatSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

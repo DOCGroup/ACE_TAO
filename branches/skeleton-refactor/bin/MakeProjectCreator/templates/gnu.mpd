@@ -14,12 +14,12 @@
 MAKEFILE         = <%project_file%>
 DEPENDENCY_FILE  = .depend.<%project_name%>
 <%if(exename)%>
-BIN_UNCHECKED    = <%exename%>
+BIN_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%><%exename%>
 <%endif%>
 <%if(staticname)%>
 
 ## LIB may be set to empty later on in this file
-LIB_UNCHECKED    = lib<%staticname%>.a
+LIB_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%staticname%>.a
 LIB              = $(LIB_UNCHECKED)
 <%if(!sharedname)%>
 static_libs_only = 1
@@ -28,17 +28,15 @@ static_libs_only = 1
 <%if(sharedname)%>
 
 ## SHLIB may be set to empty later on in this file
-SHLIB_UNCHECKED  = lib<%sharedname%>.$(SOEXT)
+SHLIB_UNCHECKED  = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
-<%if(tao)%>
+<%if(tao || ciao)%>
 
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-ifndef CIAO_ROOT
-  CIAO_ROOT = $(TAO_ROOT)/CIAO
-endif
+TAO_ROOT  ?= $(ACE_ROOT)/TAO
+<%if(ciao)%>
+CIAO_ROOT ?= $(TAO_ROOT)/CIAO
+<%endif%>
 <%endif%>
 
 <%if(grouped_source_files)%>
@@ -74,19 +72,68 @@ RESOURCES += \
 #----------------------------------------------------------------------------
 <%marker(macros)%>
 <%if(exename)%>
-LDLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
+LDLIBS =<%foreach(libs lit_libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%>
 <%else%>
 <%if(sharedname)%>
-ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
+ACE_SHLIBS =<%foreach(libs lit_libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%>
 <%endif%>
 <%endif%>
 <%if(tao_idl)%>
 TAO_IDL = <%tao_idl%>
 <%endif%>
+<%if(tao_idl_dep)%>
+TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
+<%endif%>
 <%if(tao_idlflags)%>
 TAO_IDLFLAGS = <%tao_idlflags%>
 <%endif%>
+<%if(cidlc)%>
+CIDLC = <%cidlc%>
+<%endif%>
+<%if(cidlc_dep)%>
+CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
+<%endif%>
+<%if(cidlc_flags)%>
+CIDLC_FLAGS = <%cidlc_flags%>
+<%endif%>
 
+<%if(exename)%>
+<%if(install)%>
+INSBIN ?= <%install%>
+<%endif%>
+ifeq ($(INSBIN),.)
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
+  INSBIN = $(PWD)
+endif
+<%if(targetoutdir)%>
+ifneq ($(INSBIN),)
+OUTPUT_DIRECTORY = $(INSBIN)/<%targetoutdir%>
+else
+<%endif%>
+OUTPUT_DIRECTORY = $(INSBIN)
+<%if(targetoutdir)%>
+endif
+<%endif%>
+<%else%>
+<%if(dllout || libout)%>
+INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+<%endif%>
+ifeq ($(INSLIB),.)
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
+  INSLIB = $(PWD)
+endif
+OUTPUT_DIRECTORY = $(INSLIB)<%if(targetoutdir)%>/<%targetoutdir%><%endif%>
+<%endif%>
+
+<%if(targetoutdir)%>
+VDIR   = <%targetoutdir%>.obj/
+VSHDIR = <%targetoutdir%>.shobj/
+
+<%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -94,34 +141,29 @@ ACELIB =
 tao_dont_use_idl_make_rule = 1
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
+<%if(ciao)%>
+include $(CIAO_ROOT)/rules.ciao.GNU
+<%endif%>
+<%if(version)%>
+
+ifeq ($(versioned_so),1)
+SOVERSION = .<%version%>
+endif
+<%endif%>
 
 # To build multiple targets in the same directory on AIX, it works
 # best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
 TEMPINCDIR := $(TEMPINCDIR)/<%project_name%>
-
 all: $(TEMPINCDIR)
-
 endif
 
-<%if(exename)%>
-INSBIN ?= <%if(install)%><%install%><%else%>.<%endif%>
-OUTPUT_DIRECTORY = $(INSBIN)
-<%else%>
-INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
-ifeq ($(INSLIB),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
-  endif
-  INSLIB = $(PWD)
-endif
-OUTPUT_DIRECTORY = $(INSLIB)
-<%endif%>
+ifneq ($(OUTPUT_DIRECTORY),)
 all: $(OUTPUT_DIRECTORY)
-
 $(OUTPUT_DIRECTORY):
-	-@mkdir -p "$(OUTPUT_DIRECTORY)"
+	-@$(MKDIR) "$(OUTPUT_DIRECTORY)"
+endif
 
 <%if(sharedname || staticname || exename)%>
 <%if(libs && libpaths)%>
@@ -272,7 +314,7 @@ else
 endif
 <%endfor%>
 
-OBJS   = $(addsuffix .o, $(notdir $(FILES)))
+OBJS   = $(addsuffix .$(OBJEXT), $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
 ifneq (,$(RC))
@@ -287,11 +329,13 @@ LSRC   = $(addsuffix .cpp, $(FILES))
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-<%if(install && exename)%>
+<%if(exename)%>
 
+ifneq ($(OUTPUT_DIRECTORY),)
 ifneq ($(OUTPUT_DIRECTORY),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%)
-  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%)
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
+endif
 endif
 
 <%endif%>
@@ -314,12 +358,16 @@ endif
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-<%if(tao)%>
-include $(TAO_ROOT)/taoconfig.mk
-<%endif%>
+ifeq ($(VXWORKSLINK),true)
+include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
+endif
 
 <%if(libpaths)%>
+ifeq ($(VXWORKSLINK),true)
+LDLIBPATH     =<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+else
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+endif
 <%endif%>
 <%if(includes)%>
 CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
@@ -361,6 +409,15 @@ avoid_warning:
 
 <%endif%>
 <%if(custom_types)%>
+## Some OS's have /bin/test others only have /usr/bin/test
+ifeq ($(wildcard /bin/test), /bin/test)
+  TEST_EXE = /bin/test
+else
+ifeq ($(wildcard /usr/bin/test), /usr/bin/test)
+  TEST_EXE = /usr/bin/test
+endif
+endif
+
 <%foreach(custom_types)%>
 <%if(custom_types->libpath)%>
 DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
@@ -385,21 +442,32 @@ OBJS_DEPEND_ON_GENERATED = 1
 ## the case, then we don't need this special rule.
 ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
   ## If we can find /bin/test, then we will continue
-  ifeq ($(wildcard /bin/test), /bin/test)
+  ifneq ($(TEST_EXE),)
     ## If all of the generated files are there, then we need to check
     ## and make sure that the generated files are up-to-date.  If they are not
     ## then we need the special rule.
-    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
       .NOTPARALLEL:
+<%if(flag_overrides(custom_type->input_file, dependent))%>
+    else
+      ## By this point, all of the generated files are here and up-to-date
+      ## with respect to the source file.  Now we need to make sure that
+      ## they are up-to-date with respect to the generation tool.  If the tool
+      ## is newer than the generated files, then we need the special rule.
+      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%flag_overrides(custom_type->input_file, dependent)%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+        .NOTPARALLEL:
+      endif
+<%else%>
 <%if(custom_type->dependent)%>
     else
       ## By this point, all of the generated files are here and up-to-date
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->command%>$(EXEEXT) -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->dependent%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
+<%endif%>
 <%endif%>
     endif
   else
@@ -410,12 +478,21 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->command%>$(EXEEXT)<%endif%>
-	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
+<%endif%>
+	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+<%if(flag_overrides(custom_type->input_file, postcommand))%>
+<%foreach(custom_type->input_file->output_files)%>
+	<%flag_overrides(custom_type->input_file, postcommand)%>
+<%endfor%>
+<%else%>
 <%if(custom_type->postcommand)%>
 <%foreach(custom_type->input_file->output_files)%>
-	<%custom_type->postcommand()%>
+	<%custom_type->postcommand%>
 <%endfor%>
+<%endif%>
 <%endif%>
 <%if(pch_header)%>
 <%if(custom_type->pch_postrule)%>
@@ -435,8 +512,8 @@ ifneq ($(GENERATED_DIRTY),)
 ## ensure that those files are generated before we attempt to build anything
 ## else.
 ifeq ($(OBJS_DEPEND_ON_GENERATED),1)
-$(addprefix $(VDIR), $(OBJS)): $(GENERATED_DIRTY)
-$(VSHOBJS): $(GENERATED_DIRTY)
+$(VDIR)$(ACE_PCH_FILE) $(addprefix $(VDIR), $(OBJS)): $(GENERATED_DIRTY)
+$(VSHDIR)$(ACE_PCH_FILE) $(VSHOBJS): $(GENERATED_DIRTY)
 endif
 <%else%>
 <%foreach(requires)%>
@@ -481,12 +558,14 @@ endif
 <%endif%>
 <%if(exename)%>
 
+ifneq ($(VXWORKSLINK),true)
 ifndef kylix
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 else
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
+endif
 endif
 <%endif%>
 

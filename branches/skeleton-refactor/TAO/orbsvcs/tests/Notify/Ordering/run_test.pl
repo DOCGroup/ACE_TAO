@@ -47,8 +47,14 @@ $SEC = new PerlACE::Process ("Sequence_Consumer");
 
 $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
-$NS->Spawn ();
-$TS->Spawn ();
+if ($NS->Spawn () == -1) {
+    exit 1;
+}
+
+if ($TS->Spawn () == -1) {
+    $NS->Kill ();
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
@@ -92,7 +98,7 @@ for($i = 0; $i <= $#policies; $i++) {
 }
 
 ## // pradeep: commented out priority policies temporarily till the sequences implementation is fixed.
-@policies_seq = ("fifo"); 
+@policies_seq = ("fifo");
 
 if ($status == 0) {
   for($i = 0; $i <= $#policies_seq; $i++) {

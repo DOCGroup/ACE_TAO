@@ -22,7 +22,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -156,12 +156,11 @@ namespace ACE
 
 #if defined (ACE_HAS_TLI)
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t t_rcv (ACE_HANDLE handle,
-                 void *buf,
-                 size_t len,
-                 int *flags,
-                 const ACE_Time_Value *timeout = 0);
+  extern ACE_Export ssize_t t_rcv (ACE_HANDLE handle,
+                                   void *buf,
+                                   size_t len,
+                                   int *flags,
+                                   const ACE_Time_Value *timeout = 0);
 
 #endif /* ACE_HAS_TLI */
 
@@ -378,7 +377,7 @@ namespace ACE
   /**
    * Reset the limit on the number of open handles.  If @a new_limit
    * == -1 set the limit to the maximum allowable.  Otherwise, set
-   * the limit value to @a new_limit.  If @a increase_limit_only is 
+   * the limit value to @a new_limit.  If @a increase_limit_only is
    * non-0 then only allow increases to the limit.
    */
   extern ACE_Export int set_handle_limit (int new_limit = -1,
@@ -536,17 +535,28 @@ namespace ACE
   extern ACE_Export u_long hash_pjw (const wchar_t *str, size_t len);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Computes the ISO 8802-3 standard 32 bits CRC for the string
-  /// (not for a file).
-  extern ACE_Export u_long crc32 (const char *str);
+  /// Computes CRC-CCITT for the string.
+  extern ACE_Export ACE_UINT16 crc_ccitt(const char *str);
 
-  /// Computes the ISO 8802-3 standard 32 bits CRC for the given
-  /// buffer (the length is included in the CRC).
-  extern ACE_Export u_long crc32 (const char *buf, ACE_UINT32 len);
+  /// Computes CRC-CCITT for the buffer.
+  extern ACE_Export ACE_UINT16 crc_ccitt(const void *buf, size_t len,
+					 ACE_UINT16 crc = 0);
+
+  /// Computes CRC-CCITT for the @ len iovec buffers.
+  extern ACE_Export ACE_UINT16 crc_ccitt(const iovec *iov, int len,
+					 ACE_UINT16 crc = 0);
+
+  /// Computes the ISO 8802-3 standard 32 bits CRC for the string.
+  extern ACE_Export ACE_UINT32 crc32 (const char *str);
+
+  /// Computes the ISO 8802-3 standard 32 bits CRC for the buffer.
+  extern ACE_Export ACE_UINT32 crc32 (const void *buf, size_t len,
+				      ACE_UINT32 crc = 0);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the
   /// @ len iovec buffers.
-  extern ACE_Export u_long crc32 (iovec *iov, int len);
+  extern ACE_Export ACE_UINT32 crc32 (const iovec *iov, int len,
+				      ACE_UINT32 crc = 0);
 
   /// Euclid's greatest common divisor algorithm.
   extern ACE_Export u_long gcd (u_long x, u_long y);
@@ -588,7 +598,7 @@ namespace ACE
   extern ACE_Export int process_active (pid_t pid);
 
   /**
-   * Terminate the process abruptly with id <pid>.  On Win32 platforms
+   * Terminate the process abruptly with id @a pid.  On Win32 platforms
    * this uses <TerminateProcess> and on POSIX platforms is uses
    * <kill> with the -9 (SIGKILL) signal, which cannot be caught or
    * ignored.  Note that this call is potentially dangerous to use
@@ -708,20 +718,18 @@ namespace ACE
 
 #if defined (ACE_HAS_TLI)
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t t_rcv_n_i (ACE_HANDLE handle,
-                     void *buf,
-                     size_t len,
-                     int *flags,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t t_rcv_n_i (ACE_HANDLE handle,
+                                       void *buf,
+                                       size_t len,
+                                       int *flags,
+                                       size_t *bytes_transferred);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t t_rcv_n_i (ACE_HANDLE handle,
-                     void *buf,
-                     size_t len,
-                     int *flags,
-                     const ACE_Time_Value *timeout,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t t_rcv_n_i (ACE_HANDLE handle,
+                                       void *buf,
+                                       size_t len,
+                                       int *flags,
+                                       const ACE_Time_Value *timeout,
+                                       size_t *bytes_transferred);
 
 #endif /* ACE_HAS_TLI */
 

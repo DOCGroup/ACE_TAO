@@ -161,7 +161,6 @@ namespace CORBA
     /// TAO extension.
     void _tao_set_typecode (const CORBA::TypeCode_ptr);
 
-    ACE_Message_Block *_tao_get_cdr (void) const;
     int _tao_byte_order (void) const;
 
     /// @deprecated

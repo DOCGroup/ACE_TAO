@@ -2,10 +2,6 @@
 
 #include "EC_Conjunction_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Conjunction_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
 
 const int bits_per_word = sizeof(TAO_EC_Conjunction_Filter::Word) * CHAR_BIT;
@@ -56,7 +52,7 @@ TAO_EC_Conjunction_Filter::all_received (void) const
        i != this->bitvec_ + this->nwords_;
        ++i)
     {
-      if (*i != ACE_static_cast(Word,~0))
+      if (*i != static_cast<Word> (~0))
         return 0;
     }
   return 1;
@@ -77,7 +73,7 @@ TAO_EC_Conjunction_Filter::end (void) const
 int
 TAO_EC_Conjunction_Filter::size (void) const
 {
-  return ACE_static_cast (int, this->n_);
+  return static_cast<int> (this->n_);
 }
 
 int
@@ -163,7 +159,7 @@ TAO_EC_Conjunction_Filter::clear (void)
     {
       *j = 0;
     }
-  int b = ACE_static_cast (int, this->n_ % bits_per_word);
+  int b = static_cast<int> (this->n_ % bits_per_word);
   Word last = ~0 << b;
   *j = last;
 

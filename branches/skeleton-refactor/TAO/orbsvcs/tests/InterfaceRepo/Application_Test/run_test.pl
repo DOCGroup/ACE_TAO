@@ -27,6 +27,13 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 }
 
 $TAO_IFR = new PerlACE::Process ("../../../../../bin/tao_ifr");
+
+# We want the tao_ifr executable to be found exactly in the path
+# given, without being modified by the value of -ExeSubDir.
+# So, we tell its Process object to ignore the setting of -ExeSubDir.
+
+$TAO_IFR->IgnoreExeSubDir (1);
+
 $IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " -o $ifr_iorfile");
 $SV      = new PerlACE::Process ("server", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile");
 $CL      = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile"

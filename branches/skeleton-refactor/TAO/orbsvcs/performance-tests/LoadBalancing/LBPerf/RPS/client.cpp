@@ -46,7 +46,8 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'r':
-        rate = ACE_OS::atoi (get_opts.opt_arg ());
+        rate =
+          static_cast<float> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
 
       case 'n':
@@ -128,7 +129,7 @@ main (int argc, char *argv[])
 
       // const float usecs = 1.0 / rate * 1e6;
 
-      // ACE_Time_Value tv (0, ACE_static_cast (const long, usecs));
+      // ACE_Time_Value tv (0, static_cast<const long> (usecs));
 
       // const timespec ts = tv;
 

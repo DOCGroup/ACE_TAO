@@ -6,7 +6,6 @@
 # Inputs:
 # ~~~~~~~
 # STATIC - if defined means creating a static library or executable
-# PASCAL - if defined means link dll against pascal run-time library
 # DEBUG - if defined means building with debug information
 # UNICODE - if defined means building unicode
 # CBX - if defined means building with the new cbuilderx compiler
@@ -126,18 +125,10 @@ COMMON_LFLAGS = $(DEBUG_LFLAGS) $(STATIC_LFLAGS) -x -w-dup -Gn
 
 DLL_CFLAGS = -tWD
 DLL_LFLAGS = -Tpd -Gi
-!ifdef PASCAL
-!ifdef UNICODE
-DLL_STARTUP_OBJ = c0d32w.$(OBJ_EXT) sysinit.obj
-!else
-DLL_STARTUP_OBJ = c0d32.$(OBJ_EXT) sysinit.obj
-!endif
-!else
 !ifdef UNICODE
 DLL_STARTUP_OBJ = c0d32w.$(OBJ_EXT)
 !else
 DLL_STARTUP_OBJ = c0d32.$(OBJ_EXT)
-!endif
 !endif
 
 #
@@ -146,18 +137,10 @@ DLL_STARTUP_OBJ = c0d32.$(OBJ_EXT)
 
 EXE_CFLAGS =
 EXE_LFLAGS = -Tpe
-!ifdef PASCAL
-!ifdef UNICODE
-EXE_STARTUP_OBJ = c0x32w.$(OBJ_EXT) sysinit.obj
-!else
-EXE_STARTUP_OBJ = c0x32.$(OBJ_EXT) sysinit.obj
-!endif
-!else
 !ifdef UNICODE
 EXE_STARTUP_OBJ = c0x32w.$(OBJ_EXT)
 !else
 EXE_STARTUP_OBJ = c0x32.$(OBJ_EXT)
-!endif
 !endif
 
 #
@@ -199,15 +182,7 @@ CODEGUARD_LIB = cg32.lib
 !endif
 
 !ifdef STATIC
-!ifdef PASCAL
-COMMON_LIBS = $(CODEGUARD_LIB) import32.$(LIB_EXT) vcl$(VCLVER).lib vcle$(VCLVER).lib cp32mt.lib ws2_32.lib
-!else
 COMMON_LIBS = $(CODEGUARD_LIB) import32.$(LIB_EXT) cw32mt.lib ws2_32.lib
-!endif
-!else
-!ifdef PASCAL
-COMMON_LIBS = $(CODEGUARD_LIB) import32.$(LIB_EXT) vcl$(VCLVER).bpi vcle$(VCLVER).lib cp32mti.lib ws2_32.lib
 !else
 COMMON_LIBS = $(CODEGUARD_LIB) import32.$(LIB_EXT) cw32mti.lib ws2_32.lib
-!endif
 !endif

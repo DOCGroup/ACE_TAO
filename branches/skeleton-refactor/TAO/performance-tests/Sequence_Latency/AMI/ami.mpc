@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*sequence server): taoexe, messaging, strategies {
+project(*sequence server): taoserver, messaging, strategies {
   idlflags += -GC
   requires += ami
 
@@ -12,8 +12,7 @@ project(*sequence server): taoexe, messaging, strategies {
   }
 }
 
-project(*sequence client): taoexe, messaging, strategies {
-  exename   = client
+project(*sequence client): taoclient, messaging, strategies {
   idlflags += -GC
   requires += ami
 

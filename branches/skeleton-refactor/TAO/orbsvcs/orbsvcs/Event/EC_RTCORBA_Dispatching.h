@@ -75,9 +75,5 @@ private:
   TAO_EC_Dispatching_Task *tasks_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_RTCORBA_Dispatching.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_RTCORBA_DISPATCHING_H */

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*AC_CLD) : acelib, ssl {
+  avoids += uses_wchar
   sharedname = AC_CLD
   dynamicflags = AC_CLD_BUILD_DLL
   Source_Files {
@@ -19,6 +20,7 @@ project(*AIO_CLD) : acelib, ssl {
 }
 
 project(*CLD) : acelib {
+  avoids += uses_wchar
   sharedname = CLD
   dynamicflags = CLD_BUILD_DLL
   Source_Files {
@@ -30,6 +32,7 @@ project(*CLD) : acelib {
 }
 
 project(*Configurable_Log_Server) : aceexe {
+  avoids += uses_wchar
   exename = configurable_logging_server
   Source_Files {
     Configurable_Logging_Server.cpp
@@ -45,6 +48,7 @@ project(*Display_Logfile) : aceexe {
 }
 
 project(*Reactor_Log_Server) : aceexe {
+  avoids += uses_wchar
   exename = reactor_logging_server
   Source_Files {
     Logging_Acceptor.cpp
@@ -56,6 +60,7 @@ project(*Reactor_Log_Server) : aceexe {
 }
 
 project(*Select_Reactor_Log_Server) : aceexe {
+  avoids += uses_wchar
   exename = select_reactor_loggin_server
   Source_Files {
     Logging_Acceptor.cpp
@@ -67,6 +72,7 @@ project(*Select_Reactor_Log_Server) : aceexe {
 }
 
 project(*SLD) : acelib {
+  avoids += uses_wchar
   sharedname = SLD
   dynamicflags = SLD_BUILD_DLL
   Source_Files {
@@ -78,6 +84,7 @@ project(*SLD) : acelib {
 }
 
 project(*SLDex) : acelib {
+  avoids += uses_wchar
   sharedname = SLDex
   dynamicflags = SLDEX_BUILD_DLL
   Source_Files {
@@ -99,6 +106,7 @@ project(*SR_Configurable_Log_Server) : aceexe {
 }
 
 project(*TP_Reactor_Log_Server) : aceexe {
+  avoids += uses_wchar
   exename = tp_reactor_logging_server
   Source_Files {
     Logging_Acceptor.cpp
@@ -110,6 +118,7 @@ project(*TP_Reactor_Log_Server) : aceexe {
 }
 
 project(*TPCLS) : acelib, ssl {
+  avoids += uses_wchar
   sharedname = TPCLS
   dynamicflags = TPCLS_BUILD_DLL
   Source_Files {
@@ -119,6 +128,7 @@ project(*TPCLS) : acelib, ssl {
 }
 
 project(*TPLS) : acelib {
+  avoids += uses_wchar
   sharedname = TPLS
   dynamicflags = TPLS_BUILD_DLL
   Source_Files {
@@ -130,6 +140,7 @@ project(*TPLS) : acelib {
 }
 
 project(*WFMO_Reactor_Log_Server) : aceexe, wfmo {
+  avoids += uses_wchar
   exename = wfmo_reactor_logging_server
   Source_Files {
     Logging_Acceptor.cpp

@@ -61,7 +61,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS = FT_ReplicationManager
+bin_PROGRAMS = FT_ReplicationManager
 
 FT_ReplicationManager_CPPFLAGS = \
   -I$(ACE_ROOT) \

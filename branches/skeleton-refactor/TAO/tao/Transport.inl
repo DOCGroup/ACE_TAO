@@ -50,13 +50,6 @@ TAO_Transport::opened_as (TAO::Connection_Role role)
   this->opening_connection_role_ = role;
 }
 
-ACE_INLINE bool
-TAO_Transport::acts_as_server (void) const
-{
-  return (this->opened_as () == TAO::TAO_SERVER_ROLE ||
-          this->bidirectional_flag_ == 1) ? true : false;
-}
-
 ACE_INLINE TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *
 TAO_Transport::cache_map_entry (void)
 {

@@ -23,6 +23,7 @@
 #include "ace/Copy_Disabled.h"
 
 #include "tao/PortableServer/PortableServer.h"
+#include "ID_Factory.h"
 
 /**
  * @class TAO_Notify_POA_Helper
@@ -54,11 +55,19 @@ public:
   /// Activate Object, the POA will assign an ID and return its value.
   CORBA::Object_ptr activate (PortableServer::Servant servant, CORBA::Long& id ACE_ENV_ARG_DECL);
 
+  /// Activate Object, using existing ID
+  CORBA::Object_ptr activate_with_id (PortableServer::Servant servant, CORBA::Long id ACE_ENV_ARG_DECL);
+
   /// Deactivate Object with ID
   void deactivate (CORBA::Long id ACE_ENV_ARG_DECL) const;
 
   /// Convert ID to reference.
   CORBA::Object_ptr id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const;
+
+  /// Convert reference to pointer to servant
+  PortableServer::ServantBase * reference_to_servant (CORBA::Object_ptr ptr ACE_ENV_ARG_DECL) const;
+
+  CORBA::Object_ptr servant_to_reference (PortableServer::ServantBase * servant  ACE_ENV_ARG_DECL) const;
 
 protected:
   /// Set default POA policies.
@@ -70,11 +79,15 @@ protected:
   /// Generate a unique id for each POA created.
   ACE_CString get_unique_id (void);
 
+  /// Convert id to ObjectID
+  PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const;
+
+protected:
   /// POA
   PortableServer::POA_var poa_;
 
-  /// Convert id to ObjectID
-  PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const;
+  /// ID Factory for objects.
+  TAO_Notify_ID_Factory id_factory_;
 };
 
 #if defined (__ACE_INLINE__)

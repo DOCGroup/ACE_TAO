@@ -1,7 +1,7 @@
 // $Id$
 
 ACE_INLINE CORBA::Long
-TAO_Notify_Object::id (void)
+TAO_Notify_Object::id (void) const
 {
   return id_;
 }

@@ -5,22 +5,11 @@
 
 ACE_RCSID (QtTests, server, "$Id$")
 
-#if !defined (ACE_HAS_QT)
-
-int
-main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "Qt not supported on this platform\n"));
-  return 0;
-}
-
-#else
 // who defines index macro?
 #ifdef index
 #undef index
 #endif
-#include "tao/qt_resource.h"
+#include "tao/QtResource_Loader.h"
 #include <qlcdnumber.h>
 #include <qvbox.h>
 #include <qslider.h>
@@ -44,12 +33,14 @@ parse_args (int argc, char *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
+          // ignore the first unknown option
+          return 0;
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            "usage:  %s "
+//                            "-o <iorfile>"
+//                            "\n",
+//                            argv [0]),
+//                           -1);
       }
   // Indicates sucessful parsing of the command line
   return 0;
@@ -64,7 +55,7 @@ main (int argc, char *argv[])
 
   // Qt specific stuff for running with TAO...
   QApplication app (argc, argv);
-  TAO_QtResource_Factory::set_context (&app);
+  TAO::QtResource_Loader qt_resources (&app);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -152,5 +143,3 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
   return 0;
 }
-
-#endif /* ACE_HAS_QT */

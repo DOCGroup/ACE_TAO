@@ -61,4 +61,3 @@ project(BMDevice_DnC_exec) : ciao_component_dnc {
     BMDevice_exec.cpp
   }
 }
-

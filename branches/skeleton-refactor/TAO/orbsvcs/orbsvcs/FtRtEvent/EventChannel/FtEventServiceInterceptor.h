@@ -13,6 +13,7 @@
 #ifndef FTEVENTSERVICEINTERCEPTOR_H
 #define FTEVENTSERVICEINTERCEPTOR_H
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/SString.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"

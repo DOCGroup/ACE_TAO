@@ -130,11 +130,11 @@ ifeq (1,$(ace_lib_prelink))
         #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
 endif # ace_lib_prelink
-	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA);
+	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
 ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
 # templates.
-	if test -s ./$(TEMPINCDIR)/*.C; \
+                      if test -s ./$(TEMPINCDIR)/*.C; \
 	then \
 		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \

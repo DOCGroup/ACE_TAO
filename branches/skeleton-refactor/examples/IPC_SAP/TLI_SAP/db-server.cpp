@@ -1,6 +1,6 @@
 // $Id$
 
-// Simple multi-threaded database server example. 
+// Simple multi-threaded database server example.
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/TLI_Acceptor.h"
@@ -10,7 +10,7 @@ ACE_RCSID(TLI_SAP, db_server, "$Id$")
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
-// Global thread manager. 
+// Global thread manager.
 ACE_Thread_Manager thr_mgr;
 
 void *
@@ -112,7 +112,7 @@ main (int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "platform isn't configured to support TLI\n"),

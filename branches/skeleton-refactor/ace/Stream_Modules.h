@@ -24,7 +24,7 @@
 /**
  * @class ACE_Stream_Head
  *
- * @brief Standard module that acts as the head of a ustream.
+ * @brief Standard module that acts as the head of a stream.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE>
@@ -62,7 +62,7 @@ private:
 /**
  * @class ACE_Stream_Tail
  *
- * @brief Standard module that acts as the head of a ustream.
+ * @brief Standard module that acts as the head of a stream.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE>

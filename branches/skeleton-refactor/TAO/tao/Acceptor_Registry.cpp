@@ -117,21 +117,10 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
-                             int ignore_address
+                             const TAO_EndpointSet &endpoint_set,
+                             bool ignore_address
                              ACE_ENV_ARG_DECL)
 {
-  // protocol_factories is in the following form
-  //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
-  TAO_EndpointSet endpoint_set = orb_core->orb_params ()->endpoints ();
-
-  // Check to see if there is an additional endpoint value defined
-  // as an environment property.
-  ACE_CString env_endpoint = ACE_OS::getenv ("TAO_ORBENDPOINT");
-  if (ACE_OS::strcmp (env_endpoint.c_str(), "") != 0)
-    {
-      endpoint_set.enqueue_tail (env_endpoint);
-    }
-
   if (endpoint_set.is_empty ()
       // No endpoints were specified, we let each protocol pick its
       // own default.
@@ -151,7 +140,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // Count the maximum number of endpoints in the set.  This will be
   // the maximum number of acceptors that need to be created.
   size_t acceptor_count = 0;
-  TAO_EndpointSetIterator endpts = endpoint_set.begin ();
+  TAO_EndpointSetIterator endpts (endpoint_set);
 
   for (ACE_CString *ep = 0;
        endpts.next (ep) != 0;
@@ -212,7 +201,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       ACE_CHECK_RETURN (-1);
     }
 
-  TAO_EndpointSetIterator endpoints = endpoint_set.begin ();
+  TAO_EndpointSetIterator endpoints (endpoint_set);
 
   for (ACE_CString *endpoint = 0;
        endpoints.next (endpoint) != 0;
@@ -303,11 +292,6 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             -1);
         }
     }
-
-  // No longer need the endpoint set since all associated acceptors
-  // have been opened by now.  Reclaim the memory used by the endpoint
-  // set.
-  endpoint_set.reset ();
 
   return 0;
 }
@@ -506,8 +490,8 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                ACE_Reactor *reactor,
                                ACE_CString &addrs,
                                TAO_ProtocolFactorySetItor &factory,
-                               int ignore_address
-                                ACE_ENV_ARG_DECL)
+                               bool ignore_address
+                               ACE_ENV_ARG_DECL)
 {
   ACE_CString options_tmp;
   this->extract_endpoint_options (addrs,

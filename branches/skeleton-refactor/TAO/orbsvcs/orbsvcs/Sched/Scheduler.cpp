@@ -21,10 +21,6 @@
 #include "Scheduler.h"
 #include "ace/OS_NS_stdio.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Lock_Adapter_T.h"
 
 ACE_RCSID(Sched, Scheduler, "$Id$")

@@ -48,7 +48,7 @@ public:
 
   ///= Public method to be implemented by subclasses.
   /// Exec the request.
-  virtual void execute (TAO_Notify_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL) = 0;
+  virtual void execute (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL) = 0;
 
   /// Shutdown task
   virtual void shutdown (void) = 0;
@@ -62,10 +62,6 @@ protected:
   /// Destructor
   virtual ~TAO_Notify_Worker_Task ();
 };
-
-#if defined (__ACE_INLINE__)
-#include "Worker_Task.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_WORKER_TASK_H */

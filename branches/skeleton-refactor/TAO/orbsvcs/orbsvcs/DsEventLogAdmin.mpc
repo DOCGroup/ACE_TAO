@@ -17,15 +17,23 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
 
   Header_Files {
     DsEventLogAdminC.h
+    Log/eventlog_export.h
   }
 
   Inline_Files {
     DsEventLogAdminC.inl
   }
 
+  Template_Files {
+  }
+
   // explicit Resource_Files to avoid including _Skel & _Serv rc files.
   Resource_Files {
     DsEventLogAdmin.rc
+  }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin.pc.in
   }
 }
 
@@ -42,10 +50,21 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_sk
 
   Header_Files {
     DsEventLogAdminS.h
+    DsEventLogAdminS_T.h
+    Log/eventlog_skel_export.h
   }
 
   Inline_Files {
     DsEventLogAdminS.inl
+    DsEventLogAdminS_T.inl
+  }
+
+  Template_Files {
+    DsEventLogAdminS_T.cpp
+  }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin_Skel.pc.in
   }
 }
 
@@ -64,5 +83,15 @@ project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadm
       Log/EventLogNotification.cpp
       Log/EventLog_i.cpp
     }
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_DsEventLogAdmin_Serv.pc.in
   }
 }

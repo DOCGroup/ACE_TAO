@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/SString.h"
 #include "testC.h"
 
 ACE_RCSID (Send_File, 
@@ -10,6 +11,8 @@ ACE_RCSID (Send_File,
            "$Id$")
 
 const char *ior = "file://test.ior";
+const char *cert_file = "cacert.pem";
+
 CORBA::Boolean call_shutdown = 0;
 int wait_time = 10;
 
@@ -51,6 +54,10 @@ main (int argc, char *argv[])
 
   ACE_TRY
     {
+      ACE_TString env ("SSL_CERT_FILE=");
+      env += cert_file;
+      ACE_OS::putenv (env.c_str ());
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

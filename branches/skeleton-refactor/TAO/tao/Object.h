@@ -213,7 +213,8 @@ namespace CORBA
     CORBA::Policy_ptr _get_policy (CORBA::PolicyType type
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-
+    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
@@ -245,10 +246,8 @@ namespace CORBA
     //@}
 
     // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef Object_ptr _ptr_type;
     typedef Object_var _var_type;
-#endif /* __GNUC__ */
 
     //@} End of CORBA specific methods
 
@@ -286,12 +285,6 @@ namespace CORBA
     /// Return the object key as an out parameter.  Caller should release
     /// return value when finished with it.
     virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-    CORBA::Policy_ptr _get_client_policy (CORBA::PolicyType type
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-#endif /*TAO_HAS_CORBA_MESSAGING*/
 
     /// Constructor
     Object (TAO_Stub *p,
@@ -361,13 +354,6 @@ namespace CORBA
 
   private:
 
-    /// Flag to indicate collocation.  It is 0 except for collocated
-    /// objects.
-    CORBA::Boolean is_collocated_;
-
-    /// Specify whether this is a local object or not.
-    CORBA::Boolean is_local_;
-
     /// Pointer to the Proxy Broker
     /**
      * This cached pointer instance takes care of routing the call for
@@ -376,8 +362,15 @@ namespace CORBA
      */
     TAO::Object_Proxy_Broker *proxy_broker_;
 
+    /// Flag to indicate collocation.  It is 0 except for collocated
+    /// objects.
+    CORBA::Boolean is_collocated_;
+
+    /// Specify whether this is a local object or not.
+    CORBA::Boolean is_local_;
+
     /// Flag to indicate whether the IOP::IOR has been evaluated fully.
-    Boolean is_evaluated_;
+    CORBA::Boolean is_evaluated_;
 
     /// If the IOR hasnt been evaluated fully, then the contents of
     /// the IOR that we received  should be in here!

@@ -106,9 +106,5 @@ private:
   ChildrenIterator current_child_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Conjunction_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_CONJUNCTION_FILTER_H */

@@ -4,7 +4,7 @@ project(CIDL) {
   requires += cidl exceptions
   sharedname =
   staticname = CIDL
-  includes += ../..
+  includes += $(CIAO_ROOT)/CCF
   libout = ..
   Source_Files {
  	.

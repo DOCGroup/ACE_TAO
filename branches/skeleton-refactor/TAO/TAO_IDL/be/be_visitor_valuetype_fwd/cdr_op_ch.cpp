@@ -91,3 +91,10 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
 
   return 0;
 }
+
+int
+be_visitor_valuetype_fwd_cdr_op_ch::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
+}
+

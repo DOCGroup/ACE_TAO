@@ -18,8 +18,7 @@ static int
 gen_size (void)
 {
 #if defined (ACE_HAS_THREADS)
-  ACE_RANDR_TYPE seed = ACE_static_cast (ACE_RANDR_TYPE,
-    ACE_reinterpret_cast (unsigned long, &seed));
+  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (reinterpret_cast<unsigned long> (&seed));
   return (ACE_OS::rand_r (seed) % Options::instance ()->max_msg_size ()) + 1;
 #else
   return (ACE_OS::rand () % Options::instance ()->max_msg_size ()) + 1;
@@ -109,19 +108,19 @@ spawn (void)
 #endif /* ACE_HAS_THREADS */
     }
 #if !defined (ACE_WIN32)
-  else if (ACE_OS::fork (Options::instance ()->program_name ()) == 0)
+  else if (ACE_OS::fork (ACE_TEXT_CHAR_TO_TCHAR (Options::instance ()->program_name ())) == 0)
     {
       if (Options::instance ()->exec_slave ())
         {
           char iterations[20];
           char msg_size[20];
 
-          ACE_OS::sprintf (iterations,
-                           ACE_SIZE_T_FORMAT_SPECIFIER,
-                           Options::instance ()->iteration_count ());
-          ACE_OS::sprintf (msg_size,
-                           ACE_SIZE_T_FORMAT_SPECIFIER,
-                           Options::instance ()->max_msg_size ());
+          ACE_OS::sprintf (iterations, "%lu",
+                           (unsigned long)
+                             Options::instance ()->iteration_count ());
+          ACE_OS::sprintf (msg_size, "%lu",
+                           (unsigned long)
+                             Options::instance ()->max_msg_size ());
           const char *cp = 0;
 
           if (Options::instance ()->debug ())
@@ -131,14 +130,14 @@ spawn (void)
 
           const char *argv[] =
           {
-            (char *) Options::instance ()->slave_name (),
+            Options::instance ()->slave_name (),
             "-p",
             "-n",
             iterations,
             "-L",
             msg_size,
             cp,
-            (char *) 0
+            0
           };
 
           if (ACE_OS::execv (Options::instance ()->program_name (),

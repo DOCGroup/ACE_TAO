@@ -2,10 +2,6 @@
 
 #include "EC_Type_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Type_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Type_Filter, "$Id$")
 
 TAO_EC_Type_Filter::TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header)

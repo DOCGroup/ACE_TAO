@@ -1065,6 +1065,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
       senders = 20;           // number of senders
       loglevel = 1;           // log level : 0 full/ 1 only errors
       seconds = 20;           // time to run in seconds
+#if defined(SOMAXCONN) // The test is invalid if senders > SOMAXCONN
+      if(SOMAXCONN < senders)
+        senders = SOMAXCONN;
+#endif
       return 0;
     }
 
@@ -1117,7 +1121,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#ifndef ACE_WIN32
+#if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
   sigset_t signal_set;
   if (sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -1135,7 +1139,7 @@ disable_signal (int sigmin, int sigmax)
 #else
   ACE_UNUSED_ARG(sigmin);
   ACE_UNUSED_ARG(sigmax);
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_PTHREADS_STD && !ACE_LACKS_PTHREAD_SIGMASK */
 
   return 1;
 }
@@ -1179,16 +1183,18 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       int rc = 0;
 
+      ACE_INET_Addr addr (port);
       if (both != 0 || host == 0) // Acceptor
-        rc += acceptor.start (ACE_INET_Addr (port));
+        rc += acceptor.start (addr);
 
       if (both != 0 || host != 0)
         {
           if (host == 0)
-            host = ACE_TEXT ("localhost");
+            host = ACE_LOCALHOST;
 
-          rc += connector.start (ACE_INET_Addr (port, host),
-                                 senders);
+          if (addr.set (port, host, 1, addr.get_type ()) == -1)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+          rc += connector.start (addr, senders);
 
         }
 

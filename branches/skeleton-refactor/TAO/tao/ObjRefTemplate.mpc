@@ -26,4 +26,8 @@ project : valuetype, portableserver, core {
   PIDL_Files {
     ObjRefTemplate
   }
+
+  Pkgconfig_Files {
+    ObjRefTemplate/TAO_ObjRefTemplate.pc.in
+  }
 }

@@ -157,14 +157,18 @@ test_connect (ACE_Reactor &reactor,
 void
 test (ACE_Reactor_Impl *impl)
 {
-  number_of_connections = sizeof hosts / sizeof (char *);
-
+  size_t nr_names = sizeof hosts / sizeof (char *);
   ACE_INET_Addr *addresses =
-    new ACE_INET_Addr[number_of_connections];
+    new ACE_INET_Addr[nr_names];
 
-  for (int i = 0; i < number_of_connections; ++i)
+  for (size_t i = 0, number_of_connections = 0; i < nr_names; ++i)
     {
-      addresses[i] = ACE_INET_Addr (hosts[i]);
+      if (addresses[number_of_connections].set (hosts[i]) == 0)
+        ++number_of_connections;
+      else
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
     }
 
   ACE_Reactor reactor (impl,

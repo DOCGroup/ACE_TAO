@@ -9,16 +9,11 @@
 
 #include "Config_Scheduler.h"
 
-#if defined (__ACE_INLINE__)
-#include "Config_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Sched, Config_Scheduler, "$Id$")
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
-  : scheduler_strategy_ (ACE_static_cast (RtecScheduler::Preemption_Priority_t,
-                                          TAO_MIN_CRITICAL_PRIORITY))
+  : scheduler_strategy_ (static_cast<RtecScheduler::Preemption_Priority_t> (TAO_MIN_CRITICAL_PRIORITY))
   , impl (new ACE_Strategy_Scheduler (scheduler_strategy_))
 #else
   : impl (new Scheduler_Generic)
@@ -272,7 +267,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   const char *anomaly_severity_msg = "NONE";
   CORBA::ULong anomaly_index = 0;
   CORBA::ULong anomaly_set_size =
-                    ACE_static_cast (CORBA::ULong, anomaly_set.size ());
+                    static_cast<CORBA::ULong> (anomaly_set.size ());
   if (anomalies.ptr () == 0)
     {
       anomalies =
@@ -389,7 +384,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
     }
   infos->length (impl->tasks ());
   for (RtecScheduler::handle_t handle = 1;
-       handle <= ACE_static_cast (RtecScheduler::handle_t, impl->tasks ());
+       handle <= static_cast<RtecScheduler::handle_t> (impl->tasks ());
        ++handle)
     {
       RtecScheduler::RT_Info* rt_info = 0;
@@ -397,7 +392,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         {
         case BaseSchedImplType::SUCCEEDED:
           // We know that handles start at 1.
-          infos[ACE_static_cast (CORBA::ULong, handle - 1)] = *rt_info;
+          infos[static_cast<CORBA::ULong> (handle - 1)] = *rt_info;
           break;
         case BaseSchedImplType::FAILED:
         case BaseSchedImplType::ST_UNKNOWN_TASK:
@@ -418,8 +413,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   configs->length (impl->minimum_priority_queue () + 1);
   for (RtecScheduler::Preemption_Priority_t priority = 0;
        priority <=
-         ACE_static_cast (RtecScheduler::Preemption_Priority_t,
-                          impl->minimum_priority_queue ());
+         static_cast<RtecScheduler::Preemption_Priority_t> (impl->minimum_priority_queue ());
        ++priority)
     {
       RtecScheduler::Config_Info* config_info = 0;

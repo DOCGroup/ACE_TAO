@@ -53,7 +53,9 @@ access_test (void)
 int
 rename_test (void)
 {
-#if defined (ACE_LACKS_RENAME)
+#if defined (ACE_LACKS_RENAME) || defined (ACE_VXWORKS)
+  // On VxWorks only some filesystem drivers support rename
+  // and as we do not know which is used, skip the test here
   ACE_ERROR_RETURN ((LM_INFO,
                      ACE_TEXT ("rename not supported on this platform\n")),
                     0);
@@ -172,7 +174,7 @@ string_emulation_test (void)
 
     const char *memchr1 = "abcdefghijklmnopqrstuvwxyz";
 
-    ACE_ASSERT (ACE_OS::memchr (ACE_static_cast (const void *, NULL),
+    ACE_ASSERT (ACE_OS::memchr (static_cast<const void *> (NULL),
                                 'a',
                                 0) == NULL);
     ACE_ASSERT (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != NULL);
@@ -743,8 +745,8 @@ string_convert_test (void)
   int result = 0;
   const char *test1_n = "abcdefg";
   const wchar_t *test1_w = ACE_TEXT_WIDE ("abcdefg");
-  const char *test2_n = "יטאשך";
-  const wchar_t *test2_w = ACE_TEXT_WIDE ("יטאשך");
+  const char *test2_n = "\xe9\xe8\xe0\xf9\xea";
+  const wchar_t *test2_w = ACE_TEXT_WIDE ("\xe9\xe8\xe0\xf9\xea");
   wchar_t str_w[10];
   char str_n[10];
   ACE_OS::strcpy (str_w, ACE_Ascii_To_Wide (test1_n).wchar_rep ());

@@ -116,12 +116,6 @@ private:
   TAO_Pluggable_Messaging *messaging_object_;
 };
 
-
-
-#if defined (__ACE_INLINE__)
-#include "SHMIOP_Transport.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #include /**/ "ace/post.h"

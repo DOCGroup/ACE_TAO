@@ -22,7 +22,9 @@ $client_wait_time         = 15;
 $client_args = "-ORBSvcConf $client_conf -w $client_wait_time -k file://$iorfile";
 
 # Set the SSL environment
-$ENV{'SSL_CERT_FILE'} = 'cacert.pem';
+# This doesn't work on Windows.  For some reason,
+# environment variables aren't propagated to child processes.
+#$ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 
 $SV = new PerlACE::Process ("server",
 			    "-o $iorfile " .

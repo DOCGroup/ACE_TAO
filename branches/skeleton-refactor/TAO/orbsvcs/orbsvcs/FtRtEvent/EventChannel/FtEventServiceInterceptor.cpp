@@ -1,9 +1,11 @@
 // $Id$
-
+#include "ace/OS_NS_string.h"
+#include "ace/SString.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
 #include "../Utils/Safe_InputCDR.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            FtEventServiceInterceptor,
@@ -57,7 +59,7 @@ CachedRequestTable::get_state(FtRtecEventChannelAdmin::CachedOptionResults& stat
     ++first)
   {
     TableImpl::ENTRY& entry = *first;
-    state[i].client_id = strdup(entry.ext_id_.c_str());
+    state[i].client_id = ACE_OS::strdup(entry.ext_id_.c_str());
     state[i].cached_result = entry.int_id_;
     ++i;
   }
@@ -84,8 +86,7 @@ retrieve_ft_request_context(
   ACE_CHECK;
 
   const char * buf =
-    ACE_reinterpret_cast (const char *,
-    service_context->context_data.get_buffer ());
+    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
 
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
@@ -95,7 +96,7 @@ retrieve_ft_request_context(
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
 
   if ((cdr >> ft_request_service_context) == 0)
@@ -122,8 +123,7 @@ get_transaction_depth_context(
   ACE_ENDTRY;
 
   const char * buf =
-    ACE_reinterpret_cast (const char *,
-    service_context->context_data.get_buffer ());
+    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
@@ -132,7 +132,7 @@ get_transaction_depth_context(
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FTRT::TransactionDepth result;
   if ((cdr >> result) == 0)
@@ -153,8 +153,7 @@ get_sequence_number_context(
   ACE_CHECK_RETURN(0);
 
   const char * buf =
-    ACE_reinterpret_cast (const char *,
-    service_context->context_data.get_buffer ());
+    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
@@ -163,7 +162,7 @@ get_sequence_number_context(
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if ((cdr >> result) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
@@ -222,8 +221,10 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 {
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  if (ACE_OS::strcmp(operation.in(), "push") == 0)
+  if (ACE_OS::strcmp(operation.in(), "push") == 0) {
+    TAO_FTRTEC::Log(3, "Received push command\n");
     return;
+  }
 
   ACE_TRY_EX(block1) {
     FT::FTRequestServiceContext ft_request_service_context;
@@ -306,7 +307,7 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
 
 void
 FtEventServiceInterceptor::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr 
+  PortableInterceptor::ServerRequestInfo_ptr
   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
@@ -333,7 +334,3 @@ FtEventServiceInterceptor::set_state(const FtRtecEventChannelAdmin::CachedOption
 {
   request_table_.set_state(state);
 }
-
-
-
-

@@ -72,6 +72,14 @@ module ABCModule
 typedef octet oa1[22];
 typedef octet oa2[22];
 
+// Test generation of Arg_Traits specialization for identical
+// arrays.
+interface array_args
+{
+  void all_arrays (in oa1 arg1,
+                   in oa2 arg2);
+};
+
 // This should generate unique _var and _forany types, but
 // also generate TAO_String_Manager as the element type for both.
 module string_array
@@ -79,5 +87,23 @@ module string_array
   typedef string ArrayOfString[15];
   typedef string MyString;
   typedef MyString ArrayOfMyString[15];
+};
+
+// Checks code generation for arrays and typedefs of arrays
+// when they are not declared globally or inside a module.
+interface testdata 
+{
+  typedef char Arraychar[2];
+  typedef Arraychar ArrayDeChar;
+
+  struct struct2 
+  {
+    Arraychar field_1;
+    ArrayDeChar field_2;
+  };
+
+  typedef sequence<Arraychar> ArraycharList;
+
+  typedef sequence<ArrayDeChar> ArrayDeCharList;
 };
 

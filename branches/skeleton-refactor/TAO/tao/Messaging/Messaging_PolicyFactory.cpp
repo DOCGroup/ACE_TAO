@@ -38,7 +38,7 @@ TAO_Messaging_PolicyFactory::create_policy (
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-  if (type == TAO_BUFFERING_CONSTRAINT_POLICY_TYPE)
+  if (type == TAO::BUFFERING_CONSTRAINT_POLICY_TYPE)
     return TAO_Buffering_Constraint_Policy::create (value
                                                     ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

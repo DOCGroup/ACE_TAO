@@ -30,10 +30,6 @@
 # include /**/ <semaphore.h>
 #endif /* !ACE_LACKS_SEMAPHORE_H */
 
-#if defined (VXWORKS)
-#  include /**/ <semLib.h>
-#endif /* VXWORKS */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

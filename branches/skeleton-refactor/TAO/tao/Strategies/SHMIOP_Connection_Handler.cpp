@@ -15,18 +15,14 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "SHMIOP_Endpoint.h"
 #include "tao/Resume_Handle.h"
-
-#if !defined (__ACE_INLINE__)
-# include "SHMIOP_Connection_Handler.inl"
-#endif /* ! __ACE_INLINE__ */
+#include "tao/Protocols_Hooks.h"
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/netinet/os_tcp.h"
 
 ACE_RCSID (Strategies,
-	   SHMIOP_Connection_Handler,
-	   "$Id$")
+           SHMIOP_Connection_Handler,
+           "$Id$")
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
@@ -42,8 +38,7 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager
 
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                              CORBA::Boolean flag,
-                                                              void *)
+                                                              CORBA::Boolean flag)
   : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
@@ -70,21 +65,60 @@ TAO_SHMIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_SHMIOP_Connection_Handler::open (void*)
 {
-  if (this->set_socket_option (this->peer (),
-                               this->orb_core ()->orb_params ()->sock_sndbuf_size (),
-                               this->orb_core ()->orb_params ()->sock_rcvbuf_size ())
-      == -1)
-    return -1;
-#if !defined (ACE_LACKS_TCP_NODELAY)
+  TAO_SHMIOP_Protocol_Properties protocol_properties;
 
-  int nodelay =
+  // Initialize values from ORB params.
+  protocol_properties.send_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
+  protocol_properties.recv_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+  protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
 
+  TAO_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_hooks ();
+
+  bool client =
+    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (client)
+        {
+          tph->client_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          tph->server_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  if (this->set_socket_option (this->peer (),
+                               protocol_properties.send_buffer_size_,
+                               protocol_properties.recv_buffer_size_) == -1)
+    return -1;
+
+#if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &nodelay,
-                                sizeof (int)) == -1)
+                                (void *) &protocol_properties.no_delay_,
+                                sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
+
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
@@ -97,14 +131,14 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   // completely connected.
   ACE_INET_Addr addr;
 
-  ACE_TCHAR client[MAXHOSTNAMELEN + 16];
+  ACE_TCHAR local_as_string[MAXHOSTNAMELEN + 16];
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
   // Verify that we can resolve the peer hostname.
-  else if (addr.addr_to_string (client, sizeof (client)) == -1)
+  else if (addr.addr_to_string (local_as_string, sizeof (local_as_string)) == -1)
     return -1;
 
   if (TAO_debug_level > 0)
@@ -112,7 +146,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SHMIOP connection from client")
                   ACE_TEXT ("<%s> on %d\n"),
-                  client, this->peer ().get_handle ()));
+                  local_as_string, this->peer ().get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1

@@ -23,6 +23,7 @@
 #include "be_interface_fwd.h"
 #include "be_component.h"
 #include "be_component_fwd.h"
+#include "be_home.h"
 #include "be_predefined_type.h"
 #include "be_sequence.h"
 #include "be_string.h"

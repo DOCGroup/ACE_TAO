@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Connection_Handler.h"
 #include "tao/IIOP_Connector.h"
 
 namespace TAO
@@ -92,11 +91,6 @@ namespace TAO
 
     /// The connector initiating connection requests for IIOP_SSL.
     BASE_CONNECTOR base_connector_;
-
-    /// State that will be passed to each SSLIOP connection handler upon
-    /// creation.
-    TAO::SSLIOP::Connection_Handler_State handler_state_;
-
   };
 
 } // End TAO namespace.

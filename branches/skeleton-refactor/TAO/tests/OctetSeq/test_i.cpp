@@ -27,8 +27,8 @@ Database_i::set (Test::Index i,
 
   returned_token = verification_token;
 
-  CORBA::ULong len = seq.length ();
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+  CORBA::ULong len = seq.length ();
   // CORBA::ULong max = seq.maximum ();
   ACE_Message_Block *mb = seq.mb ();
   if (mb == 0)
@@ -68,8 +68,7 @@ Database_i::get_crc (Test::Index i
   if (i >= this->max_range_)
     ACE_THROW_RETURN (Test::OutOfRange (0, this->max_range_), 0);
 
-  return ACE::crc32 (ACE_reinterpret_cast (const char*,
-                                           this->elements_[i].get_buffer ()),
+  return ACE::crc32 (this->elements_[i].get_buffer (),
                      this->elements_[i].length ());
 }
 

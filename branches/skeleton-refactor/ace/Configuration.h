@@ -31,10 +31,11 @@
 #define ACE_CONFIGURATION_H
 #include /**/ "ace/pre.h"
 
-#include "ace/SString.h"
+#include "ace/SStringfwd.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "ace/Malloc.h"
 #include "ace/Synch_Traits.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -521,7 +522,7 @@ public:
                          const ACE_TCHAR* name,
                          VALUETYPE& type);
 
-  /// Removes the the value <name> from <key>.  returns non zero on error
+  /// Removes the the value @a name from @a key.  returns non zero on error
   virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name);
 

@@ -2,6 +2,7 @@
 // $Id$
 
 project : taolib {
+  requires += dummy
   sharedname    = TAO_PSDL
   dynamicflags += TAO_PSDL_BUILD_DLL
   source_files {
@@ -33,6 +34,7 @@ project : taolib {
 }
 
 project(*Datastore) : taolib {
+  requires += dummy
   sharedname = TAO_PSDL_Datastore
   dynamicflags += TAO_PSDL_BUILD_DLL
   source_files {
@@ -44,6 +46,7 @@ project(*Datastore) : taolib {
 }
 
 project(*Parser) : taoexe {
+  requires += dummy
   after += PSDL
   libs  += TAO_PSDL
   install = .

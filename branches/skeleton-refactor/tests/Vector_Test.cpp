@@ -23,7 +23,7 @@ ACE_RCSID(tests, Vector_Test, "$Id$")
 #include "ace/Vector_T.h"
 
 typedef size_t DATA;
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
 // Borland C++ Builder 6 and earlier don't handle the second template
 // argument correctly. We have to pass it explicitly
 typedef ACE_Vector<DATA, ACE_VECTOR_DEFAULT_SIZE> VECTOR;

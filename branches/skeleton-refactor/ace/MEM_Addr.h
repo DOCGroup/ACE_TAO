@@ -41,11 +41,10 @@ public:
   /// Copy constructor.
   ACE_MEM_Addr (const ACE_MEM_Addr &);
 
-  /// Creates an <ACE_INET_Addr> from a <port_number> and the remote
-  /// <host_name>.
+  /// Creates an ACE_MEM_Addr from a @a port_number
   ACE_MEM_Addr (u_short port_number);
 
-  /// Creates an <ACE_INET_Addr> from a <port_name>.
+  /// Creates an ACE_MEM_Addr from a @a port_name.
   explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
 
   /// Default dtor.
@@ -53,24 +52,24 @@ public:
 
   // = Direct initialization methods.
 
-  /// default initialization routine.
+  /// Default initialization routine.
   int initialize_local (u_short port);
 
-  /// Check if <sap> designate an enpoint withing the same host.
+  /// Check if @a sap designate an enpoint withing the same host.
   int same_host (const ACE_INET_Addr& sap);
 
   // These methods are useful after the object has been constructed.
 
   /**
-   * Initializes an <ACE_INET_Addr> from a <port_number> and the
-   * remote <host_name>.  If <encode> is enabled then <port_number> is
-   * converted into network byte order, otherwise it is assumed to be
-   * in network byte order already and are passed straight through.
+   * Initializes an ACE_MEM_Addr from a @a port_number.  If @a encode
+   * is enabled then @a port_number is converted into network byte order,
+   * otherwise it is assumed to be in network byte order already and
+   * are passed straight through.
    */
   int set (u_short port_number,
            int encode = 1);
 
-  /// Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
+  /// Uses <getservbyname> to initialize an ACE_MEM_Addr from a
   /// <port_name>, the remote <host_name>, and the <protocol>.
   int set (const ACE_TCHAR port_name[]);
 
@@ -80,13 +79,13 @@ public:
   /// Set a pointer to the address.
   virtual void set_addr (void *, int len);
 
-  /// Transform the external <ACE_INET_Addr> address into string
+  /// Transform the external ACE_MEM_Addr address into string
   /// format.
   virtual int addr_to_string (ACE_TCHAR buffer[],
                               size_t size,
                               int ipaddr_format = 1) const;
 
-  /// Initializes the external <ACE_INET_Addr> from the <address>.
+  /// Initializes the external ACE_MEM_Addr from the @a address.
   virtual int string_to_addr (const ACE_TCHAR address[]);
 
   /// Sets the port number.

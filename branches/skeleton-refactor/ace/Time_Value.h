@@ -21,16 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 # if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
 #   include "ace/os_include/sys/os_time.h"
-#   if defined (__Lynx__)
-#     include /**/ <st.h>
-#     include /**/ <sem.h>
-#   endif /* __Lynx__ */
-#   if defined (VXWORKS)
-#     include /**/ <sys/times.h>
-#   endif /* VXWORKS */
 # endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
 
 // HP-UX 10.20 doesn't define timespec_t - it defined struct timespec.
@@ -334,9 +326,6 @@ private:
   /// Store the values as a timeval.
   timeval tv_;
 };
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 /**
  * @class ACE_Countdown_Time
@@ -380,7 +369,14 @@ private:
 
   /// Keeps track of whether we've already been stopped.
   int stopped_;
+
+  // Prevent copying
+  ACE_Countdown_Time (const ACE_Countdown_Time &);
+  ACE_Countdown_Time &operator= (const ACE_Countdown_Time &);
 };
+#if defined (ACE_WIN32) && defined (_WIN32_WCE)
+}
+#endif
 
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"

@@ -18,10 +18,10 @@ ACE_RCSID (Sched_Conf,
 const char* service_name = "ScheduleService";
 
 const char* format_string = " {%-12s, %d, %d, %d, %d, %8d, "
-  " ACE_static_cast (RtecScheduler::Criticality_t, %d), "
-  " ACE_static_cast (RtecScheduler::Importance_t, %d), "
+  " static_cast<RtecScheduler::Criticality_t> (%d), "
+  " static_cast<RtecScheduler::Importance_t> (%d), "
   " %d, %d, %3d, %d, %d, "
-  "ACE_static_cast (RtecScheduler::Info_Type_t, %d)}\n";
+  "static_cast<RtecScheduler::Info_Type_t> (%d)}\n";
 
 int
 parse_args (int argc, char *argv [])
@@ -393,15 +393,15 @@ main (int argc, char *argv[])
           // initialize the RT_Info
           ACE_Scheduler_Factory::server ()->
             set (config_infos[i].handle,
-                 ACE_static_cast (RtecScheduler::Criticality_t, config_infos[i].criticality),
+                 static_cast<RtecScheduler::Criticality_t> (config_infos[i].criticality),
                  config_infos[i].worst_case_execution_time,
                  config_infos[i].typical_execution_time,
                  config_infos[i].cached_execution_time,
                  config_infos[i].period,
-                 ACE_static_cast (RtecScheduler::Importance_t, config_infos[i].importance),
+                 static_cast<RtecScheduler::Importance_t> (config_infos[i].importance),
                  config_infos[i].quantum,
                  config_infos[i].threads,
-                 ACE_static_cast (RtecScheduler::Info_Type_t, config_infos[i].info_type)
+                 static_cast<RtecScheduler::Info_Type_t> (config_infos[i].info_type)
                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

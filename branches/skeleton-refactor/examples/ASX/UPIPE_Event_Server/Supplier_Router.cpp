@@ -58,10 +58,10 @@ int
 Supplier_Router::open (void *)
 {
   ACE_ASSERT (this->is_writer ());
-  char *argv[3];
+  ACE_TCHAR *argv[3];
 
-  argv[0] = (char *) this->name ();
-  argv[1] = (char *) options.supplier_file ();
+  argv[0] = (ACE_TCHAR *)this->name ();
+  argv[1] = (ACE_TCHAR *)options.supplier_file ();
   argv[2] = 0;
 
   if (this->init (1, &argv[1]) == -1)
@@ -107,19 +107,25 @@ Supplier_Router::put (ACE_Message_Block *mb, ACE_Time_Value *)
 // Return information about the Supplier_Router ACE_Module..
 
 int
-Supplier_Router::info (char **strp, size_t length) const
+Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
 {
-  char       buf[BUFSIZ];
+  ACE_TCHAR       buf[BUFSIZ];
   ACE_UPIPE_Addr  addr;
-  const char *mod_name = this->name ();
+  const ACE_TCHAR *mod_name = this->name ();
   ACE_UPIPE_Acceptor &sa = (ACE_UPIPE_Acceptor &) *this->acceptor_;
 
   if (sa.get_local_addr (addr) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%s\t %s/ %s",
-	     mod_name,  "upipe",
-	     "# supplier router\n");
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+# define FMTSTR ACE_TEXT ("%ls\t %ls/ %ls")
+#else
+# define FMTSTR ACE_TEXT ("%s\t %s/ %s")
+#endif
+
+  ACE_OS::sprintf (buf, FMTSTR,
+                   mod_name, ACE_TEXT ("upipe"),
+                   ACE_TEXT ("# supplier router\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
     return -1;

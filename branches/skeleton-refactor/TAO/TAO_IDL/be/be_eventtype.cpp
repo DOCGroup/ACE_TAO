@@ -123,7 +123,8 @@ be_eventtype::~be_eventtype (void)
 {
 }
 
-// Accept a visitor.
+// The differences between valuetype and eventtype are too small
+// to warrant a separate set of visitors.
 int
 be_eventtype::accept (be_visitor *visitor)
 {

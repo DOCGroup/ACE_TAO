@@ -46,7 +46,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
       if ( href_index > 0)
         {
           // Get back to buffer start location.
-          this->url_.stream ().seek (-1 * ACE_static_cast (off_t, len),
+          this->url_.stream ().seek (-1 * static_cast<off_t> (len),
                                      SEEK_CUR);
 
           int start_index = buffer.find ('\"',
@@ -92,7 +92,7 @@ HTTP_Header_Iterator::next (ACE_CString &line)
   else
     {
       for (char c;
-           (c = this->url_.stream ().get_char ()) != EOF;
+           (c = this->url_.stream ().get_char ()) != (char)EOF;
            )
         {
           // Check to see if we're at the end of the header line.

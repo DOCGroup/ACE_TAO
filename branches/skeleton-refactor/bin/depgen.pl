@@ -16,6 +16,7 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 use strict;
 use Cwd;
 use Config;
+use File::Spec;
 use File::Basename;
 
 if ( $^O eq 'VMS' ) {
@@ -178,7 +179,9 @@ sub setReplace {
   if (defined $name) {
     ## The key will be used in a regular expression.
     ## So, we need to escape some special characters.
+    $name = File::Spec->canonpath($name);
     $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
+
     $$replace{$name} = $value;
   }
 }
@@ -209,7 +212,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
     $macros{$1} = $3;
   }
   elsif ($arg =~ /^\-I(.*)/) {
-    push(@ipaths, $1);
+    push(@ipaths, File::Spec->canonpath($1));
   }
   elsif ($arg eq '-A') {
     setReplace(\%replace, $ENV{ACE_ROOT}, '$(ACE_ROOT)');

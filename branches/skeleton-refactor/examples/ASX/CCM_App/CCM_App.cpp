@@ -18,65 +18,65 @@ class ACE_Svc_Export Test_Task : public MT_Task
 public:
   virtual int open (void *);
   virtual int close (u_long);
-  virtual int init (int, char *[]);
+  virtual int init (int, ACE_TCHAR *[]);
   virtual int fini (void);
   virtual int suspend (void);
   virtual int resume (void);
 };
 
-int 
+int
 Test_Task::open (void *)
-{ 
+{
   ACE_DEBUG ((LM_DEBUG,
-              "opening %s\n",
-              this->name () ? this->name () : "task"));
+              ACE_TEXT ("opening %s\n"),
+              this->name () ? this->name () : ACE_TEXT ("task")));
   return 0;
 }
 
-int 
-Test_Task::close (u_long) 
+int
+Test_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "closing %s\n",
-              this->name () ? this->name () : "task"));
+              ACE_TEXT ("closing %s\n"),
+              this->name () ? this->name () : ACE_TEXT ("task")));
   return 0;
 }
 
-int 
-Test_Task::suspend (void) 
-{ 
-  ACE_DEBUG ((LM_DEBUG,
-              "suspending in %s\n",
-              this->name () ? this->name () : "task")); 
-  return 0; 
-}
-
-int 
-Test_Task::resume (void) 
+int
+Test_Task::suspend (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "resuming in %s\n",
-              this->name () ? this->name () : "task"));
+              ACE_TEXT ("suspending in %s\n"),
+              this->name () ? this->name () : ACE_TEXT ("task")));
   return 0;
 }
 
-int 
-Test_Task::init (int, char *[])
+int
+Test_Task::resume (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "initializing %s\n",
-              this->name () ? this->name () : "task"));
-
-  return 0; 
+              ACE_TEXT ("resuming in %s\n"),
+              this->name () ? this->name () : ACE_TEXT ("task")));
+  return 0;
 }
 
-int 
+int
+Test_Task::init (int, ACE_TCHAR *[])
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("initializing %s\n"),
+              this->name () ? this->name () : ACE_TEXT ("task")));
+
+  return 0;
+}
+
+int
 Test_Task::fini (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "finalizing %s\n",
-              this->name () ? this->name () : "task"));
-  return 0; 
+              ACE_TEXT ("finalizing %s\n"),
+              this->name () ? this->name () : ACE_TEXT ("task")));
+  return 0;
 }
 
 // Factories used to control configuration.
@@ -100,17 +100,20 @@ make_stream (void)
 MT_Module *
 make_da (void)
 {
-  return new MT_Module ("Device_Adapter", new Test_Task, new Test_Task);
+  return new MT_Module (ACE_TEXT ("Device_Adapter"),
+                        new Test_Task, new Test_Task);
 }
 
 MT_Module *
 make_ea (void)
 {
-  return new MT_Module ("Event_Analyzer", new Test_Task, new Test_Task);
+  return new MT_Module (ACE_TEXT ("Event_Analyzer"),
+                        new Test_Task, new Test_Task);
 }
 
 MT_Module *
 make_mr (void)
 {
-  return new MT_Module ("Multicast_Router", new Test_Task, new Test_Task);
+  return new MT_Module (ACE_TEXT ("Multicast_Router"),
+                        new Test_Task, new Test_Task);
 }

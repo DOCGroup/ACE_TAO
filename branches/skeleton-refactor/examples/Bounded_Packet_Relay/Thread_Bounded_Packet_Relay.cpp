@@ -66,7 +66,7 @@ Text_Input_Device_Wrapper::modify_device_settings (void *logging)
   packet_count_ = 0;
 
   if (logging)
-    logging_ = *ACE_static_cast (int *, logging);
+    logging_ = *static_cast<int *> (logging);
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Text_Input_Device_Wrapper::modify_device_settings: "
@@ -144,11 +144,10 @@ Text_Output_Device_Wrapper::write_output_message (void *message)
       if (logging_ & Text_Output_Device_Wrapper::PRINT_MSGS_RCVD)
         ACE_DEBUG ((LM_DEBUG, "output message %d:\n[%s]\n",
 		            packet_count_,
-                    ACE_static_cast (ACE_Message_Block *, message)->
+                    static_cast<ACE_Message_Block *> (message)->
                       rd_ptr ()));
 
-      delete ACE_static_cast (ACE_Message_Block *,
-                              message);
+      delete static_cast<ACE_Message_Block *> (message);
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -164,7 +163,7 @@ Text_Output_Device_Wrapper::modify_device_settings (void *logging)
   packet_count_ = 0;
 
   if (logging)
-    logging_ = *ACE_static_cast (int *, logging);
+    logging_ = *static_cast<int *> (logging);
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Text_Output_Device_Wrapper::modify_device_settings: "
@@ -220,7 +219,7 @@ User_Input_Task::set_packet_count (void *argument)
 {
   if (argument)
     {
-      driver_.packet_count (*ACE_static_cast (int *, argument));
+      driver_.packet_count (*static_cast<int *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -236,7 +235,7 @@ User_Input_Task::set_arrival_period (void *argument)
 {
   if (argument)
     {
-      driver_.arrival_period (*ACE_static_cast (int *, argument));
+      driver_.arrival_period (*static_cast<int *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -252,7 +251,7 @@ User_Input_Task::set_send_period (void *argument)
 {
   if (argument)
     {
-      driver_.send_period (*ACE_static_cast (int *, argument));
+      driver_.send_period (*static_cast<int *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -267,7 +266,7 @@ User_Input_Task::set_duration_limit (void *argument)
 {
   if (argument)
     {
-      driver_.duration_limit (*ACE_static_cast (int *, argument));
+      driver_.duration_limit (*static_cast<int *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -283,7 +282,7 @@ User_Input_Task::set_logging_level (void *argument)
 {
   if (argument)
     {
-      driver_.logging_level (*ACE_static_cast (int *, argument));
+      driver_.logging_level (*static_cast<int *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,

@@ -164,6 +164,9 @@
 					RelativePath=".\SemanticAction\EventType.hpp">
 				</File>
 				<File
+					RelativePath=".\SemanticAction\EventTypeFactory.hpp">
+				</File>
+				<File
 					RelativePath=".\SemanticAction\Factory.hpp">
 				</File>
 				<File
@@ -202,6 +205,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\EventType.cpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\EventTypeFactory.cpp">
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Factory.cpp">
@@ -245,6 +251,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\EventType.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\EventTypeFactory.hpp">
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Factory.hpp">

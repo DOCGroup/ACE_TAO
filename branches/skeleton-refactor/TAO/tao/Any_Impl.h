@@ -77,7 +77,6 @@ namespace TAO
     CORBA::TypeCode_ptr _tao_get_typecode (void) const;
     void type (CORBA::TypeCode_ptr);
 
-    virtual ACE_Message_Block *_tao_get_cdr (void) const;
     virtual int _tao_byte_order (void) const;
 
     virtual void _add_ref (void);
@@ -90,21 +89,21 @@ namespace TAO
     virtual void _tao_decode (TAO_InputCDR &
                               ACE_ENV_ARG_DECL);
 
-    virtual void assign_translator (CORBA::TypeCode_ptr,
-                                    TAO_InputCDR *
-                                    ACE_ENV_ARG_DECL);
-
     virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
     virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
     virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
+    
+    bool encoded (void) const;
 
   protected:
     Any_Impl (_tao_destructor,
-              CORBA::TypeCode_ptr);
+              CORBA::TypeCode_ptr,
+              bool encoded = false);
     virtual ~Any_Impl (void);
 
     TAO::Any_Impl::_tao_destructor value_destructor_;
     CORBA::TypeCode_ptr type_;
+    bool encoded_;
 
   private:
     /// Lock for the refcount

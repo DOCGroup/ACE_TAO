@@ -99,7 +99,7 @@ LF_ThreadPool::svc (void)
     {
       become_leader ();  // Block until this thread is the leader.
 
-      ACE_Message_Block *mb = NULL;
+      ACE_Message_Block *mb = 0;
       ACE_Time_Value tv (LONG_TIME);
       tv += ACE_OS::gettimeofday ();
 

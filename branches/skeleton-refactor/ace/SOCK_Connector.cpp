@@ -81,8 +81,7 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
 
   if (local_sap != ACE_Addr::sap_any)
     {
-      sockaddr *laddr = ACE_reinterpret_cast (sockaddr *,
-                                              local_sap.get_addr ());
+      sockaddr *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       int size = local_sap.get_size ();
 
       if (ACE_OS::bind (new_stream.get_handle (),
@@ -168,8 +167,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
     return -1;
 
   int result = ACE_OS::connect (new_stream.get_handle (),
-                                ACE_reinterpret_cast (sockaddr *,
-                                                      remote_sap.get_addr ()),
+                                reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
   return this->shared_connect_finish (new_stream,
@@ -206,8 +204,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
     return -1;
 
   int result = ACE_OS::connect (new_stream.get_handle (),
-                                ACE_reinterpret_cast (sockaddr *,
-                                                      remote_sap.get_addr ()),
+                                reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size (),
                                 qos_params);
 
@@ -254,8 +251,7 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
   if (remote_sap != 0)
     {
       int len = remote_sap->get_size ();
-      sockaddr *addr = ACE_reinterpret_cast (sockaddr *,
-                                             remote_sap->get_addr ());
+      sockaddr *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
       if (ACE_OS::getpeername (h,
                                addr,
                                &len) == -1)

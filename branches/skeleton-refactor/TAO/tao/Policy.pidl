@@ -37,9 +37,6 @@
  *   for i in Policy{S,S_T}.{h,i,cpp}; do
  *     diff -wBbu orig/$i PortableServer/$i;
  *   done >> diffs/Policy.diff
- *
- * Move the typecodes for exceptions in PolicyA.cpp to
- * PolicyC.cpp.
  */
 
 #ifndef TAO_CORBA_POLICY_PIDL

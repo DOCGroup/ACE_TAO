@@ -606,13 +606,13 @@ ACE_Process_Manager::terminate (pid_t pid)
 
   // Check for duplicates and bail out if they're already
   // registered...
-  ssize_t i = this->find_proc (pid);
+  ssize_t const i = this->find_proc (pid);
 
   if (i == -1)
     // set "no such process" error
     return -1;
 
-  int result = ACE::terminate_process (pid);
+  int const result = ACE::terminate_process (pid);
 
   if (result != -1)
     {
@@ -621,8 +621,8 @@ ACE_Process_Manager::terminate (pid_t pid)
       this->remove_proc (i);
       return 0;
     }
-  else
-    return -1;
+
+  return -1;
 }
 
 int

@@ -1,23 +1,5 @@
 // -*- C++ -*-
 // $Id$
-ACE_INLINE TAO_EndpointSet &
-TAO_ORB_Parameters::endpoints (void)
-{
-  return this->endpoints_list_;
-}
-
-ACE_INLINE int
-TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
-{
-  return this->parse_endpoints (endpoints, this->endpoints ());
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::add_endpoint (ACE_CString &endpoint)
-{
-  this->endpoints ().enqueue_tail (endpoint);
-}
-
 ACE_INLINE int
 TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 {

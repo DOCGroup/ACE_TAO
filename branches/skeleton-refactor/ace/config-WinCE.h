@@ -31,6 +31,7 @@
 # define ACE_LACKS_ASSERT_H
 # define ACE_LACKS_SEARCH_H
 # define ACE_LACKS_WCHAR_H
+# define ACE_LACKS_WCTYPE_H
 #endif /* UNDER_CE < 400 */
 
 #if !defined (ACE_HAS_WINCE)
@@ -72,6 +73,7 @@
 #define ACE_LACKS_ACE_TOKEN
 #define ACE_LACKS_ACE_OTHER
 #define ACE_LACKS_MSG_WFMO
+#define ACE_LACKS_UMASK
 
 #define ACE_HAS_WCHAR
 
@@ -194,7 +196,9 @@
 #define ACE_LACKS_ENV
 #define ACE_LACKS_HOSTNAME
 #define ACE_LACKS_REALPATH
+#define ACE_LACKS_READLINK
 #define ACE_LACKS_SWAB
+#define ACE_LACKS_TEMPNAM
 
 #if defined (_WIN32_WCE_EMULATION)
 // @@ For some reason, qsort isn't defined correctly (_stdcall vs _cdecl)

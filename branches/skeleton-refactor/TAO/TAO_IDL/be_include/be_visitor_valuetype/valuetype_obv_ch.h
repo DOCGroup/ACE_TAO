@@ -45,6 +45,7 @@ public:
   // destructor
 
   virtual int visit_valuetype (be_valuetype *node);
+  virtual int visit_eventtype (be_eventtype *node);
 
   virtual int visit_field (be_field *node);
 

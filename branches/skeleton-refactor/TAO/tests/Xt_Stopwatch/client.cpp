@@ -5,17 +5,6 @@
 
 ACE_RCSID(Xt_Stopwatch, client, "$Id$")
 
-#if !defined (ACE_HAS_XT)
-
-int
-main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "Xt not supported on this platform\n"));
-  return 0;
-}
-
-#else
 #include "Control.h"
 #include "Client.h"
 
@@ -34,7 +23,7 @@ main (int argc, char *argv[])
                                      NULL,
                                      0);
 
-  TAO_XT_Resource_Factory::set_context (app);
+  TAO::XtResource_Loader xt_loader (app);
 
   Control control (toplevel);
 
@@ -119,7 +108,7 @@ Client::parse_args (int argc,
 void
 Client::add_callback (Control &ctrl)
 {
-  XtPointer client_data = ACE_static_cast (XtPointer, this);
+  XtPointer client_data = static_cast<XtPointer> (this);
 
   // Register callbacks, specifying the object's instance pointer as
   // client data.
@@ -139,8 +128,7 @@ Client::start_callback (Widget /*widget*/,
                         XtPointer client_data,
                         XtPointer)
 {
-  Client *self = ACE_static_cast (Client *,
-                                  client_data);
+  Client *self = static_cast<Client *> (client_data);
   self->start_hook ();
 }
 
@@ -149,8 +137,7 @@ Client::stop_callback (Widget /*widget*/,
                        XtPointer client_data,
                        XtPointer )
 {
-  Client *self = ACE_static_cast (Client *,
-                                  client_data);
+  Client *self = static_cast<Client *> (client_data);
   self->stop_hook ();
 }
 
@@ -191,4 +178,3 @@ Client::stop_hook (void)
   ACE_CHECK;
 }
 
-#endif /* ACE_HAS_FL */
