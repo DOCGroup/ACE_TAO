@@ -5,6 +5,9 @@
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
+#include "tao/CDR.h"
+#include "tao/Object_KeyC.h"
+#include "ace/ACE.h"
 
 TAO_IOP_Version::~TAO_IOP_Version (void)
 {
@@ -49,6 +52,12 @@ TAO_IOP_Version::operator= (const TAO_IOP_Version &src)
   return *this;
 }
 
+// ****************************************************************
+
+TAO_Profile::~TAO_Profile (void)
+{
+}
+
 // Generic Profile
 CORBA::ULong
 TAO_Profile::tag (void) const
@@ -56,9 +65,127 @@ TAO_Profile::tag (void) const
   return this->tag_;
 }
 
-TAO_Profile::~TAO_Profile (void)
+CORBA::ULong
+TAO_Profile::_incr_refcnt (void)
+{
+  // OK, think I got it.  When this object is created (guard) the
+  // lock is automatically acquired (refcount_lock_).  Then when
+  // we leave this method the destructir for guard is called which
+  // releases the lock!
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+
+  return this->refcount_++;
+}
+
+CORBA::ULong
+TAO_Profile::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  // refcount is 0, so delete us!
+  // delete will call our ~ destructor which in turn deletes stuff.
+  delete this;
+  return 0;
+}
+
+// ****************************************************************
+
+TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag)
+  : TAO_Profile (tag)
 {
 }
+
+int
+TAO_Unknown_Profile::parse_string (const char *,
+                                   CORBA::Environment &)
+{
+  // @@ THROW something????
+  return -1;
+}
+
+CORBA::String
+TAO_Unknown_Profile::to_string (CORBA::Environment &)
+{
+  // @@ THROW something?
+  return 0;
+}
+
+const TAO_opaque&
+TAO_Unknown_Profile::body (void) const
+{
+  return this->body_;
+}
+
+int
+TAO_Unknown_Profile::decode (TAO_InputCDR& cdr)
+{
+  if ((cdr >> this->body_) == 0)
+    return -1;
+  return 0;
+}
+
+int
+TAO_Unknown_Profile::encode (TAO_OutputCDR &stream) const
+{
+  stream.write_ulong (this->tag ());
+  return (stream << this->body_);
+}
+
+const TAO_ObjectKey &
+TAO_Unknown_Profile::object_key (void) const
+{
+  // @@ TODO this is wrong, but the function is deprecated anyway....
+  static TAO_ObjectKey empty_key;
+  return empty_key;
+}
+
+TAO_ObjectKey *
+TAO_Unknown_Profile::_key (CORBA::Environment &) const
+{
+  // @@ THROW something???
+  return 0;
+}
+
+CORBA::Boolean
+TAO_Unknown_Profile::is_equivalent (TAO_Profile* other_profile,
+                                    CORBA::Environment &)
+{
+  if (other_profile->tag () != this->tag ())
+    return 0;
+
+  TAO_Unknown_Profile *op =
+    ACE_dynamic_cast (TAO_Unknown_Profile*, other_profile);
+
+  return (this->body_ == op->body_);
+}
+
+CORBA::ULong
+TAO_Unknown_Profile::hash (CORBA::ULong max,
+                           CORBA::Environment &)
+{
+  return (ACE::hash_pjw (ACE_reinterpret_cast (const char*,
+                                               this->body_.get_buffer ()),
+                         this->body_.length ()) % max);
+}
+
+ASYS_TCHAR *
+TAO_Unknown_Profile::addr_to_string(void)
+{
+  return 0;
+}
+
+void
+TAO_Unknown_Profile::reset_hint (void)
+{
+  // do nothing
+}
+
+// ****************************************************************
 
 // Transport ...
 TAO_Transport::TAO_Transport (CORBA::ULong tag)

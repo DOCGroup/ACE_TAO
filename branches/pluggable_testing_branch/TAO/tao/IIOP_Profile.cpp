@@ -27,9 +27,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -50,9 +48,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -68,9 +64,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     version_ (version),
     object_key_ (),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -92,9 +86,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -110,9 +102,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (port, host),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 
   if (host)
@@ -136,9 +126,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 
   if (host)
@@ -162,9 +150,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (port, host),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   ACE_UNUSED_ARG (version);
 
@@ -183,9 +169,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
     version_(pfile->version_),
     object_key_(pfile->object_key_),
     object_addr_(pfile->object_addr_),
-    hint_(0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_(0)
 {
 
   ACE_NEW (this->host_,
@@ -203,9 +187,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
     version_(pfile.version_),
     object_key_(pfile.object_key_),
     object_addr_(pfile.object_addr_),
-    hint_(0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_(0)
 {
 
   ACE_NEW (this->host_,
@@ -223,9 +205,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IOP_Version &version)
     version_ (version),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 }
 
@@ -238,9 +218,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
   parse_string (string, env);
 }
@@ -253,9 +231,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (void)
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    // what about refcount_lock_ (),
-    refcount_ (1)
+    hint_ (0)
 {
 }
 
@@ -293,8 +269,6 @@ TAO_IIOP_Profile::set (const ACE_INET_Addr& addr)
 
 TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 {
-  assert (this->refcount_ == 0);
-
   delete [] this->host_;
   this->host_ = 0;
 }
@@ -304,9 +278,7 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 //  0 -> can't understand this version
 //  1 -> success.
 int
-TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
-                         CORBA::Boolean &continue_decoding,
-                         CORBA::Environment &env)
+TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
 {
   CORBA::ULong encap_len = cdr.length ();
 
@@ -323,11 +295,13 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
         && cdr.read_octet (this->version_.minor)
         && this->version_.minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
   {
-    ACE_DEBUG ((LM_DEBUG,
-                "detected new v%d.%d IIOP profile",
-                this->version_.major,
-                this->version_.minor));
-    return 0;
+    if (TAO_debug_level > 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n",
+                    this->version_.major,
+                    this->version_.minor));
+      }
   }
 
   if (this->host_)
@@ -340,7 +314,12 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
   if (cdr.read_string (this->host_) == 0
       || cdr.read_ushort (this->port_) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "error decoding IIOP host/port"));
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) IIOP_Profile::decode - "
+                      "error while decoding host/port"));
+        }
       return -1;
     }
 
@@ -605,36 +584,6 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
     }
 
   return *this;
-}
-
-// Memory managment
-
-CORBA::ULong
-TAO_IIOP_Profile::_incr_refcnt (void)
-{
-  // OK, think I got it.  When this object is created (guard) the
-  // lock is automatically acquired (refcount_lock_).  Then when
-  // we leave this method the destructir for guard is called which
-  // releases the lock!
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
-
-  return this->refcount_++;
-}
-
-CORBA::ULong
-TAO_IIOP_Profile::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  // refcount is 0, so delete us!
-  // delete will call our ~ destructor which in turn deletes stuff.
-  delete this;
-  return 0;
 }
 
 CORBA::String

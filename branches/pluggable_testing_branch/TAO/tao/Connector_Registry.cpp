@@ -154,6 +154,61 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
   //           URL style IOR into an MProfile.
 }
 
+TAO_Profile*
+TAO_Connector_Registry::create_profile (TAO_InputCDR& cdr)
+{
+  CORBA::ULong tag;
+
+  // If there is an error we abort
+  if ((cdr >> tag) == 0)
+    return 0;
+
+  TAO_Connector *connector =
+    this->get_connector (tag);
+
+  if (connector == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          // @@ TODO create a generic profile in this case...
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) unknown profile tag %d\n",
+                      tag));
+        }
+
+      TAO_Profile* pfile;
+      ACE_NEW_RETURN (pfile, TAO_Unknown_Profile (tag), 0);
+
+      if (pfile->decode (cdr) == -1)
+        {
+          pfile->_decr_refcnt ();
+          pfile = 0;
+        }
+      return pfile;
+    }
+
+  // OK, we've got known profile.
+  // It's going to be encapsulated ProfileData.
+  // Create a new decoding stream and context for it, and skip the
+  // data in the parent stream
+
+  // ProfileData is encoded as a sequence of octet. So first get
+  // the length of the sequence.
+  CORBA::ULong encap_len;
+  if ((cdr >> encap_len) == 0)
+    return 0;
+
+  // Create the decoding stream from the encapsulation in the
+  // buffer, and skip the encapsulation.
+  TAO_InputCDR str (cdr, encap_len);
+
+  if (str.good_bit () == 0
+      || cdr.skip_bytes (encap_len) == 0)
+    return 0;
+
+  return connector->create_profile (str);
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<TAO_Connector*>;

@@ -27,6 +27,23 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (void)
 }
 
 int
+TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
+                          ACE_Reactor *reactor)
+{
+  return this->base_connector_.open (reactor,
+                                     trf->get_null_creation_strategy (),
+                                     trf->get_cached_connect_strategy (),
+                                     trf->get_null_activation_strategy ());
+}
+
+int
+TAO_IIOP_Connector::close (void)
+{
+  this->base_connector_.close ();
+  return 0;
+}
+
+int
 TAO_IIOP_Connector::connect (TAO_Profile *profile,
                              TAO_Transport *& transport)
 {
@@ -68,27 +85,11 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 }
 
 int
-TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
-                          ACE_Reactor *reactor)
-{
-  return this->base_connector_.open (reactor,
-                                     trf->get_null_creation_strategy (),
-                                     trf->get_cached_connect_strategy (),
-                                     trf->get_null_activation_strategy ());
-}
-
-int
-TAO_IIOP_Connector::close (void)
-{
-  this->base_connector_.close ();
-  return 0;
-}
-
-int
 TAO_IIOP_Connector::preconnect (const char *preconnects)
 {
   char *preconnections = ACE_OS::strdup (preconnects);
 
+  // @@ Fred&Ossama: cleanup this code before the merge!
 #if 0
   if (preconnections)
     {
@@ -215,6 +216,22 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
   ACE_OS::free (preconnections);
 
   return successes;
+}
+
+TAO_Profile*
+TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
+{
+  TAO_Profile* pfile;
+  ACE_NEW_RETURN (pfile, TAO_IIOP_Profile, 0);
+  
+  int r = pfile->decode (cdr);
+  if (r == -1)
+    {
+      pfile->_decr_refcnt ();
+      pfile = 0;
+    }
+
+  return pfile;
 }
 
 int
