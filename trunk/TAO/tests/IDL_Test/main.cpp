@@ -18,10 +18,13 @@
 //
 // ============================================================================
 
-#include "ace/Log_Msg.h"
 #include "pragmaS.h"
 #include "unionC.h"
 #include "repo_id_modC.h"
+
+#include "nested_scopeS.h"
+
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
 class hello_i : public virtual POA_hello
@@ -73,6 +76,10 @@ class schlemazel_i : public virtual gleep::floop::verklempt::schlemazel
 };
 
 class schmegegging_i : public virtual gleep::schmegegging
+{
+};
+
+struct something_handler : POA_bug_1985_c::d::AMI_somethingHandler
 {
 };
 
@@ -246,6 +253,55 @@ main (int argc , char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "pragma prefix error in object 'schmegegging'\n"));
         }
+
+      {
+        something_handler x;
+        char const * base[] =
+        {
+          "IDL:bug_1985_c/d/AMI_somethingHandler:1.0",
+          "IDL:bug_1985_a/b/AMI_somethingHandler:1.0",
+          "IDL:omg.org/Messaging/ReplyHandler:1.0",
+          "IDL:omg.org/CORBA/Object:1.0"
+        };
+        
+        for (int i = 0; i != sizeof (base)/sizeof (base[0]); ++i)
+          {
+            if (!x._is_a (base[i]))
+              {
+                ++error_count;
+                ACE_DEBUG ((LM_DEBUG,
+                           "something_handler::_is_a should return true for %s\n",
+                           base[i]));                               
+              }
+          }
+
+        if (x._downcast (base[0])
+            != static_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
+          {
+            ++error_count;
+            ACE_DEBUG( (LM_DEBUG,
+                       "mismatch in downcast for %s\n", 
+                        base[0]));
+          }
+          
+        if (x._downcast (base[1])
+            != static_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (&x))
+          {
+            ++error_count;
+            ACE_DEBUG ((LM_DEBUG,
+                       "mismatch in downcast for %s\n", 
+                       base[0]));
+          }
+          
+        if (x._downcast (base[2])
+            != static_cast<POA_Messaging::ReplyHandler*> (&x))
+          {
+            ++error_count;
+            ACE_DEBUG ((LM_DEBUG,
+                       "mismatch in downcast for %s\n", 
+                       base[2]));
+          }
+      }
 
       // Testing (de)marshaling of IDL union values 
       // under duplicate and default case labels.

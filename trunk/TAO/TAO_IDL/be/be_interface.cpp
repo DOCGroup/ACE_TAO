@@ -2420,8 +2420,11 @@ be_interface::copy_ctor_helper (be_interface *derived,
     }
 
   *os << "," << be_idt_nl;
+  
+  idl_bool is_rh_base =
+    (ACE_OS::strcmp (base->flat_name (), "Messaging_ReplyHandler") == 0);
 
-  if (base->is_nested ())
+  if (base->is_nested () && !is_rh_base)
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
