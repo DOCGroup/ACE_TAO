@@ -1,3 +1,22 @@
+Sat Mar 25 17:52:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/LoadBalancer/LoadBalancer.h:
+	* orbsvcs/LoadBalancer/LoadBalancer.cpp:
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	* orbsvcs/tests/LoadBalancing/Hash_Replica.idl:
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
+	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+	* orbsvcs/tests/LoadBalancing/Makefile:
+	* orbsvcs/tests/LoadBalancing/client.cpp:
+	* orbsvcs/tests/LoadBalancing/server.cpp:
+	  Now it compiles and links under Linux.
+
 Sat Mar 25 16:31:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/LoadBalancer/Makefile:

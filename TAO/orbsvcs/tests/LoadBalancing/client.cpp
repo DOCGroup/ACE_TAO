@@ -4,6 +4,11 @@
 
 // TAO Load Balancer test client
 
+#include "Hash_ReplicaC.h"
+#include "ace/Get_Opt.h"
+#include "ace/Stats.h"
+#include "ace/High_Res_Timer.h"
+
 int
 main (int argc, char *argv[])
 {
@@ -24,7 +29,7 @@ main (int argc, char *argv[])
       ACE_Get_Opt options (argc, argv, "k:t:");
       int c = 0;
 
-      while ((c = get_opts ()) != -1)
+      while ((c = options ()) != -1)
         switch (c)
           {
           case 'k':
@@ -50,8 +55,8 @@ main (int argc, char *argv[])
         orb->string_to_object (ior);
 
       Hash_Replica_var hasher =
-        Has_Replica::_unchecked_narrow (obj.in (),
-                                        ACE_TRY_ENV);
+        Hash_Replica::_unchecked_narrow (obj.in (),
+                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_Throughput_Stats stats;
@@ -59,11 +64,8 @@ main (int argc, char *argv[])
 
       for (long i = 0; i != iterations; ++i)
         {
-          CORBA::String_var hash_result;
-
           ACE_UINT64 call_start = ACE_OS::gethrtime ();
-          hasher->do_hash (argv[0], hash_result.out (),
-                           ACE_TRY_ENV);
+          hasher->do_hash (argv[0], ACE_TRY_ENV);
           ACE_TRY_CHECK;
           ACE_UINT64 end = ACE_OS::gethrtime ();
 

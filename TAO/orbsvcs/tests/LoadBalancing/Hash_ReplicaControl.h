@@ -2,10 +2,11 @@
 
 // $Id$
 
-#include "orbsvcs/LoadBalancingS.h"
-
 #ifndef TAO_HASH_REPLICACONTROL_H
 #define TAO_HASH_REPLICACONTROL_H
+
+#include "Hash_Replica_i.h"
+#include "orbsvcs/LoadBalancingS.h"
 
 class Hash_ReplicaControl : public virtual POA_LoadBalancing::ReplicaControl
 {
@@ -28,8 +29,6 @@ private:
 
   Hash_Replica_Impl replica_;
   // Replica being load balanced.
-
-  
 };
 
 #endif  /* TAO_HASH_REPLICACONTROL_H */

@@ -10,3 +10,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(orbsvcs, LoadBalancing_Strategy, "$Id$")
+
+Load_Balancing_Strategy::~Load_Balancing_Strategy (void)
+{
+}

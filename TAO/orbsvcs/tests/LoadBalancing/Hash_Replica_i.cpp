@@ -15,8 +15,9 @@ Hash_Replica_Impl::Hash_Replica_Impl (CORBA::Object_ptr load_balanced_group)
   // Nothing else
 }
 
-CORBA::ULong Replica_Impl::do_hash (const char *str,
-                                    CORBA::Environment &ACE_TRY_ENV)
+CORBA::ULong
+Hash_Replica_Impl::do_hash (const char *str,
+                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -28,7 +29,7 @@ CORBA::ULong Replica_Impl::do_hash (const char *str,
 
   // Update the load (requests per second)
 
-  if (this->start_ == 0)
+  if (this->requests_ == 0)
     this->start_ = ACE_OS::gettimeofday ();
 
   ACE_Time_Value elapsed_time =
@@ -53,7 +54,7 @@ CORBA::ULong Replica_Impl::do_hash (const char *str,
 }
 
 void
-Hash_Replica_Impl::balancer_proxy (LoadBalancing::ReplicaProxy_ptr proxy)
+Hash_Replica_Impl::set_proxy (LoadBalancing::ReplicaProxy_ptr proxy)
 {
   this->balancer_proxy_ = proxy;
 }

@@ -2,7 +2,6 @@
 
 // $Id$
 
-
 #include "Hash_ReplicaControl.h"
 
 Hash_ReplicaControl::Hash_ReplicaControl (
@@ -20,17 +19,20 @@ Hash_ReplicaControl::Hash_ReplicaControl (
       CORBA::Object_var replica = this->replica_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->replica.balancer_proxy (
-                      this->balancer_->connect (control,
-                                                replica,
-                                                ACE_TRY_ENV));
+      LoadBalancing::ReplicaProxy_var proxy =
+        this->balancer_->connect (control.in (),
+                                  replica.in (),
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->replica_.set_proxy (proxy._retn ());
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "LoadBalancer::connect");
     }
-  ACE_END_TRY;
+  ACE_ENDTRY;
 }
 
 void

@@ -2,6 +2,8 @@
 
 // $Id$
 
+#include "orbsvcs/orbsvcs/LoadBalancingC.h"
+#include "Hash_ReplicaControl.h"
 #include "ace/Get_Opt.h"
 
 int
@@ -16,17 +18,22 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       const char *balancer_ior = "file://test.ior";
+      const char *ior_output = "server.ior";
 
       // Parse the application options after the ORB has been
       // initialized.
       ACE_Get_Opt options (argc, argv, "k:");
       int c = 0;
 
-      while ((c = get_opts ()) != -1)
+      while ((c = options ()) != -1)
         switch (c)
           {
           case 'k':
             balancer_ior = options.optarg;
+            break;
+
+          case 'o':
+            ior_output = options.optarg;
             break;
           default:
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,10 +70,22 @@ main (int argc, char *argv[])
 
       Hash_ReplicaControl control (load_balancer);
 
+      CORBA::Object_var group =
+        load_balancer->group_identity (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::String_var str =
+        orb->object_to_string (group.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      FILE *lb_ior = ACE_OS::fopen (ior_output, "w");
+      ACE_OS::fprintf (lb_ior, "%s", str.in ());
+      ACE_OS::fclose (lb_ior);
+
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);

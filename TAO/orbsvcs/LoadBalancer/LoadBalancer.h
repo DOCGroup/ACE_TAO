@@ -40,7 +40,7 @@ public:
              CORBA::Environment &ACE_TRY_ENV);
   // Initialize the service
 
-  int run (CORBA_Environment &ACE_TRY_ENV);
+  void run (CORBA_Environment &ACE_TRY_ENV);
   // Run the TAO_Loadbalancer.
 
 protected:
