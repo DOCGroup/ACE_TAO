@@ -108,7 +108,7 @@ private:
   // <TimeService Clerk> object. The same instance is used by the
   // Clerk to periodically iterate through the Server Naming Context
   // and get IORs of the available servers.
-
+  
   TAO_Time_Service_Clerk *time_service_clerk_impl_;
   // Implementation of the <TimeService> Clerk object.
 
@@ -118,6 +118,9 @@ private:
   CosNaming::NamingContext_var time_service_clerk_context_;
   // Naming context for the Naming Service.
 
+  CORBA::ORB_var orb_;
+  // My orb.
+  
   int timer_value_ ;
   // Clerk seeks time periodically after this interval from the
   // servers in the network.
@@ -130,9 +133,6 @@ private:
 
   int ior_fp_;
   // Read IORs from a file.
-
-  CORBA::ORB_var orb_;
-  // My orb.
 
   int argc_;
   // Number of command line arguments.
