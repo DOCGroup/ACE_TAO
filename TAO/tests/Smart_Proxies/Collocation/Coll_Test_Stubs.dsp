@@ -17,13 +17,12 @@ CFG=Coll_Test_Stubs - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Coll_Test_Stubs - Win32 Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "Coll_Test_Stubs - Win32 Debug" (based on\
- "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "Coll_Test_Stubs - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "Coll_Test_Stubs - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -44,7 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLL_TEST_STUBS_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLL_TEST_STUBS_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLL_TEST_STUBS_EXPORTS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -70,7 +70,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLL_TEST_STUBS_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D MY_Stub_HAS_DLL=1 /D "MY_Stub_BUILD_DLL" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D MY_Stub_HAS_DLL=1 /D "MY_Stub_BUILD_DLL" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -136,10 +137,7 @@ InputPath=.\Diamond.idl
 InputName=Diamond
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl.exe -Ge 1 -Gd\
- -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export\
- -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h\
- $(InputName).idl
+	..\..\..\bin\release\tao_idl.exe -Ge 1 -Gd  -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export  -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h  $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -178,9 +176,7 @@ InputPath=.\Diamond.idl
 InputName=Diamond
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl.exe -Ge 1 -Gd -Wb,skel_export_macro=Diamond_Export\
- -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h\
- -Wb,stub_export_include=stub_export.h $(InputName).idl
+	..\..\..\..\bin\tao_idl.exe -Ge 1 -Gd -Wb,skel_export_macro=Diamond_Export  -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h  -Wb,stub_export_include=stub_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -22,6 +22,7 @@ CFG=server - Win32 Debug
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -41,7 +42,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /O2 /I "..\..\.." /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /O2 /I "..\..\.." /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -112,12 +114,12 @@ SOURCE=.\testS.h
 # Begin Source File
 
 SOURCE=.\test.idl
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 
 !IF  "$(CFG)" == "server - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "server - Win32 Debug"
 
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test

@@ -1,3 +1,154 @@
+Sat Apr 29 19:20:16 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Buffered_Oneways/client.dsp:
+        * examples/Buffered_Oneways/server.dsp:
+        * examples/Callback_Quoter/Consumer.dsp:
+        * examples/Callback_Quoter/Notifier.dsp:
+        * examples/Callback_Quoter/Supplier.dsp:
+        * examples/OBV/Typed_Events/client.dsp:
+        * examples/OBV/Typed_Events/server.dsp:
+        * examples/POA/Explicit_Activation/Alt_Resources/Alt_Resource_Factory.dsp:
+        * examples/POA/Generic_Servant/client.dsp:
+        * examples/POA/Generic_Servant/server.dsp:
+        * examples/POA/Loader/server.dsp:
+        * examples/POA/On_Demand_Loading/server.dsp:
+        * examples/Simple/bank/client.dsp:
+        * examples/Simple/bank/server.dsp:
+        * examples/Simple/chat/client.dsp:
+        * examples/Simple/chat/server.dsp:
+        * examples/Simple/echo/client.dsp:
+        * examples/Simple/echo/server.dsp:
+        * examples/Simple/time-date/Time_Date.dsp:
+        * examples/Simple/time-date/client.dsp:
+        * examples/Simple/time-date/server.dsp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp:
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/Time_Service/Time_Service_Server.dsp:
+        * orbsvcs/Trading_Service/Trading_Service.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+        * orbsvcs/orbsvcs/CosEvent_Static.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/CosProperty_Static.dsp:
+        * orbsvcs/orbsvcs/CosTime_Static.dsp:
+        * orbsvcs/orbsvcs/CosTrading_Static.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.dsp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/BCast.dsp:
+        * orbsvcs/tests/Event/Basic/Bitmask.dsp:
+        * orbsvcs/tests/Event/Basic/Complex.dsp:
+        * orbsvcs/tests/Event/Basic/Control.dsp:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Gateway.dsp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Negation.dsp:
+        * orbsvcs/tests/Event/Basic/Observer.dsp:
+        * orbsvcs/tests/Event/Basic/Random.dsp:
+        * orbsvcs/tests/Event/Basic/Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Schedule.dsp:
+        * orbsvcs/tests/Event/Basic/Shutdown.dsp:
+        * orbsvcs/tests/Event/Basic/Timeout.dsp:
+        * orbsvcs/tests/Event/Basic/Wildcard.dsp:
+        * orbsvcs/tests/Event/Performance/Connect.dsp:
+        * orbsvcs/tests/Event/Performance/Inversion.dsp:
+        * orbsvcs/tests/Event/Performance/Throughput.dsp:
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * orbsvcs/tests/Property/server.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * orbsvcs/tests/Trading/Colocated_Test.dsp:
+        * orbsvcs/tests/Trading/Export_Test.dsp:
+        * orbsvcs/tests/Trading/Import_Test.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+        * performance-tests/Latency/client.dsp:
+        * performance-tests/Latency/deferred_synch_client.dsp:
+        * performance-tests/Latency/server.dsp:
+        * performance-tests/Latency/st_client.dsp:
+        * performance-tests/Latency/st_server.dsp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.dsp:
+        * performance-tests/Pluggable/client.dsp:
+        * performance-tests/Pluggable/server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+        * tao/TAO_Static.dsp:
+        * tests/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Collocation/Diamond.dsp:
+        * tests/Connection_Purging/Connection_Purging.dsp:
+        * tests/DynAny_Test/basic_test.dsp:
+        * tests/Explicit_Event_Loop/client.dsp:
+        * tests/Explicit_Event_Loop/server.dsp:
+        * tests/Faults/client.dsp:
+        * tests/Faults/ping.dsp:
+        * tests/Faults/pong.dsp:
+        * tests/Faults/server.dsp:
+        * tests/IDL_Test/idl_test.dsp:
+        * tests/IORManipulation/IORTest.dsp:
+        * tests/InterOp-Naming/client.dsp:
+        * tests/InterOp-Naming/server.dsp:
+        * tests/Interceptors/client.dsp:
+        * tests/Interceptors/server.dsp:
+        * tests/MProfile/client.dsp:
+        * tests/MProfile/server.dsp:
+        * tests/MT_Client/client.dsp:
+        * tests/MT_Client/orb_creation.dsp:
+        * tests/MT_Client/server.dsp:
+        * tests/MT_Client/simple_client.dsp:
+        * tests/MT_Server/client.dsp:
+        * tests/MT_Server/server.dsp:
+        * tests/Native_Exceptions/client.dsp:
+        * tests/Native_Exceptions/server.dsp:
+        * tests/NestedUpcall/Simple/client.dsp:
+        * tests/NestedUpcall/Simple/server.dsp:
+        * tests/ORB_init/ORB_init.dsp:
+        * tests/OctetSeq/client.dsp:
+        * tests/OctetSeq/server.dsp:
+        * tests/POA/Deactivation/Deactivation.dsp:
+        * tests/POA/Destruction/Destruction.dsp:
+        * tests/POA/Identity/Identity.dsp:
+        * tests/Param_Test/client.dsp:
+        * tests/Smart_Proxies/client.dsp:
+        * tests/Smart_Proxies/server.dsp:
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Smart_Proxies/Collocation/Diamond.dsp:
+        * tests/Timed_Buffered_Oneways/client.dsp:
+        * tests/Timed_Buffered_Oneways/server.dsp:
+        * tests/Timeout/client.dsp:
+        * tests/Timeout/server.dsp:
+        * utils/nslist/nslist.dsp:
+
+          I started to test out my msvc_auto_compile.pl script and after
+          testing it for the whole thing, found out that I soon ran out
+          of disk space.  By the time I ran out of space, the PCH files
+          made up 3 GB of disk.  So I removed them from these projects.
+
+          Note that I did leave them in the projects that use MFC, since
+          they do use them in a more beneficial way.
+
+        * tests/MProfile/MProfile.dsw: (added)
+
+          Add a workspace in this directory since there didn't seem to be
+          one already.
+
 Sat Apr 29 19:26:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
