@@ -1,3 +1,10 @@
+Mon Aug 17 17:16:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL: Renamed README to README.sun and INSTALL to INSTALL.sun
+ 	  to reflect the fact that these documents are now very much out
+ 	  of date.  Thanks to Marherita Vittone <vittone@fndaub.fnal.gov>
+ 	  for reporting this.
+
 Mon Aug 17 15:10:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_context.h: 
