@@ -1,0 +1,19 @@
+project(Structured Supplier): notifytest {
+  exename = Structured_Supplier
+
+  Source_Files {
+    Notify_Push_Supplier.cpp
+    Structured_Supplier.cpp
+  }
+}
+
+project(Structured Consumer): notifytest {
+  exename = Structured_Consumer
+
+  Source_Files {
+    controlC.cpp
+    Notify_Push_Consumer.cpp
+    Structured_Consumer.cpp
+  }
+}
+
