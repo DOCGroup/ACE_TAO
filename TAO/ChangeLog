@@ -34,6 +34,33 @@ Wed Aug 21 16:55:39 2002  Ossama Othman  <ossama@uci.edu>
 	  Statically linked binaries require the PortableGroup library to
 	  be linked in.
 
+Wed Aug 21 12:41:51 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.h:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.h:
+
+          Fixed CORBA::Enviroment usage.
+
+        * TAO/orbsvcs/IFR_Service/IFR_Service.mpc:
+        * TAO/orbsvcs/LoadBalancer/LoadBalancer.mpc:
+        * TAO/orbsvcs/orbsvcs/RTSched.mpc:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/AVStreams_Simple_Two_Stage_With_QoS.mpc:
+        * TAO/orbsvcs/tests/CosEvent/Basic/CosEvent_Basic.mpc:
+        * TAO/orbsvcs/tests/Event/Basic/Event_Basic.mpc:
+        * TAO/orbsvcs/tests/Event/Performance/Event_Performance.mpc:
+        * TAO/orbsvcs/tests/Trading/Trading.mpc:
+        * TAO/performance-tests/Callback/Callback.mpc:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+        * TAO/performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+        * TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
+        * TAO/performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+        * TAO/tests/Collocation/Collocation.mpc:
+        * TAO/tests/IORManipulation/IORManipulation.mpc:
+        * TAO/tests/MProfile/MProfile.mpc:
+        * TAO/tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+
+          Fixed a few problems with some of the mpc files.
+
 Wed Aug 21 12:05:35 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/LocalObject.h:
