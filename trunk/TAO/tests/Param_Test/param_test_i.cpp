@@ -325,7 +325,7 @@ Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
     *out = new Param_Test::PathSpec;
 
 
-  PathSpec_var rPathSpec = new Param_Test::PathSpec;
+  Param_Test::PathSpec_var rPathSpec = new Param_Test::PathSpec;
   rPathSpec->length(2);
   
   rPathSpec[(unsigned long)0].name.id = CORBA::string_dup("staff");
