@@ -8,7 +8,7 @@ Fri Sep 17 16:51:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Changed TAO_IOR_LookupTable pointer member to non-pointer
 	  member. The add_to_ior_table() method was also moved to the
-	  TAO_ORB_Params class since it made more send to put it there.
+	  TAO_ORB_Params class since it made more sendr to put it there.
 	  These changes fix memory leaks that occurred when
 	  TAO_ORB_Core::init() returned with an error or when an exception
 	  was thrown.
