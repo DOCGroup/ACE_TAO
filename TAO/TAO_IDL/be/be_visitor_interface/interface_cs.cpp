@@ -105,7 +105,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << " (int collocated)" << be_nl
           << "{" << be_idt_nl
-          << "this->_tao_setup_collocation (collocated);" << be_uidt_nl;
+          << "this->" << node->flat_name () 
+          << "_setup_collocation (collocated);" << be_uidt_nl;
     }
   else
     {
@@ -124,22 +125,22 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       // Collocation setup method.
       *os << "void" << be_nl
-          << node->name () << "::_tao_setup_collocation (int collocated)" << be_nl
-          << "{"
-          << be_idt_nl // idt = 1
-          << "if (collocated)" << be_idt_nl //idt = 2
+          << node->name () << "::" << node->flat_name () 
+          << "_setup_collocation (int collocated)" << be_nl
+          << "{" << be_idt_nl
+          << "if (collocated)" << be_idt_nl
           << "this->the" << node->base_proxy_broker_name ()
-          << "_ =" << be_idt_nl // idt = 3
+          << "_ =" << be_idt_nl
           << "::" << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_function_pointer (this);"
-          << be_uidt << be_uidt_nl // idt = 1
-          << "else" << be_idt_nl // idt = 2
+          << be_uidt << be_uidt_nl
+          << "else" << be_idt_nl
           << "this->the" << node->base_proxy_broker_name ()
-          << "_ =" << be_idt_nl  // idt = 3
+          << "_ =" << be_idt_nl
           << "::" << node->full_remote_proxy_broker_name () << "::"
           << "the" << node->remote_proxy_broker_name ()
-          << " ();" << be_uidt << be_uidt << be_nl << be_nl; // idt = 1
+          << " ();" << be_uidt << be_uidt << be_nl << be_nl;
 
       // Now we setup the immediate parents.
       int n_parents = node->n_inherits ();
@@ -151,33 +152,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
 
-              if (inherited->is_nested ())
-                {
-                  if (!ACE_OS::strcmp (inherited->local_name (), 
-                                       node->local_name ()))
-                    {
-                      *os << "this->" << node->flat_name ()
-                          << "_base_class_name";
-                    }
-                  else
-                    {
-                      be_scope *scope = 
-                        be_scope::narrow_from_scope (inherited->defined_in ());
-
-                      be_decl* scope_decl = scope->decl ();
-
-                      *os << "ACE_NESTED_CLASS ("
-                          << scope_decl->name () << ", "
-                          << inherited->local_name ()
-                          << ")";
-                    }
-                }
-              else
-                {
-                  *os << inherited->name ();
-                }
-
-              *os << "::_tao_setup_collocation" << " (collocated);";
+              *os << "this->" << inherited->flat_name () 
+                  << "_setup_collocation" << " (collocated);";
 
               if (i == n_parents - 1)
                 {
