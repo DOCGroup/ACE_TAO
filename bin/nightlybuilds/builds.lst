@@ -4,7 +4,7 @@
 # This is a listing of the web directories and the builds contained in
 # them.
 #
-# Each entry starts with the name in brackets such as [build_name].  
+# Each entry starts with the name in brackets such as [build_name].
 # The name cannot contain spaces.
 #
 # Then several properties that can be used:
@@ -12,7 +12,7 @@
 # LIST   = URL for the directory of build logs (required)
 # WEB    = Link to a build specific page for the builds
 # STATUS = URL to a page that contains build status info
-# GROUP  = Name of the group that the build belongs in 
+# GROUP  = Name of the group that the build belongs in
 # MANUAL = URL to someplace that can start the build
 # ORANGE = Number of hours until timestamp turns orange (default: 24)
 # RED    = Number of hours until timestamp turns red (default: 48)
@@ -83,11 +83,6 @@ LIST   = http://ringil.ece.uci.edu/bugzilla/wince/
 WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?wince
 STATUS = http://ringil.ece.uci.edu/bugzilla/wince/status.txt
 
-[Debian_KCC]
-LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/doc_KCC/
-WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?doc_KCC
-STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/doc_KCC/status.txt
-
 [Debian_Minimum]
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Minimum
@@ -134,8 +129,8 @@ WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?amrod_ImplicitTemplates
 STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/amrod_ImplicitTemplates/status.txt
 
 [RedHat_GCC_3.1]
-LIST   = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/ 
-WEB    = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/ 
+LIST   = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/
+WEB    = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/
 STATUS = http://www.dist-systems.bbn.com/projects/AIRES/UAV/scoreboard/linux/status.txt
 
 [SunOS_FORTE_UP_1]
@@ -147,11 +142,6 @@ STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_FORTE_UPD
 LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC51/
 WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC51
 STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC51/status.txt
-
-[SunOS_KCC]
-LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC4.0/
-WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC4.0
-STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC4.0/status.txt
 
 [SunOS_GCC_2_95]
 LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_EGCS/
