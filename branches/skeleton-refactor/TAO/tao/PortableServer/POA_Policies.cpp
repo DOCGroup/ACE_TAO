@@ -4,7 +4,10 @@
 
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID(PortableServer, POA_Policies, "$Id$")
+
+ACE_RCSID (PortableServer,
+           POA_Policies,
+           "$Id$")
 
 
 #if (TAO_HAS_MINIMUM_POA == 0)

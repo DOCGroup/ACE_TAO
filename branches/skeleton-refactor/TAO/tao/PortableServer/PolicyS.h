@@ -26,13 +26,14 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:391
+// be\be_codegen.cpp:390
 
 #ifndef _TAO_IDL_ORIG_POLICYS_H_
 #define _TAO_IDL_ORIG_POLICYS_H_
 
 #include /**/ "ace/pre.h"
 
+#include "tao/UShortSeqS.h"
 #include "tao/PolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -44,9 +45,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -55,130 +54,130 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_sh.cpp:49
+// be\be_visitor_module/module_sh.cpp:49
 
 namespace POA_CORBA
 {
-  
-  
+
+
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:87
-  
+  // be\be_visitor_interface/interface_sh.cpp:87
+
   class Policy;
   typedef Policy *Policy_ptr;
-  
+
   class _TAO_Policy_ThruPOA_Proxy_Impl;
   class _TAO_Policy_Direct_Proxy_Impl;
   class _TAO_Policy_Strategized_Proxy_Broker;
-  
+
   class TAO_PortableServer_Export Policy
     : public virtual PortableServer::ServantBase
   {
   protected:
     Policy (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::CORBA::Policy _stub_type;
     typedef ::CORBA::Policy_ptr _stub_ptr_type;
     typedef ::CORBA::Policy_var _stub_var_type;
-    
+
     Policy (const Policy& rhs);
     virtual ~Policy (void);
-    
+
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual void* _downcast (
         const char* logical_type_id
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::CORBA::Policy *_this (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
-    
+    // be\be_visitor_operation/operation_sh.cpp:45
+
     virtual CORBA::PolicyType policy_type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void _get_policy_type_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
-    
+    // be\be_visitor_operation/operation_sh.cpp:45
+
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void copy_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
-    
+    // be\be_visitor_operation/operation_sh.cpp:45
+
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void destroy_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
@@ -186,14 +185,14 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       );
   };
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-  
+  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+
   class TAO_PortableServer_Export _TAO_Policy_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
@@ -236,7 +235,7 @@ namespace POA_CORBA
   //
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
   class TAO_PortableServer_Export _TAO_Policy_ThruPOA_Proxy_Impl
   {
@@ -246,7 +245,7 @@ namespace POA_CORBA
     virtual ~_TAO_Policy_ThruPOA_Proxy_Impl (void) {}
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     _get_policy_type (
@@ -260,7 +259,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     copy (
@@ -274,7 +273,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     destroy (
@@ -293,13 +292,13 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from 
-  // be/be_visitor_interface/direct_proxy_impl_sh.cpp:31
+  // be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
   
   ///////////////////////////////////////////////////////////////////////
   //                    Direct  Impl. Declaration
   //
   
-  class TAO_PortableServer_Export _TAO_Policy_Direct_Proxy_Impl
+class TAO_PortableServer_Export _TAO_Policy_Direct_Proxy_Impl
   {
   public:
     _TAO_Policy_Direct_Proxy_Impl (void);
@@ -307,7 +306,7 @@ namespace POA_CORBA
     virtual ~_TAO_Policy_Direct_Proxy_Impl (void) {}
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     _get_policy_type (
@@ -321,7 +320,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     copy (
@@ -335,7 +334,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     destroy (
@@ -356,19 +355,20 @@ namespace POA_CORBA
   
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_sh.cpp:80
+// be\be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1000
+// be\be_codegen.cpp:997
 
+#include "PolicyS_T.h"
 
 #if defined (__ACE_INLINE__)
 #include "PolicyS.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
