@@ -1,8 +1,15 @@
+Thu Sep 23 11:18:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Fixed the custom build setting in
+	  release configuration for RtecEventChannelAdmin.idl.  Thanks to
+	  Alok Gupta <alokg@ssind.stpn.soft.net> and Chien Yueh
+	  <cyueh@viasoft.com> for reporting this.
+
 Thu Sep 23 08:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_interface_strategy.h,
 	  TAO_IDL/be/be_interface_strategy.cpp:
-	  Introduced these files, holding now the 
+	  Introduced these files, holding now the
 	  strategies, which were formerly in the be_interface.{h,cpp}
 	  files.
 
@@ -21,7 +28,7 @@ Thu Sep 23 08:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/ast/ast_module.cpp
 	  TAO_IDL/include/ast_module.h:
-	  Added a method to add interfaces in the 
+	  Added a method to add interfaces in the
 	  back-end.
 
 	* TAO_IDL/be/be_interface.cpp,
@@ -47,7 +54,7 @@ Thu Sep 23 08:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  Did a big refactoring by commenting out all origninal
 	  AMI code generation and activating the new AMI
 	  implied IDL preprocessor.
-	  Still, AMI code does not compile yet, we need to 
+	  Still, AMI code does not compile yet, we need to
 	  implement some of the visitors.
 
 Thu Sep 23 02:02:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
