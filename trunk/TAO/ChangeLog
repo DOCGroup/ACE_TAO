@@ -1,3 +1,9 @@
+Fri Nov 28 17:21:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp:
+
+	  Cosmetic fix.
+
 Fri Nov 28 16:43:12 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsp: 

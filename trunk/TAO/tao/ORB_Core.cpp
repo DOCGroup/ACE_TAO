@@ -165,6 +165,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
                         // mean that the ORB can be reinitialized.  It
                         // can only be initialized once.
     thread_per_connection_use_timeout_ (1),
+    open_lock_ (),
     endpoint_selector_factory_ (0),
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
@@ -1525,60 +1526,55 @@ CORBA::Object_ptr
 TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
 {
   // DCL ..
-  if (!CORBA::is_nil (this->root_poa_.in ()))
-    return CORBA::Object::_duplicate (this->root_poa_.in ());
-
-  TAO_ORB_Core_Static_Resources* static_resources =
-    TAO_ORB_Core_Static_Resources::instance ();
-
-  TAO_Adapter_Factory *factory =
-    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
-              static_resources->poa_factory_name_.c_str());
-
-  if (factory == 0)
+  if (CORBA::is_nil (this->root_poa_.in ()))
     {
-      ACE_Service_Config::process_directive (
-           ACE_TEXT_CHAR_TO_TCHAR (
-             static_resources->poa_factory_directive_.c_str()));
-      factory =
+      TAO_ORB_Core_Static_Resources* static_resources =
+        TAO_ORB_Core_Static_Resources::instance ();
+
+      TAO_Adapter_Factory *factory =
         ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
           static_resources->poa_factory_name_.c_str());
+
+      if (factory == 0)
+        {
+          ACE_Service_Config::process_directive (
+           ACE_TEXT_CHAR_TO_TCHAR (
+             static_resources->poa_factory_directive_.c_str()));
+          factory =
+            ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
+              static_resources->poa_factory_name_.c_str());
+        }
+
+      if (factory == 0)
+        {
+          // It really failed, raise an exception!
+          ACE_THROW_RETURN (CORBA::ORB::InvalidName (),
+                            CORBA::Object::_nil ());
+        }
+
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        monitor,
+                        this->open_lock_,
+                        0);
+
+      if (CORBA::is_nil (this->root_poa_.in ()))
+        {
+          // @@ Not exception safe
+          TAO_Adapter *poa_adapter =
+            factory->create (this);
+
+          poa_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+          // @@ Not exception safe
+          this->root_poa_ =
+            poa_adapter->root ();
+
+          this->adapter_registry_.insert (poa_adapter
+                                          ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+        }
     }
-
-  if (factory == 0)
-    {
-      // It really failed, raise an exception!
-      ACE_THROW_RETURN (CORBA::ORB::InvalidName (),
-                        CORBA::Object::_nil ());
-    }
-
-  // @@ Not exception safe
-  TAO_Adapter *poa_adapter = factory->create (this);
-  poa_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      monitor,
-                      this->lock_,
-                      0);
-
-    if (CORBA::is_nil (this->root_poa_.in ()))
-      {
-        // @@ Not exception safe
-        this->root_poa_ =
-          poa_adapter->root ();
-
-        this->adapter_registry_.insert (poa_adapter
-                                        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (CORBA::Object::_nil ());
-      }
-    else
-      {
-        // We created an unncessary one. So delete it.
-        delete poa_adapter;
-      }
-  }
 
   return CORBA::Object::_duplicate (this->root_poa_.in ());
 }
