@@ -1,38 +1,43 @@
+Wed Jul 28 12:31:41 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/POA.i (establish_servant_lock,teardown_servant_lock):
+          with TAO_HAS_MINIMUM_CORBA only, added ACE_UNUSED_ARG (servant).
+
 Wed Jul 28 12:00:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.cpp:
 
-	  Changed initial timeprobe enumeration value.  The previous was
-	  already in use by another set of timeprobes in a different file.
+          Changed initial timeprobe enumeration value.  The previous was
+          already in use by another set of timeprobes in a different file.
 
 Wed Jul 28 11:51:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/README:
+        * performance-tests/Cubit/TAO/IDL_Cubit/README:
 
-	  Added documentation for the newly added -b client option.
+          Added documentation for the newly added -b client option.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
 
-	  Added zero-copy optimization for octet sequence test.  Thanks to 
-	  Carlos for adding this optimization.
+          Added zero-copy optimization for octet sequence test.  Thanks to
+          Carlos for adding this optimization.
 
-	  Added ability to specify a different octet sequence length when
-	  running the small_octet_seq test by using the newly added '-b'
-	  option.
+          Added ability to specify a different octet sequence length when
+          running the small_octet_seq test by using the newly added '-b'
+          option.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/benchmark.sh:
-	* performance-tests/Cubit/TAO/IDL_Cubit/benchmark_sequence.sh:
+        * performance-tests/Cubit/TAO/IDL_Cubit/benchmark.sh:
+        * performance-tests/Cubit/TAO/IDL_Cubit/benchmark_sequence.sh:
 
-	  Scripts useful for running IDL_Cubit benchmarks.
-	
+          Scripts useful for running IDL_Cubit benchmarks.
+
 Wed Jul 28 10:46:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	  Fixed compilation problems on AIX over PPC, thanks to Steve
-	  Huston for reporting the problem and helping us track it
-	  down. Note: this was another ugly macro in a system header file
-	  (s_type) it is now documented in the ACE-guidelines.html file,
-	  thanks to David for that.
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+          Fixed compilation problems on AIX over PPC, thanks to Steve
+          Huston for reporting the problem and helping us track it
+          down. Note: this was another ugly macro in a system header file
+          (s_type) it is now documented in the ACE-guidelines.html file,
+          thanks to David for that.
 
 Wed Jul 28 00:06:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
