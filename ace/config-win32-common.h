@@ -581,7 +581,7 @@ typedef unsigned long long ACE_UINT64;
 // check for ACE_HAS_WINCE.
 # if !defined (ACE_HAS_WINCE)
 # include <nb30.h>
-#  if !defined (__MINGW32__)
+#  if defined (_MSC_VER)
 #   pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
 #  endif
 # endif /* !ACE_HAS_WINCE */
