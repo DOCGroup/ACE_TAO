@@ -203,9 +203,6 @@ class TAO_EC_Copy_On_Read : public TAO_EC_Proxy_Collection<PROXY>
   //   mechanism used.
   //
   // = TODO
-  //   Ensure that the collection and lock types can be
-  //   ACE_Lock_Adapter and ACE_Proxy_Set so they can be dynamically
-  //   modified.
   //
 public:
   TAO_EC_Copy_On_Read (void);

@@ -38,8 +38,8 @@ public:
 
   TAO_EC_List_Based_Proxy_Set (void);
 
-  Iterator begin (void);
-  Iterator end (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> begin (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> end (void);
   size_t size (void) const;
   void connected (PROXY *,
                 CORBA::Environment &);
@@ -50,7 +50,7 @@ public:
   void shutdown (CORBA::Environment &);
 
 private:
-  Implementation impl_;
+  ACE_Unbounded_Set<PROXY*> impl_;
 };
 
 // ****************************************************************
@@ -59,8 +59,7 @@ template<class PROXY>
 class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator
 {
 public:
-  typedef ACE_RB_Tree<PROXY*,int,ACE_Less_Than<PROXY*>,ACE_Null_Mutex> Collection;
-  typedef ACE_TYPENAME Collection::ITERATOR Implementation;
+  typedef ACE_RB_Tree_Iterator<PROXY*,int,ACE_Less_Than<PROXY*>,ACE_Null_Mutex> Implementation;
 
   TAO_EC_RB_Tree_Based_Proxy_Set_Iterator (const Implementation &i);
 
@@ -85,8 +84,8 @@ public:
 
   TAO_EC_RB_Tree_Based_Proxy_Set (void);
 
-  Iterator begin (void);
-  Iterator end (void);
+  TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<PROXY> begin (void);
+  TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<PROXY> end (void);
   size_t size (void) const;
   void connected (PROXY *,
                 CORBA::Environment &);
