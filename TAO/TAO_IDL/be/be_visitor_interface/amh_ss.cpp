@@ -15,6 +15,7 @@
 #include        "be.h"
 
 #include "be_visitor_interface.h"
+#include "be_visitor_operation.h"
 
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
@@ -23,6 +24,22 @@ be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (be_visitor_context *ct
 
 be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss (void)
 {
+}
+
+int
+be_visitor_amh_interface_ss::visit_operation (be_operation *node)
+{
+  be_visitor_amh_operation_ss visitor (this->ctx_);
+  return visitor.visit_operation (node);
+}
+
+int
+be_visitor_amh_interface_ss::visit_attribute (be_attribute *)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "be_visitor_amh_interface_ss::visit_attribute - "
+              "ignoring attribute, must generate code later\n"));
+  return 0;
 }
 
 int
@@ -90,13 +107,20 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 
   *os << "// TAO_IDL - Generated from "
       << __FILE__ << ":" << __LINE__ << be_nl;
-  *os << "void " << full_skel_name <<
-    "::_dispatch (TAO_ServerRequest &req, " <<
-    "void *context TAO_ENV_ARG_DECL)" << be_nl;
-  *os << "{" << be_idt_nl;
-  *os << "this->asynchronous_upcall_dispatch" << be_idt_nl
-      << " (req, context, this TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
-  *os << be_uidt_nl << "}" << be_nl;
+  *os << "void" << be_nl
+      << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "void *context" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "this->asynchronous_upcall_dispatch (" << be_idt << be_idt_nl
+      << "req," << be_nl
+      << "context," << be_nl
+      << "this" << be_nl
+      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_nl;
 }
 
 int

@@ -179,6 +179,46 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
   return 0;
 }
 
+int
+be_visitor_operation::gen_environment_decl (int argument_emitted,
+                                            be_operation *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (be_global->exception_support ())
+    return 0;
+
+  // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
+  // whether the operation node has parameters.
+  const char *env_decl = "TAO_ENV_SINGLE_ARG_DECL";
+  if (argument_emitted || node->argument_count () > 0)
+    env_decl = "TAO_ENV_ARG_DECL";
+
+  *os << be_nl;
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+      // last argument - is always CORBA::Environment
+      *os << env_decl << "_WITH_DEFAULTS";
+      break;
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
+      // last argument - is always TAO_ENV_ARG_DECL
+      *os << env_decl;
+      break;
+    default:
+      *os << env_decl;
+      break;
+    }
+
+  return 0;
+}
+
 //Method that returns the appropriate CORBA::Environment variable
 const char *
 be_visitor_operation::gen_environment_var ()

@@ -77,34 +77,15 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // generate the CORBA::Environment parameter for the alternative mapping
-  if (!be_global->exception_support ())
+  if (this->gen_environment_decl (arg_emitted, node) == -1)
     {
-      // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
-      // whether the operation node has parameters.
-      const char *env_decl = (arg_emitted || node->argument_count () > 0 ?
-                              " TAO_ENV_ARG_DECL" : "TAO_ENV_SINGLE_ARG_DECL");
-
-      switch (this->ctx_->state ())
-        {
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-          // last argument - is always CORBA::Environment
-          *os << env_decl << "_WITH_DEFAULTS";
-          break;
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
-          // last argument - is always TAO_ENV_ARG_DECL
-          *os << env_decl;
-          break;
-        default:
-          *os << env_decl;
-          break;
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_arglist::"
+                         "visit_operation - "
+                         "gen_environment_decl failed\n"),
+                        -1);
     }
+
   *os << be_uidt_nl // idt = 1
       << ")" << be_uidt; // idt = 0
 

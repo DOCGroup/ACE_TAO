@@ -203,7 +203,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
    // Generate the destructor and default constructor.
   *os << be_nl;
-  *os << "// default constructor" << be_nl;
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl;
   *os << node->name () << "::" << node->local_name ();
   if (!node->is_local ())
     {
@@ -216,10 +217,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   else
     {
       *os << " (void)" << be_nl
-          << "{}" << be_idt_nl;
+          << "{}" << be_nl << be_nl;
     }
 
-  *os << "// destructor" << be_nl;
   *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
@@ -328,8 +328,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // The _unchecked_narrow method
 
-  *os << node->full_name () << "_ptr " << node->full_name ()
-      << "::_unchecked_narrow (" << be_idt << be_idt_nl
+  *os << node->full_name () << "_ptr "  << be_nl
+      << node->full_name () << "::_unchecked_narrow ("
+      << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_nl
       << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -426,7 +427,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "::_tao_class_id" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl
-      << ");\n" << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt;
+      << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
 
   *os << "}\n" << be_nl;
 
