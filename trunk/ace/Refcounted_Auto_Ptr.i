@@ -3,7 +3,7 @@
 
 // Refcounted_Auto_Ptr.i
 
-#include "Synch_T.h"
+#include "ace/Synch_T.h"
 #include "ace/Log_Msg.h"
 
 template <class X, class ACE_LOCK> inline int
@@ -102,12 +102,12 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::assign (ACE_Refcounted_Auto_Ptr_Rep<X,
     ACE_GUARD (ACE_LOCK, guard, rep->lock_);
     old = rep;
     rep = new_rep;
- 
+
     if (old->ref_count_-- > 0)
       return;
- 
+
   } // The lock is released before deleting old rep object below.
- 
+
   delete old;
 }
 
