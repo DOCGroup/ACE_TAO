@@ -1,6 +1,6 @@
 Fri Apr 30 16:29:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * TAO_IDL/be_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
         
           Changed the setting of the internal IDL compler flag for
           encountering an abstract interface to happen not only
@@ -12,14 +12,16 @@ Fri Apr 30 16:29:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           in which case the inclusion will have to be repeated in the
           stub source file generated from the main IDL file.
           
-        * TAO_IDL/be_visitor_interface/direct_proxy_impl_sh.cpp:
-        * TAO_IDL/be_visitor_interface/direct_proxy_impl_ss.cpp:
-        * TAO_IDL/be_visitor_interface/interceptors_ss.cpp:
-        * TAO_IDL/be_visitor_interface/interface_sh.cpp:
-        * TAO_IDL/be_visitor_interface/interface_ss.cpp:
-        * TAO_IDL/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
-        * TAO_IDL/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
-        
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/include/ast_attribute.h:
+            
           Added code generation for attributes inherited from an
           abstract interface, for the skeleton class itself and for
           the collocation classes. Also added code generation for 
