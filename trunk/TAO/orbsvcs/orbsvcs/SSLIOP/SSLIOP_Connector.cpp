@@ -470,8 +470,8 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       //
       // Note that it is not possible to completely disable protection
       // here.
-      if (qop == Security::SecQOPNoProtection
-          || qop == Security::SecQOPIntegrity
+      if ((qop == Security::SecQOPNoProtection
+          || qop == Security::SecQOPIntegrity)
           && ::SSL_set_cipher_list (svc_handler->peer ().ssl (),
                                     "eNULL") == 0)
         {
