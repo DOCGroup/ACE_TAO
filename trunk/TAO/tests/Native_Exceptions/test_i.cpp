@@ -21,8 +21,10 @@ Simple_Server_i::test_raise (CORBA::Long x)
 {
   throw Simple_Server::Failure ();
 
+# if defined (WIN32) || defined (__HP_aCC)
   // Make HP-UX's aCC happy
   return x;
+#endif /*WIN32 & HP */
 }
 
 void
