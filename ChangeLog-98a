@@ -1,28 +1,34 @@
+Wed Apr 22 21:53:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * config-linux-kcc.h: added #define ACE_SIZEOF_LONG_DOUBLE
+          to 12 on i386.  Thanks to Ben Eng <ben@jetpen.com> for
+          reporting this.
+
 Wed Apr 22 08:00:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Fixed a
- 	  missing semi-colon.  Thanks to Jorn Jensen <jornj@funcom.com>
- 	  for reporting this.
+        * ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Fixed a
+          missing semi-colon.  Thanks to Jorn Jensen <jornj@funcom.com>
+          for reporting this.
 
 Tue Apr 21 18:38:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_ce_dll.dsp: Removing a deprecated /windowsce:noconvert
- 	  linker flag.
+        * ace/ace_ce_dll.dsp: Removing a deprecated /windowsce:noconvert
+          linker flag.
 
 Mon Apr 20 15:39:42 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Handle_Set.cpp: Access fds_bits elements using an fd_mask
-	  pointer rather than array indexing of the fds_bits array itself.
-	  HP-UX 11 plays some games with the fd_mask type - fd_mask is defined
-	  as an int32_t, but the fds_bits is an array of longs.  This makes
-	  plainly indexing through the array by hand tricky, since the FD_*
-	  macros treat the array as int32_t.  So the bits are in the right
-	  place for int32_t, even though the array is long.  This, they say,
-	  is to preserve the same in-memory layout for 32-bit and 64-bit
-	  processes.  So, we play the same game as the FD_* macros to get
-	  the bits right.  See /usr/include/sys/_fd_macros.h.
-	  On all other systems, this amounts to practically a NOP, since this
-	  is what would have been done anyway, without all this type jazz.
+        * ace/Handle_Set.cpp: Access fds_bits elements using an fd_mask
+          pointer rather than array indexing of the fds_bits array itself.
+          HP-UX 11 plays some games with the fd_mask type - fd_mask is defined
+          as an int32_t, but the fds_bits is an array of longs.  This makes
+          plainly indexing through the array by hand tricky, since the FD_*
+          macros treat the array as int32_t.  So the bits are in the right
+          place for int32_t, even though the array is long.  This, they say,
+          is to preserve the same in-memory layout for 32-bit and 64-bit
+          processes.  So, we play the same game as the FD_* macros to get
+          the bits right.  See /usr/include/sys/_fd_macros.h.
+          On all other systems, this amounts to practically a NOP, since this
+          is what would have been done anyway, without all this type jazz.
 
 Sat Apr 18 13:59:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
