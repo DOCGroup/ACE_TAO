@@ -59,6 +59,9 @@
 // Compiler supports C++ exception handling
 #  define ACE_HAS_EXCEPTIONS
 
+// Compiler enforces the "One Definition Rule"
+#  define ACE_HAS_ONE_DEFINITION_RULE
+
 #  define ACE_HAS_TYPENAME_KEYWORD
 
 // Compiler implements templates that support typedefs inside of classes
