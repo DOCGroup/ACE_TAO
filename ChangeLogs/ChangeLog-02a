@@ -1,3 +1,10 @@
+Thu May 24 15:28:19 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	Removed this test from being run on single-threaded configurations
+	since this test uses the ACE_Thread_Manager.
+
 Thu May 24 15:12:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/config-tru64.h:
