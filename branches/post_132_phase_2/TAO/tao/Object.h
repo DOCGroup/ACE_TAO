@@ -239,17 +239,21 @@ namespace CORBA
             TAO_Abstract_ServantBase *servant = 0,
             TAO_ORB_Core *orb_core = 0);
 
-    Object (const IOP::IOR_var &ior,
+    Object (IOP::IOR *ior,
             TAO_ORB_Core *orb_core = 0);
 
     /// Get the underlying stub object.
     virtual TAO_Stub *_stubobj (void) const;
+    virtual TAO_Stub *_stubobj (void);
 
     /// Set the proxy broker.
     virtual void _proxy_broker (TAO_Object_Proxy_Broker *proxy_broker);
 
     /// Get the proxy broker.
     virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
+
+    /// Accessor to the flag..
+    CORBA::Boolean is_evaluated (void) const;
 
   protected:
 
