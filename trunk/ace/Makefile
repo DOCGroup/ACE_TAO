@@ -314,7 +314,7 @@ ifeq ($(AIX_TEMPLATE_HACK),1)
 endif
 
 LSRC  = $(addsuffix .cpp,$(FILES))
-LSRC2 = $(addsuffix .cpp,$(TEMPLATE_FILES))
+#### don't need???? LSRC2 = $(addsuffix .cpp,$(TEMPLATE_FILES))
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
