@@ -122,7 +122,15 @@ void
 Client_i::run (void)
 {
   if (this->ts_->thread_per_rate_ == 0)
-    this->do_priority_inversion_test ();
+    {
+      this->do_priority_inversion_test ();
+
+      if (this->ts_->use_utilization_test_ == 1)
+        {
+          // Exit.  Otherwise, the process just waits forever.
+          ACE_OS::exit ();
+        }
+    }
   else
     this->do_thread_per_rate_test ();
 }
@@ -545,9 +553,6 @@ Client_i::print_util_stats (void)
                     "NOW run the same test again, adding the \"-l\" option.  See README file for explanation." :
                     " "
                   ));
-
-      // Exit.  Otherwise, the process just waits forever.
-      ACE_OS::exit ();
     }
 }
 
@@ -698,6 +703,7 @@ Client_i::do_priority_inversion_test (void)
               "-------------------------- Stats -------------------------------\n"));
 
   this->print_priority_inversion_stats ();
+
   return 0;
 }
 
