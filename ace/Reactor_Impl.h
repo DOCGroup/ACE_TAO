@@ -406,7 +406,7 @@ public:
   // Returns true if Reactor has been successfully initialized, else
   // false.
 
-  virtual size_t size (void) = 0;
+  virtual size_t size (void) const = 0;
   // Returns the current size of the Reactor's internal descriptor
   // table.
 

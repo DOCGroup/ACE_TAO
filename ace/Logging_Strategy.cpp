@@ -8,6 +8,73 @@
 
 ACE_RCSID(lib, Logging_Strategy, "$Id$")
 
+// Parse the string containing (thread) priorities and set them accordingly.
+
+void
+ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string, 
+                                  ACE_Log_Msg::MASK_TYPE mask)
+{
+  u_long priority_mask = 0;
+
+  // Choose priority mask to change.
+
+  if (mask == ACE_Log_Msg::PROCESS)
+    priority_mask = process_priority_mask_;
+  else
+    priority_mask = thread_priority_mask_;
+
+  // Parse string and alternate priority mask.
+
+  for (ACE_TCHAR *priority = ACE_OS::strtok (priority_string, "|");
+       priority != 0;
+       priority = ACE_OS::strtok (0, "|"))
+    {
+      if (ACE_OS::strcmp (priority, "TRACE") == 0)
+        ACE_SET_BITS (priority_mask, LM_TRACE);
+      else if (ACE_OS::strcmp (priority, "~TRACE") == 0)
+        ACE_CLR_BITS (priority_mask, LM_TRACE);
+      else if (ACE_OS::strcmp (priority, "DEBUG") == 0)
+        ACE_SET_BITS (priority_mask, LM_DEBUG);
+      else if (ACE_OS::strcmp (priority, "~DEBUG") == 0)
+        ACE_CLR_BITS (priority_mask, LM_DEBUG);
+      else if (ACE_OS::strcmp (priority, "INFO") == 0)
+        ACE_SET_BITS (priority_mask, LM_INFO);
+      else if (ACE_OS::strcmp (priority, "~INFO") == 0)
+        ACE_CLR_BITS (priority_mask, LM_INFO);
+      else if (ACE_OS::strcmp (priority, "NOTICE") == 0)
+        ACE_SET_BITS (priority_mask, LM_NOTICE);
+      else if (ACE_OS::strcmp (priority, "~NOTICE") == 0)
+        ACE_CLR_BITS (priority_mask, LM_NOTICE);
+      else if (ACE_OS::strcmp (priority, "WARNING") == 0)
+        ACE_SET_BITS (priority_mask, LM_WARNING);
+      else if (ACE_OS::strcmp (priority, "~WARNING") == 0)
+        ACE_CLR_BITS (priority_mask, LM_WARNING);
+      else if (ACE_OS::strcmp (priority, "ERROR") == 0)
+        ACE_SET_BITS (priority_mask, LM_ERROR);
+      else if (ACE_OS::strcmp (priority, "~ERROR") == 0)
+        ACE_CLR_BITS (priority_mask, LM_ERROR);
+      else if (ACE_OS::strcmp (priority, "CRITICAL") == 0)
+        ACE_SET_BITS (priority_mask, LM_CRITICAL);
+      else if (ACE_OS::strcmp (priority, "~CRITICAL") == 0)
+        ACE_CLR_BITS (priority_mask, LM_CRITICAL);
+      else if (ACE_OS::strcmp (priority, "ALERT") == 0)
+        ACE_SET_BITS (priority_mask, LM_ALERT);
+      else if (ACE_OS::strcmp (priority, "~ALERT") == 0)
+        ACE_CLR_BITS (priority_mask, LM_ALERT);
+      else if (ACE_OS::strcmp (priority, "EMERGENCY") == 0)
+        ACE_SET_BITS (priority_mask, LM_EMERGENCY);
+      else if (ACE_OS::strcmp (priority, "~EMERGENCY") == 0)
+        ACE_CLR_BITS (priority_mask, LM_EMERGENCY);
+    }
+
+  // Affect right priority mask.
+
+  if (mask == ACE_Log_Msg::PROCESS)
+    process_priority_mask_ = priority_mask;
+  else
+    thread_priority_mask_ = priority_mask;
+}
+
 // Parse the string containing all the flags and set the flags
 // accordingly.
 
@@ -44,7 +111,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   this->interval_ = 0;
   this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:i:m:s:w"), 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:i:m:p:s:t:w"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -66,11 +133,21 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
             this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
           this->max_size_ <<= 10;       // convert to KB
           break;
+        case 'p':
+          temp = get_opt.optarg;
+          // Now tokenize the string to setup process log priority
+          this->priorities (temp, ACE_Log_Msg::PROCESS);
+          break;
         case 's':
           // Ensure that the OSTREAM flag is set
           ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
           delete [] this->filename_;
           this->filename_ = ACE::strnew (get_opt.optarg);
+          break;
+        case 't':
+          temp = get_opt.optarg;
+          // Now tokenize the string to setup thread log priority
+          this->priorities (temp, ACE_Log_Msg::THREAD);
           break;
         case 'w':
           // Cause the logfile to be wiped out, both on startup and on
@@ -119,8 +196,24 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Logging_Strategy::init");
 
+  // Store current priority masks for changes in <parse_args>.
+  
+  this->process_priority_mask_ =
+    ACE_Log_Msg::instance ()->priority_mask (ACE_Log_Msg::PROCESS);
+
+  this->thread_priority_mask_ =
+    ACE_Log_Msg::instance ()->priority_mask (ACE_Log_Msg::THREAD);
+
   // Use the options hook to parse the command line arguments.
   this->parse_args (argc, argv);
+
+  // Setup priorities (to original if not specified on command line)
+
+  ACE_Log_Msg::instance ()->priority_mask (thread_priority_mask_, 
+                                           ACE_Log_Msg::THREAD);
+
+  ACE_Log_Msg::instance ()->priority_mask (process_priority_mask_, 
+                                           ACE_Log_Msg::PROCESS);
 
   // Check if any flags were specified. If none were specified, let
   // the default behavior take effect.
