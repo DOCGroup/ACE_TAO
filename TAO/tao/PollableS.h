@@ -21,6 +21,9 @@
 #define TAO_IDL_POLLABLES_H
 
 #include "tao/PollableC.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+
 #include "tao/POA_CORBA.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -228,5 +231,7 @@ private:
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 
 #endif /* ifndef */

@@ -209,10 +209,13 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                   two_way) == -1)
     return -1;
 
-  return TAO_GIOP::send_message (this,
-                                 stream,
-                                 orb_core,
-                                 max_wait_time);
+  if (TAO_GIOP::send_message (this,
+                              stream,
+                              orb_core,
+                              max_wait_time) == -1)
+    return -1;
+
+  return this->idle_after_send ();
 }
 
 // Return 0, when the reply is not read fully, 1 if it is read fully.
@@ -233,21 +236,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
   // Use an "factory" to obtain the CDR stream, in the Muxed case the
   // factory simply allocates a new one, in the Exclusive case the
   // factory returns a pointer to the pre-allocated CDR.
-  //
-  // @@ Alex: I thought some more about this, and here is how i would
-  //    like to do it: this class keeps a CDR stream for the "current"
-  //    message beign received. Initially the CDR is 0, when the
-  //    handle_client_input() is called the first time then we go to
-  //    the muxer to obtain the CDR stream.
-  //    - The exclusive Muxer returns the CDR stream pre-allocated by
-  //      the invocation.
-  //    - The shared Muxer returns a new CDR stream.
-  //    Once all the data has been received the reply handler takes
-  //    charge of the CDR stream, or actually of its message block,
-  //    which is referenced counted and thus can be efficiently
-  //    removed.
-  //    Do I make any sense?
 
+  // Get the message state from the Transport Mux Strategy. 
   TAO_GIOP_Message_State* message_state =
     this->tms_->get_message_state ();
 
@@ -259,7 +249,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                     " nil message state\n"));
       return -1;
     }
-
+  
   int result = TAO_GIOP::handle_input (this,
                                        this->orb_core_,
                                        *message_state,

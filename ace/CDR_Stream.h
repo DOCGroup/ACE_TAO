@@ -729,9 +729,8 @@ public:
   // Re-initialize the CDR stream, copying the contents of the chain
   // of message_blocks starting from <data>.
 
-  ACE_Message_Block * steal_contents (void);
-  // Re-initialize the CDR stream, copying the contents of the chain
-  // of message_blocks starting from <data>.
+  ACE_Message_Block *steal_contents (void);
+  // Steal the contents from the currect CDR.
 
   void reset_contents (void);
   // Re-initialize the CDR stream, forgetting about the old contents
@@ -752,6 +751,10 @@ public:
   int do_byte_swap (void) const;
   // If non-zero then this stream is writing in non-native byte order,
   // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+
+  int byte_order (void) const;
+  // If <do_byte_swap> returns 1, this returns ACE_CDR_BYTE_ORDER else
+  // it returns ~ACE_CDR_BYTE_ORDER.
 
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;

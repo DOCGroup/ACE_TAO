@@ -260,7 +260,6 @@ int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-
   os->indent ();
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
@@ -328,7 +327,6 @@ int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-
   os->indent ();
   switch (this->direction ())
     {
@@ -352,7 +350,6 @@ int be_visitor_args_upcall_ss::visit_string (be_string *)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-
   os->indent ();
   switch (this->direction ())
     {
@@ -386,7 +383,6 @@ int be_visitor_args_upcall_ss::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-
   os->indent ();
   switch (this->direction ())
     {
@@ -413,7 +409,6 @@ int be_visitor_args_upcall_ss::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-
   os->indent ();
   switch (this->direction ())
     {

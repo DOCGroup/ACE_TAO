@@ -363,13 +363,13 @@ int be_visitor_args_compiled_marshal_ss::visit_valuetype_fwd (be_valuetype_fwd *
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name () << "out ()";
+          *os << arg->local_name () << ".out ()";
           break;
         case AST_Argument::dir_OUT:
           break;
         }
     }
-  else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
+  else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
       switch (this->direction ())
         {

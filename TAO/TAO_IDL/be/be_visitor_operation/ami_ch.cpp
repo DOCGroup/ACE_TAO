@@ -44,7 +44,12 @@ be_visitor_operation_ami_ch::~be_visitor_operation_ami_ch (void)
 int
 be_visitor_operation_ami_ch::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os; // output stream
+  // No sendc method for oneway operations.
+  if (node->flags () == AST_Operation::OP_oneway)
+    return 0;
+  
+  // Output stream.
+  TAO_OutStream *os ;
 
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
@@ -67,7 +72,7 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
   //         mapping. For these we grab a visitor that generates the
   //         parameter listing.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {

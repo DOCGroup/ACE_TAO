@@ -184,13 +184,47 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "# pragma once\n"
                             << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
-      // Other include files
+      // Other include files.
 
       if (idl_global->export_include () != 0)
         {
           *this->client_header_ << "#include \""
-                                    << idl_global->export_include ()
+                                << idl_global->export_include ()
                                 << "\"\n";
+        }
+
+      // Include the Messaging files if AMI is enabled. 
+      if (idl_global->ami_call_back () == I_TRUE)
+        {
+          // Include Messaging skeleton file.
+          *this->client_header_ << "#include ";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"";
+          else
+            *this->client_header_ << "<";
+          
+          *this->client_header_ << "tao/MessagingS.h";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"\n";
+          else
+            *this->client_header_ << ">\n";
+
+          // Including Asynch Invocation file.
+          *this->client_header_ << "#include ";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"";
+          else
+            *this->client_header_ << "<";
+          
+          *this->client_header_ << "tao/Asynch_Invocation.h";
+          
+          if (idl_global->changing_standard_include_files () == 1)
+            *this->client_header_ << "\"\n";
+          else
+            *this->client_header_ << ">\n";
         }
 
       // We must include all the skeleton headers corresponding to

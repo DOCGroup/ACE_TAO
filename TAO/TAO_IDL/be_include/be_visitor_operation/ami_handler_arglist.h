@@ -43,6 +43,14 @@ public:
   ~be_visitor_operation_ami_handler_arglist (void);
   // destructor
 
+  virtual int visit_scope (be_scope *node);
+  // Visit the scope and its elements. 
+  // This implementation is the same as
+  // <be_visitor_scope::visit_scope>. The variation is that it calls the
+  // <post_process>  only if the return value of the <accept> is 1. We
+  // need to do this since we have to differentiate between an argument
+  // that was printed and an argument that was skipped in the signature.
+  
   virtual int visit_operation (be_operation *node);
   // visit the operation
 
