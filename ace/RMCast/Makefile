@@ -11,18 +11,14 @@ SHLIB    = libACE_RMCast.$(SOEXT)
 FILES= \
 	RMCast \
 	RMCast_Module \
+	RMCast_Module_Factory \
 	RMCast_Fragment \
 	RMCast_Reassembly \
 	RMCast_Partial_Message \
 	\
-	RMCast_Sender_Proxy \
-	RMCast_Sender_Proxy_Best_Effort \
-	RMCast_Sender_Proxy_Factory \
-	\
-	RMCast_UDP_Receiver \
+	RMCast_IO_UDP \
 	RMCast_UDP_Event_Handler \
-	\
-	RMCast_UDP_Sender
+	RMCast_UDP_Proxy
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -96,6 +92,31 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  RMCast_Export.h RMCast.i RMCast_Module.i
+
+.obj/RMCast_Module_Factory.o .obj/RMCast_Module_Factory.so .shobj/RMCast_Module_Factory.o .shobj/RMCast_Module_Factory.so: RMCast_Module_Factory.cpp \
+ RMCast_Module_Factory.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RMCast.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ RMCast_Export.h RMCast.i RMCast_Module_Factory.i
 
 .obj/RMCast_Fragment.o .obj/RMCast_Fragment.so .shobj/RMCast_Fragment.o .shobj/RMCast_Fragment.so: RMCast_Fragment.cpp RMCast_Fragment.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -463,92 +484,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  RMCast_Partial_Message.i
 
-.obj/RMCast_Sender_Proxy.o .obj/RMCast_Sender_Proxy.so .shobj/RMCast_Sender_Proxy.o .shobj/RMCast_Sender_Proxy.so: RMCast_Sender_Proxy.cpp RMCast_Sender_Proxy.h \
+.obj/RMCast_IO_UDP.o .obj/RMCast_IO_UDP.so .shobj/RMCast_IO_UDP.o .shobj/RMCast_IO_UDP.so: RMCast_IO_UDP.cpp RMCast_IO_UDP.h \
  $(ACE_ROOT)/ace/pre.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RMCast_Export.h RMCast.i RMCast_Sender_Proxy.i RMCast_Module.h \
- RMCast_Module.i \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp
-
-.obj/RMCast_Sender_Proxy_Best_Effort.o .obj/RMCast_Sender_Proxy_Best_Effort.so .shobj/RMCast_Sender_Proxy_Best_Effort.o .shobj/RMCast_Sender_Proxy_Best_Effort.so: RMCast_Sender_Proxy_Best_Effort.cpp \
- RMCast_Sender_Proxy_Best_Effort.h \
- $(ACE_ROOT)/ace/pre.h \
- RMCast_Sender_Proxy.h RMCast.h \
+ RMCast_Module.h RMCast.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -569,116 +507,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- RMCast_Export.h RMCast.i RMCast_Sender_Proxy.i \
- RMCast_Sender_Proxy_Best_Effort.i RMCast_Module.h RMCast_Module.i \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp
-
-.obj/RMCast_Sender_Proxy_Factory.o .obj/RMCast_Sender_Proxy_Factory.so .shobj/RMCast_Sender_Proxy_Factory.o .shobj/RMCast_Sender_Proxy_Factory.so: RMCast_Sender_Proxy_Factory.cpp \
- RMCast_Sender_Proxy_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- RMCast.h $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RMCast_Export.h RMCast.i RMCast_Sender_Proxy_Factory.i
-
-.obj/RMCast_UDP_Receiver.o .obj/RMCast_UDP_Receiver.so .shobj/RMCast_UDP_Receiver.o .shobj/RMCast_UDP_Receiver.so: RMCast_UDP_Receiver.cpp RMCast_UDP_Receiver.h \
- $(ACE_ROOT)/ace/pre.h \
- RMCast_UDP_Event_Handler.h RMCast_Export.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
+ RMCast_Export.h RMCast.i RMCast_Module.i RMCast_UDP_Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Event_Handler.i \
  RMCast_UDP_Event_Handler.i \
@@ -770,9 +601,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- RMCast_UDP_Receiver.i RMCast_Sender_Proxy.h RMCast.h RMCast.i \
- RMCast_Sender_Proxy.i RMCast_Sender_Proxy_Factory.h \
- RMCast_Sender_Proxy_Factory.i
+ RMCast_IO_UDP.i RMCast_UDP_Proxy.h RMCast_UDP_Proxy.i \
+ RMCast_Module_Factory.h RMCast_Module_Factory.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp
 
 .obj/RMCast_UDP_Event_Handler.o .obj/RMCast_UDP_Event_Handler.so .shobj/RMCast_UDP_Event_Handler.o .shobj/RMCast_UDP_Event_Handler.so: RMCast_UDP_Event_Handler.cpp \
  RMCast_UDP_Event_Handler.h \
@@ -802,7 +637,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Event_Handler.i \
- RMCast_UDP_Event_Handler.i RMCast_UDP_Receiver.h \
+ RMCast_UDP_Event_Handler.i RMCast_IO_UDP.h RMCast_Module.h RMCast.h \
+ RMCast.i RMCast_Module.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -891,12 +727,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- RMCast_UDP_Receiver.i
+ RMCast_IO_UDP.i
 
-.obj/RMCast_UDP_Sender.o .obj/RMCast_UDP_Sender.so .shobj/RMCast_UDP_Sender.o .shobj/RMCast_UDP_Sender.so: RMCast_UDP_Sender.cpp RMCast_UDP_Sender.h \
+.obj/RMCast_UDP_Proxy.o .obj/RMCast_UDP_Proxy.so .shobj/RMCast_UDP_Proxy.o .shobj/RMCast_UDP_Proxy.so: RMCast_UDP_Proxy.cpp RMCast_UDP_Proxy.h \
  $(ACE_ROOT)/ace/pre.h \
- RMCast_Module.h RMCast.h \
- $(ACE_ROOT)/ace/OS.h \
+ RMCast.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -916,21 +751,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- RMCast_Export.h RMCast.i RMCast_Module.i \
- $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
+ RMCast_Export.h RMCast.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/QoS_Session.h \
- $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_Dgram.i \
- RMCast_UDP_Sender.i \
+ RMCast_UDP_Proxy.i RMCast_Module.h RMCast_Module.i \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
