@@ -1,9 +1,15 @@
+Thu Jul  1 00:18:07 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* TAO_IDL/include/utl_string.h:
+	Fixed small compilation error related to lack of size_t in
+	included headers.
+
 Wed Jun 30 11:55:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_root.cpp:
         * TAO_IDLinclude/ast_root.h:
         * TAO_IDLinclude/utl_scope.h:
-        
+
           Made the nmembers() method of UTL_Scope virtual and
           added an override in AST_Root, so we can get a member
           count of the global scope without the predefined types
@@ -12,9 +18,9 @@ Wed Jun 30 11:55:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Jun 30 06:50:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
-        
+
           Reverted some of the changes in
-          
+
           Tue Jun 29 11:13:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           so that TAO_IFR_EXE once again depends on TAO and IFR_Client.

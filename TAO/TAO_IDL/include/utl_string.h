@@ -70,6 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IDL_FE_Export.h"
 #include "idl_bool.h"
 #include "ace/iosfwd.h"
+  /* Basic_Types.h are needed in QNX for size_t type. */
+#include "ace/Basic_Types.h"
 
 class TAO_IDL_FE_Export UTL_String
 {
