@@ -20,17 +20,26 @@ public:
   virtual ~ACEXML_EC_Property();
   virtual int set (const ACEXML_String& property, const ACEXML_String& value);
   virtual int set (const ACEXML_String& property, const long value);
+  virtual int check_collection (const ACEXML_Char* str);
   virtual ACEXML_Char* dump() const;
 private:
   ACEXML_String ec_dispatching_;
   ACEXML_String ec_filtering_;
   ACEXML_String ec_supplier_filtering_;
+  ACEXML_String ec_timeout_;
+  ACEXML_String ec_observer_;
+  ACEXML_String ec_scheduling_;
+  ACEXML_String ec_proxy_push_consumer_collection_;
+  ACEXML_String ec_proxy_push_supplier_collection_;
   ACEXML_String ec_proxy_consumer_lock_;
   ACEXML_String ec_proxy_supplier_lock_;
+  ACEXML_String ec_orbid_;
   ACEXML_String ec_consumer_control_;
   ACEXML_String ec_supplier_control_;
+
   long ec_consumer_control_period_;
   long ec_supplier_control_period_;
+  long ec_dispatching_threads_;
 };
 
 #include "ace/post.h"

@@ -90,10 +90,12 @@ ACEXML_PropertyFile_Handler::endElement (const ACEXML_Char *,
         }
       else if (this->atttype_ == "long")
         {
+          int save_errno = errno;
           long value = ACE_OS::strtol (this->value_.c_str(), 0, 10);
-          if (this->property_->set (this->attname_, value) != 0)
+          if (errno != save_errno ||
+              this->property_->set (this->attname_, value) != 0)
             {
-              ACE_ERROR ((LM_ERROR, "Property %s = %ld invalid\n",
+              ACE_ERROR ((LM_ERROR, "Property %s = %ld invalid: %m\n",
                           this->attname_.c_str(), value));
               ACEXML_SAXParseException* exception = 0;
               ACE_NEW_NORETURN (exception,
