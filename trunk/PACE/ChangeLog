@@ -1,3 +1,9 @@
+Sun Jul 23 19:17:33 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pthread.h:
+
+	  Added typedefs from pace/posix/pthread.h.
+
 Sun Jul 23 18:34:26 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/pthread.inl:
@@ -65,7 +71,7 @@ Fri Jul 21 19:49:19 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/win32/utime.inl (pace_utime):
 
 	  Implemented the "RIGHT ANSWER[TM]" but it doesn't work so
-	  casted away and made the current func work. Left the 
+	  casted away and made the current func work. Left the
 	  correct implementation -- "unimplemented" :-/ in the file.
 
 	* pace/docs/PACE_POSIX_support.txt
