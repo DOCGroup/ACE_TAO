@@ -1,3 +1,9 @@
+Sun Jul  2 18:29:10 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+        * peformance-tests/RTCorba/Orb_Per_Priority/client.cpp:
+
+	  Fixed compile error.
+
 Sun Jul  2 17:58:47 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RT_Policy_i.cpp:
