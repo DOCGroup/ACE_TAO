@@ -1,3 +1,8 @@
+Fri Nov 14 18:42:23 1997  Steve Huston  <shuston@riverace.com>
+
+	* tests/Priority_Reactor_Test.cpp: Fixed client to close its socket
+	  before exiting from the thread/process.
+
 Fri Nov 14 17:41:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i: Fixed some typos in strsplit_r().
