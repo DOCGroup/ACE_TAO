@@ -247,6 +247,7 @@
 // something useful.
 #define TAO_OBJID_NAMESERVICE      "NameService"
 #define TAO_OBJID_TRADINGSERVICE   "TradingService"
+#define TAO_OBJID_IMPLREPOSERVICE  "ImplRepoService"
 #define TAO_OBJID_ROOTPOA          "RootPOA"
 #define TAO_OBJID_POACURRENT       "POACurrent"
 #define TAO_OBJID_INTERFACEREP     "InterfaceRepository"

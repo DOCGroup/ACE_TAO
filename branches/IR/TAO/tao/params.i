@@ -158,6 +158,18 @@ TAO_ORB_Parameters::trading_service_port (void) const
   return this->trading_service_port_;
 }
 
+ACE_INLINE void
+TAO_ORB_Parameters::implrepo_service_ior (const ACE_CString &ir)
+{
+  this->implrepo_service_ior_ = ir;
+}
+
+ACE_INLINE const char *
+TAO_ORB_Parameters::implrepo_service_ior (void) const
+{
+  return this->implrepo_service_ior_.c_str ();
+}
+
 ACE_INLINE TAO_IOR_LookupTable *
 TAO_ORB_Parameters::ior_lookup_table (void)
 {
