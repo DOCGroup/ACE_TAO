@@ -1,3 +1,8 @@
+Sun Sep  5 23:40:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/QOS: Continued to improve the coding style so it'll
+	  look like normal "ACE" code.
+
 Sun Sep 05 21:32:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Synch.cpp: removed unnecessary #include of ace/Object_Manager.h.

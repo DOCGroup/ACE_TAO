@@ -10,7 +10,7 @@
 //    Receiver_QOS_Event_Handler.h
 //
 // = AUTHOR
-//    Vishal Kachroo
+//    Vishal Kachroo <vishal@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,34 +24,33 @@
 
 ACE_RCSID(Receiver_QOS_Event_Handler, Receiver_QOS_Event_Handler, "$Id$")
 
-  class ACE_QOS_Event_Handler : public ACE_Event_Handler
-  {
-  public:
-    // = Initialization and Termination methods.
-    ACE_QOS_Event_Handler (void);
-    // Constructor.
+class ACE_QOS_Event_Handler : public ACE_Event_Handler
+{
+public:
+  // = Initialization and Termination methods.
+  ACE_QOS_Event_Handler (void);
+  // Constructor.
 
-    ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast);
-    // Constructor.
+  ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast);
+  // Constructor.
 
-    ~ACE_QOS_Event_Handler (void);
-    // Destructor. 
+  ~ACE_QOS_Event_Handler (void);
+  // Destructor. 
 
-    virtual ACE_HANDLE get_handle (void) const;
-    // Override this to return the handle of the Dgram_Mcast
-    // that we are using.
+  virtual ACE_HANDLE get_handle (void) const;
+  // Override this to return the handle of the Dgram_Mcast
+  // that we are using.
 
-    virtual int handle_qos (ACE_HANDLE fd);
-    // Handles a QOS event. Right now, just 
-    // prints a message.
+  virtual int handle_qos (ACE_HANDLE fd);
+  // Handles a QOS event. Right now, just 
+  // prints a message.
 
-    virtual int handle_input (ACE_HANDLE fd);
-    // Handles a READ event.
+  virtual int handle_input (ACE_HANDLE fd);
+  // Handles a READ event.
 
-  private:
-
-    ACE_SOCK_Dgram_Mcast dgram_mcast_;
-    ACE_INET_Addr remote_addr_;
-  };
+private:
+  ACE_SOCK_Dgram_Mcast dgram_mcast_;
+  ACE_INET_Addr remote_addr_;
+};
 
 #endif  /* RECEIVER_QOS_EVENT_HANDLER_H */
