@@ -671,9 +671,9 @@ start_servants (ACE_Barrier &start_barrier)
 #endif /* VXWORKS */
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Creating servant with high priority %d\n",
-	      priority));
-  
+              "Creating servant with high priority %d\n",
+              priority));
+
   // Make the high priority task an active object.
   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
                                     1,
@@ -692,15 +692,15 @@ start_servants (ACE_Barrier &start_barrier)
                   -1);
 
   ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-	                                             ACE_SCOPE_THREAD);
+                                                     ACE_SCOPE_THREAD);
 
   u_int number_of_priorities = 0;
   while (priority_iterator.more ())
-		{
-	      number_of_priorities ++;
-		  priority_iterator.next ();
+                {
+              number_of_priorities ++;
+                  priority_iterator.next ();
   }
-  
+
   // 1 priority is exclusive for the high priority client.
   number_of_priorities --;
 
@@ -708,25 +708,25 @@ start_servants (ACE_Barrier &start_barrier)
 
   // Drop the priority, so that the priority of clients will increase
   // with increasing client number.
-  for (i = 0; i < number_of_low_priority_client + 1; i++)
+  for (i = 0; i < (int) (number_of_low_priority_client + 1); i++)
     priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     priority,
                                                     ACE_SCOPE_THREAD);
 
-  // granularity of the assignment of the priorities.  Some OSs have 
-  // fewer levels of priorities than we have threads in our test, so 
-  // with this mechanism we assign priorities to groups of threads when 
+  // granularity of the assignment of the priorities.  Some OSs have
+  // fewer levels of priorities than we have threads in our test, so
+  // with this mechanism we assign priorities to groups of threads when
   // there are more threads than priorities.
   u_int grain = number_of_low_priority_client / number_of_priorities;
   u_int counter = 0;
 
-  if (grain <= 0) 
-	  grain = 1;
-  
+  if (grain <= 0)
+          grain = 1;
+
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d servants starting at priority %d\n",
               num_of_objs - 1,
-	      priority));
+              priority));
 
   // Create the low priority servants.
 
@@ -758,20 +758,20 @@ start_servants (ACE_Barrier &start_barrier)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Created servant %d with priority %d\n",
-		  i,
-		  priority));
+                  "Created servant %d with priority %d\n",
+                  i,
+                  priority));
 
       counter = (counter + 1) % grain;
-      if ( (counter == 0) && 
-	   //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
-	   ((number_of_priorities * grain) > (number_of_low_priority_client - (i - 1))) )
-	{
-	  // Get the next higher priority.
-	  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-						      priority,
-						      ACE_SCOPE_THREAD);
-	}
+      if ( (counter == 0) &&
+           //Just so when we distribute the priorities among the threads, we make sure we don't go overboard.
+           ((number_of_priorities * grain) > (number_of_low_priority_client - (i - 1))) )
+        {
+          // Get the next higher priority.
+          priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                      priority,
+                                                      ACE_SCOPE_THREAD);
+        }
     }
 
   char *args;
