@@ -98,7 +98,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
   
   *os << "TAO_" << node->flat_name () 
       << "_Default_Proxy_Factory::create_proxy (" << be_idt << be_idt_nl 
-      << node->full_name () << "_ptr proxy," << be_nl 
+      << "::" << node->full_name () 
+      << "_ptr proxy," << be_nl 
       << "CORBA::Environment &" << be_uidt_nl 
       << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
@@ -115,7 +116,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
   *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::"; 
   *os << "TAO_"
       << node->flat_name () << "_Proxy_Factory_Adapter (void)" <<be_idt_nl
-      << " : proxy_factory_ (0)," <<be_idt_nl
+      << " : proxy_factory_ (0)," << be_idt_nl
       << " delete_proxy_factory_ (0)" << be_uidt << be_uidt_nl
       << "{"<< be_nl
       << "}\n\n";
@@ -130,7 +131,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
   *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::"; 
   *os << "~TAO_"
       << node->flat_name () << "_Proxy_Factory_Adapter (void)" <<be_nl
-      << "{" <<be_idt_nl
+      << "{" << be_idt_nl
       << "// Making sure the factory which the adapter has is destroyed with it."<<be_nl
       << "if (this->proxy_factory_ != 0)" <<be_idt_nl
       << "delete this->proxy_factory_;" << be_uidt<<be_uidt_nl
@@ -148,7 +149,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       << "TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory *df," << be_idt_nl
       << " CORBA::Environment &ACE_TRY_ENV" << be_idt_nl
-      << ")" << be_uidt <<be_uidt << be_uidt_nl
+      << ")" << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << "ACE_MT (ACE_GUARD_RETURN (" 
       << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
@@ -199,10 +200,11 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
     *os << "::";  
  
   *os << "TAO_"<< node->flat_name ()
-      << "_Proxy_Factory_Adapter::create_proxy ("<< be_idt_nl
-      << node->full_name () << "_ptr proxy," << be_nl
-      << "CORBA::Environment &" << be_idt_nl
-      << ")" << be_uidt << be_uidt << be_uidt_nl
+      << "_Proxy_Factory_Adapter::create_proxy (" << be_idt << be_idt_nl
+      << "::" << node->full_name () 
+      << "_ptr proxy," << be_nl
+      << "CORBA::Environment &" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << "ACE_MT (ACE_GUARD_RETURN (" 
       << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
@@ -230,7 +232,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
   *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
   *os << "TAO_" 
       <<  node->flat_name () << "_Smart_Proxy_Base (" 
-      <<  node->full_name () << "_ptr proxy)" << be_nl
+      <<  "::" << node->full_name () 
+      << "_ptr proxy)" << be_nl
       <<  ": base_proxy_ (proxy)" << be_nl
       << "{" << be_nl
       << "}\n\n";
