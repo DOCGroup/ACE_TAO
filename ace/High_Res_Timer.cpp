@@ -34,7 +34,7 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
   unsigned long speed_type = REG_DWORD;
 
   long rc = ::RegOpenKeyEx (HKEY_LOCAL_MACHINE,
-                            __TEXT ("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"),
+                            ACE_TEXT ("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"),
                             NULL,
                             KEY_READ,
                             &hk);
@@ -44,7 +44,7 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
     return 1;
 
   rc = ::RegQueryValueEx (hk,
-                          __TEXT ("~MHz"),
+                          ACE_TEXT ("~MHz"),
                           0,
                           &speed_type,
                           (LPBYTE) &speed,

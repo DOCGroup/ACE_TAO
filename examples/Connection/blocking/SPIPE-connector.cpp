@@ -103,7 +103,7 @@ IPC_Client::IPC_Client (void)
   : iterations_ (0),
     done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
 {
-  ACE_OS::strcpy (rendezvous_, __TEXT ("acepipe"));
+  ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
 IPC_Client::~IPC_Client (void)

@@ -193,12 +193,12 @@ main (int, char *[])
   run_test (A, B, R, W);
 
   LPCTSTR cl =
-    __TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
-    __TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
-    __TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
-    __TEXT ("main") ACE_PLATFORM_EXE_SUFFIX
-    __TEXT (" -f ") ACE_PLATFORM
-    __TEXT ("tokens.conf");
+    ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
+    ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
+    ACE_TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
+    ACE_TEXT ("main") ACE_PLATFORM_EXE_SUFFIX
+    ACE_TEXT (" -f ") ACE_PLATFORM
+    ACE_TEXT ("tokens.conf");
 
   ACE_Process_Options options;
   options.command_line (cl);

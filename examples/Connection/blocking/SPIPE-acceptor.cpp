@@ -53,7 +53,7 @@ IPC_Server::IPC_Server (void)
   : n_threads_ (1),
     done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
 {
-  ACE_OS::strcpy (rendezvous_, __TEXT ("acepipe"));
+  ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
 IPC_Server::~IPC_Server (void)
