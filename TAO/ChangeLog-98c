@@ -1,3 +1,9 @@
+Wed Jul 15 16:27:01 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Simple: Added a new test that is just a simple test
+	  which can be used as a basis for new tests or just to see
+	  the basics of a CORBA client and server.
+
 Wed Jul 15 16:00:39 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* client.cpp: Changed a few cast statments; added comments
@@ -38,7 +44,7 @@ Wed Jul 15 12:07:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Wed Jul 15 12:11:01 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/Makefile: 
-		Removed unnecessary STL dependencies.
+	  Removed unnecessary STL dependencies.
 
 Wed Jul 15 11:44:57 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
