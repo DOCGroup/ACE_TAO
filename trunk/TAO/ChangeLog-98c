@@ -1,3 +1,8 @@
+Wed Mar 18 21:26:29 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/Ior_Multicast.cpp (IOR_Multicast):
+          reordered initializers to match declaration order.
+
 Wed Mar 18 20:36:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/CDR/basic_types.cpp: Rearranged this test file a bit to
