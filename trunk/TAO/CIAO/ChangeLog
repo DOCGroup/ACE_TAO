@@ -1,3 +1,16 @@
+Thu Sep 16 10:15:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        
+          Added inheritance to Servant_Impl_Base of 
+          POA_Components::CCMObject to bring it in sync with the
+          version in regular CIAO/ciao.
+          
+        * DAnCE/ciao/Servant_Impl_T.h:
+        
+          Made inheritance of Servant_Impl_Base virtual, to bring it
+          in sync with the version in regular CIAO/ciao.
+
 Thu Sep 16 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/Servant_Activator.cpp:
