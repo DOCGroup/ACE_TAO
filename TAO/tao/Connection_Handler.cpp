@@ -489,7 +489,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
           {
             ACE_ERROR ((LM_ERROR,
                         "TAO (%P|%t) - Connection_Handler[%d]::"
-                        "close_connection, error in remove_handler (%d)\n",
+                        "close_connection, problem in remove_handler (%d)\n",
                         handle, r));
           }
 
