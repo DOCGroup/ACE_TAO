@@ -13,6 +13,12 @@ Thu Aug 17 14:07:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  Extended the example to test the client exposed policies 
 	  to read the policies from a configuration file (.cfg file).
 
+Thu Aug 17 13:29:33 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
+	  Initialized the variable <i> outside the switch case block as
+	  Win32 was complaining.
+
 Thu Aug 17 11:46:49 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
