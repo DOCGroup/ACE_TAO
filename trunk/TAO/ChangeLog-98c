@@ -1,11 +1,16 @@
+Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: removed old release targets.  They're no longer
+          used, or maintained.  Silenced the creation of INSTALL.
+
 Tue Jun  9 15:57:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader: The Trading Service now uses ACE
-	containers rather than stl containers.  
-	
-	* orbsvcs/orbsvcs/Makefile: Since all stl containers in the
-	Trading Service have been replaced with ACE analogues, I've
-	updated the orbsvcs Makefile to eliminate the stl dependency.
+        containers rather than stl containers.
+
+        * orbsvcs/orbsvcs/Makefile: Since all stl containers in the
+        Trading Service have been replaced with ACE analogues, I've
+        updated the orbsvcs Makefile to eliminate the stl dependency.
 
 Tue Jun 09 15:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -13,23 +18,23 @@ Tue Jun 09 15:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Jun  9 15:14:09 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation.cpp: There was an error in the
-	generated code for the variable declaration of return types for
-	type Anys in the skeletons. Fixed.
+        * TAO_IDL/be/be_visitor_operation.cpp: There was an error in the
+        generated code for the variable declaration of return types for
+        type Anys in the skeletons. Fixed.
 
 Tue Jun  9 13:29:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_typedef (be_visitor_typedef_ch::visit_predefined)
+        * TAO_IDL/be/be_visitor_typedef (be_visitor_typedef_ch::visit_predefined)
 
-	  We had forgottent to generate the typedef for the _var types for
-	  pseudo objects and Anys. Thanks to Seth Widoff for reporting
-	  this.
+          We had forgottent to generate the typedef for the _var types for
+          pseudo objects and Anys. Thanks to Seth Widoff for reporting
+          this.
 
 Tue Jun 09 12:52:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (add_to_collocation_table): ACE_Hash_Addr must
- 	  be created with recyclable flag set to 1 otherwise the
- 	  Hash_Map_Manager can't find the object.
+        * tao/ORB_Core.cpp (add_to_collocation_table): ACE_Hash_Addr must
+          be created with recyclable flag set to 1 otherwise the
+          Hash_Map_Manager can't find the object.
 
 Tue Jun 09 11:43:19 1998  David L. Levine  <levine@cs.wustl.edu>
 

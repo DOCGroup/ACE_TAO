@@ -1,3 +1,8 @@
+Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: removed old release targets.  They're no longer
+          used, or maintained.
+
 Tue Jun 09 15:25:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.11 released.
