@@ -168,6 +168,20 @@ TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
+TAO_EC_Gateway_IIOP::reconnect_consumer_ec()
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  if (this->busy_count_ != 0)
+    {
+      this->update_posted_ = 1;
+      return;
+    }
+
+  this->update_consumer_i (c_qos_ ACE_ENV_ARG_PARAMETER);
+}
+
+void
 TAO_EC_Gateway_IIOP::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& c_qos
     ACE_ENV_ARG_DECL)
@@ -178,10 +192,11 @@ TAO_EC_Gateway_IIOP::update_consumer (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
+  this->c_qos_ = c_qos;
+
   if (this->busy_count_ != 0)
     {
       this->update_posted_ = 1;
-      this->c_qos_ = c_qos;
       return;
     }
 
