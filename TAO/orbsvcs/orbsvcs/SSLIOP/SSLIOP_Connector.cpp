@@ -559,6 +559,17 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
         }
     }
 
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so.
+  int ret =  base_transport->wait_strategy ()->register_handler ();
+
+  if (ret != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                  ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
+    }
+
   // No need to _duplicate and release since base_transport
   // is going out of scope.  transport now has control of base_transport.
   transport = base_transport;
