@@ -1365,14 +1365,7 @@ be_interface::gen_perfect_hash_methods (void)
 
   // Set the command line for the gperf program.
 
-  // Form the absolute pathname.
-  char *ace_root = ACE_OS::getenv ("ACE_ROOT");
-  if (ace_root == NULL)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Env variable 'ACE_ROOT' not found. Can't locate GPERF Program\n"),
-                      -1);
-
-  process_options.command_line ("%s/bin/gperf"
+  process_options.command_line ("%s"
                                 " "
                                 "-m -M -J -c -C"
                                 " "
@@ -1385,9 +1378,9 @@ be_interface::gen_perfect_hash_methods (void)
                                 "-Z TAO_%s_Perfect_Hash_OpTable"
                                 " "
                                 "-N lookup",
-                                ace_root,
+                                idl_global->perfect_hasher (),
                                 this->flatname ());
-
+  
   // Spawn a process for gperf.
   if (process_manager.spawn (process_options) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -235,8 +235,7 @@ public:
 			                                // Set it
 
   virtual String		*stripped_filename();	// Stripped filename
-  virtual void			set_stripped_filename(String *);
-							// Set it
+  virtual void			set_stripped_filename(String *);  // Set it
 
   virtual idl_bool		imported();		// Are we imported?
   virtual idl_bool		import();		// Is import on?
@@ -294,27 +293,40 @@ public:
 
   // helper functions that generate the file names for the C++ mapping
   // generated code.
-  static const char  *be_get_client_hdr_fname ();
+  // The parameter <base_name_only> set to 0 (no base name, but full
+  // name with output dir path, is useful, when I just want just the
+  // base name to use in #include's etc.
+  static const char  *be_get_client_hdr_fname (int base_name_only = 0);
   static const char  *be_get_client_stub_fname ();
-  static const char  *be_get_client_inline_fname ();
-  static const char  *be_get_server_hdr_fname ();
-  static const char  *be_get_server_template_hdr_fname ();
+  static const char  *be_get_client_inline_fname (int base_name_only = 0);
+  static const char  *be_get_server_hdr_fname (int base_name_only = 0);
+  static const char  *be_get_server_template_hdr_fname (int base_name_only = 0);
   static const char  *be_get_server_skeleton_fname ();
-  static const char  *be_get_server_template_skeleton_fname ();
-  static const char  *be_get_server_inline_fname ();
-  static const char  *be_get_server_template_inline_fname ();
+  static const char  *be_get_server_template_skeleton_fname (int base_name_only = 0);
+  static const char  *be_get_server_inline_fname (int base_name_only = 0);
+  static const char  *be_get_server_template_inline_fname (int base_name_only = 0);
 
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
-  static const char *be_get_client_hdr (String *idl_file_name);
+  // The parameter <base_name_only> set to 0 (no base name, but full
+  // name with output dir path, is useful, when I just want just the
+  // base name to use in #include's etc.
+  static const char *be_get_client_hdr (String *idl_file_name,
+                                        int base_name_only = 0);
   static const char *be_get_client_stub (String *idl_file_name);
-  static const char *be_get_client_inline (String *idl_file_name);
-  static const char *be_get_server_hdr (String *idl_file_name);
-  static const char *be_get_server_template_hdr (String *idl_file_name);
+  static const char *be_get_client_inline (String *idl_file_name,
+                                           int base_name_only = 0);
+  static const char *be_get_server_hdr (String *idl_file_name,
+                                        int base_name_only = 0);
+  static const char *be_get_server_template_hdr (String *idl_file_name,
+                                                 int base_name_only = 0);
   static const char *be_get_server_skeleton (String *idl_file_name);
-  static const char *be_get_server_template_skeleton (String *idl_file_name);
-  static const char *be_get_server_inline (String *idl_file_name);
-  static const char *be_get_server_template_inline (String *idl_file_name);
+  static const char *be_get_server_template_skeleton (String *idl_file_name,
+                                                      int base_name_only = 0);
+  static const char *be_get_server_inline (String *idl_file_name,
+                                           int base_name_only = 0);
+  static const char *be_get_server_template_inline (String *idl_file_name,
+                                                    int base_name_only = 0);
 
   virtual const char* export_macro (void) const;
   // returns the macro name for exporting classes in Win32 DLL.
@@ -385,7 +397,22 @@ public:
   
   virtual const char* server_template_inline_ending (void) const;
   // Get the server_template_inline_ending.
-  
+
+  virtual void output_dir (const char* s);
+  // Set the directory where all the IDL-Compiler-Generated files are
+  // to be kept. Default  is current directory from which the
+  // <tao_idl> is called. 
+
+  virtual const char* output_dir (void) const;
+  // Get the directory where all the IDL-Compiler-Generated files are
+  // to be kept. Default  is current directory from which the
+  // <tao_idl> is called. 
+
+  virtual void perfect_hasher (const char* s);
+  // Set the path for the perfect hashing program (GPERF).
+
+  virtual const char* perfect_hasher (void) const;
+  // Get the path for the perfect hashing program (GPERF). 
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack
@@ -409,18 +436,18 @@ private:
   UTL_StrList			*pd_pragmas;		// List of pragmas
 							// as its being built
   idl_bool			pd_read_from_stdin;	// Reading from stdin?
-  String			**pd_include_file_names;// Array of file names
-  unsigned long			pd_n_include_file_names;// How many
-  unsigned long			pd_n_alloced_file_names;// How many alloced
+  String			**pd_include_file_names;// Array of file names.
+  unsigned long			pd_n_include_file_names;// How many.
+  unsigned long			pd_n_alloced_file_names;// How many alloced.
 
-  ParseState			pd_parse_state;		// Parse state we're in
+  ParseState			pd_parse_state;		// Parse state we're in.
 
   // Operations
   long				seen_include_file_before(String *);
 							// Seen this include
 							// before?
 
-  String                        *pd_idl_src_file;       // IDL source file
+  String                        *pd_idl_src_file;       // IDL source file.
 
   char* export_macro_;
   char* export_include_;
@@ -452,10 +479,18 @@ private:
   
   // Server's template inline file name ending. Default is "S_T.i".
   char* server_template_inline_ending_;
+
+  // Path for the perfect hash generator(gperf) program. Default
+  // is $ACE_ROOT/bin/gperf.
+  char* perfect_hasher_;
+  
+  // Directory where all the IDL-Compiler-Generated files are to be
+  // kept. Default value is 0 for this string which means the current
+  // directory from which the <tao_idl> is called.
+  char* output_dir_;
 };
 
 #endif	//_IDL_IDL_GLOBAL_HH
-
 
 
 

@@ -528,10 +528,10 @@ private:
   // ACE_HANDLE for the file instead FILE*.
 
   TAO_OutStream *curr_os_;
-  // currently used out stream
+  // currently used out stream.
 
   be_decl *node_;
-  // save current node in this
+  // save current node in this.
 
   TAO_Visitor_Factory *visitor_factory_;
   // visitor factory object.
