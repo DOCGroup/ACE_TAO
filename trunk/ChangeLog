@@ -33,7 +33,7 @@ Sun Feb 10 16:28:30 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* TODO: Removed the ACE_USES_HIGH_BAUD_RATES macro since it no longer
 	  seems to be necessary.  Thanks to Olli Savia <ops@iki.fi> for
  	  reporting this.
-  
+
 	* ace/TTY_IO.cpp: Replaced the two strcmp() calls with one
 	  strcasecmp().  Thanks to Olli Savia <ops@iki.fi> for reporting
  	  this.
@@ -45,7 +45,7 @@ Sat Feb  9 15:17:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  it started mapping them to a smaller range. The graphs looked
 	  very ugly. The new version fixes the problem and hence a change
 	  in path.
-	
+
 Fri Feb  8 22:56:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Fixed a warning in TRU 64 builds.
