@@ -1,3 +1,26 @@
+Mon Oct 22 15:41:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Endpoint.cpp (is_equivalent): 
+	* tao/Strategies/DIOP_Endpoint.cpp: Instead of checking the
+	  hostname in the above method, we check the ip addresses. This
+	  solves the following problems
+
+	  (1) If the a connection is created using an IOR to a host A
+	      using a dotted decimal address and at some later point in
+	      time a corbaloc call uses the host name to resolve a service
+	      on the same machine, we happen to create a new connection 
+
+	  (2) Variation of 1, if the initial connection is established
+	      using a fully qualified name and the corbaloc uses a partial
+	      name. 
+
+	  (3) If an alias'ed name is used.
+
+	  Thanks to Jonathan Reis <reis@stentor.com>,  Wayne Erchak
+	  <wayne@stentor.com> and Chris Hughes <chughes@stentor.com> for
+	  finding this one out and providing a patch. 
+	  
+
 Mon Oct 22 07:54:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/SecurityLevel1/makefile:

@@ -177,8 +177,9 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     return 0;
 
   return
-    this->port_ == endpoint->port_
-    && ACE_OS::strcmp (this->host_.in (), endpoint->host_.in ()) == 0;
+    (this->port_ == endpoint->port_)
+    && (this->object_addr_.get_ip_address () ==
+        endpoint->object_addr_.get_ip_address());
 }
 
 CORBA::ULong
