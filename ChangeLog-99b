@@ -1,15 +1,21 @@
+Fri May 21 10:34:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/gethrtime.cpp,Makefile (gethrtime on Green
+          Hills/VxWorks): reverted to building gethrtime.cpp with g++, because
+          the ghs assembly code didn't work properly.
+
 Fri May 21 10:10:13 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Updated information about building egcs' C++
- 	  shared libraries with an example, and emphasized the fact that
- 	  the `--enable-shared' configuration option is not an egcs
- 	  run-time option.  Thanks to Wallace Owen <owen@visicom.com> for
- 	  motivating this.
+        * ACE-INSTALL.html: Updated information about building egcs' C++
+          shared libraries with an example, and emphasized the fact that
+          the `--enable-shared' configuration option is not an egcs
+          run-time option.  Thanks to Wallace Owen <owen@visicom.com> for
+          motivating this.
 
 Fri May 21 09:15:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-sunos5.5.h:
-	  Added ACE_HAS_NONCONST_SELECT_TIMEVAL here too
+        * ace/config-sunos5.5.h:
+          Added ACE_HAS_NONCONST_SELECT_TIMEVAL here too
 
 Fri May 21 07:53:58 1999  Steve Huston  <shuston@riverace.com>
 
@@ -36,24 +42,24 @@ Thu May 20 18:01:24 1999  Steve Huston  <shuston@riverace.com>
 
 Thu May 20 17:47:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.h (ACE_DES_ARRAY_FREE_*): Added new macros to facilitate
-	  proper destruction of arrays.
+        * ace/OS.h (ACE_DES_ARRAY_FREE_*): Added new macros to facilitate
+          proper destruction of arrays.
 
-	* ace/Containers_T.cpp (ACE_Array_Base): Changed ACE_Array_Base to
-	  use the new ACE_DES_ARRAY_FREE_* macros in order to prevent the
-	  memory leaks.
+        * ace/Containers_T.cpp (ACE_Array_Base): Changed ACE_Array_Base to
+          use the new ACE_DES_ARRAY_FREE_* macros in order to prevent the
+          memory leaks.
 
 Thu May 20 17:46:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Fixed Alpha configurations.  Thanks to
-	  Christian Schuderer <Christian.Schuderer@erl9.siemens.de> for
-	  reporting this.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Fixed Alpha configurations.  Thanks to
+          Christian Schuderer <Christian.Schuderer@erl9.siemens.de> for
+          reporting this.
 
 Thu May 20 15:35:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/TkReactor_Test.cpp:
-	  It was not compiling if ACE_HAS_TK was not defined.
+        * tests/TkReactor_Test.cpp:
+          It was not compiling if ACE_HAS_TK was not defined.
 
 Thu May 20 15:33:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
