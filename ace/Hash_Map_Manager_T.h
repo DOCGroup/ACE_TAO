@@ -44,10 +44,10 @@ public:
   ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev);
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
+  # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   /// Destructor.
   ~ACE_Hash_Map_Entry (void);
-#endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
+  #endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
   /// Key used to look up an entry.
   EXT_ID ext_id_;
