@@ -43,7 +43,7 @@ public:
                                              PortableServer::POA_ptr adapter,
                                              const char *operation,
                                              PortableServer::ServantLocator::Cookie &the_cookie,
-                                             CORBA::Environment &env);
+                                             CORBA::Environment &ACE_TRY_ENV);
   // This method is invoked by a POA whenever it receives a request
   // for MyFoo object that is not currently active.  When the POA is
   // created using the NON_RETAIN policy the Active Object Map is not
@@ -59,7 +59,7 @@ public:
                            const char *operation,
                            PortableServer::ServantLocator::Cookie the_cookie,
                            PortableServer::Servant the_servant,
-                           CORBA::Environment &env);
+                           CORBA::Environment &ACE_TRY_ENV);
   // This method is invoked whenever a MyFooServant completes a
   // request. As the Servant Loactor interface is used when the POA
   // doesnt maintain the Active Object Map, its necessary to get rid
