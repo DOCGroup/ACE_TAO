@@ -133,25 +133,11 @@
 <%endfor%>
 			</File>
 <%endif%>
-<%if(grouped_source_files)%>
-<%foreach(grouped_source_files)%>
-			<Filter
-				Name="<%grouped_source_file%>"
-				Filter="">
-<%foreach(grouped_source_file->files)%>
-				<File
-					RelativePath="<%grouped_source_file->file%>">
-				</File>
-<%endfor%>
-			</Filter>
-<%endfor%>
-<%else%>
 <%foreach(source_files)%>
 			<File
 				RelativePath="<%source_file%>">
 			</File>
 <%endfor%>
-<%endif%>
 		</Filter>
 <%endif%>
 <%endif%>
