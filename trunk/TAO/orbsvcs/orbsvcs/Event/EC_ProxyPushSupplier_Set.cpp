@@ -36,7 +36,7 @@ TAO_EC_ProxyPushSupplier_Set::disconnected_i (
       CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->all_suppliers_.remove (supplier) != 0)
-    ACE_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR ());
+    return; // ACE_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR ());
   supplier->_decr_refcnt ();
 }
 

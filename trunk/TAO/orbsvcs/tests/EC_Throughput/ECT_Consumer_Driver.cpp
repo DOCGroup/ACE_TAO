@@ -238,14 +238,20 @@ ECT_Consumer_Driver::connect_consumers
 void
 ECT_Consumer_Driver::dump_results (void)
 {
+  ECT_Driver::Throughput_Stats throughput;
+  ECT_Driver::Latency_Stats latency;
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02.2d", i);
 
       this->consumers_[i]->dump_results (buf);
+      this->consumers_[i]->accumulate (throughput);
+      this->consumers_[i]->accumulate (latency);
     }
-  this->dump_latency_results ("Latency");
+  throughput.dump_results ("ECT_Consumer", "accumulated");
+  latency.dump_results ("ECT_Consumer", "accumulated");
+  // this->dump_latency_results ("Latency");
 }
 
 void

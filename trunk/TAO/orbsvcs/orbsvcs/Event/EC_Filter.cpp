@@ -76,6 +76,8 @@ TAO_EC_Null_Filter::max_event_size (void) const
 int
 TAO_EC_Null_Filter::can_match (const RtecEventComm::EventHeader&) const
 {
+  // @@ This method should be correctly so we can implement null
+  // filtering at the consumers but real filtering on the suppliers.
   return 1;
 }
 

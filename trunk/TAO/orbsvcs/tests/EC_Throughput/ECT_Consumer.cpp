@@ -103,20 +103,20 @@ Test_Consumer::disconnect (CORBA::Environment &TAO_IN_ENV)
 void
 Test_Consumer::dump_results (const char* name)
 {
-  ACE_Time_Value tv;
-  this->timer_.elapsed_time (tv);
-  double f = 1.0 / (tv.sec () + tv.usec () / 1000000.0);
-  double eps = this->recv_count_ * f;
+  this->throughput_.dump_results ("ECT_Consumers", name);
+  this->latency_.dump_results ("ECT_Consumers", name);
+}
 
-  ACE_DEBUG ((LM_DEBUG,
-              "ECT_Consumer (%s):\n"
-              "    Total time: %d.%08.8d (secs.usecs)\n"
-              "    Total events: %d\n"
-              "    Events per second: %.3f\n",
-              name,
-              tv.sec (), tv.usec (),
-              this->recv_count_,
-              eps));
+void
+Test_Consumer::accumulate (ECT_Driver::Throughput_Stats& stats) const
+{
+  stats.accumulate (this->throughput_);
+}
+
+void
+Test_Consumer::accumulate (ECT_Driver::Latency_Stats& stats) const
+{
+  stats.accumulate (this->latency_);
 }
 
 void
@@ -133,7 +133,9 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 
   // We start the timer as soon as we receive the first event...
   if (this->recv_count_ == 0)
-    this->timer_.start ();
+    this->throughput_.start ();
+
+  this->throughput_.sample ();
 
   this->recv_count_ += events.length ();
 
@@ -158,7 +160,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
             {
               // We stop the timer as soon as we realize it is time to
               // do so.
-              this->timer_.stop ();
+              this->throughput_.stop ();
               this->driver_->shutdown_consumer (this->cookie_, TAO_IN_ENV);
             }
         }
@@ -168,6 +170,11 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
           ORBSVCS_Time::TimeT_to_hrtime (creation,
                                          e.header.creation_time);
 
+          const ACE_hrtime_t now = ACE_OS::gethrtime ();
+          const ACE_hrtime_t elapsed = now - creation;
+          this->latency_.sample (elapsed);
+
+#if 0
           ACE_hrtime_t ec_recv;
           ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
                                          e.header.ec_recv_time);
@@ -176,12 +183,10 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
           ORBSVCS_Time::TimeT_to_hrtime (ec_send,
                                          e.header.ec_send_time);
 
-          const ACE_hrtime_t now = ACE_OS::gethrtime ();
-          const ACE_hrtime_t elapsed = now - creation;
-          this->driver_->end_to_end (elapsed);
           this->driver_->supplier_to_ec (ec_recv - creation);
           this->driver_->inside_ec (ec_send - ec_recv);
           this->driver_->ec_to_consumer (now - ec_send);
+#endif /* 0 */
         }
     }
 }
