@@ -318,7 +318,7 @@ ImR_Locator_i::register_activator (const char* activator,
 void
 ImR_Locator_i::unregister_activator (const char * activator,
                                      CORBA::Long token
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ActivatorInfo info;
