@@ -97,9 +97,6 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   int result = 0;
   TAO_Reply_Dispatcher *rd = 0;
 
-  // Does the reply_dispatcher have a timeout?
-  CORBA::Boolean has_timeout = 0;
-
   // Grab the reply dispatcher for this id.
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
@@ -148,30 +145,17 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         return 0;
       }
 
-    has_timeout = rd->has_timeout ();
-
-    if (has_timeout == TAO_Reply_Dispatcher::TIMEOUT)
-      {
-        // Only when the RD has a timeout it makes sense to let other
-        // thread know that we have started dispatching.
-        // Just let the Reply_Dispatcher know that dispatching has
-        // started.
-        (void) rd->start_dispatch ();
-      }
+    // Do not move it outside the scope of the lock. A follower thread
+    // could have timedout unwinding teh stack and the reply
+    // dispatcher and that would mean the present thread could be left
+    // with a dangling pointer and may crash. To safeguard againt such
+    // cases we dispatch with the lock held.
+    // Dispatch the reply.
+    // They return 1 on success, and -1 on failure.
+    result =  rd->dispatch_reply (params);
   }
 
-  // Dispatch the reply.
-  // They return 1 on success, and -1 on failure.
-  int retval =  rd->dispatch_reply (params);
-
-  if (has_timeout == TAO_Reply_Dispatcher::TIMEOUT)
-    {
-      // Only when the RD has a timeout it makes sense to let other
-      // thread know that we have finished dispatching.
-      // Just let the Reply_Dispatcher know that dispatching is done.
-      (void) rd->end_dispatch ();
-    }
-  return retval;
+  return result;
 }
 
 int
