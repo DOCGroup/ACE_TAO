@@ -19,7 +19,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 VALUE value,
                                 DATA& data,
                                 Process_Function <DATA>* func,
-                                REFMAP& id_map)
+                                REF_MAP& id_map)
 {
   // the number of attributes
   int length = named_node_map->getLength();
@@ -86,7 +86,7 @@ void process_element (DOMNode* node,
                       DATA& data,
                       VALUE val,
                       Process_Function <DATA>* func,
-                      REFMAP& id_map)
+                      REF_MAP& id_map)
 {
   // fetch attributes
   DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -112,7 +112,7 @@ void process_sequential_element (DOMNode* node,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
                                  Process_Function <DATA>* func,
-                                 REFMAP& id_map)
+                                 REF_MAP& id_map)
 {
   if (node->hasAttributes ())
     {
@@ -122,5 +122,42 @@ void process_sequential_element (DOMNode* node,
       seq.length (i + 1);
       // call process only one element
       process_element(node, doc, iter, seq[i], i, func, id_map);
+    }
+}
+
+/*
+ *  Process references
+ */
+
+inline void
+process_refs(DOMNode*& node,
+             CORBA::ULongSeq& seq,
+             int& index,
+             IDREF_MAP& idref_map)
+{
+  if (node->hasAttributes())
+    {
+      CORBA::ULong i (seq.length ());
+      seq.length (i + 1);
+      seq[i] = 0;
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          
+          int length = named_node_map->getLength ();
+          
+          for (int j = 0; j < length; j++)
+            {
+              DOMNode* attribute_node = named_node_map->item (j);
+              XStr strattrnodename (attribute_node->getNodeName ());
+              ACE_TString aceattrnodevalue = XMLString::transcode
+                (attribute_node->getNodeValue ());
+              if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+                {
+                  index = index + 1;
+                  idref_map.bind (index, aceattrnodevalue);
+                }
+            }
+        }
     }
 }
