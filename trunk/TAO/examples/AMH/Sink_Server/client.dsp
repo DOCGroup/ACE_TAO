@@ -123,7 +123,7 @@ SOURCE=.\Test.idl
 !IF  "$(CFG)" == "AMH_Sink_Server Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Test.idl
 InputName=Test
@@ -161,7 +161,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "AMH_Sink_Server Client - Win32 Debug"
 
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Test.idl
 InputName=Test
