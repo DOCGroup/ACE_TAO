@@ -101,13 +101,10 @@ sub modifyOrbRun {
     $p2 =~ s/^\s+//;
     $p2 =~ s/\s+$//;
 
-    if ($p2 eq "") {
-      $p2 = "TAO_default_environment()";
-    }
-
     # I am relying on convention here
-    if ($p2 !~ /,/ && $p2 =~ /env/i) {
-      $line = "$p1$p2, TAO_TestCombinedThreads::getTimeout()$p3\n";
+    if ($p2 !~ /\s/) {
+      $line = "$p1" . "TAO_TestCombinedThreads::getTimeout() " .
+              "TAO_ENV_ARG_PARAMETER$p3\n";
     }
   }
   elsif ($line =~ /(.*->run\s*\()([^\)]*)(\).*)/) {
@@ -119,8 +116,8 @@ sub modifyOrbRun {
     $p2 =~ s/\s+$//;
 
     # I am relying on convention here
-    if ($p2 !~ /,/ && $p2 =~ /env/i) {
-      $p3 = ", $p2$p3";
+    if ($p2 !~ /\s/ && $p2 =~ /env/i) {
+      $p3 = " TAO_ENV_ARG_PARAMETER$p3";
       $p2 = "";
     }
 
@@ -136,13 +133,10 @@ sub modifyOrbRun {
     $p2 =~ s/^\s+//;
     $p2 =~ s/\s+$//;
 
-    if ($p2 eq "") {
-      $p2 = "TAO_default_environment()";
-    }
-
     # I am relying on convention here
-    if ($p2 !~ /,/ && $p2 =~ /env/i) {
-      $line = "$p1$p2, TAO_TestCombinedThreads::getTimeout()$p3\n";
+    if ($p2 !~ /\s/ && $p2 =~ /env/i) {
+      $line = "$p1" . "TAO_TestCombinedThreads::getTimeout() ".
+              "TAO_ENV_ARG_PARAMETER$p3\n";
     }
   }
   return $line;
@@ -172,11 +166,19 @@ sub lookForOrbInit {
 sub replaceOrbName {
   my($line) = shift;
   if ($orbInitArg < 3) {
+    if ($line =~ /TAO_ENV_ARG_PARAMETER/) {
+      $line =~ s/TAO_ENV_ARG_PARAMETER/,TAO_ENV_ARG_PARAMETER/;
+    }
     my($length)   = length($line);
     my($previous) = 0;
     for(my $i = 0; $i < $length; $i++) {
       my($ch) = substr($line, $i, 1);
-      if ($ch eq "," || $ch eq ")") {
+      ## Add the substr check because the TAO_ENV_ARG_PARAMETER doesn't
+      ## have a comma before it and the above search and replace doesn't
+      ## work for multi-lined ORB_init's
+      if ($ch eq "," || $ch eq ")" ||
+          ($orbInitArg == 2 && $i == $length - 1 &&
+           substr($line, $previous) !~ /^\s+$/)) {
         $orbInitArg++;
         if ($ch eq ")" && $orbInitArg == 2) {
           $orbInitArg = 3;
@@ -198,6 +200,9 @@ sub replaceOrbName {
         $previous = $i + 1;
       }
     }
+    if ($line =~ /,TAO_ENV_ARG_PARAMETER/) {
+      $line =~ s/,TAO_ENV_ARG_PARAMETER/ TAO_ENV_ARG_PARAMETER/;
+    }
   }
   return $line;
 }
@@ -218,6 +223,9 @@ sub lookForInitChildPOA {
 sub replaceChildOrbName {
   my($line) = shift;
   if ($initChildPOAArg < 4) {
+    if ($line =~ /TAO_ENV_ARG_PARAMETER/) {
+      $line =~ s/TAO_ENV_ARG_PARAMETER/,TAO_ENV_ARG_PARAMETER/;
+    }
     my($length)   = length($line);
     my($previous) = 0;
     my($replace) = " TAO_TestCombinedThreads::getRandomString(" .
@@ -225,7 +233,12 @@ sub replaceChildOrbName {
 
     for(my $i = 0; $i < $length; $i++) {
       my($ch) = substr($line, $i, 1);
-      if ($ch eq "," || $ch eq ")") {
+      ## Add the substr check because the TAO_ENV_ARG_PARAMETER doesn't
+      ## have a comma before it and the above search and replace doesn't
+      ## work for multi-lined ORB_init's
+      if ($ch eq "," || $ch eq ")" ||
+          ($orbInitArg == 2 && $i == $length - 1 &&
+           substr($line, $previous) !~ /^\s+$/)) {
         $initChildPOAArg++;
         if ($initChildPOAArg == 4) {
           my($size) = $i - $previous;
@@ -241,6 +254,9 @@ sub replaceChildOrbName {
         }
         $previous = $i + 1;
       }
+    }
+    if ($line =~ /,TAO_ENV_ARG_PARAMETER/) {
+      $line =~ s/,TAO_ENV_ARG_PARAMETER/ TAO_ENV_ARG_PARAMETER/;
     }
   }
   return $line;
