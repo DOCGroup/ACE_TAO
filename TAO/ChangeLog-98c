@@ -1,25 +1,25 @@
 Wed Oct 14 12:05:37 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Param_Test/ub_struct_seq.h
-	* tests/Param_Test/ub_struct_seq.cpp
-	* tests/Param_Test/param_test_i.h
-	* tests/Param_Test/param_test_i.cpp
-	* tests/Param_Test/param_test.idl
-	* tests/Param_Test/helper.h
-	* tests/Param_Test/helper.cpp
-	* tests/Param_Test/driver.cpp 
-	  Added test for unbounded sequence of structs. This is in
- 	  response to a bug report from Seung-Lee Hoon
- 	  <tarjan@lgsoft.com>.  Thanks to Andy and Carlos for help.
-	
+        * tests/Param_Test/ub_struct_seq.h
+        * tests/Param_Test/ub_struct_seq.cpp
+        * tests/Param_Test/param_test_i.h
+        * tests/Param_Test/param_test_i.cpp
+        * tests/Param_Test/param_test.idl
+        * tests/Param_Test/helper.h
+        * tests/Param_Test/helper.cpp
+        * tests/Param_Test/driver.cpp
+          Added test for unbounded sequence of structs. This is in
+          response to a bug report from Seung-Lee Hoon
+          <tarjan@lgsoft.com>.  Thanks to Andy and Carlos for help.
+
 Wed Oct 14 11:20:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.25 released.
 
 Wed Oct 14 10:47:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: 
-	  Fixed template instantiations.
+        * tao/ORB_Core.cpp:
+          Fixed template instantiations.
 
 Wed Oct 14 00:42:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -27,46 +27,46 @@ Wed Oct 14 00:42:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Oct 13 23:03:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.h: 
-	* tao/ORB_Core.i: 
-	* tao/ORB_Core.cpp: 
-	* tao/Invocation.i: 
-	* tao/Connect.cpp: 
-	* tao/CDR.h: 
-	* tao/CDR.cpp: 
-	  The input CDR can be created using a user provided data block,
-	  this is used to select the right kind of locking for the
-	  Data_Block reference count.
-	  The ORB_Core acts as a Factory of Data_Blocks, selecting the
-	  right type according to the -ORBinputcdrallocator option.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/Invocation.i:
+        * tao/Connect.cpp:
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          The input CDR can be created using a user provided data block,
+          this is used to select the right kind of locking for the
+          Data_Block reference count.
+          The ORB_Core acts as a Factory of Data_Blocks, selecting the
+          right type according to the -ORBinputcdrallocator option.
 
-	* orbsvcs/Event_Service/svc.conf: 
-	  Use the appropiate allocator for the EC, because it shares the
-	  CDR buffers between several threads (to minimize data copying).
+        * orbsvcs/Event_Service/svc.conf:
+          Use the appropiate allocator for the EC, because it shares the
+          CDR buffers between several threads (to minimize data copying).
 
 Tue Oct 13 22:15:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp (svc): Must set the
- 	  wr_ptr correctly.  Otherwise, the ORB doesn't know how much to
- 	  data to encode.
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp (svc): Must set the
+          wr_ptr correctly.  Otherwise, the ORB doesn't know how much to
+          data to encode.
 
-	* orbsvcs/orbsvcs/Event/Event_Manip.cpp (_create): event_set
- 	  length must be calculated before the call to get_buffer() since
-	  that call will change the length.
+        * orbsvcs/orbsvcs/Event/Event_Manip.cpp (_create): event_set
+          length must be calculated before the call to get_buffer() since
+          that call will change the length.
 
 Tue Oct 13 17:04:15 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/Any.cpp: Modified copy constructor and assignment operator
- 	  to avoid encoding the value of the source Any when it is 0
- 	  (which it is if the Any was constructed from just a
- 	  typecode. Perhaps this sequence of calls should never be made,
- 	  but this guards against it anyway.
+          to avoid encoding the value of the source Any when it is 0
+          (which it is if the Any was constructed from just a
+          typecode. Perhaps this sequence of calls should never be made,
+          but this guards against it anyway.
 
 Tue Oct 13 10:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.cpp: Thread ids in some platforms (ex: HP-UX) are
- 	  structures, so they cannot be initialized to 0.  Thanks to David
- 	  Janello <David.Janello@abnamro.com> for reporting this.
+        * tao/ORB.cpp: Thread ids in some platforms (ex: HP-UX) are
+          structures, so they cannot be initialized to 0.  Thanks to David
+          Janello <David.Janello@abnamro.com> for reporting this.
 
 Tue Oct 13 09:16:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -789,6 +789,11 @@ Mon Oct  5 07:54:21 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
         * tao/Server_Request.{h, cpp}:
 
           The marshal method no longer takes in the _skel_env parameter
+
+Mon Oct 05 06:44:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp (run): declare loop
+          index "i" outside of loop because it is used again.
 
 Sun Oct  4 19:48:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
