@@ -1,3 +1,36 @@
+Fri Sep  8 21:00:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ be/be_visitor_argument/arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/argument.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+
+	  Started out as a fix of a bug reported by 
+	  Christopher Kohlhoff <chris@kohlhoff.com>. If a nested portable
+	  interceptor class has a private member that's a pointer type (for
+	  example string), we generate the private member as char *&, but
+	  the constructor assigns a char * to this member. Some compilers
+  	  complain about this. The reference seems unnecessary in this case,
+	  so it has been removed in the generated header file.
+
+	  There are also many cosmetic modifications to generated code,
+	  indenting, formatting, etc. in both stub and skeleton. Also 
+	  cosmetic changes to IDL compiler source code.
+
 Fri Sep  8 20:50:00 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
