@@ -122,7 +122,7 @@ public: // Should be protected:
   ACE_Module<ACE_SYNCH_USE> *module (void) const;
 
   /**
-   * Flush the queue, i.e., close it down and free all of the enqueued
+   * Flush the task's queue, i.e., free all of the enqueued
    * message blocks and releases any threads blocked on the queue.
    * Note that if this conflicts with the C++ iostream <flush>
    * function, just rewrite the iostream function as ::<flush>.
