@@ -146,7 +146,7 @@ ACE_Unbounded_Stack<T>::delete_all_nodes (void)
   while (this->is_empty () == 0)
     {
       ACE_Node<T> *temp = this->head_->next_;
-      this->head_ = temp->next_;
+      this->head_->next_ = temp->next_;
       delete temp;
     }
 
