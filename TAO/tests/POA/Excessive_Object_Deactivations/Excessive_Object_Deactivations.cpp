@@ -35,7 +35,7 @@ public:
 };
 
 PortableServer::POA_ptr
-test_i::_default_POA (CORBA_Environment &ACE_TRY_ENV)
+test_i::_default_POA (CORBA_Environment & /*ACE_TRY_ENV*/)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -214,14 +214,14 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       test_object_deactivation (root_poa,
-                                id,
+                                id.in (),
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       id = PortableServer::string_to_ObjectId ("good id");
 
       test_object_deactivation (child_poa,
-                                id,
+                                id.in (),
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
