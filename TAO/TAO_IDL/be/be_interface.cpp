@@ -45,7 +45,7 @@ be_interface::be_interface (void)
   : skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
-    has_mixed_parentage_ (I_FALSE)
+    has_mixed_parentage_ (-1)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
@@ -74,16 +74,10 @@ be_interface::be_interface (UTL_ScopedName *n,
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
-    has_mixed_parentage_ (I_FALSE)
+    has_mixed_parentage_ (-1)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
-
-  if (! abstract && this->node_type () == AST_Decl::NT_interface)
-    {
-      this->analyze_parentage (ih,
-                               nih);
-    }
 }
 
 be_interface::~be_interface (void)
@@ -1550,19 +1544,20 @@ be_interface::gen_optable_entries (const char *full_skeleton_name,
 }
 
 void
-be_interface::analyze_parentage (AST_Interface **parents,
-                                 long n_parents)
+be_interface::analyze_parentage (void)
 {
-  for (long i = 0; i < n_parents; ++i)
+  this->has_mixed_parentage_ = 0;
+
+  for (long i = 0; i < this->pd_n_inherits; ++i)
     {
-      if (parents[i]->is_abstract ())
+      if (this->pd_inherits[i]->is_abstract ())
         {
-          this->has_mixed_parentage_ = I_TRUE;
+          this->has_mixed_parentage_ = 1;
           break;
         }
     }
 
-  if (this->has_mixed_parentage_)
+  if (this->has_mixed_parentage_ == 1)
     {
       be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }
@@ -2512,9 +2507,19 @@ be_interface::replacement (void)
   return this->strategy_->replacement ();
 }
 
-idl_bool
-be_interface::has_mixed_parentage (void) const
+int
+be_interface::has_mixed_parentage (void)
 {
+  if (this->is_abstract_)
+    {
+      return 0;
+    }
+
+  if (this->has_mixed_parentage_ == -1)
+    {
+      this->analyze_parentage ();
+    }
+
   return this->has_mixed_parentage_;
 }
 
