@@ -135,7 +135,7 @@ sub read_file {
     close($ih);
   }
   else {
-    $errorString = 'Unable to open for reading';
+    $errorString = "Unable to open \"$input\" for reading";
     $status = 0;
   }
 
