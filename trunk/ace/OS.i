@@ -12220,6 +12220,39 @@ ACE_OS_CString::wchar_rep (void)
 }
 
 ACE_INLINE int
+ACE_OS_Recursive_Thread_Mutex_Guard::acquire (void)
+{
+  return owner_ = ACE_OS::recursive_mutex_lock (&lock_);
+}
+
+ACE_INLINE int
+ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
+{
+  if (owner_ == -1)
+    return 0;
+  else
+    {
+      owner_ = -1;
+      return ACE_OS::recursive_mutex_unlock (&lock_);
+    }
+}
+
+ACE_INLINE
+ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
+  ACE_recursive_thread_mutex_t &m)
+   : lock_ (m),
+     owner_ (-1)
+{
+  acquire ();
+}
+
+ACE_INLINE int
+ACE_OS_Recursive_Thread_Mutex_Guard::locked (void)
+{
+  return owner_ != -1;
+}
+
+ACE_INLINE int
 ACE_Countdown_Time::start (void)
 {
   if (this->max_wait_time_ != 0)

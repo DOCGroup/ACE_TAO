@@ -1,9 +1,31 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Synch_T.i
-
 #include "ace/Thread.h"
+
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Guard<ACE_LOCK>::acquire (void)
+{
+  return this->owner_ = this->lock_->acquire ();
+}
+
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Guard<ACE_LOCK>::tryacquire (void)
+{
+  return this->owner_ = this->lock_->tryacquire ();
+}
+
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Guard<ACE_LOCK>::release (void)
+{
+  if (this->owner_ != -1)
+    {
+      this->owner_ = -1;
+      return this->lock_->release ();
+    }
+  else
+    return 0;
+}
 
 template <class ACE_LOCK> ACE_INLINE
 ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l)
@@ -34,30 +56,6 @@ ACE_Guard<ACE_LOCK>::~ACE_Guard (void)
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::acquire (void)
-{
-  return this->owner_ = this->lock_->acquire ();
-}
-
-template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::tryacquire (void)
-{
-  return this->owner_ = this->lock_->tryacquire ();
-}
-
-template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::release (void)
-{
-  if (this->owner_ != -1)
-    {
-      this->owner_ = -1;
-      return this->lock_->release ();
-    }
-  else
-    return 0;
-}
-
-template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::locked (void)
 {
   return this->owner_ != -1;
@@ -76,6 +74,30 @@ ACE_Write_Guard<ACE_LOCK>::ACE_Write_Guard (ACE_LOCK &m)
   this->acquire_write ();
 }
 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Write_Guard<ACE_LOCK>::acquire_write (void)
+{
+  return this->owner_ = this->lock_->acquire_write ();
+}
+
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Write_Guard<ACE_LOCK>::acquire (void)
+{
+  return this->owner_ = this->lock_->acquire_write ();
+}
+
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Write_Guard<ACE_LOCK>::tryacquire_write (void)
+{
+  return this->owner_ = this->lock_->tryacquire_write ();
+}
+
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Write_Guard<ACE_LOCK>::tryacquire (void)
+{
+  return this->owner_ = this->lock_->tryacquire_write ();
+}
+
 template <class ACE_LOCK> ACE_INLINE
 ACE_Write_Guard<ACE_LOCK>::ACE_Write_Guard (ACE_LOCK &m,
                                             int block)
@@ -88,38 +110,38 @@ ACE_Write_Guard<ACE_LOCK>::ACE_Write_Guard (ACE_LOCK &m,
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Write_Guard<ACE_LOCK>::acquire_write (void) 
+ACE_Read_Guard<ACE_LOCK>::acquire_read (void)
 {
-  return this->owner_ = this->lock_->acquire_write (); 
+  return this->owner_ = this->lock_->acquire_read ();
 }
 
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Write_Guard<ACE_LOCK>::acquire (void) 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Read_Guard<ACE_LOCK>::acquire (void)
 {
-  return this->owner_ = this->lock_->acquire_write (); 
+  return this->owner_ = this->lock_->acquire_read ();
 }
 
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Write_Guard<ACE_LOCK>::tryacquire_write (void) 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Read_Guard<ACE_LOCK>::tryacquire_read (void)
 {
-  return this->owner_ = this->lock_->tryacquire_write (); 
+  return this->owner_ = this->lock_->tryacquire_read ();
 }
 
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Write_Guard<ACE_LOCK>::tryacquire (void) 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Read_Guard<ACE_LOCK>::tryacquire (void)
 {
-  return this->owner_ = this->lock_->tryacquire_write (); 
+  return this->owner_ = this->lock_->tryacquire_read ();
 }
 
-template <class ACE_LOCK> ACE_INLINE 
+template <class ACE_LOCK> ACE_INLINE
 ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m)
   : ACE_Guard<ACE_LOCK> (&m)
 {
   this->acquire_read ();
 }
 
-template <class ACE_LOCK> ACE_INLINE 
-ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m, 
+template <class ACE_LOCK> ACE_INLINE
+ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m,
                                           int block)
   : ACE_Guard<ACE_LOCK> (&m)
 {
@@ -127,30 +149,6 @@ ACE_Read_Guard<ACE_LOCK>::ACE_Read_Guard (ACE_LOCK &m,
     this->acquire_read ();
   else
     this->tryacquire_read ();
-}
-
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Read_Guard<ACE_LOCK>::acquire_read (void) 
-{
-  return this->owner_ = this->lock_->acquire_read (); 
-}
-
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Read_Guard<ACE_LOCK>::acquire (void) 
-{ 
-  return this->owner_ = this->lock_->acquire_read (); 
-}
-
-template <class ACE_LOCK> ACE_INLINE int
-ACE_Read_Guard<ACE_LOCK>::tryacquire_read (void) 
-{ 
-  return this->owner_ = this->lock_->tryacquire_read (); 
-}
-
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Read_Guard<ACE_LOCK>::tryacquire (void) 
-{ 
-  return this->owner_ = this->lock_->tryacquire_read (); 
 }
 
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE

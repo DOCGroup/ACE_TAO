@@ -1,3 +1,22 @@
+Fri Aug 27 11:29:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.*: moved ACE_OS_Recursive_Thread_Mutex_Guard from
+          OS.cpp to OS.h so that Log_Msg.cpp can use it.
+
+        * ace/Log_Msg.cpp: replaced use of ACE_Guards with
+          ACE_OS_Thread_Recursive_Mutex. [Bug 262]
+
+        * ace/OS.h (ACE_OS_Recursive_Thread_Mutex_Guard::lock):
+          added this method.
+
+        * ace/OS.cpp (ACE_OS_GUARD,ACE_TSS_CLEANUP_GUARD,
+          ACE_TSS_BASE_GUARD): fixed to use
+          ACE_OS_Recursive_Thread_Mutex_Guard::lock.  Added
+          _RETURN versions.
+
+        * ace/Synch_T.i: reordered some methods to avoid
+          use before definition.
+
 Fri Aug 27 09:53:09 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/ATM_Stream.{h,cpp}: added get_vpi_vci method.

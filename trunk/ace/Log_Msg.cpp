@@ -52,6 +52,20 @@ ACE_RCSID(ace, Log_Msg, "$Id$")
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+# define ACE_LOG_MSG_GUARD(OBJ) \
+    ACE_OS_Recursive_Thread_Mutex_Guard OBJ ( \
+      *ACE_Log_Msg_Manager::get_lock ()); \
+    if (! OBJ.locked ()) return;
+# define ACE_LOG_MSG_GUARD_RETURN(OBJ,RETURN) \
+    ACE_OS_Recursive_Thread_Mutex_Guard OBJ ( \
+      *ACE_Log_Msg_Manager::get_lock ()); \
+    if (! OBJ.locked ()) return RETURN;
+#else  /* ! ACE_MT_SAFE */
+# define ACE_LOG_MSG_GUARD(OBJ)
+# define ACE_LOG_MSG_GUARD_RETURN(OBJ,RETURN)
+#endif /* ! ACE_MT_SAFE */
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   int ACE_Log_Msg::key_created_ = 0;
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
     defined (ACE_HAS_TSS_EMULATION)
@@ -88,19 +102,19 @@ public:
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static void close (void);
 
-  static ACE_Recursive_Thread_Mutex *get_lock (void);
+  static ACE_recursive_thread_mutex_t *get_lock (void);
 
 private:
-  static ACE_Recursive_Thread_Mutex *lock_;
+  static ACE_recursive_thread_mutex_t *lock_;
 #endif /* ! ACE_MT_SAFE */
 };
 
 ACE_LOG_MSG_IPC_STREAM *ACE_Log_Msg_Manager::message_queue_ = 0;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-ACE_Recursive_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
+ACE_recursive_thread_mutex_t *ACE_Log_Msg_Manager::lock_ = 0;
 
-ACE_Recursive_Thread_Mutex *
+ACE_recursive_thread_mutex_t *
 ACE_Log_Msg_Manager::get_lock (void)
 {
   // This function is called by the first thread to create an ACE_Log_Msg
@@ -112,7 +126,7 @@ ACE_Log_Msg_Manager::get_lock (void)
       ACE_NO_HEAP_CHECK;
 
       ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_,
-                        ACE_Recursive_Thread_Mutex,
+                        ACE_recursive_thread_mutex_t,
                         0);
 
       // Allocate the ACE_Log_Msg IPC instance.
@@ -378,8 +392,7 @@ ACE_Log_Msg::flags (void)
 {
   ACE_TRACE ("ACE_Log_Msg::flags");
   u_long result;
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Log_Msg_Manager::get_lock (), 0));
+  ACE_LOG_MSG_GUARD_RETURN (ace_mon, 0)
 
   result = ACE_Log_Msg::flags_;
   return result;
@@ -389,8 +402,7 @@ void
 ACE_Log_Msg::set_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::set_flags");
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-                     *ACE_Log_Msg_Manager::get_lock ()));
+  ACE_LOG_MSG_GUARD (ace_mon)
 
   ACE_SET_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -399,8 +411,7 @@ void
 ACE_Log_Msg::clr_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::clr_flags");
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-                     *ACE_Log_Msg_Manager::get_lock ()));
+  ACE_LOG_MSG_GUARD (ace_mon)
 
   ACE_CLR_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -410,7 +421,7 @@ ACE_Log_Msg::acquire (void)
 {
   ACE_TRACE ("ACE_Log_Msg::acquire");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  return ACE_Log_Msg_Manager::get_lock ()->acquire ();
+  return ACE_OS::recursive_mutex_lock (ACE_Log_Msg_Manager::get_lock ());
 #else  /* ! ACE_MT_SAFE */
   return 0;
 #endif /* ! ACE_MT_SAFE */
@@ -454,7 +465,7 @@ ACE_Log_Msg::release (void)
   ACE_TRACE ("ACE_Log_Msg::release");
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  return ACE_Log_Msg_Manager::get_lock ()->release ();
+  return ACE_OS::recursive_mutex_unlock (ACE_Log_Msg_Manager::get_lock ());
 #else  /* ! ACE_MT_SAFE */
   return 0;
 #endif /* ! ACE_MT_SAFE */
@@ -479,8 +490,8 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-                     *ACE_Log_Msg_Manager::get_lock ()));
+  ACE_LOG_MSG_GUARD (ace_mon)
+
   ++instance_count_;
 }
 
@@ -494,8 +505,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   // If ACE_Log_Msg_Manager::close () is called, the lock will
   // be deleted.
   {
-    ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-                       *ACE_Log_Msg_Manager::get_lock ()));
+    ACE_LOG_MSG_GUARD (ace_mon)
     instance_count = --instance_count_;
   }
   // Release the guard.
@@ -541,8 +551,8 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
                    LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                            *ACE_Log_Msg_Manager::get_lock (), -1));
+
+  ACE_LOG_MSG_GUARD_RETURN (ace_mon, -1)
 
   if (prog_name)
     {
@@ -1175,8 +1185,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 #endif /* ACE_WIN32 */
 
       // Make sure that the lock is held during all this.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Log_Msg_Manager::get_lock (), -1));
+      ACE_LOG_MSG_GUARD_RETURN (ace_mon, -1)
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::STDERR)
@@ -1330,9 +1339,6 @@ ACE_Log_Msg::dump (void) const
                 this->thr_desc_->state ()));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
   ACE_Log_Msg_Manager::message_queue_->dump ();
-
-  ACE_MT (ACE_Log_Msg_Manager::get_lock ()->dump ());
-  // Synchronize output operations.
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
