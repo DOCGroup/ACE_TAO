@@ -1,3 +1,14 @@
+Fri Dec 26 18:04:06 1997    <nw1@JIG>
+
+	* ace/Containers.h: Added iterator traits for following classes.
+	     ACE_Unbounded_Set
+	     ACE_Unbounded_Queue
+	     ACE_Unbounded_Stack
+	     ACE_Double_Linked_List
+	     ACE_Fixed_Set
+	     ACE_Bounded_Set
+	  Thanks to <???> for recommending this.
+
 Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1-4.0.h: added support for DCE threads, and merged in
