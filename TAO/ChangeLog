@@ -1,3 +1,26 @@
+Wed Jan 19 09:31:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+	* tao/ORBInitializer_Registry.cpp:
+	* tao/ORBInitializer_Registry.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Table.cpp:
+	* tao/ORB_Table.h:
+	* tao/ORB_Table.inl:
+	* tao/TAO_Internal.cpp:
+	* tao/TAO_Internal.h:
+
+	  Fixed a deadlock that occurred when daemonizing an ORB process
+	  via "-ORBDaemon" by making locking finer grained and not abusing
+	  the ACE_Static_Object_Lock.  The problem only appears to occur
+	  on (NPTL-based?) Linux installations. Thanks to Ken Sedgwick
+	  <ken at bonsai dot com> for pointing out the problem.
+
+	  Moved some static functions into the TAO::ORB namespace and some
+	  global variables into an anonymous namespace since they are
+	  used internal to TAO.
+
 Wed Jan 19 10:01:57 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typedef.cpp:
