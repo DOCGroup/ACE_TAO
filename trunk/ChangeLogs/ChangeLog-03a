@@ -14,7 +14,7 @@ Tue Feb 27 17:31:48 2001  Steve Huston  <shuston@riverace.com>
           easier to find one's way through.
 
         * ace/OS_Dirent.inl (readdir_r): Added 'defined (HPUX_11)' to the
-          ways to get the POSIX.1c-conformand version of readdir_r. Allows
+          ways to get the POSIX.1c-conformant version of readdir_r. Allows
           clean compile on HP-UX 11 without thread support.
 
 Tue Feb 27 11:38:38 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
