@@ -57,12 +57,12 @@ ifndef SOLINK
 # normal shared object files and executable shared object files (the kind
 # that the service configurator needs to be able to function).
 # 970104 Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
-ifndef ESO
-$(VSHDIR)%.so: %.cpp
-	$(SOBUILD)
-else
+ifdef (ESOBUILD)
 $(VSHDIR)%.so: %.cpp
 	$(ESOBUILD)
+else
+$(VSHDIR)%.so: %.cpp
+	$(SOBUILD)
 endif
 $(VSHDIR)%.o:	%.cpp
 	$(COMPILE.cc) $(PIC) -o $@ $<
