@@ -1,3 +1,9 @@
+Thu Mar 28 16:15:17 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/TTY_IO.h: Added the ACE_Export macro to the Serial_Params
+	  struct.  Thanks to Pavel Repin <pavel@repin.com> for reporting
+ 	  this.
+
 Thu Mar 28 13:31:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/POSIX_Asynch_IO.cpp (handle_close): 
