@@ -218,15 +218,19 @@ AST_Root::ast_accept (ast_visitor *visitor)
 void
 AST_Root::destroy ()
 {
+  long i = 0;
+  long j = 0;
+    
   // Just destroy and delete the non-predefined types in the
   // scope, in case we are processing multiple IDL files.
   // Final cleanup will be done in fini().
-  for (long i = this->pd_decls_used; i > 0; --i)
+  for (i = this->pd_decls_used; i > 0; --i)
     {
       AST_Decl *d = this->pd_decls[i - 1];
       
       if (d->node_type () == AST_Decl::NT_pre_defined)
         {
+          j = i;
           break;
         }
 
@@ -235,11 +239,47 @@ AST_Root::destroy ()
       d = 0;
       --this->pd_decls_used;
     }
+    
+  for (i = this->pd_referenced_used; i > j; --i)
+    {
+      AST_Decl *d = this->pd_referenced[i - 1];    
+      d = 0;
+      --this->pd_referenced_used;
+    }
+    
+  for (i = this->pd_name_referenced_used; i > j; --i)
+    {
+      Identifier *id = this->pd_name_referenced[i - 1];
+      id->destroy ();
+      id = 0;
+      --this->pd_name_referenced_used;
+    }
 }
 
 void
 AST_Root::fini (void)
 {
+  long i = 0;
+   
+  for (i = this->pd_referenced_used; i > 0; --i)
+    {
+      AST_Decl *d = this->pd_referenced[i - 1];
+      
+      if (d->node_type () == AST_Decl::NT_pre_defined)
+        {
+          break;
+        }
+
+      d = 0;
+    }
+    
+  for (i = this->pd_name_referenced_used; i > 0; --i)
+    {
+      Identifier *id = this->pd_name_referenced[i - 1];
+      id->destroy ();
+      id = 0;
+    }
+
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }

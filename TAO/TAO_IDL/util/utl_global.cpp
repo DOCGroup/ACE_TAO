@@ -124,6 +124,19 @@ IDL_GlobalData::dsf::dsf (void)
     string_seq_seen_ (0),
     wstring_seq_seen_ (0),
     octet_seq_seen_ (0),
+    boolean_seq_seen_ (0),
+    char_seq_seen_ (0),
+    wchar_seq_seen_ (0),
+    short_seq_seen_ (0),
+    ushort_seq_seen_ (0),
+    long_seq_seen_ (0),
+    ulong_seq_seen_ (0),
+    longlong_seq_seen_ (0),
+    ulonglong_seq_seen_ (0),
+    float_seq_seen_ (0),
+    double_seq_seen_ (0),
+    longdouble_seq_seen_ (0),
+    any_seq_seen_ (0),
 
     basic_arg_seen_ (0),
     bd_string_arg_seen_ (0),
@@ -251,14 +264,28 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.valuefactory_seen_,      cursor << 21);
   ACE_SET_BITS (this->decls_seen_masks.valuebase_seen_,         cursor << 22);
 
-  ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 37);
-  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 38);
-  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 39);
-  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 40);
-  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 41);
-  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 42);
-  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 43);
-  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 44);
+  ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 27);
+  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 28);
+  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 29);
+  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 30);
+  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 31);
+  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 32);
+  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 33);
+  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 34);
+  ACE_SET_BITS (this->decls_seen_masks.boolean_seq_seen_,       cursor << 35);
+  ACE_SET_BITS (this->decls_seen_masks.char_seq_seen_,          cursor << 36);
+  ACE_SET_BITS (this->decls_seen_masks.wchar_seq_seen_,         cursor << 37);
+  ACE_SET_BITS (this->decls_seen_masks.short_seq_seen_,         cursor << 38);
+  ACE_SET_BITS (this->decls_seen_masks.ushort_seq_seen_,        cursor << 39);
+  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 40);
+  ACE_SET_BITS (this->decls_seen_masks.long_seq_seen_,          cursor << 41);
+  ACE_SET_BITS (this->decls_seen_masks.ulong_seq_seen_,         cursor << 42);
+  ACE_SET_BITS (this->decls_seen_masks.longlong_seq_seen_,      cursor << 43);
+  ACE_SET_BITS (this->decls_seen_masks.ulonglong_seq_seen_,     cursor << 44);
+  ACE_SET_BITS (this->decls_seen_masks.float_seq_seen_,         cursor << 45);
+  ACE_SET_BITS (this->decls_seen_masks.double_seq_seen_,        cursor << 46);
+  ACE_SET_BITS (this->decls_seen_masks.longdouble_seq_seen_,    cursor << 47);
+  ACE_SET_BITS (this->decls_seen_masks.any_seq_seen_,           cursor << 48);
 
   ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 52);
   ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 53);
@@ -1035,6 +1062,24 @@ IDL_GlobalData::destroy (void)
       delete [] trash;
       trash = 0;
     }
+    
+  for (unsigned long j = 0; j < this->pd_n_include_file_names; ++j)
+    {
+      // Delete the contained char* but not the UTL_String -
+      // we can leave the slots allocated and clean up later.
+      this->pd_include_file_names[j]->destroy ();
+      this->pd_include_file_names[j] = 0;
+    }
+    
+  this->pd_n_include_file_names = 0;
+  
+  for (size_t k = 0; k < n_included_idl_files_; ++k)
+    {
+      // No memory allocated for these, so just set to 0.
+      this->included_idl_files_[k] = 0;
+    }
+    
+  this->n_included_idl_files_ = 0;
 
   this->pd_root->destroy ();
 }

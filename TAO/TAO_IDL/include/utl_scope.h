@@ -309,6 +309,10 @@ protected:
   // Checks for modules, or defns of forward declared struct or unions.
   idl_bool redef_clash (AST_Decl::NodeType new_nt,
                         AST_Decl::NodeType scope_elem_nt);
+                        
+  void check_for_predef_seq (AST_Decl *d);
+  // Set the appropriate *_seen_ flag if we are seeing a spec-defined
+  // sequence of a basic type.
 
 protected:
   // Data.
