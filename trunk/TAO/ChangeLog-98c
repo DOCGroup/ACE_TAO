@@ -1,3 +1,9 @@
+Thu Sep  3 16:22:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp: 
+	* TAO_IDL/driver/drv_args.cpp: Fixed the case where ACE_ROOT is not
+	set. OpLookup strategy changes over to Dynamic Hash. 
+
 Thu Sep  3 15:52:33 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: Fixed g++ warnings.

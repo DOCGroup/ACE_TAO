@@ -127,8 +127,12 @@ IDL_GlobalData::IDL_GlobalData()
     // This may not cause any problem if -g option is used to specify
     // the correct path for the  gperf program. Let us ignore this
     // error here. It will be caught when we check the existence of
-    // the perfect hasher.
-    this->perfect_hasher_ = 0;
+    // the perfect hasher and at that time, we can switch over to some
+    // other scheme. 
+    {
+      ACE_DEBUG ((LM_WARNING, "Warning:Env variable <ACE_ROOT> is not set\n"));
+      this->perfect_hasher_ = 0;
+    }
   else
     {
       // Set it to the default value.
