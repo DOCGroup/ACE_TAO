@@ -1,4 +1,4 @@
-// $Id
+// $Id$
 //
 // ============================================================================
 //
@@ -616,7 +616,7 @@ be_array::gen_client_inline (void)
       *ci << "}\n\n";
 
       // free method
-      *ci << "void" << nl
+      *ci << "ACE_INLINE void" << nl
           << this->name () << "_free (" << this->name ()
           << "_slice *s)" << nl;
       *ci << "{\n";
