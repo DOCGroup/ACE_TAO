@@ -1,3 +1,10 @@
+Fri Nov  3 09:34:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile:
+        * tests/Makefile:
+        * examples/Makefile:
+          Disable the RMCast builds for old versions of g++
+
 Thu Nov  2 12:11:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Name_Request_Reply.h:

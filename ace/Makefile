@@ -302,9 +302,11 @@ ifeq ($(ssl),1)
   DIRS += SSL
 endif # ssl
 
-ifneq ($(rmcast),0)
-  DIRS += RMCast
-endif # rmcast
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  ifneq ($(rmcast),0)
+    DIRS += RMCast
+  endif # rmcast
+endif # ACE_HAS_GNUG_PRE_2_8
 
 ####
 #### Build customization.
