@@ -686,7 +686,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
     {
       Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
       a1 >>= bu_in;
-      
+
       // Insert copies....
       a2 <<= *bu_in;
       *a3 <<= *bu_in;
@@ -761,13 +761,8 @@ Param_Test_i::test_exception (CORBA::ULong s1,
       return s1 * 4;
     }
   else if (d == 1)
-    {
-      ACE_TRY_ENV.exception (new Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"),
-					    s1));
-      return 0;
-    }
-  ACE_TRY_ENV.exception (new Param_Test::BadBoy);
-  return 0;
+      ACE_THROW_RETURN (Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"), s1), 0);
+  ACE_THROW_RETURN (Param_Test::BadBoy (), 0);
 }
 
 Param_Test::Big_Union*
@@ -788,7 +783,7 @@ Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
                                   Param_Test::Multdim_Array a2,
                                   Param_Test::Multdim_Array_out a3,
                                   CORBA::Environment &)
-{  
+{
   Param_Test::Multdim_Array_slice *ret;
 
   Param_Test::Multdim_Array_copy (a2, a1);
