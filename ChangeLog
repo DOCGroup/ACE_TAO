@@ -1,3 +1,9 @@
+Mon Nov  8 07:53:46 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/msvc_mpc_auto_compile.pl:
+
+          Added the protocols directory to the ace core directories.
+
 Fri Nov  5 13:44:57 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
