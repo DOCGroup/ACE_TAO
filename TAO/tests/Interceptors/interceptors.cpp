@@ -47,14 +47,12 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var ior = this->orb_->object_to_string (this,
-                                                        ACE_TRY_ENV);
-  ACE_CHECK;
+  cout << "Echo_Client_Request_Interceptor::send_request"<<endl;
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from \"%s\" on object: %s\n",
               ri->operation (),
-              this->orb_->object_to_string (this)));
+              this->orb_->object_to_string (ri->target ())));
   
   // Populate target member of the ClientRequestInfo.
 
@@ -80,11 +78,11 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
                                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  
+  cout << "Echo_Client_Request_Interceptor::receive_reply"<<endl;
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply from \"%s\" on object: %s\n",
               ri->operation (ACE_TRY_ENV),
-              ri->target (ACE_TRY_ENV)));
+              this->orb_->object_to_string (ri->target ())));
 
   // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = reply_ctx_id;
@@ -142,7 +140,7 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-
+  cout <<"Echo_Server_Request_Interceptor::receive_request"<<endl;
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
               ri->operation ()));
@@ -174,6 +172,7 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   // Add this context to the service context list.
   ri->add_reply_service_context (scc, 0);
   
+  
 }
 
 void 
@@ -182,19 +181,20 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  cout <<"Echo_Server_Request_Interceptor::send_reply"<<endl;
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
 
-  // ServiceID? is hacked and set to 1 for now
+ // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext_var sc = ri->get_reply_service_context (id); 
 
-  const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+  const char *buf = ACE_reinterpret_cast (const char *, scc.context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Replying service context: %s\n",
               buf));
-  
+ 
 }
 
 void 
