@@ -59,7 +59,9 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
 
       req->set_return_type (CORBA::_tc_ulong);
 
-      req->exceptions ()->add (CORBA::TypeCode::_duplicate (Param_Test::_tc_Ooops));
+      req->exceptions ()->add (CORBA::TypeCode::_duplicate (
+                                   Param_Test::_tc_Ooops
+                                 ));
 
       req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -86,13 +88,20 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
           if (TAO_debug_level > 0)
             {
               const char *reason = oops->reason.in ();
+
               if (reason == 0)
-                reason = "nil";
+                {
+                  reason = "nil";
+                }
+
               ACE_DEBUG ((LM_DEBUG,
                           "Test_Exception::dii_req_invoke - "
                           "expected user exception"
-                          " (%s,%d)\n", reason, oops->input));
+                          " (%s,%d)\n", 
+                          reason, 
+                          oops->input));
             }
+
           this->inout_ = this->in_ * 2;
           this->out_ = this->in_ * 3;
           this->ret_ = this->in_ * 4;
@@ -112,6 +121,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
                       "ERROR Test_Exception::dii_req_invoke - "
                       "unexpected (and unknown) user exception\n"));
         }
+
       return;
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
@@ -122,6 +132,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
                       "Test_Exception::dii_req_invoke - "
                       "expected CORBA::UNKNOWN\n"));
         }
+
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
@@ -173,8 +184,11 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
           ACE_DEBUG ((LM_DEBUG,
                       "Test_Exception::run_sii_test - "
                       "expected user exception"
-                      " (%s,%d)\n", reason, ex.input));
+                      " (%s,%d)\n", 
+                      reason, 
+                      ex.input));
         }
+
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
@@ -184,9 +198,11 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,"Test_Exception::run_sii_test - "
+          ACE_PRINT_EXCEPTION (ex,
+                               "Test_Exception::run_sii_test - "
                                "expected system exception\n");
         }
+
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
@@ -199,6 +215,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
                            "unexpected user exception\n");
     }
   ACE_ENDTRY;
+
   return -1;
 }
 
@@ -208,7 +225,10 @@ Test_Exception::check_validity (void)
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
       this->ret_ == this->in_ * 4)
-    return 1;
+    {
+      return 1;
+    }
+
   return 0;
 }
 
