@@ -1,3 +1,11 @@
+Sat Jan 27 13:29:51 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-linux.h:
+
+	  Declare the pthread_mutex_timedlock() prototype as an
+	  'extern "C"' function.  This fixes an "unresolved symbol" link
+	  error.
+
 Sat Jan 27 10:39:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/builds.lst:
