@@ -73,6 +73,9 @@ public:
   /// Reset the state..
   void reset (void);
 
+  /// Read 4 bytes.
+  static CORBA::ULong read4 (const char *buf, const CORBA::Octet byte_order);
+
 private:
 
   friend class TAO_GIOP_Message_Base;

@@ -92,7 +92,7 @@ TAO_GIOP_Message_State::take_values_from_message_block (
   this->set_payload_size_from_buffer (buf);
 
   // Get the request id
-  this->parse_fragment_header (buf, mb.length ());
+//  this->parse_fragment_header (buf, mb.length ());
 
   if (this->message_size_ == 0)
     {
@@ -225,8 +225,9 @@ TAO_GIOP_Message_State::parse_fragment_header (const char *buf,
   return 0;
 }
 
+/*static*/
 CORBA::ULong
-TAO_GIOP_Message_State::read_ulong (const char *rd_ptr)
+TAO_GIOP_Message_State::read4 (const char *rd_ptr, const CORBA::Octet byte_order)
 {
   CORBA::ULong x = 0;
 
@@ -241,7 +242,7 @@ TAO_GIOP_Message_State::read_ulong (const char *rd_ptr)
   buf[3] = *(rd_ptr + 3);
 
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-  if (!(this->byte_order_ != ACE_CDR_BYTE_ORDER))
+  if (!(byte_order != ACE_CDR_BYTE_ORDER))
     {
       x = *reinterpret_cast<ACE_CDR::ULong*> (buf);
     }
@@ -255,3 +256,4 @@ TAO_GIOP_Message_State::read_ulong (const char *rd_ptr)
 
   return x;
 }
+

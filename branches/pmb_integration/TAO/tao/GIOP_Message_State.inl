@@ -59,3 +59,10 @@ TAO_GIOP_Message_State::set_payload_size_from_buffer (const char *rd_ptr)
 
   this->message_size_ =  this->read_ulong (rd_ptr);
 }
+
+ACE_INLINE CORBA::ULong
+TAO_GIOP_Message_State::read_ulong (const char *rd_ptr)
+{
+  return TAO_GIOP_Message_State::read4( rd_ptr, this->byte_order_) ;
+}
+
