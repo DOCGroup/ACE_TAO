@@ -1,3 +1,17 @@
+Sat Jan  5 20:39:25 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Connection_Handler.cpp (handle_input, handle_output):
+
+	  Reverted my change that avoided a function call.  Bala correctly
+	  points out that the handled passed in as a parameter may be an
+	  invalid handle if the event handler is dispatched by the
+	  reactor's notification mechanism.  Not bueno.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	  (handle_input, handle_output):
+
+	  Likewise.
+
 Sat Jan  5 20:00:21 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Connection_Handler.inl (TAO_Connection_Handler):
