@@ -130,9 +130,9 @@ ECFL_Coordinator::join (Control::Peer_ptr peer,
   for (i = 0; i != this->peers_count_; ++i)
     {
       this->peers_[i]->shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
     }
 
   this->orb_->shutdown (0, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }

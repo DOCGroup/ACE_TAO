@@ -1,3 +1,9 @@
+Fri Aug 24 16:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/performance-tests/EC_Federated_Latency/Peer.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Coordinator.cpp:
+          More fixes for platforms without native C++ exceptions.
+
 Fri Aug 24 14:48:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.cpp:
