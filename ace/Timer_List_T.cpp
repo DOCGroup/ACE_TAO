@@ -259,10 +259,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
 	{
 	  number_of_cancellations++;
 
-	  if (dont_call == 0 
-	      && number_of_cancellations == 1)	  
-              this->upcall_functor ().cancellation (*this, curr->get_type ());
-          
           curr->get_prev ()->set_next (curr->get_next ());
           curr->get_next ()->set_prev (curr->get_prev ());
           ACE_Timer_Node_T<TYPE> *temp = curr;
@@ -272,6 +268,9 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
       else
         curr = curr->get_next ();
     }
+
+  if (dont_call == 0)
+     this->upcall_functor ().cancellation (*this, type);
 
   return number_of_cancellations;
 }
