@@ -1,3 +1,10 @@
+Thu Dec 31 09:46:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Same change as Andy, but also added a dependency between
+	  TimeService.idl and CosTimeBase.idl; this is safer and should
+	  also work when running make -j 2 (or more).
+
 Thu Dec 31 09:27:05 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* orbsvcs/orbsvcs/Makefile:
