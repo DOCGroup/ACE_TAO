@@ -6,8 +6,9 @@
 //    Hash_Map_Manager_Test.h
 //
 // = DESCRIPTION
-//    This file contains the definition of Dumb_String.  Some compilers
-//    need it in a .h file for template instantiation (such as AIX C Set ++)
+//    This file contains the definition of Dumb_String.  Some
+//    compilers need it in a .h file for template instantiation (such
+//    as AIX C Set++).
 //
 // = AUTHOR
 //    James Hu, Steve Huston
@@ -19,7 +20,7 @@
 
 class Dumb_String
 {
-  // = DESCRIPTION
+  // = TITLE
   //     Desperate times call for desperate measures.  Bug your
   //     compiler vendor to support template specialization.
 public:
