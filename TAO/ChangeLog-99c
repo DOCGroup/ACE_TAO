@@ -1,64 +1,69 @@
+Mon Sep  6 13:32:30 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * docs/compiler.html: Added information the macros that TAO_IDL uses
+          to determine the default external preprocessor.
+
 Mon Sep  6 08:59:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a stray ';' at the end of
-	  ACE_TRY_EX().
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a stray ';' at the end of
+          ACE_TRY_EX().
 
-	* tao/ORB_Core.cpp (init): Removed all the unnecessary uses of
-  
-	  if ((offset = foo ()) != -1)
-	  
-	  because they all seemed unnecessary.  Thanks to David Levine for
- 	  reporting this.
+        * tao/ORB_Core.cpp (init): Removed all the unnecessary uses of
+
+          if ((offset = foo ()) != -1)
+
+          because they all seemed unnecessary.  Thanks to David Levine for
+          reporting this.
 
 Mon Sep 06 03:40:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp: Removed a
-	  redundant template instantiation for TAO_Bindings_Iterator<BLAH,
-	  BLAH,BLAH,<.....>,.<<......................................>>>.
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp: Removed a
+          redundant template instantiation for TAO_Bindings_Iterator<BLAH,
+          BLAH,BLAH,<.....>,.<<......................................>>>.
 
-	* tao/ORB_Core.cpp (init): KCC 3.3e was complaining about <offset>
-	  was set but not being used.  Added ACE_UNUSED_ARG (offset) to
-	  quiet it down.
+        * tao/ORB_Core.cpp (init): KCC 3.3e was complaining about <offset>
+          was set but not being used.  Added ACE_UNUSED_ARG (offset) to
+          quiet it down.
 
 Mon Sep 06 03:10:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsw:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: AV service does not build on
-	  VC6.  Separated AV service from orbsvcs projects into its own
-	  project file so people who are not working on AV stream service
-	  can move forward.  We can move it back into orbsvcs if needs
-	  to.  There's only DLL project settings available and the
-	  generated libraries are called orbsvcsAV[d].dll.
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: AV service does not build on
+          VC6.  Separated AV service from orbsvcs projects into its own
+          project file so people who are not working on AV stream service
+          can move forward.  We can move it back into orbsvcs if needs
+          to.  There's only DLL project settings available and the
+          generated libraries are called orbsvcsAV[d].dll.
 
-	* orbsvcs/orbsvcs/AV/AV_export.h: AV Stream now has its own export
-	  macro file.
+        * orbsvcs/orbsvcs/AV/AV_export.h: AV Stream now has its own export
+          macro file.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
-	* orbsvcs/orbsvcs/AV/Flows_T.h:
-	* orbsvcs/orbsvcs/AV/Nil.h:
-	* orbsvcs/orbsvcs/AV/Policy.h:
-	* orbsvcs/orbsvcs/AV/Protocol_Factory.h:
-	* orbsvcs/orbsvcs/AV/RTCP.h:
-	* orbsvcs/orbsvcs/AV/RTP.h:
-	* orbsvcs/orbsvcs/AV/TCP.h:
-	* orbsvcs/orbsvcs/AV/Transport.h:
-	* orbsvcs/orbsvcs/AV/UDP.h:
-	* orbsvcs/orbsvcs/AV/sfp.h:  Changed to include AV_Export.h and/or
-	  to use TAO_AV_Export macro.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/Flows_T.h:
+        * orbsvcs/orbsvcs/AV/Nil.h:
+        * orbsvcs/orbsvcs/AV/Policy.h:
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.h:
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        * orbsvcs/orbsvcs/AV/RTP.h:
+        * orbsvcs/orbsvcs/AV/TCP.h:
+        * orbsvcs/orbsvcs/AV/Transport.h:
+        * orbsvcs/orbsvcs/AV/UDP.h:
+        * orbsvcs/orbsvcs/AV/sfp.h:  Changed to include AV_Export.h and/or
+          to use TAO_AV_Export macro.
 
 Sat Sep 05 01:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
-	  Fixed default cases in two switch statements.
+        * TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+          Fixed default cases in two switch statements.
 
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	  Fixed default case in switch statements.
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+          Fixed default case in switch statements.
 
 Sun Sep 05 23:04:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
