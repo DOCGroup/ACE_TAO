@@ -46,7 +46,7 @@ namespace CIAO
                        public Servant_Impl_Base
   {
   public:
-    Servant_Impl (EXEC * exe, 
+    Servant_Impl (EXEC * exe,
                   Session_Container * c);
     virtual ~Servant_Impl (void);
    
@@ -58,6 +58,11 @@ namespace CIAO
     get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
       
+    virtual CORBA::Boolean
+    same_component (CORBA::Object_ptr object_ref
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected: 
     EXEC_VAR executor_;    
     

@@ -1,3 +1,11 @@
+Mon Aug  9 11:38:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servant_Impl_T.cpp:
+        * ciao/Servant_Impl_T.h:
+        
+          Moved the body of the destructor and the same_component()
+          method from the generated servant class to the base class.
+
 Sat Aug  7 17:55:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
