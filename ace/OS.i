@@ -1453,7 +1453,16 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
+#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+  int status = pthread_mutex_trylock(m);
+  if (status == 1)
+    status = 0;
+  else if (status == 0) {
+    status = -1;
+    errno = EBUSY;
+  }
+  return status;
+#  elif defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL_RETURN (pthread_mutex_trylock (m), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), ace_result_),
