@@ -164,13 +164,11 @@ IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 ifneq ($(use_flick),1)
 $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %C.h
-	@true $@
 
 %C.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 
 $(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
-	@true $@
 
 %Cli.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
