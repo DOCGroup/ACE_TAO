@@ -7,6 +7,7 @@ IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
 
 ACE_INLINE
 IIOP::Profile::Profile (void)
+  : host (0)
 {
 }
 

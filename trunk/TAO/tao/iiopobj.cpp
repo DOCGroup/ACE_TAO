@@ -22,9 +22,9 @@ IIOP::Profile::set (const char *h,
     ACE_OS::free (this->host);
 
   this->port = p;
-  this->host = ACE_OS::strdup (h);
-  if (this->host == 0)
-    return -1;
+
+  ACE_ALLOCATOR_RETURN (this->host, ACE_OS::strdup (h), -1);
+
   this->object_addr (addr);
   return 0;
 }
@@ -74,6 +74,7 @@ IIOP::Profile::set (const char *h,
 }
 
 IIOP::Profile::Profile (const IIOP::Profile &src)
+  : host (0)
 {
   (void) this->set (src.host,
                     src.port,
@@ -120,6 +121,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
 IIOP::Profile::Profile (const char *h,
                         const CORBA::UShort p,
                         const char *key)
+  : host (0)
 {
   (void) this->set (h, p, key);
 }
@@ -128,18 +130,21 @@ IIOP::Profile::Profile (const char *h,
                         const CORBA::UShort p,
                         const char *key,
                         const ACE_INET_Addr &addr)
+  : host (0)
 {
   (void) this->set (h, p, key, &addr);
 }
 
 IIOP::Profile::Profile (const ACE_INET_Addr &addr,
                         const char *key)
+  : host (0)
 {
   (void) this->set (addr, key);
 }
 
 IIOP::Profile::Profile (const ACE_INET_Addr &addr,
                         const TAO_opaque &key)
+  : host (0)
 {
   (void) this->set (addr, key);
 }
