@@ -1,4 +1,4 @@
-Mon Jul 14 18:33:12 UTC 2003  Johnny Willemsen
+Mon Jul 14 18:33:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_errno.h:
           When building for VxWorks also include errnoLib.h
