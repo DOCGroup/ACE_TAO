@@ -247,7 +247,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -371,7 +372,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -503,7 +505,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
- SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+ SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -697,12 +700,25 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
  $(ACE_ROOT)/ace/POSIX_Asynch_IO.h \
- $(ACE_ROOT)/ace/POSIX_Asynch_IO.i \
+ $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
+ $(ACE_ROOT)/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.i \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Heap.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- $(ACE_ROOT)/ace/POSIX_Proactor.i \
- $(ACE_ROOT)/ace/Proactor.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -713,12 +729,29 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Notification_Strategy.h \
+ $(ACE_ROOT)/ace/Notification_Strategy.inl \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ $(ACE_ROOT)/ace/POSIX_Asynch_IO.i \
+ $(ACE_ROOT)/ace/POSIX_Proactor.i \
+ $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
