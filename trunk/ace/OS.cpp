@@ -680,7 +680,6 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   return result;
 }
 
-# if defined (ACE_LACKS_GETS)
 char *
 ACE_OS::gets (char *str, int n)
 {
@@ -708,10 +707,8 @@ ACE_OS::gets (char *str, int n)
     }
   if (s) *s = '\0';
 
-  // ACE_OSCALL_RETURN (::gets (str), char *, 0);
   return (c == EOF) ? 0 : str;
 }
-# endif /* ACE_LACKS_GETS */
 
 #else
 int

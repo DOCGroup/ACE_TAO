@@ -5067,15 +5067,18 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 }
 #endif /* ! VXWORKS */
 
+#if 0
 // @@ gets is evil anyway.
-#if !defined (ACE_LACKS_GETS)
+//    and it is *** DEPRECATED *** now.  If you
+//    really needs gets, use ACE_OS::gets (char*, int)
+//    instead.
 ACE_INLINE char *
 ACE_OS::gets (char *str)
 {
   // ACE_TRACE ("ACE_OS::gets");
   ACE_OSCALL_RETURN (::gets (str), char *, 0);
 }
-#endif /* !LACKS_GETS */
+#endif /* 0 */
 
 ACE_INLINE struct servent *
 ACE_OS::getservbyname_r (const char *svc, const char *proto,

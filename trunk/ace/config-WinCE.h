@@ -117,7 +117,6 @@
 
 #define ACE_LACKS_STRCASECMP    // WinCE doesn't support _stricmp
 #define ACE_LACKS_GETSERVBYNAME
-#define ACE_LACKS_GETS
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_EXEC
