@@ -1,3 +1,11 @@
+Tue Jul 13 23:32:05 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* tao/ORB_Core.cpp
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/Wait_Strategy.cpp : Integrated Carlos's changes to the
+	  leader follower model done in the main branch.
+
 Tue Jul 13 16:15:43 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Wait_Strategy.cpp:  Added debug statements. 
