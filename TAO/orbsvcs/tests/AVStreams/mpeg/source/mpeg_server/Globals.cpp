@@ -813,7 +813,7 @@ Video_Global::GetFeedBack ()
   para.needHeader = ntohl (para.needHeader);
   para.addUsecPerFrame = ntohl (para.addUsecPerFrame);
   para.addFrames = ntohl (para.addFrames);
-  para.sendthis->PatternGops = ntohl (para.sendthis->PatternGops);
+  para.sendPatternGops = ntohl (para.sendPatternGops);
   para.frameRateLimit1000 = ntohl (para.frameRateLimit1000);
 #endif
   this->frameRateLimit = para.frameRateLimit1000 / 1000.0;
