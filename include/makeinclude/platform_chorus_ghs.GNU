@@ -29,8 +29,8 @@ static_libs = 1
 
 CC      = $(GHS_DIR)/build -driver ch68
 CXX     = $(CC)
-CFLAGS  = -I$(MVME_INCL)/stdc \
-          -I$(MVME_INCL)/posix \
+CFLAGS  = -I$(MVME_INCL)/posix \
+          -I$(MVME_INCL)/stdc \
           -I$(MVME_INCL)/chorus \
           -I$(MVME_INCL)/CC
 CCFLAGS += $(CFLAGS) --no_rtti --multibyte_chars --wchar_t_keyword -tnone
