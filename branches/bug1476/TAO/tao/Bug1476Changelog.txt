@@ -1,3 +1,9 @@
+Thu Jul 21 13:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Connector.cpp:
+          In case we have a not connected transport we should look if we need
+          to deliver a connected transport or not and behave accordingly to it
+
 Wed Jul 20 15:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Server_Request.cpp:
