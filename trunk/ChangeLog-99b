@@ -1,3 +1,7 @@
+Mon Apr 19 17:17:47 1999  Steve Huston  <shuston@riverace.com>
+
+        * docs/tutorials/tutorials.dsw: Fixed project file name for 019-021.
+
 Mon Apr 19 17:02:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp (handle_close): There is no need to call
