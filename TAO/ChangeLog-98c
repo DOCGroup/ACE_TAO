@@ -1,4 +1,21 @@
-Sat Nov  8 13:15:41 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+Sat Nov  8 21:27:34 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* docs/releasenotes: Added Marina's documentation for the Trader
+ 	  and cleaned up all the other entries to make them consistent.
+
+	* tao: Changed ProfileBody to Profile, TaggedProfile to
+ 	  Tagged_Profile, ProfileSeq to Profile_Sequence, and ProfileId to
+ 	  Profile_ID.
+
+	* tao/iiopobj.cpp (ProfileBody): For some god knows why reason,
+ 	  the CORBA::String and CORBA::UShort parameters to ProfileBody
+ 	  where being passed as references.  This is silly, so I changed
+ 	  them to non-references.
+
+	* tao/connect.cpp (open): Replaced a use of
+ 	  ACE_INET_Addr::get_host_name(void) with
+ 	  ACE_INET_Addr::get_host_name (char *, size_t), which is
+ 	  reentrant.
 
 	* tao/Makefile: Removed the DCFLAGS, OCFLAGS, and the TAO_ORB_CORE
  	  target macros from the Makefile since they were unnecessary.

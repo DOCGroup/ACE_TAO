@@ -347,7 +347,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       // For now, the original code is minimally changed.
 
       IIOP_Object *objdata;
-      IIOP::ProfileBody *profile;
+      IIOP::Profile *profile;
 
       if (obj->QueryInterface (IID_IIOP_Object, (void **) &objdata) != NOERROR)
         {

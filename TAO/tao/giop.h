@@ -52,7 +52,7 @@
 // ORB's own objref profiles to be interchanged using IORs.
 //
 // Email to tag-request@omg.org to allocate tags.
-typedef CORBA::ULong TAO_IOP_ProfileId;
+typedef CORBA::ULong TAO_IOP_Profile_ID;
 
 enum 
 {
@@ -63,14 +63,14 @@ enum
   TAO_IOP_TAG_ONC_IOP = 0x4f4e4300	// ONC IOP
 };
 
-struct TAO_IOP_TaggedProfile 
+struct TAO_IOP_Tagged_Profile 
 // One per protocol.
 {		
-  TAO_IOP_ProfileId tag;
+  TAO_IOP_Profile_ID tag;
   TAO_opaque profile_data;
 };
 
-typedef CORBA_SEQUENCE <TAO_IOP_TaggedProfile> TAO_IOP_TaggedProfileSeq;
+typedef CORBA_SEQUENCE <TAO_IOP_Tagged_Profile> TAO_IOP_Tagged_Profile_Sequence;
 
 struct TAO_IOP_IOR 
   // = TITLE
@@ -83,7 +83,7 @@ struct TAO_IOP_IOR
   // actually being used.
 {
   char *type_id;
-  TAO_IOP_TaggedProfileSeq profiles;
+  TAO_IOP_Tagged_Profile_Sequence profiles;
 };
 
 // Some protocols can be factored into a set of optional components.
@@ -109,7 +109,7 @@ struct TAO_IOP_TaggedComponent
   // = DESCRIPTION
   // One way to represent multicomponent profiles, e.g. as done by the
   // DCE-CIOP protocol.  One of these gets encapsulated in
-  // TaggedProfile::profile_data.  TAG_MULTIPLE_COMPONENTS may be used
+  // Tagged_Profile::profile_data.  TAG_MULTIPLE_COMPONENTS may be used
   // to represent protocol profiles structured in that way, but
   // protocol-specific tags facilitate simpler scanning of IORs since
   // you can be assured that each profile only has data used within a
