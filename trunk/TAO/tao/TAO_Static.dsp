@@ -443,10 +443,6 @@ SOURCE=.\IOR_Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORInfo.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.cpp
 # End Source File
 # Begin Source File
