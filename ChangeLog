@@ -1,3 +1,10 @@
+Tue Jan  6 13:34:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/ThreadSafety/Atomic_Op.cpp:
+        * examples/APG/ThreadSafety/RW_Lock.cpp:
+	* examples/APG/ThreadSafety/TSS.cpp: Added missing template
+          instantiations. Corrected #pragma instantiate directives.
+
 Mon Jan  5 17:51:36 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Condition_T.cpp: Added #include "ace/OS_NS_Threads.h" to get
