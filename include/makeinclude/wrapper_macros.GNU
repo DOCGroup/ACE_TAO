@@ -567,6 +567,18 @@ ifdef static_libs_only
   override static_libs = 1
 endif # static_libs_only
 
+ifdef shared_libs
+  ifndef static_libs
+    override shared_libs_only = 1
+  endif
+endif
+
+ifdef static_libs
+  ifndef shared_libs
+    override static_libs_only = 1
+  endif
+endif
+
 #### We need to set VBIN here, because it's used in the BUILD
 #### definitions below.
 VBIN = $(BIN:%=%$(VAR))
