@@ -87,8 +87,8 @@ be_interface::compute_coll_name (int type)
     {
       cached_type = type;
 // @@ this is causing segfault on NT, why?
-//        delete this->full_coll_name_;
-//        delete this->local_coll_name_;
+      delete this->full_coll_name_;
+      delete this->local_coll_name_;
     }
 
   static const char *collocated_names[] = { "_tao_thru_poa_collocated_",
@@ -154,7 +154,7 @@ be_interface::compute_coll_name (int type)
   delete i;
 
   // Compute the local name for the collocated class.
-  int localen = sizeof (collocated);
+  int localen = ACE_OS::strlen (collocated) + 1;
   localen += ACE_OS::strlen (this->local_name ()->get_string ());
   ACE_NEW (this->local_coll_name_, char[localen]);
   ACE_OS::strcpy(this->local_coll_name_, collocated);
