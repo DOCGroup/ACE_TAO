@@ -8,7 +8,7 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 lib_LTLIBRARIES = libACE_RMCast.la
 
