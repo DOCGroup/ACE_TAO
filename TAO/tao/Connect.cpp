@@ -735,7 +735,9 @@ TAO_Client_Connection_Handler::open (void *)
 }
 
 int
-TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &, int)
+TAO_Client_Connection_Handler::send_request (TAO_ORB_Core *,
+                                             TAO_OutputCDR &,
+                                             int)
 {
   errno = ENOTSUP;
   return -1;
@@ -792,7 +794,8 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
 }
 
 int
-TAO_ST_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
+TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
+                                                TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
@@ -807,8 +810,6 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   // We could call a template method to do all this stuff, and if the
   // connection handler were obtained from a factory, then this could
   // be dynamically linked in (wouldn't that be cool/freaky?)
-
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   // Send the request
   int success  = (int) TAO_GIOP::send_request (this, 
@@ -831,7 +832,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       // this method, and simply insure that this method doesn't
       // return until such time as doing a recv() on the socket would
       // actually produce fruit.
-      ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
+      ACE_Reactor *r = orb_core->reactor ();
 
       int ret = 0;
 
@@ -871,7 +872,8 @@ TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-TAO_MT_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
+TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
+                                                TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
@@ -887,7 +889,6 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   // connection handler were obtained from a factory, then this could
   // be dynamically linked in (wouldn't that be cool/freaky?)
 
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   if (!is_twoway)
     {
       // Send the request
