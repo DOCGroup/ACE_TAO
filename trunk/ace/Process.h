@@ -66,7 +66,7 @@ public:
   int set_cwd (const TCHAR *cwd);
   // Set the working directory for the process.
 
-  int start (char *argv[], char *envp[] = 0);
+  pid_t start (char *argv[], char *envp[] = 0);
   // Start the new process.  <argv> must be specified.  It should be
   // of the following form: argv = { "c:\full\path\to\foo.exe", "-a",
   // "arg1", "etc", 0 }.  If <envp> is specified, it is passed as the

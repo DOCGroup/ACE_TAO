@@ -27,27 +27,6 @@ static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
 
-static void
-randomize (int array[], size_t size)
-{
-  size_t i;
-
-  for (i = 0; i < size; i++)
-    array [i] = i;
-  
-  ACE_OS::srand (ACE_OS::time (0L));
- 
-  // Generate an array of random numbers from 0 .. size - 1.
-
-  for (i = 0; i < size; i++)
-    {
-      int index = ACE_OS::rand() % size--;
-      int temp = array [index];
-      array [index] = array [size];
-      array [size] = temp;
-    }
-}
-
 static void 
 print_time (ACE_Profile_Timer &timer,
 	    const char *test)

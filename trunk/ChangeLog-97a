@@ -1,5 +1,26 @@
 Sun Apr 13 11:40:26 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Thread_Manager: Changed the 'int n' of spawn_n() to size_t n
+ 	  since this is more appropriate because we can't spawn a negative
+ 	  number of threads...
+
+	* ace/Thread_Manager.cpp (close): Make sure to lock the calls to
+ 	  close() in case things get amiss.
+
+	* ace/Process.cpp (start): Updated ACE_Process::start() to that it
+ 	  doesn't try to exec() a program if argv == 0.  This allows us to
+ 	  use ACE_Process to fork() a process without exec'ing.
+
+	* tests/Timer_Queue_Test.cpp (randomize_array): Added a new
+ 	  "randomization" test that determines the performance of randomly
+ 	  canceling items in the array.  Thanks to Darrell Brunsch
+ 	  <brunsch@cs.wustl.edu> for this enhancement.
+
+	* tests/test_config.h: Moved the randomize() function from
+ 	  Naming_Test.cpp to test_config.h so that we can use it in other
+ 	  tests (e.g., the new Timer_Queue_Test.cpp that Darrell is
+ 	  working on).
+
 	* ace/OS: Added a new #define called ACE_HAS_NONCONST_MSGSND which
  	  can be used for platforms (e.g., SCO) that don't have a const
  	  parameter for msgsend().  Thanks to Arturo Montes

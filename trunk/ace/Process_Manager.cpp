@@ -1,8 +1,8 @@
-#if 0
 // $Id$
 
 // Process_Manager.cpp
 #define ACE_BUILD_DLL
+#include "ace/Process.h"
 #include "ace/Process_Manager.h"
 
 #if !defined (__ACE_INLINE__)
@@ -27,7 +27,21 @@ int
 ACE_Process_Manager::resize (size_t size)
 {
   ACE_TRACE ("ACE_Process_Manager::resize");
-  return -1;
+
+  ACE_TRACE ("ACE_Thread_Manager::resize");
+  ACE_Process_Descriptor *temp;
+  
+  ACE_NEW_RETURN (temp, ACE_Process_Descriptor[size], -1);
+
+  for (size_t i = 0; i < this->max_table_size_; i++)
+    temp[i] = this->proc_table_[i]; // Structure assignment.
+
+  this->max_table_size_ = size;
+
+  delete [] this->proc_table_;
+
+  this->proc_table_ = temp;
+  return 0;
 }
 
 // Create and initialize the table to keep track of the process pool.
@@ -36,14 +50,29 @@ int
 ACE_Process_Manager::open (size_t size)
 {
   ACE_TRACE ("ACE_Process_Manager::open");
-  return -1;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  if (this->max_table_size_ < size)
+    this->resize (size);
+  return 0;
+
 }
 
 // Initialize the synchronization variables.
 
 ACE_Process_Manager::ACE_Process_Manager (size_t size)
+  : proc_table_ (0),
+    max_table_size_ (0), 
+    current_count_ (0)
+#if defined (ACE_HAS_THREADS)
+    , zero_cond_ (lock_)
+#endif /* ACE_HAS_THREADS */
 {
   ACE_TRACE ("ACE_Process_Manager::ACE_Process_Manager");
+
+  if (this->open (size) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Process_Manager"));
 }
 
 // Close up and release all resources.
@@ -52,7 +81,17 @@ int
 ACE_Process_Manager::close (void)
 {
   ACE_TRACE ("ACE_Process_Manager::close");
-  return -1;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  if (this->proc_table_ != 0)
+    {
+      delete [] this->proc_table_;
+      this->proc_table_ = 0;
+      this->max_table_size_ = 0;
+      this->current_count_ = 0;
+    }
+  return 0;
 }
 
 ACE_Process_Manager::~ACE_Process_Manager (void)
@@ -61,61 +100,72 @@ ACE_Process_Manager::~ACE_Process_Manager (void)
   this->close ();
 }
 
-// Call the appropriate OS routine to spawn a process.  Should *not*
-// be called with the lock_ held...
-
-int 
-ACE_Process_Manager::spawn_i (ACE_THR_FUNC func, 
-			      void *args, 
-			      long flags, 
-			      pid_t *t_id, 
-			      u_int priority,
-			      void *stack, 
-			      size_t stack_size)
-{
-  ACE_TRACE ("ACE_Process_Manager::spawn_i");
-  return -1;
-}
-
 // Create a new process running FUNC.  *Must* be called with the lock_
 // held...
 
-int 
-ACE_Process_Manager::spawn (ACE_THR_FUNC func, 
-			   void *args, 
-			   long flags, 
-			   pid_t *t_id, 
-			   u_int priority,
-			   void *stack, 
-			   size_t stack_size)
+pid_t
+ACE_Process_Manager::start (char *argv[],
+			    char *envp[])
 {
-  ACE_TRACE ("ACE_Process_Manager::spawn");
-  return -1;
+  ACE_TRACE ("ACE_Process_Manager::start");
+
+  // Create a new process, potentially causing an exec(), as well.
+  // This API clearly needs to be improved to pass more information
+  // in...
+  pid_t pid = ACE_Process process (argv,
+				   ACE_INVALID_HANDLE,
+				   ACE_INVALID_HANDLE,
+				   ACE_INVALID_HANDLE,
+				   envp);
+  if (pid == -1)
+    return -1;
+  else
+    return this->append_proc (pid);
 }
 
 // Create N new processs running FUNC.
 
 int 
-ACE_Process_Manager::spawn_n (int n, 
-			      ACE_THR_FUNC func, 
-			      void *args, 
-			      long flags,
-			      u_int priority)
+ACE_Process_Manager::start_n (size_t n,
+			      char *argv[],
+			      char *envp[])
 {
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
-  return -1;
+
+  for (size_t i = 0; i < n; i++)
+    if (this->start (argv, envp) == -1)
+      return -1;
+
+  return 0;
+
 }
 
 // Append a process into the pool (does not check for duplicates).
 // Must be called with locks held.
 
 int
-ACE_Process_Manager::append_proc (pid_t t_id, 
-				 ACE_Process_Descriptor::Process_State proc_state)
+ACE_Process_Manager::append_proc (pid_t pid,
+				  ACE_Process_Descriptor::Process_State proc_state)
 {
   ACE_TRACE ("ACE_Process_Manager::append_proc");
 
-  return -1;
+  // Try to resize the array to twice its existing size if we run out
+  // of space...
+  if (this->current_count_ >= this->max_table_size_ 
+      && this->resize (this->max_table_size_ * 2) == -1)
+    return -1;
+  else
+    {
+      ACE_Thread_Descriptor &proc_desc = 
+	this->proc_table_[this->current_count_];
+
+      proc_desc.proc_id_ = pid;
+      proc_desc.proc_id_ = 
+      proc_desc.proc_state_ = proc_state;
+
+      this->current_count_++;
+      return 0;
+    }
 }
 
 // Insert a process into the pool (checks for duplicates and doesn't
@@ -328,4 +378,3 @@ ACE_Process_Control::exit (void *exit_status)
   return 0;
 }
 
-#endif

@@ -105,7 +105,7 @@ public:
   // Returns: on success a unique group id that can be used to control
   // other threads added to the same group.  On failure, returns -1.
 
-  int spawn_n (int n, 
+  int spawn_n (size_t n, 
 	       ACE_THR_FUNC func, 
 	       void *args = 0,
 	       long flags = THR_NEW_LWP,

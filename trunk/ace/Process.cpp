@@ -119,7 +119,7 @@ ACE_Process::set_cwd (const TCHAR *cwd)
   return 0;
 }
 
-int
+pid_t
 ACE_Process::start (char *argv[], char *envp[])
 {
 #if defined (ACE_WIN32)
@@ -179,17 +179,20 @@ ACE_Process::start (char *argv[], char *envp[])
       if (this->cwd_[0] != '\0')
 	::chdir (cwd_);
 
-      // Child process executes the command.
-      int result;
+      if (argv != 0)
+	{
+	  // Child process executes the command.
+	  int result;
       
-      if (envp == 0)
-	result = ACE_OS::execv (argv[0], argv);
-      else
-	result = ACE_OS::execve (argv[0], argv, envp);
+	  if (envp == 0)
+	    result = ACE_OS::execv (argv[0], argv);
+	  else
+	    result = ACE_OS::execve (argv[0], argv, envp);
 
-      if (result == -1)
-	// If the execv fails, this child needs to exit.
-	ACE_OS::exit (errno);
+	  if (result == -1)
+	    // If the execv fails, this child needs to exit.
+	    ACE_OS::exit (errno);
+	}
     default:
       // Server process.  The fork succeeded.
       return 0;

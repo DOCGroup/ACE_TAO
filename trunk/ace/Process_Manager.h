@@ -19,7 +19,6 @@
 
 #include "ace/Synch.h"
 
-#if 0
 class ACE_Export ACE_Process_Descriptor
   // = Title
   //    Information for controlling groups of processs.
@@ -31,7 +30,6 @@ public:
     IDLE,
     SPAWNED,
     RUNNING,
-    SUSPENDED,
     TERMINATED
   };
 private:
@@ -41,7 +39,7 @@ private:
   pid_t proc_id_;
   // Unique process ID.
     
-  int grp_id_;
+  gid_t grp_id_;
   // Unique group ID.
 
   Process_State proc_state_;
@@ -76,50 +74,23 @@ public:
   int close (void);		
   // Release all resources.
 
-  int spawn (ACE_THR_FUNC func, 
-	     void *args, 
-	     long flags, 
-	     pid_t * = 0, 
-	     u_int priority = 0,
-	     void *stack = 0, 
-	     size_t stack_size = 0);
-  // Create a new process, which executes <func>.  
+  pid_t start (char *argv[], char *envp[] = 0);
+  // Create a new process using <ACE_Process::start>.
 
   // Returns: on success a unique group id that can be used to control
   // other processs added to the same group.  On failure, returns -1.
 
-  int spawn_n (int n, 
-	       ACE_THR_FUNC func, 
-	       void *args, 
-	       long flags,
-	       u_int priority = 0);
-  // Create N new processs, all of which execute <func>.  
+  int start_n (size_t n, 
+	       char *argv[],
+	       char *envp[] = 0);
+  // Create N new processs.
   
   // Returns: on success a unique group id that can be used to control
   // all of the processs in the same group.  On failure, returns -1.
 
-  void *exit (void *status);	
-  // Called to clean up when a process exits.
-
   int wait (ACE_Time_Value *timeout = 0);	
   // Block until there are no more processs running or <timeout>
   // expires.  Returns 0 on success and -1 on failure.
-
-  // = Suspend methods.
-  int suspend_all (void);
-  // Suspend all processs 
-  int suspend (pid_t);
-  // Suspend a single process.
-  int suspend_grp (int grp_id);
-  // Suspend a group of processs.
-
-  // = Resume methods.
-  int resume_all (void);
-  // Resume all stopped processs 
-  int resume (pid_t);
-  // Resume a single process.
-  int resume_grp (int grp_id);
-  // Resume a group of processs.
 
   // = Kill methods (send signals...).
   int kill_all (int signum);
@@ -142,15 +113,6 @@ public:
 private:
   int resize (size_t);
   // Resize the pool of Process_Descriptors.
-
-  int spawn_i (ACE_THR_FUNC func, 
-	       void *args, 
-	       long flags, 
-	       pid_t * = 0, 
-	       u_int priority = 0,
-	       void *stack = 0, 
-	       size_t stack_size = 0);
-  // Create a new process (must be called with locks held).
 
   int find (pid_t p_id);
   // Locate the index of the table slot occupied by <p_id>.  Returns
@@ -178,12 +140,6 @@ private:
   int apply_all (PROC_FUNC, int = 0);
   // Apply <func> to all members of the table.
 
-  int resume_proc (int i);
-  // Resume the process at index <i>.
-
-  int suspend_proc (int i);
-  // Suspend the process at index <i>.
-
   int kill_proc (int i, int signum);
   // Send signal <signum> to the process at index <i>.
 
@@ -196,9 +152,6 @@ private:
 
   size_t current_count_;
   // Current number of processs we are managing.
-
-  int grp_id_;
-  // Keeps track of the next group id to assign.
 };
 
 class ACE_Export ACE_Process_Control
@@ -242,7 +195,6 @@ private:
 #if defined (__ACE_INLINE__)
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
-#endif
 
 #endif /* ACE_PROCESS_MANAGER_H */
 
