@@ -154,6 +154,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->decr_indent ();
       *os << "}\n\n";
 
+      os->indent ();
+      *os << "// destructor" << be_nl
+          << node->name () << "::~" << node->local_name () << " (void)" << be_nl
+          << "{" << be_idt_nl
+          << "// finalize" << be_nl
+          << "this->_reset (this->disc_, 1);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
       // Reset this for generating the assignment operator.

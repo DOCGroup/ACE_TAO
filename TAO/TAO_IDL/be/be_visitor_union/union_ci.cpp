@@ -61,16 +61,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       *os << "// Inline operations for union " << node->name () << be_nl;
       *os << "// *************************************************************\n\n";
 
-      // generate the default constructor and the destructor here
       os->indent ();
-      *os << "// destructor" << be_nl
-          << "ACE_INLINE" << be_nl
-          << node->name () << "::~" << node->local_name () << " (void)" << be_nl
-          << "{" << be_idt_nl
-          << "// finalize" << be_nl
-          << "this->_reset (this->disc_, 1);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-
       // the virtual overloaded _reset method
       *os << "// this reset method is used by the decoding engine" << be_nl;
       *os << "ACE_INLINE void" << be_nl
