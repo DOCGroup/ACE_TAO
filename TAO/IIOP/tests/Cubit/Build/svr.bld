@@ -1,8 +1,0 @@
-#!build
-default:
-	program
-	:debuglevel=multi
-../svr.cpp
-	C++
-../cubit.cpp
-	C++
