@@ -1,0 +1,10 @@
+workspace {
+  cmdline += -value_template 'configurations="MFC Release" "MFC Debug" "Static MFC Release" "Static MFC Debug"' \
+             -value_template "default_configuration=MFC Debug"
+
+  server {
+    cmdline += -value_template type_description=Application -value_template type_code=0x0101
+    server.mpc
+  }
+  client.mpc
+}

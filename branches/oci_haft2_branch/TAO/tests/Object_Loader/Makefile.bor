@@ -1,0 +1,10 @@
+#
+# Makefile for building the Object_Loader test
+#
+
+MAKEFILES = \
+        test_dll.bor \
+        driver.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

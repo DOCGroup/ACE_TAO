@@ -1,0 +1,5 @@
+project: orbsvcsexe, notify {
+  after    += NotifyTests_Lib
+  libs     += NotifyTests
+  includes += $(TAO_ROOT)/orbsvcs/tests/Notify/lib
+}

@@ -1,0 +1,3 @@
+project : orbsvcsexe, core, event, naming, svc_utils, iortable, messaging, portableserver {
+  exename  = CosEvent_Service
+}

@@ -1,0 +1,5 @@
+project : taolib, core, portableserver {
+  sharedname   = TAO_DynamicInterface
+  dynamicflags = TAO_DYNAMICINTERFACE_BUILD_DLL
+  include_dir  = tao/DynamicInterface
+}

@@ -1,0 +1,14 @@
+project(*server): taoserver {
+  Source_Files {
+    Memory_Growth.cpp
+    server.cpp
+  }
+}
+
+project(*client): taoclient {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,40 @@
+#
+# Makefile for building the anyop client
+#
+
+NAME = anyop
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I..\.. \
+	-Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\param_testC.obj \
+        $(OBJDIR)\anyop.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_DYNAMICINTERFACE_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_DYNAMICINTERFACE_LIB)
+
+CPPDIR = .
+
+IDLDIR = .
+
+IDLFILES = \
+        $(IDLDIR)\param_test.idl
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\param_testS.cpp $(IDLDIR)\param_testC.cpp: $(IDLDIR)\param_test.idl
+	$(TAO_IDL) $**

@@ -1,0 +1,3 @@
+DIRS = collection deadlock invariant manual mutex rw_lock
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
