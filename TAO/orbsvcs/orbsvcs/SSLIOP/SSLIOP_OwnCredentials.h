@@ -14,7 +14,7 @@
 #ifndef TAO_SSLIOP_OWN_CREDENTIALS_H
 #define TAO_SSLIOP_OWN_CREDENTIALS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -112,6 +112,6 @@ namespace TAO
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_OWN_CREDENTIALS_H */

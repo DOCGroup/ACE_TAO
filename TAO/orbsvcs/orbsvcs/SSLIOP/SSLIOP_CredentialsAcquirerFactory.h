@@ -14,7 +14,7 @@
 #ifndef TAO_SSLIOP_CREDENTIALS_ACQUIRER_FACTORY_H
 #define TAO_SSLIOP_CREDENTIALS_ACQUIRER_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h"
 
@@ -57,6 +57,6 @@ namespace TAO
 }  // End TAO namespace
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_CREDENTIALS_ACQUIRER_FACTORY_H */

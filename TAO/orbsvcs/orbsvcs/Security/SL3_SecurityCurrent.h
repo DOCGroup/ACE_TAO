@@ -14,7 +14,7 @@
 #ifndef TAO_SL3_SECURITY_CURRENT_H
 #define TAO_SL3_SECURITY_CURRENT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/Security/security_export.h"
 
@@ -147,6 +147,6 @@ namespace TAO
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SL3_SECURITY_CURRENT_H */

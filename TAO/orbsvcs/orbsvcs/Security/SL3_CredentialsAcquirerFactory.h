@@ -14,7 +14,7 @@
 #ifndef TAO_SL3_CREDENTIALS_ACQUIRER_FACTORY_H
 #define TAO_SL3_CREDENTIALS_ACQUIRER_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/Security/security_export.h"
 
@@ -60,6 +60,6 @@ namespace TAO
 }  // End TAO namespace
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SL3_CREDENTIALS_ACQUIRER_FACTORY_H */
