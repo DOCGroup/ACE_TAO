@@ -1,3 +1,13 @@
+Sun Mar 21 22:30:29 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+
+	  Fixed one or other problems wit makefiles that made the builds
+	  on solaris fail. 
+	
 Sun Mar 21 22:07:09 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
