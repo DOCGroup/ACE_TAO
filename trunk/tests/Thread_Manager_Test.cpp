@@ -49,14 +49,15 @@ private:
 
 // Each thread keeps track of whether it has been signaled within a
 // separate TSS entry.
-static ACE_TSS<Signal_Catcher> signal_catcher;
+// See comment below about why it's dynamically allocated.
+static ACE_TSS<Signal_Catcher> *signal_catcher;
 
 extern "C" void
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d, signaled = %d\n", 
-	      signum, signal_catcher->signaled ()));
-  signal_catcher->signaled (1);
+	      signum, (*signal_catcher)->signaled ()));
+  (*signal_catcher)->signaled (1);
 }
 
 static void *
@@ -71,7 +72,7 @@ worker (int iterations)
       if ((i % 1000) == 0)
 	{
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-	  if (signal_catcher->signaled () > 0
+	  if ((*signal_catcher)->signaled () > 0
 	      // Only test for cancellation after we've been signaled, to
 	      // avoid race conditions for suspend() and resume().
 	      && thr_mgr->testcancel (ACE_Thread::self ()) != 0)
@@ -102,6 +103,11 @@ main (int, char *[])
   ACE_START_TEST ("Thread_Manager_Test");
 
 #if defined (ACE_HAS_THREADS)
+  // Dynamically allocate signal_catcher so that we can control when
+  // it gets deleted.  Specifically, we need to delete it before
+  // the main thread's TSS is cleaned up.
+  ACE_NEW_RETURN (signal_catcher, ACE_TSS<Signal_Catcher>, 1);
+
   ACE_Service_Config daemon;
 
   // Register a signal handler.
@@ -149,6 +155,9 @@ main (int, char *[])
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
+
+  delete signal_catcher;
+
   ACE_END_TEST;
   return 0;
 }
