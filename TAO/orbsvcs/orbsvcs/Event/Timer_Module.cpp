@@ -25,7 +25,7 @@ enum
 {
   // Timeprobe description table start key
   TAO_EC_TIMER_MODULE_START_EXECUTE = 5400,
-  TAO_EC_TIMER_MOUDLE_END_EXECUTE
+  TAO_EC_TIMER_MODULE_END_EXECUTE
 };
 
 // Setup Timeprobes
@@ -267,7 +267,7 @@ TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                        "received act == 0!!!.\n"), 0);
 
   {
-    ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE);
+//    ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_ES_PRIORITY_QUEUE_START_EXECUTE);
 
     act->execute ();
   }
