@@ -1,3 +1,13 @@
+Thu Nov 13 16:22:19 2003  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Make the check for sys/select.h set
+	  ACE_LACKS_SYS_SELECT_H is _not_ found. Added a check of select.h
+	  that sets ACE_HAS_SELECT_H. Changed further code tests that used
+	  ACE_HAS_SELECT_H to include <sys/select.h> to use
+	  ACE_LACKS_SYS_SELECT_H instead.
+
+	* m4/config_h.m4: Added AH_TEMPLATE for ACE_LACKS_SYS_SELECT_H.
+
 Thu Nov 13 19:56:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ASNMP/tests/Octet_Test.cpp:
@@ -70,9 +80,10 @@ Thu Nov 13 17:39:19 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
         * ace/config-freebsd.h:
           Remove #define ACE_SIZEOF_LONG_DOUBLE, since this value
-          is hardcoded for 32-bit platforms.  Dan Eischen <deischen@freebsd.org>
-          reported that this caused the Basic_Types_Test to fail on 64-bit FreeBSD
-          platforms.   The correct value for this constant is defined later
+          is hardcoded for 32-bit platforms.  Dan Eischen
+	  <deischen@freebsd.org> reported that this caused the
+	  Basic_Types_Test to fail on 64-bit FreeBSD platforms.
+	  The correct value for this constant is defined later
           on in Basic_Types.h by including <float.h>.
 
 Thu Nov 13 11:27:23 2003  Chad Elliott  <elliott_c@ociweb.com>
