@@ -1,7 +1,18 @@
+Sat Aug  2 09:10:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	  Cosmetic fixes.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Services_Activate.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Services_Activate.cpp: Moved
+	  all the initialization to the Initializer () routine. This
+	  should fix problems in the static builds. This have been long
+	  overdue. 
+
 Sat Aug  2 08:05:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Adapter.h:
-	* tao/Adapter.cpp: Looks like a forwardeclaration of
+	* tao/Adapter.cpp: Looks like a forwar declaration of
 	  SystemException was insufficient in builds where native
 	  exceptions are used.
 

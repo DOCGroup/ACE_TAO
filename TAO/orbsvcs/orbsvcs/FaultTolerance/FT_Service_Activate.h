@@ -45,9 +45,6 @@ public:
   /// The destructor
   virtual ~TAO_FT_Service_Activate (void);
 
-  /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-
   /**
    * Create and activate the service callbacks into the orb.
    * This method cannot throw any exception, but it can return a nil
@@ -58,6 +55,7 @@ public:
 
   /// Used to force the initialization.
   static int Initializer (void);
+
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_FT_Service_Activate)
