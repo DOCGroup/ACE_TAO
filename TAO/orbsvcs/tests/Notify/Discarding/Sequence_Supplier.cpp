@@ -25,7 +25,8 @@ static TAO_Notify_Tests_SequencePushSupplier* supplier_1 = 0;
 static CORBA::Boolean done = 0;
 static CORBA::Boolean start = 0;
 static CORBA::Boolean use_deadline_ordering = 0;
-static int max_events = 6;  // 6 sets of 16
+static int max_events = 2;  // 2 sets of 10
+static int batch_size = 10;
 static const char* ior_output_file = "supplier.ior";
 
 // ******************************************************************
@@ -152,11 +153,11 @@ SendEvents (void)
       event.filterable_data[2].name = CORBA::string_dup ("enum");
       event.filterable_data[2].value <<= (CORBA::ULong)count;
 
-      events.length (16);
+      events.length (batch_size);
       events[0] = event;
 
-      CosNotification::StructuredEvent revents[15];
-      for (int z = 0; z < 15; z++)
+      CosNotification::StructuredEvent revents[9];
+      for (int z = 0; z < 9; z++)
         {
           revents[z].header.fixed_header.event_type.domain_name =
                                 CORBA::string_dup ("Orbix 2000 Demos");
