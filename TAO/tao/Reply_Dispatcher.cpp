@@ -277,29 +277,11 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
                   "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
     }
 
-  CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
-  switch (reply_status)
-    {
-    case TAO_GIOP_NO_EXCEPTION:
-      reply_error = TAO_AMI_REPLY_OK;
-      break;
-    case TAO_GIOP_USER_EXCEPTION:
-      reply_error = TAO_AMI_REPLY_USER_EXCEPTION;
-      break;
-    case TAO_GIOP_SYSTEM_EXCEPTION:
-      reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
-      break;
-    case TAO_GIOP_LOCATION_FORWARD:
-    default: 
-      reply_error = TAO_AMI_REPLY_NOT_OK;
-      break;
-    }
-
   ACE_TRY_NEW_ENV
     {
       // Call the Request back and send the reply data.
       this->req_->handle_response (this->message_state_->cdr,
-                                   reply_error,
+                                   reply_status,
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
