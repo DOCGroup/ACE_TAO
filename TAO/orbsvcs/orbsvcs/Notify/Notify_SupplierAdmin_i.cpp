@@ -205,7 +205,7 @@ void TAO_Notify_SupplierAdmin_i::destroy (
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_Notify_SupplierAdmin_i::obtain_push_consumer (
-    CORBA::Environment &ACE_TRY_ENV
+                                                  CORBA::Environment & /*ACE_TRY_ENV*/
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -217,7 +217,7 @@ TAO_Notify_SupplierAdmin_i::obtain_push_consumer (
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_Notify_SupplierAdmin_i::obtain_pull_consumer (
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment & /*ACE_TRY_ENV*/
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

@@ -50,9 +50,9 @@ TAO_Notify_StructuredProxyPushSupplier_i::dispatch_event
 
 void
 TAO_Notify_StructuredProxyPushSupplier_i::connect_structured_push_consumer (
-    CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                            CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
+                                                                            CORBA::Environment & //ACE_TRY_ENV
+                                                                            )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosEventChannelAdmin::AlreadyConnected,
@@ -65,7 +65,7 @@ TAO_Notify_StructuredProxyPushSupplier_i::connect_structured_push_consumer (
 
 void
 TAO_Notify_StructuredProxyPushSupplier_i::disconnect_structured_push_supplier
-(CORBA::Environment &ACE_TRY_ENV)
+(CORBA::Environment & /*ACE_TRY_ENV */)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -74,8 +74,8 @@ TAO_Notify_StructuredProxyPushSupplier_i::disconnect_structured_push_supplier
 
 void
 TAO_Notify_StructuredProxyPushSupplier_i::suspend_connection (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                              CORBA::Environment & //ACE_TRY_ENV
+                                                              )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosNotifyChannelAdmin::ConnectionAlreadyInactive,
@@ -86,8 +86,8 @@ TAO_Notify_StructuredProxyPushSupplier_i::suspend_connection (
 
 void
 TAO_Notify_StructuredProxyPushSupplier_i:: resume_connection (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                              CORBA::Environment & //ACE_TRY_ENV
+                                                              )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosNotifyChannelAdmin::ConnectionAlreadyActive,

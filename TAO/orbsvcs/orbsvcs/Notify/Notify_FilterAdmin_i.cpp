@@ -13,8 +13,8 @@ TAO_Notify_FilterAdmin_i::~TAO_Notify_FilterAdmin_i (void)
 
 CORBA::Boolean
 TAO_Notify_FilterAdmin_i::match (
-    const CORBA::Any& filterable_data,
-    CORBA::Environment &ACE_TRY_ENV
+                                 const CORBA::Any& /*filterable_data*/,
+                                 CORBA::Environment & //ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -123,7 +123,7 @@ TAO_Notify_FilterAdmin_i::get_filter (
 
 CosNotifyFilter::FilterIDSeq*
 TAO_Notify_FilterAdmin_i::get_all_filters (
-    CORBA::Environment &ACE_TRY_ENV
+                                           CORBA::Environment & /*ACE_TRY_ENV*/
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -135,7 +135,7 @@ TAO_Notify_FilterAdmin_i::get_all_filters (
 
 void
 TAO_Notify_FilterAdmin_i::remove_all_filters (
-    CORBA::Environment &ACE_TRY_ENV
+                                              CORBA::Environment & /*ACE_TRY_ENV*/
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

@@ -79,9 +79,9 @@ TAO_Notify_StructuredPushConsumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_Notify_StructuredPushConsumer::offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+                                                 const CosNotification::EventTypeSeq & /*added*/,
+                                                 const CosNotification::EventTypeSeq & /*removed*/,
+                                                 CORBA::Environment & //ACE_TRY_ENV
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
