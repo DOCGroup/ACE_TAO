@@ -8,6 +8,9 @@ Sat Feb 21 08:08:55 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/debug.cpp: null f{,un}lockfile with ACE_HAS_DCE_DRAFT4_THREADS
           (LynxOS).
 
+        * tao/any.cpp (operator<<=): initialized local "tc" to avoid compiler
+          warnings.
+
 Sat Feb 21 00:31:20 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
 	* tao/connect.* (send_request): Modified to take an extra arg
