@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "client.h"
+#include "ace/Sched_Params.h"
 
 double csw = 0.0;
 
@@ -201,7 +202,7 @@ do_priority_inversion_test (Task_State &ts)
       // hang the machine, when running on single-processor machines.
       // Instead, to find the context switch time, run $ACE/performance-tests/Misc/context_switch_time
     csw = context_switch_time ();
-#endif 
+#endif
 
 #if defined (VXWORKS)
   ACE_OS::printf ("Test done.\n"
@@ -397,8 +398,14 @@ do_thread_per_rate_test (Task_State &ts)
 // finish. After they aer done, we compute the latency and jitter
 // metrics and print them.
 
+#if defined (VXWORKS)
+extern "C"
 int
-main (int argc, char *argv [])
+client (int argc, char *argv[])
+#else
+int
+main (int argc, char *argv[])
+#endif
 {
 #if defined (ACE_HAS_THREADS)
 #if defined (FORCE_ARGS)
@@ -411,6 +418,22 @@ main (int argc, char *argv [])
                   "-h",
                   "mv2604d"};  // Host name
 #endif   /* defined (FORCE_ARGS) */
+
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  if (ACE_OS::sched_params (
+        ACE_Sched_Params (
+          ACE_SCHED_FIFO,
+          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+          ACE_SCOPE_PROCESS)) != 0)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
+                    "so remain in time-sharing class\n"));
+      else
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: ACE_OS::sched_params failed\n%a"),
+                          -1);
+    }
+
   initialize ();
 
   Task_State ts (argc, argv);
