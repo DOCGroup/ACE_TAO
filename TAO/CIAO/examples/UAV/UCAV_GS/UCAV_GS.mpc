@@ -1,0 +1,62 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl UCAV_GS"
+
+project(UCAV_GS_stub): ciao_client {
+  
+  sharedname = UCAV_GS_stub
+  idlflags += -Wb,stub_export_macro=UCAV_GS_STUB_Export -Wb,stub_export_include=UCAV_GS_stub_export.h -Wb,skel_export_macro=UCAV_GS_SVNT_Export -Wb,skel_export_include=UCAV_GS_svnt_export.h
+  dynamicflags   = UCAV_GS_STUB_BUILD_DLL
+
+  IDL_Files {
+    UCAV_GS.idl
+  }
+
+  Source_Files {
+    UCAV_GSC.cpp
+  }
+}
+
+project(UCAV_GS_svnt) : ciao_servant {
+  after +=  UCAV_GS_stub
+  sharedname  = UCAV_GS_svnt
+  libs    += UCAV_GS_stub 
+  
+  idlflags  +=  -Wb,export_macro=UCAV_GS_SVNT_Export -Wb,export_include=UCAV_GS_svnt_export.h
+  dynamicflags = UCAV_GS_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    UCAV_GS.cidl
+  }
+
+  IDL_Files {
+    UCAV_GSE.idl
+  }
+
+  Source_Files {
+    UCAV_GSEC.cpp
+    UCAV_GSS.cpp
+    UCAV_GS_svnt.cpp
+  }
+}
+
+
+project(UCAV_GS_exec) : ciao_component {
+  after   += UCAV_GS_svnt
+  sharedname = UCAV_GS_exec
+  libs      += UCAV_GS_stub UCAV_GS_svnt 
+  
+  idlflags  +=  -Wb,export_macro=UCAV_GS_EXEC_Export -Wb,export_include=UCAV_GS_exec_export.h
+  dynamicflags   = UCAV_GS_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    UCAV_GS_exec.cpp
+  }
+}
+
+
+

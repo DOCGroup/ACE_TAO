@@ -1,0 +1,62 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl UAV_GS"
+
+project(UAV_GS_stub): ciao_client {
+  
+  sharedname = UAV_GS_stub
+  idlflags += -Wb,stub_export_macro=UAV_GS_STUB_Export -Wb,stub_export_include=UAV_GS_stub_export.h -Wb,skel_export_macro=UAV_GS_SVNT_Export -Wb,skel_export_include=UAV_GS_svnt_export.h
+  dynamicflags   = UAV_GS_STUB_BUILD_DLL
+
+  IDL_Files {
+    UAV_GS.idl
+  }
+
+  Source_Files {
+    UAV_GSC.cpp
+  }
+}
+
+project(UAV_GS_svnt) : ciao_servant {
+  after +=  UAV_GS_stub
+  sharedname  = UAV_GS_svnt
+  libs    += UAV_GS_stub 
+  
+  idlflags  +=  -Wb,export_macro=UAV_GS_SVNT_Export -Wb,export_include=UAV_GS_svnt_export.h
+  dynamicflags = UAV_GS_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    UAV_GS.cidl
+  }
+
+  IDL_Files {
+    UAV_GSE.idl
+  }
+
+  Source_Files {
+    UAV_GSEC.cpp
+    UAV_GSS.cpp
+    UAV_GS_svnt.cpp
+  }
+}
+
+
+project(UAV_GS_exec) : ciao_component {
+  after   += UAV_GS_svnt
+  sharedname = UAV_GS_exec
+  libs      += UAV_GS_stub UAV_GS_svnt 
+  
+  idlflags  +=  -Wb,export_macro=UAV_GS_EXEC_Export -Wb,export_include=UAV_GS_exec_export.h
+  dynamicflags   = UAV_GS_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    UAV_GS_exec.cpp
+  }
+}
+
+
+

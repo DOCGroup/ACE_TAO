@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef BATTLE_CIDL
+#define BATTLE_CIDL
+
+#include "Engagement.idl"
+
+composition session Battle_Impl
+{
+  home executor BattleHome_Exec
+  {
+    implements BBN_UAV::BattleHome;
+    manages Battle_Exec;
+  };
+};
+
+#endif /* BATTLE_CIDL */

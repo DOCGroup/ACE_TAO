@@ -6,6 +6,7 @@
  * Definition of events, and used in the BBN_UAV module.
  *
  * @author George Edwards <g.edwards@vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -19,31 +20,41 @@
 
 module BBN_UAV
 {
-
   /**
-   * @eventtype 
+   * @eventtype: emitted by Satellite, and consumed by CAOC.
    */
   eventtype TargetLocated {};
 
   /**
-   * @eventtype 
+   * @eventtype: emitted by CAOC, and consumed by UAV_GS
+   *             (UAV ground station).
    */
   eventtype PrepareCapture {};
 
   /**
-   * @eventtype 
+   * @eventtype: published by UAV_GS, and consumed by UAVs.
    */
   eventtype StartCapture {};
 
   /**
-   * @eventtype 
+   * @eventtype: emitted by CAOC, and consumed by Engagement.
    */
-  eventtype TargetRecognized {};
+  eventtype PrepareEngage {};
 
   /**
-   * @eventtype 
+   * @eventtype: emitted by Engagement, and consumed by Battle.
    */
-  eventtype EngageTarget {};
+  eventtype StartEngage {};
+  
+  /**
+   * @eventtype: emitted by Engagement, and consumed by UCAV_GS.
+   */
+  eventtype PrepareMove {};
+  
+  /**
+   * @eventtype: published by UCAV_GS, and consumed by UCAVs.
+   */
+  eventtype StartMove {};
 
 };
 

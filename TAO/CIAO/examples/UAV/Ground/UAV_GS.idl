@@ -1,31 +1,30 @@
 //$Id$
 //=============================================================================
 /**
- * @file CAOC.idl
+ * @file UAV_GS.idl
  *
- * Definition of the CAOC component
+ * Definition of the UAV_GS component
  *
  * @author George Edwards <g.edwards@vanderbilt.edu>
  * @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 //=============================================================================
-#ifndef CIAO_CAOC_IDL
-#define CIAO_CAOC_IDL
+#ifndef CIAO_UAV_GS_IDL
+#define CIAO_UAV_GS_IDL
 
 #include "../BBN_UAV.idl"
 
 module BBN_UAV
 {
-  component CAOC
+  component UAV_GS
     {
-      publishes PrepareCapture prepare_capture;
-      publishes PrepareEngage prepare_engage;
-      consumes TargetLocated target_located;
+      publishes StartCapture start_capture;
+      consumes PrepareCapture prepare_capture;
     };
 
-  home CAOCHome manages CAOC
+  home UAV_GSHome manages UAV_GS
     {
     };
 };
 
-#endif /*CIAO_CAOC_IDL */
+#endif /*CIAO_UAV_GS_IDL */

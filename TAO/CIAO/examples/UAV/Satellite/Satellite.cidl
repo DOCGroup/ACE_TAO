@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef SATELLITE_CIDL
+#define SATELLITE_CIDL
+
+#include "Satellite.idl"
+
+composition session Satellite_Impl
+{
+  home executor SatelliteHome_Exec
+  {
+    implements BBN_UAV::SatelliteHome;
+    manages Satellite_Exec;
+  };
+};
+
+#endif /* SATELLITE_CIDL */
