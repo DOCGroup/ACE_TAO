@@ -1,3 +1,12 @@
+Tue Nov 10 14:56:38 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/tutorials/index.html
+	  Including #17 now
+
+        * docs/tutorials/017/*.html
+          docs/tutorials/017/combine.shar
+	  Completed!  Commented and converted into standared Tutorial format.
+
 Tue Nov 10 10:09:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp (main): replaced hard-coded "/" with
@@ -141,7 +150,7 @@ Fri Nov 06 12:58:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/Thread_Manager.cpp: Removed several superfluous parens so
           the code looks clearer and less error-prone.
 
-1998-11-06  James CE Johnson  <jim@adt1.lads.com>
+1998-11-06  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/013/block.cpp
         * docs/tutorials/013/page05.html
