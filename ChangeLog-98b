@@ -1,5 +1,8 @@
 1998-10-13  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* ace/Synch.i (ACE_Mutex::remove): Added a #else for non-chorus
+	  cases instead of #endif to call ACE_OS::mutex_destroy.
+
 	* ace/OS.cpp : Added static member definition
 		KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS]
 	for CHORUS.
