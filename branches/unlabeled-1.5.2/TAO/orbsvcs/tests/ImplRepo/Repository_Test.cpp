@@ -4,6 +4,7 @@
 #include "../../ImplRepo_Service/Repository.h"
 
 ASYS_TCHAR *NAME_VALUE = ASYS_TEXT ("server");
+ASYS_TCHAR *NAME_VALUE2 = ASYS_TEXT ("server");
 ASYS_TCHAR *COMM_LINE_VALUE = ASYS_TEXT ("server -i");
 ASYS_TCHAR *ENV_VALUE = ASYS_TEXT ("null environment");
 ASYS_TCHAR *HOST_VALUE = ASYS_TEXT ("maxixe.cs.wustl.edu");
