@@ -63,7 +63,8 @@ Wed Apr 15 22:29:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
         operators for CORBA::Any.
 
         * TAO_IDL/be/be_predefined_type.cpp: Added cases for LongLong,
-        ULongLOng, and LongDouble which were missing.
+        ULongLOng, and LongDouble which were missing. Thanks to Sam Hauer
+	(shauer@nmo.gtegsc.com).
 
 Wed Apr 15 20:20:58 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
