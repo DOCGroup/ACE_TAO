@@ -23,8 +23,7 @@ namespace CCF
         ~Module () throw () {}
 
         Module (SimpleName const& name, ScopePtr const& scope)
-            : Declaration (name, scope),
-              Scope (name, scope)
+            : Declaration (name, scope)
         {
           type_info (static_type_info ());
         }

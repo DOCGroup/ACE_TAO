@@ -38,7 +38,7 @@ namespace CCF
       template <typename T, typename Ptr>
       DeclarationRef<T, Ptr>::
       DeclarationRef (DeclarationPtr decl)
-          : table_ (decl->scope ()->table ()),
+          : table_ (decl->table ()),
             name_ (decl->name ()),
             order_ (decl->order ()),
             initialized_ (true),
@@ -89,21 +89,10 @@ namespace CCF
       lookup (ScopedName const& n) const
         throw (DeclarationNotFound, TypeMismatch)
       {
-        IteratorPair pair = lookup (n);
+        DeclarationPtr d (lookup (n, T::static_type_info ()));
 
-        if (pair.first == pair.second) throw DeclarationNotFound ();
-
-        for (; pair.first != pair.second; pair.first++)
-        {
-          DeclarationPtr d = (*pair.first);
-
-          //@@ gcc bug
-          StrictPtr<T> p ((*pair.first)->template dynamic_type<T> ());
-
-          if (p != 0) return p;
-        }
-
-        throw TypeMismatch ();
+        //@@ gcc bug
+        return d->template dynamic_type<T> ();
       }
 
 

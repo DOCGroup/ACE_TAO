@@ -1,44 +1,108 @@
+Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+        * CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/IDL2/Makefile.archive:
+        * CCF/IDL2/Parser.cpp:
+        * CCF/IDL2/Parser.hpp:
+        * CCF/IDL2/SemanticAction.hpp:
+        * CCF/IDL2/SyntaxTree.hpp:
+        * CCF/IDL2/Traversal.hpp:
+        * CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/IDL2/SemanticAction/Typedef.hpp:
+        * CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+        * CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+        * CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+        * CCF/IDL2/SyntaxTree/Elements.cpp:
+        * CCF/IDL2/SyntaxTree/Elements.hpp:
+        * CCF/IDL2/SyntaxTree/Elements.tpp:
+        * CCF/IDL2/SyntaxTree/Interface.hpp:
+        * CCF/IDL2/SyntaxTree/Makefile.alt:
+        * CCF/IDL2/SyntaxTree/Module.hpp:
+        * CCF/IDL2/SyntaxTree/Operation.hpp:
+        * CCF/IDL2/SyntaxTree/Translation.cpp:
+        * CCF/IDL2/SyntaxTree/Translation.hpp:
+        * CCF/IDL2/SyntaxTree/TypeId.cpp:
+        * CCF/IDL2/SyntaxTree/Typedef.cpp:
+        * CCF/IDL2/SyntaxTree/Typedef.hpp:
+        * CCF/IDL2/SyntaxTree/ValueType.hpp:
+        * CCF/IDL2/Traversal/BuiltIn.hpp:
+        * CCF/IDL2/Traversal/BuiltIn.hpp.m4:
+        * CCF/IDL2/Traversal/Elements.cpp:
+        * CCF/IDL2/Traversal/Elements.hpp:
+        * CCF/IDL2/Traversal/Interface.hpp:
+        * CCF/IDL2/Traversal/Module.hpp:
+        * CCF/IDL2/Traversal/Operation.hpp:
+        * CCF/IDL2/Traversal/Translation.hpp:
+        * CCF/IDL2/Traversal/TypeId.hpp:
+        * CCF/IDL2/Traversal/Typedef.cpp:
+        * CCF/IDL2/Traversal/Typedef.hpp:
+        * CCF/IDL3/SyntaxTree/Component.hpp:
+        * CCF/IDL3/SyntaxTree/EventType.hpp:
+        * CCF/IDL3/SyntaxTree/Home.hpp:
+        * CCF/IDL3/SyntaxTree/Operation.hpp:
+        * CCF/IDL3/Traversal/Component.hpp:
+        * CCF/IDL3/Traversal/EventType.hpp:
+        * CCF/IDL3/Traversal/Home.hpp:
+        * CCF/IDL3/Traversal/Operation.hpp: 
+	* CCF/CIDL/SyntaxTree/Composition.hpp:
+        * CCF/CIDL/SyntaxTree/HomeExecutor.hpp:
+        * CCF/CIDL/Traversal/Composition.hpp:
+        * CCF/CIDL/Traversal/HomeExecutor.hpp: First part of
+	  typedef-related infrastructure.
+
+	* CCF/CodeGenerationKit/IndentationIDL.hpp:
+        * CCF/CompilerElements/Preprocessor.hpp:
+        * Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+        * Example/CIDL/LocalExecutorMapping/test-0.idl: some minor 
+	clean-up's.
+
+	* Documentation/TODO: added a few more items.
+
 Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * performance-tests/Benchmark/RoundTrip/svc.conf: 
-	  Changed to load Advanced_Resource_Factory dynamically.  
-	
+        * performance-tests/Benchmark/RoundTrip/svc.conf:
+	  Changed to load Advanced_Resource_Factory dynamically.
+
         * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
         * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
-        * performance-tests/Benchmark/RoundTripServer/server.cpp: 
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
 	  Changed to implement the Benchmark::Latency_Test interface
 	  instead of the Latency_Test interface.  Otherwise, we won't be
 	  able to connect the interface to a receptacle expecting another
 	  interface type.
-	
+
 Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
 	  Fixed a minor compilation problem.
-	
+
 	* performance-tests/Benchmark/descriptors/Test-ior.cad:
-	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl: 
-	* performance-tests/Benchmark/RoundTripServer/server.cpp: 
+	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
+	* performance-tests/Benchmark/RoundTripServer/server.cpp:
 
 	  Changed to output IOR to a fixed file named "rtserver.ior" and
 	  refer to the object as file://rtserver.ior in the cad file
 
 Mon Oct 13 23:41:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/handcrafted/Display/RateGen/controller.cpp: 
+	* examples/handcrafted/Display/RateGen/controller.cpp:
 	* examples/handcrafted/Display/RateGen/client.cpp: Added inclusion
 	  of "ace/streams.h" to make them compile.
 
 Mon Oct 13 22:31:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp: 
+	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp:
 	  Fixed a fuzz warning.
 
 Mon Oct 13 16:49:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/RTComponentServer/RTConfig_Manager.h: 
-	* tools/RTComponentServer/ComponentServer_Task.h: 
-	  Added /**/ to fix Fuzz errors.  
+	* tools/RTComponentServer/RTConfig_Manager.h:
+	* tools/RTComponentServer/ComponentServer_Task.h:
+	  Added /**/ to fix Fuzz errors.
 
 Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -55,7 +119,7 @@ Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/ServantSourceGenerator.hpp:
 
-	      Changed top of files to match the 
+	      Changed top of files to match the
 	      title/author/cvs id  format for all other
 	      CCF and CIDLC files.
 
@@ -66,7 +130,7 @@ Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	      types, and factoring out the typename emitter
 	      classes for operation return types and parameters
 	      into a separate translation unit, to eliminate
-	      the duplication in ServantHeaderGenerator.cpp and 
+	      the duplication in ServantHeaderGenerator.cpp and
 	      ServantSourceGenerator.cpp.
 
         * CIDLC/cidlc.mpc:

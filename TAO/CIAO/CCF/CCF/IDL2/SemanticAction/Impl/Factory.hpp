@@ -7,12 +7,13 @@
 
 #include "CCF/IDL2/SemanticAction/Factory.hpp"
 
-#include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
-#include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
-#include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
-#include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Attribute.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Operation.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Typedef.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
 
 namespace CCF
 {
@@ -39,20 +40,51 @@ namespace CCF
 
                 scope_ (r->scope ()),
 
-                include_ (trace_, *this, r, scope_),
-                type_id_ (trace_, scope_),
-                type_prefix_ (trace_, scope_),
-                module_ (trace_, scope_),
-                interface_ (trace_, scope_),
                 attribute_ (trace_, scope_),
-                operation_ (trace_, scope_)
+                include_ (trace_, *this, r, scope_),
+                interface_ (trace_, scope_),
+                module_ (trace_, scope_),
+                operation_ (trace_, scope_),
+                typedef__ (trace_, scope_),
+                type_id_ (trace_, scope_),
+                type_prefix_ (trace_, scope_)
           {
+          }
+
+          virtual SemanticAction::Attribute&
+          attribute ()
+          {
+            return attribute_;
           }
 
           virtual SemanticAction::Include&
           include ()
           {
             return include_;
+          }
+
+          virtual SemanticAction::Interface&
+          interface ()
+          {
+            return interface_;
+          }
+
+          virtual SemanticAction::Module&
+          module ()
+          {
+            return module_;
+          }
+
+          virtual SemanticAction::Operation&
+          operation ()
+          {
+            return operation_;
+          }
+
+          virtual SemanticAction::Typedef&
+          typedef_ ()
+          {
+            return typedef__;
           }
 
           virtual SemanticAction::TypeId&
@@ -67,43 +99,20 @@ namespace CCF
             return type_prefix_;
           }
 
-          virtual SemanticAction::Module&
-          module ()
-          {
-            return module_;
-          }
-
-          virtual SemanticAction::Interface&
-          interface ()
-          {
-            return interface_;
-          }
-
-          virtual SemanticAction::Attribute&
-          attribute ()
-          {
-            return attribute_;
-          }
-
-          virtual SemanticAction::Operation&
-          operation ()
-          {
-            return operation_;
-          }
-
         protected:
           bool trace_;
 
           SyntaxTree::ScopePtr scope_;
           SyntaxTree::TranslationRegionPtr region_;
 
+          Attribute attribute_;
           Include include_;
+          Interface interface_;
+          Module module_;
+          Operation operation_;
+          Typedef typedef__;
           TypeId type_id_;
           TypePrefix type_prefix_;
-          Module module_;
-          Interface interface_;
-          Attribute attribute_;
-          Operation operation_;
         };
       }
     }

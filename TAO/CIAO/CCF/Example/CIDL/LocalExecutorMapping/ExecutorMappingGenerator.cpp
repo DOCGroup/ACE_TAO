@@ -23,12 +23,6 @@ using std::make_pair;
 using namespace CCF::CIDL;
 using namespace SyntaxTree;
 
-/*
-
-@@ bad code: i->scope ()->table ()
-
-*/
-
 namespace
 {
   class Declarations
@@ -238,7 +232,7 @@ namespace
       ScopedName mapping (orig.scope (), "CCM_" + orig.simple ());
 
       // Check if mapping has already been provided.
-      if (i->scope ()->table ().exist (mapping)) return;
+      if (i->table ().exist (mapping)) return;
 
       // Add to the list if it's not already there.
       declarations_.add (i);
