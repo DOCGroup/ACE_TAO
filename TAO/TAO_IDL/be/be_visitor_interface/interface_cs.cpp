@@ -153,51 +153,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-/*
-  // Interceptor classes.  The interceptors helper classes must be
-  // defined before the interface operations because they are used in
-  // the implementation of these operations.
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
-  be_visitor_interface_interceptors_cs ii_visitor (&ctx);
-
-  if (node->accept (&ii_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-
-  if (!node->is_local () && ! node->is_abstract ())
-    {
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS);
-      be_visitor_interface_remote_proxy_impl_cs irpi_visitor (&ctx);
-
-      if (node->accept (&irpi_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
-                             "visit_interface - "
-                             "codegen for Base Proxy Broker class failed\n"),
-                            -1);
-        }
-
-      ctx = *this->ctx_;
-      be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
-
-      if (node->accept (&irpb_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
-                             "visit_interface - "
-                             "codegen for Base Proxy Broker class failed\n"),
-                            -1);
-        }
-    }
-*/
   if (node->is_local ())
     {
       *os << be_nl << be_nl
@@ -231,14 +186,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->base_proxy_broker_name ()
           << "_Factory_function_pointer (this);"
           << be_uidt << be_uidt;
-/*
-      *os << be_nl << "else" << be_idt_nl
-          << "this->the" << node->base_proxy_broker_name ()
-          << "_ =" << be_idt_nl
-          << "::" << node->full_remote_proxy_broker_name ()
-          << "::the" << node->remote_proxy_broker_name ()
-          << " ();" << be_uidt << be_uidt;
-*/
+
       // Now we setup the immediate parents.
       int n_parents = node->n_inherits ();
       int has_concrete_parent = 0;

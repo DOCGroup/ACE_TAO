@@ -71,7 +71,6 @@
 #include "be_visitor_operation/rettype_post_invoke_cs.cpp"
 #include "be_visitor_operation/rettype_post_upcall_ss.cpp"
 #include "be_visitor_operation/rettype_return_cs.cpp"
-#include "be_visitor_operation/rettype_vardecl_cs.cpp"
 #include "be_visitor_operation/rettype_vardecl_ss.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
 #include "be_visitor_operation/tie_si.cpp"
@@ -90,7 +89,6 @@
 
 // Interceptors
 #include "be_visitor_operation/interceptors_ch.cpp"
-#include "be_visitor_operation/interceptors_cs.cpp"
 #include "be_visitor_operation/interceptors_arglist.cpp"
 #include "be_visitor_operation/interceptors_sh.cpp"
 #include "be_visitor_operation/interceptors_ss.cpp"
@@ -99,9 +97,7 @@
 #include "be_visitor_operation/interceptors_result.cpp"
 
 // Collocation
-#include "be_visitor_operation/base_proxy_impl_ch.cpp"
 #include "be_visitor_operation/proxy_impl_xh.cpp"
-#include "be_visitor_operation/remote_proxy_impl_cs.cpp"
 #include "be_visitor_operation/thru_poa_proxy_impl_ss.cpp"
 #include "be_visitor_operation/direct_proxy_impl_ss.cpp"
 

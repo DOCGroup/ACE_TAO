@@ -44,7 +44,6 @@
 #include "be_visitor_interface/ami_interface_ch.h"
 #include "be_visitor_interface/smart_proxy_ch.h"
 #include "be_visitor_interface/smart_proxy_cs.h"
-#include "be_visitor_interface/interceptors_cs.h"
 #include "be_visitor_interface/interceptors_ss.h"
 
 // Proxy Brokers
@@ -56,10 +55,6 @@
 #include "be_visitor_interface/strategized_proxy_broker_ss.h"
 
 // Proxy Impls
-#include "be_visitor_interface/proxy_impls_ch.h"
-#include "be_visitor_interface/base_proxy_impl_ch.h"
-#include "be_visitor_interface/remote_proxy_impl_ch.h"
-#include "be_visitor_interface/remote_proxy_impl_cs.h"
 #include "be_visitor_interface/thru_poa_proxy_impl_sh.h"
 #include "be_visitor_interface/thru_poa_proxy_impl_ss.h"
 #include "be_visitor_interface/direct_proxy_impl_sh.h"

@@ -92,10 +92,6 @@ public:
   int gen_pre_stub_info (be_operation *node);
   // generate any info before the actual code for the stub is generated
 
-  virtual int gen_marshal_and_invoke (be_operation *node,
-                                      be_type *bt);
-  // generate code that marshals the arguments and transmits them
-
   virtual int gen_raise_interceptor_exception (
       be_type *return_type,
       const char *exception_name,
@@ -103,11 +99,6 @@ public:
     );
   // helper that generates code for raising an exception within
   // interceptor's try block
-
-  virtual const char *compute_operation_name (be_operation *node);
-  // compute the operation_remote_proxy_impl name.  
-  // Notice that this operation_remote_proxy_impl
-  // _does_ include the double quote.
 
 protected:
   void gen_arg_template_param_name (AST_Type *bt,
