@@ -88,7 +88,7 @@ Sun Aug 17 00:22:16 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  No need to include "tao/ORB_Core.h".
 
-	  Include "ace/Thread_Mutex.h" to pull ACE_Thread_Mutex class
+	  Include "ace/Thread_Mutex.h" to pull in ACE_Thread_Mutex class
 	  declaration.
 
 	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
