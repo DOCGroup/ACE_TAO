@@ -11,8 +11,10 @@ Thu Jul 08 22:05:31 1999  David L. Levine  <levine@cs.wustl.edu>
           ACE_DEFAULT_BASE_ADDR to 0x40000000 on __powerpc__
           only.
 
-        * ace/config-linuxppcr5.h: removed.  Linux/PPC can
+        * ace/config-linuxppcr5.h: removed.  LinuxPPC can
           now use config-linux-lxpthreads.h.
+
+        * ACE-INSTALL.html:  added LinuxPPC info.
 
           Thanks to Andreas Tobler <a.tobler@schweiz.ch> for helping
           to factor out the code from config-linuxppcr5.h.
