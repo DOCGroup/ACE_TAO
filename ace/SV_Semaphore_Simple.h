@@ -23,6 +23,18 @@
 
 #include "ace/OS.h"
 
+#if defined (ACE_WIN32) && !defined (ACE_PSOS)
+   // Default semaphore key and mutex name
+#  if !defined (ACE_DEFAULT_SEM_KEY)
+#    define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+#  endif /* ACE_DEFAULT_SEM_KEY */
+#else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+   // Default semaphore key
+#  if !defined (ACE_DEFAULT_SEM_KEY)
+#    define ACE_DEFAULT_SEM_KEY 1234
+#  endif /* ACE_DEFAULT_SEM_KEY */
+#endif /* ACE_WIN32 */
+
 /**
  * @class ACE_SV_Semaphore_Simple
  *
