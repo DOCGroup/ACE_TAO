@@ -405,11 +405,10 @@ TAO_GIOP::send_error (TAO_SVC_HANDLER *&handler)
                       (const u_char *) error_message,
                       TAO_GIOP_HEADER_LEN);
   handler->peer ().send_n (error_message, TAO_GIOP_HEADER_LEN);
-  ACE_HANDLE which = handler->peer ().get_handle ();
-  handler->handle_close ();
-  handler = 0;
   if (TAO_orbdebug)
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", which));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", handler->peer ().get_handle ()));
+//   handler->handle_close ();
+  handler = 0;
 }
 
 ssize_t

@@ -609,7 +609,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                           "but client is not waiting a response\n"));
               TAO_TRY_ENV.print_exception ("");
             }
-          this->handle_close ();
+          //          this->handle_close ();
           result = -1;
         }
       return result;
@@ -623,7 +623,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                   "(%P|%t) closing conn %d after fault %p\n",
                   this->peer().get_handle (),
                   "TAO_Server_ConnectionHandler::handle_input"));
-      this->handle_close ();
+      //      this->handle_close ();
       return -1;
     }
   TAO_ENDTRY;
@@ -641,7 +641,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                         "(%P|%t) %s: closing conn, no exception, "
                         "but expecting response\n",
                         "TAO_Server_ConnectionHandler::handle_input"));
-          this->handle_close ();
+          //          this->handle_close ();
           return -1;
         }
     }
@@ -654,7 +654,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                     "(%P|%t) %s: closing conn, no exception, "
                     "but expecting response\n",
                     "TAO_Server_ConnectionHandler::handle_input"));
-      this->handle_close ();
+      //      this->handle_close ();
       return -1;
     }
 
