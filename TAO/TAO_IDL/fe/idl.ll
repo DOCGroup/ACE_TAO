@@ -304,8 +304,7 @@ L"'"\\u([0-9a-fA-F]{1,4})"'"	{
 	        }
 ^#[ \t]*ident[ \t].*{NL}	|
 ^\?\?=[ \t]*ident[ \t].*{NL}	{
-		  /* store cpp ident */
-                  idl_global->ident_string (ace_yytext);
+		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 \/\/.*{NL}	{
@@ -457,6 +456,10 @@ idl_store_pragma(char *buf)
   while (*sp != '\n')
     ++sp;
   *sp = '\0';
+  if (ACE_OS::strstr(buf + 8, "ident") != 0) {
+    idl_global->ident_string(buf + 8);
+    return;
+  }
   UTL_StrList *p = idl_global->pragmas();
   if (p == NULL)
     idl_global->set_pragmas(new UTL_StrList(new UTL_String(buf), NULL));
