@@ -53,7 +53,10 @@ CORBA_NamedValue::Release (void)
       return this->refcount_;
   }
 
-  delete this;
+  //  delete this;
+  // this is causing free mismatched memory error
+  this->~CORBA_NamedValue ();
+  ACE_OS::free (this);
   return 0;
 }
 
@@ -113,7 +116,7 @@ CORBA_NVList::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
-  return refcount_++;
+  return this->refcount_++;
 }
 
 CORBA::ULong
@@ -124,8 +127,8 @@ CORBA_NVList::Release (void)
 
     ACE_ASSERT (this != 0);
 
-    if (--refcount_ != 0)
-      return refcount_;
+    if (--this->refcount_ != 0)
+      return this->refcount_;
   }
 
   delete this;
@@ -236,6 +239,7 @@ CORBA_NVList::add_value (const char *name,
     // place, and makes a "deep copy" of the data.
     (void) new (&this->values_[len].any_) CORBA::Any (value);
   else
+
     // The normal behaviour for parameters is that the ORB "borrows"
     // their memory for the duration of calls.
     //
