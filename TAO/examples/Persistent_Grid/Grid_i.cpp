@@ -64,9 +64,6 @@ Grid_i::set (CORBA::Short x,
 	     CORBA::Long value,
 	     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_DEBUG ((LM_DEBUG,
-                  "I am just here \n "));
-
   if (x < 0
       || y < 0
       || x >= width_
