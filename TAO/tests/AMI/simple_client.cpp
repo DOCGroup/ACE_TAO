@@ -104,7 +104,8 @@ public:
     {
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <foo_excep> called: \n"));
+                  "Callback method <foo_excep> called: \n"
+				  "Testing proper exception handling ...\n"));
       ACE_TRY
         {
           excep_holder->raise_foo (ACE_TRY_ENV);
@@ -114,6 +115,8 @@ public:
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "Catched exception:");
+		  ACE_DEBUG ((LM_DEBUG,
+					  "... exception received successfully\n"));
         }
       ACE_ENDTRY;
     };
@@ -286,8 +289,8 @@ main (int argc, char *argv[])
                       number));
         }
       
-      //if (shutdown_flag)
-      //  ami_test_var->shutdown ();
+      if (shutdown_flag)
+        ami_test_var->shutdown ();
     }
   ACE_CATCHANY
     {
