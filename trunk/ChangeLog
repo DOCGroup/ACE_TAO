@@ -1,3 +1,11 @@
+Mon Jun 18 10:06:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* etc/tao_ssliop.doxygen: New configuration file for
+	SSLIOP-related files.
+	
+	* bin/generate_doxygen.pl: Added new SSLIOP configuration file to
+	the list of things to be documented for TAO.
+
 Sun Jun 17 21:26:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Message_Block.i: Fixed Fuzz errors.
