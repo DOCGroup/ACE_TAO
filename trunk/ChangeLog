@@ -1,3 +1,28 @@
+Thu Mar 09 18:20:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* ace/Asynch_IO.h:
+	* ace/Asynch_IO_Impl.h:
+	* ace/POSIX_Asynch_IO.h:
+	* ace/POSIX_Proactor.h:
+	* ace/Proactor.h:
+	* ace/Proactor_Impl.h:
+	* ace/WIN32_Asynch_IO.h:
+	* ace/WIN32_Proactor.h:
+	* ace/config-aix-4.1.x.h:
+	* ace/config-aix-4.2.x.h:
+	* ace/config-aix-4.3.x.h:
+	  
+	  These files were using the  #if !defined (WHATEVER) as multiple
+	  inclusion guard instead of  #ifndef WHATEVER. Thanks to Paul 
+	  Calabrese <calabrese_p@ociweb.com> for reporting that.
+
+	* ace/config-visualage.h:
+	* ace/CLASSIX/CLASSIX_Port_Default.h:
+	* ace/Svc_Conf_Tokens.h:
+	  
+	  While this file were missing multiple inclusion guard. Thanks to 
+	  Paul Calabrese <calabrese_p@ociweb.com> for reporting that.
+	
 Thu Mar 09 18:06:52 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h: Added ACE_HAS_SIGTIMEDWAIT and the

@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_PROACTOR_H)
+#ifndef ACE_PROACTOR_H
 #define ACE_PROACTOR_H
 
 #include "ace/OS.h"
