@@ -37,6 +37,10 @@ void
 
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"In pre_init\n"));
 
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
                                                            ACE_ENV_ARG_PARAMETER);
@@ -131,24 +135,25 @@ void
 }
 
 void
- TAO_RTScheduler_ORB_Initializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
+					    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
+  
   // @@ This is busted.  TAO_ORBInitInfo should do proper reference
   //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
   //TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-//                                                           ACE_ENV_ARG_PARAMETER);
+  //                                                           ACE_ENV_ARG_PARAMETER);
   //ACE_CHECK;
 
-		printf ("In pre_init\n");
-
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"In post_init\n"));
+  
   CORBA::Object_ptr rt_current_obj = info->resolve_initial_references ("RTCurrent"
-								      ACE_ENV_ARG_PARAMETER);
+								       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
   
