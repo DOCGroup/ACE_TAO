@@ -26,18 +26,9 @@
 
 // =Methods on class NamedValue
 
-
-// COM's IUnknown support
-
-// {77420087-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_NamedValue,
-0x77420087, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
 CORBA::ULong
 CORBA_NamedValue::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
   return refcount_++;
 }
 
@@ -45,8 +36,6 @@ CORBA::ULong
 CORBA_NamedValue::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
-
     ACE_ASSERT (this != 0);
 
     if (--this->refcount_ != 0)
@@ -58,22 +47,6 @@ CORBA_NamedValue::Release (void)
   this->~CORBA_NamedValue ();
   ACE_OS::free (this);
   return 0;
-}
-
-TAO_HRESULT
-CORBA_NamedValue::QueryInterface (REFIID riid,
-                                  void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_NamedValue == riid || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) AddRef ();
-  return TAO_NOERROR;
 }
 
 // Reference counting for DII Request object
@@ -105,17 +78,9 @@ CORBA_NamedValue::~CORBA_NamedValue (void)
 
 // =Methods on class NVList
 
-// COM's IUnknown support
-
-// {77420088-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_NVList,
-0x77420088, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
 CORBA::ULong
 CORBA_NVList::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
   return this->refcount_++;
 }
 
@@ -123,8 +88,6 @@ CORBA::ULong
 CORBA_NVList::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
-
     ACE_ASSERT (this != 0);
 
     if (--this->refcount_ != 0)
@@ -133,22 +96,6 @@ CORBA_NVList::Release (void)
 
   delete this;
   return 0;
-}
-
-TAO_HRESULT
-CORBA_NVList::QueryInterface (REFIID riid,
-                              void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_NVList == riid || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) AddRef ();
-  return TAO_NOERROR;
 }
 
 // Reference counting for DII Request object

@@ -761,26 +761,16 @@ CORBA_Any::operator>>= (to_object obj) const
     return CORBA::B_FALSE;
 }
 
-// For COM -- IUnKnown operations
-
-// {A201E4C8-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_Any,
-0xa201e4c8, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-ULONG
+CORBA::ULong
 CORBA_Any::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
-
   return ++refcount_;
 }
 
-ULONG
+CORBA::ULong
 CORBA_Any::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
-
     ACE_ASSERT (this != 0);
 
     if (--refcount_ != 0)
@@ -789,125 +779,6 @@ CORBA_Any::Release (void)
 
   delete this;
   return 0;
-}
-
-TAO_HRESULT
-CORBA_Any::QueryInterface (REFIID riid,
-                           void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_Any == riid || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
- (void) AddRef ();
-  return TAO_NOERROR;
-}
-
-// TAO_VARIANT conversions
-
-// copy constructor
-
-CORBA_Any::CORBA_Any (const TAO_VARIANT &src)
-{
-  orb_owns_data_ = CORBA::B_TRUE;
-  refcount_ = 1;
-  type_ = CORBA::_tc_void;
-  value_ = 0;
-
-  *this = src;
-}
-
-// assignment operator
-CORBA_Any &
-CORBA_Any::operator = (const TAO_VARIANT &src)
-{
-  this->~CORBA_Any ();
-
-  // XXX better, report exception
-  assert (ACE_BIT_DISABLED (src.vt, 0xB000));
-
-  switch (src.vt & 0x0fff)
-    {
-    case VT_EMPTY:
-      type_ = CORBA::_tc_void;
-      value_ = 0;
-      break;
-
-    case VT_NULL:
-      type_ = CORBA::_tc_null;
-      value_ = 0;
-      break;
-
-    case VT_I2:
-      type_ = CORBA::_tc_short;
-      value_ =
-        new CORBA::Short ((src.vt & VT_BYREF) ? (*src.piVal) : src.iVal);
-      break;
-
-    case VT_I4:
-      type_ = CORBA::_tc_long;
-      value_ =
-        new CORBA::Long ((src.vt & VT_BYREF) ? (*src.plVal) : src.lVal);
-      break;
-
-    case VT_R4:
-      type_ = CORBA::_tc_float;
-      value_ =
-        new CORBA::Float ((src.vt & VT_BYREF) ? (*src.pfltVal) : src.fltVal);
-      break;
-
-    case VT_R8:
-      type_ = CORBA::_tc_double;
-      value_ =
-        new CORBA::Double ((src.vt & VT_BYREF) ? (*src.pdblVal) : src.dblVal);
-      break;
-
-      // case VT_CY:
-      // case VT_DATE:
-      // XXX convert currency and date to TBD CORBA conventions
-
-      // case VT_BSTR:
-      // XXX convert to CORBA string
-
-      // case VT_DISPATCH:
-      // case VT_UNKNOWN:
-      // case VT_VARIANT:
-      // XXX convert to CORBA objref or appropriate pseudo-objref
-
-      // case VT_BOOL:
-      // XXX convert to CORBA boolean
-
-      // case VT_ERROR:
-      // XXX what to do?
-
-    case VT_UI1:
-      type_ = CORBA::_tc_octet;
-      value_ =
-        new CORBA::Octet ((src.vt & VT_BYREF) ? (*src.pbVal) : src.bVal);
-      break;
-
-    default:
-      // XXX report some exception ... throw it?
-      type_ = CORBA::_tc_void;
-      value_ = 0;
-      break;
-    }
-
-  return *this;
-}
-
-CORBA_Any::operator TAO_VARIANT (void)
-{
-  TAO_VARIANT retval;
-
-  // XXX convert it ... or report exception somehow!
-
-  retval.vt = VT_EMPTY;
-  return retval;
 }
 
 // ----------------------------------------------------------------------

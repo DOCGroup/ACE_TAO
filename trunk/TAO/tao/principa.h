@@ -6,10 +6,10 @@
 //    TAO
 // 
 // = FILENAME
-//    objtable.hh
+//    principa.hh
 //
 // = DESCRIPTION
-//    Header file for Win32 interface to CORBA's "Principal" type.
+//    The CORBA_Principal pseudo-object implementation.
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
@@ -19,7 +19,7 @@
 #if !defined (TAO_PRINCIPAL_H)
 #  define TAO_PRINCIPAL_H
 
-class TAO_Export CORBA_Principal : public TAO_IUnknown
+class TAO_Export CORBA_Principal
   // = TITLE
   //    A "Principal" identifies an authenticated entity in the
   //    network administration framework.  Identities are used to
@@ -36,18 +36,15 @@ public:
 
   // Stuff required for COM IUnknown support
 
-  ULONG AddRef (void);
-  ULONG Release (void);
-  TAO_HRESULT QueryInterface (REFIID riid,
-                              void **ppv);
+  CORBA::ULong AddRef (void);
+  CORBA::ULong Release (void);
 
   CORBA_Principal (void);
 
 private:
-  ACE_SYNCH_MUTEX lock_;
-  u_int refcount_;
+  CORBA::ULong refcount_;
 
-  virtual ~CORBA_Principal (void);
+  ~CORBA_Principal (void);
 
   // = these are not provided
   CORBA_Principal &operator = (const CORBA::Principal_ptr &);
@@ -66,4 +63,5 @@ private:
   friend class everyone_needs_a_friend;
 #endif /* __GNUG__ */
 };
+
 #endif /* TAO_PRINCIPAL_H */

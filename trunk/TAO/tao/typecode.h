@@ -51,7 +51,7 @@ public:
 
 class TC_Private_State;
 
-class TAO_Export CORBA_TypeCode : public TAO_IUnknown
+class TAO_Export CORBA_TypeCode
   // = TITLE
   //   The CORBA TypeCode class. It maintains the in-memory
   //   representation of any OMG CORBA IDL data type.
@@ -158,7 +158,7 @@ public:
   void *operator new (size_t, void *p);
   void *operator new (size_t s);
 
-  virtual ~CORBA_TypeCode (void);
+  ~CORBA_TypeCode (void);
   // destructor
 
   enum traverse_status
@@ -214,12 +214,10 @@ public:
   // returns the alignment requirements for this typecode. used by the
   // IIOP marshaling engine.
 
-  // Stuff required for COM IUnknown support
-  ULONG  AddRef (void);
-  ULONG  Release (void);
-  TAO_HRESULT  QueryInterface (REFIID riid,
-                               void **ppv);
-  // =Following three are deprecated
+  CORBA::ULong  AddRef (void);
+  CORBA::ULong  Release (void);
+
+  // = Following three are deprecated
 
   CORBA::ULong param_count (CORBA::Environment &) const;
   // Deprecated, CORBA 1.2, not fully usable. Returns the number of
@@ -356,11 +354,8 @@ private:
                                        CORBA::Environment &env) const;
   // test equality for typecodes of exceptions
 
-  u_int refcount_;
+  CORBA::ULong refcount_;
   // if refcount reaches 0, free this typecode
-
-  ACE_SYNCH_MUTEX lock_;
-  // Protect access to the reference count.
 
   CORBA::Boolean delete_flag_;
   // indicates if we are freeing ourselves. This flag serves as an indication

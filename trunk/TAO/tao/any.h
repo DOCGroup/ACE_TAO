@@ -21,7 +21,8 @@
 #if !defined (TAO_ANY_H)
 #define TAO_ANY_H
 
-class TAO_Export CORBA_Any : public TAO_IUnknown
+class TAO_Export CORBA_Any
+  //
   // = TITLE
   //   Class "Any" can wrap values of any type, with the assistance
   //   of a TypeCode to describe that type.
@@ -51,7 +52,7 @@ public:
   CORBA_Any (const CORBA_Any &a);
   // Copy constructor.
 
-  virtual ~CORBA_Any (void);
+  ~CORBA_Any (void);
   // Destructor.
 
   CORBA_Any &operator= (const CORBA_Any &);
@@ -135,7 +136,8 @@ public:
 
   struct from_string
   {
-    from_string (char* s, CORBA::ULong b, CORBA::Boolean nocopy = CORBA::B_FALSE);
+    from_string (char* s, CORBA::ULong b,
+		 CORBA::Boolean nocopy = CORBA::B_FALSE);
     char *val_;
     CORBA::ULong bound_;
     CORBA::Boolean nocopy_;
@@ -153,8 +155,8 @@ public:
   void operator<<= (from_string);
   // insert a bounded string
 
-  // special types for extracting octets, chars, booleans, bounded strings, and
-  // object references
+  // special types for extracting octets, chars, booleans, bounded
+  // strings, and object references
 
   struct to_boolean
   {
@@ -212,25 +214,15 @@ public:
   // Return TypeCode of the element stored in the Any
 
   const void *value (void) const;
-  // Return <value> of <Any>.
+  // Returns 0 if the Any has not been assigned a value, following the
+  // CORBA spec (TODO: give a reference) it returns a non-zero value
+  // otherwise. TAO does *not* guarantee that this value may be
+  // casted to the contained type safely.
 
   // = Methods required for COM <IUnknown> support.
 
-  ULONG  AddRef (void);
-  ULONG  Release (void);
-  TAO_HRESULT  QueryInterface (REFIID riid,
-				    void **ppv);
-
-  // = Conversion to/from COM Variant types:
-
-  CORBA_Any (const TAO_VARIANT &src);
-  // copy constructor,
-
-  CORBA_Any &operator = (const TAO_VARIANT &src);
-  // assignment operator
-
-  operator TAO_VARIANT (void);
-  // cast operator.
+  CORBA::ULong AddRef (void);
+  CORBA::ULong Release (void);
 
 private:
   CORBA::TypeCode_ptr type_;
@@ -242,17 +234,17 @@ private:
   CORBA::Boolean orb_owns_data_;
   // Flag that indicates the ORB is responsible for deleting the data.
 
-  u_int refcount_;
+  CORBA::ULong refcount_;
   // Reference count the <Any> to reduce copying costs.
-
-  ACE_SYNCH_MUTEX lock_;
-  // Serialize access to the reference count.
 
   void replace (CORBA::TypeCode_ptr type,
 		const void *value,
 		CORBA::Boolean orb_owns_data);
   // Helper for extraction operators that don't pass an environment
-  // parameter.  94-9-14 hides unsigned char insert/extract
+  // parameter.
+
+
+  // 94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);
   CORBA::Boolean operator>>= (unsigned char&) const;
 };

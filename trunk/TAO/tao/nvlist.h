@@ -47,15 +47,10 @@ public:
 
   CORBA::ULong AddRef (void);
   CORBA::ULong Release (void);
-  TAO_HRESULT QueryInterface (REFIID riid,
-                              void **ppv);
 
 private:
   u_int refcount_;
   // refcount used in release
-
-  ACE_SYNCH_MUTEX lock_;
-  // for synchronization
 
   CORBA::Any any_;
   // holds the value
@@ -136,8 +131,6 @@ public:
 
   CORBA::ULong AddRef (void);
   CORBA::ULong Release (void);
-  TAO_HRESULT QueryInterface (REFIID riid,
-                              void **ppv);
 
 private:
   CORBA_NVList (void);
@@ -156,9 +149,6 @@ private:
 
   CORBA::ULong len_;
   // current length of list
-
-  ACE_SYNCH_MUTEX lock_;
-  // for synchronization
 
   CORBA::ULong refcount_;
   // maintains how many references exist to this object

@@ -54,6 +54,11 @@ public:
   // release the objects only from position <0> to <length-1>; so
   // shrink and then delete could result in a memory leak.
 
+  virtual void _narrow_fixup (CORBA::Environment& _env);
+  // Some sequences require some post-processing *after*
+  // demarshalling, in particular, sequences of objects require
+  // a narrow of each allocated object.
+
 protected:
   TAO_Base_Sequence (void);
   // Default constructor.

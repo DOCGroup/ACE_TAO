@@ -19,7 +19,7 @@
 #if !defined (TAO_EXCEPT_H)
 #  define TAO_EXCEPT_H
 
-class TAO_Export CORBA_Exception : public TAO_IUnknown
+class TAO_Export CORBA_Exception
   // = TITLE
   //   CORBA2-specified exception hierarchy.
   //
@@ -50,24 +50,19 @@ class TAO_Export CORBA_Exception : public TAO_IUnknown
 
   // = Methods required for COM IUnknown support
 
-  ULONG  AddRef (void);
-  ULONG  Release (void);
-  TAO_HRESULT  QueryInterface (REFIID riid,
-                               void **ppv);
+  CORBA::ULong  AddRef (void);
+  CORBA::ULong  Release (void);
 
   CORBA_Exception (CORBA::TypeCode_ptr type);
   virtual ~CORBA_Exception (void);
 
- protected:
+protected:
   CORBA::TypeCode_ptr type_;
   // Type of the Exception.
 
- private:
-  u_int refcount_;
+private:
+  CORBA::ULong refcount_;
   // Reference count to avoid copying overhead.
-
-  ACE_SYNCH_MUTEX lock_;
-  // Serialize access to reference count.
 };
 
 class TAO_Export CORBA_UserException : public CORBA_Exception

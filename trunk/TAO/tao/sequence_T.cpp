@@ -375,6 +375,23 @@ TAO_Unbounded_Object_Sequence<T>::_shrink_buffer (CORBA::ULong nl,
     }
 }
 
+template<class T> void
+TAO_Unbounded_Object_Sequence<T>::_narrow_fixup (CORBA::Environment& _env)
+{
+  T* *tmp = ACE_reinterpret_cast (T**,this->buffer_);
+  CORBA::Object* *old =
+    ACE_reinterpret_cast(CORBA::Object**,this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::Object* obj = old[i];
+      CORBA::Object::_duplicate (obj);
+      tmp[i] = T::_narrow (obj, _env);
+      if (_env.exception () != 0) return;
+      CORBA::release (obj);
+    }
+}
+
 // *************************************************************
 // Operations for class TAO_Bounded_Object_Sequence
 // *************************************************************
@@ -495,6 +512,23 @@ TAO_Bounded_Object_Sequence<T,MAX>::_shrink_buffer (CORBA::ULong nl,
     {
       CORBA::release (tmp[i]);
       tmp[i] = T::_nil ();
+    }
+}
+
+template<class T, CORBA::ULong MAX> void
+TAO_Bounded_Object_Sequence<T,MAX>::_narrow_fixup (CORBA::Environment& _env)
+{
+  T* *tmp = ACE_reinterpret_cast (T**,this->buffer_);
+  CORBA::Object* *old =
+    ACE_reinterpret_cast(CORBA::Object**,this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::Object* obj = old[i];
+      CORBA::Object::_duplicate (obj);
+      tmp[i] = T::_narrow (obj, _env);
+      if (_env.exception () != 0) return;
+      CORBA::release (obj);
     }
 }
 
