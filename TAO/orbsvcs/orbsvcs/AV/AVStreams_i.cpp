@@ -752,7 +752,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               result =
                 this->mmdevice_a_map_.bind (key,map_entry);
               if (result < 0)
-                if (TAO_debug_level > 0) 
+                if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG,"Error binding mmdevice entry in the a_map"));
             }
         }
@@ -825,12 +825,12 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               *flows_any >>= flows.out ();
               for (u_int i=0; i< flows->length ();i++)
                 {
-                  CORBA::Object_var fep_obj = 
+                  CORBA::Object_var fep_obj =
                     this->sep_a_->get_fep (flows [i],ACE_TRY_ENV);
                   ACE_TRY_CHECK_EX (set_source_id);
                   ACE_TRY_EX (producer_check)
                     {
-                      AVStreams::FlowProducer_var producer = 
+                      AVStreams::FlowProducer_var producer =
                         AVStreams::FlowProducer::_narrow (fep_obj.in (),
                                                           ACE_TRY_ENV);
                       ACE_TRY_CHECK_EX (producer_check);
@@ -847,7 +847,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
             }
           ACE_CATCHANY
             {
-              // Since the full profile failed try setting the source id 
+              // Since the full profile failed try setting the source id
               // for the sep instead.
               // @@Naga: What do we do if in the light profile the sep has
               // many producers who do not have flow interfaces. Then
@@ -1147,7 +1147,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                 {
                   AVStreams::FlowEndPoint_ptr fep_b = b_feps_entry->int_id_;
                   AVStreams::FlowConnection_var flow_connection;
-                  
+
                   AVStreams::FlowEndPoint_var connected_to =
                     fep_b->get_connected_fep (ACE_TRY_ENV);
                   ACE_TRY_CHECK_EX (flow_connect);
@@ -1199,7 +1199,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       ACE_CHECK_RETURN (0);
 
                       // make sure that a_feps is flow_producer
-                      // and b_feps is flow_consumer 
+                      // and b_feps is flow_consumer
                       // There should be a way to find which flow
                       // endpoint is producer and which is
                       // consumer.
@@ -1233,7 +1233,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                             }
                           // At this point they should both be
                           // non-nil
-                          // @@ raise an exception (which one?) if 
+                          // @@ raise an exception (which one?) if
                           // this is not true...
                           ACE_ASSERT (!CORBA::is_nil (producer.in ()));
                           ACE_ASSERT (!CORBA::is_nil (consumer.in ()));
@@ -1598,21 +1598,21 @@ TAO_Base_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &,
 }
 
 int
-TAO_Base_StreamEndPoint::set_protocol_object (const char */*flowname*/,
+TAO_Base_StreamEndPoint::set_protocol_object (const char * /*flowname*/,
                                               TAO_AV_Protocol_Object * /*sfp_object*/)
 {
   return -1;
 }
 
 int
-TAO_Base_StreamEndPoint::get_callback (const char */*flowname*/,
+TAO_Base_StreamEndPoint::get_callback (const char * /*flowname*/,
                                        TAO_AV_Callback *&/*sfp_callback*/)
 {
   return -1;
 }
 
 int
-TAO_Base_StreamEndPoint::get_control_callback (const char */*flowname*/,
+TAO_Base_StreamEndPoint::get_control_callback (const char * /*flowname*/,
                                                TAO_AV_Callback *&/*sfp_callback*/)
 {
   return -1;
@@ -2312,11 +2312,11 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
           forward_entry->parse (flow_spec[i]);
           TAO_String_Hash_Key mcast_key (forward_entry->flowname ());
           AVStreams::FlowEndPoint_ptr flow_endpoint = AVStreams::FlowEndPoint::_nil ();
-          // @@Naga: There is a problem in the full profile case for multiconnect. Since 
+          // @@Naga: There is a problem in the full profile case for multiconnect. Since
           // multiconnect on sep_a is called everytime a sink is added and if called for
-          // the same flow twice, the following code will just call add producer on the flow connection. 
+          // the same flow twice, the following code will just call add producer on the flow connection.
           // It is however very hard to find out if the flow producer is already in the flow connection
-          // since comparing object references will not work and the flowproducer reference is 
+          // since comparing object references will not work and the flowproducer reference is
           // generated by _narrow. Our only hope is that _narrow on the same fep will return the same
           // pointer for the flowproducer in which case we can find out if the flowproducer exists in
           // fep set for that flowconnection.
@@ -3619,7 +3619,7 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
                                           this->fp_name_.inout (),
                                           ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          // @@ Naga: We have to find means to set the reverse channel for the producer. 
+          // @@ Naga: We have to find means to set the reverse channel for the producer.
           // Its broken in the point-to_point case for UDP.
         }
       else
@@ -3662,10 +3662,10 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
     {
           AVStreams::FlowProducer_ptr flow_producer =
             AVStreams::FlowProducer::_duplicate (producer);
-          // @@Naga:Sometimes the same producer could be added with a different object reference. 
+          // @@Naga:Sometimes the same producer could be added with a different object reference.
           // There's no portable way of comparing obj refs. but we have to do this till we find
-          // a permanent solution.For eg. 2 different flowproducers for the same flow in a 
-          // Multipoint to Multipoint binding will have the same flowname and hence cannot be 
+          // a permanent solution.For eg. 2 different flowproducers for the same flow in a
+          // Multipoint to Multipoint binding will have the same flowname and hence cannot be
           // used for resolving ties.
           FlowProducer_SetItor begin = this->flow_producer_set_.begin ();
           FlowProducer_SetItor end = this->flow_producer_set_.end ();
@@ -3678,7 +3678,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
             }
           // We need to check the return value of the insert into the flow producer
           // set, since multiconnect could be called many times which will lead to
-          // a call to add_producer every time a sink is added. If the producer is already 
+          // a call to add_producer every time a sink is added. If the producer is already
           // present in our list we just return immediately.
           int result = this->flow_producer_set_.insert (flow_producer);
           if (result == 1)
@@ -3775,7 +3775,7 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
       FlowProducer_SetItor producer_begin = this->flow_producer_set_.begin ();
       // @@Lets take that the first entry as the only producer. We're
       // not sure if we can have multiple flow producers in a
-      // flowconnection. We can have multiple producer in the MtM binding, 
+      // flowconnection. We can have multiple producer in the MtM binding,
       // in which case the first producer that gets added is the leader.
       AVStreams::FlowProducer_ptr flow_producer = (*producer_begin);
 
