@@ -1,3 +1,15 @@
+Thu Nov 27 10:40:32 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp (import_config): The
+	  problem: when importing a configuration from file - the import
+ 	  process assumes maximum line length of 4096 bytes (which means
+ 	  actually about 1360 bytes because each byte is represented as
+ 	  three bytes in the output file).  The solution is to use a
+ 	  dynamic buffer to load a line from the file. If the load did not
+ 	  reach the end of the line - resize the buffer and continue until
+ 	  the end of the line is reached.  Thanks to Moran Levi
+ 	  <moran@monosphere.com> for the fixes.
+
 Thu Nov 27 16:51:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/ARGV_Test.cpp:

@@ -37,11 +37,34 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   if (!in)
     return -1;
 
-  // @@ XXX - change this to a dynamic buffer
-  ACE_TCHAR buffer[4096];
+  u_int buffer_size = 4096;
+  u_int read_pos = 0;
+  ACE_TCHAR *buffer;
+  ACE_NEW_RETURN (buffer, ACE_TCHAR[buffer_size], -1);
   ACE_Configuration_Section_Key section;
-  while (ACE_OS::fgets (buffer, 4096, in))
+
+  while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in))
     {
+      // Check if we got all the line.
+      ACE_TCHAR *end =
+        ACE_OS::strrchr (buffer + read_pos,
+                         ACE_LIB_TEXT ('\n')); // look for end of line
+      if (!end) // we havn't reach the end of the line yet
+        {
+          // allocate a new buffer - double size the previous one
+          ACE_TCHAR *temp_buffer;
+          ACE_NEW_RETURN (temp_buffer, ACE_TCHAR[buffer_size * 2], -1);
+
+          // copy the beginnning of the line
+          ACE_OS::memcpy (temp_buffer, buffer, buffer_size);
+          read_pos = buffer_size - 1;
+          buffer_size *= 2;
+          delete [] buffer;
+          buffer = temp_buffer;
+          continue;
+        }
+      read_pos = 0;
+
       // Check for a comment
       if (buffer[0] == ACE_LIB_TEXT (';') || buffer[0] == ACE_LIB_TEXT ('#'))
         continue;
@@ -53,6 +76,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (!end)
             {
               ACE_OS::fclose (in);
+              delete [] buffer;
               return -3;
             }
           *end = 0;
@@ -60,6 +84,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (config_.expand_path (config_.root_section (), buffer + 1, section, 1))
             {
               ACE_OS::fclose (in);
+              delete [] buffer;
               return -3;
             }
           continue;
@@ -88,6 +113,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_string_value (section, name, end))
                 {
                   ACE_OS::fclose (in);
+                  delete [] buffer;
                   return -4;
                 }
             }
@@ -99,6 +125,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_integer_value (section, name, value))
                 {
                   ACE_OS::fclose (in);
+                  delete [] buffer;
                   return -4;
                 }
             }
@@ -128,6 +155,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                 {
                   ACE_OS::fclose (in);
                   delete [] data;
+                  delete [] buffer;
                   return -4;
                 }
               else
@@ -149,6 +177,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if ((rc = process_previous_line_format (buffer, section)) != 0)
             {
               ACE_OS::fclose (in);
+              delete [] buffer;
               return rc;
             }
         }             // end if maybe old format
@@ -157,10 +186,12 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   if (ferror (in))
     {
       ACE_OS::fclose (in);
+      delete [] buffer;
       return -1;
     }
 
   ACE_OS::fclose (in);
+  delete [] buffer;
   return 0;
 }
 
