@@ -64,6 +64,9 @@ public:
   // Returns a pointer to the underlying <fd_set>.  Returns 0 if
   // <size_> == 0.
 
+  void operator= (const ACE_Handle_Set &);
+  // Assignment operator optimizes for cases where <size_> == 0.
+
   void dump (void) const;
   // Dump the state of an object.
 

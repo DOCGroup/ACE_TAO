@@ -101,6 +101,7 @@ main (int, char *[])
 {
   ACE_START_TEST ("SPIPE_Test");
 
+#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 #if !defined (ACE_LACKS_EXEC)
   switch (ACE_OS::fork ())
     {
@@ -124,10 +125,11 @@ main (int, char *[])
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
   ACE_Thread_Manager::instance ()->wait ();
+#endif /* !ACE_LACKS_EXEC */
 #else
   ACE_DEBUG ((LM_DEBUG, 
 	      "SPIPE is not supported on this platform\n"));
-#endif /* ! ACE_LACKS_EXEC */
+#endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
   ACE_END_TEST;
   return 0;
 }
