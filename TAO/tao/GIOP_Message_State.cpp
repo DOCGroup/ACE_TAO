@@ -174,7 +174,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) -  Getting byte order info.. \n"));
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Getting byte order info.. \n"));
     }
 
     // Let us be specific that this is for 1.0
