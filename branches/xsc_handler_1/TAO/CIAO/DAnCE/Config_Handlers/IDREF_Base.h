@@ -39,7 +39,7 @@ namespace CIAO
   
       /// Get the index associated with an IDREF
       bool
-      find_ref (const ACE_CString& id, size_t val);
+      find_ref (const ACE_CString& id, size_t& val);
       
       /// get the IDREF associated with an index
       bool
