@@ -26,19 +26,28 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// be/be_codegen.cpp:186
 
 #ifndef _TAO_IDL_ORIG_DOMAINC_H_
 #define _TAO_IDL_ORIG_DOMAINC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "PolicyC.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
+#include "tao/Sequence_T.h"
+#include "tao/Objref_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+
+#include "PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -81,7 +90,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:612
 
 #if !defined (_CORBA_DOMAINMANAGER__VAR_OUT_CH_)
 #define _CORBA_DOMAINMANAGER__VAR_OUT_CH_
@@ -144,7 +153,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:185
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -195,7 +204,7 @@ namespace CORBA
   const CORBA::PolicyType SecConstruction = 11U;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:612
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY__VAR_OUT_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY__VAR_OUT_CH_
@@ -259,7 +268,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:185
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -380,7 +389,7 @@ TAO::Collocation_Proxy_Broker *
   );
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:50
 
 // Traits specializations.
 namespace TAO
@@ -469,7 +478,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// be/be_codegen.cpp:1050
 
 #if defined (__ACE_INLINE__)
 #include "DomainC.i"

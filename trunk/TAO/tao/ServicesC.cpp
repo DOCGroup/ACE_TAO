@@ -705,26 +705,6 @@ CORBA::Boolean operator>> (
         CORBA::ServiceDetail_var
       >;
 
-#if !defined (_CORBA_ULONG__EXPLICIT_CS_)
-#define _CORBA_ULONG__EXPLICIT_CS_
-
-  template class
-    TAO_Unbounded_Sequence<
-        CORBA::ServiceOption
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SERVICEDETAIL__EXPLICIT_CS_)
-#define _CORBA_SERVICEDETAIL__EXPLICIT_CS_
-
-  template class
-    TAO_Unbounded_Sequence<
-        CORBA::ServiceDetail
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO_Var_Var_T<
         CORBA::ServiceInformation
@@ -758,26 +738,6 @@ CORBA::Boolean operator>> (
         CORBA::ServiceDetail, \
         CORBA::ServiceDetail_var \
       >
-
-#if !defined (_CORBA_ULONG__EXPLICIT_CS_)
-#define _CORBA_ULONG__EXPLICIT_CS_
-
-# pragma instantiate \
-    TAO_Unbounded_Sequence< \
-        CORBA::ServiceOption \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SERVICEDETAIL__EXPLICIT_CS_)
-#define _CORBA_SERVICEDETAIL__EXPLICIT_CS_
-
-# pragma instantiate \
-    TAO_Unbounded_Sequence< \
-        CORBA::ServiceDetail \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_Var_Var_T< \

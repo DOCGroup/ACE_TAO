@@ -338,11 +338,8 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Unbounded_Sequence<IOP::TaggedProfile>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Unbounded_Sequence<IOP::TaggedProfile>
 
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
