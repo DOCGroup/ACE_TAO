@@ -30,7 +30,7 @@
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-// #if 0    This inserter may or may not be needed for your ORB.
+#if 0    //This inserter may or may not be needed for your ORB.
 
 static ostream &
 operator<<(ostream & os, const CORBA::Exception & e)
@@ -46,7 +46,7 @@ operator<<(ostream & os, const CORBA::Exception & e)
     return os;
 }
 
-// #endif
+#endif
 
 //----------------------------------------------------------------
 
@@ -332,7 +332,7 @@ change(
             // to the errors sequence.
             CORBA::ULong len = ec.errors.length();
             ec.errors.length(len + 1);
-            ec.errors[len].tmstat_ref = tlist[i];
+            ec.errors[len].tmstat_ref = tlist[i].in ();
             ec.errors[len].info = bt.details;
         }
     }
