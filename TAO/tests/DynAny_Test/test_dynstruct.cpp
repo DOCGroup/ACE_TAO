@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 // ============================================================================
 //
@@ -207,44 +206,46 @@ Test_DynStruct::run_test (void)
       CORBA::Any_var out_any2 ;
       DynamicAny::DynStruct_var ftc2;
 
-      ACE_TRY
-      {
-         DynamicAny::DynAny_var ftc2_base = dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_struct_alias
-                                                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        ftc2 = DynamicAny::DynStruct::_narrow (ftc2_base.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        if (CORBA::is_nil (ftc2.in ()))
+      ACE_TRY_EX (bad_kind)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "DynStruct::_narrow() returned nil\n"),
-                            -1);
-        }
+          DynamicAny::DynAny_var ftc2_base =
+            dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_struct_alias
+                                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
 
-        ts.c = data.m_char1;
-        ts.l = data.m_long1;
-        ts.es.f = data.m_float1;
-        ts.es.s = data.m_short1;
-        CORBA::Any in_any3;
-        in_any3 <<= ts;
-        ftc2->from_any (in_any3
-                        ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        out_any2 = ftc2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        if ((out_any2.in () >>= ts_out2) != 1) // problem
+          ftc2 = DynamicAny::DynStruct::_narrow (ftc2_base.in ()
+                                                 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
+
+          if (CORBA::is_nil (ftc2.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "DynStruct::_narrow() returned nil\n"),
+                                -1);
+            }
+
+          ts.c = data.m_char1;
+          ts.l = data.m_long1;
+          ts.es.f = data.m_float1;
+          ts.es.s = data.m_short1;
+          CORBA::Any in_any3;
+          in_any3 <<= ts;
+          ftc2->from_any (in_any3
+                          ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
+          out_any2 = ftc2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
+          if ((out_any2.in () >>= ts_out2) != 1) // problem
+            {
+              ts_out2 = 0;
+            }
+        }
+      ACE_CATCH (CORBA::TypeCode::BadKind, ex)
         {
-           ts_out2 = 0;
         }
-     }
-     ACE_CATCH (CORBA::TypeCode::BadKind, ex)
-     {
-     }
-     ACE_ENDTRY;
-
+      ACE_ENDTRY;
+      ACE_TRY_CHECK;
+      
       if (ts_out2 != 0 && ts_out2->es.s == data.m_short1)
         {
           ACE_DEBUG ((LM_DEBUG,

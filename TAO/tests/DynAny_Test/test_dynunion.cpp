@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 // ============================================================================
 //
@@ -153,38 +152,39 @@ Test_DynUnion::run_test (void)
 
       CORBA::TypeCode_var s_out3;
 
-      ACE_TRY
-      {
-        DynamicAny::DynAny_var ftc2_base = dynany_factory->create_dyn_any_from_type_code
-          (DynAnyTests::_tc_test_union_alias ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        DynamicAny::DynUnion_var ftc2 =
-        DynamicAny::DynUnion::_narrow (ftc2_base.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        if (CORBA::is_nil (ftc2.in ()))
+      ACE_TRY_EX (bad_kind)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "DynUnion::_narrow() returned nil\n"),
-                            -1);
+          DynamicAny::DynAny_var ftc2_base =
+            dynany_factory->create_dyn_any_from_type_code
+            (DynAnyTests::_tc_test_union_alias ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
+          DynamicAny::DynUnion_var ftc2 =
+            DynamicAny::DynUnion::_narrow (ftc2_base.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
+
+          if (CORBA::is_nil (ftc2.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "DynUnion::_narrow() returned nil\n"),
+                                -1);
+            }
+
+          ftc2->from_any (out_any2.in ()
+                          ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
+          ftc2->seek (1
+                      ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
+          s_out3 = ftc2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (bad_kind);
         }
-
-        ftc2->from_any (out_any2.in ()
-                        ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        ftc2->seek (1
-                    ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        s_out3 = ftc2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-      }
       ACE_CATCH (CORBA::TypeCode::BadKind, ex)
-      {
-        // Failed to create
-      }
+        {
+          // Failed to create
+        }
       ACE_ENDTRY;
+      ACE_TRY_CHECK;
 
       if ( ! CORBA::is_nil (s_out3.in ()) &&
            s_out3.in ()->equal (data.m_typecode1))
