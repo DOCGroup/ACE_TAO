@@ -477,7 +477,11 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
 
       if (good_type)
         {
-          this->any_ <<= value;
+          TAO_OutputCDR cdr;
+          cdr << value;
+          this->any_._tao_replace (this->type_.in (),
+                                   TAO_ENCAP_BYTE_ORDER,
+                                   cdr.begin ());
         }
       else
         {
