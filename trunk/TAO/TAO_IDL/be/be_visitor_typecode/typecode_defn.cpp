@@ -1783,20 +1783,20 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
               break;
 
             case AST_Expression::EV_long:
-              os->print ("ACE_NTOHL (0x%x)", (unsigned long)ev->u.lval);
+              os->print ("0x%08.8x", (unsigned long)ev->u.lval);
               // size of short/wchar aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_ulong:
-              os->print ("ACE_NTOHL (0x%x)", ev->u.ulval);
+              os->print ("0x%08.8x", ev->u.ulval);
               // size of short/wchar aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_any:
               // enum
-              os->print ("ACE_NTOHL (0x%x)", (unsigned long)ev->u.eval);
+              os->print ("0x%08.8x", (unsigned long)ev->u.eval);
               // size of short/wchar aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
@@ -1853,20 +1853,20 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
               break;
 
             case AST_Expression::EV_long:
-              os->print ("ACE_NTOHL (0x%x)", (unsigned long)dv.u.long_val);
+              os->print ("0x%08.8x", (unsigned long)dv.u.long_val);
               // size of short/wchar aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_ulong:
-              os->print ("ACE_NTOHL (0x%x)", (unsigned long)dv.u.ulong_val);
+              os->print ("0x%08.8x", (unsigned long)dv.u.ulong_val);
               // size of short/wchar aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
 
             case AST_Expression::EV_any:
               // enum
-              os->print ("ACE_NTOHL (0x%x)", (unsigned long)dv.u.enum_val);
+              os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
               // size of short/wchar aligned to 4 bytes
               this->tc_offset_ += sizeof (ACE_CDR::ULong);
               break;
