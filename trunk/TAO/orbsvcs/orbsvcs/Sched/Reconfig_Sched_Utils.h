@@ -512,6 +512,7 @@ public:
   // on the operation characteristics of a representative scheduling entry.
 };
 
+typedef TAO_MUF_FAIR_Reconfig_Sched_Strategy TAO_MUF_Reconfig_Sched_Strategy;
 
 class TAO_RTSched_Export TAO_RMS_Dyn_MNO_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
