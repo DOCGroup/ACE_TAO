@@ -1,0 +1,14 @@
+// $Id$
+
+#include "POA.idl"
+
+interface Foo
+{
+  long doit ()
+    raises (PortableServer::ForwardRequest);
+
+  exception Cannot_Forward {};
+
+  void forward ()
+    raises (Cannot_Forward);
+};
