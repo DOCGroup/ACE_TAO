@@ -1,3 +1,10 @@
+Wed Jul 22 17:33:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/compat/initguid.h: 
+	* tao/compat/objbase.h: 
+	  This files are not used anymore, in fact, I thought I had
+	  removed them already.
+
 Wed Jul 22 16:37:56 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added a new Globals
