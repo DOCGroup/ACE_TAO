@@ -152,36 +152,42 @@ ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
   return this->allocator_.protect (addr, len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_MEM_POOL &
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE ACE_MEM_POOL &
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::memory_pool (void)
 {
   ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::memory_pool");
   return this->memory_pool_;
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (ssize_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (ssize_t len,
+                                            int flags)
 {
   ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::sync");
   return this->memory_pool_.sync (len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (void *addr, size_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (void *addr,
+                                            size_t len,
+                                            int flags)
 {
   ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::sync");
   return this->memory_pool_.sync (addr, len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (ssize_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (ssize_t len,
+                                               int flags)
 {
   ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
   return this->memory_pool_.protect (len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (void *addr, size_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (void *addr,
+                                               size_t len,
+                                               int flags)
 {
   ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
   return this->memory_pool_.protect (addr, len, flags);

@@ -1,17 +1,4 @@
-// ============================================================================
 // $Id$
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Trader_Base.cpp
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ============================================================================
 
 #include "Trader.h"
 #include "Offer_Iterators_T.h"

@@ -1,18 +1,4 @@
-// ============================================================================
 // $Id$
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Trader.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
 
 #ifndef TAO_TRADER_C
 #define TAO_TRADER_C
