@@ -23,6 +23,7 @@
 
 template <class MAP_LOCK_TYPE>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
+{
   // = TITLE
   //     An implementation of CosTrading::OfferIterator IDL interface
   //     appropriate when trader has Register functionality.
@@ -31,7 +32,6 @@ class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
   //     Stores ids of offers to be iterated over.  Before returning
   //     an offer, checks if the offer is still there (since it may
   //     have been removed by the Register). 
-{
 public:
 
   // = Initialization and termination methods.

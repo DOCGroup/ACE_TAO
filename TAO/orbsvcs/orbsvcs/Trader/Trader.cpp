@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "Trader.h"
+#include "Offer_Iterators_T.h"
 
 ACE_RCSID(Trader, Trader, "$Id$")
 
