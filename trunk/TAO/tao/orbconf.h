@@ -71,9 +71,9 @@
 // Define to `int' if <sys/types.h> doesn't define.
 /* #undef pid_t */
 
-// Define if your processor stores words with the most significant
-// byte first (like Motorola and SPARC, unlike Intel and VAX).
-#if defined (i386) || defined (__i386) || defined (_M_IX86) || defined (vax)
+// Define if your processor does not store words with the most significant
+// byte first.
+#if defined (i386) || defined (__i386) || defined (_M_IX86) || defined (vax) || defined (__alpha)
 #  define TAO_ENCAP_BYTE_ORDER 1  /* little endian encapsulation byte order has
                                      the value = 1 */
 #else
