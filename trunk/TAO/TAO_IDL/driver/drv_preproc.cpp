@@ -209,10 +209,10 @@ DRV_cpp_init (void)
         {
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s%s",
-                      ACE_TEXT ("Warning: The environment variable ")
-                      ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS has been ")
-                      ACE_TEXT ("deprecated.\n")
-                      ACE_TEXT ("         Please use ")
+                      ACE_TEXT ("Warning: The environment variable "),
+                      ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS has been "),
+                      ACE_TEXT ("deprecated.\n"),
+                      ACE_TEXT ("         Please use "),
                       ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS instead.\n")));
 
           cpp_args = args2;
@@ -261,9 +261,9 @@ DRV_cpp_init (void)
                   ACE_ERROR ((
                       LM_ERROR,
                       "%s%s%s%s",
-                      ACE_TEXT ("Note: The environment variables ")
-                      ACE_TEXT ("TAO_ROOT and ACE_ROOT are not defined.\n")
-                      ACE_TEXT ("      TAO_IDL may not be able to ")
+                      ACE_TEXT ("Note: The environment variables "),
+                      ACE_TEXT ("TAO_ROOT and ACE_ROOT are not defined.\n"),
+                      ACE_TEXT ("      TAO_IDL may not be able to "),
                       ACE_TEXT ("locate orb.idl\n")
                     ));
 

@@ -108,7 +108,7 @@ DRV_version (void)
   ACE_DEBUG ((LM_DEBUG,
               "%s\n"
               "%s %s\n",
-              ACE_TEXT (idl_global->prog_name ()),
+              idl_global->prog_name (),
               ACE_TEXT ("FE: Based on Sun IDL CFE version"),
               ACE_TEXT (IDL_CFE_VERSION)));
 
@@ -194,9 +194,9 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s %s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": preprocessing"),
-                  ACE_TEXT (s)));
+                  s));
     }
 
   DRV_pre_proc (s);
@@ -229,9 +229,9 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s %s\n",
-                  ACE_TEXT (idl_global->prog_name()),
+                  idl_global->prog_name(),
                   ACE_TEXT (": parsing"),
-                  ACE_TEXT (s)));
+                  s));
     }
 
   FE_yyparse ();
@@ -241,13 +241,15 @@ DRV_drive (const char *s)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s%s %d %s%s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (":"),
-                  ACE_TEXT (s),
+                  s,
                   ACE_TEXT (": found"),
                   idl_global->err_count (),
                   ACE_TEXT ("error"),
-                  ACE_TEXT ((idl_global->err_count () > 1 ? "s" : ""))));
+                  ACE_TEXT ((idl_global->err_count () > 1 
+                    ? ACE_TEXT ("s") 
+                    : ACE_TEXT ("")))));
 
       // Call BE_abort to allow a BE to clean up after itself.
       BE_abort ();
@@ -261,9 +263,9 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s %s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": dump"),
-                  ACE_TEXT (s)));
+                  s));
     }
 
   if (idl_global->compile_flags () & IDL_CF_DUMP_AST)
@@ -279,9 +281,9 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s %s\n",
-                  ACE_TEXT (idl_global->prog_name ()),
+                  idl_global->prog_name (),
                   ACE_TEXT (": BE processing on"),
-                  ACE_TEXT (s)));
+                  s));
     }
 
   BE_produce ();
