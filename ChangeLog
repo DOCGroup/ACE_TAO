@@ -1,3 +1,12 @@
+Thu Oct 30 16:14:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Thread_Manager.cpp (spawn_i): 
+
+	  Fixed ACE_Thread_Manager problem on VxWorks where thread id
+	  could be corrupted by taking address of a temporary
+	  variable. Thank to Dennis Noll, and Brian Mendel for tracking
+	  this down. 
+
 Thu Oct 30 11:57:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_orb_tests.lst: Added a couple of Portable_Interceptor
