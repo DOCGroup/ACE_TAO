@@ -3,6 +3,7 @@
 #include "Smart_Proxy_Impl.h"
 
 #include "ace/OS_NS_string.h"
+#include "ace/Log_Msg.h"
 
 Smart_Diamond_Top_Factory::Smart_Diamond_Top_Factory (void)
 {

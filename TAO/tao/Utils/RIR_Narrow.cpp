@@ -3,7 +3,9 @@
 
 #include "RIR_Narrow.h"
 #include "tao/SystemException.h"
-#include <stdexcept>
+#if defined (ACE_HAS_EXCEPTIONS)
+  #include <stdexcept>
+#endif
 
 ACE_RCSID (Utils,
            RIR_Narror,

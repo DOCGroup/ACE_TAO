@@ -29,6 +29,7 @@
 #include "tao/Typecode.h"
 #include "tao/SystemException.h"
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/CDR.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:290

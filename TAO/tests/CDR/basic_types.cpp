@@ -23,6 +23,7 @@
 #include "tao/Any.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (CDR,
            basic_types,

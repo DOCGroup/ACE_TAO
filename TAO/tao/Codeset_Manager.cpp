@@ -9,6 +9,7 @@
 #include "tao/SystemException.h"
 #include "tao/UTF16_BOM_Factory.h"
 #include "tao/debug.h"
+#include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"

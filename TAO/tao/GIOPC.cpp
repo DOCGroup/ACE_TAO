@@ -32,6 +32,7 @@
 #include "GIOPC.h"
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
+#include "tao/Any.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -51,10 +52,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 GIOP::Version::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -64,10 +65,10 @@ GIOP::Version::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 GIOP::IORAddressingInfo::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -162,10 +163,10 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
     {
       return *this;
     }
-  
+
   this->_reset (u.disc_, 0);
   this->disc_ = u.disc_;
-  
+
   switch (this->disc_)
   {
     case 0:
@@ -219,7 +220,7 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -303,9 +304,9 @@ CORBA::Boolean operator<< (
     {
       return 0;
     }
-  
+
   CORBA::Boolean result = 1;
-  
+
   switch (_tao_union._d ())
   {
     case 0:
@@ -326,7 +327,7 @@ CORBA::Boolean operator<< (
     default:
       break;
   }
-  
+
   return result;
 }
 
@@ -340,16 +341,16 @@ CORBA::Boolean operator>> (
     {
       return 0;
     }
-  
+
   CORBA::Boolean result = 1;
-  
+
   switch (_tao_discriminant)
   {
     case 0:
       {
         CORBA::OctetSeq _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-        
+
         if (result)
           {
             _tao_union.object_key (_tao_union_tmp);
@@ -361,7 +362,7 @@ CORBA::Boolean operator>> (
       {
         IOP::TaggedProfile _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-        
+
         if (result)
           {
             _tao_union.profile (_tao_union_tmp);
@@ -373,7 +374,7 @@ CORBA::Boolean operator>> (
       {
         GIOP::IORAddressingInfo _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-        
+
         if (result)
           {
             _tao_union.ior (_tao_union_tmp);
@@ -385,7 +386,7 @@ CORBA::Boolean operator>> (
       _tao_union._d (_tao_discriminant);
       break;
   }
-  
+
   return result;
 }
 
@@ -480,5 +481,5 @@ CORBA::Boolean operator>> (
         GIOP::TargetAddress_var \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
