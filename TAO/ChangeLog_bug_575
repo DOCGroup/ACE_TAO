@@ -1,5 +1,24 @@
 Wed Jul  4 16:21:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* tao/GIOP_Message_State.inl (reset):
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.inl:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Pluggable_Messaging.h:
+	* tao/Pluggable_Messaging.cpp: Added documentation.
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Fixed a minor bug. In consolidate_message ()
+	  we were not checking the queue before processing the message on
+	  hand. Now we check the queue and process the head of the queue
+	  if it is not empty. In the process we add the message on hand in
+	  the queue.
+
+Wed Jul  4 16:21:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
 	* tao/IIOP_Transport.cpp: Removed the connection_closed () from
 	  the recv_i () call.
 
