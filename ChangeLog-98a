@@ -1,3 +1,9 @@
+Tue Mar 17 13:15:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Future.cpp: Added missing ACE_MT macros so that we now
+ 	  compile correctly if we don't have threads.  Thanks to Laura
+ 	  Paterno <lpaterno@d0chb.fnal.gov> for reporting this.
+
 Tue Mar 17 15:13:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp (dump): fleshed out the implementation.
