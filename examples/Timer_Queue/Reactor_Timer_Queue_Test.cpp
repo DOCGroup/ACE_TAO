@@ -210,4 +210,7 @@ Reactor_Timer_Queue_Test_Driver::run_test (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>;
 template class Command<Input_Handler, Input_Handler::ACTION>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
+#pragma instantiate Command<Input_Handler, Input_Handler::ACTION>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

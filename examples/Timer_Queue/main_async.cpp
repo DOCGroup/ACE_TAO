@@ -45,6 +45,9 @@ main (int, char *[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER>;
 template class ACE_Auto_Basic_Ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate auto_ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER>
+#pragma instantiate ACE_Auto_Basic_Ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
