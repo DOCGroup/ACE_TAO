@@ -423,18 +423,12 @@ DRV_check_for_include (const char* buf)
       return;
 
   // Next thing is finding the file that has been `#include'd. Skip
-  // all the blanks and tabs and reach the starting " character or the
-  // character <.  
-  for (; (*r != '"') && (*r != '<'); r++)
+  // all the blanks and tabs and reach the startng " character.
+  for (; *r != '"'; r++)
     if (*r == '\n' || *r == '\0')
       return;
 
-  // Decide what will be the terminating character.
-  char terminate_char = '"';
-  if (*r == '<')
-    terminate_char = '>';
-  
-  // Skip this " or <. 
+  // Skip this ".
   r++;
 
   // Store this position.
@@ -444,8 +438,8 @@ DRV_check_for_include (const char* buf)
   if (*h == '\0')
     return;
 
-  // Find the terminating character.
-  for (; *r != terminate_char; r++)
+  // Find the closing " character.
+  for (; *r != '"'; r++)
     continue;
 
   // Make a new string for this file name.
