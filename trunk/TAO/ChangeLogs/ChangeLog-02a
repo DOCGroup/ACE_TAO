@@ -1,3 +1,18 @@
+Thu Jan 17 10:17:18 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Add the #include for "tao/TAO_AMH_Response_Handler.h" if needed.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  Add missing close braces in the generated code.  We never
+	  finished the definition of the AMH_* class.
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	  We were not closing the definition of the
+	  TAO_AMH_*ResponseHandler class either.
+	  Fixed TAO_AMH_Response_Handler name in generated code.
+	  Fixed indentation in the generated code too.
+
 Thu Jan 17 10:08:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/SecurityManager.cpp
@@ -24,7 +39,7 @@ Thu Jan 17 10:28:54 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jan 17 10:25:54 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface_strategy.h: 
+	* TAO_IDL/be_include/be_interface_strategy.h:
 	  Fixed compile errors.
 
 Thu Jan 17 09:25:11 2002  Frank Hunleth   <fhunleth@cs.wustl.edu>
