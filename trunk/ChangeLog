@@ -1,3 +1,9 @@
+Mon Aug 16 15:58:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Signal.cpp: Added template instantiations for
+	  ACE_Fixed_Set_Iterator_Base. Related to:
+	  Mon Aug  2 08:55:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
 Mon Aug 16 15:30:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Task.cpp (svc_run): Added "defined (ACE_WIN32)" to the
