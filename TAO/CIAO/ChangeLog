@@ -1,3 +1,10 @@
+Sun Oct 10 10:45:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+
+	  Fix for some typos which broke the daily builds.
+
 Sun Oct 10 02:47:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/tests/Config_Handlers/CompImplDesc_Handler_Test.cpp:
