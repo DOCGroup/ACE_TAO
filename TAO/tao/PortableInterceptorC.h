@@ -1234,6 +1234,7 @@ namespace PortableInterceptor
 
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
     virtual void tao_ft_interception_point (
         PortableInterceptor::ServerRequestInfo_ptr ,
         CORBA::OctetSeq_out
@@ -1243,6 +1244,7 @@ namespace PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
         )) {};
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
