@@ -63,7 +63,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
   handler = factory->create_io_handler ();
   if (handler == 0)
     {
-      factory->destroy_io_handler (handler, 0);
+      factory->destroy_io_handler (handler);
       ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create handler\n"));
       return -1;
     }
@@ -73,7 +73,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
   db = new JAWS_Data_Block;
   if (db == 0)
     {
-      factory->destroy_io_handler (handler, 0);
+      factory->destroy_io_handler (handler);
       ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create data block\n"));
       return -1;
     }
