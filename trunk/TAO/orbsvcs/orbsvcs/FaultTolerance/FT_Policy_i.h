@@ -210,6 +210,10 @@ private:
   // indicates whether heartbeating is enabled or not.
 };
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #if defined (__ACE_INLINE__)
 #include "FT_Policy_i.i"
 #endif /* __ACE_INLINE__ */
