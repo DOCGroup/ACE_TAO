@@ -288,7 +288,7 @@
 #define TAO_HAS_VALUETYPE
 
 // Minimum CORBA
-#define TAO_HAS_MINIMUM_CORBA
+// #define TAO_HAS_MINIMUM_CORBA
 
 // CORBA Messaging
 #if defined(ACE_WIN32)
