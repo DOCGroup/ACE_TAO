@@ -21,6 +21,8 @@ ACE_THREADS_DONT_INHERIT_LOG_MSG		Specify this if you don't want threads to inhe
 ACE_HAS_RECV_TIMEDWAIT			Platform has the MIT pthreads APIs for
 ACE_HAS_RECVFROM_TIMEDWAIT		timed send/recv operations
 ACE_HAS_RECVMSG_TIMEDWAIT
+ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of int for first argument to ::{get,set}rlimit ().  The value of this macro is the enum definition, e.g., enum __rlimit_resource, for Linux glibc 2.0.
+ACE_HAS_RUSAGE_WHO_ENUM                 Platform has enum instead of int for first argument to ::getrusage ().  The value of this macro is the enum definition, e.g., enum __rusage_who, for Linux glibc 2.0.
 ACE_HAS_SEND_TIMEDWAIT
 ACE_HAS_SENDTO_TIMEDWAIT
 ACE_HAS_SENDMSG_TIMEDWAIT
