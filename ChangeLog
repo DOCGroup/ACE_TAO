@@ -1,3 +1,16 @@
+Sat Jan  1 18:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, the define doesn't seem to be the
+        correct one, it breaks on some platforms, have to investigate
+        this again
+
+        * ace/OS_NS_stdlib.cpp:
+          Just include os_limits.h instead of limits directly
+
+        * ace/os_include/os_limits.h:
+          Dependent on ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB include
+          limits or limits.h, just as we do for new
+
 Sat Jan  1 15:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Config.{h,cpp}:
