@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @authors Jeff Parsons and Carlos O'Ryan
+ *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
 //=============================================================================
 
@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Argument.h"
+#include "tao/Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class In_Basic_SArgument_T : public Argument
+  class In_Basic_SArgument_T : public Const_Argument_T<S>
   {
   public:
     In_Basic_SArgument_T (void);
@@ -53,7 +53,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Inout_Basic_SArgument_T : public Argument
+  class Inout_Basic_SArgument_T : public Mutable_Argument_T<S &>
   {
   public:
     Inout_Basic_SArgument_T (void);
@@ -76,7 +76,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Out_Basic_SArgument_T : public Argument
+  class Out_Basic_SArgument_T : public Mutable_Argument_T<S &>
   {
   public:
     Out_Basic_SArgument_T (void);
@@ -98,7 +98,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Ret_Basic_SArgument_T : public Argument
+  class Ret_Basic_SArgument_T : public Mutable_Argument_T<S &>
   {
   public:
     Ret_Basic_SArgument_T (void);

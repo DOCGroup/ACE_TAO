@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @authors Jeff Parsons and Carlos O'Ryan
+ *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
 //=============================================================================
 
@@ -14,7 +14,8 @@
 #define TAO_VAR_ARRAY_SARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
-#include "tao/Argument.h"
+
+#include "tao/Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +30,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_forany>
-  class In_Var_Array_SArgument_T : public Argument
+  class In_Var_Array_SArgument_T : public Const_Argument_T<S const &>
   {
   public:
     In_Var_Array_SArgument_T (void);
@@ -38,7 +39,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S & arg (void) const;
+    virtual S const & arg (void) const;
 
   private:
     S x_;
@@ -51,7 +52,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_forany>
-  class Inout_Var_Array_SArgument_T : public Argument
+  class Inout_Var_Array_SArgument_T : public Mutable_Argument_T<S &>
   {
   public:
     Inout_Var_Array_SArgument_T (void);
@@ -61,7 +62,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
     S x_;
@@ -74,7 +75,7 @@ namespace TAO
    *
    */
   template<typename S_slice, typename S_var, typename S_forany>
-  class Out_Var_Array_SArgument_T : public Argument
+  class Out_Var_Array_SArgument_T : public Mutable_Argument_T<S_slice *&>
   {
   public:
     Out_Var_Array_SArgument_T (void);
@@ -83,7 +84,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_slice *& arg (void);
+    virtual S_slice *& arg (void);
 
   private:
     S_var x_;
@@ -96,7 +97,7 @@ namespace TAO
    *
    */
   template<typename S_slice, typename S_var, typename S_forany>
-  class Ret_Var_Array_SArgument_T : public Argument
+  class Ret_Var_Array_SArgument_T : public Mutable_Argument_T<S_slice *&>
   {
   public:
     Ret_Var_Array_SArgument_T (void);
@@ -105,7 +106,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_slice *& arg (void);
+    virtual S_slice *& arg (void);
 
   private:
     S_var x_;

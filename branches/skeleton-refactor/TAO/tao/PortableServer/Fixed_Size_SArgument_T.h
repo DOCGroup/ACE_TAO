@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Argument.h"
+#include "tao/Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ namespace TAO
    * size IDL types.
    */
   template<typename S>
-  class In_Fixed_Size_SArgument_T : public Argument
+  class In_Fixed_Size_SArgument_T : public Const_Argument_T<S const &>
   {
   public:
 
@@ -57,7 +57,7 @@ namespace TAO
     //@}
 
     /// Retrieve underlying argument.
-    S const & arg (void) const;
+    virtual S const & arg (void) const;
 
   private:
 
@@ -75,7 +75,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Inout_Fixed_Size_SArgument_T : public Argument
+  class Inout_Fixed_Size_SArgument_T : public Mutable_Argument_T<S &>
   {
   public:
 
@@ -98,7 +98,7 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
 
@@ -114,7 +114,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Out_Fixed_Size_SArgument_T : public Argument
+  class Out_Fixed_Size_SArgument_T : public Mutable_Argument_T<S &>
   {
   public:
 
@@ -136,7 +136,7 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
 
@@ -153,7 +153,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Ret_Fixed_Size_SArgument_T : public Argument
+  class Ret_Fixed_Size_SArgument_T : public Mutable_Argument_T<S &>
   {
   public:
 
@@ -175,7 +175,7 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
 

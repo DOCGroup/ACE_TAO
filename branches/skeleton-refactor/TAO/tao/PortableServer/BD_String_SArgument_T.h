@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @authors Jeff Parsons and Carlos O'Ryan
+ *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
 //=============================================================================
 
@@ -15,13 +15,14 @@
 #define TAO_BD_STRING_SARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
+
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Argument.h"
+#include "tao/Argument_T.h"
 
 namespace TAO
 {

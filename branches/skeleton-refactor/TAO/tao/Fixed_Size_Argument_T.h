@@ -15,7 +15,7 @@
 #define TAO_FIXED_SIZE_ARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
-#include "tao/Argument.h"
+#include "tao/Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class In_Fixed_Size_Argument_T : public Argument
+  class In_Fixed_Size_Argument_T : public Const_Argument_T<S const &>
   {
   public:
     In_Fixed_Size_Argument_T (S const & x);
@@ -39,10 +39,10 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S & arg (void) const;
+    virtual S const & arg (void) const;
 
   private:
-    const S * x_;
+    S const * x_;
   };
 
   /**
@@ -52,7 +52,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Inout_Fixed_Size_Argument_T : public Argument
+  class Inout_Fixed_Size_Argument_T : public Mutable_Argument_T<S &>
   {
   public:
     Inout_Fixed_Size_Argument_T (S & x);
@@ -62,7 +62,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
     S * x_;
@@ -75,7 +75,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Out_Fixed_Size_Argument_T : public Argument
+  class Out_Fixed_Size_Argument_T : public Mutable_Argument_T<S &>
   {
   public:
     Out_Fixed_Size_Argument_T (S & x);
@@ -84,10 +84,11 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
-    mutable S & x_;
+
+    S & x_;
   };
 
   /**
@@ -97,7 +98,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Ret_Fixed_Size_Argument_T : public Argument
+  class Ret_Fixed_Size_Argument_T : public Mutable_Argument_T<S &>
   {
   public:
     Ret_Fixed_Size_Argument_T (void);
@@ -106,7 +107,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    virtual S & arg (void);
 
     S excp (void);
     S retn (void);

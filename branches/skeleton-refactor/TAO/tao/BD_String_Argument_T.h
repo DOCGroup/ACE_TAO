@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @authors Jeff Parsons and Carlos O'Ryan
+ *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
 //=============================================================================
 
@@ -15,13 +15,14 @@
 #define TAO_BD_STRING_ARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
+
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Argument.h"
+#include "tao/Argument_T.h"
 
 namespace TAO
 {
@@ -32,19 +33,23 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S, size_t BOUND>
-  class In_BD_String_Argument_T : public Argument
+  class In_BD_String_Argument_T : public Const_Argument_T<S const *>
   {
   public:
     In_BD_String_Argument_T (const S * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S * arg (void) const;
+
+    virtual S const * arg (void) const;
 
   private:
-    const S * x_;
+
+    S const * x_;
+
   };
 
   /**
@@ -54,7 +59,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S, size_t BOUND>
-  class Inout_BD_String_Argument_T : public Argument
+  class Inout_BD_String_Argument_T : public Mutable_Argument_T<S *&>
   {
   public:
     Inout_BD_String_Argument_T (S *& x);
@@ -64,7 +69,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    virtual S *& arg (void);
 
   private:
     mutable S *& x_;
@@ -81,7 +86,7 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class Out_BD_String_Argument_T : public Argument
+  class Out_BD_String_Argument_T : public Mutable_Argument_T<S *&>
   {
   public:
     Out_BD_String_Argument_T (S_out x);
@@ -90,10 +95,10 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    virtual S *& arg (void);
 
   private:
-    mutable S *& x_;
+    S *& x_;
   };
 
   /**
@@ -107,7 +112,7 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class Ret_BD_String_Argument_T : public Argument
+  class Ret_BD_String_Argument_T : public Mutable_Argument_T<S *&>
   {
   public:
     Ret_BD_String_Argument_T (void);
@@ -116,13 +121,15 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    virtual S *& arg (void);
 
     S * excp (void);
     S * retn (void);
 
   private:
+
     S_var x_;
+
   };
 
   /**
