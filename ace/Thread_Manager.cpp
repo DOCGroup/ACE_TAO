@@ -1270,7 +1270,7 @@ ACE_Thread_Manager::hthread_within (ACE_hthread_t handle)
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    if (iter.next ()->thr_handle_ == handle)
+    if (ACE_OS::thr_cmp(iter.next ()->thr_handle_, handle))
       return 1;
 
   return 0;
@@ -1285,7 +1285,7 @@ ACE_Thread_Manager::thread_within (ACE_thread_t tid)
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    if (iter.next ()->thr_id_ == tid)
+    if (ACE_OS::thr_equal (iter.next ()->thr_id_, tid))
       return 1;
 
   return 0;
