@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_sys_utsname.h"
@@ -172,7 +173,7 @@ ACE_OS::rmdir (const ACE_TCHAR * path)
 
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::rmdir ((char *) path), int, -1);
-#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)  
+#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path, NULL),
@@ -1118,9 +1119,9 @@ ACE_OS::swab (const void *src,
 {
 #if defined (ACE_LACKS_SWAB)
   const char *from = ACE_static_cast (const char*,
-		                              src);
+                                              src);
   char *to = ACE_static_cast (char *,
-		              dest);
+                              dest);
   ssize_t ptr = 0;
   for (ptr = 1; ptr < length; ptr += 2)
     {
@@ -1133,11 +1134,11 @@ ACE_OS::swab (const void *src,
     to[ptr-1] = 0;   /* then pad with a NUL. */
 #elif defined (ACE_HAS_NONCONST_SWAB)
   const char *tmp = ACE_static_cast (const char*,
-		                             src);
+                                             src);
   char *from = ACE_const_cast (char *,
-	                           tmp);
+                                   tmp);
   char *to = ACE_static_cast (char *,
-	                          dest);
+                                  dest);
   ::swab (from, to, length);
 #else
   ::swab (src, dest, length);
