@@ -1,3 +1,16 @@
+Sat Jan 27 16:01:08 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/IFR_Service/Options.cpp:
+
+	  Include "ace/Log_Msg.h" to pull in ACE_ERROR_RETURN and LM_ERROR
+	  definitions.
+
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+
+	  Include "ace/Reactor.h" to pull in ACE_Reactor class
+	  declaration.  Needed for configurations that do not define
+	  ACE_TEMPLATES_REQUIRE_SOURCE.
+
 Sat Jan 27 11:32:18 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IOP.pidl:

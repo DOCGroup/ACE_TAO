@@ -3,6 +3,7 @@
 // $Id$
 
 #include "Hash_ReplicaControl.h"
+#include "ace/Reactor.h"
 
 Hash_ReplicaControl::Hash_ReplicaControl (void)
   : adapter_ (this),
