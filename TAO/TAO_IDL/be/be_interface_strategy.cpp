@@ -85,8 +85,8 @@ be_interface_strategy::compute_coll_names (int type,
   else
     {
       this->cached_type_ = type;
-      delete this->full_coll_name_;
-      delete this->local_coll_name_;
+      delete [] this->full_coll_name_;
+      delete [] this->local_coll_name_;
     }
 
   static const char *collocated_names[] = { "_tao_thru_poa_collocated_",
