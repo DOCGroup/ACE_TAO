@@ -88,19 +88,7 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\dataC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\dataS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ECT_Consumer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ECT_Data.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -108,56 +96,7 @@ SOURCE=.\ECT_Data.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\dataS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ECT_Consumer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ECT_Data.h
-# End Source File
-# End Group
-# Begin Group "IDL Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\data.idl
-
-!IF  "$(CFG)" == "ECT_Consumer - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ECT_Consumer - Win32 Debug"
-
-# Begin Custom Build - Invoking TAO_IDL compiler
-InputPath=.\data.idl
-InputName=data
-
-BuildCmds= \
-	..\..\..\TAO_IDL\tao_idl $(InputName).idl
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target
