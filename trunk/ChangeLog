@@ -1,3 +1,13 @@
+Mon Mar 10 14:03:11 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Factor out code to detect duplicate project names to allow the
+          WorkspaceCreator to use that same code to detect duplicate
+          workspace names.
+
 Mon Mar 10 13:30:30 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
