@@ -1,3 +1,10 @@
+Fri Dec  8 07:48:32 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+        * tao/Strategies/Makefile.bor:
+
+          Added/removed source files.
+
 Fri Dec  8 06:06:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Lite.cpp (process_request_message):

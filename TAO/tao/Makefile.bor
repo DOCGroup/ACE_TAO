@@ -5,12 +5,12 @@
 NAME = TAO
 
 DIRS = \
-        PortableServer \
-        DynamicAny \
-        DynamicInterface \
-        IORTable \
-        IORManipulation \
-        Strategies \
+	PortableServer \
+	DynamicAny \
+	DynamicInterface \
+	IORTable \
+	IORManipulation \
+	Strategies \
 	SmartProxies
 
 OBJFILES = \
@@ -32,6 +32,7 @@ OBJFILES = \
 	$(OBJDIR)\ClientRequestInfo.obj \
 	$(OBJDIR)\Connection_Descriptor_Interface.obj \
 	$(OBJDIR)\Connector_Registry.obj \
+	$(OBJDIR)\Connector_Impl.obj \
 	$(OBJDIR)\CONV_FRAMEC.obj \
 	$(OBJDIR)\CONV_FRAMES.obj \
 	$(OBJDIR)\corbafwd.obj \
@@ -54,17 +55,20 @@ OBJFILES = \
 	$(OBJDIR)\Exception.obj \
 	$(OBJDIR)\Exclusive_TMS.obj \
 	$(OBJDIR)\FILE_Parser.obj \
-	$(OBJDIR)\GIOP_Message_Accept_State.obj \
-	$(OBJDIR)\GIOP_Message_Acceptors.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
-	$(OBJDIR)\GIOP_Message_Connectors.obj \
+	$(OBJDIR)\GIOP_Message_Generator_Parser.obj \
+	$(OBJDIR)\GIOP_Message_Generator_Parser_10.obj \
+	$(OBJDIR)\GIOP_Message_Generator_Parser_11.obj \
+	$(OBJDIR)\GIOP_Message_Generator_Parser_12.obj \
+	$(OBJDIR)\GIOP_Message_Generator_Parser_Impl.obj \
 	$(OBJDIR)\GIOP_Message_Headers.obj \
 	$(OBJDIR)\GIOP_Message_Lite.obj \
+	$(OBJDIR)\GIOP_Message_Locate_Header.obj \
 	$(OBJDIR)\GIOP_Message_State.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\GIOPC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
-	$(OBJDIR)\IIOP_Connect.obj \
+	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
 	$(OBJDIR)\IIOP_Endpoint.obj \
 	$(OBJDIR)\iiop_endpoints.obj \
@@ -112,9 +116,9 @@ OBJFILES = \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\params.obj \
 	$(OBJDIR)\Parser_Registry.obj \
-        $(OBJDIR)\Services_Activate.obj \
-        $(OBJDIR)\Service_Callbacks.obj \
-        $(OBJDIR)\Fault_Tolerance_Service.obj \
+	$(OBJDIR)\Services_Activate.obj \
+	$(OBJDIR)\Service_Callbacks.obj \
+	$(OBJDIR)\Fault_Tolerance_Service.obj \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
@@ -187,10 +191,10 @@ CPPDIR = .
 
 INCDIR_NAME = tao
 INCLUDES = \
-         *.h *.i *.inl *_T.cpp \
-         TAO_Singleton.cpp \
-         orb.idl \
-         Policy.pidl
+	*.h *.i *.inl *_T.cpp \
+	TAO_Singleton.cpp \
+	orb.idl \
+	Policy.pidl
 
 LIBFILES = $(ACE_LIB)
 
