@@ -59,10 +59,6 @@
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	// JCEJ 1/7-8/96
 
 #define ACE_HAS_SIGWAIT
-// If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
-// #define ACE_LACKS_CONDATTR_PSHARED
-// #define ACE_LACKS_MUTEXATTR_PSHARED
 
 #if defined(__GLIBC__)
 // Platform supports reentrant functions (i.e., all the POSIX *_r
