@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Carlos O'Ryan
+ *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_LOG_MSG_LOGGER_H
 #define ACE_LOG_MSG_LOGGER_H
