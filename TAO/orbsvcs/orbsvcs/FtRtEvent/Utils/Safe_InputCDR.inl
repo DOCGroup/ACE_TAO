@@ -13,4 +13,4 @@ Safe_InputCDR::Safe_InputCDR(const char* buf, int size)
     this->start_.init(buf,size);
     this->start_.wr_ptr(size);
   }
-};
+}
