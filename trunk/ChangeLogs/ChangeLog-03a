@@ -1,5 +1,12 @@
 Fri May 18 06:11:49 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/config-cxx-common.h: Changed
+	  #   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40F
+	  to:
+	  #   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40D
+	  This gets rid of a very annoying informational message.  Thanks
+ 	  to Steve Vranyes <steve.vranyes@veritas.com> for reporting this
+
 	* ace/config-tru64.h: Changed 0x40E to 0x40D in the check for
 	  DIGITAL_UNIX to disable the use of systime.h.  Thanks to
 	  Steve Vranyes <steve.vranyes@veritas.com> for reporting this
