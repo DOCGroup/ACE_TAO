@@ -1,12 +1,19 @@
+Fri Oct 16 06:01:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTCosScheduling.bor:
+          This BCB makefile was generated with MPC but this used a different
+          place to store the libs, so updated this file manually so that the
+          handmade other BCB makefiles don't get problems.
+
 Thu Oct 16 21:20:11 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers: 
+	* examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
 	  Regenerated after making change to kokyu_dsrt_schedulers.mpb
-	  file. 
+	  file.
 
 Thu Oct 16 19:52:25 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/RTCosScheduling/Object1_i.h: 
+	* orbsvcs/tests/RTCosScheduling/Object1_i.h:
 	* orbsvcs/tests/RTCosScheduling/Object1_i.cpp: Fixed compile
 	  errors with no exceptions build.
 
@@ -18,11 +25,11 @@ Thu Oct 16 16:09:21 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Thu Oct 16 15:51:18 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/RTCosScheduling/server.cpp: 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp: 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h: 
-	  Fixed compile errors for no exceptions builds. 
-	
+	* orbsvcs/tests/RTCosScheduling/server.cpp:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
+	  Fixed compile errors for no exceptions builds.
+
 Thu Oct 16 11:09:43 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
@@ -31,7 +38,7 @@ Thu Oct 16 11:09:43 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 Thu Oct 16 09:34:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Changed build criteria for
-	  RTCosScheduling. 
+	  RTCosScheduling.
 
 Thu Oct 16 08:24:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
