@@ -1,3 +1,8 @@
+Thu Sep  4 09:41:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: Added missing
+	  changes from the old branch.
+
 Thu Sep  4 09:20:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/TAO_IDL_BE_DLL.dsp:
@@ -31,6 +36,7 @@ Wed Sep  3 18:23:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IORInterceptor/IORInterceptorC.h: 
 	* tao/PortableInterceptroC.h: 
           Got the lost changes in the merge from refactor-stage_5 merge.
+	
 Wed Sep  3 18:19:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
