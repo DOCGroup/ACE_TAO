@@ -98,7 +98,7 @@ interop_WChar_Passer_i::warray_from_server (CORBA::Short key
 CORBA::Boolean
 interop_WChar_Passer_i::wstruct_to_server (const interop::wstruct & test,
                                            CORBA::Short key
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return
@@ -115,9 +115,9 @@ interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key
 {
   interop::wstruct_var ws = new interop::wstruct ();
   ws->st_char = this->wchar_from_server(key ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (interop::wstruct.nil ());
+  ACE_CHECK_RETURN (0);
   ws->st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (interop::wstruct.nil ());
+  ACE_CHECK_RETURN (0);
   ref_.assign_warray (key, ws->st_array);
   ws->st_any <<= ref_.get_wstring(key);
   return ws._retn ();

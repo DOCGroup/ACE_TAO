@@ -1,3 +1,8 @@
+Tue Aug 31 09:06:40 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * interop-tests/wchar/interop_wchar_i.cpp:
+          Another exception emulation problem.
+
 Tue Aug 31 13:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (dump_iov):
@@ -24,9 +29,9 @@ Tue Aug 31 09:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 30 23:03:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Update after Portable Server refactor changes.
+          Update after Portable Server refactor changes.
 
 Mon Aug 30 18:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -45,16 +50,16 @@ Mon Aug 30 18:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Aug 30 12:27:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/Security/Send_File/README:
+        * orbsvcs/examples/Security/Send_File/README:
 
-	  Added note that "-SSLNoProtection" flag must be set when running
-	  IIOP client to SSLIOP server test.  Thanks to Jules Colding
-	  <jules at tdcadsl dot dk> for pointing out the inconsistency.
+          Added note that "-SSLNoProtection" flag must be set when running
+          IIOP client to SSLIOP server test.  Thanks to Jules Colding
+          <jules at tdcadsl dot dk> for pointing out the inconsistency.
 
-	* orbsvcs/examples/Security/Send_File/server.conf:
+        * orbsvcs/examples/Security/Send_File/server.conf:
 
-	  Enabled "-SSLNoProtection" flag to server configuration to allow
-	  IIOP client to SSLIOP server test to work as documented.
+          Enabled "-SSLNoProtection" flag to server configuration to allow
+          IIOP client to SSLIOP server test to work as documented.
 
 Mon Aug 30 14:24:20 2004  Dale Wilson  <wilson_d@ociweb.com>
 
