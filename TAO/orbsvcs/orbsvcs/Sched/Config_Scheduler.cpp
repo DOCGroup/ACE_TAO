@@ -7,7 +7,9 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-#include "Scheduler_Generic.h"
+// #include "Scheduler_Generic.h"
+#include "Strategy_Scheduler.h"
+
 #include "Config_Scheduler.h"
 
 #if defined (__ACE_INLINE__)
@@ -15,7 +17,12 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
-  : impl(new Scheduler_Generic)
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
+  : scheduler_strategy_ ((RtecScheduler::Preemption_Priority) TAO_MIN_CRITICAL_PRIORITY)
+  , impl (new ACE_Strategy_Scheduler (scheduler_strategy_))
+#else
+  : impl (new Scheduler_Generic)
+#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 {
   // impl->output_level (10);
 }
@@ -53,12 +60,17 @@ ACE_Config_Scheduler::create (const char * entry_point,
   rt_info[0]->preemption_priority = 0;
 
   RtecScheduler::handle_t handle = -1;
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
+  switch (impl->register_task (rt_info[0], handle))
+#else
   switch (impl->register_task (rt_info, 1, handle))
+#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
+
     {
-    case ACE_Scheduler::SUCCEEDED:
+    case BaseSchedImplType::SUCCEEDED:
       break;
-    case ACE_Scheduler::ST_VIRTUAL_MEMORY_EXHAUSTED:
-    case ACE_Scheduler::ST_TASK_ALREADY_REGISTERED:
+    case BaseSchedImplType::ST_VIRTUAL_MEMORY_EXHAUSTED:
+    case BaseSchedImplType::ST_TASK_ALREADY_REGISTERED:
     default:
       delete rt_info[0];
       delete[] rt_info;
@@ -78,11 +90,11 @@ ACE_Config_Scheduler::lookup (const char * entry_point,
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->get_rt_info (entry_point, rt_info))
     {
-    case ACE_Scheduler::SUCCEEDED:
+    case BaseSchedImplType::SUCCEEDED:
       return rt_info->handle;
       ACE_NOTREACHED (break);
-    case ACE_Scheduler::FAILED:
-    case ACE_Scheduler::ST_UNKNOWN_TASK:
+    case BaseSchedImplType::FAILED:
+    case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
                   "Config_Scheduler::lookup - get_rt_info failed\n"));
@@ -101,7 +113,7 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
-    case ACE_Scheduler::SUCCEEDED:
+    case BaseSchedImplType::SUCCEEDED:
       {
         // IDL memory managment semantics require the we return a copy
         RtecScheduler::RT_Info* copy;
@@ -109,8 +121,8 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
         return copy;
       }
       ACE_NOTREACHED (break);
-    case ACE_Scheduler::FAILED:
-    case ACE_Scheduler::ST_UNKNOWN_TASK:
+    case BaseSchedImplType::FAILED:
+    case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
                   "Config_Scheduler::get - lookup_rt_info failed\n"));
@@ -137,7 +149,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
-    case ACE_Scheduler::SUCCEEDED:
+    case BaseSchedImplType::SUCCEEDED:
       rt_info->criticality = criticality,
       rt_info->worst_case_execution_time = time;
       rt_info->typical_execution_time = typical_time;
@@ -148,8 +160,8 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
       rt_info->threads = threads;
       rt_info->info_type = info_type;
       break;
-    case ACE_Scheduler::FAILED:
-    case ACE_Scheduler::ST_UNKNOWN_TASK:
+    case BaseSchedImplType::FAILED:
+    case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
                   "Config_Scheduler::set - lookup_rt_info failed\n"));
@@ -205,17 +217,22 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
-    case ACE_Scheduler::SUCCEEDED:
+    case BaseSchedImplType::SUCCEEDED:
       {
         RtecScheduler::Dependency_Info dep;
         dep.rt_info = dependency;
         dep.number_of_calls = number_of_calls;
         dep.dependency_type = dependency_type;
-        ACE_Scheduler::add_dependency(rt_info, dep);
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
+        impl->add_dependency (rt_info, dep);
+#else
+        BaseSchedImplType::add_dependency (rt_info, dep);
+#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
+
       }
       break;
-    case ACE_Scheduler::FAILED:
-    case ACE_Scheduler::ST_UNKNOWN_TASK:
+    case BaseSchedImplType::FAILED:
+    case BaseSchedImplType::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
                   "cannot find %d to add dependency", handle));
@@ -236,7 +253,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   ACE_UNUSED_ARG (_env);
 
   impl->init (minimum_priority, maximum_priority);
-  if (impl->schedule () != ACE_Scheduler::SUCCEEDED)
+  if (impl->schedule () != BaseSchedImplType::SUCCEEDED)
     {
       // TODO: throw something.
       ACE_ERROR ((LM_ERROR, "schedule failed\n"));
@@ -254,12 +271,12 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
       RtecScheduler::RT_Info* rt_info = 0;
       switch (impl->lookup_rt_info (handle, rt_info))
         {
-        case ACE_Scheduler::SUCCEEDED:
+        case BaseSchedImplType::SUCCEEDED:
           // We know that handles start at 1.
           infos[CORBA::ULong(handle - 1)] = *rt_info;
           break;
-        case ACE_Scheduler::FAILED:
-        case ACE_Scheduler::ST_UNKNOWN_TASK:
+        case BaseSchedImplType::FAILED:
+        case BaseSchedImplType::ST_UNKNOWN_TASK:
         default:
           ACE_ERROR ((LM_ERROR,
                       "Config_Scheduler::schedule - lookup_rt_info failed\n"));
@@ -273,3 +290,70 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), 0);
   ACE_DEBUG ((LM_DEBUG, "dump done\n"));
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  #if defined (TAO_USES_STRATEGY_SCHEDULER)
+    #if defined (TAO_USES_MUF_SCHEDULING)
+
+      template class ACE_Strategy_Scheduler_Factory<ACE_MUF_Scheduler_Strategy>;
+
+    #elif defined (TAO_USES_MLF_SCHEDULING)
+
+      template class ACE_Strategy_Scheduler_Factory<ACE_MLF_Scheduler_Strategy>;
+
+    #elif defined (TAO_USES_EDF_SCHEDULING)
+
+      template class ACE_Strategy_Scheduler_Factory<ACE_EDF_Scheduler_Strategy>;
+
+    #elif defined (TAO_USES_RMS_SCHEDULING)
+
+      template class ACE_Strategy_Scheduler_Factory<ACE_RMS_Scheduler_Strategy>;
+
+    #elif defined (TAO_USES_RMS_DYN_SCHEDULING)
+
+      template class ACE_Strategy_Scheduler_Factory<ACE_RMS_Dyn_Scheduler_Strategy>;
+
+    #else
+
+      #error scheduling strategy must be defined
+
+    #endif /* defined (TAO_USES_MUF_SCHEDULING) */
+  #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate 
+  #if defined (TAO_USES_STRATEGY_SCHEDULER)
+    #if defined (TAO_USES_MUF_SCHEDULING)
+
+      #pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_MUF_Scheduler_Strategy>
+
+    #elif defined (TAO_USES_MLF_SCHEDULING)
+
+      #pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_MLF_Scheduler_Strategy>
+
+    #elif defined (TAO_USES_EDF_SCHEDULING)
+
+      #pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_EDF_Scheduler_Strategy>
+
+    #elif defined (TAO_USES_RMS_SCHEDULING)
+
+      #pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_RMS_Scheduler_Strategy>
+
+    #elif defined (TAO_USES_RMS_DYN_SCHEDULING)
+
+      #pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_RMS_Dyn_Scheduler_Strategy>
+
+    #else
+
+      #error scheduling strategy must be defined
+
+    #endif /* defined (TAO_USES_MUF_SCHEDULING) */
+  #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
+#endif /* defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) */
+
+
+
+
+
+
