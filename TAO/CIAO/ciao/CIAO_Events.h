@@ -16,6 +16,8 @@
 #define CIAO_EVENTS_H
 #include /**/ "ace/pre.h"
 
+#include "orbsvcs/CosNotifyCommS.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "Event_Utilities.h"
@@ -39,9 +41,10 @@ namespace CIAO_Events
     EventServiceBase * service;
     union
       {
-        RtecEventComm::PushConsumer_ptr push_consumer;
+        CosNotifyComm::StructuredPushConsumer_ptr notify_push_consumer;
+        RtecEventComm::PushConsumer_ptr rtec_push_consumer;
         ACE_Active_Map_Manager_Key * consumer_key;
-      } connection;
+      } disconnect;
   };
 
   /// An abstract base class. Derived classes will provide appropriate implementations of
@@ -196,6 +199,67 @@ namespace CIAO_Events
     
   };
 
+  class CosNotifyService :
+    public virtual EventServiceBase
+  {
+
+  public:
+
+    CosNotifyService (CORBA::ORB_ptr orb, CosNotifyChannelAdmin::EventChannel_ptr ec);
+
+    virtual void connect_event_supplier (
+        CIAO_Events::Supplier_Config_ptr supplier_config
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual CIAO_Events::EventServiceInfo connect_event_consumer (
+        CIAO_Events::Consumer_Config_ptr consumer_config
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual void disconnect_event_consumer (
+        CIAO_Events::EventServiceInfo service_info
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
+
+    virtual void disconnect_event_supplier (
+        ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
+
+    virtual void push_event (
+        Components::EventBase *ev
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+  private:
+
+    CORBA::ORB_var orb_;
+
+    // Reference to the Root POA
+    PortableServer::POA_var root_poa_;
+
+    /// Reference to the RT event channel
+    CosNotifyChannelAdmin::EventChannel_var notify_channel_;
+
+    /// The type of event
+    CORBA::String_var type_id_;
+
+    /// Info for the event publisher
+    CORBA::String_var source_id_;
+    CosNotifyComm::StructuredPushSupplier_var push_supplier_;
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_;
+
+  };
+
   /// An implementation of the Consumer_Config IDL interface that configures
   /// an RT Event Channel. An object of this type will be returned from
   /// CIAO::Container::_ciao_create_event_consumer_config () when "RTEC" is
@@ -208,10 +272,16 @@ namespace CIAO_Events
 
     RTEvent_Consumer_Config (Events_Manager * em);
 
+    void start_conjunction_group (CORBA::Long size ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void start_disjunction_group (CORBA::Long size ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     void set_consumer_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void set_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+    void insert_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void set_consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
@@ -232,17 +302,25 @@ namespace CIAO_Events
     RtecEventChannelAdmin::ConsumerQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    CosNotifyFilter::Filter * get_notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotification::QoSProperties * get_notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     CONNECTION_ID consumer_id_;
-    
-    CONNECTION_ID supplier_id_;
 
-    Components::EventConsumerBase_ptr consumer_;
+    CONNECTION_ID supplier_id_;
+    
+    Components::EventConsumerBase_var consumer_;
 
     EventServiceType service_type_;
 
     Events_Manager * events_manager_;
+
+    ACE_ConsumerQOS_Factory qos_;
   };
 
   /// An implementation of the Supplier_Config IDL interface that configures
@@ -269,6 +347,12 @@ namespace CIAO_Events
     RtecEventChannelAdmin::SupplierQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    CosNotifyFilter::Filter * get_notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotification::QoSProperties * get_notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     CONNECTION_ID supplier_id_;
@@ -276,6 +360,9 @@ namespace CIAO_Events
     EventServiceType service_type_;
 
     Events_Manager * events_manager_;
+
+    ACE_SupplierQOS_Factory qos_;
+
   };
 
   /// An implementation of the Consumer_Config IDL interface that configures
@@ -290,10 +377,16 @@ namespace CIAO_Events
 
     Direct_Consumer_Config (Events_Manager * em);
 
+    void start_conjunction_group (CORBA::Long size ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void start_disjunction_group (CORBA::Long size ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     void set_consumer_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void set_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+    void insert_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void set_consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
@@ -314,13 +407,19 @@ namespace CIAO_Events
     RtecEventChannelAdmin::ConsumerQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    CosNotifyFilter::Filter * get_notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotification::QoSProperties * get_notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     CONNECTION_ID consumer_id_;
     
     CONNECTION_ID supplier_id_;
 
-    Components::EventConsumerBase_ptr consumer_;
+    Components::EventConsumerBase_var consumer_;
 
     EventServiceType service_type_;
 
@@ -351,6 +450,12 @@ namespace CIAO_Events
     RtecEventChannelAdmin::SupplierQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    CosNotifyFilter::Filter * get_notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotification::QoSProperties * get_notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     CONNECTION_ID supplier_id_;
@@ -358,6 +463,114 @@ namespace CIAO_Events
     EventServiceType service_type_;
 
     Events_Manager * events_manager_;
+  };
+
+  /// An implementation of the Consumer_Config IDL interface that configures
+  /// the CosNotify service. An object of this type will be returned from
+  /// CIAO::Container::_ciao_create_event_consumer_config () when "NOTIFY" is
+  /// specified as the event service type.
+  class CosNotify_Consumer_Config :
+    public virtual POA_CIAO_Events::Consumer_Config
+  {
+
+  public:
+
+    CosNotify_Consumer_Config (Events_Manager * em);
+
+    void start_conjunction_group (CORBA::Long size ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void start_disjunction_group (CORBA::Long size ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void set_consumer_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void insert_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void set_consumer (Components::EventConsumerBase_ptr consumer ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_consumer_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    EventServiceType get_service_type (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    Components::EventConsumerBase_ptr get_consumer (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    RtecEventChannelAdmin::ConsumerQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotifyFilter::Filter * get_notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotification::QoSProperties * get_notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+
+    CONNECTION_ID consumer_id_;
+    
+    CONNECTION_ID supplier_id_;
+
+    Components::EventConsumerBase_var consumer_;
+
+    EventServiceType service_type_;
+
+    Events_Manager * events_manager_;
+
+    CosNotifyFilter::Filter_var filter_;
+
+    CosNotification::QoSProperties_var qos_;
+  };
+
+  /// An implementation of the Supplier_Config IDL interface that configures
+  /// the CosNotify service. An object of this type will be returned from
+  /// CIAO::Container::_ciao_create_event_supplier_config () when "NOTIFY" is
+  /// specified as the event service type.
+  class CosNotify_Supplier_Config :
+    public virtual POA_CIAO_Events::Supplier_Config
+  {
+
+  public:
+
+    CosNotify_Supplier_Config (Events_Manager * em);
+
+    void set_supplier_id (CONNECTION_ID connection_id ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CONNECTION_ID get_supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    EventServiceType get_service_type (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    RtecEventChannelAdmin::SupplierQOS * get_rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotifyFilter::Filter * get_notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CosNotification::QoSProperties * get_notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+
+    CONNECTION_ID supplier_id_;
+
+    EventServiceType service_type_;
+
+    Events_Manager * events_manager_;
+
+    CosNotifyFilter::Filter_var filter_;
+
+    CosNotification::QoSProperties_var qos_;
   };
 
   /// A helper class that encapsulates management functions for CIAO::Container.
@@ -385,12 +598,20 @@ namespace CIAO_Events
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
+    void create_notify_channel (
+        ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
     CORBA::ORB_var orb_;
 
     PortableServer::POA_var root_poa_;
 
-    /// Reference to the RT event channel
+    /// Reference to the RT Event channel
     RtecEventChannelAdmin::EventChannel_var rt_event_channel_;
+
+    /// Reference to the Notification channel
+    CosNotifyChannelAdmin::EventChannel_var notify_channel_;
 
     /// Map of event type ids
     ACE_Hash_Map_Manager<CONNECTION_ID, RtecEventComm::EventType, ACE_Null_Mutex>
@@ -436,6 +657,62 @@ namespace CIAO_Events
 
     virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    CORBA::ORB_var orb_;
+    Components::EventConsumerBase_var event_consumer_;
+  };
+
+  /// An implementation for PushSupplier
+  class CosNotifyServiceSupplier_impl :
+    public virtual POA_CosNotifyComm::StructuredPushSupplier,
+    public virtual PortableServer::RefCountServantBase
+  {
+
+  public:
+    CosNotifyServiceSupplier_impl (void);
+
+    CosNotifyServiceSupplier_impl (CORBA::ORB_ptr orb);
+
+    virtual void disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void subscription_change (
+        const CosNotification::EventTypeSeq& events_added,
+        const CosNotification::EventTypeSeq& events_removed
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType));
+
+  private:
+    CORBA::ORB_var orb_;
+  };
+
+  /// An implementation for PushConsumer
+  class CosNotifyServiceConsumer_impl :
+    public virtual POA_CosNotifyComm::StructuredPushConsumer,
+    public virtual PortableServer::RefCountServantBase
+  {
+
+  public:
+    CosNotifyServiceConsumer_impl (void);
+
+    CosNotifyServiceConsumer_impl (CORBA::ORB_ptr orb,
+      Components::EventConsumerBase_ptr consumer);
+
+    virtual void push_structured_event (const CosNotification::StructuredEvent& event);
+
+    virtual void disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void offer_change (
+        const CosNotification::EventTypeSeq& events_added,
+        const CosNotification::EventTypeSeq& events_removed
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType));
 
   private:
     CORBA::ORB_var orb_;
