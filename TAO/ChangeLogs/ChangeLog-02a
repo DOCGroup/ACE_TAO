@@ -1,3 +1,10 @@
+Wed Mar 20 06:59:58 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp (TAO_find): 
+	  Fixed a bug where a sequence was not being accessed properly.
+  	  Thansk to Laurent Sabourin <lsabourin@interstarinc.com> for
+ 	  reporting this.
+
 Tue Mar 19 21:01:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
