@@ -6005,6 +6005,7 @@ public:
                           int signum);
   static ACE_SignalHandler signal (int signum,
                                    ACE_SignalHandler);
+  static int sigpause (int signum);
   static int sigprocmask (int how,
                           const sigset_t *nsp,
                           sigset_t *osp);
