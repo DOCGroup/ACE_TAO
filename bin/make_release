@@ -197,6 +197,9 @@ unless ("$release_lib_files") {
   chomp ($release_lib_files = `$make show_release_lib_files`);
 }
 
+unless ("$release_tag_files") {
+  chomp ($release_tag_files = `$make show_release_tag_files`);
+}
 
 ########
 ######## Setup signal handlers.
@@ -565,7 +568,7 @@ sub tag () {
   if ($KIT eq "TAO") {
     chdir "..";
   }
-  &ex ("$cvs -q tag $tag $controlled_files > /dev/null");
+  &ex ("$cvs -q tag $tag $controlled_files $release_tag_files > /dev/null");
   if ($KIT eq "TAO") {
     chdir "TAO";
   }
