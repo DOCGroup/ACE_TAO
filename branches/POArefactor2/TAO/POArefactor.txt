@@ -1,3 +1,13 @@
+Mon Nov  8 12:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategyRetain.{h,cpp}:
+          Changed the reference_to_servant to check in the POA whether this
+          reference was created by this POA, don't do this in the strategy
+          itself.
+
 Fri Nov  5 15:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*
