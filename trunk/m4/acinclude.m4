@@ -77,18 +77,26 @@ dnl current set of flags so that compiler warnings become errors.  We
 dnl do this to cause certain tests to fail when they are supposed to
 dnl fail.  Some of the tests pass because the GNU C++ compiler issues
 dnl warnings instead of errors when errors should occur.
-  TEMPCXXFLAGS=""
+dnl Other "treat warnings as errors" flags for other compilers should
+dnl be added if possible.
+  save_CXXFLAGS="$CXXFLAGS"
+
   if test -n "$GXX"; then
-    TEMPCXXFLAGS="$CXXFLAGS"
     CXXFLAGS="$CXXFLAGS -Werror"
+  else
+    case $target in
+    *solaris*)
+       if test "$CXX" = CC; then
+         CXXFLAGS="$CXXFLAGS -xwe"
+       fi
+       ;;
+    *) ;;
+    esac
   fi
 
   $1
 
-  if test -n "$TEMPCXXFLAGS"; then
-    CXXFLAGS="$TEMPCXXFLAGS"
-  fi
-
+  CXXFLAGS="$save_CXXFLAGS"
 ])
 
 dnl Wrapper around AC_CACHE_VAL used to ensure "ACTION-IF" commands are run
