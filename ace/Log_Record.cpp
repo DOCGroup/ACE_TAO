@@ -1,12 +1,13 @@
-// Log_Record.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
 #include "ace/Log_Record.h"
-#include "ace/streams.h"
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+# include "ace/streams.h"
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Log_Record.i"
+# include "ace/Log_Record.i"
 #endif
 
 ACE_RCSID(ace, Log_Record, "$Id$")
@@ -153,11 +154,11 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
     {
 # if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
       const ASYS_TCHAR *lhost_name =  (const ASYS_TCHAR *) ((host_name == 0)
-                                                            ? ((char *) ASYS_TEXT ("<local_host>")) 
+                                                            ? ((char *) ASYS_TEXT ("<local_host>"))
                                                             : ((char *) host_name));
 # else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ASYS_TCHAR *lhost_name = ((host_name == 0)
-                                      ? ASYS_TEXT ("<local_host>") 
+                                      ? ASYS_TEXT ("<local_host>")
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::sprintf (verbose_msg,
@@ -238,7 +239,7 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
   return result;
 }
 
-#if ! defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 int
 ACE_Log_Record::print (const ASYS_TCHAR *host_name,

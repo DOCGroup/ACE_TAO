@@ -1,3 +1,9 @@
+Thu Jul 22 10:25:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Log_Record.cpp,SString.cpp: wrapped #include of
+          ace/streams.h with #ifndef ACE_LACKS_IOSTREAMS_TOTALLY.
+          [Bug 84]
+
 Thu Jul 22 09:55:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: updated commit message guideline
@@ -5,31 +11,31 @@ Thu Jul 22 09:55:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Jul 22 02:15:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Handle_Gobbler (class ACE_Handle_Gobbler): New class that
-	  gobbles up handles :) This class is useful when we need to
-	  control the number of handles available for a process.  Mostly
-	  used for testing purposes.
+        * ace/Handle_Gobbler (class ACE_Handle_Gobbler): New class that
+          gobbles up handles :) This class is useful when we need to
+          control the number of handles available for a process.  Mostly
+          used for testing purposes.
 
-	  Note that even though the new files are in the ace directory,
-	  they are not part of the ace library.  The files only contain
-	  inline functions and Handle_Gobbler.h is only included where
-	  needed.
+          Note that even though the new files are in the ace directory,
+          they are not part of the ace library.  The files only contain
+          inline functions and Handle_Gobbler.h is only included where
+          needed.
 
-	* tests/Cached_Conn_Test.cpp:
-	* tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.cpp:
 
-	  Added Handle_Gobbler to the test to reduce the iterations
-	  required before handles run out and purging starts.
+          Added Handle_Gobbler to the test to reduce the iterations
+          required before handles run out and purging starts.
 
 Wed Jul 21 21:45:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Reactor.cpp: Applied ACE_NOTREACHED to several
-	  run_*_event_loop methods.
+        * ace/Reactor.cpp: Applied ACE_NOTREACHED to several
+          run_*_event_loop methods.
 
-	* docs/ACE-guidelines.html: Updated ASYS_TEXT usage.
+        * docs/ACE-guidelines.html: Updated ASYS_TEXT usage.
 
-	* ace/RB_Tree.cpp:
-	* tests/Cache_Map_Manager_Test.cpp: Applied ASYS_TEXT liberally.
+        * ace/RB_Tree.cpp:
+        * tests/Cache_Map_Manager_Test.cpp: Applied ASYS_TEXT liberally.
 
 Wed Jul 21 21:19:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
