@@ -106,7 +106,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << node->name () << " *" << be_nl << node->name ()
       << "::_downcast (CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
-      << "return dynamic_cast< ::" << node->name () 
+      << "return dynamic_cast< ::" << node->name ()
       << " * > (v);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
