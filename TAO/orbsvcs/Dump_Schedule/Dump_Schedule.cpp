@@ -24,7 +24,7 @@ int main (int argc, char *argv[])
 
       CORBA::Object_var poa_object = 
 	orb->resolve_initial_references("RootPOA");
-      if (poa_object == 0)
+      if (CORBA::is_nil(poa_object.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),
 			  1);
@@ -39,13 +39,13 @@ int main (int argc, char *argv[])
 
       CORBA::Object_var naming_obj =
 	orb->resolve_initial_references ("NameService");
-      if (naming_obj == 0)
+      if (CORBA::is_nil(naming_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),
 			  1);
 
       CosNaming::NamingContext_var naming_context = 
-        CosNaming::NamingContext::_narrow (naming_obj, TAO_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
