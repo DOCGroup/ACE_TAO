@@ -7290,7 +7290,6 @@ AC_CONFIG_FILES([
   ace-config.1
   Makefile
   ace/Makefile
-  ace/HTBP/Makefile
   ace/QoS/Makefile
   ace/RMCast/Makefile
   ace/SSL/Makefile
@@ -7313,6 +7312,9 @@ AC_CONFIG_FILES([
   netsvcs/clients/Tokens/mutex/Makefile
   netsvcs/clients/Tokens/rw_lock/Makefile
   netsvcs/servers/Makefile
+  protocols/Makefile
+  protocols/ace/Makefile
+  protocols/ace/HTBP/Makefile
   tests/Makefile
   tests/RMCast/Makefile
   tests/SSL/Makefile

@@ -13,6 +13,7 @@ SUBDIRS = \
         ACEXML \
         apps \
         netsvcs \
+	protocols \
         tests
 
 ##        performance-tests \
