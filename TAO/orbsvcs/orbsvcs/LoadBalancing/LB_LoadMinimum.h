@@ -58,7 +58,8 @@ namespace TAO_LB
    * residing at the location corresponding to one of the two loads
    * will be selected at random.
    */
-  const CORBA::Float LM_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF = 0.01f;  // 1%
+  const CORBA::Float LM_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF = 0.05f;  // 1%
+  const CORBA::Float LM_DEFAULT_DIFF_AVERAGE_CUTOFF = 0.4f;  // 80%
   //@}
 }
 

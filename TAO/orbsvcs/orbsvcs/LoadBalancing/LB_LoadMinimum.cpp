@@ -208,9 +208,11 @@ TAO_LB_LoadMinimum::next_member (
 
   if (found_location)
     {
-//       ACE_DEBUG ((LM_DEBUG,
-//                   "RETURNING REFERENCE FOR LOCATION \"%s\"\n",
-//                   location[0].id.in ()));
+/*            
+       ACE_DEBUG ((LM_DEBUG,
+                   "RETURNING REFERENCE FOR LOCATION \"%s\"\n",
+                   location[0].id.in ()));
+*/                   
 
       return load_manager->get_member_ref (object_group,
                                            location
@@ -227,6 +229,10 @@ TAO_LB_LoadMinimum::next_member (
       //
       // @note The Random load balancing strategy is used since it is
       //       very lightweight and stateless.
+/*
+       ACE_DEBUG ((LM_DEBUG,
+                   "CALLING RANDOM  REFERENCE FOR LOCATION \n"));
+*/                   
 
       return TAO_LB_Random::_tao_next_member (object_group,
                                               load_manager,
@@ -258,6 +264,8 @@ TAO_LB_LoadMinimum::analyze_loads (
   CosLoadBalancing::Load total_load;
   CosLoadBalancing::Load avg_load;
 
+  CORBA::Float min_load = FLT_MAX;
+
   CosLoadBalancing::LoadList tmp (len);
   tmp.length (1);
 
@@ -287,6 +295,11 @@ TAO_LB_LoadMinimum::analyze_loads (
           total_load.value = total_load.value + load.value;
           tmp[i] = load;
 
+          if ((load.value < min_load) && (load.value != 0))
+          {
+            min_load = load.value;
+          }
+
           /*
           ACE_DEBUG ((LM_DEBUG,
                        "TOTAL == %f\n",
@@ -304,6 +317,13 @@ TAO_LB_LoadMinimum::analyze_loads (
     }
 
   avg_load.value = total_load.value / len;
+/*  
+  ACE_DEBUG ((LM_DEBUG,
+                      "AVERAGE LOAD == %f"
+                      "\tMIN LOAD == %f\n",
+                      avg_load.value,
+                      min_load));
+*/
 
   // Iterate through the entire location list to determine
   // the location where the load has to be shed.
@@ -330,13 +350,13 @@ TAO_LB_LoadMinimum::analyze_loads (
           ACE_TRY_CHECK;
           */
 
-          /*
+         /* 
           ACE_DEBUG ((LM_DEBUG,
                        "EFFECTIVE_LOAD == %f\n"
                        "AVERAGE       == %f\n",
                        tmp[i].value,
                        avg_load.value));
-          */
+        */ 
 
           if (tmp[i].value <= avg_load.value)
             {
@@ -347,14 +367,43 @@ TAO_LB_LoadMinimum::analyze_loads (
           else
             {
 
-              /*
-              ACE_DEBUG ((LM_DEBUG,
-                          "%P --- ALERTING LOCATION %u\n",
-                          i));
-              */
-              load_manager->enable_alert (loc
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              CORBA::Float percent_diff =
+                (tmp[i].value / min_load) - 1;
+
+              if (tmp[i].value == min_load)
+              {
+                percent_diff = 0;
+              }
+/*
+          ACE_DEBUG ((LM_DEBUG,
+                      "ALERT LOC == %u"
+                      "\tMIN LOAD == %f\n"
+                      "\tLOAD == %f\n"
+                      "\tPERCENT == %f\n",
+                      i,
+                      min_load,
+                      tmp[i].value,
+                      percent_diff));
+*/
+
+              if (percent_diff <= TAO_LB::LM_DEFAULT_DIFF_AVERAGE_CUTOFF)
+              {
+                load_manager->disable_alert (loc
+                                             ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+              }
+              else if ((percent_diff > TAO_LB::LM_DEFAULT_DIFF_AVERAGE_CUTOFF)
+                       && (percent_diff < 1))
+              { 
+/*                      
+                ACE_DEBUG ((LM_DEBUG,
+                            "%P --- ALERTING LOCATION %u\n",
+                            i));
+*/              
+                load_manager->enable_alert (loc
+                                            ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+              }
             }
         }
       ACE_CATCH (CosLoadBalancing::LocationNotFound, ex)
@@ -413,12 +462,17 @@ TAO_LB_LoadMinimum::get_location (
                             load
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
+/*          
+          ACE_DEBUG ((LM_DEBUG,
+                      "LOC == %u"
+                      "\tMIN LOAD == %f\n"
+                      "\tLOAD == %f\n",
+                      i,
+                      min_load,
+                      load.value));
+*/
           if (load.value < min_load)
             {
-//               ACE_DEBUG ((LM_DEBUG,
-//                           "**** LOAD == %f\n",
-//                           load.value));
 
               if (i > 0 && load.value != 0)
                 {
@@ -435,7 +489,6 @@ TAO_LB_LoadMinimum::get_location (
                   */
                   const CORBA::Float percent_diff =
                     (min_load / load.value) - 1;
-
                   /*
                     A "thundering herd" phenomenon may occur when
                     location loads are basically the same (e.g. only
@@ -530,8 +583,10 @@ TAO_LB_LoadMinimum::get_location (
   if (found_load)
     {
       if (found_location)
+      {
         location = locations[location_index];
-//       ACE_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
+        //ACE_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));
+      }
     }
 
    //ACE_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));
