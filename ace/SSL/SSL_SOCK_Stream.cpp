@@ -2,7 +2,7 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/Log_Msg.h"
-#include "ace/Time_Value.h"
+#include "ace/Countdown_Time.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_select.h"
 

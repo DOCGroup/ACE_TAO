@@ -14,7 +14,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Time_Value.h"
+#include "ace/Countdown_Time.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (ace, Process, "$Id$")
