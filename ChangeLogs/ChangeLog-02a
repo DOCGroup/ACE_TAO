@@ -1,3 +1,8 @@
+Thu Apr 26 07:58:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Prevented the BiDirectional tests from
+	  running in the Minimum nightly builds. 
+
 Thu Apr 26 07:48:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/MEM_IO.h (ACE_MEM_IO): Some cosmetic fixes.
