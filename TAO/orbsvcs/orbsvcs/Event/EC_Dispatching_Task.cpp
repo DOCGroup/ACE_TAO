@@ -12,7 +12,7 @@ ACE_RCSID(Event, EC_Dispatching, "$Id$")
 int
 TAO_EC_Queue::is_full_i (void)
 {
-  return this->cur_count_ > this->high_water_mark_;
+  return ACE_static_cast (size_t, this->cur_count_) > this->high_water_mark_;
 }
 
 // ****************************************************************
