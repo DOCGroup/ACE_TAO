@@ -449,9 +449,6 @@ Known issues:
 
 <ul>
 
-<li> ORB::shutdown needs to deactive the POA Managers. We need to fix
-this. </li><P>
-
 </UL>
 
 Future work:
@@ -469,6 +466,21 @@ real-time ORB status.</li><P>
 Recently completed work:<P>
 
 <ul>
+
+<li> ORB::shutdown now properly deactives all the POA
+Managers. </li><P>
+
+<li>
+
+POA Managers in TAO were previously ignored in the request processing
+path on the server. This is now fixed such that their state is checked
+before dispatching the client request to the servant. Only if the
+state is <CODE>ACTIVE</CODE>, is the request dispatched to the
+servant.  Otherwise, the request is rejected. Since POA Managers start
+off in <CODE>HOLDING</CODE> state, make sure to
+<CODE>activate()</CODE> them before falling into the event loop.
+
+</li><P>
 
 <li> TAO's POA now properly supports both the threading policies:
 SINGLE_THREAD_MODEL and ORB_CTRL_MODEL. </li><P>
