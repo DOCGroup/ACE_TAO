@@ -1,3 +1,9 @@
+Mon Aug 30 16:16:46 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* PROBLEM-REPORT-FORM:
+
+	  Updated to point to refer reports ace-bugs mailing list.
+
 Mon Aug 30 14:27:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cached_Accept_Conn_Test.cpp,Cached_Conn_Test.cpp,
