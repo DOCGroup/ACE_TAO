@@ -86,7 +86,7 @@ get_hello (void)
 
   ACE_NEW_RETURN (hello,
                   Hello_Impl,
-                  NULL);
+                  0);
 
   return hello;
 }

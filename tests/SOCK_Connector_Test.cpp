@@ -111,7 +111,7 @@ find_another_host (ACE_TCHAR other_host[])
       // Linux systems between <gethostent> and <gethostbyname_r>
       // (called by ACE_INET_Addr in host_is_up) This otherwise causes
       // an infinite loop on Linux --mas 03-08-2001
-      while ((h = gethostent ()) != NULL)
+      while ((h = gethostent ()) != 0)
         {
           if (ACE_OS::strcmp (h->h_name,
                               ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)

@@ -153,7 +153,7 @@ inc_count (ClientData client_data, Tcl_Interp *interp,int, const char **)
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   // eval (command);
   const char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
-  if (varValue == NULL)
+  if (varValue == 0)
     return TCL_ERROR;
   return TCL_OK;
 }
@@ -176,7 +176,7 @@ inc_tmo (ClientData client_data)
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   //  eval (command);
   const char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
-  if (varValue == NULL)
+  if (varValue == 0)
     ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
 
   (void) Tk_CreateTimerHandler (1000,
@@ -200,7 +200,7 @@ public:
     //    sprintf (command,"set %s %s",(char *)arg,new_string);
     //    eval (command);
     const char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
-    if (varValue == NULL)
+    if (varValue == 0)
       ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
 
     return 0;
@@ -316,7 +316,7 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
-                                          NULL,
+                                          0,
                                           THR_NEW_LWP | THR_DETACHED);
 
   while (!quit)

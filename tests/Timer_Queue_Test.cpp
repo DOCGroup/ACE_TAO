@@ -486,7 +486,7 @@ public:
   // = Initialization method
   Timer_Queue_Stack (ACE_Timer_Queue *queue,
     const ACE_TCHAR *name,
-    Timer_Queue_Stack *next = NULL)
+    Timer_Queue_Stack *next = 0)
     : queue_ (queue),
     name_ (name),
     next_ (next)
@@ -515,7 +515,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // = Perform initializations.
 
-  Timer_Queue_Stack *tq_stack = NULL;
+  Timer_Queue_Stack *tq_stack = 0;
 
   // Add new Timer_Queue implementations here.  Note that these will
   // be executed in "reverse order".
@@ -587,7 +587,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   Timer_Queue_Stack *tq_ptr = tq_stack;
 
-  while (tq_ptr != NULL)
+  while (tq_ptr != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("**** starting test of %s\n"),
