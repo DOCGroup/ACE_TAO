@@ -1,10 +1,28 @@
-Scope: debug.hh
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/debug.hh
 Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 extern"char*strerror(int);           1    12       6     1     0   0.2   0.0
 extern unsigned debug_level;         15   22       7     0     0   0.0   0.0
 extern char*debug_filter;            22   23       1     0     0   0.0   0.0
 _dmsg_x(env,s);                      23   43       8     3     0   0.4   0.0
+line 43: syntax error at "}" missing Eof
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 Summary for scope:                                42    21     0   0.5   0.0
 --------------------                 ---- ---- ----- ----- ----- ----- -----

@@ -1,12 +1,29 @@
-Scope: toa.hh
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/toa.hh
 Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
 --------------------                 ---- ---- ----- ----- ----- ----- -----
-typedef class TOA*TOA_ptr;           1    15      10     1     0   0.1   0.0
-CORBA_Boolean is_nil();              17   17       0     0     0            
-void release();                      18   18       0     0     0            
-extern const IID IID_TOA;            20   20       0     0     0            
-class TOA:public IUnknown{public:vi  22   184    113    41     0   0.4   0.0
-;                                    184  184      0     0     0            
+typedef class TOA*TOA_ptr;           1    18      10     1     0   0.1   0.0
+CORBA_Boolean is_nil();              20   20       0     0     0            
+void release();                      21   21       0     0     0            
+extern const IID IID_TOA;            23   23       0     0     0            
+class TOA:public IUnknown{public:vi  25   187    113    41     0   0.4   0.0
+;                                    187  187      0     0     0            
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 Summary for scope:                               123    47     0   0.4   0.0
 --------------------                 ---- ---- ----- ----- ----- ----- -----

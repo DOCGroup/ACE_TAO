@@ -1,36 +1,51 @@
-Scope: tcpoa.cpp
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/tcpoa.cpp
 Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
 --------------------                 ---- ---- ----- ----- ----- ----- -----
-static TCP_OA*the_oa;                1    51      14     1     0   0.1   0.0
-static short tcp_port;               52   52       0     0     0            
-static char namebuf[];               53   53       0     0     0            
-static pthread_key_t request_key;    57   57       0     0     0            
-static pthread_mutex_t tcpoa_mutex=  58   58       0     0     0            
-static pthread_mutex_t tcpoa_lock=P  59   59       0     0     0            
-static pthread_attr_t thread_attr;   60   60       0     0     0            
-TCP_OA::TCP_OA(){}                   64   137     34    29     3   0.9   0.1
-TCP_OA::~TCP_OA(){}                  139  145      0     6     1 ! *** ! ***
-TCP_OA_ptr TCP_OA::init(){}          148  214     21    27     7   1.3   0.3
-CORBA_Object_ptr __stdcall TCP_OA::  217  274      9    41 ?   8   4.6   0.9
-CORBA_OctetSeq*__stdcall TCP_OA::ge  277  290      4     9     1   2.3   0.3
-((GIOP::RequestHeader*)pthread_gets  294  308      9     1     0   0.1   0.0
-CORBA_Object_ptr __stdcall _this(){  312  364     23    24     6   1.0   0.3
-CORBA_OctetSeq*__stdcall TCP_OA::ge  367  382      6     8     1   1.3   0.2
-CORBA_Principal_ptr __stdcall TCP_O  385  400      6     8     1   1.3   0.2
-static void tcp_oa_dispatcher(){}    403  532     45    61 ?  10   1.4   0.2
-static GIOP::LocateStatusType tcp_o  535  559      4    18     5   4.5   1.3
-void TCP_OA::handle_message(){}      562  580      3    11     1   3.7   0.3
-void*TCP_OA::worker(){}              584  618     16    15     4   0.9   0.3
-void __stdcall TCP_OA::get_request(  622  868    128    82 ?  14   0.6   0.1
-void __stdcall TCP_OA::please_shutd  871  886      3     9     0   3.0   0.0
-void __stdcall TCP_OA::clean_shutdo  888  911      3    15     2   5.0   0.7
-void __stdcall TCP_OA::register_dir  914  935      3    16     2   5.3   0.7
-void __stdcall TCP_OA::get_request(  937  960      9    13     2   1.4   0.2
-DEFINE_GUID(IID_TCP_OA,0xa201e4c4,0  963  969      4     2     0   0.5   0.0
-ULONG __stdcall TCP_OA::AddRef(){Cr  972  981      0     6     1 ! *** ! ***
-ULONG __stdcall TCP_OA::Release(){C  983  1000     0    10     3 ! *** ! ***
-HRESULT __stdcall TCP_OA::QueryInte  1002 1021     0    16     6 ! *** ! ***
+static TCP_OA*the_oa;                1    44      14     1     0   0.1   0.0
+static pthread_key_t request_key;    47   47       0     0     0            
+static pthread_mutex_t tcpoa_mutex=  48   48       0     0     0            
+static pthread_mutex_t tcpoa_lock=P  49   49       0     0     0            
+static pthread_attr_t thread_attr;   50   50       0     0     0            
+static void tcp_oa_dispatcher(){}    53   180     45    59 ?  10   1.3   0.2
+static GIOP::LocateStatusType tcp_o  182  206      4    18     5   4.5   1.3
+TCP_OA::TCP_OA(CORBA_ORB_ptr owning  209  237      5    19     3   3.8   0.6
+TCP_OA::~TCP_OA(){}                  239  241      0     2     0 ! ***      
+TCP_OA_ptr TCP_OA::init(){}          244  288     11    18     3   1.6   0.3
+CORBA_Object_ptr __stdcall TCP_OA::  291  348      9    41 ?   8   4.6   0.9
+CORBA_OctetSeq*__stdcall TCP_OA::ge  351  364      4     9     1   2.3   0.3
+((GIOP::RequestHeader*)pthread_gets  368  382      9     1     0   0.1   0.0
+CORBA_Object_ptr __stdcall _this(){  386  436     23    22     6   1.0   0.3
+CORBA_OctetSeq*__stdcall TCP_OA::ge  439  454      6     8     1   1.3   0.2
+CORBA_Principal_ptr __stdcall TCP_O  457  472      6     8     1   1.3   0.2
+void TCP_OA::handle_message(){}      474  489      3     8     1   2.7   0.3
+void*TCP_OA::worker(){}              493  527     16    15     4   0.9   0.3
+void __stdcall TCP_OA::get_request(  531  779    128    82 ?  14   0.6   0.1
+void __stdcall TCP_OA::please_shutd  782  797      3     9     0   3.0   0.0
+void __stdcall TCP_OA::clean_shutdo  799  824      3    15     2   5.0   0.7
+void __stdcall TCP_OA::register_dir  827  848      3    16     2   5.3   0.7
+void __stdcall TCP_OA::get_request(  850  873      9    13     2   1.4   0.2
+DEFINE_GUID(IID_TCP_OA,0xa201e4c4,0  876  882      4     2     0   0.5   0.0
+ULONG __stdcall TCP_OA::AddRef(){Cr  885  894      0     6     1 ! *** ! ***
+ULONG __stdcall TCP_OA::Release(){C  896  913      0    10     3 ! *** ! ***
+HRESULT __stdcall TCP_OA::QueryInte  915  934      0    16     6 ! *** ! ***
 --------------------                 ---- ---- ----- ----- ----- ----- -----
-Summary for scope:                               344   457    78   1.3   0.2
+Summary for scope:                               305   425    73   1.4   0.2
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 

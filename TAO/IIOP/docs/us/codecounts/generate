@@ -13,7 +13,7 @@ test -x ${CCCC:=/usr/local/bin/cccc} \
 test -d ${TOPDIR:=../../../lib} \
 	|| error 1 "Unable to locate \$TOPDIR ($TOPDIR)."
 
-find $TOPDIR \( -name '*.h' -o -name '*.hh' -o -name '*.cpp' \) -print |
+find $TOPDIR \( -name '*.h' -o -name '*.i' -o -name '*.hh' -o -name '*.cpp' \) -print |
 while read file
 do
   outname=`basename $file`.cccc
