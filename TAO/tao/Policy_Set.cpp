@@ -106,8 +106,10 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source,
 void
 TAO_Policy_Set::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::ULong i;
+
   // Cleanup the policy list.
-  for (CORBA::ULong i = 0;
+  for (i = 0;
        i < this->policy_list_.length ();
        ++i)
     {
