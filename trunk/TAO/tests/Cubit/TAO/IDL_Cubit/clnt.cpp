@@ -396,13 +396,14 @@ Cubit_Client::cube_sequence (int i)
       input[j] = j;
     }
 
-  Cubit::vector* output_ptr;
-  Cubit::vector_out vout (output_ptr);
+  Cubit::vector_var output;
+  Cubit::vector_out vout (output);
 
   // Cube the sequence
   this->cubit_->cube_sequence (input, vout, this->env_);
 
-  Cubit::vector& output = *vout.ptr ();
+  //  Cubit::vector& output = *vout.ptr ();
+  output = vout;
 
   if (this->env_.exception () != 0)
     {
@@ -411,26 +412,26 @@ Cubit_Client::cube_sequence (int i)
     }
   else
     {
-      if (output.length () != input.length ())
-	{
-	  ACE_ERROR ((LM_ERROR, "** cube sequence, wrong length\n"));
-	  this->error_count_++;
-	}
+      if (output->length () != input.length ())
+        {
+          ACE_ERROR ((LM_ERROR, "** cube sequence, wrong length\n"));
+          this->error_count_++;
+        }
 
-      u_int l = output.length ();
+      u_int l = output->length ();
       if (input.length () < l)
-	{
-	  l = input.length ();
-	}
+        {
+          l = input.length ();
+        }
       for (u_int j = 0; j < l; ++j)
-	{
-	  int x = input[j];
-	  if (x*x*x != output[j])
-	    {
-	      ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
-	      this->error_count_++;
-	    }
-	}
+        {
+          int x = input[j];
+          if (x*x*x != output[j])
+            {
+              ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
+              this->error_count_++;
+            }
+        }
     }
 }
 
