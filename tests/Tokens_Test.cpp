@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -37,12 +37,12 @@
 #include "ace/Token_Invariants.h"
 #include "test_config.h"
 
-typedef ACE_Token_Invariant_Manager TOKEN_INVARIANTS;
-
 #if defined (ACE_HAS_THREADS)
 
-static char *server_host = "localhost";
-static int server_port = 23456;
+typedef ACE_Token_Invariant_Manager TOKEN_INVARIANTS;
+
+static const char *server_host = "localhost";
+static const int server_port = 23456;
 
 struct Test_Params
 {
@@ -123,12 +123,6 @@ run_thread (void *vp)
   return 0;
 }
 
-#if defined (ACE_HAS_PTHREADS)
-#define SUSPEND 0
-#else
-#define SUSPEND THR_SUSPENDED
-#endif
-
 static int
 run_test (ACE_Token_Proxy *A,
 	  ACE_Token_Proxy *B,
@@ -156,15 +150,15 @@ run_test (ACE_Token_Proxy *A,
   ACE_Thread_Manager *mgr = ACE_Service_Config::thr_mgr ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp1, THR_BOUND | SUSPEND) == -1)
+		 (void *) &tp1, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 1 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp2, THR_BOUND | SUSPEND) == -1)
+		 (void *) &tp2, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 2 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp3, THR_BOUND | SUSPEND) == -1)
+		 (void *) &tp3, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 3 failed"), -1);
 
 #if ! defined (ACE_HAS_PTHREADS)
@@ -178,17 +172,19 @@ run_test (ACE_Token_Proxy *A,
   ACE_DEBUG ((LM_DEBUG, "Test finished.\n"));
   return 0;
 }
+#endif /* ACE_HAS_THREADS */
 
 int
-main (int argc, char* argv[])
+main (int, char* argv[])
 {
   ACE_START_TEST ("Tokens_Test.cpp");
+#if defined (ACE_HAS_THREADS)
   ACE_Token_Proxy *A, *B, *R, *W;
 
-  A = new ACE_Local_Mutex ("L Mutex A", 0, 0);
-  B = new ACE_Local_Mutex ("L Mutex B", 0, 0);
-  R = new ACE_Local_RLock ("L Reader Lock", 0, 0);
-  W = new ACE_Local_WLock ("L Writer Lock", 0, 0);
+  ACE_NEW_RETURN (A, ACE_Local_Mutex ("L Mutex A", 0, 0), -1);
+  ACE_NEW_RETURN (B, ACE_Local_Mutex ("L Mutex B", 0, 0), -1);
+  ACE_NEW_RETURN (R, ACE_Local_RLock ("L Reader Lock", 0, 0), -1);
+  ACE_NEW_RETURN (W, ACE_Local_WLock ("L Writer Lock", 0, 0), -1);
 
   run_test (A,B,R,W);
 
@@ -220,12 +216,13 @@ main (int argc, char* argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Using Token Server on %s at port %d.\n", server_host, server_port));
   ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
-  A = new ACE_Remote_Mutex ("R Mutex A", 0, 1);
-  B = new ACE_Remote_Mutex ("R Mutex B", 0, 1);
-  R = new ACE_Remote_RLock ("R Reader Lock", 0, 1);
-  W = new ACE_Remote_WLock ("R Writer Lock", 0, 1);
 
-  run_test (A,B,R,W);
+  ACE_NEW_RETURN (A, ACE_Remote_Mutex ("R Mutex A", 0, 1), -1);
+  ACE_NEW_RETURN (B, ACE_Remote_Mutex ("R Mutex B", 0, 1), -1);
+  ACE_NEW_RETURN (R, ACE_Remote_RLock ("R Reader Lock", 0, 1), -1);
+  ACE_NEW_RETURN (W, ACE_Remote_WLock ("R Writer Lock", 0, 1), -1);
+
+  run_test (A, B, R, W);
 
   // Wait for the server to finish.
   ACE_OS::sleep (3);
@@ -235,16 +232,10 @@ main (int argc, char* argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "Kill failed.\n"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));
-
+#else
+  ACE_ERROR ((LM_ERROR, 
+	      "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR, 
-		     "threads not supported on this platform\n"), -1);
-}
-#endif /* ACE_HAS_THREADS */

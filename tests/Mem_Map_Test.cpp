@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -23,8 +23,8 @@
 #include "ace/Mem_Map.h"
 #include "test_config.h"
 
-static int size = 10;
-static int num_lines = 15;
+static const int FILE_SIZE = 10;
+static const int NUM_LINES = 15;
 
 static void
 reverse_file (ACE_HANDLE file_handle,
@@ -51,17 +51,20 @@ reverse_file (ACE_HANDLE file_handle,
   ACE_OS::write (file_handle, array, count+1);
 }
 
-int
-create_test_file ()
+static int
+create_test_file (int size, int num_lines)
 {
-  ACE_HANDLE file_handle;
-  char *mybuf = new char[size+1];
+  char *mybuf;
+  
+  ACE_NEW_RETURN (mybuf, char[size + 1], -1);
   char c = 'a';
   char d = c;
 
-  if ((file_handle = ACE_OS::open (ACE_DEFAULT_TEST_FILE, 
-				   O_RDWR | O_CREAT | O_TRUNC, 
-				   0666)) == 0)
+  ACE_HANDLE file_handle = ACE_OS::open (ACE_DEFAULT_TEST_FILE, 
+					 O_RDWR | O_CREAT | O_TRUNC,
+					 0666);
+
+  if (file_handle  == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
   
   for (int j = 0; j < num_lines; j++)
@@ -71,8 +74,11 @@ create_test_file ()
 	  mybuf[i] = c;
 	  c++;
 	}
+
       mybuf[size] = '\0';
+
       c = ++d;
+
       if (ACE_OS::write (file_handle, mybuf, size) != size)
 	ACE_ERROR_RETURN ((LM_ERROR, "write to file failed\n"), -1);
 
@@ -89,12 +95,8 @@ main (int, char **argv)
 {
   ACE_START_TEST ("Mem_Map_Test.cpp");
 
-  ACE_LOG_MSG->open (argv[0]);
-
-  ACE_HANDLE temp_file_handle;
-
   // First create a test file to work on
-  if (create_test_file () != 0)
+  if (create_test_file (FILE_SIZE, NUM_LINES) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Create test file failed\n"), -1);
 
   ACE_Mem_Map mmap;
@@ -103,14 +105,16 @@ main (int, char **argv)
   if (mmap.map (ACE_DEFAULT_TEST_FILE) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n%a", "mmap"), -1);
 
+  ACE_HANDLE temp_file_handle = ACE_OS::open (ACE_TEMP_FILE_NAME, 
+					      O_RDWR | O_TRUNC | O_CREAT,
+					      0666);
+
   // Now create a temporary file for intermediate processing
-  if ((temp_file_handle = ACE_OS::open (ACE_TEMP_FILE_NAME, 
-					O_RDWR | O_TRUNC | O_CREAT,
-					0666)) == 0)
+  if (temp_file_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
 
   // Reverse the original file and write the output to the temporary
-  // file 
+  // file.
   reverse_file (temp_file_handle, 
 		(char *) mmap.addr (), 
 		mmap.size ());
@@ -134,7 +138,7 @@ main (int, char **argv)
     ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
   
   // Now reverse the temporary file and write everything to the second
-  // temporary file
+  // temporary file.
   reverse_file (temp_file_handle, 
 		(char *) temp_mmap.addr (), 
 		temp_mmap.size ());
@@ -143,6 +147,7 @@ main (int, char **argv)
 
   // Memory map the second temporary file
   ACE_Mem_Map temp_mmap2;
+
   if (temp_mmap2.map (temp_file_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n%a", "mmap"), -1);
 

@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -85,7 +85,7 @@ Test_Task::open (void *args)
 }
 
 int 
-Test_Task::close (u_long flags)
+Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, reclock_, -1);
 
@@ -97,8 +97,7 @@ Test_Task::close (u_long flags)
 }
 
 int 
-Test_Task::put (ACE_Message_Block *mb, 
-		ACE_Time_Value *tv)
+Test_Task::put (ACE_Message_Block *, ACE_Time_Value *)
 {
   return 0;
 }
@@ -120,14 +119,13 @@ Test_Task::svc (void)
 }
 
 int 
-Test_Task::handle_close (ACE_HANDLE fd, 
-			 ACE_Reactor_Mask close_mask)
+Test_Task::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   return 0;
 }
 
 int 
-Test_Task::handle_input (ACE_HANDLE fd)
+Test_Task::handle_input (ACE_HANDLE)
 {
   this->handled_++;
 
@@ -171,13 +169,23 @@ worker (void *args)
   return 0;
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#endif /* ACE_HAS_THREADS */
+
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Reactors_Test.cpp");
 
+#if defined (ACE_HAS_THREADS)
   ACE_Reactor *react1 = ACE_Service_Config::reactor ();
-  ACE_Reactor *react2 = new ACE_Reactor ();
+  ACE_Reactor *react2;
+
+  ACE_NEW_RETURN (react2, ACE_Reactor, -1);
+
   Test_Task tt1[MAX_TASKS];
   Test_Task tt2[MAX_TASKS];
 
@@ -196,20 +204,10 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   ACE_Service_Config::thr_mgr ()->wait ();
-
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */

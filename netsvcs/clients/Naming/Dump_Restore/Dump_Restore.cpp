@@ -55,11 +55,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
 {
   char option[BUFSIZ];
   char buf1[BUFSIZ];
-  char buf2[BUFSIZ];
-  char buf3[BUFSIZ];
-  char *temp_buf;
-  int port;
-  char input[256];
+  u_short port;
 
   if (::scanf ("%s", option) <= 0)
     {
@@ -273,7 +269,7 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
       // reset file pointer
       ACE_OS::rewind (this->infile_);
       
-      ACE_Allocator *allocator = ACE_Service_Config::allocator ();
+      ACE_Allocator *allocator = ACE_Service_Config::alloc ();
       ACE_Read_Buffer read_buffer (this->infile_, 0, allocator);
 
       for (char *temp; (temp = read_buffer.read ('\n')) != 0; )

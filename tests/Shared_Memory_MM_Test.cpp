@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -26,7 +26,7 @@
 #include "ace/Thread_Manager.h"
 #include "test_config.h"
 
-#define SHMSZ 27
+const int SHMSZ = 27;
 static char shm_key[] = "/tmp/fooXXXXXX";
 
 // Global thread manager.
@@ -39,7 +39,7 @@ client (void *)
   // Insert thread into thr_mgr
   ACE_Thread_Control thread_control (&thr_mgr);  
   ACE_NEW_THREAD;
-#endif
+#endif /* ACE_WIN32 */
 
   ACE_OS::sleep (3);
   char t = 'a';
@@ -66,7 +66,7 @@ server (void *)
   // Insert thread into thr_mgr
   ACE_Thread_Control thread_control (&thr_mgr);  
   ACE_NEW_THREAD;
-#endif
+#endif /* ACE_WIN32 */
 
   ACE_Shared_Memory *shm_server;
   ACE_NEW_RETURN (shm_server, ACE_Shared_Memory_MM (shm_key, SHMSZ), 0);
@@ -90,7 +90,7 @@ server (void *)
 }
 
 static void
-spawn ()
+spawn (void)
 {
 #if !defined (ACE_WIN32)
   switch (ACE_OS::fork ())
@@ -120,7 +120,7 @@ spawn ()
 }
 
 int
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Shared_Memory_MM_Test.cpp");
 

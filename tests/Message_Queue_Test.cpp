@@ -19,13 +19,14 @@
 
 #include "ace/Message_Queue.h"
 #include "ace/Synch.h"
+#include "test_config.h"
 
 typedef ACE_Message_Queue <ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator <ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Message_Queue_Test.cpp");
 
@@ -34,9 +35,14 @@ main (int argc, char *argv[])
 
   for (int i = 1; i <= ITERATIONS; i++)
     {
-      char *buffer = new char[BUFSIZ];
+      char *buffer;
+      ACE_NEW_RETURN (buffer, char[BUFSIZ], -1);
       sprintf (buffer, "%d", i);
-      ACE_Message_Block *entry = new ACE_Message_Block (buffer, sizeof buffer);
+
+      ACE_Message_Block *entry;
+
+      ACE_NEW_RETURN (entry, ACE_Message_Block (buffer, sizeof buffer), -1);
+
       if (queue.enqueue (entry) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue\n"), -1);
     }

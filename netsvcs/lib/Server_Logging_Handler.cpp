@@ -197,7 +197,8 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logg
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
         len = ntohl (len);
-	if ((n = this->peer ().recv_n ((void *) &lp, len)) != len)
+	n = this->peer ().recv_n ((void *) &lp, len);
+	if (n != len)
 	  ACE_ERROR_RETURN ((LM_ERROR, "len = %d, %p at host %s\n",
 			    n, "server logger", this->host_name_), -1);
 	/* NOTREACHED */

@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -31,7 +31,7 @@
 #include "test_config.h"
 
 // pipe name to use
-static char *pipe_name = "acepipe";
+static const char *PIPE_NAME = "ace_pipe_name";
 
 // Global thread manager.
 static ACE_Thread_Manager thr_mgr;
@@ -43,7 +43,7 @@ client (void *)
   ACE_Thread_Control thread_control (&thr_mgr);  // Insert thread into thr_mgr
   ACE_NEW_THREAD;
 #endif
-  char *rendezvous = "ace_pipe_name";
+  const char *rendezvous = PIPE_NAME;
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
 
@@ -78,9 +78,9 @@ server (void *)
   int n;
   char t = 'a';
 
-  char *rendezvous = "ace_pipe_name";
+  const char *rendezvous = PIPE_NAME;
 
-  // Initialize named pipe listener
+  // Initialize named pipe listener.
 
   if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
@@ -138,9 +138,12 @@ main (int, char *argv[])
 {
   ACE_START_TEST ("SPIPE_Test.cpp");
 
+#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
   spawn ();
-
+#else
+  ACE_ERROR ((LM_ERROR, 
+	      "SPIPE is not supported on this platform\n"));
+#endif /* defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) */
   ACE_END_TEST;
   return 0;
 }
-

@@ -117,8 +117,11 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Naming_Test.cpp");
 
-  ACE_Naming_Context *ns_context = new ACE_Naming_Context ();
+  ACE_Naming_Context *ns_context;
+  ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
+
   ACE_Name_Options *name_options = ns_context->name_options ();
+
   name_options->parse_args (argc, argv);
   name_options->database (ACE::basename (name_options->process_name (),
 					 ACE_DIRECTORY_SEPARATOR_CHAR));

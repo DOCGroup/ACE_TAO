@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -63,11 +63,14 @@ tester (Tester_Args *args)
   return 0;
 }
 
+#endif /* ACE_HAS_THREADS */
+
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST ("Barrier_Test.cpp");
 
+#if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon (argv[0]);
 
   int n_threads = ACE_MAX_THREADS;
@@ -84,15 +87,10 @@ main (int argc, char *argv[])
 
   // Wait for all the threads to reach their exit point.
   ACE_Service_Config::thr_mgr ()->wait ();
-
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */
+

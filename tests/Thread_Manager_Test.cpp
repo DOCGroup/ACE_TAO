@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -20,12 +20,11 @@
 // ============================================================================
 
 #include "ace/Log_Msg.h"
-
-#if defined (ACE_HAS_THREADS)
-
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "test_config.h"
+
+#if defined (ACE_HAS_THREADS)
 
 static void
 handler (int signum)
@@ -60,13 +59,15 @@ worker (int iterations)
 static const int DEFAULT_THREADS = ACE_MAX_THREADS;
 static const int DEFAULT_ITERATIONS = 100000;
 
+#endif /* ACE_HAS_THREADS */
+
 int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Thread_Manager_Test.cpp");
 
+#if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon;
-
   daemon.open (argv[0]);
 
   // Register a signal handler
@@ -110,14 +111,9 @@ main (int argc, char *argv[])
 
   // Perform a barrier wait until all the threads have shut down.
   thr_mgr->wait ();
-
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
-#else
-int 
-main (int, char *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR, "threads not supported on this platform\n"), -1);
-}
-#endif /* ACE_HAS_THREADS */
