@@ -251,8 +251,6 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::ThreadPolicyValue>::create (
               "ThreadPolicyFactory",
-              ACE_TEXT("dynamic ThreadPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyFactoryImpl()"),
               PortableServer::ORB_CTRL_MODEL ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   policies.merge_policy (thread_policy ACE_ENV_ARG_PARAMETER);
@@ -267,8 +265,6 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::LifespanPolicyValue>::create (
               "LifespanPolicyFactory",
-              ACE_TEXT("dynamic LifespanPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactoryImpl()"),
               PortableServer::TRANSIENT ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   policies.merge_policy (lifespan_policy ACE_ENV_ARG_PARAMETER);
@@ -281,8 +277,6 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::IdUniquenessPolicyValue>::create (
               "IdUniquenessPolicyFactory",
-              ACE_TEXT("dynamic IdUniquenessPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactoryImpl()"),
               PortableServer::UNIQUE_ID ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   policies.merge_policy (id_uniqueness_policy ACE_ENV_ARG_PARAMETER);
@@ -295,8 +289,6 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::IdAssignmentPolicyValue>::create (
               "IdAssignmentPolicyFactory",
-              ACE_TEXT("dynamic IdAssignmentPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactoryImpl()"),
               PortableServer::SYSTEM_ID ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   policies.merge_policy (id_assignment_policy ACE_ENV_ARG_PARAMETER);
@@ -310,8 +302,6 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::ImplicitActivationPolicyValue>::create (
               "ImplicitActivationPolicyFactory",
-              ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
               PortableServer::NO_IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   policies.merge_policy (implicit_activation_policy ACE_ENV_ARG_PARAMETER);
@@ -324,8 +314,6 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::ServantRetentionPolicyValue>::create (
               "ServantRetentionPolicyFactory",
-              ACE_TEXT("dynamic ServantRetentionPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactoryImpl()"),
               PortableServer::RETAIN ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   policies.merge_policy (servant_retention_policy ACE_ENV_ARG_PARAMETER);
@@ -338,8 +326,6 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::RequestProcessingPolicyValue>::create (
               "RequestProcessingPolicyFactory",
-              ACE_TEXT("dynamic RequestProcessingPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactoryImpl()"),
               PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   policies.merge_policy (request_processing_policy ACE_ENV_ARG_PARAMETER);
@@ -688,8 +674,6 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
           ::PortableServer::ImplicitActivationPolicy_ptr,
           ::PortableServer::ImplicitActivationPolicyValue>::create (
             "ImplicitActivationPolicyFactory",
-            ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
-            ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
             PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
 
   policies.merge_policy (implicit_activation_policy.in()
