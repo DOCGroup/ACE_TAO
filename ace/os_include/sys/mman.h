@@ -39,27 +39,15 @@
 #  if defined (ACE_HAS_BROKEN_MMAP_H)
      }
 #  endif /* ACE_HAS_BROKEN_MMAP_H */
-#else /* ACE_LACKS_SYS_MMAH */
-#  define PROT_READ 0
-#  define PROT_WRITE 0
-#  define PROT_EXEC 0
-#  define PROT_NONE 0
-#  define PROT_RDWR 0
-#  define MAP_PRIVATE 0
-#  define MAP_SHARED 0
-#  define MAP_FIXED 0
-#endif /* !ACE_LACKS_SYS_MMAN_H */
-
-#if defined (ACE_WIN32)
-// These two may be used for internal flags soon:
-#   define MAP_PRIVATE 1
-#   define MAP_SHARED  2
-#   define MAP_FIXED   4
-
-// MMAP flags
-#   define PROT_READ PAGE_READONLY
-#   define PROT_WRITE PAGE_READWRITE
-#   define PROT_RDWR PAGE_READWRITE
+#elif defined (ACE_WIN32)
+   // These two may be used for internal flags soon:
+#  define MAP_PRIVATE 1
+#  define MAP_SHARED  2
+#  define MAP_FIXED   4
+   // MMAP flags
+#  define PROT_READ PAGE_READONLY
+#  define PROT_WRITE PAGE_READWRITE
+#  define PROT_RDWR PAGE_READWRITE
 /* If we can find suitable use for these flags, here they are:
 PAGE_WRITECOPY
 PAGE_EXECUTE
@@ -69,7 +57,16 @@ PAGE_EXECUTE_WRITECOPY
 PAGE_GUARD
 PAGE_NOACCESS
 PAGE_NOCACHE  */
-#endif /* ACE_WIN32 */
+#else /* ACE_WIN32 */
+#  define PROT_READ 0
+#  define PROT_WRITE 0
+#  define PROT_EXEC 0
+#  define PROT_NONE 0
+#  define PROT_RDWR 0
+#  define MAP_PRIVATE 0
+#  define MAP_SHARED 0
+#  define MAP_FIXED 0
+#endif /* !ACE_LACKS_SYS_MMAN_H */
 
 #if !defined (PROT_RDWR)
 #  define PROT_RDWR (PROT_READ|PROT_WRITE)

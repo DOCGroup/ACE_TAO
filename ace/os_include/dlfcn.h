@@ -34,6 +34,10 @@
 #  endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
 #endif /* !ACE_LACKS_DLFCN_H */
 
+/* Set the proper handle type for dynamically-loaded libraries. */
+/* Also define a default 'mode' for loading a library - the names and values */
+/* differ between OSes, so if you write code that uses the mode, be careful */
+/* of the platform differences. */
 #if defined (ACE_PSOS)
    typedef ACE_HANDLE ACE_SHLIB_HANDLE;
 #  define ACE_SHLIB_INVALID_HANDLE ACE_INVALID_HANDLE
@@ -43,35 +47,28 @@
    typedef HINSTANCE ACE_SHLIB_HANDLE;
 #  define ACE_SHLIB_INVALID_HANDLE 0
 #  define ACE_DEFAULT_SHLIB_MODE 0
+#elif defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
+   typedef void *ACE_SHLIB_HANDLE;
+#  define ACE_SHLIB_INVALID_HANDLE 0
+#  if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
+#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
+#  else
+#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
+#  endif /* KCC */
+#elif defined (__hpux)
+#  if defined(__GNUC__) || __cplusplus >= 199707L
+#    include /**/x <dl.h>
+#  else
+#    include /**/x <cxxdl.h>
+#  endif /* (g++ || HP aC++) vs. HP C++ */
+   typedef shl_t ACE_SHLIB_HANDLE;
+#  define ACE_SHLIB_INVALID_HANDLE 0
+#  define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
+#else /* !ACE_PSOS && !ACE_WIN32 && !ACE_HAS_SVR4_DYNAMIC_LINKING && !__hpux */
+   typedef void *ACE_SHLIB_HANDLE;
+#  define ACE_SHLIB_INVALID_HANDLE 0
+#  define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
 #endif /* ACE_PSOS */
-
-/* Set the proper handle type for dynamically-loaded libraries. */
-/* Also define a default 'mode' for loading a library - the names and values */
-/* differ between OSes, so if you write code that uses the mode, be careful */
-/* of the platform differences. */
-#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-  typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
-#   else
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
-#   endif /* KCC */
-#   elif defined (__hpux)
-#     if defined(__GNUC__) || __cplusplus >= 199707L
-#       include /**/x <dl.h>
-#     else
-#       include /**/x <cxxdl.h>
-#     endif /* (g++ || HP aC++) vs. HP C++ */
-  typedef shl_t ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
-#   else
-  typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
-
-#   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if !defined (RTLD_LAZY)
 #define RTLD_LAZY 1

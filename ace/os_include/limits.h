@@ -66,8 +66,10 @@
 #if !defined (PATH_MAX)
 #  if defined (_MAX_PATH)
 #    define PATH_MAX _MAX_PATH
+#  elif defined (MAX_PATH)
+#    define PATH_MAX MAX_PATH
 #  else /* !_MAX_PATH */
-#    define 1024
+#    define PATH_MAX 1024
 #  endif /* _MAX_PATH */
 #endif /* !PATH_MAX */
 
