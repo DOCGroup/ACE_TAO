@@ -21,7 +21,10 @@
 
 // Platform specific directives
 // gcc defines __FreeBSD__ automatically for us.
+#if !defined (_THREAD_SAFE)
 #define _THREAD_SAFE
+#endif /* _THREAD_SAFE */
+
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
@@ -32,6 +35,9 @@
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM
 #define ACE_LACKS_SIGSET
 
+// Use of <malloc.h> is deprecated.
+#defined ACE_LACKS_MALLOC_H
+
 // sched.h still not fully support on FreeBSD ?
 // this is taken from /usr/src/lib/libc_r/uthread/pthread-private.h
 enum schedparam_policy {
@@ -40,6 +46,9 @@ enum schedparam_policy {
         SCHED_FIFO,
         SCHED_OTHER
 };
+
+// This won't be necessary after it is fixed in the system include headers.
+char * cuserid (char *s);
 
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
