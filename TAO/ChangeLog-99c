@@ -1,3 +1,16 @@
+Wed Sep 15 15:04:48 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/ORB_init/run_test.pl:
+
+	  Added a simple perl script to run the ORB_init test.  Thanks to
+	  Darrell for convincing me to add one.
+
+	* tests/ORB_init/ORB_init.dsp:
+	* tests/ORB_init/ORB_init.dsw:
+
+	  Added MSVC project files for the ORB_init test.  Thanks to
+	  Nanbor for creating these files.
+
 Wed Sep 15 15:01:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_exception.h:
