@@ -2395,21 +2395,10 @@ typedef short ACE_pri_t;
 
 #if defined (ACE_HAS_HI_RES_TIMER)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
-  typedef hrtime_t ACE_hrtime_t;
+typedef hrtime_t ACE_hrtime_t;
 #else
   #if defined (ACE_HAS_LONGLONG_T)
-    #if defined (__GNUC__)
-      #if defined (VXWORKS)
-        typedef unsigned long long ACE_hrtime_t;  // confirmed: 8 bytes!
-      #else
-        // Need to use {u_}longlong_t with g++ 2.7.2, because its
-        // long {unsigned} long types are only 4 bytes.
-        typedef u_longlong_t ACE_hrtime_t;
-      #endif /* VXWORKS */
-    #else
-      // Sun C++ 4.1 won't accept "long u_long" or "u_long long".
-      typedef unsigned long long ACE_hrtime_t;
-    #endif /* __GNUC__ */
+typedef unsigned long long ACE_hrtime_t;
   #else
     class ACE_U_LongLong
     {

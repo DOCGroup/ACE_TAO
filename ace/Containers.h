@@ -624,9 +624,6 @@ public:
   ACE_Fixed_Set (void);
   // Constructor.
 
-  ACE_Fixed_Set (size_t size);
-  // Constructor.
-
   ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &);
   // Copy constructor. 
 
