@@ -3,7 +3,8 @@ Thu Jun 12 15:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Typecode.cpp: In lieu of the following "Thu Jun 12 15:20:37
 	  2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" change
 	  in ACE, the explicit template instantiations for
-	  ACE_Unbounded_Queue<> is now removed.
+	  ACE_Unbounded_Queue<> is now removed. Thanks again to Rob Andzik
+	  for motivating these changes. 
 
 Thu Jun 12 14:53:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
