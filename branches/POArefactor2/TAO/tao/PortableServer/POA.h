@@ -872,8 +872,6 @@ protected:
 
   PortableServer::AdapterActivator_var adapter_activator_;
 
-  PortableServer::ServantActivator_var servant_activator_;
-
   PortableServer::ServantBase_var default_servant_;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
