@@ -446,6 +446,13 @@ fe_populate_global_scope (AST_Module *m)
                             create_scoped_name ("valuetype")
                           );
   m->fe_add_predefined_type (pdt);
+
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("ValueBase")
+                          );
+  m->fe_add_predefined_type (pdt);
 }
 
 // Populate idl_global's hash map with upper case versions of
