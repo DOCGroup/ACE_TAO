@@ -40,7 +40,7 @@ ACE_RCSID (tests,
 #define TEST_ENTRY ".."
 #else
 #define TEST_DIR "../tests"
-#define TEST_ENTRY "Makefile"
+#define TEST_ENTRY "Dirent_Test.cpp"
 #endif /* VXWORKS || CHORUS */
 
 static const int RECURSION_INDENT = 3;
