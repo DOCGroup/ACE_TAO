@@ -727,6 +727,35 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   return result;
 }
 
+template <class ACE_SELECT_REACTOR_TOKEN> int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler *handler,
+                                                              int dont_call_handle_close)
+{
+  ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+
+  if (this->timer_queue_ != 0)
+    return this->timer_queue_->cancel (handler, dont_call_handle_close);
+  else
+    return 0;
+}
+
+template <class ACE_SELECT_REACTOR_TOKEN> int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
+                                                              const void **arg,
+                                                              int dont_call_handle_close)
+{
+  ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+
+  if (this->timer_queue_ != 0)
+    return this->timer_queue_->cancel (timer_id,
+                                       arg,
+                                       dont_call_handle_close);
+  else
+    return 0;
+}
+
 template <class ACE_SELECT_REACTOR_TOKEN> long
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   (ACE_Event_Handler *handler,
