@@ -1,3 +1,10 @@
+Fri Feb 12 09:19:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: added ACE_HAS_STANDARD_CPP_LIBRARY and
+          ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB #defines with Sun CC 5.0.
+          Thanks to Diethard Ohrt <Diethard.Ohrt@siemens.at> for
+          providing these.
+
 Thu Feb 11 15:05:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ACE-INSTALL.html: Reworded the first step of the Windows
@@ -9,60 +16,60 @@ Thu Feb 11 14:30:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Feb 11 03:48:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h: Added #pragma once and ACE_CORBA_MACROS_H to
-	  prevent duplicate inclusion of this file.
+        * ace/CORBA_macros.h: Added #pragma once and ACE_CORBA_MACROS_H to
+          prevent duplicate inclusion of this file.
 
-	  Added a new macro ACE_ANY_EXCEPTION to denote the name of the
-	  CORBA exception caught by the ACE_CATCHANY.  Thanks to Lothar
-	  Werzinger <lwerzinger@krones.de> for suggesting this.
+          Added a new macro ACE_ANY_EXCEPTION to denote the name of the
+          CORBA exception caught by the ACE_CATCHANY.  Thanks to Lothar
+          Werzinger <lwerzinger@krones.de> for suggesting this.
 
 Wed Feb 10 23:01:16 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/config-win32-common.h: Made a better effort at finding out
- 	  if the files are compiled against the correct run-time
- 	  libraries.  Now _DLL is checked to see if it is defined for
- 	  ACE_HAS_DLL != 0 builds, and if it is not defined for static
- 	  builds.
+          if the files are compiled against the correct run-time
+          libraries.  Now _DLL is checked to see if it is defined for
+          ACE_HAS_DLL != 0 builds, and if it is not defined for static
+          builds.
 
           This should help diagnose the problem of not using (Debug)
- 	  Multithreaded DLL run-time libraries in clients that use DLL
- 	  versions of ace (one symptom of this mistake is errno not
- 	  working correctly because of one copy being defined in the DLL
- 	  and one in the program itself).
+          Multithreaded DLL run-time libraries in clients that use DLL
+          versions of ace (one symptom of this mistake is errno not
+          working correctly because of one copy being defined in the DLL
+          and one in the program itself).
 
 Wed Feb 10 22:19:33 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/014/stream.cpp : Removed the __LINE__ displays.
-	* docs/tutorials/014/page01.html : Added Kirthika's abstract
+        * docs/tutorials/014/stream.cpp : Removed the __LINE__ displays.
+        * docs/tutorials/014/page01.html : Added Kirthika's abstract
 
-	* docs/tutorials/015/page01.html : Added Kirthika's abstract
-	* docs/tutorials/015/page12.html : Oops... Wrong intro text.
-	* docs/tutorials/015/Protocol_Stream.cpp : Typos fixed
-	* docs/tutorials/015/Protocol_Task.cpp : Typos fixed
+        * docs/tutorials/015/page01.html : Added Kirthika's abstract
+        * docs/tutorials/015/page12.html : Oops... Wrong intro text.
+        * docs/tutorials/015/Protocol_Stream.cpp : Typos fixed
+        * docs/tutorials/015/Protocol_Task.cpp : Typos fixed
 
 Wed Feb 10 15:04:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile: added Pair_T.cpp and Template_Instantiations.cpp
-	  to the TEMPLATE_FILES list/variable.  They were missing.
-	* tests/Conn_Test.cpp (spawn_processes): initialized
-	  pid_t *children_ptr to zero to prevent "uninitialized"
-	  warnings from egcs 1.1.1.
+        * ace/Makefile: added Pair_T.cpp and Template_Instantiations.cpp
+          to the TEMPLATE_FILES list/variable.  They were missing.
+        * tests/Conn_Test.cpp (spawn_processes): initialized
+          pid_t *children_ptr to zero to prevent "uninitialized"
+          warnings from egcs 1.1.1.
 
 Wed Feb 10 14:16:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/Message_Queue_Test.cpp (performance_test): initialized
-	  ACE_Message_Block **send_block to zero to prevent "uninitialized"
-	  warnings from egcs 1.1.1.
+        * tests/Message_Queue_Test.cpp (performance_test): initialized
+          ACE_Message_Block **send_block to zero to prevent "uninitialized"
+          warnings from egcs 1.1.1.
 
 Wed Feb 10 14:02:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/ACE.cpp (get_ip_interfaces): initialized struct ifreq * ifs
-	  to zero to prevent "uninitialized" warnings from egcs 1.1.1.
+        * ace/ACE.cpp (get_ip_interfaces): initialized struct ifreq * ifs
+          to zero to prevent "uninitialized" warnings from egcs 1.1.1.
 
 Wed Feb 10 10:53:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
-	  Fixed several minor syntax errors.
+        * examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
+          Fixed several minor syntax errors.
 
 Tue Feb 09 16:54:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -75,16 +82,16 @@ Tue Feb 09 16:54:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Feb 09 16:07:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Synch.{h,i,cpp}: Removed classes ACE_Null_Mutex_Guard and
-	  ACE_Thread_Mutex_Guard since there doesn't seem any need for
-	  them any more.  They should be replaced by
-	  ACE_Guard<ACE_Null_Mutex> and ACE_Guard<ACE_Thread_Mutex>.  If
-	  by any chance you still need to use them, add
-	  ACE_USES_OBSOLETE_GUARD_CLASSES into your config.h file.
+        * ace/Synch.{h,i,cpp}: Removed classes ACE_Null_Mutex_Guard and
+          ACE_Thread_Mutex_Guard since there doesn't seem any need for
+          them any more.  They should be replaced by
+          ACE_Guard<ACE_Null_Mutex> and ACE_Guard<ACE_Thread_Mutex>.  If
+          by any chance you still need to use them, add
+          ACE_USES_OBSOLETE_GUARD_CLASSES into your config.h file.
 
-	* ace/Local_Tokens.h: Replaced ACE_Null_Mutex_Guard and
-	  ACE_Thread_Mutex_Guard with ACE_Guard<ACE_Null_Mutex> and
-	  ACE_Guard<ACE_Thread_Mutex>.
+        * ace/Local_Tokens.h: Replaced ACE_Null_Mutex_Guard and
+          ACE_Thread_Mutex_Guard with ACE_Guard<ACE_Null_Mutex> and
+          ACE_Guard<ACE_Thread_Mutex>.
 
 Tue Feb  9 16:12:42 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
@@ -1792,10 +1799,10 @@ Tue Jan 12 19:52:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
           run-time libraries.
 
         * ace/SOCK_IO.{h,i,cpp} (sendv,recvv,sendv_n,recvv_n): Renamed
-	  vector send_n/recv_n.  There were name clashing since these
-	  methods have similar signatures to some send_n/recv_n in
-	  ACE_SOCK_Stream, they got hidden by the derived methods.
-	  Renaming them solve the problem.
+          vector send_n/recv_n.  There were name clashing since these
+          methods have similar signatures to some send_n/recv_n in
+          ACE_SOCK_Stream, they got hidden by the derived methods.
+          Renaming them solve the problem.
 
 Tue Jan 12 10:59:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
