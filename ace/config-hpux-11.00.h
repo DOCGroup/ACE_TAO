@@ -204,7 +204,9 @@
 
 // Manually tweak the malloc control block paddings to properly align
 // things.
-#define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS  2
+#define ACE_MALLOC_PADDING 16
+#define ACE_MALLOC_ALIGN 8
+#define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS  3
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
