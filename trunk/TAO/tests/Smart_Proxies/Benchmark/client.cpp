@@ -177,6 +177,8 @@ main (int argc, char *argv[])
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
            price = server->box_prices (ACE_TRY_ENV);
+           ACE_TRY_CHECK;
+
            if (price < 300)
              cost = server->tickets (5);
 
@@ -224,6 +226,8 @@ main (int argc, char *argv[])
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
            price1 = server1->box_prices (ACE_TRY_ENV);
+           ACE_TRY_CHECK;
+
            if (price1 < 300)
              cost = server1->tickets (5);
 

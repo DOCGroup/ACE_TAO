@@ -130,6 +130,7 @@ main (int argc, char *argv[])
 
       Test_var Test_object =
         servant._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (Test_object.in (),
