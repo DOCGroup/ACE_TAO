@@ -1,3 +1,16 @@
+Sun Dec  7 000:46:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          Added #ifdef guard to declaration of Array_Traits<> specializations,
+          similar to the ones already generated for Array_Traits<> 
+          specialization implementations in the *C.i file. These guards are
+          composed from the flat name of the unaliased array element type
+          and the dimension(s), eliminating redefinition errors that can
+          occur when two arrays of the same element type and length (either
+          both typedef'd or both anonymous) appear in the same translation
+          unit.
+
 Sun Dec  7 00:53:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTEvent:
@@ -17,8 +30,7 @@ Sun Dec  7 00:41:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 	* tao/Messaging/Asynch_Reply_Dispatcher.h:
 
-	  Fixed a bunch of copile errors when compiled with exceptions=0.
-
+	  Fixed a bunch of compile errors when compiled with exceptions=0.
 
 Sat Dec  6 23:42:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
