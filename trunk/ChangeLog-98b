@@ -9,6 +9,8 @@ Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
           and ACE_U_LongLong need an explicit narrowing to 32 bits.  This
           macro provides a consistent way to do that on all platforms.
 
+        * ace/Asynch_IO.*: added trailing $ to CVS keyword string.
+
 Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added os-patches/ to distribution.
