@@ -61,9 +61,9 @@ MyFooServant::shutdown (CORBA::Environment &env)
 
 // This is the point of entry into this library.
 
-extern "C" ACE_Svc_Export PortableServer::Servant create_MyFoo (CORBA::ORB_ptr orb,
-                                                                PortableServer::POA_ptr poa,
-                                                                CORBA::Long value);
+extern "C" GENERIC_SERVANT_Export PortableServer::Servant create_MyFoo (CORBA::ORB_ptr orb,
+                                                                        PortableServer::POA_ptr poa,
+                                                                        CORBA::Long value);
 
 // The servant pointer is returned which will be of Base class
 // type. The binding to the MyFoo servant will happen at run-time.
