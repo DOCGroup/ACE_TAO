@@ -1,4 +1,3 @@
-// Pipe.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -43,15 +42,15 @@ ACE_Pipe::open (void)
     {
       ACE_INET_Addr sv_addr (my_addr.get_port_number (),
                              ASYS_TEXT ("localhost"));
-      
+
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
-	result = -1;
+        result = -1;
       else if (acceptor.accept (reader) == -1)
-	{
-	  writer.close ();
-	  result = -1;
-	}
+        {
+          writer.close ();
+          result = -1;
+        }
     }
 
   // Close down the acceptor endpoint since we don't need it anymore.
@@ -60,12 +59,15 @@ ACE_Pipe::open (void)
     return -1;
 
   int one = 1;
+
+#ifndef ACE_LACKS_TCP_NODELAY
   // Make sure that the TCP stack doesn't try to buffer small writes.
   // Since this communication is purely local to the host it doesn't
   // affect network performance.
   if (writer.set_option (IPPROTO_TCP, TCP_NODELAY,
-			 &one, sizeof one) == -1)
+                         &one, sizeof one) == -1)
     return -1;
+#endif /* ACE_LACKS_TCP_NODELAY */
 
   this->handles_[0] = reader.get_handle ();
   this->handles_[1] = writer.get_handle ();
@@ -135,8 +137,8 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
                 ASYS_TEXT ("ACE_Pipe::ACE_Pipe")));
 }
 
-ACE_Pipe::ACE_Pipe (ACE_HANDLE read, 
-		    ACE_HANDLE write)
+ACE_Pipe::ACE_Pipe (ACE_HANDLE read,
+                    ACE_HANDLE write)
 {
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
   this->handles_[0] = read;
