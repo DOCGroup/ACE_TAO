@@ -3,7 +3,6 @@ conditional_include "idl_compiler"
 configurations = gcc
 soext          = so
 ssl_libs       = ssl crypto
-zzip_libs      = z zziplib
 cppflags       =
 
 gcc {
@@ -40,5 +39,3 @@ hpux {
   soext  = sl
   ldlibs = -lxti -lpthread -lrt -ldld
 }
-
-conditional_include "zziplib"

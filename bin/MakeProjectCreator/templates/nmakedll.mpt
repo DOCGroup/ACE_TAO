@@ -30,7 +30,6 @@ Release {
   type_is_binary        = 1
   pdb                   = 1
   ssl_libs              = libeay32 ssleay32
-  zzip_libs             = z zzip
 }
 
 Debug {
@@ -46,7 +45,6 @@ Debug {
   type_is_binary        = 1
   pdb                   = 1
   ssl_libs              = libeay32 ssleay32
-  zzip_libs             = z zzip
 }
 
 Static Release {
@@ -92,7 +90,6 @@ MFC Release {
   type_is_binary        = 1
   pdb                   = 1
   ssl_libs              = libeay32 ssleay32
-  zzip_libs             = z zzip
 }
 
 MFC Debug {
@@ -108,7 +105,6 @@ MFC Debug {
   type_is_binary        = 1
   pdb                   = 1
   ssl_libs              = libeay32 ssleay32
-  zzip_libs             = z zzip
 }
 
 Static MFC Release {
@@ -141,4 +137,3 @@ Static MFC Debug {
 }
 
 conditional_include "vcfullmacros"
-conditional_include "zziplib"

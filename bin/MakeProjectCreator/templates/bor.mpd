@@ -8,13 +8,6 @@ NAME = <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%endi
 !endif
 <%endif%>
 
-<%if(zzip)%>
-!ifdef ZZIP_ROOT
-<%endif%>
-NAME = <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%endif%>
-<%if(zzip)%>
-!endif
-<%endif%>
 <%if(idl_files)%>
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
@@ -28,18 +21,13 @@ OBJFILES = \
 <%endif%>
 
 EXTERNAL_LIBS = \
-<%if(ssl)%><%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%><%endif%> \
-<%if(zzip)%><%foreach(zzip_libs)%> <%zzip_lib%>.lib<%endfor%> <%endif%>
+<%if(ssl)%><%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%><%endif%>
 
 LFLAGS = \
 <%foreach(libpaths)%>
 	-j<%libpath%>\$(CONFIG_SUBDIR) -j<%libpath%> \
 	-L<%libpath%>\$(CONFIG_SUBDIR) -L<%libpath%> \
 <%endfor%>
-<%if(zzip)%>
-        -j$(ZZIP_ROOT)\lib\$(CONFIG_SUBDIR) -j$(ZZIP_ROOT)\lib \
-        -L$(ZZIP_ROOT)\lib\$(CONFIG_SUBDIR) -L$(ZZIP_ROOT)\lib \
-<%endif%>
   -j$(CORE_BINDIR) \
   -L$(CORE_BINDIR)
 
@@ -78,10 +66,6 @@ CFLAGS = \
 <%foreach(includes)%>
 	-I<%include%> \
 <%endfor%>
-<%if(zzip)%>
-        -I$(ZZIP_ROOT)\include \
-        <%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%> \
-<%endif%>
 	$(LIB_FLAGS) \
 	$(DLL_FLAGS)
 <%if(pch_header)%>

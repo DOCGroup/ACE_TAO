@@ -256,10 +256,6 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%if(macros)%>
 CPPFLAGS     +=<%foreach(macros)%> -D<%macro%><%endfor%>
 <%endif%>
-<%if(zzip)%>
-CPPFLAGS     += -I$(ZZIP_ROOT)/include
-CPPFLAGS     += <%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%>
-<%endif%>
 <%if(idlpreprocessor)%>
 ifeq ($(TAO_IDL_PREPROCESSOR),)
   CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
@@ -287,10 +283,6 @@ endif
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>
 
-<%if(zzip)%>
-LDFLAGS      += -L$(ZZIP_ROOT)/lib
-<%endif%>
-
 <%if(idl_files)%>
 <%if(idlflags)%>
 TAO_IDLFLAGS += <%idlflags%>
@@ -305,9 +297,6 @@ TAO_IDLFLAGS += <%idlflags%>
 <%endif%>
 <%if(ssl)%>
 <%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
-<%endif%>
-<%if(zzip)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(zzip_libs)%> -l<%zzip_lib%><%endfor%>
 <%endif%>
 #----------------------------------------------------------------------------
 #       Local targets

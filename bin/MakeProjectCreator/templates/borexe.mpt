@@ -2,4 +2,3 @@ conditional_include "idl_compiler_win32"
 
 type_is_binary  = 1
 common_defines  = WIN32
-conditional_include "zziplib"
