@@ -13,10 +13,11 @@ package Parser;
 use strict;
 use FileHandle;
 
+use OutputMessage;
 use StringProcessor;
 
 use vars qw(@ISA);
-@ISA = qw(StringProcessor);
+@ISA = qw(OutputMessage StringProcessor);
 
 # ************************************************************
 # Data Section
@@ -38,7 +39,10 @@ if ($^O eq 'cygwin' && $cwd !~ /[A-Za-z]:/) {
 sub new {
   my($class) = shift;
   my($inc)   = shift;
-  my($self)  = $class->SUPER::new();
+  my($info)  = (defined $ENV{MPC_SILENT} ||
+                !defined $ENV{MPC_INFORMATION} ? 0 : 1);
+  my($warn)  = (defined $ENV{MPC_SILENT} ? 0 : 1);
+  my($self)  = $class->SUPER::new($info, $warn);
 
   $self->{'line_number'} = 0;
   $self->{'include'}     = $inc;
@@ -133,7 +137,7 @@ sub read_file {
     close($ih);
   }
   else {
-    $errorString = 'ERROR: Unable to open for reading';
+    $errorString = 'Unable to open for reading';
     $status = 0;
   }
 

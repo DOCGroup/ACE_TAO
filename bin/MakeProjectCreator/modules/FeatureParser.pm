@@ -38,8 +38,8 @@ sub new {
         ## We only want to warn the user about problems
         ## with the feature file.
         my($lnumber) = $self->get_line_number();
-        $warn =~ s/ERROR/WARNING/;
-        print "$f: line $lnumber:\n$warn\n";
+        print "$f: line $lnumber:\n";
+        $self->warning($warn);
       }
     }
   }
@@ -62,7 +62,7 @@ sub parse_line {
   }
   else {
     $status = 0;
-    $error  = "ERROR: Unrecognized line: $line";
+    $error  = "Unrecognized line: $line";
   }
 
   return $status, $error;

@@ -16,14 +16,6 @@ use strict;
 # Subroutine Section
 # ************************************************************
 
-sub new {
-  my($class)  = shift;
-  my($self)   = bless {
-                      }, $class;
-  return $self;
-}
-
-
 sub extractType {
   my($self) = shift;
   my($name) = shift;

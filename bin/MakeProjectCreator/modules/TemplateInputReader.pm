@@ -67,7 +67,7 @@ sub parse_line {
     }
     else {
       $status = 0;
-      $errorString = 'ERROR: Unmatched curly brace';
+      $errorString = 'Unmatched curly brace';
     }
   }
   elsif ($line =~ /^(\w+)\s*(\+=|=)\s*(.*)?/) {
@@ -112,7 +112,7 @@ sub parse_line {
       }
       else {
         $status = 0;
-        $errorString = "ERROR: Redifinition of '$name'";
+        $errorString = "Redifinition of '$name'";
       }
     }
   }
@@ -126,7 +126,7 @@ sub parse_line {
   }
   else {
     $status = 0;
-    $errorString = "ERROR: Unrecognized line: $line";
+    $errorString = "Unrecognized line: $line";
   }
 
   return $status, $errorString;

@@ -304,11 +304,9 @@ sub get_value_with_default {
   else {
     $value = $self->{'defaults'}->{$name};
     if (!defined $value) {
-#      print "DEBUG: WARNING: $name defaulting to empty string\n";
       $value = '';
     }
     else {
-#      print "DEBUG: WARNING: $name using default value of $value\n";
       $value = $self->adjust_value($name, $value);
     }
     $value = $self->{'prjc'}->relative($value);
@@ -424,7 +422,7 @@ sub handle_end {
 
   if (!defined $end) {
     $status = 0;
-    $errorString = "ERROR: Unmatched $name\n";
+    $errorString = "Unmatched $name\n";
   }
   elsif ($end eq 'endif') {
     $self->{'if_skip'} = 0;
@@ -623,12 +621,12 @@ sub handle_foreach {
       ## with custom types.
       if ($val =~ /^custom_type\->/ || $val eq 'custom_types') {
         $status = 0;
-        $errorString = 'ERROR: The foreach variable can not be ' .
+        $errorString = 'The foreach variable can not be ' .
                        'named when dealing with custom types';
       }
       elsif ($val =~ /^grouped_.*_file\->/ || $val =~ /^grouped_.*files$/) {
         $status = 0;
-        $errorString = 'ERROR: The foreach variable can not be ' .
+        $errorString = 'The foreach variable can not be ' .
                        'named when dealing with grouped files';
       }
     }
@@ -865,7 +863,7 @@ sub process_name {
       }
     }
     $status = 0;
-    $errorString = "ERROR: Unable to parse line starting at $error";
+    $errorString = "Unable to parse line starting at $error";
   }
 
   return $status, $errorString, $length;
@@ -992,7 +990,7 @@ sub parse_line {
          $nlen) = $self->process_name($substr);
 
         if ($status && $nlen == 0) {
-          $errorString = "ERROR: Could not parse this line at column $i";
+          $errorString = "Could not parse this line at column $i";
           $status = 0;
         }
         if (!$status) {
@@ -1045,7 +1043,7 @@ sub parse_file {
     if (defined $$sstack[0]) {
       my($lstack) = $self->{'lstack'};
       $status = 0;
-      $errorString = "ERROR: missing an $$sstack[0] starting at $$lstack[0]";
+      $errorString = "Missing an $$sstack[0] starting at $$lstack[0]";
     }
   }
 
