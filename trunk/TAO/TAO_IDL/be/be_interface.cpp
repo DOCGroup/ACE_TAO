@@ -1809,7 +1809,7 @@ be_interface::queryinterface_helper (be_interface *derived,
     }
   else
     {
-      *os << "&ACE_NESTED_CLASS (" << scope->name () << ", " 
+      *os << "&ACE_NESTED_CLASS (::" << scope->name () << ", " 
           << ancestor->local_name () << ")" << "::_narrow" << be_uidt 
           << "))" << be_nl;
     }
