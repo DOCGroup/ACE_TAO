@@ -1,3 +1,8 @@
+Sun Feb 10 13:16:45 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/ImplRepo_Service/Options.cpp:
+	  Include yet another missing "tao/Environment.h"
+
 Sun Feb 10 09:08:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/IORManipulation/IORTest.cpp:
