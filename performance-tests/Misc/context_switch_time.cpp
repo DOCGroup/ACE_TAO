@@ -1223,15 +1223,15 @@ main (int argc, char *argv [])
 
               ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
                                    "%.3f microseconds\n",
-                          (double) (ACE_UINT64_DBLCAST_ADAPTER (
+                          (double) ACE_UINT64_DBLCAST_ADAPTER (
                             ping_suspend_resume_test.elapsed_time ()) /
-                              num_iterations),
-                          (double) (ACE_UINT64_DBLCAST_ADAPTER (
+                              num_iterations,
+                          (double) ACE_UINT64_DBLCAST_ADAPTER (
                             suspend_resume_test.elapsed_time ()) /
-                              num_iterations),
-                          (double) (ACE_UINT64_DBLCAST_ADAPTER (
+                              num_iterations,
+                          (double) ACE_UINT64_DBLCAST_ADAPTER (
                             ping_suspend_resume_test.elapsed_time () -
-                            suspend_resume_test.elapsed_time ()) /
+                            suspend_resume_test.elapsed_time () /
                               num_iterations / 2u)));
             }
           else
