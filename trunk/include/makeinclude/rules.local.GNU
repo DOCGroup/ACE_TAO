@@ -85,6 +85,17 @@ endif
 
 .PRECIOUS:	$(VLIB)
 
+#### show_statics shows static objects in locally-created object files.
+#### It assumes that the object files were built using g++.
+#### TOOLENV selects the proper nm in VxWorks host environments.
+show_statics:
+	-@nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' global destructors '
+
+#### show_uninit shows uninitialized data in locally-created object files.
+#### TOOLENV selects the proper nm in VxWorks host environments.
+show_uninit:
+	-@nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' b '
+
 #----------------------------------------------------------------------------
 #	Installation targets
 #----------------------------------------------------------------------------
