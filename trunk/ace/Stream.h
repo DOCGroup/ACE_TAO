@@ -115,7 +115,7 @@ public:
   // for the operation to complete (or block forever if <timeout> ==
   // 0).
 
-  vritual int get (ACE_Message_Block *&mb,
+  virtual int get (ACE_Message_Block *&mb,
                    ACE_Time_Value *timeout = 0);
   // Read the message <mb> that is stored in the the stream head.
   // Wait for upto <timeout> amount of time for the operation to
