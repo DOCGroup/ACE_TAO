@@ -150,6 +150,8 @@ class ACE_Thread_Descriptor_Base
   //     terminated.
 
   friend class ACE_Thread_Manager;
+  friend class ACE_Double_Linked_List<ACE_Thread_Descriptor_Base>;
+  friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base>;
   friend class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
   friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 public:
@@ -164,6 +166,16 @@ public:
   int operator!= (const ACE_Thread_Descriptor_Base &rhs) const;
   // Inequality operator.
 
+  int grp_id (void);
+  // Group ID.
+
+  ACE_Thread_State state (void);
+  // Current state of the thread.
+
+  ACE_Task_Base *task (void);
+  // Return the pointer to an <ACE_Task_Base> or NULL if there's no
+  // <ACE_Task_Base> associated with this thread.;
+
 protected:
   ACE_thread_t thr_id_;
   // Unique thread ID.
@@ -171,11 +183,26 @@ protected:
   ACE_hthread_t thr_handle_;
   // Unique handle to thread (used by Win32 and AIX).
 
-  long flags_;
+  int grp_id_;
+  // Group ID.
+
+  ACE_Thread_State thr_state_;
+  // Current state of the thread.
+
+  ACE_Task_Base *task_;
+  // Pointer to an <ACE_Task_Base> or NULL if there's no
+  // <ACE_Task_Base>.
+
+ long flags_;
   // Keeps track of whether this thread was created "detached" or not.
   // If a thread is *not* created detached then if someone calls
   // <ACE_Thread_Manager::wait>, we need to join with that thread (and
   // close down the handle).
+
+  ACE_Thread_Descriptor_Base *next_;
+  ACE_Thread_Descriptor_Base *prev_;
+  // We need these pointers to maintain the double-linked list in a
+  // thread managers.
 };
 
 class ACE_Export ACE_Thread_Descriptor : public ACE_Thread_Descriptor_Base
@@ -199,16 +226,6 @@ public:
 
   void self (ACE_hthread_t &);
   // Unique handle to thread (used by Win32 and AIX).
-
-  int grp_id (void);
-  // Group ID.
-
-  ACE_Thread_State state (void);
-  // Current state of the thread.
-
-  ACE_Task_Base *task (void);
-  // Return the pointer to an <ACE_Task_Base> or NULL if there's no
-  // <ACE_Task_Base> associated with this thread.;
 
   void dump (void) const;
   // Dump the state of an object.
@@ -287,20 +304,10 @@ private:
   // The AT_Thread_Exit list
 #endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
-  int grp_id_;
-  // Group ID.
-
-  ACE_Thread_State thr_state_;
-  // Current state of the thread.
-
   ACE_Cleanup_Info cleanup_info_;
   // Stores the cleanup info for a thread.
   // @@ Note, this should be generalized to be a stack of
   // <ACE_Cleanup_Info>s.
-
-  ACE_Task_Base *task_;
-  // Pointer to an <ACE_Task_Base> or NULL if there's no
-  // <ACE_Task_Base>.
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   ACE_Thread_Manager* tm_;
@@ -318,11 +325,6 @@ private:
   int terminated_;
   // Keep track of termination status.
 #endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-
-  ACE_Thread_Descriptor *next_;
-  ACE_Thread_Descriptor *prev_;
-  // We need these pointers to maintain the double-linked list in a
-  // thread managers.
 };
 
 // Forward declaration.
@@ -473,6 +475,9 @@ public:
   // failure.  If <abandon_detached_threads> is set, wait will first
   // check thru its thread list for threads with THR_DETACHED or
   // THR_DAEMON flags set and remove these threads.
+
+  int join (ACE_thread_t tid);
+  // Join a thread specified by <tid>.
 
   int wait_grp (int grp_id);
   // Block until there are no more threads running in a group.
@@ -746,6 +751,9 @@ protected:
                   int async_cancel = 0);
   // Set the cancellation flag for the thread described in <tda>.
 
+  int register_as_terminated (ACE_Thread_Descriptor *td);
+  // Register a thread as terminated and put it into the <terminated_thr_list_>. 
+
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
   // Keeping a list of thread descriptors within the thread manager.
   // Double-linked list enables us to cache the entries in TSS
@@ -753,7 +761,7 @@ protected:
   // affecting other thread's descriptor entries.
 
 #if !defined (VXWORKS)
-  ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base> terminated_thr_queue_;
+  ACE_Double_Linked_List<ACE_Thread_Descriptor_Base> terminated_thr_list_;
   // Collect terminated but not yet joined thread entries.
 #endif /* VXWORKS */
 
