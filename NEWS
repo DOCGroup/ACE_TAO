@@ -64,6 +64,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.1 and ACE-5.4.2
 
 . Usage of ASYS_INLINE is deprecated in ACE, use ACE_INLINE instead.
 
+. All inline source files now end in ".inl".  The previous ".i"
+  extension is generally used for preprocessed C sources.
+
 . Autoconf support has been improved and fixed on a number of
   platforms, including the BSD variants (e.g. FreeBSD).  It is still
   not the preferred way to configure most platforms, but it is ready
@@ -106,6 +109,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.1 and ACE-5.4.2
 
 . All C++ equality, relational and logical operators now return bool
   instead of int, as is the norm for modern C++.
+
+. Added new ACE_OS::realpath() implementation.  Contributed by Olli
+  Savia  <ops at iki dot fi>
+
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4 and ACE-5.4.1
 ====================================================
