@@ -83,7 +83,7 @@ Test_Big_Union::reset_parameters (void)
     case 0:
       {
         Param_Test::Fixed_Array x;
-        for (int i = 0; i < Param_Test::DIM1; ++i)
+        for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
           {
             x[i] = gen->gen_long ();
           }
@@ -266,7 +266,7 @@ Test_Big_Union::check_validity (void)
         Param_Test::Fixed_Array_slice* inout_array = this->inout_.the_array ();
         Param_Test::Fixed_Array_slice* out_array   = this->out_->the_array ();
         Param_Test::Fixed_Array_slice* ret_array   = this->ret_->the_array ();
-        for (int i = 0; i < Param_Test::DIM1; ++i)
+        for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
           {
             if (in_array[i] != inout_array[i]
                 || in_array[i] != out_array[i]
@@ -277,11 +277,45 @@ Test_Big_Union::check_validity (void)
       break;
     case 1:
       {
-        Coffee_ptr in    = this->in_.the_interface ();
-        Coffee_ptr inout = this->inout_.the_interface ();
-        Coffee_ptr out   = this->out_->the_interface ();
-        Coffee_ptr ret   = this->ret_->the_interface ();
+        ACE_TRY_NEW_ENV
+          {
+            Coffee_ptr in    = this->in_.the_interface ();
+            Coffee_ptr inout = this->inout_.the_interface ();
+            Coffee_ptr out   = this->out_->the_interface ();
+            Coffee_ptr ret   = this->ret_->the_interface ();
 
+            if (CORBA::is_nil (in)
+                || CORBA::is_nil (inout)
+                || CORBA::is_nil (out)
+                || CORBA::is_nil (ret))
+              return 0;
+
+            Coffee::Desc_var in_desc =
+              in->description (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+            Coffee::Desc_var inout_desc =
+              inout->description (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+            Coffee::Desc_var out_desc =
+              out->description (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+            Coffee::Desc_var ret_desc =
+              ret->description (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+
+            if (ACE_OS::strcmp (in_desc->name.in (),
+                                inout_desc->name.in ())
+                || ACE_OS::strcmp (in_desc->name.in (),
+                                   out_desc->name.in ())
+                || ACE_OS::strcmp (in_desc->name.in (),
+                                   ret_desc->name.in ()))
+              return 0;
+          }
+        ACE_CATCHANY
+          {
+            return 0;
+          }
+        ACE_ENDTRY;
       }
       break;
     case 2:
@@ -330,13 +364,13 @@ Test_Big_Union::check_validity (void)
 
     case 5:
       {
-        const Param_Test::Short_Seq& in = 
+        const Param_Test::Short_Seq& in =
           this->in_.the_sequence ();
-        const Param_Test::Short_Seq& inout = 
+        const Param_Test::Short_Seq& inout =
           this->inout_.the_sequence ();
-        const Param_Test::Short_Seq& out = 
+        const Param_Test::Short_Seq& out =
           this->out_->the_sequence ();
-        const Param_Test::Short_Seq& ret = 
+        const Param_Test::Short_Seq& ret =
           this->ret_->the_sequence ();
 
         if (in.length () != out.length ()
@@ -353,16 +387,30 @@ Test_Big_Union::check_validity (void)
           }
       }
       break;
-#if 0
+
     case 6:
       {
-        CORBA::Any any;
-        any <<= CORBA::Short (25);
-        this->in_.the_any (any);
-        this->inout_.the_any (any);
+        CORBA::Any in = this->in_.the_any ();
+        CORBA::Any inout = this->inout_.the_any ();
+        CORBA::Any out = this->out_->the_any ();
+        CORBA::Any ret = this->ret_->the_any ();
+
+        CORBA::Short in_short;
+        CORBA::Short inout_short;
+        CORBA::Short out_short;
+        CORBA::Short ret_short;
+        if (!(in >>= in_short)
+            || !(inout >>= inout_short)
+            || !(out >>= out_short)
+            || !(ret >>= ret_short))
+          return 0;
+
+        if (in_short != inout_short
+            || in_short != out_short
+            || in_short != ret_short)
+          return 0;
       }
       break;
-#endif
 
     case 7:
       {
@@ -397,37 +445,84 @@ Test_Big_Union::check_validity (void)
       }
       break;
 
-#if 0
     case 10:
       {
-        Param_Test::Var_Struct var_struct;
-        var_struct.dummy1 = gen->gen_string ();
-        var_struct.dummy2 = gen->gen_string ();
-        CORBA::ULong len = gen->gen_long () % 10 + 1;
-        var_struct.seq.length (len);
+        const Param_Test::Var_Struct& in =
+          this->in_.the_var_struct ();
+        const Param_Test::Var_Struct& inout =
+          this->inout_.the_var_struct ();
+        const Param_Test::Var_Struct& out =
+          this->out_->the_var_struct ();
+        const Param_Test::Var_Struct& ret =
+          this->ret_->the_var_struct ();
+
+        if (!(ACE_OS::strcmp (in.dummy1.in (),
+                              inout.dummy1.in ()) == 0
+              && ACE_OS::strcmp (in.dummy2.in (),
+                                 inout.dummy2.in ()) == 0)
+            || !(ACE_OS::strcmp (in.dummy1.in (),
+                                 out.dummy1.in ()) == 0
+               && ACE_OS::strcmp (in.dummy2.in (),
+                                  out.dummy2.in ()) == 0)
+            || !(ACE_OS::strcmp (in.dummy1.in (),
+                                 ret.dummy1.in ()) == 0
+               && ACE_OS::strcmp (in.dummy2.in (),
+                                  ret.dummy2.in ()) == 0))
+          return 0;
+
+        if (in.seq.length () != inout.seq.length ()
+            || in.seq.length () != out.seq.length ()
+            || in.seq.length () != ret.seq.length ())
+          return 0;
+
+        CORBA::ULong len = in.seq.length ();
         for (CORBA::ULong i = 0; i != len; ++i)
           {
-            var_struct.seq[i] = gen->gen_string ();
+            if (ACE_OS::strcmp (in.seq[i].in (),
+                                inout.seq[i].in ())
+                || ACE_OS::strcmp (in.seq[i].in (),
+                                   out.seq[i].in ())
+                || ACE_OS::strcmp (in.seq[i].in (),
+                                   ret.seq[i].in ()))
+              return 0;
           }
-        this->in_.the_var_struct (x);
-        this->inout_.the_var_struct (x);
       }
       break;
     case 11:
       {
-        Param_Test::Fixed_Struct fixed_struct;
-        fixed_struct.l = gen->gen_long ();
-        fixed_struct.c = gen->gen_long () % 255;
-        fixed_struct.s = gen->gen_long () % 32768;
-        fixed_struct.o = gen->gen_long () % 255;
-        fixed_struct.f = gen->gen_short () / 255.0;
-        fixed_struct.b = gen->gen_long () % 2; 
-        fixed_struct.d = gen->gen_short () / 255.0;
-        this->in_.the_fixed_struct (x);
-        this->inout_.the_fixed_struct (x);
+        const Param_Test::Fixed_Struct& in =
+          this->in_.the_fixed_struct ();
+        const Param_Test::Fixed_Struct& inout =
+          this->inout_.the_fixed_struct ();
+        const Param_Test::Fixed_Struct& out =
+          this->out_->the_fixed_struct ();
+        const Param_Test::Fixed_Struct& ret =
+          this->ret_->the_fixed_struct ();
+
+        if (! (in.l == inout.l
+               && in.c == inout.c
+               && in.s == inout.s
+               && in.o == inout.o
+               && in.f == inout.f
+               && in.b == inout.b
+               && in.d == inout.d)
+            || !(in.l == out.l
+                 && in.c == out.c
+                 && in.s == out.s
+                 && in.o == out.o
+                 && in.f == out.f
+                 && in.b == out.b
+                 && in.d == out.d)
+            || !(in.l == ret.l
+                 && in.c == ret.c
+                 && in.s == ret.s
+                 && in.o == ret.o
+                 && in.f == ret.f
+                 && in.b == ret.b
+                 && in.d == ret.d))
+          return 0;
       }
       break;
-#endif /* 0 */
     }
 
   return 1;
