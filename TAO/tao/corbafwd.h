@@ -338,7 +338,7 @@ class CORBA_ORB_ObjectIdList_out;
 typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 
 // Forward declarations for INTERFACE REPO..Bala
-#ifdef TAO_HAS_INTERFACE_REPOSTORY
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
 
 class CORBA_IRObject;
 class CORBA_IRObject_var;
@@ -1429,6 +1429,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
+
 #ifdef TAO_HAS_INTERFACE_REPOSITORY
   // ------------------------------Interface REPOS Bala
 
