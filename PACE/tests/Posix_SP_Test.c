@@ -32,7 +32,7 @@ main (int argc, char **argv)
 {
   long retval;
   time_t local_time;
-  utsname name;
+  struct utsname name;
 
   /* Call pace_sysconf() */
   retval = pace_sysconf(_SC_2_C_BIND);
