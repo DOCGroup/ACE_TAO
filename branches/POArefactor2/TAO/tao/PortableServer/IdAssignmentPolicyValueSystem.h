@@ -14,8 +14,7 @@
 #define TAO_PORTABLESERVER_IDASSIGNMENTPOLICYVALUESYSTEM_H
 #include /**/ "ace/pre.h"
 
-#include "tao/POrtableServer/portableserver_export.h"
-
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
