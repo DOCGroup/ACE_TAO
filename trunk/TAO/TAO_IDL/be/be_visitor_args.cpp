@@ -230,7 +230,7 @@ int be_visitor_args_decl::visit_string (be_string *)
       this->stream () << "const char*";
       break;
     case AST_Argument::dir_INOUT:
-      this->stream () << "char*";
+      this->stream () << "char*&";
       break;
     case AST_Argument::dir_OUT:
       this->stream () << "CORBA::String_out";

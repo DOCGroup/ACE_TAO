@@ -1,3 +1,8 @@
+Mon Feb  2 13:47:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Fixed the mapping for strings as INOUT parameters.
+
 Mon Feb 02 08:59:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/tao_util.cpp (init): added .in () to poa_object in call to

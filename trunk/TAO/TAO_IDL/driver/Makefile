@@ -50,8 +50,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 # Need the following. But we should be able to handle this using ACE's functionality
-OSV	= SOLARIS2
-CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION) -D$(OSV)
+CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
 $(LOBJS): $(LHDRS)
 
