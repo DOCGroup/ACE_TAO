@@ -22,8 +22,13 @@ ACE_ARGV::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("argc_ = %d"), this->argc_));
 
+  ACE_ARGV *this_obj = ACE_const_cast (ACE_ARGV *, this);
+
   for (size_t i = 0; i < this->argc_; i++)
-    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nargv_[%i] = %s"), i, this->argv_[i]));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("\nargv_[%i] = %s"),
+                i,
+                this_obj->argv ()[i]));
 
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nbuf = %s\n"), this->buf_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));

@@ -423,24 +423,26 @@ operator != (const ACE_Time_Value &tv1,
 
 // Add TV to this.
 
-ACE_INLINE void
+ACE_INLINE ACE_Time_Value &
 ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
 {
   ACE_OS_TRACE ("ACE_Time_Value::operator+=");
   this->sec (this->sec () + tv.sec ());
   this->usec (this->usec () + tv.usec ());
   this->normalize ();
+  return *this;
 }
 
 // Subtract TV to this.
 
-ACE_INLINE void
+ACE_INLINE ACE_Time_Value &
 ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
 {
   ACE_OS_TRACE ("ACE_Time_Value::operator-=");
   this->sec (this->sec () - tv.sec ());
   this->usec (this->usec () - tv.usec ());
   this->normalize ();
+  return *this;
 }
 
 // Adds two ACE_Time_Value objects together, returns the sum.

@@ -382,7 +382,7 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
   int remote_size = 0;
 
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),
-                          message_block.size () - 2 * this->address_size (),
+                          bytes_to_read_,
                           this->address_size (),
                           this->address_size (),
                           &local_addr,
