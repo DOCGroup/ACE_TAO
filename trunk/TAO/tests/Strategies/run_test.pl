@@ -26,7 +26,8 @@ print STDERR "\nrunning Strategies test with static config\n\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
@@ -61,7 +62,8 @@ print STDERR "\nrunning Strategies test with dynamic config\n\n";
 
 $SV2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV2->Kill ();
     exit 1;

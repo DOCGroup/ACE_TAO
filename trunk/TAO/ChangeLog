@@ -1,3 +1,42 @@
+Fri Nov 19 12:46:00 2004    Gary Maxey  <gary.maxey@hp.com>
+
+        * tests/CodeSets/simple/run_test.pl
+        * tests/Connect_Strategy_Test/run_test.pl
+        * tests/Crashed_Callback/run_test.pl
+        * tests/Crash_On_Write/run_test.pl
+        * tests/Forwarding/run_test.pl
+        * tests/ICMG_Any_Bug/run_test.pl
+        * tests/MProfile_Connection_Timeout/run_test.pl
+        * tests/MT_Server/run_test.pl
+        * tests/Multiple/run_test.pl
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl
+        * tests/NestedUpcall/Simple/run_test.pl
+        * tests/NestedUpcall/Triangle_Test/run_test.pl
+        * tests/Nested_Upcall_Crash/run_test.pl
+        * tests/No_Server_MT_Connect_Test/run_test.pl
+        * tests/Objref_Sequence_Test/run_test.pl
+        * tests/OBV/Any/run_test.pl
+        * tests/OBV/Collocated/Forward/run_test.pl
+        * tests/OBV/Factory/run_test.pl
+        * tests/OBV/Forward/run_test.pl
+        * tests/OBV/Supports/run_test.pl
+        * tests/OBV/TC_Alignment/run_test.pl
+        * tests/Portable_Interceptors/AMI/run_test.pl
+        * tests/Server_Connection_Purging/run_test.pl
+        * tests/Server_Port_Zero/run_test.pl
+        * tests/Single_Read/run_test.pl
+        * tests/Smart_Proxies/Benchmark/run_test.pl
+        * tests/Smart_Proxies/On_Demand/run_test.pl
+        * tests/Smart_Proxies/Policy/run_test.pl
+        * tests/Smart_Proxies/run_test.pl
+        * tests/Strategies/run_test.pl
+        * tests/Timed_Buffered_Oneways/run_test.pl
+        * tests/Timeout/run_test.pl
+        * tests/Two_Objects/run_test.pl
+
+          Use variable from Run_Tests.pm to specify timeout for
+          process startup.
+
 Fri Nov 19 14:44:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
