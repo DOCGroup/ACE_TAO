@@ -6,6 +6,15 @@ Fri Jul 17 07:32:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/IO_SAP.cpp (enable): removed unreachable break statement.
 
+        * ace/OS.i (sema_wait w/time): on VxWorks and pSoS, subtract
+          the current time from the time argument to get the relative
+          time that the systems calls expect.  Thanks to Steve Huston
+          for recommending this change.  Also, removed ACE_ADAPT_RETVAL
+          wrap so that errno isn't disturbed.  On VxWorks, convert
+          S_objLib_OBJ_TIMEOUT errno to ETIME.
+
+        * tests/run_tests.vxworks: added Semaphore_Test.
+
 Thu Jul 16 18:28:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::sema_wait(ACE_sema_t*, ACE_Time_Value&)):
