@@ -162,6 +162,7 @@ module CORBA
         in RepositoryId id,
         in Identifier name
       );
+
     TypeCode create_component_tc (
         in RepositoryId id,
         in Identifier name
@@ -170,6 +171,14 @@ module CORBA
     TypeCode create_home_tc (
         in RepositoryId id,
         in Identifier name
+      );
+
+    TypeCode create_event_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in ValueModifier type_modifier,
+        in TypeCode concrete_base,
+        in ValueMemberSeq members
       );
   };
 };

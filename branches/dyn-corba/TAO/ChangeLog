@@ -1,3 +1,26 @@
+Wed Jan  8 10:53:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+	  Added valuetype case to private_member_name, added
+	  eventtype, component and home cases to other methods,
+	  and updated comments in the header file.
+
+        * tao/TypeCodeFactory/TypeCodeFactory.pidl:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+
+	  Added 'create_event_tc' to the TypeCodeFactory interface and
+	  regenerated the code.
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+	  Filled in 'create_value_tc' method, added 'create_event_tc'
+	  method, and factored out some common code.
+
 Tue Dec 17 15:36:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_T.inl(demarshal_value):
