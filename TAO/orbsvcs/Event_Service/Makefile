@@ -122,6 +122,8 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
@@ -177,8 +179,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
@@ -394,12 +394,10 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Null_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Null_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Basic_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Basic_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i
 

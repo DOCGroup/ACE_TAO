@@ -76,7 +76,6 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -178,6 +177,8 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -197,8 +198,6 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
@@ -312,24 +311,24 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/POAManager.i \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/IIOP_Acceptor.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/POA.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
@@ -358,7 +357,6 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -460,6 +458,8 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -479,8 +479,6 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/GIOP.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
@@ -594,24 +592,24 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(TAO_ROOT)/tao/POAManager.i \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/IIOP_Acceptor.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/POA.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
@@ -644,7 +642,6 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -732,7 +729,6 @@ ImplRepo_Service: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \

@@ -108,38 +108,6 @@ public:
   // the event.
 };
 
-// ****************************************************************
-
-class TAO_EC_Null_SupplierFiltering : public TAO_EC_SupplierFiltering
-{
-  // = TITLE
-  //   A null filtering strategy.
-  //
-  // = DESCRIPTION
-  //   This strategy does no filtering, it is useful for backends of
-  //   the CosEventChannel, testing and broadcasters; it uses the
-  //   ConsumerAdmin to find all the consumers and pushes the event to
-  //   all of them.
-  //
-public:
-  TAO_EC_Null_SupplierFiltering (TAO_EC_Event_Channel* ec);
-  // Constructor
-
-  // = The TAO_EC_SupplierFiltering methods.
-  virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
-  virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-			  CORBA::Environment &env);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-			     CORBA::Environment &env);
-  virtual void push (const RtecEventComm::EventSet& event,
-                     CORBA::Environment &);
-
-private:
-  TAO_EC_Event_Channel *event_channel_;
-  // The event channel, used to locate the set of consumers.
-};
-
 #if defined (__ACE_INLINE__)
 #include "EC_SupplierFiltering.i"
 #endif /* __ACE_INLINE__ */

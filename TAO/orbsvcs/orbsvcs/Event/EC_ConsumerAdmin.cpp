@@ -1,8 +1,8 @@
 // $Id$
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
+#include "EC_ProxyConsumer.h"
 #include "EC_Event_Channel.h"
 #include "EC_Command.h"
 
@@ -53,6 +53,8 @@ TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
     {
       (*i)->connected (consumer, ACE_TRY_ENV);
       ACE_CHECK;
+      consumer->connected (*i, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -71,6 +73,8 @@ TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
        ++i)
     {
       (*i)->disconnected (consumer, ACE_TRY_ENV);
+      ACE_CHECK;
+      consumer->disconnected (*i, ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
