@@ -45,85 +45,81 @@ namespace CIAO
 {
   class ExecutionManager_Impl
     : public virtual POA_CIAO::ExecutionManagerDaemon,
-      public virtual PortableServer::RefCountServantBase
-  {
+    public virtual PortableServer::RefCountServantBase
+    {
 
-  public:
-    // Default constructor.
-    ExecutionManager_Impl (CORBA::ORB_ptr orb,
-                           PortableServer::POA_ptr poa,
-                           const char * init_file
-                           ACE_ENV_ARG_DECL);
+    public:
+      // Default constructor.
+      ExecutionManager_Impl (CORBA::ORB_ptr orb,
+                             PortableServer::POA_ptr poa,
+                             const char * init_file
+                             ACE_ENV_ARG_DECL);
 
-    // Default destructor.
-    ~ExecutionManager_Impl ();
-
-
-    // Generate an ApplicationManager factory.
-    virtual Deployment::DomainApplicationManager_ptr
-    preparePlan
-      (
-        const Deployment::DeploymentPlan & plan,
-        CORBA::Boolean commitResources
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-	       CORBA::SystemException,
-	       Deployment::ResourceNotAvailable,
-	       Deployment::PlanError,
-	       Deployment::StartError
-      ));
-
-    // Return a set of the currently held DomainApplicationMnager.
-    virtual Deployment::DomainApplicationManagers *
-    getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      // Default destructor.
+      ~ExecutionManager_Impl ();
 
 
-    // Destroy a specific manager.
-    virtual void
-    destroyManager
-      (
-	Deployment::DomainApplicationManager_ptr manager
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-	CORBA::SystemException,
-        Deployment::StopError
-      ));
+      // Generate an ApplicationManager factory.
+      virtual Deployment::DomainApplicationManager_ptr
+        preparePlan
+        (
+         const Deployment::DeploymentPlan & plan,
+         CORBA::Boolean commitResources
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS
+         )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::ResourceNotAvailable,
+                         Deployment::PlanError,
+                         Deployment::StartError
+                         ));
 
-    virtual void
-      shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      // Return a set of the currently held DomainApplicationMnager.
+      virtual Deployment::DomainApplicationManagers *
+        getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-  protected:
-    typedef ACE_Hash_Map_Manager_Ex<const char *,
-      Deployment::DomainApplicationManager_ptr,
-      ACE_Hash<const char *>, ACE_Equal_To<const char *>,
-      TAO_SYNCH_MUTEX> Table;
-    typedef Table::iterator Iterator;
+      // Destroy a specific manager.
+      virtual void
+        destroyManager
+        (
+         Deployment::DomainApplicationManager_ptr manager
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS
+         )
+        ACE_THROW_SPEC ((
+                         CORBA::SystemException,
+                         Deployment::StopError
+                         ));
 
-    // Helper operations to maintain list of NodeApplication
-    // Managers
-    int bind (const char *id,
-              Deployment::DomainApplicationManager_ptr obj);
+      virtual void
+        shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-    int unbind (const char *id);
+    protected:
+      typedef ACE_Hash_Map_Manager_Ex<const char *,
+        Deployment::DomainApplicationManager_ptr,
+        ACE_Hash<const char *>, ACE_Equal_To<const char *>,
+        TAO_SYNCH_MUTEX> Table;
+      typedef Table::iterator Iterator;
 
-    // Cached ORB pointer
-    CORBA::ORB_var orb_;
+      // Helper operations to maintain list of NodeApplication
+      // Managers
+      int bind (const char *id,
+                Deployment::DomainApplicationManager_ptr obj);
 
-    // Cached POA pointer
-    PortableServer::POA_var poa_;
+      int unbind (const char *id);
 
-    // Internal Hashtable
-    Table table_;
+      // Cached ORB pointer
+      CORBA::ORB_var orb_;
 
-    // Path to the initialization file
-    char * init_file_;
-  };
+      // Cached POA pointer
+      PortableServer::POA_var poa_;
+
+      // Internal Hashtable
+      Table table_;
+
+      // Path to the initialization file
+      char * init_file_;
+    };
 
 };
 

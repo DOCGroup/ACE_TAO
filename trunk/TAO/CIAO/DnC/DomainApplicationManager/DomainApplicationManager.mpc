@@ -1,10 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project (DomainApplicationManager): taolib {
-  libs += Deployment_stub Deployment_svnt TAO_Valuetype TAO_PortableServer
+project (DomainApplicationManager): taolib, ciao_deployment_svnt {
+  libs += TAO_Valuetype 
   requires += dnc
-  includes += $(CIAO_ROOT)/DnC  
   
   Source_Files {
     DomainApplicationManager_Impl.cpp

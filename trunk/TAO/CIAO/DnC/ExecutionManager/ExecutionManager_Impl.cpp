@@ -4,7 +4,7 @@
 #include "ExecutionManager_Impl.h"
 
 CIAO::ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
-						    PortableServer::POA_ptr poa,
+                                                    PortableServer::POA_ptr poa,
                                                     const char * init_file)
   : orb_ (CORBA::ORB::_duplicate  (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -97,7 +97,7 @@ preparePlan (const Deployment::DeploymentPlan &plan,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::ResourceNotAvailable,
                    Deployment::PlanError,
-		   Deployment::StartError
+                   Deployment::StartError
                    ))
 {
   // Check if the plan already exists and the ApplicationManager is active
@@ -160,8 +160,8 @@ CIAO::ExecutionManager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   // Initialize the list of DomainApplication Managers
   Deployment::DomainApplicationManagers_var list = 0;
   ACE_NEW_THROW_EX (list,
-		    Deployment::DomainApplicationManagers,
-     		    CORBA::NO_MEMORY());
+                    Deployment::DomainApplicationManagers,
+                    CORBA::NO_MEMORY());
 
   // Iterate over the table and get all the Managers
   // Delete the Map for maintaining
@@ -184,7 +184,7 @@ void
 CIAO::ExecutionManager_Impl::destroyManager (Deployment::DomainApplicationManager_ptr manager
                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::StopError))
+                   Deployment::StopError))
 {
   if (CORBA::is_nil (manager))
     ACE_THROW (Deployment::StopError ());
