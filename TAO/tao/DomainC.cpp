@@ -253,7 +253,7 @@ CORBA::Environment &)
 {}
 
 Dynamic::ParameterList *
-CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::arguments (CORBA::Environment &)
+CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::arguments (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
    // Generate the arg list on demand
@@ -267,23 +267,23 @@ CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_polic
     return &this->parameter_list_;
 }
 
-  Dynamic::ExceptionList *
-  CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::exceptions (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Generate the exception list on demand
-    return 0;
+Dynamic::ExceptionList *
+CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::exceptions (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand
+  return 0;
 }
 
 
-      CORBA::Any *
-  CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::result (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
- // Generate the result on demand :
-    this->result_val_ <<= this->result_;
+CORBA::Any *
+CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::result (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand :
+  this->result_val_ <<= this->result_;
   return &this->result_val_;
-  }
+}
 
 void
 CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::result (CORBA::Policy_ptr  result)
@@ -534,43 +534,43 @@ CORBA::Environment &)
 {}
 
 Dynamic::ParameterList *
-CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::arguments (CORBA::Environment &)
+CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::arguments (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-   // Generate the arg list on demand
+  // Generate the arg list on demand
   CORBA::ULong length = 0;
-        length = this->parameter_list_.length ();
-      this->parameter_list_.length (length + 1);
-      this->parameter_list_[length].argument <<=  this->object_type_;
+  length = this->parameter_list_.length ();
+  this->parameter_list_.length (length + 1);
+  this->parameter_list_[length].argument <<=  this->object_type_;
 
-    this->parameter_list_[length].mode = Dynamic::PARAM_IN;
-                length = this->parameter_list_.length ();
-        this->parameter_list_.length (length + 1);
-        this->parameter_list_[length].argument <<= CORBA::Any::from_boolean (this->constr_policy_ );
-      this->parameter_list_[length].mode = Dynamic::PARAM_IN;
+  this->parameter_list_[length].mode = Dynamic::PARAM_IN;
+  length = this->parameter_list_.length ();
+  this->parameter_list_.length (length + 1);
+  this->parameter_list_[length].argument <<= CORBA::Any::from_boolean (this->constr_policy_ );
+  this->parameter_list_[length].mode = Dynamic::PARAM_IN;
 
-      return &this->parameter_list_;
+  return &this->parameter_list_;
 }
 
-    Dynamic::ExceptionList *
-    CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::exceptions (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      // Generate the exception list on demand
-      return 0;
+Dynamic::ExceptionList *
+CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::exceptions (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand
+  return 0;
 }
 
 
-          CORBA::Any *
-    CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::result (CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException))
-    {
- // Generate the result on demand :
-     CORBA::TypeCode tc (CORBA::tk_void);
-    this->result_val_.type (&tc);
+CORBA::Any *
+CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::result (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand :
+  CORBA::TypeCode tc (CORBA::tk_void);
+  this->result_val_.type (&tc);
 
-    return &this->result_val_;
-    }
+  return &this->result_val_;
+}
 
 #endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
 
