@@ -1,3 +1,14 @@
+Fri Mar 25 09:27:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+
+	  Removed ACE_{,U}INT64_TYPEDEF macros.  These resulted in
+	  preprocessor conditionals used to set ACE_{,U}INT64.  Now that
+	  Basic_Types.h has been refactored, config headers can override
+	  it by defining ACE_{,U}INT{8,16,32,64}_TYPE.  We will use that
+	  generalized infrastructure instead.
+
 Fri Mar 25 07:49:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Basic_Types.h:

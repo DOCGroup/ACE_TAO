@@ -7248,8 +7248,10 @@ dnl
 
 dnl Make final substitutions and defines
 if test "$ace_u_long_long_typedef_set" = yes; then
-  AC_DEFINE_UNQUOTED([ACE_INT64_TYPEDEF], [$ACE_INT64])
-  AC_DEFINE_UNQUOTED([ACE_UINT64_TYPEDEF], [$ACE_UINT64])
+  AC_DEFINE_UNQUOTED([ACE_INT64_TYPE], [$ACE_INT64],
+	[Define to signed 64 bit integer type])
+  AC_DEFINE_UNQUOTED([ACE_UINT64_TYPE], [$ACE_UINT64],
+	[Define to unsigned 64 bit integer type])
 fi
 
 dnl Combine package set flags with user's flags.
@@ -7287,13 +7289,6 @@ ACE_CACHE_CHECK([if generated ACE configuration is usable],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
-#if defined(ACE_INT64_TYPEDEF)
-  typedef ACE_INT64_TYPEDEF ACE_INT64;
-#endif /* ACE_INT64_TYPEDEF */
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
 // Include ".cpp" files instead of headers so that we can get a more
 // thorough test compile.
 #include "ace/Time_Value.cpp"
@@ -7363,13 +7358,6 @@ ACE_CACHE_CHECK([for ACE_IOStream support],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
-#if defined(ACE_INT64_TYPEDEF)
-  typedef ACE_INT64_TYPEDEF ACE_INT64;
-#endif /* ACE_INT64_TYPEDEF */
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
 #include "ace/IOStream.cpp"
         ],
         [
@@ -7399,13 +7387,6 @@ ACE_CACHE_CHECK([for ACE_addr::sap_any support],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
-#if defined(ACE_INT64_TYPEDEF)
-  typedef ACE_INT64_TYPEDEF ACE_INT64;
-#endif /* ACE_INT64_TYPEDEF */
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
 #include "ace/FILE_Addr.h"
         ],
         [
@@ -7419,13 +7400,6 @@ ACE_CACHE_CHECK([for ACE_addr::sap_any support],
          dnl compilation work!
          ACE_TRY_COMPILE([-I. -I${srcdir}],
            [
-#if defined(ACE_INT64_TYPEDEF)
-  typedef ACE_INT64_TYPEDEF ACE_INT64;
-#endif /* ACE_INT64_TYPEDEF */
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
 #define ACE_HAS_BROKEN_SAP_ANY
 #include "ace/FILE_Addr.h"
            ],
@@ -7454,13 +7428,6 @@ ACE_CACHE_CHECK([if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector],
       dnl Now run the compilation test
       ACE_TRY_COMPILE([-I. -I${srcdir}],
         [
-#if defined(ACE_INT64_TYPEDEF)
-  typedef ACE_INT64_TYPEDEF ACE_INT64;
-#endif /* ACE_INT64_TYPEDEF */
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
 #include "ace/OS.cpp"
         ],
         [
@@ -7474,13 +7441,6 @@ ACE_CACHE_CHECK([if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector],
          dnl compilation work!
          ACE_TRY_COMPILE([-I. -I${srcdir}],
            [
-#if defined(ACE_INT64_TYPEDEF)
-  typedef ACE_INT64_TYPEDEF ACE_INT64;
-#endif /* ACE_INT64_TYPEDEF */
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
 #define ACE_NEEDS_DEV_IO_CONVERSION
 #include "ace/DEV_Connector.cpp"
            ],
