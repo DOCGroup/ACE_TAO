@@ -264,8 +264,6 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
   return;
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 CORBA::Boolean
 CORBA::is_nil (CORBA::Object_ptr obj)
 {
@@ -278,6 +276,9 @@ CORBA::is_nil (CORBA::Object_ptr obj)
 
   return 0;
 }
+
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In

@@ -1,3 +1,9 @@
+Tue Sep 19 10:36:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Object.cpp: Moved the is_nil () of minimum_corba
+	  definitions. It was a big mistake to have put that there in the
+	  first place. Thanks to Carlos for pointing this out.
+
 Mon Sep 18 18:58:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
@@ -26,11 +32,11 @@ Mon Sep 18 18:58:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Sep 18 15:09:29 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IIOP_Profile.cpp (parse_string): 
-	  
+	* tao/IIOP_Profile.cpp (parse_string):
+
 	  Correctly assigned the host variable which got messed up during
 	  the merge.
-	
+
 Mon Sep 18 14:33:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
