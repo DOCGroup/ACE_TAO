@@ -1,0 +1,175 @@
+This program illustrates how to implement a simple client and server
+using CORBA, IIOP, and asynchronous method invocations (AMI).  Client
+applications can use this service to download and display files from a
+CORBA server on the network.  The core functionality of this program
+is as follows:
+
+        * Client applications register callbacks with servers using
+           the Observer pattern.  The server will ``push'' chunks of
+           data to the client.  Thus, the client will play the role of
+           a ``server,'' as well.
+           
+        * Operations in the IDL interface will use exceptions to propagate
+          problems back to clients.
+
+        * The CORBA Naming Service is used to bind and resolve object
+          references, rather than using a file.
+
+
+Basic design of the programs:
+
+The basic idea used in both the client and and the server is to use
+AMI when performing all requests.  This allows both the client and the
+server to perform other tasks without having to wait for a given task
+to complete.
+
+The client first activates its Callback object, and then
+asynchronously registers a reference to its Callback object with the
+server's Push_Iterator_Factory.  The Push_Iterator_Factory then
+creates an AMI reply handler "Callback_Handler" for the requested file
+that asynchronously sends chunks of data to the client's Callback
+object.  After creating and running the Callback_Handler, the
+Push_Iterator_Factory returns the Metadata containing the content type
+and modification date of the file to client.  Since the Callback was
+registered using the Push_Iterator_Factory using AMI, an AMI reply
+handler called "Push_Iterator_Handler" on the client side will receive
+and handle the Metadata returned from the Push_Iterator_Factory.  The
+Push_Iterator_Handler then passes the received Metadata to the
+Callback object.  The Callback will spawn an external viewer once both
+the Metadata and the entire file content have been received.  The
+Callback object is designed to correctly handle the case where the
+content is received before the Metadata, and vice versa.  This
+operation is thread-safe.  Note that no threads are created at the
+application level in neither the client nor the server, yet
+concurrency is still achieved due to the fact that AMI is used on both
+sides.
+
+A schematic of the operations involved follows:
+
+  CLIENT				SERVER
+  ------				------
+  Push_Iterator_Handler - activate
+  Callback - activate			Push_Iterator_Factory - activate
+
+  sendc_register_callback()	--->	register_callback()
+					Callback_Handler - activate
+
+  next_chunk()			<---	sendc_next_chunk()
+  .					.
+  .					.
+  .					.
+  next_chunk()			<---	sendc_next_chunk()
+
+  register_callback()		<---	Metadata - returned
+  Metadata passed to Callback
+
+  next_chunk()			<---	sendc_next_chunk()
+  .					.
+  .					.
+  .					.
+  next_chunk()			<---	sendc_next_chunk()
+
+Note that the Callback_Handler will not send the next chunk until it
+receives a reply from the client's Callback object.  This ensures that
+the client receives all chunks of data in the proper order.
+
+
+The client program performs the following activities:
+          
+        1. From the command-line, it reads the name of the pathname
+           you want to download.  It then initializes the client-side
+           ORB and uses resolve_initial_references() to obtain a
+           reference to a Naming Service (which must be running). This
+           object reference is then downcast via _narrow() to an
+           object reference for a CosNaming::NamingContext interface,
+           which is then used to resolve the object reference that the
+           server bound earlier.  After narrowing this to the Server
+           interface, the sendc_register_callback() operation is
+           called via the object reference to pass asynchronously pass
+           the Callback interface from the client to the server, which
+           then uses AMI to push chunks of the file to the client.
+          
+        2. The server calls the sendc_next_chunk() method on the
+           callback, passing in the offset and the next chunk.  
+          
+        3. When the client receives the next_chunk() callback that
+           contains a chunk of the file, the contents are written into
+           a temporary file created in your a cache (e.g.,
+           /tmp/yourloginname) on the local host.  Then, an external
+           viewer is spawned to display the file.  The type of viewer
+           to spawn is determined by examining the the content_type_
+           metadata returned by the server.
+	
+       
+The example can be run as follows:
+
+	1. Start the Name Service:
+
+		$ NameService -o /tmp/ns.ior
+
+	2. Start the SMI Content Server:
+
+		$ server -ORBInitRef NameService=file:///tmp/ns.ior
+
+	3. Request a file using the client:
+
+		$ client -ORBInitRef NameService=file:///tmp/ns.ior \
+		~/foo.jpg ~/bar.pdf ~/baz.jpg
+
+This example can service multiple file requests.
+
+
+Server output should look like the following:
+
+$ ./server -ORBInitRef NameService=file:///tmp/ns.ior
+Bound <Push_Iterator_Factory> to <IOR:010000002300000039434c3a5765625f5365727665722f4974657261746f725f466163746f72793a312e300001000000000000007c000000010102001400000076616c696e6f722e6563652e7563692e65647500489700001b00000014010f00525354a6ae4e392ad209000000000001000000010000000003000000000000000800000001000000004f4154010000001400000001ac854001000100000000000901010000000000004f41540400000001ac0000> in Name Service.
+Accepting requests.
+Received request for file: </home/myhome/foo.jpg>
+Sending chunk 1 from /home/myhome/foo.jpg of size <8192>
+Received request for file: </home/myhome/bar.pdf>
+Sending chunk 1 from /home/myhome/bar.pdf of size <8192>
+Received request for file: </home/myhome/baz.jpg>
+Sending chunk 1 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 2 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 2 from /home/myhome/foo.jpg of size <8192>
+Sending chunk 2 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 3 from /home/myhome/foo.jpg of size <8192>
+Sending chunk 3 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 3 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 4 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 4 from /home/myhome/foo.jpg of size <8192>
+Sending chunk 4 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 5 from /home/myhome/baz.jpg of size <6997>
+Sending chunk 5 from /home/myhome/foo.jpg of size <4573>
+Sending chunk 5 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 6 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 7 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 8 from /home/myhome/bar.pdf of size <8192>
+...
+Sending chunk 138 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 139 from /home/myhome/bar.pdf of size <5832>
+
+
+Notice that requests for chunks of data from three separate files occur
+in the above run.
+
+
+Client output should look similar to:
+
+$ ./client -ORBInitRef NameService=file:///tmp/ns.ior ~/foo.jpg ~/bar.pdf \
+~/baz.jpg
+Retrieved file has the following characteristics:
+  Modification Date: Wed, 01 Mar 2000 04:28:18 GMT
+  Content Type: image/jpeg
+Retrieved file has the following characteristics:
+  Modification Date: Fri, 24 Mar 2000 06:25:23 GMT
+  Content Type: image/jpeg
+Retrieved file has the following characteristics:
+  Modification Date: Sat, 19 Feb 2000 03:19:50 GMT
+  Content Type: application/pdf
+Wrote retrieved data to file </tmp/ace-file-0oklyh>
+Spawned viewer <xv> with PID <11631>.
+Wrote retrieved data to file </tmp/ace-file-qyLaLc>
+Spawned viewer <xv> with PID <11632>.
+Wrote retrieved data to file </tmp/ace-file-2VHw4l>
+Spawned viewer <acroread> with PID <11633>.

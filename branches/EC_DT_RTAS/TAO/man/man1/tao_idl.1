@@ -1,0 +1,167 @@
+.\" Process this file with
+.\" groff -man -Tascii tao_idl.1
+.\"
+.\" $Id$
+.\"
+.TH tao_idl 1 "DECEMBER 1998" "CORBA Tools" "User Manuals"
+.SH NAME
+tao_idl \- Compile IDL sources for use with the ACE ORB (TAO)
+.SH SYNOPSIS
+.B tao_idl
+.B [
+.I OPTION
+.B ... ] 
+filename
+.SH DESCRIPTION
+.B tao_idl
+is a program that is used to compile
+.I IDL
+source code.  The IDL compiler generates 6 files from each .idl file, the file
+names are obtained by taking the IDL basename and appending C.h, C.i, C.cpp,
+S.h, S.i and S.cpp; the client stubs are declared in the C.h file, the
+skeletons in the S.h file. Please see the Options list on how to get different
+suffixes for these files. 
+
+Both clients and servers should link against the object files for the stubs
+and skeletons, this is needed to transparently support collocated objects.
+
+The server skeleton can make use of different lookup strategies to match the
+incoming operation with the correct operation at the servant.  Dynamic Hashing
+and Perfect Hashing are the two different operation lookup strategies that are
+currently supported in tao_idl.  By default, tao_idl tries to use Perfect
+Hashing strategy.  If supported and available, gperf generates the lookup
+methods for this strategy. 
+.SH OPTIONS
+.TP
+.B \-V
+the compiler printouts its version and exits
+.TP
+.BI "\-Wb," "option_list" 
+pass options to the backend
+.IP
+.BI "export_macro=" "macro_name"
+The compiler will emit macro_name right after each class or extern keyword,
+this is needed for Windows/NT that requires special directives to export
+symbols from DLLs, usually the definition is just a space on unix platforms.
+.IP
+.BI "export_include=" "include_path"
+The compiler will generate code to include include_path at the top of the
+client header, this is usually a good place to define the export macro. 
+.TP
+.B \-E
+only invoke the preprocessor
+.TP
+.BI "-Wp," "option_list"
+pass options to the preprocessor
+.TP
+.BI "\-D" "macro_definition"
+passed to the preprocessor
+.TP
+.BI "\-U" "macro_name"
+passed to the preprocessor
+.TP
+.BI "\-I" "include_path"
+passed to the preprocessor
+.TP
+.BI "\-A" "assertion"
+passed to the preprocessor
+.TP
+.B \-Y
+passed to the preprocessor
+.TP
+.B "\-H perfect_hash"
+To specify the IDL compiler to generate skelton code that uses perfect hashed
+operation lookup strategy, which is the default strategy. Perfect hashing uses
+gperf program, to generate lookup methods.
+.TP
+.B "\-H dynamic_hash"
+To specify the IDL compiler to generate skelton code that uses dynamic hashed
+operation lookup strategy.
+.TP
+.B "\-H binary_search"
+To specify the IDL compiler to generate skelton code that uses binary search
+based operation lookup strategy.
+.TP
+.B "\-H linear_search"
+To specify the IDL compiler to generate skelton code that uses linear search
+based operation lookup strategy.
+.TP
+.B "\-in"
+To generate #include statements with <>'s for the standard include
+files (e.g. tao/corba.h) indicating them as non-changing files
+.TP
+.B "\-ic"
+To generate #include statements with ""s for changing standard include
+files (e.g. tao/corba.h). 
+.TP
+.B \-g
+To specify the path for the perfect hasing program (GPERF). Default is
+$ACE_ROOT/bin/gperf or whatever the ACE_GPERF macro was defined to be during
+compilation of TAO.
+based operation lookup strategy.
+.TP
+.B \-o
+To specify the output directory to IDL compiler as to where all the
+IDL\-compiler\-generated files are to be put. By default, all the files are
+put in the current directory from where
+.B tao_idl
+is called.
+.TP
+.B \-hc
+Client's header file name ending. Default is "C.h".
+.TP
+.B \-hs
+Server's header file name ending. Default is "S.h".
+.TP
+.B \-hT
+Server's template header file name ending. Default is "S_T.h".
+.TP
+.B \-cs
+Client stub's file name ending. Default is "C.cpp".
+.TP
+.B \-ci
+Client inline file name ending. Default is "C.i".
+.TP
+.B \-ss
+Server skeleton file name ending. Default is "S.cpp".
+.TP
+.B \-sT
+Server template skeleton file name ending. Default is "S_T.cpp".
+.TP
+.B \-si
+Server inline skeleton file name ending. Default is "S_i.cpp".
+.TP
+.B \-st
+Server's template inline file name ending. Default is "S_T.i".
+.TP
+.B \-Gc
+Generate stubs and skeletons using compiled marshaling.
+.TP
+.B \-Gi
+Generate stubs and skeletons using interpretive marshaling (default for now).
+.TP
+.B \-Ge
+Generate code that uses C++ exceptions (unimplemented as yet).
+.TP
+.B \-Gt
+Generate optimized TypeCodes (unimplemented as yet).
+.TP
+.B \-Sa
+Suppress generation of the
+.I Any
+operators
+.TP
+.B \-St
+Suppress generation of the
+.I TypeCodes
+.SH BUGS
+(blank for now)
+.SH AUTHORS
+.IP
+Carlos O'Ryan <coryan@cs.wustl.edu>
+.IP
+Ossama Othman <ossama@debian.org>
+performed man page conversion from original HTML source
+.SH "SEE ALSO"
+.BR gperf (1),
+.BR TAO (7)

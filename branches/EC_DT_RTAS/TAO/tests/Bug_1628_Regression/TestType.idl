@@ -1,0 +1,16 @@
+//
+// $Id$
+//
+
+//module Test {
+
+
+                // The size of the hash md5
+          const unsigned long HASH_MD5_SIZEOF = 16;
+
+                // The hash MD5 type
+          typedef octet HashedMD5SimpleSecret[HASH_MD5_SIZEOF] ;
+
+
+
+//};

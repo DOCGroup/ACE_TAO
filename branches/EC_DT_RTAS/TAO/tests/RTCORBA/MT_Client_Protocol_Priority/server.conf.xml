@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/RTCORBA/MT_Client_Protocol_Priority/server.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <dynamic id="SHMIOP_Factory" type="Service_Object">
+   <initializer path="TAO_Strategies" init="_make_TAO_SHMIOP_Protocol_Factory" params="-MMAPFilePrefix server_shmiop "/>
+ </dynamic>
+</ACE_Svc_Conf>
