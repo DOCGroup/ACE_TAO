@@ -160,6 +160,7 @@ class CORBA_NamedValue_var;
 class CORBA_NamedValue_out;
 typedef class CORBA_NamedValue *CORBA_NamedValue_ptr;
 
+
 class CORBA_NVList;
 class CORBA_NVList_var;
 class CORBA_NVList_out;
@@ -174,6 +175,8 @@ class CORBA_ContextList;
 class CORBA_ContextList_var;
 class CORBA_ContextList_out;
 typedef class CORBA_ContextList *CORBA_ContextList_ptr;
+
+
 
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
 
@@ -385,7 +388,7 @@ public:
   typedef NamedValue *NamedValue_ptr;
   typedef CORBA_NamedValue_var NamedValue_var;
   typedef CORBA_NamedValue_out NamedValue_out;
-
+   
   typedef CORBA_NVList NVList;
   typedef NVList *NVList_ptr;
   typedef CORBA_NVList_var NVList_var;
@@ -594,6 +597,9 @@ TAO_SYSTEM_EXCEPTION_LIST
 
   static CORBA::TypeCode_ptr _tc_Current;
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+  static CORBA::TypeCode_ptr _tc_NamedValue;
+#endif /* End of Minimum CORBA */
   enum
   {
     // = Define flags for NVList add methods
