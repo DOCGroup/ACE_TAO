@@ -1,3 +1,10 @@
+Mon Apr  2 16:45:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IFR_Client/IFR_ExtendedC.h:
+
+          Removed declarations of some constants that also
+          occur in corbafwd.h.
+
 Mon Apr  2 16:22:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
