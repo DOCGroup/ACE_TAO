@@ -1,3 +1,9 @@
+Mon Oct 09 10:39:59 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/Makefile.bor:
+
+	  Added missing file RT_PortableServerC to the build list.
+
 Sun Oct  8 22:23:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: FaultTolerance library will not be
