@@ -43,8 +43,7 @@ namespace CIAO
     class Config_Handler_Export Property_Handler
     {
     public:
-      static void process_Property (xercesc::DOMDocument *,
-                                    DOMNodeIterator * iter,
+      static void process_Property (DOMNodeIterator * iter,
                                     Deployment::Property &property);
       // process elements of type Property definitions in
       // the descriptor files
