@@ -1038,7 +1038,9 @@ int
 ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::join_thr");
-
+#if defined (ACE_HAS_PACE)
+  return ACE_Thread::join (td->thr_handle_);
+#else
   int result = ACE_Thread::join (td->thr_handle_);
 
 # if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
@@ -1065,6 +1067,7 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
     }
 
   return 0;
+#endif /* ACE_HAS_PACE */
 }
 
 int
