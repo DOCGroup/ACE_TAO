@@ -1,5 +1,14 @@
 Tue Jul  4 10:12:12 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/POSIX_Proactor.cpp: Removed unnecessary parens around
+	  aiocb * and ACE_POSIX_Asynch_Result * to make certain compilers
+ 	  happy.  Thanks to Marina for reporting this.
+
+	* ace/SUN_Proactor.cpp (handle_events): Fixed an ACE_ERROR that
+	  should have been ACE_ERROR_RETURN.  Thanks to Marina for
+ 	  reporting this.
+	  (start_aio): Fixed capitalization of "Op" to be "op".
+
 	* ace/POSIX_Proactor.cpp,
 	* ace/SUN_Proactor.cpp: Fixed improper use of TCHAR to be ACE_TCHAR
 	  and also fixed another stray use of "int result".  Thanks to

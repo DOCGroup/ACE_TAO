@@ -44,11 +44,11 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
 
   if ((int) result == -1)
     // Check errno  for  EINVAL,EAGAIN,EINTR ??
-    ACE_ERROR ((LM_ERROR,
-                "%N:%l:(%P | %t)::%p\n",
-                "ACE_SUN_Proactor::handle_events:"
-                "aiowait failed"),
-               0);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%N:%l:(%P | %t)::%p\n",
+                       "ACE_SUN_Proactor::handle_events:"
+                       "aiowait failed"),
+                      0);
    
   if ((int) result ==  0)
     return 0; // timeout
@@ -146,7 +146,7 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 
   // Start IO
 
-  switch (Op)
+  switch (op)
     {
     case 0 : 
       ptype = "read";
