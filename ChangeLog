@@ -1,3 +1,7 @@
+Sat Dec  7 19:54:12 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: For WinCE, define S_IFDIR and S_IFREG file mode masks.
+
 Sat Dec 07 14:29:47 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ACE.cpp (format_hexdump): This change fixed the problem that
