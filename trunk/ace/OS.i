@@ -2101,6 +2101,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     case WAIT_ABANDONED:
       errno = WAIT_ABANDONED;
       return -1;
+    case WAIT_TIMEOUT:
+      errno = ETIME;
+      return -1;
     default:
       // This is a hack, we need to find an appropriate mapping...
       errno = ::GetLastError ();
