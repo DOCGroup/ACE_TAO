@@ -56,7 +56,7 @@ namespace CIAO
 
     /// handle the package configuration and populate it
     void CompIntrDesc_Handler::process_ComponentInterfaceDescription
-      (::Deployment::ComponentInterfaceDescription &compintrdesc)
+      (::Deployment::ComponentInterfaceDescription &cid)
     {
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
@@ -68,72 +68,49 @@ namespace CIAO
               // Fetch the text node which contains the "label"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_label (text->getNodeValue(), compintrdesc);
+              this->process_label (text->getNodeValue(), cid);
             }
           else if (node_name == XStr (ACE_TEXT ("UUID")))
             {
               // Fetch the text node which contains the "UUID"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_UUID (text->getNodeValue(), compintrdesc);
+              this->process_UUID (text->getNodeValue(), cid);
             }
           else if (node_name == XStr (ACE_TEXT ("specificType")))
             {
               // Fetch the text node which contains the "specificType"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_specificType (text->getNodeValue(), compintrdesc);
+              this->process_specificType (text->getNodeValue(), cid);
             }
           else if (node_name == XStr (ACE_TEXT ("supportedType")))
             {
               // Fetch the text node which contains the "supportedType"
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_supportedType (text->getNodeValue(), compintrdesc);
+              this->process_supportedType (text->getNodeValue(), cid);
             }
           else if (node_name == XStr (ACE_TEXT ("configProperty")))
             {
-              // increase the length of the sequence
-              CORBA::ULong i (compintrdesc.configProperty.length ());
-              compintrdesc.configProperty.length (i + 1);
-
-              // delegate the populating process
-              Property_Handler::process_Property (this->iter_,
-                                                  compintrdesc.configProperty[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("infoProperty")))
             {
-              // increase the length of the sequence
-              CORBA::ULong i (compintrdesc.infoProperty.length ());
-              compintrdesc.infoProperty.length (i + 1);
-
-              // delegate the populating process
-              Property_Handler::process_Property (this->iter_,
-                                                  compintrdesc.infoProperty[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
             {
-              // increase the length of the sequence
-              CORBA::ULong i (compintrdesc.property.length ());
-              compintrdesc.property.length (i + 1);
-
-	      // fetch the CompPropDesc handler
-	      CompPropDesc_Handler comppropdesc_handler (this->iter_, false);
-
-              // delegate the populating process
-	      comppropdesc_handler.process_ComponentPropertyDescription (compintrdesc.property[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("port")))
             {
               // increase the length of the sequence
-              CORBA::ULong i (compintrdesc.port.length ());
-              compintrdesc.port.length (i + 1);
+              CORBA::ULong i (cid.port.length ());
+              cid.port.length (i + 1);
 
 	      // fetch the CompPortDesc handler
 	      CompPortDesc_Handler compportdesc_handler (this->iter_, false);
 
               // delegate the populating process
-	      compportdesc_handler.process_ComponentPortDescription (compintrdesc.port[i]);
+	      compportdesc_handler.process_ComponentPortDescription (cid.port[i]);
             }
           else
             {
@@ -146,46 +123,46 @@ namespace CIAO
 
     /// handle label attribute
     void CompIntrDesc_Handler::process_label
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
     {
       if (name)
         {
-          compintrdesc.label = XMLString::transcode (name);
+          cid.label = XMLString::transcode (name);
         }
     }
 
     /// handle UUID attribute
     void CompIntrDesc_Handler::process_UUID
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
     {
       if (name)
         {
-          compintrdesc.UUID = XMLString::transcode (name);
+          cid.UUID = XMLString::transcode (name);
         }
     }
 
     /// handle specificType attribute
     void CompIntrDesc_Handler::process_specificType
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
     {
       if (name)
         {
-          compintrdesc.specificType = XMLString::transcode (name);
+          cid.specificType = XMLString::transcode (name);
         }
     }
 
     /// handle supportedType attribute
     void CompIntrDesc_Handler::process_supportedType
-      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &compintrdesc)
+      (const XMLCh* name, ::Deployment::ComponentInterfaceDescription &cid)
     {
       if (name)
         {
 	  // increase the length of the sequence
-	  CORBA::ULong i (compintrdesc.supportedType.length ());
-	  compintrdesc.supportedType.length (i + 1);
+	  CORBA::ULong i (cid.supportedType.length ());
+	  cid.supportedType.length (i + 1);
 
 	  // push back the last item
-          compintrdesc.supportedType[i] = XMLString::transcode (name);
+          cid.supportedType[i] = XMLString::transcode (name);
         }
     }
 
