@@ -10,6 +10,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 // DJT removed this due to some minor issues related to the
 // definitions of timestruc_t and tid_t in procfs.h not sure what
 // functionality is lost?  Platform supports <sys/procfs.h>

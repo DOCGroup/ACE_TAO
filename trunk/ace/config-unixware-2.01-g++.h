@@ -8,18 +8,15 @@
 
 // See README for what the ACE_HAS... and ACE_LACKS... macros mean
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 #define ACE_LACKS_STRCASECMP
 #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_GNU_CSTRING_H
-
-#define __ACE_INLINE__
-
-#if defined (__ACE_INLINE__)
-#define ACE_HAS_INLINED_OSCALLS
-#endif /* __ACE_INLINE__ */
-
 #define ACE_HAS_MSG
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 // Not yet sure about threads

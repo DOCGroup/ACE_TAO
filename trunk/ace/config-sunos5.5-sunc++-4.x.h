@@ -7,6 +7,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 // until we can trust exception handling with Sun C++, it's not enabled . . .
 // #define ACE_HAS_EXCEPTIONS
 

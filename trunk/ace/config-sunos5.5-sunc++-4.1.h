@@ -11,6 +11,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 // ACE_HAS_EXCEPTIONS requires -noex, but that causes problems with
 // Sun C++ 4.1 on multiprocessor UltraSparcs:  threaded executables
 // core dump when threads exit.  This problem does not seem to appear
@@ -20,10 +24,6 @@
 // #define ACE_HAS_EXCEPTIONS
 
 #define ACE_HAS_UNICODE
-
-#if defined (__ACE_INLINE__)
-#define ACE_HAS_INLINED_OSCALLS
-#endif /* __ACE_INLINE__ */
 
 // Note that SunC++ 4.1 fixes template bugs that prevented earlier
 // versions from supporting template typedefs correctly.

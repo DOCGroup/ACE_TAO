@@ -28,6 +28,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG
 

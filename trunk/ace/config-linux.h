@@ -7,6 +7,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 // Do we really need this #define here?
 #define LINUX 1.2.10
 
