@@ -93,8 +93,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (ast, 
-           ast_decl, 
+ACE_RCSID (ast,
+           ast_decl,
            "$Id$")
 
 COMMON_Base::COMMON_Base (idl_bool local,
@@ -296,7 +296,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
       AST_Decl *tmp = 0;
       UTL_Scope *s_tmp = 0;
 
-      for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_decls); 
+      for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_decls);
            !i.is_done ();
            i.next ())
         {
@@ -355,8 +355,8 @@ AST_Decl::compute_full_name (void)
       long second = I_FALSE;
       char *name = 0;
 
-      for (UTL_IdListActiveIterator i (this->name ()); 
-           !i.is_done (); 
+      for (UTL_IdListActiveIterator i (this->name ());
+           !i.is_done ();
            i.next ())
         {
           if (!first)
@@ -393,8 +393,8 @@ AST_Decl::compute_full_name (void)
       first = I_TRUE;
       second = I_FALSE;
 
-      for (UTL_IdListActiveIterator j (this->name ()); 
-           !j.is_done (); 
+      for (UTL_IdListActiveIterator j (this->name ());
+           !j.is_done ();
            j.next ())
         {
           if (!first)
@@ -484,8 +484,8 @@ AST_Decl::compute_repoID (void)
       namelen += 4;
     }
 
-  for (UTL_IdListActiveIterator i (this->name ()); 
-       !i.is_done (); 
+  for (UTL_IdListActiveIterator i (this->name ());
+       !i.is_done ();
        i.next ())
     {
       if (!first)
@@ -540,12 +540,12 @@ AST_Decl::compute_repoID (void)
 
       ACE_OS::strcat (this->repoID_, "/");
     }
-  
+
   first = I_TRUE;
   second = I_FALSE;
 
-  for (UTL_IdListActiveIterator j (this->name ()); 
-       !j.is_done (); 
+  for (UTL_IdListActiveIterator j (this->name ());
+       !j.is_done ();
        j.next ())
     {
       if (!first)
@@ -869,7 +869,7 @@ AST_Decl::repoID (char *value)
       delete [] this->repoID_;
       this->repoID_ = 0;
     }
-    
+
   this->repoID_ = value;
 }
 
@@ -933,14 +933,14 @@ AST_Decl::version (char *value)
     {
       delete [] this->version_;
       this->version_ = value;
-      
+
       // Repo id is now computed eagerly, so a version set must update
       // is as well.
       if (this->repoID_ != 0)
         {
           ACE_CString tmp (this->repoID_);
           int pos = tmp.rfind (':');
-          
+
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr (0, pos + 1) + value;
@@ -994,7 +994,7 @@ AST_Decl::set_id_with_typeid (char *value)
   {
     case AST_Decl::NT_field:
       {
-        AST_Interface *iface = 
+        AST_Interface *iface =
           AST_Interface::narrow_from_scope (this->defined_in ());
 
         if (iface == 0 || iface->node_type () == AST_Decl::NT_valuetype == 0)
@@ -1343,13 +1343,6 @@ void
 AST_Decl::last_referenced_as (UTL_ScopedName *n)
 {
   this->last_referenced_as_ = n;
-
-  if (idl_global->in_main_file ()
-      && ACE_OS::strcmp (n->last_component ()->get_string (),
-                         "ParameterMode") == 0)
-    {
-      idl_global->parametermode_seen_ = true;
-    }
 }
 
 UTL_Scope *
@@ -1365,7 +1358,7 @@ AST_Decl::prefix_scope (UTL_Scope *s)
 }
 
 // Container types will override this.
-int 
+int
 AST_Decl::contains_wstring (void)
 {
   if (this->contains_wstring_ == -1)
@@ -1375,7 +1368,7 @@ AST_Decl::contains_wstring (void)
           case AST_Decl::NT_array:
             {
               AST_Array *a = AST_Array::narrow_from_decl (this);
-              this->contains_wstring_ = 
+              this->contains_wstring_ =
                 a->base_type ()->contains_wstring ();
               break;
             }
@@ -1384,14 +1377,14 @@ AST_Decl::contains_wstring (void)
           case AST_Decl::NT_union:
             {
               AST_Structure *s = AST_Structure::narrow_from_decl (this);
-              this->contains_wstring_ = 
+              this->contains_wstring_ =
                 s->contains_wstring ();
               break;
             }
           case AST_Decl::NT_sequence:
             {
               AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
-              this->contains_wstring_ = 
+              this->contains_wstring_ =
                 s->base_type ()->contains_wstring ();
               break;
             }
@@ -1400,14 +1393,14 @@ AST_Decl::contains_wstring (void)
           case AST_Decl::NT_union_branch:
             {
               AST_Field *f = AST_Field::narrow_from_decl (this);
-              this->contains_wstring_ = 
+              this->contains_wstring_ =
                 f->field_type ()->contains_wstring ();
               break;
             }
           case AST_Decl::NT_typedef:
             {
               AST_Typedef *td = AST_Typedef::narrow_from_decl (this);
-              this->contains_wstring_ = 
+              this->contains_wstring_ =
                 td->primitive_base_type ()->contains_wstring ();
               break;
             }
@@ -1424,7 +1417,7 @@ AST_Decl::contains_wstring (void)
 }
 
 // Non-virtual - no need to override this one.
-void 
+void
 AST_Decl::contains_wstring (int val)
 {
   this->contains_wstring_ = val;

@@ -135,7 +135,7 @@ IDL_GlobalData::IDL_GlobalData (void)
   // in the environment.
   // Form the absolute pathname.
   char* ace_root = ACE_OS::getenv ("ACE_ROOT");
-  
+
   if (ace_root == 0)
     // This may not cause any problem if -g option is used to specify
     // the correct path for the  gperf program. Let us ignore this
@@ -229,7 +229,6 @@ IDL_GlobalData::reset_flag_seen (void)
   object_arg_seen_ = false;
   octet_seq_seen_ = false;
   operation_seen_ = false;
-  parametermode_seen_ = false;
   pseudo_seq_seen_ = false;
   seq_seen_ = false;
   short_seq_seen_ = false;
@@ -1008,7 +1007,7 @@ IDL_GlobalData::destroy (void)
       delete [] trash;
       trash = 0;
     }
-    
+
   for (unsigned long j = 0; j < this->pd_n_include_file_names; ++j)
     {
       // Delete the contained char* but not the UTL_String -
@@ -1016,15 +1015,15 @@ IDL_GlobalData::destroy (void)
       this->pd_include_file_names[j]->destroy ();
       this->pd_include_file_names[j] = 0;
     }
-    
+
   this->pd_n_include_file_names = 0;
-  
+
   for (size_t k = 0; k < n_included_idl_files_; ++k)
     {
       // No memory allocated for these, so just set to 0.
       this->included_idl_files_[k] = 0;
     }
-    
+
   this->n_included_idl_files_ = 0;
 
   this->pd_root->destroy ();
@@ -1432,14 +1431,14 @@ IDL_GlobalData::create_uses_multiple_stuff (
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
   UTL_ScopedName sn (&struct_id, 0);
-  AST_Structure *connection = 
+  AST_Structure *connection =
     idl_global->gen ()->create_structure (&sn, 0, 0);
   struct_id.destroy ();
-  
+
   Identifier object_id ("objref");
   UTL_ScopedName object_name (&object_id,
                               0);
-  AST_Field *object_field = 
+  AST_Field *object_field =
     idl_global->gen ()->create_field (pd.impl,
                                       &object_name,
                                       AST_Field::vis_NA);
@@ -1465,7 +1464,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
     }
 
   AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
-  
+
   Identifier cookie_id ("ck");
   UTL_ScopedName cookie_name (&cookie_id,
                               0);
@@ -1475,9 +1474,9 @@ IDL_GlobalData::create_uses_multiple_stuff (
                                       AST_Field::vis_NA);
   (void) DeclAsScope (connection)->fe_add_field (cookie_field);
   cookie_id.destroy ();
-  
+
   (void) c->fe_add_structure (connection);
-  
+
   ACE_UINT64 bound = 0;
   AST_Expression *bound_expr =
     idl_global->gen ()->create_expr (bound,
@@ -1488,7 +1487,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
                                          0,
                                          0,
                                          0);
-                                         
+
   ACE_CString seq_string (pd.id->get_string ());
   seq_string += "Connections";
   Identifier seq_id (seq_string.c_str ());
@@ -1500,6 +1499,6 @@ IDL_GlobalData::create_uses_multiple_stuff (
                                         0,
                                         0);
   seq_id.destroy ();
-  
+
   (void) c->fe_add_typedef (connections);
 }

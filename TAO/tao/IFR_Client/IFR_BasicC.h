@@ -44,13 +44,13 @@
 #include "tao/Object.h"
 #include "tao/Typecode.h"
 #include "tao/Any.h"
-#include "tao/ParameterMode.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
 
+#include "tao/ParameterModeC.h"
 #include "IFR_BaseC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -76,13 +76,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-  
+
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -92,22 +92,22 @@ namespace TAO
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_PRIMITIVEDEF__VAR_OUT_CH_)
 #define _CORBA_PRIMITIVEDEF__VAR_OUT_CH_
-  
+
   class PrimitiveDef;
   typedef PrimitiveDef *PrimitiveDef_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         PrimitiveDef
       >
     PrimitiveDef_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         PrimitiveDef
@@ -115,22 +115,22 @@ namespace CORBA
     PrimitiveDef_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_STRINGDEF__VAR_OUT_CH_)
 #define _CORBA_STRINGDEF__VAR_OUT_CH_
-  
+
   class StringDef;
   typedef StringDef *StringDef_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         StringDef
       >
     StringDef_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StringDef
@@ -138,22 +138,22 @@ namespace CORBA
     StringDef_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_SEQUENCEDEF__VAR_OUT_CH_)
 #define _CORBA_SEQUENCEDEF__VAR_OUT_CH_
-  
+
   class SequenceDef;
   typedef SequenceDef *SequenceDef_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         SequenceDef
       >
     SequenceDef_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         SequenceDef
@@ -161,22 +161,22 @@ namespace CORBA
     SequenceDef_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_ARRAYDEF__VAR_OUT_CH_)
 #define _CORBA_ARRAYDEF__VAR_OUT_CH_
-  
+
   class ArrayDef;
   typedef ArrayDef *ArrayDef_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ArrayDef
       >
     ArrayDef_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ArrayDef
@@ -184,16 +184,16 @@ namespace CORBA
     ArrayDef_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_WSTRINGDEF__VAR_OUT_CH_)
 #define _CORBA_WSTRINGDEF__VAR_OUT_CH_
-  
+
   class WstringDef;
   typedef WstringDef *WstringDef_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         WstringDef

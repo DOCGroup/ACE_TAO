@@ -1424,13 +1424,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
-  // ParameterMode is so rarely used, it was put in a separate TAO file.
-  this->gen_cond_file_include (
-      idl_global->parametermode_seen_,
-      "tao/ParameterMode.h",
-      this->client_header_
-    );
-
   // Include the Messaging library entry point, if AMI is enabled.
   if (be_global->ami_call_back () == I_TRUE)
     {
@@ -1544,8 +1537,8 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/ORB_Core.h");
     }
 
-  // We generate this include if we 
-  // have typecode support 
+  // We generate this include if we
+  // have typecode support
   // AND have not already included it in the header file
   // OR a TypeCode or TCKind reference is not seen
   //    AND we are not generating typecodes in a separate file.
@@ -1606,7 +1599,7 @@ TAO_CodeGen::gen_skel_src_includes (void)
     {
       return;
     }
-    
+
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Object_Adapter.h");
   this->gen_standard_include (this->server_skeletons_,
