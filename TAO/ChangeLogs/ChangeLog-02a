@@ -1,3 +1,19 @@
+Fri Aug 11 09:51:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+	  Code generation from nested_scopes.idl in IDL_Test
+	  was producing errors when the AMI option (-GC) was
+	  used. Had to change some fully scoped names to local
+	  names for args to exception holder _var and _out
+	  constructors and assignment operators, as well as
+	  the _tao_unmarshal and tao_repository_id functions.
+	  Thanks to Johnny Willemsen <Johnny.Willemsen@meco.nl>
+	  for reporting these errors, which cropped up with the
+	  Borland and MSVC compilers.
+
 Fri Aug 11 08:12:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Exception.cpp:
