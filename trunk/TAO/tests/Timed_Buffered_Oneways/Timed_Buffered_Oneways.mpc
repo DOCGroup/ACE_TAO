@@ -1,13 +1,11 @@
-project(*Server): messaging, taoserver, corba_messaging {
+project(*Server): messaging, taoexe, portableserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): messaging, taoserver, corba_messaging {
-  exename = client
-
+project(*Client): messaging, taoexe, portableserver {
   Source_Files {
     testC.cpp
     client.cpp

@@ -1,11 +1,11 @@
-project(*Server): taoserver, messaging, corba_messaging {
+project(*Server): taoexe, portableserver, messaging {
   Source_Files {
     Payload_Receiver.cpp
     server.cpp
   }
 }
 
-project(*Client): taoclient, messaging, corba_messaging {
+project(*Client): taoexe, messaging {
   exename = client
 
   Source_Files {

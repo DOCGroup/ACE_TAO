@@ -1,4 +1,4 @@
-project(*server) : taoserver, iortable {
+project(*server) : taoexe, portableserver, iortable {
   Source_Files {
     Broadcaster_i.cpp
     Server_i.cpp
@@ -6,9 +6,7 @@ project(*server) : taoserver, iortable {
   }
 }
 
-project(*client): taoserver {
-  exename = client
-
+project(*client): taoexe, portableserver {
   Source_Files {
     Receiver_i.cpp
     Client_i.cpp

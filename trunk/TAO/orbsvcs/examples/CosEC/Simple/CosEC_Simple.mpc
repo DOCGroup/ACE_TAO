@@ -1,0 +1,17 @@
+project(*Service) : orbsvcsexe, event {
+  Source_Files {
+    Service.cpp
+  }
+}
+
+project(*Consumer) : orbsvcsexe, event {
+  Source_Files {
+    Consumer.cpp
+  }
+}
+
+project(*Supplier) : orbsvcsexe, event {
+  Source_Files {
+    Supplier.cpp
+  }
+}

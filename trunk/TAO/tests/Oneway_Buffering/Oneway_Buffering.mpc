@@ -1,4 +1,4 @@
-project(*Server): messaging, taoserver, corba_messaging {
+project(*Server): messaging, taoexe, portableserver {
   Source_Files {
     Oneway_Buffering.cpp
     server.cpp
@@ -13,16 +13,14 @@ project(*Server): messaging, taoserver, corba_messaging {
 // have gone on to build the generated files. By depending on *Server,
 // only one process is allowed to compile Test.idl and thus the build
 // succeeds.
-project(*Client): messaging, taoserver, corba_messaging {
-  exename   = client
+project(*Client): messaging, taoexe, portableserver {
   Source_Files {
     TestC.cpp
     client.cpp
   }  
 }
 
-project(*Admin): messaging, taoserver, corba_messaging {
-  exename   = admin
+project(*Admin): messaging, taoexe, portableserver {
   Source_Files {
     Oneway_Buffering_Admin.cpp
     admin.cpp

@@ -21,9 +21,8 @@ project(*Diamond) : taolib_with_idl, portableserver {
   }
 }
 
-project(*Server) : strategies, taoserver {
+project(*Server) : strategies, taoexe, portableserver {
   after   += Collocation_Test_Stub Collocation_Diamond
-  exename  = Collocation
   libs    += Collocation_Test_Stub Collocation_Diamond
 
   IDL_Files {

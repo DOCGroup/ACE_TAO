@@ -1,4 +1,4 @@
-project(*Server): taoserver, valuetype {
+project(*Server): taoexe, portableserver, valuetype {
   Source_Files {
     testS.cpp
     testC.cpp
@@ -7,7 +7,7 @@ project(*Server): taoserver, valuetype {
   }
 }
 
-project(*Client): taoclient, valuetype {
+project(*Client): taoexe, valuetype {
   Source_Files {
     testC.cpp
     client.cpp

@@ -1,4 +1,4 @@
-project(*Server): taoserver {
+project(*Server): taoexe, portableserver {
   Source_Files {
     test_i.cpp
     Stopwatch_display.cpp
@@ -7,7 +7,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoexe {
   Source_Files {
     testC.cpp
     Control.cpp

@@ -1,20 +1,18 @@
-project(*Server): taoserver, messaging, minimum_corba, dynamicinterface {
+project(*Server): taoexe, portableserver, messaging, minimum_corba, dynamicinterface {
   Source_Files {
     test_i.cpp
     server.cpp
   }  
 }
  
-project(*Client): taoclient, messaging, minimum_corba, dynamicinterface {
-  exename   = client
+project(*Client): taoexe, messaging, minimum_corba, dynamicinterface {
   Source_Files {
     testC.cpp
     client.cpp
   }  
 }
 
-project(*Gateway): taoserver, messaging, minimum_corba, dynamicinterface {
-  exename   = gateway
+project(*Gateway): taoexe, portableserver, messaging, minimum_corba, dynamicinterface {
   Source_Files {
     test_dsi.cpp
     gateway.cpp

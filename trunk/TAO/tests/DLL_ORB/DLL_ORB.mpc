@@ -28,7 +28,7 @@ project(*Server) : taoexe {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoexe {
   IDL_Files {
   }
 

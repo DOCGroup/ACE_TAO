@@ -1,0 +1,13 @@
+project(*client) : taoexe, portableserver, rtcorba {
+  source_files {
+    client.cpp
+    Custom_Network_Priority_Mapping.cpp
+  }
+}
+
+project(*server) : taoexe, rtportableserver, rtcorba {
+  source_files {
+    server.cpp
+    Custom_Network_Priority_Mapping.cpp
+  }
+}

@@ -1,11 +1,11 @@
-project(*security server): taoserver, orbsvcsexe, ssl, security {
+project(*security server): taoexe, portableserver, orbsvcsexe, ssl, security {
   Source_Files {
     SLevel1_Test_i.cpp
     server.cpp
   }
 }
 
-project(*security client): taoclient, orbsvcsexe, ssl, security {
+project(*security client): taoexe, orbsvcsexe, ssl, security {
   Source_Files {
     SLevel1_TestC.cpp
     client.cpp

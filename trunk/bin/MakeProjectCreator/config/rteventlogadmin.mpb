@@ -1,0 +1,4 @@
+project : dseventlogadmin {
+  after      += RTEventLogAdmin
+  libs       += TAO_RTEventLogAdmin
+}

@@ -1,0 +1,16 @@
+project(*Client) : taoexe, portableserver {
+  source_files {
+    client.cpp
+  }
+}
+
+project(*Server) : taoexe, portableserver {
+  includes += ../Generic_Servant
+  libs += Generic_Servant
+  after += POA_Generic_Servant_Lib
+  source_files {
+    test_i.cpp
+    server.cpp
+    Servant_Activator.cpp
+  }
+}

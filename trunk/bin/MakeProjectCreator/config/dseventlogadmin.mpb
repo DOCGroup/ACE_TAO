@@ -1,0 +1,4 @@
+project : dslogadmin {
+  after      += DsEventLogAdmin
+  libs       += TAO_DsEventLogAdmin
+}

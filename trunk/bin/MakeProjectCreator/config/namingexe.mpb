@@ -1,2 +1,2 @@
-project : taoserver, orbsvcsexe, naming {
+project : orbsvcsexe, naming {
 }

@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   NT_Service.h
+ *  @file   Activator_NT_Service.h
  *
  *  $Id$
  *
@@ -21,7 +21,6 @@
 
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
 #include "tao/orbconf.h"
 
 static const char * IMR_ACTIVATOR_SERVICE_NAME = "TAOIMRActivator";
@@ -52,7 +51,7 @@ private:
   friend class ACE_Singleton<Activator_NT_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<Activator_NT_Service, ACE_Mutex> SERVICE;
+typedef ACE_Singleton<Activator_NT_Service, Activator_NT_Service::MUTEX> SERVICE;
 
 #endif /* ACE_WIN32 */
 

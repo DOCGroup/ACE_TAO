@@ -1,0 +1,8 @@
+project : aceexe {
+  after    += Synch_Lib
+  libs     += Synch_Lib
+  libpaths += Synch_Lib
+  source_files {
+    synch_driver.cpp
+  }
+}

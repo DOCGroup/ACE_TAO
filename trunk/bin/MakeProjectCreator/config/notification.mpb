@@ -1,4 +1,4 @@
-project : event, etcl, dynamicany {
+project : etcl, dynamicany, portableserver {
   after     += CosNotification
   libs      += TAO_CosNotification
   comps     += Notify

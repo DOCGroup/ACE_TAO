@@ -1,0 +1,4 @@
+project : messaging {
+  requires += ami
+  idlflags += -GC
+}

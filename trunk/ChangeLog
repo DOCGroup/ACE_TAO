@@ -1,3 +1,54 @@
+Wed Nov 12 16:55:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/NT_Service.h:
+        * ace/QoS/qos.mpc:
+        * bin/MakeProjectCreator/config/amh.mpb:
+        * bin/MakeProjectCreator/config/ami.mpb:
+        * bin/MakeProjectCreator/config/avstreams.mpb:
+        * bin/MakeProjectCreator/config/dseventlogadmin.mpb:
+        * bin/MakeProjectCreator/config/dsnotifylogadmin.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/mfc.mpb:
+        * bin/MakeProjectCreator/config/namingexe.mpb:
+        * bin/MakeProjectCreator/config/notification.mpb:
+        * bin/MakeProjectCreator/config/notifytest.mpb:
+        * bin/MakeProjectCreator/config/psdl.mpb:
+        * bin/MakeProjectCreator/config/qos.mpb:
+        * bin/MakeProjectCreator/config/rpc.mpb:
+        * bin/MakeProjectCreator/config/rt_client.mpb:
+        * bin/MakeProjectCreator/config/rt_server.mpb:
+        * bin/MakeProjectCreator/config/rteventexe.mpb:
+        * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
+        * bin/MakeProjectCreator/config/smart_proxies.mpb:
+        * bin/MakeProjectCreator/config/ssliop.mpb:
+        * bin/MakeProjectCreator/config/taoclient.mpb:
+        * bin/MakeProjectCreator/config/wxwindows.mpb:
+        * examples/ConfigViewer/ConfigViewer.mpc:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc:
+        * examples/NT_Service/NT_Service.mpc:
+        * examples/QOS/Change_Receiver_FlowSpec/QOS_Change_Receiver_FlowSpec.mpc:
+        * examples/QOS/Change_Sender_TSpec/QOS_Change_Sender_FlowSpec.mpc:
+        * examples/QOS/Diffserv/QOS_Diffserv.mpc:
+        * examples/QOS/Simple/QOS_Simple.mpc:
+        * examples/RMCast/Send_File/RMCast_Send_File.mpc:
+        * examples/Timer_Queue/Timer_Queue.mpc:
+        * performance-tests/Misc/Misc.mpc:
+        * performance-tests/RPC/RPC.mpc:
+        * performance-tests/Server_Concurrency/Leader_Follower/Server_Concurrency_Leader_Follower.mpc:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Server_Concurrency_Queue_Based_Workers.mpc:
+        * performance-tests/Synch-Benchmarks/Synch_Benchmarks.mpc:
+        * performance-tests/Synch-Benchmarks/Base_Test/Synch_Benchmarks_Base_Test.mpc:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Benchmarks_Synch_Lib.mpc:
+        * performance-tests/TCP/TCP.mpc:
+        * performance-tests/TTCP/ACE-C++/TTCP_ACE_C++.mpc:
+        * performance-tests/UDP/UDP.mpc:
+
+          Imported many misc MPC file fixes from the OCI repository. 
+          Imported new mpc and mpb files from the OCI repository.
+          Added missing #include to ace/NT_Service.h that was used by 
+            macros defined in this file.
+
 Wed Nov 12 12:43:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

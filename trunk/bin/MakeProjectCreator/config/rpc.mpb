@@ -1,0 +1,10 @@
+project {
+  requires += rpc
+  Define_Custom(rpcgen) {
+    command          = rpcgen
+    inputext         = .x
+    source_outputext = .c
+    header_outputext = .h
+    pre_extension    = _svc,_clnt
+  }
+}

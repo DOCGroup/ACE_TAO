@@ -1,0 +1,14 @@
+project(*client) : taoexe, portableserver, event, naming  {
+  source_files {
+    client.cpp
+    Stock_Consumer.cpp
+  }
+}
+
+project(*server) : taoexe, portableserver, event, naming {
+  source_files {
+    server.cpp
+    Stock_Factory_i.cpp
+    Stock_i.cpp
+  }
+}
