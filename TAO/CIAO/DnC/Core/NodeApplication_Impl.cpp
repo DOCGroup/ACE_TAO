@@ -153,13 +153,13 @@ install_home (const ::Deployment::ImplementationInfo & impl_info
     impl_info.servant_entrypt.in ()
     ACE_ENV_ARG_PARAMETER);
 
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
   // Bind the home in the map.
   if (this->home_map_.bind (impl_info.component_instance_name.in (),
 			    Components::CCMHome::_duplicate (newhome.in ())))
     ACE_THROW_RETURN (Deployment::InstallationFailure (),
-		      CORBA::Object::_nil ());
+		      Components::CCMHome::_nil ());
 
   //Note: If the return value will be discarded, it must be kept in a var or
   //      release () will have to be called explicitly.
