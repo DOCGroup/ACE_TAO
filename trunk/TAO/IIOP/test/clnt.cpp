@@ -104,24 +104,6 @@ main (int    argc, char   *argv[])
   CORBA_Object_ptr objref = CORBA_Object::_nil();
   CORBA_Environment env;
 
-#if defined (VXWORKS)
-  // Work around VxWorks' lack of command line
-
-  loop_count = 50;
-  int dummy = 1;
-  orb_ptr = CORBA_ORB_init (dummy, (char **)0, "internet", env);
-  if (env.exception() != 0)
-    {
-      print_exception(env.exception(), "ORB initialization");
-      return 1;
-    }
-
-  hostAdd( "mv2604d", "130.38.183.132" ); 
-
-  TAO_arg_ior = ACE_OS::strdup("iiop:1.0//mv2604d:1000/key0");
-
-#else
-
   orb_ptr = CORBA_ORB_init(argc, argv, "internet", env);
   if (env.exception() != 0)
     {
@@ -134,14 +116,12 @@ main (int    argc, char   *argv[])
   //
   parse_args(argc, argv);
 
-#endif
-
   if (TAO_arg_ior == 0)
     ACE_ERROR_RETURN((LM_ERROR, "%s: must specify an object reference using -O <ior>\n", argv[0]), 1);
 
   objref = orb_ptr->string_to_object ((CORBA_String)TAO_arg_ior, env);
 
-  ACE_OS::free(TAO_arg_ior);
+  ACE_OS::free((void*)TAO_arg_ior);
   TAO_arg_ior = 0;
 
   if (env.exception () != 0)
