@@ -364,6 +364,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
+  *cs << "ACE_INLINE" << be_nl;
   *cs << fname << "::operator " << this->name ()
       << "* () // cast " << be_nl;
   *cs << "{\n";
