@@ -53,7 +53,7 @@ public:
   // <host_name> into the sorted list of userids kept on the client's
   // side.
 
-  static int name_compare (void *, void *);
+  static int name_compare (const void *, const void *);
   // This function is passed to qsort to perform the comparison
   // between login names for two friends.
 
