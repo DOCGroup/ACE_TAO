@@ -5710,15 +5710,6 @@ public:
   static int mutex_lock (ACE_mutex_t *m,
                          int &abandoned);
 
-  /// Win32 note: Abandoned mutexes are not treated differently. 0 is
-  /// returned since the calling thread does get the ownership.
-  static int mutex_trylock (ACE_mutex_t *m);
-
-  /// This method is only implemented for Win32.  For abandoned
-  /// mutexes, <abandoned> is set to 1 and 0 is returned.
-  static int mutex_trylock (ACE_mutex_t *m,
-                            int &abandoned);
-
   /// This method attempts to acquire a lock, but gives up if the lock
   /// has not been acquired by the given time.
   /**
@@ -5730,8 +5721,18 @@ public:
    * the mutex should not be a recursive one, i.e., it should only be
    * a standard mutex or an error checking mutex.
    */
-  static int mutex_timedlock (ACE_mutex_t *m,
-                              ACE_Time_Value *timeout);
+  static int mutex_lock (ACE_mutex_t *m,
+                         const ACE_Time_Value &timeout);
+
+
+  /// Win32 note: Abandoned mutexes are not treated differently. 0 is
+  /// returned since the calling thread does get the ownership.
+  static int mutex_trylock (ACE_mutex_t *m);
+
+  /// This method is only implemented for Win32.  For abandoned
+  /// mutexes, <abandoned> is set to 1 and 0 is returned.
+  static int mutex_trylock (ACE_mutex_t *m,
+                            int &abandoned);
 
   static int mutex_unlock (ACE_mutex_t *m);
   //@}
