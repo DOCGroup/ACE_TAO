@@ -50,7 +50,13 @@ public:
     TAO_PRIORITY_MAPPING_DIRECT
   };
 
+  enum
+  {
+    TAO_NETWORK_PRIORITY_MAPPING_LINEAR
+  };
+
   TAO_RT_ORBInitializer (int priority_mapping_type,
+			 int network_priority_mapping_type,
                          long sched_policy,
                          long scope_policy);
 
@@ -78,6 +84,9 @@ private:
 
   /// Priority mapping type.
   int priority_mapping_type_;
+
+  /// Network Priority mapping type.
+  int network_priority_mapping_type_;
 
   /// Scheduling policy.
   long sched_policy_;
