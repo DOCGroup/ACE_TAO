@@ -1,3 +1,19 @@
+Fri Dec 19 08:43:44 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Malloc_T.cpp: Reformatted some of the code to conform to
+	  ACE guidelines.  In particular, stuff like this:
+  
+          if ((this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(pool_name)) == 0)
+	    return;
+  
+          should be written like this:
+  
+          this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(pool_name);
+          if (this->lock_ == 0)
+            return;
+
+          since the latter is less error prone and more readable!  
+  
 Fri Dec 19 13:31:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/parser/parser/Parser.i (isChar):
