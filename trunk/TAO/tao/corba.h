@@ -111,6 +111,7 @@
 #include "tao/typecode.i"
 #include "tao/any.i"
 #include "tao/boa.i"
+#include "tao/giop.i"
 #include "tao/object.i"  // should always be
 #include "tao/orbobj.i"
 #include "tao/svrrqst.i"

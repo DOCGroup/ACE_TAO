@@ -5,6 +5,18 @@ CORBA_TypeCode::kind (CORBA::Environment &env) const
   return _kind;
 }
 
+// Returns true if the two typecodes are identical
+ACE_INLINE CORBA::Boolean 
+CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
+                       CORBA::Environment &env) const
+{
+  if (this->_kind != tc->kind (env))
+    // simple case
+    return CORBA::B_FALSE;
+  else
+    return this->private_equal (tc, env);
+}
+
 // just fetch the 'kind' field out of the typecode
 ACE_INLINE void *
 CORBA_TypeCode::operator new (size_t s)
