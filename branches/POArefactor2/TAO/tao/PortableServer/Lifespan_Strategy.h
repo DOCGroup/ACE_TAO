@@ -102,6 +102,11 @@ namespace TAO
 
       // @@ Johnny, why can;t use the enum's defined within
       // PortableServer IDL? Wouldn't they make life much simpler?
+      // @bala, this if for the IOR setup/parsing, I can't find these charachters
+      // in the pidl file. In the POA it are static methods, seems that this
+      // normal methods doesn't work, because in some static functions these are
+      // used. This still needs some work, but I want to get those info out of
+      // the POA.
       virtual char lifespan_key_type (void)
       {
         return 'T';
@@ -148,6 +153,9 @@ namespace TAO
       //all the ImR related code? I am not sure whether this is the
       //right place foir these. May be they are. We can get to them
       //later.
+      // @Bala, I think the triggering of the ImR should be here, the question
+      // whether this functionality must be here or use an adapter with a
+      // separate library, important is that the code is out of the POA
       /// ImplRepo helper method, notify the ImplRepo on startup
       void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -160,6 +168,7 @@ namespace TAO
 
       /// Flag for whether the ImR should be used or not.
       // @@ Johnny, Can't this be bool?
+      // @ Bala, I will change this
       int use_imr_;
     };
   } /* namespace Portable_Server */
