@@ -1,3 +1,16 @@
+Sun Mar 14 10:01:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lib_Find.cpp (ld_find):
+          When the dll is not found on win32, try again using ACE_DLL_PREFIX
+          prefixed. With MinGW all dll's have lib prefixed and when the prefix
+          wasn't attached by the user things failed. This fixes the DLL test
+          problems in the MinGW build. Thanks to Martin Corino
+          <mcorino@remedy.nl> for figuring this out and making the patch.
+
+        * ace/config-win32-mingw.h:
+          Removed setting of ACE_DLL_PREFIX, this is already done in
+          Default_Constants.h
+
 Sat Mar 13 18:25:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/OS/Process/process.cpp:
