@@ -98,6 +98,10 @@ SOURCE=.\IORInterceptor_Adapter_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_List.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORInterceptorC.cpp
 # ADD CPP /GR
 # End Source File
@@ -115,12 +119,20 @@ SOURCE=.\iorinterceptor_export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IORInterceptor_List.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORInterceptorC.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "i"
+# Begin Source File
+
+SOURCE=.\IORInterceptor_List.inl
+# End Source File
 # Begin Source File
 
 SOURCE=.\IORInterceptorC.i
