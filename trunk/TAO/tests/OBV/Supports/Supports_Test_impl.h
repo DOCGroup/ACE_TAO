@@ -41,8 +41,7 @@ public:
 class vt_graph_impl :
   public virtual OBV_Supports_Test::vt_graph,
   public virtual POA_Supports_Test::vt_graph,
-  public virtual CORBA::DefaultValueRefCountBase,
-  public virtual PortableServer::ServantBase
+  public virtual CORBA::DefaultValueRefCountBase
 {
 
 public:

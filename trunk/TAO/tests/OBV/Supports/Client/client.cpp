@@ -94,67 +94,43 @@ main (int argc, char *argv[])
 		ACE_TRY_CHECK;
 		if (CORBA::is_nil (test_graph.in ())) ACE_ERROR_RETURN ((LM_DEBUG, "Nil Supports_Test::graph obj ref\n"), 1);
 
-    //cout << "pass_vt_graph_in" << endl;
-
 		ACE_ASSERT (test_vt_graph->size () == 3);
 		my_test->pass_vt_graph_in (test_vt_graph.in () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_vt_graph->size () == 3);
-
-    //cout << endl;
-
-    //cout << "pass_obj_graph_in" << endl;
 
 		ACE_ASSERT (test_graph->size () == 4);
 		my_test->pass_obj_graph_in (test_graph.in () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_graph->size () == 5);
 
-    //cout << endl;
-
     test_vt_graph->add_node ("NEW1");
 
     test_graph->add_node ("NEW2");
-
-    //cout << "pass_vt_graph_out" << endl;
 
     ACE_ASSERT (test_vt_graph->size () == 4);
     my_test->pass_vt_graph_out (test_vt_graph.out () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_vt_graph->size () == 4);
 
-    //cout << endl;
-
-    //cout << "pass_obj_graph_out" << endl;
-
 		ACE_ASSERT (test_graph->size () == 6);
 		my_test->pass_obj_graph_out (test_graph.out () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_graph->size () == 5);
 
-    //cout << endl;
-
     test_vt_graph->add_node ("NEW2");
 
     test_graph->add_node ("NEW2");
-
-    //cout << "pass_vt_graph_inout" << endl;
 
     ACE_ASSERT (test_vt_graph->size () == 5);
     my_test->pass_vt_graph_inout (test_vt_graph.inout () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_vt_graph->size () == 6);
 
-    //cout << endl;
-
-    //cout << "pass_obj_graph_inout" << endl;
-
 		ACE_ASSERT (test_graph->size () == 6);
 		my_test->pass_obj_graph_inout (test_graph.inout () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_graph->size () == 7);
-
-    //cout << endl;
 
 		/* Shut down */
 
