@@ -124,6 +124,7 @@ Svc_Handler_Test
 TP_Reactor_Test: ALL
 TSS_Test
 Task_Test
+Task_Ex_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
 Thread_Pool_Reactor_Resume_Test: OTHER !ST

@@ -762,6 +762,13 @@ project(Task Test) : acetest {
   }
 }
 
+project(Task_Ex Test) : acetest {
+  exename = Task_Ex_Test
+  Source_Files {
+    Task_Ex_Test.cpp
+  }
+}
+
 project(Thread Manager Test) : acetest {
   exename = Thread_Manager_Test
   Source_Files {
