@@ -223,7 +223,7 @@ namespace ImplementationRepository
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:231
+// be\be_visitor_root/root.cpp:132
 
 extern TAO_IMR_Client_Export
 TAO::Collocation_Proxy_Broker *
