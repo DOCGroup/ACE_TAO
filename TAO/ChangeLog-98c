@@ -1,3 +1,10 @@
+Sat Sep 12 23:34:17 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/Typecode.h:
+	  Fixed the equivalent(0 function I added a few days ago -
+	  seems the .h and .cpp signatures didn't agree. Must be
+	  Alzheimer's.
+
 Sat Sep 12 21:54:04 1998  Seth Widoff  <swidoff@sophocles.cimds.ri.cmu.edu>
 
 	* orbsvcs/orbsvcs/Trader/constraint.l:
