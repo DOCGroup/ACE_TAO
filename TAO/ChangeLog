@@ -1,3 +1,12 @@
+Sat Aug 23 11:41:33 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+
+	  Include "ace/Null_Condition.h" and
+	  "ace/Condition_Thread_Mutex.h" to pull in ACE_Null_Condition and
+	  and ACE_Condition_Thread_Mutex class declarations,
+	  respectively.
+
 Sat Aug 23 18:28:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/TypeCode_Creation/TypeCode_Creation.mpc:
