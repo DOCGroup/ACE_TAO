@@ -53,11 +53,12 @@ CLI_FILES =	param_testCli	\
 		ub_str_seq	\
 		ub_string	\
 		ub_struct_seq	\
-		var_array	\
-		var_struct \
-		except \
-		big_union \
-		multdim_array \
+		var_array    	\
+		var_struct	\
+		recursive_struct \
+		except		\
+		big_union	\
+		multdim_array	\
 		complex_any
 
 PARAM_TEST_SVR_OBJS = $(addsuffix .o,$(SVR_FILES))
