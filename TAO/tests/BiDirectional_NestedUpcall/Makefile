@@ -274,6 +274,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  testS_T.h testS_T.i testS_T.cpp testS.i test_i.i \
+ $(ACE_ROOT)/ace/High_Res_Timer.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/BiDir_GIOP/BiDirGIOP.h \
  $(TAO_ROOT)/tao/BiDir_GIOP/bidirgiop_export.h \
  $(TAO_ROOT)/tao/BiDir_Adapter.h \
