@@ -1,3 +1,4 @@
+
 // $Id$
 
 #include "RT_ORB_Loader.h"
@@ -33,6 +34,7 @@ TAO_RT_ORB_Loader::init (int argc,
 
   // Set defaults.
   int priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
+  int network_priority_mapping_type = TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
   long sched_policy = THR_SCHED_DEFAULT;
   long scope_policy = THR_SCOPE_PROCESS;
   int curarg = 0;
@@ -108,6 +110,19 @@ TAO_RT_ORB_Loader::init (int argc,
                           name));
           }
       }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+				 ACE_LIB_TEXT("-ORBNetworkPriorityMapping")) == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+	    
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_LIB_TEXT("linear")) == 0)
+              network_priority_mapping_type = TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
+	  }
+      }
     else
       {
         if (TAO_debug_level > 0)
@@ -129,6 +144,7 @@ TAO_RT_ORB_Loader::init (int argc,
       /// Register the RTCORBA ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_RT_ORBInitializer (priority_mapping_type,
+					       network_priority_mapping_type,
                                                sched_policy,
                                                scope_policy),
                         CORBA::NO_MEMORY (

@@ -234,7 +234,8 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Long recv_buffer_size,
                                             CORBA::Boolean keep_alive,
                                             CORBA::Boolean dont_route,
-                                            CORBA::Boolean no_delay
+                                            CORBA::Boolean no_delay,
+					    CORBA::Boolean enable_network_priority
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException ))
 {
@@ -244,7 +245,8 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                         recv_buffer_size,
                                         keep_alive,
                                         dont_route,
-                                        no_delay),
+                                        no_delay,
+					enable_network_priority),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::TCPProtocolProperties::_nil ());

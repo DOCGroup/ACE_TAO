@@ -13,6 +13,7 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "RT_Policy_i.h"
 #include "RT_Protocols_Hooks.h"
 #include "Priority_Mapping_Manager.h"
+#include "Network_Priority_Mapping_Manager.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitInfo.h"
@@ -22,6 +23,7 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "Continuous_Priority_Mapping.h"
 #include "Linear_Priority_Mapping.h"
 #include "Direct_Priority_Mapping.h"
+#include "Linear_Network_Priority_Mapping.h"
 #include "RT_ORB.h"
 #include "RT_Current.h"
 #include "RT_Thread_Lane_Resources_Manager.h"
@@ -33,9 +35,11 @@ static const char *rt_poa_factory_name = "TAO_RT_POA";
 static const char *rt_poa_factory_directive = "dynamic TAO_RT_POA Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
 
 TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
+					      int network_priority_mapping_type,
                                               long sched_policy,
                                               long scope_policy)
   : priority_mapping_type_ (priority_mapping_type),
+    network_priority_mapping_type_ (network_priority_mapping_type),
     sched_policy_ (sched_policy),
     scope_policy_ (scope_policy)
 {
@@ -117,10 +121,42 @@ TAO_RT_ORBInitializer::pre_init (
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
 
+
   TAO_Priority_Mapping_Manager_var safe_manager = manager;
 
   info->register_initial_reference ("PriorityMappingManager",
                                     manager
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  // Create the initial priority mapping instance.
+  TAO_Network_Priority_Mapping *npm;
+  switch (this->network_priority_mapping_type_)
+    {
+    default: 
+    case TAO_NETWORK_PRIORITY_MAPPING_LINEAR:
+      ACE_NEW (npm,
+               TAO_Linear_Network_Priority_Mapping (sched_policy));
+      break;
+    }
+  
+  // Set the Priority_Mapping_Manager
+  TAO_Network_Priority_Mapping_Manager *network_manager = 0;
+
+  ACE_NEW_THROW_EX (network_manager,
+                    TAO_Network_Priority_Mapping_Manager (npm),
+                    CORBA::NO_MEMORY (
+				      CORBA::SystemException::_tao_minor_code (
+		    TAO_DEFAULT_MINOR_CODE,
+			    ENOMEM),
+				      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+
+  TAO_Network_Priority_Mapping_Manager_var safe_network_manager = network_manager;
+  
+  info->register_initial_reference ("NetworkPriorityMappingManager",
+                                    network_manager
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
