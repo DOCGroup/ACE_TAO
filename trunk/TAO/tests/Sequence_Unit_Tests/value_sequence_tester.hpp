@@ -62,8 +62,8 @@ struct value_sequence_tester
 
   void test_default_constructor()
   {
-    long a = tested_allocation_traits::allocbuf_calls;
-    long f = tested_allocation_traits::freebuf_calls;
+    expected_calls a(tested_allocation_traits::allocbuf_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x;
 
@@ -73,18 +73,18 @@ struct value_sequence_tester
       BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
       BOOST_CHECK_EQUAL(true, x.release());
     }
-    BOOST_CHECK_EQUAL(  a, tested_allocation_traits::allocbuf_calls);
-    BOOST_CHECK_EQUAL(++f, tested_allocation_traits::freebuf_calls);
+    BOOST_CHECK_MESSAGE(a.expect(0), a);
+    BOOST_CHECK_MESSAGE(f.expect(1), f);
   }
 
 
   void test_copy_constructor_from_default()
   {
-    long a = tested_allocation_traits::allocbuf_calls;
-    long f = tested_allocation_traits::freebuf_calls;
+    expected_calls a(tested_allocation_traits::allocbuf_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x;
-      BOOST_CHECK_EQUAL(a, tested_allocation_traits::allocbuf_calls);
+      BOOST_CHECK_MESSAGE(a.expect(0), a);
       BOOST_CHECK_EQUAL(
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
@@ -92,13 +92,12 @@ struct value_sequence_tester
       BOOST_CHECK_EQUAL(true, x.release());
 
       tested_sequence y(x);
-      BOOST_CHECK_EQUAL(++a, tested_allocation_traits::allocbuf_calls);
+      BOOST_CHECK_MESSAGE(a.expect(1), a);
       BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
       BOOST_CHECK_EQUAL(x.length(), y.length());
       BOOST_CHECK_EQUAL(x.release(), y.release());
     }
-    f += 2;
-    BOOST_CHECK_EQUAL(  f, tested_allocation_traits::freebuf_calls);
+    BOOST_CHECK_MESSAGE(f.expect(2), f);
   }
 
   void test_index_accessor()
@@ -153,11 +152,11 @@ struct value_sequence_tester
 
   void test_assignment_from_default()
   {
-    long a = tested_allocation_traits::allocbuf_calls;
-    long f = tested_allocation_traits::freebuf_calls;
+    expected_calls a(tested_allocation_traits::allocbuf_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x;
-      BOOST_CHECK_EQUAL(a, tested_allocation_traits::allocbuf_calls);
+      BOOST_CHECK_MESSAGE(a.expect(0), a);
       BOOST_CHECK_EQUAL(
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
@@ -165,17 +164,16 @@ struct value_sequence_tester
       BOOST_CHECK_EQUAL(true, x.release());
 
       tested_sequence y;
-      BOOST_CHECK_EQUAL(a, tested_allocation_traits::allocbuf_calls);
+      BOOST_CHECK_MESSAGE(a.expect(0), a);
 
       y = x;
-      BOOST_CHECK_EQUAL(++a, tested_allocation_traits::allocbuf_calls);
-      BOOST_CHECK_EQUAL(++f, tested_allocation_traits::freebuf_calls);
+      BOOST_CHECK_MESSAGE(a.expect(1), a);
+      BOOST_CHECK_MESSAGE(f.expect(1), f);
       BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
       BOOST_CHECK_EQUAL(x.length(), y.length());
       BOOST_CHECK_EQUAL(x.release(), y.release());
     }
-    f += 2;
-    BOOST_CHECK_EQUAL(  f, tested_allocation_traits::freebuf_calls);
+    BOOST_CHECK_MESSAGE(f.expect(2), f);
   }
 
   void test_assignment_values()
@@ -198,40 +196,38 @@ struct value_sequence_tester
 
   void test_exception_in_copy_constructor()
   {
-    long f;
+    expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x; x.length(8);
+      f.reset();
 
-      f = tested_allocation_traits::freebuf_calls;
-
-      long a = tested_allocation_traits::allocbuf_calls;
-      tested_allocation_traits::calls_until_failure_in_allocbuf = 1;
+      expected_calls a(tested_allocation_traits::allocbuf_calls);
+      tested_allocation_traits::allocbuf_calls.failure_countdown(1);
       BOOST_CHECK_THROW(tested_sequence y(x), testing_exception);
-      BOOST_CHECK_EQUAL(++a, tested_allocation_traits::allocbuf_calls);
+      BOOST_CHECK_MESSAGE(a.expect(1), a);
     }
-    BOOST_CHECK_EQUAL(++f, tested_allocation_traits::freebuf_calls);
+    BOOST_CHECK_MESSAGE(f.expect(1), f);
   }
 
   void test_exception_in_assignment()
   {
-    long f;
+    expected_calls f(tested_allocation_traits::freebuf_calls);
     {
       tested_sequence x; x.length(2);
 
       tested_sequence y; y.length(3);
 
-      long a = tested_allocation_traits::allocbuf_calls;
-      f = tested_allocation_traits::freebuf_calls;
-      tested_allocation_traits::calls_until_failure_in_allocbuf = 1;
+      expected_calls a(tested_allocation_traits::allocbuf_calls);
+      f.reset();
+      tested_allocation_traits::allocbuf_calls.failure_countdown(1);
       BOOST_CHECK_THROW(y = x, testing_exception);
 
-      BOOST_CHECK_EQUAL(++a, tested_allocation_traits::allocbuf_calls);
-      BOOST_CHECK_EQUAL(  f, tested_allocation_traits::freebuf_calls);
+      BOOST_CHECK_MESSAGE(a.expect(1), a);
+      BOOST_CHECK_MESSAGE(f.expect(0), f);
 
       BOOST_CHECK_EQUAL(CORBA::ULong(3), y.length());
     }
-    ++f /* for x */; ++f /* for y */;
-    BOOST_CHECK_EQUAL(  f, tested_allocation_traits::freebuf_calls);
+    BOOST_CHECK_MESSAGE(f.expect(2), f);
   }
 
 };
