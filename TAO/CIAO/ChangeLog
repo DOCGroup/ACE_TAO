@@ -1,3 +1,22 @@
+Tue Dec 21 11:29:03 2004  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * tools/Segment_Timer/Segment_Timer.h
+
+          Increased the value of the macro MAX_READINGS, since the
+          current value is too small and caused core dump for even
+          50 connections. Thanks Roland Schmmack <Roland.Schimmack@gmx.de>
+          for reporting this bug!
+
+Mon Dec 20 17:27:01 2004  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ciao/CCM_Core.mpc
+        * ciao/Deployment_Core.idl
+        * ciao/NodeApplication_Impl.cpp
+        * ciao/NodeApplication_Impl.h
+        * ciao/NodeApplication_Impl.inl
+
+          Reverted changes back because of the check-in mistake I just made.
+
 Mon Dec 20 16:32:54 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* DAnCE/Config_Handlers/Config_Handlers.mpc: Added include path to
