@@ -178,7 +178,7 @@ protected:
 
   CORBA::Boolean is_policy_list_initialized_;
 
-  ACE_MT (ACE_Recursive_Thread_Mutex mutex_;)
+  ACE_SYNCH_RECURSIVE_MUTEX mutex_;
   // Mutex used to make sure that only one policy list
   // is created.
 
