@@ -1,3 +1,6 @@
+Wed Dec 10 12:09:36 CST 1997
+       * sagent.cpp, Eric Newton fix. result not checked. v1.8
+  
 Mon Dec  8 14:33:59 CST 1997
       * Thanks to Eric Newton's <ecn@smart.net> continued patches
          Version 1.7 has fixes for: agent, base library
