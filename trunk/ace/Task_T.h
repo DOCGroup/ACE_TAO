@@ -150,8 +150,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &))
 };
 
-template <class PEER_STREAM, class SYNCH>
-class ACE_Buffered_Task : public ACE_Task<SYNCH>
+template <class PEER_STREAM, ACE_SYNCH_DECL>
+class ACE_Buffered_Task : public ACE_Task<ACE_SYNCH_USE>
 {
   // = TITLE
   //     Defines a configurable and efficient buffering scheme for

@@ -106,8 +106,8 @@ ACE_Task<ACE_SYNCH_USE>::module (void) const
 // <high_water_mark> and the <timeout>, which are used to determine at
 // what point to flush the buffer.
 
-template <class PEER_STREAM, class SYNCH>
-ACE_Buffered_Task<PEER_STREAM, class SYNCH>::ACE_Buffered_Task (PEER_STREAM stream,
+template <class PEER_STREAM, ACE_SYNCH_DECL>
+ACE_Buffered_Task<PEER_STREAM, ACE_SYNCH_USE>::ACE_Buffered_Task (PEER_STREAM stream,
                                                                 size_t high_water_mark,
                                                                 ACE_Time_Value *timeout)
   : current_size_ (0),
@@ -118,8 +118,8 @@ ACE_Buffered_Task<PEER_STREAM, class SYNCH>::ACE_Buffered_Task (PEER_STREAM stre
 {
 }
 
-template <class PEER_STREAM, class SYNCH> int
-ACE_Buffered_Task<PEER_STREAM, SYNCH>::put (ACE_Message_Block *mb,
+template <class PEER_STREAM, ACE_SYNCH_DECL> int
+ACE_Buffered_Task<PEER_STREAM, ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
                                             ACE_Time_Value *tv)
 {
 #if 0
@@ -142,8 +142,8 @@ ACE_Buffered_Task<PEER_STREAM, SYNCH>::put (ACE_Message_Block *mb,
 
 // Flush the buffer.
 
-template <class PEER_STREAM, class SYNCH> int
-ACE_Buffered_Task<PEER_STREAM, SYNCH>::flush (void)
+template <class PEER_STREAM, ACE_SYNCH_DECL> int
+ACE_Buffered_Task<PEER_STREAM, ACE_SYNCH_USE>::flush (void)
 {
 #if 0
   iovec iov[ACE_DEFAULT_WRITEV_MAX];

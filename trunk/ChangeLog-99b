@@ -1,3 +1,9 @@
+Fri May 14 21:11:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Task_T.h:
+	* ace/Task_T.cpp:
+	  Fixed syntax errors in ACE_Buffered_Task
+
 Fri May 14 21:03:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* netsvcs/lib/Log_Message_Receiver.cpp:
