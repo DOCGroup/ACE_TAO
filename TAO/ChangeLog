@@ -1,5 +1,9 @@
 Wed Apr 16 08:27:21 2003  Ossama Othman  <ossama@uci.edu>
 
+	* tao/CORBA_String.cpp:
+
+	  Include "ace/streams.h" to pull in iostream class declarations.
+
 	* tao/Exception.h:
 
 	  Include <stdio.h> to pull in "FILE" typedef.
