@@ -386,12 +386,41 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   // No need to grab the lock, it is beign held already by the
   // filter() method
   this->refcount_++;
-  this->event_channel_->dispatching ()->push (this,
-                                              event,
-                                              qos_info,
-                                              ACE_TRY_ENV);
+
+  if (this->is_connected_i () == 0)
+    return; // TAO_THROW (RtecEventComm::Disconnected ());????
+
+  if (this->suspended_ != 0)
+    return;
+
+  RtecEventComm::PushConsumer_var consumer =
+    RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
+
+  {
+    TAO_EC_Unlock reverse_lock (*this->lock_);
+
+    ACE_GUARD_THROW_EX (TAO_EC_Unlock, ace_mon, reverse_lock,
+                        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    this->event_channel_->dispatching ()->push (this,
+                                                consumer.in (),
+                                                event,
+                                                qos_info,
+                                                ACE_TRY_ENV);
+  }
   if (this->child_ != 0)
     this->child_->clear ();
+
+  // The reference count was incremented just before delegating on the
+  // dispatching strategy, in this can we need to decrement it *now*.
+  this->refcount_--;
+  // @@ What if it reaches 0???
+  if (this->refcount_ == 0)
+    {
+      this->lock_->release ();
+      this->event_channel_->destroy_proxy_push_supplier (this);
+    }
 }
 
 void
@@ -402,50 +431,116 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   // No need to grab the lock, it is beign held already by the
   // filter() method
   this->refcount_++;
-  this->event_channel_->dispatching ()->push_nocopy (this,
-                                                     event,
-                                                     qos_info,
-                                                     ACE_TRY_ENV);
+
+  if (this->is_connected_i () == 0)
+    return; // TAO_THROW (RtecEventComm::Disconnected ());????
+
+  if (this->suspended_ != 0)
+    return;
+
+  RtecEventComm::PushConsumer_var consumer =
+    RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
+
+  {
+    TAO_EC_Unlock reverse_lock (*this->lock_);
+
+    ACE_GUARD_THROW_EX (TAO_EC_Unlock, ace_mon, reverse_lock,
+                        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    this->event_channel_->dispatching ()->push_nocopy (this,
+                                                       consumer.in (),
+                                                       event,
+                                                       qos_info,
+                                                       ACE_TRY_ENV);
+  }
   if (this->child_ != 0)
     this->child_->clear ();
+
+  // The reference count was incremented just before delegating on the
+  // dispatching strategy, in this can we need to decrement it *now*.
+  this->refcount_--;
+  // @@ What if it reaches 0???
+  if (this->refcount_ == 0)
+    {
+      this->lock_->release ();
+      this->event_channel_->destroy_proxy_push_supplier (this);
+    }
 }
 
 void
-TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event,
-                                            CORBA::Environment& ACE_TRY_ENV)
+TAO_EC_ProxyPushSupplier::push_to_consumer (
+    RtecEventComm::PushConsumer_ptr consumer,
+    const RtecEventComm::EventSet& event,
+    CORBA::Environment& ACE_TRY_ENV)
 {
-  RtecEventComm::PushConsumer_var consumer;
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    // The reference count was increased just before pushing to the
-    // dispatching module, we must decrease here.  But if we get
-    // removed then we abort.  We don't want to call _decr_refcnt()
-    // because that will require two locks.
-    this->refcount_--;
-    if (this->refcount_ == 0)
-      {
-        ace_mon.release ();
-        this->event_channel_->destroy_proxy_push_supplier (this);
-        return;
-      }
-
     if (this->is_connected_i () == 0)
       return; // ACE_THROW (RtecEventComm::Disconnected ());????
 
     if (this->suspended_ != 0)
       return;
-
-    consumer =
-      RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
-
-    // The refcount cannot be zero, because we have at least two
-    // references,
   }
 
+  ACE_TRY
+    {
+      consumer->push (event, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
+    {
+      // Do not report errors for old consumers
+      // NOTE: The comparison below is not completely correct, it
+      // could be that the remote consumer and the local consumer are
+      // in fact the same object, but represented by different objects
+      // references.  Unfortunately this is not a good spot to invoke
+      // _is_equivalent(), and that may not give us the desired answer
+      // anyway.
+      if (consumer == this->consumer_.in ())
+        {
+          TAO_EC_ConsumerControl *control =
+            this->event_channel_->consumer_control ();
+
+          control->consumer_not_exist (this, ACE_TRY_ENV);
+        }
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      // Do not report errors for old consumers
+      // NOTE: The comparison below is not completely correct, it
+      // could be that the remote consumer and the local consumer are
+      // in fact the same object, but represented by different objects
+      // references.  Unfortunately this is not a good spot to invoke
+      // _is_equivalent(), and that may not give us the desired answer
+      // anyway.
+      if (consumer == this->consumer_.in ())
+        {
+          TAO_EC_ConsumerControl *control =
+            this->event_channel_->consumer_control ();
+
+          control->system_exception (this,
+                                     sysex,
+                                     ACE_TRY_ENV);
+        }
+    }
+  ACE_CATCHANY
+    {
+      // Shouldn't happen, but does not hurt
+    }
+  ACE_ENDTRY;
+}
+
+void
+TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
+    RtecEventComm::PushConsumer_ptr consumer,
+    const RtecEventComm::EventSet& event,
+    CORBA::Environment& ACE_TRY_ENV)
+{
   ACE_TRY
     {
       consumer->push (event, ACE_TRY_ENV);
@@ -469,64 +564,9 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event
     }
   ACE_CATCHANY
     {
-      // Shouldn't happen, but does not hurt
+      // Shouldn't happen
     }
   ACE_ENDTRY;
-}
-
-void
-TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
-    const RtecEventComm::EventSet& event,
-    CORBA::Environment& ACE_TRY_ENV)
-{
-  if (this->is_connected_i () == 0)
-    return; // TAO_THROW (RtecEventComm::Disconnected ());????
-
-  if (this->suspended_ != 0)
-    return;
-
-  RtecEventComm::PushConsumer_var consumer =
-    RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
-
-  {
-    TAO_EC_Unlock reverse_lock (*this->lock_);
-
-    ACE_GUARD_THROW_EX (TAO_EC_Unlock, ace_mon, reverse_lock,
-                        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    ACE_TRY
-      {
-        consumer->push (event, ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
-      {
-        TAO_EC_ConsumerControl *control =
-          this->event_channel_->consumer_control ();
-
-        control->consumer_not_exist (this, ACE_TRY_ENV);
-      }
-    ACE_CATCH (CORBA::SystemException, sysex)
-      {
-        TAO_EC_ConsumerControl *control =
-          this->event_channel_->consumer_control ();
-
-        control->system_exception (this,
-                                   sysex,
-                                 ACE_TRY_ENV);
-      }
-    ACE_CATCHANY
-      {
-        // Shouldn't happen
-      }
-    ACE_ENDTRY;
-  }
-
-  // The reference count was incremented just before delegating on the
-  // dispatching strategy, in this can we need to decrement it *now*.
-  this->refcount_--;
-  // @@ What if it reaches 0???
 }
 
 CORBA::Boolean

@@ -26,8 +26,7 @@
 #include "ace/pre.h"
 #define TAO_EC_DISPATCHING_TASK_H
 
-#include "ace/Task.h"
-#include "ace/Message_Block.h"
+#include "EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,8 +34,21 @@
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "event_export.h"
+#include "ace/Task.h"
+#include "ace/Message_Block.h"
 
-class TAO_EC_ProxyPushSupplier;
+class TAO_ORBSVCS_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
+{
+public:
+  TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
+                size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
+                ACE_Notification_Strategy * = 0);
+
+protected:
+  // = Override the default definition in the Message_Queue, to count
+  // the number of messages (and not their size).
+  virtual int is_full_i (void);
+};
 
 class TAO_RTEvent_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
@@ -54,6 +66,7 @@ public:
   // Process the events in the queue.
 
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
+                     RtecEventComm::PushConsumer_ptr consumer,
                      RtecEventComm::EventSet& event,
                      CORBA::Environment &env);
 
@@ -63,6 +76,9 @@ private:
 
   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
   // Helper data structure to minimize memory allocations...
+
+  TAO_EC_Queue the_queue_;
+  // The queue
 };
 
 // ****************************************************************
@@ -102,10 +118,14 @@ class TAO_RTEvent_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
 {
 public:
   TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
+                       RtecEventComm::PushConsumer_ptr consumer,
                        RtecEventComm::EventSet& event,
                        ACE_Data_Block* data_block,
                        ACE_Allocator *mb_allocator);
   // Constructor
+
+  virtual ~TAO_EC_Push_Command (void);
+  // Destructor
 
   virtual int execute (CORBA::Environment&);
   // Command callback
@@ -113,6 +133,9 @@ public:
 private:
   TAO_EC_ProxyPushSupplier* proxy_;
   // The proxy
+
+  RtecEventComm::PushConsumer_var consumer_;
+  // The consumer connected to the proxy when the event was pushed.
 
   RtecEventComm::EventSet event_;
   // The event

@@ -2158,8 +2158,8 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj,
       ACE_TRY_CHECK;
       // Add it to the sequence of flowNames supported.
       // put the flowname and the flowendpoint in a hashtable.
-      TAO_String_Hash_Key fep_name_key (CORBA::string_dup (flow_name));
-      if (this->fep_map_.bind (fep_name_key, fep) != 0)
+      TAO_String_Hash_Key fep_name_key (CORBA::string_dup (flow_name.in ()));
+      if (this->fep_map_.bind (fep_name_key, fep.in ()) != 0)
         {
           ACE_THROW_RETURN (AVStreams::streamOpFailed (), 0);
         }
@@ -3307,8 +3307,8 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
 
   // Add it to the sequence of flowNames supported.
   // put the flowname and the fdev in a hashtable.
-  TAO_String_Hash_Key fdev_name_key (CORBA::string_dup (flow_name));
-  if (this->fdev_map_.bind (fdev_name_key, fdev) != 0)
+  TAO_String_Hash_Key fdev_name_key (CORBA::string_dup (flow_name.in ()));
+  if (this->fdev_map_.bind (fdev_name_key, fdev.in ()) != 0)
     ACE_THROW_RETURN (AVStreams::streamOpFailed (), 0);
 
   // increment the flow count.

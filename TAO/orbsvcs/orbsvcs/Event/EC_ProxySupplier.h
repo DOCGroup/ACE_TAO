@@ -104,9 +104,11 @@ public:
   virtual void shutdown (CORBA::Environment &env);
   // The event channel is shutting down
 
-  void push_to_consumer (const RtecEventComm::EventSet &event,
+  void push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
+                         const RtecEventComm::EventSet &event,
                          CORBA::Environment &env);
-  void reactive_push_to_consumer (const RtecEventComm::EventSet &event,
+  void reactive_push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
+                                  const RtecEventComm::EventSet &event,
                                   CORBA::Environment &env);
   // Pushes to the consumer, verifies that it is connected and that it
   // is not suspended.

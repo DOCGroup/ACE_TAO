@@ -10,6 +10,14 @@
 ACE_RCSID(Event, EC_Dispatching, "$Id$")
 
 int
+TAO_EC_Queue::is_full_i (void)
+{
+  return this->cur_count_ > this->high_water_mark_;
+}
+
+// ****************************************************************
+
+int
 TAO_EC_Dispatching_Task::svc (void)
 {
   int done = 0;
@@ -54,6 +62,7 @@ TAO_EC_Dispatching_Task::svc (void)
 
 void
 TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
+                               RtecEventComm::PushConsumer_ptr consumer,
                                RtecEventComm::EventSet& event,
                                CORBA::Environment &ACE_TRY_ENV)
 {
@@ -68,6 +77,7 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 
   ACE_Message_Block *mb =
     new (buf) TAO_EC_Push_Command (proxy,
+                                   consumer,
                                    event,
                                    this->data_block_.duplicate (),
                                    this->allocator_);
@@ -90,10 +100,18 @@ TAO_EC_Shutdown_Task_Command::execute (CORBA::Environment&)
 
 // ****************************************************************
 
+ACE_INLINE
+TAO_EC_Push_Command::~TAO_EC_Push_Command (void)
+{
+  this->proxy_->_decr_refcnt ();
+}
+
 int
 TAO_EC_Push_Command::execute (CORBA::Environment& ACE_TRY_ENV)
 {
-  this->proxy_->push_to_consumer (this->event_, ACE_TRY_ENV);
+  this->proxy_->push_to_consumer (this->consumer_.in (),
+                                  this->event_,
+                                  ACE_TRY_ENV);
   return 0;
 }
 

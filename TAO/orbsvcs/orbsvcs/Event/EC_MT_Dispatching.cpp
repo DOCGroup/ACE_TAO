@@ -65,16 +65,18 @@ TAO_EC_MT_Dispatching::shutdown (void)
 
 void
 TAO_EC_MT_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
+                             RtecEventComm::PushConsumer_ptr consumer,
                              const RtecEventComm::EventSet& event,
                              TAO_EC_QOS_Info& qos_info,
                              CORBA::Environment& ACE_TRY_ENV)
 {
   RtecEventComm::EventSet event_copy = event;
-  this->push_nocopy (proxy, event_copy, qos_info, ACE_TRY_ENV);
+  this->push_nocopy (proxy, consumer, event_copy, qos_info, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_MT_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                                    RtecEventComm::PushConsumer_ptr consumer,
                                     RtecEventComm::EventSet& event,
                                     TAO_EC_QOS_Info&,
                                     CORBA::Environment &ACE_TRY_ENV)
@@ -83,5 +85,5 @@ TAO_EC_MT_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   if (this->active_ == 0)
     this->activate ();
 
-  this->task_.push (proxy, event, ACE_TRY_ENV);
+  this->task_.push (proxy, consumer, event, ACE_TRY_ENV);
 }
