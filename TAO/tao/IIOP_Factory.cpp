@@ -7,6 +7,7 @@
 
 ACE_RCSID(tao, IIOP_Factory, "$Id$")
 
+static const char prefix_[] = "iiop";
 
 TAO_IIOP_Protocol_Factory::TAO_IIOP_Protocol_Factory (void)
   :  major_ (TAO_DEF_GIOP_MAJOR),
@@ -28,6 +29,12 @@ TAO_IIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
   // in the IOR then it is not an IOR we can use.
   return (ACE_OS::strcasecmp (prefix.c_str (), protocol[0]) == 0 ||
           ACE_OS::strcasecmp (prefix.c_str (), protocol[1]) == 0);
+}
+
+const char *
+TAO_IIOP_Protocol_Factory::prefix (void) const
+{
+  return ::prefix_;
 }
 
 TAO_Acceptor *
