@@ -22,6 +22,12 @@ Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
           recursive make to build libDLL_Test.so, only do that if it
           needs to be built.  And, added dependencies to Makefile.DLL.
 
+        * ace/Makefile: commented out use of TEMPLATE_FILES.  I don't
+          believe that it's needed.
+
+        * ace/CLASSIX/Makefile: removed unused TEMPLATE_FILES and
+          LSRC2 macros, and gethrtime build rule.
+
 Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>
 
         * ace/IOStream_T.{cpp|h|i}: Those last changes break (at least)
