@@ -1,3 +1,20 @@
+Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp (connect):
+	* tao/UIOP_Connector.cpp (connect):
+
+	  If the connect() call fails, the svc_handler is closed by the
+	  Connector.  In case of the Cached Connector, it will not only
+	  close the svc_handler, but also zero it out.  No further action
+	  is required by the user.
+
+	* tao/IIOP_Profile.cpp (reset_hint):
+	* tao/UIOP_Profile.cpp (reset_hint):
+
+	  <this->hint_> can only be changed under the protection of the
+	  connector lock.  Therefore, it is passed to the cleanup_hint()
+	  function.
+
 Fri Nov 12 08:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/UIOP_Profile.cpp:
@@ -48,7 +65,7 @@ Thu Nov 11 17:18:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  the ostream operator.
 
 	* TAO_IDL/be/be_exception.cpp:
-	  Modified the generated ostream operator for 
+	  Modified the generated ostream operator for
 	  exceptions to output the same thing(s) in the same
 	  format as Steve's operator for CORBA_Exception.
 
@@ -114,7 +131,7 @@ Wed Nov 10 14:40:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 Wed Nov 10 11:11:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/reopened_modules.idl:
-	  Reopened a module a forward declared an interface 
+	  Reopened a module a forward declared an interface
 	  that had been defined when the module was first
 	  opened. The recently-added check for undefined
 	  forward declarations caught this error.
@@ -132,7 +149,7 @@ Tue Nov  9 17:12:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tests/Endpoint_Per_Priority/client.dsp:
 	* tests/Endpoint_Per_Priority/server.dsp:
 	  I forgot to configure the compile settings for test.idl. It
-	  had been done only in the server project. Thanks to 
+	  had been done only in the server project. Thanks to
 	  Marina for pointing this out. Also set 'additional library
 	  paths' in both projects, thanks to Irfan's advice.
 
@@ -164,14 +181,14 @@ Tue Nov  9 15:12:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
 	  Changed
-	 
+
 	  #if defined(_MSC_VER)
 	  #pragma warning(disable:4250)
 	  #endif /* _MSC_VER */
-  
+
 	  // ...
-  
-          #if defined(_MSC_VER)  
+
+          #if defined(_MSC_VER)
 	  #pragma warning(default:4250)
 	  #endif /* _MSC_VER */
 
@@ -181,13 +198,13 @@ Tue Nov  9 15:12:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  #pragma warning(push)
 	  #pragma warning(disable:4250)
 	  #endif /* _MSC_VER */
-  
+
 	  // ...
-  
-          #if defined(_MSC_VER)  
+
+          #if defined(_MSC_VER)
 	  #pragma warning(pop)
 	  #endif /* _MSC_VER */
-  
+
           in all generated header files. This will restore the original
 	  value even if it was modified from the default. Also removed
 	  the first half of the pair from generated *S_T.cpp file - it
@@ -195,7 +212,7 @@ Tue Nov  9 15:12:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Thanks to David Hauck <davidh@realtimeint.com> and
 	  Jovan Kilibarda <jovank@realtimeint.com> for
 	  suggesting this.
-	  
+
 Tue Nov  9 14:34:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
        * TAO_IDL/be_include/be.h
@@ -250,24 +267,24 @@ Tue Nov  9 14:34:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	 tao/TAOS_T.h
 	 tao/Buffering_Constraint_Policy.h
 	 examples/OBV/Typed_Events/Event_Types_impl.h: Added
-	 
+
 	 #if defined(_MSC_VER)
 	 #pragma warning(push)
 	 #pragma warning(disable:4250)
 	 #endif /* _MSC_VER */
-  
+
 	 // ...
-  
-         #if defined(_MSC_VER)  
+
+         #if defined(_MSC_VER)
 	 #pragma warning(pop)
 	 #endif /* _MSC_VER */
-  
+
          to these above files to that things will work better with MSVC++.
 	 Thanks to David Hauck <davidh@realtimeint.com> for
 	 suggesting this.
 
 Tue Nov 09 10:25:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-    
+
 	* tao/GIOP_Server_Request.h: Added #include "tao/ORB.h".  I use ORB
 	  function in the .i file.  Thanks to David for noticing this.
 
