@@ -668,7 +668,6 @@ ACE_Service_Config::close_singletons (void)
 ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
-  ACE_Service_Config::close ();
 }
 
 // ************************************************************
