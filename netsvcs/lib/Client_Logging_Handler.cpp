@@ -169,7 +169,7 @@ ACE_Client_Logging_Handler::close (u_long)
   ACE_DEBUG ((LM_DEBUG, "shutting down!!!\n"));
 
   if (this->logging_output_ != ACE_STDOUT)
-    ACE_OS::closesocket (this->logging_outout_);
+    ACE_OS::closesocket (this->logging_output_);
 
   this->destroy ();
   return 0;
