@@ -441,6 +441,38 @@ ACE_SSL_Context::report_error (void)
   ACE_OS::last_error (error);
 }
 
+int
+ACE_SSL_Context::dh_params (const char *file_name,
+                            int type)
+{
+  if (this->dh_params_.type () != -1)
+    return 0;
+
+  this->dh_params_ = ACE_SSL_Data_File (file_name, type);
+
+  this->check_context ();
+
+  {
+    // For now we only support PEM encodings
+    if (this->dh_params_.type () != SSL_FILETYPE_PEM)
+      return -1;
+
+    // Swiped from Rescorla's examples and the OpenSSL s_server.c app
+    DH *ret=0;
+    FILE *dhfp = 0;
+
+    if ((dhfp = ACE_OS::fopen (this->dh_params_.file_name (), "r")) == NULL)
+      return -1;
+
+    ret = PEM_read_DHparams (dhfp, NULL, NULL, NULL);
+    ACE_OS::fclose (dhfp);
+    if(::SSL_CTX_set_tmp_dh (this->context_, ret) < 0)
+      return -1;
+    DH_free (ret);
+  }
+
+  return 0;
+}
 
 // ****************************************************************
 
