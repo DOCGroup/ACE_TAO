@@ -18,7 +18,7 @@
 #include "ace/Get_Opt.h"
 
 char *ior_file_name_ = 0;
-char *comserv_path_ = "../ComponentServer/ComponentServer";
+const char *comserv_path_ = "../ComponentServer/ComponentServer";
 char *installation_ior_ = 0;
 CORBA::ULong spawn_wait_ = 5;
 

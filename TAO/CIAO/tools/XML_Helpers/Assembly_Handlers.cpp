@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Assembly_Handlers.h"
+#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Assembly_Handlers.inl"
