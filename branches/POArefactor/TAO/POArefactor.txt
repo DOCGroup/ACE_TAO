@@ -1,3 +1,17 @@
+Mon Oct 11 08:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdAssignmentPolicyFactory.h
+        * tao/PortableServer/IdUniquenessPolicyFactory.h
+        * tao/PortableServer/ImplicitActivationPolicyFactory.h
+        * tao/PortableServer/LifespanPolicyFactory.h
+        * tao/PortableServer/POA_Current.h
+        * tao/PortableServer/RequestProcessingPolicyFactory.h
+        * tao/PortableServer/ServantRetentionPolicyFactory.h
+        * tao/PortableServer/ThreadPolicyFactory.h
+        * tao/PortableServer/Thread_Strategy.cpp
+        * tao/PortableServer/Thread_Strategy.h:
+          Updated by Bala
+
 Fri Oct  8 09:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Activation_Strategy.h:
