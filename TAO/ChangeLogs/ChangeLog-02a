@@ -1,3 +1,34 @@
+Mon Feb  7 15:31:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be_include/be_union_branch.h:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be_visitor_union/union_ch.cpp:
+	* TAO_IDL/be_visitor_union/union_ci.cpp:
+	* TAO_IDL/be_visitor_union/union_cs.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  The IDL compiler has been generating a
+	  separate member typecode inside the union for each
+	  duplicate case label, but the TypeCode class
+	  contains no state (and therefore no methods using
+	  such state) containing info about multiple case
+	  labels - only about members. Typecode generation was changed
+	  to generate just one typecode for each member with
+	  the value of the first case label encountered for
+	  that member. The private union function _discriminant()
+	  (called by (de)marshaling code) was modified to
+	  return this value no matter what the actual current
+	  discriminant value may be. Thanks to
+	  Christopher Kohlhoff <chris@kohlhoff.com> for sending
+	  in yet another IDL file/test code example that got to
+	  the crux of this matter.
+
+	* tests/IDL_Test/union.idl:
+	* tests/IDL_Test/main.cpp:
+	  Added an expanded version of Chris Kohlhoff's example
+	  to IDL_Test.
+
 Mon Feb 07 12:15:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/run_test.pl: Set the "-x" switch on the client,
