@@ -21,7 +21,7 @@
 
 class ACE_Export ACE_High_Res_Timer
 {
-  // = TITLE 
+  // = TITLE
   //     A high resolution timer class wrapper that encapsulates
   //     OS-specific high-resolution timers, such as those found on
   //     Solaris, AIX, Win32/Pentium, and VxWorks.
@@ -166,7 +166,7 @@ protected:
 
 private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
-                            ACE_hrtime_t hrt);
+                            const ACE_hrtime_t hrt);
   // Converts an <hrt> to <tv> using global_scale_factor_.
 
   static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =

@@ -1,17 +1,25 @@
 /* -*- C++ -*- */
 // $Id$
 
-// High_Res_Timer.i
-
 ACE_INLINE void
 ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
-				  ACE_hrtime_t hrt)
+                                  const ACE_hrtime_t hrt)
 {
   // The following are based on the units of global_scale_factor_
   // being 1/microsecond.  Therefore, dividing by it converts
   // clock ticks to microseconds.
-  tv.sec ((long) (hrt / global_scale_factor_) / ACE_ONE_SECOND_IN_USECS);
-  tv.usec ((long) (hrt / global_scale_factor_) % ACE_ONE_SECOND_IN_USECS);
+  tv.sec ((long) (hrt / (ACE_UINT32) ACE_ONE_SECOND_IN_USECS /
+                  global_scale_factor_));
+
+  // Calculate usec in a manner that's compatible with ACE_U_LongLong.
+  // hrt = (tv.sec * ACE_ONE_SECOND_IN_USECS + tv.usec) * global_scale_factor_
+  // tv.usec = hrt / global_scale_factor_ - tv.sec * ACE_ONE_SECOND_IN_USECS
+  // That first term will be lossy, so factor out global_scale_factor_:
+  // tv.usec = (hrt - tv.sec * ACE_ONE_SECOND_IN_USECS * global_scale_factor_)/
+  //           global_scale_factor
+  ACE_hrtime_t tmp = tv.sec ();
+  tmp *= ((ACE_UINT32) ACE_ONE_SECOND_IN_USECS * global_scale_factor_);
+  tv.usec ((hrt - tmp) / global_scale_factor_);
 }
 
 
@@ -19,7 +27,7 @@ ACE_INLINE ACE_Time_Value
 ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
 {
 #if defined (ACE_WIN32)
-  // If the global_scale_factor_ == 1 and we're on an Intel platform,
+  // If the global_scale_factor_ == 1 and we're on a WIN32 platform,
   // then a scale factor is needed by the platform gethrtime.  Since
   // one has not been set, just return ACE_OS::gettimeofday.
   if (ACE_High_Res_Timer::global_scale_factor_ == 1)
@@ -28,7 +36,7 @@ ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
 
   ACE_Time_Value tv;
   ACE_High_Res_Timer::hrtime_to_tv (tv,
-				    ACE_OS::gethrtime (op));
+                                    ACE_OS::gethrtime (op));
   return tv;
 }
 
@@ -37,7 +45,7 @@ ACE_INLINE ACE_hrtime_t
 ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
 {
 #if defined (ACE_WIN32)
-  // If the global_scale_factor_ == 1 and we're on an Intel platform,
+  // If the global_scale_factor_ == 1 and we're on a WIN32 platform,
   // then a scale factor is needed by the platform gethrtime.  Since
   // one has not been set, just return ACE_OS::gettimeofday.
   if (ACE_High_Res_Timer::global_scale_factor_ == 1)

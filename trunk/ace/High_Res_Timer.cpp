@@ -102,8 +102,7 @@ ACE_High_Res_Timer::reset (void)
 void
 ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
 {
-  tv.sec ((long) ((this->end_ - this->start_) / global_scale_factor_) / ACE_ONE_SECOND_IN_USECS);
-  tv.usec ((long) ((this->end_ - this->start_) / global_scale_factor_) % ACE_ONE_SECOND_IN_USECS);
+  hrtime_to_tv (tv, end_ - start_);
 }
 
 #if defined (ACE_HAS_POSIX_TIME)
@@ -141,10 +140,7 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
 {
-  // Leave off any microseconds using DIV.
-  tv.sec ((long) (this->total_ / global_scale_factor_) / ACE_ONE_SECOND_IN_USECS);
-  // Leave off any seconds using MOD.
-  tv.usec ((long) (this->total_ / global_scale_factor_) % ACE_ONE_SECOND_IN_USECS);
+  hrtime_to_tv (tv, total_);
 }
 
 // The whole point is to get nanoseconds.  However, our scale_factor
