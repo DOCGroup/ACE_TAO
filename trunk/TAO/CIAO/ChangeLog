@@ -1,3 +1,36 @@
+Sat Mar 19 15:29:45 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/Any_Handler.h:
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+        * DAnCE/Config_Handlers/CEPE_Handler.cpp:
+        * DAnCE/Config_Handlers/CEPE_Handler.h:
+        * DAnCE/Config_Handlers/Deployment.cpp:
+        * DAnCE/Config_Handlers/DnC_Dump.cpp:
+        * DAnCE/Config_Handlers/DnC_Dump.h:
+        * DAnCE/Config_Handlers/DnC_Dump_T.cpp:
+        * DAnCE/Config_Handlers/DnC_Dump_T.h:
+        * DAnCE/Config_Handlers/Dump_Obj.cpp:
+        * DAnCE/Config_Handlers/Dump_Obj.h:
+        * DAnCE/Config_Handlers/ERE_Handler.cpp:
+        * DAnCE/Config_Handlers/ERE_Handler.h:
+        * DAnCE/Config_Handlers/IDD_Handler.cpp:
+        * DAnCE/Config_Handlers/IDD_Handler.h:
+        * DAnCE/Config_Handlers/IDREF_Base.cpp:
+        * DAnCE/Config_Handlers/IDREF_Base.h:
+        * DAnCE/Config_Handlers/ID_Handler.cpp:
+        * DAnCE/Config_Handlers/ID_Handler.h:
+        * DAnCE/Config_Handlers/IRDD_Handler.cpp:
+        * DAnCE/Config_Handlers/IRDD_Handler.h:
+        * DAnCE/Config_Handlers/MDD_Handler.cpp:
+        * DAnCE/Config_Handlers/MDD_Handler.h:
+        * DAnCE/Config_Handlers/Modified_Deployment.xsd:
+        * DAnCE/Config_Handlers/PCD_Handler.cpp:
+        * DAnCE/Config_Handlers/PCD_Handler.h:
+        * DAnCE/Config_Handlers/PSPE_Handler.cpp:
+        * DAnCE/Config_Handlers/PSPE_Handler.h:
+
+          More XML config handlers.
+
 Sat Mar 19 15:25:17 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/ADD_Handler.cpp:
