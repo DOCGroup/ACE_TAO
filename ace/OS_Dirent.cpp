@@ -13,10 +13,10 @@
  */
 #if defined (ACE_WIN32)
 #  if !defined (INVALID_FILE_ATTRIBUTES)
-#    define INVALID_FILE_ATTRIBUTES (-1)
+#    define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
 #  endif /* INVALID_FILE_ATTRIBUTES */
 #  if !defined (INVALID_SET_FILE_POINTER)
-#    define INVALID_SET_FILE_POINTER (-1)
+#    define INVALID_SET_FILE_POINTER ((DWORD)-1)
 #  endif /* INVALID_SET_FILE_POINTER */
 #endif /* ACE_WIN32 */
 
@@ -35,7 +35,7 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
 
    // Check if filename is a directory.
    DWORD fileAttribute = ACE_TEXT_GetFileAttributes (filename);
-   if (fileAttribute == INVALID_FILE_ATTRIBUTES 
+   if (fileAttribute == INVALID_FILE_ATTRIBUTES
        || !(fileAttribute & FILE_ATTRIBUTE_DIRECTORY))
      return 0;
 
