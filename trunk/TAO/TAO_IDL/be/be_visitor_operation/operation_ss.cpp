@@ -335,8 +335,6 @@ be_visitor_operation_ss::gen_raise_exception (be_type *bt,
                                               const char *env)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
 
   os->indent ();
   *os << "TAO_THROW_ENV ("
@@ -349,8 +347,6 @@ int
 be_visitor_operation_ss::gen_check_exception (be_type *bt, const char *env)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
   
   os->indent ();
   // check if there is an exception
@@ -484,7 +480,6 @@ be_interpretive_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                                                             be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
   be_visitor_context ctx;
 
   // setup parameters for demarshaling and demarshal them
