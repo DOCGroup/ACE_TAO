@@ -37,6 +37,7 @@
 
 #include "Protocols_Hooks.h"
 #include "IORInterceptor_Adapter.h"
+#include "IORInterceptor_Adapter_Factory.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
@@ -116,7 +117,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     dynamic_adapter_name_ ("Dynamic_Adapter"),
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
-    iorinterceptor_adapter_name_ ("IORInterceptor_Adapter"),
+    iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_name_ ("Valuetype_Adapter"),
     poa_factory_name_ ("TAO_POA"),
     poa_factory_directive_ ("dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()")
@@ -1201,15 +1202,15 @@ TAO_ORB_Core::typecodefactory_adapter_name (void)
 }
 
 void
-TAO_ORB_Core::iorinterceptor_adapter_name (const char *name)
+TAO_ORB_Core::iorinterceptor_adapter_factory_name (const char *name)
 {
-  TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_name_ = name;
+  TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_factory_name_ = name;
 }
 
 const char *
-TAO_ORB_Core::iorinterceptor_adapter_name (void)
+TAO_ORB_Core::iorinterceptor_adapter_factory_name (void)
 {
-  return TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_name_.c_str();
+  return TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_factory_name_.c_str();
 }
 
 void
@@ -2044,6 +2045,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
           this->ior_interceptor_adapter_->destroy_interceptors (
               ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
+          this->ior_interceptor_adapter_ = 0;
         }
 
     }
@@ -2804,11 +2806,13 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                         0);
       if (this->ior_interceptor_adapter_ == 0)
         {
-          this->ior_interceptor_adapter_=
-          ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
-              TAO_ORB_Core::iorinterceptor_adapter_name ()
+          TAO_IORInterceptor_Adapter_Factory * the_ior_interceptor_adapter_factory =
+            ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance (
+              TAO_ORB_Core::iorinterceptor_adapter_factory_name ()
               );
-
+          this->ior_interceptor_adapter_ =
+            the_ior_interceptor_adapter_factory->create (ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
     }
   return this->ior_interceptor_adapter_;

@@ -1,3 +1,26 @@
+Fri Jul 18 10:35:23 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tao/IORInterceptor_Adapter.cpp:
+        * tao/IORInterceptor_Adapter.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+
+        Added Files:
+        * tao/IORInterceptor_Adapter_Factory.cpp:
+        * tao/IORInterceptor_Adapter_Factory.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
+
+        Modified ORB_Core to create a new IORInterceptor_Adapter when
+        needed instead of obtaining a reference to a global
+        IORInterceptor_Adapter. This is accomplished via the new
+        IORInterceptor_Adapter_Factory class. This change was made so that
+        processes with multiple ORBs can have different IOR interceptors
+        registered with each ORB. 
+
 Fri Jul 18 15:29:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
