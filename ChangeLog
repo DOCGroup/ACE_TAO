@@ -1,3 +1,42 @@
+Tue Nov 25 23:41:21 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* apps/JAWS3/jaws3/Concurrency.cpp:
+	Remove the unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
+
+	* apps/JAWS3/jaws3/Config_File.cpp:
+	Added #include "ace/Unbounded_Queue.h"
+
+	* apps/JAWS3/jaws3/Datagram.cpp:
+	Remove unnecessary default values in cpp impl file.
+
+	* apps/JAWS3/jaws3/Event_Dispatcher.cpp:
+	Use ACE_THR_FUNC_RETURN instead of void*
+
+	* apps/JAWS3/jaws3/IO.h:
+	Added #include "ace/Singleton.h" and 
+	#include "ace/Synch_Traits.h"	
+
+	* apps/JAWS3/jaws3/Reactive_IO.cpp:
+	Added #include "ace/ACE.h"
+
+	* apps/JAWS3/jaws3/Signal_Task.cpp:
+	Added #define JAWS_BUILD_DLL
+	Use ACE_THR_FUNC_RETURN instead of void*
+	Add if !defined (ACE_WIN32) for WIN32 because of SIGHUP
+
+	* apps/JAWS3/jaws3/Signal_Task.h:
+	Added #include "jaws3/Export.h" and add JAWS_Export to JAWS_Signal_Task
+
+	* apps/JAWS3/jaws3/THYBRID_Concurrency.h:
+	* apps/JAWS3/jaws3/TPR_Concurrency.h:
+	Added #include "ace/Atomic_Op.h"
+	
+Tue Nov 25 23:35:27 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* apps/JAWS3/jaws3.mwc:
+	* apps/JAWS3/jaws3/jaws3.mpc: 
+	Added To the repository
+	
 Tue Nov 25 15:01:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/global.features:
