@@ -37,20 +37,28 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
 
   // Refresh position
   BasicSP::ReadData_var dat
-    = this->context_->get_connection_datain (ACE_ENV_ARG_PARAMETER);
+    = this->context_->get_connection_datain (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (dat.in ()))
+  {
     ACE_THROW (CORBA::BAD_INV_ORDER ());
+  }
 
-  this->str_ =
-    dat->get_data ();
+  char *str =
+    dat->get_data (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "BMDisplay - Display data is [%s] \n",
-              this->str_.in ()));
+              "BMClosedED - Display data is [%s] \n",
+               str));
 
-  // Nitify others
+  if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
+    {	  
+      this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");	   
+    }
+
+  // Notify others
   BasicSP::DataAvailable_var event =
     new OBV_BasicSP::DataAvailable;
 
