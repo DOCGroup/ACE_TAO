@@ -7,6 +7,7 @@
 
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
+#include "JAWS/IO_Acceptor.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 #include "JAWS/Waiter.h"
