@@ -105,7 +105,7 @@ int OpenLiveAudio(AudioParameter * ap)
 		  &attributes);
   if (ac == NULL)
   {
-    perror("AS error: failed to create ac");
+   ACE_OS::perror ("AS error: failed to create ac");
     AFCloseAudioConn(aud);
     return -1;
   }
@@ -219,7 +219,7 @@ void StopPlayLiveAudio(void)
 int ReadLiveAudioSamples(char * buf, int samples)
 {
   int bytes = samples * bps;
-  int len = read(sunfd1, buf, bytes);
+  int len = ACE_OS::read (sunfd1, buf, bytes);
   if (len != bytes) {
     fprintf(stderr, "ReadLive: need %d samples (%dB), read %dB\n",
 	    samples, bytes, len);

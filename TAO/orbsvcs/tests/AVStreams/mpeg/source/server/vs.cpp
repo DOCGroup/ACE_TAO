@@ -32,7 +32,7 @@ Video_Child_Process::init (int argc,
   */
   VIDEO_SINGLETON::instance ()->msgsize -= sizeof(VideoMessage);
   
-  VIDEO_SINGLETON::instance ()->start_time = time(NULL);
+  VIDEO_SINGLETON::instance ()->start_time =ACE_OS::time (NULL);
 
   VIDEO_SINGLETON::instance ()->lastRef [0] 
     = VIDEO_SINGLETON::instance ()->lastRef[1] 

@@ -370,7 +370,7 @@ mib_Widget *mib_load_interface(Widget parent, char *from, int file_type)
       return NULL;
 
     thiswfile.buffer = (void *)instring;
-    thiswfile.buflen = strlen(instring);
+    thiswfile.buflen =ACE_OS::strlen (instring);
     thiswfile.point = 0;
 
     if (!mib_load_Root(parent, &thisw, &thiswfile))
@@ -399,7 +399,7 @@ int mib_load_mib_class(mib_Widget **thisw, mib_Widget *parent, char *name,
   else
     editstate = WEMPTY;
 
-  namelen = strlen(name);
+  namelen =ACE_OS::strlen (name);
   if (namelen < 2)
     return 0;
 
@@ -619,7 +619,7 @@ int mib_load_Root(Widget parent, mib_Widget **thisw, mib_Buffer *fin)
   /* we don't expect any private resources for the root widget */
 
   got_line = mib_read_line(fin, res, val);
-  if (strcmp(res,"EndWidget."))
+  if (ACE_OS::strcmp (res,"EndWidget."))
     return 0;
 
 /*   XtManageChild((*thisw)->me);

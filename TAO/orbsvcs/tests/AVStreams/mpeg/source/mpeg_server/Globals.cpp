@@ -691,7 +691,7 @@ Video_Global::ComputeFirstSendPattern (float limit)
 {
   char * buf = this->firstSendPattern;
   int len = this->firstPatternSize;
-  char * pat = (char *)malloc (len);
+  char * pat = (char *)ACE_OS::malloc (len);
   int f;
 
   if (pat == NULL) {
@@ -913,7 +913,7 @@ Video_Global::ReadInfoFromFile (void)
   memset (this->pattern, 0, PATTERN_SIZE);
   read_bytes (fd, this->pattern, this->patternSize);
 #ifdef STAT
-  this->framesSent = (char *)malloc ((this->numF + 7)>>3);
+  this->framesSent = (char *)ACE_OS::malloc ((this->numF + 7)>>3);
   if (this->framesSent == NULL)
     {
       fprintf (stderr, "Error: VS fails to alloc mem for this->framesSent for %d frames", this->numF);
@@ -921,30 +921,30 @@ Video_Global::ReadInfoFromFile (void)
       exit (1);
     }
 #endif
-  this->systemHeader = (struct Video_Global::SystemHeader *)malloc (sizeof (struct Video_Global::SystemHeader) * this->numS);
+  this->systemHeader = (struct Video_Global::SystemHeader *)ACE_OS::malloc (sizeof (struct Video_Global::SystemHeader) * this->numS);
   if (this->systemHeader == NULL)
     {
-      perror ("Error: VS error on malloc this->SystemHeader");
+      perror ("Error: VS error on ACE_OS::malloc this->SystemHeader");
       exit (1);
     }
-  this->gopTable = (struct Video_Global::GopTable *)malloc (sizeof (struct Video_Global::GopTable) * this->numG);
+  this->gopTable = (struct Video_Global::GopTable *)ACE_OS::malloc (sizeof (struct Video_Global::GopTable) * this->numG);
   if (this->gopTable == NULL)
     {
-      perror ("Error: VS error on malloc GopHeader");
+      perror ("Error: VS error on ACE_OS::malloc GopHeader");
       exit (1);
     }
-  this->frameTable = (struct Video_Global::FrameTable *)malloc (sizeof (Video_Global::FrameTable) * this->numF);
+  this->frameTable = (struct Video_Global::FrameTable *)ACE_OS::malloc (sizeof (Video_Global::FrameTable) * this->numF);
   if (this->frameTable == NULL)
     {
-      perror ("Error: VS error on malloc this->frameTable");
+      perror ("Error: VS error on ACE_OS::malloc this->frameTable");
       exit (1);
     }
   this->packetBufSize = this->maxS + this->maxG + max (this->maxI, max (this->maxP, this->maxB));
-  this->packet = (VideoPacket *)malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
+  this->packet = (VideoPacket *)ACE_OS::malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
                                         this->packetBufSize);
   if (this->packet == NULL)	
     {	
-      perror ("Error: VS error on malloc this->packet buffer");
+      perror ("Error: VS error on ACE_OS::malloc this->packet buffer");
       exit (1);
     }
   this->packet = (VideoPacket *) ((char *)this->packet + sizeof (VideoMessage));
@@ -1184,7 +1184,7 @@ you need to update the constant definition in common.h and recompile.\n",
         }
 
 #ifdef STAT
-      this->framesSent = (char *)malloc ((this->numF + 7)>>3);
+      this->framesSent = (char *)ACE_OS::malloc ((this->numF + 7)>>3);
       if (this->framesSent == NULL)
         {
           fprintf (stderr, "VS fails to alloc mem for this->framesSent for %d frames", this->numF);
@@ -1193,22 +1193,22 @@ you need to update the constant definition in common.h and recompile.\n",
         }
 #endif
 
-      this->systemHeader = (struct Video_Global::SystemHeader *)malloc (sizeof (struct Video_Global::SystemHeader) * this->numS);
+      this->systemHeader = (struct Video_Global::SystemHeader *)ACE_OS::malloc (sizeof (struct Video_Global::SystemHeader) * this->numS);
       if (this->systemHeader == NULL)
         {
-          perror ("VS error on malloc this->SystemHeader");
+          perror ("VS error on ACE_OS::malloc this->SystemHeader");
           return 7;
         }
-      this->gopTable = (struct Video_Global::GopTable *)malloc (sizeof (struct Video_Global::GopTable) * this->numG);
+      this->gopTable = (struct Video_Global::GopTable *)ACE_OS::malloc (sizeof (struct Video_Global::GopTable) * this->numG);
       if (this->gopTable == NULL)
         {
-          perror ("VS error on malloc GopHeader");
+          perror ("VS error on ACE_OS::malloc GopHeader");
           return 8;
         }
-      this->frameTable = (struct Video_Global::FrameTable *)malloc (sizeof (Video_Global::FrameTable) * this->numF);
+      this->frameTable = (struct Video_Global::FrameTable *)ACE_OS::malloc (sizeof (Video_Global::FrameTable) * this->numF);
       if (this->frameTable == NULL)
         {
-          perror ("VS error on malloc this->frameTable");
+          perror ("VS error on ACE_OS::malloc this->frameTable");
           return 9;
         }
 
@@ -1311,11 +1311,11 @@ you need to update the constant definition in common.h and recompile.\n",
           this->minG = min (this->minG, this->gopTable[gopptr].headerSize);
         }
       this->packetBufSize = this->maxS + this->maxG + max (this->maxI, max (this->maxP, this->maxB));
-      this->packet = (VideoPacket *)malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
+      this->packet = (VideoPacket *)ACE_OS::malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
                                             this->packetBufSize);
       if (this->packet == NULL)
         {
-          perror ("VS error on malloc this->packet buffer");
+          perror ("VS error on ACE_OS::malloc this->packet buffer");
           return 10;
         }
       this->packet = (VideoPacket *) ((char *)this->packet + sizeof (VideoMessage));
@@ -1401,7 +1401,7 @@ you need to update the constant definition in common.h and recompile.\n",
 #endif
   {
     this->firstPatternSize = this->gopTable[0].totalFrames;
-    this->firstSendPattern = (char *)malloc (this->firstPatternSize);
+    this->firstSendPattern = (char *)ACE_OS::malloc (this->firstPatternSize);
     if (this->firstSendPattern == NULL)
       {
         fprintf (stderr, "VS failed to allocate this->firstthis->Sendthis->Pattern for %d frames",
@@ -1831,11 +1831,11 @@ Video_Global::init_video (void)
     this->pattern[0] = 'I';
     this->pattern[1] = 0;
     this->packetBufSize = this->verticalSize * this->horizontalSize * 3;
-    this->packet = (VideoPacket *)malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
+    this->packet = (VideoPacket *)ACE_OS::malloc (sizeof (VideoMessage) + sizeof (VideoPacket) +
                                           this->packetBufSize);
     if (this->packet == NULL)	
       {
-        perror ("Error: VS error on malloc this->packet buffer");
+        perror ("Error: VS error on ACE_OS::malloc this->packet buffer");
         exit (1);
       }
     this->packet = (VideoPacket *) ((char *)this->packet + sizeof (VideoMessage));
@@ -2276,7 +2276,7 @@ Audio_Global::CmdRead(char *buf, int psize)
   if (res == 0) return (1);
   if (res == -1) {
     fprintf(stderr, "AS error on read cmdSocket, size %d", psize);
-    perror("");
+   ACE_OS::perror ("");
     return (-1);
   }
   return 0;
@@ -2287,8 +2287,8 @@ Audio_Global::CmdWrite(char *buf, int size)
 {
   int res = wait_write_bytes(serviceSocket, buf, size);
   if (res == -1) {
-    if (errno != EPIPE) perror("AS writes to serviceSocket");
-    exit(errno != EPIPE);
+    if (errno != EPIPE)ACE_OS::perror ("AS writes to serviceSocket");
+    ACE_OS::exit (errno != EPIPE);
   }
 }
 
@@ -2331,7 +2331,7 @@ Audio_Global::INITaudio(void)
     write_string(serviceSocket, errmsg);
     return(1);
   }
-  memcpy(&audioPara, &para.para, sizeof(audioPara));
+  ACE_OS::memcpy (&audioPara, &para.para, sizeof(audioPara));
   /*
   fprintf(stderr, "Client Audio para: encode %d, ch %d, sps %d, bps %d.\n",
 	  para.para.encodeType, para.para.channels,
@@ -2339,7 +2339,7 @@ Audio_Global::INITaudio(void)
    */
   audioFile[para.nameLength] = 0;
   {
-    int len = strlen(audioFile);
+    int len =ACE_OS::strlen (audioFile);
     if (strncasecmp("LiveAudio", audioFile, 9) &&
 	strcasecmp(".au", audioFile+len-3)) {
       char errmsg[128];
@@ -2370,7 +2370,7 @@ Audio_Global::INITaudio(void)
     if (fd == -1)
     {
       fprintf(stderr, "AS error on opening audio file %s", audioFile);
-      perror("");
+     ACE_OS::perror ("");
       failureType = 0;
       goto failure;
     }
@@ -2436,10 +2436,10 @@ Audio_Global::send_packet (int firstSample, int samples)
   }
   else {
     lseek(fd, offset, SEEK_SET);
-    while ((len = read(fd, buf, size)) == -1) {
+    while ((len = ACE_OS::read (fd, buf, size)) == -1) {
       if (errno == EINTR)
 	continue;   /* interrupted */
-      perror("AS error on read audio file");
+     ACE_OS::perror ("AS error on read audio file");
       return(-1);
     }
     if (len < audioPara.bytesPerSample) {
@@ -2459,12 +2459,12 @@ Audio_Global::send_packet (int firstSample, int samples)
   }
   segsize = sizeof(*pktbuf) + len;
   if (conn_tag != 0) {
-    while ((sentsize = write(audioSocket, (char *)pktbuf, segsize)) == -1) {
+    while ((sentsize = ACE_OS::write (audioSocket, (char *)pktbuf, segsize)) == -1) {
       if (errno == EINTR) /* interrupted */
 	continue;
       if (errno == ENOBUFS) {
 	if (resent) {
-	  perror("AS Warning, pkt discarded because");
+	 ACE_OS::perror ("AS Warning, pkt discarded because");
 	  break;
 	}
 	else {
@@ -2478,7 +2478,7 @@ Audio_Global::send_packet (int firstSample, int samples)
 		firstSample, samples);
 	perror("");
       }
-      exit((errno != EPIPE));
+      ACE_OS::exit ((errno != EPIPE));
     }
   }
   else {
@@ -2489,7 +2489,7 @@ Audio_Global::send_packet (int firstSample, int samples)
 		firstSample, samples);
 	perror("");
       }
-      exit((errno != EPIPE));
+      ACE_OS::exit ((errno != EPIPE));
      }
   }
   if (sentsize < segsize) {
@@ -2636,7 +2636,7 @@ Audio_Global::PLAYaudio(void)
     {
       if (errno == EINTR)
         continue;
-      perror("AS error on select reading or writing");
+     ACE_OS::perror ("AS error on select reading or writing");
       return(-1);
     }
     if (FD_ISSET(serviceSocket, &read_mask)){  /* STOP, SPEED, or CLOSE*/
@@ -2682,7 +2682,7 @@ Audio_Global::PLAYaudio(void)
           if (result != 0)
             return result;
 	  /*
-	  CmdWrite(AUDIO_STOP_PATTERN, strlen(AUDIO_STOP_PATTERN));
+	  CmdWrite(AUDIO_STOP_PATTERN,ACE_OS::strlen (AUDIO_STOP_PATTERN));
 	  */
 	  if (live_source) {
 	    StopPlayLiveAudio();
@@ -2710,17 +2710,17 @@ Audio_Global::PLAYaudio(void)
 	  len = wait_read_bytes(audioSocket, (char *)fbpara, sizeof(*fbpara));
 	  if (len == 0) return(1); /* connection broken */
 	  else if (len < 0) { /* unexpected error */
-	    perror("AS read1 FB");
+	   ACE_OS::perror ("AS read1 FB");
 	    return(-1);
 	  }
 	}
 	else { /* discard mode packet stream, read the whole packet */
-	  len = read(audioSocket, (char *)fbpara,  FBBUF_SIZE);
+	  len = ACE_OS::read (audioSocket, (char *)fbpara,  FBBUF_SIZE);
 	}
 	if (len == -1) {
 	  if (errno == EINTR) continue; /* interrupt */
 	  else {
-	    if (errno != EPIPE && errno != ECONNRESET) perror("AS failed to read() fbmsg header");
+	    if (errno != EPIPE && errno != ECONNRESET)ACE_OS::perror ("AS failed to ACE_OS::read () fbmsg header");
 	    break;
 	  }
 	}
@@ -2728,7 +2728,7 @@ Audio_Global::PLAYaudio(void)
       }
       if (len < sizeof(*fbpara)) {
 	if (len > 0) fprintf(stderr,
-			 "AS warn read() len %dB < sizeof(*fbpara) %dB\n",
+			 "AS warn ACE_OS::read () len %dB < sizeof(*fbpara) %dB\n",
 			 len, sizeof(*fbpara));
 	continue;
       }
@@ -2746,7 +2746,7 @@ Audio_Global::PLAYaudio(void)
 				bytes);
 	  if (len == 0) return(1); /* connection broken */
 	  else if (len < 0) { /* unexpected error */
-	    perror("AS read2 FB");
+	   ACE_OS::perror ("AS read2 FB");
 	    return(-1);
 	  }
 	  len += sizeof(*fbpara);
@@ -2918,8 +2918,8 @@ Audio_Global::on_exit_routine(void)
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
       struct hostent *hp;
-      time_t val = time(NULL);
-      char * buf = ctime(&start_time);
+      time_t val =ACE_OS::time (NULL);
+      char * buf = ACE_OS::ctime (&start_time);
 
       hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;

@@ -23,6 +23,10 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
+#if !defined (AV_FILTERS_H)
+#define AV_FILTERS_H
+
 #define FILTER_LOWPASS  0
 #define FILTER_MEDIAN   1
 #define FILTER_AVERAGE  2
@@ -83,3 +87,5 @@ LowPassFilter * NewLowPassFilter(double R);
 LowPassFilter * ResetLowPassFilter(LowPassFilter * f, double R);
 void FreeLowPassFilter(LowPassFilter * f);
 double DoLowPassFilter(LowPassFilter *f, double value);
+
+#endif /* AV_FILTERS_H */
