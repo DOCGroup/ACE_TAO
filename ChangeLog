@@ -1,3 +1,13 @@
+Mon May 22 15:25:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.{h,cpp} (ACE_Thread_Exit):
+	* ace/Thread_Manager.cpp (~ACE_Thread_Exit): Moved the reset of
+	  ACE_Thread_Exit::is_constructed_ from the Thread_Exit's
+	  destructor to ACE_OS_Object_Manager::fini ().  Otherwise, the
+	  singleton ACE_Thread_Exit may get created multiple times.
+	  Thanks to Eric Yee <eyee@authentica.com> for reporting the
+	  problem.
+
 Mon May 22 11:23:19 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * ACE version 5.1.3 released.
