@@ -6,11 +6,15 @@
 #include "CEC_SupplierControl.h"
 #include "CEC_ProxyPullSupplier.h"
 
+#include "ace/Reverse_Lock_T.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "CEC_ProxyPullConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_ProxyPullConsumer, "$Id$")
+ACE_RCSID (CosEvent,
+           CEC_ProxyPullConsumer,
+           "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 

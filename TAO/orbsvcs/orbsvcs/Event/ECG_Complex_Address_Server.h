@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_Complex_Address_Server.h
  *
@@ -10,6 +11,7 @@
 
 #ifndef TAO_ECG_COMPLEX_ADDRESS_SERVER_H
 #define TAO_ECG_COMPLEX_ADDRESS_SERVER_H
+
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
@@ -17,6 +19,7 @@
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/INET_Addr.h"
+#include "ace/Null_Mutex.h"
 
 #include "EC_Lifetime_Utils_T.h"
 
@@ -108,4 +111,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_ECG_COMPLEX_ADDRESS_SERVER_H */
+
+#endif  /* TAO_ECG_COMPLEX_ADDRESS_SERVER_H */

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Dispatching_Task.h
@@ -12,10 +13,12 @@
 
 #ifndef TAO_CEC_DISPATCHING_TASK_H
 #define TAO_CEC_DISPATCHING_TASK_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
+#include "ace/Lock_Adapter_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +26,7 @@
 
 #include "orbsvcs/CosEvent/event_export.h"
 #include "CEC_ProxyPushSupplier.h"
+
 
 /**
  * @class TAO_CEC_Dispatching_Task
@@ -113,4 +117,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_CEC_DISPATCHING_TASK_H */
+
+#endif  /* TAO_CEC_DISPATCHING_TASK_H */

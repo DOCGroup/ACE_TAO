@@ -2,6 +2,7 @@
 
 #include "ace/OS.h"
 #include "ace/Singleton.h"
+#include "ace/Null_Mutex.h"
 
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -10,7 +11,9 @@
 #include "orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(orbsvcs, Scheduler_Factory, "$Id$")
+ACE_RCSID(orbsvcs,
+          Scheduler_Factory,
+          "$Id$")
 
 // Initialize static class members.
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;

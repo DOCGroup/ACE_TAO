@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Gateway_IIOP.h
  *
@@ -15,6 +16,7 @@
 
 #ifndef TAO_EC_GATEWAY_IIOP_H
 #define TAO_EC_GATEWAY_IIOP_H
+
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
@@ -23,6 +25,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients.h"
 #include "ace/Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_ECG_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP_Factory;
@@ -242,4 +245,5 @@ protected:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_EC_GATEWAY_IIOP_H */

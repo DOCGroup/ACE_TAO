@@ -28,6 +28,7 @@
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 #include "log_export.h"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 30

@@ -18,6 +18,7 @@
 
 #include "Trader.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 /**
  * @class TAO_Service_Type_Repository
