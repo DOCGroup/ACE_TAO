@@ -40,7 +40,7 @@
 #if defined (ACE_AS_STATIC_LIBS) || \
   (!defined (ACE_WIN32) && !defined (ACE_HAS_SVR4_DYNAMIC_LINKING) && \
    !defined (__hpux))
-#include "ace/Logging_Strategy.cpp"
+#include "ace/Logging_Strategy.h"
 #endif
 
 #include "ace/Auto_Ptr.cpp"
