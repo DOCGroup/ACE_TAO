@@ -61,7 +61,7 @@ LINK32=link.exe -lib
 RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CePlatform)"<%foreach(defines common_defines cpu_defines macros)%> /d <%define%><%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%> /r
 CPP=<%cpp("cl.exe")%>
-# ADD CPP /nologo <%if(optimize)%>/O2<%else%>/Ob<%endif%> <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%>/D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) <%foreach(defines common_defines cpu_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FR /FD /c
+# ADD CPP /nologo <%if(optimize)%>/O2<%else%>/Ob0<%endif%> <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%>/D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) <%foreach(defines common_defines cpu_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dynamicflag%> <%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FR /FD /c
 <%if(compile_flags_removed)%>
 # SUBTRACT CPP <%compile_flags_removed%>
 <%endif%>
@@ -98,7 +98,7 @@ LIB32=link.exe -lib
 <%if(pch_header)%>
 # Begin Source File
 
-SOURCE=.\<%pch_source%>
+SOURCE=".\<%pch_source%>"
 # ADD CPP /Yc"<%pch_header%>"
 # End Source File
 <%endif%>
@@ -106,7 +106,7 @@ SOURCE=.\<%pch_source%>
 <%foreach(source_files)%>
 # Begin Source File
 
-SOURCE=.\<%source_file%>
+SOURCE=".\<%source_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -117,13 +117,13 @@ SOURCE=.\<%source_file%>
 <%if(pch_header)%>
 # Begin Source File
 
-SOURCE=.\<%pch_header%>
+SOURCE=".\<%pch_header%>"
 # End Source File
 <%endif%>
 <%foreach(header_files)%>
 # Begin Source File
 
-SOURCE=.\<%header_file%>
+SOURCE=".\<%header_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -135,7 +135,7 @@ SOURCE=.\<%header_file%>
 <%foreach(inline_files)%>
 # Begin Source File
 
-SOURCE=.\<%inline_file%>
+SOURCE=".\<%inline_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -147,7 +147,7 @@ SOURCE=.\<%inline_file%>
 <%foreach(template_files)%>
 # Begin Source File
 
-SOURCE=.\<%template_file%>
+SOURCE=".\<%template_file%>"
 # PROP Exclude_From_Build 1
 # End Source File
 <%endfor%>
@@ -160,7 +160,7 @@ SOURCE=.\<%template_file%>
 <%foreach(documentation_files)%>
 # Begin Source File
 
-SOURCE=.\<%documentation_file%>
+SOURCE=".\<%documentation_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -172,7 +172,7 @@ SOURCE=.\<%documentation_file%>
 <%foreach(resource_files)%>
 # Begin Source File
 
-SOURCE=.\<%resource_file%>
+SOURCE=".\<%resource_file%>"
 # End Source File
 <%endfor%>
 # End Group
@@ -184,7 +184,7 @@ SOURCE=.\<%resource_file%>
 <%foreach(idl_files)%>
 # Begin Source File
 
-SOURCE=.\<%idl_file%>
+SOURCE=".\<%idl_file%>"
 
 <%foreach(platform_longs)%>
 <%foreach(configurations)%>
@@ -236,7 +236,7 @@ BuildCmds= \
 <%if(custom_type->input_file->output_files)%>
 # Begin Source File
 
-SOURCE=.\<%custom_type->input_file%>
+SOURCE=".\<%custom_type->input_file%>"
 
 <%foreach(platform_longs)%>
 <%foreach(configurations)%>
