@@ -1,3 +1,28 @@
+Mon May 22 13:57:45 2000  Ossama Othman  <ossama@uci.edu>
+
+	These changes were necessary to get the CORBA Security Service IDL
+	to compile, however they also apply to other IDL files that
+	include <orb.idl>.
+
+	* tao/POA.pidl:
+
+	  Moved "Identifier" and "RepositoryId" typedefs to
+	  `tao/orb.idl'.  These typedefs are not specific to the POA, and
+	  they are needed by some services, such as the Security Service.
+
+	  Include <orb.idl> to pull in the moved typedefs.
+
+	* tao/CORBA.pidl:
+
+	  Moved contents of this file to `tao/orb.idl' since types in this
+	  file must be available to CORBA applications that include
+	  <orb.idl>, and since CORBA.pidl is not a standard IDL file.
+
+	* tao/orb.idl:
+
+	  This file now contains the core CORBA typedefs necessary to
+	  compile most, CORBA IDL files that depend on them.
+
 Mon May 22 14:28:03 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.CosNotification (ACE_SHLIBS):
