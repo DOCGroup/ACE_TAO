@@ -5,6 +5,14 @@ Wed Nov 05 13:39:19 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Nov 05 12:53:53 1997    <irfan@TWOSTEP>
 
+	* tao/interp.cpp: 
+
+	  - Win32 does not use "fixed" byte alignment.  Fixed the
+ 	    setup_entry macro to take this into account.
+
+	  - (declare_entry) Seperated the declaration of the structs from
+ 	    their use.  This is necessary for the VC++4.2 compiler.
+
 	* tests/Cubit/TAO/DII_Cubit/svr.cpp (main): Commented out debug
  	  message, since obj is not declared.
 
