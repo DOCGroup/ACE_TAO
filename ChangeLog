@@ -1,3 +1,10 @@
+Wed Jul 23 17:34:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration_Import_Export.h:
+          Document for ACE_Registry_ImpExp that the value after dword is read
+          in hexidecimal format. Thanks to Todd Cooper <todd@DO11073.com> for
+          reporting this.
+
 Tue Jul 22 22:46:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS.h: Fixed a typo in the documentation of read_n ().
@@ -14,14 +21,14 @@ Tue Jul 22 19:20:16 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	  Included the UUID generator files into the project to compile on
 	  windows.
-	
+
 	* tests/tests.dsw:
-	* tests/UUIDTest.dsp:	
+	* tests/UUIDTest.dsp:
 
 	  Updated tests.dsw to include the corresponding UUIDTest.dsp
 	  project for the unit test UUIDTest which tests the ACE UUID
 	  generator.
-	
+
 Tue Jul 22 16:43:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.i:

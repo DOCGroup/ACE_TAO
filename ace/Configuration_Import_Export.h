@@ -81,7 +81,7 @@ private:
  *        using the Win32 Registry file export format.  This format looks like
  *        [Section]
  *        "key"="String Data"
- *        "key"=dword: numeric data
+ *        "key"=dword: numeric data in hexidecimal format
  *        "key"=hex: binary data
  *
  * @todo
