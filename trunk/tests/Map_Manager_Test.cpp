@@ -236,6 +236,7 @@ template class ACE_Hash_Map_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Hash_Map_Entry<TYPE, TYPE>;
 template class ACE_Map_Manager<TYPE, TYPE, MUTEX>;
+template class ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Entry<TYPE, TYPE>;
@@ -245,6 +246,7 @@ template class ACE_Map_Entry<TYPE, TYPE>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<TYPE, TYPE>
 #pragma instantiate ACE_Map_Manager<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Iterator<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Entry<TYPE, TYPE>
