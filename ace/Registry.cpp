@@ -1,9 +1,9 @@
 #define ACE_BUILD_DLL
 
-#if defined (ACE_WIN32)
-
 #include "ace/Registry.h"
       
+#if defined (ACE_WIN32)
+
 // Funky macro to deal with strange error passing semantics
 // of Win32 Reg*() functions
 #define ACE_REGISTRY_CALL_RETURN(X) \

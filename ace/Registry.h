@@ -14,16 +14,17 @@
 // 
 // ============================================================================
 
-#if defined (ACE_WIN32)
-
 #if !defined (ACE_REGISTRY_H)
 #define ACE_REGISTRY_H
 
 #include "ace/OS.h"
-// You must build and configure the STL components in order to use
-// this wrapper.
+
+#if defined (ACE_WIN32)
+// This only works on Win32 platforms
+
 #include "vector.h"
 #include "bstring.h"
+// You must configure the STL components in order to use this wrapper.
 
 class ACE_Export ACE_Registry
   // = TITLE
@@ -502,5 +503,5 @@ private:
 
 };
 
-#endif /* ACE_REGISTRY_H */
 #endif /* ACE_WIN32 */
+#endif /* ACE_REGISTRY_H */
