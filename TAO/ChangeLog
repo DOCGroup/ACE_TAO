@@ -1,3 +1,9 @@
+Tue Dec 30 13:22:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/simple.cpp:
+          Removed not needed ; after ACE_RCSID to fix Tru64 warning
+
 Tue Dec 30 13:09:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
