@@ -386,5 +386,6 @@ template class ACE_Thru_Task<ACE_SYNCH>;
   #pragma instantiate ACE_Task<ACE_NULL_SYNCH>
   #pragma instantiate ACE_Thru_Task<ACE_NULL_SYNCH>
 #endif /* ACE_HAS_THREADS */
+#else
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
