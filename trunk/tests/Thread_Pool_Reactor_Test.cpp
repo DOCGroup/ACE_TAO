@@ -66,19 +66,20 @@ static ASYS_TCHAR *rendezvous = ASYS_TEXT ("127.0.0.1:10010");
 static size_t svr_thrno = ACE_MAX_THREADS;
 // Total number of server threads.
 
-static size_t cli_thrno =
-// Total number of client threads.
 #if defined (CHORUS) // Add platforms that can't handle too many
                      // connection simultaneously here.
-  ACE_MAX_THREADS;
+#define ACE_LOAD_FACTOR /2
 #else
-  ACE_MAX_ITERATIONS; // Otherwise, we'll try to torture the platform.
+#define ACE_LOAD_FACTOR
 #endif
 
-static size_t cli_conn_no = ACE_MAX_ITERATIONS;
+static size_t cli_thrno =  ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
+// Total number of client threads.
+
+static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
 // Total connection attemps of a client thread.
 
-static size_t cli_req_no = ACE_MAX_THREADS;
+static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 // Total requests a client thread sends.
 
 static int req_delay = 50;
