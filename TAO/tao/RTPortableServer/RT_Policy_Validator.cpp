@@ -1,5 +1,3 @@
-// @(#) $Id$
-
 #include "RT_Policy_Validator.h"
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB_Core.h"
@@ -9,9 +7,12 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/Pluggable.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
 
-ACE_RCSID(tao, POA, "$Id$")
+ACE_RCSID (tao,
+           POA,
+           "$Id$")
 
 TAO_POA_RT_Policy_Validator::TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core),
