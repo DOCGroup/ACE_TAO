@@ -16,7 +16,7 @@ TAO_Protocol_Factory::~TAO_Protocol_Factory (void)
 {
 }
 
-ACE_INLINE CORBA::ULong
+CORBA::ULong
 TAO_Protocol_Factory::tag (void) const
 {
   return this->tag_;
