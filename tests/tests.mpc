@@ -1141,3 +1141,11 @@ project(Framework Component Test) : aceexe {
   }
 }
 
+project(Unbounded Set Ex Test) : aceexe {
+  exename = Unbounded_Set_Test_Ex
+  Source_Files {
+    Unbounded_Set_Test_Ex.cpp
+  }
+  Header_Files {
+  }
+}
