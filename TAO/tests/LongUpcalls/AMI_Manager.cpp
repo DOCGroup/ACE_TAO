@@ -4,23 +4,25 @@
 
 #include "AMI_Manager.h"
 
-ACE_RCSID(LongUpcalls, AMI_Manager, "$Id$")
+ACE_RCSID (LongUpcalls,
+           AMI_Manager,
+           "$Id$")
 
 static void
-validate_connection(Test::Controller_ptr controller
-                    ACE_ENV_ARG_DECL)
+validate_connection (Test::Controller_ptr controller
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (())
 {
   ACE_TRY
     {
-#if (TAO_HAS_MESSAGING == 1)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::PolicyList_var unused;
-      controller->validate_connection(unused
-                                      ACE_ENV_ARG_PARAMETER);
+      controller->_validate_connection (unused
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
-      controller->_is_a("Not_an_IDL_Type"
-                        ACE_ENV_ARG_PARAMETER);
+      controller->_is_a ("Not_an_IDL_Type"
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif
     }
