@@ -5,7 +5,7 @@
 // using the following compilers:
 //   * Sun C++ 4.2 and later (including 5.x), patched as noted below
 //   * g++ 2.7.2 and later, including egcs
-//   * GreenHills 1.8.8 and later
+//   * Green Hills 1.8.8 and later
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -81,7 +81,12 @@
 # endif /* !ACE_MT_SAFE */
 
 #elif defined (ghs)
-# define ACE_HAS_BROKEN_ENUMS /* Necessary with 1.8.9, not 1.8.8. */
+# if defined (__STANDARD_CXX)
+   // Green Hills 1.8.9, but not 1.8.8.
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# endif /* __STANDARD_CXX */
+
+# define ACE_HAS_BROKEN_ENUMS /* Necessary with 1.8.9, harmless with 1.8.8. */
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_LONGLONG_T /* It really doesn't have it.  Boo. */
@@ -98,7 +103,7 @@
 # endif /* !ACE_MT_SAFE */
 
   // To avoid warning about inconsistent declaration between Sun's
-  // stdlib.h and GreenHills' ctype.h.
+  // stdlib.h and Green Hills' ctype.h.
 # include <stdlib.h>
 
 #else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
