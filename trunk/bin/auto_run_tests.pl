@@ -4,7 +4,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # $Id$
 # -*- perl -*-
-# This file is for running the run_test.pl scripts listed in 
+# This file is for running the run_test.pl scripts listed in
 # auto_run_tests.lst.
 
 use lib "$ENV{ACE_ROOT}/bin";
@@ -23,7 +23,7 @@ $config_list = new PerlACE::ConfigList;
 $config_list->load ($ACE_ROOT."/bin/auto_run_tests.lst");
 
 if (!getopts ('ac:ds:t') || $opt_h) {
-    print "run_test.pl [-a] [-c config] [-h] [-s sandbox] [-t]\n";
+    print "auto_run_tests.pl [-a] [-c config] [-h] [-s sandbox] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
     print "\n";
@@ -80,8 +80,8 @@ foreach $test ($config_list->valid_entries ()) {
     $cmd = '';
     if ($opt_s) {
         $cmd = "$opt_s \"perl $program $inherited_options\"";
-    } 
-    else { 
+    }
+    else {
         $cmd = $program.$inherited_options;
     }
 
