@@ -12,7 +12,7 @@
 //    Implementation of the DynArray test
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -21,8 +21,8 @@
 #include "data.h"
 
 Test_DynArray::Test_DynArray (CORBA::ORB_var orb)
-  : test_name_ (CORBA::string_dup ("test_dynarray")),
-    orb_ (orb),
+  : orb_ (orb),
+    test_name_ (CORBA::string_dup ("test_dynarray")),
     error_count_ (0)
 {
 }

@@ -12,7 +12,7 @@
 //    This file contains the implementation of the DynAny basic test manager
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 

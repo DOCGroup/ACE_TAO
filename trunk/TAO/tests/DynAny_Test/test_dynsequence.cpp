@@ -21,8 +21,8 @@
 #include "data.h"
 
 Test_DynSequence::Test_DynSequence (CORBA::ORB_var orb)
-  : test_name_ (CORBA::string_dup ("test_dynsequence")),
-    orb_ (orb),
+  : orb_ (orb),
+    test_name_ (CORBA::string_dup ("test_dynsequence")),
     error_count_ (0)
 {
 }
