@@ -3139,9 +3139,16 @@ PAGE_NOCACHE  */
 #   endif /* __BORLANDC__ */
 
 typedef OVERLAPPED ACE_OVERLAPPED;
+
+#if defined (ACE_HAS_PACE)
+typedef pace_pthread_t ACE_thread_t;
+typedef pace_pid_t pid_t;
+#else /* !ACE_HAS_PACE */
 typedef DWORD ACE_thread_t;
-typedef HANDLE ACE_hthread_t;
 typedef long pid_t;
+#endif /* ACE_HAS_PACE */
+
+typedef HANDLE ACE_hthread_t;
 #define ACE_INVALID_PID ((pid_t) -1)
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef DWORD ACE_OS_thread_key_t;

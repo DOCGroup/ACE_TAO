@@ -2148,14 +2148,14 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_lock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
-  return ACE_OS::mutex_lock (m);
-# elif defined (ACE_HAS_WTHREADS)
+# if defined (ACE_HAS_WTHREADS)
   ::EnterCriticalSection (m);
   return 0;
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
+  return ACE_OS::mutex_lock (m);
 #elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_lock (m);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2166,10 +2166,9 @@ ACE_INLINE int
 ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::thread_mutex_trylock");
+
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
-  return ACE_OS::mutex_trylock (m);
-# elif defined (ACE_HAS_WTHREADS)
+# if defined (ACE_HAS_WTHREADS)
 #   if defined (ACE_HAS_WIN32_TRYLOCK)
   BOOL result = ::TryEnterCriticalSection (m);
   if (result == TRUE)
@@ -2183,9 +2182,12 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_WIN32_TRYLOCK */
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
+  return ACE_OS::mutex_trylock (m);
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return ACE_OS::mutex_trylock (m);
-# endif /* Threads variety case */
+#endif /* Threads variety case */
+
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2197,11 +2199,11 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 {
   ACE_OS_TRACE ("ACE_OS::thread_mutex_unlock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
-  return ACE_OS::mutex_unlock (m);
-# elif defined (ACE_HAS_WTHREADS)
+# if defined (ACE_HAS_WTHREADS)
   ::LeaveCriticalSection (m);
   return 0;
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
+  return ACE_OS::mutex_unlock (m);
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return ACE_OS::mutex_unlock (m);
 # endif /* Threads variety case */
@@ -3238,14 +3240,14 @@ ACE_OS::sema_init (ACE_sema_t *s,
                                 O_CREAT,
                                 ACE_DEFAULT_FILE_PERMS,
                                 count);
-    if (s->sema_ == (sem_t *) SEM_FAILED)
+    if (s->sema_ == (pace_sem_t *) SEM_FAILED)
       return -1;
     else
       return 0;
   }
   else
   {
-    ACE_NEW_RETURN (s->sema_, sem_t, -1);
+    ACE_NEW_RETURN (s->sema_, pace_sem_t, -1);
     ACE_OSCALL_RETURN (::pace_sem_init (s->sema_,
                                         type != USYNC_THREAD,
                                         count), int, -1);
