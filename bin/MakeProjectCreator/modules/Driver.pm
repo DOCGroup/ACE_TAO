@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = 1.8;
+  $self->{'version'}  = 1.9;
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -288,6 +288,11 @@ sub run {
     ## To correctly reference any pathnames in the input file, chdir to
     ## its directory if there's any directory component to the specified path.
     my($base) = basename($cfile);
+
+    if (-d $cfile) {
+      $base = '';
+    }
+
     foreach my $name (@{$options->{'generators'}}) {
       if (!$loaded{$name}) {
         require "$name.pm";
@@ -307,7 +312,7 @@ sub run {
                                   $options->{'toplevel'},
                                   $options->{'baseprojs'});
       if ($base ne $file) {
-        my($dir) = dirname($file);
+        my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$generator->cd($dir)) {
           print STDERR "ERROR: Unable to change to directory: $dir\n";
           $status++;
