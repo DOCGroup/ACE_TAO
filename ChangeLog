@@ -1,3 +1,11 @@
+Mon Sep 13 19:09:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+
+	  Changed to use ACE_CHECK_HAS_FUNC([scandir]) and get rid of
+	  explicit definition, autoconf template macro, etc.
+
 Mon Sep 13 20:33:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
   	* ace/Select_Reactor_Base.cpp: Changed the 

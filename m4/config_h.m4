@@ -635,9 +635,6 @@ AH_TEMPLATE([ACE_LACKS_NETDB_REENTRANT_FUNCTIONS],
 AH_TEMPLATE([ACE_HAS_REGEX],
 [Platform supports the POSIX regular expression library])
 
-AH_TEMPLATE([ACE_HAS_SCANDIR],
-[Platform supports the scandir() function.])
-
 AH_TEMPLATE([ACE_HAS_SEMUN],
 [Compiler/platform defines a union semun for SysV shared memory ])
 
