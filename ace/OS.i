@@ -6840,6 +6840,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
   lock->overlapped_.hEvent = INVALID_HANDLE_VALUE;
 #endif /* ACE_WIN32 */
   lock->handle_ = ACE_INVALID_HANDLE;
+  lock->lockname_ = 0;
 
   if (name != 0)
     {
@@ -6847,6 +6848,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                   ACE_HANDLE,
                   ACE_INVALID_HANDLE,
                   lock->handle_);
+      lock->lockname_ = ACE_OS::strdup (name);
       return lock->handle_ == ACE_INVALID_HANDLE ? -1 : 0;
     }
   else
@@ -7022,6 +7024,12 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
       ACE_OS::flock_unlock (lock);
       ACE_OS::close (lock->handle_);
       lock->handle_ = ACE_INVALID_HANDLE;
+      if (lock->lockname_ != 0)
+	{
+	  ACE_OS::unlink (lock->lockname_);
+	  ACE_OS::free ((void*) lock->lockname_);
+	  lock->lockname_ = 0;
+	}
     }
   return 0;
 }
