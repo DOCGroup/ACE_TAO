@@ -102,9 +102,9 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/params.h"
 #include "tao/client_factory.h"
 #include "tao/client_factory.h"
+#include "tao/server_factory.h"
 #include "tao/default_client.h"
 #include "tao/default_server.h"
-#include "tao/server_factory.h"
 
 #include "tao/except.h"
 #include "tao/interp.h"
