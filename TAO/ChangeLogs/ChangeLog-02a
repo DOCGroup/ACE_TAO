@@ -1,3 +1,15 @@
+Wed Jul  4 09:10:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+
+          Removed ACE_HAS_USING_KEYWORD guard from each TIE class
+          declaration, and added it to the global module reopening
+          where all TIE class declarations will occur. This 
+          includes the TAO_NAMESPACE macro inside the guard, which
+          is what we want if the platform does not support 
+          namespaces.
+
 Wed Jul  4 14:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Makefile.bor
