@@ -1,3 +1,12 @@
+Fri Jun 16 08:40:38 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl: 
+
+          Moved the print statement for a project file from Build_Config
+          to Build, so it will be executed for the -CORE target.
+
+          This was causing incorrect headers in nightly build reports.
+
 Fri Jun 16 08:12:37 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added a section for PACE.
