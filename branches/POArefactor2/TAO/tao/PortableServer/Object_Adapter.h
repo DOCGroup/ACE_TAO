@@ -136,6 +136,8 @@ public:
   /// Return the validator.
   TAO_Policy_Validator &validator (void);
 
+  int enable_locking() const;
+
   /// Return the set of default policies.
   TAO_POA_Policy_Set &default_poa_policies (void);
 
@@ -390,10 +392,8 @@ protected:
 
   TAO_ORB_Core &orb_core_;
 
-// @todo Made this temporarily public to made the servant_retention_strategy
-public:
   int enable_locking_;
-protected:
+
   TAO_SYNCH_MUTEX thread_lock_;
 
   ACE_Lock *lock_;
