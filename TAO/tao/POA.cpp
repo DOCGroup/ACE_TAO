@@ -1,8 +1,6 @@
 // @(#) $Id$
 
-#define POA_NO_TIMESTAMP
-
-# include "tao/corba.h"
+#include "tao/corba.h"
 
 // Timeprobes class
 #include "tao/Timeprobe.h"

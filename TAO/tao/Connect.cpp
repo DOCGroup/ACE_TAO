@@ -109,59 +109,6 @@ TAO_Server_Connection_Handler::svc (void)
   return result;
 }
 
-// Extract a message from the stream associated with <peer()> and
-// place it into <input>.  Return 0 if success, -1 with <errno> and
-// <env> set if problems.
-
-TAO_Server_Connection_Handler::RequestStatus
-TAO_Server_Connection_Handler::recv_request (TAO_InputCDR &input,
-                                             CORBA::Environment &env)
-{
-  RequestStatus which = Error;
-
-  TAO_SVC_HANDLER *this_ptr = this;
-
-  switch (TAO_GIOP::recv_request (this_ptr, input, env))
-    {
-    case TAO_GIOP::Request:
-      // Received a request...just exit for further processing!
-      which = Request;
-      break;
-
-    case TAO_GIOP::LocateRequest:
-      // Received a request...just exit for further processing!
-      which = LocateRequest;
-      break;
-
-      // These messages should never be sent to the server; it's an
-      // error if the peer tries.  Set the environment accordingly, as
-      // it's not yet been reported as an error.
-    case TAO_GIOP::Reply:
-    case TAO_GIOP::LocateReply:
-    case TAO_GIOP::CloseConnection:
-    default:                                    // Unknown message
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Illegal message received by server\n"));
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-      // FALLTHROUGH
-
-    case TAO_GIOP::EndOfFile:
-      errno = EPIPE;
-      // FALLTHROUGH
-
-      // recv_request () has already set some error in the environment
-      // for all "MessageError" cases, so don't clobber it.
-      //
-      // General error recovery is to send MessageError to the peer
-      // just in case (it'll fail on EOF) and then close the
-      // connection.
-    case TAO_GIOP::MessageError:
-      break;
-    }
-
-  return which;
-}
-
 // Handle processing of the request residing in <input>, setting
 // <response_required> to zero if the request is for a oneway or
 // non-zero if for a two-way and <output> to any necessary response
@@ -293,11 +240,12 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   int result = 0;
   int error_encountered = 0;
   int response_required;
+  TAO_SVC_HANDLER *this_ptr = this;
   CORBA::Environment env;
 
-  switch (this->recv_request (input, env))
+  switch (TAO_GIOP::recv_request (this_ptr, input))
     {
-    case Request:
+    case TAO_GIOP::Request:
       // Message was successfully read, so handle it.  If we encounter
       // any errors, <output> will be set appropriately by the called
       // code, and -1 will be returned.
@@ -305,27 +253,32 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
         error_encountered = 1;
       break;
 
-    case LocateRequest:
+    case TAO_GIOP::LocateRequest:
       if (this->handle_locate (input, output, response_required, env) == -1)
         error_encountered = 1;
       break;
 
-    case -1:
-      // Check errno and/or env for details
-      if (env.exception ())
-        {
-          TAO_GIOP::make_error (output /* ...other information... */ );
-          error_encountered = 1;
-          // Of course, we must be careful to properly process
-          // end-of-file and other communications-related conditions
-          // here so that handle_input() returns the correct value.
-        }
-      else if (errno == EPIPE)
-        {
-          // Got a EOF
-          response_required = error_encountered = 0;
-          result = -1;
-        }
+    case TAO_GIOP::EndOfFile:
+      // Got a EOF
+      errno = EPIPE;
+      response_required = error_encountered = 0;
+      result = -1;
+      break;
+
+      // These messages should never be sent to the server; it's an
+      // error if the peer tries.  Set the environment accordingly, as
+      // it's not yet been reported as an error.
+    case TAO_GIOP::Reply:
+    case TAO_GIOP::LocateReply:
+    case TAO_GIOP::CloseConnection:
+    default:                                    // Unknown message
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Illegal message received by server\n"));
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      // FALLTHROUGH
+
+    case TAO_GIOP::MessageError:
+      error_encountered = 1;      
       break;
     }
 

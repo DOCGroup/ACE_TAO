@@ -60,8 +60,7 @@ ORBCORE_SRCS = \
 	skip \
 	TAO_Internal \
 	Typecode_Constants \
-	TAO \
-	Timeprobe
+	TAO 
 
 FILES	 = $(ORBCORE_SRCS)
 
