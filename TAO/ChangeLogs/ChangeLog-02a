@@ -1,3 +1,9 @@
+Tue Feb 13 17:42:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Performance/Latency.dsp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.dsp:
+          Add missing library
+
 Tue Feb 13 17:37:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Quoter/Makefile:
