@@ -12,12 +12,19 @@ Tue Feb 25 11:17:47 2003  Ossama Othman  <ossama@uci.edu>
 	* tao/IFR_Client/IFR_ExtendedC.cpp:
 	* tao/IFR_Client/IFR_ExtendedC.h:
 	* tao/IFR_Client/IFR_ExtendedC.i:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
 
 	  Regenerated these stubs to pull in the latest CORBA namespace
 	  fixes.
 
 	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
 	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.h:
 
 	  "CORBA_" -> "CORBA::".
 
