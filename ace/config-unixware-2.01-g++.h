@@ -12,6 +12,10 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -65,17 +69,13 @@
 #define ACE_HAS_VOIDPTR_SOCKOPT
 
 #define ACE_LACKS_MADVISE
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_SYSCALL
 
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
-#define ACE_PAGE_SIZE	4096
+#define ACE_PAGE_SIZE 4096
 #define ACE_REDEFINES_XTI_FUNCTIONS
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // Compiling for UNIXWARE
 #if !defined (UNIXWARE)

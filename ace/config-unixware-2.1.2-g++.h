@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // The following configuration file is designed to work
 // for Unixware platforms running UnixWare 2.1.2 and gcc version 2.7.2.2
 
@@ -9,6 +12,10 @@
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
+
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -65,20 +72,16 @@
 #define ACE_HAS_THR_MINSTACK
 
 #define ACE_LACKS_MADVISE
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_PRI_T
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
 
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
-#define ACE_PAGE_SIZE   4096
+#define ACE_PAGE_SIZE 4096
 #define ACE_REDEFINES_XTI_FUNCTIONS
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #if ! defined (UNIXWARE)
 #define UNIXWARE

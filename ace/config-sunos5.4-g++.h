@@ -11,11 +11,13 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/config-g++-common.h"
+#define ACE_HAS_GNU_CSTRING_H
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_STRING_CLASS
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
@@ -23,10 +25,6 @@
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 #define ACE_HAS_TERM_IOCTLS
-
-// Must specialize templates due to G++'s lame parameterized type
-// support...
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -51,16 +49,6 @@
 
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
-
-// Compiler's template mechanism must see source code (i.e., .C files).
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// Denotes that GNU has cstring.h as standard
-// which redefines memchr()
-#define ACE_HAS_GNU_CSTRING_H
-
-// Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Compiler/platform correctly calls init()/fini() for shared libraries.
 #define ACE_HAS_AUTOMATIC_INIT_FINI
