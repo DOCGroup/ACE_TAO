@@ -69,6 +69,11 @@ typedef unsigned long long uint64_t;
 // SunOS 5.7 has socklen_t
 #define ACE_HAS_SOCKLEN_T
 
+// snprintf() is available at least from Solaris 7 on. If it can be determined
+// that it's also available in Solaris 2.6, this can be moved into
+// config-sunos5.6.h.
+#define ACE_HAS_SNPRINTF
+
 #if defined (__sparcv9)
 #define ERRMAX 256 /* Needed for following define */
 #define ACE_LACKS_SYS_NERR
