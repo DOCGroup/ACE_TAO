@@ -111,7 +111,7 @@ void ViewIORDialog::DecodeIOR()
       {
         TAO_IIOP_Profile* pIIOPProfile = (TAO_IIOP_Profile*)pProfile;
         TAO_IIOP_Endpoint* pIIOPEndpoint =
-          (TAO_IIOP_Endpoint*)pProfile->endpoint ();
+          (TAO_IIOP_Endpoint*)pIIOPProfile->endpoint ();
         CString ProfileString;
         ProfileString.Format("IOP %d.%d@%s:%d", 
           pIIOPProfile->version().major, 
