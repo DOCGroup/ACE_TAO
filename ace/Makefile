@@ -530,43 +530,36 @@ all.nested: all.local
 	echo >> $@ "// EOF";
 
 Svc_Conf_y.cpp: Svc_Conf.y
-	if [ -f /pkg/gnu/bin/bison ]; then \
-          /pkg/gnu/bin/bison -l -d Svc_Conf.y; \
-          sed -e "s/char \*getenv/char *ace_foo/g" \
-              -e "s/= getenv/= ACE_OS::getenv/g" \
-              -e "s/yy/ace_yy/g" \
-              -e "s/->ace_yyerrno/->yyerrno/g" \
-              -e "s/YY/ACE_YY/g" \
-              -e "s/Svc_Conf\.tab\.c/Svc_Conf_y.cpp/g" < Svc_Conf.tab.c > /tmp/$@; \
-          cp /tmp/$@ $@; \
-          patch < ../etc/Svc_Conf_y.cpp.diff; \
-	  echo '// $$'\I\d'$$' > Svc_Conf_Tokens.h; \
-	  cat Svc_Conf.tab.h >> Svc_Conf_Tokens.h; \
-          $(RM) -f /tmp/$@ Svc_Conf.tab.c Svc_Conf.tab.h Svc_Conf_y.cpp.orig; \
-        else \
-          touch $@; \
-        fi
+	$(YACC) -l -d Svc_Conf.y; \
+	sed -e "s/char \*getenv/char *ace_foo/g" \
+	    -e "s/= getenv/= ACE_OS::getenv/g" \
+	    -e "s/fprintf/ACE_OS::fprintf/g" \
+            -e "s/yy/ace_yy/g" \
+            -e "s/->ace_yyerrno/->yyerrno/g" \
+	    -e "s/YY/ACE_YY/g" \
+            -e "s/Svc_Conf\.tab\.c/Svc_Conf_y.cpp/g" < Svc_Conf.tab.c > /tmp/$@; \
+	cp /tmp/$@ $@; \
+	patch < ../etc/Svc_Conf_y.cpp.diff; \
+	echo '// $$'\I\d'$$' > Svc_Conf_Tokens.h; \
+	cat Svc_Conf.tab.h >> Svc_Conf_Tokens.h; \
+	$(RM) -f /tmp/$@ Svc_Conf.tab.c Svc_Conf.tab.h Svc_Conf_y.cpp.orig;
 
 Svc_Conf_l.cpp: Svc_Conf.l
-	if [ -f /pkg/gnu/bin/flex ]; then \
-          /pkg/gnu/bin/flex -L -t -I Svc_Conf.l > $@; \
-          sed -e "s/unistd/stdio/g" \
-              -e "s/yy/ace_yy/g" \
-              -e "s/YY/ACE_YY/g" \
-              -e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" \
-              -e "s/exit( 1 );/ACE_OS::exit( 1 );/g" \
-              -e "s/isatty( fileno(file)/ACE_OS::isatty( fileno (file)/g" \
-              -e "s/int isatty/int nop_isatty/g" \
-              -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" \
-              -e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \
-              -e "s@#include <@#include /**/ <@" \
-              -e "s@ECHO@ACE_SVC_CONF_ECHO@" < $@ > /tmp/$@; \
-          cp /tmp/$@ $@; \
-          patch < ../etc/Svc_Conf_l.cpp.diff; \
-          $(RM) -f /tmp/$@ Svc_Conf_l.cpp.orig; \
-        else \
-          touch $@; \
-        fi
+	$(LEX) -L -t -I Svc_Conf.l > $@; \
+	sed -e "s/unistd/stdio/g" \
+	    -e "s/yy/ace_yy/g" \
+            -e "s/YY/ACE_YY/g" \
+            -e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" \
+            -e "s/exit( 1 );/ACE_OS::exit( 1 );/g" \
+            -e "s/isatty( fileno(file)/ACE_OS::isatty( fileno (file)/g" \
+            -e "s/int isatty/int nop_isatty/g" \
+            -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" \
+            -e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \
+            -e "s@#include <@#include /**/ <@" \
+            -e "s@ECHO@ACE_SVC_CONF_ECHO@" < $@ > /tmp/$@; \
+	cp /tmp/$@ $@; \
+	patch < ../etc/Svc_Conf_l.cpp.diff; \
+	$(RM) -f /tmp/$@ Svc_Conf_l.cpp.orig;
 
 # Some compilation for the QtReactor stuff. We need to run moc
 # ie. (Meta Object compiler) for our QtReactor.h. So, let's do it
