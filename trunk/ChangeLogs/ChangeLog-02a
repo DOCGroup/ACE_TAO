@@ -1,3 +1,10 @@
+Sat Mar  2 09:17:45 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
+
+	* ace/INET_Addr.cpp (set): Change errno = EINVAL to errno = error if
+	  the call to ACE_OS::gethostbyname_r() fails since errno should
+ 	  already have been set!  Thanks to Felix Wyss <FelixW@inin.com>
+ 	  for reporting this.
+
 Fri Mar 01 08:03:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:
