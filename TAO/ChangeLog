@@ -1,3 +1,15 @@
+Tue Nov 25 13:51:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp (compute_full_name):
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp (gen_skel_helper):
+        
+          Fixed long-standing problems with code that was hanging on
+          to memory owned by ACE_CStrings. These problems show themselves
+          only intermittently, which is why they weren't fixed long ago.
+          Thanks to Malcolm McRoberts <mmcroberts@ideorlando.org> for
+          reporting the problem and providing helpful feedback, since it
+          was so hard to reproduce.
+
 Tue Nov 25 09:56:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/DLL_ORB/Makefile.Test_Client_Module:

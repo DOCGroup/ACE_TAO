@@ -91,22 +91,22 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
       // which call the corresponding method of the base class by doing the
       // proper casting.
 
-      ACE_CString result ("POA_");
+      ACE_CString ancestor_name ("POA_");
       char *buf = 0;
       ancestor->compute_full_name ("AMH_", "", buf);
-      result += buf;
+      ancestor_name += buf;
       delete [] buf;
       buf = 0;
 
-      const char *ancestor_amh_name = result.fast_rep ();
+      const char *ancestor_amh_name = ancestor_name.fast_rep ();
 
-      result = "POA_";
+      ACE_CString derived_name ("POA_");
       derived->compute_full_name ("AMH_", "", buf);
-      result += buf;
+      derived_name += buf;
       delete [] buf;
       buf = 0;
 
-      const char *derived_amh_name = result.fast_rep ();
+      const char *derived_amh_name = derived_name.fast_rep ();
 
       for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
            !si.is_done ();
