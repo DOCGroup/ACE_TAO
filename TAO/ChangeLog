@@ -1,3 +1,20 @@
+Thu Jan 15 16:10:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+        
+          - Added ostream insertion operator for CORBA::Exception*,
+            which is required by the spec along with the existing
+            ostream insertion operator for CORBA::Exception&.
+            
+          - Moved the above operators into the CORBA namespace.
+            Defining them in the global namespace as they were makes
+            them easily hidden, and we know that the compiler will
+            eventually look in the scope of the rhs operand, and thus
+            will always find the CORBA::Exception overload. Thanks
+            to Hans Utz <hans.utz@informatik.uni-ulm.de> for the
+            suggestion.
+
 Thu Jan 15 15:50:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_type.cpp:
