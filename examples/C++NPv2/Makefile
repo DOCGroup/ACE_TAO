@@ -15,6 +15,8 @@ EXAMPLES = Reactor_Logging_Server \
            Configurable_Logging_Server \
            SLD \
            SLDex \
+           CLD \
+           TPLS \
            display_logfile
 
 all:
