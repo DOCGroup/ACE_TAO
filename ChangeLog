@@ -1,8 +1,16 @@
+Wed Aug 20 06:59:52 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Warn about duplicate project names for all project types.  It will
+          have to be this way as long as MPC supports VC6.
+
 Tue Aug 19 10:07:47 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* doc/tutorials/015: Added support for compression.  Thanks
-	  to Andrew Marlow <apm35@student.open.ac.uk> for contributing
- 	  this.
+        * doc/tutorials/015: Added support for compression.  Thanks
+          to Andrew Marlow <apm35@student.open.ac.uk> for contributing
+          this.
 
 Mon Aug 18 21:26:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

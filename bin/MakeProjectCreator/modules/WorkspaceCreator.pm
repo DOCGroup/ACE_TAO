@@ -470,7 +470,27 @@ sub write_workspace {
   my($error)     = '';
 
   if ($self->get_toplevel()) {
-    if (!$addfile) {
+    if ($addfile) {
+      ## NOTE: If support for VC6 is ever removed, then we can remove
+      ## this block of code.  So far, VC6 is the only tool we support
+      ## that can not handle projects that exist in different directories
+      ## but have the same name.
+      my(%names) = ();
+      foreach my $project (@{$self->{'projects'}}) { 
+        my($name) = $self->{'project_info'}->{$project}->[0];
+        if (defined $names{$name}) {
+          ## Having duplicate project names is an error in a VC6 Workspace.
+          ## We will create the project, but we will warn the user that 
+          ## the project has duplicate names.
+          print "WARNING: A duplicate project named '$name' " .
+                "has already been added.\n";
+        }
+        else {
+          $names{$name} = 1;
+        }
+      }
+    }
+    else {
       $self->{'per_project_workspace_name'} = 1;
     }
     my($name) = $self->transform_file_name($self->workspace_file_name());
