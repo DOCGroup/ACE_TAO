@@ -68,7 +68,7 @@ public:
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void call_client (CORBA::Environment&);
+  int call_client (CORBA::Environment&);
 
 private:
   CORBA::ORB_var orb_;

@@ -133,8 +133,8 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      // Explicit Event Loop
-      while (1)
+      int retval = 0;
+      while (retval == 0)
         {
           // Please see the README file on why this is being done
           CORBA::Boolean pending =
@@ -147,7 +147,7 @@ main (int argc, char *argv[])
               ACE_TRY_CHECK;
             }
 
-          server_impl.call_client (ACE_TRY_ENV);
+          retval = server_impl.call_client (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
