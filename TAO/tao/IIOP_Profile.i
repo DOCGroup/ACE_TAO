@@ -7,13 +7,6 @@ TAO_IIOP_Profile::object_key (void) const
   return this->object_key_;
 }
 
-ACE_INLINE TAO_ObjectKey &
-TAO_IIOP_Profile::object_key (TAO_ObjectKey& objkey)
-{
-  this->object_key_ = objkey;
-  return this->object_key_;
-}
-
 ACE_INLINE TAO_ObjectKey *
 TAO_IIOP_Profile::_key (void) const
 {
@@ -33,13 +26,13 @@ TAO_IIOP_Profile::object_addr (void) const
 }
 
 ACE_INLINE const char *
-TAO_IIOP_Profile::host (void)
+TAO_IIOP_Profile::host (void) const
 {
   return this->host_.in ();
 }
 
 ACE_INLINE CORBA::UShort
-TAO_IIOP_Profile::port (void)
+TAO_IIOP_Profile::port (void) const
 {
   return this->port_;
 }

@@ -71,26 +71,23 @@ public:
 
   TAO_UIOP_Profile (const char *string,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ());
   // Create object using a string ior.
-
-  TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile);
-  // Profile copy constructor
 
   TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
   // Profile constructor, default.
-
-  TAO_UIOP_Profile & operator= (const TAO_UIOP_Profile &src);
-  // Assignment operator
 
   ~TAO_UIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
   int parse_string (const char *string,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ());
   // Initialize this object using the given input string.
 
-  char * to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  char * to_string (CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ());
   // Return a string representation for this profile.
   // client must deallocate memory.
 
@@ -100,14 +97,12 @@ public:
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
 
-  const TAO_ObjectKey &object_key (void) const;
-  // @@ deprecated, return a reference to the Object Key.
-
-  TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
-  // @@ deprecated. set the Object Key.
+  virtual const TAO_ObjectKey &object_key (void) const;
+  // @@ deprecated. return a reference to the Object Key.
 
   TAO_ObjectKey *_key (void) const;
-  // Return a pointer to the Object Key.
+  // Return a pointer to the Object Key.  The caller owns the memory
+  // allocated for the returned key.
 
   CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
   // Return true if this profile is equivalent to other_profile.  Two
@@ -115,7 +110,8 @@ public:
   // and version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
-                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                     CORBA::Environment &ACE_TRY_ENV =
+                       TAO_default_environment ());
   // Return a hash value for this object.
 
   int addr_to_string (char *buffer, size_t length);
@@ -137,6 +133,12 @@ public:
 
   void reset_hint (void);
   // Reset the hint's value.
+
+private:
+
+  ACE_UNIMPLEMENTED_FUNC (TAO_UIOP_Profile (const TAO_UIOP_Profile &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_UIOP_Profile & operator= (const TAO_UIOP_Profile &))
+  // Profiles should not be copied.
 
 private:
 

@@ -7,13 +7,6 @@ TAO_SHMIOP_Profile::object_key (void) const
   return this->object_key_;
 }
 
-ACE_INLINE TAO_ObjectKey &
-TAO_SHMIOP_Profile::object_key (TAO_ObjectKey& objkey)
-{
-  this->object_key_ = objkey;
-  return this->object_key_;
-}
-
 ACE_INLINE TAO_ObjectKey *
 TAO_SHMIOP_Profile::_key (void) const
 {
@@ -33,13 +26,13 @@ TAO_SHMIOP_Profile::object_addr (void) const
 }
 
 ACE_INLINE const char *
-TAO_SHMIOP_Profile::host (void)
+TAO_SHMIOP_Profile::host (void) const
 {
   return this->host_.in ();
 }
 
 ACE_INLINE CORBA::UShort
-TAO_SHMIOP_Profile::port (void)
+TAO_SHMIOP_Profile::port (void) const
 {
   return this->port_;
 }
@@ -57,7 +50,7 @@ TAO_SHMIOP_Profile::version (void) const
 }
 
 ACE_INLINE TAO_SHMIOP_Client_Connection_Handler *&
-TAO_SHMIOP_Profile::hint(void)
+TAO_SHMIOP_Profile::hint (void)
 {
   return this->hint_;
 }

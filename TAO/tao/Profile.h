@@ -71,7 +71,7 @@ public:
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV) = 0;
   // Initialize this object using the given input string.
-  // Supports URL stylr of object references
+  // Supports URL style of object references
 
   virtual char* to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
   // Return a string representation for this profile.  client must
@@ -85,9 +85,6 @@ public:
 
   virtual const TAO_ObjectKey &object_key (void) const = 0;
   // @@ deprecated. return a reference to the Object Key.
-
-  TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
-  // @@ deprecated. set the Object Key.
 
   virtual TAO_ObjectKey *_key (void) const = 0;
   // Obtain the object key, return 0 if the profile cannot be parsed.
