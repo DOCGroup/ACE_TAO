@@ -1,12 +1,23 @@
+Thu Dec 18 19:47:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Message_Queue.cpp (ACE_Message_Queue_Iterator): Changed
+ 	  queue to q to avoid clashes with STL.  Thanks to Brian Mendel
+ 	  <bmendel@mdc.com> for reporting this.
+
+        * ace/OS.h: The server logging daemon is implemented using TCP/IP
+          under Win32.  Therefore, we can simplify the creation of the
+          ACE_DEFAULT_LOGGER_KEY.  Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for reporting this problem.
+
 Thu Dec 18 15:48:03 1997    <nw1@JIG>
 
-        * ace/OS.{h,cpp} (rethrow_w32_structural_exception):  Added this
-          function prints out an error message to indicate the occurance
-          of structural exception and rethrow it again.  
+        * ace/OS.{h,cpp} (rethrow_w32_structural_exception): Added this
+ 	  function, which prints out an error message to indicate the
+ 	  occurance of structural exception and rethrow it again.
           (ACE_Thread_Adapter::invoke): Rearranged try and except block
-          for Win32 and added a finally block so when a structural
-          exception occurs, a thread can clean it up properly, print out
-          an error message, and rethrow the exception again. 
+ 	  for Win32 and added a finally block so when a structural
+ 	  exception occurs, a thread can clean it up properly, print out
+ 	  an error message, and rethrow the exception again.
 
 Thu Dec 18 15:40:50 1997  James C Hu  <jxh@cs.wustl.edu>
 
@@ -16,13 +27,6 @@ Thu Dec 18 15:40:50 1997  James C Hu  <jxh@cs.wustl.edu>
 
         * ace/OS.h: Added new #defines to facilitate forward declarations
           of ACE_Export classes.
-
-Thu Dec 18 14:35:24 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-        * ace/OS.h: The server logging daemon is implemented using TCP/IP
-          under Win32.  Therefore, we can simplify the creation of the
-          ACE_DEFAULT_LOGGER_KEY.  Thanks to Patrick J. McNerthney
-          <pat@thememedia.com> for reporting this problem.
 
 Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
 
