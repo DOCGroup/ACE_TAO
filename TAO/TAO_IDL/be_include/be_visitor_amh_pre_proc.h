@@ -90,9 +90,9 @@ private:
 //                              be_interface *response_handler,
 //                              be_valuetype *excep_holder);
 
-  /// Create an operation with only the OUT and INOUT arguments
-//  int create_response_handler_operation (be_operation *node,
-//                                         be_interface *response_handler);
+  /// Create an operation with return, OUT and INOUT arguments
+  int create_response_handler_operation (be_operation *node,
+                                         be_interface *response_handler);
 
   /// Specialized visit_scope
   int visit_scope (be_scope *node);
