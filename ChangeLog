@@ -1,3 +1,9 @@
+Wed Dec 10 07:09:10 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/dseventlogadmin.mpb:
+
+          The dseventlogadmin base project should also inherit from event.
+
 Wed Dec 10 12:56:47 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
