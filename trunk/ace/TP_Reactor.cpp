@@ -76,7 +76,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
     }
   else
     {
-      ACE_MT (result = this->token_.acquire ();
+      ACE_MT (result = this->token_.acquire ());
     }
 
   // Now that this thread owns the token let us make
