@@ -78,7 +78,8 @@ BIN =   Aio_Platform_Test \
 BIN2 = Naming_Test \
        Thread_Pool_Reactor_Test \
        XtReactor_Test \
-       FlReactor_Test
+       FlReactor_Test \
+	TkReactor_Test	
 
 #### If the ACE library wasn't built with all components, don't
 #### try to build certain tests.
@@ -142,6 +143,8 @@ realclean: clean
 
 .obj/Aio_Platform_Test.o .obj/Aio_Platform_Test.so .shobj/Aio_Platform_Test.o .shobj/Aio_Platform_Test.so: Aio_Platform_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -179,6 +182,8 @@ realclean: clean
 .obj/Atomic_Op_Test.o .obj/Atomic_Op_Test.so .shobj/Atomic_Op_Test.o .shobj/Atomic_Op_Test.so: Atomic_Op_Test.cpp \
  $(ACE_ROOT)/tests/test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -215,6 +220,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp
 .obj/Barrier_Test.o .obj/Barrier_Test.so .shobj/Barrier_Test.o .shobj/Barrier_Test.so: Barrier_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -274,6 +281,8 @@ realclean: clean
 .obj/Basic_Types_Test.o .obj/Basic_Types_Test.so .shobj/Basic_Types_Test.o .shobj/Basic_Types_Test.so: Basic_Types_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -285,8 +294,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Version.h \
- test_config.h \
+ $(ACE_ROOT)/ace/Version.h test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -311,6 +319,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp
 .obj/Buffer_Stream_Test.o .obj/Buffer_Stream_Test.so .shobj/Buffer_Stream_Test.o .shobj/Buffer_Stream_Test.so: Buffer_Stream_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -436,6 +446,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream.cpp
 .obj/CDR_Test.o .obj/CDR_Test.so .shobj/CDR_Test.o .shobj/CDR_Test.so: CDR_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -506,6 +518,8 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.i
 .obj/Collection_Test.o .obj/Collection_Test.so .shobj/Collection_Test.o .shobj/Collection_Test.so: Collection_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -562,6 +576,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i
 .obj/Conn_Test.o .obj/Conn_Test.so .shobj/Conn_Test.o .shobj/Conn_Test.so: Conn_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -718,10 +734,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i \
- Conn_Test.h
+ $(ACE_ROOT)/ace/Get_Opt.i Conn_Test.h
 .obj/DLList_Test.o .obj/DLList_Test.so .shobj/DLList_Test.o .shobj/DLList_Test.so: DLList_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -780,6 +797,8 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i
 .obj/DLL_Test.o .obj/DLL_Test.so .shobj/DLL_Test.o .shobj/DLL_Test.so: DLL_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -814,13 +833,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- DLL_Test.h \
- $(ACE_ROOT)/ace/DLL.h \
+ DLL_Test.h $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 .obj/Enum_Interfaces_Test.o .obj/Enum_Interfaces_Test.so .shobj/Enum_Interfaces_Test.o .shobj/Enum_Interfaces_Test.so: Enum_Interfaces_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -861,6 +881,8 @@ realclean: clean
  $(ACE_ROOT)/ace/INET_Addr.i
 .obj/Env_Value_Test.o .obj/Env_Value_Test.so .shobj/Env_Value_Test.o .shobj/Env_Value_Test.so: Env_Value_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -905,6 +927,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Env_Value_T.cpp
 .obj/Future_Test.o .obj/Future_Test.so .shobj/Future_Test.o .shobj/Future_Test.so: Future_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1034,6 +1058,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 .obj/Handle_Set_Test.o .obj/Handle_Set_Test.so .shobj/Handle_Set_Test.o .shobj/Handle_Set_Test.so: Handle_Set_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1097,6 +1123,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i
 .obj/High_Res_Timer_Test.o .obj/High_Res_Timer_Test.so .shobj/High_Res_Timer_Test.o .shobj/High_Res_Timer_Test.so: High_Res_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1139,8 +1167,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 .obj/OrdMultiSet_Test.o .obj/OrdMultiSet_Test.so .shobj/OrdMultiSet_Test.o .shobj/OrdMultiSet_Test.so: OrdMultiSet_Test.cpp \
  $(ACE_ROOT)/ace/inc_user_config.h \
- test_config.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ test_config.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1196,6 +1225,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i
 .obj/Hash_Map_Manager_Test.o .obj/Hash_Map_Manager_Test.so .shobj/Hash_Map_Manager_Test.o .shobj/Hash_Map_Manager_Test.so: Hash_Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1280,6 +1311,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 .obj/IOStream_Test.o .obj/IOStream_Test.so .shobj/IOStream_Test.o .shobj/IOStream_Test.so: IOStream_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1430,6 +1463,8 @@ realclean: clean
  $(ACE_ROOT)/ace/IOStream_T.cpp
 .obj/Map_Test.o .obj/Map_Test.so .shobj/Map_Test.o .shobj/Map_Test.so: Map_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1538,6 +1573,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Profile_Timer.i
 .obj/Map_Manager_Test.o .obj/Map_Manager_Test.so .shobj/Map_Manager_Test.o .shobj/Map_Manager_Test.so: Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1635,6 +1672,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Profile_Timer.i
 .obj/Mem_Map_Test.o .obj/Mem_Map_Test.so .shobj/Mem_Map_Test.o .shobj/Mem_Map_Test.so: Mem_Map_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1673,6 +1712,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.i
 .obj/MM_Shared_Memory_Test.o .obj/MM_Shared_Memory_Test.so .shobj/MM_Shared_Memory_Test.o .shobj/MM_Shared_Memory_Test.so: MM_Shared_Memory_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1734,6 +1775,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i
 .obj/MT_Reactor_Timer_Test.o .obj/MT_Reactor_Timer_Test.so .shobj/MT_Reactor_Timer_Test.o .shobj/MT_Reactor_Timer_Test.so: MT_Reactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1858,6 +1901,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Pipe.i
 .obj/MT_SOCK_Test.o .obj/MT_SOCK_Test.so .shobj/MT_SOCK_Test.o .shobj/MT_SOCK_Test.so: MT_SOCK_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1935,6 +1980,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Handle_Set.i
 .obj/Message_Block_Test.o .obj/Message_Block_Test.so .shobj/Message_Block_Test.o .shobj/Message_Block_Test.so: Message_Block_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2061,6 +2108,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Profile_Timer.i
 .obj/Message_Queue_Test.o .obj/Message_Queue_Test.so .shobj/Message_Queue_Test.o .shobj/Message_Queue_Test.so: Message_Queue_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2174,6 +2223,8 @@ realclean: clean
 .obj/Message_Queue_Notifications_Test.o .obj/Message_Queue_Notifications_Test.so .shobj/Message_Queue_Notifications_Test.o .shobj/Message_Queue_Notifications_Test.so: \
  Message_Queue_Notifications_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2295,6 +2346,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 .obj/New_Fail_Test.o .obj/New_Fail_Test.so .shobj/New_Fail_Test.o .shobj/New_Fail_Test.so: New_Fail_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2332,6 +2385,8 @@ realclean: clean
  $(ACE_ROOT)/ace/CORBA_macros.h
 .obj/Notify_Performance_Test.o .obj/Notify_Performance_Test.so .shobj/Notify_Performance_Test.o .shobj/Notify_Performance_Test.so: Notify_Performance_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2466,6 +2521,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 .obj/Process_Mutex_Test.o .obj/Process_Mutex_Test.so .shobj/Process_Mutex_Test.o .shobj/Process_Mutex_Test.so: Process_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2509,6 +2566,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 .obj/Process_Strategy_Test.o .obj/Process_Strategy_Test.so .shobj/Process_Strategy_Test.o .shobj/Process_Strategy_Test.so: Process_Strategy_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2658,6 +2717,8 @@ realclean: clean
  Process_Strategy_Test.h
 .obj/Priority_Buffer_Test.o .obj/Priority_Buffer_Test.so .shobj/Priority_Buffer_Test.o .shobj/Priority_Buffer_Test.so: Priority_Buffer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2768,6 +2829,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Queue.i
 .obj/Dynamic_Priority_Test.o .obj/Dynamic_Priority_Test.so .shobj/Dynamic_Priority_Test.o .shobj/Dynamic_Priority_Test.so: Dynamic_Priority_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2882,6 +2945,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.i
 .obj/Priority_Task_Test.o .obj/Priority_Task_Test.so .shobj/Priority_Task_Test.o .shobj/Priority_Task_Test.so: Priority_Task_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3005,6 +3070,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.i
 .obj/Priority_Reactor_Test.o .obj/Priority_Reactor_Test.so .shobj/Priority_Reactor_Test.o .shobj/Priority_Reactor_Test.so: Priority_Reactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3179,6 +3246,8 @@ realclean: clean
  Priority_Reactor_Test.h
 .obj/Pipe_Test.o .obj/Pipe_Test.so .shobj/Pipe_Test.o .shobj/Pipe_Test.so: Pipe_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3224,6 +3293,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 .obj/RB_Tree_Test.o .obj/RB_Tree_Test.so .shobj/RB_Tree_Test.o .shobj/RB_Tree_Test.so: RB_Tree_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3288,6 +3359,8 @@ realclean: clean
  $(ACE_ROOT)/ace/RB_Tree.cpp
 .obj/Reactors_Test.o .obj/Reactors_Test.so .shobj/Reactors_Test.o .shobj/Reactors_Test.so: Reactors_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3413,6 +3486,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -3487,6 +3562,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Singleton.cpp
 .obj/Reactor_Notify_Test.o .obj/Reactor_Notify_Test.so .shobj/Reactor_Notify_Test.o .shobj/Reactor_Notify_Test.so: Reactor_Notify_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3622,6 +3699,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Select_Reactor.i
 .obj/Reactor_Performance_Test.o .obj/Reactor_Performance_Test.so .shobj/Reactor_Performance_Test.o .shobj/Reactor_Performance_Test.so: Reactor_Performance_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3798,6 +3877,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 .obj/Reactor_Timer_Test.o .obj/Reactor_Timer_Test.so .shobj/Reactor_Timer_Test.o .shobj/Reactor_Timer_Test.so: Reactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3863,6 +3944,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h
 .obj/Reader_Writer_Test.o .obj/Reader_Writer_Test.so .shobj/Reader_Writer_Test.o .shobj/Reader_Writer_Test.so: Reader_Writer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3923,6 +4006,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 .obj/Recursive_Mutex_Test.o .obj/Recursive_Mutex_Test.so .shobj/Recursive_Mutex_Test.o .shobj/Recursive_Mutex_Test.so: Recursive_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3983,6 +4068,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i
 .obj/Reverse_Lock_Test.o .obj/Reverse_Lock_Test.so .shobj/Reverse_Lock_Test.o .shobj/Reverse_Lock_Test.so: Reverse_Lock_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4019,6 +4106,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp
 .obj/Semaphore_Test.o .obj/Semaphore_Test.so .shobj/Semaphore_Test.o .shobj/Semaphore_Test.so: Semaphore_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4079,6 +4168,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 .obj/Service_Config_Test.o .obj/Service_Config_Test.so .shobj/Service_Config_Test.o .shobj/Service_Config_Test.so: Service_Config_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4153,6 +4244,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 .obj/Sigset_Ops_Test.o .obj/Sigset_Ops_Test.so .shobj/Sigset_Ops_Test.o .shobj/Sigset_Ops_Test.so: Sigset_Ops_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4190,6 +4283,8 @@ realclean: clean
 .obj/Simple_Message_Block_Test.o .obj/Simple_Message_Block_Test.so .shobj/Simple_Message_Block_Test.o .shobj/Simple_Message_Block_Test.so: Simple_Message_Block_Test.cpp \
  test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4251,6 +4346,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.cpp
 .obj/SOCK_Test.o .obj/SOCK_Test.so .shobj/SOCK_Test.o .shobj/SOCK_Test.so: SOCK_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4328,6 +4425,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Handle_Set.i
 .obj/SOCK_Connector_Test.o .obj/SOCK_Connector_Test.so .shobj/SOCK_Connector_Test.o .shobj/SOCK_Connector_Test.so: SOCK_Connector_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4379,6 +4478,8 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i
 .obj/SPIPE_Test.o .obj/SPIPE_Test.so .shobj/SPIPE_Test.o .shobj/SPIPE_Test.so: SPIPE_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4452,6 +4553,8 @@ realclean: clean
  $(ACE_ROOT)/ace/SPIPE_Acceptor.h
 .obj/SString_Test.o .obj/SString_Test.so .shobj/SString_Test.o .shobj/SString_Test.so: SString_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4491,6 +4594,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Malloc_Base.h
 .obj/SV_Shared_Memory_Test.o .obj/SV_Shared_Memory_Test.so .shobj/SV_Shared_Memory_Test.o .shobj/SV_Shared_Memory_Test.so: SV_Shared_Memory_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4547,6 +4652,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i
 .obj/Task_Test.o .obj/Task_Test.so .shobj/Task_Test.o .shobj/Task_Test.so: Task_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4668,6 +4775,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 .obj/Thread_Manager_Test.o .obj/Thread_Manager_Test.so .shobj/Thread_Manager_Test.o .shobj/Thread_Manager_Test.so: Thread_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4723,37 +4832,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
+ $(ACE_ROOT)/ace/Thread_Manager.i
 .obj/Thread_Mutex_Test.o .obj/Thread_Mutex_Test.so .shobj/Thread_Mutex_Test.o .shobj/Thread_Mutex_Test.so: Thread_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4812,6 +4895,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i
 .obj/Thread_Pool_Test.o .obj/Thread_Pool_Test.so .shobj/Thread_Pool_Test.o .shobj/Thread_Pool_Test.so: Thread_Pool_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4934,6 +5019,8 @@ realclean: clean
 .obj/Timeprobe_Test.o .obj/Timeprobe_Test.so .shobj/Timeprobe_Test.o .shobj/Timeprobe_Test.so: Timeprobe_Test.cpp \
  $(ACE_ROOT)/tests/test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4971,6 +5058,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Timeprobe.h
 .obj/Time_Service_Test.o .obj/Time_Service_Test.so .shobj/Time_Service_Test.o .shobj/Time_Service_Test.so: Time_Service_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5012,8 +5101,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Process.i
 .obj/Time_Value_Test.o .obj/Time_Value_Test.so .shobj/Time_Value_Test.o .shobj/Time_Value_Test.so: Time_Value_Test.cpp \
  $(ACE_ROOT)/ace/inc_user_config.h \
- test_config.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ test_config.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -5049,6 +5139,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp
 .obj/Timer_Queue_Test.o .obj/Timer_Queue_Test.so .shobj/Timer_Queue_Test.o .shobj/Timer_Queue_Test.so: Timer_Queue_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5126,6 +5218,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Hash_T.cpp
 .obj/TSS_Test.o .obj/TSS_Test.so .shobj/TSS_Test.o .shobj/TSS_Test.so: TSS_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5185,6 +5279,8 @@ realclean: clean
  TSS_Test_Errno.h
 .obj/UPIPE_SAP_Test.o .obj/UPIPE_SAP_Test.so .shobj/UPIPE_SAP_Test.o .shobj/UPIPE_SAP_Test.so: UPIPE_SAP_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5329,6 +5425,8 @@ realclean: clean
 .obj/Upgradable_RW_Test.o .obj/Upgradable_RW_Test.so .shobj/Upgradable_RW_Test.o .shobj/Upgradable_RW_Test.so: Upgradable_RW_Test.cpp Upgradable_RW_Test.h \
  test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5457,6 +5555,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Profile_Timer.i
 .obj/Naming_Test.o .obj/Naming_Test.so .shobj/Naming_Test.o .shobj/Naming_Test.so: Naming_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5557,6 +5657,8 @@ realclean: clean
 .obj/Thread_Pool_Reactor_Test.o .obj/Thread_Pool_Reactor_Test.so .shobj/Thread_Pool_Reactor_Test.o .shobj/Thread_Pool_Reactor_Test.so: Thread_Pool_Reactor_Test.cpp \
  $(ACE_ROOT)/tests/test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5722,6 +5824,8 @@ realclean: clean
  $(ACE_ROOT)/tests/Thread_Pool_Reactor_Test.h
 .obj/XtReactor_Test.o .obj/XtReactor_Test.so .shobj/XtReactor_Test.o .shobj/XtReactor_Test.so: XtReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5758,6 +5862,46 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp
 .obj/FlReactor_Test.o .obj/FlReactor_Test.so .shobj/FlReactor_Test.o .shobj/FlReactor_Test.so: FlReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp
+.obj/TkReactor_Test.o .obj/TkReactor_Test.so .shobj/TkReactor_Test.o .shobj/TkReactor_Test.so: TkReactor_Test.cpp test_config.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5794,6 +5938,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp
 .obj/Tokens_Test.o .obj/Tokens_Test.so .shobj/Tokens_Test.o .shobj/Tokens_Test.so: Tokens_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
