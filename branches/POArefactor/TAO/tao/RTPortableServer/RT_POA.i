@@ -2,6 +2,7 @@
 
 // Exception macros
 #include "tao/PortableServer/poa_macros.h"
+#include "tao/PortableServer/POA_Guard.h"
 #include "tao/Environment.h"
 
 ACE_INLINE CORBA::Object_ptr
@@ -67,11 +68,11 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
 
   while (1)
     {
-      int wait_occurred_restart_call = 0;      
+      int wait_occurred_restart_call = 0;
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD_RETURN (0);
-      
+
       PortableServer::ObjectId *result =
         this->activate_object_i (servant,
                                  priority,
@@ -108,11 +109,11 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
 
   while (1)
     {
-      int wait_occurred_restart_call = 0;      
-      
+      int wait_occurred_restart_call = 0;
+
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD;
-      
+
       this->activate_object_with_id_i (oid,
                                        servant,
                                        priority,
