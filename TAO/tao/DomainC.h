@@ -340,9 +340,7 @@ public:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_DomainManager;
-
-TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SecConstruction;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_DomainManager;
 
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___PTR_CH_)
@@ -634,7 +632,7 @@ public:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_ConstructionPolicy;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_ConstructionPolicy;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -786,7 +784,7 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_DomainManagerList;
+extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_DomainManagerList;
 
 
 
