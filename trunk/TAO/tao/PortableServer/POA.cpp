@@ -761,6 +761,10 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
+
+  // @@ Priyanka, why are you allocating this sequence on the heap.
+  //    Not only is it unnecessary to do so, but it is expensive.
+  //    Just instantiate it on the stack.
   PortableInterceptor::ObjectReferenceTemplateSeq
     *seq_obj_ref_template = 0;
 
@@ -859,9 +863,18 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
+  // @@ Priyanka, once you fix the sequence instantiation so that it
+  //    is stack instantiated, you can remove the broken cast you use
+  //    below and simply pass the sequence as an "in" parameter,
+  //    i.e. just pass it in without a cast.  Note that you'll need to
+  //    fix the adapter_state_changed() signature to accept a
+  //       "const PortableInterceptor::ObjectReferenceTemplateSeq &"
+  //    Hence no need to introduce pointers or casts.
   this->adapter_state_changed (
      (const PortableInterceptor::ObjectReferenceTemplateSeq *)seq_obj_ref_template,
       this->adapter_state_);
+  // @@ Priyanka, once you add the missing ACE_ENV_ARG_PARAMETER to
+  //    the above call, don't forget the ACE_CHECK here.
     }
   else
     {
@@ -1042,6 +1055,15 @@ TAO_POA::tao_add_ior_component_to_profile (
                                  CORBA::COMPLETED_NO));
 }
 
+// @@ Priyanka, change the first paramater to a:
+//       const PortableInterceptor::ObjectReferenceTemplateSeq &
+//    Just use the standard C++ mapping parameter passing rules.
+//    While it isn't strictly necessary to do so for this TAO-specific
+//    method, it is less confusing to use consistent parameter passing
+//    style.
+//
+//    Also, the IOR interceptors can throw an exception.  You forgot
+//    to add a CORBA::Environment parameter, i.e. "ACE_ENV_ARG_DECL"
 void
 TAO_POA::
 adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq *seq_obj_ref_template,
@@ -1058,8 +1080,19 @@ adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq *se
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
+      // @@ Priyanka, your missing the "ACE_ENV_ARG_PARAMETER" in the
+      //    following method call.  This is really bad for the
+      //    emulated exceptions case.  Not only is the exception not
+      //    propagated up to the caller, but you're also introducing a
+      //    TSS access each time this method is called due to the
+      //    missing the ACE_ENV_ARG_PARAMETER.  The TSS access occurs
+      //    since the default CORBA::Environment argument call you
+      //    introduced by not passing in the ACE_ENV_ARG_PARAMETER
+      //    places the emulated exception results in TSS.
       interceptors[i]->adapter_state_changed ((*seq_obj_ref_template),
                                               state);
+      // @@ Priyanka, once you add the "ACE_ENV_ARG_PARAMETER" don't
+      //    forget the ACE_CHECK here.
     }
 }
 
