@@ -6,10 +6,8 @@
   </HEAD>
 
   <BODY>
-    <CENTER>
       <H3>Event Service Status</H3>
       Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
-    </CENTER>
 
     <H4>Last Updated: $Date$ </H4>
 
@@ -114,35 +112,37 @@
 
     <H3>Features in previous releases</H3>
 
+<UL>
       <LI>
 	When several suppliers are consumers are distributed over the
 	network it could be nice to exploit locality and have a
 	separate Event Channel on each process (or host).
 	Only when an event is required by some remote consumer we need
-	to send it through the network.
+	to send it through the network. <P>
 
 	The basic architecture to achieve this seems very simple,
 	each Event Channel has a proxy that connects to the EC peers,
 	providing a "merge" of its (local) consumer subscriptions as
-	its own subscription list.
+	its own subscription list. <P>
 
 	Locally the proxy connects as a supplier,
-	publishing all the events it has register for.
+	publishing all the events it has register for. <P>
 
 	To avoid event looping the events carry a time-to-live field
 	that is decremented each time the event goes through a proxy, 
 	when the TTL gets to zero the event is not propagated by the
-	proxy. 
+	proxy. <P>
 
 	In the current release an experimental implementation is
 	provided,
 	it basically hardcodes all the subscriptions and publications,
 	we are researching on how to automatically build the
-	publication list.</LI>
+	publication list.<P>
 
-      <LI>
+      <LI> <P>
 	We use the COS Time Service types (not the services) to
-	specify time for the Event Service and Scheduling Service.</LI>
+	specify time for the Event Service and Scheduling Service.<P>
+</UL>
 
   </BODY>
 </HTML>
