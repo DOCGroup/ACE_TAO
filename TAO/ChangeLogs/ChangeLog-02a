@@ -89,7 +89,15 @@ Wed June 26  2:09:00 2002 Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  Added:
 	  connection_handler - accessor method for the underlying connection handler.
 
+	* tests/RTCORBA/Diffserv/Makefile:
+	* tests/RTCORBA/Diffserv/README:	
+	* tests/RTCORBA/Diffserv/client.cpp:
+ 	* tests/RTCORBA/Diffserv/server.cpp: 	
+	* tests/RTCORBA/Diffserv/test.idl: 		
+	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h: 	
 
+	  Added the Diffserv test to demonstrate the setting of dscp in the IIOP request and replies.
+	
 Wed May 22 23:18:59 2002  Priyanka  <oci@cs.wustl.edu>
 
         * TAO version 1.2.3 released.
