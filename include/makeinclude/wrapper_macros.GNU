@@ -481,12 +481,6 @@ ifeq ($(ssl),0)
   override ssl =
 endif # ssl
 
-ifneq ($(ssl),)
-  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-  LIBS += $(PLATFORM_SSL_LIBS)
-  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
-endif # ssl
-
 ifeq ($(exceptions),0)
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.

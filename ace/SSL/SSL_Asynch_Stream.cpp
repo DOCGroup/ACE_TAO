@@ -51,7 +51,7 @@ protected:
   ACE_SSL_Asynch_Write_Stream_Result (ACE_Handler &handler,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
-                                      u_long bytes_to_read,
+                                      size_t bytes_to_read,
                                       const void* act,
                                       ACE_HANDLE event,
                                       int priority,
@@ -62,7 +62,7 @@ ACE_SSL_Asynch_Write_Stream_Result::ACE_SSL_Asynch_Write_Stream_Result
   (ACE_Handler &       handler,
     ACE_HANDLE          handle,
     ACE_Message_Block & message_block,
-    u_long              bytes_to_write,
+    size_t              bytes_to_write,
     const void *        act,
     ACE_HANDLE          event,
     int                 priority,
@@ -94,7 +94,7 @@ protected:
   ACE_SSL_Asynch_Read_Stream_Result (ACE_Handler &handler,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
-                                     u_long bytes_to_read,
+                                     size_t bytes_to_read,
                                      const void* act,
                                      ACE_HANDLE event,
                                      int priority,
@@ -107,7 +107,7 @@ ACE_SSL_Asynch_Read_Stream_Result::ACE_SSL_Asynch_Read_Stream_Result
   (ACE_Handler &        handler,
     ACE_HANDLE           handle,
     ACE_Message_Block &  message_block,
-    u_long               bytes_to_read,
+    size_t               bytes_to_read,
     const void *         act,
     ACE_HANDLE           event,
     int                  priority,
@@ -134,10 +134,10 @@ class ACE_SSL_Asynch_Result : public A_RESULT
 public:
     ACE_SSL_Asynch_Result (ACE_Handler & handler);
 
-    void complete (u_long bytes_transferred,
-                    int    success,
-                    const  void * completion_key,
-                    u_long error);
+    void complete (size_t bytes_transferred,
+                   int    success,
+                   const  void * completion_key,
+                   u_long error);
 };
 
 ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result
@@ -154,7 +154,7 @@ ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result
 }
 
 void
-ACE_SSL_Asynch_Result::complete (u_long /* bytes_transferred */,
+ACE_SSL_Asynch_Result::complete (size_t /* bytes_transferred */,
                                  int    /* success */,
                                  const  void * /* completion_key */,
                                  u_long /* error */)
@@ -398,7 +398,7 @@ ACE_SSL_Asynch_Stream::open (ACE_HANDLE new_handle,
 // ************************************************************
 int
 ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
-                             u_long bytes_to_read,
+                             size_t bytes_to_read,
                              const void * act,
                              int priority,
                              int signal_number)
@@ -441,7 +441,7 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
 // ************************************************************
 int
 ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
-                              u_long bytes_to_write,
+                              size_t bytes_to_write,
                               const void * act,
                               int priority,
                               int signal_number)
@@ -636,7 +636,7 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
     }
 
   ACE_Message_Block & mb = this->ext_read_result_->message_block ();
-  u_long bytes_req = this->ext_read_result_->bytes_to_read ();
+  size_t bytes_req = this->ext_read_result_->bytes_to_read ();
 
   int bytes_trn = ::SSL_read (this->ssl_,
                               mb.rd_ptr (),
@@ -693,7 +693,7 @@ ACE_SSL_Asynch_Stream::do_SSL_write (void)
     }
 
   ACE_Message_Block & mb = this->ext_write_result_->message_block ();
-  u_long       bytes_req = this->ext_write_result_->bytes_to_write ();
+  size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
 
   int bytes_trn = ::SSL_write (this->ssl_,
                                mb.rd_ptr (),
@@ -1033,8 +1033,8 @@ ACE_SSL_Asynch_Stream::handle_write_stream (
 
   ACE_Message_Block & mb = result.message_block ();
 
-  u_long bytes_req = result.bytes_to_write ();
-  u_long bytes_trn = result.bytes_transferred ();
+  size_t bytes_req = result.bytes_to_write ();
+  size_t bytes_trn = result.bytes_transferred ();
   u_long errval    = result.error ();
   size_t len       = bytes_req - bytes_trn;
 
@@ -1076,7 +1076,7 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
 
   this->bio_inp_flag_ &= ~BF_AIO;
 
-  u_long bytes_trn = result.bytes_transferred ();
+  size_t bytes_trn = result.bytes_transferred ();
   u_long errval    = result.error ();
 
   if (errval != 0)                     // error ?
