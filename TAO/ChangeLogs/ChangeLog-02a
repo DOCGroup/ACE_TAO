@@ -1,3 +1,10 @@
+Fri May 18 16:30:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/FILE_Parser.cpp (parse_string):
+
+	  Added missing ACE_CHECK_RETURN after the ACE_ENDTRY macro.  It
+	  is required since the caught exception is re-thrown.
+
 Fri May 18 15:27:11 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Connection_Purging_Strategy.h:
@@ -86,8 +93,8 @@ Fri May 18 06:53:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage,
   	* orbsvcs/tests/AVStreams/Simple_Three_Stage,
   	* orbsvcs/tests/AVStreams/Component_Switching:
-	  Added makefiles for BCB.  Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
-	  for contributing this.
+	  Added makefiles for BCB.  Thanks to Johnny Willemsen
+	  <jwillemsen@remedy.nl> for contributing this.
 
 Thu May 17 23:37:04 2001  Ossama Othman  <ossama@uci.edu>
 
