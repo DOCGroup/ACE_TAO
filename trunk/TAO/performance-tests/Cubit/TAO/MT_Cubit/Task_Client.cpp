@@ -246,19 +246,6 @@ Client::get_low_priority_jitter (void)
 int
 Client::svc (void)
 {
-  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
-  // ACE way to do that . . .
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-  int prio;
-
-  if (ACE_Thread::getprio (thr_handle, prio) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client::svc; set my priority to %d\n",
-              prio));
-  ACE_OS::thr_setprio (prio);
-
   Cubit_ptr cb = 0;
   CORBA::ORB_var orb;
   CORBA::Object_var objref (0);
@@ -538,10 +525,10 @@ Client::svc (void)
 
   // Perform the tests.
   int result = this->run_tests (cb,
-				ts_->loop_count_,
+                                ts_->loop_count_,
                                 this->id_,
                                 ts_->datatype_,
-				frequency);
+                                frequency);
 
   if (result == -1)
     return -1;
@@ -604,15 +591,15 @@ Client::run_tests (Cubit_ptr cb,
 
       if ( (i % ts_->granularity_) == 0)
         {
-	  if (ts_->use_utilization_test_ == 0)
-	    {
-	      ACE_Time_Value tv (0,
-				 (u_long) ((sleep_time - delta) < 0
-					   ? 0
-					   : (sleep_time - delta)));
-	      ACE_OS::sleep (tv);
-	    }
-	      
+          if (ts_->use_utilization_test_ == 0)
+            {
+              ACE_Time_Value tv (0,
+                                 (u_long) ((sleep_time - delta) < 0
+                                           ? 0
+                                           : (sleep_time - delta)));
+              ACE_OS::sleep (tv);
+            }
+
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
 #else /* CHORUS */
@@ -981,19 +968,6 @@ Yield_Test::~Yield_Test()
 int
 Yield_Test::svc ()
 {
-  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
-  // ACE way to do that . . .
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-  int prio;
-
-  if (ACE_Thread::getprio (thr_handle, prio) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Yield_Test::svc; set my priority to %d\n",
-              prio));
-  ACE_OS::thr_setprio (prio);
-
   for (unsigned long i = 0; i < iterations_; ++i)
     {
       ACE_OS::thr_yield ();
