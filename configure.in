@@ -1051,7 +1051,7 @@ ACE_CACHE_CHECK(for getopt() prototype, ace_cv_lib_getopt_proto, [
      ace_cv_lib_getopt_proto=yes
     ],
     [
-     AC_EGREP_HEADER(getopt, stdlib.h,
+     AC_EGREP_HEADER([[^_]+getopt], stdlib.h,
        [
         ace_cv_lib_getopt_proto=yes
        ],
@@ -6723,8 +6723,13 @@ ACE_CACHE_CHECK(if running on a Pentium(tm) processor,
     case "$target" in
       i386-* | i486-* |i586-* | i686-*)
 dnl If we do have a pentium, than define ACE_HAS_PENTIUM and add
-dnl gethrtime.cpp to the source list
-        ace_cv_feature_pentium=yes
+dnl gethrtime.cpp to the source list, but only if we're using GNU C++
+dnl since gethrtime.cpp uses assembler code specific to that compiler.
+	if test -n "$GXX"; then
+          ace_cv_feature_pentium=yes
+        else
+          ace_cv_feature_pentium=no
+	fi
         ;;
       *)
         ace_cv_feature_pentium=no
