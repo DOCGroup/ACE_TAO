@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_macros.h"
@@ -10,6 +11,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+
 #if defined (ACE_HAS_PRIOCNTL)
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
@@ -672,8 +674,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         result = -1;
 #     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 #   elif defined (ACE_HAS_RECURSIVE_MUTEXES)
-      ACE_ADAPT_RETVAL (::pthread_mutexattr_settype (attributes, lock_type),
-                        result);
+      (void) ACE_ADAPT_RETVAL (::pthread_mutexattr_settype (attributes,
+                                                            lock_type),
+                               result);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
     }
 
