@@ -1111,6 +1111,10 @@ SOURCE=.\Default_Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\default_ports.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Protocols_Hooks.h
 # End Source File
 # Begin Source File
@@ -1428,6 +1432,10 @@ SOURCE=.\Object_Proxy_Impl.h
 # Begin Source File
 
 SOURCE=.\Object_Ref_Table.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
 
