@@ -317,7 +317,7 @@ sub create_kit () {
             "$find $release_files $release_filter | $cpio -o -H tar | " .
             "$gzip -9 > ACE+TAO.tar.gz && " .
             "$chmod a+r ACE+TAO.tar.gz && " .
-            "$mv ACE_TAO.tar.gz ACE_wrappers/ $exec_suffix");
+            "$mv ACE+TAO.tar.gz ACE_wrappers/ $exec_suffix");
   }
 
   0;
