@@ -22,17 +22,19 @@ OBJFILES = \
 	$(OBJDIR)\Endpoint_Strategy.obj \
 	$(OBJDIR)\FlowSpec_Entry.obj \
 	$(OBJDIR)\MCast.obj \
+        $(OBJDIR)\md5c.obj \
 	$(OBJDIR)\media-timer.obj \
 	$(OBJDIR)\Null_MediaCtrlC.obj \
 	$(OBJDIR)\Null_MediaCtrlS.obj \
 	$(OBJDIR)\Policy.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\RTCP.obj \
+        $(OBJDIR)\RTCP_Channel.obj \
+        $(OBJDIR)\RTCP_Packet.obj \
 	$(OBJDIR)\RTP.obj \
 	$(OBJDIR)\sfp.obj \
 	$(OBJDIR)\sfpC.obj \
 	$(OBJDIR)\sfpS.obj \
-	$(OBJDIR)\source.obj \
 	$(OBJDIR)\TCP.obj \
 	$(OBJDIR)\Transport.obj \
 	$(OBJDIR)\UDP.obj
@@ -49,6 +51,7 @@ CFLAGS = \
 	-DTAO_AV_BUILD_DLL
 
 CPPDIR = .;AV
+CDIR = AV
 
 IDLDIR = .
 
