@@ -16,6 +16,9 @@ Thu Apr 24 09:33:53 1997  David L. Levine  <levine@cs.wustl.edu>
 	  (And the other sunos5.4 config files don't have it.)
 	  Thanks to Joey Zhu <joey.zhu@wcom.com> for reporting this.
 
+	* tests/Timer_Queue_Test.cpp (main): added delete of timer_ids array
+	  to avoid memory leak.
+
 Thu Apr 24 07:24:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Process_Strategy_Test.cpp (handle_input): We were
