@@ -1,3 +1,11 @@
+Mon May 17 10:11:46 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Plan_Handler.h:
+        * DnC/Config_Handlers/Domain_Handler.h:
+
+          Replaced the use of a Synch_Mutex with that of a Null_Mutex as
+          there will not be multiple threads parsing the handler.
+
 Mon May 17 11:24:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DnC/Config_Handlers/Plan_Handler.h:
