@@ -1,3 +1,19 @@
+Sat Nov 13 17:17:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynArray_i.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	* tao/Exception.cpp:
+	  Patches sent in by Philippe Merle <Philippe.Merle@lifl.fr>.
+	  In all Dyn*_i.cpp files, type () functions now returns a
+	  duplicate. In DynStruct_i.cpp, code was added to from_any (0
+	  and to_any () to facilitate the case where the struct is an
+	  exception. In Exception.cpp, UnknownUserException constructor 
+	  with Any argument now calls base class constructor explicitly,
+	  similarly to the default constructor.
+
 Fri Nov 12 13:24:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Exception.cpp:
