@@ -46,12 +46,12 @@ Legend:
 [1111x ] 	SII short
 [1111x ] 	SII ubstring
 [1111x ] 	SII fixed_struct
-[1110x ] 	SII strseq
-[0110x ] 	SII var_struct
-[0110x ] 	SII nested_struct
+[1111x ] 	SII strseq
+[0111x ] 	SII var_struct
+[0111x ] 	SII nested_struct
 [0000x ] 	SII struct_seq
 [0000x ] 	SII objref
-
+    
 [11x1x ] 	DII short
 [11x1x ] 	DII ubstring
 [11x1x ] 	DII fixed_struct
@@ -60,7 +60,7 @@ Legend:
 [00x0x ] 	DII nested_struct
 [00x0x ] 	DII struct_seq
 [00x0x ] 	DII objref
-
+    
 [0x0x0 ] Thruput/TAO compiles
 
 [1111x ] liborbsvcs compiles
@@ -78,24 +78,25 @@ Legend:
 [11x11 ] Event_Latency compiles
 [x1x0x ]        Event_Latency runs
 
-[010100] MT_Cubit compiles
+[110100] MT_Cubit compiles
 [xxx0xx] 	runs for Octet
 [xxx0xx] 	runs for Short
 [xxx0xx] 	runs for Long
 [xxx0xx] 	runs for Struct
-
+ 
 NOTES
 * Solaris/CC
-**orbsvcs/tests/Logger does not compile
-**Thruput/TAO/server.cpp -same errors as Logger/svr.cpp
-**ParamTest/var_struct,nested_struct,struct_seq - seg. fault , but able to fix manually
-  the tao_idl compiler generated files, works fine then.
-
+** orbsvcs/tests/Logger does not compile
+** Thruput/TAO/server.cpp -same errors as Logger/svr.cpp
+** ParamTest/var_struct,nested_struct,struct_seq - seg. fault , but
+   able to fix manually the tao_idl compiler generated files, works
+   fine then.
+ 
 * NT
 ** Warnings on libTAO and tao_idl compilation.
 ** Param_Test with struct_seq segfaults server.
 ** MT_Cubit client segfaults after transactions made.
-
+ 
 * Solaris/g++
 ** Warnings during tao_idl compilation.
 ** SII,DII struct_seq causes a bus error on the server.
@@ -118,8 +119,9 @@ NOTES
 
 * Linux/g++
 ** IDL Cubit clnt works, but generates a SEGV on shutdown
-** IDL Cubit svr executes, but returns object references across the wire with host of 127.0.0.1
-The remote client gets a MARSHAL exception.
+** IDL Cubit svr executes, but returns object references across the
+   wire with host of 127.0.0.1 The remote client gets a MARSHAL
+   exception.
 
 * Other (Linux/egcs, Solaris/egcs, etc.)
 
