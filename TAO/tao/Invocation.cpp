@@ -12,6 +12,7 @@
 #include "tao/Connector_Registry.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
+#include "tao/Bind_Dispatcher_Guard.h"
 
 #include "tao/RT_Policy_i.h"
 #include "tao/Messaging_Policy_i.h"
@@ -919,9 +920,11 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
 
-  int retval =
-    tms->bind_dispatcher (this->op_details_.request_id (),
-                          &this->rd_);
+  TAO_Bind_Dispatcher_Guard dispatch_guard(this->op_details_.request_id(),
+                                           &this->rd_,
+                                           tms);
+  int retval = dispatch_guard.status();
+
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -993,7 +996,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   if (reply_error == -1)
     {
-      tms->unbind_dispatcher (this->op_details_.request_id ());
+      // The guard automatically unbinds the dispatcher
       if (errno == ETIME)
         {
           // Just a timeout, don't close the connection or
@@ -1192,9 +1195,11 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // the two classes now?
   TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
 
-  int retval =
-    tms->bind_dispatcher (this->op_details_.request_id (),
-                          &rd);
+  TAO_Bind_Dispatcher_Guard dispatch_guard(this->op_details_.request_id(),
+                                           &rd,
+                                           tms);
+  int retval = dispatch_guard.status();
+
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -1242,7 +1247,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Check the reply error.
   if (reply_error == -1)
     {
-      tms->unbind_dispatcher (this->op_details_.request_id ());
+      // The guard automatically unbinds the dispatcher
       if (errno == ETIME)
         {
           // Just a timeout, don't close the connection or
@@ -1419,9 +1424,11 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Bind.
   TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
 
-  int retval =
-    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
-                                               &this->rd_);
+  TAO_Bind_Dispatcher_Guard dispatch_guard(this->op_details_.request_id(),
+                                           &this->rd_,
+                                           this->transport_->tms ());
+  int retval = dispatch_guard.status();
+
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -1478,7 +1485,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Check the reply error.
   if (reply_error == -1)
     {
-      tms->unbind_dispatcher (this->op_details_.request_id ());
+      // The guard automatically unbinds the dispatcher
       if (errno == ETIME)
         {
           // Just a timeout, don't close the connection or
