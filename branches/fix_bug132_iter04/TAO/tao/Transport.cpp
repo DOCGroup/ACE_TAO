@@ -211,88 +211,54 @@ dump_iov (iovec *iov, int iovcnt, int id,
 }
 
 int
-TAO_Transport::send_message_block_chain (const ACE_Message_Block *message_block,
+TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
                                          size_t &bytes_transferred,
-                                         ACE_Time_Value *timeout)
+                                         ACE_Time_Value *max_wait_time)
 {
-  bytes_transferred = 0;
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
+  return this->send_message_block_chain_i (mb,
+                                           bytes_transferred,
+                                           max_wait_time);
+}
 
-  iovec iov[IOV_MAX];
-  int iovcnt = 0;
+int
+TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
+                                           size_t &bytes_transferred,
+                                           ACE_Time_Value *)
+{
+  size_t total_length = mb->total_length ();
 
-  while (message_block != 0)
+  // We are going to block, so there is no need to clone
+  // the message block.
+  TAO_Synch_Queued_Message synch_message (mb);
+
+  synch_message.push_back (this->head_, this->tail_);
+
+  int n = this->drain_queue_i ();
+  if (n == -1)
     {
-      size_t message_block_length =
-        message_block->length ();
-
-      // Check if this block has any data to be sent.
-      if (message_block_length > 0)
-        {
-              // Collect the data in the iovec.
-          iov[iovcnt].iov_base = message_block->rd_ptr ();
-          iov[iovcnt].iov_len  = message_block_length;
-
-          // Increment iovec counter.
-          iovcnt++;
-
-          // The buffer is full make a OS call.  @@ TODO find a way to
-          // find IOV_MAX for platforms that do not define it rather
-          // than simply setting IOV_MAX to some arbitrary value such
-          // as 16.
-          if (iovcnt == IOV_MAX)
-            {
-              size_t current_transfer = 0;
-
-              ssize_t result =
-                this->send (iov, iovcnt, current_transfer, timeout);
-
-              if (TAO_debug_level == 2)
-                {
-                  dump_iov (iov, iovcnt, this->id (),
-                            current_transfer, "send_message_block_chain");
-                }
-
-              // Add to total bytes transferred.
-              bytes_transferred += current_transfer;
-
-              // Errors.
-              if (result == -1 || result == 0)
-                return result;
-
-              // Reset iovec counter.
-              iovcnt = 0;
-            }
-        }
-
-      // Select the next message block in the chain.
-      message_block = message_block->cont ();
+      synch_message.remove_from_list (this->head_, this->tail_);
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return -1; // Error while sending...
+    }
+  else if (n == 1)
+    {
+      ACE_ASSERT (synch_message.all_data_sent ());
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return 1;  // Empty queue, message was sent..
     }
 
-  // Check for remaining buffers to be sent.  This will happen when
-  // IOV_MAX is not a multiple of the number of message blocks.
-  if (iovcnt != 0)
-    {
-      size_t current_transfer = 0;
+  ACE_ASSERT (n == 0); // Some data sent, but data remains.
 
-      ssize_t result =
-        this->send (iov, iovcnt, current_transfer, timeout);
+  // Remove the temporary message from the queue...
+  synch_message.remove_from_list (this->head_, this->tail_);
 
-      if (TAO_debug_level == 2)
-        {
-          dump_iov (iov, iovcnt, this->id (),
-                    current_transfer, "send_message_block_chain");
-        }
+  bytes_transferred =
+    total_length - synch_message.message_length ();
 
-      // Add to total bytes transferred.
-      bytes_transferred += current_transfer;
-
-      // Errors.
-      if (result == -1 || result == 0)
-        return result;
-    }
-
-  // Return total bytes transferred.
-  return bytes_transferred;
+  return 0;
 }
 
 int
@@ -342,9 +308,9 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
       // we release it we need to recheck the status of the transport
       // after we return... once I understand the final form for this
       // code I will re-visit this decision
-      n = this->send_message_block_chain (message_block,
-                                          byte_count,
-                                          max_wait_time);
+      n = this->send_message_block_chain_i (message_block,
+                                            byte_count,
+                                            max_wait_time);
       if (n == 0)
         return -1; // EOF
       else if (n == -1)
@@ -370,10 +336,6 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
           // be fast.
           return 0;
         }
-
-      // ... if the message was partially sent then we need to
-      // continue sending ASAP ...
-      (void) flushing_strategy->schedule_output (this);
     }
 
   // ... either the message must be queued or we need to queue it
@@ -401,7 +363,11 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
     this->check_buffering_constraints_i (stub,
                                          must_flush);
 
-  if (constraints_reached)
+  // ... but we also want to activate it if the message was partially
+  // sent.... Plus, when we use the blocking flushing strategy the
+  // queue is flushed as a side-effect of 'schedule_output()'
+
+  if (constraints_reached || try_sending_first)
     {
       (void) flushing_strategy->schedule_output (this);
     }
@@ -414,11 +380,6 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
       ACE_GUARD_RETURN (TAO_REVERSE_SYNCH_MUTEX, ace_mon, reverse, -1);
       (void) flushing_strategy->flush_transport (this);
     }
-
-  // ... in any case, check for timeouts and report them to the
-  // application ...
-  if (max_wait_time != 0 && n == -1 && errno == ETIME)
-    return -1;
 
   return 0;
 }
@@ -477,37 +438,45 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
                                                &synch_message,
                                                max_wait_time);
   }
-  if (result == -1 && errno == ETIME)
+  if (result == -1)
     {
-      if (this->head_ != &synch_message)
+      synch_message.remove_from_list (this->head_, this->tail_);
+      if (errno == ETIME)
         {
-          synch_message.remove_from_list (this->head_, this->tail_);
+          if (this->head_ == &synch_message)
+            {
+              // This is a timeout, there is only one nasty case: the
+              // message has been partially sent!  We simply cannot take
+              // the message out of the queue, because that would corrupt
+              // the connection.
+              //
+              // What we do is replace the queued message with an
+              // asynchronous message, that contains only what remains of
+              // the timed out request.  If you think about sending
+              // CancelRequests in this case: there is no much point in
+              // doing that: the receiving ORB would probably ignore it,
+              // and figuring out the request ID would be a bit of a
+              // nightmare.
+              //
+
+              synch_message.remove_from_list (this->head_, this->tail_);
+              TAO_Queued_Message *queued_message = 0;
+              ACE_NEW_RETURN (queued_message,
+                              TAO_Asynch_Queued_Message (
+                                  synch_message.current_block ()),
+                              -1);
+              queued_message->push_front (this->head_, this->tail_);
+            }
         }
 
-      else
+      if (TAO_debug_level > 0)
         {
-          // This is a timeout, there is only one nasty case: the
-          // message has been partially sent!  We simply cannot take
-          // the message out of the queue, because that would corrupt
-          // the connection.
-          //
-          // What we do is replace the queued message with an
-          // asynchronous message, that contains only what remains of
-          // the timed out request.  If you think about sending
-          // CancelRequests in this case: there is no much point in
-          // doing that: the receiving ORB would probably ignore it,
-          // and figuring out the request ID would be a bit of a
-          // nightmare.
-          //
-
-          synch_message.remove_from_list (this->head_, this->tail_);
-          TAO_Queued_Message *queued_message = 0;
-          ACE_NEW_RETURN (queued_message,
-                          TAO_Asynch_Queued_Message (
-                              synch_message.current_block ()),
-                          -1);
-          queued_message->push_front (this->head_, this->tail_);
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) TAO_Transport::send_synchronous_message_i, "
+                      "error while flushing message %p\n", ""));
         }
+
+      return -1;
     }
 
   else
@@ -796,6 +765,12 @@ int
 TAO_Transport::queue_is_empty (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, 0);
+  return this->queue_is_empty_i ();
+}
+
+int
+TAO_Transport::queue_is_empty_i (void)
+{
   return (this->head_ == 0);
 }
 
@@ -882,6 +857,64 @@ TAO_Transport::drain_queue (void)
 }
 
 int
+TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
+{
+  size_t byte_count = 0;
+
+  // ... send the message ...
+  ssize_t retval =
+    this->send (iov, iovcnt, byte_count);
+
+  if (TAO_debug_level == 5)
+    {
+      dump_iov (iov, iovcnt, this->id (),
+                byte_count, "drain_queue_helper");
+    }
+
+  // ... now we need to update the queue, removing elements
+  // that have been sent, and updating the last element if it
+  // was only partially sent ...
+  this->cleanup_queue (byte_count);
+  iovcnt = 0;
+
+  if (retval == 0)
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_Transport::drain_queue_helper, "
+                      "send() returns 0"));
+        }
+      return -1;
+    }
+  else if (retval == -1)
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_Transport::drain_queue_helper, "
+                      "%p", "send()"));
+        }
+      if (errno == EWOULDBLOCK)
+        return 0;
+      return -1;
+    }
+
+  // ... start over, how do we guarantee progress?  Because if
+  // no bytes are sent send() can only return 0 or -1
+  ACE_ASSERT (byte_count != 0);
+
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Transport::drain_queue_helper, "
+                  "byte_count = %d, head_is_empty = %d\n",
+                  byte_count, (this->head_ == 0)));
+    }
+  return 1;
+}
+
+int
 TAO_Transport::drain_queue_i (void)
 {
   if (this->head_ == 0)
@@ -905,38 +938,19 @@ TAO_Transport::drain_queue_i (void)
       // IOV_MAX elements ...
       if (iovcnt == IOV_MAX)
         {
-          size_t byte_count = 0;
+          int retval =
+            this->drain_queue_helper (iovcnt, iov);
 
-          // ... send the message ...
-          ssize_t retval =
-            this->send (iov, iovcnt, byte_count);
-
-          if (TAO_debug_level == 2)
+          if (TAO_debug_level > 4)
             {
-              dump_iov (iov, iovcnt, this->id (),
-                        byte_count, "drain_queue_i");
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - TAO_Transport::drain_queue_i, "
+                          "helper retval = %d\n",
+                          retval));
             }
+          if (retval != 1)
+            return retval;
 
-          // ... now we need to update the queue, removing elements
-          // that have been sent, and updating the last element if it
-          // was only partially sent ...
-          this->cleanup_queue (byte_count);
-          iovcnt = 0;
-
-          if (retval == 0)
-            {
-              return -1;
-            }
-          else if (retval == -1)
-            {
-              if (errno == EWOULDBLOCK)
-                return 0;
-              return -1;
-            }
-
-          // ... start over, how do we guarantee progress?  Because if
-          // no bytes are sent send() can only return 0 or -1
-          ACE_ASSERT (byte_count != 0);
           i = this->head_;
           continue;
         }
@@ -948,30 +962,18 @@ TAO_Transport::drain_queue_i (void)
 
   if (iovcnt != 0)
     {
-      size_t byte_count = 0;
-      ssize_t retval =
-        this->send (iov, iovcnt, byte_count);
+      int retval =
+        this->drain_queue_helper (iovcnt, iov);
 
-      if (TAO_debug_level == 2)
-        {
-          dump_iov (iov, iovcnt, this->id (),
-                    byte_count, "drain_queue_i");
-        }
-
-      this->cleanup_queue (byte_count);
-      iovcnt = 0;
-
-      if (retval == 0)
-        {
-          return -1;
-        }
-      else if (retval == -1)
-        {
-          if (errno == EWOULDBLOCK)
-            return 0;
-          return -1;
-        }
-      ACE_ASSERT (byte_count != 0);
+          if (TAO_debug_level > 4)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - TAO_Transport::drain_queue_i, "
+                          "helper retval = %d\n",
+                          retval));
+            }
+      if (retval != 1)
+        return retval;
     }
 
   if (this->head_ == 0)
@@ -987,8 +989,24 @@ TAO_Transport::cleanup_queue (size_t byte_count)
     {
       TAO_Queued_Message *i = this->head_;
 
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_Transport::cleanup_queue, "
+                      "byte_count = %d, head_is_empty = %d\n",
+                      byte_count, (this->head_ == 0)));
+        }
+
       // Update the state of the first message
       i->bytes_transferred (byte_count);
+
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_Transport::cleanup_queue, "
+                      "after transfer, byte_count = %d, all_sent = %d\n",
+                      byte_count, i->all_data_sent ()));
+        }
 
       // ... if all the data was sent the message must be removed from
       // the queue...

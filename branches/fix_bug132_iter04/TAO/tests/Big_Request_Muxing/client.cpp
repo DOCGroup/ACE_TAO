@@ -64,22 +64,23 @@ main (int argc, char *argv[])
       Client_Task task0 (ACE_Thread_Manager::instance (),
                          payload_receiver.in (),
                          1000,
-                         32768,
+                         4096,
                          orb.in (),
                          Messaging::SYNC_WITH_TARGET);
       Client_Task task1 (ACE_Thread_Manager::instance (),
                          payload_receiver.in (),
                          1000,
-                         32768,
+                         4096,
                          orb.in (),
                          Messaging::SYNC_WITH_TRANSPORT);
       Client_Task task2 (ACE_Thread_Manager::instance (),
                          payload_receiver.in (),
                          1000,
-                         32768,
+                         4096,
                          orb.in (),
                          Messaging::SYNC_NONE);
 
+      ACE_DEBUG ((LM_DEBUG, "(%P) Activating threads\n"));
       if (task0.activate (THR_NEW_LWP | THR_JOINABLE, 2, 1) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
@@ -93,11 +94,12 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
 
-      ACE_Time_Value tv (240, 0);
+      ACE_Time_Value tv (120, 0);
       orb->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_Thread_Manager::instance ()->wait ();
+      ACE_DEBUG ((LM_DEBUG, "(%P) Threads finished\n"));
 
       CORBA::Long count =
         payload_receiver->get_message_count (ACE_TRY_ENV);

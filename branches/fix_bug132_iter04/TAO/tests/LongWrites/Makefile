@@ -18,9 +18,9 @@ IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
 BIN = server client
 
-SRC = $(addsuffix .cpp, $(BIN) Receiver Sender Coordinator) $(IDL_SRC)
+SRC = $(addsuffix .cpp, $(BIN) Receiver Sender Sender_Task Coordinator) $(IDL_SRC)
 
-CLIENT_OBJS = client.o TestC.o TestS.o Receiver.o Sender.o
+CLIENT_OBJS = client.o TestC.o TestS.o Receiver.o Sender.o Sender_Task.o
 SERVER_OBJS = server.o TestC.o TestS.o Coordinator.o
 
 TAO_IDLFLAGS += -Ge 1

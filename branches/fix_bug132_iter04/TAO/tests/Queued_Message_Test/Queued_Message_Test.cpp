@@ -8,38 +8,41 @@
  */
 // ============================================================================
 
-#include "tao/Queued_Message.h"
+#include "tao/Asynch_Queued_Message.h"
 
 ACE_RCSID(tests, Queued_Message_Test, "$Id$")
 
 /// Max number of bytes on each message block
 const size_t max_block_length = 256;
 
-/// Create a message block chain of at most 64 elements
-const size_t max_chain_length = 64;
+static TAO_Queued_Message *
+create_new_message (ACE_RANDR_TYPE &seed)
+{
+  // First create a message block
+  size_t block_size =
+    64 + ACE_OS::rand_r(seed) % (max_block_length - 64);
+  ACE_Message_Block mb (block_size);
+  mb.wr_ptr (block_size);
+
+  return new TAO_Asynch_Queued_Message (&mb);
+}
 
 /// Add a new message at the tail of the queue.
-static void add_message (TAO_Queued_Message *&head,
-                         TAO_Queued_Message *&tail,
-                         ACE_RANDR_TYPE &seed)
+static void push_back_message (TAO_Queued_Message *&head,
+                               TAO_Queued_Message *&tail,
+                               ACE_RANDR_TYPE &seed)
 {
-  // ACE_DEBUG ((LM_DEBUG, "Adding message\n"));
-  // First build a message block chain
-  size_t chain_length =
-    1 + ACE_OS::rand_r(seed) % max_chain_length;
-  ACE_Message_Block *mb = 0;
-  for (size_t j = 0; j != chain_length; ++j)
-    {
-      size_t block_size =
-        64 + ACE_OS::rand_r(seed) % (max_block_length - 64);
-      ACE_Message_Block *cont = mb;
-      mb = new ACE_Message_Block (block_size);
-      mb->wr_ptr (block_size);
-      mb->cont (cont);
-    }
-  TAO_Queued_Message *msg =
-    new TAO_Queued_Message (mb, 1);
+  TAO_Queued_Message *msg = create_new_message (seed);
   msg->push_back (head, tail);
+}
+
+/// Add a new message at the head of the queue.
+static void push_front_message (TAO_Queued_Message *&head,
+                                TAO_Queued_Message *&tail,
+                                ACE_RANDR_TYPE &seed)
+{
+  TAO_Queued_Message *msg = create_new_message (seed);
+  msg->push_front (head, tail);
 }
 
 /// Remove the message at the head of the queue, and simulate the
@@ -56,7 +59,7 @@ static void del_message (TAO_Queued_Message *&head,
   // multiple write() calls, in this simulation, we call the
   // bytes_transferred() method until all messages are removed.
 
-  size_t total_length = current->mb ()->total_length ();
+  size_t total_length = current->message_length ();
   while (total_length > 0)
     {
       // select how many bytes we want to 'send' in this iteration.
@@ -67,7 +70,7 @@ static void del_message (TAO_Queued_Message *&head,
       current->bytes_transferred (t);
       total_length -= t;
     }
-  if (!current->done ())
+  if (!current->all_data_sent ())
     {
       ACE_ERROR ((LM_DEBUG,
                   "ERROR: inconsistent state in Queued_Message\n"));
@@ -102,7 +105,7 @@ main (int, ACE_TCHAR *[])
   int i;
   for (i = 0; i != iterations; ++i)
     {
-      add_message (head, tail, seed);
+      push_back_message (head, tail, seed);
       add_count++;
       if (ACE_OS::rand_r(seed) % 100 > 90)
         {
@@ -120,7 +123,11 @@ main (int, ACE_TCHAR *[])
     {
       if (ACE_OS::rand_r(seed) % 100 > 90)
         {
-          add_message (head, tail, seed); add_count++;
+          push_back_message (head, tail, seed); add_count++;
+        }
+      if (ACE_OS::rand_r(seed) % 100 > 90)
+        {
+          push_front_message (head, tail, seed); add_count++;
         }
       if (head != 0)
         {
