@@ -11,6 +11,10 @@ Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Asynch_IO.*: added trailing $ to CVS keyword string.
 
+        * ace/Asynch_IO.cpp: fixed so that it will compile with Sun CC
+          on Solaris 2.6.  Thanks to Frederic ANDRES <andres@rd.nacsis.ac.jp>
+          for reporting this.
+
 Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added os-patches/ to distribution.
