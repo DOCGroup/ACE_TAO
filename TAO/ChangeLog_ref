@@ -1,3 +1,8 @@
+Sun Sep  7 20:43:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/ImR_ActivatorC.cpp: Removed include of
+	  Invocation.h. Not sure how it was sticking around.
+
 Sun Sep  7 15:52:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO.dsp:
