@@ -155,7 +155,8 @@ CONTROLLED_FILES = \
         ltconfig \
         ltmain.sh \
         m4 \
-	man \
+	man/man3/Makefile.am \
+	man/html/Makefile.am \
         missing \
         mkinstalldirs \
         netsvcs \
