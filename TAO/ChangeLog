@@ -22,7 +22,7 @@ Thu Jan 13 13:50:26 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
             in turn calls the static methjod CORBA::Object::Marshal(),
             which does a check for null reference. Most of these
             replacements had been done some time ago, these were
-            evidently overlooked.
+            evidently overlooked. This fix closes [BUGID:2027].
             
           - Made generated CORBA::Boolean values more consistent about
             assigning or returniong 'true' or 'false' rather than
