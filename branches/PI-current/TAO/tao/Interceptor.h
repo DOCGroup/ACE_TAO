@@ -29,11 +29,11 @@
 #ifndef TAO_INTERCEPTOR_H
 #define TAO_INTERCEPTOR_H
 
+#include "tao/InterceptorS.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/InterceptorS.h"
 
 #if defined (TAO_HAS_INTERCEPTORS)
 # define TAO_INTERCEPTOR(X) X
