@@ -1,0 +1,4 @@
+project(HTBP) : acelib, core {
+  sharedname   = ACE_HTBP
+  dynamicflags = ACE_HTBP_BUILD_DLL
+}
