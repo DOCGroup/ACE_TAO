@@ -374,7 +374,8 @@ void Plan_Handler::process_pspe (DOMNodeIterator* iter,
         (CIAO::Config_Handler::Utils::process_string 
               (iter, node_name, "portName", pspe.portName));
       else if
-        (process_boolean (iter, node_name, "provider", pspe.provider));
+        (CIAO::Config_Handler::Utils::process_boolean 
+              (iter, node_name, "provider", pspe.provider));
       else if (node_name == XStr (ACE_TEXT ("kind")))
         {
           CPK_Handler::process_CCMComponentPortKind (iter, pspe.kind);
