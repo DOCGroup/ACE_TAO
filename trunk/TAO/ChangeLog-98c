@@ -28,6 +28,9 @@ Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
           collisions with tmplinst.cpp in test directories, when using
           GreenHills/Chorus.
 
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (main): added explicit
+          int return type.
+
 Sun Mar  1 13:42:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* release.pl: This script will now move the 'Current' tag to
