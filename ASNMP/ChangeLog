@@ -1,15 +1,5 @@
 Thu Apr 22 20:45:27 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ASNMP/asnmp/address.cpp:
-	* ASNMP/asnmp/address.h:
-	* ASNMP/asnmp/octet.cpp:
-	* ASNMP/asnmp/octet.h:
-	* ASNMP/asnmp/oid.cpp:
-	* ASNMP/asnmp/oid.h:
-	* ASNMP/asnmp/target.cpp:
-	* ASNMP/asnmp/target.h:
-	* ASNMP/asnmp/vb.cpp:
-	* ASNMP/asnmp/vb.h:
 	* ASNMP/tests/Octet_Test.cpp:
 	* ASNMP/tests/Oid_Test.cpp:
 
