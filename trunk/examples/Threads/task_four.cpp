@@ -127,10 +127,10 @@ Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr,
 			    size_t n_tasks,
 			    size_t n_threads,
 			    size_t n_iterations)           
-  : n_tasks_ (n_tasks), 
+  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+    n_tasks_ (n_tasks), 
     n_threads_ (n_threads), 
-    n_iterations_ (n_iterations),
-    ACE_Task<ACE_MT_SYNCH> (thr_mgr)
+    n_iterations_ (n_iterations)
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, 1, 0, -1, -1, this) == -1)
