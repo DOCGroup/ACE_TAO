@@ -23,9 +23,14 @@
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 
+// The Following header must remain visible since it contains the
+// "TAO_INTERCEPTOR" macros.  Note that this won't cause problems when
+// portable interceptor support is disabled since those macros are
+// always visible, too.
+#include "tao/PortableInterceptor.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/PortableInterceptor.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined (__BORLANDC__)
