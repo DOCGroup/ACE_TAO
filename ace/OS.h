@@ -3221,6 +3221,7 @@ public:
   static int sema_post (ACE_sema_t *s, size_t release_count);
   static int sema_trywait (ACE_sema_t *s);
   static int sema_wait (ACE_sema_t *s);
+  static int sema_wait (ACE_sema_t *s, ACE_Time_Value &tv);
 
   // = A set of wrappers for System V semaphores.
   static int semctl (int int_id, int semnum, int cmd, semun);
