@@ -9,7 +9,7 @@
 //    Thread_Pool_Reactor_Test.cpp
 //
 // = DESCRIPTION
-//      This program is a torture test of thread poll reactors.  It
+//      This program is a torture test of thread pool reactors.  It
 //      starts by spawning several server threads waiting to handle
 //      events.  Several other client threads are spawned right after
 //      to initiate connections to server threads.  Each connection
