@@ -19,6 +19,15 @@
 #if !defined (TAO_CORBACOM_H)
 #define TAO_CORBACOM_H
 
+#if !defined(TAO_CONST)
+//Something to document the fact that we want to put 'const' in front
+// of a type, but that it won't turn out the way we want, e.g., we
+// really want to express that a CORBA_String is const, but since CORBA_String
+// is a char*, the const modifies the pointer and not the pointed-to, and
+// some compilers (like SGI's EDG-derived thang) complain.
+#  define TAO_CONST
+#endif
+
 #  if	SIZEOF_BOOL != 0
 typedef bool			CORBA_Boolean;
 #    define CORBA_B_FALSE false

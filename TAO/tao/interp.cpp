@@ -205,18 +205,19 @@ static table_element table [TC_KIND_COUNT] =
 // (one byte).
 
 #if defined (unix) || defined (VXWORKS)
+#define MAGIC_NUMBER 64
 #define setup_entry(x,t) \
     { \
     	struct align_struct_ ## t { \
     	    x one; \
-      	    char dummy [33 - sizeof(x)]; \
+      	    char dummy [MAGIC_NUMBER + 1 - sizeof(x)]; \
     	    x two; \
     	}; \
  	\
 	align_struct_ ## t	 align; \
 	table [t].size = sizeof (x); \
 	table [t].alignment = \
-		(char*) &align.two - (char*) &align.one - 32; \
+		(char*) &align.two - (char*) &align.one - MAGIC_NUMBER; \
     }
 
 #else	// PC "fixed" alignment
