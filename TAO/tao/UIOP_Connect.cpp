@@ -129,7 +129,7 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) UIOP connection from client <%s> on %d\n",
+                  "TAO (%P|%t) UIOP connection from client <%s> on %d\n",
                   addr.get_path_name (), this->peer ().get_handle ()));
 
   return 0;
@@ -149,7 +149,7 @@ TAO_UIOP_Server_Connection_Handler::activate (long flags,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_UIOP_Server_Connection_Handler::activate"
+                 "TAO (%P|%t) UIOP_Server_Connection_Handler::activate"
                  " %d threads, flags = %d\n",
                  n_threads,
                  flags,
@@ -173,7 +173,7 @@ TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_UIOP_Server_Connection_Handler::handle_close"
+                 "TAO (%P|%t) UIOP_Server_Connection_Handler::handle_close"
                  " (%d, %d)\n",
                  handle,
                  rm));
@@ -306,7 +306,7 @@ TAO_UIOP_Client_Connection_Handler::open (void *)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) UIOP connection to server <%s> on %d\n",
+                "TAO (%P|%t) UIOP connection to server <%s> on %d\n",
                 addr.get_path_name (), this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
@@ -326,7 +326,7 @@ TAO_UIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_UIOP_Client_Connection_Handler::handle_close"
+                 "TAO (%P|%t) UIOP_Client_Connection_Handler::handle_close"
                  " (%d, %d)\n",
                  handle,
                  rm));

@@ -137,7 +137,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) IIOP connection from client <%s> on %d\n",
+                "TAO (%P|%t) IIOP connection from client <%s> on %d\n",
                 client, this->peer ().get_handle ()));
 
   return 0;
@@ -157,7 +157,7 @@ TAO_IIOP_Server_Connection_Handler::activate (long flags,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_IIOP_Server_Connection_Handler::activate %d "
+                 "TAO (%P|%t) IIOP_Server_Connection_Handler::activate %d "
                  "threads, flags = %d\n",
                  n_threads,
                  flags,
@@ -181,7 +181,7 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_IIOP_Server_Connection_Handler::handle_close "
+                 "TAO (%P|%t) IIOP_Server_Connection_Handler::handle_close "
                  "(%d, %d)\n",
                  handle,
                  rm));
@@ -202,7 +202,7 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) TAO_IIOP_Server_Connection_Handler::svc begin\n"));
+                "TAO (%P|%t) IIOP_Server_Connection_Handler::svc begin\n"));
 
   // Here we simply synthesize the "typical" event loop one might find
   // in a reactive handler, except that this can simply block waiting
@@ -229,7 +229,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - %p\n",
-                  "TAO_IIOP_Server_Connection_Handler::handle_input, "
+                  "IIOP_Server_Connection_Handler::handle_input, "
                   "handle_input"));
     }
 
@@ -332,7 +332,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) IIOP connection to server <%s> on %d\n",
+                "TAO (%P|%t) IIOP connection to server <%s> on %d\n",
                 server, this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
@@ -352,7 +352,7 @@ TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_IIOP_Client_Connection_Handler::"
+                 "TAO (%P|%t) IIOP_Client_Connection_Handler::"
                  "handle_close (%d, %d)\n", handle, rm));
 
   if (this->recycler ())
