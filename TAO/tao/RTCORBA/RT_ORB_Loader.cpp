@@ -156,7 +156,7 @@ TAO_RT_ORB_Loader::init (int argc,
 
 /////////////////////////////////////////////////////////////////////
 
-ACE_FACTORY_DEFINE (TAO, TAO_RT_ORB_Loader)
+ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_ORB_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_RT_ORB_Loader,
                        ACE_TEXT ("RT_ORB_Loader"),
                        ACE_SVC_OBJ_T,
