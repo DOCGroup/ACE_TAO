@@ -10,9 +10,7 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 {
 }
 
-const CORBA::ULong magic = 3145;
-
-CORBA::Any* 
+CORBA::Any*
 Test_impl::get_something (
     CORBA::Boolean need_vb
     TAO_ENV_ARG_DECL_NOT_USED)
