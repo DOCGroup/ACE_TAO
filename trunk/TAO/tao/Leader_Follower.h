@@ -86,8 +86,7 @@ public:
   /**
    * adds the a follower to the set of followers in the leader-
    * follower model
-   * returns 0 on success, -1 on failure and 1 if the element is
-   * already there.
+   * returns 0 on success, -1 on failure.
    */
   int add_follower (TAO_Follower_Node *follower_ptr);
 
