@@ -40,6 +40,10 @@ Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_chorus.GNU: added trailing "/"
           to TOOLENV definition, so that it can be empty when not used.
 
+        * ACE-INSTALL.html,include/makeinclude/wrapper_macros.GNU:
+          added documentation for ACE show_statics and show_uninit targets.
+          These are only supported with g++.
+
 Fri Oct 31 00:53:52 1997    <irfan@TWOSTEP>
 
 	* The following five changes were suggested by Stephen Coy
