@@ -28,9 +28,7 @@
 #if (_MSC_VER >= 1100)
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_TYPENAME_KEYWORD
-#endif
-  
-
+#endif /* _MSC_VER >= 1100 */
 
 // Win32 has UNICODE support
 #define ACE_HAS_UNICODE
@@ -130,7 +128,10 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 // iostream header lacks ipfx (), isfx (), etc., declarations
+// only for MSVC 4.2 and below
+#if (_MSC_VER < 1100)
 #define ACE_LACKS_IOSTREAM_FX
+#endif /* _MSC_VER < 1100 */
 
 // Template specialization is supported
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
