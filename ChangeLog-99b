@@ -1,3 +1,10 @@
+Thu Aug 05 12:01:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.cpp (shared_free): Applied
+	  ACE_reinterpret_cast (ACE_Malloc_Header*, yadda) to serveral
+	  pointer comparisons.  MSVC was complaining because the pointers are
+	  of different types.
+
 Thu Aug  5 11:57:23 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU (YACC): Removed the
