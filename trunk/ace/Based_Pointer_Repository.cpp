@@ -1,5 +1,6 @@
 // $Id$
 
+#define ACE_BUILD_DLL
 #include  "ace/Based_Pointer_Repository.h"
 
 ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository (void)
@@ -21,9 +22,9 @@ ACE_Based_Pointer_Repository::find (void *addr,
 
   for (MAP_ENTRY *ce = 0;
        iter.next (ce) != 0;
-       iter.advance ()) 
+       iter.advance ())
     // Check to see if <addr> is within any of the regions.
-    if (addr >= ce->ext_id_ 
+    if (addr >= ce->ext_id_
         && addr < ((char *) ce->ext_id_ + *(ce->int_id_)))
       {
         // Assign the base address.
@@ -40,19 +41,19 @@ ACE_Based_Pointer_Repository::find (void *addr,
 // existing entry.
 
 int
-ACE_Based_Pointer_Repository::bind (void *addr, size_t size) 
+ACE_Based_Pointer_Repository::bind (void *addr, size_t size)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, -1);
 
   size_t *sizep;
 
-  if (addr_map_.find (addr, sizep) != -1) 
+  if (addr_map_.find (addr, sizep) != -1)
     {
       // Store new size.
-      *sizep = size; 
+      *sizep = size;
       return 0;
     }
-  else 
+  else
     {
       ACE_NEW_RETURN (sizep,
                       size_t,
@@ -74,7 +75,7 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
 
   for (MAP_ENTRY *ce = 0;
        iter.next (ce) != 0;
-       iter.advance ()) 
+       iter.advance ())
     {
       // Check to see if <addr> is within any of the regions.
       if (addr >= ce->ext_id_
