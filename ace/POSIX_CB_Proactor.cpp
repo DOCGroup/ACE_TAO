@@ -16,7 +16,7 @@
 ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
   : ACE_POSIX_AIOCB_Proactor (max_aio_operations, 
                               ACE_POSIX_Proactor::PROACTOR_CB),
-    sema_ (0)
+    sema_ ((unsigned int) 0)
 {
   // we should start pseudo-asynchronous accept task
   // one per all future acceptors
