@@ -19,28 +19,6 @@ endif
 
 
 ####
-#### Build customization.
-####
-ifndef TAO_ORBSVCS
-  #### Please see docs/configurations.html#orbsvcs for documentation of
-  #### TAO_ORBSVCS.
-  TAO_ORBSVCS = Naming \
-                Time \
-                Log \
-                Concurrency \
-                LifeCycle \
-                ImplRepo \
-                Property \
-                Trader \
-                Sched \
-                Event \
-                CosEvent \
-                AV \
-		Event2
-endif # TAO_ORBSVCS
-
-
-####
 #### Macro customization.
 ####
 ifeq ($(findstring g++,$(CXX)),g++)
@@ -50,7 +28,6 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # g++ < 2.8
 
   ifneq ($(findstring egcs-2.91,$(shell $(CXX) --version)),)
-
     #### egcs 2.91.57 seems to go overboard:
     ####   DynAny_i.cpp:565: warning: `class TAO_DynAny_i * this' might be
     ####   used uninitialized in this function
