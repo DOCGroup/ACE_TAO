@@ -16,7 +16,7 @@ do
   then
     shift
     target=$1
-  break
+    break
   fi  
   shift
 done
@@ -24,14 +24,22 @@ done
 #unfortunately, time only goes down to seconds, so do it by hand...
 start=`date +%s%N`
 g++ $commandline
-stop=`date +%s%N`
 
-let "total = (${stop}-${start})"
+retval=$?
 
-# convert to microseconds even though we will only use milliseconds in the 
-# graphs
-let "total = ($total)/1000"
+# only echo the compile time if the call was successful
+if [ $retval -eq 0 ]; then
+  stop=`date +%s%N`
 
-# add the path, relative to $ACE_ROOT, to the beginning of the object name
-# so that it can be used to name the object when it's processed.  
-echo "compile time: ${PWD#$ACE_ROOT/}/${target} $total"
+  let "total = (${stop}-${start})"
+
+  # convert to microseconds even though we will only use milliseconds in the 
+  # graphs
+  let "total = ($total)/1000"
+
+  # add the path, relative to $ACE_ROOT, to the beginning of the object name
+  # so that it can be used to name the object when it's processed.  
+  echo "compile time: ${PWD#$ACE_ROOT/}/${target} $total"
+fi
+
+exit $retval
