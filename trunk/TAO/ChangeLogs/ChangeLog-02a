@@ -1,3 +1,11 @@
+Thu Mar 16 15:26:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Lite.cpp (parse_reply): 
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Connectors.cpp: More warning fixes. These were
+	  in Digital Unix. Thanks to Jeff Parsons <parsons@cs.wustl.edu>
+	  for reporting this.
+
 Thu Mar 16 13:22:02 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Acceptor.cpp (open_default):
