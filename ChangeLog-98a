@@ -1,4 +1,6 @@
-Sun Apr 12 11:51:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sun Apr 12 21:11:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Prevent using ACE_HAS_MOSTLY_UNICODE_APIS without UNICODE.
 
 	* ace/OS.cpp (thr_create):
 	* ace/Thread_Manager.cpp (spawn_i): Removed directive
