@@ -1,3 +1,9 @@
+Thu Mar 31 07:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Refcounted_Auto_Ptr.h:
+	  Added explicit keyword to single argument constructor now RMCast is
+	  updated
+
 Thu Mar 31 09:58:48 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.cpp:
