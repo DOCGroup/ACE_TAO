@@ -1564,6 +1564,7 @@ public:
 template <class ACE_LOCK>
 class ACE_Guard;
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Guard<ACE_Null_Mutex>
 {
   // = TITLE
@@ -1597,6 +1598,7 @@ private:
 template <class ACE_LOCK>
 class ACE_Write_Guard;
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Write_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
 {
   // = TITLE
@@ -1616,6 +1618,7 @@ public:
 template <class ACE_LOCK>
 class ACE_Read_Guard;
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Read_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
 {
   // = TITLE
