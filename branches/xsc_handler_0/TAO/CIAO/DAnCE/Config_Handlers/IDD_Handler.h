@@ -20,7 +20,8 @@
 
 namespace Deployment
 {
-  struct InstanceDeploymentDescriptionn; 
+  struct InstanceDeploymentDescription; 
+  struct InstanceResourceDeploymentDescription;
 }
 
 namespace CIAO
@@ -29,12 +30,13 @@ namespace CIAO
   namespace Config_Handlers
   {
     
-   struct InstanceDeploymentDescriptionn;
+   struct InstanceDeploymentDescription;
+    struct InstanceResourceDeploymentDescription;
    
    /*
     * @class IDD_Handler
     *
-    * @brief Handler class for <InstanceDeploymentDescriptionn> types.
+    * @brief Handler class for <InstanceDeploymentDescription> types.
     *
     * This class defines handler methods to map values from
     * XSC InstanceDeploymentDescriptionn objects, parsed from
@@ -42,7 +44,7 @@ namespace CIAO
     *
     */
     
-    class Config_Handlers_Export IDD_Handler{
+    class Config_Handlers_Export IDD_Handler {
      
       public:
        
@@ -52,10 +54,15 @@ namespace CIAO
         ///This method takes a <Deployment::InstanceDeploymentDescriptionn>
         ///and maps the values from the passed in XSC 
         ///InstanceDeploymentDescriptionn to its members.
-        void get_InstanceDeploymentDescriptionn (
-                    Deployment::InstanceDeploymentDescriptionn& toconfig,
-                    InstanceDeploymentDescriptionn& desc);          
+        void get_InstanceDeploymentDescription (
+                    Deployment::InstanceDeploymentDescription& toconfig,
+                    InstanceDeploymentDescription& desc);
 
+        /// This method populates the Deployment::InstanceResourceDeploymentDescription
+        /// Which is inly used in the IDD above.  
+        void get_InstanceResourceDeploymentDescription (
+                    Deployment::InstanceResourceDeploymentDescription &toconfig,
+                    InstanceResourceDeploymentDescription &desc);
     };
   }
 }
