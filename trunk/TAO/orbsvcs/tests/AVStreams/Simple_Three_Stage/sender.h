@@ -126,9 +126,6 @@ private:
   TAO_MMDevice* sender_mmdevice_;
   // The sender MMDevice.
 
-  TAO_StreamCtrl streamctrl_;
-  // Video stream controller
-
   Sender_StreamEndPoint* endpoint_;
   // Reference to the sender streamendpoint
 
@@ -141,24 +138,11 @@ private:
   ACE_CString filename_;
   // File from which data is read.
 
-  ACE_CString address_;
-  // Address of the sender host machine or a multicast address - Default is
-  // UDP multicast addess
-
   TAO_Naming_Client my_naming_client_;
   // The Naming Service client.
 
   FILE *fp_;
   // File handle of the file read from.
-
-  ACE_CString protocol_;
-  // Selected protocol - default is UDP
-
-  ACE_CString flowname_;
-  // Teh flowname_ of the stream set up between the sender and receiver.
-
-  int use_sfp_;
-  // If set to 1 then use sfp as the flow carrier protocol.
 
   int frame_rate_;
   // The sepcified data frame rate

@@ -75,7 +75,6 @@ Receiver::Receiver (void)
 
 Receiver::~Receiver (void)
 {
-  delete this->mmdevice_;
 }
 
 int
@@ -96,6 +95,10 @@ Receiver::init (int,
                   TAO_MMDevice (&this->reactive_strategy_),
                   -1);
 
+  // Servant Reference Counting to manage lifetime
+  PortableServer::ServantBase_var safe_mmdevice =
+    this->mmdevice_;
+  
   // Register the receiver mmdevice with the naming service.
   CosNaming::Name receiver_mmdevice_name (1);
   receiver_mmdevice_name.length (1);
