@@ -21,7 +21,8 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 ACE_DLL::ACE_DLL (const char *dll_name,
                   int open_mode,
                   int close_on_destruction)
-  : handle_ (ACE_OS::dlopen (dll_name, open_mode)),
+  : handle_ (ACE_OS::dlopen (ASYS_WIDE_STRING (dll_name),
+                             open_mode)),
     close_on_destruction_ (close_on_destruction)
 {
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
@@ -76,7 +77,7 @@ ACE_DLL::open (const char *dll_filename,
     return result;
 
   // The ACE_SHLIB_HANDLE object is obtained.
-  this->handle_ = ACE_OS::dlopen (ASYS_ONLY_MULTIBYTE_STRING (dll_pathname),
+  this->handle_ = ACE_OS::dlopen (dll_pathname,
                                   open_mode);
 
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
