@@ -1,7 +1,21 @@
 // This may look like C, but it's really -*- C++ -*-
 
 // CORBA_SEQUENCE support.
-template 
+
+template <class T> ACE_INLINE
+CORBA_SEQUENCE<T>::CORBA_SEQUENCE (void)
+  : maximum (0),
+    length (0),
+    buffer (0),
+    release (0) 
+{ 
+}
+
+// XXX destructor should free buffer, elements!!
+template <class T> ACE_INLINE
+CORBA_SEQUENCE<T>~CORBA_SEQUENCE (void) 
+{ 
+}
 
 // String utility support
 
