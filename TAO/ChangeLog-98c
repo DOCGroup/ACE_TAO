@@ -1,14 +1,17 @@
 Fri Sep 18 11:27:00 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.{h,cpp}: Moved all the
-	  template code from Endpoint_Strategy.{h,cpp} into these separate
-	  files.
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.{h,cpp}: Moved all the
+          template code from Endpoint_Strategy.{h,cpp} into these separate
+          files.
 
 Fri Sep 18 08:39:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.i
           ({consumer,supplier}_{ipaddr,name}): added ACE_CAST_CONST to please
           Sun C++.  Thanks to Hans Rohnert for reporting this.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (svc):
+          (svc): print out errno string if ORB initialization fails.
 
 Fri Sep 18 02:15:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
