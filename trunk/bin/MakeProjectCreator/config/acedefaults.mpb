@@ -10,6 +10,7 @@ project: ace_qt, zzip {
   specific(bmake) {
     unicode_flags += -DACE_USES_WCHAR
     macros += ACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\\"$(LIBMODIFIER)\\")
+    debug_macros += ACE_NO_INLINE=1
   }
 
   specific(automake) {
