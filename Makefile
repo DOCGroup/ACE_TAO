@@ -85,6 +85,7 @@ endif
 ifeq ($(PWD),/home/cs/faculty/schmidt/adaptive/ACE_wrappers)
   TIMESTAMP = perl -pi -e 'BEGIN {chop ($$date=`/usr/bin/date`);} \
                            s/(, released ).*/$$1$$date./' VERSION; \
+	      chmod 644 VERSION; \
               cvs commit -m'make release: updated timestamp' VERSION; 
 else
   TIMESTAMP =
