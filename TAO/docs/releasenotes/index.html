@@ -577,8 +577,8 @@ install time. <P>
 <p>Current status (as of 7th Apr 1999):
 <ul>
 <li>
-Implementation of the CORBA Naming Service spec is complete.  Optional
-persistence capability has been added.</li>
+Implementation of the CORBA Naming Service spec is complete.  TAO's
+Naming Service provides an optional persistence capability.</li>
 <li>
 Implementation of the CORBA InterOperable Naming Service is in
 progress. </li>
@@ -586,11 +586,11 @@ progress. </li>
 Recently completed work:
 <ul>
 <li>
-Persistence for the Naming Service has been implemented.  Persistence
+Added support for Persistence (using memory-mapped files).  Persistence
 feature is optional, and is controlled by the command line argument.</li>
 
 <li>
-The implementation of the Naming Service has been updated to use new ACE
+Updated he implementation of the Naming Service to use new ACE
 exception macros.</li>
 <li>
 Added support for the InterOperable Naming Service, which enables the
@@ -602,7 +602,7 @@ for non-locality-constrained objects. Two options -ORBInitRef and
 arbitrary services.
 </li>
 
-<li>The Naming Service is being used as an agent to understand IIOP
+<li>Added support for the Naming service to act like an agent: to understand IIOP
 request messages from clients and respond with reply messages with a
 LOCATION_FORWARD/OBJECT_NOT_EXIST status. The Naming Service can be
 configured through ORB options to register arbitrary services given
@@ -623,30 +623,30 @@ conjunction with the current TAO examples.
 Work in progress:
 <ul>
 
-<LI> Currently adding support for the iiopname format and conversions
+<LI> Support for the iiopname format and conversions
 to and from URL-style IORs.
 </LI>
 
 <LI>
-Adding a more detailed test for the InterOperable Naming Service.
+A detailed InterOperable Naming Service test.
 </LI>
 
 </ul>
 Future work:
 <ul>
 <li>
-Support for a load balancing feature similar to the one provided in ORBIX.
+Support for a load balancing feature similar to the one present in ORBIX.
 It will be possible to bind a group of objects under a single name, and when a client attempts to resolve the name in question, a preset policy (e.g., random, round robin, etc.) will determine which one of the object references from the group will be returned.
 </li>
 <li>
-Update destroy method, once the POA restructuring effort is complete, to do the "Right Thing TM".
+Update to the 'destroy' method, once the POA restructuring effort is complete, to do the "Right Thing TM".
 </li>
 <li>
 Replication of the bindings to other Naming Service's currently running.
 It will probably be modeled after the LDAP Multi-Master Replication
 Protocol.</li>
 <li>
-Support will be added for the Naming Service to handle the IIOP
+Support for the Naming Service to handle the IIOP
 LocateRequest messages and respond with LocateReply messages with a
 LOCATION_FORWARD/OBJECT_NOT_EXIST status.
 </ul>
