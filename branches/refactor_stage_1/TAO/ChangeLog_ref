@@ -1,3 +1,15 @@
+Tue Apr 22 10:37:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+          Turned on CDR operator generation for sequences that have an
+          element type easily detectable as local by the IDL compiler.
+          For the insertion operator, the error will be detected at
+          a lower level, via the generated virtual marshal() method
+          for interfaces. For the extraction operator, 0 is returned.
+
 Tue Apr 22 09:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
