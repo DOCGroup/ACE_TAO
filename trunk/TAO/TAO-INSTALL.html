@@ -5,16 +5,16 @@
 <BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
 
 <HR>
-<h3>Building and Installing TAO</h3>
+<H3>Building and Installing TAO</H3>
 
 TAO has been ported and tested Windows NT, Solaris, VxWorks, and
 Linux.  I expect that major portions of the release will port easily
 to other platforms that ACE has been ported to.  If you can help port
 TAO to other platforms we'd appreciate it. <P>
 
-TAO can be obtained <A
+TAO can be obtained <A 
 HREF="http://www.cs.wustl.edu/~schmidt/TAO-obtain.html">electronically</A>
-via the WWW and ftp.  Bundled with the TAO release is
+via the WWW and ftp.  Bundled with the TAO release is <A 
 HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>.  You will
 need the most recent version of ACE because TAO tends to track changes
 to ACE rather closely. <P>
@@ -25,98 +25,112 @@ ORB vendor's library, <EM>e.g.</EM>, liborbix.so, will produce
 undefined and most likely unpredictable and erroneous results. <P>
 
 <HR><P>
-<h3>On UNIX platforms</h3>
+<H3>On UNIX platforms</H3>
 
-    <ol>
-      <li>Set <code>ACE_ROOT</code> environment variable as outlined
-      in the <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
-installation
-      notes</a>.</li> <P>
+<OL>
+  <LI>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in 
+      the <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
+      installation notes</A>.<P>
 
-      <li>Build and install ACE under <CODE>$ACE_ROOT</CODE>.</li> <P>
+  <LI>Build and install ACE under <CODE>$ACE_ROOT</CODE>.<P>
 
       <UL>
-      <li>Change directory to <code>$ACE_ROOT/ace</code> and execute
-      <code><a href="#makenotes">make</a></code>.</li> <P>
+        <LI>Change directory to <CODE>$ACE_ROOT/ace</CODE> and execute 
+            <CODE><A HREF="#makenotes">make</A></CODE>.<P>
       </UL>
 
-      <li>Set <code>TAO_ROOT</code> environment variable to
-           <CODE>$ACE_ROOT/TAO</CODE>. <P>
+  <LI>Set <CODE>TAO_ROOT</CODE> environment variable to 
+      <CODE>$ACE_ROOT/TAO</CODE>. <P>
 
-      <li>Build and install the TAO release under <CODE>$TAO_ROOT</CODE>.</li> <P>
+  <LI>Build and install the TAO release under <CODE>$TAO_ROOT</CODE>.<P>
 
       <UL>
-      <li>Change directory to <code>$TAO_ROOT/tao</code> and
-      execute <code><a href="#makenotes">make</a></code>.</li> <P>
+        <LI>Change directory to <CODE>$TAO_ROOT/tao</CODE> and
+            execute <code><a href="#makenotes">make</a></code>.<P></li> 
       </UL>
 
-      <li>Change directory to <code>$TAO_ROOT/tests</code> and
-      execute <code><a href="#makenotes">make</a></code>.</li> <P>
+  <LI>Change directory to <CODE>$TAO_ROOT/tests</CODE> and
+      execute <CODE><A HREF="#makenotes">make</A></CODE>. <P>
 
-      <li>Follow instructions on executing the various examples under
-      <code>$TAO_ROOT/tests</code>.<P>
+  <LI>Follow instructions on executing the various examples under
+      <CODE>$TAO_ROOT/tests</CODE>.<P>
 
-    </ol>
+</OL>
 
-    <h4><strong><a name="makenotes">A Note On Make</a></strong></h4>
-    <p>
-      Since TAO is built atop ACE, TAO re-uses ACE's Makefile
-      structure as well.  Thus, just like ACE requires GNU Make, so
-      too does TAO.  More exactly, versions of <code>make</code> which
-      are known to <em>not</em> work include those from Solaris 4.x
-      and 5.x, HP-UX, the latest BSD, etc.
-    <p>
-      GNU Make can be obtained from various places in source form.
+<H4><STRONG><A NAME="makenotes">A Note On Make</A></STRONG></H4>
+    
+<P>
+Since TAO is built on top  ofACE, TAO re-uses ACE's Makefile structure 
+as well.  Thus, just like ACE requires GNU Make, so too does TAO.  
+More exactly, versions of <CODE>make</CODE> which are known to 
+<EM>not</EM> work include those from Solaris 4.x and 5.x, HP-UX, the 
+latest BSD, etc.<P>
+
+GNU Make can be obtained from various places in source form.<P>
 	      
 
 <HR><P>
+
 <H3>On Windows NT</H3>
 
-Before compiling <CODE>TAO_IDL</CODE> on NT, you may need to set the
+To compile <CODE>TAO_IDL</CODE> on NT, you may need to set the
 environment variable <CODE>CPP_PATH</CODE> to where CL.exe is
 installed on your machine.  By default, we set this variable to
 "C:/Program Files/DevStudio/VC/bin".  Your location may vary, however.
 Notice that if you forget to set this variable before compiling
 <CODE>TAO_IDL</CODE>, you can use <CODE>CPP_LOCATION</CODE> to specify
-the absolute pathname to CL.exe. We set if to "C:/Program
+the absolute pathname to CL.exe. We set it to "C:/Program
 Files/DevStudio/VC/bin/CL.exe" when we do use it.<P>
+
+Remember to <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">set 
+up ACE</A> before building TAO.
 
 <H4>Visual C++ 5.0</H4>
 
 <P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
-<CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 5.0 Project files
+<CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 5 Project files
 are set up to work in this configuration. If you move it, then make
 sure you change the project file to look for the include and library
-files in the correct place.</P>
+files in the correct place.  If you are using <A 
+HREF="#taoace">TAOACE.dsw</A> then you shouldn't need to worry about 
+this.</P>
 
 <OL>
-  <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or ace-vc50.dsw,
-       whichever is in your copy of ACE). <BR><BR>
+  <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or 
+       ace-vc50.dsw, whichever is in your copy of ACE). <P>
 
-  <LI> Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO library. <BR><BR>
+  <LI> Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO 
+       library. <P>
 
-  <LI> To build the Cubit test, load the workspace <CODE>tests\Cubit\TAO\test.dsw</CODE>
-       and build both client and server. <BR><BR>
+  <LI> To build the Cubit test, load the workspace 
+       <CODE>tests\Cubit\TAO\test.dsw</CODE> and build both client 
+       and server. <P>
 </OL>
+
+<H4><A NAME="taoace">TAOACE.dsw</A></H4>
+
+<P>TAOACE.dsw is a Visual C++ 5 workspace that loads the projects 
+ACE, TAO, TAO_IDL (the compiler), and orbsvcs.  The dependencies are 
+set up to correctly between the projects so for example, ACE will 
+be built automatically when TAO is built.</P>
 
 <H4>Visual C++ 4.x</H4>
 
 <OL>
   <LI> In Tools|Options, go to the Directories page and make sure that include
        files paths includes ACE_wrappers\ and the root directory of TAO (which
-       can be <CODE>ACE_wrappers\TAO</CODE> if installed there).  The
-library files paths
-       should include <CODE>ACE_wrappers\ace</CODE>. <P>
+       can be <CODE>ACE_wrappers\TAO</CODE> if installed there).  The library files 
+       paths should include <CODE>ACE_wrappers\ace</CODE>. <P>
 
-  <LI> Load the project file <CODE>tao\TAO.mdp</CODE> and build the
-TAO library. <P>
+  <LI> Load the project file <CODE>tao\TAO.mdp</CODE> and build the TAO library. <P>
 
   <LI> To build the Cubit test, load the project file <CODE>tests\Cubit\TAO\test.mdp</CODE>
        and build both client and server. <P>
 </OL>
 
-<P><HR><P>
+<P>
+<HR>
+<P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
