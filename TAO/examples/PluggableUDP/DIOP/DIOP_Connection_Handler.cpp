@@ -257,14 +257,11 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
           // a reference to it.  This will eventually call
           // TAO_Transport::release ().
           this->transport (0);
-
-          this->peer ().close ();
         }
 
       // Follow usual Reactor-style lifecycle semantics and commit
       // suicide.
-      delete this;
-
+      this->destroy ();
     }
 
   return 0;

@@ -1,3 +1,14 @@
+Fri Apr 20 14:39:48 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	  (handle_close):
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp
+	  (handle_close):
+
+	  Call destroy() on the Svc_Handler rather than calling "delete
+	  this."  See ChangeLog entry from Tue Apr 17 15:48:20 2001
+	  Nanbor Wang  <nanbor@cs.wustl.edu>.
+
 Fri Apr 20 15:51:52 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * docs/ec_options.html:
