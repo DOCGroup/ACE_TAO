@@ -1,3 +1,9 @@
+Sun Aug 24 13:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
+          Fixed these BCB makefiles by regenerating them using MPC
+
 Sun Aug 24 13:00:31 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DynAny_Test/analyzer.cpp:
