@@ -47,8 +47,8 @@ Wed Sep  3 20:25:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Wed Sep  3 17:37:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTScheduling/RTScheduler.mpc: Added the above file into the  
-	  repository. 
+	* tao/RTScheduling/RTScheduler.mpc: Added the above file into the
+	  repository.
 
 Wed Sep  3 17:10:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -56,7 +56,7 @@ Wed Sep  3 17:10:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Messaging/Asynch_Invocation.cpp:
 	* tao/Messaging/Asynch_Invocation_Adapter.h:
 	* tao/Messaging/Asynch_Invocation_Adapter.cpp: These files are not
-	  meant for the main trunk. Somehow sneaked into the main trunk. 
+	  meant for the main trunk. Somehow sneaked into the main trunk.
 
 Tue Sep  2 13:38:37 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
 
