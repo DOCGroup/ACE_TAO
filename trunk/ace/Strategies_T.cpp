@@ -7,6 +7,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Strategies_T.h"
 #include "ace/Service_Types.h"
+#include "ace/Thread_Manager.h"
 #include "ace/WFMO_Reactor.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Singleton_Strategy)
