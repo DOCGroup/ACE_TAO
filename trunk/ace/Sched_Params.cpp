@@ -54,9 +54,9 @@ ACE_Sched_Params::priority_min (const Policy policy,
                                     P_MYID /* ignored */,
                                     PC_GETCID,
                                     (char *) &pcinfo) == -1)
-	// Just hope that priority range wasn't configured from -1
-	// .. 1
-	return -1;
+        // Just hope that priority range wasn't configured from -1
+        // .. 1
+        return -1;
 
       // OK, now we've got the class ID in pcinfo.pc_cid.  In
       // addition, the maximum configured time-share priority is in
