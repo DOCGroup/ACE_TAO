@@ -66,11 +66,11 @@ TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
                                     T *data,
                                     CORBA::Boolean release)
 {
-  this->maximum_ = maximum;
+  this->maximum_ = max;
   this->length_ = length;
   if (this->buffer_ && this->release_ == CORBA::B_TRUE)
     TAO_Unbounded_Sequence<T>::freebuf (this->buffer_);
-  this->buffer_ = buffer;
+  this->buffer_ = data;
   this->release_ = release;
 }
 
@@ -162,11 +162,11 @@ TAO_Bounded_Sequence<T, MAX>::replace (CORBA::ULong max,
                                        T *data,
                                        CORBA::Boolean release)
 {
-  this->maximum_ = maximum;
+  this->maximum_ = max;
   this->length_ = length;
   if (this->buffer_ && this->release_ == CORBA::B_TRUE)
     TAO_Bounded_Sequence<T, MAX>::freebuf (this->buffer_);
-  this->buffer_ = buffer;
+  this->buffer_ = data;
   this->release_ = release;
 }
 
