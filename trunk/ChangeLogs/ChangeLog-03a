@@ -1,25 +1,25 @@
 Tue Dec 12 09:52:00 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-    
-        * Well, it looks like we finally have a new president in the 
-	  US, yow!
-  
+
+        * Well, it looks like we finally have a new president in the
+          US, yow!
+
 Tue Dec 12 04:53:17 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Config.{h,i}: Added an inequality operator.
+        * ace/Service_Config.{h,i}: Added an inequality operator.
           Thanks to Mike Curtis <mccurry@my-deja.com> for pointing this
- 	  out.
-	
-	* ace/Service_Config.cpp (process_commandline_directives): Changed
-	  a check for error values being -1 to being != 0 since process_directive()
-	  can return 
-  
+          out.
+
+        * ace/Service_Config.cpp (process_commandline_directives): Changed
+          a check for error values being -1 to being != 0 since process_directive()
+          can return
+
           1) a positive number of parse errors
-	  2) and -1 on a certain ACE_NEW_RETURN call
-	  3) but always zero on success.
-  
-          Thanks to Mike Curtis <mccurry@my-deja.com> and 
-	  Munagala Ramanath <Munagala.Ramanath@PostX.com>
-	  for pointing this out.
+          2) and -1 on a certain ACE_NEW_RETURN call
+          3) but always zero on success.
+
+          Thanks to Mike Curtis <mccurry@my-deja.com> and
+          Munagala Ramanath <Munagala.Ramanath@PostX.com>
+          for pointing this out.
 
 Tue Dec 12 01:07:39 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -29,24 +29,26 @@ Tue Dec 12 01:07:39 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Dec 11 15:10:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/Get_Opt.h:
-	  In some platforms 'optind', 'optarg' and 'opterr'
+        * ace/Get_Opt.h:
+          In some platforms 'optind', 'optarg' and 'opterr' are defined as
+          macros, undefine them because we use the same identifiers as
+          variable names.
 
-	* ace/OS.h:
-	  If 'timezone' is defined as a macro in the system header files
-	  then define ACE_TIMEZONE and #undef timezone.
-	  The ACE_OS::timezone() method cannot be compiled otherwise, but
-	  unfortunately this forces us to disable support for the method
-	  under that sort of platform.
+        * ace/OS.h:
+          If 'timezone' is defined as a macro in the system header files
+          then define ACE_TIMEZONE and #undef timezone.
+          The ACE_OS::timezone() method cannot be compiled otherwise, but
+          unfortunately this forces us to disable support for the method
+          under that sort of platform.
 
-	* ace/OS.h:
-	  Do not include sys/shm.h if ACE_LACKS_SYSV_SHMEM is defined,
-	  there is no reason to #include the file if we are not using it
-	  anyway.
- 
-	* ace/ACE.cpp:
-	  Check the return value from getrlimit() before accepting its
-	  results.
+        * ace/OS.h:
+          Do not include sys/shm.h if ACE_LACKS_SYSV_SHMEM is defined,
+          there is no reason to #include the file if we are not using it
+          anyway.
+
+        * ace/ACE.cpp:
+          Check the return value from getrlimit() before accepting its
+          results.
 
 Mon Dec 11 00:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -60,7 +62,7 @@ Mon Dec 11 00:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Process.i:
 
           Added wchar_t versions of:
-          
+
           - ACE_Process_Options::working_directory (wd)
           - ACE_Process_Options::command_line (format, ...)
 
@@ -83,10 +85,10 @@ Mon Dec 11 00:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Log_Msg.h:
         * ace/Log_Msg.cpp:
 
-          Changed the first parameter to set and conditional_set from 
-          being ACE_TCHAR to just char.  We'll assume filenames are 
-          always ansi strings (since __FILE__ seems to act this way).  
-          There was actually a dangling pointer problem in the 
+          Changed the first parameter to set and conditional_set from
+          being ACE_TCHAR to just char.  We'll assume filenames are
+          always ansi strings (since __FILE__ seems to act this way).
+          There was actually a dangling pointer problem in the
           conditional_set when ACE_USES_WCHAR was defined before.
 
           Added an ANTI_TCHAR version of log (priority, format, ...).
@@ -100,23 +102,23 @@ Mon Dec 11 00:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
           %c : print out an ansi character
           %C : print out an ansi string
-          %s : print out an ACE_TCHAR * string 
+          %s : print out an ACE_TCHAR * string
           %w : print out a wide character
           %W : print out a wide string
 
-          An example, which will also function correctly even when 
+          An example, which will also function correctly even when
           ACE_USES_WCHAR is defined:
 
           void print (char *a_str, wchar_t *w_str, ACE_TCHAR *t_str)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "%C %s %W\n",
-                        a_str, 
-                        t_str, 
+                        a_str,
+                        t_str,
                         w_str));
           }
 
-          Unfortunately this only really takes care of the string 
+          Unfortunately this only really takes care of the string
           specifiers.  There is still work to be done with the other
           implicit string specifiers (%p, %N, etc.).
 
@@ -135,21 +137,21 @@ Mon Dec 11 00:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Dec  8 13:47:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
 
-	  Added Refcounted_Auto_Ptr.{h,i} to these projects.
+          Added Refcounted_Auto_Ptr.{h,i} to these projects.
 
 Fri Dec  8 10:34:32 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/Makefile: Added Refcounted_Auto_Ptr to the list of template
- 	  files.
-	
-	* ace/Auto_Ptr.{h,i}: 
-  	* ace/Refcounted_Auto_Ptr.{h,i}: Moved the new
-	  ACE_Refcounted_Auto_Ptr into a separate file to reduce
- 	  unnecessarily coupling in ACE.  Thanks to Darrell Brunsch for
- 	  pointing this out.
+          files.
+
+        * ace/Auto_Ptr.{h,i}:
+        * ace/Refcounted_Auto_Ptr.{h,i}: Moved the new
+          ACE_Refcounted_Auto_Ptr into a separate file to reduce
+          unnecessarily coupling in ACE.  Thanks to Darrell Brunsch for
+          pointing this out.
 
 Fri Dec  8 09:27:01 2000  Chad Elliott <elliott_c@ociweb.com>
 
@@ -180,7 +182,7 @@ Thu Dec  7 13:16:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
           When calling ACE_OS::cuserid and passing a NULL pointer, it
           should be cast to something like char * or wchar_t *.  In
-          this case it should be a char *, so I added a 
+          this case it should be a char *, so I added a
           ACE_static_cast for it.
 
 Thu Dec  7 02:31:44 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -189,14 +191,14 @@ Thu Dec  7 02:31:44 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Disabled inlining for SH3 Release configuration.  The SH3 compiler
           has problems with inlined functions (in this case, ACE_OS::dlerror's
-          static variable was staying unresolved).  Thanks to Ricardo Chan 
-          <ricchan@nortelnetworks.com> for pointing this out to me. 
+          static variable was staying unresolved).  Thanks to Ricardo Chan
+          <ricchan@nortelnetworks.com> for pointing this out to me.
 
 Thu Dec  7 03:33:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added RTCORBA MT test.
+          Added RTCORBA MT test.
 
 Wed Dec  6 19:52:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -207,37 +209,37 @@ Wed Dec  6 19:52:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Dec 06 20:12:35 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Containers_T.cpp (operator=): In case the existing array is
-	  larger than the rhs (right hand side), we don't have to free and
-	  reallocate the existing array.  However, we do need to run the
-	  destructor on the array elements that will be replaced.  Hence,
-	  I added a call to ACE_DES_ARRAY_NOFREE for the elements being
-	  replaced.
+        * ace/Containers_T.cpp (operator=): In case the existing array is
+          larger than the rhs (right hand side), we don't have to free and
+          reallocate the existing array.  However, we do need to run the
+          destructor on the array elements that will be replaced.  Hence,
+          I added a call to ACE_DES_ARRAY_NOFREE for the elements being
+          replaced.
 
-	  This fixes bug 704.  Thanks to Martin Krumpolec
-	  <krumpo@pobox.sk> for reporting the bug and for providing an
-	  example illustrating the problem.
+          This fixes bug 704.  Thanks to Martin Krumpolec
+          <krumpo@pobox.sk> for reporting the bug and for providing an
+          example illustrating the problem.
 
 Wed Dec  6 14:29:13 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Auto_Ptr.{h,i}: Added a new set of class (ACE_Refcounted_Auto_Ptr_Rep,
-	  ACE_Refcounted_Auto_Ptr) that implements support for a reference
- 	  counted auto_ptr.  Thanks to Johnny Tucker
- 	  <JTucker@infoglide.com> for contributing this.
+        * ace/Auto_Ptr.{h,i}: Added a new set of class (ACE_Refcounted_Auto_Ptr_Rep,
+          ACE_Refcounted_Auto_Ptr) that implements support for a reference
+          counted auto_ptr.  Thanks to Johnny Tucker
+          <JTucker@infoglide.com> for contributing this.
 
-	* ace/Managed_Object.h: Added ACE_UNIMPLEMENTED_FUNC macros for
-	  copy constructor and assignment operator in class
- 	  ACE_Cleanup_Adapter.  Thanks to Johnny Willemsen
- 	  <johnny.willemsen@meco.nl> for reporting this.
+        * ace/Managed_Object.h: Added ACE_UNIMPLEMENTED_FUNC macros for
+          copy constructor and assignment operator in class
+          ACE_Cleanup_Adapter.  Thanks to Johnny Willemsen
+          <johnny.willemsen@meco.nl> for reporting this.
 
-	* tests/run_tests.sh: Prevent null or zero-length string test name from being
-	  passed into the run() function.  Thanks to Jon Loeliger
- 	  <jloeliger@chiaro.com> for reporting this.
+        * tests/run_tests.sh: Prevent null or zero-length string test name from being
+          passed into the run() function.  Thanks to Jon Loeliger
+          <jloeliger@chiaro.com> for reporting this.
 
-	* tests/Log_Msg_Test.cpp,
-	* examples/Log_Msg/test_log_msg.cpp (main):
+        * tests/Log_Msg_Test.cpp,
+        * examples/Log_Msg/test_log_msg.cpp (main):
           Replaced int with u_long to make compilers happy.  Thanks to
- 	  Mike Curtis <mccurry@my-deja.com> for pointing this out.
+          Mike Curtis <mccurry@my-deja.com> for pointing this out.
 
 Tue Dec  5 11:45:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
