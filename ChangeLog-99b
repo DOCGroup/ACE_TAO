@@ -1,3 +1,10 @@
+Fri May 14 21:03:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* netsvcs/lib/Log_Message_Receiver.cpp:
+	  Changed ACE_Guard instantiations with ACE_GUARD() macros to
+	  avoid some warnings with egcs, similar to the problem that David 
+	  had with Message_Queue_T.cpp
+
 Fri May 14 19:31:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Message_Block.cpp (total_size): 
