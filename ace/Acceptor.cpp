@@ -159,6 +159,13 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::resume (void)
 // <reactor>.
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close (void)
+{
+  ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close");
+  return this->handle_close ();
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
 							      ACE_Reactor_Mask)
 {
@@ -709,6 +716,13 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Oneshot_Acceptor (v
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Oneshot_Acceptor");
   this->handle_close ();
+}
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close (void)
+{
+  ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close");
+  return this->handle_close ();
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int

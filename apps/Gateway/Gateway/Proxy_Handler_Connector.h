@@ -33,9 +33,6 @@ public:
   int initiate_connection (Proxy_Handler *, 
 			   ACE_Synch_Options & = ACE_Synch_Options::synch);
 
-protected:  
-  // Override the connection-failure method to add timer support.
-  virtual int handle_close (ACE_HANDLE sd, ACE_Reactor_Mask);
 };
 
 #endif /* _IO_HANDLER_CONNECTOR */
