@@ -170,90 +170,28 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   this->acceptor_ = acceptor;
   this->reactor_ = reactor;
   this->entry_ = entry;
-  
-  ACE_CString flowname (entry->flowname ());
-
-  /*
-  ACE_Multihomed_INET_Addr multi_addr;    
-  Secondary_Addr_Map_Entry* addrs = 0;
-  char** sec_addrs;
-  if (sec_addr_map_.find (flowname, addrs) == 0) 
-    {
-      Interface_Seq* addr_seq = &addrs->int_id_;
-      ACE_NEW_RETURN (sec_addrs, char* [addr_seq->size ()],-1);
-      ACE_DEBUG ((LM_DEBUG,
-		  "Secondary Addresses for flow %s\n",
-		  flowname.c_str ()));
-
-      Interface_Seq_Itor addrs_begin = addr_seq->begin ();
-      for (Interface_Seq_Itor addrs_end = addr_seq->end (); 
-	   addrs_begin != addrs_end; ++addrs_begin)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "%s\n",
-		      (*addrs_begin).c_str ()));
-	}
-    }
-    else ACE_DEBUG ((LM_DEBUG,
-    "No secondary addresses for flow %s\n",
-    flowname.c_str ()));
-  */
 
   ACE_UINT32 local_ip_addr [entry->num_local_sec_addrs ()];
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_local_sec_addr ();
   for (int i = 0; i < entry->num_local_sec_addrs (); i++)
     {
-      
-      ACE_DEBUG ((LM_DEBUG,
-		  "%s\n",
-		  addrs [i]));
-
       ACE_CString addr_str (addrs[i]);
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
       local_ip_addr [i] = ip_addr.get_ip_address ();
     }
-
-    ACE_DEBUG ((LM_DEBUG,
-		"%s %s \n",
-		local_addr.get_host_addr (),
-		local_addr.get_host_name ()));
 		
   ACE_Multihomed_INET_Addr multi_addr;
-  //   multi_addr.set (local_addr.get_port_number (),
-  // 		  local_addr.get_host_addr (),
-  // 		  1,
-  // 		  AF_INET,
-  // 		  (const char**) entry->get_local_sec_addr (),
-  // 		  entry->num_local_sec_addrs ());
-
   multi_addr.set (local_addr.get_port_number (),
 		  local_addr.get_ip_address (),
 		  1,
 		  local_ip_addr,
 		  entry->num_local_sec_addrs ());
-
-  size_t size = 5;
-  ACE_INET_Addr* peer_addrs;
-  ACE_NEW_RETURN (peer_addrs, ACE_INET_Addr[size], -1);
-  multi_addr.get_secondary_addresses (peer_addrs, size);
-  char buf[BUFSIZ];
-  for (unsigned int i=0; i < size;i++)
-    {
-      peer_addrs [i].addr_to_string (buf,
-				      BUFSIZ);
-      ACE_DEBUG ((LM_DEBUG,
-		  "Local Secondary Addresses %s %d\n",
-		  buf,
-		  size));
-    }
-
   
   int result = this->open (multi_addr,reactor);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Acceptor::open failed\n"),-1);
-
   
   return 0;
 }
@@ -304,7 +242,6 @@ TAO_AV_SCTP_SEQ_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_
                                                             sctp_handler->transport ());
       
       sctp_handler->protocol_object (object);
-      
       this->endpoint_->set_flow_handler (this->flowname_.c_str (),sctp_handler);
       this->entry_->protocol_object (object);
       this->entry_->handler (sctp_handler);
@@ -534,117 +471,87 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
   ACE_Addr *remote_addr = entry->address ();
   ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr *,remote_addr);
   TAO_AV_SCTP_SEQ_Flow_Handler *handler = 0;
-  
-  ACE_UINT32 remote_ip_addr [entry->num_local_sec_addrs ()];
-  ACE_INET_Addr ip_addr;
-  char** addrs = entry->get_local_sec_addr ();
-  for (int i = 0; i < entry->num_local_sec_addrs (); i++)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-		  "In the for loop remote %s \n",
-		  addrs[i]));
-      ACE_CString addr_str (addrs[i]);
-      addr_str += ":";
-      ip_addr.set (addr_str.c_str ());
-      remote_ip_addr [i] = ip_addr.get_ip_address ();
-    }  
-  
 
   ACE_Multihomed_INET_Addr remote_multi_addr;
   remote_multi_addr.set (inet_addr->get_port_number (),
 			 inet_addr->get_ip_address (),
 			 1,
-			 remote_ip_addr,
-			 entry->num_local_sec_addrs ());
-
-  ACE_DEBUG ((LM_DEBUG,
-	      "Remote Sec Addrs\n"));
-  
-  for (int i = 0; i < entry->num_local_sec_addrs (); i++)
-    ACE_DEBUG ((LM_DEBUG,
-		"%s\n",
-		(entry->get_local_sec_addr ())[i]));
-
-  
+			 0,
+			 0);
 
   ACE_Multihomed_INET_Addr local_addr; //This can be a multihomed address
-  
+  ACE_INET_Addr *addr;
   if (entry->get_peer_addr () != 0)
     {
-      ACE_UINT32 local_ip_addr [entry->num_peer_sec_addrs ()];
-      ACE_INET_Addr ip_addr;
-      char** addrs = entry->get_peer_sec_addr ();
-      for (int i = 0; i < entry->num_peer_sec_addrs (); i++)
-	{
-	  ACE_CString addr_str (addrs[i]);
-	  addr_str += ":";
-	  ip_addr.set (addr_str.c_str ());
-	  local_ip_addr [i] = ip_addr.get_ip_address ();
-	}  
-      
-      ACE_INET_Addr *addr = ACE_dynamic_cast (ACE_INET_Addr *, entry->get_peer_addr ());
-      local_addr.set (addr->get_port_number (),
-		      addr->get_ip_address (),
-		      1,
-		      local_ip_addr,
-		      entry->num_peer_sec_addrs ());
-
+      addr = ACE_dynamic_cast (ACE_INET_Addr *, entry->get_peer_addr ());
     }
-  
-  size_t size = 5;
-  ACE_INET_Addr* peer_addrs;
-  ACE_NEW_RETURN (peer_addrs, ACE_INET_Addr[size], -1);
-  remote_multi_addr.get_secondary_addresses (peer_addrs, size);
-  char buf[BUFSIZ];
-  for (unsigned int i=0; i < size;i++)
+  else 
     {
-      peer_addrs [i].addr_to_string (buf,
-				      BUFSIZ);
-      ACE_DEBUG ((LM_DEBUG,
-		  "Remote Secondary Address %s %d\n",
-		  buf,
-		  size));
+      ACE_NEW_RETURN (addr,
+		      ACE_INET_Addr ("0"),
+		      -1);
     }
 
-  local_addr.get_secondary_addresses (peer_addrs, size);
-  for (unsigned int i=0; i < size;i++)
+  ACE_UINT32 local_ip_addr [entry->num_peer_sec_addrs ()];
+  ACE_INET_Addr ip_addr;
+  char** addrs = entry->get_peer_sec_addr ();
+  for (int i = 0; i < entry->num_peer_sec_addrs (); i++)
     {
-      peer_addrs [i].addr_to_string (buf,
-				     BUFSIZ);
-      ACE_DEBUG ((LM_DEBUG,
-		  "Local Secondary Address %s %d\n",
-		  buf,
-		  size));
-    }
+      ACE_CString addr_str (addrs[i]);
+      addr_str += ":";
+      ip_addr.set (addr_str.c_str ());
+      local_ip_addr [i] = ip_addr.get_ip_address ();
+    }  
+
+  local_addr.set (addr->get_port_number (),
+		  addr->get_ip_address (),
+		  1,
+		  local_ip_addr,
+		  entry->num_peer_sec_addrs ());
 
   int result = this->connector_.connector_connect (handler,
 						   remote_multi_addr,
 						   local_addr);
+
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_connector::connect failed\n"),-1);
   entry->handler (handler);
   transport = handler->transport ();
 
-  handler->peer ().get_local_addrs (peer_addrs, size);
-  for (unsigned int i=0; i < size;i++)
+  if (TAO_debug_level > 0)
     {
-      peer_addrs [i].addr_to_string (buf,
-				      BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
-		  "%s %d\n",
-		  buf,
-		  size));
-    }
-  size = 3;
-  handler->peer ().get_remote_addrs (peer_addrs, size);
-  for (unsigned int i=0; i < size;i++)
-    {
-      peer_addrs [i].addr_to_string (buf,
-				     BUFSIZ);
+		  "Local Addrs\n"));
+      char buf [BUFSIZ];
+      size_t size = BUFSIZ;
+      ACE_INET_Addr *peer_addrs;
+      ACE_NEW_RETURN (peer_addrs,ACE_INET_Addr [size], -1);
+      handler->peer ().get_local_addrs (peer_addrs, size);
+      for (unsigned int i=0; i < size;i++)
+	{
+	  peer_addrs [i].addr_to_string (buf,
+					 BUFSIZ);
+	  ACE_DEBUG ((LM_DEBUG,
+		      "%s %d\n",
+		      buf,
+		      size));
+	}
+
       ACE_DEBUG ((LM_DEBUG,
-		  "%s %d\n",
-		  buf,
-		  size));
+		  "Remote Addrs\n"));
+
+      size = BUFSIZ;
+      handler->peer ().get_remote_addrs (peer_addrs, size);
+      for (unsigned int i=0; i < size;i++)
+	{
+	  peer_addrs [i].addr_to_string (buf,
+					 BUFSIZ);
+	  ACE_DEBUG ((LM_DEBUG,
+		      "%s %d\n",
+		      buf,
+		      size));
+	}
+      delete peer_addrs;
     }
 
   return 0;
@@ -835,23 +742,6 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("unable to register client handler")),
                       -1);
-
-  size_t size = 5;
-  ACE_INET_Addr* peer_addrs;
-  ACE_NEW_RETURN (peer_addrs, ACE_INET_Addr[size], -1);
-  
-  char buf [BUFSIZ];
-  this->peer ().get_local_addrs (peer_addrs, size);
-  for (unsigned int i=0; i < size;i++)
-    {
-      peer_addrs [i].addr_to_string (buf,
-				     BUFSIZ);
-      ACE_DEBUG ((LM_DEBUG,
-		  "%s %d\n",
-		  buf,
-		  size));
-    }
-  
   return 0;
 }
 
