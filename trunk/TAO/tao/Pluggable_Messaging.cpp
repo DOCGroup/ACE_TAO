@@ -19,6 +19,16 @@ TAO_Pluggable_Messaging::~TAO_Pluggable_Messaging (void)
   //no-op
 }
 
+CORBA::Boolean
+TAO_Pluggable_Messaging::write_reply_header (TAO_OutputCDR & /*cdr*/,
+                                             TAO_Pluggable_Reply_Params & /*params*/,
+                                             CORBA::Environment & /*ACE_TRY_ENV*/)
+                       
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
 int
 TAO_Pluggable_Messaging:: transport_message (TAO_Transport *transport,
                                              TAO_OutputCDR &stream,
