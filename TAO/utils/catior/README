@@ -1,0 +1,12 @@
+$Id$
+
+CatIOR is a small utility that takes in a stringified IOR and decode 
+it, printing out the information contained in it.
+
+Usage
+-----
+
+catior -f <filename>
+
+Takes in a file which contains the IOR and will then output the 
+encoded information to stdout.
