@@ -155,10 +155,10 @@ CIAO::NodeApplication_Impl::
 install (const ::Deployment::ImplementationInfos & impl_infos
 	 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   ::Deployment::UnknownImplId,
-		   ::Deployment::ImplEntryPointNotFound,
-		   ::Deployment::InstallationFailure,
-		   ::Components::InvalidConfiguration))
+		   Deployment::UnknownImplId,
+		   Deployment::ImplEntryPointNotFound,
+		   Deployment::InstallationFailure,
+		   Components::InvalidConfiguration))
 {
   Deployment::ComponentInfos * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -201,6 +201,35 @@ install (const ::Deployment::ImplementationInfos & impl_infos
       = impl_infos[i].component_instance_name.in ();
 
     (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
+
+    // Deal with Component instance related Properties.
+    // Now I am only concerning about the COMPOENTIOR and here is only the hardcoded
+    // version of the configuration. Hopefully we will reach an agreement after the RTWS
+    // about how the configuration should be done.
+    for (CORBA::ULong prop_len = 0;
+	 prop_len < impl_infos[i].component_config.length ();
+	 ++ prop_len)
+    {
+      if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
+			  "ComponentIOR") == 0)
+      {
+	ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
+	const char * path;
+	impl_infos[i].component_config[prop_len].value >>= path;
+
+	CORBA::String_var ior =
+	  this->orb_->object_to_string (comp.in() ACE_ENV_ARG_PARAMETER);
+	ACE_CHECK;
+
+	if (write_IOR (path, ior.in ()) != 0)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
+	  ACE_THROW (CORBA::INTERNAL ());
+	}
+
+      }
+
+    }
   }
   return retv._retn ();
 }

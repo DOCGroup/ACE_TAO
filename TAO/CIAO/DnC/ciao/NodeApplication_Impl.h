@@ -24,6 +24,9 @@
 #include "ace/Synch_Traits.h"
 #include "Container_Base.h"
 #include "Deployment_CoreS.h"
+#include "Server_init.h"
+
+using CIAO::Utility::write_IOR;
 
 /**
  *
