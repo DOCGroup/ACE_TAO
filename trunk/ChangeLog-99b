@@ -1,25 +1,33 @@
+Fri May 14 16:10:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Message_Queue_T.cpp: replaced raw ACE_Read_Guards
+          with ACE_READ_GUARD_RETURN macros.  That avoids a compiler
+          warning (egcs 1.1.1/SunOS 5.7) now that the ACE_Guard<Null_Mutex>
+          destructor has been removed.  Thanks to Irfan and Carlos
+          for suggesting this fix.
+
 Fri May 14 15:35:50 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (clr_flags and set_flags): We should use ioctl()
- 	  calls to implement on vxworks this rather than fcntl().  Thanks
- 	  to Joseph A. Condlin <jac@slpmbo.ed.ray.com> for reporting this.
+        * ace/ACE.cpp (clr_flags and set_flags): We should use ioctl()
+          calls to implement on vxworks this rather than fcntl().  Thanks
+          to Joseph A. Condlin <jac@slpmbo.ed.ray.com> for reporting this.
 
 Fri May 14 13:15:02 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * examples/IPC_SAP/TLI_SAP/Makefile: Took out FORE specific
- 	  information. Somehow my local changes got checked in - this is
- 	  to undo that.
+          information. Somehow my local changes got checked in - this is
+          to undo that.
 
 Fri May 14 12:58:02 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/ATM_Addr.h:
         * ace/ATM_Addr.i:
         * ace/ATM_Addr.cpp: Added accessor methods for the selector byte
- 	  of an ATM address.
+          of an ATM address.
 
         * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
         * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp: Modify example code
- 	  to have the user optionally specify the selector byte.
+          to have the user optionally specify the selector byte.
 
 Fri May 14 12:47:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -30,15 +38,15 @@ Fri May 14 11:36:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/SString.h:
         * ace/SString.i: Added new class to auto destroy dynamically
- 	  allocated strings, sort of a mixing between auto_ptr and
- 	  CString.  Auto_Ptr_Array was not useful because we need to free
- 	  using ACE_OS::free() (and in the future allocators).
+          allocated strings, sort of a mixing between auto_ptr and
+          CString.  Auto_Ptr_Array was not useful because we need to free
+          using ACE_OS::free() (and in the future allocators).
 
 Fri May 14 10:37:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.i: Fixed a deadlock in cond_timedwait()/cond_broadcast().
-  	  Thanks to Brian C. Olson <bolson@rtlogic.com> for reporting
- 	  this.
+          Thanks to Brian C. Olson <bolson@rtlogic.com> for reporting
+          this.
 
         * ace/Synch.h (ACE_Null_Mutex>): Commented out the ~ACE_Guard()
           destructor to prevent segfaults on certain versions of SunC++.
