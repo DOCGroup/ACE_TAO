@@ -28,9 +28,9 @@ namespace CIAO
         root_ (doc->getDocumentElement()),
         filter_ (filter),
         iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
+                                         this->filter_,
+                                         0,
+                                         true)),
         release_ (true)
     {}
 
@@ -100,7 +100,7 @@ namespace CIAO
               
               // delegate the populating process
               ID_Handler::process_ImplementationDependency
-              (this->iter_, cid.dependsOn[i]);
+                (this->iter_, cid.dependsOn[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("configProperty")))
             {
