@@ -1,64 +1,82 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
-TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(top_builddir)/TAO_IDL/tao_idl
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
-BUILT_SOURCES = \
-  TestS_T.cpp \
-  TestC.inl \
-  TestS.inl \
-  TestS_T.inl \
-  TestC.cpp \
-  TestC.h \
-  TestS.h \
-  TestS_T.h
+noinst_PROGRAMS =
+CLEANFILES =
+BUILT_SOURCES =
 
-CLEANFILES = \
-  TestS_T.cpp \
+## Makefile.RTCORBA_Baseline_Idl.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_RT_CORBA
+if !BUILD_MINIMUM_CORBA
+
+BUILT_SOURCES += \
   TestC.inl \
   TestS.inl \
   TestS_T.inl \
-  TestC.cpp \
   TestC.h \
   TestS.h \
   TestS_T.h \
-  Test-stamp
+  TestC.cpp \
+  TestS.cpp \
+  TestS_T.cpp
 
-TestS_T.cpp TestC.inl TestS.inl TestS_T.inl TestC.cpp TestC.h TestS.h TestS_T.h: Test-stamp
+CLEANFILES += \
+  Test-stamp \
+  TestC.inl \
+  TestS.inl \
+  TestS_T.inl \
+  TestC.h \
+  TestS.h \
+  TestS_T.h \
+  TestC.cpp \
+  TestS.cpp \
+  TestS_T.cpp
+
+TestC.inl TestS.inl TestS_T.inl TestC.h TestS.h TestS_T.h TestC.cpp TestS.cpp TestS_T.cpp: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Test.idl
 	@touch $@
 
-## Makefile.RTCORBA_Baseline_Client.am 
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.RTCORBA_Baseline_Client.am
+
+if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
-noinst_PROGRAMS = client
-endif
-endif
+
+noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
-  -I../lib \
-  -I$(TAO_ROOT)/orbsvcs
+  -I../lib
 
 client_SOURCES = \
   TestC.cpp \
   client.cpp \
-  TestC.h \
-  TestS_T.h \
-  TestC.inl \
-  TestS_T.inl
+  Roundtrip.h
 
 client_LDADD = \
   ../lib/libTAO_RTEC_Perf.la \
@@ -67,45 +85,41 @@ client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
 
-## Makefile.RTCORBA_Baseline_Server.am 
+## Makefile.RTCORBA_Baseline_Server.am
 
+if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += server
-endif
-endif
 
 server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib \
-  -I../lib \
-  -I$(TAO_ROOT)/orbsvcs
+  -I../lib
 
 server_SOURCES = \
   Roundtrip.cpp \
-  TestC.cpp \
-  TestS.cpp \
   server.cpp \
-  Roundtrip.h \
-  TestC.h \
-  TestS.h \
-  TestS_T.h \
-  TestC.inl \
-  TestS.inl \
-  TestS_T.inl
+  TestS.cpp \
+  TestC.cpp \
+  Roundtrip.h
 
 server_LDADD = \
   ../lib/libTAO_RTEC_Perf.la \
@@ -114,18 +128,21 @@ server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB
