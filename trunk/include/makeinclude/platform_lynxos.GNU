@@ -1,7 +1,7 @@
 # $Id$
 # LynxOS with g++
 
-LYNXOS = 1
+CROSS-COMPILE = 1
 
 # NOTE:  with LynxOS 2.5.0-FCS version: 012797-G, you'll need to
 #        apply this patch:
