@@ -6,7 +6,9 @@
 #include "ace/Thread_Exit.h"
 #include "ace/Thread_Hook.h"
 
-ACE_RCSID(ace, Thread_Adapter, "$Id$")
+ACE_RCSID (ace,
+           Thread_Adapter,
+           "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Thread_Adapter.inl"
@@ -244,9 +246,7 @@ ACE_Thread_Adapter::invoke_i (void)
 #  endif /* SC_PREPC */
       status = ::t_delete (0); // Suicide - only returns on error
 #endif /* ACE_PSOS */
-
-      return status;
     }
 
-  ACE_NOTREACHED (return status);
+  return status;
 }

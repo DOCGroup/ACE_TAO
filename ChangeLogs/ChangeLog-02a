@@ -1,3 +1,11 @@
+Tue Mar 05 20:34:22 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS_Thread_Adapter.cpp (invoke):
+	* ace/Thread_Adapter.cpp (invoke_i):
+
+	  Fixed "jump out of __finally block" warning emanating from
+	  MSVC 7.
+
 Tue Mar 05 15:46:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Memory_Pool.h:
