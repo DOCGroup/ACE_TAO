@@ -30,15 +30,15 @@ class Config_Test
 
   int m_nTimeToLive;
   int m_bDelay;
-  char m_pszDestIPAddress[TEST_MAX_STRING];
+  ACE_TCHAR m_pszDestIPAddress[TEST_MAX_STRING];
   int m_nDestPort;
   int m_nReconnectInterval;
 
-  char m_pszLogFilePath[TEST_MAX_STRING];
-  char m_pszTransactionFilePath[TEST_MAX_STRING];
-  char m_pszHeading[TEST_MAX_STRING];
+  ACE_TCHAR m_pszLogFilePath[TEST_MAX_STRING];
+  ACE_TCHAR m_pszTransactionFilePath[TEST_MAX_STRING];
+  ACE_TCHAR m_pszHeading[TEST_MAX_STRING];
   int m_nTraceLevel;
-  char m_pszJustification[TEST_MAX_STRING];
+  ACE_TCHAR m_pszJustification[TEST_MAX_STRING];
 
 public:
   Config_Test (void) { }
@@ -48,7 +48,7 @@ public:
 private:
   void get_section_string (ACE_Configuration_Section_Key& SectionKey,
                            const ACE_TCHAR *pszName,
-                           char *pszVariable,
+                           ACE_TCHAR *pszVariable,
                            int nMaxLength);
   void get_section_integer (ACE_Configuration_Section_Key& SectionKey,
                             const ACE_TCHAR *pszName,
