@@ -1,3 +1,9 @@
+Sun Apr 05 00:20:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.h: Moved "#include "ace/OS.h" out of _ACE_H_ block to
+ 	  resolve the circular inclusion that occured when building ACE
+ 	  Unicode Release version.
+
 Sat Apr 04 21:19:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.37, released Sat Apr 04 21:19:32 1998.
