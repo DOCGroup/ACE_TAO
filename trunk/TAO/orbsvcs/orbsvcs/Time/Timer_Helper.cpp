@@ -3,6 +3,7 @@
 
 #include "Timer_Helper.h"
 #include "TAO_Time_Service_Clerk.h"
+#include "ace/OS.h"
 
 // Constructor.
 Timer_Helper::Timer_Helper (void)
@@ -36,16 +37,15 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 	   server_iterator.next (value) != 0;
 	   server_iterator.advance ())
 	{
-
-	  printf("Making a remote Call\n");
+	  
 	  // This is a remote call.
 	  CosTime::UTO_var UTO_server =
 	    (*value)->universal_time (TAO_TRY_ENV);
-
+	  
 	  TAO_CHECK_ENV;
-
-	  #if defined (ACE_LACKS_LONGLONG_T)
-
+	  
+          #if defined (ACE_LACKS_LONGLONG_T)
+	  
 	  ACE_DEBUG ((LM_DEBUG,
 		      "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
 		      "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
@@ -85,6 +85,13 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
       // servers.
       clerk_->time_ = sum / no_of_servers ;
 
+      // Set the Time Displacement Factor. The TZ environment variable is 
+      // read to set the time zone. We convert the timezone value from seconds 
+      // to minutes.
+
+      ACE_OS::tzset();
+      clerk_->time_displacement_factor (ACE_OS::timezone () / 60);
+      
       // Record the current time in a timestamp to know when global
       // updation of time was done.
       clerk_->update_timestamp_ = ACE_OS::gettimeofday ().sec () * 10000000

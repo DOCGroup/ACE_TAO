@@ -86,10 +86,19 @@ public:
   // This method is called by the driver program to set the Naming
   // Server instance.
 
+  CORBA::Short time_displacement_factor (void);
+  // Returns the time displacement factor.
+
+  void time_displacement_factor (CORBA::Short);
+  // Set the TDF.
+
   CORBA::ULongLong time_;
   // Clerk's notion of time.
 
 private:
+
+  CORBA::Short time_displacement_factor_;
+  // Time displacement factor in minutes.
 
   IORS server_;
   // Set of server Time Server IORs.

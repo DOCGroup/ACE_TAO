@@ -41,11 +41,11 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &TAO_IN_ENV)
   ACE_NEW_THROW_RETURN (uto,
 			TAO_UTO (this->get_time (),
 				 0,
-				 0),
+				 this->time_displacement_factor ()),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::UTO::_nil ());
   // Return the global time as a UTO.
-
+  
   return uto->_this ();
 }
 
@@ -126,3 +126,22 @@ TAO_Time_Service_Clerk::get_time (void)
 
   return time;
 }
+
+// Returns the time displacement factor in minutes.
+// This is displacement from the GMT.
+CORBA::Short
+TAO_Time_Service_Clerk::time_displacement_factor (void)
+{
+  return time_displacement_factor_;
+}
+
+// Sets the TDF.
+void
+TAO_Time_Service_Clerk::time_displacement_factor (CORBA::Short tdf)
+{
+  this->time_displacement_factor_ = tdf;
+}
+
+
+
+
