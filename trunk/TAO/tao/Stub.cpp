@@ -512,7 +512,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type
 
 CORBA::Policy_ptr
 TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
-                             ACE_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL)
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
