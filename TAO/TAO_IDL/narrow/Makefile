@@ -53,10 +53,23 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/narrow.o .shobj/narrow.so: narrow.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/narrow.o .shobj/narrow.so: narrow.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
