@@ -1,3 +1,9 @@
+Fri Jan 28 20:14:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/RB_Tree.h:
+	* ace/RB_Tree.i:
+	  current_size() was not const.
+
 Fri Jan 28 13:57:37 2000  Fred Kuhns    <fredk@cs.wustl.edu>
 
         * fixed QoS realted bugs in QoS_Session_Impl.cpp QoS_Session_Impl.h
