@@ -89,7 +89,7 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request,
   ACE_CHECK;
 
   CORBA::Any_ptr ap = nv->value ();
-  char *value;
+  const char *value;
   *ap >>= value;
 
   const char *object_id =
@@ -161,7 +161,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
     ACE_THROW_RETURN (Database::Unknown_Type (),
                       Database::Entry::_nil ());
 
-  char *name = 0;
+  const char *name = 0;
   CORBA::Long id = 0;
 
   const Database::NamedValue &first =

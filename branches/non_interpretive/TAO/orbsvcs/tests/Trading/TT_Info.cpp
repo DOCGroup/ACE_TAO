@@ -217,7 +217,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
               CORBA::ULong     ulong_val;
               CORBA::Float     float_val;
               CORBA::Double   double_val;
-              char *          string_val;
+              const char *    string_val;
 
               if ((*value) >>= CORBA::Any::to_char (char_val))
                 {

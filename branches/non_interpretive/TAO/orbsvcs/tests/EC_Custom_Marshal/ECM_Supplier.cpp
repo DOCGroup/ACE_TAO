@@ -220,10 +220,8 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
 
       // The typecode name standard, the encode method is not (in
       // general the CDR interface is not specified).
-      // @@ TODO once the compiled marshalling approach is in place
-      // this will read: cdr << info;
-      cdr.encode (ECM_IDLData::_tc_Info, &info, 0, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (!(cdr << info))
+        ACE_THROW (CORBA::MARSHAL ());
 
       // Here we marshall a non-IDL type.
       cdr << other;
